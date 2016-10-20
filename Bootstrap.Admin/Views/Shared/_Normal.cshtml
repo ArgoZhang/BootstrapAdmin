@@ -1,0 +1,93 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section css {
+    <link href="~/Content/css/font-awesome.css" rel="stylesheet" />
+    <link href="~/Content/css/bootstrap-table.css" rel="stylesheet" />
+    <link href="~/Content/css/sweetalert.css" rel="stylesheet" />
+    <link href="~/Content/css/site.css" rel="stylesheet" />
+    @RenderSection("css", false)
+}
+@section javascript {
+    <script src="~/Content/js/framework.js"></script>
+    @RenderSection("Javascript", false)
+}
+<section id="container">
+    <!--header start-->
+    <header class="header white-bg">
+        <div class="sidebar-toggle-box">
+            <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
+        </div>
+        <!--logo start-->
+        <a href="#" class="logo">超期烟出入库检测系统</a>
+        <!--logo end-->
+        <nav class="navbar lgbMenu">
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">参数设置 <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="~/Home/Rules">规则设置</a></li>
+                            <li class="divider"></li>
+                            <li><a href="~/Home/Terminals">输入口设置</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </nav>
+        <div class="top-nav">
+            <!--search & user info start-->
+            <ul class="nav pull-right top-menu">
+                <li>
+                    <input type="text" class="form-control search" placeholder="搜索">
+                </li>
+                <!-- user login dropdown start-->
+                <li class="dropdown">
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <img alt="" src="../content/images/logo6.jpg">
+                        <span class="username">Argo Zhang</span>
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu extended logout">
+                        <div class="log-arrow-up"></div>
+                        <li><a href="#"><i class=" fa fa-suitcase"></i> 个人中心</a></li>
+                        <li><a href="#"><i class="fa fa-cog"></i> 设置</a></li>
+                        <li><a href="#"><i class="fa fa-bell-o"></i> 通知</a></li>
+                        <li><a href="~/Home"><i class="fa fa-key"></i> 注销</a></li>
+                    </ul>
+                </li>
+                <!-- user login dropdown end -->
+            </ul>
+            <!--search & user info end-->
+        </div>
+        <!--breadcrumbs start -->
+        <div class="lgbBreadcrumb">
+            <ul class="breadcrumb">
+                <li><a href="#"><i class="fa fa-home"></i> 参数设置</a></li>
+                <li class="active">自定义功能设置</li>
+            </ul>
+        </div>
+        <!--breadcrumbs end -->
+    </header>
+    <!--header end-->
+
+    <section class="body-content">
+        <div class="row">
+            <div class="col-lg-12">
+                @RenderBody()
+            </div>
+        </div>
+    </section>
+
+    <!--footer start-->
+    <footer class="site-footer">
+        <div class="text-center">
+            2016 © 红云红河集团.
+            <a href="#" class="go-top">
+                <i class="fa fa-angle-up"></i>
+            </a>
+        </div>
+    </footer>
+    <!--footer end-->
+</section>
+@RenderSection("modal", false)

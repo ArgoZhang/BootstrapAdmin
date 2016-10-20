@@ -1,0 +1,52 @@
+﻿@{
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+@section css {
+    @RenderSection("css", false)
+}
+@section header {
+    @RenderSection("header", false)
+}
+@section navigator {
+    @RenderSection("navigator", false)
+}
+@section javascript {
+    <script src="~/content/js/sweetalert.js"></script>
+    <script src="~/content/js/bootstrap-table.js"></script>
+    <script src="~/content/js/bootstrap-table-zh-CN.js"></script>
+    <script src="~/content/js/jquery.validate.js"></script>
+    <script src="~/content/js/messages_zh.js"></script>
+    @RenderSection("Javascript", false)
+}
+@section modal {
+    <div class="modal fade" id="dialogNew" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog terminal-dialog">
+            @RenderSection("modal", false)
+        </div>
+    </div>
+}
+<div class="panel panel-default">
+    <div class="panel-heading">查询条件</div>
+    <div class="panel-body">
+        @RenderSection("query", false)
+    </div>
+</div>
+<div id="toolbar" class="btn-group">
+    <button id="btn_add" type="button" class="btn btn-success">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+    </button>
+    <button id="btn_delete" type="button" class="btn btn-danger">
+        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+    </button>
+    <button id="btn_edit" type="button" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>编辑
+    </button>
+</div>
+<div class="panel panel-default terminal-pannel">
+    <div class="panel-heading">
+        查询结果
+    </div>
+    <div class="panel-body table-body">
+        <table></table>
+    </div>
+</div>

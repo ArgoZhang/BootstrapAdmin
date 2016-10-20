@@ -1,0 +1,18 @@
+﻿@model Bootstrap.Admin.Models.NavigatorBarModel
+<aside>
+    <div id="sidebar" class="nav-collapse ">
+        <!-- sidebar menu start-->
+        <ul class="sidebar-menu" id="nav-accordion">
+            @foreach (var menu in Model.Navigator)
+            {
+                <li>
+                    <a href="@menu.Url" class="@menu.Active">
+                        <i class="fa @menu.Icon"></i>
+                        <span>@menu.Name</span>
+                    </a>
+                </li>
+            }
+        </ul>
+        <!-- sidebar menu end-->
+    </div>
+</aside>

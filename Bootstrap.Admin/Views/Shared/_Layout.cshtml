@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewBag.Title</title>
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link href="~/Content/css/bootstrap.css" rel="stylesheet">
+    <link href="~/Content/css/bootstrap-theme.css" rel="stylesheet">
+    @RenderSection("css", false)
+</head>
+<body>
+    @RenderBody()
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="~/content/js/jquery-1.10.2.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="~/content/js/bootstrap.js"></script>
+    <script src="~/content/js/longbow.dataentity.js"></script>
+    <script src="~/content/js/Longbow.Common.js"></script>
+    @RenderSection("Javascript", false)
+</body>
+</html>

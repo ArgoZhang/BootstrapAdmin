@@ -1,0 +1,47 @@
+﻿@model Bootstrap.Admin.Models.HeaderBarModel
+<!--header start-->
+<header class="header white-bg">
+    <div class="sidebar-toggle-box">
+        <div class="fa fa-bars tooltips" data-placement="right" data-original-title="展开/收起 导航条"></div>
+    </div>
+    <!--logo start-->
+    <a href="#" class="logo">后台管理系统</a>
+    <!--logo end-->
+    <div class="top-nav">
+        <!--search & user info start-->
+        <ul class="nav pull-right top-menu">
+            <li>
+                <input type="text" class="form-control search" placeholder="搜索">
+            </li>
+            <!-- user login dropdown start-->
+            <li class="dropdown">
+                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                    <img alt="" src="../content/images/logo6.jpg">
+                    <span class="username">@Model.UserName</span>
+                    <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu extended logout">
+                    <div class="log-arrow-up"></div>
+                    <li><a href="#"><i class=" fa fa-suitcase"></i> 个人中心</a></li>
+                    <li><a href="#"><i class="fa fa-cog"></i> 设置</a></li>
+                    <li><a href="#"><i class="fa fa-bell-o"></i> 通知</a></li>
+                    <li><a href="~/Home"><i class="fa fa-key"></i> 注销</a></li>
+                </ul>
+            </li>
+            <!-- user login dropdown end -->
+        </ul>
+        <!--search & user info end-->
+    </div>
+    <!--breadcrumbs start -->
+    <div class="lgbBreadcrumb">
+        <ul class="breadcrumb">
+            <li><a href="~/Admin/Index"><i class="fa fa-home"></i>首页</a></li>
+            @if (!string.IsNullOrEmpty(Model.BreadcrumbName))
+            {
+                <li>@Model.BreadcrumbName</li>
+            }
+        </ul>
+    </div>
+    <!--breadcrumbs end -->
+</header>
+<!--header end-->

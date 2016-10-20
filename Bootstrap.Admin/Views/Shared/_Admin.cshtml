@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "后台管理";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section css {
+    <link href="~/Content/css/font-awesome.css" rel="stylesheet" />
+    <link href="~/Content/css/bootstrap-table.css" rel="stylesheet" />
+    <link href="~/Content/css/sweetalert.css" rel="stylesheet" />
+    <link href="~/Content/css/site.css" rel="stylesheet" />
+    <link href="~/Content/css/fix.css" rel="stylesheet" />
+    <link href="~/Content/css/admin.css" rel="stylesheet" />
+    @RenderSection("css", false)
+}
+@section javascript {
+    <script src="~/Content/js/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="~/Content/js/jquery.scrollTo.js"></script>
+    <script src="~/Content/js/jquery.nicescroll.min.js"></script>
+    <script src="~/Content/js/common-scripts.js"></script>
+    <script src="~/Content/js/framework.js"></script>
+    @RenderSection("Javascript", false)
+}
+@RenderSection("header", false)
+@RenderSection("navigator", false)
+<section id="container">
+    <section>
+        <div id="main-content" class="row">
+            <div class="col-lg-12">
+                @RenderBody()
+            </div>
+        </div>
+    </section>
+
+    <!--footer start-->
+    <footer class="site-footer">
+        <div class="text-center">
+            2016 © 红云红河集团.
+            <a href="#" class="go-top">
+                <i class="fa fa-angle-up"></i>
+            </a>
+        </div>
+    </footer>
+    <!--footer end-->
+</section>
+@RenderSection("modal", false)

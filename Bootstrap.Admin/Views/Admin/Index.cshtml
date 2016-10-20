@@ -1,0 +1,11 @@
+﻿@model Bootstrap.Admin.Models.ModelBase
+@{
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+@section header {
+    @Html.Partial("Header", Model.Header)
+}
+@section navigator {
+    @Html.Partial("Navigator", Model.Navigator)
+}
+<div style="height: 1000px;"><h4>欢迎使用后台管理</h4></div>

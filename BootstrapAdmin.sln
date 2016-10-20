@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bootstrap.DataAccess", "Bootstrap.DataAccess\Bootstrap.DataAccess.csproj", "{AF16CA71-B8C6-4F51-B38C-0C0300FDEBD7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sql", "sql", "{87319AF5-7C40-4362-B67C-35F9DD737DB4}"
+	ProjectSection(SolutionItems) = preProject
+		DatabaseScripts\Install.sql = DatabaseScripts\Install.sql
+		DatabaseScripts\Proc_StartTerminal.sql = DatabaseScripts\Proc_StartTerminal.sql
+		DatabaseScripts\Proc_StopTerminal.sql = DatabaseScripts\Proc_StopTerminal.sql
+		DatabaseScripts\Readme.txt = DatabaseScripts\Readme.txt
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bootstrap.Admin", "Bootstrap.Admin\Bootstrap.Admin.csproj", "{7B2B7043-3CB2-4C5A-BDF2-8C47F1A5471A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{792A0B12-3F41-4BC4-A768-7D8D91C213B2}"
+	ProjectSection(SolutionItems) = preProject
+		Init.bat = Init.bat
+		环境搭建指南.txt = 环境搭建指南.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{586410F2-C1F0-47CD-AB28-2CF506DED2C8}"
+	ProjectSection(SolutionItems) = preProject
+		Scripts\Publish-Console.bat = Scripts\Publish-Console.bat
+		Scripts\Publish.vbs = Scripts\Publish.vbs
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AF16CA71-B8C6-4F51-B38C-0C0300FDEBD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF16CA71-B8C6-4F51-B38C-0C0300FDEBD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF16CA71-B8C6-4F51-B38C-0C0300FDEBD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF16CA71-B8C6-4F51-B38C-0C0300FDEBD7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B2B7043-3CB2-4C5A-BDF2-8C47F1A5471A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B2B7043-3CB2-4C5A-BDF2-8C47F1A5471A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B2B7043-3CB2-4C5A-BDF2-8C47F1A5471A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B2B7043-3CB2-4C5A-BDF2-8C47F1A5471A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
