@@ -21,7 +21,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="pIds"></param>
         /// <returns></returns>
-        public static IEnumerable<Terminal> RetrieveTerminals(string tId)
+        public static IEnumerable<Terminal> RetrieveTerminals(string tId = null)
         {
             string sql = "select t.*, tc.RuleID, r.Name RuleName from Terminals t left join TerminalRuleConfig tc on t.ID = tc.TerminalId left join Rules r on tc.RuleId = r.Id order by t.Name";
             var ret = CacheManager.GetOrAdd(TerminalDataKey, CacheSection.RetrieveIntervalByKey(TerminalDataKey), key =>
