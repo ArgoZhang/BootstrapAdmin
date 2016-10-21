@@ -1,4 +1,4 @@
-﻿@model Bootstrap.Admin.Models.UserModel
+﻿@model Bootstrap.Admin.Models.NavigatorBarModel
 @{
     ViewBag.Title = "用户管理";
     Layout = "~/Views/Shared/_Default.cshtml";
@@ -8,10 +8,10 @@
     <script src="~/scripts/Terminals.js"></script>
 }
 @section header {
-    @Html.Partial("Header", Model.Header)
+    @Html.Partial("Header", Model)
 }
 @section navigator {
-    @Html.Partial("Navigator", Model.Navigator)
+    @Html.Partial("Navigator", Model)
 }
 @section query {
     <form class="form-horizontal" role="form">

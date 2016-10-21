@@ -1,6 +1,4 @@
 ﻿using Bootstrap.Admin.Models;
-using Bootstrap.DataAccess;
-using System.Collections.Generic;
 using System.Web.Http;
 
 namespace Bootstrap.Admin.Controllers

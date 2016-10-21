@@ -5,10 +5,13 @@
     <link href="~/Content/css/fix.css" rel="stylesheet" />
     @RenderSection("css", false)
 }
-@RenderBody()
-@section modal{
-    @RenderSection("modal", false)
-}
 @section javascript {
     @RenderSection("Javascript", false)
 }
+@section modal{
+    @RenderSection("modal", false)
+}
+@section header {
+    @RenderSection("header", false)
+}
+@RenderBody()

@@ -3,15 +3,15 @@ using System.Collections.Generic;
 
 namespace Bootstrap.Admin.Models
 {
-    public class NavigatorBarModel
+    public class NavigatorBarModel : HeaderBarModel
     {
         public NavigatorBarModel()
         {
-            Navigator = Menu.RetrieveMenus();
+            Menus = Menu.RetrieveMenus();
         }
         /// <summary>
         /// 
         /// </summary>
-        public List<Menu> Navigator { get; set; }
+        public List<Menu> Menus { get; set; }
     }
 }

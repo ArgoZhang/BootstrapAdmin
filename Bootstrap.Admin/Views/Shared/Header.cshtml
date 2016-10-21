@@ -7,6 +7,20 @@
     <!--logo start-->
     <a href="#" class="logo">后台管理系统</a>
     <!--logo end-->
+    <nav class="navbar lgbMenu @Model.ShowMenu">
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">参数设置 <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="~/Home/Rules">规则设置</a></li>
+                        <li class="divider"></li>
+                        <li><a href="~/Home/Terminals">输入口设置</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </nav>
     <div class="top-nav">
         <!--search & user info start-->
         <ul class="nav pull-right top-menu">
@@ -25,7 +39,7 @@
                     <li><a href="#"><i class=" fa fa-suitcase"></i> 个人中心</a></li>
                     <li><a href="#"><i class="fa fa-cog"></i> 设置</a></li>
                     <li><a href="#"><i class="fa fa-bell-o"></i> 通知</a></li>
-                    <li><a href="~/Home"><i class="fa fa-key"></i> 注销</a></li>
+                    <li><a href="~/Home/Logout"><i class="fa fa-key"></i> 注销</a></li>
                 </ul>
             </li>
             <!-- user login dropdown end -->
@@ -35,7 +49,7 @@
     <!--breadcrumbs start -->
     <div class="lgbBreadcrumb">
         <ul class="breadcrumb">
-            <li><a href="~/Admin/Index"><i class="fa fa-home"></i>首页</a></li>
+            <li><a href="@Url.Content(Model.HomeUrl)"><i class="fa fa-home"></i>首页</a></li>
             @if (!string.IsNullOrEmpty(Model.BreadcrumbName))
             {
                 <li>@Model.BreadcrumbName</li>

@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Bootstrap.Admin.Models.HeaderBarModel
+@{
     ViewBag.Title = "Rules";
     Layout = "~/Views/Shared/_Fix.cshtml";
 }
@@ -9,6 +10,9 @@
     <script src="~/content/js/jquery.validate.js"></script>
     <script src="~/content/js/messages_zh.js"></script>
     <script src="~/scripts/Terminals.js"></script>
+}
+@section header {
+    @Html.Partial("Header", Model)
 }
 <div class="panel panel-default">
     <div class="panel-heading">查询条件</div>
