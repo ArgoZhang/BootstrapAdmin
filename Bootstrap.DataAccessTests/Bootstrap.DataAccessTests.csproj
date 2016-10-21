@@ -36,6 +36,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Longbow.V4, Version=4.0.0.0, Culture=neutral, PublicKeyToken=c20f2177a7066899, processorArchitecture=MSIL" />
     <Reference Include="System" />
   </ItemGroup>
   <Choose>
@@ -59,6 +60,9 @@
       <Project>{AF16CA71-B8C6-4F51-B38C-0C0300FDEBD7}</Project>
       <Name>Bootstrap.DataAccess</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
