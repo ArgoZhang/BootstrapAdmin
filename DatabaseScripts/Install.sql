@@ -1,147 +1,144 @@
 USE [master]
 GO
 
-Create database [ExtendedChecker]
+Create database [BootstrapAdmin]
 GO
 
-ALTER DATABASE [ExtendedChecker] SET RECOVERY SIMPLE
+ALTER DATABASE [BootstrapAdmin] SET RECOVERY SIMPLE
 GO
 
-ALTER DATABASE [ExtendedChecker] SET AUTO_SHRINK ON 
+ALTER DATABASE [BootstrapAdmin] SET AUTO_SHRINK ON 
 GO
 
-USE [ExtendedChecker]
+USE [BootstrapAdmin]
 GO
 
-/****** Object:  Table [dbo].[Rules]    Script Date: 9/1/2016 7:44:10 PM ******/
+/****** Object:  Table [dbo].[Users]    Script Date: 10/22/2016 09:44:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[Terminals](
+CREATE TABLE [dbo].[Users](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
-	[Name] [nvarchar](50) NOT NULL,
-	[ClientIP] [varchar](15) NOT NULL,
-	[ClientPort] [int] NOT NULL,
-	[ServerIP] [varchar](15) NOT NULL,
-	[ServerPort] [int] NOT NULL,
-	[DeviceIP] [varchar](15) NOT NULL,
-	[DevicePort] [int] NOT NULL,
-	[DatabaseName] [varchar](50) NULL,
-	[DatabaseUserName] [varchar](50) NULL,
-	[DatabasePassword] [varchar](50) NULL,
-	[Status] [bit] NOT NULL,
- CONSTRAINT [PK_Terminal] PRIMARY KEY CLUSTERED 
+	[UserName] [nvarchar](50) NULL,
+	[Password] [nvarchar](50) NULL,
+	[PassSalt] [nvarchar](50) NULL,
+ CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-SET ANSI_PADDING OFF
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ID' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Users', @level2type=N'COLUMN',@level2name=N'ID'
 GO
-/****** Object:  Table [dbo].[TerminalRuleConfig]    Script Date: 09/06/2016 14:31:10 ******/
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'用户名' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Users', @level2type=N'COLUMN',@level2name=N'UserName'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'密码' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Users', @level2type=N'COLUMN',@level2name=N'Password'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'验证' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Users', @level2type=N'COLUMN',@level2name=N'PassSalt'
+GO
+/****** Object:  Table [dbo].[UserRole]    Script Date: 10/22/2016 09:44:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[TerminalRuleConfig](
-	[TerminalID] [int] NOT NULL,
-	[RuleID] [int] NOT NULL
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[ScanInventory]    Script Date: 09/06/2016 14:31:10 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[ScanInventory](
+CREATE TABLE [dbo].[UserRole](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
-	[BarCode] [varchar](32) NOT NULL,
-	[TerminalID] [int] NOT NULL,
-	[ScanTime] [datetime] NOT NULL,
-	[BarCodeType] [int] NOT NULL,
- CONSTRAINT [PK_ScanInventory] PRIMARY KEY CLUSTERED 
+	[UserID] [int] NOT NULL,
+	[RoleID] [int] NOT NULL,
+ CONSTRAINT [PK_UserRole] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-SET ANSI_PADDING OFF
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ID' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'UserRole', @level2type=N'COLUMN',@level2name=N'ID'
 GO
-/****** Object:  Table [dbo].[Rules]    Script Date: 09/06/2016 14:31:10 ******/
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'用户ID' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'UserRole', @level2type=N'COLUMN',@level2name=N'UserID'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'角色ID' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'UserRole', @level2type=N'COLUMN',@level2name=N'RoleID'
+GO
+/****** Object:  Table [dbo].[UserGroup]    Script Date: 10/22/2016 09:44:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[Rules](
+CREATE TABLE [dbo].[UserGroup](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
-	[Name] [nvarchar](200) NOT NULL,
-	[Memo] [nvarchar](2000) NULL,
-	[Interval] [int] NOT NULL,
-	[Enabled] [bit] NOT NULL,
- CONSTRAINT [PK_Rules] PRIMARY KEY CLUSTERED 
+	[UserID] [int] NOT NULL,
+	[GroupID] [int] NOT NULL,
+ CONSTRAINT [PK_UserGroup] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Default [DF_Rules_Enabled]    Script Date: 09/06/2016 14:31:10 ******/
-ALTER TABLE [dbo].[Rules] ADD  CONSTRAINT [DF_Rules_Enabled]  DEFAULT ((1)) FOR [Enabled]
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ID' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'UserGroup', @level2type=N'COLUMN',@level2name=N'ID'
 GO
-/****** Object:  Default [DF_Terminals_Satus]    Script Date: 09/06/2016 14:31:10 ******/
-ALTER TABLE [dbo].[Terminals] ADD  CONSTRAINT [DF_Terminals_Satus]  DEFAULT ((0)) FOR [Status]
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'用户ID' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'UserGroup', @level2type=N'COLUMN',@level2name=N'UserID'
 GO
-
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'部门ID' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'UserGroup', @level2type=N'COLUMN',@level2name=N'GroupID'
+GO
+/****** Object:  Table [dbo].[Roles]    Script Date: 10/22/2016 09:44:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
--- =============================================
--- Author:		Argo Zhang
--- Create date: 2016-09-06
--- Description:	
--- =============================================
-CREATE PROCEDURE Proc_StartTerminal
-	-- Add the parameters for the stored procedure here
-	@tId int, 
-	@rId int
-	WITH ENCRYPTION
-AS
-BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	SET NOCOUNT ON;
-	SET XACT_ABORT ON;
-    -- Insert statements for procedure here
-	delete from TerminalRuleConfig where TerminalID = @tId;
-	insert into TerminalRuleConfig (TerminalID, RuleID) values (@tId, @rId);
-	update Terminals set Status = 1 where Id = @tId;
-END
+CREATE TABLE [dbo].[Roles](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[RoleName] [nvarchar](50) NULL,
+	[Description] [nvarchar](500) NULL,
+ CONSTRAINT [PK_Roles] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
 GO
-
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ID' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Roles', @level2type=N'COLUMN',@level2name=N'ID'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'角色名称' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Roles', @level2type=N'COLUMN',@level2name=N'RoleName'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'描述' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Roles', @level2type=N'COLUMN',@level2name=N'Description'
+GO
+/****** Object:  Table [dbo].[RoleGroup]    Script Date: 10/22/2016 09:44:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
--- =============================================
--- Author:		Argo Zhang
--- Create date: 2016-09-06
--- Description:	
--- =============================================
-CREATE PROCEDURE Proc_StopTerminal
-	-- Add the parameters for the stored procedure here
-	@tId int
-	WITH ENCRYPTION
-AS
-BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	SET NOCOUNT ON;
-	SET XACT_ABORT ON;
-    -- Insert statements for procedure here
-	delete from TerminalRuleConfig where TerminalID = @tId;
-	update Terminals set Status = 0 where Id = @tId;
-END
+CREATE TABLE [dbo].[RoleGroup](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[RoleID] [int] NOT NULL,
+	[GroupID] [int] NOT NULL,
+ CONSTRAINT [PK_RoleGroup] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ID' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'RoleGroup', @level2type=N'COLUMN',@level2name=N'ID'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'角色ID' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'RoleGroup', @level2type=N'COLUMN',@level2name=N'RoleID'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'部门ID' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'RoleGroup', @level2type=N'COLUMN',@level2name=N'GroupID'
+GO
+/****** Object:  Table [dbo].[Groups]    Script Date: 10/22/2016 09:44:03 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Groups](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[GroupName] [nvarchar](50) NULL,
+	[Description] [nvarchar](500) NULL,
+ CONSTRAINT [PK_Groups] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ID' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Groups', @level2type=N'COLUMN',@level2name=N'ID'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'部门名称' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Groups', @level2type=N'COLUMN',@level2name=N'GroupName'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'描述' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Groups', @level2type=N'COLUMN',@level2name=N'Description'
 GO

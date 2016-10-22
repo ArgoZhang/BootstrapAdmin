@@ -1,7 +1,7 @@
 ﻿(function ($) {
-    ExtenderChecker = function (options) {
+    BootstrapAdmin = function (options) {
         var that = this;
-        this.options = $.extend({}, ExtenderChecker.settings, options);
+        this.options = $.extend({}, BootstrapAdmin.settings, options);
 
         this.dataEntity = options.dataEntity;
         if (!(this.dataEntity instanceof DataEntity) && window.console) {
@@ -14,7 +14,7 @@
             source.data('click', name);
             $("#" + this.options.click[name]).click(function () {
                 var method = $(this).data('click');
-                ExtenderChecker.prototype[method].apply(that);
+                BootstrapAdmin.prototype[method].apply(that);
             });
         }
 
@@ -30,11 +30,11 @@
         }
     };
 
-    ExtenderChecker.VERSION = "1.0";
-    ExtenderChecker.Author = "Argo Zhang";
-    ExtenderChecker.Email = "argo@163.com";
+    BootstrapAdmin.VERSION = "1.0";
+    BootstrapAdmin.Author = "Argo Zhang";
+    BootstrapAdmin.Email = "argo@163.com";
 
-    ExtenderChecker.settings = {
+    BootstrapAdmin.settings = {
         url: undefined,
         bootstrapTable: 'table',
         validateForm: 'dataForm',
@@ -42,12 +42,12 @@
         click: {}
     }
 
-    ExtenderChecker.idFormatter = function (value, row, index) {
+    BootstrapAdmin.idFormatter = function (value, row, index) {
         return "<a class='edit' href='javascript:void(0)'>" + value + "</a>";
     };
 
-    ExtenderChecker.prototype = {
-        constructor: ExtenderChecker,
+    BootstrapAdmin.prototype = {
+        constructor: BootstrapAdmin,
 
         query: function () {
             if (this.options.bootstrapTable.constructor === String) $(this.options.bootstrapTable).bootstrapTable('refresh');

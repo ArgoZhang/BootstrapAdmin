@@ -38,9 +38,7 @@ namespace Bootstrap.DataAccess
                             Users.Add(new User()
                             {
                                 ID = (int)reader[0],
-                                UserName = (string)reader[1],
-                                Password = (string)reader[2],
-                                PassSalt = (string)reader[3],
+                                UserName = (string)reader[1]
                             });
                         }
                     }
@@ -54,15 +52,25 @@ namespace Bootstrap.DataAccess
         /// 删除用户
         /// </summary>
         /// <param name="ids"></param>
-        public static void DeleteUser(string ids)
+        public static bool DeleteUser(string ids)
         {
-            if (string.IsNullOrEmpty(ids) || ids.Contains("'")) return;
-            string sql = string.Format(CultureInfo.InvariantCulture, "Delete from Users where ID in ({0})", ids);
-            using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
+            bool ret = false;
+            if (string.IsNullOrEmpty(ids) || ids.Contains("'")) return ret;
+            try
             {
-                DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
+                string sql = string.Format(CultureInfo.InvariantCulture, "Delete from Users where ID in ({0})", ids);
+                using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
+                {
+                    DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
+                }
                 ClearCache();
+                ret = true;
             }
+            catch (Exception ex)
+            {
+                ExceptionManager.Publish(ex);
+            }
+            return ret;
         }
         /// <summary>
         /// 保存新建/更新的用户信息
@@ -71,11 +79,11 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static bool SaveUser(User p)
         {
+            //TODO: 这里这样处理明显不行，需要用非对称加密算法进行混淆加密后存储到数据库中
             if (p == null) throw new ArgumentNullException("p");
             bool ret = false;
             if (p.UserName.Length > 50) p.UserName.Substring(0, 50);
             if (p.Password.Length > 50) p.Password.Substring(0, 50);
-            if (p.PassSalt.Length > 50) p.PassSalt.Substring(0, 50);
             string sql = p.ID == 0 ?
                 "Insert Into Users (UserName, Password, PassSalt) Values (@UserName, @Password, @PassSalt)" :
                 "Update Users set UserName = @UserName, Password = @Password, PassSalt = @PassSalt where ID = @ID";
@@ -86,7 +94,7 @@ namespace Bootstrap.DataAccess
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ID", p.ID, ParameterDirection.Input));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserName", p.UserName, ParameterDirection.Input));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Password", p.Password, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@PassSalt", p.PassSalt, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@PassSalt", DBNull.Value, ParameterDirection.Input));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
                 ret = true;

@@ -5,7 +5,6 @@
 }
 @section Javascript {
     <script src="~/scripts/Users.js"></script>
-    <script src="~/scripts/Terminals.js"></script>
 }
 @section header {
     @Html.Partial("Header", Model)
@@ -16,9 +15,9 @@
 @section query {
     <form class="form-horizontal" role="form">
         <div class="form-group terminal-form-group">
-            <label class="control-label col-lg-1" for="txt_search_name">用户名</label>
+            <label class="control-label col-lg-1" for="txt_search_name">用户名称</label>
             <div class="col-lg-4">
-                <input type="text" class="form-control" id="txt_username" />
+                <input type="text" class="form-control" id="txt_search_name" />
             </div>
             <div class="col-lg-2">
                 <button type="button" id="btn_query" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询</button>
@@ -35,58 +34,22 @@
         <div class="modal-body">
             <form class="form-horizontal terminal-form-group" id="dataForm" name="dataForm" role="form">
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="terminalName">输入口名称</label>
+                    <label class="control-label col-sm-2" for="userName">用户名称</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" id="terminalName" name="terminalName" size="20" maxlength="50" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-2" for="clientIP">工控机IP</label>
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control" id="clientIP" name="clientIP" size="20" maxlength="15" />
-                    </div>
-                    <label class="control-label col-sm-2" for="clientPort">工控机Port</label>
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control" id="clientPort" name="clientPort" size="20" maxlength="5" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-2" for="serverIP">服务器IP</label>
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control" id="serverIP" name="serverIP" size="20" maxlength="15" />
-                    </div>
-                    <label class="control-label col-sm-2" for="serverPort">服务器Port</label>
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control" id="serverPort" name="serverPort" size="20" maxlength="5" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-2" for="deviceIP">比对设备IP</label>
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control" id="deviceIP" name="deviceIP" size="20" maxlength="15" />
-                    </div>
-                    <label class="control-label col-sm-2" for="devicePort">比对设备Port</label>
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control" id="devicePort" name="devicePort" size="20" maxlength="5" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-2" for="databaseName">数据库名称</label>
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control" id="databaseName" name="databaseName" maxlength="50" />
+                        <input type="text" class="form-control" id="userName" name="userName" maxlength="50" />
                     </div>
                     <div class="col-sm-1" style="display:none;">
-                        <input type="text" class="form-control" id="terminalId" />
+                        <input type="text" class="form-control" id="userID" name="userID" />
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="databaseUserName">数据库用户名</label>
+                    <label class="control-label col-sm-2" for="password">登录密码</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" id="databaseUserName" name="databaseUserName" size="20" maxlength="50" />
+                        <input type="text" class="form-control" id="password" name="password" maxlength="15" />
                     </div>
-                    <label class="control-label col-sm-2" for="databasePassword">数据库密码</label>
+                    <label class="control-label col-sm-2" for="confirm">确认密码</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" id="databasePassword" name="databasePassword" size="20" maxlength="50" />
+                        <input type="text" class="form-control" id="confirm" name="confirm" maxlength="5" />
                     </div>
                 </div>
             </form>

@@ -52,13 +52,9 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="TerminalHelperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-
     <Compile Include="GroupHelperTests.cs" />
-
     <Compile Include="UserHelperTests.cs" />
-
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Bootstrap.DataAccess\Bootstrap.DataAccess.csproj">

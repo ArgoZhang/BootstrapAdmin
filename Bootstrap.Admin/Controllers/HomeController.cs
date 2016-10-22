@@ -16,26 +16,7 @@ namespace Bootstrap.Admin.Controllers
         public ActionResult Index()
         {
             var v = new HeaderBarModel();
-            return View(v);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult Rules()
-        {
-            var v = new HeaderBarModel();
-            v.BreadcrumbName = "规则设置";
-            return View(v);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult Terminals()
-        {
-            var v = new HeaderBarModel();
-            v.BreadcrumbName = "输入口设置";
+            v.ShowMenu = "hide";
             return View(v);
         }
         /// <summary>

@@ -4,27 +4,23 @@ using System.Linq;
 
 namespace Bootstrap.Admin.Models
 {
-    public class TerminalsModel
+    public class UserEntity
     {
         public int total { get; private set; }
 
-        public IEnumerable<Terminal> rows { get; private set; }
+        public IEnumerable<User> rows { get; private set; }
 
-        public void RetrieveTerminals(TerminalsPageOption option)
+        public void RetrieveUsers(TerminalsPageOption option)
         {
             // int limit, int offset, string name, string price, string sort, string order
-            var data = TerminalHelper.RetrieveTerminals(string.Empty);
+            var data = UserHelper.RetrieveUsers(string.Empty);
             if (!string.IsNullOrEmpty(option.Name))
             {
-                data = data.Where(t => t.Name.Contains(option.Name));
-            }
-            if (!string.IsNullOrEmpty(option.Ip))
-            {
-                data = data.Where(t => t.ServerIP.Contains(option.Ip));
+                data = data.Where(t => t.UserName.Contains(option.Name));
             }
             total = data.Count();
             // TODO: 通过option.Sort属性判断对那列进行排序，现在统一对名称列排序
-            data = option.Order == "asc" ? data.OrderBy(t => t.Name) : data.OrderByDescending(t => t.Name);
+            data = option.Order == "asc" ? data.OrderBy(t => t.UserName) : data.OrderByDescending(t => t.UserName);
             rows = data.Skip(option.Offset).Take(option.Limit);
         }
     }
@@ -34,7 +30,5 @@ namespace Bootstrap.Admin.Models
     public class TerminalsPageOption : PaginationOption
     {
         public string Name { get; set; }
-
-        public string Ip { get; set; }
     }
 }

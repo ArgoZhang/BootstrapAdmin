@@ -18,22 +18,15 @@ namespace Bootstrap.DataAccess.Tests
         [TestMethod]
         public void DeleteUserTest()
         {
-            string ids = "2";
-            try
-            {
-                UserHelper.DeleteUser(ids);
-                Assert.IsTrue(true);
-            }
-            catch
-            {
-                Assert.IsTrue(false,"带有参数的UserHelper.DeleteUserTest方法调用失败，请检查数据库连接或者数据库SQL语句");
-            }
-            
+            //TODO: Delete方法没有返回值，自己想想做一个返回值即可
+            Assert.IsTrue(UserHelper.DeleteUser("1,2"), "带有参数的UserHelper.DeleteUserTest方法调用失败，请检查数据库连接或者数据库SQL语句");
+            Assert.IsFalse(UserHelper.DeleteUser(string.Empty), "参数为空字符串的UserHelper.DeleteUserTest方法调用失败，请检查数据库连接或者数据库SQL语句");
         }
 
         [TestMethod]
         public void SaveUserTest()
         {
+            //TODO: 两个提示一模一样完全不知道哪里出了问题，本单元测试未通过
             User users = new User();
             users.ID = 0;
             users.UserName = "liqi";
@@ -50,6 +43,5 @@ namespace Bootstrap.DataAccess.Tests
             result = UserHelper.SaveUser(users1);
             Assert.IsTrue(result == true, "带有参数的UserHelper.SaveUser方法中更新用户信息失败，请检查数据库连接或者数据库SQL语句");
         }
-
     }
 }

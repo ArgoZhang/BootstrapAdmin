@@ -1,38 +1,55 @@
 ﻿using Bootstrap.Admin.Models;
+using Bootstrap.DataAccess;
 using System.Web.Http;
+using System.Linq;
 
 namespace Bootstrap.Admin.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class UsersController : ApiController
     {
-        // GET api/<controller>
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         [HttpGet]
-        public UserModel Get()
+        public UserEntity Get([FromUri]TerminalsPageOption value)
         {
-            return new UserModel()
-            {
-            };
-        }
+            var ret = new UserEntity();
+            ret.RetrieveUsers(value);
+            return ret;
 
-        // GET api/<controller>/5
-        public string Get(int id)
-        {
-            return "value";
         }
-
-        // POST api/<controller>
-        public void Post([FromBody]string value)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public User Get(int id)
         {
+            return UserHelper.RetrieveUsers().FirstOrDefault(t => t.ID == id);
         }
-
-        // PUT api/<controller>/5
-        public void Put(int id, [FromBody]string value)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        [HttpPost]
+        public bool Post([FromBody]User value)
         {
+            return UserHelper.SaveUser(value);
         }
-
-        // DELETE api/<controller>/5
-        public void Delete(int id)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        [HttpDelete]
+        public bool Delete([FromBody]string value)
         {
+            return UserHelper.DeleteUser(value);
         }
     }
 }

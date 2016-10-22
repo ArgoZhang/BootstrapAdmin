@@ -7,10 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bootstrap.DataAccess", "Boo
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sql", "sql", "{87319AF5-7C40-4362-B67C-35F9DD737DB4}"
 	ProjectSection(SolutionItems) = preProject
-		DatabaseScripts\ExtendedChecker.sql = DatabaseScripts\ExtendedChecker.sql
 		DatabaseScripts\Install.sql = DatabaseScripts\Install.sql
-		DatabaseScripts\Proc_StartTerminal.sql = DatabaseScripts\Proc_StartTerminal.sql
-		DatabaseScripts\Proc_StopTerminal.sql = DatabaseScripts\Proc_StopTerminal.sql
 		DatabaseScripts\Readme.txt = DatabaseScripts\Readme.txt
 	EndProjectSection
 EndProject

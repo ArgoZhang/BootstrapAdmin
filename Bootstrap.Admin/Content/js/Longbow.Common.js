@@ -1,6 +1,4 @@
-﻿/// <reference path="jquery-1.10.2.js" />
-
-(function ($) {
+﻿(function ($) {
     // 增加Array扩展
     if (!$.isFunction(Array.prototype.filter)) {
         Array.prototype.filter = function (callback, thisObject) {
@@ -92,6 +90,32 @@
                 });
             });
             that.animate({ marginTop: "+=" + getHeight() });
+        }
+    });
+
+    $.fn.extend({
+        autoValidate: function (options) {
+            // validate
+            $("#dataForm").validate({
+                ignore: "ignore",
+                rules: $.extend({}, options),
+                unhighlight: function (element, errorClass, validClass) {
+                    $.validator.defaults.unhighlight(element, errorClass, validClass);
+                    $(element).popover('destroy');
+                },
+                errorPlacement: function (label, element) {
+                    $(element).popover('destroy');
+                    $(element).popover({
+                        animation: true,
+                        delay: { "show": 100, "hide": 100 },
+                        container: 'form',
+                        trigger: 'manual',
+                        content: $(label).text(),
+                        placement: 'auto'
+                    });
+                    $(element).popover('show');
+                }
+            });
         }
     });
 })(jQuery);

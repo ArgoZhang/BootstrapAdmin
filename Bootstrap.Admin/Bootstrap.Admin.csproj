@@ -148,7 +148,7 @@
     <Content Include="Content\js\messages_zh.js" />
     <Content Include="Content\js\messages_zh.min.js" />
     <Content Include="Scripts\Login.js" />
-    <Content Include="Scripts\Terminals.js" />
+    <Content Include="Scripts\Users.js" />
     <Content Include="Content\js\jquery-1.10.2.js" />
     <Content Include="Content\js\jquery-1.10.2.min.js" />
     <Content Include="Content\js\sweetalert.js" />
@@ -172,8 +172,6 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\RulesController.cs" />
-    <Compile Include="Controllers\TerminalsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -182,15 +180,12 @@
     <Compile Include="Models\ModelBase.cs" />
     <Compile Include="Models\NavigatorBarModel.cs" />
     <Compile Include="Models\PaginationOption.cs" />
-    <Compile Include="Models\TerminalsModel.cs" />
-    <Compile Include="Models\UserModel.cs" />
+    <Compile Include="Models\UserEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
     <Content Include="packages.config" />
-    <Content Include="Views\Home\Terminals.cshtml" />
-    <Content Include="Views\Home\Rules.cshtml" />
     <Content Include="Content\fonts\fontawesome-webfont.ttf" />
     <Content Include="Content\fonts\fontawesome-webfont.woff" />
     <Content Include="Views\Shared\_Fix.cshtml" />
