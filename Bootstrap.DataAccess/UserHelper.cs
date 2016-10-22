@@ -10,6 +10,9 @@ using System.Linq;
 
 namespace Bootstrap.DataAccess
 {
+    /// <summary>
+    /// 用户表相关操作类
+    /// </summary>
     public static class UserHelper
     {
         private const string UserDataKey = "UserData-CodeUserHelper";
@@ -47,7 +50,6 @@ namespace Bootstrap.DataAccess
             }, CacheSection.RetrieveDescByKey(UserDataKey));
             return string.IsNullOrEmpty(tId) ? ret : ret.Where(t => tId.Equals(t.ID.ToString(), StringComparison.OrdinalIgnoreCase));
         }
-
         /// <summary>
         /// 删除用户
         /// </summary>
@@ -62,7 +64,6 @@ namespace Bootstrap.DataAccess
                 ClearCache();
             }
         }
-
         /// <summary>
         /// 保存新建/更新的用户信息
         /// </summary>
@@ -97,12 +98,10 @@ namespace Bootstrap.DataAccess
             }
             return ret;
         }
-
-
         // 更新缓存
         private static void ClearCache()
         {
-            CacheManager.Clear(key => key.Contains("TerminalData-"));
+            CacheManager.Clear(key => key == UserDataKey);
         }
     }
 }

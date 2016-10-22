@@ -1,5 +1,4 @@
-﻿
-namespace Bootstrap.DataAccess
+﻿namespace Bootstrap.DataAccess
 {
     /// <summary>
     /// author:liuchun

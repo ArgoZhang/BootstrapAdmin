@@ -14,11 +14,9 @@ namespace Bootstrap.DataAccess
     /// author:liuchun
     /// date:2016.10.22
     /// </summary>
-    /// 
     public static class GroupHelper
     {
         private const string GroupDataKey = "GroupData-CodeGroupHelper";
-
         /// <summary>
         /// 查询所有群组信息
         /// </summary>
@@ -26,7 +24,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<Group> RetrieveGroups(string tId = null)
         {
-            string sql = "select t.* from Groups t";
+            string sql = "select * from Groups";
             var ret = CacheManager.GetOrAdd(GroupDataKey, CacheSection.RetrieveIntervalByKey(GroupDataKey), key =>
             {
                 List<Group> Groups = new List<Group>();
@@ -51,8 +49,6 @@ namespace Bootstrap.DataAccess
             }, CacheSection.RetrieveDescByKey(GroupDataKey));
             return string.IsNullOrEmpty(tId) ? ret : ret.Where(t => tId.Equals(t.ID.ToString(), StringComparison.OrdinalIgnoreCase));
         }
-
-
         /// <summary>
         /// 删除群组信息
         /// </summary>
@@ -67,7 +63,6 @@ namespace Bootstrap.DataAccess
                 ClearCache();
             }
         }
-
         /// <summary>
         /// 保存新建/更新的群组信息
         /// </summary>
@@ -100,14 +95,11 @@ namespace Bootstrap.DataAccess
             }
             return ret;
         }
-
         // 更新缓存
         private static void ClearCache()
         {
-            CacheManager.Clear(key => key.Contains("GroupData-"));
+            CacheManager.Clear(key => key == GroupDataKey);
         }
-
-
     }
 }
 

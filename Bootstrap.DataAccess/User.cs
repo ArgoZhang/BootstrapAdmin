@@ -1,5 +1,8 @@
 ﻿namespace Bootstrap.DataAccess
 {
+    /// <summary>
+    /// 用户表实体类
+    /// </summary>
     public class User
     {
         /// <summary>
