@@ -1,4 +1,4 @@
-﻿USE [master]
+USE [master]
 GO
 
 Create database [BootstrapAdmin]
@@ -36,7 +36,7 @@ EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'密码' , @lev
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'验证' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Users', @level2type=N'COLUMN',@level2name=N'PassSalt'
 GO
-/****** Object:  Table [dbo].[UserRole]    Script Date: 10/23/2016 23:27:32 ******/
+/****** Object:  Table [dbo].[UserRole]    Script Date: 10/22/2016 09:44:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -57,7 +57,7 @@ EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'用户ID' , @l
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'角色ID' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'UserRole', @level2type=N'COLUMN',@level2name=N'RoleID'
 GO
-/****** Object:  Table [dbo].[UserGroup]    Script Date: 10/23/2016 23:27:32 ******/
+/****** Object:  Table [dbo].[UserGroup]    Script Date: 10/22/2016 09:44:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -78,7 +78,7 @@ EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'用户ID' , @l
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'部门ID' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'UserGroup', @level2type=N'COLUMN',@level2name=N'GroupID'
 GO
-/****** Object:  Table [dbo].[Roles]    Script Date: 10/23/2016 23:27:32 ******/
+/****** Object:  Table [dbo].[Roles]    Script Date: 10/22/2016 09:44:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -99,7 +99,7 @@ EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'角色名称' 
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'描述' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Roles', @level2type=N'COLUMN',@level2name=N'Description'
 GO
-/****** Object:  Table [dbo].[RoleGroup]    Script Date: 10/23/2016 23:27:32 ******/
+/****** Object:  Table [dbo].[RoleGroup]    Script Date: 10/22/2016 09:44:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -120,30 +120,7 @@ EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'角色ID' , @l
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'部门ID' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'RoleGroup', @level2type=N'COLUMN',@level2name=N'GroupID'
 GO
-/****** Object:  Table [dbo].[Navigations]    Script Date: 10/23/2016 23:27:32 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[Navigations](
-	[ID] [int] IDENTITY(1,1) NOT NULL,
-	[ParentId] [int] NOT NULL,
-	[Name] [nvarchar](50) NOT NULL,
-	[Order] [int] NULL,
-	[Icon] [varchar](50) NOT NULL,
-	[Url] [varchar](50) NULL,
-	[Category] [varchar](50) NOT NULL,
- CONSTRAINT [PK_Navigations] PRIMARY KEY CLUSTERED 
-(
-	[ID] ASC
-)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-SET ANSI_PADDING OFF
-GO
-/****** Object:  Table [dbo].[Groups]    Script Date: 10/23/2016 23:27:32 ******/
+/****** Object:  Table [dbo].[Groups]    Script Date: 10/22/2016 09:44:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -164,6 +141,24 @@ EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'部门名称' 
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'描述' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Groups', @level2type=N'COLUMN',@level2name=N'Description'
 GO
-/****** Object:  Default [DF_Navigations_Category]    Script Date: 10/23/2016 23:27:32 ******/
+CREATE TABLE [dbo].[Navigations](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[ParentId] [int] NOT NULL,
+	[Name] [nvarchar](50) NOT NULL,
+	[Order] [int] NULL,
+	[Icon] [varchar](50) NOT NULL,
+	[Url] [varchar](50) NULL,
+	[Category] [varchar](50) NOT NULL,
+ CONSTRAINT [PK_Navigations] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
 ALTER TABLE [dbo].[Navigations] ADD  CONSTRAINT [DF_Navigations_Category]  DEFAULT ((0)) FOR [Category]
 GO

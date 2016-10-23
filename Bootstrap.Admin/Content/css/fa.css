@@ -1,0 +1,30 @@
+﻿.fontawesome-icon-list .fa-hover a {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+    color: #222;
+    line-height: 32px;
+    height: 32px;
+    padding-left: 10px;
+    border-radius: 4px;
+}
+
+    .fontawesome-icon-list .fa-hover a:hover {
+        background-color: #1d9d74;
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .fontawesome-icon-list .fa-hover a .fa {
+        width: 32px;
+        font-size: 14px;
+        display: inline-block;
+        text-align: right;
+        margin-right: 10px;
+    }
+
+    .fontawesome-icon-list .fa-hover a:hover .fa {
+        font-size: 28px;
+        vertical-align: -6px;
+    }

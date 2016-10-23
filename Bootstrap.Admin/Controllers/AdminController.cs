@@ -32,5 +32,14 @@ namespace Bootstrap.Admin.Controllers
             v.HomeUrl = "~/Admin";
             return View(v);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [AllowAnonymous]
+        public ActionResult FAIcon()
+        {
+            return View();
+        }
     }
 }
