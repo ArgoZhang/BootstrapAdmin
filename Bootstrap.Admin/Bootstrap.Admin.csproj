@@ -112,6 +112,7 @@
     <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\images\arrow-up.png" />
     <Content Include="Content\images\avatar1_small.jpg" />
+    <Content Include="Content\images\error.png" />
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
     <Content Include="Content\images\nav-expand.png" />
@@ -119,6 +120,7 @@
     <Content Include="Content\css\site.css" />
     <Content Include="Content\css\sweetalert.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\images\success.png" />
     <Content Include="Content\js\common-scripts.js" />
     <Content Include="Content\js\jquery.dcjqaccordion.2.7.js" />
     <Content Include="Content\js\jquery.nicescroll.min.js" />

@@ -416,11 +416,19 @@ a.logo {
 }
 
 input.error {
+    padding-right: 30px;
     border-color: red;
+    background-repeat: no-repeat;
+    background-image: url('../images/error.png');
+    background-position: right 8px center;
 }
 
 input.valid {
+    padding-right: 30px;
     border-color: green;
+    background-repeat: no-repeat;
+    background-image: url('../images/success.png');
+    background-position: right 8px center;
 }
 
 .container-fluid {
