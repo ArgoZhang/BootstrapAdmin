@@ -96,7 +96,7 @@
     $.fn.extend({
         autoValidate: function (options) {
             // validate
-            $("#dataForm").validate({
+            $(this).validate({
                 ignore: "ignore",
                 rules: $.extend({}, options),
                 unhighlight: function (element, errorClass, validClass) {

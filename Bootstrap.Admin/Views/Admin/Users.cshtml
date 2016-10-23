@@ -1,4 +1,4 @@
-﻿@model Bootstrap.Admin.Models.NavigatorBarModel
+﻿@model NavigatorBarModel
 @{
     ViewBag.Title = "用户管理";
     Layout = "~/Views/Shared/_Default.cshtml";
@@ -45,11 +45,11 @@
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="password">登录密码</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" id="password" name="password" maxlength="15" />
+                        <input type="password" class="form-control" id="password" name="password" maxlength="15" />
                     </div>
                     <label class="control-label col-sm-2" for="confirm">确认密码</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" id="confirm" name="confirm" maxlength="5" />
+                        <input type="password" class="form-control" id="confirm" name="confirm" maxlength="15" />
                     </div>
                 </div>
             </form>

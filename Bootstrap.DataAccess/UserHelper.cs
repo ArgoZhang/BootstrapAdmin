@@ -1,6 +1,7 @@
 ﻿using Longbow.Caching;
 using Longbow.Caching.Configuration;
 using Longbow.ExceptionManagement;
+using Longbow.Security;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -16,7 +17,6 @@ namespace Bootstrap.DataAccess
     public static class UserHelper
     {
         private const string UserDataKey = "UserData-CodeUserHelper";
-
         /// <summary>
         /// 查询所有用户
         /// </summary>
@@ -47,6 +47,36 @@ namespace Bootstrap.DataAccess
                 return Users;
             }, CacheSection.RetrieveDescByKey(UserDataKey));
             return string.IsNullOrEmpty(tId) ? ret : ret.Where(t => tId.Equals(t.ID.ToString(), StringComparison.OrdinalIgnoreCase));
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        private static User RetrieveUsersByName(string userName)
+        {
+            User user = null;
+            string sql = "select ID, UserName, [Password], PassSalt from Users where UserName = @UserName";
+            DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
+            try
+            {
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserName", userName, ParameterDirection.Input));
+                using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
+                {
+                    if (reader.Read())
+                    {
+                        user = new User()
+                        {
+                            ID = (int)reader[0],
+                            UserName = (string)reader[1],
+                            Password = (string)reader[2],
+                            PassSalt = (string)reader[3]
+                        };
+                    }
+                }
+            }
+            catch (Exception ex) { ExceptionManager.Publish(ex); }
+            return user;
         }
         /// <summary>
         /// 删除用户
@@ -84,6 +114,8 @@ namespace Bootstrap.DataAccess
             bool ret = false;
             if (p.UserName.Length > 50) p.UserName.Substring(0, 50);
             if (p.Password.Length > 50) p.Password.Substring(0, 50);
+            p.PassSalt = LgbCryptography.GenerateSalt();
+            p.Password = LgbCryptography.ComputeHash(p.Password, p.PassSalt);
             string sql = p.ID == 0 ?
                 "Insert Into Users (UserName, Password, PassSalt) Values (@UserName, @Password, @PassSalt)" :
                 "Update Users set UserName = @UserName, Password = @Password, PassSalt = @PassSalt where ID = @ID";
@@ -94,7 +126,7 @@ namespace Bootstrap.DataAccess
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ID", p.ID, ParameterDirection.Input));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserName", p.UserName, ParameterDirection.Input));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Password", p.Password, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@PassSalt", DBNull.Value, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@PassSalt", p.PassSalt, ParameterDirection.Input));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
                 ret = true;
@@ -105,6 +137,17 @@ namespace Bootstrap.DataAccess
                 ExceptionManager.Publish(ex);
             }
             return ret;
+        }
+        /// <summary>
+        /// 验证用户登陆账号与密码正确
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public static bool Authenticate(string userName, string password)
+        {
+            var user = RetrieveUsersByName(userName);
+            return user != null && user.Password == LgbCryptography.ComputeHash(password, user.PassSalt);
         }
         // 更新缓存
         private static void ClearCache()

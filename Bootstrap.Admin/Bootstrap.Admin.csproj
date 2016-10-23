@@ -179,6 +179,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\HeaderBarModel.cs" />
+    <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\ModelBase.cs" />
     <Compile Include="Models\NavigatorBarModel.cs" />
     <Compile Include="Models\PaginationOption.cs" />

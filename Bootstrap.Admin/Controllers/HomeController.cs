@@ -1,4 +1,6 @@
 ﻿using Bootstrap.Admin.Models;
+using Bootstrap.DataAccess;
+using Longbow.Security.Principal;
 using System.Web.Mvc;
 using System.Web.Security;
 
@@ -22,18 +24,21 @@ namespace Bootstrap.Admin.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="username"></param>
+        /// <param name="userName"></param>
         /// <param name="password"></param>
         /// <param name="remember"></param>
         /// <returns></returns>
         [AllowAnonymous]
-        public ActionResult Login(string username, string password, string remember)
+        public ActionResult Login(string userName, string password, string remember)
         {
-            if (username == "Argo")
+            //UNDONE: 本方法有严重安全漏洞，发布前需要修正
+            var model = new LoginModel();
+            model.UserName = userName;
+            if (LgbPrincipal.IsAdmin(userName) || UserHelper.Authenticate(userName, password))
             {
-                FormsAuthentication.RedirectFromLoginPage(username, false);
+                FormsAuthentication.RedirectFromLoginPage(userName, false);
             }
-            return View();
+            return View(model);
         }
         /// <summary>
         /// 
