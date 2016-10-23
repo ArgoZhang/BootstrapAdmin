@@ -39,6 +39,7 @@
     <DelaySign>true</DelaySign>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Bootstrap.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=c20f2177a7066899, processorArchitecture=MSIL" />
     <Reference Include="Longbow, Version=3.0.0.0, Culture=neutral, PublicKeyToken=c20f2177a7066899, processorArchitecture=MSIL" />
     <Reference Include="Longbow.Data, Version=3.0.0.0, Culture=neutral, PublicKeyToken=c20f2177a7066899, processorArchitecture=MSIL" />
     <Reference Include="Longbow.ExceptionManagement, Version=3.0.0.0, Culture=neutral, PublicKeyToken=c20f2177a7066899, processorArchitecture=MSIL" />
@@ -56,13 +57,32 @@
     <Compile Include="..\bldver.cs">
       <Link>bldver.cs</Link>
     </Compile>
+    <Compile Include="CacheCleanUtility.cs" />
     <Compile Include="DBAccessManager.cs" />
+    <Compile Include="Dict.cs" />
+    <Compile Include="DictHelper.cs" />
+    <Compile Include="ExceptionHelper.cs" />
+    <Compile Include="Exceptions.cs" />
+    <Compile Include="Group.cs" />
+    <Compile Include="GroupHelper.cs" />
+    <Compile Include="Log.cs" />
+    <Compile Include="LogHelper.cs" />
     <Compile Include="Menu.cs" />
+    <Compile Include="MenuHelper.cs" />
+    <Compile Include="Message.cs" />
+    <Compile Include="MessageHelper.cs" />
+    <Compile Include="NotificationHelper.cs" />
+    <Compile Include="Notification.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Terminal.cs" />
-    <Compile Include="TerminalHelper.cs" />
+    <Compile Include="Role.cs" />
+    <Compile Include="RoleHelper.cs" />
+    <Compile Include="Task.cs" />
+    <Compile Include="TaskHelper.cs" />
+    <Compile Include="User.cs" />
+    <Compile Include="UserHelper.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Longbow.Utility.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

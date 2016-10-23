@@ -153,3 +153,6 @@ Dotfuscated/
 */UpdateServer/v*
 */UpdateServer/*.dll
 */UpdateServer/*.exe
+
+#uploader
+uploader/

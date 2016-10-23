@@ -1,0 +1,17 @@
+﻿@model NavigatorBarModel
+@{
+    ViewBag.Title = "客户端测试";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+@section css {
+    <style type="text/css">
+        label {
+            word-break: break-all;
+        }
+
+        .control-label {
+            width: 120px;
+        }
+    </style>
+}
+@Html.Partial("_Mobile")

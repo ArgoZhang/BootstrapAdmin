@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "无权访问页面";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section css {
+    <style>
+        body {
+            background: #8075c6;
+            color: #fff;
+        }
+
+        .error-wrapper {
+            text-align: center;
+            margin-top: 10%;
+        }
+
+            .error-wrapper .icon-500 {
+                background: url(content/images/error_icon.png) no-repeat;
+                width: 289px;
+                height: 274px;
+                display: inline-block;
+                margin-left: 55px;
+            }
+
+            .error-wrapper p {
+                padding-top: 15px;
+            }
+
+        a, a:hover, a:focus {
+            text-decoration: none;
+            outline: none;
+            font-size: 14px;
+            font-weight: 300;
+            color: #ffffff;
+        }
+    </style>
+}
+<section class="error-wrapper">
+    <i class="icon-500"></i>
+    <h1>访问网页被拒绝</h1>
+    <h2>您无权访问本页面，请联系网站管理员授权后在查看</h2>
+    <p class="page-500"><a href="~/Home/Logout" target="_top">返回登陆页</a></p>
+</section>

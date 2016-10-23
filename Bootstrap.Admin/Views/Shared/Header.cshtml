@@ -1,47 +1,115 @@
-﻿@model Bootstrap.Admin.Models.HeaderBarModel
-<!--header start-->
-<header class="header white-bg">
-    <div class="sidebar-toggle-box">
-        <div class="fa fa-bars tooltips" data-placement="right" data-original-title="展开/收起 导航条"></div>
-    </div>
-    <!--logo start-->
-    <a href="#" class="logo">后台管理系统</a>
-    <!--logo end-->
-    <div class="top-nav">
-        <!--search & user info start-->
-        <ul class="nav pull-right top-menu">
-            <li>
-                <input type="text" class="form-control search" placeholder="搜索">
-            </li>
-            <!-- user login dropdown start-->
+﻿@model HeaderBarModel
+<header class="header">
+    <a id="navbar" href="#" class="sidebar-toggle-box">
+        <i class="fa fa-bars"></i>
+        <span id="websiteTitle">@Model.Title</span>
+    </a>
+    @if (LgbPrincipal.IsAdmin(User))
+    {
+        <ul class="notify-row">
+            <!-- tasks start -->
             <li class="dropdown">
                 <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                    <img alt="" src="../content/images/logo6.jpg">
-                    <span class="username">@Model.UserName</span>
-                    <b class="caret"></b>
+                    <i class="fa fa-tasks"></i>
+                    <span id="msgHeaderTaskBadge" class="badge bg-success"></span>
                 </a>
-                <ul class="dropdown-menu extended logout">
-                    <div class="log-arrow-up"></div>
-                    <li><a href="#"><i class=" fa fa-suitcase"></i> 个人中心</a></li>
-                    <li><a href="#"><i class="fa fa-cog"></i> 设置</a></li>
-                    <li><a href="#"><i class="fa fa-bell-o"></i> 通知</a></li>
-                    <li><a href="~/Home"><i class="fa fa-key"></i> 注销</a></li>
+                <ul class="dropdown-menu tasks-bar">
+                    <li class="notify-arrow notify-arrow-green"></li>
+                    <li id="msgHeaderTaskContent">
+                        <p>您有 <span id="msgHeaderTask">0</span> 个未完成的任务</p>
+                    </li>
+                    <li>
+                        <a href="~/Admin/Tasks">查看所有任务</a>
+                    </li>
                 </ul>
             </li>
-            <!-- user login dropdown end -->
+            <!-- tasks end -->
+            <!-- message dropdown start-->
+            <li class="dropdown">
+                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                    <i class="fa fa-envelope"></i>
+                    <span id="msgHeaderMsgBadge" class="badge bg-important"></span>
+                </a>
+                <ul class="dropdown-menu inbox">
+                    <li class="notify-arrow notify-arrow-red"></li>
+                    <li id="msgHeaderMsgContent">
+                        <p>您有 <span id="msgHeaderMsg">0</span> 个未读的消息</p>
+                    </li>
+                    <li>
+                        <a href="~/Admin/Messages">查看所有消息</a>
+                    </li>
+                </ul>
+            </li>
+            <!-- message dropdown end -->
+            <!-- users dropdown start-->
+            <li class="dropdown">
+                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                    <i class="fa fa-user-plus"></i>
+                    <span id="msgHeaderUserBadge" class="badge bg-user"></span>
+                </a>
+                <ul class="dropdown-menu users">
+                    <li class="notify-arrow notify-arrow-user"></li>
+                    <li id="msgHeaderUserContent">
+                        <p>您有 <span id="msgHeaderUser">0</span> 条新用户通知</p>
+                    </li>
+                    <li>
+                        <a href="~/Admin/Notifications">查看所有通知</a>
+                    </li>
+                </ul>
+            </li>
+            <!-- users dropdown end -->
+            <!-- apps dropdown start-->
+            <li class="dropdown">
+                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                    <i class="fa fa-bug"></i>
+                    <span id="msgHeaderAppBadge" class="badge bg-warning"></span>
+                </a>
+                <ul class="dropdown-menu notification">
+                    <li class="notify-arrow notify-arrow-yellow"></li>
+                    <li id="msgHeaderAppContent">
+                        <p>您有 <span id="msgHeaderApp">0</span> 条程序异常通知</p>
+                    </li>
+                    <li>
+                        <a href="~/Admin/Exceptions">查看所有异常</a>
+                    </li>
+                </ul>
+            </li>
+            <!-- apps dropdown end -->
+            <!-- db dropdown start-->
+            <li class="dropdown">
+                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                    <i class="fa fa-database"></i>
+                    <span id="msgHeaderDbBadge" class="badge bg-db"></span>
+                </a>
+                <ul class="dropdown-menu dbs">
+                    <li class="notify-arrow notify-arrow-db"></li>
+                    <li id="msgHeaderDbContent">
+                        <p>您有 <span id="msgHeaderDb">0</span> 条数据库异常通知</p>
+                    </li>
+                    <li>
+                        <a href="~/Admin/Exceptions">查看所有异常</a>
+                    </li>
+                </ul>
+            </li>
+            <!-- db dropdown end -->
         </ul>
-        <!--search & user info end-->
-    </div>
-    <!--breadcrumbs start -->
-    <div class="lgbBreadcrumb">
-        <ul class="breadcrumb">
-            <li><a href="~/Admin/Index"><i class="fa fa-home"></i>首页</a></li>
-            @if (!string.IsNullOrEmpty(Model.BreadcrumbName))
-            {
-                <li>@Model.BreadcrumbName</li>
-            }
+    }
+    <div class="dropdown">
+        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+            <img id="headerIcon" alt="" src="@Url.Content(Model.Icon)">
+            <span id="userDisplayName" class="username">@Model.DisplayName</span>
+            <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+            <li></li>
+            <li><a href="~/Admin/Profiles"><i class=" fa fa-suitcase"></i>个人中心</a></li>
+            <li><a href="~/Admin/Index"><i class="fa fa-cog"></i>设置</a></li>
+            <li><a href="~/Admin/Notifications"><i class="fa fa-bell"></i>通知<span id="logoutNoti" class="badge"></span></a></li>
+            <li><a href="~/Home/Login"><i class="fa fa-key"></i>注销</a></li>
         </ul>
     </div>
-    <!--breadcrumbs end -->
+    <ul class="breadcrumb">
+        <li><a href="@Url.Content(Model.HomeUrl)"><i class="fa fa-home"></i>首页</a></li>
+        <li id="breadNav"></li>
+    </ul>
 </header>
-<!--header end-->

@@ -1,7 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
-  <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -43,8 +41,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Bootstrap.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=c20f2177a7066899, processorArchitecture=MSIL" />
+    <Reference Include="Bootstrap.Security.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=c20f2177a7066899, processorArchitecture=MSIL" />
+    <Reference Include="Longbow, Version=3.0.0.0, Culture=neutral, PublicKeyToken=c20f2177a7066899, processorArchitecture=MSIL" />
+    <Reference Include="Longbow.ExceptionManagement, Version=3.0.0.0, Culture=neutral, PublicKeyToken=c20f2177a7066899, processorArchitecture=MSIL" />
     <Reference Include="Longbow.V4, Version=4.0.0.0, Culture=neutral, PublicKeyToken=c20f2177a7066899, processorArchitecture=MSIL" />
+    <Reference Include="Longbow.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=c20f2177a7066899, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -85,9 +92,6 @@
     <Reference Include="System.Web.Mvc">
       <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System.Net.Http.Formatting">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
@@ -99,62 +103,139 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\css\admin.css" />
-    <Content Include="Content\css\blue.css" />
-    <Content Include="Content\css\fix.css" />
-    <Content Include="Content\css\font-awesome.css" />
-    <Content Include="Content\css\bootstrap-table.css" />
-    <Content Include="Content\css\bootstrap-table.min.css" />
-    <Content Include="Content\css\bootstrap-theme.css" />
-    <Content Include="Content\css\bootstrap-theme.min.css" />
-    <Content Include="Content\css\bootstrap.css" />
-    <Content Include="Content\css\bootstrap.min.css" />
-    <Content Include="Content\images\arrow-up.png" />
-    <Content Include="Content\images\avatar1_small.jpg" />
-    <Content Include="Content\images\glyphicons-halflings-white.png" />
-    <Content Include="Content\images\glyphicons-halflings.png" />
+    <Content Include="App_Data\ErrorLog\Readme.txt" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\api.css" />
+    <Content Include="Content\bootstrap-datetimepicker.css" />
+    <Content Include="Content\bootstrap-datetimepicker.min.css" />
+    <Content Include="Content\fileinput.css" />
+    <Content Include="Content\fileinput.min.css" />
+    <Content Include="Content\IE8.css" />
+    <Content Include="Content\images\bg2.jpg" />
+    <Content Include="Content\images\bg4.jpg" />
+    <Content Include="Content\images\bg3.png" />
+    <Content Include="Content\login-responsive.css" />
+    <Content Include="Content\nprogress.css" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\html\api.html" />
+    <Content Include="Content\images\error_icon.png" />
+    <Content Include="favicon.ico" />
+    <Content Include="Content\admin-responsive.css" />
+    <Content Include="Content\admin.css" />
+    <Content Include="Content\blue.css" />
+    <Content Include="Content\fa.css" />
+    <Content Include="Content\bootstrap-table.css" />
+    <Content Include="Content\bootstrap-table.min.css" />
+    <Content Include="Content\jquery.nestable.css" />
+    <Content Include="Content\lock.css" />
+    <Content Include="Content\login.css" />
+    <Content Include="Content\register.css" />
+    <Content Include="Content\tasks.css" />
+    <Content Include="Content\html\RegResult.html" />
+    <Content Include="Content\images\bg.jpg" />
+    <Content Include="Content\images\loading-sm.gif" />
+    <Content Include="Content\images\loading.gif" />
+    <Content Include="Content\images\lock-bg.jpg" />
+    <Content Include="Content\images\logo.jpg" />
+    <Content Include="Content\images\logo1.jpg" />
+    <Content Include="Content\images\logo2.jpg" />
+    <Content Include="Content\images\logo3.jpg" />
+    <Content Include="Content\images\logo4.jpg" />
+    <Content Include="Content\images\logo5.jpg" />
+    <Content Include="Content\images\logo6.jpg" />
+    <Content Include="Content\images\uploader\Admin.jpg" />
+    <Content Include="Content\images\uploader\default.jpg" />
+    <Content Include="Content\images\uploader\readme.txt" />
+    <Content Include="Content\site-responsive.css" />
+    <Content Include="Content\images\error.png" />
     <Content Include="Content\images\nav-expand.png" />
-    <Content Include="Content\images\search-icon.png" />
-    <Content Include="Content\css\site.css" />
-    <Content Include="Content\css\sweetalert.css" />
-    <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Content\js\common-scripts.js" />
-    <Content Include="Content\js\jquery.dcjqaccordion.2.7.js" />
-    <Content Include="Content\js\jquery.nicescroll.min.js" />
-    <Content Include="Content\js\jquery.scrollTo.js" />
-    <Content Include="Content\js\jquery.scrollTo.min.js" />
-    <Content Include="Content\js\longbow.dataentity.js" />
+    <Content Include="Content\site.css" />
+    <Content Include="Content\sweetalert.css" />
+    <Content Include="Content\images\success.png" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\css\bootstrap.min.css.map" />
-    <Content Include="Content\css\bootstrap.css.map" />
-    <Content Include="Content\css\bootstrap-theme.min.css.map" />
-    <Content Include="Content\css\bootstrap-theme.css.map" />
-    <Content Include="Content\js\additional-methods.js" />
-    <Content Include="Content\js\additional-methods.min.js" />
-    <Content Include="Content\js\bootstrap-table-zh-CN.js" />
-    <Content Include="Content\js\bootstrap-table-zh-CN.min.js" />
-    <Content Include="Content\js\bootstrap-table.js" />
-    <Content Include="Content\js\bootstrap-table.min.js" />
-    <Content Include="Content\js\bootstrap.js" />
-    <Content Include="Content\js\bootstrap.min.js" />
-    <Content Include="Content\js\jquery.validate.js" />
-    <Content Include="Content\js\jquery.validate.min.js" />
-    <Content Include="Content\js\Longbow.Common.js" />
-    <Content Include="Content\js\messages_zh.js" />
-    <Content Include="Content\js\messages_zh.min.js" />
+    <Content Include="Scripts\additional-methods.js" />
+    <Content Include="Scripts\additional-methods.min.js" />
+    <Content Include="Scripts\bootstrap-datetimepicker.js" />
+    <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
+    <Content Include="Scripts\bootstrap-datetimepicker.zh-CN.js" />
+    <Content Include="Scripts\bootstrap-table-zh-CN.js" />
+    <Content Include="Scripts\bootstrap-table-zh-CN.min.js" />
+    <Content Include="Scripts\bootstrap-table.js" />
+    <Content Include="Scripts\bootstrap-table.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\bootstrap3-typeahead.js" />
+    <Content Include="Scripts\bootstrap3-typeahead.min.js" />
+    <Content Include="Scripts\common-scripts.js" />
+    <Content Include="Scripts\Content.js" />
+    <Content Include="Scripts\Dicts.js" />
+    <Content Include="Scripts\Exceptions.js" />
+    <Content Include="Scripts\fileinput.js" />
+    <Content Include="Scripts\fileinput.min.js" />
+    <Content Include="Scripts\fileinput.zh.js" />
+    <Content Include="Scripts\framework.js" />
+    <Content Include="Scripts\Groups.js" />
+    <Content Include="Scripts\icon.js" />
+    <Content Include="Scripts\Profiles.js" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.1.1.js" />
+    <Content Include="Scripts\jquery-3.1.1.min.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.dcjqaccordion.2.7.js" />
+    <Content Include="Scripts\jquery.nestable.js" />
+    <Content Include="Scripts\jquery.nicescroll.min.js" />
+    <Content Include="Scripts\jquery.scrollTo.js" />
+    <Content Include="Scripts\jquery.scrollTo.min.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\lock.js" />
+    <Content Include="Scripts\log.js" />
     <Content Include="Scripts\Login.js" />
-    <Content Include="Scripts\Terminals.js" />
-    <Content Include="Content\js\jquery-1.10.2.js" />
-    <Content Include="Content\js\jquery-1.10.2.min.js" />
-    <Content Include="Content\js\sweetalert.js" />
-    <Content Include="Content\js\sweetalert.min.js" />
-    <None Include="Content\js\_references.js" />
-    <Content Include="Content\js\framework.js" />
-    <Content Include="Web.config" />
+    <Content Include="Scripts\Logs.js" />
+    <Content Include="Scripts\Longbow.Common.js" />
+    <Content Include="Scripts\longbow.dataentity.js" />
+    <Content Include="Scripts\Menus.js" />
+    <Content Include="Scripts\message.js" />
+    <Content Include="Scripts\messages_zh.js" />
+    <Content Include="Scripts\messages_zh.min.js" />
+    <Content Include="Scripts\noti.js" />
+    <Content Include="Scripts\nprogress.js" />
+    <Content Include="Scripts\Settings.js" />
+    <Content Include="Scripts\register.js" />
+    <Content Include="Scripts\Roles.js" />
+    <Content Include="Scripts\sweetalert.js" />
+    <Content Include="Scripts\sweetalert.min.js" />
+    <Content Include="Scripts\tasks.js" />
+    <Content Include="Scripts\apidoc.js" />
+    <Content Include="Scripts\Users.js" />
+    <Content Include="packages.config" />
+    <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.1.1.min.map" />
+    <Content Include="Views\Shared\Readme.txt" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
@@ -162,32 +243,46 @@
     <Compile Include="..\bldver.cs">
       <Link>bldver.cs</Link>
     </Compile>
+    <Compile Include="App_Start\DBPublisher.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\DictsController.cs" />
+    <Compile Include="Controllers\ExceptionsController.cs" />
+    <Compile Include="Controllers\GroupsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\RulesController.cs" />
-    <Compile Include="Controllers\TerminalsController.cs" />
+    <Compile Include="Controllers\ProfilesController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\LogsController.cs" />
+    <Compile Include="Controllers\MenusController.cs" />
+    <Compile Include="Controllers\MessagesController.cs" />
+    <Compile Include="Controllers\NotificationsController.cs" />
+    <Compile Include="Controllers\SettingsController.cs" />
+    <Compile Include="Controllers\RolesController.cs" />
+    <Compile Include="Controllers\TasksController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProfilesModel.cs" />
+    <Compile Include="Models\LockModel.cs" />
+    <Compile Include="Models\MessageCountModel.cs" />
+    <Compile Include="Models\QueryDictOption.cs" />
+    <Compile Include="Models\QueryExceptionOption.cs" />
+    <Compile Include="Models\QueryGroupOption.cs" />
+    <Compile Include="Models\QueryLogOption.cs" />
+    <Compile Include="Models\QueryMenuOption.cs" />
+    <Compile Include="Models\QueryRoleOption.cs" />
+    <Compile Include="Models\QueryUserOption.cs" />
     <Compile Include="Models\HeaderBarModel.cs" />
+    <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\ModelBase.cs" />
     <Compile Include="Models\NavigatorBarModel.cs" />
-    <Compile Include="Models\PaginationOption.cs" />
-    <Compile Include="Models\TerminalsModel.cs" />
-    <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
-    <Content Include="packages.config" />
-    <Content Include="Views\Home\Terminals.cshtml" />
-    <Content Include="Views\Home\Rules.cshtml" />
-    <Content Include="Content\fonts\fontawesome-webfont.ttf" />
-    <Content Include="Content\fonts\fontawesome-webfont.woff" />
-    <Content Include="Views\Shared\_Fix.cshtml" />
     <Content Include="Views\Shared\_Normal.cshtml" />
     <Content Include="Views\Shared\_Admin.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
@@ -197,6 +292,37 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Header.cshtml" />
     <Content Include="Views\Shared\Navigator.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Shared\UnAuthorized.cshtml" />
+    <Content Include="Views\Shared\AwesomeIcon.cshtml" />
+    <Content Include="Views\Admin\FAIcon.cshtml" />
+    <Content Include="Views\Admin\Groups.cshtml" />
+    <Content Include="Views\Admin\Roles.cshtml" />
+    <Content Include="Views\Admin\Menus.cshtml" />
+    <Content Include="Views\Admin\Dicts.cshtml" />
+    <Content Include="Views\Shared\RoleConfig.cshtml" />
+    <Content Include="Views\Shared\IconView.cshtml" />
+    <Content Include="Views\Shared\UserConfig.cshtml" />
+    <Content Include="Views\Shared\GroupConfig.cshtml" />
+    <Content Include="Views\Admin\Logs.cshtml" />
+    <Content Include="Views\Admin\Settings.cshtml" />
+    <Content Include="Views\Shared\Footer.cshtml" />
+    <Content Include="Views\Shared\MenuTree.cshtml" />
+    <Content Include="Views\Shared\NavigatorConfig.cshtml" />
+    <Content Include="Views\Shared\SubNavigation.cshtml" />
+    <Content Include="Views\Home\Lock.cshtml" />
+    <Content Include="Views\Home\Register.cshtml" />
+    <Content Include="Views\Admin\Notifications.cshtml" />
+    <Content Include="Views\Admin\Profiles.cshtml" />
+    <Content Include="Views\Admin\Exceptions.cshtml" />
+    <Content Include="Views\Admin\Messages.cshtml" />
+    <Content Include="Views\Admin\Tasks.cshtml" />
+    <Content Include="Views\Admin\Mobile.cshtml" />
+    <Content Include="Views\Shared\_Mobile.cshtml" />
+    <Content Include="Views\Home\Mobile.cshtml" />
+    <Content Include="Views\Shared\SubMenu.cshtml" />
+    <Content Include="Views\Admin\Api.cshtml" />
+    <Content Include="Views\Shared\_ButtonBarGroup.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -204,9 +330,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Bootstrap.DataAccess\Bootstrap.DataAccess.csproj">
       <Project>{af16ca71-b8c6-4f51-b38c-0c0300fdebd7}</Project>
@@ -247,13 +371,6 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
-  </Target>
   <PropertyGroup>
     <PostBuildEvent>cscript /Nologo $(SolutionDir)Scripts\Publish.vbs $(TargetDir) $(TargetName) $(TargetExt) $(SolutionDir) $(OutDir) $(ConfigurationName)</PostBuildEvent>
   </PropertyGroup>

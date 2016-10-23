@@ -1,12 +1,15 @@
 Option Explicit
 
 Dim fso, shell
-Dim targetDir, targetName, extName, keyFile, destDir, solutionDir, cmd, file, assemblyDir, outDir
+Dim targetDir, targetName, extName, keyFile, destDir, solutionDir, cmd, file, assemblyDir, outDir, batFile, signCmd
 Dim msg(), m
 
-keyFile = "D:\src\Longbow\Keys\Longbow.Utility.snk"
-destDir = "D:\src\Longbow\BootstrapAdmin\Publish\Web-App\WebConsole"
+keyFile = "..\Keys\Longbow.Utility.snk"
+destDir = "Publish\Web-App\WebConsole"
 assemblyDir = "C:\Longbow.Utility 2005\Release"
+batFile = "..\Scripts\LgbSign.bat"
+signCmd = "%ProgramFiles(x86)%\Microsoft SDKs\Windows\v7.0A\bin\sn.exe"
+
 Set shell = WScript.CreateObject("WScript.Shell")
 Set fso = CreateObject("Scripting.FileSystemObject")
 
@@ -24,6 +27,9 @@ End If
 
 If WScript.Arguments.Count > 3 Then
     solutionDir = WScript.Arguments(3)
+    keyFile = solutionDir & keyFile
+    destDir = solutionDir & destDir
+    batFile = solutionDir & batFile
 End If
 
 If WScript.Arguments.Count > 4 Then
@@ -39,7 +45,7 @@ If WScript.Arguments.Count > 5 Then
         If extName = ".dll" Then
             WScript.Echo WScript.Arguments(5) & " Mode... Quit copy BEFORE Re-signed assembly"
             WScript.Quit
-        End If
+     End If
     End If
 End If
 
@@ -58,13 +64,13 @@ End If
 CopyFile fso, targetDir, destdir & "Original\", targetName & extName, true
 
 ReDim msg(0)
-msg(0) = """D:\src\Longbow\Scripts\LgbSign.bat"" """ & destdir & targetName & extName & """"
+msg(0) = """" & batFile & """ """ & destdir & targetName & extName & """ """ & keyFile
 
 For Each file in fso.GetFolder(targetDir).Files
     If fso.GetExtensionName(file) = "dll" then
         If NOT CopyFile(fso, assemblyDir, destDir, file.Name, false) Then
             ReDim Preserve msg(UBound(msg)+1)
-            msg(UBound(msg)) = """D:\src\Longbow\Scripts\LgbSign.bat"" """ & destdir & file.Name & """"
+            msg(UBound(msg)) = """" & signCmd & """ """ & destdir & file.Name & """"
             CopyFile fso, solutionDir & GetFileName(file.Name) & "\" & outDir, destDir & "Original\", file.Name, true
             ReSignFile targetdir & file.Name
         Else
@@ -109,7 +115,10 @@ Function GetFileName(fileName)
 End Function
 
 Sub ReSignFile(fileName)
-    cmd = """%ProgramFiles(x86)%\Microsoft SDKs\Windows\v7.0A\bin\sn.exe"" -R """ & fileName & """ " & keyFile
+    If Not fso.FileExists(shell.ExpandEnvironmentStrings(signCmd)) Then
+        signCmd = "%ProgramFiles(x86)%\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.1 Tools\sn.exe"
+    End If
+    cmd = """"& signCmd &""" -R """ & fileName & """ " & keyFile
     shell.run cmd, 0, True
-    WScript.Echo "Assembly '" & fileName & "' successfully re-signed"
+    WScript.Echo "Assembly '" & fileName & "' successfully re-signed @_@"
 End Sub

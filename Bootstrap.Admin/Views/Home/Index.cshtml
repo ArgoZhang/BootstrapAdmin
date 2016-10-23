@@ -1,29 +1,17 @@
-﻿@{
-    ViewBag.Title = "系统登陆";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+﻿@model HeaderBarModel
+@{
+    ViewBag.Title = "首页";
+    Layout = "~/Views/Shared/_Normal.cshtml";
 }
 @section css {
-    <link href="~/Content/css/site.css" rel="stylesheet" />
+    <style>
+        .site-footer {
+            position: fixed;
+        }
+    </style>
 }
 @section javascript {
-    <script src="~/Scripts/Login.js"></script>
+    <script src="~/Scripts/Content.js"></script>
 }
-<div class="container">
-    <form class="form-signin" action="~/Home/Rules">
-        <h2 class="form-signin-heading">欢迎登陆本系统</h2>
-        <div class="login-wrap">
-            <div class="input-group">
-                <span class="glyphicon glyphicon-user input-group-addon"></span>
-                <input type="text" class="form-control" placeholder="用户名" autofocus />
-            </div>
-            <div class="input-group">
-                <span class="glyphicon glyphicon-lock input-group-addon"></span>
-                <input type="password" class="form-control" placeholder="密码" />
-            </div>
-            <div class="checkbox">
-                <input id="remember" type="checkbox" value="remember-me" /><label for="remember">记住我</label>
-            </div>
-            <button class="btn btn-lg btn-login btn-block" type="submit">登 陆</button>
-        </div>
-    </form>
+<div id="content" class="content-body welcome-bg">
 </div>

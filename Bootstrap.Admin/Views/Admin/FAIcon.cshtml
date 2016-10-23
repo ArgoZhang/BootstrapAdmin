@@ -1,0 +1,12 @@
+﻿@model NavigatorBarModel
+@{
+    ViewBag.Title = "图标集";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+@section css {
+    <link href="~/Content/fa.css" rel="stylesheet" />
+}
+@section javascript {
+    <script src="~/Scripts/icon.js"></script>
+}
+@Html.Partial("IconView")

@@ -7,9 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bootstrap.DataAccess", "Boo
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sql", "sql", "{87319AF5-7C40-4362-B67C-35F9DD737DB4}"
 	ProjectSection(SolutionItems) = preProject
+		DatabaseScripts\InitData.sql = DatabaseScripts\InitData.sql
 		DatabaseScripts\Install.sql = DatabaseScripts\Install.sql
-		DatabaseScripts\Proc_StartTerminal.sql = DatabaseScripts\Proc_StartTerminal.sql
-		DatabaseScripts\Proc_StopTerminal.sql = DatabaseScripts\Proc_StopTerminal.sql
+		DatabaseScripts\Procedures.sql = DatabaseScripts\Procedures.sql
 		DatabaseScripts\Readme.txt = DatabaseScripts\Readme.txt
 	EndProjectSection
 EndProject
@@ -27,6 +27,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{5864
 		Scripts\Publish.vbs = Scripts\Publish.vbs
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bootstrap.DataAccessTests", "Bootstrap.DataAccessTests\Bootstrap.DataAccessTests.csproj", "{D3A9D339-6E5E-416D-BB71-D3AAE105BD16}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bootstrap.Client", "Bootstrap.Client\Bootstrap.Client.csproj", "{6B261B2C-9E70-467C-BE76-13C0E280A683}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +45,14 @@ Global
 		{7B2B7043-3CB2-4C5A-BDF2-8C47F1A5471A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B2B7043-3CB2-4C5A-BDF2-8C47F1A5471A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B2B7043-3CB2-4C5A-BDF2-8C47F1A5471A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3A9D339-6E5E-416D-BB71-D3AAE105BD16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3A9D339-6E5E-416D-BB71-D3AAE105BD16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3A9D339-6E5E-416D-BB71-D3AAE105BD16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3A9D339-6E5E-416D-BB71-D3AAE105BD16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B261B2C-9E70-467C-BE76-13C0E280A683}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B261B2C-9E70-467C-BE76-13C0E280A683}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B261B2C-9E70-467C-BE76-13C0E280A683}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B261B2C-9E70-467C-BE76-13C0E280A683}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

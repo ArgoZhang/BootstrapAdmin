@@ -1,0 +1,106 @@
+﻿@model NavigatorBarModel
+@{
+    ViewBag.Title = "程序异常";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+@section css {
+    <link href="~/Content/bootstrap-table.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-datetimepicker.css" rel="stylesheet" />
+    <link href="~/Content/fa.css" rel="stylesheet" />
+}
+@section Javascript {
+    <script src="~/Scripts/bootstrap-table.js"></script>
+    <script src="~/Scripts/bootstrap-table-zh-CN.js"></script>
+    <script src="~/Scripts/longbow.dataentity.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script src="~/scripts/Exceptions.js"></script>
+}
+<div class="panel panel-default">
+    <div class="panel-heading">查询条件</div>
+    <div class="panel-body">
+        <form class="form-inline" role="form">
+            <div class="row">
+                <div class="form-group col-xs-12 col-sm-6 col-md-5 col-lg-5">
+                    <label class="control-label" for="txt_operate_start">起始时间</label>
+                    <div class="input-group date form_date">
+                        <input id="txt_operate_start" class="form-control" size="16" type="text" value="" readonly>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                    </div>
+                </div>
+                <div class="form-group col-xs-12 col-sm-6 col-md-5 col-lg-5">
+                    <label class="control-label" for="txt_operate_end">终止时间</label>
+                    <div class="input-group date form_date">
+                        <input id="txt_operate_end" class="form-control" size="16" type="text" value="" readonly>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                    </div>
+                </div>
+                <div class="form-group col-xs-12 col-sm-12 col-md-2 col-lg-2">
+                    <label class="sr-only"></label>
+                    <button type="button" id="btn_query" class="btn btn-primary form-control"><i class="fa fa-search" aria-hidden="true"></i><span>查询</span></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div id="toolbar" class="btn-group hidden">
+    <button id="btn_view" type="button" class="btn btn-danger">
+        <i class="fa fa-file-text-o" aria-hidden="true"></i><span class="hidden-tb">服务器日志</span>
+    </button>
+    <div class="toolbar btn-group dropdown">
+        <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button"><i class="fa fa-gear"></i></button>
+        <div class="dropdown-menu">
+            <a id="tb_view" href="#" title="查看明细"><i class="fa fa-file-text-o"></i></a>
+        </div>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        查询结果
+    </div>
+    <div class="panel-body">
+        <table></table>
+    </div>
+</div>
+@section modal {
+    <div class="modal fade" id="dialogNew" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div id="errorList" class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">程序异常日志窗口</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-inline" id="dataForm" name="dataForm" role="form"><div class="row"></div></form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        关闭
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="errorDetail" class="modal-content icon-content">
+        <div class="modal-header">
+            <button type="button" class="close" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myDetailModalLabel">程序异常日志窗口</h4>
+        </div>
+        <div class="modal-body">
+            <i id="fa-top" class="fa-target"></i>
+            <div class="affix" id="myScrollspy">
+                <div><a href="#fa-top" class="fa fa-arrow-circle-up"></a></div>
+                <div><a href="#fa-bottom" class="fa fa-arrow-circle-down"></a></div>
+            </div>
+            <div id="dataFormDetail"><div class="text-center"><i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i></div></div>
+            <i id="fa-bottom" class="fa-target"></i>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default">
+                关闭
+            </button>
+        </div>
+    </div>
+}

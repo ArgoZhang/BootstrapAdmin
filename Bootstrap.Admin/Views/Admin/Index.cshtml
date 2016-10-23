@@ -1,11 +1,24 @@
 ﻿@model Bootstrap.Admin.Models.ModelBase
 @{
+    ViewBag.Title = "后台管理";
     Layout = "~/Views/Shared/_Admin.cshtml";
 }
-@section header {
-    @Html.Partial("Header", Model.Header)
+@section css {
+    <style>
+        .site-footer, .main-content {
+            position: fixed;
+        }
+
+            .main-content h4 {
+                color: #fff;
+            }
+    </style>
 }
-@section navigator {
-    @Html.Partial("Navigator", Model.Navigator)
+@section javascript {
+    <script>
+        $(function () {
+            $('#main-content').addClass('welcome-bg');
+        });
+    </script>
 }
-<div style="height: 1000px;"><h4>欢迎使用后台管理</h4></div>
+<div><h4>欢迎使用后台管理</h4></div>

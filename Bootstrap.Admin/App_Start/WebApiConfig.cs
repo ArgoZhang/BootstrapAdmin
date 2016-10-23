@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using Bootstrap.Security.Mvc;
+using System.Web.Http;
 
 namespace Bootstrap.Admin
 {
@@ -7,7 +8,7 @@ namespace Bootstrap.Admin
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
-
+            config.Filters.Add(new BAAPIAuthorizaAttribute());
             // Web API routes
             config.MapHttpAttributeRoutes();
 
@@ -16,6 +17,9 @@ namespace Bootstrap.Admin
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            var json = GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings;
+            json.DateFormatString = "yyyy'-'MM'-'dd' 'HH':'mm':'ss";
         }
     }
 }

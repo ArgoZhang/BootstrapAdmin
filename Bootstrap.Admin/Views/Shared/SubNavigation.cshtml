@@ -1,0 +1,7 @@
+﻿@model IEnumerable<Menu>
+<ul class="sub" style="display: none;">
+    @foreach (var menu in Model)
+    {
+        @Html.Partial("SubMenu", menu)
+    }
+</ul>

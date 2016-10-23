@@ -1,0 +1,66 @@
+﻿@model NavigatorBarModel
+@{
+    ViewBag.Title = "部门管理";
+    Layout = "~/Views/Shared/_Default.cshtml";
+}
+@section Javascript {
+    <script src="~/scripts/Groups.js"></script>
+}
+@section query {
+    <form class="form-inline" role="form">
+        <div class="row">
+            <div class="form-group col-lg-5">
+                <label class="control-label" for="txt_search_name">部门名称</label>
+                <input type="text" class="form-control" id="txt_search_name" />
+            </div>
+            <div class="form-group col-lg-5">
+                <label class="control-label" for="txt_group_desc">部门描述</label>
+                <input type="text" class="form-control" id="txt_group_desc" />
+            </div>
+            <div class="form-group col-lg-2">
+                <button type="button" id="btn_query" class="btn btn-primary form-control"><i class="fa fa-search" aria-hidden="true"></i><span>查询</span></button>
+            </div>
+        </div>
+    </form>
+}
+@section toolbar {
+    <button id="btn_assignRole" type="button" class="btn btn-info">
+        <span class="fa fa-sitemap" aria-hidden="true"></span><span class="hidden-tb">指派角色</span>
+    </button>
+    <button id="btn_assignUser" type="button" class="btn btn-info">
+        <span class="fa fa-user" aria-hidden="true"></span><span class="hidden-tb">指派用户</span>
+    </button>
+    <div class="toolbar btn-group dropdown">
+        <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button"><i class="fa fa-gear"></i></button>
+        <div class="dropdown-menu">
+            @Html.Partial("_ButtonBarGroup")
+            <a id="tb_assignRole" href="#" title="指派角色"><i class="fa fa-sitemap"></i></a>
+            <a id="tb_assignUser" href="#" title="指派用户"><i class="fa fa-user"></i></a>
+        </div>
+    </div>
+}
+@section modal {
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">部门编辑窗口</h4>
+    </div>
+    <div class="modal-body">
+        <form class="form-inline" id="dataForm" name="dataForm" role="form">
+            <div class="row">
+                <div class="form-group col-lg-6">
+                    <label class="control-label" for="groupName">部门名称</label>
+                    <input type="text" class="form-control" id="groupName" name="groupName" placeholder="不可为空，50字以内" maxlength="50" />
+                </div>
+                <div class="form-group col-lg-6">
+                    <input type="text" class="form-control hidden" id="groupID" name="groupID" />
+                    <label class="control-label" for="groupDesc">部门描述</label>
+                    <input type="text" class="form-control" id="groupDesc" name="groupDesc" placeholder="描述信息(可为空)，50字以内" maxlength="50" />
+                </div>
+            </div>
+        </form>
+    </div>
+}
+@section customModal {
+    @Html.Partial("RoleConfig")
+    @Html.Partial("UserConfig")
+}
