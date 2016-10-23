@@ -1,4 +1,4 @@
-USE [master]
+ÔªøUSE [master]
 GO
 
 Create database [BootstrapAdmin]
@@ -12,8 +12,7 @@ GO
 
 USE [BootstrapAdmin]
 GO
-
-/****** Object:  Table [dbo].[Users]    Script Date: 10/22/2016 09:44:03 ******/
+/****** Object:  Table [dbo].[Users]    Script Date: 10/23/2016 23:27:32 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -31,13 +30,13 @@ CREATE TABLE [dbo].[Users](
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ID' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Users', @level2type=N'COLUMN',@level2name=N'ID'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'”√ªß√˚' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Users', @level2type=N'COLUMN',@level2name=N'UserName'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Áî®Êà∑Âêç' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Users', @level2type=N'COLUMN',@level2name=N'UserName'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'√‹¬Î' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Users', @level2type=N'COLUMN',@level2name=N'Password'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ÂØÜÁ†Å' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Users', @level2type=N'COLUMN',@level2name=N'Password'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'—È÷§' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Users', @level2type=N'COLUMN',@level2name=N'PassSalt'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'È™åËØÅ' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Users', @level2type=N'COLUMN',@level2name=N'PassSalt'
 GO
-/****** Object:  Table [dbo].[UserRole]    Script Date: 10/22/2016 09:44:03 ******/
+/****** Object:  Table [dbo].[UserRole]    Script Date: 10/23/2016 23:27:32 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -54,11 +53,11 @@ CREATE TABLE [dbo].[UserRole](
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ID' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'UserRole', @level2type=N'COLUMN',@level2name=N'ID'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'”√ªßID' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'UserRole', @level2type=N'COLUMN',@level2name=N'UserID'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Áî®Êà∑ID' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'UserRole', @level2type=N'COLUMN',@level2name=N'UserID'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Ω«…´ID' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'UserRole', @level2type=N'COLUMN',@level2name=N'RoleID'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ËßíËâ≤ID' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'UserRole', @level2type=N'COLUMN',@level2name=N'RoleID'
 GO
-/****** Object:  Table [dbo].[UserGroup]    Script Date: 10/22/2016 09:44:03 ******/
+/****** Object:  Table [dbo].[UserGroup]    Script Date: 10/23/2016 23:27:32 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -75,11 +74,11 @@ CREATE TABLE [dbo].[UserGroup](
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ID' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'UserGroup', @level2type=N'COLUMN',@level2name=N'ID'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'”√ªßID' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'UserGroup', @level2type=N'COLUMN',@level2name=N'UserID'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Áî®Êà∑ID' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'UserGroup', @level2type=N'COLUMN',@level2name=N'UserID'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'≤ø√≈ID' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'UserGroup', @level2type=N'COLUMN',@level2name=N'GroupID'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ÈÉ®Èó®ID' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'UserGroup', @level2type=N'COLUMN',@level2name=N'GroupID'
 GO
-/****** Object:  Table [dbo].[Roles]    Script Date: 10/22/2016 09:44:03 ******/
+/****** Object:  Table [dbo].[Roles]    Script Date: 10/23/2016 23:27:32 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -96,11 +95,11 @@ CREATE TABLE [dbo].[Roles](
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ID' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Roles', @level2type=N'COLUMN',@level2name=N'ID'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Ω«…´√˚≥∆' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Roles', @level2type=N'COLUMN',@level2name=N'RoleName'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ËßíËâ≤ÂêçÁß∞' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Roles', @level2type=N'COLUMN',@level2name=N'RoleName'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'√Ë ˆ' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Roles', @level2type=N'COLUMN',@level2name=N'Description'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ÊèèËø∞' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Roles', @level2type=N'COLUMN',@level2name=N'Description'
 GO
-/****** Object:  Table [dbo].[RoleGroup]    Script Date: 10/22/2016 09:44:03 ******/
+/****** Object:  Table [dbo].[RoleGroup]    Script Date: 10/23/2016 23:27:32 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -117,11 +116,34 @@ CREATE TABLE [dbo].[RoleGroup](
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ID' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'RoleGroup', @level2type=N'COLUMN',@level2name=N'ID'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Ω«…´ID' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'RoleGroup', @level2type=N'COLUMN',@level2name=N'RoleID'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ËßíËâ≤ID' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'RoleGroup', @level2type=N'COLUMN',@level2name=N'RoleID'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'≤ø√≈ID' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'RoleGroup', @level2type=N'COLUMN',@level2name=N'GroupID'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ÈÉ®Èó®ID' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'RoleGroup', @level2type=N'COLUMN',@level2name=N'GroupID'
 GO
-/****** Object:  Table [dbo].[Groups]    Script Date: 10/22/2016 09:44:03 ******/
+/****** Object:  Table [dbo].[Navigations]    Script Date: 10/23/2016 23:27:32 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Navigations](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[ParentId] [int] NOT NULL,
+	[Name] [nvarchar](50) NOT NULL,
+	[Order] [int] NULL,
+	[Icon] [varchar](50) NOT NULL,
+	[Url] [varchar](50) NULL,
+	[Category] [varchar](50) NOT NULL,
+ CONSTRAINT [PK_Navigations] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[Groups]    Script Date: 10/23/2016 23:27:32 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -138,7 +160,10 @@ CREATE TABLE [dbo].[Groups](
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ID' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Groups', @level2type=N'COLUMN',@level2name=N'ID'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'≤ø√≈√˚≥∆' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Groups', @level2type=N'COLUMN',@level2name=N'GroupName'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ÈÉ®Èó®ÂêçÁß∞' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Groups', @level2type=N'COLUMN',@level2name=N'GroupName'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'√Ë ˆ' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Groups', @level2type=N'COLUMN',@level2name=N'Description'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ÊèèËø∞' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Groups', @level2type=N'COLUMN',@level2name=N'Description'
+GO
+/****** Object:  Default [DF_Navigations_Category]    Script Date: 10/23/2016 23:27:32 ******/
+ALTER TABLE [dbo].[Navigations] ADD  CONSTRAINT [DF_Navigations_Category]  DEFAULT ((0)) FOR [Category]
 GO

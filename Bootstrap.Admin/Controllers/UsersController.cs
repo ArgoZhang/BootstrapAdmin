@@ -16,7 +16,7 @@ namespace Bootstrap.Admin.Controllers
         /// <param name="value"></param>
         /// <returns></returns>
         [HttpGet]
-        public UserEntity Get([FromUri]TerminalsPageOption value)
+        public UserEntity Get([FromUri]UsersPageOption value)
         {
             var ret = new UserEntity();
             ret.RetrieveUsers(value);

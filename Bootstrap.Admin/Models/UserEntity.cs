@@ -1,4 +1,5 @@
 ﻿using Bootstrap.DataAccess;
+using Longbow.Web.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,7 +11,7 @@ namespace Bootstrap.Admin.Models
 
         public IEnumerable<User> rows { get; private set; }
 
-        public void RetrieveUsers(TerminalsPageOption option)
+        public void RetrieveUsers(UsersPageOption option)
         {
             // int limit, int offset, string name, string price, string sort, string order
             var data = UserHelper.RetrieveUsers(string.Empty);
@@ -23,12 +24,5 @@ namespace Bootstrap.Admin.Models
             data = option.Order == "asc" ? data.OrderBy(t => t.UserName) : data.OrderByDescending(t => t.UserName);
             rows = data.Skip(option.Offset).Take(option.Limit);
         }
-    }
-    /// <summary>
-    /// 
-    /// </summary>
-    public class TerminalsPageOption : PaginationOption
-    {
-        public string Name { get; set; }
     }
 }
