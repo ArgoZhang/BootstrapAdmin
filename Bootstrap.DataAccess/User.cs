@@ -10,7 +10,7 @@
         /// </summary>
         public int ID { get; set; }
         /// <summary>
-        /// 获得/设置 用户名称
+        /// 获得/设置 登陆账号
         /// </summary>
         public string UserName { get; set; }
         /// <summary>
@@ -21,5 +21,9 @@
         /// 获取/设置 验证信息
         /// </summary>
         public string PassSalt { get; set; }
+        /// <summary>
+        /// 获取/设置 显示名称
+        /// </summary>
+        public string DisplayName { get; set; }
     }
 }

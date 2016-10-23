@@ -15,7 +15,6 @@ namespace Bootstrap.Admin.Controllers
         public ActionResult Index()
         {
             var v = new NavigatorBarModel();
-            v.UserName = "Argo Zhang";
             v.ShowMenu = "hide";
             v.HomeUrl = "~/Admin";
             return View(v);
@@ -27,7 +26,6 @@ namespace Bootstrap.Admin.Controllers
         public ActionResult Users()
         {
             var v = new NavigatorBarModel();
-            v.UserName = "Argo Zhang";
             v.BreadcrumbName = "用户管理";
             v.ShowMenu = "hide";
             v.Menus[1].Active = "active";

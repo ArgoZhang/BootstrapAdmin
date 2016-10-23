@@ -17,6 +17,7 @@ namespace Bootstrap.DataAccess
     public static class UserHelper
     {
         private const string UserDataKey = "UserData-CodeUserHelper";
+        private const string UserDisplayNameDataKey = "UserData-CodeUserHelper-";
         /// <summary>
         /// 查询所有用户
         /// </summary>
@@ -24,7 +25,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<User> RetrieveUsers(string tId = null)
         {
-            string sql = "select * from Users";
+            string sql = "select ID, UserName, DisplayName from Users";
             var ret = CacheManager.GetOrAdd(UserDataKey, CacheSection.RetrieveIntervalByKey(UserDataKey), key =>
             {
                 List<User> Users = new List<User>();
@@ -38,7 +39,8 @@ namespace Bootstrap.DataAccess
                             Users.Add(new User()
                             {
                                 ID = (int)reader[0],
-                                UserName = (string)reader[1]
+                                UserName = (string)reader[1],
+                                DisplayName = (string)reader[2]
                             });
                         }
                     }
@@ -53,30 +55,35 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        private static User RetrieveUsersByName(string userName)
+        public static User RetrieveUsersByName(string userName)
         {
-            User user = null;
-            string sql = "select ID, UserName, [Password], PassSalt from Users where UserName = @UserName";
-            DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
-            try
+            string key = string.Format("{0}{1}", UserDisplayNameDataKey, userName);
+            return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(UserDisplayNameDataKey), k =>
             {
-                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserName", userName, ParameterDirection.Input));
-                using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
+                User user = null;
+                string sql = "select ID, UserName, [Password], PassSalt, DisplayName from Users where UserName = @UserName";
+                DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
+                try
                 {
-                    if (reader.Read())
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserName", userName, ParameterDirection.Input));
+                    using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
                     {
-                        user = new User()
+                        if (reader.Read())
                         {
-                            ID = (int)reader[0],
-                            UserName = (string)reader[1],
-                            Password = (string)reader[2],
-                            PassSalt = (string)reader[3]
-                        };
+                            user = new User()
+                            {
+                                ID = (int)reader[0],
+                                UserName = (string)reader[1],
+                                Password = (string)reader[2],
+                                PassSalt = (string)reader[3],
+                                DisplayName = (string)reader[4]
+                            };
+                        }
                     }
                 }
-            }
-            catch (Exception ex) { ExceptionManager.Publish(ex); }
-            return user;
+                catch (Exception ex) { ExceptionManager.Publish(ex); }
+                return user;
+            }, CacheSection.RetrieveDescByKey(UserDisplayNameDataKey));
         }
         /// <summary>
         /// 删除用户
@@ -117,8 +124,8 @@ namespace Bootstrap.DataAccess
             p.PassSalt = LgbCryptography.GenerateSalt();
             p.Password = LgbCryptography.ComputeHash(p.Password, p.PassSalt);
             string sql = p.ID == 0 ?
-                "Insert Into Users (UserName, Password, PassSalt) Values (@UserName, @Password, @PassSalt)" :
-                "Update Users set UserName = @UserName, Password = @Password, PassSalt = @PassSalt where ID = @ID";
+                "Insert Into Users (UserName, Password, PassSalt, DisplayName) Values (@UserName, @Password, @PassSalt, @DisplayName)" :
+                "Update Users set UserName = @UserName, Password = @Password, PassSalt = @PassSalt, DisplayName = @DisplayName where ID = @ID";
             try
             {
                 using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
@@ -127,6 +134,7 @@ namespace Bootstrap.DataAccess
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserName", p.UserName, ParameterDirection.Input));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Password", p.Password, ParameterDirection.Input));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@PassSalt", p.PassSalt, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@DisplayName", p.DisplayName, ParameterDirection.Input));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
                 ret = true;
@@ -153,6 +161,7 @@ namespace Bootstrap.DataAccess
         private static void ClearCache()
         {
             CacheManager.Clear(key => key == UserDataKey);
+            CacheManager.Clear(key => key.Contains(UserDisplayNameDataKey));
         }
     }
 }

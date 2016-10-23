@@ -3,7 +3,8 @@
         map: {
             ID: "userID",
             UserName: "userName",
-            Password: "password"
+            Password: "password",
+            DisplayName: "displayName"
         }
     });
 
@@ -53,4 +54,6 @@
             equalTo: "#password"
         }
     });
+
+    //TODO: 客户端点击保存用户后，要更新页面右上角用户显示名称
 });

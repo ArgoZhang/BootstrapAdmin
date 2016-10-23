@@ -15,11 +15,15 @@
 @section query {
     <form class="form-horizontal" role="form">
         <div class="form-group terminal-form-group">
-            <label class="control-label col-lg-1" for="txt_search_name">用户名称</label>
-            <div class="col-lg-4">
+            <label class="control-label col-lg-1" for="txt_search_name">登陆名称</label>
+            <div class="col-lg-2">
                 <input type="text" class="form-control" id="txt_search_name" />
             </div>
+            <label class="control-label col-lg-1" for="txt_display_name">显示名称</label>
             <div class="col-lg-2">
+                <input type="text" class="form-control" id="txt_display_name" />
+            </div>
+            <div class="col-lg-1">
                 <button type="button" id="btn_query" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询</button>
             </div>
         </div>
@@ -34,21 +38,25 @@
         <div class="modal-body">
             <form class="form-horizontal terminal-form-group" id="dataForm" name="dataForm" role="form">
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="userName">用户名称</label>
-                    <div class="col-sm-4">
+                    <label class="control-label col-sm-2" for="userName">登陆名称</label>
+                    <div class="col-sm-3">
                         <input type="text" class="form-control" id="userName" name="userName" maxlength="50" />
                     </div>
-                    <div class="col-sm-1" style="display:none;">
+                    <label class="control-label col-sm-2" for="userName">显示名称</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" id="displayName" name="displayName" maxlength="50" />
+                    </div>
+                    <div class="col-sm-12" style="display:none;">
                         <input type="text" class="form-control" id="userID" name="userID" />
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="password">登录密码</label>
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
                         <input type="password" class="form-control" id="password" name="password" maxlength="15" />
                     </div>
                     <label class="control-label col-sm-2" for="confirm">确认密码</label>
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
                         <input type="password" class="form-control" id="confirm" name="confirm" maxlength="15" />
                     </div>
                 </div>

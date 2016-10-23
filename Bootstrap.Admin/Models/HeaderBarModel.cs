@@ -1,4 +1,7 @@
-﻿namespace Bootstrap.Admin.Models
+﻿using Bootstrap.DataAccess;
+using System.Web;
+
+namespace Bootstrap.Admin.Models
 {
     /// <summary>
     /// 
@@ -7,13 +10,13 @@
     {
         public HeaderBarModel()
         {
-            UserName = "Argo Zhang";
+            DisplayName = UserHelper.RetrieveUsersByName(HttpContext.Current.User.Identity.Name).DisplayName;
             HomeUrl = "~/";
         }
         /// <summary>
         /// 
         /// </summary>
-        public string UserName { get; set; }
+        public string DisplayName { get; set; }
         /// <summary>
         /// 
         /// </summary>
