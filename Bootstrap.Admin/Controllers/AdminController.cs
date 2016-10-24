@@ -36,6 +36,19 @@ namespace Bootstrap.Admin.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
+        public ActionResult Groups()
+        {
+            var v = new NavigatorBarModel();
+            v.BreadcrumbName = "部门管理";
+            v.ShowMenu = "hide";
+            v.Menus[3].Active = "active";
+            v.HomeUrl = "~/Admin";
+            return View(v);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [AllowAnonymous]
         public ActionResult FAIcon()
         {

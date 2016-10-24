@@ -1,14 +1,11 @@
 ﻿using Bootstrap.Admin.Models;
 using Bootstrap.DataAccess;
-using System.Web.Http;
 using System.Linq;
+using System.Web.Http;
 
 namespace Bootstrap.Admin.Controllers
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public class UsersController : ApiController
+    public class GroupsController : ApiController
     {
         /// <summary>
         /// 
@@ -16,7 +13,7 @@ namespace Bootstrap.Admin.Controllers
         /// <param name="value"></param>
         /// <returns></returns>
         [HttpGet]
-        public QueryData<User> Get([FromUri]QueryUserOption value)
+        public QueryData<Group> Get([FromUri]QueryGroupOption value)
         {
             return value.RetrieveData();
         }
@@ -26,18 +23,18 @@ namespace Bootstrap.Admin.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public User Get(int id)
+        public Group Get(int id)
         {
-            return UserHelper.RetrieveUsers().FirstOrDefault(t => t.ID == id);
+            return GroupHelper.RetrieveGroups().FirstOrDefault(t => t.ID == id);
         }
         /// <summary>
         /// 
         /// </summary>
         /// <param name="value"></param>
         [HttpPost]
-        public bool Post([FromBody]User value)
+        public bool Post([FromBody]Group value)
         {
-            return UserHelper.SaveUser(value);
+            return GroupHelper.SaveGroup(value);
         }
         /// <summary>
         /// 
@@ -46,7 +43,7 @@ namespace Bootstrap.Admin.Controllers
         [HttpDelete]
         public bool Delete([FromBody]string value)
         {
-            return UserHelper.DeleteUser(value);
+            return GroupHelper.DeleteGroup(value);
         }
     }
 }

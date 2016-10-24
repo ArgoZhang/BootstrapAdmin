@@ -53,15 +53,25 @@ namespace Bootstrap.DataAccess
         /// 删除群组信息
         /// </summary>
         /// <param name="ids"></param>
-        public static void DeleteGroup(string ids)
+        public static bool DeleteGroup(string ids)
         {
-            if (string.IsNullOrEmpty(ids) || ids.Contains("'")) return;
-            string sql = string.Format(CultureInfo.InvariantCulture, "Delete from Groups where ID in ({0})", ids);
-            using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
+            var ret = false;
+            if (string.IsNullOrEmpty(ids) || ids.Contains("'")) return ret;
+            try
             {
-                DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
-                ClearCache();
+                string sql = string.Format(CultureInfo.InvariantCulture, "Delete from Groups where ID in ({0})", ids);
+                using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
+                {
+                    DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
+                    ClearCache();
+                    ret = true;
+                }
             }
+            catch (Exception ex)
+            {
+                ExceptionManager.Publish(ex);
+            }
+            return ret;
         }
         /// <summary>
         /// 保存新建/更新的群组信息

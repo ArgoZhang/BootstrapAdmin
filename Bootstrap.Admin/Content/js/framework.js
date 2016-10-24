@@ -39,8 +39,14 @@
         bootstrapTable: 'table',
         validateForm: 'dataForm',
         modal: 'dialogNew',
-        click: {}
-    }
+        click: {
+            query: 'btn_query',
+            create: 'btn_add',
+            edit: 'btn_edit',
+            del: 'btn_delete',
+            save: 'btnSubmit'
+        }
+    };
 
     BootstrapAdmin.idFormatter = function (value, row, index) {
         return "<a class='edit' href='javascript:void(0)'>" + value + "</a>";

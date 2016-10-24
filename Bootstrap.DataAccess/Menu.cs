@@ -30,7 +30,7 @@ namespace Bootstrap.DataAccess
                 new Menu() { Name = "菜单管理", Icon = "fa-dashboard", Url="javascript:;", Active = "" },
                 new Menu() { Name = "用户管理", Icon = "fa-user", Url="/Admin/Users", Active = "" },
                 new Menu() { Name = "角色管理", Icon = "fa-sitemap", Url="javascript:;", Active = "" },
-                new Menu() { Name = "部门管理", Icon = "fa-home", Url="javascript:;", Active = "" },
+                new Menu() { Name = "部门管理", Icon = "fa-home", Url="/Admin/Groups", Active = "" },
                 new Menu() { Name = "字典表维护", Icon = "fa-book", Url="javascript:;", Active = "" },
                 new Menu() { Name = "个性化维护", Icon = "fa-pencil", Url="javascript:;", Active = "" },
                 new Menu() { Name = "系统日志", Icon = "fa-lock", Url="javascript:;", Active = "" }
