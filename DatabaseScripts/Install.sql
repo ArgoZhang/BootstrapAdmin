@@ -12,7 +12,7 @@ GO
 
 USE [BootstrapAdmin]
 GO
-/****** Object:  Table [dbo].[Users]    Script Date: 10/23/2016 23:27:32 ******/
+/****** Object:  Table [dbo].[Users]    Script Date: 10/24/2016 15:48:24 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -22,6 +22,7 @@ CREATE TABLE [dbo].[Users](
 	[UserName] [nvarchar](50) NULL,
 	[Password] [nvarchar](50) NULL,
 	[PassSalt] [nvarchar](50) NULL,
+	[DisplayName] [nvarchar](50) NULL,
  CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
@@ -34,7 +35,9 @@ EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'用户名' , @
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'密码' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Users', @level2type=N'COLUMN',@level2name=N'Password'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'验证' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Users', @level2type=N'COLUMN',@level2name=N'PassSalt'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'密码盐' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Users', @level2type=N'COLUMN',@level2name=N'PassSalt'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'显示名称' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Users', @level2type=N'COLUMN',@level2name=N'DisplayName'
 GO
 /****** Object:  Table [dbo].[UserRole]    Script Date: 10/22/2016 09:44:03 ******/
 SET ANSI_NULLS ON
