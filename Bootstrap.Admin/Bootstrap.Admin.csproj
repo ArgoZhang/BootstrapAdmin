@@ -153,6 +153,7 @@
     <Content Include="Content\js\messages_zh.js" />
     <Content Include="Content\js\messages_zh.min.js" />
     <Content Include="Scripts\Groups.js" />
+    <Content Include="Scripts\icon.js" />
     <Content Include="Scripts\Login.js" />
     <Content Include="Scripts\Roles.js" />
     <Content Include="Scripts\Users.js" />
@@ -219,6 +220,7 @@
     <Content Include="Views\Admin\FAIcon.cshtml" />
     <Content Include="Views\Admin\Groups.cshtml" />
     <Content Include="Views\Admin\Roles.cshtml" />
+    <Content Include="Views\Shared\Glyphicons.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

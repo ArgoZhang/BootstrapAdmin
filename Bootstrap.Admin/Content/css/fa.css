@@ -1,4 +1,8 @@
-﻿.fontawesome-icon-list .fa-hover a {
+﻿body {
+    padding-top: 16px;
+}
+
+.fontawesome-icon-list .fa-hover a {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -28,3 +32,46 @@
         font-size: 28px;
         vertical-align: -6px;
     }
+
+.fontawesome-icon-list ul {
+    display: block;
+    margin-left: -28px;
+}
+
+    .fontawesome-icon-list ul li {
+        overflow: hidden;
+        list-style: none;
+        float: left;
+        padding-left: 10px;
+        padding-right: 15px;
+        padding-top: 2px;
+        padding-bottom: 4px;
+        text-overflow: ellipsis;
+        line-height: 32px;
+        height: 32px;
+        white-space: nowrap;
+        vertical-align: middle;
+    }
+
+        .fontawesome-icon-list ul li:hover {
+            background-color: #1d9d74;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+            .fontawesome-icon-list ul li:hover span:nth-child(1) {
+                font-size: 28px;
+                vertical-align: middle;
+            }
+
+        .fontawesome-icon-list ul li span:nth-child(1) {
+            margin-right: 10px;
+        }
+
+@media (max-width: 768px) {
+    .col-sm-6 {
+        width: 50%;
+    }
+}
