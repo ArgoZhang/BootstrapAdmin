@@ -17,7 +17,7 @@
         columns: [{ checkbox: true },
             { title: "Id", field: "ID", events: bsa.idEvents(), formatter: BootstrapAdmin.idFormatter },
             { title: "部门名称", field: "GroupName", sortable: true },
-            { title: "部门描述", field: "Description", sortable: true }
+            { title: "部门描述", field: "Description", sortable: false }
         ]
     });
 

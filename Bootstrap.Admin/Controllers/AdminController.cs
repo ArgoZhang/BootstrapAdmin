@@ -45,6 +45,15 @@ namespace Bootstrap.Admin.Controllers
             v.HomeUrl = "~/Admin";
             return View(v);
         }
+        public ActionResult Roles()
+        {
+            var v = new NavigatorBarModel();
+            v.BreadcrumbName = "角色管理";
+            v.ShowMenu = "hide";
+            v.Menus[2].Active = "active";
+            v.HomeUrl = "~/Admin";
+            return View(v);
+        }
         /// <summary>
         /// 
         /// </summary>

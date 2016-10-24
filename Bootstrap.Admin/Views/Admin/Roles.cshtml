@@ -1,0 +1,58 @@
+﻿@model NavigatorBarModel
+@{
+    ViewBag.Title = "角色管理";
+    Layout = "~/Views/Shared/_Default.cshtml";
+}
+@section Javascript {
+    <script src="~/scripts/Roles.js"></script>
+}
+@section header {
+    @Html.Partial("Header", Model)
+}
+@section navigator {
+    @Html.Partial("Navigator", Model)
+}
+@section query {
+    <form class="form-inline" role="form">
+        <div class="form-group col-lg-5">
+            <label class="control-label" for="txt_search_name">角色名称</label>
+            <input type="text" class="form-control" id="txt_search_name" />
+        </div>
+        <div class="form-group col-lg-5">
+            <label class="control-label" for="txt_group_desc">角色描述</label>
+            <input type="text" class="form-control" id="txt_role_desc" />
+        </div>
+        <div class="form-group col-lg-2">
+            <button type="button" id="btn_query" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询</button>
+        </div>
+    </form>
+}
+@section modal {
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel">角色编辑窗口</h4>
+        </div>
+        <div class="modal-body">
+            <form class="form-inline" id="dataForm" name="dataForm" role="form">
+                <div class="form-group col-lg-6">
+                    <label class="control-label" for="roleName">角色名称</label>
+                    <input type="text" class="form-control" id="roleName" name="roleName" maxlength="50" />
+                </div>
+                <div class="form-group col-lg-6">
+                    <label class="control-label" for="roleDesc">角色描述</label>
+                    <input type="text" class="form-control" id="roleDesc" name="roleDesc" maxlength="50" />
+                    <input type="text" class="form-control hide" id="roleID" name="roleID" />
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+                关闭
+            </button>
+            <button type="button" class="btn btn-primary" id="btnSubmit">
+                提交更改
+            </button>
+        </div>
+    </div>
+}

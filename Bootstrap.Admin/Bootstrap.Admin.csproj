@@ -154,6 +154,7 @@
     <Content Include="Content\js\messages_zh.min.js" />
     <Content Include="Scripts\Groups.js" />
     <Content Include="Scripts\Login.js" />
+    <Content Include="Scripts\Roles.js" />
     <Content Include="Scripts\Users.js" />
     <Content Include="Content\js\jquery-1.10.2.js" />
     <Content Include="Content\js\jquery-1.10.2.min.js" />
@@ -182,11 +183,13 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\GroupsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\QueryGroupOption.cs" />
+    <Compile Include="Models\QueryRoleOption.cs" />
     <Compile Include="Models\QueryUserOption.cs" />
     <Compile Include="Models\HeaderBarModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
@@ -215,6 +218,7 @@
     <Content Include="Views\Shared\AwesomeIcon.cshtml" />
     <Content Include="Views\Admin\FAIcon.cshtml" />
     <Content Include="Views\Admin\Groups.cshtml" />
+    <Content Include="Views\Admin\Roles.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
