@@ -18,7 +18,7 @@
         /// </summary>
         public string Password { get; set; }
         /// <summary>
-        /// 获取/设置 验证信息
+        /// 获取/设置 密码盐
         /// </summary>
         public string PassSalt { get; set; }
         /// <summary>

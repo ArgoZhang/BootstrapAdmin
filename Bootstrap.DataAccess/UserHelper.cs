@@ -51,7 +51,7 @@ namespace Bootstrap.DataAccess
             return string.IsNullOrEmpty(tId) ? ret : ret.Where(t => tId.Equals(t.ID.ToString(), StringComparison.OrdinalIgnoreCase));
         }
         /// <summary>
-        /// 
+        /// 根据用户名查询用户
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
@@ -116,13 +116,12 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static bool SaveUser(User p)
         {
-            //TODO: 这里这样处理明显不行，需要用非对称加密算法进行混淆加密后存储到数据库中
             if (p == null) throw new ArgumentNullException("p");
             bool ret = false;
             if (p.UserName.Length > 50) p.UserName.Substring(0, 50);
-            if (p.Password.Length > 50) p.Password.Substring(0, 50);
             p.PassSalt = LgbCryptography.GenerateSalt();
             p.Password = LgbCryptography.ComputeHash(p.Password, p.PassSalt);
+            if (p.DisplayName.Length > 50) p.DisplayName.Substring(0, 50);
             string sql = p.ID == 0 ?
                 "Insert Into Users (UserName, Password, PassSalt, DisplayName) Values (@UserName, @Password, @PassSalt, @DisplayName)" :
                 "Update Users set UserName = @UserName, Password = @Password, PassSalt = @PassSalt, DisplayName = @DisplayName where ID = @ID";
