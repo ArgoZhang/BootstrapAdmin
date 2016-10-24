@@ -8,7 +8,7 @@
         }
     });
 
-    var extender = new BootstrapAdmin({
+    var bsa = new BootstrapAdmin({
         url: '../api/Users',
         dataEntity: dataEntity,
         click: {
@@ -20,21 +20,12 @@
         }
     });
 
-    idEvents = {
-        'click .edit': function (e, value, row, index) {
-            dataEntity.load(row);
-            $('table').bootstrapTable('uncheckAll');
-            $('table').bootstrapTable('check', index);
-            $("#dialogNew").modal("show");
-        }
-    };
-
     $('table').smartTable({
         url: '../api/Users',            //请求后台的URL（*）
         sortName: 'UserName',
         queryParams: function (params) { return $.extend(params, { name: $("#txt_search_name").val() }); },           //传递参数（*）
         columns: [{ checkbox: true },
-            { title: "Id", field: "ID", events: idEvents, formatter: BootstrapAdmin.idFormatter },
+            { title: "Id", field: "ID", events: bsa.idEvents(), formatter: BootstrapAdmin.idFormatter },
             { title: "用户名称", field: "UserName", sortable: true }
         ]
     });

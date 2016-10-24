@@ -48,6 +48,20 @@
 
     BootstrapAdmin.prototype = {
         constructor: BootstrapAdmin,
+        idEvents: function () {
+            var op = {
+                dataEntity: this.options.dataEntity,
+                table: this.options.bootstrapTable,
+                modal: this.options.modal
+            };
+            return {
+                'click .edit': function (e, value, row, index) {
+                    op.dataEntity.load(row);
+                    $('#' + op.table).bootstrapTable('uncheckAll').bootstrapTable('check', index);
+                    $('#' + op.modal).modal("show");
+                }
+            }
+        },
 
         query: function () {
             if (this.options.bootstrapTable.constructor === String) $(this.options.bootstrapTable).bootstrapTable('refresh');
