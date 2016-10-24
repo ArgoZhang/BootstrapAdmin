@@ -52,6 +52,10 @@
         confirm: {
             required: true,
             equalTo: "#password"
+        },
+        displayName: {
+            required: true,
+            maxlength: 50
         }
     });
 
