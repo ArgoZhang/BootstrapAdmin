@@ -392,22 +392,30 @@ a.logo {
     margin-right: 10px;
 }
 
-@media (max-width: 768px) {
-    .form-inline {
-        margin-bottom: -15px;
+@media (min-width: 768px) {
+    .form-inline .form-group {
+        margin-bottom: 15px;
     }
 
-        .form-inline .form-group {
-            margin-bottom: 15px;
-        }
+    .panel-body {
+        padding-bottom: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .panel-body {
+        padding-bottom: 0;
+    }
 }
 
 .modal-body {
     padding-bottom: 0;
 }
 
-.modal-dialog {
-    width: 800px;
+@media (min-width: 992px) {
+    .modal-dialog {
+        width: 800px;
+    }
 }
 
 .modal-header {
@@ -420,6 +428,10 @@ a.logo {
     .modal-header .close {
         margin-top: 1px;
     }
+
+.modal-footer {
+    clear: both;
+}
 
 .fixed-table-loading {
     padding-top: 5px;
