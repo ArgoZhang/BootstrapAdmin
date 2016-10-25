@@ -4,7 +4,7 @@
 }
 
 #main-content {
-    margin-left: 210px;
+    margin-top: 0;
     position: fixed;
     left: 0;
     bottom: 40px;
@@ -19,4 +19,5 @@
     bottom: 0;
     right: 0;
     z-index: 50;
+    height: 40px;
 }

@@ -1,7 +1,5 @@
-﻿.wrapper {
-    display: inline-block;
-    padding: 15px;
-    width: 100%;
+﻿#main-content {
+    margin-left: 210px;
 }
 
 .sidebar-closed > #sidebar > ul {

@@ -10,6 +10,16 @@
     -moz-font-smoothing: antialiased;
 }
 
+#main-content {
+    margin-top: 94px;
+}
+
+.wrapper {
+    display: inline-block;
+    padding: 15px;
+    width: 100%;
+}
+
 ul li {
     list-style: none;
 }
@@ -29,10 +39,6 @@ a, a:hover, a:focus {
 
 div button span {
     margin-right: 4px;
-}
-
-.body-content {
-    margin-top: 108px;
 }
 
 .header, .footer {

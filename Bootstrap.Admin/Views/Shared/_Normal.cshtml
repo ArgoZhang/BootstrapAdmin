@@ -6,6 +6,7 @@
     <link href="~/Content/css/bootstrap-table.css" rel="stylesheet" />
     <link href="~/Content/css/sweetalert.css" rel="stylesheet" />
     <link href="~/Content/css/site.css" rel="stylesheet" />
+    <link href="~/Content/css/site-responsive.css" rel="stylesheet" />
     @RenderSection("css", false)
 }
 @section javascript {
@@ -14,12 +15,14 @@
 }
 <section id="container">
     @RenderSection("header", false)
-    <section class="body-content">
-        <div class="row">
-            <div class="col-lg-12">
-                @RenderBody()
+    <section id="main-content">
+        <section class="wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    @RenderBody()
+                </div>
             </div>
-        </div>
+        </section>
     </section>
 
     <!--footer start-->
