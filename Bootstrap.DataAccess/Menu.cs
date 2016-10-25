@@ -43,7 +43,7 @@ namespace Bootstrap.DataAccess
         public static List<Menu> RetrieveMenus()
         {
             return new List<Menu>() {
-                new Menu() { Name = "菜单管理", Icon = "fa-dashboard", Url="javascript:;", Active = "" },
+                new Menu() { Name = "菜单管理", Icon = "fa-dashboard", Url="/Admin/Menus", Active = "" },
                 new Menu() { Name = "用户管理", Icon = "fa-user", Url="/Admin/Users", Active = "" },
                 new Menu() { Name = "角色管理", Icon = "fa-sitemap", Url="/Admin/Roles", Active = "" },
                 new Menu() { Name = "部门管理", Icon = "fa-home", Url="/Admin/Groups", Active = "" },
