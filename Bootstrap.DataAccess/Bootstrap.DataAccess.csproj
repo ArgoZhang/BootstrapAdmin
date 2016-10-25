@@ -60,6 +60,7 @@
     <Compile Include="Group.cs" />
     <Compile Include="GroupHelper.cs" />
     <Compile Include="Menu.cs" />
+    <Compile Include="MenuHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Role.cs" />
     <Compile Include="RoleHelper.cs" />

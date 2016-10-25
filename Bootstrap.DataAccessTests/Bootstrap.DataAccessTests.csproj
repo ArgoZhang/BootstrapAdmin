@@ -55,6 +55,7 @@
     <Compile Include="RoleHelperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GroupHelperTests.cs" />
+    <Compile Include="MenuHelperTests.cs" />
     <Compile Include="UserHelperTests.cs" />
   </ItemGroup>
   <ItemGroup>
