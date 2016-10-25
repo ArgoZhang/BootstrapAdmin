@@ -10,9 +10,15 @@ namespace Bootstrap.Admin.Models
     {
         public HeaderBarModel()
         {
-            DisplayName = UserHelper.RetrieveUsersByName(HttpContext.Current.User.Identity.Name).DisplayName;
+            var user = UserHelper.RetrieveUsersByName(HttpContext.Current.User.Identity.Name);
+            DisplayName = user.DisplayName;
+            UserID = user.ID;
             HomeUrl = "~/";
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int UserID { get; set; }
         /// <summary>
         /// 
         /// </summary>

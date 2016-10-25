@@ -8,7 +8,12 @@
                 Password: "password",
                 DisplayName: "displayName"
             }
-        })
+        }),
+        success: function (src, data) {
+            if (src === 'save' && data.ID === $('#userId').val()) {
+                $('.username').text(data.DisplayName);
+            }
+        }
     });
 
     $('table').smartTable({
@@ -41,6 +46,4 @@
             maxlength: 50
         }
     });
-
-    //TODO: 客户端点击保存用户后，要更新页面右上角用户显示名称
 });

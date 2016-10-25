@@ -115,11 +115,13 @@
                     cancelButtonText: "取消"
                 }, function () {
                     var iDs = arrselections.map(function (element, index) { return element.ID }).join(",");
+                    options.IDs = iDs;
                     $.ajax({
                         url: options.url,
                         data: { "": iDs },
                         type: 'DELETE',
                         success: function (result) {
+                            if ($.isFunction(options.success)) options.success('del', options);
                             if (result) setTimeout(function () { swal("成功！", "删除数据", "success"); $(options.bootstrapTable).bootstrapTable('refresh'); }, 100);
                             else setTimeout(function () { swal("失败", "删除数据", "error"); }, 200);
                         },
@@ -140,7 +142,7 @@
                 type: 'POST',
                 success: function (result) {
                     if (result) {
-                        if ($.isFunction(options.success)) options.success(options.data);
+                        if ($.isFunction(options.success)) options.success('save', options.data);
                         if (options.bootstrapTable.constructor === String && options.data.ID.constructor === String) {
                             // 更新表格
                             if (options.data.ID > 0) {
