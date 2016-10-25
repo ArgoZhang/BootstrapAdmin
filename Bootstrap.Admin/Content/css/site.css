@@ -35,12 +35,6 @@ div button span {
     margin-top: 108px;
 }
 
-.row {
-    margin-left: 0;
-    margin-right: 0;
-    margin-top: 92px;
-}
-
 .header, .footer {
     min-height: 60px;
     padding: 0 15px;
@@ -308,13 +302,6 @@ a.logo {
                 display: block;
             }
 
-@media screen and (-webkit-min-device-pixel-ratio:0) {
-    /* Safari and Chrome */
-    .dropdown-menu.extended {
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.176) !important;
-    }
-}
-
 /*Login*/
 .form-signin {
     width: 330px;
@@ -387,39 +374,16 @@ a.logo {
 
 /*end login*/
 
-/*bootstrap table 下边距*/
-.table-body {
-    padding: 0px 8px;
-}
-
 .form-inline .form-group label.control-label {
     margin-right: 10px;
-}
-
-@media (min-width: 768px) {
-    .form-inline .form-group {
-        margin-bottom: 15px;
-    }
-
-    .panel-body {
-        padding-bottom: 0;
-    }
-}
-
-@media (max-width: 768px) {
-    .panel-body {
-        padding-bottom: 0;
-    }
+    width: 80px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .modal-body {
     padding-bottom: 0;
-}
-
-@media (min-width: 992px) {
-    .modal-dialog {
-        width: 800px;
-    }
 }
 
 .modal-header {

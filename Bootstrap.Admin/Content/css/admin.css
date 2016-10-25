@@ -1,11 +1,27 @@
-﻿#sidebar {
+﻿.wrapper {
+    display: inline-block;
+    padding: 15px;
+    width: 100%;
+}
+
+.sidebar-closed > #sidebar > ul {
+    display: none;
+}
+
+.sidebar-closed #main-content {
+    margin-left: 0px;
+}
+
+.sidebar-closed #sidebar {
+    margin-left: -210px;
+}
+
+#sidebar {
     width: 210px;
-    position: absolute;
-    top: 0;
-    bottom: 40px;
+    height: 100%;
+    position: fixed;
     background: #2a3542;
     overflow-y: scroll;
-    outline: none;
     margin-top: 94px;
 }
 
@@ -131,7 +147,3 @@ ul.sidebar-menu {
                     transition: all 0.3s ease;
                     color: #aeb2b7;
                 }
-
-.row {
-    margin-left: 210px;
-}
