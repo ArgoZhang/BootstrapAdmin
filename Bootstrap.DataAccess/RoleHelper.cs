@@ -19,7 +19,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="tId"></param>
         /// <returns></returns>
-        public static IEnumerable<Role> RetrieveRole(string tId = null)
+        public static IEnumerable<Role> RetrieveRoles(string tId = null)
         {
             string sql = "select * from Roles";
             var ret = CacheManager.GetOrAdd(RoleDataKey, CacheSection.RetrieveIntervalByKey(RoleDataKey), key =>
@@ -45,6 +45,30 @@ namespace Bootstrap.DataAccess
                 return roles;
             }, CacheSection.RetrieveDescByKey(RoleDataKey));
             return string.IsNullOrEmpty(tId) ? ret : ret.Where(t => tId.Equals(t.ID.ToString(), StringComparison.OrdinalIgnoreCase));
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static bool SaveRolesByUserId(int id, string value)
+        {
+            //UNDONE: 编写通过用户ID保存当前授权角色的方法
+            return true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<Role> RetrieveRolesByUserId()
+        {
+            //UNDONE: 编写通过用户ID获取所有角色的方法
+            return new List<Role>() {
+                new Role() { ID = 1, RoleName = "TestRole1", Description = "测试角色1" },
+                new Role() { ID = 2, RoleName = "TestRole2", Description = "测试角色2" }
+            };
         }
         /// <summary>
         /// 删除角色表

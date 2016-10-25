@@ -9,6 +9,35 @@
                 DisplayName: "displayName"
             }
         }),
+        click: {
+            assign: [{
+                id: 'btn_assignRole',
+                click: function (row) {
+                    Role.getRolesByUserId(1, function (roles) {
+                        $("#dialogRole .modal-title").text($.format('{0}-角色授权窗口', row.DisplayName));
+                        var data = $.map(roles, function (element, index) {
+                            return $.format('<div class="checkbox"><label><input type="checkbox" value="{0}">{1}</label></div>', element.ID, element.RoleName);
+                        }).join('');
+                        $('#dialogRole form').html(data);
+                        $('#dialogRole').modal('show');
+                    });
+                }
+            }, {
+                id: 'btn_assignGroup',
+                click: function (row) {
+                    var userId = row.ID;
+                }
+            }, {
+                id: 'btnSubmitUserRole',
+                click: function (row) {
+                    var userId = row.ID;
+                    var roleIds = $('#dialogRole :checked').map(function (index, element) {
+                        return $(element).val();
+                    }).toArray().join(',');
+                    Role.saveRolesByUserId(userId, roleIds, function () { });
+                }
+            }]
+        },
         success: function (src, data) {
             if (src === 'save' && data.ID === $('#userId').val()) {
                 $('.username').text(data.DisplayName);

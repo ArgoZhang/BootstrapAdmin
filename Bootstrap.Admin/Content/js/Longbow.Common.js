@@ -93,6 +93,17 @@
         }
     });
 
+    // enhance window.console.log
+    if (!window.console) {
+        window.console = {
+            log: function () {
+
+            }
+        };
+    }
+    window.console = window.console || {};
+    console.log || (console.log = opera.postError);
+
     $.fn.extend({
         autoValidate: function (options) {
             // validate

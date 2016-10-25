@@ -28,9 +28,9 @@ namespace Bootstrap.DataAccess.Tests
         [TestMethod()]
         public void RetrieveRoleTest()
         {
-            var result = RoleHelper.RetrieveRole("1");
+            var result = RoleHelper.RetrieveRoles("1");
             Assert.IsTrue((result.Count() == 0 || result.Count() == 1), "带有参数的RoleHelper.RetrieveRole方法调用失败，请检查数据库连接或者数据库SQL语句");
-            result = RoleHelper.RetrieveRole();
+            result = RoleHelper.RetrieveRoles();
             Assert.IsTrue(result.Count() >= 0, "不带参数的RoleHelper.RetrieveRole方法调用失败，请检查数据库连接或者数据库SQL语句");
         }
         [TestMethod()]
@@ -42,7 +42,7 @@ namespace Bootstrap.DataAccess.Tests
                 RoleName = "RoleUnitTest",
                 Description = string.Empty
             });
-            var role = RoleHelper.RetrieveRole().FirstOrDefault(r => r.RoleName == "RoleUnitTest");
+            var role = RoleHelper.RetrieveRoles().FirstOrDefault(r => r.RoleName == "RoleUnitTest");
             Assert.IsTrue(RoleHelper.DeleteRole(role.ID.ToString()), "删除用户失败");
         }
     }

@@ -1,6 +1,7 @@
 ﻿(function ($) {
     BootstrapAdmin = function (options) {
         var that = this;
+        if (options.click !== undefined && options.click.constructor === Object) { options.click = $.extend({}, BootstrapAdmin.settings.click, options.click); }
         this.options = $.extend({}, BootstrapAdmin.settings, options);
 
         this.dataEntity = options.dataEntity;
@@ -10,12 +11,21 @@
 
         // handler click event
         for (name in this.options.click) {
-            var source = $("#" + this.options.click[name]);
-            source.data('click', name);
-            $("#" + this.options.click[name]).click(function () {
-                var method = $(this).data('click');
-                BootstrapAdmin.prototype[method].apply(that);
-            });
+            var ele = this.options.click[name];
+            var cId = ele;
+            var event = null;
+            if ($.isArray(ele)) {
+                for (index in ele) {
+                    if (ele[index].id === undefined) {
+                        window.console.log('options.click.assign[{0}].{1}.id 未设置控件id', index, name);
+                        continue;
+                    }
+                    cId = ele[index]['id'];
+                    event = ele[index]['click'];
+                    handler(cId, event);
+                }
+            }
+            else handler(cId, event);
         }
 
         // handler modal window show event
@@ -26,6 +36,16 @@
                     v.currentElements.each(function () { $(this).popover('destroy'); })
                     v.resetForm();
                 }
+            });
+        }
+
+        function handler(cid, event) {
+            var source = $("#" + cId);
+            source.data('click', name);
+            if (event !== null) source.data('event', event);
+            source.click(function () {
+                var method = $(this).data('click');
+                BootstrapAdmin.prototype[method].call(that, this, $(this).data('event'));
             });
         }
     };
@@ -44,7 +64,8 @@
             create: 'btn_add',
             edit: 'btn_edit',
             del: 'btn_delete',
-            save: 'btnSubmit'
+            save: 'btnSubmit',
+            assign: []
         }
     };
 
@@ -56,14 +77,15 @@
         constructor: BootstrapAdmin,
         idEvents: function () {
             var op = {
-                dataEntity: this.options.dataEntity,
+                dataEntity: $.extend({}, this.options.dataEntity),
                 table: this.options.bootstrapTable,
                 modal: this.options.modal
             };
             return {
                 'click .edit': function (e, value, row, index) {
                     op.dataEntity.load(row);
-                    $('#' + op.table).bootstrapTable('uncheckAll').bootstrapTable('check', index);
+                    $(op.table).bootstrapTable('uncheckAll');
+                    $(op.table).bootstrapTable('check', index);
                     $('#' + op.modal).modal("show");
                 }
             }
@@ -74,23 +96,23 @@
         },
 
         create: function () {
-            this.dataEntity.reset();
+            if (this.dataEntity instanceof DataEntity) this.dataEntity.reset();
             if (this.options.modal.constructor === String) $('#' + this.options.modal).modal("show");
             if (this.options.bootstrapTable.constructor === String) $(this.options.bootstrapTable).bootstrapTable('uncheckAll');
         },
 
         edit: function () {
-            options = this.options;
+            var options = this.options;
             if (options.bootstrapTable.constructor !== String) return;
             var arrselections = $(options.bootstrapTable).bootstrapTable('getSelections');
             if (arrselections.length == 0) {
-                swal('请选择要编辑的条目', "编辑操作", "warning");
+                swal('请选择要编辑的数据', "编辑操作", "warning");
             }
             else if (arrselections.length > 1) {
-                swal('请选择一个要编辑的条目', "编辑操作", "warning");
+                swal('请选择一个要编辑的数据', "编辑操作", "warning");
             }
             else {
-                this.dataEntity.load(arrselections[0]);
+                if (this.dataEntity instanceof DataEntity) this.dataEntity.load(arrselections[0]);
                 if (options.modal.constructor === String) $('#' + options.modal).modal("show");
             }
         },
@@ -100,7 +122,7 @@
             if (options.bootstrapTable.constructor !== String) return;
             var arrselections = $(options.bootstrapTable).bootstrapTable('getSelections');
             if (arrselections.length == 0) {
-                swal('请选择要删除的条目', "删除操作", "warning");
+                swal('请选择要删除的数据', "删除操作", "warning");
                 return;
             }
             else {
@@ -134,7 +156,8 @@
         },
 
         save: function () {
-            var options = $.extend({}, this.options, { data: this.dataEntity.get() });
+            var options = $.extend({ data: {} }, this.options);
+            if (this.dataEntity instanceof DataEntity) options = $.extend(options, { data: this.dataEntity.get() });
             if (options.validateForm.constructor === String && !$("#" + options.validateForm).valid()) return;
             $.ajax({
                 url: options.url,
@@ -170,6 +193,62 @@
                     swal("失败", "保存数据失败", "error");
                 }
             });
-        }
+        },
+
+        assign: function (eventSrc, callback) {
+            var options = this.options;
+            if (options.bootstrapTable.constructor !== String) return;
+            var arrselections = $(options.bootstrapTable).bootstrapTable('getSelections');
+            if (arrselections.length == 0) {
+                swal('请选择要编辑的数据', "编辑操作", "warning");
+            }
+            else if (arrselections.length > 1) {
+                swal('请选择一个要编辑的数据', "编辑操作", "warning");
+            }
+            else {
+                if ($.isFunction(callback)) {
+                    callback.call(eventSrc, arrselections[0]);
+                }
+            }
+        },
+
+    };
+
+    Role = {};
+    Role.getRolesByUserId = function (userId, callback) {
+        $.ajax({
+            url: '../api/Roles/' + userId,
+            type: 'GET',
+            success: function (result) {
+                callback(result);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                callback();
+            }
+        });
+    };
+    Role.getRolesByGroupId = function (groupId) {
+
+    };
+    Role.saveRolesByUserId = function (userId, roleIds, callback) {
+        $.ajax({
+            url: '../api/Roles/' + userId,
+            data: { "": roleIds },
+            type: 'PUT',
+            success: function (result) {
+                callback(result);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                callback();
+            }
+        });
+    }
+
+    Group = {};
+    Group.getGroupsByUserId = function (userId) {
+
+    };
+    Group.getGroupsByRoleId = function (roleId) {
+
     };
 })(jQuery);

@@ -18,6 +18,10 @@ ul li {
     outline: none;
 }
 
+    .btn span.fa, .btn span.glyphicon {
+        margin-right: 6px;
+    }
+
 a, a:hover, a:focus {
     text-decoration: none;
     outline: none;
@@ -432,6 +436,11 @@ a.logo {
 .modal-footer {
     clear: both;
 }
+
+    .modal-footer .btn {
+        padding-left: 22px;
+        padding-right: 22px;
+    }
 
 .fixed-table-loading {
     padding-top: 5px;
