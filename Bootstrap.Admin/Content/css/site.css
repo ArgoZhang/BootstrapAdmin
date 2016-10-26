@@ -396,6 +396,10 @@ a.logo {
     margin-bottom: 15px;
 }
 
+    .modal-dialog .modal-body .form-inline .form-group input {
+        padding-right: 30px;
+    }
+
 .modal-header {
     background-color: #f5f5f5;
     border-top-left-radius: 6px;
@@ -456,7 +460,7 @@ input.valid {
     padding-left: 6px;
 }
 
-.lgbBreadcrumb {
+ul.breadcrumb {
     position: absolute;
     top: 56px;
     left: 15px;
@@ -464,20 +468,19 @@ input.valid {
     border-color: #ddd;
     border-width: 1px 0 0 0;
     border-style: solid;
+    background-color: transparent;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
 }
 
-    .lgbBreadcrumb > ul {
-        background-color: transparent;
+    ul.breadcrumb > li.active {
+        display: inline-block;
     }
 
-        .lgbBreadcrumb > ul > li.active {
-            display: inline-block;
-        }
+    ul.breadcrumb > li.load {
+        display: none;
+    }
 
-        .lgbBreadcrumb > ul > li.load {
-            display: none;
-        }
-
-        .lgbBreadcrumb > ul > li > a > i {
-            padding-right: 6px;
-        }
+    ul.breadcrumb > li > a > i {
+        padding-right: 6px;
+    }

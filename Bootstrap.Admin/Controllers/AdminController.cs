@@ -26,7 +26,6 @@ namespace Bootstrap.Admin.Controllers
         public ActionResult Users()
         {
             var v = new NavigatorBarModel();
-            v.BreadcrumbName = "用户管理";
             v.ShowMenu = "hide";
             v.Menus[1].Active = "active";
             v.HomeUrl = "~/Admin";
@@ -39,7 +38,6 @@ namespace Bootstrap.Admin.Controllers
         public ActionResult Groups()
         {
             var v = new NavigatorBarModel();
-            v.BreadcrumbName = "部门管理";
             v.ShowMenu = "hide";
             v.Menus[3].Active = "active";
             v.HomeUrl = "~/Admin";
@@ -48,7 +46,6 @@ namespace Bootstrap.Admin.Controllers
         public ActionResult Roles()
         {
             var v = new NavigatorBarModel();
-            v.BreadcrumbName = "角色管理";
             v.ShowMenu = "hide";
             v.Menus[2].Active = "active";
             v.HomeUrl = "~/Admin";
@@ -57,7 +54,6 @@ namespace Bootstrap.Admin.Controllers
         public ActionResult Menus()
         {
             var v = new NavigatorBarModel();
-            v.BreadcrumbName = "菜单管理";
             v.ShowMenu = "hide";
             v.Menus[0].Active = "active";
             v.HomeUrl = "~/Admin";

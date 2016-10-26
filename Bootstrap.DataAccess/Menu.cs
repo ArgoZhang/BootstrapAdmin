@@ -34,23 +34,10 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获得/设置 菜单分类
         /// </summary>
-        public string Category { get; set; }
+        public int Category { get; set; }
         /// <summary>
-        /// 
+        /// 获得/设置 是否当前被选中 active为选中
         /// </summary>
         public string Active { get; set; }
-
-        public static List<Menu> RetrieveMenus()
-        {
-            return new List<Menu>() {
-                new Menu() { Name = "菜单管理", Icon = "fa-dashboard", Url="/Admin/Menus", Active = "" },
-                new Menu() { Name = "用户管理", Icon = "fa-user", Url="/Admin/Users", Active = "" },
-                new Menu() { Name = "角色管理", Icon = "fa-sitemap", Url="/Admin/Roles", Active = "" },
-                new Menu() { Name = "部门管理", Icon = "fa-home", Url="/Admin/Groups", Active = "" },
-                new Menu() { Name = "字典表维护", Icon = "fa-book", Url="javascript:;", Active = "" },
-                new Menu() { Name = "个性化维护", Icon = "fa-pencil", Url="javascript:;", Active = "" },
-                new Menu() { Name = "系统日志", Icon = "fa-lock", Url="javascript:;", Active = "" }
-            };
-        }
     }
 }

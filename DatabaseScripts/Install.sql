@@ -148,10 +148,10 @@ CREATE TABLE [dbo].[Navigations](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
 	[ParentId] [int] NOT NULL,
 	[Name] [nvarchar](50) NOT NULL,
-	[Order] [int] NULL,
+	[Order] [int] NOT NULL,
 	[Icon] [varchar](50) NOT NULL,
 	[Url] [varchar](50) NULL,
-	[Category] [varchar](50) NOT NULL,
+	[Category] [int] NOT NULL,
  CONSTRAINT [PK_Navigations] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
@@ -163,5 +163,24 @@ GO
 SET ANSI_PADDING OFF
 GO
 
+ALTER TABLE [dbo].[Navigations] ADD  CONSTRAINT [DF_Navigations_ParentId]  DEFAULT ((0)) FOR [ParentId]
+GO
+
+ALTER TABLE [dbo].[Navigations] ADD  CONSTRAINT [DF_Navigations_Order]  DEFAULT ((0)) FOR [Order]
+GO
+
+ALTER TABLE [dbo].[Navigations] ADD  CONSTRAINT [DF_Navigations_Icon]  DEFAULT ('none') FOR [Icon]
+GO
+
 ALTER TABLE [dbo].[Navigations] ADD  CONSTRAINT [DF_Navigations_Category]  DEFAULT ((0)) FOR [Category]
 GO
+
+SET IDENTITY_INSERT Navigations ON
+insert into Navigations (ID, Name, [Order], Icon, Url) values (1, '菜单管理', 10, 'fa fa-dashboard', '~/Admin/Menus')
+insert into Navigations (ID, Name, [Order], Icon, Url) values (2, '用户管理', 20, 'fa fa-user', '~/Admin/Users')
+insert into Navigations (ID, Name, [Order], Icon, Url) values (3, '角色管理', 30, 'fa fa-sitemap', '~/Admin/Roles')
+insert into Navigations (ID, Name, [Order], Icon, Url) values (4, '部门管理', 40, 'fa fa-home', '~/Admin/Groups')
+insert into Navigations (ID, Name, [Order], Icon, Url) values (5, '字典表维护', 50, 'fa fa-book', '~/Admin/Dict')
+insert into Navigations (ID, Name, [Order], Icon, Url) values (6, '个性化维护', 60, 'fa fa-pencil', '~/Admin/Profiles')
+insert into Navigations (ID, Name, [Order], Icon, Url) values (7, '系统日志', 70, 'fa fa-gears', '~/Admin/EventLog')
+SET IDENTITY_INSERT Navigations OFF

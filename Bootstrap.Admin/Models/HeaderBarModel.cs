@@ -26,10 +26,6 @@ namespace Bootstrap.Admin.Models
         /// <summary>
         /// 
         /// </summary>
-        public string BreadcrumbName { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
         public string ShowMenu { get; set; }
         /// <summary>
         /// 

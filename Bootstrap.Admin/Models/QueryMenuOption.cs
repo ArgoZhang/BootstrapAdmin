@@ -20,15 +20,10 @@ namespace Bootstrap.Admin.Models
 
         public QueryData<Menu> RetrieveData()
         {
-            // int limit, int offset, string name, string price, string sort, string order
-            var data = MenuHelper.RetrieveMenus(string.Empty);
+            var data = MenuHelper.RetrieveMenus();
             if (!string.IsNullOrEmpty(Name))
             {
                 data = data.Where(t => t.Name.Contains(Name));
-            }
-            if (!string.IsNullOrEmpty(Category))
-            {
-                data = data.Where(t => t.Category.Contains(Category));
             }
             var ret = new QueryData<Menu>();
             ret.total = data.Count();

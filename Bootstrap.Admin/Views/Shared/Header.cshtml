@@ -33,7 +33,7 @@
                     <img alt="" src="../content/images/logo6.jpg">
                     <span class="username">@Model.DisplayName</span>
                     <b class="caret"></b>
-                    <input id="userId" type="text" class="hide" value="@Model.UserID"/>
+                    <input id="userId" type="text" class="hide" value="@Model.UserID" />
                 </a>
                 <ul class="dropdown-menu extended logout">
                     <div class="log-arrow-up"></div>
@@ -48,15 +48,10 @@
         <!--search & user info end-->
     </div>
     <!--breadcrumbs start -->
-    <div class="lgbBreadcrumb">
-        <ul class="breadcrumb">
-            <li><a href="@Url.Content(Model.HomeUrl)"><i class="fa fa-home"></i>首页</a></li>
-            @if (!string.IsNullOrEmpty(Model.BreadcrumbName))
-            {
-                <li>@Model.BreadcrumbName</li>
-            }
-        </ul>
-    </div>
+    <ul class="breadcrumb">
+        <li><a href="@Url.Content(Model.HomeUrl)"><i class="fa fa-home"></i>首页</a></li>
+        <li></li>
+    </ul>
     <!--breadcrumbs end -->
 </header>
 <!--header end-->

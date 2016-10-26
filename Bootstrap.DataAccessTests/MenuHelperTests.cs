@@ -24,7 +24,7 @@ namespace Bootstrap.DataAccess.Tests
             p.Order = 0;            
             p.Icon = "测试菜单Icon";
             p.Url = "urlTestAdd";
-            p.Category = "测试菜单分组";   
+            p.Category = 1;   
             var result = MenuHelper.SaveMenu(p);
             Assert.IsTrue(result, "增加菜单出错");
 
@@ -35,7 +35,7 @@ namespace Bootstrap.DataAccess.Tests
             p1.Order = 0;
             p1.Icon = "测试菜单Icon1";
             p1.Url = "urlTestUpdate";
-            p1.Category = "测试菜单分组1";
+            p1.Category = 1;
             result = MenuHelper.SaveMenu(p1);
             Assert.IsTrue(result, "更新菜单出错");
         }
@@ -51,7 +51,7 @@ namespace Bootstrap.DataAccess.Tests
                 Order = 0,
                 Icon = "测试菜单Icon1",
                 Url = "urlTestUpdate",
-                Category = "测试菜单分组1"           
+                Category = 1           
             });
             var menu = MenuHelper.RetrieveMenus().FirstOrDefault(m => m.Name == "菜单删除测试");
             Assert.IsTrue(MenuHelper.DeleteMenu(menu.ID.ToString()),"删除菜单失败");

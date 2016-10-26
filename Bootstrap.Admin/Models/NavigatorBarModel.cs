@@ -1,5 +1,6 @@
 ﻿using Bootstrap.DataAccess;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Bootstrap.Admin.Models
 {
@@ -7,7 +8,8 @@ namespace Bootstrap.Admin.Models
     {
         public NavigatorBarModel()
         {
-            Menus = Menu.RetrieveMenus();
+            Menus = MenuHelper.RetrieveMenus().ToList();
+            Menus.ForEach(m => m.Active = null);
         }
         /// <summary>
         /// 

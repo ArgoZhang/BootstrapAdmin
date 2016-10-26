@@ -37,10 +37,10 @@ namespace Bootstrap.DataAccess
                                 ID = (int)reader[0],
                                 ParentId = (int)reader[1],
                                 Name = (string)reader[2],
-                                Order = LgbConvert.ReadValue((int)reader[3],0),
+                                Order = (int)reader[3],
                                 Icon = (string)reader[4],
-                                Url = LgbConvert.ReadValue((string)reader[5],string.Empty),
-                                Category = (string)reader[6]
+                                Url = LgbConvert.ReadValue((string)reader[5], string.Empty),
+                                Category = (int)reader[6]
                             });
                         }
                     }
@@ -49,6 +49,16 @@ namespace Bootstrap.DataAccess
                 return Menus;
             }, CacheSection.RetrieveDescByKey(MenuDataKey));
             return string.IsNullOrEmpty(tId) ? ret : ret.Where(t => tId.Equals(t.ID.ToString(), StringComparison.OrdinalIgnoreCase));
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public static IEnumerable<Menu> RetrieveMenusByUserId(int userId)
+        {
+            //UNDONE: 通过用户ID获得到当前用户配置的菜单
+            return RetrieveMenus();
         }
         /// <summary>
         /// 删除菜单信息
@@ -85,8 +95,7 @@ namespace Bootstrap.DataAccess
             bool ret = false;
             if (p.Name.Length > 50) p.Name.Substring(0, 50);
             if (p.Icon.Length > 50) p.Icon.Substring(0, 50);
-            if (p.Url != null) { if (p.Url.Length > 50) p.Url.Substring(0, 50); }           
-            if (p.Category.Length > 50) p.Category.Substring(0, 50);
+            if (p.Url != null) { if (p.Url.Length > 50) p.Url.Substring(0, 50); }
             string sql = p.ID == 0 ?
                 "Insert Into Navigations (ParentId, Name, [Order], Icon, Url, Category) Values (@ParentId, @Name, @Order, @Icon, @Url, @Category)" :
                 "Update Navigations set ParentId = @ParentId, Name = @Name, [Order] = @Order, Icon = @Icon, Url = @Url, Category = @Category where ID = @ID";
