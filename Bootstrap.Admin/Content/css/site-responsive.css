@@ -59,12 +59,16 @@
         top: 0px;
     }
 
-    .notify-row {
+    .logo {
         display: none;
     }
 }
 
 @media (max-width: 480px) {
+    .notify-row {
+        display: none;
+    }
+
     .modal-dialog {
         width: 370px;
     }
