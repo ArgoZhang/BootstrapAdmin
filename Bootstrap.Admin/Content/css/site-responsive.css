@@ -5,24 +5,36 @@
     }
 }
 
-@media (min-width: 980px) {
+@media (max-width: 1200px) {
+    .modal-dialog .modal-body {
+        padding-bottom: 0;
+    }
+}
+
+@media (min-width: 990px) {
     .modal-dialog {
         width: 800px;
     }
 }
 
-@media (max-width: 979px) {
+@media (max-width: 990px) {
     .panel-body {
-        padding-top: 0px;
+        padding-bottom: 0;
     }
 
         .panel-body .form-inline .form-group {
-            margin-top: 15px;
-            margin-bottom: 0;
+            margin-bottom: 15px;
         }
 }
 
+@media (min-width: 768px) {
+}
+
 @media (max-width: 768px) {
+    .modal-dialog {
+        width: 540px;
+    }
+
     .sidebar-close #sidebar {
         height: auto;
         overflow: hidden;
@@ -49,6 +61,10 @@
 }
 
 @media (max-width: 480px) {
+    .modal-dialog {
+        width: 370px;
+    }
+
     .top-nav ul.top-menu > li {
         float: right;
     }
@@ -59,4 +75,7 @@
 }
 
 @media (max-width:320px) {
+    .modal-dialog {
+        width: 300px;
+    }
 }

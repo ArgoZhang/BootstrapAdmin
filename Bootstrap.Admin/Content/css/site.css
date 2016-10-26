@@ -392,8 +392,8 @@ a.logo {
     overflow: hidden;
 }
 
-.modal-body {
-    padding-bottom: 0;
+.modal-dialog .modal-body .form-inline .form-group {
+    margin-bottom: 15px;
 }
 
 .modal-header {
