@@ -58,6 +58,10 @@
         right: 10px;
         top: 0px;
     }
+
+    .notify-row {
+        display: none;
+    }
 }
 
 @media (max-width: 480px) {
