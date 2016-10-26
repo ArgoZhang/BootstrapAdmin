@@ -45,5 +45,17 @@ namespace Bootstrap.DataAccess.Tests
             var role = RoleHelper.RetrieveRoles().FirstOrDefault(r => r.RoleName == "RoleUnitTest");
             Assert.IsTrue(RoleHelper.DeleteRole(role.ID.ToString()), "删除用户失败");
         }
+        [TestMethod()]
+        public void RetrieveRolesByUserIdTest()
+        {
+            var result = RoleHelper.RetrieveRolesByUserId("1");
+            Assert.IsTrue(result.Count() >= 0, "用户查询角色关系失败！");
+        }
+        [TestMethod()]
+        public void SaveRolesByUserIdTest()
+        {
+            var result = RoleHelper.SaveRolesByUserId(1,"3");
+            Assert.IsTrue(result == true, "保存用户角色关系失败");
+        }
     }
 }

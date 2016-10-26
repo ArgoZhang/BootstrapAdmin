@@ -218,7 +218,8 @@
     Role.getRolesByUserId = function (userId, callback) {
         $.ajax({
             url: '../api/Roles/' + userId,
-            type: 'GET',
+            data: { "": "user" },
+            type: 'POST',
             success: function (result) {
                 callback(result);
             },
@@ -233,7 +234,7 @@
     Role.saveRolesByUserId = function (userId, roleIds, callback) {
         $.ajax({
             url: '../api/Roles/' + userId,
-            data: { "": roleIds },
+            data: { "roleIds": roleIds,"type":"user" },
             type: 'PUT',
             success: function (result) {
                 callback(result);

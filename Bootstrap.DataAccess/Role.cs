@@ -14,5 +14,9 @@
         /// 获得/设置 角色描述
         /// </summary>
         public string Description { get; set; }
+        /// <summary>
+        /// 获取/设置 用户角色状态
+        /// </summary>
+        public int IsSelect { get; set; }
     }
 }

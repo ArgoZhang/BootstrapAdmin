@@ -1,7 +1,7 @@
 ﻿using Bootstrap.Admin.Models;
 using Bootstrap.DataAccess;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web.Http;
 
 namespace Bootstrap.Admin.Controllers
@@ -23,10 +23,17 @@ namespace Bootstrap.Admin.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet]
-        public IEnumerable<Role> Get(int id)
+        [HttpPost]
+        public IEnumerable<Role> Post(int id, [FromBody]string value)
         {
-            return RoleHelper.RetrieveRolesByUserId();
+            if (value == "user")
+            {
+                return RoleHelper.RetrieveRolesByUserId(id.ToString());
+            }
+            else
+            {
+                return null;
+            }
         }
         /// <summary>
         /// 
@@ -34,9 +41,13 @@ namespace Bootstrap.Admin.Controllers
         /// <param name="id"></param>
         /// <param name="value"></param>
         [HttpPut]
-        public bool Put(int id, [FromBody]string value)
+        public bool Put(int id, [FromBody]JObject value)
         {
-            return RoleHelper.SaveRolesByUserId(id, value);
+            dynamic json = value;
+            string roleIds = json.roleIds;
+            if (json.type == "user")
+                return RoleHelper.SaveRolesByUserId(id, roleIds);
+            return false;
         }
         /// <summary>
         /// 

@@ -1,11 +1,13 @@
 ﻿using Longbow;
 using Longbow.Caching;
 using Longbow.Caching.Configuration;
+using Longbow.Data;
 using Longbow.ExceptionManagement;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
 
@@ -14,6 +16,7 @@ namespace Bootstrap.DataAccess
     public class RoleHelper
     {
         private const string RoleDataKey = "RoleData-CodeRoleHelper";
+        private const string RoleUserIDDataKey = "RoleData-CodeRoleHelper-";
         /// <summary>
         /// 查询所有角色
         /// </summary>
@@ -47,28 +50,93 @@ namespace Bootstrap.DataAccess
             return string.IsNullOrEmpty(tId) ? ret : ret.Where(t => tId.Equals(t.ID.ToString(), StringComparison.OrdinalIgnoreCase));
         }
         /// <summary>
-        /// 
+        /// 保存用户角色关系
         /// </summary>
         /// <param name="id"></param>
         /// <param name="value"></param>
         /// <returns></returns>
         public static bool SaveRolesByUserId(int id, string value)
         {
-            //UNDONE: 编写通过用户ID保存当前授权角色的方法
-            return true;
-        }
+            DataTable dt = new DataTable();
+            dt.Columns.Add("UserID", typeof(int));
+            dt.Columns.Add("RoleID", typeof(int));
+            //判断用户是否选定角色
+            if (!string.IsNullOrEmpty(value))
+            {
+                string[] roleIDs = value.Split(',');
+                foreach (string roleID in roleIDs)
+                {
+                    DataRow row = dt.NewRow();
+                    row["UserID"] = id;
+                    row["RoleID"] = roleID;
+                    dt.Rows.Add(row);
+                }
+            }
 
+            string sql = "delete from UserRole where UserID=@UserID;";
+            using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
+            {
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserID", id, ParameterDirection.Input));
+                using (TransactionPackage transaction = DBAccessManager.SqlDBAccess.BeginTransaction())
+                {
+                    using (SqlBulkCopy bulk = new SqlBulkCopy((SqlConnection)transaction.Transaction.Connection, SqlBulkCopyOptions.Default, (SqlTransaction)transaction.Transaction))
+                    {
+                        bulk.BatchSize = 1000;
+                        bulk.DestinationTableName = "UserRole";
+                        bulk.ColumnMappings.Add("UserID", "UserID");
+                        bulk.ColumnMappings.Add("RoleID", "RoleID");
+
+                        bool ret = true;
+                        try
+                        {
+                            DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd, transaction);
+                            bulk.WriteToServer(dt);
+                            transaction.CommitTransaction();
+                            ClearCache();
+                        }
+                        catch (Exception ex)
+                        {
+                            ret = false;
+                            transaction.RollbackTransaction();
+                        }
+                        return ret;
+                    }
+                }
+            }
+        }
         /// <summary>
-        /// 
+        /// 查询某个用户所拥有的角色
         /// </summary>
         /// <returns></returns>
-        public static IEnumerable<Role> RetrieveRolesByUserId()
+        public static IEnumerable<Role> RetrieveRolesByUserId(string userId)
         {
-            //UNDONE: 编写通过用户ID获取所有角色的方法
-            return new List<Role>() {
-                new Role() { ID = 1, RoleName = "TestRole1", Description = "测试角色1" },
-                new Role() { ID = 2, RoleName = "TestRole2", Description = "测试角色2" }
-            };
+            string sql = "select *,case when (ID in( select RoleID from UserRole where UserID=@UserID)) then 1 else 0 end as IsSelect from Roles";
+            string k = string.Format("{0}{1}", RoleUserIDDataKey, userId);
+            var ret = CacheManager.GetOrAdd(k, CacheSection.RetrieveIntervalByKey(RoleUserIDDataKey), key =>
+            {
+                List<Role> Roles = new List<Role>();
+                DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserID", userId, ParameterDirection.Input));
+                try
+                {
+                    using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
+                    {
+                        while (reader.Read())
+                        {
+                            Roles.Add(new Role()
+                            {
+                                ID = (int)reader[0],
+                                RoleName = (string)reader[1],
+                                Description = (string)reader[2],
+                                IsSelect = (int)reader[3]
+                            });
+                        }
+                    }
+                }
+                catch (Exception ex) { ExceptionManager.Publish(ex); }
+                return Roles;
+            }, CacheSection.RetrieveDescByKey(RoleUserIDDataKey));
+            return ret;
         }
         /// <summary>
         /// 删除角色表

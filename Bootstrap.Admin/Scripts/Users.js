@@ -13,10 +13,14 @@
             assign: [{
                 id: 'btn_assignRole',
                 click: function (row) {
-                    Role.getRolesByUserId(1, function (roles) {
+                    Role.getRolesByUserId(row.ID, function (roles) {
                         $("#dialogRole .modal-title").text($.format('{0}-角色授权窗口', row.DisplayName));
                         var data = $.map(roles, function (element, index) {
-                            return $.format('<div class="checkbox"><label><input type="checkbox" value="{0}">{1}</label></div>', element.ID, element.RoleName);
+                            if (element.IsSelect == 1) {
+                                return $.format('<div class="checkbox"><label><input type="checkbox" value="{0}" checked="checked">{1}</label></div>', element.ID, element.RoleName);
+                            } else if (element.IsSelect == 0) {
+                                return $.format('<div class="checkbox"><label><input type="checkbox" value="{0}">{1}</label></div>', element.ID, element.RoleName);
+                            }
                         }).join('');
                         $('#dialogRole form').html(data);
                         $('#dialogRole').modal('show');
@@ -34,7 +38,14 @@
                     var roleIds = $('#dialogRole :checked').map(function (index, element) {
                         return $(element).val();
                     }).toArray().join(',');
-                    Role.saveRolesByUserId(userId, roleIds, function () { });
+                    Role.saveRolesByUserId(userId, roleIds, function (result) {
+                        if (result) {
+                            $('#dialogRole').modal("hide");
+                            swal("成功", "修改角色", "success");
+                        } else {
+                            swal("失败", "修改角色", "error");
+                        }
+                    });
                 }
             }]
         },
