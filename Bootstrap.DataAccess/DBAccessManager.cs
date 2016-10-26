@@ -6,7 +6,7 @@ namespace Bootstrap.DataAccess
     /// <summary>
     /// 
     /// </summary>
-    static class DBAccessManager
+    public static class DBAccessManager
     {
         private static Lazy<DBAccess> db = new Lazy<DBAccess>(() => DBAccess.CreateDB("SQL"), true);
 

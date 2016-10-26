@@ -1,6 +1,7 @@
 ﻿using Longbow;
 using Longbow.Caching;
 using Longbow.Caching.Configuration;
+using Longbow.Data;
 using Longbow.ExceptionManagement;
 using System;
 using System.Collections.Generic;
@@ -38,8 +39,8 @@ namespace Bootstrap.DataAccess
                                 ParentId = (int)reader[1],
                                 Name = (string)reader[2],
                                 Order = (int)reader[3],
-                                Icon = (string)reader[4],
-                                Url = LgbConvert.ReadValue((string)reader[5], string.Empty),
+                                Icon = LgbConvert.ReadValue(reader[4], string.Empty),
+                                Url = LgbConvert.ReadValue(reader[5], string.Empty),
                                 Category = (int)reader[6]
                             });
                         }
@@ -93,9 +94,10 @@ namespace Bootstrap.DataAccess
         {
             if (p == null) throw new ArgumentNullException("p");
             bool ret = false;
+            if (string.IsNullOrEmpty(p.Name)) return ret;
             if (p.Name.Length > 50) p.Name.Substring(0, 50);
-            if (p.Icon.Length > 50) p.Icon.Substring(0, 50);
-            if (p.Url != null) { if (p.Url.Length > 50) p.Url.Substring(0, 50); }
+            if (p.Icon != null && p.Icon.Length > 50) p.Icon.Substring(0, 50);
+            if (p.Url != null && p.Url.Length > 50) p.Url.Substring(0, 50);
             string sql = p.ID == 0 ?
                 "Insert Into Navigations (ParentId, Name, [Order], Icon, Url, Category) Values (@ParentId, @Name, @Order, @Icon, @Url, @Category)" :
                 "Update Navigations set ParentId = @ParentId, Name = @Name, [Order] = @Order, Icon = @Icon, Url = @Url, Category = @Category where ID = @ID";
@@ -107,8 +109,8 @@ namespace Bootstrap.DataAccess
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ParentId", p.ParentId, ParameterDirection.Input));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Name", p.Name, ParameterDirection.Input));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Order", p.Order, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Icon", p.Icon, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Url", p.Url, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Icon", DBAccess.ToDBValue(p.Icon), ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Url", DBAccess.ToDBValue(p.Url), ParameterDirection.Input));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Category", p.Category, ParameterDirection.Input));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }

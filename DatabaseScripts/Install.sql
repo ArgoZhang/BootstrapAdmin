@@ -149,7 +149,7 @@ CREATE TABLE [dbo].[Navigations](
 	[ParentId] [int] NOT NULL,
 	[Name] [nvarchar](50) NOT NULL,
 	[Order] [int] NOT NULL,
-	[Icon] [varchar](50) NOT NULL,
+	[Icon] [varchar](50) NULL,
 	[Url] [varchar](50) NULL,
 	[Category] [int] NOT NULL,
  CONSTRAINT [PK_Navigations] PRIMARY KEY CLUSTERED 

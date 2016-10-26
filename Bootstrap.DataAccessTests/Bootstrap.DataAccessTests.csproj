@@ -36,8 +36,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Longbow.Data, Version=3.0.0.0, Culture=neutral, PublicKeyToken=c20f2177a7066899, processorArchitecture=MSIL" />
     <Reference Include="Longbow.V4, Version=4.0.0.0, Culture=neutral, PublicKeyToken=c20f2177a7066899, processorArchitecture=MSIL" />
     <Reference Include="System" />
+    <Reference Include="System.Data" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
