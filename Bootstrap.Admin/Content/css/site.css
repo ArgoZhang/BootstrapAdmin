@@ -158,6 +158,10 @@ a.logo {
         top: 50px;
     }
 
+        .top-nav .dropdown-menu.extended.logout li a i {
+            margin-bottom: 4px;
+        }
+
     .top-nav .nav .caret {
         border-bottom-color: #A4AABA;
         border-top-color: #A4AABA;
