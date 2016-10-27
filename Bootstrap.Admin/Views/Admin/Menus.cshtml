@@ -3,6 +3,9 @@
     ViewBag.Title = "菜单管理";
     Layout = "~/Views/Shared/_Default.cshtml";
 }
+@section css {
+    <link href="~/Content/css/fa.css" rel="stylesheet" />
+}
 @section Javascript {
     <script src="~/scripts/Menus.js"></script>
 }
@@ -69,4 +72,5 @@
 }
 @section customModal {
     @Html.Partial("RoleConfig")
+    @Html.Partial("IconView")
 }

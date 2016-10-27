@@ -83,4 +83,27 @@
             maxlength: 50
         }
     });
+
+    $('.fontawesome-icon-list ul li').addClass('col-md-3 col-sm-4 col-sm-6');
+
+    $('.fontawesome-icon-list .fa-hover a, .fontawesome-icon-list ul li').click(function () {
+        $('.icon-content .modal-footer i').attr('class', $(this).children('i, span:first').attr('class'));
+        return false;
+    });
+
+    $('.form-group .input-group .input-group-btn .btn').click(function () {
+        $('.icon-content').show();
+    });
+
+    $('.icon-content button:not(:last)').click(function () {
+        $('.icon-content').hide();
+    });
+
+    $('.icon-content button:last').click(function () {
+        var icon = $('.icon-content .modal-footer i').attr('class');
+        window.console.log(icon);
+        $('.icon-content').hide();
+        $('.form-group .input-group input.disabled').val(icon);
+        $('.form-group .input-group .input-group-btn .btn i').attr('class', icon);
+    });
 });

@@ -225,6 +225,7 @@
     <Content Include="Views\Admin\Menus.cshtml" />
     <Content Include="Views\Shared\Glyphicons.cshtml" />
     <Content Include="Views\Shared\RoleConfig.cshtml" />
+    <Content Include="Views\Shared\IconView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

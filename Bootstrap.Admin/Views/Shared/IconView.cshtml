@@ -1,0 +1,44 @@
+﻿<div class="modal-content icon-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myIconModalLabel">请选择图标</h4>
+    </div>
+    <div class="modal-body">
+        <i id="fa-top"></i>
+        <div class="col-sm-9">
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#Fontawesome" data-toggle="tab">Fontawesome 图标</a></li>
+                <li role="presentation"><a href="#Glyphicons" data-toggle="tab">Glyphicons 图标</a></li>
+            </ul>
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="Fontawesome">@Html.Partial("AwesomeIcon")</div>
+                <div role="tabpanel" class="tab-pane" id="Glyphicons">@Html.Partial("Glyphicons")</div>
+            </div>
+        </div>
+        <div class="fb-timeliner">
+            <h2 class="recent-highlight">图标分类</h2>
+            <ul>
+                <li class="active"><a href="#">类型一</a></li>
+                <li><a href="#new">新图标</a></li>
+                <li><a href="#web-application">Web 图标</a></li>
+                <li><a href="#accessibility">accessibility</a></li>
+                <li><a href="#transportation">transportation</a></li>
+                <li><a href="#gender">gender</a></li>
+                <li><a href="#">类型一</a></li>
+                <li><a href="#">类型一</a></li>
+                <li><a href="#">类型一</a></li>
+                <li><a href="#">类型一</a></li>
+                <li><a href="#">类型一</a></li>
+                <li><a href="#medical">医疗图标</a></li>
+                <li><a href="#fa-top">返回顶部</a></li>
+                <li><a href="#fa-bottom">返回底部</a></li>
+            </ul>
+        </div>
+        <i id="fa-bottom"></i>
+    </div>
+    <div class="modal-footer">
+        <span>被选择的图标：</span><i></i>
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary" id="btnSubmitIcon">保存</button>
+    </div>
+</div>

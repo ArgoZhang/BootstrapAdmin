@@ -1,16 +1,125 @@
-﻿body {
-    padding-top: 16px;
+﻿.modal-body #fa-top {
+    float: left;
+    margin-top: -15px;
 }
+
+.modal-body #fa-bottom {
+    clear: both;
+    float: right;
+    margin-bottom: -15px;
+}
+
+.form-group .input-group .input-group-btn .btn i {
+    color: #187c9a;
+    padding-right: 6px;
+}
+
+.fb-timeliner {
+    position: fixed;
+    right: 40px;
+    width: 150px;
+}
+
+    .fb-timeliner ul {
+        margin-left: 10px;
+        margin-bottom: 20px;
+        padding-left: 0;
+    }
+
+        .fb-timeliner ul li {
+            margin-bottom: 3px;
+        }
+
+            .fb-timeliner ul li.active a {
+                color: #7a7a7a;
+                border-left: 4px solid #5bc0de;
+                padding-left: 10px;
+            }
+
+            .fb-timeliner ul li a {
+                color: #999797;
+                border-left: 4px solid #d3d7dd;
+                padding-left: 10px;
+                padding-top: 3px;
+                padding-bottom: 3px;
+                display: block;
+            }
+
+                .fb-timeliner ul li a:hover {
+                    color: #999797;
+                    border-left: 4px solid #d9534f;
+                    padding-left: 10px;
+                }
+
+    .fb-timeliner h2 {
+        background: #828283;
+        color: #fff;
+        margin-top: 0;
+        padding: 10px 15px;
+        font-size: 16px;
+        border-radius: 4px;
+        -webkit-border-radius: 4px;
+        font-weight: 300;
+    }
+
+.recent-highlight {
+    background: #FF6C60 !important;
+}
+
+#pickIcon {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.icon-content {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    bottom: 15px;
+    right: 15px;
+    z-index: 1051;
+    display: none;
+}
+
+    .icon-content .modal-body {
+        position: fixed;
+        left: 18px;
+        right: 16px;
+        top: 62px;
+        bottom: 80px;
+        overflow-y: scroll;
+    }
+
+    .icon-content .modal-footer {
+        position: fixed;
+        left: 16px;
+        right: 16px;
+        bottom: 15px;
+    }
+
+        .icon-content .modal-footer span {
+            vertical-align: middle;
+            font-size: 14px;
+            color: #000;
+        }
+
+        .icon-content .modal-footer i {
+            vertical-align: middle;
+            font-size: 22px;
+            padding: 0 15px;
+            color: #337ab7;
+        }
 
 .fontawesome-icon-list .fa-hover a {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    line-height: 32px;
+    padding-left: 10px;
     display: block;
     color: #222;
-    line-height: 32px;
     height: 32px;
-    padding-left: 10px;
     border-radius: 4px;
 }
 
@@ -40,16 +149,16 @@
 
     .fontawesome-icon-list ul li {
         overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        line-height: 32px;
+        padding-left: 10px;
         list-style: none;
         float: left;
-        padding-left: 10px;
         padding-right: 15px;
         padding-top: 2px;
         padding-bottom: 4px;
-        text-overflow: ellipsis;
-        line-height: 32px;
         height: 32px;
-        white-space: nowrap;
         vertical-align: middle;
     }
 
@@ -69,9 +178,3 @@
         .fontawesome-icon-list ul li span:nth-child(1) {
             margin-right: 10px;
         }
-
-@media (max-width: 768px) {
-    .col-sm-6 {
-        width: 50%;
-    }
-}
