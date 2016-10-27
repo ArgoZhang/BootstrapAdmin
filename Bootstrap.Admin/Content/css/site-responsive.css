@@ -40,8 +40,9 @@
         overflow: hidden;
         overflow-y: auto;
         position: absolute;
-        z-index: 1001;
+        z-index: 1;
         display: block;
+        padding-bottom: inherit;
     }
 
     #sidebar {
@@ -95,7 +96,7 @@
     }
 
     #sidebar {
-        margin-top: 94px;
+        padding-top: 94px;
         height: 100%;
     }
 

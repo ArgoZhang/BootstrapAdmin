@@ -21,6 +21,7 @@
     background: #2a3542;
     overflow-y: scroll;
     position: absolute;
+    padding-bottom: 15px;
 }
 
     #sidebar .sub-menu > .sub li {
