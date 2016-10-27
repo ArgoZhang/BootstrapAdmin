@@ -2,8 +2,10 @@
 using Bootstrap.DataAccess;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web.Http;
+using Newtonsoft.Json.Linq;
+using System.Linq;
+
 
 namespace Bootstrap.Admin.Controllers
 {
@@ -45,11 +47,10 @@ namespace Bootstrap.Admin.Controllers
             }
             return ret;
         }
-        /// <summary>
-        /// 
+        /// <summary>根据GroupID获取
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="value"></param>
+        /// <returns></returns>
         [HttpPut]
         public bool Put(int id, [FromBody]JObject value)
         {

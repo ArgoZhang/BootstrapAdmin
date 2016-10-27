@@ -247,7 +247,7 @@
     Role.getRolesByUserId = function (userId, callback) {
         processRolesData({ Id: userId, callback: callback, data: { type: "user" } });
     };
-    Role.getRolesByGroupId = function (groupId) {
+    Role.getRolesByGroupId = function (groupId, callback) {
         processRolesData({ Id: groupId, callback: callback, data: { type: "group" } });
     };
     Role.getRolesByMenuId = function (menuId, callback) {
@@ -255,6 +255,9 @@
     };
     Role.saveRolesByUserId = function (userId, roleIds, callback) {
         processRolesData({ Id: userId, callback: callback, method: "PUT", data: { type: "user", roleIds: roleIds } });
+    }
+    Role.saveRolesByGroupId = function (groupId, roleIds, callback) {
+        processRolesData({ Id: groupId, callback: callback, method: "PUT", data: { type: "group", roleIds: roleIds } });
     }
     Role.saveRolesByMenuId = function (menuId, roleIds, callback) {
         processRolesData({ Id: menuId, callback: callback, method: "PUT", data: { type: "menu", roleIds: roleIds } });
@@ -318,7 +321,7 @@
                 }
                 if (result) { swal("成功", "授权角色", "success"); }
                 else { swal("失败", "授权角色", "error"); }
-                if ($.isFunction(data.callback))  data.callback(result);
+                if ($.isFunction(data.callback)) data.callback(result);
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 if ($.isFunction(data.callback)) data.callback(false);
@@ -333,10 +336,10 @@
     Group.saveGroupsByUserId = function (userId, groupIds, callback) {
         processGroupsData({ Id: userId, callback: callback, method: "PUT", data: { type: "user", groupIds: groupIds } });
     };
-    Group.getGroupsByRoleId = function (roleId,callback) {
+    Group.getGroupsByRoleId = function (roleId, callback) {
         processGroupsData({ Id: roleId, callback: callback, data: { type: "role" } });
     };
-    Group.saveGroupsByRoleId = function (roleId,groupIds,callback) {
+    Group.saveGroupsByRoleId = function (roleId, groupIds, callback) {
         processGroupsData({ Id: roleId, callback: callback, method: "PUT", data: { type: "role", groupIds: groupIds } });
     };
 })(jQuery);

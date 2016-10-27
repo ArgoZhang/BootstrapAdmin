@@ -3,6 +3,7 @@ using Longbow.Caching;
 using Longbow.Caching.Configuration;
 using Longbow.Data;
 using Longbow.ExceptionManagement;
+using Longbow.Data;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -10,6 +11,7 @@ using System.Data.Common;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
+using System.Data.SqlClient;
 
 namespace Bootstrap.DataAccess
 {
@@ -19,8 +21,9 @@ namespace Bootstrap.DataAccess
     public class RoleHelper
     {
         private const string RoleDataKey = "RoleData-CodeRoleHelper";
+        private const string RolebyGroupDataKey = "RoleData-CodeRoleHelper-";
         private const string RoleUserIDDataKey = "RoleData-CodeRoleHelper-";
-        private const string RoleNavigationIDDataKey = "RoleData-CodeRoleHelper-Navigation-";
+        private const string RoleNavigationIDDataKey = "RoleData-CodeRoleHelper-Navigation";
         /// <summary>
         /// 查询所有角色
         /// </summary>
@@ -107,6 +110,8 @@ namespace Bootstrap.DataAccess
             }
             return ret;
         }
+       
+      
 
         /// <summary>
         /// 查询某个用户所拥有的角色
@@ -141,7 +146,7 @@ namespace Bootstrap.DataAccess
                 return Roles;
             }, CacheSection.RetrieveDescByKey(RoleUserIDDataKey));
         }
-
+   
         /// <summary>
         /// 删除角色表
         /// </summary>
@@ -206,15 +211,15 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<Role> RetrieveRolesByMenuId(int menuId)
         {
+            string sql = "select r.ID, r.RoleName, r.[Description], case ur.RoleID when r.ID then 'checked' else '' end [status] from Roles r left join NavigationRole ur on r.ID = ur.RoleID and NavigationID = @NavigationID";
             string k = string.Format("{0}{1}", RoleNavigationIDDataKey, menuId);
-            return CacheManager.GetOrAdd(k, CacheSection.RetrieveIntervalByKey(RoleUserIDDataKey), key =>
+            var ret = CacheManager.GetOrAdd(k, CacheSection.RetrieveIntervalByKey(RoleNavigationIDDataKey), key =>
             {
                 List<Role> Roles = new List<Role>();
-                string sql = "select r.ID, r.RoleName, r.[Description], case ur.RoleID when r.ID then 'checked' else '' end [status] from Roles r left join NavigationRole ur on r.ID = ur.RoleID and NavigationID = @NavigationID";
+                DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@NavigationID", menuId, ParameterDirection.Input));
                 try
                 {
-                    DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@NavigationID", menuId, ParameterDirection.Input));
                     using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
                     {
                         while (reader.Read())
@@ -231,15 +236,9 @@ namespace Bootstrap.DataAccess
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return Roles;
-            }, CacheSection.RetrieveDescByKey(RoleUserIDDataKey));
+            }, CacheSection.RetrieveDescByKey(RoleNavigationIDDataKey));
+            return ret;
         }
-
-        /// <summary>
-        /// 保存菜单角色关系
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="value"></param>
-        /// <returns></returns>
         public static bool SavaRolesByMenuId(int id, string value)
         {
             DataTable dt = new DataTable();
@@ -281,6 +280,7 @@ namespace Bootstrap.DataAccess
                         }
                         catch (Exception ex)
                         {
+                            ExceptionManager.Publish(ex);
                             ret = false;
                             transaction.RollbackTransaction();
                         }
@@ -289,30 +289,102 @@ namespace Bootstrap.DataAccess
                 }
             }
         }
-
         // 更新缓存
         private static void ClearCache(string cacheKey = null)
         {
             CacheManager.Clear(key => string.IsNullOrEmpty(cacheKey) || key == cacheKey);
         }
+
         /// <summary>
-        /// 查询某个部门所拥有的角色
-        /// </summary>
-        /// <param name="menuId"></param>
+        /// 根据GroupId查询和该Group有关的所有Roles
+        /// author:liuchun
+        /// <param name="tId"></param>
         /// <returns></returns>
-        public static IEnumerable<Role> RetrieveRolesByGroupId(int groupId)
+        public static IEnumerable<Role> RetrieveRolesByGroupId(int groupID)
         {
-            return null;
+            string key = string.Format("{0}{1}", RolebyGroupDataKey, groupID);
+            return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RolebyGroupDataKey), k =>
+            {
+                List<Role> Roles = new List<Role>();
+               string sql= "select r.ID, r.RoleName, r.[Description], case ur.RoleID when r.ID then 'checked' else '' end [status] from Roles r left join RoleGroup ur on r.ID = ur.RoleID and GroupID = @GroupID";
+                DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
+                try
+                {
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@GroupID", groupID, ParameterDirection.Input));
+                    using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
+                    {
+                        while (reader.Read())
+                        {
+                            Roles.Add(new Role()
+                            {
+                                ID = (int)reader[0],
+                                RoleName = (string)reader[1],
+                                Description = (string)reader[2],
+                                Checked = (string)reader[3]
+                            });
+                        }
+                    }
+                }
+                catch (Exception ex) { ExceptionManager.Publish(ex); }
+                return Roles;
+            }, CacheSection.RetrieveDescByKey(RolebyGroupDataKey));
         }
+
         /// <summary>
-        /// 保存部门角色关系
+        /// 根据GroupId更新Roles信息，删除旧的Roles信息，插入新的Roles信息
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="value"></param>
+        /// <param name="p"></param>
         /// <returns></returns>
-        public static bool SaveRolesByGroupId(int id, string value)
+        public static bool SaveRolesByGroupId(int gid, string value)
         {
-            return false;
+            //构造表格
+            DataTable dt = new DataTable();
+            dt.Columns.Add("RoleID", typeof(int));
+            dt.Columns.Add("GroupID", typeof(int));
+            if (!string.IsNullOrEmpty(value))
+            {
+                string[] roles = value.Split(',');
+                foreach (string role in roles)
+                {
+                    DataRow r = dt.NewRow();
+                    r["RoleID"] = role;
+                    r["GroupID"] = gid;
+                    dt.Rows.Add(r);
+                }
+            }
+
+            var trans = DBAccessManager.SqlDBAccess.BeginTransaction();
+            try
+            {
+                using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, string.Empty))
+                {
+                    // 执行第一个sql
+                    cmd.CommandText = "delete from RoleGroup where GroupID=@GroupID";
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@GroupID", gid, ParameterDirection.Input));
+                    DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd, trans);
+                }
+
+                using (SqlBulkCopy bulk = new SqlBulkCopy((SqlConnection)trans.Transaction.Connection, SqlBulkCopyOptions.Default, (SqlTransaction)trans.Transaction))
+                {
+                    bulk.BatchSize = 1000;
+                    bulk.DestinationTableName = "RoleGroup";
+                    bulk.ColumnMappings.Add("RoleID", "RoleID");
+                    bulk.ColumnMappings.Add("GroupID", "GroupID");
+                    bulk.WriteToServer(dt);
+                }
+
+                trans.CommitTransaction();
+                ClearCache();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.Publish(ex);
+                trans.RollbackTransaction();
+                return false;
+            }
+
+
         }
     }
 }

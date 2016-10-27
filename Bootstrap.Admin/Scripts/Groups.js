@@ -5,10 +5,50 @@
             map: {
                 ID: "groupID",
                 GroupName: "groupName",
-                Description: "groupDesc"
+                Description: "groupDesc"               
             }
-        })
+        }),
+        click: {
+            assign: [{
+                id: 'btn_assignRole',
+                click: function (row) {
+                    Role.getRolesByGroupId(row.ID, function (data) {
+                        $("#dialogRole .modal-title").text($.format('{0}-角色授权窗口', row.GroupName));
+                        $('#dialogRole form').html(data);
+                        $('#dialogRole').modal('show');
+                    });
+                }
+            }, {
+                id: 'btn_assignGroup',
+                click: function (row) {
+                    var userId = row.ID;
+                }
+            }, {
+                id: 'btnSubmitUserRole',
+                click: function (row) {
+                    var userId = row.ID;
+                    var roleIds = $('#dialogRole :checked').map(function (index, element) {
+                        return $(element).val();
+                    }).toArray().join(',');
+                    Role.saveRolesByGroupId(userId, roleIds, function (result) {
+                        if (result) {
+                            $('#dialogRole').modal("hide");
+                            swal("成功", "修改角色", "success");
+                        } else {
+                            swal("失败", "修改角色", "error");
+                        }
+
+                    });
+                }
+            }]
+        },
+        success: function (src, data) {
+            if (src === 'save' && data.ID === $('#userId').val()) {
+                $('.username').text(data.DisplayName);
+            }
+        }
     });
+
 
     $('table').smartTable({
         url: '../api/Groups',            //请求后台的URL（*）

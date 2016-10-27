@@ -5,7 +5,7 @@
             map: {
                 ID: "roleID",
                 RoleName: "roleName",
-                Description: "roleDesc"
+                Description: "roleDesc"             
             }
         }),
         click: {

@@ -57,5 +57,21 @@ namespace Bootstrap.DataAccess.Tests
             var result = RoleHelper.SaveRolesByUserId(1,"3");
             Assert.IsTrue(result == true, "保存用户角色关系失败");
         }
+
+        [TestMethod()]
+        public void RetrieveRoleByGroupIDTest()
+        {
+            var result = RoleHelper.RetrieveRolesByGroupId(1);
+            Assert.IsTrue((result.Count() == 8), "RetrieveRoleByGroupID测试失败");
+            
+        }
+
+        [TestMethod()]
+        public void SaveRoleByGroupIDTest()
+        {
+            var result = RoleHelper.SaveRolesByGroupId(1,"1,2,3,4");
+            Assert.IsTrue(result, "SaveRoleByGroupID测试失败");
+
+        }
     }
 }
