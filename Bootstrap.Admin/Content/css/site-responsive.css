@@ -82,8 +82,46 @@
     }
 }
 
-@media (max-width:320px) {
+@media (max-width: 320px) {
     .modal-dialog {
         width: 300px;
+    }
+}
+
+@media (min-height: 768px) {
+    html, body {
+        height: 100%;
+        overflow: hidden;
+    }
+
+    #sidebar {
+        margin-top: 94px;
+        height: 100%;
+    }
+
+    .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 50;
+    }
+
+    .site-footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        z-index: 50;
+    }
+
+    #main-content {
+        margin-top: 0;
+        position: fixed;
+        left: 0;
+        bottom: 40px;
+        right: 0;
+        top: 94px;
+        overflow: auto;
     }
 }

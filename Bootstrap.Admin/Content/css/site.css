@@ -10,10 +10,6 @@
     -moz-font-smoothing: antialiased;
 }
 
-#main-content {
-    margin-top: 94px;
-}
-
 .wrapper {
     display: inline-block;
     padding: 15px;
@@ -42,16 +38,10 @@ div button span {
 }
 
 .header, .footer {
-    min-height: 60px;
     padding: 0 15px;
 }
 
 .header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1002;
     height: 94px;
     border-color: #ddd;
     border-width: 0 0 1px 0;
@@ -95,7 +85,8 @@ a.logo {
 .site-footer {
     background: #5b6e84;
     color: #fff;
-    padding: 10px 0;
+    padding: 10px 4px;
+    height: 40px;
 }
 
 .go-top {
@@ -318,20 +309,20 @@ a.logo {
         -webkit-border-radius: 4px 4px 0px 0px;
     }
 
-    .dropdown-menu.extended li p.green {
-        background-color: #a9d86e;
-        color: #fff;
-    }
+        .dropdown-menu.extended li p.green {
+            background-color: #a9d86e;
+            color: #fff;
+        }
 
-    .dropdown-menu.extended li p.yellow {
-        background-color: #fcb322;
-        color: #fff;
-    }
+        .dropdown-menu.extended li p.yellow {
+            background-color: #fcb322;
+            color: #fff;
+        }
 
-    .dropdown-menu.extended li p.red {
-        background-color: #ff6c60;
-        color: #fff;
-    }
+        .dropdown-menu.extended li p.red {
+            background-color: #ff6c60;
+            color: #fff;
+        }
 
     .dropdown-menu.extended .progress {
         margin-bottom: 0 !important;

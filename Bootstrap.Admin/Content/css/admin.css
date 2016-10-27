@@ -1,5 +1,6 @@
 ﻿#main-content {
     margin-left: 210px;
+    height: auto;
 }
 
 .sidebar-closed > #sidebar > ul {
@@ -16,11 +17,10 @@
 
 #sidebar {
     width: 210px;
-    height: 100%;
-    position: fixed;
+    height: auto;
     background: #2a3542;
     overflow-y: scroll;
-    margin-top: 94px;
+    position: absolute;
 }
 
     #sidebar .sub-menu > .sub li {

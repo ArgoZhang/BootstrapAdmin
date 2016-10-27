@@ -103,7 +103,6 @@
     <Content Include="Content\css\admin.css" />
     <Content Include="Content\css\blue.css" />
     <Content Include="Content\css\fa.css" />
-    <Content Include="Content\css\fix.css" />
     <Content Include="Content\css\font-awesome.css" />
     <Content Include="Content\css\bootstrap-table.css" />
     <Content Include="Content\css\bootstrap-table.min.css" />
@@ -208,7 +207,6 @@
     <Content Include="packages.config" />
     <Content Include="Content\fonts\fontawesome-webfont.ttf" />
     <Content Include="Content\fonts\fontawesome-webfont.woff" />
-    <Content Include="Views\Shared\_Fix.cshtml" />
     <Content Include="Views\Shared\_Normal.cshtml" />
     <Content Include="Views\Shared\_Admin.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
