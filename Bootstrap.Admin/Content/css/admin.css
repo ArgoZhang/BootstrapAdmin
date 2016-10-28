@@ -146,3 +146,15 @@ ul.sidebar-menu {
                     transition: all 0.3s ease;
                     color: #aeb2b7;
                 }
+
+/*Modal Dialog Checkbox*/
+.modal-body .checkbox {
+    padding: 5px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+    .modal-body .checkbox label input[type='checkbox'] {
+        margin-right: 6px;
+        top: 2px;
+    }

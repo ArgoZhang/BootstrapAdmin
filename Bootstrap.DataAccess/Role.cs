@@ -15,8 +15,8 @@
         /// </summary>
         public string Description { get; set; }
         /// <summary>
-        /// 获取/设置 用户角色状态
+        /// 获取/设置 用户角色关联状态 checked 标示已经关联 '' 标示未关联
         /// </summary>
-        public int IsSelect { get; set; }
+        public string Checked { get; set; }
     }
 }

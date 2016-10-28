@@ -214,22 +214,27 @@
 
     };
 
-    Role = {};
-    Role.getRolesByUserId = function (userId, callback) {
+    var processRolesData = function (options) {
+        var data = $.extend({ data: { type: "" }, method: "POST", Id: "" }, options);
         $.ajax({
-            url: '../api/Roles/' + userId,
-            data: { "": "user" },
-            type: 'POST',
+            url: '../api/Roles/' + data.Id,
+            data: data.data,
+            type: data.method,
             success: function (result) {
-                callback(result);
+                if ($.isFunction(data.callback)) data.callback(result);
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                callback();
+                if ($.isFunction(data.callback)) data.callback(false);
             }
         });
+    }
+
+    Role = {};
+    Role.getRolesByUserId = function (userId, callback) {
+        processRolesData({ Id: userId, callback: callback, data: { type: "user" } });
     };
     Role.getRolesByGroupId = function (groupId) {
-
+        processRolesData({ Id: groupId, callback: callback, data: { type: "group" } });
     };
 
     //查询菜单对应角色
@@ -248,17 +253,7 @@
     };
 
     Role.saveRolesByUserId = function (userId, roleIds, callback) {
-        $.ajax({
-            url: '../api/Roles/' + userId,
-            data: { "roleIds": roleIds,"type":"user" },
-            type: 'PUT',
-            success: function (result) {
-                callback(result);
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                callback();
-            }
-        });
+        processRolesData({ Id: userId, callback: callback, method: "PUT", data: { type: "user", roleIds: roleIds } });
     }
 
     //保存菜单对应角色

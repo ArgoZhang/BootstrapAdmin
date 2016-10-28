@@ -2,6 +2,7 @@
 using Bootstrap.DataAccess;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
 
 namespace Bootstrap.Admin.Controllers
@@ -24,15 +25,22 @@ namespace Bootstrap.Admin.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpPost]
-        public IEnumerable<Role> Post(int id, [FromBody]string value)
+        public IEnumerable<Role> Post(int id, [FromBody]JObject value)
         {
-            if (value == "user")
+            var ret = new List<Role>();
+            dynamic json = value;
+            switch ((string)json.type)
             {
-                return RoleHelper.RetrieveRolesByUserId(id.ToString());
-            }
-            else if(value == "menu")
-            {
-                return RoleHelper.RetrieveRolesByMenuId(id.ToString());
+                case "user":
+                    ret = RoleHelper.RetrieveRolesByUserId(id).ToList();
+                    break;
+                case "group":
+                    ret = RoleHelper.RetrieveRolesByGroupId(id).ToList();
+                    break;
+				case "menu"
+                    ret = RoleHelper.RetrieveRolesByMenuId(id.ToString());
+                default:
+                    break;
             }
             else
             {
@@ -47,13 +55,23 @@ namespace Bootstrap.Admin.Controllers
         [HttpPut]
         public bool Put(int id, [FromBody]JObject value)
         {
+            var ret = false;
             dynamic json = value;
             string roleIds = json.roleIds;
-            if (json.type == "user")
-                return RoleHelper.SaveRolesByUserId(id, roleIds);
-            if (json.type == "menu")
-                return RoleHelper.SavaRolesByMenuId(id,roleIds);
-            return false;
+            switch ((string)json.type)
+            {
+                case "user":
+                    ret = RoleHelper.SaveRolesByUserId(id, roleIds);
+                    break;
+                case "group":
+                    ret = RoleHelper.SaveRolesByGroupId(id, roleIds);
+                    break;
+				case "menu":
+					ret = RoleHelper.SavaRolesByMenuId(id, roleIds);	
+                default:
+                    break;
+            }
+            return ret;
         }
         /// <summary>
         /// 

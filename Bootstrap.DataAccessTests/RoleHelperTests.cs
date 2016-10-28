@@ -48,7 +48,7 @@ namespace Bootstrap.DataAccess.Tests
         [TestMethod()]
         public void RetrieveRolesByUserIdTest()
         {
-            var result = RoleHelper.RetrieveRolesByUserId("1");
+            var result = RoleHelper.RetrieveRolesByUserId(1);
             Assert.IsTrue(result.Count() >= 0, "用户查询角色关系失败！");
         }
         [TestMethod()]

@@ -13,8 +13,12 @@ using System.Linq;
 
 namespace Bootstrap.DataAccess
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class RoleHelper
     {
+        // UNDONE: 两个缓存考虑可以共用，待完善
         private const string RoleDataKey = "RoleData-CodeRoleHelper";
         private const string RoleUserIDDataKey = "RoleData-CodeRoleHelper-";
         private const string RoleNavigationIDDataKey = "RoleData-CodeRoleHelper-Navigation";
@@ -54,72 +58,81 @@ namespace Bootstrap.DataAccess
         /// 保存用户角色关系
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="value"></param>
+        /// <param name="roleIds"></param>
         /// <returns></returns>
-        public static bool SaveRolesByUserId(int id, string value)
+        public static bool SaveRolesByUserId(int id, string roleIds)
         {
+            var ret = false;
             DataTable dt = new DataTable();
             dt.Columns.Add("UserID", typeof(int));
             dt.Columns.Add("RoleID", typeof(int));
             //判断用户是否选定角色
-            if (!string.IsNullOrEmpty(value))
+            if (!string.IsNullOrEmpty(roleIds))
             {
-                string[] roleIDs = value.Split(',');
-                foreach (string roleID in roleIDs)
+                roleIds.Split(',').ToList().ForEach(roleId =>
                 {
                     DataRow row = dt.NewRow();
-                    row["UserID"] = id;
-                    row["RoleID"] = roleID;
-                    dt.Rows.Add(row);
-                }
+                    dt.Rows.Add(id, roleId);
+                });
             }
-
-            string sql = "delete from UserRole where UserID=@UserID;";
-            using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
+            using (TransactionPackage transaction = DBAccessManager.SqlDBAccess.BeginTransaction())
             {
-                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserID", id, ParameterDirection.Input));
-                using (TransactionPackage transaction = DBAccessManager.SqlDBAccess.BeginTransaction())
+                try
                 {
-                    using (SqlBulkCopy bulk = new SqlBulkCopy((SqlConnection)transaction.Transaction.Connection, SqlBulkCopyOptions.Default, (SqlTransaction)transaction.Transaction))
+                    // delete user from config table
+                    string sql = "delete from UserRole where UserID = @UserID;";
+                    using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
                     {
-                        bulk.BatchSize = 1000;
-                        bulk.DestinationTableName = "UserRole";
-                        bulk.ColumnMappings.Add("UserID", "UserID");
-                        bulk.ColumnMappings.Add("RoleID", "RoleID");
+                        cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserID", id, ParameterDirection.Input));
+                        DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd, transaction);
 
-                        bool ret = true;
-                        try
+                        // insert batch data into config table
+                        using (SqlBulkCopy bulk = new SqlBulkCopy((SqlConnection)transaction.Transaction.Connection, SqlBulkCopyOptions.Default, (SqlTransaction)transaction.Transaction))
                         {
-                            DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd, transaction);
+                            bulk.BatchSize = 1000;
+                            bulk.DestinationTableName = "UserRole";
+                            bulk.ColumnMappings.Add("UserID", "UserID");
+                            bulk.ColumnMappings.Add("RoleID", "RoleID");
                             bulk.WriteToServer(dt);
                             transaction.CommitTransaction();
-                            ClearCache();
                         }
-                        catch (Exception ex)
-                        {
-                            ret = false;
-                            transaction.RollbackTransaction();
-                        }
-                        return ret;
                     }
+                    ret = true;
+                    ClearCache();
+                }
+                catch (Exception ex)
+                {
+                    ExceptionManager.Publish(ex);
+                    transaction.RollbackTransaction();
                 }
             }
+            return ret;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static bool SaveRolesByGroupId(int id, string value)
+        {
+            return true;
         }
         /// <summary>
         /// 查询某个用户所拥有的角色
         /// </summary>
         /// <returns></returns>
-        public static IEnumerable<Role> RetrieveRolesByUserId(string userId)
+        public static IEnumerable<Role> RetrieveRolesByUserId(int userId)
         {
-            string sql = "select *,case when (ID in( select RoleID from UserRole where UserID=@UserID)) then 1 else 0 end as IsSelect from Roles";
             string k = string.Format("{0}{1}", RoleUserIDDataKey, userId);
-            var ret = CacheManager.GetOrAdd(k, CacheSection.RetrieveIntervalByKey(RoleUserIDDataKey), key =>
+            return CacheManager.GetOrAdd(k, CacheSection.RetrieveIntervalByKey(RoleUserIDDataKey), key =>
             {
                 List<Role> Roles = new List<Role>();
-                DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
-                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserID", userId, ParameterDirection.Input));
+                string sql = "select r.ID, r.RoleName, r.[Description], case ur.RoleID when r.ID then 'checked' else '' end [status] from Roles r left join UserRole ur on r.ID = ur.RoleID and UserID = @UserID";
                 try
                 {
+                    DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserID", userId, ParameterDirection.Input));
                     using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
                     {
                         while (reader.Read())
@@ -129,7 +142,7 @@ namespace Bootstrap.DataAccess
                                 ID = (int)reader[0],
                                 RoleName = (string)reader[1],
                                 Description = (string)reader[2],
-                                IsSelect = (int)reader[3]
+                                Checked = (string)reader[3]
                             });
                         }
                     }
@@ -137,7 +150,15 @@ namespace Bootstrap.DataAccess
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return Roles;
             }, CacheSection.RetrieveDescByKey(RoleUserIDDataKey));
-            return ret;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="groupId"></param>
+        /// <returns></returns>
+        public static IEnumerable<Role> RetrieveRolesByGroupId(int groupId)
+        {
+            return new List<Role>();
         }
         /// <summary>
         /// 删除角色表
@@ -163,7 +184,6 @@ namespace Bootstrap.DataAccess
             }
             return ret;
         }
-
         /// <summary>
         /// 保存新建/更新的角色信息
         /// </summary>
@@ -290,9 +310,9 @@ namespace Bootstrap.DataAccess
         }
 
         // 更新缓存
-        private static void ClearCache()
+        private static void ClearCache(string cacheKey = null)
         {
-            CacheManager.Clear(key => key.Contains("RoleData-"));
+            CacheManager.Clear(key => string.IsNullOrEmpty(cacheKey) || key == cacheKey);
         }
     }
 }
