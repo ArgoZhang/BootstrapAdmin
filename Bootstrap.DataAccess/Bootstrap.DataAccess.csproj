@@ -57,6 +57,8 @@
       <Link>bldver.cs</Link>
     </Compile>
     <Compile Include="DBAccessManager.cs" />
+    <Compile Include="Dict.cs" />
+    <Compile Include="DictHelper.cs" />
     <Compile Include="Group.cs" />
     <Compile Include="GroupHelper.cs" />
     <Compile Include="Menu.cs" />
