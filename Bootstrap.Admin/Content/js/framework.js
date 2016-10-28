@@ -297,9 +297,41 @@
         processUsersData({ Id: roleId, callback: callback, method: "PUT", data: { type: "role", userIds: userIds } });
     }
 
-    Group = {};
-    Group.getGroupsByUserId = function (userId) {
+    var processGroupsData = function (options) {
+        var data = $.extend({ data: { type: "" }, method: "POST", Id: "" }, options);
+        $.ajax({
+            url: '../api/Groups/' + data.Id,
+            data: data.data,
+            type: data.method,
+            success: function (result) {
+                if ($.isFunction(data.callback)) {
+                    if ($.isArray(result)) {
+                        var html = $.map(result, function (element, index) {
+                            return $.format('<div class="checkbox col-lg-3 col-xs-4"><label title="{3}"><input type="checkbox" value="{0}" {2}>{1}</label></div>', element.ID, element.GroupName, element.Checked, element.Description);
+                        }).join('');
+                        data.callback(html);
+                        return;
+                    }
+                }
+                else if ($.isPlainObject(data.callback) && data.callback.modal !== undefined) {
+                    $("#" + data.callback.modal).modal('hide');
+                }
+                if (result) { swal("成功", "授权角色", "success"); }
+                else { swal("失败", "授权角色", "error"); }
+                if ($.isFunction(data.callback))  data.callback(result);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                if ($.isFunction(data.callback)) data.callback(false);
+            }
+        });
+    }
 
+    Group = {};
+    Group.getGroupsByUserId = function (userId, callback) {
+        processGroupsData({ Id: userId, callback: callback, data: { type: "user" } });
+    };
+    Group.saveGroupsByUserId = function (userId, groupIds, callback) {
+        processGroupsData({ Id: userId, callback: callback, method: "PUT", data: { type: "user", groupIds: groupIds } });
     };
     Group.getGroupsByRoleId = function (roleId) {
 

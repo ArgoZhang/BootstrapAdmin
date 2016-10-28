@@ -227,6 +227,7 @@
     <Content Include="Views\Shared\RoleConfig.cshtml" />
     <Content Include="Views\Shared\IconView.cshtml" />
     <Content Include="Views\Shared\UserConfig.cshtml" />
+    <Content Include="Views\Shared\GroupConfig.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

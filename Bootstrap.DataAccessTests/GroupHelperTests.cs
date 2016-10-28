@@ -48,6 +48,18 @@ namespace Bootstrap.DataAccess.Tests
             }
         }
 
+        [TestMethod()]
+        public void RetrieveGroupsByUserIdTest()
+        {
+            var result = GroupHelper.RetrieveGroupsByUserId(1);
+            Assert.IsTrue(result.Count() > 0, "根据用户查询群组失败");
+        }
+        [TestMethod()]
+        public void SaveGroupsByUserIdTest()
+        {
+            var result = GroupHelper.SaveGroupsByUserId(1, "1,2");
+            Assert.IsTrue(result == true, "保存用户群组关系失败");
+        }
 
     }
 }

@@ -22,7 +22,11 @@
             }, {
                 id: 'btn_assignGroup',
                 click: function (row) {
-                    var userId = row.ID;
+                    Group.getGroupsByUserId(row.ID, function (data) {
+                        $("#dialogGroup .modal-title").text($.format('{0}-部门授权窗口', row.DisplayName));
+                        $('#dialogGroup form').html(data);
+                        $('#dialogGroup').modal('show');
+                    });
                 }
             }, {
                 id: 'btnSubmitUserRole',
@@ -32,6 +36,15 @@
                         return $(element).val();
                     }).toArray().join(',');
                     Role.saveRolesByUserId(userId, roleIds, { modal: 'dialogRole' });
+                }
+            }, {
+                id: 'btnSubmitUserGroup',
+                click: function (row) {
+                    var userId = row.ID;
+                    var groupIds = $('#dialogGroup :checked').map(function (index, element) {
+                        return $(element).val();
+                    }).toArray().join(',');
+                    Group.saveGroupsByUserId(userId, groupIds, { modal: 'dialogGroup' });
                 }
             }]
         },
