@@ -34,7 +34,7 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获得/设置 菜单分类
         /// </summary>
-        public int Category { get; set; }
+        public string Category { get; set; }
         /// <summary>
         /// 获得/设置 是否当前被选中 active为选中
         /// </summary>

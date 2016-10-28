@@ -27,7 +27,7 @@ namespace Bootstrap.Admin.Models
             }
             if (!string.IsNullOrEmpty(Category))
             {
-                data = data.Where(t => t.Category.ToString().Equals(Category));
+                data = data.Where(t => t.Category.Contains(Category));
             }
             var ret = new QueryData<Menu>();
             ret.total = data.Count();

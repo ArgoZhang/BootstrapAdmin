@@ -41,7 +41,7 @@ namespace Bootstrap.DataAccess
                                 Order = (int)reader[3],
                                 Icon = LgbConvert.ReadValue(reader[4], string.Empty),
                                 Url = LgbConvert.ReadValue(reader[5], string.Empty),
-                                Category = (int)reader[6]
+                                Category = (string)reader[6]
                             });
                         }
                     }

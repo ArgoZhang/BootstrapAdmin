@@ -151,8 +151,28 @@ CREATE TABLE [dbo].[Navigations](
 	[Order] [int] NOT NULL,
 	[Icon] [varchar](50) NULL,
 	[Url] [varchar](50) NULL,
-	[Category] [int] NOT NULL,
+	[Category] [nvarchar](50) NOT NULL,
  CONSTRAINT [PK_Navigations] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+
+/****** Object:  Table [dbo].[NavigationRole]    Script Date: 10/28/2016 15:14:35 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[NavigationRole](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[NavigationID] [int] NOT NULL,
+	[RoleID] [int] NOT NULL,
+ CONSTRAINT [PK_NavigationRole] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
