@@ -25,5 +25,9 @@
         /// 获取/设置 显示名称
         /// </summary>
         public string DisplayName { get; set; }
+        /// <summary>
+        /// 获取/设置 角色用户关联状态 checked 标示已经关联 '' 标示未关联
+        /// </summary>
+        public string Checked { get; set; }
     }
 }

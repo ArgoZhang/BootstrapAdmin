@@ -254,6 +254,39 @@
         processRolesData({ Id: menuId, callback: callback, method: "PUT", data: { type: "menu", roleIds: roleIds } });
     };
 
+    var processUsersData = function (options) {
+        var data = $.extend({ data: { type: "" }, method: "POST", Id: "" }, options);
+        $.ajax({
+            url: '../api/Users/' + data.Id,
+            data: data.data,
+            type: data.method,
+            success: function (result) {
+                if ($.isFunction(data.callback)) {
+                    if ($.isArray(result)) {
+                        var html = $.map(result, function (element, index) {
+                            return $.format('<div class="checkbox col-lg-3 col-xs-4"><input type="checkbox" value="{0}" {2}>{1}</div>', element.ID, element.DisplayName, element.Checked);
+                        }).join('');
+                        data.callback(html);
+                    }
+                    else
+                        data.callback(result);
+                }
+                else { data.callback(false); }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                if ($.isFunction(data.callback)) data.callback(false);
+            }
+        });
+    }
+
+    User = {};
+    User.getUsersByRoleId = function (roleId, callback) {
+        processUsersData({ Id: roleId, callback: callback, data: { type: "role" } });
+    };
+    User.saveUsersByRoleId = function (roleId, userIds, callback) {
+        processUsersData({ Id: roleId, callback: callback, method: "PUT", data: { type: "role", userIds: userIds } });
+    }
+
     Group = {};
     Group.getGroupsByUserId = function (userId) {
 

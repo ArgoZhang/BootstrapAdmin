@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
 
@@ -18,6 +19,7 @@ namespace Bootstrap.DataAccess
     {
         private const string UserDataKey = "UserData-CodeUserHelper";
         private const string UserDisplayNameDataKey = "UserData-CodeUserHelper-";
+        private const string UserRoleIDDataKey = "UserData-CodeUserHelper-Role-";
         /// <summary>
         /// 查询所有用户
         /// </summary>
@@ -161,6 +163,93 @@ namespace Bootstrap.DataAccess
         {
             CacheManager.Clear(key => key == UserDataKey);
             CacheManager.Clear(key => key.Contains(UserDisplayNameDataKey));
+            CacheManager.Clear(key => key.Contains(UserRoleIDDataKey));
+        }
+
+
+        /// <summary>
+        /// 通过roleId获取所有用户
+        /// </summary>
+        /// <param name="roleId"></param>
+        /// <returns></returns>
+        public static IEnumerable<User> RetrieveUsersByRoleId(int roleId)
+        {
+            
+            string key = string.Format("{0}{1}", UserRoleIDDataKey, roleId);
+            return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(UserDisplayNameDataKey), k =>
+            {
+                List<User> Users = new List<User>();
+                string sql = "select u.ID,u.UserName,u.DisplayName,case ur.UserID when u.ID then 'checked' else '' end [status] from Users u left join UserRole ur on u.ID=ur.UserID and RoleID =@RoleID";
+                DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@RoleID", roleId, ParameterDirection.Input));
+                try
+                {
+                    using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
+                    {
+                        while (reader.Read())
+                        {
+                            Users.Add(new User()
+                            {
+                                ID = (int)reader[0],
+                                UserName = (string)reader[1],
+                                DisplayName = (string)reader[2],
+                                Checked = (string)reader[3]
+                            });
+                        }
+                    }
+                }
+                catch (Exception ex) { ExceptionManager.Publish(ex); }
+                return Users;
+            }, CacheSection.RetrieveDescByKey(UserRoleIDDataKey));
+        }
+        /// <summary>
+        /// 通过角色ID保存当前授权用户（插入）
+        /// </summary>
+        /// <param name="id">角色ID</param>
+        /// <param name="value">用户ID数组</param>
+        /// <returns></returns>
+        public static bool SaveUsersByRoleId(int id, string value)
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("RoleID", typeof(int));
+            dt.Columns.Add("UserID", typeof(int));
+            if (!string.IsNullOrEmpty(value))
+            {
+                string[] userIds = value.Split(',');
+                foreach (string userId in userIds)
+                {
+                    DataRow dr = dt.NewRow();
+                    dr["RoleID"] = id;
+                    dr["UserID"] = userId;
+                    dt.Rows.Add(dr);
+                }
+            }
+            var trans = DBAccessManager.SqlDBAccess.BeginTransaction();
+            try
+            {
+                using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, string.Empty))
+                {
+                    cmd.CommandText = "delete from UserRole where RoleId=@RoleId";
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@RoleId", id, ParameterDirection.Input));
+                    DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd, trans);
+                    using (SqlBulkCopy bulk = new SqlBulkCopy((SqlConnection)trans.Transaction.Connection, SqlBulkCopyOptions.Default, (SqlTransaction)trans.Transaction))
+                    {
+                        bulk.BatchSize = 1000;
+                        bulk.DestinationTableName = "UserRole";
+                        bulk.ColumnMappings.Add("RoleID", "RoleID");
+                        bulk.ColumnMappings.Add("UserID", "UserID");
+                        bulk.WriteToServer(dt);
+                    }
+                    trans.CommitTransaction();
+                    ClearCache();
+                    return true;
+                }
+            }
+            catch
+            {
+                trans.RollbackTransaction();
+                return false;
+            }
         }
     }
 }
