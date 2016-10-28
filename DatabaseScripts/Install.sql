@@ -175,6 +175,28 @@ GO
 ALTER TABLE [dbo].[Navigations] ADD  CONSTRAINT [DF_Navigations_Category]  DEFAULT ((0)) FOR [Category]
 GO
 
+/****** Object:  Table [dbo].[Dicts]    Script Date: 2016/10/27 星期四 16:35:54 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Dicts](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[Category] [nvarchar](50) NOT NULL,
+	[Name] [nvarchar](50) NOT NULL,
+	[Code] [varchar](50) NOT NULL,
+ CONSTRAINT [PK_dbo.Dict] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+
 SET IDENTITY_INSERT Navigations ON
 insert into Navigations (ID, Name, [Order], Icon, Url) values (1, '菜单管理', 10, 'fa fa-dashboard', '~/Admin/Menus')
 insert into Navigations (ID, Name, [Order], Icon, Url) values (2, '用户管理', 20, 'fa fa-user', '~/Admin/Users')
