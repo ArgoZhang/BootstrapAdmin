@@ -37,15 +37,13 @@ namespace Bootstrap.Admin.Controllers
                 case "group":
                     ret = RoleHelper.RetrieveRolesByGroupId(id).ToList();
                     break;
-				case "menu"
-                    ret = RoleHelper.RetrieveRolesByMenuId(id.ToString());
+                case "menu":
+                    ret = RoleHelper.RetrieveRolesByMenuId(id).ToList();
+                    break;
                 default:
                     break;
             }
-            else
-            {
-                return null;
-            }
+            return ret;
         }
         /// <summary>
         /// 
@@ -66,8 +64,9 @@ namespace Bootstrap.Admin.Controllers
                 case "group":
                     ret = RoleHelper.SaveRolesByGroupId(id, roleIds);
                     break;
-				case "menu":
-					ret = RoleHelper.SavaRolesByMenuId(id, roleIds);	
+                case "menu":
+                    ret = RoleHelper.SavaRolesByMenuId(id, roleIds);
+                    break;
                 default:
                     break;
             }

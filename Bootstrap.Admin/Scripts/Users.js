@@ -13,11 +13,8 @@
             assign: [{
                 id: 'btn_assignRole',
                 click: function (row) {
-                    Role.getRolesByUserId(row.ID, function (roles) {
+                    Role.getRolesByUserId(row.ID, function (data) {
                         $("#dialogRole .modal-title").text($.format('{0}-角色授权窗口', row.DisplayName));
-                        var data = $.map(roles, function (element, index) {
-                            return $.format('<div class="checkbox col-lg-3 col-xs-4"><label title="{3}"><input type="checkbox" value="{0}" {2}>{1}</label></div>', element.ID, element.RoleName, element.Checked, element.Description);
-                        }).join('');
                         $('#dialogRole form').html(data);
                         $('#dialogRole').modal('show');
                     });

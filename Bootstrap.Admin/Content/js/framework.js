@@ -221,7 +221,15 @@
             data: data.data,
             type: data.method,
             success: function (result) {
-                if ($.isFunction(data.callback)) data.callback(result);
+                if ($.isFunction(data.callback)) {
+                    if ($.isArray(result)) {
+                        var html = $.map(result, function (element, index) {
+                            return $.format('<div class="checkbox col-lg-3 col-xs-4"><label title="{3}"><input type="checkbox" value="{0}" {2}>{1}</label></div>', element.ID, element.RoleName, element.Checked, element.Description);
+                        }).join('');
+                        data.callback(html);
+                    }
+                }
+                else { data.callback(false); }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 if ($.isFunction(data.callback)) data.callback(false);
@@ -236,39 +244,14 @@
     Role.getRolesByGroupId = function (groupId) {
         processRolesData({ Id: groupId, callback: callback, data: { type: "group" } });
     };
-
-    //查询菜单对应角色
     Role.getRolesByMenuId = function (menuId, callback) {
-        $.ajax({
-            url: '../api/Roles/' + menuId,
-            data: { "": "menu" },
-            type: 'POST',
-            success: function (result) {
-                callback(result);
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                callback();
-            }
-        });
+        processRolesData({ Id: menuId, callback: callback, data: { type: "menu" } });
     };
-
     Role.saveRolesByUserId = function (userId, roleIds, callback) {
         processRolesData({ Id: userId, callback: callback, method: "PUT", data: { type: "user", roleIds: roleIds } });
     }
-
-    //保存菜单对应角色
     Role.saveRolesByMenuId = function (menuId, roleIds, callback) {
-        $.ajax({
-            url: '../api/Roles/' + menuId,
-            data: { "roleIds": roleIds, "type": "menu" },
-            type: 'PUT',
-            success: function (result) {
-                callback(result);
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                callback();
-            }
-        });
+        processRolesData({ Id: menuId, callback: callback, method: "PUT", data: { type: "menu", roleIds: roleIds } });
     };
 
     Group = {};

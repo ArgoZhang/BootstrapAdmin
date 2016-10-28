@@ -18,10 +18,9 @@ namespace Bootstrap.DataAccess
     /// </summary>
     public class RoleHelper
     {
-        // UNDONE: 两个缓存考虑可以共用，待完善
         private const string RoleDataKey = "RoleData-CodeRoleHelper";
         private const string RoleUserIDDataKey = "RoleData-CodeRoleHelper-";
-        private const string RoleNavigationIDDataKey = "RoleData-CodeRoleHelper-Navigation";
+        private const string RoleNavigationIDDataKey = "RoleData-CodeRoleHelper-Navigation-";
         /// <summary>
         /// 查询所有角色
         /// </summary>
@@ -222,17 +221,17 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="menuId"></param>
         /// <returns></returns>
-        public static IEnumerable<Role> RetrieveRolesByMenuId(string menuId) 
+        public static IEnumerable<Role> RetrieveRolesByMenuId(int menuId)
         {
-            string sql = "select *,case when (ID in( select RoleID from NavigationRole where NavigationID=@NavigationID)) then 1 else 0 end as IsSelect from Roles";
             string k = string.Format("{0}{1}", RoleNavigationIDDataKey, menuId);
-            var ret = CacheManager.GetOrAdd(k, CacheSection.RetrieveIntervalByKey(RoleNavigationIDDataKey), key =>
+            return CacheManager.GetOrAdd(k, CacheSection.RetrieveIntervalByKey(RoleUserIDDataKey), key =>
             {
                 List<Role> Roles = new List<Role>();
-                DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
-                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@NavigationID", menuId, ParameterDirection.Input));
+                string sql = "select r.ID, r.RoleName, r.[Description], case ur.RoleID when r.ID then 'checked' else '' end [status] from Roles r left join NavigationRole ur on r.ID = ur.RoleID and NavigationID = @NavigationID";
                 try
                 {
+                    DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@NavigationID", menuId, ParameterDirection.Input));
                     using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
                     {
                         while (reader.Read())
@@ -242,15 +241,14 @@ namespace Bootstrap.DataAccess
                                 ID = (int)reader[0],
                                 RoleName = (string)reader[1],
                                 Description = (string)reader[2],
-                                IsSelect = (int)reader[3]
+                                Checked = (string)reader[3]
                             });
                         }
                     }
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return Roles;
-            }, CacheSection.RetrieveDescByKey(RoleNavigationIDDataKey));
-            return ret;
+            }, CacheSection.RetrieveDescByKey(RoleUserIDDataKey));
         }
 
         /// <summary>
