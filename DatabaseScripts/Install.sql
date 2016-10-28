@@ -144,6 +144,33 @@ EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'部门名称' 
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'描述' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Groups', @level2type=N'COLUMN',@level2name=N'Description'
 GO
+
+/****** Object:  Table [dbo].[Logs]    Script Date: 10/28/2016 16:39:11 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Logs](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[OperationType] [int] NULL,
+	[UserID] [int] NULL,
+	[OperationTime] [datetime] NULL,
+	[TableName] [nvarchar](50) NULL,
+	[BusinessName] [nvarchar](50) NULL,
+	[PrimaryKey] [nvarchar](50) NULL,
+	[SqlText] [nvarchar](max) NULL,
+	[OperationIp] [nvarchar](50) NULL,
+ CONSTRAINT [PK_Logs] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Logs', @level2type=N'COLUMN',@level2name=N'ID'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Logs', @level2type=N'COLUMN',@level2name=N'OperationType'
+GO
+
 CREATE TABLE [dbo].[Navigations](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
 	[ParentId] [int] NOT NULL,

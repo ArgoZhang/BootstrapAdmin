@@ -61,6 +61,8 @@
     <Compile Include="DictHelper.cs" />
     <Compile Include="Group.cs" />
     <Compile Include="GroupHelper.cs" />
+    <Compile Include="Log.cs" />
+    <Compile Include="LogHelper.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="MenuHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
