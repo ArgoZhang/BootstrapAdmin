@@ -231,6 +231,22 @@
     Role.getRolesByGroupId = function (groupId) {
 
     };
+
+    //查询菜单对应角色
+    Role.getRolesByMenuId = function (menuId, callback) {
+        $.ajax({
+            url: '../api/Roles/' + menuId,
+            data: { "": "menu" },
+            type: 'POST',
+            success: function (result) {
+                callback(result);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                callback();
+            }
+        });
+    };
+
     Role.saveRolesByUserId = function (userId, roleIds, callback) {
         $.ajax({
             url: '../api/Roles/' + userId,
@@ -244,6 +260,21 @@
             }
         });
     }
+
+    //保存菜单对应角色
+    Role.saveRolesByMenuId = function (menuId, roleIds, callback) {
+        $.ajax({
+            url: '../api/Roles/' + menuId,
+            data: { "roleIds": roleIds, "type": "menu" },
+            type: 'PUT',
+            success: function (result) {
+                callback(result);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                callback();
+            }
+        });
+    };
 
     Group = {};
     Group.getGroupsByUserId = function (userId) {

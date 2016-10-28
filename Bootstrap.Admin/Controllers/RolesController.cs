@@ -30,6 +30,10 @@ namespace Bootstrap.Admin.Controllers
             {
                 return RoleHelper.RetrieveRolesByUserId(id.ToString());
             }
+            else if(value == "menu")
+            {
+                return RoleHelper.RetrieveRolesByMenuId(id.ToString());
+            }
             else
             {
                 return null;
@@ -47,6 +51,8 @@ namespace Bootstrap.Admin.Controllers
             string roleIds = json.roleIds;
             if (json.type == "user")
                 return RoleHelper.SaveRolesByUserId(id, roleIds);
+            if (json.type == "menu")
+                return RoleHelper.SavaRolesByMenuId(id,roleIds);
             return false;
         }
         /// <summary>

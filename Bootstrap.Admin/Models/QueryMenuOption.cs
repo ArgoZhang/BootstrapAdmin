@@ -25,6 +25,10 @@ namespace Bootstrap.Admin.Models
             {
                 data = data.Where(t => t.Name.Contains(Name));
             }
+            if (!string.IsNullOrEmpty(Category))
+            {
+                data = data.Where(t => t.Category.ToString().Equals(Category));
+            }
             var ret = new QueryData<Menu>();
             ret.total = data.Count();
             // TODO: 通过option.Sort属性判断对那列进行排序，现在统一对名称列排序

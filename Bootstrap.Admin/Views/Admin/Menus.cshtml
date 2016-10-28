@@ -27,6 +27,11 @@
         </div>
     </form>
 }
+@section toolbar {
+    <button id="btn_assignRole" type="button" class="btn btn-info">
+        <span class="fa fa-sitemap" aria-hidden="true"></span>指派角色
+    </button>
+}
 @section modal {
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -61,4 +66,7 @@
             </div>
         </form>
     </div>
+}
+@section customModal {
+    @Html.Partial("RoleConfig")
 }

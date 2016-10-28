@@ -17,6 +17,7 @@ namespace Bootstrap.DataAccess
     {
         private const string RoleDataKey = "RoleData-CodeRoleHelper";
         private const string RoleUserIDDataKey = "RoleData-CodeRoleHelper-";
+        private const string RoleNavigationIDDataKey = "RoleData-CodeRoleHelper-Navigation";
         /// <summary>
         /// 查询所有角色
         /// </summary>
@@ -194,6 +195,98 @@ namespace Bootstrap.DataAccess
                 ExceptionManager.Publish(ex);
             }
             return ret;
+        }
+
+        /// <summary>
+        /// 查询某个菜单所拥有的角色
+        /// </summary>
+        /// <param name="menuId"></param>
+        /// <returns></returns>
+        public static IEnumerable<Role> RetrieveRolesByMenuId(string menuId) 
+        {
+            string sql = "select *,case when (ID in( select RoleID from NavigationRole where NavigationID=@NavigationID)) then 1 else 0 end as IsSelect from Roles";
+            string k = string.Format("{0}{1}", RoleNavigationIDDataKey, menuId);
+            var ret = CacheManager.GetOrAdd(k, CacheSection.RetrieveIntervalByKey(RoleNavigationIDDataKey), key =>
+            {
+                List<Role> Roles = new List<Role>();
+                DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@NavigationID", menuId, ParameterDirection.Input));
+                try
+                {
+                    using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
+                    {
+                        while (reader.Read())
+                        {
+                            Roles.Add(new Role()
+                            {
+                                ID = (int)reader[0],
+                                RoleName = (string)reader[1],
+                                Description = (string)reader[2],
+                                IsSelect = (int)reader[3]
+                            });
+                        }
+                    }
+                }
+                catch (Exception ex) { ExceptionManager.Publish(ex); }
+                return Roles;
+            }, CacheSection.RetrieveDescByKey(RoleNavigationIDDataKey));
+            return ret;
+        }
+
+        /// <summary>
+        /// 保存菜单角色关系
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static bool SavaRolesByMenuId(int id, string value)
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("NavigationID", typeof(int));
+            dt.Columns.Add("RoleID", typeof(int));
+            //判断用户是否选定角色
+            if (!string.IsNullOrEmpty(value))
+            {
+                string[] roleIDs = value.Split(',');
+                foreach (string roleID in roleIDs)
+                {
+                    DataRow row = dt.NewRow();
+                    row["NavigationID"] = id;
+                    row["RoleID"] = roleID;
+                    dt.Rows.Add(row);
+                }
+            }
+
+            string sql = "delete from NavigationRole where NavigationID=@NavigationID;";
+            using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
+            {
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@NavigationID", id, ParameterDirection.Input));
+                using (TransactionPackage transaction = DBAccessManager.SqlDBAccess.BeginTransaction())
+                {
+                    using (SqlBulkCopy bulk = new SqlBulkCopy((SqlConnection)transaction.Transaction.Connection, SqlBulkCopyOptions.Default, (SqlTransaction)transaction.Transaction))
+                    {
+                        bulk.BatchSize = 1000;
+                        bulk.DestinationTableName = "NavigationRole";
+                        bulk.ColumnMappings.Add("NavigationID", "NavigationID");
+                        bulk.ColumnMappings.Add("RoleID", "RoleID");
+
+                        bool ret = true;
+                        try
+                        {
+                            DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd, transaction);
+                            bulk.WriteToServer(dt);
+                            transaction.CommitTransaction();
+                            ClearCache();
+                        }
+                        catch (Exception ex)
+                        {
+                            ret = false;
+                            transaction.RollbackTransaction();
+                        }
+                        return ret;
+                    }
+                }
+            }
         }
 
         // 更新缓存
