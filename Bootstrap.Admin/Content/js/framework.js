@@ -17,7 +17,7 @@
             if ($.isArray(ele)) {
                 for (index in ele) {
                     if (ele[index].id === undefined) {
-                        window.console.log('options.click.assign[{0}].{1}.id 未设置控件id', index, name);
+                        window.console.log('options.click.assign[{0}].{1}.id 未设置控件id', ele[index].id, name);
                         continue;
                     }
                     cId = ele[index]['id'];
@@ -227,9 +227,15 @@
                             return $.format('<div class="checkbox col-lg-3 col-xs-4"><label title="{3}"><input type="checkbox" value="{0}" {2}>{1}</label></div>', element.ID, element.RoleName, element.Checked, element.Description);
                         }).join('');
                         data.callback(html);
+                        return;
                     }
                 }
-                else { data.callback(false); }
+                else if ($.isPlainObject(data.callback) && data.callback.modal !== undefined) {
+                    $("#" + data.callback.modal).modal('hide');
+                }
+                if (result) { swal("成功", "授权角色", "success"); }
+                else { swal("失败", "授权角色", "error"); }
+                data.callback(result);
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 if ($.isFunction(data.callback)) data.callback(false);
@@ -264,14 +270,18 @@
                 if ($.isFunction(data.callback)) {
                     if ($.isArray(result)) {
                         var html = $.map(result, function (element, index) {
-                            return $.format('<div class="checkbox col-lg-3 col-xs-4"><input type="checkbox" value="{0}" {2}>{1}</div>', element.ID, element.DisplayName, element.Checked);
+                            return $.format('<div class="checkbox col-lg-3 col-xs-4"><label><input type="checkbox" value="{0}" {2}>{1}</label></div>', element.ID, element.DisplayName, element.Checked);
                         }).join('');
                         data.callback(html);
+                        return;
                     }
-                    else
-                        data.callback(result);
                 }
-                else { data.callback(false); }
+                else if ($.isPlainObject(data.callback) && data.callback.modal !== undefined) {
+                    $("#" + data.callback.modal).modal('hide');
+                }
+                if (result) { swal("成功", "授权用户", "success"); }
+                else { swal("失败", "授权用户", "error"); }
+                data.callback(result);
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 if ($.isFunction(data.callback)) data.callback(false);

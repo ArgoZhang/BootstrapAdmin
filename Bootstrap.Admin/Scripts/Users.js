@@ -31,14 +31,7 @@
                     var roleIds = $('#dialogRole :checked').map(function (index, element) {
                         return $(element).val();
                     }).toArray().join(',');
-                    Role.saveRolesByUserId(userId, roleIds, function (result) {
-                        if (result) {
-                            $('#dialogRole').modal("hide");
-                            swal("成功", "修改角色", "success");
-                        } else {
-                            swal("失败", "修改角色", "error");
-                        }
-                    });
+                    Role.saveRolesByUserId(userId, roleIds, { modal: 'dialogRole' });
                 }
             }]
         },

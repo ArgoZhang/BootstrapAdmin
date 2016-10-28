@@ -30,22 +30,9 @@
                     var userIds = $('#dialogUser :checked').map(function (index, element) {
                         return $(element).val();
                     }).toArray().join(',');
-                    User.saveUsersByRoleId(roleId, userIds, function (result) {
-                        if (result) {
-                            $('#dialogUser').modal('hide');
-                            swal("成功", "修改用户", "success");
-                        } 
-                        else {
-                            swal("失败", "修改用户", "error");
-                        }            
-                    });
+                    User.saveUsersByRoleId(roleId, userIds, { modal: 'dialogUser' });
                 }
             }]
-        },
-        success: function (src, data) {
-            if (src === 'save' && data.ID === $('#roleId').val()) {
-                //$('.username').text(data.DisplayName);
-            }
         }
     });
 
