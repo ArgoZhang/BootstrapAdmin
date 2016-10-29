@@ -235,7 +235,7 @@
                 }
                 if (result) { swal("成功", "授权角色", "success"); }
                 else { swal("失败", "授权角色", "error"); }
-                data.callback(result);
+                if ($.isFunction(data.callback)) data.callback(result);
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 if ($.isFunction(data.callback)) data.callback(false);
@@ -284,7 +284,7 @@
                 }
                 if (result) { swal("成功", "授权用户", "success"); }
                 else { swal("失败", "授权用户", "error"); }
-                data.callback(result);
+                if ($.isFunction(data.callback)) data.callback(result);
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 if ($.isFunction(data.callback)) data.callback(false);
@@ -298,6 +298,12 @@
     };
     User.saveUsersByRoleId = function (roleId, userIds, callback) {
         processUsersData({ Id: roleId, callback: callback, method: "PUT", data: { type: "role", userIds: userIds } });
+    }
+    User.getUsersByGroupeId = function (groupId, callback) {
+        processUsersData({ Id: groupId, callback: callback, data: { type: "group" } });
+    };
+    User.saveUsersByGroupId = function (groupId, userIds, callback) {
+        processUsersData({ Id: groupId, callback: callback, method: "PUT", data: { type: "group", userIds: userIds } });
     }
 
     var processGroupsData = function (options) {

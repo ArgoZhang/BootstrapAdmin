@@ -38,6 +38,9 @@ namespace Bootstrap.Admin.Controllers
                 case "role":
                     ret = UserHelper.RetrieveUsersByRoleId(id).ToList();
                     break;
+                case "group":
+                    ret = UserHelper.RetrieveUsersByGroupId(id).ToList();
+                    break;
                 default:
                     break;
             }
@@ -74,6 +77,9 @@ namespace Bootstrap.Admin.Controllers
             {
                 case "role":
                     ret = UserHelper.SaveUsersByRoleId(id, userIds);
+                    break;
+                case "group":
+                    ret = UserHelper.SaveUsersByGroupId(id, userIds);
                     break;
                 default:
                     break;

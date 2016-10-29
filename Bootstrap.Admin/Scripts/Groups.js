@@ -19,26 +19,32 @@
                     });
                 }
             }, {
-                id: 'btn_assignGroup',
+                id: 'btn_assignUser',
                 click: function (row) {
-                    var userId = row.ID;
+                    User.getUsersByGroupeId(row.ID, function (data) {
+                        $("#dialogUser .modal-title").text($.format('{0}-指定用户窗口', row.GroupName));
+                        $('#dialogUser form').html(data);
+                        $('#dialogUser').modal('show');
+                    });
                 }
             }, {
                 id: 'btnSubmitUserRole',
                 click: function (row) {
-                    var userId = row.ID;
+                  
+                    var groupId = row.ID;
                     var roleIds = $('#dialogRole :checked').map(function (index, element) {
                         return $(element).val();
                     }).toArray().join(',');
-                    Role.saveRolesByGroupId(userId, roleIds, function (result) {
-                        if (result) {
-                            $('#dialogRole').modal("hide");
-                            swal("成功", "修改角色", "success");
-                        } else {
-                            swal("失败", "修改角色", "error");
-                        }
-
-                    });
+                    Role.saveRolesByGroupId(groupId, roleIds, { modal: 'dialogRole' });
+                }
+            },{
+                id: 'btnSubmitRoleUser',
+                click: function (row) {
+                    var groupId = row.ID;
+                    var userIds = $('#dialogUser :checked').map(function (index, element) {
+                        return $(element).val();
+                    }).toArray().join(',');
+                    User.saveUsersByGroupId(groupId, userIds, { modal: 'dialogUser' });
                 }
             }]
         },

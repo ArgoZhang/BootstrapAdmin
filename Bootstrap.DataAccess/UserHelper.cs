@@ -21,6 +21,7 @@ namespace Bootstrap.DataAccess
         private const string UserDataKey = "UserData-CodeUserHelper";
         private const string UserDisplayNameDataKey = "UserData-CodeUserHelper-";
         private const string UserRoleIDDataKey = "UserData-CodeUserHelper-Role-";
+        private const string UserGroupIDDataKey = "UserData-CodeUserHelper-Group-";
         /// <summary>
         /// 查询所有用户
         /// </summary>
@@ -247,6 +248,93 @@ namespace Bootstrap.DataAccess
                     ClearCache();
                 }
                 catch(Exception ex)
+                {
+                    ExceptionManager.Publish(ex);
+                    transaction.RollbackTransaction();
+                }
+            }
+            return ret;
+        }
+
+        /// <summary>
+        /// 通过groupId获取所有用户
+        /// </summary>
+        /// <param name="roleId"></param>
+        /// <returns></returns>
+        public static IEnumerable<User> RetrieveUsersByGroupId(int groupId)
+        {
+
+            string key = string.Format("{0}{1}", UserGroupIDDataKey, groupId);
+            return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(UserGroupIDDataKey), k =>
+            {
+                List<User> Users = new List<User>();
+                string sql = "select u.ID,u.UserName,u.DisplayName,case ur.UserID when u.ID then 'checked' else '' end [status] from Users u left join UserGroup ur on u.ID=ur.UserID and GroupID =@groupId";
+                DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@GroupID", groupId, ParameterDirection.Input));
+                try
+                {
+                    using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
+                    {
+                        while (reader.Read())
+                        {
+                            Users.Add(new User()
+                            {
+                                ID = (int)reader[0],
+                                UserName = (string)reader[1],
+                                DisplayName = (string)reader[2],
+                                Checked = (string)reader[3]
+                            });
+                        }
+                    }
+                }
+                catch (Exception ex) { ExceptionManager.Publish(ex); }
+                return Users;
+            }, CacheSection.RetrieveDescByKey(UserRoleIDDataKey));
+        }
+        /// <summary>
+        /// 通过部门ID保存当前授权用户（插入）
+        /// </summary>
+        /// <param name="id">GroupID</param>
+        /// <param name="value">用户ID数组</param>
+        /// <returns></returns>
+        public static bool SaveUsersByGroupId(int id, string userIds)
+        {
+            bool ret = false;
+            DataTable dt = new DataTable();
+            dt.Columns.Add("UserID", typeof(int));
+            dt.Columns.Add("GroupID", typeof(int)); 
+            if (!string.IsNullOrEmpty(userIds))
+            {
+                userIds.Split(',').ToList().ForEach(userId =>
+                {
+                    DataRow dr = dt.NewRow();
+                    dt.Rows.Add(userId, id);
+                });
+            }
+            using (TransactionPackage transaction = DBAccessManager.SqlDBAccess.BeginTransaction())
+            {
+                try
+                {
+                    //删除用户角色表该角色所有的用户
+                    string sql = "delete from UserGroup where GroupID=@groupID";
+                    using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
+                    {
+                        cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@groupID", id, ParameterDirection.Input));
+                        DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd, transaction);
+                        //批插入用户角色表
+                        using (SqlBulkCopy bulk = new SqlBulkCopy((SqlConnection)transaction.Transaction.Connection, SqlBulkCopyOptions.Default, (SqlTransaction)transaction.Transaction))
+                        {
+                            bulk.DestinationTableName = "UserGroup";
+                            bulk.ColumnMappings.Add("UserID", "UserID");
+                            bulk.ColumnMappings.Add("GroupID", "GroupID");
+                            bulk.WriteToServer(dt);
+                            transaction.CommitTransaction();
+                        }
+                    }
+                    ret = true;
+                    ClearCache();
+                }
+                catch (Exception ex)
                 {
                     ExceptionManager.Publish(ex);
                     transaction.RollbackTransaction();
