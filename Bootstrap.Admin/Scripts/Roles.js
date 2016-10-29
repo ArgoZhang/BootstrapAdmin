@@ -38,21 +38,15 @@
                 }
             },
             {
-                id: 'btnSubmitRoleGroup',
+                id: 'btnSubmitUserGroup',
                 click: function (row) {
                     var roleId = row.ID;
                     var groupIds = $('#dialogGroup :checked').map(function (index, element) {
                         return $(element).val();
                     }).toArray().join(',');
-                    Group.saveGroupsByRoleId(roleId, groupIds, function (result) {
-                        if (result) {
-                            $('#dialogGroup').modal('hide');
-                            swal("成功", "修改部门", "success");
-                        }
-                        else {
-                            swal("失败", "修改部门", "error");
-                        }
-                    });
+                    Group.saveGroupsByRoleId(roleId, groupIds, { modal: 'dialogGroup' });
+                        
+                    
                 }
             }]
         }

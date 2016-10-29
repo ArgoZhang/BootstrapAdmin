@@ -339,5 +339,4 @@
     Group.saveGroupsByRoleId = function (roleId,groupIds,callback) {
         processGroupsData({ Id: roleId, callback: callback, method: "PUT", data: { type: "role", groupIds: groupIds } });
     };
-    };
 })(jQuery);

@@ -295,5 +295,24 @@ namespace Bootstrap.DataAccess
         {
             CacheManager.Clear(key => string.IsNullOrEmpty(cacheKey) || key == cacheKey);
         }
+        /// <summary>
+        /// 查询某个部门所拥有的角色
+        /// </summary>
+        /// <param name="menuId"></param>
+        /// <returns></returns>
+        public static IEnumerable<Role> RetrieveRolesByGroupId(int groupId)
+        {
+            return null;
+        }
+        /// <summary>
+        /// 保存部门角色关系
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static bool SaveRolesByGroupId(int id, string value)
+        {
+            return false;
+        }
     }
 }
