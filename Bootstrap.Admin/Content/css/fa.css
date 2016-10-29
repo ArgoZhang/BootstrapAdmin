@@ -24,13 +24,15 @@
     right: 40px;
     width: 150px;
     bottom: 100px;
-    overflow-y: auto;
 }
 
     .fb-timeliner ul {
-        margin-left: 10px;
-        margin-bottom: 20px;
-        padding-left: 0;
+        top: 44px;
+        width: 150px;
+        bottom: 0;
+        position: absolute;
+        overflow-y:auto;
+        padding-left: 6px;
     }
 
         .fb-timeliner ul li {
