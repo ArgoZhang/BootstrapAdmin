@@ -2,7 +2,6 @@
 {
     /// <summary>
     /// 字典表实体
-    /// Category与Code自关联
     /// author:renshuo
     /// date:2016.10.27
     /// </summary>

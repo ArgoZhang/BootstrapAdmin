@@ -249,7 +249,7 @@ insert into Navigations (ID, Name, [Order], Icon, Url) values (1, '菜单管理'
 insert into Navigations (ID, Name, [Order], Icon, Url) values (2, '用户管理', 20, 'fa fa-user', '~/Admin/Users')
 insert into Navigations (ID, Name, [Order], Icon, Url) values (3, '角色管理', 30, 'fa fa-sitemap', '~/Admin/Roles')
 insert into Navigations (ID, Name, [Order], Icon, Url) values (4, '部门管理', 40, 'fa fa-home', '~/Admin/Groups')
-insert into Navigations (ID, Name, [Order], Icon, Url) values (5, '字典表维护', 50, 'fa fa-book', '~/Admin/Dict')
+insert into Navigations (ID, Name, [Order], Icon, Url) values (5, '字典表维护', 50, 'fa fa-book', '~/Admin/Dicts')
 insert into Navigations (ID, Name, [Order], Icon, Url) values (6, '个性化维护', 60, 'fa fa-pencil', '~/Admin/Profiles')
 insert into Navigations (ID, Name, [Order], Icon, Url) values (7, '系统日志', 70, 'fa fa-gears', '~/Admin/EventLog')
 SET IDENTITY_INSERT Navigations OFF

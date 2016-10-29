@@ -223,6 +223,7 @@
     <Content Include="Views\Admin\Groups.cshtml" />
     <Content Include="Views\Admin\Roles.cshtml" />
     <Content Include="Views\Admin\Menus.cshtml" />
+    <Content Include="Views\Admin\Dicts.cshtml" />
     <Content Include="Views\Shared\Glyphicons.cshtml" />
     <Content Include="Views\Shared\RoleConfig.cshtml" />
     <Content Include="Views\Shared\IconView.cshtml" />
