@@ -63,6 +63,14 @@
     .logo {
         display: none;
     }
+
+    .fb-timeliner {
+        display: none;
+    }
+
+    .icon-body {
+        margin-right: 0 !important;
+    }
 }
 
 @media (max-width: 480px) {
