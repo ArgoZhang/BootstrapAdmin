@@ -107,16 +107,7 @@ namespace Bootstrap.DataAccess
             }
             return ret;
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public static bool SaveRolesByGroupId(int id, string value)
-        {
-            return true;
-        }
+
         /// <summary>
         /// 查询某个用户所拥有的角色
         /// </summary>
@@ -150,15 +141,7 @@ namespace Bootstrap.DataAccess
                 return Roles;
             }, CacheSection.RetrieveDescByKey(RoleUserIDDataKey));
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="groupId"></param>
-        /// <returns></returns>
-        public static IEnumerable<Role> RetrieveRolesByGroupId(int groupId)
-        {
-            return new List<Role>();
-        }
+
         /// <summary>
         /// 删除角色表
         /// </summary>

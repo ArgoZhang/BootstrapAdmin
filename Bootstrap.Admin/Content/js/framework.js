@@ -333,7 +333,11 @@
     Group.saveGroupsByUserId = function (userId, groupIds, callback) {
         processGroupsData({ Id: userId, callback: callback, method: "PUT", data: { type: "user", groupIds: groupIds } });
     };
-    Group.getGroupsByRoleId = function (roleId) {
-
+    Group.getGroupsByRoleId = function (roleId,callback) {
+        processGroupsData({ Id: roleId, callback: callback, data: { type: "role" } });
+    };
+    Group.saveGroupsByRoleId = function (roleId,groupIds,callback) {
+        processGroupsData({ Id: roleId, callback: callback, method: "PUT", data: { type: "role", groupIds: groupIds } });
+    };
     };
 })(jQuery);

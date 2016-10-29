@@ -1,5 +1,6 @@
 ﻿using Longbow.Caching;
 using Longbow.Caching.Configuration;
+using Longbow.Data;
 using Longbow.ExceptionManagement;
 using Longbow.Security;
 using System;
@@ -208,48 +209,50 @@ namespace Bootstrap.DataAccess
         /// <param name="id">角色ID</param>
         /// <param name="value">用户ID数组</param>
         /// <returns></returns>
-        public static bool SaveUsersByRoleId(int id, string value)
+        public static bool SaveUsersByRoleId(int id, string userIds)
         {
+            bool ret = false;
             DataTable dt = new DataTable();
             dt.Columns.Add("RoleID", typeof(int));
             dt.Columns.Add("UserID", typeof(int));
-            if (!string.IsNullOrEmpty(value))
+            if (!string.IsNullOrEmpty(userIds))
             {
-                string[] userIds = value.Split(',');
-                foreach (string userId in userIds)
+                userIds.Split(',').ToList().ForEach(userId =>
                 {
                     DataRow dr = dt.NewRow();
-                    dr["RoleID"] = id;
-                    dr["UserID"] = userId;
-                    dt.Rows.Add(dr);
-                }
+                    dt.Rows.Add(id, userId);
+                });
             }
-            var trans = DBAccessManager.SqlDBAccess.BeginTransaction();
-            try
+            using (TransactionPackage transaction = DBAccessManager.SqlDBAccess.BeginTransaction())
             {
-                using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, string.Empty))
+                try
                 {
-                    cmd.CommandText = "delete from UserRole where RoleId=@RoleId";
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@RoleId", id, ParameterDirection.Input));
-                    DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd, trans);
-                    using (SqlBulkCopy bulk = new SqlBulkCopy((SqlConnection)trans.Transaction.Connection, SqlBulkCopyOptions.Default, (SqlTransaction)trans.Transaction))
+                    //删除用户角色表该角色所有的用户
+                    string sql = "delete from UserRole where RoleId=@RoleId";
+                    using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
                     {
-                        bulk.BatchSize = 1000;
-                        bulk.DestinationTableName = "UserRole";
-                        bulk.ColumnMappings.Add("RoleID", "RoleID");
-                        bulk.ColumnMappings.Add("UserID", "UserID");
-                        bulk.WriteToServer(dt);
+                        cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@RoleID", id, ParameterDirection.Input));
+                        DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd, transaction);
+                        //批插入用户角色表
+                        using (SqlBulkCopy bulk = new SqlBulkCopy((SqlConnection)transaction.Transaction.Connection, SqlBulkCopyOptions.Default, (SqlTransaction)transaction.Transaction))
+                        {
+                            bulk.DestinationTableName = "UserRole";
+                            bulk.ColumnMappings.Add("RoleID", "RoleID");
+                            bulk.ColumnMappings.Add("UserID", "UserID");
+                            bulk.WriteToServer(dt);
+                            transaction.CommitTransaction();
+                        }
                     }
-                    trans.CommitTransaction();
+                    ret= true;
                     ClearCache();
-                    return true;
+                }
+                catch(Exception ex)
+                {
+                    ExceptionManager.Publish(ex);
+                    transaction.RollbackTransaction();
                 }
             }
-            catch
-            {
-                trans.RollbackTransaction();
-                return false;
-            }
+            return ret;
         }
     }
 }

@@ -20,6 +20,7 @@ namespace Bootstrap.DataAccess
     {
         private const string GroupDataKey = "GroupData-CodeGroupHelper";
         private const string GroupUserIDDataKey = "GroupData-CodeGroupHelper-";
+		private const string GroupRoleIDDataKey = "GroupData-CodeGroupHelper-Role-";
         /// <summary>
         /// 查询所有群组信息
         /// </summary>
@@ -203,6 +204,91 @@ namespace Bootstrap.DataAccess
         {
             CacheManager.Clear(key => key == GroupDataKey);
             CacheManager.Clear(key => key == GroupUserIDDataKey);
+			CacheManager.Clear(key => key.Contains(GroupRoleIDDataKey));
+        }
+		/// <summary>
+        /// 根据角色ID指派部门
+        /// </summary>
+        /// <param name="roleId"></param>
+        /// <returns></returns>
+        public static IEnumerable<Group> RetrieveGroupsByRoleId(int roleId)
+        {
+            string k = string.Format("{0}{1}", GroupRoleIDDataKey, roleId);
+            return CacheManager.GetOrAdd(k, CacheSection.RetrieveIntervalByKey(GroupRoleIDDataKey), key =>
+            {
+                List<Group> Groups = new List<Group>();
+                string sql = "select g.ID,g.GroupName,g.[Description],case rg.GroupID when g.ID then 'checked' else '' end [status] from Groups g left join RoleGroup rg on g.ID=rg.GroupID and RoleID=@RoleID";
+                DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@RoleID", roleId, ParameterDirection.Input));
+                try
+                {
+                    using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
+                    {
+                        while (reader.Read())
+                        {
+                            Groups.Add(new Group()
+                            {
+                                ID=(int)reader[0],
+                                GroupName=(string)reader[1],
+                                Description=(string)reader[2],
+                                Checked = (string)reader[3]
+                            });
+                        }
+                    }
+                }
+                catch (Exception ex) { ExceptionManager.Publish(ex); }
+                return Groups;
+            },CacheSection.RetrieveDescByKey(GroupRoleIDDataKey));
+        }
+        /// <summary>
+        /// 根据角色ID以及选定的部门ID，保到角色部门表
+        /// </summary>
+        /// <param name="roleId"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static bool SaveGroupsByRoleId(int id, string groupIds)
+        {
+            bool ret = false;
+            DataTable dt = new DataTable();
+            dt.Columns.Add("GroupID", typeof(int));
+            dt.Columns.Add("RoleID", typeof(int));
+            if (!string.IsNullOrEmpty(groupIds))
+            {
+                groupIds.Split(',').ToList().ForEach(groupId =>
+                {
+                    DataRow dr = dt.NewRow();
+                    dt.Rows.Add(groupId, id);
+                });
+            }
+            using(TransactionPackage transaction=DBAccessManager.SqlDBAccess.BeginTransaction()){
+                try
+                {
+                    //删除角色部门表该角色所有的部门
+                    string sql = "delete from RoleGroup where RoleID=@RoleID";
+                    using (DbCommand cmd=DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text,sql))
+                    {
+                        cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@RoleID", id, ParameterDirection.Input));
+                        DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd, transaction);
+                        //批插入角色部门表
+                        using (SqlBulkCopy bulk = new SqlBulkCopy((SqlConnection)transaction.Transaction.Connection, SqlBulkCopyOptions.Default, (SqlTransaction)transaction.Transaction))
+                        {
+                            bulk.BatchSize=1000;
+                            bulk.ColumnMappings.Add("GroupID","GroupID");
+                            bulk.ColumnMappings.Add("RoleID","RoleID");
+                            bulk.DestinationTableName = "RoleGroup";
+                            bulk.WriteToServer(dt);
+                            transaction.CommitTransaction();
+                        }
+                    }
+                    ret = true;
+                    ClearCache();
+                }
+                catch (Exception ex) {
+                    ExceptionManager.Publish(ex);
+                    transaction.RollbackTransaction();
+                }
+            }
+            return ret;
         }
     }
 }
