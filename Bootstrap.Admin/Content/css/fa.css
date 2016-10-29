@@ -18,6 +18,10 @@
     margin-right: 160px;
 }
 
+    .icon-body .page-header {
+        padding: 16px 0;
+    }
+
 .fb-timeliner {
     position: fixed;
     top: 80px;
