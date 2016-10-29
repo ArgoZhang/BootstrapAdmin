@@ -152,6 +152,7 @@
     <Content Include="Content\js\Longbow.Common.js" />
     <Content Include="Content\js\messages_zh.js" />
     <Content Include="Content\js\messages_zh.min.js" />
+    <Content Include="Scripts\Dicts.js" />
     <Content Include="Scripts\Groups.js" />
     <Content Include="Scripts\icon.js" />
     <Content Include="Scripts\Login.js" />
