@@ -184,6 +184,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\DictsController.cs" />
     <Compile Include="Controllers\GroupsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MenusController.cs" />
@@ -192,6 +193,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\QueryDictOption.cs" />
     <Compile Include="Models\QueryGroupOption.cs" />
     <Compile Include="Models\QueryMenuOption.cs" />
     <Compile Include="Models\QueryRoleOption.cs" />
