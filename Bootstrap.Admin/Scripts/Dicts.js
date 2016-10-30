@@ -25,7 +25,15 @@
 
     // validate
     $('#dataForm').autoValidate({
-        groupName: {
+        dictCate: {
+            required: true,
+            maxlength: 50
+        },
+        dictName: {
+            required: true,
+            maxlength: 50
+        },
+        dictCode: {
             required: true,
             maxlength: 50
         }
