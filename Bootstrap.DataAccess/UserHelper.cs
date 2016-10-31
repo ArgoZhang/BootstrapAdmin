@@ -161,13 +161,10 @@ namespace Bootstrap.DataAccess
             return user != null && user.Password == LgbCryptography.ComputeHash(password, user.PassSalt);
         }
         // 更新缓存
-        private static void ClearCache()
+        private static void ClearCache(string cacheKey = null)
         {
-            CacheManager.Clear(key => key == UserDataKey);
-            CacheManager.Clear(key => key.Contains(UserDisplayNameDataKey));
-            CacheManager.Clear(key => key.Contains(UserRoleIDDataKey));
+            CacheManager.Clear(key => string.IsNullOrEmpty(cacheKey) || key == cacheKey);
         }
-
 
         /// <summary>
         /// 通过roleId获取所有用户
@@ -229,7 +226,7 @@ namespace Bootstrap.DataAccess
                 try
                 {
                     //删除用户角色表该角色所有的用户
-                    string sql = "delete from UserRole where RoleId=@RoleId";
+                    string sql = "delete from UserRole where RoleID=@RoleID";
                     using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
                     {
                         cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@RoleID", id, ParameterDirection.Input));
@@ -316,10 +313,10 @@ namespace Bootstrap.DataAccess
                 try
                 {
                     //删除用户角色表该角色所有的用户
-                    string sql = "delete from UserGroup where GroupID=@groupID";
+                    string sql = "delete from UserGroup where GroupID=@GroupID";
                     using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
                     {
-                        cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@groupID", id, ParameterDirection.Input));
+                        cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@GroupID", id, ParameterDirection.Input));
                         DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd, transaction);
                         //批插入用户角色表
                         using (SqlBulkCopy bulk = new SqlBulkCopy((SqlConnection)transaction.Transaction.Connection, SqlBulkCopyOptions.Default, (SqlTransaction)transaction.Transaction))

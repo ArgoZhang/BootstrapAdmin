@@ -13,7 +13,7 @@
                 id: 'btn_assignUser',
                 click: function (row) {
                     User.getUsersByRoleId(row.ID, function (data) {
-                        $("#dialogUser.modal-title").text($.format('{0}-用户授权窗口', row.RoleName));
+                        $("#dialogUser .modal-title").text($.format('{0}-用户授权窗口', row.RoleName));
                         $('#dialogUser form').html(data);
                         $('#dialogUser').modal('show');
                     })
@@ -22,7 +22,7 @@
                 id: 'btn_assignGroup',
                 click: function (row) {
                     Group.getGroupsByRoleId(row.ID, function (data) {
-                        $("#dialogGroup.modal-title").text($.format('{0}-部门授权窗口', row.RoleName));
+                        $("#dialogGroup .modal-title").text($.format('{0}-部门授权窗口', row.RoleName));
                         $('#dialogGroup form').html(data);
                         $('#dialogGroup').modal('show');
                     })

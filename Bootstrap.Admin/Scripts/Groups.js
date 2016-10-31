@@ -22,7 +22,7 @@
                 id: 'btn_assignUser',
                 click: function (row) {
                     User.getUsersByGroupeId(row.ID, function (data) {
-                        $("#dialogUser .modal-title").text($.format('{0}-指定用户窗口', row.GroupName));
+                        $("#dialogUser .modal-title").text($.format('{0}-用户授权窗口', row.GroupName));
                         $('#dialogUser form').html(data);
                         $('#dialogUser').modal('show');
                     });

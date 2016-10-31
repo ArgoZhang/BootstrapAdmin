@@ -3,7 +3,6 @@ using Longbow.Caching;
 using Longbow.Caching.Configuration;
 using Longbow.Data;
 using Longbow.ExceptionManagement;
-using Longbow.Data;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,7 +10,6 @@ using System.Data.Common;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
-using System.Data.SqlClient;
 
 namespace Bootstrap.DataAccess
 {
@@ -110,9 +108,6 @@ namespace Bootstrap.DataAccess
             }
             return ret;
         }
-       
-      
-
         /// <summary>
         /// 查询某个用户所拥有的角色
         /// </summary>
@@ -146,7 +141,7 @@ namespace Bootstrap.DataAccess
                 return Roles;
             }, CacheSection.RetrieveDescByKey(RoleUserIDDataKey));
         }
-   
+
         /// <summary>
         /// 删除角色表
         /// </summary>
@@ -239,55 +234,53 @@ namespace Bootstrap.DataAccess
             }, CacheSection.RetrieveDescByKey(RoleNavigationIDDataKey));
             return ret;
         }
-        public static bool SavaRolesByMenuId(int id, string value)
+        public static bool SavaRolesByMenuId(int id, string roleIds)
         {
+            var ret = false;
             DataTable dt = new DataTable();
             dt.Columns.Add("NavigationID", typeof(int));
             dt.Columns.Add("RoleID", typeof(int));
             //判断用户是否选定角色
-            if (!string.IsNullOrEmpty(value))
+            if (!string.IsNullOrEmpty(roleIds))
             {
-                string[] roleIDs = value.Split(',');
-                foreach (string roleID in roleIDs)
+                roleIds.Split(',').ToList().ForEach(roleId =>
                 {
                     DataRow row = dt.NewRow();
-                    row["NavigationID"] = id;
-                    row["RoleID"] = roleID;
-                    dt.Rows.Add(row);
-                }
+                    dt.Rows.Add(id, roleId);
+                });
             }
-
-            string sql = "delete from NavigationRole where NavigationID=@NavigationID;";
-            using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
+            using (TransactionPackage transaction = DBAccessManager.SqlDBAccess.BeginTransaction())
             {
-                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@NavigationID", id, ParameterDirection.Input));
-                using (TransactionPackage transaction = DBAccessManager.SqlDBAccess.BeginTransaction())
+                try
                 {
-                    using (SqlBulkCopy bulk = new SqlBulkCopy((SqlConnection)transaction.Transaction.Connection, SqlBulkCopyOptions.Default, (SqlTransaction)transaction.Transaction))
+                    // delete role from config table
+                    string sql = "delete from NavigationRole where NavigationID=@NavigationID;";
+                    using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
                     {
-                        bulk.BatchSize = 1000;
-                        bulk.DestinationTableName = "NavigationRole";
-                        bulk.ColumnMappings.Add("NavigationID", "NavigationID");
-                        bulk.ColumnMappings.Add("RoleID", "RoleID");
+                        cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@NavigationID", id, ParameterDirection.Input));
+                        DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd, transaction);
 
-                        bool ret = true;
-                        try
+                        // insert batch data into config table
+                        using (SqlBulkCopy bulk = new SqlBulkCopy((SqlConnection)transaction.Transaction.Connection, SqlBulkCopyOptions.Default, (SqlTransaction)transaction.Transaction))
                         {
-                            DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd, transaction);
+                            bulk.BatchSize = 1000;
+                            bulk.DestinationTableName = "NavigationRole";
+                            bulk.ColumnMappings.Add("NavigationID", "NavigationID");
+                            bulk.ColumnMappings.Add("RoleID", "RoleID");
                             bulk.WriteToServer(dt);
                             transaction.CommitTransaction();
-                            ClearCache();
                         }
-                        catch (Exception ex)
-                        {
-                            ExceptionManager.Publish(ex);
-                            ret = false;
-                            transaction.RollbackTransaction();
-                        }
-                        return ret;
                     }
+                    ret = true;
+                    ClearCache();
+                }
+                catch (Exception ex)
+                {
+                    ExceptionManager.Publish(ex);
+                    transaction.RollbackTransaction();
                 }
             }
+            return ret;
         }
         // 更新缓存
         private static void ClearCache(string cacheKey = null)
@@ -335,56 +328,53 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="p"></param>
         /// <returns></returns>
-        public static bool SaveRolesByGroupId(int gid, string value)
+        public static bool SaveRolesByGroupId(int id, string roleIds)
         {
+            var ret = false;
             //构造表格
             DataTable dt = new DataTable();
             dt.Columns.Add("RoleID", typeof(int));
             dt.Columns.Add("GroupID", typeof(int));
-            if (!string.IsNullOrEmpty(value))
+            if (!string.IsNullOrEmpty(roleIds))
             {
-                string[] roles = value.Split(',');
-                foreach (string role in roles)
+                roleIds.Split(',').ToList().ForEach(roleId =>
                 {
-                    DataRow r = dt.NewRow();
-                    r["RoleID"] = role;
-                    r["GroupID"] = gid;
-                    dt.Rows.Add(r);
+                    DataRow row = dt.NewRow();
+                    dt.Rows.Add(roleId,id);
+                });
+            }
+            using (TransactionPackage transaction = DBAccessManager.SqlDBAccess.BeginTransaction())
+            {
+                try
+                {
+                    // delete user from config table
+                    string sql = "delete from RoleGroup where GroupID=@GroupID";
+                    using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
+                    {
+                        cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@GroupID", id, ParameterDirection.Input));
+                        DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd, transaction);
+
+                        // insert batch data into config table
+                        using (SqlBulkCopy bulk = new SqlBulkCopy((SqlConnection)transaction.Transaction.Connection, SqlBulkCopyOptions.Default, (SqlTransaction)transaction.Transaction))
+                        {
+                            bulk.BatchSize = 1000;
+                            bulk.DestinationTableName = "RoleGroup";
+                            bulk.ColumnMappings.Add("RoleID", "RoleID");
+                            bulk.ColumnMappings.Add("GroupID", "GroupID");
+                            bulk.WriteToServer(dt);
+                            transaction.CommitTransaction();
+                        }
+                    }
+                    ret = true;
+                    ClearCache();
+                }
+                catch (Exception ex)
+                {
+                    ExceptionManager.Publish(ex);
+                    transaction.RollbackTransaction();
                 }
             }
-
-            var trans = DBAccessManager.SqlDBAccess.BeginTransaction();
-            try
-            {
-                using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, string.Empty))
-                {
-                    // 执行第一个sql
-                    cmd.CommandText = "delete from RoleGroup where GroupID=@GroupID";
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@GroupID", gid, ParameterDirection.Input));
-                    DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd, trans);
-                }
-
-                using (SqlBulkCopy bulk = new SqlBulkCopy((SqlConnection)trans.Transaction.Connection, SqlBulkCopyOptions.Default, (SqlTransaction)trans.Transaction))
-                {
-                    bulk.BatchSize = 1000;
-                    bulk.DestinationTableName = "RoleGroup";
-                    bulk.ColumnMappings.Add("RoleID", "RoleID");
-                    bulk.ColumnMappings.Add("GroupID", "GroupID");
-                    bulk.WriteToServer(dt);
-                }
-
-                trans.CommitTransaction();
-                ClearCache();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                ExceptionManager.Publish(ex);
-                trans.RollbackTransaction();
-                return false;
-            }
-
-
+            return ret;
         }
     }
 }

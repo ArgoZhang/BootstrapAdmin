@@ -20,7 +20,7 @@ namespace Bootstrap.DataAccess
     {
         private const string GroupDataKey = "GroupData-CodeGroupHelper";
         private const string GroupUserIDDataKey = "GroupData-CodeGroupHelper-";
-		private const string GroupRoleIDDataKey = "GroupData-CodeGroupHelper-Role-";
+        private const string GroupRoleIDDataKey = "GroupData-CodeGroupHelper-Role-";
         /// <summary>
         /// 查询所有群组信息
         /// </summary>
@@ -150,63 +150,60 @@ namespace Bootstrap.DataAccess
         /// <param name="id"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static bool SaveGroupsByUserId(int id, string value)
+        public static bool SaveGroupsByUserId(int id, string groupIds)
         {
+            var ret = false;
             DataTable dt = new DataTable();
             dt.Columns.Add("UserID", typeof(int));
             dt.Columns.Add("GroupID", typeof(int));
             //判断用户是否选定角色
-            if (!string.IsNullOrEmpty(value))
+            if (!string.IsNullOrEmpty(groupIds))
             {
-                string[] groupIDs = value.Split(',');
-                foreach (string groupID in groupIDs)
+                groupIds.Split(',').ToList().ForEach(groupId =>
                 {
                     DataRow row = dt.NewRow();
-                    row["UserID"] = id;
-                    row["GroupID"] = groupID;
-                    dt.Rows.Add(row);
-                }
+                    dt.Rows.Add(id, groupId);
+                });
             }
-
-            string sql = "delete from UserGroup where UserID=@UserID;";
-            using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
+            using (TransactionPackage transaction = DBAccessManager.SqlDBAccess.BeginTransaction())
             {
-                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserID", id, ParameterDirection.Input));
-                using (TransactionPackage transaction = DBAccessManager.SqlDBAccess.BeginTransaction())
+                try
                 {
-                    using (SqlBulkCopy bulk = new SqlBulkCopy((SqlConnection)transaction.Transaction.Connection, SqlBulkCopyOptions.Default, (SqlTransaction)transaction.Transaction))
+                    //删除用户部门表中该用户所有的部门关系
+                    string sql = "delete from UserGroup where UserID=@UserID;";
+                    using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
                     {
-                        bulk.BatchSize = 1000;
-                        bulk.DestinationTableName = "UserGroup";
-                        bulk.ColumnMappings.Add("UserID", "UserID");
-                        bulk.ColumnMappings.Add("GroupID", "GroupID");
+                        cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserID", id, ParameterDirection.Input));
+                        DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd, transaction);
 
-                        bool ret = true;
-                        try
+                        // insert batch data into config table
+                        using (SqlBulkCopy bulk = new SqlBulkCopy((SqlConnection)transaction.Transaction.Connection, SqlBulkCopyOptions.Default, (SqlTransaction)transaction.Transaction))
                         {
-                            DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd, transaction);
+                            bulk.BatchSize = 1000;
+                            bulk.DestinationTableName = "UserGroup";
+                            bulk.ColumnMappings.Add("UserID", "UserID");
+                            bulk.ColumnMappings.Add("GroupID", "GroupID");
                             bulk.WriteToServer(dt);
                             transaction.CommitTransaction();
-                            ClearCache();
                         }
-                        catch (Exception ex)
-                        {
-                            ret = false;
-                            transaction.RollbackTransaction();
-                        }
-                        return ret;
                     }
+                    ret = true;
+                    ClearCache();
+                }
+                catch (Exception ex)
+                {
+                    ExceptionManager.Publish(ex);
+                    transaction.RollbackTransaction();
                 }
             }
+            return ret;
         }
         // 更新缓存
-        private static void ClearCache()
+        private static void ClearCache(string cacheKey = null)
         {
-            CacheManager.Clear(key => key == GroupDataKey);
-            CacheManager.Clear(key => key == GroupUserIDDataKey);
-			CacheManager.Clear(key => key.Contains(GroupRoleIDDataKey));
+            CacheManager.Clear(key => string.IsNullOrEmpty(cacheKey) || key == cacheKey);
         }
-		/// <summary>
+        /// <summary>
         /// 根据角色ID指派部门
         /// </summary>
         /// <param name="roleId"></param>
@@ -228,9 +225,9 @@ namespace Bootstrap.DataAccess
                         {
                             Groups.Add(new Group()
                             {
-                                ID=(int)reader[0],
-                                GroupName=(string)reader[1],
-                                Description=(string)reader[2],
+                                ID = (int)reader[0],
+                                GroupName = (string)reader[1],
+                                Description = (string)reader[2],
                                 Checked = (string)reader[3]
                             });
                         }
@@ -238,7 +235,7 @@ namespace Bootstrap.DataAccess
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return Groups;
-            },CacheSection.RetrieveDescByKey(GroupRoleIDDataKey));
+            }, CacheSection.RetrieveDescByKey(GroupRoleIDDataKey));
         }
         /// <summary>
         /// 根据角色ID以及选定的部门ID，保到角色部门表
@@ -260,21 +257,22 @@ namespace Bootstrap.DataAccess
                     dt.Rows.Add(groupId, id);
                 });
             }
-            using(TransactionPackage transaction=DBAccessManager.SqlDBAccess.BeginTransaction()){
+            using (TransactionPackage transaction = DBAccessManager.SqlDBAccess.BeginTransaction())
+            {
                 try
                 {
                     //删除角色部门表该角色所有的部门
                     string sql = "delete from RoleGroup where RoleID=@RoleID";
-                    using (DbCommand cmd=DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text,sql))
+                    using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
                     {
                         cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@RoleID", id, ParameterDirection.Input));
                         DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd, transaction);
                         //批插入角色部门表
                         using (SqlBulkCopy bulk = new SqlBulkCopy((SqlConnection)transaction.Transaction.Connection, SqlBulkCopyOptions.Default, (SqlTransaction)transaction.Transaction))
                         {
-                            bulk.BatchSize=1000;
-                            bulk.ColumnMappings.Add("GroupID","GroupID");
-                            bulk.ColumnMappings.Add("RoleID","RoleID");
+                            bulk.BatchSize = 1000;
+                            bulk.ColumnMappings.Add("GroupID", "GroupID");
+                            bulk.ColumnMappings.Add("RoleID", "RoleID");
                             bulk.DestinationTableName = "RoleGroup";
                             bulk.WriteToServer(dt);
                             transaction.CommitTransaction();
@@ -283,7 +281,8 @@ namespace Bootstrap.DataAccess
                     ret = true;
                     ClearCache();
                 }
-                catch (Exception ex) {
+                catch (Exception ex)
+                {
                     ExceptionManager.Publish(ex);
                     transaction.RollbackTransaction();
                 }
