@@ -23,7 +23,7 @@
                     });
                 }
             }, {
-                id: 'btnSubmitUserRole',
+                id: 'btnSubmitRole',
                 click: function (row) {
                     var menuId = row.ID;
                     var roleIds = $('#dialogRole :checked').map(function (index, element) {

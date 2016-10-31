@@ -28,7 +28,7 @@
                     });
                 }
             }, {
-                id: 'btnSubmitUserRole',
+                id: 'btnSubmitRole',
                 click: function (row) {
                   
                     var groupId = row.ID;
@@ -38,7 +38,7 @@
                     Role.saveRolesByGroupId(groupId, roleIds, { modal: 'dialogRole' });
                 }
             },{
-                id: 'btnSubmitRoleUser',
+                id: 'btnSubmitUser',
                 click: function (row) {
                     var groupId = row.ID;
                     var userIds = $('#dialogUser :checked').map(function (index, element) {
@@ -47,11 +47,6 @@
                     User.saveUsersByGroupId(groupId, userIds, { modal: 'dialogUser' });
                 }
             }]
-        },
-        success: function (src, data) {
-            if (src === 'save' && data.ID === $('#userId').val()) {
-                $('.username').text(data.DisplayName);
-            }
         }
     });
 

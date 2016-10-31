@@ -29,7 +29,7 @@
                     });
                 }
             }, {
-                id: 'btnSubmitUserRole',
+                id: 'btnSubmitRole',
                 click: function (row) {
                     var userId = row.ID;
                     var roleIds = $('#dialogRole :checked').map(function (index, element) {
@@ -38,7 +38,7 @@
                     Role.saveRolesByUserId(userId, roleIds, { modal: 'dialogRole' });
                 }
             }, {
-                id: 'btnSubmitUserGroup',
+                id: 'btnSubmitGroup',
                 click: function (row) {
                     var userId = row.ID;
                     var groupIds = $('#dialogGroup :checked').map(function (index, element) {

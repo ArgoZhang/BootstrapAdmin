@@ -28,7 +28,7 @@
                     })
                 }
             }, {
-                id: 'btnSubmitRoleUser',
+                id: 'btnSubmitUser',
                 click: function (row) {
                     var roleId = row.ID;
                     var userIds = $('#dialogUser :checked').map(function (index, element) {
@@ -38,7 +38,7 @@
                 }
             },
             {
-                id: 'btnSubmitUserGroup',
+                id: 'btnSubmitGroup',
                 click: function (row) {
                     var roleId = row.ID;
                     var groupIds = $('#dialogGroup :checked').map(function (index, element) {
