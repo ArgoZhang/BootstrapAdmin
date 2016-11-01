@@ -1,4 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Data;
+using System.Data.Common;
 using System.Linq;
 
 namespace Bootstrap.DataAccess.Tests
@@ -7,48 +9,54 @@ namespace Bootstrap.DataAccess.Tests
     public class DictHelperTests
     {
 
+        private Dict Dict { get; set; }
+
+        [TestInitialize]
+        public void Initialized()
+        {
+            Dict = new Dict() { Category = "__测试菜单__", Name = "__测试子菜单1__", Code = "2" };
+        }
+
+        [TestCleanup]
+        public void CleanUp()
+        {
+            using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, "Delete from Dicts where Category = '__测试菜单__'"))
+            {
+                DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
+            }
+        }
+
         [TestMethod]
         public void RetrieveDictsTest()
         {
-            SaveDictTest();
-            var result = DictHelper.RetrieveDicts("1");
-            Assert.IsTrue((result.Count() == 0 || result.Count() == 1), "带有参数的DictHelper.RetrieveDicts方法调用失败，请检查数据库连接或者数据库SQL语句");
-            result = DictHelper.RetrieveDicts();
-            Assert.IsTrue(result.Count() >= 0, "不带参数的DictHelper.RetrieveDicts方法调用失败，请检查数据库连接或者数据库SQL语句");
+            Assert.IsTrue(DictHelper.RetrieveDicts().Count() > 1, "不带参数的DictHelper.RetrieveDicts方法调用失败");
         }
 
         [TestMethod]
         public void SaveDictTest()
         {
-            Dict p = new Dict();
-            p.Category = "测试省份";
-            p.Name = "测试城市";
-            p.Code = "测试字典";
-            var result = DictHelper.SaveDict(p);
-            Assert.IsTrue(result, "增加用户出错");
+            // 测试插入字典记录方法 ID = 0
+            Assert.IsTrue(DictHelper.SaveDict(Dict), "插入字典记录操作失败，请检查 DictHelper.SaveDict 方法");
+            var dicts = DictHelper.RetrieveDicts();
+            Assert.IsTrue(dicts.Count() > 0, "插入字典记录操作失败，请检查 DictHelper.SaveDict 方法");
 
-            p.ID = 1;
-            p.Category = "测试省份22";
-            p.Name = "测试城市22";
-            p.Code = "测试字典22";
-            result = DictHelper.SaveDict(p);
-            Assert.IsTrue(result, "更新用户出错");
+            // 测试更新字典记录方法 ID != 0
+            var dict = dicts.FirstOrDefault(d => d.Category == Dict.Category);
+            dict.Name = "__测试子菜单2__";
+            Assert.IsTrue(DictHelper.SaveDict(dict), string.Format("更新字典记录ID = {0} 操作失败，请检查 DictHelper.SaveDict 方法", dict.ID));
+            var dest = DictHelper.RetrieveDicts(dict.ID.ToString());
+            Assert.IsTrue(dest.Count() == 1, "带参数的DictHelper.RetrieveDicts方法调用失败");
+            Assert.AreEqual(dict.Name, dest.First().Name, string.Format("更新字典记录ID = {0} 操作失败，请检查 DictHelper.SaveDict 方法", dict.ID));
         }
 
         [TestMethod]
         public void DeleteDictTest()
         {
-            SaveDictTest();
-            string p = "1";
-            try
-            {
-                DictHelper.DeleteDict(p);
-                Assert.IsTrue(true);
-            }
-            catch
-            {
-                Assert.IsTrue(false, "删除用户出错");
-            }
+            // 先判断数据环境是否可以删除，没有数据先伪造数据
+            var dict = DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == Dict.Category);
+            if (dict == null) DictHelper.SaveDict(Dict);
+            dict = DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == Dict.Category);
+            Assert.IsTrue(DictHelper.DeleteDict(dict.ID.ToString()), "DictHelper.DeleteDict 方法调用失败");
         }
     }
 }
