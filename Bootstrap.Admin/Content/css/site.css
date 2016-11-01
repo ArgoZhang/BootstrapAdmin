@@ -286,6 +286,13 @@ a.logo {
                 display: block;
             }
 
+            .dropdown-menu.extended.logout > li > a > .badge {
+                position: absolute;
+                right: 20px;
+                top: 4px;
+                background: #FCB322;
+            }
+
     .dropdown-menu.extended li a {
         border-bottom: 1px solid #EBEBEB !important;
         font-size: 12px;
