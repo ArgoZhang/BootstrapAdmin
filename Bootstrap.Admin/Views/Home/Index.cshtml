@@ -1,9 +1,12 @@
-﻿@model Bootstrap.Admin.Models.HeaderBarModel
+﻿@model ContentModel
 @{
-    ViewBag.Title = "Rules";
     Layout = "~/Views/Shared/_Normal.cshtml";
 }
+@section javascript {
+    <script src="~/Scripts/Content.js"></script>
+}
+
 @section header {
     @Html.Partial("Header", Model)
 }
-<div style="height: 1000px;"><h4>欢迎使用本系统</h4></div>
+@Html.Partial("Content", Model)

@@ -113,6 +113,7 @@
     <Content Include="Content\css\font-awesome.min.css" />
     <Content Include="Content\css\site-responsive.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\html\dummy.html" />
     <Content Include="Content\images\arrow-up.png" />
     <Content Include="Content\images\avatar1_small.jpg" />
     <Content Include="Content\images\error.png" />
@@ -152,6 +153,7 @@
     <Content Include="Content\js\Longbow.Common.js" />
     <Content Include="Content\js\messages_zh.js" />
     <Content Include="Content\js\messages_zh.min.js" />
+    <Content Include="Scripts\Content.js" />
     <Content Include="Scripts\Dicts.js" />
     <Content Include="Scripts\Groups.js" />
     <Content Include="Scripts\icon.js" />
@@ -169,9 +171,7 @@
     <None Include="Scripts\_references.js" />
     <Content Include="Content\js\framework.js" />
     <Content Include="Views\Shared\Readme.txt" />
-    <Content Include="Web.config">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="Web.config" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
@@ -193,6 +193,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ContentModel.cs" />
     <Compile Include="Models\QueryDictOption.cs" />
     <Compile Include="Models\QueryGroupOption.cs" />
     <Compile Include="Models\QueryMenuOption.cs" />
@@ -232,6 +233,7 @@
     <Content Include="Views\Shared\IconView.cshtml" />
     <Content Include="Views\Shared\UserConfig.cshtml" />
     <Content Include="Views\Shared\GroupConfig.cshtml" />
+    <Content Include="Views\Shared\Content.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

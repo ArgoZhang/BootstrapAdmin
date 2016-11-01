@@ -17,8 +17,9 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public ActionResult Index()
         {
-            var v = new HeaderBarModel();
+            var v = new ContentModel();
             v.ShowMenu = "hide";
+            v.Url = "/Content/html/dummy.html";
             return View(v);
         }
         /// <summary>

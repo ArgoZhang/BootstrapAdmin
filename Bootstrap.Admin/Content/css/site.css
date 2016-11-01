@@ -624,3 +624,9 @@ ul.breadcrumb {
     ul.breadcrumb > li > a > i {
         padding-right: 6px;
     }
+
+iframe {
+    width: 100%;
+    border: none;
+    height: 500px;
+}
