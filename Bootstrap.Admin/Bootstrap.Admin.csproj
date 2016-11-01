@@ -166,7 +166,7 @@
     <Content Include="Content\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\fonts\FontAwesome.otf" />
-    <None Include="Content\js\_references.js" />
+    <None Include="Scripts\_references.js" />
     <Content Include="Content\js\framework.js" />
     <Content Include="Views\Shared\Readme.txt" />
     <Content Include="Web.config">
