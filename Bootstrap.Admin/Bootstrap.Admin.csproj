@@ -234,6 +234,7 @@
     <Content Include="Views\Shared\UserConfig.cshtml" />
     <Content Include="Views\Shared\GroupConfig.cshtml" />
     <Content Include="Views\Shared\Content.cshtml" />
+    <Content Include="Views\Admin\Profiles.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
