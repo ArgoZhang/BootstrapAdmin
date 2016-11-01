@@ -8,8 +8,8 @@ SET IDENTITY_INSERT [dbo].[Users] OFF
 
 DELETE From Dicts where ID in (1, 2)
 SET IDENTITY_INSERT [dbo].[Dicts] ON 
-INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code]) VALUES (1, N'菜单', N'系统菜单', '0')
-INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code]) VALUES (2, N'菜单', N'外部菜单', '1')
+INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code]) VALUES (1, N'菜单', N'系统菜单', N'0')
+INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code]) VALUES (2, N'菜单', N'外部菜单', N'1')
 SET IDENTITY_INSERT [dbo].[Dicts] OFF
 
 DELETE FROM Navigations where ID in (1, 2, 3, 4, 5, 6, 7, 8)

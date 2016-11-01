@@ -162,7 +162,7 @@ CREATE TABLE [dbo].[Dicts](
     [ID] [int] IDENTITY(1,1) NOT NULL,
     [Category] [nvarchar](50) NOT NULL,
     [Name] [nvarchar](50) NOT NULL,
-    [Code] [varchar](50) NOT NULL,
+    [Code] [nvarchar](50) NOT NULL,
  CONSTRAINT [PK_dbo.Dict] PRIMARY KEY CLUSTERED 
 (
     [ID] ASC
@@ -180,12 +180,6 @@ EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'字典名称' 
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'字典代码' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Dicts', @level2type=N'COLUMN',@level2name=N'Code'
 GO
-
-SET IDENTITY_INSERT [dbo].[Dicts] ON 
-INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code]) VALUES (1, N'菜单', N'系统菜单', N'0')
-INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code]) VALUES (2, N'菜单', N'外部菜单', N'1')
-SET IDENTITY_INSERT [dbo].[Dicts] OFF
-
 /****** Object:  Table [dbo].[Logs]    Script Date: 10/28/2016 16:39:11 ******/
 SET ANSI_NULLS ON
 GO
@@ -226,17 +220,6 @@ CREATE TABLE [dbo].[Navigations](
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-SET IDENTITY_INSERT [dbo].[Navigations] ON 
-INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (1, 0, N'菜单管理', 10, N'fa fa-dashboard', N'~/Admin/Menus', N'0')
-INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (2, 0, N'用户管理', 20, N'fa fa-user', N'~/Admin/Users', N'0')
-INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (3, 0, N'角色管理', 30, N'fa fa-sitemap', N'~/Admin/Roles', N'0')
-INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (4, 0, N'部门管理', 40, N'fa fa-home', N'~/Admin/Groups', N'0')
-INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (5, 0, N'字典表维护', 50, N'fa fa-book', N'~/Admin/Dicts', N'0')
-INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (6, 0, N'个性化维护', 60, N'fa fa-pencil', N'~/Admin/Profiles', N'0')
-INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (7, 0, N'系统日志', 70, N'fa fa-gears', N'~/Admin/Logs', N'0')
-SET IDENTITY_INSERT [dbo].[Navigations] OFF
-
 /****** Object:  Table [dbo].[NavigationRole]    Script Date: 10/28/2016 15:14:35 ******/
 SET ANSI_NULLS ON
 GO
