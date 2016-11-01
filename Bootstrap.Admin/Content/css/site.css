@@ -111,15 +111,11 @@ a.logo {
     margin-top: 7px;
 }
 
-    .top-nav li.dropdown .dropdown-menu {
-        float: right;
-        right: 0;
-        left: auto;
-    }
-
     .top-nav .username {
         font-size: 13px;
         color: #555555;
+        display: inline-block;
+        min-width: 18px;
     }
 
     .top-nav ul.top-menu > li > a {
@@ -165,6 +161,7 @@ a.logo {
 
     .top-nav ul.top-menu > li .dropdown-menu.logout {
         width: 268px !important;
+        right: 0;
     }
 
 .nav > li, ul.top-menu > li {
@@ -233,6 +230,7 @@ a.logo {
     max-width: 300px !important;
     min-width: 160px !important;
     top: 42px;
+    right: -100px;
     width: 235px !important;
     padding: 0;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.176) !important;
@@ -378,9 +376,7 @@ a.logo {
 }
 
 .notify-row {
-    position: absolute;
-    right: 350px;
-    top: 15px;
+    margin-top: 4px;
 }
 
     .notify-row .badge {
@@ -417,7 +413,7 @@ a.logo {
     margin-top: 0;
     opacity: 0;
     position: absolute;
-    left: 7px;
+    right: 107px;
     top: -18px;
     transition: all 0.25s ease 0s;
     width: 0;
