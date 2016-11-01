@@ -1,14 +1,18 @@
 USE [BootstrapAdmin]
 GO
-/* added by argo the default password is 123789 */
-insert into Users (UserName, Password, PassSalt, DisplayName) values ('Admin', 'Es7WVgNsJuELwWK8daCqufUBknCsSC0IYDphQZAiGOo=', 'W5vpBEOYRGHkQXatN0t+ECM/U8cHDuEgrq56+zZBk4J481xH', 'Administrator')
-GO
 
+DELETE From Users where ID = 1
+SET IDENTITY_INSERT [dbo].[Users] ON 
+insert into Users (ID, UserName, Password, PassSalt, DisplayName) values (1, 'Admin', 'Es7WVgNsJuELwWK8daCqufUBknCsSC0IYDphQZAiGOo=', 'W5vpBEOYRGHkQXatN0t+ECM/U8cHDuEgrq56+zZBk4J481xH', 'Administrator')
+SET IDENTITY_INSERT [dbo].[Users] OFF
+
+DELETE From Dicts where ID in (1, 2)
 SET IDENTITY_INSERT [dbo].[Dicts] ON 
 INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code]) VALUES (1, N'菜单', N'系统菜单', '0')
 INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code]) VALUES (2, N'菜单', N'外部菜单', '1')
 SET IDENTITY_INSERT [dbo].[Dicts] OFF
 
+DELETE FROM Navigations where ID in (1, 2, 3, 4, 5, 6, 7)
 SET IDENTITY_INSERT [dbo].[Navigations] ON 
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (1, 0, N'菜单管理', 10, N'fa fa-dashboard', N'~/Admin/Menus', N'0')
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (2, 0, N'用户管理', 20, N'fa fa-user', N'~/Admin/Users', N'0')
