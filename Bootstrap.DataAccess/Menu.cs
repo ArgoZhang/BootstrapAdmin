@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-
+﻿
 namespace Bootstrap.DataAccess
 {
     /// <summary>
