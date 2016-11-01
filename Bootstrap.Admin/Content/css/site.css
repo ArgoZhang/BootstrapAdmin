@@ -377,6 +377,7 @@ a.logo {
 
 .notify-row {
     margin-top: 4px;
+    padding-right: 10px;
 }
 
     .notify-row .badge {
