@@ -1,4 +1,4 @@
-USE [BootstrapAdmin]
+ï»¿USE [BootstrapAdmin]
 GO
 
 DELETE From Users where ID = 1
@@ -8,17 +8,18 @@ SET IDENTITY_INSERT [dbo].[Users] OFF
 
 DELETE From Dicts where ID in (1, 2)
 SET IDENTITY_INSERT [dbo].[Dicts] ON 
-INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code]) VALUES (1, N'²Ëµ¥', N'ÏµÍ³²Ëµ¥', '0')
-INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code]) VALUES (2, N'²Ëµ¥', N'Íâ²¿²Ëµ¥', '1')
+INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code]) VALUES (1, N'èœå•', N'ç³»ç»Ÿèœå•', '0')
+INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code]) VALUES (2, N'èœå•', N'å¤–éƒ¨èœå•', '1')
 SET IDENTITY_INSERT [dbo].[Dicts] OFF
 
-DELETE FROM Navigations where ID in (1, 2, 3, 4, 5, 6, 7)
+DELETE FROM Navigations where ID in (1, 2, 3, 4, 5, 6, 7, 8)
 SET IDENTITY_INSERT [dbo].[Navigations] ON 
-INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (1, 0, N'²Ëµ¥¹ÜÀí', 10, N'fa fa-dashboard', N'~/Admin/Menus', N'0')
-INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (2, 0, N'ÓÃ»§¹ÜÀí', 20, N'fa fa-user', N'~/Admin/Users', N'0')
-INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (3, 0, N'½ÇÉ«¹ÜÀí', 30, N'fa fa-sitemap', N'~/Admin/Roles', N'0')
-INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (4, 0, N'²¿ÃÅ¹ÜÀí', 40, N'fa fa-home', N'~/Admin/Groups', N'0')
-INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (5, 0, N'×Öµä±íÎ¬»¤', 50, N'fa fa-book', N'~/Admin/Dicts', N'0')
-INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (6, 0, N'¸öĞÔ»¯Î¬»¤', 60, N'fa fa-pencil', N'~/Admin/Profiles', N'0')
-INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (7, 0, N'ÏµÍ³ÈÕÖ¾', 70, N'fa fa-gears', N'~/Admin/Logs', N'0')
+INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (1, 0, N'èœå•ç®¡ç†', 10, N'fa fa-dashboard', N'~/Admin/Menus', N'0')
+INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (2, 0, N'ç”¨æˆ·ç®¡ç†', 20, N'fa fa-user', N'~/Admin/Users', N'0')
+INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (3, 0, N'è§’è‰²ç®¡ç†', 30, N'fa fa-sitemap', N'~/Admin/Roles', N'0')
+INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (4, 0, N'éƒ¨é—¨ç®¡ç†', 40, N'fa fa-home', N'~/Admin/Groups', N'0')
+INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (5, 0, N'å­—å…¸è¡¨ç»´æŠ¤', 50, N'fa fa-book', N'~/Admin/Dicts', N'0')
+INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (6, 0, N'ä¸ªæ€§åŒ–ç»´æŠ¤', 60, N'fa fa-pencil', N'~/Admin/Profiles', N'0')
+INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (7, 0, N'ç³»ç»Ÿæ—¥å¿—', 70, N'fa fa-gears', N'~/Admin/Logs', N'0')
+INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (8, 0, N'è¿”å›å‰å°', 80, N'fa fa-hand-o-left', N'~/Home', N'0')
 SET IDENTITY_INSERT [dbo].[Navigations] OFF
