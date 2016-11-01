@@ -9,11 +9,13 @@ namespace Bootstrap.DataAccess.Tests
     public class MenuHelperTests
     {
         private Menu Menu { get; set; }
+        private Role Role { get; set; }
 
         [TestInitialize]
         public void Initialized()
         {
-            Menu = new Menu() { Name = "__测试菜单__", Order = 999 };
+            Menu = new Menu() { Name = "__测试菜单__", Order = 999, Category = "0" };
+            Role = new Role() { RoleName = "_测试角色_", Description = "这是一个测试角色", Checked = "0" };
         }
         [TestCleanup]
         public void CleanUp()
@@ -57,11 +59,28 @@ namespace Bootstrap.DataAccess.Tests
             Assert.IsTrue(MenuHelper.DeleteMenu(menu.ID.ToString()), "MenuHelper.DeleteMenu 方法调用失败");
         }
 
-        [TestMethod()]
-        public void RetrieveMenusByUserIdTest()
+        [TestMethod]
+        public void SavaRolesByMenuIdTest()
         {
-            // UNDONE: 根据代码编写单元测试
-            Assert.IsTrue(true);
+            var menu = MenuHelper.RetrieveMenus().FirstOrDefault(m => m.Name == Menu.Name);
+            if (menu == null) MenuHelper.SaveMenu(Menu);
+            menu = MenuHelper.RetrieveMenus().FirstOrDefault(m => m.Name == Menu.Name);
+
+            var role = RoleHelper.RetrieveRoles().FirstOrDefault(m => m.RoleName == Role.RoleName);
+            if (role == null) RoleHelper.SaveRole(Role);
+            role = RoleHelper.RetrieveRoles().FirstOrDefault(m => m.RoleName == Role.RoleName);
+
+            Assert.IsTrue(RoleHelper.SavaRolesByMenuId(menu.ID, role.ID.ToString()), "保存菜单角色关系失败");
+            Assert.IsTrue(RoleHelper.RetrieveRolesByMenuId(menu.ID).Count() > 0, string.Format("获取菜单ID={0}的角色关系失败", menu.ID));
+
+            //删除数据
+            string sql = "delete from Navigations where Name='__测试菜单__';";
+            sql += "delete from Roles where RoleName='_测试角色_';";
+            sql += string.Format("delete from NavigationRole where NavigationID={0}", menu.ID);
+            using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
+            {
+                DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
+            }
         }
     }
 }
