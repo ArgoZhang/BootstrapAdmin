@@ -61,6 +61,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static User RetrieveUsersByName(string userName)
         {
+            if (Longbow.Security.Principal.LgbPrincipal.IsAdmin(userName)) return new User() { DisplayName = "网站管理员", UserName = userName };
             string key = string.Format("{0}{1}", UserDisplayNameDataKey, userName);
             return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(UserDisplayNameDataKey), k =>
             {
@@ -173,7 +174,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<User> RetrieveUsersByRoleId(int roleId)
         {
-            
+
             string key = string.Format("{0}{1}", UserRoleIDDataKey, roleId);
             return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(UserDisplayNameDataKey), k =>
             {
@@ -241,10 +242,10 @@ namespace Bootstrap.DataAccess
                             transaction.CommitTransaction();
                         }
                     }
-                    ret= true;
+                    ret = true;
                     ClearCache();
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     ExceptionManager.Publish(ex);
                     transaction.RollbackTransaction();
@@ -299,7 +300,7 @@ namespace Bootstrap.DataAccess
             bool ret = false;
             DataTable dt = new DataTable();
             dt.Columns.Add("UserID", typeof(int));
-            dt.Columns.Add("GroupID", typeof(int)); 
+            dt.Columns.Add("GroupID", typeof(int));
             if (!string.IsNullOrEmpty(userIds))
             {
                 userIds.Split(',').ToList().ForEach(userId =>
