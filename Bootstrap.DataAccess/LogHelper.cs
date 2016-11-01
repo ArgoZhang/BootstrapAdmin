@@ -81,7 +81,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="p"></param>
         /// <returns></returns>
-        public static bool saveLog(Log p)
+        public static bool SaveLog(Log p)
         {
             if (p == null) throw new ArgumentNullException("p");
             bool ret = false;

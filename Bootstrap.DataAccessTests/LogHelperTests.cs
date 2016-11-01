@@ -25,15 +25,12 @@ namespace Bootstrap.DataAccess.Tests
         [TestMethod]
         public void RetrieveLogsTest()
         {
-            //var resul = LogHelper.RetrieveLogs("1");
-            //Assert.IsTrue((resul.Count() == 0 || result.Count() == 1), "带有参数的LogHelper.RetrieveLogs方法调用失败，请检查数据库连接或者数据库SQL语句");
-            var result = LogHelper.RetrieveLogs();
-            Assert.IsTrue(result.Count() >= 0, "带有参数的LogHelper.RetrieveLogs方法调用失败，请检查数据库连接或者数据库SQL语句");
+            Assert.IsTrue(LogHelper.RetrieveLogs().Count() >= 0, "带有参数的LogHelper.RetrieveLogs方法调用失败，请检查数据库连接或者数据库SQL语句");
         }
         [TestMethod]
-        public void saveLogTest()
+        public void SaveLogTest()
         {
-            Assert.IsTrue(LogHelper.saveLog(Log), "新增日志信息出错,请检查LogHelper的saveLog 方法");
+            Assert.IsTrue(LogHelper.SaveLog(Log), "新增日志信息出错,请检查LogHelper的saveLog 方法");
             var logs = LogHelper.RetrieveLogs();
             Assert.IsTrue(logs.Count() > 0, "新增日志信息出错,请检查LogHelper的saveLog 方法");
         }
@@ -42,7 +39,7 @@ namespace Bootstrap.DataAccess.Tests
         {
             // 先判断数据环境是否可以删除，没有数据先伪造数据
             var log = LogHelper.RetrieveLogs().FirstOrDefault(m => m.OperationType == Log.OperationType);
-            if (log == null) LogHelper.saveLog(Log);
+            if (log == null) LogHelper.SaveLog(Log);
             log = LogHelper.RetrieveLogs().FirstOrDefault(m => m.OperationType == Log.OperationType);
             Assert.IsTrue(LogHelper.DeleteLog(log.ID.ToString()), "删除日志信息出错");
         }
