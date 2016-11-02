@@ -140,13 +140,12 @@
         bottom: 40px;
         right: 0;
         top: 94px;
-        overflow: hidden;
+        overflow: auto;
     }
 
         .content-body iframe {
             width: 100%;
             border: none;
-            height: 100%;
-            overflow: auto;
+            overflow: hidden;
         }
 }

@@ -175,9 +175,15 @@ $(function () {
         }, "请填写正确的IP地址");
     }
 
+    // tool tips
+    $('.tooltips').tooltip();
+
+    // popovers
+    $('.popovers').popover();
+
     $(".go-top").click(function (e) {
         e.preventDefault();
-        $('#main-content').animate({
+        $('#main-content, .content-body, body').animate({
             scrollTop: 0
         }, 200);
     });

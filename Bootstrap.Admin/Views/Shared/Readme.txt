@@ -9,6 +9,3 @@
 
 
 -------> _Normal.cshtml
-		/Home/Terminals
---------------> _Fix.cshtml
-				/Home/Rules
