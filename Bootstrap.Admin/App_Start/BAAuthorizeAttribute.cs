@@ -1,7 +1,7 @@
-﻿using Longbow.Security.Principal;
-using Longbow.Web.Mvc;
-using System;
+﻿using System;
 using System.Web.Mvc;
+using Longbow.Security.Principal;
+using Longbow.Web.Mvc;
 
 namespace Bootstrap.Admin
 {
@@ -25,10 +25,10 @@ namespace Bootstrap.Admin
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        protected override bool AuthenticateRole(string userName)
+        protected override bool AuthenticateRole()
         {
             Roles = "Administrators;SupperAdmin"; //RoleHelper.RetrieveRolesByUrl();
-            return base.AuthenticateRole(userName);
+            return base.AuthenticateRole();
         }
         /// <summary>
         /// 
