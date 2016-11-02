@@ -51,7 +51,6 @@
 
     #main-content {
         margin: 0px !important;
-        position: none !important;
     }
 
     .top-nav {
@@ -70,6 +69,17 @@
 
     .icon-body {
         margin-right: 0 !important;
+    }
+
+    .modal-body div.checkbox {
+        min-width: 190px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .modal-body .checkbox label input[type='checkbox'] {
+        top: 4px;
     }
 }
 
