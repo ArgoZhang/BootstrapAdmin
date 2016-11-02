@@ -15,6 +15,7 @@ namespace Bootstrap.DataAccess
     public static class MenuHelper
     {
         private const string MenuDataKey = "MenuData-CodeMenuHelper";
+        private const string MenuByUserDataKey = "MneuData-CodeMenuHelper-User";
         /// <summary>
         /// 查询所有菜单信息
         /// </summary>
@@ -52,14 +53,40 @@ namespace Bootstrap.DataAccess
             return string.IsNullOrEmpty(tId) ? ret : ret.Where(t => tId.Equals(t.ID.ToString(), StringComparison.OrdinalIgnoreCase));
         }
         /// <summary>
-        /// 
+        /// 查询某个用户所配置的菜单
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
         public static IEnumerable<Menu> RetrieveMenusByUserId(int userId)
         {
-            //UNDONE: 通过用户ID获得到当前用户配置的菜单
-            return RetrieveMenus();
+            string sql = "select distinct n.* from UserRole ur,NavigationRole nr,Navigations n where ur.RoleID=nr.RoleID and nr.NavigationID=n.ID and ur.UserID = @UserID";
+            return CacheManager.GetOrAdd(MenuByUserDataKey, CacheSection.RetrieveIntervalByKey(MenuByUserDataKey), key =>
+            {
+                List<Menu> Menus = new List<Menu>();
+                DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
+                try
+                {
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserID", userId, ParameterDirection.Input));
+                    using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
+                    {
+                        while (reader.Read())
+                        {
+                            Menus.Add(new Menu()
+                            {
+                                ID = (int)reader[0],
+                                ParentId = (int)reader[1],
+                                Name = (string)reader[2],
+                                Order = (int)reader[3],
+                                Icon = LgbConvert.ReadValue(reader[4], string.Empty),
+                                Url = LgbConvert.ReadValue(reader[5], string.Empty),
+                                Category = (string)reader[6]
+                            });
+                        }
+                    }
+                }
+                catch (Exception ex) { ExceptionManager.Publish(ex); }
+                return Menus;
+            }, CacheSection.RetrieveDescByKey(MenuByUserDataKey));
         }
         /// <summary>
         /// 删除菜单信息

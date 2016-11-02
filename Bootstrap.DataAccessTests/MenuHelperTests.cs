@@ -33,6 +33,12 @@ namespace Bootstrap.DataAccess.Tests
         }
 
         [TestMethod]
+        public void RetrieveMenuByUserIDTest() 
+        {
+            Assert.IsTrue(MenuHelper.RetrieveMenusByUserId(1).Count() > 1, "根据用户ID查询菜单的MenuHelper.RetrieveMenusByUserId方法调用失败");
+        }
+
+        [TestMethod]
         public void SaveMenuTest()
         {
             // 测试插入菜单方法 ID = 0
