@@ -67,14 +67,7 @@ namespace Bootstrap.DataAccess
             dt.Columns.Add("UserID", typeof(int));
             dt.Columns.Add("RoleID", typeof(int));
             //判断用户是否选定角色
-            if (!string.IsNullOrEmpty(roleIds))
-            {
-                roleIds.Split(',').ToList().ForEach(roleId =>
-                {
-                    DataRow row = dt.NewRow();
-                    dt.Rows.Add(id, roleId);
-                });
-            }
+            if (!string.IsNullOrEmpty(roleIds)) roleIds.Split(',').ToList().ForEach(roleId => dt.Rows.Add(id, roleId));
             using (TransactionPackage transaction = DBAccessManager.SqlDBAccess.BeginTransaction())
             {
                 try
@@ -241,14 +234,7 @@ namespace Bootstrap.DataAccess
             dt.Columns.Add("NavigationID", typeof(int));
             dt.Columns.Add("RoleID", typeof(int));
             //判断用户是否选定角色
-            if (!string.IsNullOrEmpty(roleIds))
-            {
-                roleIds.Split(',').ToList().ForEach(roleId =>
-                {
-                    DataRow row = dt.NewRow();
-                    dt.Rows.Add(id, roleId);
-                });
-            }
+            if (!string.IsNullOrEmpty(roleIds)) roleIds.Split(',').ToList().ForEach(roleId => dt.Rows.Add(id, roleId));
             using (TransactionPackage transaction = DBAccessManager.SqlDBAccess.BeginTransaction())
             {
                 try
@@ -299,7 +285,7 @@ namespace Bootstrap.DataAccess
             return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RolebyGroupDataKey), k =>
             {
                 List<Role> Roles = new List<Role>();
-               string sql= "select r.ID, r.RoleName, r.[Description], case ur.RoleID when r.ID then 'checked' else '' end [status] from Roles r left join RoleGroup ur on r.ID = ur.RoleID and GroupID = @GroupID";
+                string sql = "select r.ID, r.RoleName, r.[Description], case ur.RoleID when r.ID then 'checked' else '' end [status] from Roles r left join RoleGroup ur on r.ID = ur.RoleID and GroupID = @GroupID";
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                 try
                 {
@@ -335,14 +321,7 @@ namespace Bootstrap.DataAccess
             DataTable dt = new DataTable();
             dt.Columns.Add("RoleID", typeof(int));
             dt.Columns.Add("GroupID", typeof(int));
-            if (!string.IsNullOrEmpty(roleIds))
-            {
-                roleIds.Split(',').ToList().ForEach(roleId =>
-                {
-                    DataRow row = dt.NewRow();
-                    dt.Rows.Add(roleId,id);
-                });
-            }
+            if (!string.IsNullOrEmpty(roleIds)) roleIds.Split(',').ToList().ForEach(roleId => dt.Rows.Add(roleId, id));
             using (TransactionPackage transaction = DBAccessManager.SqlDBAccess.BeginTransaction())
             {
                 try

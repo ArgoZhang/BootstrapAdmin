@@ -157,14 +157,7 @@ namespace Bootstrap.DataAccess
             dt.Columns.Add("UserID", typeof(int));
             dt.Columns.Add("GroupID", typeof(int));
             //判断用户是否选定角色
-            if (!string.IsNullOrEmpty(groupIds))
-            {
-                groupIds.Split(',').ToList().ForEach(groupId =>
-                {
-                    DataRow row = dt.NewRow();
-                    dt.Rows.Add(id, groupId);
-                });
-            }
+            if (!string.IsNullOrEmpty(groupIds)) groupIds.Split(',').ToList().ForEach(groupId => dt.Rows.Add(id, groupId));
             using (TransactionPackage transaction = DBAccessManager.SqlDBAccess.BeginTransaction())
             {
                 try
@@ -249,14 +242,7 @@ namespace Bootstrap.DataAccess
             DataTable dt = new DataTable();
             dt.Columns.Add("GroupID", typeof(int));
             dt.Columns.Add("RoleID", typeof(int));
-            if (!string.IsNullOrEmpty(groupIds))
-            {
-                groupIds.Split(',').ToList().ForEach(groupId =>
-                {
-                    DataRow dr = dt.NewRow();
-                    dt.Rows.Add(groupId, id);
-                });
-            }
+            if (!string.IsNullOrEmpty(groupIds)) groupIds.Split(',').ToList().ForEach(groupId => dt.Rows.Add(groupId, id));
             using (TransactionPackage transaction = DBAccessManager.SqlDBAccess.BeginTransaction())
             {
                 try

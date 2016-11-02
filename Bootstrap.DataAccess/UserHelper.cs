@@ -214,14 +214,7 @@ namespace Bootstrap.DataAccess
             DataTable dt = new DataTable();
             dt.Columns.Add("RoleID", typeof(int));
             dt.Columns.Add("UserID", typeof(int));
-            if (!string.IsNullOrEmpty(userIds))
-            {
-                userIds.Split(',').ToList().ForEach(userId =>
-                {
-                    DataRow dr = dt.NewRow();
-                    dt.Rows.Add(id, userId);
-                });
-            }
+            if (!string.IsNullOrEmpty(userIds)) userIds.Split(',').ToList().ForEach(userId => dt.Rows.Add(id, userId));
             using (TransactionPackage transaction = DBAccessManager.SqlDBAccess.BeginTransaction())
             {
                 try
@@ -301,14 +294,7 @@ namespace Bootstrap.DataAccess
             DataTable dt = new DataTable();
             dt.Columns.Add("UserID", typeof(int));
             dt.Columns.Add("GroupID", typeof(int));
-            if (!string.IsNullOrEmpty(userIds))
-            {
-                userIds.Split(',').ToList().ForEach(userId =>
-                {
-                    DataRow dr = dt.NewRow();
-                    dt.Rows.Add(userId, id);
-                });
-            }
+            if (!string.IsNullOrEmpty(userIds)) userIds.Split(',').ToList().ForEach(userId => dt.Rows.Add(userId, id));
             using (TransactionPackage transaction = DBAccessManager.SqlDBAccess.BeginTransaction())
             {
                 try
