@@ -214,27 +214,28 @@
 
     };
 
-    var processRolesData = function (options) {
-        var data = $.extend({ data: { type: "" }, method: "POST", Id: "" }, options);
+    var htmlTemplate = '<div class="form-group checkbox col-lg-3 col-xs-4"><label class="tooltips" data-placement="top" data-original-title="{3}" title="{3}"><input type="checkbox" value="{0}" {2}>{1}</label></div>';
+
+    var processData = function (options) {
+        var data = $.extend({ data: { type: "" }, method: "POST", Id: "", url: this.url, title: this.title, html: this.html }, options);
         $.ajax({
-            url: '../api/Roles/' + data.Id,
+            url: data.url + data.Id,
             data: data.data,
             type: data.method,
             success: function (result) {
                 if ($.isFunction(data.callback)) {
                     if ($.isArray(result)) {
-                        var html = $.map(result, function (element, index) {
-                            return $.format('<div class="checkbox col-lg-3 col-xs-4"><label title="{3}"><input type="checkbox" value="{0}" {2}>{1}</label></div>', element.ID, element.RoleName, element.Checked, element.Description);
-                        }).join('');
+                        var html = data.html(result);
                         data.callback(html);
+                        $('div.checkbox label.tooltips').tooltip();
                         return;
                     }
                 }
                 else if ($.isPlainObject(data.callback) && data.callback.modal !== undefined) {
                     $("#" + data.callback.modal).modal('hide');
                 }
-                if (result) { swal("成功", "授权角色", "success"); }
-                else { swal("失败", "授权角色", "error"); }
+                if (result) { swal("成功", data.title, "success"); }
+                else { swal("失败", data.title, "error"); }
                 if ($.isFunction(data.callback)) data.callback(result);
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -242,110 +243,70 @@
             }
         });
     }
-
-    Role = {};
+    // Role
+    Role = {
+        url: '../api/Roles/', title: "授权角色", html: function (result) {
+            return $.map(result, function (element, index) {
+                return $.format(htmlTemplate, element.ID, element.RoleName, element.Checked, element.Description);
+            }).join('');
+        }
+    };
     Role.getRolesByUserId = function (userId, callback) {
-        processRolesData({ Id: userId, callback: callback, data: { type: "user" } });
+        processData.call(this, { Id: userId, callback: callback, data: { type: "user" } });
     };
     Role.getRolesByGroupId = function (groupId, callback) {
-        processRolesData({ Id: groupId, callback: callback, data: { type: "group" } });
+        processData.call(this, { Id: groupId, callback: callback, data: { type: "group" } });
     };
     Role.getRolesByMenuId = function (menuId, callback) {
-        processRolesData({ Id: menuId, callback: callback, data: { type: "menu" } });
+        processData.call(this, { Id: menuId, callback: callback, data: { type: "menu" } });
     };
     Role.saveRolesByUserId = function (userId, roleIds, callback) {
-        processRolesData({ Id: userId, callback: callback, method: "PUT", data: { type: "user", roleIds: roleIds } });
+        processData.call(this, { Id: userId, callback: callback, method: "PUT", data: { type: "user", roleIds: roleIds } });
     }
     Role.saveRolesByGroupId = function (groupId, roleIds, callback) {
-        processRolesData({ Id: groupId, callback: callback, method: "PUT", data: { type: "group", roleIds: roleIds } });
+        processData.call(this, { Id: groupId, callback: callback, method: "PUT", data: { type: "group", roleIds: roleIds } });
     }
     Role.saveRolesByMenuId = function (menuId, roleIds, callback) {
-        processRolesData({ Id: menuId, callback: callback, method: "PUT", data: { type: "menu", roleIds: roleIds } });
+        processData.call(this, { Id: menuId, callback: callback, method: "PUT", data: { type: "menu", roleIds: roleIds } });
     };
-
-    var processUsersData = function (options) {
-        var data = $.extend({ data: { type: "" }, method: "POST", Id: "" }, options);
-        $.ajax({
-            url: '../api/Users/' + data.Id,
-            data: data.data,
-            type: data.method,
-            success: function (result) {
-                if ($.isFunction(data.callback)) {
-                    if ($.isArray(result)) {
-                        var html = $.map(result, function (element, index) {
-                            return $.format('<div class="checkbox col-lg-3 col-xs-4"><label><input type="checkbox" value="{0}" {2}>{1}</label></div>', element.ID, element.DisplayName, element.Checked);
-                        }).join('');
-                        data.callback(html);
-                        return;
-                    }
-                }
-                else if ($.isPlainObject(data.callback) && data.callback.modal !== undefined) {
-                    $("#" + data.callback.modal).modal('hide');
-                }
-                if (result) { swal("成功", "授权用户", "success"); }
-                else { swal("失败", "授权用户", "error"); }
-                if ($.isFunction(data.callback)) data.callback(result);
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                if ($.isFunction(data.callback)) data.callback(false);
-            }
-        });
+    // Users
+    User = {
+        url: '../api/Users/', title: "授权用户", html: function (result) {
+            return $.map(result, function (element, index) {
+                return $.format(htmlTemplate, element.ID, element.DisplayName, element.Checked, element.UserName);
+            }).join('');
+        }
     }
-
-    User = {};
     User.getUsersByRoleId = function (roleId, callback) {
-        processUsersData({ Id: roleId, callback: callback, data: { type: "role" } });
+        processData.call(this, { Id: roleId, callback: callback, data: { type: "role" } });
     };
     User.saveUsersByRoleId = function (roleId, userIds, callback) {
-        processUsersData({ Id: roleId, callback: callback, method: "PUT", data: { type: "role", userIds: userIds } });
+        processData.call(this, { Id: roleId, callback: callback, method: "PUT", data: { type: "role", userIds: userIds } });
     }
     User.getUsersByGroupeId = function (groupId, callback) {
-        processUsersData({ Id: groupId, callback: callback, data: { type: "group" } });
+        processData.call(this, { Id: groupId, callback: callback, data: { type: "group" } });
     };
     User.saveUsersByGroupId = function (groupId, userIds, callback) {
-        processUsersData({ Id: groupId, callback: callback, method: "PUT", data: { type: "group", userIds: userIds } });
+        processData.call(this, { Id: groupId, callback: callback, method: "PUT", data: { type: "group", userIds: userIds } });
     }
-
-    var processGroupsData = function (options) {
-        var data = $.extend({ data: { type: "" }, method: "POST", Id: "" }, options);
-        $.ajax({
-            url: '../api/Groups/' + data.Id,
-            data: data.data,
-            type: data.method,
-            success: function (result) {
-                if ($.isFunction(data.callback)) {
-                    if ($.isArray(result)) {
-                        var html = $.map(result, function (element, index) {
-                            return $.format('<div class="checkbox col-lg-3 col-xs-4"><label title="{3}"><input type="checkbox" value="{0}" {2}>{1}</label></div>', element.ID, element.GroupName, element.Checked, element.Description);
-                        }).join('');
-                        data.callback(html);
-                        return;
-                    }
-                }
-                else if ($.isPlainObject(data.callback) && data.callback.modal !== undefined) {
-                    $("#" + data.callback.modal).modal('hide');
-                }
-                if (result) { swal("成功", "授权角色", "success"); }
-                else { swal("失败", "授权角色", "error"); }
-                if ($.isFunction(data.callback)) data.callback(result);
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                if ($.isFunction(data.callback)) data.callback(false);
-            }
-        });
-    }
-
-    Group = {};
+    // Groups
+    Group = {
+        url: '../api/Groups/', title: "授权部门", html: function (result) {
+            return $.map(result, function (element, index) {
+                return $.format(htmlTemplate, element.ID, element.GroupName, element.Checked, element.Description);
+            }).join('');
+        }
+    };
     Group.getGroupsByUserId = function (userId, callback) {
-        processGroupsData({ Id: userId, callback: callback, data: { type: "user" } });
+        processData.call(this, { Id: userId, callback: callback, data: { type: "user" } });
     };
     Group.saveGroupsByUserId = function (userId, groupIds, callback) {
-        processGroupsData({ Id: userId, callback: callback, method: "PUT", data: { type: "user", groupIds: groupIds } });
+        processData.call(this, { Id: userId, callback: callback, method: "PUT", data: { type: "user", groupIds: groupIds } });
     };
     Group.getGroupsByRoleId = function (roleId, callback) {
-        processGroupsData({ Id: roleId, callback: callback, data: { type: "role" } });
+        processData.call(this, { Id: roleId, callback: callback, data: { type: "role" } });
     };
     Group.saveGroupsByRoleId = function (roleId, groupIds, callback) {
-        processGroupsData({ Id: roleId, callback: callback, method: "PUT", data: { type: "role", groupIds: groupIds } });
+        processData.call(this, { Id: roleId, callback: callback, method: "PUT", data: { type: "role", groupIds: groupIds } });
     };
 })(jQuery);
