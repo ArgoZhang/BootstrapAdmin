@@ -72,6 +72,14 @@ namespace Bootstrap.Admin.Controllers
             v.HomeUrl = "~/Admin";
             return View(v);
         }
+        public ActionResult Logs()
+        {
+            var v = new NavigatorBarModel();
+            v.ShowMenu = "hide";
+            v.Menus[6].Active = "active";
+            v.HomeUrl = "~/Admin";
+            return View(v);
+        }
         /// <summary>
         /// 
         /// </summary>

@@ -158,6 +158,7 @@
     <Content Include="Scripts\Groups.js" />
     <Content Include="Scripts\icon.js" />
     <Content Include="Scripts\Login.js" />
+    <Content Include="Scripts\Logs.js" />
     <Content Include="Scripts\Menus.js" />
     <Content Include="Scripts\Roles.js" />
     <Content Include="Scripts\Users.js" />
@@ -187,6 +188,7 @@
     <Compile Include="Controllers\DictsController.cs" />
     <Compile Include="Controllers\GroupsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LogsController.cs" />
     <Compile Include="Controllers\MenusController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -196,6 +198,7 @@
     <Compile Include="Models\ContentModel.cs" />
     <Compile Include="Models\QueryDictOption.cs" />
     <Compile Include="Models\QueryGroupOption.cs" />
+    <Compile Include="Models\QueryLogOption.cs" />
     <Compile Include="Models\QueryMenuOption.cs" />
     <Compile Include="Models\QueryRoleOption.cs" />
     <Compile Include="Models\QueryUserOption.cs" />
@@ -233,6 +236,7 @@
     <Content Include="Views\Shared\IconView.cshtml" />
     <Content Include="Views\Shared\UserConfig.cshtml" />
     <Content Include="Views\Shared\GroupConfig.cshtml" />
+    <Content Include="Views\Admin\Logs.cshtml" />
     <Content Include="Views\Shared\Content.cshtml" />
     <Content Include="Views\Admin\Profiles.cshtml" />
     <Content Include="Views\Shared\Footer.cshtml" />

@@ -180,26 +180,28 @@ EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'字典名称' 
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'字典代码' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Dicts', @level2type=N'COLUMN',@level2name=N'Code'
 GO
-/****** Object:  Table [dbo].[Logs]    Script Date: 10/28/2016 16:39:11 ******/
+GO
+/****** Object:  Table [dbo].[Logs]    Script Date: 11/02/2016 15:33:28 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+SET ANSI_PADDING ON
+GO
 CREATE TABLE [dbo].[Logs](
-    [ID] [int] IDENTITY(1,1) NOT NULL,
-    [OperationType] [int] NULL,
-    [UserID] [int] NULL,
-    [OperationTime] [datetime] NULL,
-    [TableName] [nvarchar](50) NULL,
-    [BusinessName] [nvarchar](50) NULL,
-    [PrimaryKey] [nvarchar](50) NULL,
-    [SqlText] [nvarchar](max) NULL,
-    [OperationIp] [nvarchar](50) NULL,
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[OperationType] [int] NOT NULL,
+	[UserName] [varchar](50) NOT NULL,
+	[OperationTime] [datetime] NOT NULL,
+	[OperationIp] [nvarchar](50) NULL,
+	[Remark] [nvarchar](500) NULL,
  CONSTRAINT [PK_Logs] PRIMARY KEY CLUSTERED 
 (
-    [ID] ASC
+	[ID] ASC
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Logs', @level2type=N'COLUMN',@level2name=N'ID'
 GO

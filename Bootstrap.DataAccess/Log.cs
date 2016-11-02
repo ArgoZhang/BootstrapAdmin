@@ -14,9 +14,9 @@ namespace Bootstrap.DataAccess
         public int OperationType { get; set; }
 
         /// <summary>
-        /// 获得/设置 用户ID
+        /// 获得/设置 用户名称
         /// </summary>
-        public int UserID { get; set; }
+        public string UserName { get; set; }
 
         /// <summary>
         /// 获得/设置 操作时间
@@ -24,28 +24,13 @@ namespace Bootstrap.DataAccess
         public DateTime OperationTime { get; set; }
 
         /// <summary>
-        /// 获得/设置 操作表表名
-        /// </summary>
-        public string TableName { get; set; }
-
-        /// <summary>
-        /// 获得/设置 操作内容
-        /// </summary>
-        public string BusinessName { get; set; }
-
-        /// <summary>
-        /// 获得/设置 操作表的主键
-        /// </summary>
-        public string PrimaryKey { get; set; }
-
-        /// <summary>
-        /// 获得/设置 sql语句
-        /// </summary>
-        public string SqlText { get; set; }
-
-        /// <summary>
         /// 获得/设置 操作者Ip
         /// </summary>
         public string OperationIp { get; set; }
+
+        /// <summary>
+        /// 获取/设置 备注
+        /// </summary>
+        public string Remark { get; set; }
     }
 }

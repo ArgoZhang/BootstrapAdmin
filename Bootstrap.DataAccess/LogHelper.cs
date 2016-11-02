@@ -1,4 +1,5 @@
-﻿using Longbow.Caching;
+﻿using Longbow;
+using Longbow.Caching;
 using Longbow.Caching.Configuration;
 using Longbow.ExceptionManagement;
 using System;
@@ -35,13 +36,10 @@ namespace Bootstrap.DataAccess
                                 {
                                     ID = (int)reader[0],
                                     OperationType = (int)reader[1],
-                                    UserID = (int)reader[2],
+                                    UserName = (string)reader[2],
                                     OperationTime = (DateTime)reader[3],
-                                    TableName = (string)reader[4],
-                                    BusinessName = (string)reader[5],
-                                    PrimaryKey = (string)reader[6],
-                                    SqlText = (string)reader[7],
-                                    OperationIp = (string)reader[8],
+                                    OperationIp = LgbConvert.ReadValue((string)reader[4],string.Empty),
+                                    Remark=LgbConvert.ReadValue((string)reader[5],string.Empty)
                                 });
                             }
                         }
@@ -85,19 +83,16 @@ namespace Bootstrap.DataAccess
         {
             if (p == null) throw new ArgumentNullException("p");
             bool ret = false;
-            string sql = "Insert Into Logs (OperationType, UserID,OperationTime,TableName,BusinessName,PrimaryKey,SqlText,OperationIp) Values (@OperationType, @UserID,@OperationTime,@TableName,@BusinessName,@PrimaryKey,@SqlText,@OperationIp)";
+            string sql = "Insert Into Logs (OperationType, UserName,OperationTime,OperationIp,Remark) Values (@OperationType, @UserName,@OperationTime,@OperationIp,@Remark)";
             try
             {
                 using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
                 {
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@OperationType", p.OperationType, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserID", p.UserID, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@OperationTime", p.OperationTime, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@TableName", p.TableName, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@BusinessName", p.BusinessName, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@PrimaryKey", p.PrimaryKey, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@SqlText", p.SqlText, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserName", p.UserName, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@OperationTime", System.DateTime.Now, ParameterDirection.Input));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@OperationIp", p.OperationIp, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Remark", p.Remark, ParameterDirection.Input));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
                 ret = true;
