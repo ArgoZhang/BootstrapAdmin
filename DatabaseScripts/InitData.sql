@@ -27,7 +27,7 @@ INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [C
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (11, 0, N'返回前台', 100, N'fa fa-hand-o-left', N'~/Home/Index', N'0')
 SET IDENTITY_INSERT [dbo].[Navigations] OFF
 
-DELETE FROM NavigationRole where ID in (1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+DELETE FROM NavigationRole where ID in (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
 SET IDENTITY_INSERT [dbo].[NavigationRole] ON 
 INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (1, 1, 1)
 INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (2, 2, 1)
@@ -40,6 +40,7 @@ INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (8, 8, 1)
 INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (9, 9, 1)
 INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (10, 10, 1)
 INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (11, 11, 1)
+INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (12, 11, 2)
 SET IDENTITY_INSERT [dbo].[NavigationRole] OFF
 
 DELETE FROM RoleGroup where ID in (1)
@@ -47,9 +48,10 @@ SET IDENTITY_INSERT [dbo].[RoleGroup] ON
 INSERT [dbo].[RoleGroup] ([ID], [RoleID], [GroupID]) VALUES (1, 1, 1)
 SET IDENTITY_INSERT [dbo].[RoleGroup] OFF
 
-DELETE FROM Roles where ID in (1)
+DELETE FROM Roles where ID in (1, 2)
 SET IDENTITY_INSERT [dbo].[Roles] ON 
 INSERT [dbo].[Roles] ([ID], [RoleName], [Description]) VALUES (1, N'Administrators', N'系统管理员')
+INSERT [dbo].[Roles] ([ID], [RoleName], [Description]) VALUES (2, N'Default', N'默认用户，可访问前台页面')
 SET IDENTITY_INSERT [dbo].[Roles] OFF
 
 DELETE FROM UserGroup where ID in (1)
