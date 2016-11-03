@@ -44,7 +44,7 @@ namespace Bootstrap.DataAccess.Tests
             var dict = dicts.FirstOrDefault(d => d.Category == Dict.Category);
             dict.Name = "__测试子菜单2__";
             Assert.IsTrue(DictHelper.SaveDict(dict), string.Format("更新字典记录ID = {0} 操作失败，请检查 DictHelper.SaveDict 方法", dict.ID));
-            var dest = DictHelper.RetrieveDicts(dict.ID.ToString());
+            var dest = DictHelper.RetrieveDicts(dict.ID);
             Assert.IsTrue(dest.Count() == 1, "带参数的DictHelper.RetrieveDicts方法调用失败");
             Assert.AreEqual(dict.Name, dest.First().Name, string.Format("更新字典记录ID = {0} 操作失败，请检查 DictHelper.SaveDict 方法", dict.ID));
         }

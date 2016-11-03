@@ -19,11 +19,11 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="tId"></param>
         /// <returns></returns>
-        public static IEnumerable<Dict> RetrieveDicts(string tId = null)
+        public static IEnumerable<Dict> RetrieveDicts(int id = 0)
         {
-            string sql = "select * from Dicts";
             var ret = CacheManager.GetOrAdd(DictDataKey, CacheSection.RetrieveIntervalByKey(DictDataKey), key =>
             {
+                string sql = "select * from Dicts";
                 List<Dict> Dicts = new List<Dict>();
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                 try
@@ -46,7 +46,7 @@ namespace Bootstrap.DataAccess
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return Dicts;
             }, CacheSection.RetrieveDescByKey(DictDataKey));
-            return string.IsNullOrEmpty(tId) ? ret : ret.Where(t => tId.Equals(t.ID.ToString(), StringComparison.OrdinalIgnoreCase));
+            return id == 0 ? ret : ret.Where(t => id == t.ID);
         }
 
         /// <summary>

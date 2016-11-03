@@ -20,7 +20,7 @@ namespace Bootstrap.Admin.Models
         /// <returns></returns>
         public QueryData<Dict> RetrieveData()
         {
-            var data = DictHelper.RetrieveDicts(string.Empty);
+            var data = DictHelper.RetrieveDicts();
             if (!string.IsNullOrEmpty(Name))
             {
                 data = data.Where(t => t.Name.Contains(Name));
