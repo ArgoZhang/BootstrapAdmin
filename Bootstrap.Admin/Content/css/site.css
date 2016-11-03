@@ -259,8 +259,8 @@ a.logo {
                 text-transform: uppercase;
             }
 
-                .dropdown-menu.extended.logout > li:last-child > a:hover > i {
-                    color: #fff;
+                .dropdown-menu.extended.logout > li:last-child > a:hover, .dropdown-menu.extended.logout > li:last-child > a:hover > i {
+                    color: #FF6C60;
                 }
 
         .dropdown-menu.extended.logout > li > a {
