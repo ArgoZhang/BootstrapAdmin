@@ -7,7 +7,7 @@
                 Category: "dictCate",
                 Name: "dictName",
                 Code: "dictCode",
-                Define:"dictDefine"
+                Define: "dictDefine"
             }
         })
     });
@@ -15,13 +15,13 @@
     $('table').smartTable({
         url: '../api/Dicts',            //请求后台的URL（*）
         sortName: 'Category',
-        queryParams: function (params) { return $.extend(params, { name: $("#txt_dict_name").val(), category: $("#txt_dict_cate").val() }); },
+        queryParams: function (params) { return $.extend(params, { name: $("#txt_dict_name").val(), define: $("#txt_dict_cate").val() }); },
         columns: [{ checkbox: true },
             { title: "Id", field: "ID", events: bsa.idEvents(), formatter: BootstrapAdmin.idFormatter },
-            { title: "字典种类", field: "Category", sortable: true },
-            { title: "字典名称", field: "Name", sortable: false },
-            { title: "字典代码", field: "Code", sortable: true },
-            { title: "字典定义", field: "Define", sortable: false }
+            { title: "字典分项", field: "Category", sortable: true },
+            { title: "字典名称", field: "Name", sortable: true },
+            { title: "字典代码", field: "Code", sortable: false },
+            { title: "字典类别", field: "DefineName", sortable: true }
         ]
     });
 

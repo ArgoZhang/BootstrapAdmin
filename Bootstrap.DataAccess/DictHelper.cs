@@ -23,7 +23,7 @@ namespace Bootstrap.DataAccess
         {
             var ret = CacheManager.GetOrAdd(DictDataKey, CacheSection.RetrieveIntervalByKey(DictDataKey), key =>
             {
-                string sql = "select * from Dicts";
+                string sql = "select ID, Category, Name, Code, Define, case Define when 0 then '系统使用' else '用户自定义' end DefineName from Dicts";
                 List<Dict> Dicts = new List<Dict>();
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                 try
@@ -38,7 +38,8 @@ namespace Bootstrap.DataAccess
                                 Category = (string)reader[1],
                                 Name = (string)reader[2],
                                 Code = (string)reader[3],
-                                Define = (int)reader[4]
+                                Define = (int)reader[4],
+                                DefineName = (string)reader[5]
                             });
                         }
                     }

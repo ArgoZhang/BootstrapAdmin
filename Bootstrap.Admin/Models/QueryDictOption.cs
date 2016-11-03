@@ -13,7 +13,7 @@ namespace Bootstrap.Admin.Models
         /// <summary>
         /// 字典种类
         /// </summary>
-        public string Category { get; set; }
+        public string Define { get; set; }
         /// <summary>
         /// 字典表查询
         /// </summary>
@@ -25,9 +25,9 @@ namespace Bootstrap.Admin.Models
             {
                 data = data.Where(t => t.Name.Contains(Name));
             }
-            if (!string.IsNullOrEmpty(Category))
+            if (!string.IsNullOrEmpty(Define))
             {
-                data = data.Where(t => t.Category.Contains(Category));
+                data = data.Where(t => t.Define.ToString() == Define);
             }
             var ret = new QueryData<Dict>();
             ret.total = data.Count();
