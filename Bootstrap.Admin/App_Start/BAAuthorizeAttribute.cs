@@ -31,7 +31,7 @@ namespace Bootstrap.Admin
         protected override bool AuthenticateRole()
         {
             string url = string.Format("~/{0}/{1}", ControllerName, ActionName);
-            Roles = string.Join(";", RoleHelper.RetrieveRolesByURL(url).Select(r => r.RoleName));
+            Roles = string.Join(";", RoleHelper.RetrieveRolesByUrl(url).Select(r => r.RoleName));
             return base.AuthenticateRole();
         }
         /// <summary>

@@ -396,7 +396,7 @@ namespace Bootstrap.DataAccess
         /// 从Navigators-〉GroupNavigatorRole-〉Role查查询某个用户所拥有的角色
         /// </summary>
         /// <returns></returns>
-        public static IEnumerable<Role> RetrieveRolesByURL(string url)
+        public static IEnumerable<Role> RetrieveRolesByUrl(string url)
         {
             string key = string.Format("{0}{1}", RoleDataKey, url);
             return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RoleDataKey), k =>
