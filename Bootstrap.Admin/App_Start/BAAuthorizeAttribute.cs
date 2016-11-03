@@ -1,7 +1,9 @@
-﻿using System;
-using System.Web.Mvc;
+﻿using Bootstrap.DataAccess;
 using Longbow.Security.Principal;
 using Longbow.Web.Mvc;
+using System;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace Bootstrap.Admin
 {
@@ -15,7 +17,8 @@ namespace Bootstrap.Admin
         {
             if (filterContext.HttpContext.User.Identity.IsAuthenticated)
             {
-                var roles = "Administrators;Users".Split(';'); //RoleHelper.RetrieveRolesByUserName();
+                string username = filterContext.HttpContext.User.Identity.Name;
+                var roles = RoleHelper.RetrieveRolesByUserName(username).Select(r => r.RoleName);
                 filterContext.HttpContext.User = new LgbPrincipal(filterContext.HttpContext.User.Identity, roles);
             }
             base.OnAuthorization(filterContext);
@@ -27,7 +30,8 @@ namespace Bootstrap.Admin
         /// <returns></returns>
         protected override bool AuthenticateRole()
         {
-            Roles = "Administrators;SupperAdmin"; //RoleHelper.RetrieveRolesByUrl();
+            string url = string.Format("~/{0}/{1}", ControllerName, ActionName);
+            Roles = string.Join(";", RoleHelper.RetrieveRolesByURL(url).Select(r => r.RoleName));
             return base.AuthenticateRole();
         }
         /// <summary>

@@ -355,5 +355,74 @@ namespace Bootstrap.DataAccess
             }
             return ret;
         }
+
+        /// <summary>
+        /// 根据用户名查询某个用户所拥有的角色
+        /// 从UserRole表查
+        /// 从User-〉Group-〉GroupRole查
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<Role> RetrieveRolesByUserName(string username)
+        {
+            string key = string.Format("{0}{1}", RoleDataKey, username);
+            return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RoleDataKey), k =>
+            {
+                List<Role> Roles = new List<Role>();
+                try
+                {
+                    string sql = "select r.ID, r.RoleName, r.[Description] from Roles r left join UserRole ur on r.ID =ur.RoleID inner join Users u on ur.UserID=u.ID and u.UserName=@UserName union select r.ID, r.RoleName, r.[Description] from Roles r left join RoleGroup rg on r.ID =rg.RoleID inner join Groups g on rg.GroupID=g.ID left join UserGroup ug on ug.GroupID=g.ID inner join Users u on ug.UserID=u.ID and u.UserName=@UserName";
+                    DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserName", username, ParameterDirection.Input));
+                    using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
+                    {
+                        while (reader.Read())
+                        {
+                            Roles.Add(new Role()
+                            {
+                                ID = (int)reader[0],
+                                RoleName = (string)reader[1],
+                                Description = (string)reader[2],
+                            });
+                        }
+                    }
+                }
+                catch (Exception ex) { ExceptionManager.Publish(ex); }
+                return Roles;
+            }, CacheSection.RetrieveDescByKey(RoleDataKey));
+        }
+        /// <summary>
+        /// 根据菜单url查询某个所拥有的角色
+        /// 从NavigatorRole表查
+        /// 从Navigators-〉GroupNavigatorRole-〉Role查查询某个用户所拥有的角色
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<Role> RetrieveRolesByURL(string url)
+        {
+            string key = string.Format("{0}{1}", RoleDataKey, url);
+            return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RoleDataKey), k =>
+            {
+                string sql = "select r.ID, r.RoleName, r.[Description] from Roles r left join NavigationRole nr on r.ID =nr.RoleID inner join Navigations n on nr.NavigationID =n.ID and n.Url=@URl";
+                List<Role> Roles = new List<Role>();
+                try
+                {
+                    DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@URl", url, ParameterDirection.Input));
+                    using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
+                    {
+                        while (reader.Read())
+                        {
+                            Roles.Add(new Role()
+                            {
+                                ID = (int)reader[0],
+                                RoleName = (string)reader[1],
+                                Description = (string)reader[2],
+                            });
+                        }
+                    }
+                }
+                catch (Exception ex) { ExceptionManager.Publish(ex); }
+                return Roles;
+            }, CacheSection.RetrieveDescByKey(RoleDataKey));
+        }
     }
 }
