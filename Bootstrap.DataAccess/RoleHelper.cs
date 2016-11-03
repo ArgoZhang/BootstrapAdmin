@@ -370,7 +370,7 @@ namespace Bootstrap.DataAccess
                 List<Role> Roles = new List<Role>();
                 try
                 {
-                    string sql = "select r.ID, r.RoleName, r.[Description] from Roles r left join UserRole ur on r.ID =ur.RoleID inner join Users u on ur.UserID=u.ID and u.UserName=@UserName union select r.ID, r.RoleName, r.[Description] from Roles r left join RoleGroup rg on r.ID =rg.RoleID inner join Groups g on rg.GroupID=g.ID left join UserGroup ug on ug.GroupID=g.ID inner join Users u on ug.UserID=u.ID and u.UserName=@UserName";
+                    string sql = "select r.ID, r.RoleName, r.[Description] from Roles r inner join UserRole ur on r.ID=ur.RoleID inner join Users u on ur.UserID=u.ID and u.UserName=@UserName union select r.ID, r.RoleName, r.[Description] from Roles r inner join RoleGroup rg on r.ID=rg.RoleID inner join Groups g on rg.GroupID=g.ID inner join UserGroup ug on ug.GroupID=g.ID inner join Users u on ug.UserID=u.ID and u.UserName=@UserName";
                     DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserName", username, ParameterDirection.Input));
                     using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
@@ -401,7 +401,7 @@ namespace Bootstrap.DataAccess
             string key = string.Format("{0}{1}", RoleDataKey, url);
             return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RoleDataKey), k =>
             {
-                string sql = "select r.ID, r.RoleName, r.[Description] from Roles r left join NavigationRole nr on r.ID =nr.RoleID inner join Navigations n on nr.NavigationID =n.ID and n.Url=@URl";
+                string sql = "select r.ID, r.RoleName, r.[Description] from Roles r inner join NavigationRole nr on r.ID = nr.RoleID inner join Navigations n on nr.NavigationID = n.ID and n.Url = @URl";
                 List<Role> Roles = new List<Role>();
                 try
                 {
