@@ -14,7 +14,7 @@ namespace Bootstrap.DataAccess.Tests
         [TestInitialize]
         public void Initialized()
         {
-            Dict = new Dict() { Category = "__测试菜单__", Name = "__测试子菜单1__", Code = "2" };
+            Dict = new Dict() { Category = "__测试菜单__", Name = "__测试子菜单1__", Code = "2",Define = 0 };
         }
 
         [TestCleanup]

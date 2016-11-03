@@ -6,7 +6,8 @@
                 ID: "dictID",
                 Category: "dictCate",
                 Name: "dictName",
-                Code: "dictCode"
+                Code: "dictCode",
+                Define:"dictDefine"
             }
         })
     });
@@ -19,7 +20,8 @@
             { title: "Id", field: "ID", events: bsa.idEvents(), formatter: BootstrapAdmin.idFormatter },
             { title: "字典种类", field: "Category", sortable: true },
             { title: "字典名称", field: "Name", sortable: false },
-            { title: "字典代码", field: "Code", sortable: false }
+            { title: "字典代码", field: "Code", sortable: true },
+            { title: "字典定义", field: "Define", sortable: false }
         ]
     });
 
@@ -35,6 +37,10 @@
         },
         dictCode: {
             required: true,
+            maxlength: 50
+        },
+        dictDefine: {
+            required: false,
             maxlength: 50
         }
     });

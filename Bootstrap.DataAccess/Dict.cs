@@ -27,5 +27,11 @@
         /// 代号
         /// </summary>
         public string Code { get; set; }
+
+        /// <summary>
+        /// 1表示系统使用，0表示用户自定义
+        /// 默认为1
+        /// </summary>
+        public int Define { get; set; }
     }
 }

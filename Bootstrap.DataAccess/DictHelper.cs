@@ -37,7 +37,8 @@ namespace Bootstrap.DataAccess
                                 ID = (int)reader[0],
                                 Category = (string)reader[1],
                                 Name = (string)reader[2],
-                                Code = (string)reader[3]
+                                Code = (string)reader[3],
+                                Define = (int)reader[4]
                             });
                         }
                     }
@@ -87,8 +88,8 @@ namespace Bootstrap.DataAccess
             if (p.Name.Length > 50) p.Name.Substring(0, 50);
             if (p.Code.Length > 50) p.Code.Substring(0, 50);
             string sql = p.ID == 0 ?
-                "Insert Into Dicts (Category, Name, Code) Values (@Category, @Name, @Code)" :
-                "Update Dicts set Category = @Category, Name = @Name, @Code = Code where ID = @ID";
+                "Insert Into Dicts (Category, Name, Code ,Define) Values (@Category, @Name, @Code, @Define)" :
+                "Update Dicts set Category = @Category, Name = @Name, @Code = Code ,@Define = Define where ID = @ID";
             try
             {
                 using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
@@ -97,6 +98,7 @@ namespace Bootstrap.DataAccess
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Category", p.Category, ParameterDirection.Input));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Name", p.Name, ParameterDirection.Input));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Code", p.Code, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Define", p.Define, ParameterDirection.Input));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
                 ret = true;

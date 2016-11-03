@@ -151,26 +151,24 @@ GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'部门ID' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'RoleGroup', @level2type=N'COLUMN',@level2name=N'GroupID'
 GO
 
-/****** Object:  Table [dbo].[Dicts]    Script Date: 2016/10/31 星期一 11:33:42 ******/
+/****** Object:  Table [dbo].[Dicts]    Script Date: 2016/11/2 星期三 16:57:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
-GO
 CREATE TABLE [dbo].[Dicts](
-    [ID] [int] IDENTITY(1,1) NOT NULL,
-    [Category] [nvarchar](50) NOT NULL,
-    [Name] [nvarchar](50) NOT NULL,
-    [Code] [nvarchar](50) NOT NULL,
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[Category] [nvarchar](50) NOT NULL,
+	[Name] [nvarchar](50) NOT NULL,
+	[Code] [nvarchar](50) NOT NULL,
+	[Define] [int] NOT NULL,
  CONSTRAINT [PK_dbo.Dict] PRIMARY KEY CLUSTERED 
 (
-    [ID] ASC
+	[ID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
-
 GO
-SET ANSI_PADDING OFF
+ALTER TABLE [dbo].[Dicts] ADD  CONSTRAINT [DF_Dicts_Define]  DEFAULT ((1)) FOR [Define]
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'字典Id' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Dicts', @level2type=N'COLUMN',@level2name=N'ID'
 GO
@@ -180,7 +178,9 @@ EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'字典名称' 
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'字典代码' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Dicts', @level2type=N'COLUMN',@level2name=N'Code'
 GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'0表示系统使用，1表示自定义' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Dicts', @level2type=N'COLUMN',@level2name=N'Define'
 GO
+
 /****** Object:  Table [dbo].[Logs]    Script Date: 11/02/2016 15:33:28 ******/
 SET ANSI_NULLS ON
 GO
