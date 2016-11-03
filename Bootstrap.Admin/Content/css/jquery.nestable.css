@@ -159,6 +159,24 @@
         background: #d5d5d5;
     }
 
+    .dd3-content label {
+        display: block;
+        cursor: pointer;
+    }
+
+        .dd3-content label span {
+            position: absolute;
+        }
+
+            .dd3-content label span.active {
+                color: darkred;
+            }
+
+        .dd3-content label input {
+            margin-right: 6px;
+            cursor: pointer;
+        }
+
 .dd-dragel > .dd3-item > .dd3-content {
     margin: 0;
 }

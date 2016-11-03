@@ -45,8 +45,14 @@
     <div class="modal-body">
         <form class="form-inline" id="dataForm" name="dataForm" role="form">
             <div class="form-group col-lg-6">
-                <label class="control-label" for="parentId">父级ID</label>
-                <input type="text" class="form-control" id="parentId" name="parentId" maxlength="50" />
+                <label class="control-label" for="parentId">父级菜单</label>
+                <div class="input-group">
+                    <input type="text" class="form-control hide" id="parentId" name="parentId" />
+                    <input type="text" class="form-control disabled" disabled id="parentName" />
+                    <span class="input-group-btn">
+                        <button id="btnMenuParent" class="btn btn-default" type="button">选择</button>
+                    </span>
+                </div>
             </div>
             <div class="form-group col-lg-6">
                 <label class="control-label" for="name">菜单名称</label>
@@ -58,7 +64,7 @@
                 <div class="input-group">
                     <input type="text" class="form-control" id="order" name="order" />
                     <span class="input-group-btn">
-                        <button id="btnMenu" class="btn btn-default" type="button"><i></i>调整</button>
+                        <button id="btnMenuOrder" class="btn btn-default" type="button">调整</button>
                     </span>
                 </div>
             </div>
@@ -79,7 +85,7 @@
                 <label class="control-label" for="category">类别</label>
                 <!-- Split button -->
                 <div class="btn-group">
-                    <input type="text" class="form-control hide" id="category" name="category" value="0" />
+                    <input type="text" class="form-control hide" id="category" name="category" value="1" />
                     <button type="button" class="btn btn-default">自定义菜单</button>
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                         <span class="caret"></span>
