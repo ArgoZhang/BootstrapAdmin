@@ -1,4 +1,5 @@
 ﻿using Bootstrap.Admin.Models;
+using Bootstrap.DataAccess;
 using System.Web.Mvc;
 
 namespace Bootstrap.Admin.Controllers
@@ -14,9 +15,7 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public ActionResult Index()
         {
-            var v = new NavigatorBarModel();
-            v.ShowMenu = "hide";
-            v.HomeUrl = "~/Admin";
+            var v = new NavigatorBarModel("~/Admin/Index");
             return View(v);
         }
         /// <summary>
@@ -25,10 +24,7 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public ActionResult Users()
         {
-            var v = new NavigatorBarModel();
-            v.ShowMenu = "hide";
-            v.Menus[1].Active = "active";
-            v.HomeUrl = "~/Admin";
+            var v = new NavigatorBarModel("~/Admin/Users");
             return View(v);
         }
         /// <summary>
@@ -37,10 +33,7 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public ActionResult Groups()
         {
-            var v = new NavigatorBarModel();
-            v.ShowMenu = "hide";
-            v.Menus[3].Active = "active";
-            v.HomeUrl = "~/Admin";
+            var v = new NavigatorBarModel("~/Admin/Groups");
             return View(v);
         }
         /// <summary>
@@ -49,35 +42,23 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public ActionResult Dicts()
         {
-            var v = new NavigatorBarModel();
-            v.ShowMenu = "hide";
-            v.Menus[4].Active = "active";
-            v.HomeUrl = "~/Admin";
+            var v = new NavigatorBarModel("~/Admin/Dicts");
             return View(v);
         }
 
         public ActionResult Roles()
         {
-            var v = new NavigatorBarModel();
-            v.ShowMenu = "hide";
-            v.Menus[2].Active = "active";
-            v.HomeUrl = "~/Admin";
+            var v = new NavigatorBarModel("~/Admin/Roles");
             return View(v);
         }
         public ActionResult Menus()
         {
-            var v = new NavigatorBarModel();
-            v.ShowMenu = "hide";
-            v.Menus[0].Active = "active";
-            v.HomeUrl = "~/Admin";
+            var v = new NavigatorBarModel("~/Admin/Menus");
             return View(v);
         }
         public ActionResult Logs()
         {
-            var v = new NavigatorBarModel();
-            v.ShowMenu = "hide";
-            v.Menus[6].Active = "active";
-            v.HomeUrl = "~/Admin";
+            var v = new NavigatorBarModel("~/Admin/Logs");
             return View(v);
         }
         /// <summary>
@@ -95,10 +76,7 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public ActionResult Profiles()
         {
-            var v = new NavigatorBarModel();
-            v.ShowMenu = "hide";
-            v.Menus[5].Active = "active";
-            v.HomeUrl = "~/Admin";
+            var v = new NavigatorBarModel("~/Admin/Profiles");
             return View(v);
         }
     }
