@@ -35,6 +35,10 @@ namespace Bootstrap.DataAccess
         /// </summary>
         public string Category { get; set; }
         /// <summary>
+        /// 获得 菜单分类名称，取字典表中的Name category="菜单"
+        /// </summary>
+        public string CategoryName { get; set; }
+        /// <summary>
         /// 获得/设置 是否当前被选中 active为选中
         /// </summary>
         public string Active { get; set; }

@@ -23,7 +23,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<Menu> RetrieveMenus(string tId = null)
         {
-            string sql = "select * from Navigations";
+            string sql = "select n.*, d.Name as CategoryName from Navigations n inner join Dicts d on n.Category = d.Code and d.Category = N'菜单' and d.Define = 0";
             var ret = CacheManager.GetOrAdd(MenuDataKey, CacheSection.RetrieveIntervalByKey(MenuDataKey), key =>
             {
                 List<Menu> Menus = new List<Menu>();
@@ -42,7 +42,8 @@ namespace Bootstrap.DataAccess
                                 Order = (int)reader[3],
                                 Icon = LgbConvert.ReadValue(reader[4], string.Empty),
                                 Url = LgbConvert.ReadValue(reader[5], string.Empty),
-                                Category = (string)reader[6]
+                                Category = (string)reader[6],
+                                CategoryName = (string)reader[7]
                             });
                         }
                     }

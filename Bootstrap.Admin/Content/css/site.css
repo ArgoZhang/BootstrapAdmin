@@ -21,7 +21,7 @@ ul li {
 }
 
 .btn {
-    outline: none;
+    outline: none !important;
 }
 
     .btn span.fa, .btn span.glyphicon {

@@ -41,12 +41,12 @@
         queryParams: function (params) { return $.extend(params, { name: $("#txt_menus_name").val(), category: $('#txt_menus_category').val() }); },           //传递参数（*）
         columns: [{ checkbox: true },
             { title: "Id", field: "ID", events: bsa.idEvents(), formatter: BootstrapAdmin.idFormatter },
-            { title: "父级Id", field: "ParentId", sortable: false },
+            { title: "父级ID", field: "ParentId", sortable: false },
             { title: "菜单名称", field: "Name", sortable: true },
-            { title: "菜单序号", field: "Order", sortable: false },
+            { title: "菜单序号", field: "Order", sortable: true },
             { title: "菜单图标", field: "Icon", sortable: false },
             { title: "菜单路径", field: "Url", sortable: false },
-            { title: "菜单类别", field: "Category", sortable: false }
+            { title: "菜单类别", field: "CategoryName", sortable: true }
         ]
     });
 

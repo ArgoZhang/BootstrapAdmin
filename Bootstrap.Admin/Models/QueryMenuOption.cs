@@ -28,8 +28,20 @@ namespace Bootstrap.Admin.Models
             }
             var ret = new QueryData<Menu>();
             ret.total = data.Count();
-            // TODO: 通过option.Sort属性判断对那列进行排序，现在统一对名称列排序
-            data = Order == "asc" ? data.OrderBy(t => t.Name) : data.OrderByDescending(t => t.Name);
+            switch (Sort)
+            {
+                case "Name":
+                    data = Order == "asc" ? data.OrderBy(t => t.Name) : data.OrderByDescending(t => t.Name);
+                    break;
+                case "Order":
+                    data = Order == "asc" ? data.OrderBy(t => t.Order) : data.OrderByDescending(t => t.Order);
+                    break;
+                case "CategoryName":
+                    data = Order == "asc" ? data.OrderBy(t => t.CategoryName) : data.OrderByDescending(t => t.CategoryName);
+                    break;
+                default:
+                    break;
+            }
             ret.rows = data.Skip(Offset).Take(Limit);
             return ret;
         }
