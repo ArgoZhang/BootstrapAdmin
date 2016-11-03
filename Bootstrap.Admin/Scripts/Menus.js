@@ -60,6 +60,10 @@
             required: true,
             maxlength: 50
         },
+        order: {
+            required: true,
+            digits: true
+        },
         url: {
             required: true,
             maxlength: 50
@@ -77,19 +81,33 @@
         return false;
     });
 
-    $('.form-group .input-group .input-group-btn .btn').click(function () {
+    $('#btnIcon').click(function () {
         $('.icon-content').show();
     });
 
-    $('.icon-content button:not(:last)').click(function () {
+    $('.icon-content button').click(function () {
         $('.icon-content').hide();
     });
 
     $('.icon-content button:last').click(function () {
         var icon = $('.icon-content .modal-footer i').attr('class');
-        window.console.log(icon);
-        $('.icon-content').hide();
-        $('.form-group .input-group input.disabled').val(icon);
-        $('.form-group .input-group .input-group-btn .btn i').attr('class', icon);
+        $('#icon').val(icon);
+        $('#btnIcon i').attr('class', icon);
     });
+
+    $('#btnMenu').click(function () {
+        $('#dialogNew div.modal-dialog').hide();
+        $('.menu-content').show();
+    });
+
+    $('.menu-content button').click(function () {
+        $('.menu-content').hide();
+        $('#dialogNew div.modal-dialog').show();
+    });
+
+    $('.menu-content button:last').click(function () {
+
+    });
+
+    $('#nestable_menu').nestable();
 });

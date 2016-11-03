@@ -111,6 +111,8 @@
     <Content Include="Content\css\bootstrap.css" />
     <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\font-awesome.min.css" />
+    <Content Include="Content\css\jquery.nestable.css" />
+    <Content Include="Content\js\jquery.nestable.js" />
     <Content Include="Content\css\site-responsive.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\html\dummy.html" />
@@ -240,6 +242,7 @@
     <Content Include="Views\Shared\Content.cshtml" />
     <Content Include="Views\Admin\Profiles.cshtml" />
     <Content Include="Views\Shared\Footer.cshtml" />
+    <Content Include="Views\Shared\MenuTree.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

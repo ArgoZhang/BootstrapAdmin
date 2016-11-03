@@ -5,8 +5,10 @@
 }
 @section css {
     <link href="~/Content/css/fa.css" rel="stylesheet" />
+    <link href="~/Content/css/jquery.nestable.css" rel="stylesheet" />
 }
 @section Javascript {
+    <script src="~/Content/js/jquery.nestable.js"></script>
     <script src="~/scripts/Menus.js"></script>
 }
 @section header {
@@ -53,14 +55,19 @@
             </div>
             <div class="form-group col-lg-6">
                 <label class="control-label" for="order">菜单序号</label>
-                <input type="text" class="form-control" id="order" name="order" />
+                <div class="input-group">
+                    <input type="text" class="form-control" id="order" name="order" />
+                    <span class="input-group-btn">
+                        <button id="btnMenu" class="btn btn-default" type="button"><i></i>调整</button>
+                    </span>
+                </div>
             </div>
             <div class="form-group col-lg-6">
                 <label class="control-label" for="icon">菜单图标</label>
                 <div class="input-group">
                     <input type="text" class="form-control disabled" disabled id="icon" name="icon" maxlength="50" />
                     <span class="input-group-btn">
-                        <button class="btn btn-default" type="button"><i></i>选择</button>
+                        <button id="btnIcon" class="btn btn-default" type="button"><i></i>选择</button>
                     </span>
                 </div>
             </div>
@@ -78,4 +85,5 @@
 @section customModal {
     @Html.Partial("RoleConfig")
     @Html.Partial("IconView")
+    @Html.Partial("MenuTree", Model.Menus)
 }

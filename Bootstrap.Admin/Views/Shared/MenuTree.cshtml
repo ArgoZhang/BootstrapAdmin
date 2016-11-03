@@ -1,0 +1,24 @@
+﻿@model List<Menu>
+<div class="modal-content menu-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myMenuModalLabel">请选择菜单</h4>
+    </div>
+    <div class="modal-body">
+        <div class="dd" id="nestable_menu">
+            <ol class="dd-list">
+                @foreach (var menu in Model)
+                {
+                    <li class="dd-item dd3-item" data-id="@menu.ID">
+                        <div class="dd-handle dd3-handle"></div>
+                        <div class="dd3-content">@menu.Name</div>
+                    </li>
+                }
+            </ol>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary" id="btnSubmitMenu">保存</button>
+    </div>
+</div>

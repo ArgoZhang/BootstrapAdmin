@@ -35,7 +35,7 @@
         width: 150px;
         bottom: 0;
         position: absolute;
-        overflow-y:auto;
+        overflow-y: auto;
         padding-left: 6px;
     }
 
@@ -191,3 +191,12 @@
         .fontawesome-icon-list ul li span:nth-child(1) {
             margin-right: 10px;
         }
+
+
+.menu-content {
+    display: none;
+    z-index: 1051;
+    margin: auto;
+    width: 600px;
+    margin-top: 100px;
+}
