@@ -214,7 +214,7 @@
 
     };
 
-    var htmlTemplate = '<div class="form-group checkbox col-lg-3 col-xs-4"><label class="tooltips" data-placement="top" data-original-title="{3}" title="{3}"><input type="checkbox" value="{0}" {2}>{1}</label></div>';
+    var htmlTemplate = '<div class="form-group checkbox col-lg-3 col-xs-4"><label class="tooltips" data-placement="top" data-original-title="{3}" title="{3}"><input type="checkbox" value="{0}" {2}/>{1}</label></div>';
 
     var processData = function (options) {
         var data = $.extend({ data: { type: "" }, method: "POST", Id: "", url: this.url, title: this.title, html: this.html }, options);
