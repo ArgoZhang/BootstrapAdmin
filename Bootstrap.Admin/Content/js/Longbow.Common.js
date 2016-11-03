@@ -78,21 +78,6 @@
         }
     });
 
-    $.fn.extend({
-        "autoCenter": function () {
-            var that = this;
-            var getHeight = function () {
-                return ($(window).height() - $(that).outerHeight()) / 2 + $(document).scrollTop();
-            }
-            $(window).resize(function () {
-                $(that).css({
-                    marginTop: getHeight()
-                });
-            });
-            that.animate({ marginTop: "+=" + getHeight() });
-        }
-    });
-
     // enhance window.console.log
     if (!window.console) {
         window.console = {
@@ -105,6 +90,18 @@
     console.log || (console.log = opera.postError);
 
     $.fn.extend({
+        autoCenter: function () {
+            var that = this;
+            var getHeight = function () {
+                return ($(window).height() - $(that).outerHeight()) / 2 + $(document).scrollTop();
+            }
+            $(window).resize(function () {
+                $(that).css({
+                    marginTop: getHeight()
+                });
+            });
+            that.animate({ marginTop: "+=" + getHeight() });
+        },
         autoValidate: function (options) {
             // validate
             $(this).validate({
@@ -127,10 +124,7 @@
                     $(element).popover('show');
                 }
             });
-        }
-    });
-
-    $.fn.extend({
+        },
         smartTable: function (options) {
             var settings = $.extend({
                 method: 'get',                      //请求方式（*）
