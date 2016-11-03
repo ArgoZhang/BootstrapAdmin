@@ -187,4 +187,10 @@ $(function () {
             scrollTop: 0
         }, 200);
     });
+
+    $('.form-group .btn-group .dropdown-menu a').on('click', function () {
+        var parent = $(this).parents('div.btn-group');
+        parent.children('input.hide').val($(this).attr("data-val"));
+        parent.children('button:first').text($(this).text());
+    });
 });
