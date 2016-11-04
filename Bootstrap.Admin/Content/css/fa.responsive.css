@@ -1,0 +1,9 @@
+﻿@media (max-height: 768px) {
+    .menu-content {
+        position: absolute;
+        margin-top: inherit;
+        left: 50%;
+        margin-left: -300px;
+        top: 50px;
+    }
+}

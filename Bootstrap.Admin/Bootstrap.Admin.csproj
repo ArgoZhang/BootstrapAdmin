@@ -171,6 +171,7 @@
     <Content Include="Content\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\fonts\FontAwesome.otf" />
+    <Content Include="Content\css\fa.responsive.css" />
     <None Include="Scripts\_references.js" />
     <Content Include="Content\js\framework.js" />
     <Content Include="Views\Shared\Readme.txt" />
