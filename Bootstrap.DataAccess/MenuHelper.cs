@@ -14,8 +14,8 @@ namespace Bootstrap.DataAccess
 {
     public static class MenuHelper
     {
-        private const string MenuDataKey = "MenuData-CodeMenuHelper";
-        private const string MenuByUserDataKey = "MneuData-CodeMenuHelper-User";
+        private const string MenuDataKey = "MenuHelper-RetrieveMenus";
+        private const string MenuByUserDataKey = "MenuHelper-RetrieveMenusByUserId-userId";
         /// <summary>
         /// 查询所有菜单信息
         /// </summary>

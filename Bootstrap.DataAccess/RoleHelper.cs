@@ -21,7 +21,7 @@ namespace Bootstrap.DataAccess
         private const string RoleDataKey = "RoleData-CodeRoleHelper";
         private const string RolebyGroupDataKey = "RoleData-CodeRoleHelper-";
         private const string RoleUserIDDataKey = "RoleData-CodeRoleHelper-";
-        private const string RoleNavigationIDDataKey = "RoleData-CodeRoleHelper-Navigation";
+        private const string RoleNavigationIDDataKey = "RoleHelper-RetrieveRolesByMenuId-menuId";
         /// <summary>
         /// 查询所有角色
         /// </summary>
