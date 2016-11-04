@@ -10,7 +10,8 @@
                 OperationType: "operateType",
                 UserID: "userId",
                 OperationTime: "operateTime",
-                operateIp: "OperationIp"
+                OperateIp: "operationIp",
+                OperationModule: "operationModule",
             }
         })
     });
@@ -29,7 +30,8 @@
                 }
             },
             { title: "操作IP", field: "OperationIp", sortable: false },
-            { title: "备注", field: "Remark", sortable: false }
+            { title: "备注", field: "Remark", sortable: false },
+            { title: "操作模块", field: "OperationModule", sortable: false }
         ]
     });
 });

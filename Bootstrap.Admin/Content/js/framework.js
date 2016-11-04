@@ -144,7 +144,7 @@
                         type: 'DELETE',
                         success: function (result) {
                             if ($.isFunction(options.success)) options.success('del', options);
-                            if (result) setTimeout(function () { swal("成功！", "删除数据", "success"); $(options.bootstrapTable).bootstrapTable('refresh'); }, 100);
+                            if (result) setTimeout(function () { swal("成功！", "删除数据", "success"); $(options.bootstrapTable).bootstrapTable('refresh'); saveLog(options, "DELETE"); }, 100);
                             else setTimeout(function () { swal("失败", "删除数据", "error"); }, 200);
                         },
                         error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -183,6 +183,7 @@
                             }
                         }
                         if (options.modal.constructor === String) $('#' + options.modal).modal("hide");
+                        saveLog(options, "POST");
                         swal("成功", "保存数据", "success");
                     }
                     else {

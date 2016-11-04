@@ -1,5 +1,4 @@
-﻿using Longbow;
-using Longbow.Caching;
+﻿using Longbow.Caching;
 using Longbow.Caching.Configuration;
 using Longbow.ExceptionManagement;
 using System;
@@ -8,6 +7,7 @@ using System.Data;
 using System.Data.Common;
 using System.Globalization;
 using System.Linq;
+using System.Web;
 
 namespace Bootstrap.DataAccess
 {
@@ -38,8 +38,9 @@ namespace Bootstrap.DataAccess
                                     OperationType = (int)reader[1],
                                     UserName = (string)reader[2],
                                     OperationTime = (DateTime)reader[3],
-                                    OperationIp = LgbConvert.ReadValue((string)reader[4],string.Empty),
-                                    Remark=LgbConvert.ReadValue((string)reader[5],string.Empty)
+                                    OperationIp = (string)reader[4],
+                                    Remark = (string)reader[5],
+                                    OperationModule = (string)reader[6]
                                 });
                             }
                         }
@@ -83,16 +84,17 @@ namespace Bootstrap.DataAccess
         {
             if (p == null) throw new ArgumentNullException("p");
             bool ret = false;
-            string sql = "Insert Into Logs (OperationType, UserName,OperationTime,OperationIp,Remark) Values (@OperationType, @UserName,@OperationTime,@OperationIp,@Remark)";
+            string sql = "Insert Into Logs (OperationType, UserName,OperationTime,OperationIp,Remark,OperationModule) Values (@OperationType, @UserName,@OperationTime,@OperationIp,@Remark,@OperationModule)";
             try
             {
                 using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
                 {
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@OperationType", p.OperationType, ParameterDirection.Input));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserName", p.UserName, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@OperationTime", System.DateTime.Now, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@OperationIp", p.OperationIp, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Remark", p.Remark, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@OperationTime", p.OperationTime, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@OperationIp", p.OperationIp == null ? "" : p.OperationIp, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Remark", p.Remark == null ? "" : p.Remark, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@OperationModule", p.OperationModule == null ? "" : p.OperationModule, ParameterDirection.Input));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
                 ret = true;
@@ -108,6 +110,23 @@ namespace Bootstrap.DataAccess
         private static void ClearCache()
         {
             CacheManager.Clear(key => key == LogDataKey);
+        }
+
+        /// <summary>
+        /// 获取客户端IP地址
+        /// </summary>
+        /// <returns></returns>
+        public static string GetClientIp()
+        {
+            HttpRequest request = HttpContext.Current.Request;
+            string result = request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+            if (string.IsNullOrEmpty(result))
+                result = request.ServerVariables["REMOTE_ADDR"];
+            if (string.IsNullOrEmpty(result))
+                result = request.UserHostAddress;
+            if (string.IsNullOrEmpty(result))
+                result = "0.0.0.0";
+            return result;
         }
     }
 }

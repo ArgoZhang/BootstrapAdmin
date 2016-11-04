@@ -128,10 +128,12 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\images\success.png" />
     <Content Include="Content\js\common-scripts.js" />
+    <Content Include="Content\js\jQuery.cookie.js" />
     <Content Include="Content\js\jquery.dcjqaccordion.2.7.js" />
     <Content Include="Content\js\jquery.nicescroll.min.js" />
     <Content Include="Content\js\jquery.scrollTo.js" />
     <Content Include="Content\js\jquery.scrollTo.min.js" />
+    <Content Include="Content\js\log.js" />
     <Content Include="Content\js\longbow.dataentity.js" />
     <Content Include="Global.asax" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />

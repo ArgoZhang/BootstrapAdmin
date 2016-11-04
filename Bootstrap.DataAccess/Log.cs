@@ -32,5 +32,10 @@ namespace Bootstrap.DataAccess
         /// 获取/设置 备注
         /// </summary>
         public string Remark { get; set; }
+
+        /// <summary>
+        /// 获取/设置 操作模块
+        /// </summary>
+        public string OperationModule { get; set; }
     }
 }

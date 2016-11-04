@@ -27,5 +27,14 @@ namespace Bootstrap.Admin.Controllers
         {
             return LogHelper.RetrieveLogs().FirstOrDefault(t => t.ID == id);
         }
+
+        [HttpPost]
+        public bool Post([FromBody]Log value)
+        {
+
+            value.OperationIp = LogHelper.GetClientIp();
+            value.OperationTime = System.DateTime.Now;
+            return LogHelper.SaveLog(value);
+        }
     }
 }

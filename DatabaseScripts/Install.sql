@@ -181,7 +181,7 @@ GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'0表示系统使用，1表示自定义' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Dicts', @level2type=N'COLUMN',@level2name=N'Define'
 GO
 
-/****** Object:  Table [dbo].[Logs]    Script Date: 11/02/2016 15:33:28 ******/
+/****** Object:  Table [dbo].[Logs]    Script Date: 11/04/2016 15:13:04 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -195,6 +195,7 @@ CREATE TABLE [dbo].[Logs](
 	[OperationTime] [datetime] NOT NULL,
 	[OperationIp] [nvarchar](50) NULL,
 	[Remark] [nvarchar](500) NULL,
+	[OperationModule] [varchar](50) NULL,
  CONSTRAINT [PK_Logs] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
