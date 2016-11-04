@@ -112,6 +112,7 @@
     <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\font-awesome.min.css" />
     <Content Include="Content\css\jquery.nestable.css" />
+    <Content Include="Content\css\tasks.css" />
     <Content Include="Content\js\jquery.nestable.js" />
     <Content Include="Content\css\site-responsive.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
@@ -164,6 +165,7 @@
     <Content Include="Scripts\Login.js" />
     <Content Include="Scripts\Logs.js" />
     <Content Include="Scripts\Menus.js" />
+    <Content Include="Scripts\Profiles.js" />
     <Content Include="Scripts\Roles.js" />
     <Content Include="Scripts\Users.js" />
     <Content Include="Content\js\jquery-1.10.2.js" />

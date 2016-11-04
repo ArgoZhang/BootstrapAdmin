@@ -16,12 +16,14 @@ namespace Bootstrap.DataAccess
     /// <summary>
     /// 
     /// </summary>
-    public class RoleHelper
+    public static class RoleHelper
     {
-        private const string RoleDataKey = "RoleData-CodeRoleHelper";
-        private const string RolebyGroupDataKey = "RoleData-CodeRoleHelper-";
-        private const string RoleUserIDDataKey = "RoleData-CodeRoleHelper-";
-        private const string RoleNavigationIDDataKey = "RoleHelper-RetrieveRolesByMenuId-menuId";
+        private const string RetrieveRolesDataKey = "RoleHelper-RetrieveRoles";
+        private const string RetrieveRolesByUrlDataKey = "RoleHelper-RetrieveRolesByUrl";
+        private const string RetrieveRolesByUserNameDataKey = "RoleHelper-RetrieveRolesByUserName";
+        internal const string RetrieveRolesByUserIDDataKey = "RoleHelper-RetrieveRolesByUserId";
+        internal const string RetrieveRolesByMenuIDDataKey = "RoleHelper-RetrieveRolesByMenuId";
+        internal const string RetrieveRolesByGroupIDDataKey = "RoleHelper-RetrieveRolesByGroupId";
         /// <summary>
         /// 查询所有角色
         /// </summary>
@@ -29,9 +31,9 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<Role> RetrieveRoles(string tId = null)
         {
-            string sql = "select * from Roles";
-            var ret = CacheManager.GetOrAdd(RoleDataKey, CacheSection.RetrieveIntervalByKey(RoleDataKey), key =>
+            var ret = CacheManager.GetOrAdd(RetrieveRolesDataKey, CacheSection.RetrieveIntervalByKey(RetrieveRolesDataKey), key =>
             {
+                string sql = "select * from Roles";
                 List<Role> roles = new List<Role>();
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                 try
@@ -51,7 +53,7 @@ namespace Bootstrap.DataAccess
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return roles;
-            }, CacheSection.RetrieveDescByKey(RoleDataKey));
+            }, CacheSection.RetrieveDescByKey(RetrieveRolesDataKey));
             return string.IsNullOrEmpty(tId) ? ret : ret.Where(t => tId.Equals(t.ID.ToString(), StringComparison.OrdinalIgnoreCase));
         }
         /// <summary>
@@ -90,8 +92,9 @@ namespace Bootstrap.DataAccess
                             transaction.CommitTransaction();
                         }
                     }
+                    roleIds.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).AsParallel()
+                        .ForAll(r => CacheManager.Clear(key => key == string.Format("{0}-{1}", RetrieveRolesByUserIDDataKey, id) || key == string.Format("{0}-{1}", UserHelper.RetrieveUsersByRoleIDDataKey, r)));
                     ret = true;
-                    ClearCache();
                 }
                 catch (Exception ex)
                 {
@@ -107,8 +110,8 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<Role> RetrieveRolesByUserId(int userId)
         {
-            string k = string.Format("{0}{1}", RoleUserIDDataKey, userId);
-            return CacheManager.GetOrAdd(k, CacheSection.RetrieveIntervalByKey(RoleUserIDDataKey), key =>
+            string key = string.Format("{0}-{1}", RetrieveRolesByUserIDDataKey, userId);
+            return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RetrieveRolesByUserIDDataKey), k =>
             {
                 List<Role> Roles = new List<Role>();
                 string sql = "select r.ID, r.RoleName, r.[Description], case ur.RoleID when r.ID then 'checked' else '' end [status] from Roles r left join UserRole ur on r.ID = ur.RoleID and UserID = @UserID";
@@ -132,9 +135,8 @@ namespace Bootstrap.DataAccess
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return Roles;
-            }, CacheSection.RetrieveDescByKey(RoleUserIDDataKey));
+            }, CacheSection.RetrieveDescByKey(RetrieveRolesByUserIDDataKey));
         }
-
         /// <summary>
         /// 删除角色表
         /// </summary>
@@ -149,7 +151,7 @@ namespace Bootstrap.DataAccess
                 using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
                 {
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
-                    ClearCache();
+                    CacheManager.Clear(key => key == RetrieveRolesDataKey);
                     ret = true;
                 }
             }
@@ -182,8 +184,8 @@ namespace Bootstrap.DataAccess
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Description", p.Description, ParameterDirection.Input));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
+                CacheManager.Clear(key => key == RetrieveRolesDataKey);
                 ret = true;
-                ClearCache();
             }
             catch (DbException ex)
             {
@@ -191,7 +193,6 @@ namespace Bootstrap.DataAccess
             }
             return ret;
         }
-
         /// <summary>
         /// 查询某个菜单所拥有的角色
         /// </summary>
@@ -199,10 +200,10 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<Role> RetrieveRolesByMenuId(int menuId)
         {
-            string sql = "select r.ID, r.RoleName, r.[Description], case ur.RoleID when r.ID then 'checked' else '' end [status] from Roles r left join NavigationRole ur on r.ID = ur.RoleID and NavigationID = @NavigationID";
-            string k = string.Format("{0}{1}", RoleNavigationIDDataKey, menuId);
-            var ret = CacheManager.GetOrAdd(k, CacheSection.RetrieveIntervalByKey(RoleNavigationIDDataKey), key =>
+            string key = string.Format("{0}-{1}", RetrieveRolesByMenuIDDataKey, menuId);
+            var ret = CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RetrieveRolesByMenuIDDataKey), k =>
             {
+                string sql = "select r.ID, r.RoleName, r.[Description], case ur.RoleID when r.ID then 'checked' else '' end [status] from Roles r left join NavigationRole ur on r.ID = ur.RoleID and NavigationID = @NavigationID";
                 List<Role> Roles = new List<Role>();
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@NavigationID", menuId, ParameterDirection.Input));
@@ -224,7 +225,7 @@ namespace Bootstrap.DataAccess
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return Roles;
-            }, CacheSection.RetrieveDescByKey(RoleNavigationIDDataKey));
+            }, CacheSection.RetrieveDescByKey(RetrieveRolesByMenuIDDataKey));
             return ret;
         }
         public static bool SavaRolesByMenuId(int id, string roleIds)
@@ -257,8 +258,9 @@ namespace Bootstrap.DataAccess
                             transaction.CommitTransaction();
                         }
                     }
+                    roleIds.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).AsParallel()
+   .ForAll(r => CacheManager.Clear(key => key == string.Format("{0}-{1}", RetrieveRolesByMenuIDDataKey, id) || key.Contains(MenuHelper.RetrieveMenusByUserIDDataKey)));
                     ret = true;
-                    ClearCache();
                 }
                 catch (Exception ex)
                 {
@@ -268,12 +270,6 @@ namespace Bootstrap.DataAccess
             }
             return ret;
         }
-        // 更新缓存
-        private static void ClearCache(string cacheKey = null)
-        {
-            CacheManager.Clear(key => string.IsNullOrEmpty(cacheKey) || key == cacheKey);
-        }
-
         /// <summary>
         /// 根据GroupId查询和该Group有关的所有Roles
         /// author:liuchun
@@ -281,8 +277,8 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<Role> RetrieveRolesByGroupId(int groupID)
         {
-            string key = string.Format("{0}{1}", RolebyGroupDataKey, groupID);
-            return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RolebyGroupDataKey), k =>
+            string key = string.Format("{0}-{1}", RetrieveRolesByGroupIDDataKey, groupID);
+            return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RetrieveRolesByGroupIDDataKey), k =>
             {
                 List<Role> Roles = new List<Role>();
                 string sql = "select r.ID, r.RoleName, r.[Description], case ur.RoleID when r.ID then 'checked' else '' end [status] from Roles r left join RoleGroup ur on r.ID = ur.RoleID and GroupID = @GroupID";
@@ -306,7 +302,7 @@ namespace Bootstrap.DataAccess
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return Roles;
-            }, CacheSection.RetrieveDescByKey(RolebyGroupDataKey));
+            }, CacheSection.RetrieveDescByKey(RetrieveRolesByGroupIDDataKey));
         }
 
         /// <summary>
@@ -344,8 +340,9 @@ namespace Bootstrap.DataAccess
                             transaction.CommitTransaction();
                         }
                     }
+                    roleIds.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).AsParallel()
+    .ForAll(r => CacheManager.Clear(key => key == string.Format("{0}-{1}", RetrieveRolesByGroupIDDataKey, id) || key == string.Format("{0}-{1}", GroupHelper.RetrieveGroupsByRoleIDDataKey, r)));
                     ret = true;
-                    ClearCache();
                 }
                 catch (Exception ex)
                 {
@@ -355,7 +352,6 @@ namespace Bootstrap.DataAccess
             }
             return ret;
         }
-
         /// <summary>
         /// 根据用户名查询某个用户所拥有的角色
         /// 从UserRole表查
@@ -364,8 +360,8 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<Role> RetrieveRolesByUserName(string username)
         {
-            string key = string.Format("{0}{1}", RoleDataKey, username);
-            return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RoleDataKey), k =>
+            string key = string.Format("{0}-{1}", RetrieveRolesByUserNameDataKey, username);
+            return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RetrieveRolesByUserNameDataKey), k =>
             {
                 List<Role> Roles = new List<Role>();
                 try
@@ -388,7 +384,7 @@ namespace Bootstrap.DataAccess
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return Roles;
-            }, CacheSection.RetrieveDescByKey(RoleDataKey));
+            }, CacheSection.RetrieveDescByKey(RetrieveRolesByUserNameDataKey));
         }
         /// <summary>
         /// 根据菜单url查询某个所拥有的角色
@@ -398,8 +394,8 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<Role> RetrieveRolesByUrl(string url)
         {
-            string key = string.Format("{0}{1}", RoleDataKey, url);
-            return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RoleDataKey), k =>
+            string key = string.Format("{0}-{1}", RetrieveRolesDataKey, url);
+            return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RetrieveRolesDataKey), k =>
             {
                 string sql = "select r.ID, r.RoleName, r.[Description] from Roles r inner join NavigationRole nr on r.ID = nr.RoleID inner join Navigations n on nr.NavigationID = n.ID and n.Url = @URl";
                 List<Role> Roles = new List<Role>();
@@ -422,7 +418,7 @@ namespace Bootstrap.DataAccess
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return Roles;
-            }, CacheSection.RetrieveDescByKey(RoleDataKey));
+            }, CacheSection.RetrieveDescByKey(RetrieveRolesDataKey));
         }
     }
 }

@@ -4,7 +4,10 @@
     Layout = "~/Views/Shared/_Admin.cshtml";
 }
 @section Javascript {
-
+    <script src="~/Scripts/Profiles.js"></script>
+}
+@section css {
+    <link href="~/Content/css/tasks.css" rel="stylesheet" />
 }
 @section header {
     @Html.Partial("Header", Model)
@@ -31,6 +34,15 @@
             <span class="input-group-btn">
                 <button class="btn btn-default" type="button">保存</button>
             </span>
+        </div>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">网站缓存</div>
+    <div class="panel-body">
+        <div class="tasks-widget">
+            <ul id="sortable" class="task-list ui-sortable">
+            </ul>
         </div>
     </div>
 </div>

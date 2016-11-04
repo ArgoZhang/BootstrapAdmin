@@ -3,6 +3,7 @@ using Longbow.Caching.Configuration;
 using Longbow.Data;
 using Longbow.ExceptionManagement;
 using Longbow.Security;
+using Longbow.Security.Principal;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -18,10 +19,10 @@ namespace Bootstrap.DataAccess
     /// </summary>
     public static class UserHelper
     {
-        private const string UserDataKey = "UserData-CodeUserHelper";
-        private const string UserDisplayNameDataKey = "UserData-CodeUserHelper-";
-        private const string UserRoleIDDataKey = "UserData-CodeUserHelper-Role-";
-        private const string UserGroupIDDataKey = "UserData-CodeUserHelper-Group-";
+        private const string RetrieveUsersDataKey = "UserHelper-RetrieveUsers";
+        internal const string RetrieveUsersByNameDataKey = "UserHelper-RetrieveUsersByName";
+        internal const string RetrieveUsersByRoleIDDataKey = "UserHelper-RetrieveUsersByRoleId";
+        internal const string RetrieveUsersByGroupIDDataKey = "UserHelper-RetrieveUsersByGroupId";
         /// <summary>
         /// 查询所有用户
         /// </summary>
@@ -30,7 +31,7 @@ namespace Bootstrap.DataAccess
         public static IEnumerable<User> RetrieveUsers(string tId = null)
         {
             string sql = "select ID, UserName, DisplayName from Users";
-            var ret = CacheManager.GetOrAdd(UserDataKey, CacheSection.RetrieveIntervalByKey(UserDataKey), key =>
+            var ret = CacheManager.GetOrAdd(RetrieveUsersDataKey, CacheSection.RetrieveIntervalByKey(RetrieveUsersDataKey), key =>
             {
                 List<User> Users = new List<User>();
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
@@ -51,7 +52,7 @@ namespace Bootstrap.DataAccess
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return Users;
-            }, CacheSection.RetrieveDescByKey(UserDataKey));
+            }, CacheSection.RetrieveDescByKey(RetrieveUsersDataKey));
             return string.IsNullOrEmpty(tId) ? ret : ret.Where(t => tId.Equals(t.ID.ToString(), StringComparison.OrdinalIgnoreCase));
         }
         /// <summary>
@@ -61,9 +62,9 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static User RetrieveUsersByName(string userName)
         {
-            if (Longbow.Security.Principal.LgbPrincipal.IsAdmin(userName)) return new User() { DisplayName = "网站管理员", UserName = userName };
-            string key = string.Format("{0}{1}", UserDisplayNameDataKey, userName);
-            return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(UserDisplayNameDataKey), k =>
+            if (LgbPrincipal.IsAdmin(userName)) return new User() { DisplayName = "网站管理员", UserName = userName };
+            string key = string.Format("{0}-{1}", RetrieveUsersByNameDataKey, userName);
+            return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RetrieveUsersByNameDataKey), k =>
             {
                 User user = null;
                 string sql = "select ID, UserName, [Password], PassSalt, DisplayName from Users where UserName = @UserName";
@@ -88,7 +89,7 @@ namespace Bootstrap.DataAccess
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return user;
-            }, CacheSection.RetrieveDescByKey(UserDisplayNameDataKey));
+            }, CacheSection.RetrieveDescByKey(RetrieveUsersByNameDataKey));
         }
         /// <summary>
         /// 删除用户
@@ -105,7 +106,7 @@ namespace Bootstrap.DataAccess
                 {
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
-                ClearCache();
+                CacheManager.Clear(key => key == RetrieveUsersDataKey);
                 ret = true;
             }
             catch (Exception ex)
@@ -142,7 +143,7 @@ namespace Bootstrap.DataAccess
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
                 ret = true;
-                ClearCache();
+                CacheManager.Clear(key => key == RetrieveUsersDataKey || key == RetrieveUsersByNameDataKey);
             }
             catch (DbException ex)
             {
@@ -161,12 +162,6 @@ namespace Bootstrap.DataAccess
             var user = RetrieveUsersByName(userName);
             return user != null && user.Password == LgbCryptography.ComputeHash(password, user.PassSalt);
         }
-        // 更新缓存
-        private static void ClearCache(string cacheKey = null)
-        {
-            CacheManager.Clear(key => string.IsNullOrEmpty(cacheKey) || key == cacheKey);
-        }
-
         /// <summary>
         /// 通过roleId获取所有用户
         /// </summary>
@@ -174,9 +169,8 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<User> RetrieveUsersByRoleId(int roleId)
         {
-
-            string key = string.Format("{0}{1}", UserRoleIDDataKey, roleId);
-            return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(UserDisplayNameDataKey), k =>
+            string key = string.Format("{0}-{1}", RetrieveUsersByRoleIDDataKey, roleId);
+            return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RetrieveUsersByNameDataKey), k =>
             {
                 List<User> Users = new List<User>();
                 string sql = "select u.ID,u.UserName,u.DisplayName,case ur.UserID when u.ID then 'checked' else '' end [status] from Users u left join UserRole ur on u.ID=ur.UserID and RoleID =@RoleID";
@@ -200,7 +194,7 @@ namespace Bootstrap.DataAccess
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return Users;
-            }, CacheSection.RetrieveDescByKey(UserRoleIDDataKey));
+            }, CacheSection.RetrieveDescByKey(RetrieveUsersByRoleIDDataKey));
         }
         /// <summary>
         /// 通过角色ID保存当前授权用户（插入）
@@ -235,8 +229,9 @@ namespace Bootstrap.DataAccess
                             transaction.CommitTransaction();
                         }
                     }
+                    userIds.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).AsParallel()
+.ForAll(u => CacheManager.Clear(key => key == string.Format("{0}-{1}", RetrieveUsersByRoleIDDataKey, id) || key == string.Format("{0}-{1}", RoleHelper.RetrieveRolesByUserIDDataKey, u)));
                     ret = true;
-                    ClearCache();
                 }
                 catch (Exception ex)
                 {
@@ -246,7 +241,6 @@ namespace Bootstrap.DataAccess
             }
             return ret;
         }
-
         /// <summary>
         /// 通过groupId获取所有用户
         /// </summary>
@@ -254,9 +248,8 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<User> RetrieveUsersByGroupId(int groupId)
         {
-
-            string key = string.Format("{0}{1}", UserGroupIDDataKey, groupId);
-            return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(UserGroupIDDataKey), k =>
+            string key = string.Format("{0}-{1}", RetrieveUsersByGroupIDDataKey, groupId);
+            return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RetrieveUsersByGroupIDDataKey), k =>
             {
                 List<User> Users = new List<User>();
                 string sql = "select u.ID,u.UserName,u.DisplayName,case ur.UserID when u.ID then 'checked' else '' end [status] from Users u left join UserGroup ur on u.ID=ur.UserID and GroupID =@groupId";
@@ -280,7 +273,7 @@ namespace Bootstrap.DataAccess
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return Users;
-            }, CacheSection.RetrieveDescByKey(UserRoleIDDataKey));
+            }, CacheSection.RetrieveDescByKey(RetrieveUsersByRoleIDDataKey));
         }
         /// <summary>
         /// 通过部门ID保存当前授权用户（插入）
@@ -315,8 +308,9 @@ namespace Bootstrap.DataAccess
                             transaction.CommitTransaction();
                         }
                     }
+                    userIds.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).AsParallel()
+.ForAll(u => CacheManager.Clear(key => key == string.Format("{0}-{1}", RetrieveUsersByGroupIDDataKey, id) || key == string.Format("{0}-{1}", GroupHelper.RetrieveGroupsByUserIDDataKey, u)));
                     ret = true;
-                    ClearCache();
                 }
                 catch (Exception ex)
                 {

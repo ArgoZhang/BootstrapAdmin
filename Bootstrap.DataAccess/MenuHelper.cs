@@ -14,8 +14,8 @@ namespace Bootstrap.DataAccess
 {
     public static class MenuHelper
     {
-        private const string MenuDataKey = "MenuHelper-RetrieveMenus";
-        private const string MenuByUserDataKey = "MenuHelper-RetrieveMenusByUserId-userId";
+        private const string RetrieveMenusDataKey = "MenuHelper-RetrieveMenus";
+        internal const string RetrieveMenusByUserIDDataKey = "MenuHelper-RetrieveMenusByUserId";
         /// <summary>
         /// 查询所有菜单信息
         /// </summary>
@@ -24,7 +24,7 @@ namespace Bootstrap.DataAccess
         public static IEnumerable<Menu> RetrieveMenus(string tId = null)
         {
             string sql = "select n.*, d.Name as CategoryName from Navigations n inner join Dicts d on n.Category = d.Code and d.Category = N'菜单' and d.Define = 0";
-            var ret = CacheManager.GetOrAdd(MenuDataKey, CacheSection.RetrieveIntervalByKey(MenuDataKey), key =>
+            var ret = CacheManager.GetOrAdd(RetrieveMenusDataKey, CacheSection.RetrieveIntervalByKey(RetrieveMenusDataKey), key =>
             {
                 List<Menu> Menus = new List<Menu>();
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
@@ -50,7 +50,7 @@ namespace Bootstrap.DataAccess
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return Menus;
-            }, CacheSection.RetrieveDescByKey(MenuDataKey));
+            }, CacheSection.RetrieveDescByKey(RetrieveMenusDataKey));
             return string.IsNullOrEmpty(tId) ? ret : ret.Where(t => tId.Equals(t.ID.ToString(), StringComparison.OrdinalIgnoreCase));
         }
         /// <summary>
@@ -60,9 +60,10 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<Menu> RetrieveMenusByUserId(int userId)
         {
-            string sql = "select distinct n.* from UserRole ur,NavigationRole nr,Navigations n where ur.RoleID=nr.RoleID and nr.NavigationID=n.ID and ur.UserID = @UserID";
-            return CacheManager.GetOrAdd(MenuByUserDataKey, CacheSection.RetrieveIntervalByKey(MenuByUserDataKey), key =>
+            string key = string.Format("{0}-{1}", RetrieveMenusByUserIDDataKey, userId);
+            return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RetrieveMenusByUserIDDataKey), k =>
             {
+                string sql = "select distinct n.* from UserRole ur,NavigationRole nr,Navigations n where ur.RoleID=nr.RoleID and nr.NavigationID=n.ID and ur.UserID = @UserID";
                 List<Menu> Menus = new List<Menu>();
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                 try
@@ -87,7 +88,7 @@ namespace Bootstrap.DataAccess
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return Menus;
-            }, CacheSection.RetrieveDescByKey(MenuByUserDataKey));
+            }, CacheSection.RetrieveDescByKey(RetrieveMenusByUserIDDataKey));
         }
         /// <summary>
         /// 删除菜单信息
@@ -104,7 +105,7 @@ namespace Bootstrap.DataAccess
                 {
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
-                ClearCache();
+                ids.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList().ForEach(id => CacheManager.Clear(key => key == string.Format("{0}-{1}", RoleHelper.RetrieveRolesByMenuIDDataKey, id)));
                 ret = true;
             }
             catch (Exception ex)
@@ -143,18 +144,13 @@ namespace Bootstrap.DataAccess
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
                 ret = true;
-                ClearCache();
+                CacheManager.Clear(key => key == RetrieveMenusDataKey);
             }
             catch (DbException ex)
             {
                 ExceptionManager.Publish(ex);
             }
             return ret;
-        }
-        // 更新缓存
-        private static void ClearCache()
-        {
-            CacheManager.Clear(key => key == MenuDataKey);
         }
     }
 }

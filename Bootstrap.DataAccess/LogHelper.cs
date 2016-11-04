@@ -1,4 +1,5 @@
-﻿using Longbow.Caching;
+﻿using Longbow;
+using Longbow.Caching;
 using Longbow.Caching.Configuration;
 using Longbow.ExceptionManagement;
 using System;
@@ -11,9 +12,9 @@ using System.Web;
 
 namespace Bootstrap.DataAccess
 {
-    public class LogHelper
+    public static class LogHelper
     {
-        private const string LogDataKey = "LogData-CodeLogHelper";
+        private const string RetrieveLogsDataKey = "LogHelper-RetrieveLogs";
         /// <summary>
         /// 查询所有日志信息
         /// </summary>
@@ -21,33 +22,33 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<Log> RetrieveLogs(string tId = null)
         {
-            string sql = "select * from Logs";
-            var ret = CacheManager.GetOrAdd(LogDataKey, CacheSection.RetrieveIntervalByKey(LogDataKey), key =>
+            var ret = CacheManager.GetOrAdd(RetrieveLogsDataKey, CacheSection.RetrieveIntervalByKey(RetrieveLogsDataKey), key =>
+            {
+                string sql = "select * from Logs";
+                List<Log> Logs = new List<Log>();
+                DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
+                try
                 {
-                    List<Log> Logs = new List<Log>();
-                    DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
-                    try
+                    using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
                     {
-                        using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
+                        while (reader.Read())
                         {
-                            while (reader.Read())
+                            Logs.Add(new Log()
                             {
-                                Logs.Add(new Log()
-                                {
-                                    ID = (int)reader[0],
-                                    OperationType = (int)reader[1],
-                                    UserName = (string)reader[2],
-                                    OperationTime = (DateTime)reader[3],
-                                    OperationIp = (string)reader[4],
-                                    Remark = (string)reader[5],
-                                    OperationModule = (string)reader[6]
-                                });
-                            }
+                                ID = (int)reader[0],
+                                OperationType = (int)reader[1],
+                                UserName = (string)reader[2],
+                                OperationTime = (DateTime)reader[3],
+                                OperationIp = (string)reader[4],
+                                Remark = (string)reader[5],
+                                OperationModule = (string)reader[6]
+                            });
                         }
                     }
-                    catch (Exception ex) { ExceptionManager.Publish(ex); }
-                    return Logs;
-                }, CacheSection.RetrieveDescByKey(LogDataKey));
+                }
+                catch (Exception ex) { ExceptionManager.Publish(ex); }
+                return Logs;
+            }, CacheSection.RetrieveDescByKey(RetrieveLogsDataKey));
             return string.IsNullOrEmpty(tId) ? ret : ret.Where(t => tId.Equals(t.ID.ToString(), StringComparison.OrdinalIgnoreCase));
         }
         /// <summary>
@@ -109,7 +110,7 @@ namespace Bootstrap.DataAccess
         //更新缓存
         private static void ClearCache()
         {
-            CacheManager.Clear(key => key == LogDataKey);
+            CacheManager.Clear(key => key == RetrieveLogsDataKey);
         }
 
         /// <summary>

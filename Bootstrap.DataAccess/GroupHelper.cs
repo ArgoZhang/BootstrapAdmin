@@ -18,9 +18,9 @@ namespace Bootstrap.DataAccess
     /// </summary>
     public static class GroupHelper
     {
-        private const string GroupDataKey = "GroupData-CodeGroupHelper";
-        private const string GroupUserIDDataKey = "GroupData-CodeGroupHelper-";
-        private const string GroupRoleIDDataKey = "GroupData-CodeGroupHelper-Role-";
+        private const string RetrieveGroupsDataKey = "GroupHelper-RetrieveGroups";
+        internal const string RetrieveGroupsByUserIDDataKey = "GroupHelper-RetrieveGroupsByUserId";
+        internal const string RetrieveGroupsByRoleIDDataKey = "GroupHelper-RetrieveGroupsByRoleId";
         /// <summary>
         /// 查询所有群组信息
         /// </summary>
@@ -28,9 +28,9 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<Group> RetrieveGroups(string tId = null)
         {
-            string sql = "select * from Groups";
-            var ret = CacheManager.GetOrAdd(GroupDataKey, CacheSection.RetrieveIntervalByKey(GroupDataKey), key =>
+            var ret = CacheManager.GetOrAdd(RetrieveGroupsDataKey, CacheSection.RetrieveIntervalByKey(RetrieveGroupsDataKey), key =>
             {
+                string sql = "select * from Groups";
                 List<Group> Groups = new List<Group>();
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                 try
@@ -50,7 +50,7 @@ namespace Bootstrap.DataAccess
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return Groups;
-            }, CacheSection.RetrieveDescByKey(GroupDataKey));
+            }, CacheSection.RetrieveDescByKey(RetrieveGroupsDataKey));
             return string.IsNullOrEmpty(tId) ? ret : ret.Where(t => tId.Equals(t.ID.ToString(), StringComparison.OrdinalIgnoreCase));
         }
         /// <summary>
@@ -67,7 +67,7 @@ namespace Bootstrap.DataAccess
                 using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
                 {
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
-                    ClearCache();
+                    CacheManager.Clear(key => key == RetrieveGroupsDataKey);
                     ret = true;
                 }
             }
@@ -101,7 +101,7 @@ namespace Bootstrap.DataAccess
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
                 ret = true;
-                ClearCache();
+                CacheManager.Clear(key => key == RetrieveGroupsDataKey);
             }
             catch (DbException ex)
             {
@@ -116,10 +116,10 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<Group> RetrieveGroupsByUserId(int userId)
         {
-            string sql = "select g.ID,g.GroupName,g.[Description],case ug.GroupID when g.ID then 'checked' else '' end [status] from Groups g left join UserGroup ug on g.ID=ug.GroupID and UserID=@UserID";
-            string k = string.Format("{0}{1}", GroupUserIDDataKey, userId);
-            var ret = CacheManager.GetOrAdd(k, CacheSection.RetrieveIntervalByKey(GroupUserIDDataKey), key =>
+            string key = string.Format("{0}-{1}", RetrieveGroupsByUserIDDataKey, userId);
+            var ret = CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RetrieveGroupsByUserIDDataKey), k =>
             {
+                string sql = "select g.ID,g.GroupName,g.[Description],case ug.GroupID when g.ID then 'checked' else '' end [status] from Groups g left join UserGroup ug on g.ID=ug.GroupID and UserID=@UserID";
                 List<Group> Groups = new List<Group>();
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserID", userId, ParameterDirection.Input));
@@ -141,7 +141,7 @@ namespace Bootstrap.DataAccess
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return Groups;
-            }, CacheSection.RetrieveDescByKey(GroupUserIDDataKey));
+            }, CacheSection.RetrieveDescByKey(RetrieveGroupsByUserIDDataKey));
             return ret;
         }
         /// <summary>
@@ -180,8 +180,9 @@ namespace Bootstrap.DataAccess
                             transaction.CommitTransaction();
                         }
                     }
+                    groupIds.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).AsParallel()
+.ForAll(g => CacheManager.Clear(key => key == string.Format("{0}-{1}", RetrieveGroupsByUserIDDataKey, id) || key == string.Format("{0}-{1}", UserHelper.RetrieveUsersByGroupIDDataKey, g)));
                     ret = true;
-                    ClearCache();
                 }
                 catch (Exception ex)
                 {
@@ -191,11 +192,6 @@ namespace Bootstrap.DataAccess
             }
             return ret;
         }
-        // 更新缓存
-        private static void ClearCache(string cacheKey = null)
-        {
-            CacheManager.Clear(key => string.IsNullOrEmpty(cacheKey) || key == cacheKey);
-        }
         /// <summary>
         /// 根据角色ID指派部门
         /// </summary>
@@ -203,8 +199,8 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<Group> RetrieveGroupsByRoleId(int roleId)
         {
-            string k = string.Format("{0}{1}", GroupRoleIDDataKey, roleId);
-            return CacheManager.GetOrAdd(k, CacheSection.RetrieveIntervalByKey(GroupRoleIDDataKey), key =>
+            string k = string.Format("{0}-{1}", RetrieveGroupsByRoleIDDataKey, roleId);
+            return CacheManager.GetOrAdd(k, CacheSection.RetrieveIntervalByKey(RetrieveGroupsByRoleIDDataKey), key =>
             {
                 List<Group> Groups = new List<Group>();
                 string sql = "select g.ID,g.GroupName,g.[Description],case rg.GroupID when g.ID then 'checked' else '' end [status] from Groups g left join RoleGroup rg on g.ID=rg.GroupID and RoleID=@RoleID";
@@ -228,7 +224,7 @@ namespace Bootstrap.DataAccess
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return Groups;
-            }, CacheSection.RetrieveDescByKey(GroupRoleIDDataKey));
+            }, CacheSection.RetrieveDescByKey(RetrieveGroupsByRoleIDDataKey));
         }
         /// <summary>
         /// 根据角色ID以及选定的部门ID，保到角色部门表
@@ -264,8 +260,9 @@ namespace Bootstrap.DataAccess
                             transaction.CommitTransaction();
                         }
                     }
+                    groupIds.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).AsParallel()
+    .ForAll(g => CacheManager.Clear(key => key == string.Format("{0}-{1}", RetrieveGroupsByRoleIDDataKey, id) || key == string.Format("{0}-{1}", RoleHelper.RetrieveRolesByGroupIDDataKey, g)));
                     ret = true;
-                    ClearCache();
                 }
                 catch (Exception ex)
                 {

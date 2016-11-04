@@ -10,9 +10,9 @@ using System.Linq;
 
 namespace Bootstrap.DataAccess
 {
-    public class DictHelper
+    public static class DictHelper
     {
-        private const string DictDataKey = "DictData-CodeDictHelper";
+        private const string RetrieveDictsDataKey = "DictHelper-RetrieveDicts";
 
         /// <summary>
         /// 查询所有字典信息
@@ -21,7 +21,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<Dict> RetrieveDicts(int id = 0)
         {
-            var ret = CacheManager.GetOrAdd(DictDataKey, CacheSection.RetrieveIntervalByKey(DictDataKey), key =>
+            var ret = CacheManager.GetOrAdd(RetrieveDictsDataKey, CacheSection.RetrieveIntervalByKey(RetrieveDictsDataKey), key =>
             {
                 string sql = "select ID, Category, Name, Code, Define, case Define when 0 then '系统使用' else '用户自定义' end DefineName from Dicts";
                 List<Dict> Dicts = new List<Dict>();
@@ -46,7 +46,7 @@ namespace Bootstrap.DataAccess
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return Dicts;
-            }, CacheSection.RetrieveDescByKey(DictDataKey));
+            }, CacheSection.RetrieveDescByKey(RetrieveDictsDataKey));
             return id == 0 ? ret : ret.Where(t => id == t.ID);
         }
 
@@ -75,7 +75,6 @@ namespace Bootstrap.DataAccess
             }
             return ret;
         }
-
         /// <summary>
         /// 保存新建/更新的字典信息
         /// </summary>
@@ -111,13 +110,12 @@ namespace Bootstrap.DataAccess
             }
             return ret;
         }
-
         /// <summary>
         /// 更新缓存
         /// </summary>
         private static void ClearCache()
         {
-            CacheManager.Clear(key => key == DictDataKey);
+            CacheManager.Clear(key => key == RetrieveDictsDataKey);
         }
     }
 }
