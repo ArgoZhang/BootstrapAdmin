@@ -30,7 +30,6 @@
 
     .tasks-widget .task-list > li {
         position: relative;
-        padding: 10px 5px;
         border-bottom: 1px dashed #eaeaea;
     }
 
@@ -50,6 +49,7 @@
     .tasks-widget .task-list li > .task-title {
         overflow: hidden;
         margin-right: 10px;
+        height: 46px;
     }
 
         .tasks-widget .task-list li > .task-title .task-value {
@@ -59,18 +59,24 @@
             position: absolute;
             left: 190px;
             right: 40px;
+            top: 16px;
             display: inline-block;
+            padding-left: 16px;
         }
 
         .tasks-widget .task-list li > .task-title .badge {
-            position: absolute;
+            position: relative;
             display: inline-block;
-            left: 25px;
-            top: 2px;
+            top: -19px;
+            left: -12px;
         }
 
         .tasks-widget .task-list li > .task-title .label-success {
             background-color: #5cb85c;
+        }
+
+        .tasks-widget .task-list li > .task-title .hidden-phone {
+            padding-top: 14px;
         }
 
     .tasks-widget .task-list li > .task-config {
@@ -86,6 +92,7 @@
         white-space: nowrap;
         text-overflow: ellipsis;
         display: inline-block;
+        padding-top: 17px;
     }
 
     .tasks-widget .task-list li.task-done .task-title-sp {
@@ -129,7 +136,7 @@
         #sortable li i {
             position: absolute;
             left: 6px;
-            padding: 4px 10px 0 10px;
+            padding: 19px 10px;
             cursor: pointer;
         }
 
@@ -138,7 +145,7 @@
         }
 
 .ui-sortable > li {
-    padding: 18px 0 15px 35px !important;
+    padding-left: 35px !important;
     position: relative;
     background: #f5f6f8;
     margin-bottom: 2px;
