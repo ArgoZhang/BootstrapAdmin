@@ -18,9 +18,9 @@ namespace Bootstrap.DataAccess
     /// </summary>
     public static class RoleHelper
     {
-        private const string RetrieveRolesDataKey = "RoleHelper-RetrieveRoles";
+        internal const string RetrieveRolesDataKey = "RoleHelper-RetrieveRoles";
         private const string RetrieveRolesByUrlDataKey = "RoleHelper-RetrieveRolesByUrl";
-        private const string RetrieveRolesByUserNameDataKey = "RoleHelper-RetrieveRolesByUserName";
+        internal const string RetrieveRolesByUserNameDataKey = "RoleHelper-RetrieveRolesByUserName";
         internal const string RetrieveRolesByUserIDDataKey = "RoleHelper-RetrieveRolesByUserId";
         internal const string RetrieveRolesByMenuIDDataKey = "RoleHelper-RetrieveRolesByMenuId";
         internal const string RetrieveRolesByGroupIDDataKey = "RoleHelper-RetrieveRolesByGroupId";
@@ -151,7 +151,7 @@ namespace Bootstrap.DataAccess
                 using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
                 {
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
-                    CacheManager.Clear(key => key == RetrieveRolesDataKey);
+                    CacheCleanUtility.ClearCache(roleIds: IDs);
                     ret = true;
                 }
             }
@@ -184,7 +184,7 @@ namespace Bootstrap.DataAccess
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Description", p.Description, ParameterDirection.Input));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
-                CacheManager.Clear(key => key == RetrieveRolesDataKey);
+                CacheCleanUtility.ClearCache(roleIds: p.ID == 0 ? "" : p.ID.ToString());
                 ret = true;
             }
             catch (DbException ex)
@@ -258,8 +258,7 @@ namespace Bootstrap.DataAccess
                             transaction.CommitTransaction();
                         }
                     }
-                    roleIds.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).AsParallel()
-   .ForAll(r => CacheManager.Clear(key => key == string.Format("{0}-{1}", RetrieveRolesByMenuIDDataKey, id) || key.Contains(MenuHelper.RetrieveMenusByUserIDDataKey)));
+                    CacheCleanUtility.ClearCache(roleIds: roleIds, menuIds: id.ToString());
                     ret = true;
                 }
                 catch (Exception ex)
@@ -340,8 +339,7 @@ namespace Bootstrap.DataAccess
                             transaction.CommitTransaction();
                         }
                     }
-                    roleIds.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).AsParallel()
-    .ForAll(r => CacheManager.Clear(key => key == string.Format("{0}-{1}", RetrieveRolesByGroupIDDataKey, id) || key == string.Format("{0}-{1}", GroupHelper.RetrieveGroupsByRoleIDDataKey, r)));
+                    CacheCleanUtility.ClearCache(roleIds: roleIds, groupIds: id.ToString());
                     ret = true;
                 }
                 catch (Exception ex)
@@ -394,8 +392,8 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<Role> RetrieveRolesByUrl(string url)
         {
-            string key = string.Format("{0}-{1}", RetrieveRolesDataKey, url);
-            return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RetrieveRolesDataKey), k =>
+            string key = string.Format("{0}-{1}", RetrieveRolesByUrlDataKey, url);
+            return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RetrieveRolesByUrlDataKey), k =>
             {
                 string sql = "select r.ID, r.RoleName, r.[Description] from Roles r inner join NavigationRole nr on r.ID = nr.RoleID inner join Navigations n on nr.NavigationID = n.ID and n.Url = @URl";
                 List<Role> Roles = new List<Role>();
@@ -418,7 +416,7 @@ namespace Bootstrap.DataAccess
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return Roles;
-            }, CacheSection.RetrieveDescByKey(RetrieveRolesDataKey));
+            }, CacheSection.RetrieveDescByKey(RetrieveRolesByUrlDataKey));
         }
     }
 }

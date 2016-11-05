@@ -14,7 +14,7 @@ namespace Bootstrap.DataAccess
 {
     public static class MenuHelper
     {
-        private const string RetrieveMenusDataKey = "MenuHelper-RetrieveMenus";
+        internal const string RetrieveMenusDataKey = "MenuHelper-RetrieveMenus";
         internal const string RetrieveMenusByUserIDDataKey = "MenuHelper-RetrieveMenusByUserId";
         /// <summary>
         /// 查询所有菜单信息
@@ -105,7 +105,7 @@ namespace Bootstrap.DataAccess
                 {
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
-                ids.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList().ForEach(id => CacheManager.Clear(key => key == string.Format("{0}-{1}", RoleHelper.RetrieveRolesByMenuIDDataKey, id)));
+                CacheCleanUtility.ClearCache(menuIds: ids);
                 ret = true;
             }
             catch (Exception ex)
@@ -143,8 +143,8 @@ namespace Bootstrap.DataAccess
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Category", p.Category, ParameterDirection.Input));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
+                CacheCleanUtility.ClearCache(menuIds: p.ID == 0 ? "" : p.ID.ToString());
                 ret = true;
-                CacheManager.Clear(key => key == RetrieveMenusDataKey);
             }
             catch (DbException ex)
             {

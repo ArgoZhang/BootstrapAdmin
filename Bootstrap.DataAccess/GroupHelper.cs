@@ -18,7 +18,7 @@ namespace Bootstrap.DataAccess
     /// </summary>
     public static class GroupHelper
     {
-        private const string RetrieveGroupsDataKey = "GroupHelper-RetrieveGroups";
+        internal const string RetrieveGroupsDataKey = "GroupHelper-RetrieveGroups";
         internal const string RetrieveGroupsByUserIDDataKey = "GroupHelper-RetrieveGroupsByUserId";
         internal const string RetrieveGroupsByRoleIDDataKey = "GroupHelper-RetrieveGroupsByRoleId";
         /// <summary>
@@ -67,7 +67,7 @@ namespace Bootstrap.DataAccess
                 using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
                 {
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
-                    CacheManager.Clear(key => key == RetrieveGroupsDataKey);
+                    CacheCleanUtility.ClearCache(groupIds: ids);
                     ret = true;
                 }
             }
@@ -100,8 +100,8 @@ namespace Bootstrap.DataAccess
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Description", p.Description, ParameterDirection.Input));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
+                CacheCleanUtility.ClearCache(groupIds: p.ID == 0 ? "" : p.ID.ToString());
                 ret = true;
-                CacheManager.Clear(key => key == RetrieveGroupsDataKey);
             }
             catch (DbException ex)
             {
@@ -180,8 +180,7 @@ namespace Bootstrap.DataAccess
                             transaction.CommitTransaction();
                         }
                     }
-                    groupIds.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).AsParallel()
-.ForAll(g => CacheManager.Clear(key => key == string.Format("{0}-{1}", RetrieveGroupsByUserIDDataKey, id) || key == string.Format("{0}-{1}", UserHelper.RetrieveUsersByGroupIDDataKey, g)));
+                    CacheCleanUtility.ClearCache(groupIds: groupIds, userIds: id.ToString());
                     ret = true;
                 }
                 catch (Exception ex)
@@ -260,8 +259,7 @@ namespace Bootstrap.DataAccess
                             transaction.CommitTransaction();
                         }
                     }
-                    groupIds.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).AsParallel()
-    .ForAll(g => CacheManager.Clear(key => key == string.Format("{0}-{1}", RetrieveGroupsByRoleIDDataKey, id) || key == string.Format("{0}-{1}", RoleHelper.RetrieveRolesByGroupIDDataKey, g)));
+                    CacheCleanUtility.ClearCache(groupIds: groupIds, roleIds: id.ToString());
                     ret = true;
                 }
                 catch (Exception ex)

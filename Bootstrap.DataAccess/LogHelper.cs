@@ -1,5 +1,4 @@
-﻿using Longbow;
-using Longbow.Caching;
+﻿using Longbow.Caching;
 using Longbow.Caching.Configuration;
 using Longbow.ExceptionManagement;
 using System;
@@ -14,7 +13,7 @@ namespace Bootstrap.DataAccess
 {
     public static class LogHelper
     {
-        private const string RetrieveLogsDataKey = "LogHelper-RetrieveLogs";
+        internal const string RetrieveLogsDataKey = "LogHelper-RetrieveLogs";
         /// <summary>
         /// 查询所有日志信息
         /// </summary>
@@ -66,7 +65,7 @@ namespace Bootstrap.DataAccess
                 using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
                 {
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
-                    ClearCache();
+                    CacheCleanUtility.ClearCache(logIds: ids);
                     ret = true;
                 }
             }
@@ -98,8 +97,8 @@ namespace Bootstrap.DataAccess
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@OperationModule", p.OperationModule == null ? "" : p.OperationModule, ParameterDirection.Input));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
+                CacheCleanUtility.ClearCache(logIds: p.ID == 0 ? "" : p.ID.ToString());
                 ret = true;
-                ClearCache();
             }
             catch (DbException ex)
             {
@@ -107,12 +106,6 @@ namespace Bootstrap.DataAccess
             }
             return ret;
         }
-        //更新缓存
-        private static void ClearCache()
-        {
-            CacheManager.Clear(key => key == RetrieveLogsDataKey);
-        }
-
         /// <summary>
         /// 获取客户端IP地址
         /// </summary>

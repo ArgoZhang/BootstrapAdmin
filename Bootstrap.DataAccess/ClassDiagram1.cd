@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Bootstrap.DataAccess.DictHelper">
-    <Position X="0.5" Y="5.5" Width="1.5" />
+    <Position X="0.5" Y="5.5" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAQAAACAAAAAAAAAAAACAAQAAAAAAAAAAAACAAAAAA=</HashCode>
       <FileName>DictHelper.cs</FileName>
@@ -14,10 +14,10 @@
       <FileName>GroupHelper.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Bootstrap.DataAccess.LogHelper" Collapsed="true">
-    <Position X="3" Y="5.5" Width="1.5" />
+  <Class Name="Bootstrap.DataAccess.LogHelper">
+    <Position X="3.25" Y="5.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAIACACEAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAKACACEAAAAAAAAAAAAAAACAAAAAA=</HashCode>
       <FileName>LogHelper.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -40,6 +40,13 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAgAAAAEIQAkAAIEgEAIEAAAAAAAAAAAAAg=</HashCode>
       <FileName>UserHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Bootstrap.DataAccess.CacheCleanUtility">
+    <Position X="8.75" Y="3.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>CacheCleanUtility.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

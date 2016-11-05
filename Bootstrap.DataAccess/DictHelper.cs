@@ -12,8 +12,7 @@ namespace Bootstrap.DataAccess
 {
     public static class DictHelper
     {
-        private const string RetrieveDictsDataKey = "DictHelper-RetrieveDicts";
-
+        internal const string RetrieveDictsDataKey = "DictHelper-RetrieveDicts";
         /// <summary>
         /// 查询所有字典信息
         /// </summary>
@@ -49,7 +48,6 @@ namespace Bootstrap.DataAccess
             }, CacheSection.RetrieveDescByKey(RetrieveDictsDataKey));
             return id == 0 ? ret : ret.Where(t => id == t.ID);
         }
-
         /// <summary>
         /// 删除字典中的数据
         /// </summary>
@@ -65,7 +63,7 @@ namespace Bootstrap.DataAccess
                 using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
                 {
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
-                    ClearCache();
+                    CacheCleanUtility.ClearCache(dictIds: ids);
                     ret = true;
                 }
             }
@@ -102,20 +100,13 @@ namespace Bootstrap.DataAccess
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
                 ret = true;
-                ClearCache();
+                CacheCleanUtility.ClearCache(dictIds: p.ID == 0 ? "" : p.ID.ToString());
             }
             catch (DbException ex)
             {
                 ExceptionManager.Publish(ex);
             }
             return ret;
-        }
-        /// <summary>
-        /// 更新缓存
-        /// </summary>
-        private static void ClearCache()
-        {
-            CacheManager.Clear(key => key == RetrieveDictsDataKey);
         }
     }
 }
