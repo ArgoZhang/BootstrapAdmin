@@ -217,7 +217,7 @@ a.logo {
         font-weight: 300;
     }
 
-.log-arrow-up {
+.arrow-up {
     background: url("../images/arrow-up.png") no-repeat;
     width: 20px;
     height: 11px;
@@ -374,6 +374,60 @@ a.logo {
     position: absolute;
     right: 5px;
 }
+
+.dropdown-menu.menu {
+    top: 50px;
+    left: 15px;
+    margin-right: 15px;
+}
+
+    .dropdown-menu.menu .arrow-up {
+        left: 43px;
+        top: -10px;
+    }
+
+    .dropdown-menu.menu .menu-submenu {
+        padding: 0 16px;
+    }
+
+        .dropdown-menu.menu .menu-submenu ul {
+            float: left;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        .dropdown-menu.menu .menu-submenu li p {
+            color: #323232;
+            font-size: 14px;
+            text-transform: none;
+            font-weight: bold;
+            border-bottom: solid 1px #a9d86e;
+            padding: 10px 0 4px 0;
+            margin-bottom: 14px;
+        }
+
+            .dropdown-menu.menu .menu-submenu li p.active {
+                color: #FF6C60;
+            }
+
+        .dropdown-menu.menu .menu-submenu li a {
+            margin-bottom: 15px;
+            display: inline-block;
+            color: #323232;
+            font-size: 13px;
+        }
+
+            .dropdown-menu.menu .menu-submenu li a.active {
+                color: #FF6C60;
+            }
+
+            .dropdown-menu.menu .menu-submenu li a:hover {
+                color: #FF6C60;
+            }
+
+            .dropdown-menu.menu .menu-submenu li a i {
+                padding-right: 6px;
+            }
 
 .notify-row {
     margin-top: 4px;

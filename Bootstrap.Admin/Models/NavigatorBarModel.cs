@@ -9,14 +9,13 @@ namespace Bootstrap.Admin.Models
     {
         public NavigatorBarModel(string url)
         {
-            Menus = MenuHelper.RetrieveMenus().ToList();
-            Menus.ForEach(m => m.Active = m.Url.Equals(url, StringComparison.OrdinalIgnoreCase) ? "active" : "");
+            Navigations = MenuHelper.RetrieveNavigationsByUserId(UserID);
+            Navigations.ToList().ForEach(m => m.Active = m.Url.Equals(url, StringComparison.OrdinalIgnoreCase) ? "active" : "");
             HomeUrl = "~/Admin/Index";
-            ShowMenu = "hide";
         }
         /// <summary>
         /// 
         /// </summary>
-        public List<Menu> Menus { get; set; }
+        public IEnumerable<Menu> Navigations { get; set; }
     }
 }

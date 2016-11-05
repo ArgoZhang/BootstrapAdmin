@@ -5,22 +5,22 @@
         <div class="fa fa-bars tooltips" data-placement="right" data-original-title="展开/收起 导航条"></div>
     </div>
     <!--logo start-->
-    <a href="#" class="logo">@Model.Title</a>
+    <a href="#" data-toggle="dropdown" class="logo dropdown-toggle">@Model.Title</a>
     <!--logo end-->
-    <nav class="navbar lgbMenu @Model.ShowMenu">
-        <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">参数设置 <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="~/Home/Rules">规则设置</a></li>
-                        <li class="divider"></li>
-                        <li><a href="~/Home/Terminals">输入口设置</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div><!--/.nav-collapse -->
-    </nav>
+    @if (Model.Menus.Count() > 0 && Model.ShowMenu)
+    {
+        <ul class="dropdown-menu menu">
+            <div class="menu-arrow arrow-up"></div>
+            <li>
+                <div class="menu-submenu">
+                    @foreach (var menu in Model.Menus)
+                {
+                        @Html.Partial("SubMenu", menu)
+                    }
+                </div>
+            </li>
+        </ul>
+    }
     <div class="top-nav">
         <!--search & user info start-->
         <ul class="nav pull-right top-menu">
@@ -235,7 +235,7 @@
                     <input id="userId" type="text" class="hide" value="@Model.UserID" />
                 </a>
                 <ul class="dropdown-menu extended logout">
-                    <div class="log-arrow-up"></div>
+                    <div class="arrow-up"></div>
                     <li><a href="#"><i class=" fa fa-suitcase"></i>个人中心</a></li>
                     <li><a href="~/Admin"><i class="fa fa-cog"></i>设置</a></li>
                     <li><a href="#"><i class="fa fa-bell-o"></i>通知<span class="badge bg-success">5</span></a></li>

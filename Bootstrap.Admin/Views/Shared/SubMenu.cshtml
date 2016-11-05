@@ -1,0 +1,11 @@
+﻿@model Menu
+<ul>
+    <li>
+        <p>@Model.Name</p>
+    </li>
+    @foreach (var menu in Model.Menus)
+    {
+        <li><a href="@Url.Content(menu.Url)" class="@menu.Active"><i class="@menu.Icon"></i><span>@menu.Name</span></a></li>
+    }
+</ul>
+

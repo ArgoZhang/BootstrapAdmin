@@ -28,13 +28,13 @@
             <label class="control-label" for="txt_menus_category">菜单类别</label>
             <input type="text" class="form-control hide" id="txt_menus_category" />
             <div class="btn-group">
-                <button type="button" class="btn btn-default">未选择</button>
+                <button type="button" class="btn btn-default">全部</button>
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                     <span class="caret"></span>
                     <span class="sr-only">下拉按钮</span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="#" data-val="">未选择</a></li>
+                    <li><a href="#" data-val="">全部</a></li>
                     <li><a href="#" data-val="0">系统菜单</a></li>
                     <li><a href="#" data-val="1">自定义菜单</a></li>
                 </ul>
@@ -84,7 +84,7 @@
             <div class="form-group col-lg-6">
                 <label class="control-label" for="url">路径</label>
                 <input type="text" class="form-control" id="url" name="url" maxlength="50" />
-            </div>           
+            </div>
             <div class="form-group col-lg-6">
                 <label class="control-label" for="order">菜单序号</label>
                 <div class="input-group">
@@ -116,5 +116,5 @@
 @section customModal {
     @Html.Partial("RoleConfig")
     @Html.Partial("IconView")
-    @Html.Partial("MenuTree", Model.Menus)
+    @Html.Partial("MenuTree", Model.Navigations)
 }

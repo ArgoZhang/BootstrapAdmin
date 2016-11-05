@@ -1,4 +1,5 @@
 ﻿using Bootstrap.DataAccess;
+using System.Collections.Generic;
 using System.Web;
 
 namespace Bootstrap.Admin.Models
@@ -14,22 +15,27 @@ namespace Bootstrap.Admin.Models
             DisplayName = user.DisplayName;
             UserID = user.ID;
             HomeUrl = "~/";
+            Menus = MenuHelper.RetrieveLinksByUserId(user.ID);
         }
         /// <summary>
         /// 
         /// </summary>
-        public int UserID { get; set; }
+        public int UserID { get; protected set; }
         /// <summary>
         /// 
         /// </summary>
-        public string DisplayName { get; set; }
+        public string DisplayName { get; protected set; }
         /// <summary>
         /// 
         /// </summary>
-        public string ShowMenu { get; set; }
+        public bool ShowMenu { get; protected set; }
         /// <summary>
         /// 
         /// </summary>
-        public string HomeUrl { get; set; }
+        public string HomeUrl { get; protected set; }
+        /// <summary>
+        /// 获得/设置 前台菜单
+        /// </summary>
+        public IEnumerable<Menu> Menus { get; private set; }
     }
 }

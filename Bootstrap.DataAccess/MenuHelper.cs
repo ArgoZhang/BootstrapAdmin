@@ -21,11 +21,11 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="tId"></param>
         /// <returns></returns>
-        public static IEnumerable<Menu> RetrieveMenus(string tId = null)
+        public static IEnumerable<Menu> RetrieveMenus()
         {
-            string sql = "select n.*, d.Name as CategoryName from Navigations n inner join Dicts d on n.Category = d.Code and d.Category = N'菜单' and d.Define = 0";
-            var ret = CacheManager.GetOrAdd(RetrieveMenusDataKey, CacheSection.RetrieveIntervalByKey(RetrieveMenusDataKey), key =>
+            return CacheManager.GetOrAdd(RetrieveMenusDataKey, CacheSection.RetrieveIntervalByKey(RetrieveMenusDataKey), key =>
             {
+                string sql = "select n.*, d.Name as CategoryName from Navigations n inner join Dicts d on n.Category = d.Code and d.Category = N'菜单' and d.Define = 0";
                 List<Menu> Menus = new List<Menu>();
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                 try
@@ -51,7 +51,6 @@ namespace Bootstrap.DataAccess
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return Menus;
             }, CacheSection.RetrieveDescByKey(RetrieveMenusDataKey));
-            return string.IsNullOrEmpty(tId) ? ret : ret.Where(t => tId.Equals(t.ID.ToString(), StringComparison.OrdinalIgnoreCase));
         }
         /// <summary>
         /// 查询某个用户所配置的菜单
@@ -63,7 +62,7 @@ namespace Bootstrap.DataAccess
             string key = string.Format("{0}-{1}", RetrieveMenusByUserIDDataKey, userId);
             return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RetrieveMenusByUserIDDataKey), k =>
             {
-                string sql = "select distinct n.* from UserRole ur,NavigationRole nr,Navigations n where ur.RoleID=nr.RoleID and nr.NavigationID=n.ID and ur.UserID = @UserID";
+                string sql = "select n.* from Navigations n inner join NavigationRole nr on n.ID = nr.NavigationID inner join UserRole ur on nr.RoleID = ur.RoleID inner join Users u on ur.UserID = u.ID where u.ID = @UserID union select n.* from Navigations n inner join NavigationRole nr on n.ID = nr.NavigationID inner join RoleGroup rg on nr.RoleID = rg.RoleID inner join UserGroup ur on rg.GroupID = ur.GroupID inner join Users u on ur.UserID = u.ID where u.ID = @UserID";
                 List<Menu> Menus = new List<Menu>();
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                 try
@@ -89,6 +88,38 @@ namespace Bootstrap.DataAccess
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return Menus;
             }, CacheSection.RetrieveDescByKey(RetrieveMenusByUserIDDataKey));
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public static IEnumerable<Menu> RetrieveNavigationsByUserId(int userId)
+        {
+            var navs = (userId == 0 ? RetrieveMenus() : RetrieveMenusByUserId(userId)).Where(m => m.Category == "0");
+            var root = navs.Where(m => m.ParentId == 0);
+            CascadeMenu(navs, root);
+            return root;
+        }
+        private static void CascadeMenu(IEnumerable<Menu> navs, IEnumerable<Menu> level)
+        {
+            level.ToList().ForEach(m =>
+            {
+                m.Menus = navs.Where(sub => sub.ParentId == m.ID);
+                CascadeMenu(navs, m.Menus);
+            });
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public static IEnumerable<Menu> RetrieveLinksByUserId(int userId)
+        {
+            var navs = (userId == 0 ? RetrieveMenus() : RetrieveMenusByUserId(userId)).Where(m => m.Category == "1");
+            var root = navs.Where(m => m.ParentId == 0);
+            CascadeMenu(navs, root);
+            return root;
         }
         /// <summary>
         /// 删除菜单信息

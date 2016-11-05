@@ -1,4 +1,5 @@
-﻿
+﻿using System.Collections.Generic;
+
 namespace Bootstrap.DataAccess
 {
     /// <summary>
@@ -42,5 +43,9 @@ namespace Bootstrap.DataAccess
         /// 获得/设置 是否当前被选中 active为选中
         /// </summary>
         public string Active { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public IEnumerable<Menu> Menus { get; set; }
     }
 }

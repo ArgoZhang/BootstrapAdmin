@@ -33,7 +33,7 @@ namespace Bootstrap.DataAccess.Tests
         }
 
         [TestMethod]
-        public void RetrieveMenuByUserIDTest() 
+        public void RetrieveMenuByUserIDTest()
         {
             Assert.IsTrue(MenuHelper.RetrieveMenusByUserId(1).Count() > 1, "根据用户ID查询菜单的MenuHelper.RetrieveMenusByUserId方法调用失败");
         }
@@ -50,9 +50,6 @@ namespace Bootstrap.DataAccess.Tests
             var menu = menus.FirstOrDefault(m => m.Name == Menu.Name);
             menu.Icon = "fa";
             Assert.IsTrue(MenuHelper.SaveMenu(menu), string.Format("更新菜单ID = {0} 操作失败，请检查 MenuHelper.SaveMenu 方法", menu.ID));
-            var dest = MenuHelper.RetrieveMenus(menu.ID.ToString());
-            Assert.IsTrue(dest.Count() == 1, "带参数的MenuHelper.RetrieveMenus方法调用失败");
-            Assert.AreEqual(menu.Icon, dest.First().Icon, string.Format("更新菜单ID = {0} 操作失败，请检查 MenuHelper.SaveMenu 方法", menu.ID));
         }
 
         [TestMethod]

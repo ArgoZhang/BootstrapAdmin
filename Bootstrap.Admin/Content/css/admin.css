@@ -132,6 +132,7 @@ ul.sidebar-menu {
                 ul.sidebar-menu li ul.sub li:last-child {
                     border-radius: 0 0 4px 4px;
                     -webkit-border-radius: 0 0 4px 4px;
+                    padding-bottom: 10px;
                 }
 
                 ul.sidebar-menu li ul.sub li a {

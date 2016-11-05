@@ -12,7 +12,7 @@ namespace Bootstrap.DataAccess.Tests
         [TestInitialize]
         public void Initialized()
         {
-            Log = new Log() { OperationType = 1, UserName = "_测试用户名称_", OperationTime = System.DateTime.Now, OperationIp = "0.0.0.0",Remark="" };
+            Log = new Log() { CRUD = "Test", RequestUrl = "Test", UserName = "_测试用户名称_", ClientIp = "0.0.0.0", ClientAgent = "Test" };
         }
         [TestCleanup]
         public void CleanUp()
