@@ -113,6 +113,7 @@
     <Content Include="Content\css\font-awesome.min.css" />
     <Content Include="Content\css\jquery.nestable.css" />
     <Content Include="Content\css\tasks.css" />
+    <Content Include="Content\images\bg.jpg" />
     <Content Include="Content\js\jquery.nestable.js" />
     <Content Include="Content\css\site-responsive.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
@@ -177,6 +178,7 @@
     <Content Include="Content\css\fa.responsive.css" />
     <None Include="Scripts\_references.js" />
     <Content Include="Content\js\framework.js" />
+    <Content Include="Scripts\well.js" />
     <Content Include="Views\Shared\Readme.txt" />
     <Content Include="Web.config" />
     <Content Include="Views\Shared\_Layout.cshtml" />

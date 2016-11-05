@@ -10,6 +10,10 @@
     -moz-font-smoothing: antialiased;
 }
 
+.well-bg {
+    color: #fff;
+}
+
 .wrapper {
     display: inline-block;
     padding: 15px;
