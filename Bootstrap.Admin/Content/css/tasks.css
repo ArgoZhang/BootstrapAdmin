@@ -52,10 +52,7 @@
         height: 46px;
     }
 
-        .tasks-widget .task-list li > .task-title .task-value {
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
+        .tasks-widget .task-list li > .task-title .task-wrapper {
             position: absolute;
             left: 190px;
             right: 40px;
@@ -63,6 +60,14 @@
             display: inline-block;
             padding-left: 16px;
         }
+
+            .tasks-widget .task-list li > .task-title .task-wrapper span {
+                display: inline-block;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 100%;
+            }
 
         .tasks-widget .task-list li > .task-title .badge {
             position: relative;
