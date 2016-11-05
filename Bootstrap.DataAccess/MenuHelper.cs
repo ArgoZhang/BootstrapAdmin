@@ -97,7 +97,7 @@ namespace Bootstrap.DataAccess
         public static IEnumerable<Menu> RetrieveNavigationsByUserId(int userId)
         {
             var navs = (userId == 0 ? RetrieveMenus() : RetrieveMenusByUserId(userId)).Where(m => m.Category == "0");
-            var root = navs.Where(m => m.ParentId == 0);
+            var root = navs.Where(m => m.ParentId == 0).OrderBy(m => m.Order);
             CascadeMenu(navs, root);
             return root;
         }
@@ -105,7 +105,7 @@ namespace Bootstrap.DataAccess
         {
             level.ToList().ForEach(m =>
             {
-                m.Menus = navs.Where(sub => sub.ParentId == m.ID);
+                m.Menus = navs.Where(sub => sub.ParentId == m.ID).OrderBy(sub => sub.Order);
                 CascadeMenu(navs, m.Menus);
             });
         }
@@ -117,7 +117,7 @@ namespace Bootstrap.DataAccess
         public static IEnumerable<Menu> RetrieveLinksByUserId(int userId)
         {
             var navs = (userId == 0 ? RetrieveMenus() : RetrieveMenusByUserId(userId)).Where(m => m.Category == "1");
-            var root = navs.Where(m => m.ParentId == 0);
+            var root = navs.Where(m => m.ParentId == 0).OrderBy(m => m.Order);
             CascadeMenu(navs, root);
             return root;
         }
