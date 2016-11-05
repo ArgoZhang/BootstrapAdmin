@@ -15,7 +15,7 @@
     $('table').smartTable({
         url: '../api/Dicts',            //请求后台的URL（*）
         sortName: 'Category',
-        queryParams: function (params) { return $.extend(params, { name: $("#txt_dict_name").val(), define: $("#txt_dict_cate").val() }); },
+        queryParams: function (params) { return $.extend(params, { category: $('#txt_dict_cate').val(), name: $("#txt_dict_name").val(), define: $("#txt_dict_define").val() }); },
         columns: [{ checkbox: true },
             { title: "Id", field: "ID", events: bsa.idEvents(), formatter: BootstrapAdmin.idFormatter },
             { title: "字典分项", field: "Category", sortable: true },

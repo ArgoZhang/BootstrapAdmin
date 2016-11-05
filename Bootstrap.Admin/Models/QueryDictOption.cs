@@ -7,6 +7,10 @@ namespace Bootstrap.Admin.Models
     public class QueryDictOption : PaginationOption
     {
         /// <summary>
+        /// 字典分项
+        /// </summary>
+        public string Category { get; set; }
+        /// <summary>
         /// 字典名称
         /// </summary>
         public string Name { get; set; }
@@ -21,6 +25,10 @@ namespace Bootstrap.Admin.Models
         public QueryData<Dict> RetrieveData()
         {
             var data = DictHelper.RetrieveDicts();
+            if (!string.IsNullOrEmpty(Category))
+            {
+                data = data.Where(t => t.Category.Contains(Category));
+            }
             if (!string.IsNullOrEmpty(Name))
             {
                 data = data.Where(t => t.Name.Contains(Name));
