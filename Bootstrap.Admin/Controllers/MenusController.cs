@@ -1,6 +1,5 @@
 ﻿using Bootstrap.Admin.Models;
 using Bootstrap.DataAccess;
-using System.Linq;
 using System.Web.Http;
 
 namespace Bootstrap.Admin.Controllers
@@ -16,16 +15,6 @@ namespace Bootstrap.Admin.Controllers
         public QueryData<Menu> Get([FromUri]QueryMenuOption value)
         {
             return value.RetrieveData();
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpGet]
-        public Menu Get(int id)
-        {
-            return MenuHelper.RetrieveMenus().FirstOrDefault(t => t.ID == id);
         }
         /// <summary>
         /// 

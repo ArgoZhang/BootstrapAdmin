@@ -37,11 +37,11 @@
 
     $('table').smartTable({
         url: '../api/Menus',            //请求后台的URL（*）
-        sortName: 'UserName',
-        queryParams: function (params) { return $.extend(params, { name: $("#txt_menus_name").val(), category: $('#txt_menus_category').val() }); },           //传递参数（*）
+        sortName: 'Order',
+        queryParams: function (params) { return $.extend(params, { parentName: $('#txt_parent_menus_name').val(), name: $("#txt_menus_name").val(), category: $('#txt_menus_category').val() }); },           //传递参数（*）
         columns: [{ checkbox: true },
             { title: "Id", field: "ID", events: bsa.idEvents(), formatter: BootstrapAdmin.idFormatter },
-            { title: "父级ID", field: "ParentId", sortable: false },
+            { title: "父级菜单", field: "ParentName", sortable: true },
             { title: "菜单名称", field: "Name", sortable: true },
             { title: "菜单序号", field: "Order", sortable: true },
             { title: "菜单图标", field: "Icon", sortable: false },

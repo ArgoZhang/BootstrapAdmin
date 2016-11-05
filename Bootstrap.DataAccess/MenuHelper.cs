@@ -25,7 +25,7 @@ namespace Bootstrap.DataAccess
         {
             return CacheManager.GetOrAdd(RetrieveMenusDataKey, CacheSection.RetrieveIntervalByKey(RetrieveMenusDataKey), key =>
             {
-                string sql = "select n.*, d.Name as CategoryName from Navigations n inner join Dicts d on n.Category = d.Code and d.Category = N'菜单' and d.Define = 0";
+                string sql = "select n.*, d.Name as CategoryName, ln.Name as ParentName from Navigations n inner join Dicts d on n.Category = d.Code and d.Category = N'菜单' and d.Define = 0 left join Navigations ln on n.ParentId = ln.ID";
                 List<Menu> Menus = new List<Menu>();
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                 try
@@ -43,7 +43,8 @@ namespace Bootstrap.DataAccess
                                 Icon = LgbConvert.ReadValue(reader[4], string.Empty),
                                 Url = LgbConvert.ReadValue(reader[5], string.Empty),
                                 Category = (string)reader[6],
-                                CategoryName = (string)reader[7]
+                                CategoryName = (string)reader[7],
+                                ParentName = LgbConvert.ReadValue(reader[8], string.Empty)
                             });
                         }
                     }

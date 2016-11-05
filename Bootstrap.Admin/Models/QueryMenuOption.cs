@@ -13,11 +13,19 @@ namespace Bootstrap.Admin.Models
         /// <summary>
         /// 
         /// </summary>
+        public string ParentName { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public string Category { get; set; }
 
         public QueryData<Menu> RetrieveData()
         {
             var data = MenuHelper.RetrieveMenus();
+            if (!string.IsNullOrEmpty(ParentName))
+            {
+                data = data.Where(t => t.ParentName.Contains(ParentName));
+            }
             if (!string.IsNullOrEmpty(Name))
             {
                 data = data.Where(t => t.Name.Contains(Name));
@@ -32,6 +40,9 @@ namespace Bootstrap.Admin.Models
             {
                 case "Name":
                     data = Order == "asc" ? data.OrderBy(t => t.Name) : data.OrderByDescending(t => t.Name);
+                    break;
+                case "ParentName":
+                    data = Order == "asc" ? data.OrderBy(t => t.ParentName) : data.OrderByDescending(t => t.ParentName);
                     break;
                 case "Order":
                     data = Order == "asc" ? data.OrderBy(t => t.Order) : data.OrderByDescending(t => t.Order);

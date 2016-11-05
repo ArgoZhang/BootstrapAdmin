@@ -16,6 +16,10 @@ namespace Bootstrap.DataAccess
         /// </summary>
         public int ParentId { set; get; }
         /// <summary>
+        /// 获得/设置 父级菜单名称
+        /// </summary>
+        public string ParentName { get; set; }
+        /// <summary>
         /// 获得/设置 菜单名称
         /// </summary>
         public string Name { get; set; }
