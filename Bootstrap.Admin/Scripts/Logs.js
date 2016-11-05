@@ -17,5 +17,4 @@
             { title: "操作模块", field: "RequestUrl", sortable: false }
         ]
     });
-    var log = new LogPlugin();
 });

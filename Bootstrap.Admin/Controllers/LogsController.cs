@@ -34,7 +34,6 @@ namespace Bootstrap.Admin.Controllers
         {
             var request = HttpContext.Current.Request;
             value.ClientAgent = request.UserAgent;
-            value.RequestUrl = request.Url.AbsolutePath;
             value.ClientIp = request.UserHostAddress;
             value.UserName = HttpContext.Current.User.Identity.Name;
             return LogHelper.SaveLog(value);
