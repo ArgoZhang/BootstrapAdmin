@@ -5,7 +5,7 @@
         <div class="fa fa-bars tooltips" data-placement="right" data-original-title="展开/收起 导航条"></div>
     </div>
     <!--logo start-->
-    <a href="#" class="logo">后台管理系统</a>
+    <a href="#" class="logo">@Model.Title</a>
     <!--logo end-->
     <nav class="navbar lgbMenu @Model.ShowMenu">
         <div id="navbar" class="navbar-collapse collapse">
@@ -252,5 +252,6 @@
         <li></li>
     </ul>
     <!--breadcrumbs end -->
+    <input id="footer" type="text" class="hide" value="@Model.Footer" />
 </header>
 <!--header end-->

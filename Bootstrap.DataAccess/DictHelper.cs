@@ -13,6 +13,7 @@ namespace Bootstrap.DataAccess
     public static class DictHelper
     {
         internal const string RetrieveDictsDataKey = "DictHelper-RetrieveDicts";
+        internal const string RetrieveWebSettingsDataKey = "DictHelper-RetrieveDictsWebSettings";
         /// <summary>
         /// 查询所有字典信息
         /// </summary>
@@ -87,7 +88,7 @@ namespace Bootstrap.DataAccess
             if (p.Code.Length > 50) p.Code.Substring(0, 50);
             string sql = p.ID == 0 ?
                 "Insert Into Dicts (Category, Name, Code ,Define) Values (@Category, @Name, @Code, @Define)" :
-                "Update Dicts set Category = @Category, Name = @Name, @Code = Code ,@Define = Define where ID = @ID";
+                "Update Dicts set Category = @Category, Name = @Name, Code = @Code, Define = @Define where ID = @ID";
             try
             {
                 using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
@@ -107,6 +108,53 @@ namespace Bootstrap.DataAccess
                 ExceptionManager.Publish(ex);
             }
             return ret;
+        }
+        public static IEnumerable<Dict> RetrieveWebSettings()
+        {
+            return CacheManager.GetOrAdd(RetrieveWebSettingsDataKey, CacheSection.RetrieveIntervalByKey(RetrieveWebSettingsDataKey), key =>
+            {
+                string sql = "select ID, Category, Name, Code, Define, case Define when 0 then '系统使用' else '用户自定义' end DefineName from Dicts where Category = N'网站设置' and Define = 0";
+                List<Dict> Dicts = new List<Dict>();
+                DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
+                try
+                {
+                    using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
+                    {
+                        while (reader.Read())
+                        {
+                            Dicts.Add(new Dict()
+                            {
+                                ID = (int)reader[0],
+                                Category = (string)reader[1],
+                                Name = (string)reader[2],
+                                Code = (string)reader[3],
+                                Define = (int)reader[4],
+                                DefineName = (string)reader[5]
+                            });
+                        }
+                    }
+                }
+                catch (Exception ex) { ExceptionManager.Publish(ex); }
+                return Dicts;
+            }, CacheSection.RetrieveDescByKey(RetrieveWebSettingsDataKey));
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static string RetrieveWebTitle()
+        {
+            var settings = DictHelper.RetrieveWebSettings();
+            return (settings.FirstOrDefault(d => d.Name == "网站标题") ?? new Dict() { Code = "后台管理系统" }).Code;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static string RetrieveWebFooter()
+        {
+            var settings = DictHelper.RetrieveWebSettings();
+            return (settings.FirstOrDefault(d => d.Name == "网站页脚") ?? new Dict() { Code = "2016 © 通用后台管理系统" }).Code;
         }
     }
 }

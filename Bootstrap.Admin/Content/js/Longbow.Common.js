@@ -187,4 +187,6 @@ $(function () {
         parent.prev('input.hide').val($(this).attr("data-val"));
         parent.children('button:first').text($(this).text());
     });
+
+    $('.site-footer div span').text($('#footer').val());
 });

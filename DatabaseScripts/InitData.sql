@@ -6,10 +6,12 @@ SET IDENTITY_INSERT [dbo].[Users] ON
 insert into Users (ID, UserName, Password, PassSalt, DisplayName) values (1, 'Admin', 'Es7WVgNsJuELwWK8daCqufUBknCsSC0IYDphQZAiGOo=', 'W5vpBEOYRGHkQXatN0t+ECM/U8cHDuEgrq56+zZBk4J481xH', 'Administrator')
 SET IDENTITY_INSERT [dbo].[Users] OFF
 
-DELETE From Dicts where ID in (1, 2)
+DELETE From Dicts where ID in (1, 2, 3, 4)
 SET IDENTITY_INSERT [dbo].[Dicts] ON 
 INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (1, N'菜单', N'系统菜单', N'0', 0)
 INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (2, N'菜单', N'外部菜单', N'1', 0)
+INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (3, N'网站设置', N'网站标题', N'后台管理系统', 0)
+INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (4, N'网站设置', N'网站页脚', N'2016 © 通用后台管理系统', 0)
 SET IDENTITY_INSERT [dbo].[Dicts] OFF
 
 DELETE FROM Navigations where ID in (1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
