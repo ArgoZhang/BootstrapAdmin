@@ -5,17 +5,12 @@
         <h4 class="modal-title" id="myMenuModalLabel">请选择菜单</h4>
     </div>
     <div class="modal-body">
-        <div class="dd" id="nestable_menu">
-            <ol class="dd-list">
-                @foreach (var menu in Model)
-                {
-                    <li class="dd-item dd3-item" data-id="@menu.ID">
-                        <div class="dd-handle dd3-handle"></div>
-                        <div class="dd3-content"><label><input name="menuParent" type="checkbox" value="@menu.ID" /><input type="radio" name="menu" value="@menu.ID" /><span>@menu.Name</span></label></div>
-                    </li>
-                }
-            </ol>
-        </div>
+        @if (Model.Count() > 0)
+        {
+            <div class="dd" id="nestable_menu">
+                @Html.Partial("SubMenuTree", @Model)
+            </div>
+        }
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>

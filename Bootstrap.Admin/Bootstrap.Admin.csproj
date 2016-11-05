@@ -249,6 +249,7 @@
     <Content Include="Views\Shared\MenuTree.cshtml" />
     <Content Include="Views\Shared\SubNavigation.cshtml" />
     <Content Include="Views\Shared\SubMenu.cshtml" />
+    <Content Include="Views\Shared\SubMenuTree.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
