@@ -36,11 +36,6 @@ EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'密码盐' , @
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'显示名称' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Users', @level2type=N'COLUMN',@level2name=N'DisplayName'
 GO
-
-/* added by argo the default password is 123789 */
-insert into Users (UserName, Password, PassSalt, DisplayName) values ('Admin', 'Es7WVgNsJuELwWK8daCqufUBknCsSC0IYDphQZAiGOo=', 'W5vpBEOYRGHkQXatN0t+ECM/U8cHDuEgrq56+zZBk4J481xH', 'Administrator')
-GO
-
 /****** Object:  Table [dbo].[Groups]    Script Date: 10/22/2016 09:44:03 ******/
 SET ANSI_NULLS ON
 GO
@@ -180,33 +175,39 @@ EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'字典代码' 
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'0表示系统使用，1表示自定义' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Dicts', @level2type=N'COLUMN',@level2name=N'Define'
 GO
-
-/****** Object:  Table [dbo].[Logs]    Script Date: 11/04/2016 15:13:04 ******/
+/****** Object:  Table [dbo].[Logs]    Script Date: 11/05/2016 14:17:40 ******/
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
+
 SET ANSI_PADDING ON
 GO
+
 CREATE TABLE [dbo].[Logs](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
-	[OperationType] [int] NOT NULL,
+	[CRUD] [varchar](50) NOT NULL,
 	[UserName] [varchar](50) NOT NULL,
-	[OperationTime] [datetime] NOT NULL,
-	[OperationIp] [nvarchar](50) NULL,
-	[Remark] [nvarchar](500) NULL,
-	[OperationModule] [varchar](50) NULL,
+	[LogTime] [datetime] NOT NULL,
+	[ClientIp] [varchar](15) NOT NULL,
+	[ClientAgent] [nvarchar](500) NOT NULL,
+	[RequestUrl] [nvarchar](500) NOT NULL,
  CONSTRAINT [PK_Logs] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
+
 GO
+
 SET ANSI_PADDING OFF
 GO
+
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Logs', @level2type=N'COLUMN',@level2name=N'ID'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Logs', @level2type=N'COLUMN',@level2name=N'OperationType'
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Logs', @level2type=N'COLUMN',@level2name=N'CURD'
 GO
 /****** Object:  Table [dbo].[Navigations]  ******/
 CREATE TABLE [dbo].[Navigations](

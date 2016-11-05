@@ -1,9 +1,11 @@
 ﻿@model NavigatorBarModel
 @{
     ViewBag.Title = "系统日志";
-    Layout = "~/Views/Shared/_Default.cshtml";
+    Layout = "~/Views/Shared/_Admin.cshtml";
 }
 @section Javascript {
+    <script src="~/content/js/bootstrap-table.js"></script>
+    <script src="~/content/js/bootstrap-table-zh-CN.js"></script>
     <script src="~/scripts/Logs.js"></script>
 }
 @section header {
@@ -12,23 +14,33 @@
 @section navigator {
     @Html.Partial("Navigator", Model)
 }
-@section query {
-    <form class="form-inline" role="form">
-        <div class="form-group col-lg-5">
-            <label class="control-label" for="txt_operate_type">操作类型</label>
-            <input type="text" class="form-control" id="txt_operate_type" />
-        </div>
-        <div class="form-group col-lg-5">
-            <label class="control-label" for="txt_operate_start">起始时间</label>
-            <input type="datetime" class="form-control" id="txt_operate_start" />
-        </div>
-        <div class="form-group col-lg-5">
-            <label class="control-label" for="txt_operate_end">终止时间</label>
-            <input type="datetime" class="form-control" id="txt_operate_end" />
-        </div>
-
-        <div class="form-group col-lg-2">
-            <button type="button" id="btn_query" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询</button>
-        </div>
-    </form>
-}
+<div class="panel panel-default">
+    <div class="panel-heading">查询条件</div>
+    <div class="panel-body">
+        <form class="form-inline" role="form">
+            <div class="form-group col-lg-5">
+                <label class="control-label" for="txt_operate_type">操作类型</label>
+                <input type="text" class="form-control" id="txt_operate_type" />
+            </div>
+            <div class="form-group col-lg-5">
+                <label class="control-label" for="txt_operate_start">起始时间</label>
+                <input type="datetime" class="form-control" id="txt_operate_start" />
+            </div>
+            <div class="form-group col-lg-5">
+                <label class="control-label" for="txt_operate_end">终止时间</label>
+                <input type="datetime" class="form-control" id="txt_operate_end" />
+            </div>
+            <div class="form-group col-lg-2">
+                <button type="button" id="btn_query" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        查询结果
+    </div>
+    <div class="panel-body">
+        <table></table>
+    </div>
+</div>

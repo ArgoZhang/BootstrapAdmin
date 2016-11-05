@@ -11,7 +11,7 @@ namespace Bootstrap.Admin.Models
         /// <summary>
         /// 
         /// </summary>
-        public string  OperateType { get; set; }
+        public string OperateType { get; set; }
         /// <summary>
         /// 
         /// </summary>
@@ -25,32 +25,31 @@ namespace Bootstrap.Admin.Models
             var data = LogHelper.RetrieveLogs(string.Empty);
             if (!string.IsNullOrEmpty(OperateType))
             {
-                data = data.Where(t => t.OperationType.ToString().Contains(OperateType));
+                data = data.Where(t => t.CRUD.ToString().Contains(OperateType));
             }
 
             if (!string.IsNullOrEmpty(OperateTimeStart))
             {
                 DateTime opTimeStart = StringToDateTime(OperateTimeStart);
                 if (opTimeStart != null)
-                    data = data.Where(t => IsSmallThen(opTimeStart, t.OperationTime));
+                    data = data.Where(t => IsSmallThen(opTimeStart, t.LogTime));
             }
             if (!string.IsNullOrEmpty(OperateTimeEnd))
             {
                 DateTime opTimeEnd = StringToDateTime(OperateTimeEnd);
                 if (opTimeEnd != null)
-                    data = data.Where(t => IsSmallThen(t.OperationTime, opTimeEnd));
+                    data = data.Where(t => IsSmallThen(t.LogTime, opTimeEnd));
             }
 
             var ret = new QueryData<Log>();
             ret.total = data.Count();
-            // TODO: 通过option.Sort属性判断对那列进行排序，现在统一对名称列排序
-            data = Order == "asc" ? data.OrderBy(t => t.OperationType) : data.OrderByDescending(t => t.OperationType);
+            data = Order == "asc" ? data.OrderBy(t => t.CRUD) : data.OrderByDescending(t => t.CRUD);
             ret.rows = data.Skip(Offset).Take(Limit);
             return ret;
         }
         private static DateTime StringToDateTime(string dt_str)
         {
-            DateTime dt ;
+            DateTime dt;
             DateTimeFormatInfo dtFormat = new DateTimeFormatInfo();
             dtFormat.ShortDatePattern = "yyyy-MM-dd HH:mm:ss";
             dt = Convert.ToDateTime(dt_str, dtFormat);

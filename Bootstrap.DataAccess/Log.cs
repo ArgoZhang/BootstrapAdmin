@@ -11,7 +11,7 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获得/设置 操作类型
         /// </summary>
-        public int OperationType { get; set; }
+        public string CRUD { get; set; }
 
         /// <summary>
         /// 获得/设置 用户名称
@@ -21,21 +21,21 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获得/设置 操作时间
         /// </summary>
-        public DateTime OperationTime { get; set; }
+        public DateTime LogTime { get; set; }
 
         /// <summary>
-        /// 获得/设置 操作者Ip
+        /// 获得/设置 客户端IP
         /// </summary>
-        public string OperationIp { get; set; }
+        public string ClientIp { get; set; }
 
         /// <summary>
-        /// 获取/设置 备注
+        /// 获取/设置 客户端信息
         /// </summary>
-        public string Remark { get; set; }
+        public string ClientAgent { get; set; }
 
         /// <summary>
-        /// 获取/设置 操作模块
+        /// 获取/设置 请求网址
         /// </summary>
-        public string OperationModule { get; set; }
+        public string RequestUrl { get; set; }
     }
 }

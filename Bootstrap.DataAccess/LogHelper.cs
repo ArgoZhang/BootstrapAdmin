@@ -35,12 +35,12 @@ namespace Bootstrap.DataAccess
                             Logs.Add(new Log()
                             {
                                 ID = (int)reader[0],
-                                OperationType = (int)reader[1],
+                                CRUD = (string)reader[1],
                                 UserName = (string)reader[2],
-                                OperationTime = (DateTime)reader[3],
-                                OperationIp = (string)reader[4],
-                                Remark = (string)reader[5],
-                                OperationModule = (string)reader[6]
+                                LogTime = (DateTime)reader[3],
+                                ClientIp = (string)reader[4],
+                                ClientAgent = (string)reader[5],
+                                RequestUrl = (string)reader[6]
                             });
                         }
                     }
@@ -84,17 +84,16 @@ namespace Bootstrap.DataAccess
         {
             if (p == null) throw new ArgumentNullException("p");
             bool ret = false;
-            string sql = "Insert Into Logs (OperationType, UserName,OperationTime,OperationIp,Remark,OperationModule) Values (@OperationType, @UserName,@OperationTime,@OperationIp,@Remark,@OperationModule)";
+            string sql = "Insert Into Logs (CRUD, UserName, LogTime, ClientIp, ClientAgent, RequestUrl) Values (@CRUD, @UserName, GetDate(), @ClientIp, @ClientAgent, @RequestUrl)";
             try
             {
                 using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
                 {
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@OperationType", p.OperationType, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@CRUD", p.CRUD, ParameterDirection.Input));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserName", p.UserName, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@OperationTime", p.OperationTime, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@OperationIp", p.OperationIp == null ? "" : p.OperationIp, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Remark", p.Remark == null ? "" : p.Remark, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@OperationModule", p.OperationModule == null ? "" : p.OperationModule, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ClientIp", p.ClientIp, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ClientAgent", p.ClientAgent, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@RequestUrl", p.RequestUrl, ParameterDirection.Input));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
                 CacheCleanUtility.ClearCache(logIds: p.ID == 0 ? "" : p.ID.ToString());
@@ -105,22 +104,6 @@ namespace Bootstrap.DataAccess
                 ExceptionManager.Publish(ex);
             }
             return ret;
-        }
-        /// <summary>
-        /// 获取客户端IP地址
-        /// </summary>
-        /// <returns></returns>
-        public static string GetClientIp()
-        {
-            HttpRequest request = HttpContext.Current.Request;
-            string result = request.ServerVariables["HTTP_X_FORWARDED_FOR"];
-            if (string.IsNullOrEmpty(result))
-                result = request.ServerVariables["REMOTE_ADDR"];
-            if (string.IsNullOrEmpty(result))
-                result = request.UserHostAddress;
-            if (string.IsNullOrEmpty(result))
-                result = "0.0.0.0";
-            return result;
         }
     }
 }

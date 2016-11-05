@@ -1,6 +1,7 @@
 ﻿using Bootstrap.Admin.Models;
 using Bootstrap.DataAccess;
 using System.Linq;
+using System.Web;
 using System.Web.Http;
 
 namespace Bootstrap.Admin.Controllers
@@ -31,9 +32,11 @@ namespace Bootstrap.Admin.Controllers
         [HttpPost]
         public bool Post([FromBody]Log value)
         {
-
-            value.OperationIp = LogHelper.GetClientIp();
-            value.OperationTime = System.DateTime.Now;
+            var request = HttpContext.Current.Request;
+            value.ClientAgent = request.UserAgent;
+            value.RequestUrl = request.Url.AbsolutePath;
+            value.ClientIp = request.UserHostAddress;
+            value.UserName = HttpContext.Current.User.Identity.Name;
             return LogHelper.SaveLog(value);
         }
     }

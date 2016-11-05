@@ -1,30 +1,38 @@
-﻿var saveLog = function (options,otype) {
-    $.ajax({
-        url: "../api/Logs",
-        type: "POST",
-        data: CreateOperationData(options,otype),
-        success: function (result) {
-            if (result) {
-            }
+﻿(function ($) {
+    LogPlugin = function (options) {
+        var that = this;
+        this.options = $.extend({}, LogPlugin.settings, options);
+
+        // handler click event
+        for (name in this.options.click) {
+            var cId = this.options.click[name];
+            var source = $("#" + cId);
+            source.data('click', name);
+            source.click(function () {
+                var method = $(this).data('click');
+                LogPlugin.prototype[method].call(that, this);
+            });
         }
-    });
-}
 
-function CreateOperationData(options,otype) {
-    var nameStr = $.cookie("lgb____bd____cp");
-    nameStr = nameStr.substring("realUserName=".length, nameStr.indexOf("&"));
-
-    var operationType;
-    if (otype == "POST") {
-        //0表示新增，1表示修改
-        operationType = options.data.ID == 0 ? 0 : 1;
-    } else if (otype == "DELETE") {
-        //2表示删除
-        operationType = 2;
     }
-    //operationModule表示修改的模块
-    var operationModule = options.url.substring(options.url.lastIndexOf("/") + 1, options.url.length);
 
-    var postdata = { OperationType: operationType, UserName: nameStr, Remark: "", OperationModule: operationModule };
-    return postdata;
-}
+    LogPlugin.settings = {
+        url: '../api/Logs',
+        click: {
+            query: 'btn_query',
+            del: 'btn_delete',
+            save: 'btnSubmit'
+        }
+    }
+
+    LogPlugin.prototype = {
+        constructor: LogPlugin,
+        query: function (element) {
+            log(this.options.url, { crud: 'Query' });
+        }
+    }
+
+    var log = function (url, data) {
+        $.post(url, data);
+    }
+})(jQuery);
