@@ -24,6 +24,15 @@ namespace Bootstrap.Admin.Controllers
         /// <summary>
         /// 
         /// </summary>
+        /// <returns></returns>
+        [AllowAnonymous]
+        public ActionResult Lock()
+        {
+            return View();
+        }
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="userName"></param>
         /// <param name="password"></param>
         /// <param name="remember"></param>
