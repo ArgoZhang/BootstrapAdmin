@@ -14,7 +14,7 @@ INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (3, N'�
 INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (4, N'网站设置', N'网站页脚', N'2016 © 通用后台管理系统', 0)
 SET IDENTITY_INSERT [dbo].[Dicts] OFF
 
-DELETE FROM Navigations where ID in (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14)
+DELETE FROM Navigations
 SET IDENTITY_INSERT [dbo].[Navigations] ON 
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (1, 0, N'后台管理', 1, N'fa fa-gear', N'~/Admin/Index', N'0')
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (2, 0, N'菜单管理', 10, N'fa fa-dashboard', N'~/Admin/Menus', N'0')
@@ -31,22 +31,6 @@ INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [C
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (13, 0, N'锁定屏幕', 10, N'fa fa-lock', N'~/Home/Lock', N'1')
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (14, 13, N'锁定屏幕', 10, N'fa fa-lock', N'~/Home/Lock', N'1')
 SET IDENTITY_INSERT [dbo].[Navigations] OFF
-
-DELETE FROM NavigationRole where ID in (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
-SET IDENTITY_INSERT [dbo].[NavigationRole] ON 
-INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (1, 1, 1)
-INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (2, 2, 1)
-INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (3, 3, 1)
-INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (4, 4, 1)
-INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (5, 5, 1)
-INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (6, 6, 1)
-INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (7, 7, 1)
-INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (8, 8, 1)
-INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (9, 9, 1)
-INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (10, 10, 1)
-INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (11, 11, 1)
-INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (12, 11, 2)
-SET IDENTITY_INSERT [dbo].[NavigationRole] OFF
 
 DELETE FROM RoleGroup where ID in (1)
 SET IDENTITY_INSERT [dbo].[RoleGroup] ON 
@@ -68,3 +52,22 @@ DELETE FROM UserRole where ID in (1)
 SET IDENTITY_INSERT [dbo].[UserRole] ON 
 INSERT [dbo].[UserRole] ([ID], [UserID], [RoleID]) VALUES (1, 1, 1)
 SET IDENTITY_INSERT [dbo].[UserRole] OFF
+
+DELETE FROM NavigationRole
+SET IDENTITY_INSERT [dbo].[NavigationRole] ON 
+INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (1, 1, 1)
+INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (2, 2, 1)
+INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (3, 3, 1)
+INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (4, 4, 1)
+INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (5, 5, 1)
+INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (6, 6, 1)
+INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (7, 7, 1)
+INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (8, 8, 1)
+INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (9, 9, 1)
+INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (10, 10, 1)
+INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (11, 11, 1)
+INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (12, 11, 2)
+INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (13, 12, 1)
+INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (14, 13, 2)
+INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (15, 14, 2)
+SET IDENTITY_INSERT [dbo].[NavigationRole] OFF
