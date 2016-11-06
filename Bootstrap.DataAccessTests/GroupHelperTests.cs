@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
@@ -15,8 +16,8 @@ namespace Bootstrap.DataAccess.Tests
         [TestInitialize]
         public void IniInitialized()
         {
-            Group = new Group() { GroupName="_测试部门_",Description="我是很厉害的测试部门"};
-            User = new User() { UserName = "_测试用户_", Password = "123", PassSalt = "123", DisplayName = "测试者" };
+            Group = new Group() { GroupName = "_测试部门_", Description = "我是很厉害的测试部门" };
+            User = new User() { UserName = "_测试用户_", Password = "123", PassSalt = "123", DisplayName = "测试者", RegisterTime = DateTime.Now, ApprovedTime = DateTime.Now };
             Role = new Role() { RoleName = "_测试角色_", Description = "测试角色" };
         }
 
@@ -45,8 +46,8 @@ namespace Bootstrap.DataAccess.Tests
 
             //测试更新部门方法 ID!=0
             var group = groups.FirstOrDefault(g => g.GroupName == Group.GroupName);
-            group.Description="我是测试部门";
-            Assert.IsTrue(GroupHelper.SaveGroup(group), string.Format("更新部门ID={0}操作失败，请检查GroupHelper.SaveGroup方法",group.ID));
+            group.Description = "我是测试部门";
+            Assert.IsTrue(GroupHelper.SaveGroup(group), string.Format("更新部门ID={0}操作失败，请检查GroupHelper.SaveGroup方法", group.ID));
             var ret = GroupHelper.RetrieveGroups(group.ID.ToString());
             Assert.IsTrue(ret.Count() == 1, "带参数的GroupHelper.RetrieveGroups方法失败");
             Assert.AreEqual(group.Description, ret.First().Description, string.Format("更新部门ID={0}操作失败，请检查GroupHelper.SaveGroup方法", group.ID));

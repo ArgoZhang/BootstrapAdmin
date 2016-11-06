@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace Bootstrap.DataAccess.Tests
         public void Initialized()
         {
             Role = new Role() { RoleName = "_测试角色_", Description = "这是一个测试角色", Checked = "0" };
-            User = new User() { UserName = "_测试用户_", Password = "111", PassSalt = "111", DisplayName = "_测试用户_", Checked = "0" };
+            User = new User() { UserName = "_测试用户_", Password = "111", PassSalt = "111", DisplayName = "_测试用户_", Checked = "0", RegisterTime = DateTime.Now, ApprovedTime = DateTime.Now };
             Group = new Group() { GroupName = "_测试部门_", Description = "这是一个测试部门", Checked = "0" };
         }
         [TestCleanup]

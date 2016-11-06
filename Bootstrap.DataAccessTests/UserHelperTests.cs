@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace Bootstrap.DataAccess.Tests
         [TestInitialize]
         public void Initialized()
         {
-            User = new User() { UserName = "_测试用户_", Password = "123", PassSalt = "123",DisplayName="测试者" };
+            User = new User() { UserName = "_测试用户_", Password = "123", PassSalt = "123", DisplayName = "测试者", RegisterTime = DateTime.Now, ApprovedTime = DateTime.Now };
             Role = new Role() { RoleName = "_测试角色_", Description = "测试角色" };
             Group = new Group() { GroupName = "_测试部门_", Description = "测试部门" };
         }
@@ -33,7 +34,7 @@ namespace Bootstrap.DataAccess.Tests
         [TestMethod]
         public void RetrieveUsersTest()
         {
-            Assert.IsTrue(UserHelper.RetrieveUsers().Count() >=1, "不带参数的UserHelper.RetrieveUsers方法调用失败，请检查数据库连接或者数据库SQL语句");
+            Assert.IsTrue(UserHelper.RetrieveUsers().Count() >= 1, "不带参数的UserHelper.RetrieveUsers方法调用失败，请检查数据库连接或者数据库SQL语句");
         }
 
         [TestMethod]
@@ -73,9 +74,9 @@ namespace Bootstrap.DataAccess.Tests
             if (role == null) RoleHelper.SaveRole(Role);
             role = RoleHelper.RetrieveRoles().FirstOrDefault(r => r.RoleName == Role.RoleName);
 
-            Assert.IsTrue(UserHelper.SaveUsersByRoleId(role.ID,user.ID.ToString()), "存储角色用户信息失败");
+            Assert.IsTrue(UserHelper.SaveUsersByRoleId(role.ID, user.ID.ToString()), "存储角色用户信息失败");
 
-            Assert.IsTrue(UserHelper.RetrieveUsersByRoleId(role.ID).Count()>=1, string.Format("获取角色ID={0}的用户信息失败",role.ID));
+            Assert.IsTrue(UserHelper.RetrieveUsersByRoleId(role.ID).Count() >= 1, string.Format("获取角色ID={0}的用户信息失败", role.ID));
 
             //删除数据
             string sql = "Delete from Users where UserName = '_测试用户_';";
