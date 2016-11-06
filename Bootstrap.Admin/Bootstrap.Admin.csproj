@@ -207,6 +207,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ContentModel.cs" />
+    <Compile Include="Models\LockModel.cs" />
     <Compile Include="Models\QueryDictOption.cs" />
     <Compile Include="Models\QueryGroupOption.cs" />
     <Compile Include="Models\QueryLogOption.cs" />

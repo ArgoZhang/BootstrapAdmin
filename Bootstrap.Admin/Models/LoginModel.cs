@@ -5,10 +5,12 @@
     /// </summary>
     public class LoginModel
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public LoginModel()
         {
-            UserName = "Argo";
-            Password = "1111";
+
         }
         /// <summary>
         /// 

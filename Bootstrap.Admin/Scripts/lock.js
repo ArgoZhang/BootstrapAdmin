@@ -1,24 +1,17 @@
 ﻿$(function () {
     $('body').addClass('lock-screen');
+    $('#time').text((new Date()).format('HH:mm:ss'));
 
-    function startTime() {
-        var today = new Date();
-        var h = today.getHours();
-        var m = today.getMinutes();
-        var s = today.getSeconds();
-        // add a zero in front of numbers<10
-        m = checkTime(m);
-        s = checkTime(s);
-        document.getElementById('time').innerHTML = h + ":" + m + ":" + s;
-        t = setTimeout(function () { startTime() }, 500);
-    }
+    setInterval(function () {
+        $('#time').text((new Date()).format('HH:mm:ss'));
+    }, 500);
 
-    function checkTime(i) {
-        if (i < 10) {
-            i = "0" + i;
+    $.extend($.validator.messages, { required: "请输入密码" });
+    // validate
+    $('form').autoValidate({
+        password: {
+            required: true,
+            maxlength: 50
         }
-        return i;
-    }
-
-    startTime();
+    });
 });

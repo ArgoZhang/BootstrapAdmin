@@ -11,6 +11,8 @@
     $(window).on('resize', iframeResposive);
 
     $('.menu-submenu a').click(function (event) {
+        var act = $(this).attr("data-act");
+        if (act === "True") return true;
         event.preventDefault();
         $('.menu-submenu a, .menu-submenu p').removeClass('active');
         $(this).addClass('active');

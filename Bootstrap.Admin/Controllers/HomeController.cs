@@ -1,6 +1,7 @@
 ﻿using Bootstrap.Admin.Models;
 using Bootstrap.DataAccess;
 using Longbow.Security.Principal;
+using System;
 using System.Web.Mvc;
 using System.Web.Security;
 
@@ -25,10 +26,16 @@ namespace Bootstrap.Admin.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        [AllowAnonymous]
-        public ActionResult Lock()
+        public ActionResult Lock(LockModel model)
         {
-            return View();
+            if (!string.IsNullOrEmpty(model.Password))
+            {
+                return RedirectToAction("Login", new { userName = model.UserName, password = model.Password });
+            }
+            var user = UserHelper.RetrieveUsersByName(User.Identity.Name);
+            model.UserName = user.UserName;
+            model.DisplayName = user.DisplayName;
+            return View(model);
         }
         /// <summary>
         /// 

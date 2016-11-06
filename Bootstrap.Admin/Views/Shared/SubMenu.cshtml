@@ -5,7 +5,7 @@
     </li>
     @foreach (var menu in Model.Menus)
     {
-        <li><a href="@Url.Content(menu.Url)" class="@menu.Active"><i class="@menu.Icon"></i><span>@menu.Name</span></a></li>
+        <li><a href="@Url.Content(menu.Url)" data-act="@menu.Url.StartsWith("~")"><i class="@menu.Icon"></i><span>@menu.Name</span></a></li>
     }
 </ul>
 
