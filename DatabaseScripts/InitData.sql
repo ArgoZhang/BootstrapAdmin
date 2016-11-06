@@ -14,7 +14,7 @@ INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (3, N'�
 INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (4, N'网站设置', N'网站页脚', N'2016 © 通用后台管理系统', 0)
 SET IDENTITY_INSERT [dbo].[Dicts] OFF
 
-DELETE FROM Navigations where ID in (1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+DELETE FROM Navigations where ID in (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14)
 SET IDENTITY_INSERT [dbo].[Navigations] ON 
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (1, 0, N'后台管理', 1, N'fa fa-gear', N'~/Admin/Index', N'0')
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (2, 0, N'菜单管理', 10, N'fa fa-dashboard', N'~/Admin/Menus', N'0')
@@ -27,6 +27,9 @@ INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [C
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (9, 0, N'通知管理', 80, N'fa fa-bell-o', N'~/Admin/News', N'0')
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (10, 0, N'个人中心', 90, N'fa fa-suitcase', N'~/Admin/Infos', N'0')
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (11, 0, N'返回前台', 100, N'fa fa-hand-o-left', N'~/Home/Index', N'0')
+INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (12, 0, N'锁定屏幕', 110, N'fa fa-lock', N'~/Home/Lock', N'0')
+INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (13, 0, N'锁定屏幕', 10, N'fa fa-lock', N'~/Home/Lock', N'1')
+INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (14, 13, N'锁定屏幕', 10, N'fa fa-lock', N'~/Home/Lock', N'1')
 SET IDENTITY_INSERT [dbo].[Navigations] OFF
 
 DELETE FROM NavigationRole where ID in (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
