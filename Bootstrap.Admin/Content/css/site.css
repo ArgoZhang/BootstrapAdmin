@@ -543,6 +543,18 @@ a.logo {
         padding: 20px;
     }
 
+        .form-signin div.login-wrap .login-footer {
+            padding-bottom: 15px;
+        }
+
+            .form-signin div.login-wrap .login-footer .login-create {
+                float: left;
+            }
+
+            .form-signin div.login-wrap .login-footer .login-reset {
+                float: right;
+            }
+
     .form-signin div.input-group {
         margin-bottom: 15px;
         border-radius: 5px;
