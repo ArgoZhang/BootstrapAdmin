@@ -87,6 +87,10 @@ div.input-group input, div.input-group input:hover, div.input-group input:focus 
 }
 
     div.input-group input.error {
-        background: #e66763;
-        border-color: red;
+        background-color: #dcc4c4;
+        border-color: #e21717;
+    }
+
+    div.input-group input.error::-webkit-input-placeholder {
+        color: red;
     }
