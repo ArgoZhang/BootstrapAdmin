@@ -113,6 +113,7 @@
     <Content Include="Content\css\font-awesome.min.css" />
     <Content Include="Content\css\jquery.nestable.css" />
     <Content Include="Content\css\lock.css" />
+    <Content Include="Content\css\register.css" />
     <Content Include="Content\css\tasks.css" />
     <Content Include="Content\images\bg.jpg" />
     <Content Include="Content\images\lock-bg.jpg" />
@@ -169,6 +170,7 @@
     <Content Include="Scripts\Logs.js" />
     <Content Include="Scripts\Menus.js" />
     <Content Include="Scripts\Profiles.js" />
+    <Content Include="Scripts\register.js" />
     <Content Include="Scripts\Roles.js" />
     <Content Include="Scripts\Users.js" />
     <Content Include="Content\js\jquery-1.10.2.js" />
@@ -257,6 +259,7 @@
     <Content Include="Views\Shared\SubMenu.cshtml" />
     <Content Include="Views\Shared\SubMenuTree.cshtml" />
     <Content Include="Views\Home\Lock.cshtml" />
+    <Content Include="Views\Home\Register.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

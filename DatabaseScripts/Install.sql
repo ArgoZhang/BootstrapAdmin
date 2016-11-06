@@ -1,4 +1,4 @@
-USE [master]
+﻿USE [master]
 GO
 Create database [BootstrapAdmin]
 GO
@@ -9,33 +9,56 @@ GO
 USE [BootstrapAdmin]
 GO
 
-/****** Object:  Table [dbo].[Users]    Script Date: 10/24/2016 15:48:24 ******/
+/****** Object:  Table [dbo].[Users]    Script Date: 11/06/2016 15:23:21 ******/
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
+
+SET ANSI_PADDING ON
+GO
+
 CREATE TABLE [dbo].[Users](
-    [ID] [int] IDENTITY(1,1) NOT NULL,
-    [UserName] [varchar](50) NOT NULL,
-    [Password] [varchar](50) NOT NULL,
-    [PassSalt] [varchar](50) NOT NULL,
-    [DisplayName] [nvarchar](50) NOT NULL,
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[UserName] [varchar](50) NOT NULL,
+	[Password] [varchar](50) NOT NULL,
+	[PassSalt] [varchar](50) NOT NULL,
+	[DisplayName] [nvarchar](50) NOT NULL,
+	[RegisterTime] [datetime] NOT NULL,
+	[ApprovedTime] [datetime] NULL,
  CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED 
 (
-    [ID] ASC
+	[ID] ASC
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
+
 GO
+
+SET ANSI_PADDING OFF
+GO
+
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ID' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Users', @level2type=N'COLUMN',@level2name=N'ID'
 GO
+
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'用户名' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Users', @level2type=N'COLUMN',@level2name=N'UserName'
 GO
+
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'密码' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Users', @level2type=N'COLUMN',@level2name=N'Password'
 GO
+
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'密码盐' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Users', @level2type=N'COLUMN',@level2name=N'PassSalt'
 GO
+
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'显示名称' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Users', @level2type=N'COLUMN',@level2name=N'DisplayName'
 GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'注册时间' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Users', @level2type=N'COLUMN',@level2name=N'RegisterTime'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'批复时间' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Users', @level2type=N'COLUMN',@level2name=N'ApprovedTime'
+GO
+
 /****** Object:  Table [dbo].[Groups]    Script Date: 10/22/2016 09:44:03 ******/
 SET ANSI_NULLS ON
 GO

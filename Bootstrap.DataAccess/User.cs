@@ -1,4 +1,6 @@
-﻿namespace Bootstrap.DataAccess
+﻿using System;
+
+namespace Bootstrap.DataAccess
 {
     /// <summary>
     /// 用户表实体类
@@ -21,5 +23,13 @@
         /// 获取/设置 角色用户关联状态 checked 标示已经关联 '' 标示未关联
         /// </summary>
         public string Checked { get; set; }
+        /// <summary>
+        /// 获得/设置 用户注册时间
+        /// </summary>
+        public DateTime RegisterTime { get; set; }
+        /// <summary>
+        /// 获得/设置 用户被批复时间
+        /// </summary>
+        public DateTime ApprovedTime { get; set; }
     }
 }

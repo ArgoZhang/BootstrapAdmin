@@ -30,7 +30,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<User> RetrieveUsers(string tId = null)
         {
-            string sql = "select ID, UserName, DisplayName from Users";
+            string sql = "select ID, UserName, DisplayName, RegisterTime, ApprovedTime from Users Where ApprovedTime is not null";
             var ret = CacheManager.GetOrAdd(RetrieveUsersDataKey, CacheSection.RetrieveIntervalByKey(RetrieveUsersDataKey), key =>
             {
                 List<User> Users = new List<User>();
@@ -45,7 +45,9 @@ namespace Bootstrap.DataAccess
                             {
                                 ID = (int)reader[0],
                                 UserName = (string)reader[1],
-                                DisplayName = (string)reader[2]
+                                DisplayName = (string)reader[2],
+                                RegisterTime = (DateTime)reader[3],
+                                ApprovedTime = (DateTime)reader[4]
                             });
                         }
                     }
@@ -67,7 +69,7 @@ namespace Bootstrap.DataAccess
             return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RetrieveUsersByNameDataKey), k =>
             {
                 User user = null;
-                string sql = "select ID, UserName, [Password], PassSalt, DisplayName from Users where UserName = @UserName";
+                string sql = "select ID, UserName, [Password], PassSalt, DisplayName, RegisterTime, ApprovedTime from Users where ApprovedTime is not null and UserName = @UserName";
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                 try
                 {
@@ -82,7 +84,9 @@ namespace Bootstrap.DataAccess
                                 UserName = (string)reader[1],
                                 Password = (string)reader[2],
                                 PassSalt = (string)reader[3],
-                                DisplayName = (string)reader[4]
+                                DisplayName = (string)reader[4],
+                                RegisterTime = (DateTime)reader[5],
+                                ApprovedTime = (DateTime)reader[6]
                             };
                         }
                     }
@@ -129,7 +133,7 @@ namespace Bootstrap.DataAccess
             p.Password = LgbCryptography.ComputeHash(p.Password, p.PassSalt);
             if (p.DisplayName.Length > 50) p.DisplayName.Substring(0, 50);
             string sql = p.ID == 0 ?
-                "Insert Into Users (UserName, Password, PassSalt, DisplayName) Values (@UserName, @Password, @PassSalt, @DisplayName)" :
+                "Insert Into Users (UserName, Password, PassSalt, DisplayName, RegisterTime, ApprovedTime) Values (@UserName, @Password, @PassSalt, @DisplayName, GetDate(), @ApprovedTime)" :
                 "Update Users set UserName = @UserName, Password = @Password, PassSalt = @PassSalt, DisplayName = @DisplayName where ID = @ID";
             try
             {
@@ -140,6 +144,7 @@ namespace Bootstrap.DataAccess
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Password", p.Password, ParameterDirection.Input));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@PassSalt", p.PassSalt, ParameterDirection.Input));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@DisplayName", p.DisplayName, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ApprovedTime", DBAccess.ToDBValue(p.ApprovedTime), ParameterDirection.Input));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
                 CacheCleanUtility.ClearCache(userIds: p.ID == 0 ? "" : p.ID.ToString());
@@ -173,7 +178,7 @@ namespace Bootstrap.DataAccess
             return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RetrieveUsersByNameDataKey), k =>
             {
                 List<User> Users = new List<User>();
-                string sql = "select u.ID,u.UserName,u.DisplayName,case ur.UserID when u.ID then 'checked' else '' end [status] from Users u left join UserRole ur on u.ID=ur.UserID and RoleID =@RoleID";
+                string sql = "select u.ID, u.UserName, u.DisplayName, case ur.UserID when u.ID then 'checked' else '' end [status] from Users u left join UserRole ur on u.ID = ur.UserID and RoleID = @RoleID where u.ApprovedTime is not null";
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@RoleID", roleId, ParameterDirection.Input));
                 try
@@ -251,7 +256,7 @@ namespace Bootstrap.DataAccess
             return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RetrieveUsersByGroupIDDataKey), k =>
             {
                 List<User> Users = new List<User>();
-                string sql = "select u.ID,u.UserName,u.DisplayName,case ur.UserID when u.ID then 'checked' else '' end [status] from Users u left join UserGroup ur on u.ID=ur.UserID and GroupID =@groupId";
+                string sql = "select u.ID, u.UserName, u.DisplayName, case ur.UserID when u.ID then 'checked' else '' end [status] from Users u left join UserGroup ur on u.ID = ur.UserID and GroupID =@groupId where u.ApprovedTime is not null";
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@GroupID", groupId, ParameterDirection.Input));
                 try
@@ -292,7 +297,7 @@ namespace Bootstrap.DataAccess
                 try
                 {
                     //删除用户角色表该角色所有的用户
-                    string sql = "delete from UserGroup where GroupID=@GroupID";
+                    string sql = "delete from UserGroup where GroupID = @GroupID";
                     using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
                     {
                         cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@GroupID", id, ParameterDirection.Input));
@@ -317,6 +322,16 @@ namespace Bootstrap.DataAccess
                 }
             }
             return ret;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static bool RegisterUser(string userName, string displayName, string password)
+        {
+            //TODO：判断注册用户是否合理，判断合法后插入数据库中返回真，并通知管理员组有新用户注册，需要批复。数据库Users表中增加一个字段标示用户是否被批复
+            if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(displayName) || string.IsNullOrEmpty(password)) return false;
+            return SaveUser(new User() { UserName = userName, DisplayName = displayName, Password = password });
         }
     }
 }

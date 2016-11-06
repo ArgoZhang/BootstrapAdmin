@@ -1,6 +1,7 @@
 ﻿using Bootstrap.Admin.Models;
 using Bootstrap.DataAccess;
 using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -64,6 +65,7 @@ namespace Bootstrap.Admin.Controllers
         [HttpPost]
         public bool Post([FromBody]User value)
         {
+            value.ApprovedTime = DateTime.Now;
             return UserHelper.SaveUser(value);
         }
 

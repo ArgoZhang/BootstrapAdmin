@@ -3,7 +3,7 @@ GO
 
 DELETE From Users where ID = 1
 SET IDENTITY_INSERT [dbo].[Users] ON 
-insert into Users (ID, UserName, Password, PassSalt, DisplayName) values (1, 'Admin', 'Es7WVgNsJuELwWK8daCqufUBknCsSC0IYDphQZAiGOo=', 'W5vpBEOYRGHkQXatN0t+ECM/U8cHDuEgrq56+zZBk4J481xH', 'Administrator')
+insert into Users (ID, UserName, Password, PassSalt, DisplayName, RegisterTime, ApprovedTime) values (1, 'Admin', 'Es7WVgNsJuELwWK8daCqufUBknCsSC0IYDphQZAiGOo=', 'W5vpBEOYRGHkQXatN0t+ECM/U8cHDuEgrq56+zZBk4J481xH', 'Administrator', GetDate(), GetDate())
 SET IDENTITY_INSERT [dbo].[Users] OFF
 
 DELETE From Dicts where ID in (1, 2, 3, 4)
