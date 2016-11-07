@@ -10,6 +10,10 @@
     -moz-font-smoothing: antialiased;
 }
 
+.dropdown-menu {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.176) !important;
+}
+
 .well-bg {
     color: #fff;
 }

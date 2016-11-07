@@ -1,10 +1,3 @@
-@media screen and (-webkit-min-device-pixel-ratio:0) {
-    /* Safari and Chrome */
-    .dropdown-menu.extended {
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.176) !important;
-    }
-}
-
 @media (max-width: 1200px) {
     .modal-dialog .modal-body {
         padding-bottom: 0;
@@ -53,12 +46,6 @@
         margin: 0px !important;
     }
 
-    .top-nav {
-        position: absolute;
-        right: 10px;
-        top: 0px;
-    }
-
     .logo {
         display: none;
     }
@@ -92,11 +79,11 @@
         width: 370px;
     }
 
-    .top-nav ul.top-menu > li {
+    .top-menu > li {
         float: right;
     }
 
-    .top-nav .search {
+    .top-menu .search {
         display: none;
     }
 }
@@ -104,6 +91,12 @@
 @media (max-width: 320px) {
     .modal-dialog {
         width: 300px;
+    }
+
+    .top-menu {
+        position: absolute;
+        right: 15px;
+        left: auto;
     }
 }
 
