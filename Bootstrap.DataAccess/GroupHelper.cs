@@ -59,29 +59,23 @@ namespace Bootstrap.DataAccess
         /// <param name="ids"></param>
         public static bool DeleteGroup(string ids)
         {
-            var ret = false;
+            bool ret = false;
             if (string.IsNullOrEmpty(ids) || ids.Contains("'")) return ret;
-            using (TransactionPackage transaction = DBAccessManager.SqlDBAccess.BeginTransaction())
+            try
             {
-                try
+                using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_DeleteGroups"))
                 {
-                    string sql = string.Format(CultureInfo.InvariantCulture, "Delete from Groups where ID in ({0})", ids);
-                    sql += string.Format("delete from RoleGroup where GroupID in ({0});", ids);
-                    sql += string.Format("delete from UserGroup where GroupID in ({0});", ids);
-                    using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
-                    {
-                        DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
-                    }
-                    CacheCleanUtility.ClearCache(groupIds: ids);
-                    ret = true;
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ids", ids, ParameterDirection.Input));
+                    DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
-                catch (Exception ex)
-                {
-                    ExceptionManager.Publish(ex);
-                    transaction.RollbackTransaction();
-                }
-                return ret;
+                CacheCleanUtility.ClearCache(groupIds: ids);
+                ret = true;
             }
+            catch (Exception ex)
+            {
+                ExceptionManager.Publish(ex);
+            }
+            return ret;
         }
         /// <summary>
         /// 保存新建/更新的群组信息

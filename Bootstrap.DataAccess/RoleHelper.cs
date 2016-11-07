@@ -141,30 +141,23 @@ namespace Bootstrap.DataAccess
         /// 删除角色表
         /// </summary>
         /// <param name="IDs"></param>
-        public static bool DeleteRole(string IDs)
+        public static bool DeleteRole(string ids)
         {
             bool ret = false;
-            if (string.IsNullOrEmpty(IDs) || IDs.Contains("'")) return ret;
-            using (TransactionPackage transaction = DBAccessManager.SqlDBAccess.BeginTransaction())
+            if (string.IsNullOrEmpty(ids) || ids.Contains("'")) return ret;
+            try
             {
-                try
+                using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_DeleteRoles"))
                 {
-                    string sql = string.Format(CultureInfo.InvariantCulture, "Delete from Roles where ID in ({0});", IDs);
-                    sql += string.Format("delete from UserRole where RoleID in ({0});", IDs);
-                    sql += string.Format("delete from RoleGroup where RoleID in ({0});", IDs);
-                    sql += string.Format("delete from NavigationRole where RoleID in ({0});", IDs);
-                    using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
-                    {
-                        DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
-                    }
-                    CacheCleanUtility.ClearCache(roleIds: IDs);
-                    ret = true;
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ids", ids, ParameterDirection.Input));
+                    DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
-                catch (Exception ex)
-                {
-                    ExceptionManager.Publish(ex);
-                    transaction.RollbackTransaction();
-                }
+                CacheCleanUtility.ClearCache(roleIds: ids);
+                ret = true;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.Publish(ex);
             }
             return ret;
         }
