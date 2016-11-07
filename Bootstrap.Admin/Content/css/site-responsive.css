@@ -104,7 +104,7 @@
     }
 }
 
-@media (min-height: 768px) {
+@media (min-height: 600px) {
     html, body {
         height: 100%;
         overflow: hidden;
