@@ -524,90 +524,6 @@ a.logo {
             }
 /*end*/
 
-/*Login*/
-.form-signin {
-    width: 330px;
-    max-width: 330px;
-    margin: 0 auto;
-    background: #fff;
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
-    border: solid 1px #ddd;
-}
-
-    .form-signin h2.form-signin-heading {
-        margin: 0;
-        padding: 20px 15px;
-        text-align: center;
-        background: #41cac0;
-        border-radius: 5px 5px 0 0;
-        -webkit-border-radius: 5px 5px 0 0;
-        color: #fff;
-        font-size: 18px;
-        text-transform: uppercase;
-        font-weight: 300;
-        font-family: 'Open Sans', sans-serif;
-    }
-
-    .form-signin div.login-wrap {
-        padding: 20px;
-    }
-
-        .form-signin div.login-wrap .login-footer {
-            padding-bottom: 15px;
-        }
-
-            .form-signin div.login-wrap .login-footer .login-create {
-                float: left;
-            }
-
-            .form-signin div.login-wrap .login-footer .login-reset {
-                float: right;
-            }
-
-    .form-signin div.input-group {
-        margin-bottom: 15px;
-        border-radius: 5px;
-        -webkit-border-radius: 5px;
-        border: 1px solid #eaeaea;
-        box-shadow: none;
-        font-size: 12px;
-    }
-
-        .form-signin div.input-group > span {
-            top: 0;
-            background-color: #5bc0de;
-        }
-
-        .form-signin div.input-group > span, div.input-group > input {
-            border-color: #5bc0de;
-        }
-
-    .form-signin .btn-login {
-        background: #f67a6e;
-        color: #fff;
-        text-transform: uppercase;
-        font-weight: 300;
-        font-family: 'Open Sans', sans-serif;
-        box-shadow: 0 4px #e56b60;
-        margin-bottom: 20px;
-        outline: none !important;
-    }
-
-    .form-signin .checkbox {
-        padding-left: 24px;
-    }
-
-        .form-signin .checkbox > input {
-            top: -1px;
-        }
-
-        .form-signin .checkbox > label {
-            padding-left: 4px;
-        }
-
-/*end login*/
-
 .form-inline .form-group label.control-label {
     margin-right: 10px;
     width: 80px;
@@ -676,12 +592,6 @@ input.valid {
 .navbar-collapse {
     margin-left: 0;
     padding-left: 0;
-}
-
-.lgbMenu {
-    float: left;
-    padding-top: 4px;
-    padding-left: 6px;
 }
 
 ul.breadcrumb {

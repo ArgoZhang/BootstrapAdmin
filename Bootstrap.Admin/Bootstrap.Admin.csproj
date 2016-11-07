@@ -113,6 +113,7 @@
     <Content Include="Content\css\font-awesome.min.css" />
     <Content Include="Content\css\jquery.nestable.css" />
     <Content Include="Content\css\lock.css" />
+    <Content Include="Content\css\login.css" />
     <Content Include="Content\css\register.css" />
     <Content Include="Content\css\tasks.css" />
     <Content Include="Content\images\bg.jpg" />
