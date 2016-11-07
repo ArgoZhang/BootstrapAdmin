@@ -78,5 +78,25 @@ namespace Bootstrap.Admin.Controllers
             var v = new NavigatorBarModel("~/Admin/Profiles");
             return View(v);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult News()
+        {
+            var v = new NavigatorBarModel("~/Admin/News");
+            return View(v);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Infos()
+        {
+            var v = new NavigatorBarModel("~/Admin/Infos");
+            return View(v);
+        }
     }
 }

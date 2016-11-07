@@ -261,6 +261,8 @@
     <Content Include="Views\Shared\SubMenuTree.cshtml" />
     <Content Include="Views\Home\Lock.cshtml" />
     <Content Include="Views\Home\Register.cshtml" />
+    <Content Include="Views\Admin\News.cshtml" />
+    <Content Include="Views\Admin\Infos.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

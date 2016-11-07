@@ -1,0 +1,13 @@
+﻿@model NavigatorBarModel
+@{
+    ViewBag.Title = "通知管理";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+@section header {
+    @Html.Partial("Header", Model)
+}
+@section navigator {
+    @Html.Partial("Navigator", Model)
+}
+
+
