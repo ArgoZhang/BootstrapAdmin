@@ -44,13 +44,44 @@
                     var groupIds = $('#dialogGroup :checked').map(function (index, element) {
                         return $(element).val();
                     }).toArray().join(',');
-                    Group.saveGroupsByRoleId(roleId, groupIds, { modal: 'dialogGroup' });
-                        
-                    
+                    Group.saveGroupsByRoleId(roleId, groupIds, { modal: 'dialogGroup' });    
+                }
+            },
+            {
+                id: 'btn_assignMenu',
+                click: function (row) {
+                    Menu.getMenusByRoleId(row.ID, function (data) {
+                        $(".menu-content .modal-header .modal-title").text($.format('{0}-菜单授权窗口', row.RoleName));
+                        $('.menu-content button:last').data('type', 'menu');
+                        $('ol.dd-list').html(data);
+                        $('#dialogMenu').modal('show');
+                        $('.menu-content').show();
+                        $('div.dd3-content :checkbox').show();
+                        $('div.dd3-content :radio').hide();
+                    })
+                }
+            },
+            {
+                id: 'btnSubmitMenu',
+                click: function (row) {
+                    var roleId = row.ID;
+                    var type = $('.menu-content button:last').data('type');
+                    switch (type) {
+                        case "menu":
+                            var menuIds = $('.dd3-content :checkbox:checked').map(function (index, element) {
+                                return $(element).val();
+                            }).toArray().join(',');
+                            break;
+                        default:
+                            break;
+                    }
+                    Menu.saveMenusByRoleId(roleId, menuIds, { modal: 'dialogMenu' });
                 }
             }]
         }
     });
+
+    $('#nestable_menu').nestable();
 
     $('table').smartTable({
         url: '../api/Roles',            //请求后台的URL（*）

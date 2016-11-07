@@ -37,6 +37,11 @@ namespace Bootstrap.DataAccess.Tests
         {
             Assert.IsTrue(MenuHelper.RetrieveMenusByUserId(1).Count() > 1, "根据用户ID查询菜单的MenuHelper.RetrieveMenusByUserId方法调用失败");
         }
+        [TestMethod]
+        public void RetrieveMenuByRoleIDTest()
+        {
+            Assert.IsTrue(MenuHelper.RetrieveMenusByRoleId(1).Count() >= 0, "根据角色ID查询菜单的MenuHelper.RetrieveMenusByRoleId方法调用失败");
+        }
 
         [TestMethod]
         public void SaveMenuTest()
@@ -80,6 +85,29 @@ namespace Bootstrap.DataAccess.Tests
             string sql = "delete from Navigations where Name='__测试菜单__';";
             sql += "delete from Roles where RoleName='_测试角色_';";
             sql += string.Format("delete from NavigationRole where NavigationID={0}", menu.ID);
+            using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
+            {
+                DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
+            }
+        }
+        [TestMethod]
+        public void SaveMenusByRoleIdTest()
+        {
+            var menu = MenuHelper.RetrieveMenus().FirstOrDefault(m => m.Name == Menu.Name);
+            if (menu == null) MenuHelper.SaveMenu(Menu);
+            menu = MenuHelper.RetrieveMenus().FirstOrDefault(m => m.Name == Menu.Name);
+            var role = RoleHelper.RetrieveRoles().FirstOrDefault(r => r.RoleName == Role.RoleName);
+            if (role == null) RoleHelper.SaveRole(Role);
+            role = RoleHelper.RetrieveRoles().FirstOrDefault(r => r.RoleName == Role.RoleName);
+
+            Assert.IsTrue(MenuHelper.SaveMenusByRoleId(role.ID, menu.ID.ToString()), "存储角色菜单信息失败");
+            int x = MenuHelper.RetrieveMenusByRoleId(role.ID).Count();
+            Assert.IsTrue(x >= 1, string.Format("获取角色ID={0}的菜单信息失败", role.ID));
+
+            //删除数据
+            string sql = "Delete from Navigations where Name = '__测试菜单__';";
+            sql += "Delete from Roles where RoleName='_测试角色_';";
+            sql += string.Format("Delete from NavigationRole where RoleID={0};", role.ID);
             using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
             {
                 DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);

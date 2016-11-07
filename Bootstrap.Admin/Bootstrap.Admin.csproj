@@ -264,6 +264,7 @@
     <Content Include="Views\Admin\Profiles.cshtml" />
     <Content Include="Views\Shared\Footer.cshtml" />
     <Content Include="Views\Shared\MenuTree.cshtml" />
+    <Content Include="Views\Shared\NavigatorConfig.cshtml" />
     <Content Include="Views\Shared\SubNavigation.cshtml" />
     <Content Include="Views\Shared\SubMenu.cshtml" />
     <Content Include="Views\Shared\SubMenuTree.cshtml" />

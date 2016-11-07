@@ -1,5 +1,8 @@
 ﻿using Bootstrap.Admin.Models;
 using Bootstrap.DataAccess;
+using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
 
 namespace Bootstrap.Admin.Controllers
@@ -33,6 +36,37 @@ namespace Bootstrap.Admin.Controllers
         public bool Delete([FromBody]string value)
         {
             return MenuHelper.DeleteMenu(value);
+        }
+        [HttpPost]
+        public IEnumerable<Menu> Post(int id, [FromBody]JObject value)
+        {
+            var ret = new List<Menu>();
+            dynamic json = value;
+            switch ((string)json.type)
+            {
+                case "role":
+                    ret = MenuHelper.RetrieveMenusByRoleId(id).ToList();
+                    break;
+                default:
+                    break;
+            }
+            return ret;
+        }
+        [HttpPut]
+        public bool Put(int id, [FromBody]JObject value)
+        {
+            var ret = false;
+            dynamic json = value;
+            string menuIds = json.menuIds.ToString();
+            switch ((string)json.type)
+            {
+                case "role":
+                    ret = MenuHelper.SaveMenusByRoleId(id, menuIds);
+                    break;
+                default:
+                    break;
+            }
+            return ret;
         }
     }
 }

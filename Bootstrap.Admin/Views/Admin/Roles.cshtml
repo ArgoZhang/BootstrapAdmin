@@ -3,8 +3,14 @@
     ViewBag.Title = "角色管理";
     Layout = "~/Views/Shared/_Default.cshtml";
 }
+@section css {
+    <link href="~/Content/css/fa.css" rel="stylesheet" />
+    <link href="~/Content/css/jquery.nestable.css" rel="stylesheet" />
+}
 @section Javascript {
+    <script src="~/Content/js/jquery.nestable.js"></script>
     <script src="~/scripts/Roles.js"></script>
+
 }
 @section header {
     @Html.Partial("Header", Model)
@@ -34,6 +40,9 @@
     <button id="btn_assignGroup" type="button" class="btn btn-info">
         <span class="fa fa-home" aria-hidden="true"></span>指派部门
     </button>  
+    <button id="btn_assignMenu" type="button" class="btn btn-info">
+        <span class="fa fa-home" aria-hidden="true"></span>指派菜单
+    </button>
 }
 @section modal {
     <div class="modal-header">
@@ -57,4 +66,5 @@
 @section customModal{
     @Html.Partial("UserConfig")
     @Html.Partial("GroupConfig")
+    @Html.Partial("NavigatorConfig", Model.Navigations)
 }

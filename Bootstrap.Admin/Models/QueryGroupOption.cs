@@ -32,7 +32,6 @@ namespace Bootstrap.Admin.Models
             }
             var ret = new QueryData<Group>();
             ret.total = data.Count();
-            // TODO: 通过option.Sort属性判断对那列进行排序，现在统一对名称列排序
             data = Order == "asc" ? data.OrderBy(t => t.GroupName) : data.OrderByDescending(t => t.GroupName);
             ret.rows = data.Skip(Offset).Take(Limit);
             return ret;

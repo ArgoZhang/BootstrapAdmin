@@ -310,4 +310,19 @@
     Group.saveGroupsByRoleId = function (roleId, groupIds, callback) {
         processData.call(this, { Id: roleId, callback: callback, method: "PUT", data: { type: "role", groupIds: groupIds } });
     };
+    htmlTemplateForMenu='<li class="dd-item dd3-item" data-id="{0}"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><label><input name="menuParent" type="checkbox" value="{0}" {2} /><input type="radio" name="menu" value="{0}" {2} /><span>{1}</span></label></div></li>';
+    //Menus
+    Menu = {
+        url: '../api/Menus/', title: "授权菜单", html: function (result) {
+            return $.map(result, function (element, index) {
+                return $.format(htmlTemplateForMenu, element.ID, element.Name, element.Active);
+            }).join('');
+        }
+    }
+    Menu.getMenusByRoleId = function (roleId, callback) {
+        processData.call(this, { Id: roleId, callback: callback, data: { type: "role" } });
+    };
+    Menu.saveMenusByRoleId = function (roleId, menuIds, callback) {
+        processData.call(this, { Id: roleId, callback: callback, method: "PUT", data: { type: "role", menuIds:menuIds } });
+    };
 })(jQuery);

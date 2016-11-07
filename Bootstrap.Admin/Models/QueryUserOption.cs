@@ -32,8 +32,17 @@ namespace Bootstrap.Admin.Models
             }
             var ret = new QueryData<User>();
             ret.total = data.Count();
-            // TODO: 通过option.Sort属性判断对那列进行排序，现在统一对名称列排序
-            data = Order == "asc" ? data.OrderBy(t => t.UserName) : data.OrderByDescending(t => t.UserName);
+            switch (Sort)
+            {
+                case "UserName":
+                    data = Order == "asc" ? data.OrderBy(t => t.UserName) : data.OrderByDescending(t => t.UserName);
+                    break;
+                case "RegisterTime":
+                    data = Order == "asc" ? data.OrderBy(t => t.RegisterTime) : data.OrderByDescending(t => t.RegisterTime);
+                    break;
+                default:
+                    break;
+            }
             ret.rows = data.Skip(Offset).Take(Limit);
             return ret;
         }

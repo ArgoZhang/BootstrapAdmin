@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
 
@@ -16,6 +17,7 @@ namespace Bootstrap.DataAccess
     {
         internal const string RetrieveMenusDataKey = "MenuHelper-RetrieveMenus";
         internal const string RetrieveMenusByUserIDDataKey = "MenuHelper-RetrieveMenusByUserId";
+        internal const string RetrieveMenusByRoleIDDataKey = "MenuHelper-RetrieveMenusByRoleId";
         /// <summary>
         /// 查询所有菜单信息
         /// </summary>
@@ -181,6 +183,89 @@ namespace Bootstrap.DataAccess
             catch (DbException ex)
             {
                 ExceptionManager.Publish(ex);
+            }
+            return ret;
+        }
+
+        /// <summary>
+        /// 查询某个角色所配置的菜单
+        /// </summary>
+        /// <param name="roleId"></param>
+        /// <returns></returns>
+        public static IEnumerable<Menu> RetrieveMenusByRoleId(int roleId)
+        {
+            string key = string.Format("{0}-{1}", RetrieveMenusByRoleIDDataKey, roleId);
+            return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RetrieveMenusByRoleIDDataKey), k =>
+            {
+                List<Menu> Menus = new List<Menu>();
+                string sql = "select n.ID,n.ParentId, n.Name,n.[Order],n.Icon,n.Url,n.Category, case nr.NavigationID when n.ID then 'active' else '' end [status] from Navigations n left join NavigationRole nr on n.ID = nr.NavigationID and RoleID = @RoleID";
+                DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@RoleID", roleId, ParameterDirection.Input));
+                try
+                {
+                    using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
+                    {
+                        while (reader.Read())
+                        {
+                            Menus.Add(new Menu()
+                            {
+                                ID = (int)reader[0],
+                                ParentId = (int)reader[1],
+                                Name = (string)reader[2],
+                                Order = (int)reader[3],
+                                Icon = LgbConvert.ReadValue(reader[4], string.Empty),
+                                Url = LgbConvert.ReadValue(reader[5], string.Empty),
+                                Category = (string)reader[6],
+                                Active = (string)reader[7] == "" ? "" : "checked"
+                            });
+                        }
+                    }
+                }
+                catch (Exception ex) { ExceptionManager.Publish(ex); }
+                return Menus;
+            }, CacheSection.RetrieveDescByKey(RetrieveMenusByRoleIDDataKey));
+        }
+        /// <summary>
+        /// 通过角色ID保存当前授权菜单
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="menuIds"></param>
+        /// <returns></returns>
+        public static bool SaveMenusByRoleId(int id, string menuIds)
+        {
+            bool ret = false;
+            DataTable dt = new DataTable();
+            dt.Columns.Add("RoleID", typeof(int));
+            dt.Columns.Add("NavigationID", typeof(int));
+            if (!string.IsNullOrEmpty(menuIds)) menuIds.Split(',').ToList().ForEach(menuId => dt.Rows.Add(id, Convert.ToInt32(menuId)));
+            using (TransactionPackage transaction = DBAccessManager.SqlDBAccess.BeginTransaction())
+            {
+                try
+                {
+                    //删除菜单角色表该角色所有的菜单
+                    string sql = "delete from NavigationRole where RoleID=@RoleID";
+                    using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
+                    {
+                        cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@RoleID", id, ParameterDirection.Input));
+                        DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd, transaction);
+                        //批插入菜单角色表
+                        using (SqlBulkCopy bulk = new SqlBulkCopy((SqlConnection)transaction.Transaction.Connection, SqlBulkCopyOptions.Default, (SqlTransaction)transaction.Transaction))
+                        {
+                            bulk.DestinationTableName = "NavigationRole";
+                            bulk.ColumnMappings.Add("RoleID", "RoleID");
+                            bulk.ColumnMappings.Add("NavigationID", "NavigationID");
+                            bulk.WriteToServer(dt);
+                            transaction.CommitTransaction();
+                        }
+                    }
+                    CacheCleanUtility.ClearCache(menuIds: menuIds, roleIds: id.ToString());
+                    ret = true;
+                }
+                catch (Exception ex)
+                {
+                    ExceptionManager.Publish(ex);
+                    transaction.RollbackTransaction();
+                }
             }
             return ret;
         }
