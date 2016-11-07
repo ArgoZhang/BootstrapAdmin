@@ -42,9 +42,6 @@ namespace Bootstrap.Admin.Models
             // 通过option.Sort属性判断对那列进行排序
             switch (Sort)
             {
-                case "ID":
-                    data = Order == "asc" ? data.OrderBy(t => t.ID) : data.OrderByDescending(t => t.ID);
-                    break;
                 case "Category":
                     data = Order == "asc" ? data.OrderBy(t => t.Category) : data.OrderByDescending(t => t.Category);
                     break;
