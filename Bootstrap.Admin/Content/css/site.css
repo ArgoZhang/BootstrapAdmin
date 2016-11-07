@@ -61,7 +61,6 @@ div button span {
     border-bottom: 1px solid #f1f2f7;
 }
 
-
 .arrow-up {
     background: url("../images/arrow-up.png") no-repeat;
     width: 20px;
@@ -72,29 +71,24 @@ div button span {
 }
 
 /*Title*/
-a.logo {
+.sidebar-toggle-box {
+    margin-top: 20px;
     font-size: 21px;
-    color: #2e2e2e;
+    color: #333;
     float: left;
     margin-top: 15px;
     text-transform: uppercase;
 }
 
-    a.logo:hover, a.logo:focus {
+    .sidebar-toggle-box:hover, .sidebar-toggle-box:focus {
         text-decoration: none;
         outline: none;
+        color: #337ab7;
     }
 
-    a.logo span {
-        color: #FF6C60;
+    .sidebar-toggle-box span {
+        padding-left: 6px;
     }
-/*end title*/
-
-.sidebar-toggle-box {
-    float: left;
-    padding-right: 15px;
-    margin-top: 20px;
-}
 
     .sidebar-toggle-box .fa-bars {
         cursor: pointer;
@@ -108,6 +102,7 @@ a.logo {
     padding: 10px 4px;
     height: 40px;
 }
+/*end title*/
 
 .go-top {
     margin-right: 1%;
@@ -280,7 +275,8 @@ a.logo {
 /*notify bar*/
 .notify-row {
     margin-top: 20px;
-    float: left;
+    padding-left: 20px;
+    display: inline-block;
 }
 
     .notify-row > li {

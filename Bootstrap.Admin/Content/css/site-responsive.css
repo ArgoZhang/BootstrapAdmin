@@ -46,10 +46,6 @@
         margin: 0px !important;
     }
 
-    .logo {
-        display: none;
-    }
-
     .fb-timeliner {
         display: none;
     }
@@ -70,8 +66,20 @@
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 666px) {
     .notify-row {
+        display: none;
+    }
+}
+
+@media (max-width: 548px) {
+    .top-menu .search {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .sidebar-toggle-box span, .notify-row {
         display: none;
     }
 
@@ -81,10 +89,6 @@
 
     .top-menu > li {
         float: right;
-    }
-
-    .top-menu .search {
-        display: none;
     }
 }
 

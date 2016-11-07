@@ -42,7 +42,7 @@ $(function () {
             $("#sidebar").scrollTo("+=" + Math.abs(diff), 500);
     });
 
-    $('.fa-bars').click(function () {
+    $('.sidebar-toggle-box').click(function () {
 
         if ($('#sidebar > ul').is(":visible") === true) {
             $('#main-content').css({

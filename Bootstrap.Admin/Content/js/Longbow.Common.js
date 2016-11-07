@@ -189,4 +189,9 @@ $(function () {
     });
 
     $('.site-footer div span').text($('#footer').val());
+
+    $('.sidebar-toggle-box').click(function () {
+        window.console.log('1');
+        $(this).next('a').toggle();
+    });
 });
