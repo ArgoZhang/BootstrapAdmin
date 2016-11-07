@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sql", "sql", "{87319AF5-7C4
 	ProjectSection(SolutionItems) = preProject
 		DatabaseScripts\InitData.sql = DatabaseScripts\InitData.sql
 		DatabaseScripts\Install.sql = DatabaseScripts\Install.sql
+		DatabaseScripts\Procedures.sql = DatabaseScripts\Procedures.sql
 		DatabaseScripts\Readme.txt = DatabaseScripts\Readme.txt
 	EndProjectSection
 EndProject

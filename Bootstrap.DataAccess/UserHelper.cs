@@ -103,25 +103,19 @@ namespace Bootstrap.DataAccess
         {
             bool ret = false;
             if (string.IsNullOrEmpty(ids) || ids.Contains("'")) return ret;
-            using (TransactionPackage transaction = DBAccessManager.SqlDBAccess.BeginTransaction())
+            try
             {
-                try
+                using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_DeleteUsers"))
                 {
-                    string sql = string.Format(CultureInfo.InvariantCulture, "Delete from Users where ID in ({0})", ids);
-                    sql += string.Format("delete from UserRole where UserID in ({0});", ids);
-                    sql += string.Format("delete from UserGroup where UserID in ({0});", ids);
-                    using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
-                    {
-                        DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
-                    }
-                    CacheCleanUtility.ClearCache(userIds: ids);
-                    ret = true;
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ids", ids, ParameterDirection.Input));
+                    DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
-                catch (Exception ex)
-                {
-                    ExceptionManager.Publish(ex);
-                    transaction.RollbackTransaction();
-                }
+                CacheCleanUtility.ClearCache(userIds: ids);
+                ret = true;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.Publish(ex);
             }
             return ret;
         }
