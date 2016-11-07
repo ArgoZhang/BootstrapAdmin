@@ -39,8 +39,24 @@ namespace Bootstrap.Admin.Models
             }
             var ret = new QueryData<Dict>();
             ret.total = data.Count();
-            // 通过option.Sort属性判断对那列进行排序，现在对字典表Category列排序
-            data = Order == "asc" ? data.OrderBy(t => t.Category) : data.OrderByDescending(t => t.Category);
+            // 通过option.Sort属性判断对那列进行排序
+            switch (Sort)
+            {
+                case "ID":
+                    data = Order == "asc" ? data.OrderBy(t => t.ID) : data.OrderByDescending(t => t.ID);
+                    break;
+                case "Category":
+                    data = Order == "asc" ? data.OrderBy(t => t.Category) : data.OrderByDescending(t => t.Category);
+                    break;
+                case "Name":
+                    data = Order == "asc" ? data.OrderBy(t => t.Name) : data.OrderByDescending(t => t.Name);
+                    break;
+                case "Define":
+                    data = Order == "asc" ? data.OrderBy(t => t.Define) : data.OrderByDescending(t => t.Define);
+                    break;
+                default:
+                    break;
+            }
             ret.rows = data.Skip(Offset).Take(Limit);
             return ret;
         }

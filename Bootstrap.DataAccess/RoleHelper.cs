@@ -145,19 +145,26 @@ namespace Bootstrap.DataAccess
         {
             bool ret = false;
             if (string.IsNullOrEmpty(IDs) || IDs.Contains("'")) return ret;
-            try
+            using (TransactionPackage transaction = DBAccessManager.SqlDBAccess.BeginTransaction())
             {
-                string sql = string.Format(CultureInfo.InvariantCulture, "Delete from Roles where ID in ({0})", IDs);
-                using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
+                try
                 {
-                    DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
+                    string sql = string.Format(CultureInfo.InvariantCulture, "Delete from Roles where ID in ({0});", IDs);
+                    sql += string.Format("delete from UserRole where RoleID in ({0});", IDs);
+                    sql += string.Format("delete from RoleGroup where RoleID in ({0});", IDs);
+                    sql += string.Format("delete from NavigationRole where RoleID in ({0});", IDs);
+                    using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
+                    {
+                        DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
+                    }
                     CacheCleanUtility.ClearCache(roleIds: IDs);
                     ret = true;
                 }
-            }
-            catch (Exception ex)
-            {
-                ExceptionManager.Publish(ex);
+                catch (Exception ex)
+                {
+                    ExceptionManager.Publish(ex);
+                    transaction.RollbackTransaction();
+                }
             }
             return ret;
         }

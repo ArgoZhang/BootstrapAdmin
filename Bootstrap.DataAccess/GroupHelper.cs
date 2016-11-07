@@ -61,21 +61,27 @@ namespace Bootstrap.DataAccess
         {
             var ret = false;
             if (string.IsNullOrEmpty(ids) || ids.Contains("'")) return ret;
-            try
+            using (TransactionPackage transaction = DBAccessManager.SqlDBAccess.BeginTransaction())
             {
-                string sql = string.Format(CultureInfo.InvariantCulture, "Delete from Groups where ID in ({0})", ids);
-                using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
+                try
                 {
-                    DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
+                    string sql = string.Format(CultureInfo.InvariantCulture, "Delete from Groups where ID in ({0})", ids);
+                    sql += string.Format("delete from RoleGroup where GroupID in ({0});", ids);
+                    sql += string.Format("delete from UserGroup where GroupID in ({0});", ids);
+                    using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
+                    {
+                        DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
+                    }
                     CacheCleanUtility.ClearCache(groupIds: ids);
                     ret = true;
                 }
+                catch (Exception ex)
+                {
+                    ExceptionManager.Publish(ex);
+                    transaction.RollbackTransaction();
+                }
+                return ret;
             }
-            catch (Exception ex)
-            {
-                ExceptionManager.Publish(ex);
-            }
-            return ret;
         }
         /// <summary>
         /// 保存新建/更新的群组信息
