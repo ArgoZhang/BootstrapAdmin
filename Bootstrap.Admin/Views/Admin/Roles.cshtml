@@ -39,9 +39,9 @@
     </button>
     <button id="btn_assignGroup" type="button" class="btn btn-info">
         <span class="fa fa-home" aria-hidden="true"></span>指派部门
-    </button>  
+    </button>
     <button id="btn_assignMenu" type="button" class="btn btn-info">
-        <span class="fa fa-home" aria-hidden="true"></span>指派菜单
+        <span class="fa fa-dashboard" aria-hidden="true"></span>指派菜单
     </button>
 }
 @section modal {
@@ -66,5 +66,5 @@
 @section customModal{
     @Html.Partial("UserConfig")
     @Html.Partial("GroupConfig")
-    @Html.Partial("NavigatorConfig", Model.Navigations)
+    @Html.Partial("NavigatorConfig", Model.Navigations.Union(Model.Menus))
 }
