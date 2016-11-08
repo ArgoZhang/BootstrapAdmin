@@ -160,4 +160,7 @@
     });
 
     $('#nestable_menu').nestable();
+
+    // select
+    $('select').selectpicker();
 });
