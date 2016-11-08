@@ -120,6 +120,8 @@
         $('.menu-content button:last').data('type', 'parent');
         $('.menu-content').show();
         $('div.dd3-content :checkbox').hide();
+        $('div.dd > ol.dd-list > li.dd-item').hide();
+        $('div.dd > ol.dd-list > li[data-category="' + $('#category').selectpicker('val') + '"]').show();
         $('div.dd3-content :radio').show();
     });
 
@@ -129,12 +131,6 @@
         $('.menu-content').hide();
         $('#dialogNew div.modal-dialog').show();
     });
-
-    //$('.dd3-content label').click(function (e) {
-    //    var c = $(this).parents('div').children('label').children('input:not(:hidden)');
-    //    if (c.length == 1) c.get(0).click();
-    //    window.console.log($(this).html());
-    //});
 
     $('.menu-content button:last').click(function () {
         var type = $('.menu-content button:last').data('type');

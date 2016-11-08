@@ -103,5 +103,5 @@
 @section customModal {
     @Html.Partial("RoleConfig")
     @Html.Partial("IconView")
-    @Html.Partial("MenuTree", Model.Navigations)
+    @Html.Partial("MenuTree", Model.Navigations.Union(Model.Menus))
 }
