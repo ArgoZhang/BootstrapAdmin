@@ -200,3 +200,8 @@
     width: 600px;
     margin-top: 100px;
 }
+
+    .menu-content .modal-body {
+        overflow-y: auto;
+        max-height: 400px;
+    }
