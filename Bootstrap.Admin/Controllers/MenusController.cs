@@ -1,5 +1,6 @@
 ﻿using Bootstrap.Admin.Models;
 using Bootstrap.DataAccess;
+using Longbow.Security.Principal;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace Bootstrap.Admin.Controllers
         [HttpGet]
         public QueryData<Menu> Get([FromUri]QueryMenuOption value)
         {
-            return value.RetrieveData();
+            return value.RetrieveData(User.Identity.Name);
         }
         /// <summary>
         /// 

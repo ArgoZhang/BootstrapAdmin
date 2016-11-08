@@ -106,3 +106,44 @@ BEGIN
 	exec(@sql)
 END
 GO
+
+Drop PROCEDURE Proc_RetrieveMenus
+GO
+-- =============================================
+-- Author:		Argo Zhang
+-- Create date: 2016-11-08
+-- Description:	
+-- =============================================
+Create PROCEDURE Proc_RetrieveMenus
+	-- Add the parameters for the stored procedure here
+	@userName varchar(50) = null
+	WITH ENCRYPTION
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+	SET XACT_ABORT ON;
+    -- Insert statements for procedure here
+	if @userName = '' or @userName is null
+		select n.*, d.Name as CategoryName, ln.Name as ParentName 
+		from Navigations n inner join Dicts d on n.Category = d.Code and d.Category = N'²Ëµ¥' and d.Define = 0 
+		left join Navigations ln on n.ParentId = ln.ID
+	else
+		select n.*, d.Name as CategoryName, ln.Name as ParentName 
+		from Navigations n inner join Dicts d on n.Category = d.Code and d.Category = N'²Ëµ¥' and d.Define = 0 
+		left join Navigations ln on n.ParentId = ln.ID
+		inner join (
+			select nr.NavigationID from Users u 
+			inner join UserRole ur on ur.UserID = u.ID 
+			inner join  NavigationRole nr on nr.RoleID = ur.RoleID
+			where u.UserName = @userName
+			union
+			select nr.NavigationID from Users u 
+			inner join UserGroup ug on u.ID = ug.UserID
+			inner join RoleGroup rg on rg.GroupID = ug.GroupID 
+			inner join NavigationRole nr on nr.RoleID = rg.RoleID
+			where u.UserName = @userName
+		) nav on n.ID = nav.NavigationID
+END
+GO

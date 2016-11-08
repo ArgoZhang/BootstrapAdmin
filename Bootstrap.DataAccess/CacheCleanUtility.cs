@@ -37,7 +37,7 @@ namespace Bootstrap.DataAccess
                 {
                     cacheKeys.Add(string.Format("{0}-{1}", RoleHelper.RetrieveRolesByUserIDDataKey, id));
                     cacheKeys.Add(string.Format("{0}-{1}", GroupHelper.RetrieveGroupsByUserIDDataKey, id));
-                    cacheKeys.Add(string.Format("{0}-{1}", MenuHelper.RetrieveMenusByUserIDDataKey, id));
+                    cacheKeys.Add(MenuHelper.RetrieveMenusDataKey);
                 });
                 // final cleanup 
                 CacheManager.Clear(key => cacheKeys.Any(k => k == key) || key.Contains(UserHelper.RetrieveUsersDataKey) || key.Contains(RoleHelper.RetrieveRolesByUserNameDataKey));

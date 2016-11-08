@@ -3,12 +3,12 @@ using Longbow.Caching;
 using Longbow.Caching.Configuration;
 using Longbow.Data;
 using Longbow.ExceptionManagement;
+using Longbow.Security.Principal;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
-using System.Globalization;
 using System.Linq;
 
 namespace Bootstrap.DataAccess
@@ -16,38 +16,41 @@ namespace Bootstrap.DataAccess
     public static class MenuHelper
     {
         internal const string RetrieveMenusDataKey = "MenuHelper-RetrieveMenus";
-        internal const string RetrieveMenusByUserIDDataKey = "MenuHelper-RetrieveMenusByUserId";
         internal const string RetrieveMenusByRoleIDDataKey = "MenuHelper-RetrieveMenusByRoleId";
         /// <summary>
         /// 查询所有菜单信息
         /// </summary>
-        /// <param name="tId"></param>
+        /// <param name="userName"></param>
         /// <returns></returns>
-        public static IEnumerable<Menu> RetrieveMenus()
+        public static IEnumerable<Menu> RetrieveMenus(string userName = null)
         {
-            return CacheManager.GetOrAdd(RetrieveMenusDataKey, CacheSection.RetrieveIntervalByKey(RetrieveMenusDataKey), key =>
+            userName = LgbPrincipal.IsAdmin(userName) ? string.Empty : userName;
+            string key = string.Format("{0}-{1}", RetrieveMenusDataKey, userName);
+            return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RetrieveMenusDataKey), k =>
             {
-                string sql = "select n.*, d.Name as CategoryName, ln.Name as ParentName from Navigations n inner join Dicts d on n.Category = d.Code and d.Category = N'菜单' and d.Define = 0 left join Navigations ln on n.ParentId = ln.ID";
                 List<Menu> Menus = new List<Menu>();
-                DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                 try
                 {
-                    using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
+                    using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_RetrieveMenus"))
                     {
-                        while (reader.Read())
+                        cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@userName", DBAccess.ToDBValue(userName), ParameterDirection.Input));
+                        using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
                         {
-                            Menus.Add(new Menu()
+                            while (reader.Read())
                             {
-                                ID = (int)reader[0],
-                                ParentId = (int)reader[1],
-                                Name = (string)reader[2],
-                                Order = (int)reader[3],
-                                Icon = LgbConvert.ReadValue(reader[4], string.Empty),
-                                Url = LgbConvert.ReadValue(reader[5], string.Empty),
-                                Category = (string)reader[6],
-                                CategoryName = (string)reader[7],
-                                ParentName = LgbConvert.ReadValue(reader[8], string.Empty)
-                            });
+                                Menus.Add(new Menu()
+                                {
+                                    ID = (int)reader[0],
+                                    ParentId = (int)reader[1],
+                                    Name = (string)reader[2],
+                                    Order = (int)reader[3],
+                                    Icon = LgbConvert.ReadValue(reader[4], string.Empty),
+                                    Url = LgbConvert.ReadValue(reader[5], string.Empty),
+                                    Category = (string)reader[6],
+                                    CategoryName = (string)reader[7],
+                                    ParentName = LgbConvert.ReadValue(reader[8], string.Empty)
+                                });
+                            }
                         }
                     }
                 }
@@ -56,50 +59,25 @@ namespace Bootstrap.DataAccess
             }, CacheSection.RetrieveDescByKey(RetrieveMenusDataKey));
         }
         /// <summary>
-        /// 查询某个用户所配置的菜单
+        /// 
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public static IEnumerable<Menu> RetrieveMenusByUserId(int userId)
+        public static IEnumerable<Menu> RetrieveNavigationsByUserName(string userName)
         {
-            string key = string.Format("{0}-{1}", RetrieveMenusByUserIDDataKey, userId);
-            return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RetrieveMenusByUserIDDataKey), k =>
-            {
-                string sql = "select n.* from Navigations n inner join NavigationRole nr on n.ID = nr.NavigationID inner join UserRole ur on nr.RoleID = ur.RoleID inner join Users u on ur.UserID = u.ID where u.ID = @UserID union select n.* from Navigations n inner join NavigationRole nr on n.ID = nr.NavigationID inner join RoleGroup rg on nr.RoleID = rg.RoleID inner join UserGroup ur on rg.GroupID = ur.GroupID inner join Users u on ur.UserID = u.ID where u.ID = @UserID";
-                List<Menu> Menus = new List<Menu>();
-                DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
-                try
-                {
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserID", userId, ParameterDirection.Input));
-                    using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
-                    {
-                        while (reader.Read())
-                        {
-                            Menus.Add(new Menu()
-                            {
-                                ID = (int)reader[0],
-                                ParentId = (int)reader[1],
-                                Name = (string)reader[2],
-                                Order = (int)reader[3],
-                                Icon = LgbConvert.ReadValue(reader[4], string.Empty),
-                                Url = LgbConvert.ReadValue(reader[5], string.Empty),
-                                Category = (string)reader[6]
-                            });
-                        }
-                    }
-                }
-                catch (Exception ex) { ExceptionManager.Publish(ex); }
-                return Menus;
-            }, CacheSection.RetrieveDescByKey(RetrieveMenusByUserIDDataKey));
+            var navs = RetrieveMenus(userName).Where(m => m.Category == "0");
+            var root = navs.Where(m => m.ParentId == 0).OrderBy(m => m.Order);
+            CascadeMenu(navs, root);
+            return root;
         }
         /// <summary>
         /// 
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public static IEnumerable<Menu> RetrieveNavigationsByUserId(int userId)
+        public static IEnumerable<Menu> RetrieveLinksByUserName(string userName)
         {
-            var navs = (userId == 0 ? RetrieveMenus() : RetrieveMenusByUserId(userId)).Where(m => m.Category == "0");
+            var navs = RetrieveMenus(userName).Where(m => m.Category == "1");
             var root = navs.Where(m => m.ParentId == 0).OrderBy(m => m.Order);
             CascadeMenu(navs, root);
             return root;
@@ -111,18 +89,6 @@ namespace Bootstrap.DataAccess
                 m.Menus = navs.Where(sub => sub.ParentId == m.ID).OrderBy(sub => sub.Order);
                 CascadeMenu(navs, m.Menus);
             });
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="userId"></param>
-        /// <returns></returns>
-        public static IEnumerable<Menu> RetrieveLinksByUserId(int userId)
-        {
-            var navs = (userId == 0 ? RetrieveMenus() : RetrieveMenusByUserId(userId)).Where(m => m.Category == "1");
-            var root = navs.Where(m => m.ParentId == 0).OrderBy(m => m.Order);
-            CascadeMenu(navs, root);
-            return root;
         }
         /// <summary>
         /// 删除菜单信息
@@ -198,26 +164,28 @@ namespace Bootstrap.DataAccess
             return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RetrieveMenusByRoleIDDataKey), k =>
             {
                 List<Menu> Menus = new List<Menu>();
-                string sql = "select n.ID,n.ParentId, n.Name,n.[Order],n.Icon,n.Url,n.Category, case nr.NavigationID when n.ID then 'active' else '' end [status] from Navigations n left join NavigationRole nr on n.ID = nr.NavigationID and RoleID = @RoleID";
-                DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
-                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@RoleID", roleId, ParameterDirection.Input));
                 try
                 {
-                    using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
+                    string sql = "select n.ID,n.ParentId, n.Name,n.[Order],n.Icon,n.Url,n.Category, case nr.NavigationID when n.ID then 'active' else '' end [status] from Navigations n left join NavigationRole nr on n.ID = nr.NavigationID and RoleID = @RoleID";
+                    using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
                     {
-                        while (reader.Read())
+                        cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@RoleID", roleId, ParameterDirection.Input));
+                        using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
                         {
-                            Menus.Add(new Menu()
+                            while (reader.Read())
                             {
-                                ID = (int)reader[0],
-                                ParentId = (int)reader[1],
-                                Name = (string)reader[2],
-                                Order = (int)reader[3],
-                                Icon = LgbConvert.ReadValue(reader[4], string.Empty),
-                                Url = LgbConvert.ReadValue(reader[5], string.Empty),
-                                Category = (string)reader[6],
-                                Active = (string)reader[7] == "" ? "" : "checked"
-                            });
+                                Menus.Add(new Menu()
+                                {
+                                    ID = (int)reader[0],
+                                    ParentId = (int)reader[1],
+                                    Name = (string)reader[2],
+                                    Order = (int)reader[3],
+                                    Icon = LgbConvert.ReadValue(reader[4], string.Empty),
+                                    Url = LgbConvert.ReadValue(reader[5], string.Empty),
+                                    Category = (string)reader[6],
+                                    Active = (string)reader[7] == "" ? "" : "checked"
+                                });
+                            }
                         }
                     }
                 }

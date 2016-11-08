@@ -9,7 +9,7 @@ namespace Bootstrap.Admin.Models
     {
         public NavigatorBarModel(string url)
         {
-            Navigations = MenuHelper.RetrieveNavigationsByUserId(UserID);
+            Navigations = MenuHelper.RetrieveNavigationsByUserName(UserName);
             Navigations.ToList().ForEach(m => m.Active = m.Url.Equals(url, StringComparison.OrdinalIgnoreCase) ? "active" : "");
             HomeUrl = "~/Admin/Index";
         }

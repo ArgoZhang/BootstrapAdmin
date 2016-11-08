@@ -19,9 +19,9 @@ namespace Bootstrap.Admin.Models
         /// </summary>
         public string Category { get; set; }
 
-        public QueryData<Menu> RetrieveData()
+        public QueryData<Menu> RetrieveData(string userName)
         {
-            var data = MenuHelper.RetrieveMenus();
+            var data = MenuHelper.RetrieveMenus(userName);
             if (!string.IsNullOrEmpty(ParentName))
             {
                 data = data.Where(t => t.ParentName.Contains(ParentName));

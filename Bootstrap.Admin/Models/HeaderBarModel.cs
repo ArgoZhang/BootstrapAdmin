@@ -13,10 +13,12 @@ namespace Bootstrap.Admin.Models
         {
             var user = UserHelper.RetrieveUsersByName(HttpContext.Current.User.Identity.Name);
             DisplayName = user.DisplayName;
+            UserName = user.UserName;
             UserID = user.ID;
             HomeUrl = "~/";
-            Menus = MenuHelper.RetrieveLinksByUserId(user.ID);
+            Menus = MenuHelper.RetrieveLinksByUserName(UserName);
         }
+        public string UserName { get; protected set; }
         /// <summary>
         /// 
         /// </summary>
