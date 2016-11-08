@@ -44,4 +44,6 @@
             maxlength: 50
         }
     });
+    // select
+    $('select').selectpicker();
 });
