@@ -23,7 +23,7 @@ namespace Bootstrap.DataAccess
         {
             var ret = CacheManager.GetOrAdd(RetrieveDictsDataKey, CacheSection.RetrieveIntervalByKey(RetrieveDictsDataKey), key =>
             {
-                string sql = "select ID, Category, Name, Code, Define, case Define when 0 then '系统使用' else '用户自定义' end DefineName from Dicts";
+                string sql = "select ID, Category, Name, Code, Define, case Define when 0 then '系统使用' else '自定义' end DefineName from Dicts";
                 List<Dict> Dicts = new List<Dict>();
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                 try

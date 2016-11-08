@@ -26,7 +26,10 @@
             var target = {};
             for (name in this.options.map) {
                 var ctl = $("#" + this.options.map[name]);
-                if (ctl.hasClass('selectpicker')) target[name] = ctl.selectpicker('val');
+                if (ctl.hasClass('selectpicker')) {
+                    target[name] = ctl.selectpicker('val');
+                    target[name + 'Name'] = ctl.parentsUntil('bootstrap-select').children('button[data-id="' + this.options.map[name] + '"]').attr('title');
+                }
                 else target[name] = ctl.val();
             }
             return target;
