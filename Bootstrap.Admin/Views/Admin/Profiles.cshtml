@@ -4,6 +4,7 @@
     Layout = "~/Views/Shared/_Admin.cshtml";
 }
 @section Javascript {
+    <script src="~/Content/js/sweetalert.js"></script>
     <script src="~/Scripts/Profiles.js"></script>
 }
 @section css {
@@ -15,13 +16,14 @@
 @section navigator {
     @Html.Partial("Navigator", Model)
 }
+
 <div class="panel panel-default">
     <div class="panel-heading">系统名称设置</div>
     <div class="panel-body">
         <div class="input-group">
-            <input type="text" class="form-control">
+            <input type="text" class="form-control" id="sysNameSet">
             <span class="input-group-btn">
-                <button class="btn btn-default" type="button">保存</button>
+                <button class="btn btn-default" type="button" id="sysSave">保存</button>
             </span>
         </div>
     </div>
@@ -30,9 +32,9 @@
     <div class="panel-heading">页脚设置</div>
     <div class="panel-body">
         <div class="input-group">
-            <input type="text" class="form-control">
+            <input type="text" class="form-control" id="footSet">
             <span class="input-group-btn">
-                <button class="btn btn-default" type="button">保存</button>
+                <button class="btn btn-default" type="button" id="footSave">保存</button>
             </span>
         </div>
     </div>

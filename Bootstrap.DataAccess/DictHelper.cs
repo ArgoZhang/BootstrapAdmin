@@ -156,5 +156,51 @@ namespace Bootstrap.DataAccess
             var settings = DictHelper.RetrieveWebSettings();
             return (settings.FirstOrDefault(d => d.Name == "网站页脚") ?? new Dict() { Code = "2016 © 通用后台管理系统" }).Code;
         }
+        /// <summary>
+        /// 保存网站个性化设置
+        /// 2016-11-8
+        /// </summary>
+        /// <returns></returns>
+        public static bool SaveProfiles(string type, string value)
+        {
+            string name="";
+            string category="网站设置";
+            switch(type)
+            {
+                case "sysName": name = "网站标题"; break;
+                case "foot": name = "网站页脚"; break;
+            }
+            var settings = DictHelper.RetrieveWebSettings();
+            var p = from ps in settings
+                    where ps.Name.Equals(name)
+                     select new
+                     {
+                         ID=ps.ID
+                     };
+                   
+            var ret = false;
+            string sql = "Update Dicts set Code = @Code where Category =@Category and Name=@Name";
+            try
+            {
+                using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
+                {
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Code", value, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Category", category, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Name", name, ParameterDirection.Input));     
+                    DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
+                }
+                ret = true;
+
+                foreach(var px in p)
+                CacheCleanUtility.ClearCache(dictIds:px.ID.ToString());
+            }
+            catch (DbException ex)
+            {
+                ExceptionManager.Publish(ex);
+            }
+            return ret;
+        }
+       
+   
     }
 }
