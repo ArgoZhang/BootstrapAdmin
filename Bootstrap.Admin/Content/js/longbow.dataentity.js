@@ -17,13 +17,17 @@
         },
         reset: function () {
             for (name in this.options.map) {
-                $("#" + this.options.map[name]).val("");
+                var ctl = $("#" + this.options.map[name]);
+                if (ctl.hasClass('selectpicker')) ctl.selectpicker('val', "");
+                else ctl.val("");
             }
         },
         get: function () {
             var target = {};
             for (name in this.options.map) {
-                target[name] = $("#" + this.options.map[name]).val();
+                var ctl = $("#" + this.options.map[name]);
+                if (ctl.hasClass('selectpicker')) target[name] = ctl.selectpicker('val');
+                else target[name] = ctl.val();
             }
             return target;
         }
