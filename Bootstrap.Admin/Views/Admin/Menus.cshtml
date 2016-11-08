@@ -20,31 +20,23 @@
 }
 @section query {
     <form class="form-inline" role="form">
-        <div class="form-group col-lg-3">
+        <div class="form-group col-xs-12 col-sm-6 col-md-4 col-lg-4">
             <label class="control-label" for="txt_parent_menus_name">父级菜单</label>
             <input type="text" class="form-control" id="txt_parent_menus_name" />
         </div>
-        <div class="form-group col-lg-3">
+        <div class="form-group col-xs-12 col-sm-6 col-md-4 col-lg-4">
             <label class="control-label" for="txt_menus_name">菜单名称</label>
             <input type="text" class="form-control" id="txt_menus_name" />
         </div>
-        <div class="form-group col-lg-3">
-            <label class="control-label" for="txt_menus_category">菜单类别</label>
-            <input type="text" class="form-control hide" id="txt_menus_category" />
-            <div class="btn-group">
-                <button type="button" class="btn btn-default">全部</button>
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    <span class="caret"></span>
-                    <span class="sr-only">下拉按钮</span>
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="#" data-val="">全部</a></li>
-                    <li><a href="#" data-val="0">系统菜单</a></li>
-                    <li><a href="#" data-val="1">外部菜单</a></li>
-                </ul>
-            </div>
+        <div class="form-group col-xs-12 col-sm-6 col-md-3 col-lg-3">
+            <label class="control-label" for="sel_menus_category">菜单类别</label>
+            <select class="selectpicker form-control" data-width="auto" id="sel_menus_category">
+                <option value="">全部</option>
+                <option value="0">系统菜单</option>
+                <option value="1">外部菜单</option>
+            </select>
         </div>
-        <div class="form-group col-lg-1">
+        <div class="form-group col-xs-12 col-sm-6 col-md-1 col-lg-1">
             <button type="button" id="btn_query" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询</button>
         </div>
     </form>
@@ -99,20 +91,12 @@
                 </div>
             </div>
             <div class="form-group col-lg-6">
-                <label class="control-label" for="category">类别</label>
-                <!-- Split button -->
-                <input type="text" class="form-control hide" id="category" name="category" value="1" />
-                <div class="btn-group">
-                    <button type="button" class="btn btn-default">外部菜单</button>
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                        <span class="caret"></span>
-                        <span class="sr-only">下拉按钮</span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="#" data-val="0">系统菜单</a></li>
-                        <li><a href="#" data-val="1">外部菜单</a></li>
-                    </ul>
-                </div>
+                <label class="control-label" for="category">菜单类别</label>
+                <select class="selectpicker form-control" data-width="auto" id="category">
+                    <option value="">全部</option>
+                    <option value="0">系统菜单</option>
+                    <option value="1">外部菜单</option>
+                </select>
             </div>
         </form>
     </div>

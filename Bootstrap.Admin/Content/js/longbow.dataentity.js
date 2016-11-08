@@ -10,7 +10,9 @@
     DataEntity.prototype = {
         load: function (value) {
             for (name in this.options.map) {
-                $("#" + this.options.map[name]).val(value[name]);
+                var ctl = $("#" + this.options.map[name]);
+                if (ctl.hasClass('selectpicker')) ctl.selectpicker('val', value[name]);
+                else ctl.val(value[name]);
             }
         },
         reset: function () {
