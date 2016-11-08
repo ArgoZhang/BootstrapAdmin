@@ -169,12 +169,6 @@ $(function () {
         }, "请填写正确的IP地址");
     }
 
-    // tool tips
-    $('.tooltips').tooltip();
-
-    // popovers
-    $('.popovers').popover();
-
     $(".go-top").click(function (e) {
         e.preventDefault();
         $('#main-content, .content-body, body').animate({
@@ -182,16 +176,5 @@ $(function () {
         }, 200);
     });
 
-    $('.form-group .btn-group .dropdown-menu a').on('click', function () {
-        var parent = $(this).parents('div.btn-group');
-        parent.prev('input.hide').val($(this).attr("data-val"));
-        parent.children('button:first').text($(this).text());
-    });
-
     $('.site-footer div span').text($('#footer').val());
-
-    $('.sidebar-toggle-box').click(function () {
-        window.console.log('1');
-        $(this).next('a').toggle();
-    });
 });
