@@ -97,37 +97,39 @@
 
     // 排序按钮
     $('#btnMenuOrder').click(function () {
-        $('li.dd-item').remove('[data-id="0"]');
         $('#dialogNew div.modal-dialog').hide();
         $('.menu-content button:last').data('type', 'order');
         // handler new menu
         if ($('#menuID').val() == "") {
             var menuName = $('#name').val();
             if (menuName == "") menuName = "新建菜单-未命名";
-            $('.dd-list').append($.format('<li class="dd-item dd3-item" data-id="0"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><label><span>{0}</span></label></div></li>', menuName));
+            $('div.dd > ol.dd-list').append($.format('<li class="dd-item dd3-item" data-id="0"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><label><span>{0}</span></label></div></li>', menuName));
         }
         var did = $('#menuID').val();
         if (did == "") did = 0;
-        $('.dd-list li[data-id="' + did + '"] span').addClass('active');
+        $('div.dd input').hide();
+        $('div.dd li[data-id="' + did + '"] span').addClass('active');
+        $('div.dd > ol.dd-list > li.dd-item').remove('[data-id="0"]');
+        $('div.dd > ol.dd-list > li.dd-item').hide();
+        $('div.dd > ol.dd-list > li[data-category="' + $('#category').selectpicker('val') + '"]').show();
         $('.menu-content').show();
-        $('div.dd3-content input').hide();
     });
 
     // 选择父节点按钮
     $('#btnMenuParent').click(function () {
-        $('li.dd-item').remove('[data-id="0"]');
         $('#dialogNew div.modal-dialog').hide();
         $('.menu-content button:last').data('type', 'parent');
         $('.menu-content').show();
-        $('div.dd3-content :checkbox').hide();
+        $('li.dd-item').remove('[data-id="0"]');
+        $('div.dd :checkbox').hide();
         $('div.dd > ol.dd-list > li.dd-item').hide();
         $('div.dd > ol.dd-list > li[data-category="' + $('#category').selectpicker('val') + '"]').show();
-        $('div.dd3-content :radio').show();
+        $('div.dd :radio').show();
     });
 
     $('.menu-content button').click(function () {
         // remove active css
-        $('.dd3-content span').removeClass('active');
+        $('div.dd li span').removeClass('active');
         $('.menu-content').hide();
         $('#dialogNew div.modal-dialog').show();
     });
