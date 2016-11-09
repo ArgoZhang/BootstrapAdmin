@@ -1,0 +1,71 @@
+﻿@media (min-width: 990px) {
+    .modal-dialog {
+        width: 800px;
+    }
+}
+
+@media (max-width: 768px) {
+    #sidebar {
+        display: none;
+        overflow-y: auto;
+        position: absolute;
+        width: auto;
+        padding-right: 20px;
+        z-index: 2;
+    }
+
+    #main-content {
+        margin-left: 0;
+    }
+
+    .bs-bars {
+        display: none;
+    }
+
+    .toolbar {
+        display: inline-block;
+    }
+
+    .modal-dialog {
+        width: 540px;
+    }
+
+    .fb-timeliner {
+        display: none;
+    }
+
+    .icon-body {
+        margin-right: 0 !important;
+    }
+
+    .modal-body div.checkbox {
+        min-width: 190px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .modal-body .checkbox label input[type='checkbox'] {
+        top: 4px;
+    }
+}
+
+@media (max-width: 548px) {
+    .modal-dialog {
+        width: 460px;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-dialog {
+        width: 300px;
+    }
+}
+
+@media (min-height: 700px) {
+    #sidebar {
+        padding-top: 94px;
+        height: 100%;
+        padding-bottom: 54px;
+    }
+}

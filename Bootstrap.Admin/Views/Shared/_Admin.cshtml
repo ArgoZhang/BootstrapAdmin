@@ -7,6 +7,7 @@
     <link href="~/Content/css/site.css" rel="stylesheet" />
     <link href="~/Content/css/admin.css" rel="stylesheet" />
     <link href="~/Content/css/site-responsive.css" rel="stylesheet" />
+    <link href="~/Content/css/admin-responsive.css" rel="stylesheet" />
     @RenderSection("css", false)
 }
 @section javascript {
@@ -18,7 +19,7 @@
     <script src="~/Content/js/framework.js"></script>
     @RenderSection("Javascript", false)
 }
-<section>
+<section class="sidebar">
     @RenderSection("header", false)
     @RenderSection("navigator", false)
     <section id="main-content">

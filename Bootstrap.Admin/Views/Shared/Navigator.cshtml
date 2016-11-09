@@ -1,13 +1,13 @@
 ﻿@model NavigatorBarModel
 <aside>
-    <div id="sidebar" class="nav-collapse ">
+    <div id="sidebar" class="nav-collapse">
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" id="nav-accordion">
             @foreach (var menu in Model.Navigations)
             {
                 <li class="sub-menu">
                     <a href="@Url.Content(menu.Url)" class="@menu.Active"><i class="@menu.Icon"></i><span>@menu.Name</span></a>
-                    @if(menu.Menus.Count() > 0)
+                    @if (menu.Menus.Count() > 0)
                     {
                         @Html.Partial("SubNavigation", menu.Menus)
                     }

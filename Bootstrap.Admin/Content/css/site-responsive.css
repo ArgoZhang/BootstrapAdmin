@@ -1,56 +1,7 @@
-@media (min-width: 990px) {
-    .modal-dialog {
-        width: 800px;
-    }
-}
-
-@media (max-width: 990px) {
-}
-
-@media (min-width: 768px) {
-}
-
-@media (max-width: 768px) {
-    .modal-dialog {
-        width: 540px;
-    }
-
-    .sidebar-close #sidebar {
-        height: auto;
-        overflow: hidden;
-        overflow-y: auto;
-        position: absolute;
-        z-index: 1;
-        display: block;
-        padding-bottom: inherit;
-    }
-
-    #sidebar {
-        display: none;
-    }
-
-    #main-content {
+@media (max-width: 930px) {
+    /*#main-content {
         margin: 0px !important;
-    }
-
-    .fb-timeliner {
-        display: none;
-    }
-
-    .icon-body {
-        margin-right: 0 !important;
-    }
-
-    .modal-body div.checkbox {
-        min-width: 190px;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-    }
-
-    .modal-body .checkbox label input[type='checkbox'] {
-        top: 4px;
-    }
+    }*/
 }
 
 @media (max-width: 666px) {
@@ -63,27 +14,11 @@
     .top-menu .search {
         display: none;
     }
-
-    .modal-dialog {
-        width: 460px;
-    }
-
-    .bs-bars {
-        display: none;
-    }
-
-    .toolbar {
-        display: inline-block;
-    }
 }
 
 @media (max-width: 480px) {
     .sidebar-toggle-box span, .notify-row {
         display: none;
-    }
-
-    .modal-dialog {
-        width: 300px;
     }
 
     .top-menu > li {
@@ -99,16 +34,10 @@
     }
 }
 
-@media (min-height: 600px) {
+@media (min-height: 700px) {
     html, body {
         height: 100%;
         overflow: hidden;
-    }
-
-    #sidebar {
-        padding-top: 94px;
-        height: 100%;
-        padding-bottom: 54px;
     }
 
     .header {

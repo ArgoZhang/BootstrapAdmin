@@ -1,9 +1,4 @@
-﻿#main-content {
-    margin-left: 210px;
-    height: auto;
-}
-
-.has-error input {
+﻿.has-error input {
     background-repeat: no-repeat;
     background-image: url('../images/error.png');
     background-position: right 8px center;
@@ -23,16 +18,18 @@
     border-color: #3c763d;
 }
 
-.sidebar-closed > #sidebar > ul {
-    display: none;
+
+#main-content {
+    margin-left: 210px;
+    height: auto;
 }
 
 .sidebar-closed #main-content {
-    margin-left: 0px;
+    margin-left: 0;
 }
 
 .sidebar-closed #sidebar {
-    margin-left: -210px;
+    display: none !important;
 }
 
 #sidebar {

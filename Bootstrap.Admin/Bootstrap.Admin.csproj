@@ -100,6 +100,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\css\admin-responsive.css" />
     <Content Include="Content\css\admin.css" />
     <Content Include="Content\css\blue.css" />
     <Content Include="Content\css\bootstrap-select.css" />
