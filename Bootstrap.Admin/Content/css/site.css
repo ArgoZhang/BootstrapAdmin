@@ -10,26 +10,6 @@
     -moz-font-smoothing: antialiased;
 }
 
-.has-error input {
-    background-repeat: no-repeat;
-    background-image: url('../images/error.png');
-    background-position: right 8px center;
-}
-
-.has-error .input-group-btn button, .has-error .input-group-btn button:active:focus {
-    border-color: #a94442;
-}
-
-.has-success input {
-    background-repeat: no-repeat;
-    background-image: url('../images/success.png');
-    background-position: right 8px center;
-}
-
-.has-success .input-group-btn button, .has-success .input-group-btn button:active:focus {
-    border-color: #3c763d;
-}
-
 .dropdown-menu {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.176) !important;
 }

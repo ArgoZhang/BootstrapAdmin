@@ -3,6 +3,26 @@
     height: auto;
 }
 
+.has-error input {
+    background-repeat: no-repeat;
+    background-image: url('../images/error.png');
+    background-position: right 8px center;
+}
+
+.has-error .input-group-btn button, .has-error .input-group-btn button:active:focus {
+    border-color: #a94442;
+}
+
+.has-success input {
+    background-repeat: no-repeat;
+    background-image: url('../images/success.png');
+    background-position: right 8px center;
+}
+
+.has-success .input-group-btn button, .has-success .input-group-btn button:active:focus {
+    border-color: #3c763d;
+}
+
 .sidebar-closed > #sidebar > ul {
     display: none;
 }
@@ -159,3 +179,25 @@ ul.sidebar-menu {
         margin-right: 6px;
         top: 2px;
     }
+
+.toolbar {
+    position: relative;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    line-height: 34px;
+    display: none;
+}
+
+    .toolbar div {
+        padding: 0;
+        white-space: nowrap;
+    }
+
+        .toolbar div a:first-child {
+            border-left: none;
+        }
+
+        .toolbar div a {
+            padding: 8px 20px;
+            border-left: solid 1px #aeb2b7;
+        }

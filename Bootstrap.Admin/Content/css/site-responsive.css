@@ -67,6 +67,14 @@
     .modal-dialog {
         width: 460px;
     }
+
+    .bs-bars {
+        display: none;
+    }
+
+    .toolbar {
+        display: inline-block;
+    }
 }
 
 @media (max-width: 480px) {
