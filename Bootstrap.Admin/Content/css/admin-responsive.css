@@ -28,6 +28,7 @@
 
     .modal-dialog {
         width: 540px;
+        margin:20px auto;
     }
 
     .fb-timeliner {

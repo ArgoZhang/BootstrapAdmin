@@ -197,11 +197,15 @@
     display: none;
     z-index: 1051;
     margin: auto;
-    width: 600px;
+    width: 100%;
     margin-top: 100px;
 }
 
     .menu-content .modal-body {
         overflow-y: auto;
         max-height: 400px;
+    }
+
+    .menu-content .dd {
+        max-width: inherit;
     }
