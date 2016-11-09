@@ -158,6 +158,11 @@
                 clickToSelect: false,
             }, options);
             $(this).bootstrapTable(settings);
+            $('.toolbar').insertBefore($('.bootstrap-table > .fixed-table-toolbar > .bs-bars'));
+            $('.toolbar a').click(function () {
+                var ctl = $('#' + $(this).attr('id').replace('tb_', 'btn_'));
+                ctl.trigger("click");
+            });
         }
     });
 })(jQuery);
