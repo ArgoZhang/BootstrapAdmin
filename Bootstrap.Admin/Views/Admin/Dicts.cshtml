@@ -52,25 +52,27 @@
     </div>
     <div class="modal-body">
         <form class="form-inline" id="dataForm" name="dataForm" role="form">
-            <div class="form-group col-lg-6">
-                <label class="control-label" for="dictCate">字典分项</label>
-                <input type="text" class="form-control" id="dictCate" name="dictCate" maxlength="50" />
-            </div>
-            <div class="form-group col-lg-6">
-                <input type="text" class="form-control hidden" id="dictID" name="dictID" />
-                <label class="control-label" for="dictName">字典名称</label>
-                <input type="text" class="form-control" id="dictName" name="dictName" maxlength="50" />
-            </div>
-            <div class="form-group col-lg-6">
-                <label class="control-label" for="dictCode">字典代码</label>
-                <input type="text" class="form-control" id="dictCode" name="dictCode" maxlength="50" />
-            </div>
-            <div class="form-group col-lg-6">
-                <label class="control-label" for="dictDefine">字典类别</label>
-                <select class="selectpicker form-control" data-width="auto" id="dictDefine">
-                    <option value="0">系统使用</option>
-                    <option value="1">自定义</option>
-                </select>
+            <div class="row">
+                <div class="form-group col-lg-6">
+                    <label class="control-label" for="dictCate">字典分项</label>
+                    <input type="text" class="form-control" id="dictCate" name="dictCate" placeholder="不可为空" maxlength="50" />
+                </div>
+                <div class="form-group col-lg-6">
+                    <input type="text" class="form-control hidden" id="dictID" name="dictID" />
+                    <label class="control-label" for="dictName">字典名称</label>
+                    <input type="text" class="form-control" id="dictName" name="dictName" placeholder="不可为空" maxlength="50" />
+                </div>
+                <div class="form-group col-lg-6">
+                    <label class="control-label" for="dictCode">字典代码</label>
+                    <input type="text" class="form-control" id="dictCode" name="dictCode" placeholder="不可为空" maxlength="50" />
+                </div>
+                <div class="form-group col-lg-6">
+                    <label class="control-label" for="dictDefine">字典类别</label>
+                    <select class="selectpicker form-control" data-width="auto" id="dictDefine" data-default-val="1">
+                        <option value="0">系统使用</option>
+                        <option value="1">自定义</option>
+                    </select>
+                </div>
             </div>
         </form>
     </div>
