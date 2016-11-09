@@ -56,12 +56,7 @@
             required: true,
             maxlength: 50
         },
-        icon: {
-            required: true,
-            maxlength: 50
-        },
         order: {
-            required: true,
             digits: true
         },
         url: {

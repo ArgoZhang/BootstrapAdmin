@@ -105,10 +105,15 @@
         autoValidate: function (options) {
             // validate
             $(this).validate({
+                validClass: "has-success",
+                errorClass: "has-error",
                 ignore: "ignore",
                 rules: $.extend({}, options),
+                highlight: function (element, errorClass, validClass) {
+                    $(element).parents('.form-group').addClass(errorClass).removeClass(validClass);
+                },
                 unhighlight: function (element, errorClass, validClass) {
-                    $.validator.defaults.unhighlight(element, errorClass, validClass);
+                    $(element).parents('.form-group').removeClass(errorClass).addClass(validClass);
                     $(element).popover('destroy');
                 },
                 errorPlacement: function (label, element) {

@@ -13,16 +13,10 @@
     <script src="~/Content/js/framework.js"></script>
     @RenderSection("Javascript", false)
 }
-<section id="container">
+<section>
     @RenderSection("header", false)
     <section id="main-content">
-        <section class="wrapper">
-            <div class="row">
-                <div class="col-lg-12">
-                    @RenderBody()
-                </div>
-            </div>
-        </section>
+        @RenderBody()
     </section>
     @Html.Partial("Footer")
 </section>

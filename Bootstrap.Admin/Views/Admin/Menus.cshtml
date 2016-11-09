@@ -20,24 +20,26 @@
 }
 @section query {
     <form class="form-inline" role="form">
-        <div class="form-group col-xs-12 col-sm-6 col-md-3 col-lg-3">
-            <label class="control-label" for="txt_parent_menus_name">父级菜单</label>
-            <input type="text" class="form-control" id="txt_parent_menus_name" />
-        </div>
-        <div class="form-group col-xs-12 col-sm-6 col-md-3 col-lg-3">
-            <label class="control-label" for="txt_menus_name">菜单名称</label>
-            <input type="text" class="form-control" id="txt_menus_name" />
-        </div>
-        <div class="form-group col-xs-12 col-sm-6 col-md-3 col-lg-3">
-            <label class="control-label" for="sel_menus_category">菜单类别</label>
-            <select class="selectpicker form-control" data-width="auto" id="sel_menus_category">
-                <option value="">全部</option>
-                <option value="0">系统菜单</option>
-                <option value="1">外部菜单</option>
-            </select>
-        </div>
-        <div class="form-group col-xs-12 col-sm-6 col-md-2 col-lg-2">
-            <button type="button" id="btn_query" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询</button>
+        <div class="row">
+            <div class="form-group col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                <label class="control-label" for="txt_parent_menus_name">父级菜单</label>
+                <input type="text" class="form-control" id="txt_parent_menus_name" />
+            </div>
+            <div class="form-group col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                <label class="control-label" for="txt_menus_name">菜单名称</label>
+                <input type="text" class="form-control" id="txt_menus_name" />
+            </div>
+            <div class="form-group col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                <label class="control-label" for="sel_menus_category">菜单类别</label>
+                <select class="selectpicker" data-width="auto" id="sel_menus_category">
+                    <option value="">全部</option>
+                    <option value="0">系统菜单</option>
+                    <option value="1">外部菜单</option>
+                </select>
+            </div>
+            <div class="form-group col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                <button type="button" id="btn_query" class="btn btn-primary form-control"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询</button>
+            </div>
         </div>
     </form>
 }
@@ -53,49 +55,51 @@
     </div>
     <div class="modal-body">
         <form class="form-inline" id="dataForm" name="dataForm" role="form">
-            <div class="form-group col-lg-6">
-                <label class="control-label" for="parentId">父级菜单</label>
-                <div class="input-group">
-                    <input type="text" class="form-control hide" id="parentId" name="parentId" />
-                    <input type="text" class="form-control" readonly id="parentName" />
-                    <span class="input-group-btn">
-                        <button id="btnMenuParent" class="btn btn-default" type="button">选择</button>
-                    </span>
+            <div class="row">
+                <div class="form-group col-lg-6">
+                    <input type="text" class="form-control hidden" id="parentId" name="parentId" />
+                    <label class="control-label" for="parentName">父级菜单</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" readonly id="parentName" name="parentName" placeholder="请选择...(可为空)" maxlength="50" />
+                        <span class="input-group-btn">
+                            <button id="btnMenuParent" class="btn btn-default" type="button">选择</button>
+                        </span>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group col-lg-6">
-                <label class="control-label" for="name">菜单名称</label>
-                <input type="text" class="form-control" id="name" name="name" maxlength="50" />
-                <input type="text" class="form-control hide" id="menuID" name="menuID" />
-            </div>
-            <div class="form-group col-lg-6">
-                <label class="control-label" for="icon">菜单图标</label>
-                <div class="input-group">
-                    <input type="text" class="form-control" readonly id="icon" name="icon" maxlength="50" />
-                    <span class="input-group-btn">
-                        <button id="btnIcon" class="btn btn-default" type="button">选择</button>
-                    </span>
+                <div class="form-group col-lg-6">
+                    <input type="text" class="form-control hidden" id="menuID" name="menuID" />
+                    <label class="control-label" for="name">菜单名称</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="不可为空" maxlength="50" />
                 </div>
-            </div>
-            <div class="form-group col-lg-6">
-                <label class="control-label" for="url">路径</label>
-                <input type="text" class="form-control" id="url" name="url" maxlength="50" />
-            </div>
-            <div class="form-group col-lg-6">
-                <label class="control-label" for="order">菜单序号</label>
-                <div class="input-group">
-                    <input type="text" class="form-control" id="order" name="order" />
-                    <span class="input-group-btn">
-                        <button id="btnMenuOrder" class="btn btn-default" type="button">调整</button>
-                    </span>
+                <div class="form-group col-lg-6">
+                    <label class="control-label" for="icon">菜单图标</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" readonly id="icon" name="icon" placeholder="请选择...(可为空)" maxlength="50" />
+                        <span class="input-group-btn">
+                            <button id="btnIcon" class="btn btn-default" type="button">选择</button>
+                        </span>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group col-lg-6">
-                <label class="control-label" for="category">菜单类别</label>
-                <select class="selectpicker form-control" data-width="auto" id="category">
-                    <option value="0">系统菜单</option>
-                    <option value="1">外部菜单</option>
-                </select>
+                <div class="form-group col-lg-6">
+                    <label class="control-label" for="url">路径</label>
+                    <input type="text" class="form-control" id="url" name="url" placeholder="不可为空" maxlength="50" />
+                </div>
+                <div class="form-group col-lg-6">
+                    <label class="control-label" for="order">菜单序号</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="order" name="order" data-default-val="10" placeholder="默认为10" maxlength="8" />
+                        <span class="input-group-btn">
+                            <button id="btnMenuOrder" class="btn btn-default" type="button">调整</button>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group col-lg-6">
+                    <label class="control-label" for="category">菜单类别</label>
+                    <select class="selectpicker" data-width="auto" id="category" name="category" data-default-val="1">
+                        <option value="0">系统菜单</option>
+                        <option value="1">外部菜单</option>
+                    </select>
+                </div>
             </div>
         </form>
     </div>

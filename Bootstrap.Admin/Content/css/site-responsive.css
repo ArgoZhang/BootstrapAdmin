@@ -1,9 +1,3 @@
-@media (max-width: 1200px) {
-    .modal-dialog .modal-body {
-        padding-bottom: 0;
-    }
-}
-
 @media (min-width: 990px) {
     .modal-dialog {
         width: 800px;
@@ -11,13 +5,6 @@
 }
 
 @media (max-width: 990px) {
-    .panel-body {
-        padding-bottom: 0;
-    }
-
-        .panel-body .form-inline .form-group {
-            margin-bottom: 15px;
-        }
 }
 
 @media (min-width: 768px) {
@@ -76,6 +63,10 @@
     .top-menu .search {
         display: none;
     }
+
+    .modal-dialog {
+        width: 460px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -84,7 +75,7 @@
     }
 
     .modal-dialog {
-        width: 370px;
+        width: 300px;
     }
 
     .top-menu > li {
@@ -93,10 +84,6 @@
 }
 
 @media (max-width: 320px) {
-    .modal-dialog {
-        width: 300px;
-    }
-
     .top-menu {
         position: absolute;
         right: 15px;

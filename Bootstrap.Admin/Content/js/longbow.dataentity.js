@@ -18,8 +18,10 @@
         reset: function () {
             for (name in this.options.map) {
                 var ctl = $("#" + this.options.map[name]);
-                if (ctl.hasClass('selectpicker')) ctl.selectpicker('val', "1");
-                else ctl.val("");
+                var dv = ctl.attr("data-default-val");
+                if (dv === undefined) dv = "";
+                if (ctl.hasClass('selectpicker')) ctl.selectpicker('val', dv);
+                else ctl.val(dv);
             }
         },
         get: function () {
@@ -30,7 +32,11 @@
                     target[name] = ctl.selectpicker('val');
                     target[name + 'Name'] = ctl.parentsUntil('bootstrap-select').children('button[data-id="' + this.options.map[name] + '"]').attr('title');
                 }
-                else target[name] = ctl.val();
+                else {
+                    var dv = ctl.attr('data-default-val');
+                    if (dv !== undefined && ctl.val().trim() === "") target[name] = dv;
+                    else target[name] = ctl.val();
+                }
             }
             return target;
         }

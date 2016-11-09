@@ -10,6 +10,26 @@
     -moz-font-smoothing: antialiased;
 }
 
+.has-error input {
+    background-repeat: no-repeat;
+    background-image: url('../images/error.png');
+    background-position: right 8px center;
+}
+
+.has-error .input-group-btn button, .has-error .input-group-btn button:active:focus {
+    border-color: #a94442;
+}
+
+.has-success input {
+    background-repeat: no-repeat;
+    background-image: url('../images/success.png');
+    background-position: right 8px center;
+}
+
+.has-success .input-group-btn button, .has-success .input-group-btn button:active:focus {
+    border-color: #3c763d;
+}
+
 .dropdown-menu {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.176) !important;
 }
@@ -18,11 +38,34 @@
     color: #fff;
 }
 
-.wrapper {
-    display: inline-block;
-    padding: 15px;
-    width: 100%;
+#main-content {
+    padding: 15px 15px 0 15px;
 }
+
+    #main-content > .panel:last-child .panel-body {
+        padding-bottom: 0;
+    }
+
+.form-inline .form-group {
+    margin-bottom: 15px;
+}
+
+    .form-inline .form-group .control-label {
+        margin-right: 10px;
+        width: 80px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        vertical-align: middle;
+    }
+
+.modal-dialog .modal-body, .panel-body {
+    padding-bottom: 0;
+}
+
+    .modal-dialog .modal-body .form-inline .form-group input {
+        padding-right: 30px;
+    }
 
 ul li {
     list-style: none;
@@ -513,22 +556,6 @@ div button span {
             }
 /*end*/
 
-.form-inline .form-group label.control-label {
-    margin-right: 10px;
-    width: 80px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-.modal-dialog .modal-body .form-inline .form-group {
-    margin-bottom: 15px;
-}
-
-    .modal-dialog .modal-body .form-inline .form-group input {
-        padding-right: 30px;
-    }
-
 .modal-header {
     background-color: #f5f5f5;
     border-top-left-radius: 6px;
@@ -551,36 +578,6 @@ div button span {
 
 .fixed-table-loading {
     padding-top: 5px;
-}
-
-input.error {
-    padding-right: 30px;
-    border-color: red;
-    background-repeat: no-repeat;
-    background-image: url('../images/error.png');
-    background-position: right 8px center;
-}
-
-input.valid {
-    padding-right: 30px;
-    border-color: green;
-    background-repeat: no-repeat;
-    background-image: url('../images/success.png');
-    background-position: right 8px center;
-}
-
-.container-fluid {
-    padding-left: 0;
-}
-
-.navbar-default {
-    background-color: #fff;
-    border-color: #fff;
-}
-
-.navbar-collapse {
-    margin-left: 0;
-    padding-left: 0;
 }
 
 ul.breadcrumb {

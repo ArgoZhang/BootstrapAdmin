@@ -14,16 +14,18 @@
 }
 @section query {
     <form class="form-inline" role="form">
-        <div class="form-group col-lg-5">
-            <label class="control-label" for="txt_search_name">部门名称</label>
-            <input type="text" class="form-control" id="txt_search_name" />
-        </div>
-        <div class="form-group col-lg-5">
-            <label class="control-label" for="txt_group_desc">部门描述</label>
-            <input type="text" class="form-control" id="txt_group_desc" />
-        </div>
-        <div class="form-group col-lg-2">
-            <button type="button" id="btn_query" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询</button>
+        <div class="row">
+            <div class="form-group col-lg-5">
+                <label class="control-label" for="txt_search_name">部门名称</label>
+                <input type="text" class="form-control" id="txt_search_name" />
+            </div>
+            <div class="form-group col-lg-5">
+                <label class="control-label" for="txt_group_desc">部门描述</label>
+                <input type="text" class="form-control" id="txt_group_desc" />
+            </div>
+            <div class="form-group col-lg-2">
+                <button type="button" id="btn_query" class="btn btn-primary form-control"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询</button>
+            </div>
         </div>
     </form>
 }
@@ -42,14 +44,16 @@
     </div>
     <div class="modal-body">
         <form class="form-inline" id="dataForm" name="dataForm" role="form">
-            <div class="form-group col-lg-6">
-                <label class="control-label" for="groupName">部门名称</label>
-                <input type="text" class="form-control" id="groupName" name="groupName" maxlength="50" />
-            </div>
-            <div class="form-group col-lg-6">
-                <label class="control-label" for="groupDesc">部门描述</label>
-                <input type="text" class="form-control" id="groupDesc" name="groupDesc" maxlength="50" />
-                <input type="text" class="form-control hide" id="groupID" name="groupID" />
+            <div class="row">
+                <div class="form-group col-lg-6">
+                    <label class="control-label" for="groupName">部门名称</label>
+                    <input type="text" class="form-control" id="groupName" name="groupName" maxlength="50" />
+                </div>
+                <div class="form-group col-lg-6">
+                    <input type="text" class="form-control hidden" id="groupID" name="groupID" />
+                    <label class="control-label" for="groupDesc">部门描述</label>
+                    <input type="text" class="form-control" id="groupDesc" name="groupDesc" maxlength="50" />
+                </div>
             </div>
         </form>
     </div>
