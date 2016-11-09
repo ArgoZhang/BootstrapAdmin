@@ -18,7 +18,7 @@
         reset: function () {
             for (name in this.options.map) {
                 var ctl = $("#" + this.options.map[name]);
-                if (ctl.hasClass('selectpicker')) ctl.selectpicker('val', "");
+                if (ctl.hasClass('selectpicker')) ctl.selectpicker('val', "1");
                 else ctl.val("");
             }
         },
