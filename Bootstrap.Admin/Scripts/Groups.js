@@ -5,7 +5,7 @@
             map: {
                 ID: "groupID",
                 GroupName: "groupName",
-                Description: "groupDesc"               
+                Description: "groupDesc"
             }
         }),
         click: {
@@ -30,14 +30,13 @@
             }, {
                 id: 'btnSubmitRole',
                 click: function (row) {
-                  
                     var groupId = row.ID;
                     var roleIds = $('#dialogRole :checked').map(function (index, element) {
                         return $(element).val();
                     }).toArray().join(',');
                     Role.saveRolesByGroupId(groupId, roleIds, { modal: 'dialogRole' });
                 }
-            },{
+            }, {
                 id: 'btnSubmitUser',
                 click: function (row) {
                     var groupId = row.ID;
