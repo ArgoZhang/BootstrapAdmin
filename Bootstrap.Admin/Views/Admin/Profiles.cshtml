@@ -6,6 +6,8 @@
 @section Javascript {
     <script src="~/content/js/longbow.dataentity.js"></script>
     <script src="~/content/js/sweetalert.js"></script>
+    <script src="~/content/js/jquery.validate.js"></script>
+    <script src="~/content/js/messages_zh.js"></script>
     <script src="~/Scripts/Profiles.js"></script>
 }
 @section css {
@@ -22,7 +24,7 @@
     <div class="panel-heading">系统名称设置</div>
     <div class="panel-body">
         <div class="input-group form-group">
-            <input type="text" class="form-control" id="sysName" value="@Model.Title" />
+            <input type="text" class="form-control" id="sysName" placeholder="请输入网站标题" value="@Model.Title" />
             <span class="input-group-btn">
                 <button class="btn btn-default" type="button" id="sysSave">保存</button>
             </span>
@@ -33,7 +35,7 @@
     <div class="panel-heading">页脚设置</div>
     <div class="panel-body">
         <div class="input-group form-group">
-            <input type="text" class="form-control" id="sysFoot" value="@Model.Footer" />
+            <input type="text" class="form-control" id="sysFoot" placeholder="请输入网站页脚" value="@Model.Footer" />
             <span class="input-group-btn">
                 <button class="btn btn-default" type="button" id="footSave">保存</button>
             </span>

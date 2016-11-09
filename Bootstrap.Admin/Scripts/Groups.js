@@ -49,7 +49,6 @@
         }
     });
 
-
     $('table').smartTable({
         url: '../api/Groups',            //请求后台的URL（*）
         sortName: 'GroupName',

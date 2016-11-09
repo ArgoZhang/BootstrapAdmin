@@ -14,11 +14,19 @@
             assign: [{
                 id: 'sysSave',
                 click: function (row, data) {
+                    if (data.Title == "") {
+                        swal("请输入网站标题内容", "保存操作", "error");
+                        return;
+                    }
                     Profiles.saveWebSite({ name: '网站标题', code: data.Title, category: '网站设置' });
                 }
             }, {
                 id: 'footSave',
                 click: function (row, data) {
+                    if (data.Title == "") {
+                        swal("请输入网站页脚内容", "保存操作", "error");
+                        return;
+                    }
                     Profiles.saveWebSite({ name: '网站页脚', code: data.Footer, category: '网站设置' });
                 }
             }]
