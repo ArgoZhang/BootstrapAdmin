@@ -4,7 +4,8 @@
     Layout = "~/Views/Shared/_Admin.cshtml";
 }
 @section Javascript {
-    <script src="~/Content/js/sweetalert.js"></script>
+    <script src="~/content/js/sweetalert.js"></script>
+    <script src="~/content/js/longbow.dataentity.js"></script>
     <script src="~/Scripts/Profiles.js"></script>
 }
 @section css {
@@ -16,23 +17,22 @@
 @section navigator {
     @Html.Partial("Navigator", Model)
 }
-
 <div class="panel panel-default">
     <div class="panel-heading">系统名称设置</div>
     <div class="panel-body">
-        <div class="input-group">         
-                <input type="text" class="form-control" id="sysNameSet">
-                <span class="input-group-btn">
-                    <button class="btn btn-default" type="button" id="sysSave">保存</button>
-                </span>
-            </div>
+        <div class="input-group form-group">
+            <input type="text" class="form-control" id="sysName" value="@Model.Title" />
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button" id="sysSave">保存</button>
+            </span>
+        </div>
     </div>
 </div>
 <div class="panel panel-default">
     <div class="panel-heading">页脚设置</div>
     <div class="panel-body">
-        <div class="input-group">
-            <input type="text" class="form-control" id="footSet">
+        <div class="input-group form-group">
+            <input type="text" class="form-control" id="sysFoot" value="@Model.Footer" />
             <span class="input-group-btn">
                 <button class="btn btn-default" type="button" id="footSave">保存</button>
             </span>
@@ -40,12 +40,10 @@
     </div>
 </div>
 <div class="panel panel-default">
-    <div class="panel-heading">网站缓存<span class="pull-right"><a href="javascript:;" class="tooltips fa fa-refresh" data-placement="left" data-original-title="点击刷新"></a></span></div>
+    <div class="panel-heading">网站缓存<a href="javascript:;" class="cf pull-right tooltips fa fa-refresh" data-placement="left" data-original-title="点击刷新"></a></div>
     <div class="panel-body">
         <div class="tasks-widget">
             <ul id="sortable" class="task-list ui-sortable"></ul>
         </div>
     </div>
 </div>
-
-

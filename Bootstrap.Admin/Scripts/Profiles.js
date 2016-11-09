@@ -1,53 +1,28 @@
 ﻿$(function () {
-
-    var url = "../api/Profiles";
-
-    $.ajax({
-        url: url,
-        type: 'GET',
-        success: function (result) {
-            if (result) {
-                $('#sysNameSet').val(result[0]);
-                $('#footSet').val(result[1]);
+    var bsa = new BootstrapAdmin({
+        url: '../api/Profiles',
+        bootstrapTable: null,
+        validateForm: null,
+        modal: null,
+        dataEntity: new DataEntity({
+            map: {
+                Title: "sysName",
+                Footer: "sysFoot"
             }
-            else {
-                swal("失败", "加载数据失败", "error");
-            }
+        }),
+        click: {
+            assign: [{
+                id: 'sysSave',
+                click: function (row, data) {
+                    Profiles.saveWebSite({ name: '网站标题', code: data.Title, category: '网站设置' });
+                }
+            }, {
+                id: 'footSave',
+                click: function (row, data) {
+                    Profiles.saveWebSite({ name: '网站页脚', code: data.Footer, category: '网站设置' });
+                }
+            }]
         }
-    });
-
-    $('#sysSave').click(function () {
-         var dvalue = $('#sysNameSet').val();
-        $.ajax({
-            url: url,
-            data: { "type": "sysName", "dvalue": dvalue },
-            type: 'POST',
-            success: function (result) {
-                if (result) {
-                    swal("成功", "设置网站标题成功", "success");
-                }
-                else {
-                    swal("失败", "设置网站标题失败", "error");
-                }
-            }
-        });
-    });
-
-    $('#footSave').click(function () {
-        var dvalue = $('#footSet').val();
-        $.ajax({
-            url: url,
-            data: { "type": "foot", "dvalue": dvalue },
-            type: 'POST',
-            success: function (result) {
-                if (result) {
-                    swal("成功", "设置网站页脚成功", "success");
-                }
-                else {
-                    swal("失败", "设置网站页脚失败", "error");
-                }
-            }
-        });
     });
 
     var html = '<li class="list-primary"><i class="fa fa-ellipsis-v"></i><div class="task-title"><span class="task-title-sp">{2}</span><span class="badge badge-sm label-success">{0}</span><div class="task-wrapper"><span class="task-value tooltips" data-placement="top" data-original-title="{3}">{3}</span></div><div class="pull-right hidden-phone"><button class="btn btn-danger btn-xs fa fa-trash-o tooltips" data-key="{1}" data-placement="left" data-original-title="{1}"></button></div></div></li>';
@@ -80,10 +55,5 @@
     }
 
     listCache({ url: '../../CacheList.axd' });
-
     $('a.fa-refresh').click(function () { listCache({ url: '../../CacheList.axd' }); });
-
-  
-
-  
 })

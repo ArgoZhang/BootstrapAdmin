@@ -169,7 +169,6 @@ ul.sidebar-menu {
 .modal-body .checkbox {
     padding: 5px;
     margin-top: 0;
-    margin-bottom: 0;
 }
 
     .modal-body .checkbox label input[type='checkbox'] {
@@ -198,3 +197,13 @@ ul.sidebar-menu {
             padding: 8px 20px;
             border-left: solid 1px #aeb2b7;
         }
+
+/*cache*/
+a.cf {
+    font-size: 15px;
+}
+
+    a.cf:hover {
+        -webkit-animation: fa-spin 2s infinite linear;
+        animation: fa-spin 2s infinite linear;
+    }

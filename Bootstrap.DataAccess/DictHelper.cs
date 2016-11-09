@@ -158,41 +158,26 @@ namespace Bootstrap.DataAccess
         }
         /// <summary>
         /// 保存网站个性化设置
-        /// 2016-11-8
         /// </summary>
+        /// <param name="name"></param>
+        /// <param name="code"></param>
+        /// <param name="category"></param>
         /// <returns></returns>
-        public static bool SaveProfiles(string type, string value)
+        public static bool SaveProfiles(string name, string code, string category)
         {
-            string name="";
-            string category="网站设置";
-            switch(type)
-            {
-                case "sysName": name = "网站标题"; break;
-                case "foot": name = "网站页脚"; break;
-            }
-            var settings = DictHelper.RetrieveWebSettings();
-            var p = from ps in settings
-                    where ps.Name.Equals(name)
-                     select new
-                     {
-                         ID=ps.ID
-                     };
-                   
             var ret = false;
-            string sql = "Update Dicts set Code = @Code where Category =@Category and Name=@Name";
+            string sql = "Update Dicts set Code = @Code where Category = @Category and Name = @Name";
             try
             {
                 using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
                 {
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Code", value, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Name", name, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Code", code, ParameterDirection.Input));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Category", category, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Name", name, ParameterDirection.Input));     
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
+                CacheManager.Clear(key => key == RetrieveWebSettingsDataKey);
                 ret = true;
-
-                foreach(var px in p)
-                CacheCleanUtility.ClearCache(dictIds:px.ID.ToString());
             }
             catch (DbException ex)
             {
@@ -200,7 +185,5 @@ namespace Bootstrap.DataAccess
             }
             return ret;
         }
-       
-   
     }
 }

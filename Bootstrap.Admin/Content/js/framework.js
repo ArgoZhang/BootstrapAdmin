@@ -30,7 +30,7 @@
         }
 
         // handler modal window show event
-        if (this.options.modal.constructor === String) {
+        if (this.options.modal && this.options.modal.constructor === String) {
             $('#' + this.options.modal).on('show.bs.modal', function (e) {
                 if (that.options.validateForm.constructor === String) {
                     var v = $('#' + that.options.validateForm).validate();
@@ -198,21 +198,27 @@
 
         assign: function (eventSrc, callback) {
             var options = this.options;
-            if (options.bootstrapTable.constructor !== String) return;
-            var arrselections = $(options.bootstrapTable).bootstrapTable('getSelections');
-            if (arrselections.length == 0) {
-                swal('请选择要编辑的数据', "编辑操作", "warning");
-            }
-            else if (arrselections.length > 1) {
-                swal('请选择一个要编辑的数据', "编辑操作", "warning");
-            }
-            else {
-                if ($.isFunction(callback)) {
-                    callback.call(eventSrc, arrselections[0]);
+            var row = {};
+            if (options.bootstrapTable && options.bootstrapTable.constructor === String) {
+                var arrselections = $(options.bootstrapTable).bootstrapTable('getSelections');
+                if (arrselections.length == 0) {
+                    swal('请选择要编辑的数据', "编辑操作", "warning");
+                    return;
+                }
+                else if (arrselections.length > 1) {
+                    swal('请选择一个要编辑的数据', "编辑操作", "warning");
+                    return;
+                }
+                else {
+                    row = arrselections[0];
                 }
             }
+            if ($.isFunction(callback)) {
+                var data = options.dataEntity;
+                if (data instanceof DataEntity) data = data.get();
+                callback.call(eventSrc, row, $.extend({}, data));
+            }
         },
-
     };
 
     var htmlTemplate = '<div class="form-group checkbox col-lg-3 col-xs-4"><label class="tooltips" data-placement="top" data-original-title="{3}" title="{3}"><input type="checkbox" value="{0}" {2}/>{1}</label></div>';
@@ -342,4 +348,12 @@
     Menu.saveMenusByRoleId = function (roleId, menuIds, callback) {
         processData.call(this, { Id: roleId, callback: callback, method: "PUT", data: { type: "role", menuIds: menuIds } });
     };
+    //Profiles
+    Profiles = {
+        url: '../api/Profiles/',
+        title: "个性化维护"
+    }
+    Profiles.saveWebSite = function (options) {
+        processData.call(this, { data: options });
+    }
 })(jQuery);
