@@ -17,6 +17,8 @@ INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (6, N'�
 INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (7, N'系统通知', N'数据库连接', N'2', 0)
 INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (8, N'通知状态', N'未处理', N'0', 0)
 INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (9, N'通知状态', N'已处理', N'1', 0)
+INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (10, N'处理结果', N'同意', N'0', 0)
+INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (11, N'处理结果', N'拒绝', N'1', 0)
 SET IDENTITY_INSERT [dbo].[Dicts] OFF
 
 DELETE FROM Navigations where ID < 15

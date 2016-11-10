@@ -143,6 +143,7 @@ CREATE TABLE [dbo].[Notifications](
 	[RegisterTime] [datetime] NOT NULL,
 	[ProcessTime] [datetime] NULL,
 	[ProcessBy] [nvarchar](50) NULL,
+	[ProcessResult] [nvarchar](50) NULL,
 	[Status] [nvarchar](50) NOT NULL
 ) ON [PRIMARY]
 GO
