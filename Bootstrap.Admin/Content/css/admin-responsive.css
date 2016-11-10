@@ -11,7 +11,7 @@
         position: absolute;
         width: auto;
         padding-right: 20px;
-        z-index: 2;
+        z-index: 5;
     }
 
     #main-content {
