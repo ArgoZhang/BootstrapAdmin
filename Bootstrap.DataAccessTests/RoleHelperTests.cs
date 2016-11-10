@@ -16,7 +16,7 @@ namespace Bootstrap.DataAccess.Tests
         public void Initialized()
         {
             Role = new Role() { RoleName = "_测试角色_", Description = "这是一个测试角色", Checked = "0" };
-            User = new User() { UserName = "_测试用户_", Password = "111", PassSalt = "111", DisplayName = "_测试用户_", Checked = "0", RegisterTime = DateTime.Now, ApprovedTime = DateTime.Now };
+            User = new User() { UserName = "_测试用户_", Password = "111", PassSalt = "111", DisplayName = "_测试用户_", Checked = "0", RegisterTime = DateTime.Now, ApprovedTime = DateTime.Now, Description = "测试用户" };
             Group = new Group() { GroupName = "_测试部门_", Description = "这是一个测试部门", Checked = "0" };
         }
         [TestCleanup]
@@ -38,7 +38,7 @@ namespace Bootstrap.DataAccess.Tests
             var role = roles.FirstOrDefault(m => m.RoleName == Role.RoleName);
             role.Description = "这是修改后的测试角色";
             Assert.IsTrue(RoleHelper.SaveRole(role), string.Format("更新角色ID={0}操作失败，请检查RoleHelper.SaveRole方法", role.ID));
-            var ret = RoleHelper.RetrieveRoles(role.ID.ToString());
+            var ret = RoleHelper.RetrieveRoles(role.ID);
             Assert.IsTrue(ret.Count() == 1, "带参数的RoleHelper.RetrieveRoles方法调用失败");
             Assert.AreEqual(role.Description, ret.First().Description, string.Format("更新角色ID={0}操作失败，请检查RoleHelper.SaveRole方法", role.ID));
         }

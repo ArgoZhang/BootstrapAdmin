@@ -27,9 +27,9 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 查询所有角色
         /// </summary>
-        /// <param name="tId"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        public static IEnumerable<Role> RetrieveRoles(string tId = null)
+        public static IEnumerable<Role> RetrieveRoles(int id = 0)
         {
             var ret = CacheManager.GetOrAdd(RetrieveRolesDataKey, CacheSection.RetrieveIntervalByKey(RetrieveRolesDataKey), key =>
             {
@@ -54,7 +54,7 @@ namespace Bootstrap.DataAccess
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return roles;
             }, CacheSection.RetrieveDescByKey(RetrieveRolesDataKey));
-            return string.IsNullOrEmpty(tId) ? ret : ret.Where(t => tId.Equals(t.ID.ToString(), StringComparison.OrdinalIgnoreCase));
+            return id == 0 ? ret : ret.Where(t => id == t.ID);
         }
         /// <summary>
         /// 保存用户角色关系

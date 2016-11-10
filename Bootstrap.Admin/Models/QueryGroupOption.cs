@@ -21,7 +21,7 @@ namespace Bootstrap.Admin.Models
         public QueryData<Group> RetrieveData()
         {
             // int limit, int offset, string name, string price, string sort, string order
-            var data = GroupHelper.RetrieveGroups(string.Empty);
+            var data = GroupHelper.RetrieveGroups();
             if (!string.IsNullOrEmpty(GroupName))
             {
                 data = data.Where(t => t.GroupName.Contains(GroupName));

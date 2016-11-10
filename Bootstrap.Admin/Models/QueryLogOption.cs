@@ -20,9 +20,13 @@ namespace Bootstrap.Admin.Models
         /// 
         /// </summary>
         public string OperateTimeEnd { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public QueryData<Log> RetrieveData()
         {
-            var data = LogHelper.RetrieveLogs(string.Empty);
+            var data = LogHelper.RetrieveLogs();
             if (!string.IsNullOrEmpty(OperateType))
             {
                 data = data.Where(t => t.CRUD.ToString().Contains(OperateType));

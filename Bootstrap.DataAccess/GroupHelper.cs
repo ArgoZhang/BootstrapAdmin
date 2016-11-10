@@ -1,4 +1,5 @@
-﻿using Longbow.Caching;
+﻿using Longbow;
+using Longbow.Caching;
 using Longbow.Caching.Configuration;
 using Longbow.Data;
 using Longbow.ExceptionManagement;
@@ -24,9 +25,9 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 查询所有群组信息
         /// </summary>
-        /// <param name="tId"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        public static IEnumerable<Group> RetrieveGroups(string tId = null)
+        public static IEnumerable<Group> RetrieveGroups(int id = 0)
         {
             var ret = CacheManager.GetOrAdd(RetrieveGroupsDataKey, CacheSection.RetrieveIntervalByKey(RetrieveGroupsDataKey), key =>
             {
@@ -43,7 +44,7 @@ namespace Bootstrap.DataAccess
                             {
                                 ID = (int)reader[0],
                                 GroupName = (string)reader[1],
-                                Description = (string)reader[2]
+                                Description = LgbConvert.ReadValue(reader[2], string.Empty)
                             });
                         }
                     }
@@ -51,7 +52,7 @@ namespace Bootstrap.DataAccess
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return Groups;
             }, CacheSection.RetrieveDescByKey(RetrieveGroupsDataKey));
-            return string.IsNullOrEmpty(tId) ? ret : ret.Where(t => tId.Equals(t.ID.ToString(), StringComparison.OrdinalIgnoreCase));
+            return id == 0 ? ret : ret.Where(t => id == t.ID);
         }
         /// <summary>
         /// 删除群组信息
@@ -87,7 +88,7 @@ namespace Bootstrap.DataAccess
             if (p == null) throw new ArgumentNullException("p");
             bool ret = false;
             if (p.GroupName.Length > 50) p.GroupName.Substring(0, 50);
-            if (p.Description.Length > 500) p.Description.Substring(0, 500);
+            if (!string.IsNullOrEmpty(p.Description) && p.Description.Length > 500) p.Description.Substring(0, 500);
             string sql = p.ID == 0 ?
                 "Insert Into Groups (GroupName, Description) Values (@GroupName, @Description)" :
                 "Update Groups set GroupName = @GroupName, Description = @Description where ID = @ID";
@@ -97,7 +98,7 @@ namespace Bootstrap.DataAccess
                 {
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ID", p.ID, ParameterDirection.Input));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@GroupName", p.GroupName, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Description", p.Description, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Description", DBAccess.ToDBValue(p.Description), ParameterDirection.Input));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
                 CacheCleanUtility.ClearCache(groupIds: p.ID == 0 ? "" : p.ID.ToString());

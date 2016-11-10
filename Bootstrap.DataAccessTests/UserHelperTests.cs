@@ -16,7 +16,7 @@ namespace Bootstrap.DataAccess.Tests
         [TestInitialize]
         public void Initialized()
         {
-            User = new User() { UserName = "_测试用户_", Password = "123", PassSalt = "123", DisplayName = "测试者", RegisterTime = DateTime.Now, ApprovedTime = DateTime.Now };
+            User = new User() { UserName = "_测试用户_", Password = "123", PassSalt = "123", DisplayName = "测试者", RegisterTime = DateTime.Now, ApprovedTime = DateTime.Now, Description = "测试" };
             Role = new Role() { RoleName = "_测试角色_", Description = "测试角色" };
             Group = new Group() { GroupName = "_测试部门_", Description = "测试部门" };
         }
@@ -49,7 +49,7 @@ namespace Bootstrap.DataAccess.Tests
             var user = users.FirstOrDefault(u => u.UserName == User.UserName);
             user.DisplayName = "测试者2号";
             Assert.IsTrue(UserHelper.SaveUser(user), string.Format("更新用户ID={0}操作失败，请检查UserHelper.SaveUser方法", user.ID));
-            var ret = UserHelper.RetrieveUsers(user.ID.ToString());
+            var ret = UserHelper.RetrieveUsers(user.ID);
             Assert.IsTrue(ret.Count() == 1, "带参数的UserHelper.RetrieveUsers方法调用失败");
             Assert.AreEqual(user.DisplayName, ret.First().DisplayName, string.Format("更新用户ID={0}操作失败，请检查UserHelper.SaveUser方法", user.ID));
         }

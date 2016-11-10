@@ -1,4 +1,5 @@
-﻿using Longbow.Caching;
+﻿using Longbow;
+using Longbow.Caching;
 using Longbow.Caching.Configuration;
 using Longbow.Data;
 using Longbow.ExceptionManagement;
@@ -25,9 +26,9 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 查询所有用户
         /// </summary>
-        /// <param name="pIds"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        public static IEnumerable<User> RetrieveUsers(string tId = null)
+        public static IEnumerable<User> RetrieveUsers(int id = 0)
         {
             string sql = "select ID, UserName, DisplayName, RegisterTime, ApprovedTime from Users Where ApprovedTime is not null";
             var ret = CacheManager.GetOrAdd(RetrieveUsersDataKey, CacheSection.RetrieveIntervalByKey(RetrieveUsersDataKey), key =>
@@ -46,7 +47,7 @@ namespace Bootstrap.DataAccess
                                 UserName = (string)reader[1],
                                 DisplayName = (string)reader[2],
                                 RegisterTime = (DateTime)reader[3],
-                                ApprovedTime = (DateTime)reader[4]
+                                ApprovedTime = LgbConvert.ReadValue(reader[4], DateTime.MinValue)
                             });
                         }
                     }
@@ -54,7 +55,7 @@ namespace Bootstrap.DataAccess
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return Users;
             }, CacheSection.RetrieveDescByKey(RetrieveUsersDataKey));
-            return string.IsNullOrEmpty(tId) ? ret : ret.Where(t => tId.Equals(t.ID.ToString(), StringComparison.OrdinalIgnoreCase));
+            return id == 0 ? ret : ret.Where(t => id == t.ID);
         }
         /// <summary>
         /// 根据用户名查询用户
@@ -127,17 +128,13 @@ namespace Bootstrap.DataAccess
         {
             if (p == null) throw new ArgumentNullException("p");
             bool ret = false;
-            if (p.UserName.Length > 50) 
-                p.UserName.Substring(0, 50);
+            if (p.UserName.Length > 50) p.UserName.Substring(0, 50);
             p.PassSalt = LgbCryptography.GenerateSalt();
             p.Password = LgbCryptography.ComputeHash(p.Password, p.PassSalt);
-            if (string.IsNullOrEmpty(p.Description))
-                p.Description=" ";
-            else if(p.Description.Length > 500)
-               p.Description.Substring(0, 500);
+            if (p.ID == 0 && p.Description.Length > 500) p.Description.Substring(0, 500);
             string sql = p.ID == 0 ?
-                "Insert Into Users (UserName, Password, PassSalt, DisplayName, RegisterTime, ApprovedTime,Description) Values (@UserName, @Password, @PassSalt, @DisplayName, GetDate(), @ApprovedTime,@Description)" :
-                "Update Users set UserName = @UserName, Password = @Password, PassSalt = @PassSalt, DisplayName = @DisplayName,Description=@Description where ID = @ID";
+                "Insert Into Users (UserName, Password, PassSalt, DisplayName, RegisterTime, ApprovedTime, Description) Values (@UserName, @Password, @PassSalt, @DisplayName, GetDate(), @ApprovedTime, @Description)" :
+                "Update Users set UserName = @UserName, Password = @Password, PassSalt = @PassSalt, DisplayName = @DisplayName where ID = @ID";
             try
             {
                 using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
@@ -148,7 +145,7 @@ namespace Bootstrap.DataAccess
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@PassSalt", p.PassSalt, ParameterDirection.Input));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@DisplayName", p.DisplayName, ParameterDirection.Input));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ApprovedTime", DBAccess.ToDBValue(p.ApprovedTime), ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Description", p.Description, ParameterDirection.Input));
+                    if (p.ID == 0) cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Description", p.Description, ParameterDirection.Input));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
                 CacheCleanUtility.ClearCache(userIds: p.ID == 0 ? "" : p.ID.ToString());
@@ -331,12 +328,12 @@ namespace Bootstrap.DataAccess
         /// 
         /// </summary>
         /// <returns></returns>
-        public static bool RegisterUser(string userName, string displayName, string password,string description)
+        public static bool RegisterUser(string userName, string displayName, string password, string description)
         {
             //TODO：未完成并通知管理员组有新用户注册，需要批复。
-            if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(displayName) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(description)) 
+            if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(displayName) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(description))
                 return false;
-            return SaveUser(new User() { UserName = userName, DisplayName = displayName, Password = password,Description=description });
+            return SaveUser(new User() { UserName = userName, DisplayName = displayName, Password = password, Description = description });
         }
     }
 }
