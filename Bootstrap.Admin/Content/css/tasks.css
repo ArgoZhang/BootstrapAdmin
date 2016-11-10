@@ -88,6 +88,11 @@
             padding-top: 14px;
         }
 
+            .tasks-widget .task-list li > .task-title .hidden-phone button.btn-xs {
+                font-size: 12px;
+                line-height: 1.5;
+            }
+
     .tasks-widget .task-list li > .task-config {
         position: absolute;
         top: 10px;
