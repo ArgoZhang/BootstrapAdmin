@@ -6,15 +6,20 @@ SET IDENTITY_INSERT [dbo].[Users] ON
 insert into Users (ID, UserName, Password, PassSalt, DisplayName, RegisterTime, ApprovedTime) values (1, 'Admin', 'Es7WVgNsJuELwWK8daCqufUBknCsSC0IYDphQZAiGOo=', 'W5vpBEOYRGHkQXatN0t+ECM/U8cHDuEgrq56+zZBk4J481xH', 'Administrator', GetDate(), GetDate())
 SET IDENTITY_INSERT [dbo].[Users] OFF
 
-DELETE From Dicts where ID in (1, 2, 3, 4)
+DELETE From Dicts where ID < 10
 SET IDENTITY_INSERT [dbo].[Dicts] ON 
 INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (1, N'菜单', N'系统菜单', N'0', 0)
 INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (2, N'菜单', N'外部菜单', N'1', 0)
 INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (3, N'网站设置', N'网站标题', N'后台管理系统', 0)
 INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (4, N'网站设置', N'网站页脚', N'2016 © 通用后台管理系统', 0)
+INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (5, N'系统通知', N'用户注册', N'0', 0)
+INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (6, N'系统通知', N'程序异常', N'1', 0)
+INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (7, N'系统通知', N'数据库连接', N'2', 0)
+INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (8, N'通知状态', N'未处理', N'0', 0)
+INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (9, N'通知状态', N'已处理', N'1', 0)
 SET IDENTITY_INSERT [dbo].[Dicts] OFF
 
-DELETE FROM Navigations
+DELETE FROM Navigations where ID < 15
 SET IDENTITY_INSERT [dbo].[Navigations] ON 
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (1, 0, N'后台管理', 1, N'fa fa-gear', N'~/Admin/Index', N'0')
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (2, 0, N'菜单管理', 10, N'fa fa-dashboard', N'~/Admin/Menus', N'0')
