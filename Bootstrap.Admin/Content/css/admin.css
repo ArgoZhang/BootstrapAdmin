@@ -187,19 +187,27 @@ ul.sidebar-menu {
     display: none;
 }
 
-    .toolbar div {
+    .toolbar .dropdown-menu {
         padding: 0;
+        margin-top: 4px;
         white-space: nowrap;
+        min-width: 40px;
     }
 
-        .toolbar div a:first-child {
-            border-left: none;
-        }
-
-        .toolbar div a {
+        .toolbar .dropdown-menu a {
             padding: 8px 20px;
             border-left: solid 1px #aeb2b7;
+            border-right: none;
+            color: #504d4d;
         }
+
+            .toolbar .dropdown-menu a:first-child {
+                border-left: none;
+            }
+
+            .toolbar .dropdown-menu a:hover {
+                color: #235e90;
+            }
 
 /*cache*/
 .panel a.fa-refresh {

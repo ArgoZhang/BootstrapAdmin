@@ -28,7 +28,7 @@
 
     .modal-dialog {
         width: 540px;
-        margin:20px auto;
+        margin: 20px auto;
     }
 
     .fb-timeliner {
@@ -61,6 +61,21 @@
     .modal-dialog {
         width: 300px;
     }
+}
+
+@media (max-width: 400px) {
+    .toolbar .dropdown-menu a {
+        border-left: none;
+        padding: 8px;
+    }
+
+        .toolbar .dropdown-menu a:first-child {
+            padding-left: 16px;
+        }
+
+        .toolbar .dropdown-menu a:last-child {
+            padding-right: 16px;
+        }
 }
 
 @media (min-height: 700px) {
