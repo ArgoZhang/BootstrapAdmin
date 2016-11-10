@@ -136,7 +136,7 @@ BEGIN
 		inner join (
 			select nr.NavigationID from Users u 
 			inner join UserRole ur on ur.UserID = u.ID 
-			inner join  NavigationRole nr on nr.RoleID = ur.RoleID
+			inner join NavigationRole nr on nr.RoleID = ur.RoleID
 			where u.UserName = @userName
 			union
 			select nr.NavigationID from Users u 
@@ -144,6 +144,13 @@ BEGIN
 			inner join RoleGroup rg on rg.GroupID = ug.GroupID 
 			inner join NavigationRole nr on nr.RoleID = rg.RoleID
 			where u.UserName = @userName
+			union
+			select n.ID from Navigations n
+			where EXISTS (select UserName from Users u 
+				inner join UserRole ur on u.ID = ur.UserID
+				inner join Roles r on ur.RoleID = r.ID
+				where u.UserName = @userName and r.RoleName = N'Administrators'
+			)
 		) nav on n.ID = nav.NavigationID
 END
 GO
