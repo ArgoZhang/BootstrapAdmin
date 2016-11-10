@@ -43,16 +43,24 @@
                         <span class="glyphicon glyphicon-lock input-group-addon"></span>
                         <input type="password" id="password" name="password" class="form-control" value="" placeholder="密码" />
                     </div>
+                    <label for="description">申请理由：</label>
+                    <div class="input-group">
+                        <span class="glyphicon glyphicon-lock input-group-addon"></span>
+                        <input type="text" id="description" name="description" class="form-control" value="" placeholder="申请理由" />
+                    </div>
                     <button id="btnAccount" class="btn btn-primary" type="button">继续</button>
                 </div> <!-- /.setup-form-container -->
             </div>
             <div class="setup-confirm">
                 <h4>您注册的信息如下：</h4>
                 <div>
-                    <label>登陆账号：</label><span></span>
+                    <label>登陆账号：</label><span id="loginID"></span>
                 </div>
                 <div>
-                    <label>显示名称：</label><span></span>
+                    <label>显示名称：</label><span id="loginName"></span>
+                </div>
+                <div>
+                    <label>申请理由：</label><span id="loginDesc"></span>
                 </div>
                 <button id="btnSubmit" class="btn btn-primary" type="submit">确认并提交</button>
             </div>
@@ -63,10 +71,13 @@
                 <ul class="features-list">
                     <li><strong>Unlimited</strong>特性一</li>
                     <li><strong>Unlimited</strong>特性二</li>
+                    <li><strong>Unlimited</strong>特性三</li>
+                    <li><strong>Unlimited</strong>特性四</li>
                     <li class="list-divider"></li>
                     <li><i class="glyphicon glyphicon-ok"></i>优点一</li>
                     <li><i class="glyphicon glyphicon-ok"></i>优点二</li>
                     <li><i class="glyphicon glyphicon-ok"></i>优点三</li>
+                    <li><i class="glyphicon glyphicon-ok"></i>优点四</li>
                 </ul>
             </div>
         </div>

@@ -15,6 +15,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 SET ANSI_PADDING ON
 GO
+
 CREATE TABLE [dbo].[Users](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
 	[UserName] [varchar](50) NOT NULL,
@@ -23,28 +24,39 @@ CREATE TABLE [dbo].[Users](
 	[DisplayName] [nvarchar](50) NOT NULL,
 	[RegisterTime] [datetime] NOT NULL,
 	[ApprovedTime] [datetime] NULL,
+	[Description] [nvarchar](500) NULL,
  CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
+
 GO
+
 SET ANSI_PADDING OFF
 GO
+
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ID' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Users', @level2type=N'COLUMN',@level2name=N'ID'
 GO
+
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'用户名' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Users', @level2type=N'COLUMN',@level2name=N'UserName'
 GO
+
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'密码' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Users', @level2type=N'COLUMN',@level2name=N'Password'
 GO
+
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'密码盐' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Users', @level2type=N'COLUMN',@level2name=N'PassSalt'
 GO
+
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'显示名称' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Users', @level2type=N'COLUMN',@level2name=N'DisplayName'
 GO
+
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'注册时间' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Users', @level2type=N'COLUMN',@level2name=N'RegisterTime'
 GO
+
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'批复时间' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Users', @level2type=N'COLUMN',@level2name=N'ApprovedTime'
 GO
+
 /****** Object:  Table [dbo].[UserRole]    Script Date: 11/07/2016 11:45:40 ******/
 SET ANSI_NULLS ON
 GO

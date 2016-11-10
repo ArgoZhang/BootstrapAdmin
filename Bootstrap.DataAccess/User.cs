@@ -31,5 +31,9 @@ namespace Bootstrap.DataAccess
         /// 获得/设置 用户被批复时间
         /// </summary>
         public DateTime ApprovedTime { get; set; }
+        /// <summary>
+        /// 获得/设置 用户的申请理由
+        /// </summary>
+        public string Description { get; set; }
     }
 }

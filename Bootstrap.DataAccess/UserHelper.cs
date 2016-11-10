@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
-using System.Globalization;
 using System.Linq;
 
 namespace Bootstrap.DataAccess
@@ -128,13 +127,17 @@ namespace Bootstrap.DataAccess
         {
             if (p == null) throw new ArgumentNullException("p");
             bool ret = false;
-            if (p.UserName.Length > 50) p.UserName.Substring(0, 50);
+            if (p.UserName.Length > 50) 
+                p.UserName.Substring(0, 50);
             p.PassSalt = LgbCryptography.GenerateSalt();
             p.Password = LgbCryptography.ComputeHash(p.Password, p.PassSalt);
-            if (p.DisplayName.Length > 50) p.DisplayName.Substring(0, 50);
+            if (string.IsNullOrEmpty(p.Description))
+                p.Description=" ";
+            else if(p.Description.Length > 500)
+               p.Description.Substring(0, 500);
             string sql = p.ID == 0 ?
-                "Insert Into Users (UserName, Password, PassSalt, DisplayName, RegisterTime, ApprovedTime) Values (@UserName, @Password, @PassSalt, @DisplayName, GetDate(), @ApprovedTime)" :
-                "Update Users set UserName = @UserName, Password = @Password, PassSalt = @PassSalt, DisplayName = @DisplayName where ID = @ID";
+                "Insert Into Users (UserName, Password, PassSalt, DisplayName, RegisterTime, ApprovedTime,Description) Values (@UserName, @Password, @PassSalt, @DisplayName, GetDate(), @ApprovedTime,@Description)" :
+                "Update Users set UserName = @UserName, Password = @Password, PassSalt = @PassSalt, DisplayName = @DisplayName,Description=@Description where ID = @ID";
             try
             {
                 using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
@@ -145,6 +148,7 @@ namespace Bootstrap.DataAccess
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@PassSalt", p.PassSalt, ParameterDirection.Input));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@DisplayName", p.DisplayName, ParameterDirection.Input));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ApprovedTime", DBAccess.ToDBValue(p.ApprovedTime), ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Description", p.Description, ParameterDirection.Input));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
                 CacheCleanUtility.ClearCache(userIds: p.ID == 0 ? "" : p.ID.ToString());
@@ -327,11 +331,12 @@ namespace Bootstrap.DataAccess
         /// 
         /// </summary>
         /// <returns></returns>
-        public static bool RegisterUser(string userName, string displayName, string password)
+        public static bool RegisterUser(string userName, string displayName, string password,string description)
         {
-            //TODO：判断注册用户是否合理，判断合法后插入数据库中返回真，并通知管理员组有新用户注册，需要批复。数据库Users表中增加一个字段标示用户是否被批复
-            if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(displayName) || string.IsNullOrEmpty(password)) return false;
-            return SaveUser(new User() { UserName = userName, DisplayName = displayName, Password = password });
+            //TODO：未完成并通知管理员组有新用户注册，需要批复。
+            if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(displayName) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(description)) 
+                return false;
+            return SaveUser(new User() { UserName = userName, DisplayName = displayName, Password = password,Description=description });
         }
     }
 }

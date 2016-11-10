@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <link href="/Content/css/bootstrap.css" rel="stylesheet">
+    <link href="/Content/css/bootstrap-theme.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container" align="center">
+        <form id="login" class="form-signin" method="post">
+            <h2 class="form-signin-heading">注册成功！</h2>
+            <div class="login-wrap">
+                <div class="input-group">
+                    <span >你需要等待管理员的审核</span>                  
+                </div>  
+                <div class="input-group">
+                    <span>才能开启账号，请耐心等待！</span>
+                </div>
+                <input id="btnClose" type="button" value="关闭本页" onclick="custom_close()" />        
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>
+
+<script language="javascript">
+function custom_close() {
+ if(confirm("您确定要关闭本页吗？")) {
+            window.opener = null;
+            window.open('', '_self');
+            window.close();
+        }
+        else { }
+    }
+</script>

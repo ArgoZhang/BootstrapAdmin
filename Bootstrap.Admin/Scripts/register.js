@@ -11,7 +11,11 @@
         password: {
             required: true,
             maxlength: 50
-        }
+        },
+        description: {
+            required: true,
+            maxlength: 500
+    }
     });
 
     $('#btnAccount').click(function () {
@@ -19,8 +23,9 @@
         if (valid) {
             $('.setup-main').hide();
             $('.steps li').toggleClass('current');
-            $('.setup-confirm span:first').text($('#userName').val());
-            $('.setup-confirm span:last').text($('#displayName').val());
+            $('#loginID').text($('#userName').val());
+            $('#loginName').text($('#displayName').val());
+            $('#loginDesc').text($('#description').val());
             $('.setup-confirm').show();
         }
     });
