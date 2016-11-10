@@ -5,10 +5,13 @@
 }
 @section css {
     <link href="~/Content/css/bootstrap-table.css" rel="stylesheet" />
+    <link href="~/Content/css/bootstrap-datetimepicker.css" rel="stylesheet" />
 }
 @section Javascript {
     <script src="~/content/js/bootstrap-table.js"></script>
     <script src="~/content/js/bootstrap-table-zh-CN.js"></script>
+    <script src="~/Content/js/moment-with-locales.js"></script>
+    <script src="~/Content/js/bootstrap-datetimepicker.js"></script>
     <script src="~/scripts/Logs.js"></script>
 }
 @section header {
@@ -22,19 +25,32 @@
     <div class="panel-body">
         <form class="form-inline" role="form">
             <div class="row">
-                <div class="form-group col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <label class="control-label" for="txt_operate_type">操作类型</label>
                     <input type="text" class="form-control" id="txt_operate_type" />
                 </div>
-                <div class="form-group col-xs-12 col-sm-6 col-md-3 col-lg-3">
+            </div>
+            <div class="row">
+                <div class="form-group col-xs-12 col-sm-6 col-md-5 col-lg-5">
                     <label class="control-label" for="txt_operate_start">起始时间</label>
-                    <input type="datetime" class="form-control" id="txt_operate_start" />
+                    <div class="input-group date">
+                        <input type="datetime" class="form-control" id="txt_operate_start" />
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+                        </span>
+                    </div>
                 </div>
-                <div class="form-group col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                <div class="form-group col-xs-12 col-sm-6 col-md-5 col-lg-5">
                     <label class="control-label" for="txt_operate_end">终止时间</label>
-                    <input type="datetime" class="form-control" id="txt_operate_end" />
+                    <div class="input-group input-append date form_datetime">
+                        <input type="datetime" class="form-control" id="txt_operate_start" />
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+                        </span>
+                    </div>
                 </div>
-                <div class="form-group col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                <div class="form-group col-xs-12 col-sm-12 col-md-2 col-lg-2">
+                    <label class="sr-only"></label>
                     <button type="button" id="btn_query" class="btn btn-primary form-control"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询</button>
                 </div>
             </div>

@@ -61,6 +61,10 @@
     .modal-dialog {
         width: 300px;
     }
+
+    input[type="datetime"] {
+        min-width: inherit;
+    }
 }
 
 @media (max-width: 400px) {

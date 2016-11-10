@@ -227,3 +227,7 @@ ul.sidebar-menu {
         padding-top: 7px;
         padding-bottom: 7px;
     }
+
+input[type="datetime"] {
+    min-width: 220px;
+}
