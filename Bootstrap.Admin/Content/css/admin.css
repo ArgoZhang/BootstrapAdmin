@@ -24,6 +24,10 @@
     height: auto;
 }
 
+    #main-content > .panel > .panel-body > .modal-footer {
+        text-align: left;
+    }
+
 .sidebar-closed #main-content {
     margin-left: 0;
 }
