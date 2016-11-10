@@ -11,11 +11,6 @@ $(function () {
         //        cookie: 'dcjq-accordion-1',
         classExpand: 'dcjq-current-parent'
     });
-
-    $('input[type="datetime"]').parent().datetimepicker({
-        locale: "zh-cn",
-        format: "YYYY-MM-DD"
-    });
 });
 
 (function ($) {

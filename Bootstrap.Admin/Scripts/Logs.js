@@ -17,4 +17,9 @@
             { title: "操作模块", field: "RequestUrl", sortable: false }
         ]
     });
+
+    $('input[type="datetime"]').parent().datetimepicker({
+        locale: "zh-cn",
+        format: "YYYY-MM-DD"
+    });
 });
