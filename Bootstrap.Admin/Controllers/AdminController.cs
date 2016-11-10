@@ -44,17 +44,28 @@ namespace Bootstrap.Admin.Controllers
             var v = new NavigatorBarModel("~/Admin/Dicts");
             return View(v);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Roles()
         {
             var v = new NavigatorBarModel("~/Admin/Roles");
             return View(v);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Menus()
         {
             var v = new NavigatorBarModel("~/Admin/Menus");
             return View(v);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Logs()
         {
             var v = new NavigatorBarModel("~/Admin/Logs");

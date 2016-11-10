@@ -80,20 +80,20 @@ namespace Bootstrap.DataAccess
                     {
                         cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserID", id, ParameterDirection.Input));
                         DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd, transaction);
-
-                        // insert batch data into config table
-                        using (SqlBulkCopy bulk = new SqlBulkCopy((SqlConnection)transaction.Transaction.Connection, SqlBulkCopyOptions.Default, (SqlTransaction)transaction.Transaction))
+                        if (dt.Rows.Count > 0)
                         {
-                            bulk.BatchSize = 1000;
-                            bulk.DestinationTableName = "UserRole";
-                            bulk.ColumnMappings.Add("UserID", "UserID");
-                            bulk.ColumnMappings.Add("RoleID", "RoleID");
-                            bulk.WriteToServer(dt);
-                            transaction.CommitTransaction();
+                            // insert batch data into config table
+                            using (SqlBulkCopy bulk = new SqlBulkCopy((SqlConnection)transaction.Transaction.Connection, SqlBulkCopyOptions.Default, (SqlTransaction)transaction.Transaction))
+                            {
+                                bulk.DestinationTableName = "UserRole";
+                                bulk.ColumnMappings.Add("UserID", "UserID");
+                                bulk.ColumnMappings.Add("RoleID", "RoleID");
+                                bulk.WriteToServer(dt);
+                            }
                         }
+                        transaction.CommitTransaction();
                     }
-                    roleIds.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).AsParallel()
-                        .ForAll(r => CacheManager.Clear(key => key == string.Format("{0}-{1}", RetrieveRolesByUserIDDataKey, id) || key == string.Format("{0}-{1}", UserHelper.RetrieveUsersByRoleIDDataKey, r)));
+                    CacheCleanUtility.ClearCache(userIds: id.ToString(), roleIds: roleIds);
                     ret = true;
                 }
                 catch (Exception ex)
