@@ -18,7 +18,6 @@
     border-color: #3c763d;
 }
 
-
 #main-content {
     margin-left: 210px;
     height: auto;
@@ -210,4 +209,13 @@ a.cf {
     a.cf:hover {
         -webkit-animation: fa-spin 2s infinite linear;
         animation: fa-spin 2s infinite linear;
+    }
+
+.bootstrap-select .dropdown-menu {
+    padding: 0px;
+}
+
+    .bootstrap-select .dropdown-menu > li > a {
+        padding-top: 7px;
+        padding-bottom: 7px;
     }
