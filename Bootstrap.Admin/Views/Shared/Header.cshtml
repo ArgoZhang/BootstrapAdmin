@@ -21,201 +21,204 @@
             </li>
         </ul>
     }
+    @if (!Model.ShowMenu)
+    {
     <!--  notification start -->
-    <ul class="notify-row">
-        <!-- settings start -->
-        <li class="dropdown">
-            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                <i class="fa fa-tasks"></i>
-                <span class="badge bg-success">5</span>
-            </a>
-            <ul class="dropdown-menu tasks-bar">
-                <div class="notify-arrow notify-arrow-green"></div>
-                <li>
-                    <p>您有 5 个待处理的任务</p>
-                </li>
-                <li>
-                    <a href="#">
-                        <div>
-                            <div class="desc">任务1</div>
-                            <div class="percent">40%</div>
-                        </div>
-                        <div class="progress progress-striped">
-                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                                <span class="sr-only">40% Complete (success)</span>
+        <ul class="notify-row">
+            <!-- settings start -->
+            <li class="dropdown">
+                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                    <i class="fa fa-tasks"></i>
+                    <span class="badge bg-success">5</span>
+                </a>
+                <ul class="dropdown-menu tasks-bar">
+                    <div class="notify-arrow notify-arrow-green"></div>
+                    <li>
+                        <p>您有 5 个待处理的任务</p>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <div>
+                                <div class="desc">任务1</div>
+                                <div class="percent">40%</div>
                             </div>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <div>
-                            <div class="desc">任务2</div>
-                            <div class="percent">60%</div>
-                        </div>
-                        <div class="progress progress-striped">
-                            <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-                                <span class="sr-only">60% Complete (warning)</span>
+                            <div class="progress progress-striped">
+                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                                    <span class="sr-only">40% Complete (success)</span>
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <div>
-                            <div class="desc">任务3</div>
-                            <div class="percent">87%</div>
-                        </div>
-                        <div class="progress progress-striped">
-                            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 87%">
-                                <span class="sr-only">87% Complete</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <div>
+                                <div class="desc">任务2</div>
+                                <div class="percent">60%</div>
                             </div>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <div>
-                            <div class="desc">任务4</div>
-                            <div class="percent">33%</div>
-                        </div>
-                        <div class="progress progress-striped">
-                            <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 33%">
-                                <span class="sr-only">33% Complete (danger)</span>
+                            <div class="progress progress-striped">
+                                <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
+                                    <span class="sr-only">60% Complete (warning)</span>
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <div>
-                            <div class="desc">任务5</div>
-                            <div class="percent">45%</div>
-                        </div>
-                        <div class="progress progress-striped active">
-                            <div class="progress-bar" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
-                                <span class="sr-only">45% Complete</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <div>
+                                <div class="desc">任务3</div>
+                                <div class="percent">87%</div>
                             </div>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">查看所有任务</a>
-                </li>
-            </ul>
-        </li>
-        <!-- settings end -->
-        <!-- inbox dropdown start-->
-        <li id="header_inbox_bar" class="dropdown">
-            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                <i class="fa fa-envelope-o"></i>
-                <span class="badge bg-important">4</span>
-            </a>
-            <ul class="dropdown-menu inbox">
-                <div class="notify-arrow notify-arrow-red"></div>
-                <li>
-                    <p>您有 4 个待处理的消息</p>
-                </li>
-                <li>
-                    <a href="#">
-                        <span class="photo"><img alt="avatar" src="../content/images/logo6.jpg"></span>
-                        <span class="subject">
-                            <span class="from">Jianmin Yin</span>
-                            <span class="time">Just now</span>
-                        </span>
-                        <span class="message">你好, 测试消息</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <span class="photo"><img alt="avatar" src="../content/images/logo3.jpg"></span>
-                        <span class="subject">
-                            <span class="from">张广坡</span>
-                            <span class="time">10 mins</span>
-                        </span>
-                        <span class="message">还是测试消息</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <span class="photo"><img alt="avatar" src="../content/images/logo.jpg"></span>
-                        <span class="subject">
-                            <span class="from">李琦</span>
-                            <span class="time">3 hrs</span>
-                        </span>
-                        <span class="message">继续测试</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <span class="photo"><img alt="avatar" src="../content/images/logo1.jpg"></span>
-                        <span class="subject">
-                            <span class="from">刘老师</span>
-                            <span class="time">Just now</span>
-                        </span>
-                        <span class="message">统一管理</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">查看所有消息</a>
-                </li>
-            </ul>
-        </li>
-        <!-- inbox dropdown end -->
-        <!-- notification dropdown start-->
-        <li id="header_notification_bar" class="dropdown">
-            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                <i class="fa fa-bell-o"></i>
-                <span class="badge bg-warning">5</span>
-            </a>
-            <ul class="dropdown-menu notification">
-                <div class="notify-arrow notify-arrow-yellow"></div>
-                <li>
-                    <p>您有 5 条新通知</p>
-                </li>
-                <li>
-                    <a href="#">
-                        <span class="label label-danger"><i class="fa fa-bolt"></i></span>
-                        服务器超载
-                        <span class="small italic">34 分钟</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <span class="label label-warning"><i class="fa fa-bell"></i></span>
-                        服务器未响应
-                        <span class="small italic">1 小时</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <span class="label label-danger"><i class="fa fa-bolt"></i></span>
-                        数据库内存过高
-                        <span class="small italic">4 小时</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <span class="label label-success"><i class="fa fa-plus"></i></span>
-                        新用户注册
-                        <span class="small italic">刚刚</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <span class="label label-info"><i class="fa fa-bullhorn"></i></span>
-                        程序出现错误
-                        <span class="small italic">10 分钟</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">查看所有通知</a>
-                </li>
-            </ul>
-        </li>
-        <!-- notification dropdown end -->
-    </ul>
+                            <div class="progress progress-striped">
+                                <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 87%">
+                                    <span class="sr-only">87% Complete</span>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <div>
+                                <div class="desc">任务4</div>
+                                <div class="percent">33%</div>
+                            </div>
+                            <div class="progress progress-striped">
+                                <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 33%">
+                                    <span class="sr-only">33% Complete (danger)</span>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <div>
+                                <div class="desc">任务5</div>
+                                <div class="percent">45%</div>
+                            </div>
+                            <div class="progress progress-striped active">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
+                                    <span class="sr-only">45% Complete</span>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">查看所有任务</a>
+                    </li>
+                </ul>
+            </li>
+            <!-- settings end -->
+            <!-- inbox dropdown start-->
+            <li id="header_inbox_bar" class="dropdown">
+                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                    <i class="fa fa-envelope-o"></i>
+                    <span class="badge bg-important">4</span>
+                </a>
+                <ul class="dropdown-menu inbox">
+                    <div class="notify-arrow notify-arrow-red"></div>
+                    <li>
+                        <p>您有 4 个待处理的消息</p>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="photo"><img alt="avatar" src="../content/images/logo6.jpg"></span>
+                            <span class="subject">
+                                <span class="from">Jianmin Yin</span>
+                                <span class="time">Just now</span>
+                            </span>
+                            <span class="message">你好, 测试消息</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="photo"><img alt="avatar" src="../content/images/logo3.jpg"></span>
+                            <span class="subject">
+                                <span class="from">张广坡</span>
+                                <span class="time">10 mins</span>
+                            </span>
+                            <span class="message">还是测试消息</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="photo"><img alt="avatar" src="../content/images/logo.jpg"></span>
+                            <span class="subject">
+                                <span class="from">李琦</span>
+                                <span class="time">3 hrs</span>
+                            </span>
+                            <span class="message">继续测试</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="photo"><img alt="avatar" src="../content/images/logo1.jpg"></span>
+                            <span class="subject">
+                                <span class="from">刘老师</span>
+                                <span class="time">Just now</span>
+                            </span>
+                            <span class="message">统一管理</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">查看所有消息</a>
+                    </li>
+                </ul>
+            </li>
+            <!-- inbox dropdown end -->
+            <!-- notification dropdown start-->
+            <li id="header_notification_bar" class="dropdown">
+                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                    <i class="fa fa-bell-o"></i>
+                    <span class="badge bg-warning">5</span>
+                </a>
+                <ul class="dropdown-menu notification">
+                    <div class="notify-arrow notify-arrow-yellow"></div>
+                    <li>
+                        <p>您有 5 条新通知</p>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="label label-danger"><i class="fa fa-bolt"></i></span>
+                            服务器超载
+                            <span class="small italic">34 分钟</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="label label-warning"><i class="fa fa-bell"></i></span>
+                            服务器未响应
+                            <span class="small italic">1 小时</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="label label-danger"><i class="fa fa-bolt"></i></span>
+                            数据库内存过高
+                            <span class="small italic">4 小时</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="label label-success"><i class="fa fa-plus"></i></span>
+                            新用户注册
+                            <span class="small italic">刚刚</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="label label-info"><i class="fa fa-bullhorn"></i></span>
+                            程序出现错误
+                            <span class="small italic">10 分钟</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">查看所有通知</a>
+                    </li>
+                </ul>
+            </li>
+            <!-- notification dropdown end -->
+        </ul>
     <!--  notification end -->
+    }
     <!--search & user info start-->
     <ul class="nav pull-right top-menu">
         <li>
@@ -231,9 +234,9 @@
             </a>
             <ul class="dropdown-menu logout">
                 <div class="arrow-up"></div>
-                <li><a href="#"><i class=" fa fa-suitcase"></i>个人中心</a></li>
-                <li><a href="~/Admin"><i class="fa fa-cog"></i>设置</a></li>
-                <li><a href="#"><i class="fa fa-bell-o"></i>通知<span class="badge bg-success">5</span></a></li>
+                <li><a href="~/Admin/Infos"><i class=" fa fa-suitcase"></i>个人中心</a></li>
+                <li><a href="~/Admin/Index"><i class="fa fa-cog"></i>设置</a></li>
+                <li><a href="~/Admin/News"><i class="fa fa-bell-o"></i>通知<span class="badge bg-success">5</span></a></li>
                 <li><a href="~/Home/Logout"><i class="fa fa-key"></i>注销</a></li>
             </ul>
         </li>

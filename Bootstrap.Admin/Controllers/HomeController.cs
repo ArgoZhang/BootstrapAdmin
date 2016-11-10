@@ -49,6 +49,7 @@ namespace Bootstrap.Admin.Controllers
         {
             //UNDONE: 本方法有严重安全漏洞，发布前需要修正
             var model = new LoginModel();
+            if (string.IsNullOrEmpty(userName)) return View(model);
             model.UserName = userName;
             if (LgbPrincipal.IsAdmin(userName) || UserHelper.Authenticate(userName, password))
             {
@@ -72,15 +73,15 @@ namespace Bootstrap.Admin.Controllers
         /// </summary>
         /// <returns></returns>
         [AllowAnonymous]
-        public ActionResult Register(string userName, string displayName, string password,string description)
+        public ActionResult Register(string userName, string displayName, string password, string description)
         {
-            var result = UserHelper.RegisterUser(userName, displayName, password,description);
-            if (result) 
+            var result = UserHelper.RegisterUser(userName, displayName, password, description);
+            if (result)
             {
                 return Redirect("/Content/html/RegResult.html");
             }
-               
-            else 
+
+            else
                 return View();
         }
     }

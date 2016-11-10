@@ -136,7 +136,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Notifications](
-	[ID] [int] NOT NULL,
+	[ID] [int] IDENTITY(1,1) NOT NULL,
 	[Category] [nvarchar](50) NOT NULL,
 	[Title] [nvarchar](50) NOT NULL,
 	[Content] [nvarchar](50) NOT NULL,
@@ -144,7 +144,11 @@ CREATE TABLE [dbo].[Notifications](
 	[ProcessTime] [datetime] NULL,
 	[ProcessBy] [nvarchar](50) NULL,
 	[ProcessResult] [nvarchar](50) NULL,
-	[Status] [nvarchar](50) NOT NULL
+	[Status] [nvarchar](50) NOT NULL,
+ CONSTRAINT [PK_Notifications] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'0 标示未处理 1 标示已处理' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Notifications', @level2type=N'COLUMN',@level2name=N'Status'
@@ -235,7 +239,31 @@ EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'部门名称' 
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'描述' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Groups', @level2type=N'COLUMN',@level2name=N'Description'
 GO
-/****** Object:  Table [dbo].[Dicts]    Script Date: 11/10/2016 11:32:54 ******/
+/****** Object:  Table [dbo].[Exceptions]    Script Date: 11/10/2016 16:30:56 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Exceptions](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[AppDomainName] [varchar](50) NOT NULL,
+	[ErrorPage] [varchar](50) NOT NULL,
+	[UserID] [varchar](50) NULL,
+	[UserIp] [varchar](15) NOT NULL,
+	[Message] [nvarchar](max) NOT NULL,
+	[StackTrace] [nvarchar](max) NULL,
+	[LogTime] [datetime] NOT NULL,
+ CONSTRAINT [PK_Exceptions] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[Dicts]    Script Date: 11/10/2016 16:30:56 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
