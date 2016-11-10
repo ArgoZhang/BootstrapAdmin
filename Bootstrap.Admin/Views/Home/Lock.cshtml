@@ -17,12 +17,12 @@
         <img src="../../content/images/logo2.jpg" alt="lock avatar" />
         <h1>@Model.DisplayName</h1>
         <span class="locked">系统已锁定</span>
-        <form role="form" class="form-inline" method="post">
+        <form role="form" class="form-inline" method="post" autocomplete="off">
             <input type="text" name="username" class="hide" value="@Model.UserName" />
             <div class="form-group col-lg-12">
                 <div class="input-group">
                     <span class="glyphicon glyphicon-lock input-group-addon"></span>
-                    <input type="password" name="password" class="form-control" value="" placeholder="密码" />
+                    <input type="password" name="password" class="form-control" value="" autocomplete="off" placeholder="密码" />
                     <span class="input-group-btn">
                         <button class="btn btn-lock" type="submit">
                             <i class="glyphicon glyphicon-arrow-right"></i>
