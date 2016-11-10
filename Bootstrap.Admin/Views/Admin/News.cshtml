@@ -17,21 +17,76 @@
     @Html.Partial("Navigator", Model)
 }
 <div class="panel panel-default">
-    <div class="panel-heading">新用户注册未授权通知<span class="pull-right"><a href="javascript:;" class="tooltips fa fa-refresh" data-placement="left" data-original-title="点击刷新"></a></span></div>
+    <div class="panel-heading">用户注册<span class="pull-right"><a href="javascript:;" class="tooltips fa fa-refresh" data-placement="left" data-original-title="点击刷新"></a></span></div>
     <div class="panel-body">
         <div class="tasks-widget">
             <ul id="sortable" class="task-list ui-sortable">
-                <li class="list-primary" >
-                    <div class="task-title">
-                        <span class="task-title-sp">注册名：测试小王</span>
-                        <span class="task-title-sp">注册时间：20016-9-18</span>
-                        <span class="task-title-sp">注册描述：某某部门新入职员工</span>
-                        <div class="pull-right hidden-phone">
-                            <button class="btn btn-danger btn-xs fa fa-trash-o tooltips" data-placement="left" data-original-title="同意授权"></button>
-                            <button class="btn btn-danger btn-xs fa fa-trash-o tooltips" data-placement="left" data-original-title="拒绝授权"></button>
+                @foreach (var nofi in Model.Notifications)
+                {
+                    <li class="list-primary">
+                        <i class="fa fa-ellipsis-v"></i>
+                        <div class="task-title">
+                            <span class="task-title-sp">@nofi.Title</span>
+                            <div class="task-wrapper notifi">
+                                <span class="task-value tooltips" data-placement="top" data-original-title="@nofi.Content">@nofi.Content</span>
+                            </div>
+                            <div class="pull-right hidden-phone">
+                                <button class="btn btn-success btn-xs fa fa-check tooltips" data-placement="left" data-original-title="同意授权"></button>
+                                <button class="btn btn-danger btn-xs fa fa-remove tooltips" data-placement="left" data-original-title="拒绝授权"></button>
+                            </div>
                         </div>
-                    </div>
-                </li>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">程序错误<a href="javascript:;" class="pull-right tooltips fa fa-refresh" data-placement="left" data-original-title="点击刷新"></a></div>
+    <div class="panel-body">
+        <div class="tasks-widget">
+            <ul id="sortable" class="task-list ui-sortable">
+                @foreach (var nofi in Model.Notifications)
+                {
+                    <li class="list-warning">
+                        <i class="fa fa-ellipsis-v"></i>
+                        <div class="task-title">
+                            <span class="task-title-sp">@nofi.Title</span>
+                            <div class="task-wrapper notifi">
+                                <span class="task-value tooltips" data-placement="top" data-original-title="@nofi.Content">@nofi.Content</span>
+                            </div>
+                            <div class="pull-right hidden-phone">
+                                <button class="btn btn-success btn-xs fa fa-check tooltips" data-placement="left" data-original-title="同意授权"></button>
+                                <button class="btn btn-danger btn-xs fa fa-remove tooltips" data-placement="left" data-original-title="拒绝授权"></button>
+                            </div>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">数据库报警<span class="pull-right"><a href="javascript:;" class="tooltips fa fa-refresh" data-placement="left" data-original-title="点击刷新"></a></span></div>
+    <div class="panel-body">
+        <div class="tasks-widget">
+            <ul id="sortable" class="task-list ui-sortable">
+                @foreach (var nofi in Model.Notifications)
+                {
+                    <li class="list-danger">
+                        <i class="fa fa-ellipsis-v"></i>
+                        <div class="task-title">
+                            <span class="task-title-sp">@nofi.Title</span>
+                            <div class="task-wrapper notifi">
+                                <span class="task-value tooltips" data-placement="top" data-original-title="@nofi.Content">@nofi.Content</span>
+                            </div>
+                            <div class="pull-right hidden-phone">
+                                <button class="btn btn-success btn-xs fa fa-check tooltips" data-placement="left" data-original-title="同意授权"></button>
+                                <button class="btn btn-danger btn-xs fa fa-remove tooltips" data-placement="left" data-original-title="拒绝授权"></button>
+                            </div>
+                        </div>
+                    </li>
+                }
             </ul>
         </div>
     </div>

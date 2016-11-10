@@ -202,11 +202,11 @@ ul.sidebar-menu {
         }
 
 /*cache*/
-a.cf {
+.panel a.fa-refresh {
     font-size: 15px;
 }
 
-    a.cf:hover {
+    .panel a.fa-refresh:hover {
         -webkit-animation: fa-spin 2s infinite linear;
         animation: fa-spin 2s infinite linear;
     }

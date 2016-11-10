@@ -17,6 +17,7 @@ namespace Bootstrap.Admin.Models
             UserID = user.ID;
             HomeUrl = "~/";
             Menus = MenuHelper.RetrieveLinksByUserName(UserName);
+            Notifications = NotificationsHelper.RetrieveNotifications();
         }
         public string UserName { get; protected set; }
         /// <summary>
@@ -39,5 +40,9 @@ namespace Bootstrap.Admin.Models
         /// 获得/设置 前台菜单
         /// </summary>
         public IEnumerable<Menu> Menus { get; private set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public IEnumerable<Notifications> Notifications { get; set; }
     }
 }

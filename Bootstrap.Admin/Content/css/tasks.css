@@ -61,6 +61,10 @@
             padding-left: 16px;
         }
 
+            .tasks-widget .task-list li > .task-title .task-wrapper.notifi {
+                right: 70px;
+            }
+
             .tasks-widget .task-list li > .task-title .task-wrapper span {
                 display: inline-block;
                 white-space: nowrap;

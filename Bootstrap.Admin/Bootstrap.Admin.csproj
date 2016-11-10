@@ -179,6 +179,7 @@
     <Content Include="Scripts\Login.js" />
     <Content Include="Scripts\Logs.js" />
     <Content Include="Scripts\Menus.js" />
+    <Content Include="Scripts\News.js" />
     <Content Include="Scripts\Profiles.js" />
     <Content Include="Scripts\register.js" />
     <Content Include="Scripts\Roles.js" />
