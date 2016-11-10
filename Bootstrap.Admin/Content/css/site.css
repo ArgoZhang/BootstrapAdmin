@@ -298,15 +298,15 @@ div button span {
     display: inline-block;
 }
 
-    .notify-row .bg-success, .notify-row .dropdown-menu.tasks-bar li p, .notify-row .dropdown-menu.tasks-bar li:last-child {
+    .notify-row .bg-success, .notify-row .dropdown-menu.tasks-bar li p {
         background: #a9d86e;
     }
 
-    .notify-row .bg-important, .notify-row .dropdown-menu.inbox li p, .notify-row .dropdown-menu.inbox li:last-child {
+    .notify-row .bg-important, .notify-row .dropdown-menu.inbox li p {
         background: #ff6c60;
     }
 
-    .notify-row .bg-warning, .notify-row .dropdown-menu.notification li p, .notify-row .dropdown-menu.notification li:last-child {
+    .notify-row .bg-warning, .notify-row .dropdown-menu.notification li p {
         background: #FCB322;
     }
 
