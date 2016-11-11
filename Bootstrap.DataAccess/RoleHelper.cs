@@ -184,7 +184,7 @@ namespace Bootstrap.DataAccess
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Description", p.Description, ParameterDirection.Input));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
-                CacheCleanUtility.ClearCache(roleIds: p.ID == 0 ? "" : p.ID.ToString());
+                CacheCleanUtility.ClearCache(roleIds: p.ID == 0 ? string.Empty : p.ID.ToString());
                 ret = true;
             }
             catch (DbException ex)

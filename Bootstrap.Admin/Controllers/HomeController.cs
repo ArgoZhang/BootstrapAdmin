@@ -73,9 +73,11 @@ namespace Bootstrap.Admin.Controllers
         /// </summary>
         /// <returns></returns>
         [AllowAnonymous]
-        public ActionResult Register(string userName, string displayName, string password, string description)
+        public ActionResult Register(User p)
         {
-            var result = UserHelper.RegisterUser(userName, displayName, password, description);
+            if (string.IsNullOrEmpty(p.UserName) || string.IsNullOrEmpty(p.Password) || string.IsNullOrEmpty(p.DisplayName) || string.IsNullOrEmpty(p.Description)) return View();
+            p.UserStatus = 1;
+            var result = UserHelper.SaveUser(p);
             if (result)
             {
                 return Redirect("/Content/html/RegResult.html");

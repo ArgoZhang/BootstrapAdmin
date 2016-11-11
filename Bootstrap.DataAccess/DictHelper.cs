@@ -101,7 +101,7 @@ namespace Bootstrap.DataAccess
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
                 ret = true;
-                CacheCleanUtility.ClearCache(dictIds: p.ID == 0 ? "" : p.ID.ToString());
+                CacheCleanUtility.ClearCache(dictIds: p.ID == 0 ? string.Empty : p.ID.ToString());
             }
             catch (DbException ex)
             {

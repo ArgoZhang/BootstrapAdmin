@@ -162,7 +162,6 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-
 Drop PROCEDURE Proc_SaveUsers
 GO
 -- =============================================
@@ -173,13 +172,12 @@ GO
 CREATE PROCEDURE [dbo].[Proc_SaveUsers]
 	-- Add the parameters for the stored procedure here
 	@id int,
-	@userName varchar(max),
-	@password varchar(max),
-	@passSalt varchar(max),
-    @displayName varchar(max),
-    @description varchar(max),
-    --type=0表示自由注册，type=1表示系统添加
-    @type varchar(max)
+	@userName varchar(50),
+	@password varchar(50),
+	@passSalt varchar(50),
+    @displayName nvarchar(50),
+    @description nvarchar(500),
+    @userStatus int = 0 --0表示管理员创建 1标示用户注册 2标示管理员批复
 	WITH ENCRYPTION
 AS
 BEGIN
@@ -187,27 +185,20 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 	SET XACT_ABORT ON;
-	
     -- Insert statements for procedure here
-	if @id=0
-	begin
-	 if @type='0'
-	   begin
-	     Insert Into Users (UserName, Password, PassSalt, DisplayName, RegisterTime, Description)values(@userName,@password,@passSalt,@displayName,GETDATE(),@description)
-	     insert into Notifications(Category,Title,Content,RegisterTime,Status)values(0,@userName,@description,GETDATE(),0)
-	   end
-	 else
-	   begin
-	     Insert Into Users (UserName, Password, PassSalt, DisplayName, RegisterTime,ApprovedTime,Description)values(@userName,@password,@passSalt,@displayName,GETDATE(),GETDATE(),@description)
-	   end	   
-    end
-	else
-	begin
-	   Update Users set UserName =@userName, Password =@password, PassSalt =@passSalt, DisplayName =@displayName where ID = @id
-	end
+	if @userStatus = 2
+		begin
+			update Users set ApprovedTime = GETDATE() where ID = @id
+		end
+	else 
+		begin
+			declare @approveTime datetime = null
+			if @userStatus = 0 set @approveTime = GETDATE() 
+			Insert Into Users (UserName, [Password], PassSalt, DisplayName, RegisterTime, ApprovedTime, [Description]) values (@userName, @password, @passSalt, @displayName, GETDATE(), @approveTime, @description)
+		end
 END
-
 GO
+
 Drop PROCEDURE Proc_ProcessRegisterUser
 GO
 -- =============================================

@@ -96,7 +96,7 @@ namespace Bootstrap.DataAccess
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@RequestUrl", p.RequestUrl, ParameterDirection.Input));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
-                CacheCleanUtility.ClearCache(logIds: p.ID == 0 ? "" : p.ID.ToString());
+                CacheCleanUtility.ClearCache(logIds: p.ID == 0 ? string.Empty : p.ID.ToString());
                 ret = true;
             }
             catch (DbException ex)
