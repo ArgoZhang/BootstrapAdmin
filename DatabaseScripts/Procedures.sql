@@ -154,3 +154,54 @@ BEGIN
 		) nav on n.ID = nav.NavigationID
 END
 GO
+
+/****** Object:  StoredProcedure [dbo].[Proc_SaveUsers]    Script Date: 11/11/2016 08:51:44 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		LiuChun
+-- Create date: 2016-11-10
+-- Description:	
+-- =============================================
+CREATE PROCEDURE [dbo].[Proc_SaveUsers]
+	-- Add the parameters for the stored procedure here
+	@id int,
+	@userName varchar(max),
+	@password varchar(max),
+	@passSalt varchar(max),
+    @displayName varchar(max),
+    @description varchar(max),
+    --type=0表示自由注册，type=1表示系统添加
+    @type varchar(max)
+	WITH ENCRYPTION
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+	SET XACT_ABORT ON;
+	
+    -- Insert statements for procedure here
+	if @id=0
+	begin
+	 if @type='0'
+	   begin
+	     Insert Into Users (UserName, Password, PassSalt, DisplayName, RegisterTime, Description)values(@userName,@password,@passSalt,@displayName,GETDATE(),@description)
+	     insert into Notifications(Category,Title,Content,RegisterTime,Status)values(0,@userName,@description,GETDATE(),1)
+	   end
+	 else
+	   begin
+	     Insert Into Users (UserName, Password, PassSalt, DisplayName, RegisterTime,ApprovedTime,Description)values(@userName,@password,@passSalt,@displayName,GETDATE(),GETDATE(),@description)
+	   end	   
+    end
+	else
+	begin
+	   Update Users set UserName =@userName, Password =@password, PassSalt =@passSalt, DisplayName =@displayName where ID = @id
+	end
+END
+
+GO

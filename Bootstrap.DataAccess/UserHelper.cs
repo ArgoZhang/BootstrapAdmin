@@ -126,29 +126,31 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static bool SaveUser(User p)
         {
+            string type = "";
             if (p == null) throw new ArgumentNullException("p");
-            bool ret = false;
             if (p.UserName.Length > 50) p.UserName.Substring(0, 50);
             p.PassSalt = LgbCryptography.GenerateSalt();
             p.Password = LgbCryptography.ComputeHash(p.Password, p.PassSalt);
             if (p.ID == 0 && p.Description.Length > 500) p.Description.Substring(0, 500);
-            string sql = p.ID == 0 ?
-                "Insert Into Users (UserName, Password, PassSalt, DisplayName, RegisterTime, ApprovedTime, Description) Values (@UserName, @Password, @PassSalt, @DisplayName, GetDate(), @ApprovedTime, @Description)" :
-                "Update Users set UserName = @UserName, Password = @Password, PassSalt = @PassSalt, DisplayName = @DisplayName where ID = @ID";
+            if ((p.ApprovedTime == null) || (p.ApprovedTime == DateTime.MinValue))
+                type = "0";
+            else
+                type = "1";
+            bool ret = false;  
             try
             {
-                using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
+                using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_SaveUsers"))
                 {
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ID", p.ID, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserName", p.UserName, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Password", p.Password, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@PassSalt", p.PassSalt, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@DisplayName", p.DisplayName, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ApprovedTime", DBAccess.ToDBValue(p.ApprovedTime), ParameterDirection.Input));
-                    if (p.ID == 0) cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Description", p.Description, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@id", p.ID, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@userName", p.UserName, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@password", p.Password, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@passSalt", p.PassSalt, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@displayName", p.DisplayName, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@description", p.Description, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@type", type, ParameterDirection.Input));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
-                CacheCleanUtility.ClearCache(userIds: p.ID == 0 ? "" : p.ID.ToString());
+                CacheCleanUtility.ClearCache(userIds: p.ID.ToString());
                 ret = true;
             }
             catch (DbException ex)
@@ -329,8 +331,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <returns></returns>
         public static bool RegisterUser(string userName, string displayName, string password, string description)
-        {
-            //TODO：未完成并通知管理员组有新用户注册，需要批复。
+        {           
             if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(displayName) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(description))
                 return false;
             return SaveUser(new User() { UserName = userName, DisplayName = displayName, Password = password, Description = description });
