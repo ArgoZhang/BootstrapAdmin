@@ -31,7 +31,7 @@ INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [C
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (6, 0, N'字典表维护', 50, N'fa fa-book', N'~/Admin/Dicts', N'0')
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (7, 0, N'个性化维护', 60, N'fa fa-pencil', N'~/Admin/Profiles', N'0')
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (8, 0, N'系统日志', 70, N'fa fa-gears', N'~/Admin/Logs', N'0')
-INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (9, 0, N'通知管理', 80, N'fa fa-bell-o', N'~/Admin/News', N'0')
+INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (9, 0, N'通知管理', 80, N'fa fa-bell-o', N'~/Admin/Notifications', N'0')
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (10, 0, N'个人中心', 90, N'fa fa-suitcase', N'~/Admin/Infos', N'0')
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (11, 0, N'返回前台', 100, N'fa fa-hand-o-left', N'~/Home/Index', N'0')
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (12, 0, N'锁定屏幕', 110, N'fa fa-lock', N'~/Home/Lock', N'0')
@@ -39,16 +39,21 @@ INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [C
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (14, 13, N'锁定屏幕', 10, N'fa fa-lock', N'~/Home/Lock', N'1')
 SET IDENTITY_INSERT [dbo].[Navigations] OFF
 
-DELETE FROM RoleGroup where ID in (1)
-SET IDENTITY_INSERT [dbo].[RoleGroup] ON 
-INSERT [dbo].[RoleGroup] ([ID], [RoleID], [GroupID]) VALUES (1, 1, 1)
-SET IDENTITY_INSERT [dbo].[RoleGroup] OFF
+DELETE FROM GROUPS WHERE ID = 1
+SET IDENTITY_INSERT [dbo].[Groups] ON 
+INSERT [dbo].[Groups] ([ID], [GroupName], [Description]) VALUES (1, 1, N'系统默认组')
+SET IDENTITY_INSERT [dbo].[Groups] OFF
 
 DELETE FROM Roles where ID in (1, 2)
 SET IDENTITY_INSERT [dbo].[Roles] ON 
 INSERT [dbo].[Roles] ([ID], [RoleName], [Description]) VALUES (1, N'Administrators', N'系统管理员')
 INSERT [dbo].[Roles] ([ID], [RoleName], [Description]) VALUES (2, N'Default', N'默认用户，可访问前台页面')
 SET IDENTITY_INSERT [dbo].[Roles] OFF
+
+DELETE FROM RoleGroup where ID in (1)
+SET IDENTITY_INSERT [dbo].[RoleGroup] ON 
+INSERT [dbo].[RoleGroup] ([ID], [RoleID], [GroupID]) VALUES (1, 1, 1)
+SET IDENTITY_INSERT [dbo].[RoleGroup] OFF
 
 DELETE FROM UserGroup where ID in (1)
 SET IDENTITY_INSERT [dbo].[UserGroup] ON 

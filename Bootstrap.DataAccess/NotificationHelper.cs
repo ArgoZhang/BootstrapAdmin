@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+using System.Linq;
 
 namespace Bootstrap.DataAccess
 {
@@ -18,14 +19,13 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static IEnumerable<Notification> RetrieveNotifications(string category = null)
+        public static IEnumerable<Notification> RetrieveNotifications()
         {
-            return CacheManager.GetOrAdd(RetrieveNotifyDataKey, CacheSection.RetrieveIntervalByKey(RetrieveNotifyDataKey), key =>
+            var ret = CacheManager.GetOrAdd(RetrieveNotifyDataKey, CacheSection.RetrieveIntervalByKey(RetrieveNotifyDataKey), key =>
             {
-                string sql = "select * from Notifications where Category=@Category";
+                string sql = "select * from Notifications";
                 List<Notification> notifications = new List<Notification>();
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
-                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Category", Convert.ToInt32(category), ParameterDirection.Input));
                 try
                 {
                     using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
@@ -51,6 +51,15 @@ namespace Bootstrap.DataAccess
                 return notifications;
 
             }, CacheSection.RetrieveDescByKey(RetrieveNotifyDataKey));
+            ret.AsParallel().ForAll(n =>
+            {
+                var ts = DateTime.Now - n.RegisterTime;
+                if (ts.TotalMinutes < 5) n.Period = "刚刚";
+                else if (ts.Days > 0) n.Period = string.Format("{0}天", ts.Days);
+                else if (ts.Hours > 0) n.Period = string.Format("{0}小时", ts.Hours);
+                else if (ts.Minutes > 0) n.Period = string.Format("{0}分钟", ts.Minutes);
+            });
+            return ret;
         }
 
         /// <summary>
@@ -66,7 +75,7 @@ namespace Bootstrap.DataAccess
             {
                 using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_ProcessRegisterUser"))
                 {
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@id", Convert.ToInt32(id), ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@id", id, ParameterDirection.Input));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
                 CacheCleanUtility.ClearCache(notifyIds: id);

@@ -20,7 +20,7 @@
     <div class="panel-heading">用户注册<span class="pull-right"><a href="javascript:;" class="tooltips fa fa-refresh" data-placement="left" data-original-title="点击刷新"></a></span></div>
     <div class="panel-body">
         <div class="tasks-widget">
-            <ul id="sortable" class="task-list ui-sortable">
+            <ul id="tasks-users" class="task-list ui-sortable">
                 @foreach (var nofi in Model.Notifications)
                 {
                     <li class="list-primary">
@@ -45,7 +45,7 @@
     <div class="panel-heading">程序错误<a href="javascript:;" class="pull-right tooltips fa fa-refresh" data-placement="left" data-original-title="点击刷新"></a></div>
     <div class="panel-body">
         <div class="tasks-widget">
-            <ul id="sortable" class="task-list ui-sortable">
+            <ul id="tasks-app" class="task-list ui-sortable">
                 @foreach (var nofi in Model.Notifications)
                 {
                     <li class="list-warning">
@@ -70,7 +70,7 @@
     <div class="panel-heading">数据库报警<span class="pull-right"><a href="javascript:;" class="tooltips fa fa-refresh" data-placement="left" data-original-title="点击刷新"></a></span></div>
     <div class="panel-body">
         <div class="tasks-widget">
-            <ul id="sortable" class="task-list ui-sortable">
+            <ul id="tasks-db" class="task-list ui-sortable">
                 @foreach (var nofi in Model.Notifications)
                 {
                     <li class="list-danger">

@@ -94,9 +94,9 @@ namespace Bootstrap.Admin.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        public ActionResult News()
+        public ActionResult Notifications()
         {
-            var v = new NavigatorBarModel("~/Admin/News");
+            var v = new NavigatorBarModel("~/Admin/Notifications");
             return View(v);
         }
 

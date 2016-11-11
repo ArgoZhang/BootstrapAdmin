@@ -48,6 +48,7 @@ namespace Bootstrap.DataAccess.Tests
             // 测试更新用户方法 ID != 0
             var user = users.FirstOrDefault(u => u.UserName == User.UserName);
             user.DisplayName = "测试者2号";
+            user.Description = "测试";
             Assert.IsTrue(UserHelper.SaveUser(user), string.Format("更新用户ID={0}操作失败，请检查UserHelper.SaveUser方法", user.ID));
             var ret = UserHelper.RetrieveUsers(user.ID);
             Assert.IsTrue(ret.Count() == 1, "带参数的UserHelper.RetrieveUsers方法调用失败");

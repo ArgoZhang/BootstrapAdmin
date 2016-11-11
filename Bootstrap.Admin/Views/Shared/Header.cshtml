@@ -1,4 +1,4 @@
-﻿@model Bootstrap.Admin.Models.HeaderBarModel
+﻿@model HeaderBarModel
 <!--header start-->
 <header class="header white-bg">
     <a href="#" data-toggle="dropdown" class="sidebar-toggle-box dropdown-toggle">
@@ -165,56 +165,43 @@
             </li>
             <!-- inbox dropdown end -->
             <!-- notification dropdown start-->
-            <li id="header_notification_bar" class="dropdown">
-                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                    <i class="fa fa-bell-o"></i>
-                    <span class="badge bg-warning">5</span>
-                </a>
-                <ul class="dropdown-menu notification">
-                    <div class="notify-arrow notify-arrow-yellow"></div>
-                    <li>
-                        <p>您有 5 条新通知</p>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span class="label label-danger"><i class="fa fa-bolt"></i></span>
-                            服务器超载
-                            <span class="small italic">34 分钟</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span class="label label-warning"><i class="fa fa-bell"></i></span>
-                            服务器未响应
-                            <span class="small italic">1 小时</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span class="label label-danger"><i class="fa fa-bolt"></i></span>
-                            数据库内存过高
-                            <span class="small italic">4 小时</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span class="label label-success"><i class="fa fa-plus"></i></span>
-                            新用户注册
-                            <span class="small italic">刚刚</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span class="label label-info"><i class="fa fa-bullhorn"></i></span>
-                            程序出现错误
-                            <span class="small italic">10 分钟</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">查看所有通知</a>
-                    </li>
-                </ul>
-            </li>
+            @if (Model.Notifications.Count() > 0)
+            {
+                <li id="header_notification_bar" class="dropdown">
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <i class="fa fa-bell-o"></i>
+                        <span class="badge bg-warning">@Model.Notifications.Count()</span>
+                    </a>
+                    <ul class="dropdown-menu notification">
+                        <div class="notify-arrow notify-arrow-yellow"></div>
+                        <li>
+                            <p>您有 @Model.Notifications.Count() 条新通知</p>
+                        </li>
+                        @foreach (var noti in Model.Notifications.Take(6))
+                        {
+                            <li>
+                                <a href="#">
+                                    @if (noti.Category == "0")
+                                    {
+                                        <span class="label label-success"><i class="fa fa-plus"></i></span><div>@noti.Content</div><span class="small italic">@noti.Period</span>
+                                    }
+                                    else if (noti.Category == "1")
+                                    {
+                                        <span class="label label-warning"><i class="fa fa-bell"></i></span><div>@noti.Content</div><span class="small italic">@noti.Period</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="label label-danger"><i class="fa fa-bolt"></i></span><div>@noti.Content</div><span class="small italic">@noti.Period</span>
+                                    }
+                                </a>
+                            </li>
+                        }
+                        <li>
+                            <a href="~/Admin/Notifications">查看所有通知</a>
+                        </li>
+                    </ul>
+                </li>
+            }
             <!-- notification dropdown end -->
         </ul>
     <!--  notification end -->
@@ -236,7 +223,7 @@
                 <div class="arrow-up"></div>
                 <li><a href="~/Admin/Infos"><i class=" fa fa-suitcase"></i>个人中心</a></li>
                 <li><a href="~/Admin/Index"><i class="fa fa-cog"></i>设置</a></li>
-                <li><a href="~/Admin/News"><i class="fa fa-bell-o"></i>通知<span class="badge bg-success">5</span></a></li>
+                <li><a href="~/Admin/Notifications"><i class="fa fa-bell-o"></i>通知<span class="badge bg-success">@Model.Notifications.Count()</span></a></li>
                 <li><a href="~/Home/Logout"><i class="fa fa-key"></i>注销</a></li>
             </ul>
         </li>
