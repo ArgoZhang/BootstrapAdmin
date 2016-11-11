@@ -124,6 +124,13 @@
     <Content Include="Content\html\RegResult.html" />
     <Content Include="Content\images\bg.jpg" />
     <Content Include="Content\images\lock-bg.jpg" />
+    <Content Include="Content\images\logo.jpg" />
+    <Content Include="Content\images\logo1.jpg" />
+    <Content Include="Content\images\logo2.jpg" />
+    <Content Include="Content\images\logo3.jpg" />
+    <Content Include="Content\images\logo4.jpg" />
+    <Content Include="Content\images\logo5.jpg" />
+    <Content Include="Content\images\logo6.jpg" />
     <Content Include="Content\js\bootstrap-datetimepicker.js" />
     <Content Include="Content\js\bootstrap-select.js" />
     <Content Include="Content\js\bootstrap-select.min.js" />
@@ -281,6 +288,7 @@
     <Content Include="Views\Home\Register.cshtml" />
     <Content Include="Views\Admin\Notifications.cshtml" />
     <Content Include="Views\Admin\Infos.cshtml" />
+    <Content Include="Views\Admin\Excep.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
