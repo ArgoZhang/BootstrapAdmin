@@ -25,12 +25,13 @@
 
 .tasks-widget .task-list {
     padding: 0;
-    margin: 0;
+    margin: 0 0 20px 0;
 }
 
     .tasks-widget .task-list > li {
         position: relative;
         border-bottom: 1px dashed #eaeaea;
+        font-size: 12px;
     }
 
     .tasks-widget .task-list li.last-line {
@@ -63,6 +64,7 @@
 
             .tasks-widget .task-list li > .task-title .task-wrapper.notifi {
                 right: 70px;
+                left: 90px;
             }
 
             .tasks-widget .task-list li > .task-title .task-wrapper span {
@@ -135,28 +137,18 @@
         margin-bottom: 0 !important;
     }
 
+    .tasks-widget .task-list li i {
+        position: absolute;
+        left: 6px;
+        padding: 19px 10px;
+        cursor: pointer;
+    }
+
 #sortable {
     list-style-type: none;
-    margin: 0 0 20px 0;
     padding: 0;
     width: 100%;
 }
-
-    #sortable li {
-        padding-left: 3em;
-        font-size: 12px;
-    }
-
-        #sortable li i {
-            position: absolute;
-            left: 6px;
-            padding: 19px 10px;
-            cursor: pointer;
-        }
-
-        #sortable li input[type=checkbox] {
-            margin-top: 0;
-        }
 
 .ui-sortable > li {
     padding-left: 35px !important;
