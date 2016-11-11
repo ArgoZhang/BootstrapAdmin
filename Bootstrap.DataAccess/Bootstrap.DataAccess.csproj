@@ -61,6 +61,7 @@
     <Compile Include="Dict.cs" />
     <Compile Include="DictHelper.cs" />
     <Compile Include="ExceptionHelper.cs" />
+    <Compile Include="Exceptions.cs" />
     <Compile Include="Group.cs" />
     <Compile Include="GroupHelper.cs" />
     <Compile Include="Log.cs" />

@@ -17,7 +17,7 @@ namespace Bootstrap.DataAccess
         /// <param name="dictIds"></param>
         /// <param name="logIds"></param>
         /// <param name="notifyIds"></param>
-        internal static void ClearCache(string roleIds = null, string userIds = null, string groupIds = null, string menuIds = null, string dictIds = null, string logIds = null, string notifyIds = null)
+        internal static void ClearCache(string roleIds = null, string userIds = null, string groupIds = null, string menuIds = null, string dictIds = null, string logIds = null, string notifyIds = null, string exceptionIds = null)
         {
             var cacheKeys = new List<string>();
             if (roleIds != null)
@@ -82,6 +82,12 @@ namespace Bootstrap.DataAccess
             {
                 // final cleanup 
                 CacheManager.Clear(key => key.Contains(NotificationHelper.RetrieveNotificationsDataKey));
+                cacheKeys.Clear();
+            }
+            if (exceptionIds != null)
+            {
+                // final cleanup 
+                CacheManager.Clear(key => key.Contains(ExceptionHelper.RetrieveExceptionsDataKey));
                 cacheKeys.Clear();
             }
         }

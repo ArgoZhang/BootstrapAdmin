@@ -8,6 +8,7 @@
 @section javascript {
     <script src="~/content/js/jquery.validate.js"></script>
     <script src="~/content/js/messages_zh.js"></script>
+    <script src="~/content/js/sweetalert.js"></script>
     <script src="~/Scripts/register.js"></script>
 }
 <div class="container">
@@ -43,10 +44,15 @@
                         <span class="glyphicon glyphicon-lock input-group-addon"></span>
                         <input type="password" id="password" name="password" class="form-control" value="" placeholder="密码" />
                     </div>
-                    <label for="description">申请理由：</label>
+                    <label for="assurePassword">确认密码：</label>
                     <div class="input-group">
                         <span class="glyphicon glyphicon-lock input-group-addon"></span>
-                        <input type="text" id="description" name="description" class="form-control" value="" placeholder="申请理由" />
+                        <input type="password" id="assurePassword" name="assurePassword" class="form-control" value="" placeholder="确认密码" />
+                    </div>
+                    <label for="description">申请理由：</label>
+                    <div class="input-group">
+                        <span class="glyphicon glyphicon-certificate input-group-addon"></span>
+                        <textarea id="description" name="description" class="form-control"  placeholder="申请理由" ></textarea>
                     </div>
                     <button id="btnAccount" class="btn btn-primary" type="button">继续</button>
                 </div> <!-- /.setup-form-container -->

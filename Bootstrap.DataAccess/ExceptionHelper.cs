@@ -1,5 +1,9 @@
-﻿using Longbow.Data;
+﻿using Longbow.Caching;
+using Longbow.Caching.Configuration;
+using Longbow.Data;
+using Longbow.ExceptionManagement;
 using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Data;
 using System.Data.Common;
@@ -8,8 +12,10 @@ namespace Bootstrap.DataAccess
 {
     public static class ExceptionHelper
     {
-        public static void Log(Exception ex, NameValueCollection additionalInfo)
+        internal const string RetrieveExceptionsDataKey = "ExceptionHelper-RetrieveExceptions";
+        public static bool Log(Exception ex, NameValueCollection additionalInfo)
         {
+            bool ret = false;
             try
             {
                 var sql = "insert into Exceptions (AppDomainName, ErrorPage, UserID, UserIp, Message, StackTrace, LogTime) values (@AppDomainName, @ErrorPage, @UserID, @UserIp, @Message, @StackTrace, GetDate())";
@@ -23,11 +29,49 @@ namespace Bootstrap.DataAccess
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@StackTrace", DBAccess.ToDBValue(ex.StackTrace), ParameterDirection.Input));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
+                ret = true;
             }
             catch
             {
                 throw new Exception("Excetion Log Error");
             }
+            return ret;
+        }
+        /// <summary>
+        /// 查询所有异常
+        /// </summary>
+        /// <param name="tId"></param>
+        /// <returns></returns>
+        public static IEnumerable<Exceptions> RetrieveExceptions()
+        {
+            return CacheManager.GetOrAdd(RetrieveExceptionsDataKey, CacheSection.RetrieveIntervalByKey(RetrieveExceptionsDataKey), key =>
+            {
+                string sql = "select * from Exceptions";
+                List<Exceptions> Exceptions = new List<Exceptions>();
+                DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
+                try
+                {
+                    using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
+                    {
+                        while (reader.Read())
+                        {
+                            Exceptions.Add(new Exceptions()
+                            {
+                                ID = (int)reader[0],
+                                AppDomainName = (string)reader[1],
+                                ErrorPage = (string)reader[2],
+                                UserID = (string)reader[3],
+                                UserIp = (string)reader[4],
+                                Message = (string)reader[5],
+                                StackTrace = (string)reader[6],
+                                LogTime = (DateTime)reader[7],
+                            });
+                        }
+                    }
+                }
+                catch (Exception ex) { ExceptionManager.Publish(ex); }
+                return Exceptions;
+            }, CacheSection.RetrieveDescByKey(RetrieveExceptionsDataKey));
         }
     }
 }
