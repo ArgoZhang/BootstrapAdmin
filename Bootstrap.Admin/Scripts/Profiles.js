@@ -38,7 +38,7 @@
     function listCache(options) {
         $.ajax({
             url: options.url,
-            type: 'GET',
+            type: 'POST',
             success: function (result) {
                 if (result) {
                     result = $.parseJSON(result);
