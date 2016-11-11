@@ -1,4 +1,4 @@
-SET ANSI_NULLS ON
+锘縎ET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
@@ -127,11 +127,11 @@ BEGIN
     -- Insert statements for procedure here
 	if @userName = '' or @userName is null
 		select n.*, d.Name as CategoryName, ln.Name as ParentName 
-		from Navigations n inner join Dicts d on n.Category = d.Code and d.Category = N'菜单' and d.Define = 0 
+		from Navigations n inner join Dicts d on n.Category = d.Code and d.Category = N'鑿滃崟' and d.Define = 0 
 		left join Navigations ln on n.ParentId = ln.ID
 	else
 		select n.*, d.Name as CategoryName, ln.Name as ParentName 
-		from Navigations n inner join Dicts d on n.Category = d.Code and d.Category = N'菜单' and d.Define = 0 
+		from Navigations n inner join Dicts d on n.Category = d.Code and d.Category = N'鑿滃崟' and d.Define = 0 
 		left join Navigations ln on n.ParentId = ln.ID
 		inner join (
 			select nr.NavigationID from Users u 
@@ -178,7 +178,7 @@ CREATE PROCEDURE [dbo].[Proc_SaveUsers]
 	@passSalt varchar(max),
     @displayName varchar(max),
     @description varchar(max),
-    --type=0表示自由注册，type=1表示系统添加
+    --type=0琛ㄧず鑷敱娉ㄥ唽锛宼ype=1琛ㄧず绯荤粺娣诲姞
     @type varchar(max)
 	WITH ENCRYPTION
 AS
