@@ -194,7 +194,7 @@ BEGIN
 	 if @type='0'
 	   begin
 	     Insert Into Users (UserName, Password, PassSalt, DisplayName, RegisterTime, Description)values(@userName,@password,@passSalt,@displayName,GETDATE(),@description)
-	     insert into Notifications(Category,Title,Content,RegisterTime,Status)values(0,@userName,@description,GETDATE(),1)
+	     insert into Notifications(Category,Title,Content,RegisterTime,Status)values(0,@userName,@description,GETDATE(),0)
 	   end
 	 else
 	   begin
