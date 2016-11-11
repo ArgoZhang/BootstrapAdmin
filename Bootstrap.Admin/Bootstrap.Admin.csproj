@@ -197,6 +197,7 @@
     <Content Include="Content\css\fa.responsive.css" />
     <Content Include="Content\css\bootstrap-select.css.map" />
     <Content Include="Content\js\bootstrap-select.js.map" />
+    <Content Include="packages.config" />
     <None Include="Scripts\_references.js" />
     <Content Include="Content\js\framework.js" />
     <Content Include="Scripts\well.js" />
