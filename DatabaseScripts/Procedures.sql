@@ -189,13 +189,16 @@ BEGIN
     -- Insert statements for procedure here
 	if @userStatus = 2
 		begin
-			update Users set ApprovedTime = GETDATE() where ID = @id
+			update Users set ApprovedTime = GETDATE(), ApprovedBy = @approvedBy where ID = @id
 		end
 	else 
 		begin
 			declare @approveTime datetime = null
 			if @userStatus = 0 set @approveTime = GETDATE() 
-			Insert Into Users (UserName, [Password], PassSalt, DisplayName, RegisterTime, ApprovedTime, ApprovedBy, [Description]) values (@userName, @password, @passSalt, @displayName, GETDATE(), @approveTime, @approvedBy, @description)
+			if(@id = 0)
+				Insert Into Users (UserName, [Password], PassSalt, DisplayName, RegisterTime, ApprovedTime, [Description]) values (@userName, @password, @passSalt, @displayName, GETDATE(), @approveTime, @description)
+			else 
+				Update Users set UserName = @userName, Password = @password, PassSalt = @passSalt, DisplayName = @displayName where ID = @id
 		end
 END
 GO
