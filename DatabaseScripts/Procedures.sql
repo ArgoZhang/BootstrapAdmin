@@ -176,6 +176,7 @@ CREATE PROCEDURE [dbo].[Proc_SaveUsers]
 	@password varchar(50),
 	@passSalt varchar(50),
     @displayName nvarchar(50),
+	@approvedBy varchar(50),
     @description nvarchar(500),
     @userStatus int = 0 --0表示管理员创建 1标示用户注册 2标示管理员批复
 	WITH ENCRYPTION
@@ -194,7 +195,7 @@ BEGIN
 		begin
 			declare @approveTime datetime = null
 			if @userStatus = 0 set @approveTime = GETDATE() 
-			Insert Into Users (UserName, [Password], PassSalt, DisplayName, RegisterTime, ApprovedTime, [Description]) values (@userName, @password, @passSalt, @displayName, GETDATE(), @approveTime, @description)
+			Insert Into Users (UserName, [Password], PassSalt, DisplayName, RegisterTime, ApprovedTime, ApprovedBy, [Description]) values (@userName, @password, @passSalt, @displayName, GETDATE(), @approveTime, @approvedBy, @description)
 		end
 END
 GO

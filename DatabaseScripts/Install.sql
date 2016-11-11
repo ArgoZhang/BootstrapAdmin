@@ -23,6 +23,7 @@ CREATE TABLE [dbo].[Users](
 	[DisplayName] [nvarchar](50) NOT NULL,
 	[RegisterTime] [datetime] NOT NULL,
 	[ApprovedTime] [datetime] NULL,
+	[ApprovedBy] [nvarchar](50) NULL,
 	[Description] [nvarchar](500) NOT NULL,
  CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED 
 (
