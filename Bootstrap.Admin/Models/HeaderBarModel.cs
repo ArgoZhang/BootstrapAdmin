@@ -17,7 +17,7 @@ namespace Bootstrap.Admin.Models
             UserID = user.ID;
             HomeUrl = "~/";
             Menus = MenuHelper.RetrieveLinksByUserName(UserName);
-            Notifications = NotificationsHelper.RetrieveNotifications();
+            Notifications = NotificationHelper.RetrieveNotifications();
         }
         public string UserName { get; protected set; }
         /// <summary>
@@ -43,6 +43,6 @@ namespace Bootstrap.Admin.Models
         /// <summary>
         /// 
         /// </summary>
-        public IEnumerable<Notifications> Notifications { get; set; }
+        public IEnumerable<Notification> Notifications { get; set; }
     }
 }

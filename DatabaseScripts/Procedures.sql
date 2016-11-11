@@ -208,3 +208,28 @@ BEGIN
 END
 
 GO
+Drop PROCEDURE Proc_ProcessRegisterUser
+GO
+-- =============================================
+-- Author:		XiaTiantian
+-- Create date: 2016-11-10
+-- Description:	
+-- =============================================
+Create PROCEDURE Proc_ProcessRegisterUser
+	-- Add the parameters for the stored procedure here
+	@id int
+	WITH ENCRYPTION
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+	SET XACT_ABORT ON;
+    -- Insert statements for procedure here
+	update Users set ApprovedTime=GETDATE() where UserName=(select Title from Notifications where ID=@id)
+	update Notifications set Status='1',ProcessTime=GETDATE(),ProcessResult='0' where ID=@id
+END
+GO
+
+
+

@@ -61,6 +61,7 @@
     <Compile Include="GroupHelperTests.cs" />
     <Compile Include="MenuHelperTests.cs" />
     <Compile Include="LogHelperTests.cs" />
+    <Compile Include="NotificationHelperTest.cs" />
     <Compile Include="UserHelperTests.cs" />
   </ItemGroup>
   <ItemGroup>
