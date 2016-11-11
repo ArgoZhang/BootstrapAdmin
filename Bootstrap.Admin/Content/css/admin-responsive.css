@@ -10,8 +10,11 @@
         overflow-y: auto;
         position: absolute;
         width: auto;
-        padding-right: 20px;
         z-index: 5;
+    }
+
+    #sidebar ul li a {
+        padding-right: 25px;
     }
 
     #main-content {
