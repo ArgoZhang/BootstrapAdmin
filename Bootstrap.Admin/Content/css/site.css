@@ -329,6 +329,7 @@ div button span {
             .notify-row > li > a .badge {
                 position: absolute;
                 top: -10px;
+                z-index: 1;
             }
 
     .notify-row .dropdown-menu {
@@ -479,6 +480,17 @@ div button span {
             font-style: italic;
             font-weight: bold;
             float: right;
+            padding-top: 2px;
+        }
+
+        .notify-row .dropdown-menu.notification > li > a > div {
+            position: absolute;
+            left: 36px;
+            right: 44px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            display: inline-block;
         }
 
 .dropdown-menu.menu {
