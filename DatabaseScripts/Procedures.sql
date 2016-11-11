@@ -162,6 +162,9 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
+
+Drop PROCEDURE Proc_SaveUsers
+GO
 -- =============================================
 -- Author:		LiuChun
 -- Create date: 2016-11-10
