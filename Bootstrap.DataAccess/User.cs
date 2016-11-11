@@ -43,5 +43,9 @@ namespace Bootstrap.DataAccess
         /// 获得/设置 用户当前状态 0 表示管理员注册用户 1 表示用户自己注册 2 表示管理员批复
         /// </summary>
         public int UserStatus { get; set; }
+        /// <summary>
+        /// 获得/设置 通知描述 2分钟内为刚刚
+        /// </summary>
+        public string Period { get; set; }
     }
 }

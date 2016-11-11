@@ -23,6 +23,7 @@ namespace Bootstrap.DataAccess
         private const string RetrieveUsersByNameDataKey = "UserHelper-RetrieveUsersByName";
         internal const string RetrieveUsersByRoleIDDataKey = "UserHelper-RetrieveUsersByRoleId";
         internal const string RetrieveUsersByGroupIDDataKey = "UserHelper-RetrieveUsersByGroupId";
+        internal const string RetrieveUsersForNotifyDataKey = "UserHelper-RetrieveUsersForNotify";
         /// <summary>
         /// 查询所有用户
         /// </summary>
@@ -95,6 +96,40 @@ namespace Bootstrap.DataAccess
                 return user;
             }, CacheSection.RetrieveDescByKey(RetrieveUsersByNameDataKey));
         }
+        /// <summary>
+        /// 查询所有的新注册用户
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<User> RetrieveUsersForNotify()
+        {
+            string sql = "select ID, UserName, DisplayName, RegisterTime, [Description] from Users Where ApprovedTime is null";
+            var ret = CacheManager.GetOrAdd(RetrieveUsersForNotifyDataKey, CacheSection.RetrieveIntervalByKey(RetrieveUsersForNotifyDataKey), key =>
+            {
+                List<User> Users = new List<User>();
+                DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
+                try
+                {
+                    using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
+                    {
+                        while (reader.Read())
+                        {
+                            Users.Add(new User()
+                            {
+                                ID = (int)reader[0],
+                                UserName = (string)reader[1],
+                                DisplayName = (string)reader[2],
+                                RegisterTime = (DateTime)reader[3],
+                                Description = (string)reader[4]
+                            });
+                        }
+                    }
+                }
+                catch (Exception ex) { ExceptionManager.Publish(ex); }
+                return Users;
+            }, CacheSection.RetrieveDescByKey(RetrieveUsersForNotifyDataKey));
+            return ret;
+        }
+
         /// <summary>
         /// 删除用户
         /// </summary>

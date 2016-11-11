@@ -21,14 +21,14 @@
     <div class="panel-body">
         <div class="tasks-widget">
             <ul id="tasks-users" class="task-list ui-sortable">
-                @foreach (var nofi in Model.Notifications)
+                @foreach (var u in Model.Notifications)
                 {
                     <li class="list-primary">
                         <i class="fa fa-ellipsis-v"></i>
                         <div class="task-title">
-                            <span class="task-title-sp">@nofi.Title</span>
+                            <span class="task-title-sp">@u.DisplayName</span>
                             <div class="task-wrapper notifi">
-                                <span class="task-value tooltips" data-placement="top" data-original-title="@nofi.Content">@nofi.Content</span>
+                                <span class="task-value tooltips" data-placement="top" data-original-title="@u.Description">@u.Description</span>
                             </div>
                             <div class="pull-right hidden-phone">
                                 <button class="btn btn-success btn-xs fa fa-check tooltips" data-placement="left" data-original-title="同意授权"></button>
@@ -51,9 +51,9 @@
                     <li class="list-warning">
                         <i class="fa fa-ellipsis-v"></i>
                         <div class="task-title">
-                            <span class="task-title-sp">@nofi.Title</span>
+                            <span class="task-title-sp">@nofi.DisplayName</span>
                             <div class="task-wrapper notifi">
-                                <span class="task-value tooltips" data-placement="top" data-original-title="@nofi.Content">@nofi.Content</span>
+                                <span class="task-value tooltips" data-placement="top" data-original-title="@nofi.Description">@nofi.Description</span>
                             </div>
                             <div class="pull-right hidden-phone">
                                 <button class="btn btn-success btn-xs fa fa-check tooltips" data-placement="left" data-original-title="同意授权"></button>
@@ -76,9 +76,9 @@
                     <li class="list-danger">
                         <i class="fa fa-ellipsis-v"></i>
                         <div class="task-title">
-                            <span class="task-title-sp">@nofi.Title</span>
+                            <span class="task-title-sp">@nofi.DisplayName</span>
                             <div class="task-wrapper notifi">
-                                <span class="task-value tooltips" data-placement="top" data-original-title="@nofi.Content">@nofi.Content</span>
+                                <span class="task-value tooltips" data-placement="top" data-original-title="@nofi.Description">@nofi.Description</span>
                             </div>
                             <div class="pull-right hidden-phone">
                                 <button class="btn btn-success btn-xs fa fa-check tooltips" data-placement="left" data-original-title="同意授权"></button>

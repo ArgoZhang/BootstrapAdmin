@@ -15,6 +15,29 @@ namespace Bootstrap.DataAccess
         internal const string RetrieveNotifyDataKey = "NotificationHelper-RetrieveNotifications";
 
         /// <summary>
+        /// 查询新注册用户
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<User> RetrieveUser()
+        {
+            var ret = UserHelper.RetrieveUsersForNotify();
+            if (ret != null)
+            {
+                ret.AsParallel().ForAll(n =>
+                {
+                    var ts = DateTime.Now - n.RegisterTime;
+                    if (ts.TotalMinutes < 5) n.Period = "刚刚";
+                    else if (ts.Days > 0) n.Period = string.Format("{0}天", ts.Days);
+                    else if (ts.Hours > 0) n.Period = string.Format("{0}小时", ts.Hours);
+                    else if (ts.Minutes > 0) n.Period = string.Format("{0}分钟", ts.Minutes);
+                });
+                return ret;
+            }
+            List<User> users = new List<User>();
+            return users;
+        }
+
+        /// <summary>
         /// 新用户注册的通知的面板显示
         /// </summary>
         /// <param name="id"></param>
