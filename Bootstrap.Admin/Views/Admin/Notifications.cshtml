@@ -20,16 +20,15 @@
     <div class="panel-heading">用户注册<span class="pull-right"><a href="javascript:;" class="tooltips fa fa-refresh" data-placement="left" data-original-title="点击刷新"></a></span></div>
     <div class="panel-body">
         <div class="tasks-widget">
-            <ul id="tasks-users" class="task-list ui-sortable">
-                @foreach (var u in Model.Notifications)
+            <ul id="tasks-users" class="task-list ui-sortable" data-category="0">
+                @foreach (var noti in Model.Notifications.Where(n => n.Category == "0"))
                 {
                     <li class="list-primary">
                         <i class="fa fa-ellipsis-v"></i>
-                        <div class="task-title">
-                            <span class="task-title-sp">@u.DisplayName</span>
-                            <div class="task-wrapper notifi">
-                                <span class="task-value tooltips" data-placement="top" data-original-title="@u.Description">@u.Description</span>
-                            </div>
+                        <div class="task-title notifi">
+                            <span class="task-title-sp">@noti.Title</span>
+                            <span class="task-value">@noti.Content</span>
+                            <span class="task-time">@noti.RegisterTime.ToString("yyyy-MM-dd HH:mm:ss")</span>
                             <div class="pull-right hidden-phone">
                                 <button class="btn btn-success btn-xs fa fa-check tooltips" data-placement="left" data-original-title="同意授权"></button>
                                 <button class="btn btn-danger btn-xs fa fa-remove tooltips" data-placement="left" data-original-title="拒绝授权"></button>
@@ -45,16 +44,15 @@
     <div class="panel-heading">程序错误<a href="javascript:;" class="pull-right tooltips fa fa-refresh" data-placement="left" data-original-title="点击刷新"></a></div>
     <div class="panel-body">
         <div class="tasks-widget">
-            <ul id="tasks-app" class="task-list ui-sortable">
-                @foreach (var nofi in Model.Notifications)
+            <ul id="tasks-app" class="task-list ui-sortable" data-category="1">
+                @foreach (var nofi in Model.Notifications.Where(n => n.Category == "1"))
                 {
                     <li class="list-warning">
                         <i class="fa fa-ellipsis-v"></i>
-                        <div class="task-title">
-                            <span class="task-title-sp">@nofi.DisplayName</span>
-                            <div class="task-wrapper notifi">
-                                <span class="task-value tooltips" data-placement="top" data-original-title="@nofi.Description">@nofi.Description</span>
-                            </div>
+                        <div class="task-title notifi">
+                            <span class="task-title-sp">@nofi.Title</span>
+                            <span class="task-value">@nofi.Content</span>
+                            <span class="task-time">@nofi.RegisterTime.ToString("yyyy-MM-dd HH:mm:ss")</span>
                             <div class="pull-right hidden-phone">
                                 <button class="btn btn-success btn-xs fa fa-check tooltips" data-placement="left" data-original-title="同意授权"></button>
                                 <button class="btn btn-danger btn-xs fa fa-remove tooltips" data-placement="left" data-original-title="拒绝授权"></button>
@@ -70,16 +68,15 @@
     <div class="panel-heading">数据库报警<span class="pull-right"><a href="javascript:;" class="tooltips fa fa-refresh" data-placement="left" data-original-title="点击刷新"></a></span></div>
     <div class="panel-body">
         <div class="tasks-widget">
-            <ul id="tasks-db" class="task-list ui-sortable">
-                @foreach (var nofi in Model.Notifications)
+            <ul id="tasks-db" class="task-list ui-sortable" data-category="2">
+                @foreach (var nofi in Model.Notifications.Where(n => n.Category == "2"))
                 {
                     <li class="list-danger">
                         <i class="fa fa-ellipsis-v"></i>
-                        <div class="task-title">
-                            <span class="task-title-sp">@nofi.DisplayName</span>
-                            <div class="task-wrapper notifi">
-                                <span class="task-value tooltips" data-placement="top" data-original-title="@nofi.Description">@nofi.Description</span>
-                            </div>
+                        <div class="task-title notifi">
+                            <span class="task-title-sp">@nofi.Title</span>
+                            <span class="task-time">@nofi.RegisterTime.ToString("yyyy-MM-dd HH:mm:ss")</span>
+                            <span class="task-value">@nofi.Content</span>
                             <div class="pull-right hidden-phone">
                                 <button class="btn btn-success btn-xs fa fa-check tooltips" data-placement="left" data-original-title="同意授权"></button>
                                 <button class="btn btn-danger btn-xs fa fa-remove tooltips" data-placement="left" data-original-title="拒绝授权"></button>

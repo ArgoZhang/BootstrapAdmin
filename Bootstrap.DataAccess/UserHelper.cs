@@ -23,7 +23,7 @@ namespace Bootstrap.DataAccess
         private const string RetrieveUsersByNameDataKey = "UserHelper-RetrieveUsersByName";
         internal const string RetrieveUsersByRoleIDDataKey = "UserHelper-RetrieveUsersByRoleId";
         internal const string RetrieveUsersByGroupIDDataKey = "UserHelper-RetrieveUsersByGroupId";
-        internal const string RetrieveUsersForNotifyDataKey = "UserHelper-RetrieveUsersForNotify";
+        internal const string RetrieveNewUsersDataKey = "UserHelper-RetrieveNewUsers";
         /// <summary>
         /// 查询所有用户
         /// </summary>
@@ -100,11 +100,11 @@ namespace Bootstrap.DataAccess
         /// 查询所有的新注册用户
         /// </summary>
         /// <returns></returns>
-        public static IEnumerable<User> RetrieveUsersForNotify()
+        public static IEnumerable<User> RetrieveNewUsers()
         {
-            string sql = "select ID, UserName, DisplayName, RegisterTime, [Description] from Users Where ApprovedTime is null";
-            var ret = CacheManager.GetOrAdd(RetrieveUsersForNotifyDataKey, CacheSection.RetrieveIntervalByKey(RetrieveUsersForNotifyDataKey), key =>
+            var ret = CacheManager.GetOrAdd(RetrieveNewUsersDataKey, CacheSection.RetrieveIntervalByKey(RetrieveNewUsersDataKey), key =>
             {
+                string sql = "select ID, UserName, DisplayName, RegisterTime, [Description] from Users Where ApprovedTime is null";
                 List<User> Users = new List<User>();
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                 try
@@ -126,7 +126,7 @@ namespace Bootstrap.DataAccess
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return Users;
-            }, CacheSection.RetrieveDescByKey(RetrieveUsersForNotifyDataKey));
+            }, CacheSection.RetrieveDescByKey(RetrieveNewUsersDataKey));
             return ret;
         }
 

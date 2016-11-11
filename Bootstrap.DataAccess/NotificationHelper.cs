@@ -12,31 +12,8 @@ namespace Bootstrap.DataAccess
 {
     public class NotificationHelper
     {
-        internal const string RetrieveNotifyDataKey = "NotificationHelper-RetrieveNotifications";
-
-        /// <summary>
-        /// 查询新注册用户
-        /// </summary>
-        /// <returns></returns>
-        public static IEnumerable<User> RetrieveUser()
-        {
-            var ret = UserHelper.RetrieveUsersForNotify();
-            if (ret != null)
-            {
-                ret.AsParallel().ForAll(n =>
-                {
-                    var ts = DateTime.Now - n.RegisterTime;
-                    if (ts.TotalMinutes < 5) n.Period = "刚刚";
-                    else if (ts.Days > 0) n.Period = string.Format("{0}天", ts.Days);
-                    else if (ts.Hours > 0) n.Period = string.Format("{0}小时", ts.Hours);
-                    else if (ts.Minutes > 0) n.Period = string.Format("{0}分钟", ts.Minutes);
-                });
-                return ret;
-            }
-            List<User> users = new List<User>();
-            return users;
-        }
-
+        // UNDOEN: 此处需要继续完善，增强异常的通知管理
+        internal const string RetrieveNotificationsDataKey = "NotificationHelper-RetrieveNotifications";
         /// <summary>
         /// 新用户注册的通知的面板显示
         /// </summary>
@@ -44,7 +21,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<Notification> RetrieveNotifications()
         {
-            var ret = CacheManager.GetOrAdd(RetrieveNotifyDataKey, CacheSection.RetrieveIntervalByKey(RetrieveNotifyDataKey), key =>
+            var notifies = CacheManager.GetOrAdd(RetrieveNotificationsDataKey, CacheSection.RetrieveIntervalByKey(RetrieveNotificationsDataKey), key =>
             {
                 string sql = "select * from Notifications";
                 List<Notification> notifications = new List<Notification>();
@@ -73,7 +50,9 @@ namespace Bootstrap.DataAccess
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return notifications;
 
-            }, CacheSection.RetrieveDescByKey(RetrieveNotifyDataKey));
+            }, CacheSection.RetrieveDescByKey(RetrieveNotificationsDataKey));
+            var users = UserHelper.RetrieveNewUsers().Select(u => new Notification() { ID = u.ID, Category = "0", Content = u.Description, Title = u.DisplayName, RegisterTime = u.RegisterTime }).ToList();
+            var ret = users.Union(notifies);
             ret.AsParallel().ForAll(n =>
             {
                 var ts = DateTime.Now - n.RegisterTime;
@@ -82,7 +61,7 @@ namespace Bootstrap.DataAccess
                 else if (ts.Hours > 0) n.Period = string.Format("{0}小时", ts.Hours);
                 else if (ts.Minutes > 0) n.Period = string.Format("{0}分钟", ts.Minutes);
             });
-            return ret;
+            return ret.OrderByDescending(n => n.RegisterTime);
         }
 
         /// <summary>

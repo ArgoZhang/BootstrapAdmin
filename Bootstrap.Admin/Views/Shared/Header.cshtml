@@ -177,11 +177,22 @@
                         <li>
                             <p>您有 @Model.Notifications.Count() 条新通知</p>
                         </li>
-                        @foreach (var u in Model.Notifications.Take(6))
+                        @foreach (var noti in Model.Notifications.Take(6))
                         {
                             <li>
-                                <a href="~/Admin/Notifications">
-                                    <span class="label label-success"><i class="fa fa-plus"></i></span><div>@u.DisplayName</div><span class="small italic">@u.Period</span>
+                                <a href="~/Admin/Notifications/@noti.ID?category=@noti.Category">
+                                    @if (noti.Category == "0")
+                                    {
+                                        <span class="label label-success"><i class="fa fa-plus"></i></span><div>@noti.Content</div><span class="small italic">@noti.Period</span>
+                                    }
+                                    else if (noti.Category == "1")
+                                    {
+                                        <span class="label label-warning"><i class="fa fa-bell"></i></span><div>@noti.Content</div><span class="small italic">@noti.Period</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="label label-danger"><i class="fa fa-bolt"></i></span><div>@noti.Content</div><span class="small italic">@noti.Period</span>
+                                    }
                                 </a>
                             </li>
                         }

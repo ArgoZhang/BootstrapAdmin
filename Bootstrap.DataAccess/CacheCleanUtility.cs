@@ -40,6 +40,7 @@ namespace Bootstrap.DataAccess
                     cacheKeys.Add(string.Format("{0}-{1}", GroupHelper.RetrieveGroupsByUserIDDataKey, id));
                     cacheKeys.Add(MenuHelper.RetrieveMenusDataKey);
                 });
+                cacheKeys.Add(UserHelper.RetrieveNewUsersDataKey);
                 // final cleanup 
                 CacheManager.Clear(key => cacheKeys.Any(k => k == key) || key.Contains(UserHelper.RetrieveUsersDataKey) || key.Contains(RoleHelper.RetrieveRolesByUserNameDataKey));
                 cacheKeys.Clear();
@@ -80,7 +81,7 @@ namespace Bootstrap.DataAccess
             if (notifyIds != null)
             {
                 // final cleanup 
-                CacheManager.Clear(key => key.Contains(NotificationHelper.RetrieveNotifyDataKey));
+                CacheManager.Clear(key => key.Contains(NotificationHelper.RetrieveNotificationsDataKey));
                 cacheKeys.Clear();
             }
         }
