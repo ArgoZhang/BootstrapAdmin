@@ -495,12 +495,14 @@ div button span {
 
 .dropdown-menu.menu {
     top: 50px;
-    left: 15px;
+    left: 6px;
     margin-right: 15px;
+    min-height: 160px;
+    min-width: 280px;
 }
 
     .dropdown-menu.menu .arrow-up {
-        left: 43px;
+        left: 8px;
         top: -10px;
     }
 

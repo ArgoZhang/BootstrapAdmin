@@ -1,4 +1,6 @@
 ﻿$(function () {
+    $('#navbar').attr('data-toggle', "dropdown").addClass('dropdown-toggle');
+
     function iframeResposive() {
         try {
             var fra = $('iframe').get(0);

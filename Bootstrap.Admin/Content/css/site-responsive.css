@@ -32,6 +32,10 @@
         right: 15px;
         left: auto;
     }
+
+    .dropdown-menu.menu {
+        min-width: inherit;
+    }
 }
 
 @media (min-height: 700px) {
