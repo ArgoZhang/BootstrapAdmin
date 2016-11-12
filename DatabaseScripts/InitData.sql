@@ -33,7 +33,7 @@ INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [C
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (5, 0, N'菜单管理', 50, N'fa fa-dashboard', N'~/Admin/Menus', N'0')
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (6, 0, N'用户管理', 60, N'fa fa-user', N'~/Admin/Users', N'0')
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (7, 0, N'角色管理', 70, N'fa fa-sitemap', N'~/Admin/Roles', N'0')
-INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (8, 0, N'部门管理', 80, N'fa fa-home', N'~/Admin/Groups', N'0')
+INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (8, 0, N'部门管理', 80, N'fa fa-bank', N'~/Admin/Groups', N'0')
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (9, 0, N'字典表维护', 90, N'fa fa-book', N'~/Admin/Dicts', N'0')
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (10, 0, N'站内消息', 100, N'fa fa-envelope-o', N'~/Admin/Messages', N'0')
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (11, 0, N'任务消息', 110, N'fa fa fa-tasks', N'~/Admin/Tasks', N'0')
