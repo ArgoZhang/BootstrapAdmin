@@ -1,5 +1,6 @@
 ﻿using Bootstrap.DataAccess;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web;
 
 namespace Bootstrap.Admin.Models
@@ -17,7 +18,9 @@ namespace Bootstrap.Admin.Models
             UserID = user.ID;
             HomeUrl = "~/";
             Menus = MenuHelper.RetrieveLinksByUserName(UserName);
-            Notifications = NotificationHelper.RetrieveNotifications();
+            var notis = NotificationHelper.RetrieveNotifications();
+            NotifiCount = notis.Count();
+            Notifications = notis.Take(6);
         }
         public string UserName { get; protected set; }
         /// <summary>
@@ -41,8 +44,12 @@ namespace Bootstrap.Admin.Models
         /// </summary>
         public IEnumerable<Menu> Menus { get; private set; }
         /// <summary>
-        /// 
+        /// 获得/设置 通知内容集合
         /// </summary>
         public IEnumerable<Notification> Notifications { get; set; }
+        /// <summary>
+        /// 获得/设置 通知数量
+        /// </summary>
+        public int NotifiCount { get; set; }
     }
 }

@@ -47,5 +47,17 @@ namespace Bootstrap.DataAccess
         /// 获得/设置 通知描述 2分钟内为刚刚
         /// </summary>
         public string Period { get; set; }
+        /// <summary>
+        /// 获得/设置 拒绝人
+        /// </summary>
+        public string RejectedBy { get; set; }
+        /// <summary>
+        /// 获得/设置 拒绝原因
+        /// </summary>
+        public string RejectedReason { get; set; }
+        /// <summary>
+        /// 获得/设置 拒绝时刻
+        /// </summary>
+        public string RejectedTime { get; set; }
     }
 }

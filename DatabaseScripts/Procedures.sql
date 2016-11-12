@@ -175,10 +175,12 @@ CREATE PROCEDURE [dbo].[Proc_SaveUsers]
 	@userName varchar(50),
 	@password varchar(50),
 	@passSalt varchar(50),
-    @displayName nvarchar(50),
+	@displayName nvarchar(50),
 	@approvedBy varchar(50),
-    @description nvarchar(500),
-    @userStatus int = 0 --0表示管理员创建 1标示用户注册 2标示管理员批复
+	@description nvarchar(500),
+	@rejectedBy varchar(50),
+	@rejectedReason nvarchar(500),
+	@userStatus int = 0 --0表示管理员创建 1标示用户注册 2标示管理员批复
 	WITH ENCRYPTION
 AS
 BEGIN
@@ -189,7 +191,10 @@ BEGIN
     -- Insert statements for procedure here
 	if @userStatus = 2
 		begin
-			update Users set ApprovedTime = GETDATE(), ApprovedBy = @approvedBy where ID = @id
+			if @approvedBy is not null
+				update Users set ApprovedTime = GETDATE(), ApprovedBy = @approvedBy where ID = @id
+			else
+				update Users set RejectedTime = GETDATE(), RejectedBy = @rejectedBy, RejectedReason = @rejectedReason where ID = @id
 		end
 	else 
 		begin

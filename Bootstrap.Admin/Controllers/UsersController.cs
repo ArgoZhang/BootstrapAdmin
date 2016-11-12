@@ -84,6 +84,20 @@ namespace Bootstrap.Admin.Controllers
                 case "group":
                     ret = UserHelper.SaveUsersByGroupId(id, userIds);
                     break;
+                case "user":
+                    // 此时 userIds 存储的信息是操作结果 1 标示同意 0 标示拒绝
+                    var user = new User() { ID = id, UserStatus = 2 };
+                    if (userIds == "1")
+                    {
+                        user.ApprovedBy = User.Identity.Name;
+                    }
+                    else
+                    {
+                        user.RejectedReason = "无原因";
+                        user.RejectedBy = User.Identity.Name;
+                    }
+                    ret = UserHelper.SaveUser(user);
+                    break;
                 default:
                     break;
             }

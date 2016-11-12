@@ -49,7 +49,6 @@
 
     .tasks-widget .task-list li > .task-title {
         overflow: hidden;
-        margin-right: 10px;
         height: 46px;
     }
 
@@ -82,11 +81,17 @@
 
         .tasks-widget .task-list li > .task-title .hidden-phone {
             padding-top: 14px;
+            margin-right: 4px;
         }
 
             .tasks-widget .task-list li > .task-title .hidden-phone button.btn-xs {
                 font-size: 12px;
                 line-height: 1.5;
+                margin-right: 4px;
+            }
+
+            .tasks-widget .task-list li > .task-title .hidden-phone a.btn-xs {
+                padding: 4px 5px;
             }
 
     .tasks-widget .task-list li > .task-config {

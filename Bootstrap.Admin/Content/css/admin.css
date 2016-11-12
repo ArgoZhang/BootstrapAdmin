@@ -214,11 +214,6 @@ ul.sidebar-menu {
     font-size: 15px;
 }
 
-    .panel a.fa-refresh:hover {
-        -webkit-animation: fa-spin 2s infinite linear;
-        animation: fa-spin 2s infinite linear;
-    }
-
 .bootstrap-select .dropdown-menu {
     padding: 0px;
 }

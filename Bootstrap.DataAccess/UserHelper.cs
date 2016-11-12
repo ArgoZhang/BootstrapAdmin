@@ -104,7 +104,7 @@ namespace Bootstrap.DataAccess
         {
             var ret = CacheManager.GetOrAdd(RetrieveNewUsersDataKey, CacheSection.RetrieveIntervalByKey(RetrieveNewUsersDataKey), key =>
             {
-                string sql = "select ID, UserName, DisplayName, RegisterTime, [Description] from Users Where ApprovedTime is null";
+                string sql = "select ID, UserName, DisplayName, RegisterTime, [Description] from Users Where ApprovedTime is null and RejectedTime is null";
                 List<User> Users = new List<User>();
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                 try
@@ -161,22 +161,27 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static bool SaveUser(User p)
         {
-            if (p.UserName.Length > 50) p.UserName.Substring(0, 50);
-            p.PassSalt = LgbCryptography.GenerateSalt();
-            p.Password = LgbCryptography.ComputeHash(p.Password, p.PassSalt);
             if (p.ID == 0 && p.Description.Length > 500) p.Description.Substring(0, 500);
+            if (p.UserStatus != 2)
+            {
+                if (p.UserName.Length > 50) p.UserName.Substring(0, 50);
+                p.PassSalt = LgbCryptography.GenerateSalt();
+                p.Password = LgbCryptography.ComputeHash(p.Password, p.PassSalt);
+            }
             bool ret = false;
             try
             {
                 using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_SaveUsers"))
                 {
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@id", p.ID, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@userName", p.UserName, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@password", p.Password, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@passSalt", p.PassSalt, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@displayName", p.DisplayName, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@userName", DBAccess.ToDBValue(p.UserName), ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@password", DBAccess.ToDBValue(p.Password), ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@passSalt", DBAccess.ToDBValue(p.PassSalt), ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@displayName", DBAccess.ToDBValue(p.DisplayName), ParameterDirection.Input));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@description", DBAccess.ToDBValue(p.Description), ParameterDirection.Input));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@approvedBy", DBAccess.ToDBValue(p.ApprovedBy), ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@rejectedBy", DBAccess.ToDBValue(p.RejectedBy), ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@rejectedReason", DBAccess.ToDBValue(p.RejectedReason), ParameterDirection.Input));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@userStatus", p.UserStatus, ParameterDirection.Input));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
