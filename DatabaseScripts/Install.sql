@@ -312,3 +312,26 @@ GO
 /****** Object:  Default [DF_Notifications_Status]    Script Date: 11/12/2016 15:49:11 ******/
 ALTER TABLE [dbo].[Notifications] ADD  CONSTRAINT [DF_Notifications_Status]  DEFAULT ((0)) FOR [Status]
 GO
+
+/****** Object:  Table [dbo].[Messages]    Script Date: 11/12/2016 11:18:31 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Messages](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[Title] [nvarchar](50) NOT NULL,
+	[Content] [nvarchar](500) NOT NULL,
+	[From] [nvarchar](50) NOT NULL,
+	[To] [nvarchar](50) NOT NULL,
+	[SendTime] [datetime] NOT NULL,
+	[Status] [nvarchar](50) NOT NULL,
+ CONSTRAINT [PK_Messages] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
