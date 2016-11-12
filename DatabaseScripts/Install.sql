@@ -8,7 +8,7 @@ ALTER DATABASE [BootstrapAdmin] SET AUTO_SHRINK ON
 GO
 USE [BootstrapAdmin]
 GO
-/****** Object:  Table [dbo].[Users]    Script Date: 11/10/2016 11:32:54 ******/
+/****** Object:  Table [dbo].[Users]    Script Date: 11/12/2016 15:49:11 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -23,8 +23,11 @@ CREATE TABLE [dbo].[Users](
 	[DisplayName] [nvarchar](50) NOT NULL,
 	[RegisterTime] [datetime] NOT NULL,
 	[ApprovedTime] [datetime] NULL,
-	[ApprovedBy] [nvarchar](50) NULL,
+	[ApprovedBy] [varchar](50) NULL,
 	[Description] [nvarchar](500) NOT NULL,
+	[RejectedBy] [varchar](50) NULL,
+	[RejectedTime] [datetime] NULL,
+	[RejectedReason] [nvarchar](50) NULL,
  CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
@@ -47,7 +50,7 @@ EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'注册时间' 
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'批复时间' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Users', @level2type=N'COLUMN',@level2name=N'ApprovedTime'
 GO
-/****** Object:  Table [dbo].[UserRole]    Script Date: 11/10/2016 11:32:54 ******/
+/****** Object:  Table [dbo].[UserRole]    Script Date: 11/12/2016 15:49:11 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -68,7 +71,7 @@ EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'用户ID' , @l
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'角色ID' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'UserRole', @level2type=N'COLUMN',@level2name=N'RoleID'
 GO
-/****** Object:  Table [dbo].[UserGroup]    Script Date: 11/10/2016 11:32:54 ******/
+/****** Object:  Table [dbo].[UserGroup]    Script Date: 11/12/2016 15:49:11 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -89,7 +92,7 @@ EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'用户ID' , @l
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'部门ID' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'UserGroup', @level2type=N'COLUMN',@level2name=N'GroupID'
 GO
-/****** Object:  Table [dbo].[Roles]    Script Date: 11/10/2016 11:32:54 ******/
+/****** Object:  Table [dbo].[Roles]    Script Date: 11/12/2016 15:49:11 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -110,7 +113,7 @@ EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'角色名称' 
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'描述' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Roles', @level2type=N'COLUMN',@level2name=N'Description'
 GO
-/****** Object:  Table [dbo].[RoleGroup]    Script Date: 11/10/2016 11:32:54 ******/
+/****** Object:  Table [dbo].[RoleGroup]    Script Date: 11/12/2016 15:49:11 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -131,7 +134,7 @@ EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'角色ID' , @l
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'部门ID' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'RoleGroup', @level2type=N'COLUMN',@level2name=N'GroupID'
 GO
-/****** Object:  Table [dbo].[Notifications]    Script Date: 11/10/2016 11:32:54 ******/
+/****** Object:  Table [dbo].[Notifications]    Script Date: 11/12/2016 15:49:11 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -154,7 +157,7 @@ CREATE TABLE [dbo].[Notifications](
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'0 标示未处理 1 标示已处理' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Notifications', @level2type=N'COLUMN',@level2name=N'Status'
 GO
-/****** Object:  Table [dbo].[Navigations]    Script Date: 11/10/2016 11:32:54 ******/
+/****** Object:  Table [dbo].[Navigations]    Script Date: 11/12/2016 15:49:11 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -177,7 +180,7 @@ CREATE TABLE [dbo].[Navigations](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[NavigationRole]    Script Date: 11/10/2016 11:32:54 ******/
+/****** Object:  Table [dbo].[NavigationRole]    Script Date: 11/12/2016 15:49:11 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -192,7 +195,7 @@ CREATE TABLE [dbo].[NavigationRole](
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Logs]    Script Date: 11/10/2016 11:32:54 ******/
+/****** Object:  Table [dbo].[Logs]    Script Date: 11/12/2016 15:49:11 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -219,7 +222,7 @@ EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'' , @level0typ
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Logs', @level2type=N'COLUMN',@level2name=N'CRUD'
 GO
-/****** Object:  Table [dbo].[Groups]    Script Date: 11/10/2016 11:32:54 ******/
+/****** Object:  Table [dbo].[Groups]    Script Date: 11/12/2016 15:49:11 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -240,7 +243,7 @@ EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'部门名称' 
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'描述' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Groups', @level2type=N'COLUMN',@level2name=N'Description'
 GO
-/****** Object:  Table [dbo].[Exceptions]    Script Date: 11/10/2016 16:30:56 ******/
+/****** Object:  Table [dbo].[Exceptions]    Script Date: 11/12/2016 15:49:11 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -264,7 +267,7 @@ CREATE TABLE [dbo].[Exceptions](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[Dicts]    Script Date: 11/10/2016 16:30:56 ******/
+/****** Object:  Table [dbo].[Dicts]    Script Date: 11/12/2016 15:49:11 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -291,21 +294,21 @@ EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'字典代码' 
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'0表示系统使用，1表示自定义' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Dicts', @level2type=N'COLUMN',@level2name=N'Define'
 GO
-/****** Object:  Default [DF_Dicts_Define]    Script Date: 11/10/2016 11:32:54 ******/
+/****** Object:  Default [DF_Dicts_Define]    Script Date: 11/12/2016 15:49:11 ******/
 ALTER TABLE [dbo].[Dicts] ADD  CONSTRAINT [DF_Dicts_Define]  DEFAULT ((1)) FOR [Define]
 GO
-/****** Object:  Default [DF_Navigations_ParentId]    Script Date: 11/10/2016 11:32:54 ******/
+/****** Object:  Default [DF_Navigations_ParentId]    Script Date: 11/12/2016 15:49:11 ******/
 ALTER TABLE [dbo].[Navigations] ADD  CONSTRAINT [DF_Navigations_ParentId]  DEFAULT ((0)) FOR [ParentId]
 GO
-/****** Object:  Default [DF_Navigations_Order]    Script Date: 11/10/2016 11:32:54 ******/
+/****** Object:  Default [DF_Navigations_Order]    Script Date: 11/12/2016 15:49:11 ******/
 ALTER TABLE [dbo].[Navigations] ADD  CONSTRAINT [DF_Navigations_Order]  DEFAULT ((0)) FOR [Order]
 GO
-/****** Object:  Default [DF_Navigations_Icon]    Script Date: 11/10/2016 11:32:54 ******/
+/****** Object:  Default [DF_Navigations_Icon]    Script Date: 11/12/2016 15:49:11 ******/
 ALTER TABLE [dbo].[Navigations] ADD  CONSTRAINT [DF_Navigations_Icon]  DEFAULT ('none') FOR [Icon]
 GO
-/****** Object:  Default [DF_Navigations_Category]    Script Date: 11/10/2016 11:32:54 ******/
+/****** Object:  Default [DF_Navigations_Category]    Script Date: 11/12/2016 15:49:11 ******/
 ALTER TABLE [dbo].[Navigations] ADD  CONSTRAINT [DF_Navigations_Category]  DEFAULT ((0)) FOR [Category]
 GO
-/****** Object:  Default [DF_Notifications_Status]    Script Date: 11/10/2016 11:32:54 ******/
+/****** Object:  Default [DF_Notifications_Status]    Script Date: 11/12/2016 15:49:11 ******/
 ALTER TABLE [dbo].[Notifications] ADD  CONSTRAINT [DF_Notifications_Status]  DEFAULT ((0)) FOR [Status]
 GO
