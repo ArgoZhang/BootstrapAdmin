@@ -95,7 +95,6 @@ div button span {
 
 /*Title*/
 .sidebar-toggle-box {
-    margin-top: 20px;
     font-size: 21px;
     color: #333;
     float: left;
@@ -182,6 +181,7 @@ div button span {
             padding: 6px;
             background: none;
             margin-right: 0;
+            display: block;
         }
 
             .top-menu > li > a:hover .caret {
