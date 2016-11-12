@@ -21,7 +21,9 @@ namespace Bootstrap.Admin.Models
             var notis = NotificationHelper.RetrieveNotifications();
             NotifiCount = notis.Count();
             Notifications = notis.Take(6);
-            Messages = MessageHelper.RetrieveMessagesHeader(HttpContext.Current.User.Identity.Name);
+            var msgs = MessageHelper.RetrieveMessagesHeader(UserName);
+            MessageCount = msgs.Count();
+            Messages = msgs.Take(6);
         }
         public string UserName { get; protected set; }
         /// <summary>
@@ -53,9 +55,12 @@ namespace Bootstrap.Admin.Models
         /// </summary>
         public int NotifiCount { get; set; }
         /// <summary>
-        /// 或者/设置消息列表
+        /// 获得/设置 消息列表
         /// </summary>
         public IEnumerable<Message> Messages { get; set; }
-
+        /// <summary>
+        /// 获得/设置 消息数量
+        /// </summary>
+        public int MessageCount { get; set; }
     }
 }

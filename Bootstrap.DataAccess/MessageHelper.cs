@@ -10,13 +10,14 @@ using System.Linq;
 
 namespace Bootstrap.DataAccess
 {
-
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class MessageHelper
     {
         internal const string RetrieveMessageFromDataKey = "MessageHelper-RetrieveMessagesFromOthers";
         internal const string RetrieveMessageToDataKey = "MessageHelper-RetrieveMessagesToOthers";
-       
+
         /// <summary>
         /// 获取其他人发送给自己的消息列表
         /// </summary>
@@ -45,7 +46,7 @@ namespace Bootstrap.DataAccess
                                 To = (string)reader[4],
                                 SendTime = LgbConvert.ReadValue(reader[5], DateTime.MinValue),
                                 Status = (string)reader[6]
-                                
+
                             });
                         }
                     }
@@ -54,10 +55,8 @@ namespace Bootstrap.DataAccess
                 return messages;
 
             }, CacheSection.RetrieveDescByKey(RetrieveMessageFromDataKey));
-
             return messageRet.OrderByDescending(n => n.SendTime);
         }
-
         /// <summary>
         /// 自己获取发送给其他人的消息列表
         /// </summary>
@@ -95,10 +94,8 @@ namespace Bootstrap.DataAccess
                 return messages;
 
             }, CacheSection.RetrieveDescByKey(RetrieveMessageToDataKey));
-
             return messageRet.OrderByDescending(n => n.SendTime);
         }
-
         /// <summary>
         /// 获取Header处显示的消息列表
         /// </summary>
@@ -106,9 +103,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<Message> RetrieveMessagesHeader(string userName)
         {
-
             var messageRet = RetrieveMessagesFromOthers(userName);
-
             messageRet.AsParallel().ForAll(n =>
             {
                 var ts = DateTime.Now - n.SendTime;
@@ -119,6 +114,5 @@ namespace Bootstrap.DataAccess
             });
             return messageRet;
         }
-
     }
 }

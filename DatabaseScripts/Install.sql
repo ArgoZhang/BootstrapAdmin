@@ -324,8 +324,8 @@ CREATE TABLE [dbo].[Messages](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
 	[Title] [nvarchar](50) NOT NULL,
 	[Content] [nvarchar](500) NOT NULL,
-	[From] [nvarchar](50) NOT NULL,
-	[To] [nvarchar](50) NOT NULL,
+	[From] [varchar](50) NOT NULL,
+	[To] [varchar](50) NOT NULL,
 	[SendTime] [datetime] NOT NULL,
 	[Status] [nvarchar](50) NOT NULL,
  CONSTRAINT [PK_Messages] PRIMARY KEY CLUSTERED 
