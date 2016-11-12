@@ -38,7 +38,7 @@
     }
 }
 
-@media (min-height: 700px) {
+@media (min-height: 672px) {
     html, body {
         height: 100%;
         overflow: hidden;

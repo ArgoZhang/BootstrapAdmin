@@ -8,7 +8,6 @@
     #sidebar {
         display: none;
         overflow-y: auto;
-        position: absolute;
         width: 100%;
         z-index: 5;
     }
@@ -85,7 +84,7 @@
         }
 }
 
-@media (min-height: 700px) {
+@media (min-height: 672px) {
     #sidebar {
         padding-top: 94px;
         height: 100%;
