@@ -107,63 +107,39 @@
                 </ul>
             </li>
             <!-- settings end -->
-            <!-- inbox dropdown start-->
-            <li id="header_inbox_bar" class="dropdown">
-                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                    <i class="fa fa-envelope-o"></i>
-                    <span class="badge bg-important">4</span>
-                </a>
-                <ul class="dropdown-menu inbox">
-                    <div class="notify-arrow notify-arrow-red"></div>
-                    <li>
-                        <p>您有 4 个待处理的消息</p>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span class="photo"><img alt="avatar" src="~/content/images/logo6.jpg"></span>
-                            <span class="subject">
-                                <span class="from">Jianmin Yin</span>
-                                <span class="time">Just now</span>
-                            </span>
-                            <span class="message">你好, 测试消息</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span class="photo"><img alt="avatar" src="~/content/images/logo3.jpg"></span>
-                            <span class="subject">
-                                <span class="from">张广坡</span>
-                                <span class="time">10 mins</span>
-                            </span>
-                            <span class="message">还是测试消息</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span class="photo"><img alt="avatar" src="~/content/images/logo.jpg"></span>
-                            <span class="subject">
-                                <span class="from">李琦</span>
-                                <span class="time">3 hrs</span>
-                            </span>
-                            <span class="message">继续测试</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span class="photo"><img alt="avatar" src="~/content/images/logo1.jpg"></span>
-                            <span class="subject">
-                                <span class="from">刘老师</span>
-                                <span class="time">Just now</span>
-                            </span>
-                            <span class="message">统一管理</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">查看所有消息</a>
-                    </li>
-                </ul>
-            </li>
-            <!-- inbox dropdown end -->
+            <!-- message dropdown start-->
+    @if (Model.Messages.Count() > 0)
+   {
+       <li id="header_inbox_bar" class="dropdown">
+           <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+               <i class="fa fa-envelope-o"></i>
+               <span class="badge bg-important">@Model.Messages.Count()</span>
+           </a>
+           <ul class="dropdown-menu inbox">
+               <div class="notify-arrow notify-arrow-red"></div>
+               <li>
+                   <p>您有 @Model.Messages.Count() 个未读的消息</p>
+               </li>
+               @foreach(var mess in Model.Messages.Take(6))
+               {
+                   <li>
+                       <a href="~/Admin/Messages/@mess.ID">
+                           <span class="photo"><img alt="avatar" src="../content/images/logo6.jpg"></span>
+                           <span class="subject">
+                               <span class="from">@mess.From</span>
+                               <span class="time">@mess.Period</span>
+                           </span>
+                           <span class="message">@mess.Title</span>
+                       </a>
+                   </li>
+               }
+                   <li>
+                       <a href="~/Admin/Messages">查看所有消息</a>
+                   </li>
+          </ul>
+       </li>
+    }
+            <!-- message dropdown end -->
             <!-- notification dropdown start-->
             @if (Model.NotifiCount > 0)
             {
