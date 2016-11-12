@@ -9,7 +9,7 @@
         display: none;
         overflow-y: auto;
         position: absolute;
-        width: auto;
+        width: 100%;
         z-index: 5;
     }
 
