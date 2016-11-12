@@ -47,7 +47,7 @@ SET IDENTITY_INSERT [dbo].[Navigations] OFF
 
 DELETE FROM GROUPS WHERE ID = 1
 SET IDENTITY_INSERT [dbo].[Groups] ON 
-INSERT [dbo].[Groups] ([ID], [GroupName], [Description]) VALUES (1, 1, N'系统默认组')
+INSERT [dbo].[Groups] ([ID], [GroupName], [Description]) VALUES (1, 'Admin', N'系统默认组')
 SET IDENTITY_INSERT [dbo].[Groups] OFF
 
 DELETE FROM Roles where ID in (1, 2)
