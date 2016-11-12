@@ -98,7 +98,7 @@ ul.sidebar-menu {
 
             ul.sidebar-menu li a i {
                 font-size: 15px;
-                padding-right: 6px;
+                width: 22px;
             }
 
             ul.sidebar-menu li.sub-menu {
