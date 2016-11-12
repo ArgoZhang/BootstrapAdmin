@@ -68,6 +68,8 @@
     <Compile Include="LogHelper.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="MenuHelper.cs" />
+    <Compile Include="Message.cs" />
+    <Compile Include="MessageHelper.cs" />
     <Compile Include="NotificationHelper.cs" />
     <Compile Include="Notification.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

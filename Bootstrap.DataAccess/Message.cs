@@ -1,0 +1,50 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace Bootstrap.DataAccess
+{
+    /// <summary>
+    /// 消息表实体
+    /// author:liuchun
+    /// date:2016.11.12
+    /// </summary>
+    public class Message
+    {
+        /// <summary>
+        /// 消息主键 数据库自增
+        /// </summary>
+        public int ID { get; set; }
+        /// <summary>
+        /// 标题
+        /// </summary>
+        public string Title { get; set; }
+        /// <summary>
+        /// 内容
+        /// </summary>
+        public string Content { get; set; }
+        /// <summary>
+        /// 发消息人
+        /// </summary>
+        public string From { get; set; }
+        /// <summary>
+        /// 收消息人
+        /// </summary>
+        public string To { get; set; }
+        /// <summary>
+        /// 消息发送时间
+        /// </summary>
+        public DateTime SendTime { get; set; }
+        /// <summary>
+        /// 消息状态：0-未读，1-已读，2-删除
+        /// 和Dict表的通知消息关联
+        /// </summary>
+        public string  Status { get; set; }
+
+        /// <summary>
+        /// 获得/设置 时间描述 2分钟内为刚刚
+        /// </summary>
+        public string Period { get; set; }
+    }
+}
