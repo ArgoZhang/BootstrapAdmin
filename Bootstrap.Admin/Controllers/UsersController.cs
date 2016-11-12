@@ -65,7 +65,6 @@ namespace Bootstrap.Admin.Controllers
         [HttpPost]
         public bool Post([FromBody]User value)
         {
-            value.ApprovedTime = DateTime.Now;
             value.Description = string.Format("管理员{0}创建用户", User.Identity.Name);
             value.ApprovedBy = User.Identity.Name;
             return UserHelper.SaveUser(value);
