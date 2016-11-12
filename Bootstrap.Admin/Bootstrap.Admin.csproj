@@ -294,6 +294,7 @@
     <Content Include="Views\Admin\Infos.cshtml" />
     <Content Include="Views\Admin\Excep.cshtml" />
     <Content Include="Views\Admin\Exceptions.cshtml" />
+    <Content Include="Views\Admin\Messages.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

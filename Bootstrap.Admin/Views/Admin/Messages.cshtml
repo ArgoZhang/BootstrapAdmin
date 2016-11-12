@@ -1,0 +1,94 @@
+﻿@model NavigatorBarModel
+@{
+    ViewBag.Title = "站内消息";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+@section header {
+    @Html.Partial("Header", Model)
+}
+@section navigator {
+    @Html.Partial("Navigator", Model)
+}
+<div class="mail-box">
+    <aside class="sm-side">
+        <div class="user-head">
+            <a href="javascript:;" class="inbox-avatar">
+                <img src="../../content/images/logo6.jpg" alt="">
+            </a>
+            <div class="user-name"><h5><a href="#">Argo Zhang</a></h5></div>
+        </div>
+        <div class="inbox-body">
+            <a class="btn btn-compose" data-toggle="modal" href="#myModal">
+                写消息
+            </a>
+        </div>
+        <ul class="inbox-nav inbox-divider">
+            <li class="active">
+                <a href="#"><i class="fa fa-inbox"></i>收信箱<span class="label label-danger pull-right">2</span></a>
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-envelope-o"></i>发信箱</a>
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-bookmark-o"></i>标旗消息</a>
+            </li>
+            <li>
+                <a href="#"><i class=" fa fa-external-link"></i>草稿箱<span class="label label-info pull-right">30</span></a>
+            </li>
+            <li>
+                <a href="#"><i class=" fa fa-trash-o"></i>垃圾箱</a>
+            </li>
+        </ul>
+    </aside>
+    <aside class="lg-side">
+        <div class="inbox-head">
+            <h3>消息列表</h3>
+        </div>
+        <div class="inbox-body">
+            <table class="table table-inbox table-hover">
+                <tbody>
+                    <tr class="unread">
+                        <td class="inbox-small-cells">
+                            <input type="checkbox" class="mail-checkbox">
+                        </td>
+                        <td class="inbox-small-cells"><i class="fa fa-star"></i></td>
+                        <td class="view-message  dont-show">消息人</td>
+                        <td class="view-message ">消息标题</td>
+                        <td class="view-message  inbox-small-cells"><i class="fa fa-paperclip"></i></td>
+                        <td class="view-message  text-right">09:27</td>
+                    </tr>
+                    <tr class="unread">
+                        <td class="inbox-small-cells">
+                            <input type="checkbox" class="mail-checkbox">
+                        </td>
+                        <td class="inbox-small-cells"><i class="fa fa-star inbox-started"></i></td>
+                        <td class="view-message dont-show">消息人<span class="label label-warning pull-right">紧急</span></td>
+                        <td class="view-message">消息内容</td>
+                        <td class="view-message inbox-small-cells"></td>
+                        <td class="view-message text-right">12:23</td>
+                    </tr>
+                    <tr class="">
+                        <td class="inbox-small-cells">
+                            <input type="checkbox" class="mail-checkbox">
+                        </td>
+                        <td class="inbox-small-cells"><i class="fa fa-star"></i></td>
+                        <td class="view-message dont-show">消息人<span class="label label-success pull-right">处理</span></td>
+                        <td class="view-message">消息内容</td>
+                        <td class="view-message inbox-small-cells"></td>
+                        <td class="view-message text-right">11:23</td>
+                    </tr>
+                    <tr class="">
+                        <td class="inbox-small-cells">
+                            <input type="checkbox" class="mail-checkbox">
+                        </td>
+                        <td class="inbox-small-cells"><i class="fa fa-star inbox-started"></i></td>
+                        <td class="view-message dont-show">消息人<span class="label label-danger pull-right">紧急</span></td>
+                        <td class="view-message">消息内容</td>
+                        <td class="view-message inbox-small-cells"><i class="fa fa-paperclip"></i></td>
+                        <td class="view-message text-right">11:23</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </aside>
+</div>

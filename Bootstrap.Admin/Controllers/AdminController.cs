@@ -130,5 +130,14 @@ namespace Bootstrap.Admin.Controllers
             var v = new NavigatorBarModel("~/Admin/Exceptions");
             return View(v);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Messages()
+        {
+            var v = new NavigatorBarModel("~/Admin/Messages");
+            return View(v);
+        }
     }
 }
