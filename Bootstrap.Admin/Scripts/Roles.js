@@ -53,6 +53,13 @@
                     Menu.getMenusByRoleId(row.ID, function (data) {
                         $(".menu-content .modal-header .modal-title").text($.format('{0}-菜单授权窗口', row.RoleName));
                         $('.menu-content button:last').data('type', 'menu');
+                        // set checkbox status
+                        var menus = $('#nestable_menu').find('input:checkbox');
+                        menus.removeProp('checked');
+                        $.each(data, function (index, item) {
+                            var selector = $.format('[value={0}]', item.ID);
+                            menus.filter(selector).prop('checked', 'checked');
+                        });
                         $('#dialogMenu').modal('show');
                         $('.menu-content').show();
                         $('div.dd3-content :radio').hide();

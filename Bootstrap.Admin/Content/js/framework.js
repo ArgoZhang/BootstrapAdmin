@@ -244,8 +244,9 @@
         function success(result) {
             if ($.isFunction(data.callback)) {
                 if ($.isArray(result)) {
-                    var html = data.html(result);
-                    data.callback(html);
+                    var formatData = result;
+                    if ($.isFunction(data.html)) formatData = data.html(result);
+                    data.callback(formatData);
                     $('div.checkbox label.tooltips').tooltip();
                     return;
                 }
@@ -335,15 +336,10 @@
     //Menus
     Menu = {
         url: '../api/Menus/',
-        title: "授权菜单",
-        html: function (result) {
-            return $.map(result, function (element, index) {
-                return $.format(htmlTemplateForMenu, element.ID, element.Name, element.Active);
-            }).join('');
-        }
+        title: "授权菜单"
     }
     Menu.getMenusByRoleId = function (roleId, callback) {
-        processData.call(this, { Id: roleId, callback: callback, remote: false });
+        processData.call(this, { Id: roleId, callback: callback, data: { type: "role" } });
     };
     Menu.saveMenusByRoleId = function (roleId, menuIds, callback) {
         processData.call(this, { Id: roleId, callback: callback, method: "PUT", data: { type: "role", menuIds: menuIds } });

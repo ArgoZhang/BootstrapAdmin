@@ -166,7 +166,7 @@ namespace Bootstrap.DataAccess
                 List<Menu> Menus = new List<Menu>();
                 try
                 {
-                    string sql = "select n.ID,n.ParentId, n.Name,n.[Order],n.Icon,n.Url,n.Category, case nr.NavigationID when n.ID then 'active' else '' end [status] from Navigations n left join NavigationRole nr on n.ID = nr.NavigationID and RoleID = @RoleID";
+                    string sql = "select NavigationID from NavigationRole where RoleID = @RoleID";
                     using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
                     {
                         cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@RoleID", roleId, ParameterDirection.Input));
@@ -176,14 +176,7 @@ namespace Bootstrap.DataAccess
                             {
                                 Menus.Add(new Menu()
                                 {
-                                    ID = (int)reader[0],
-                                    ParentId = (int)reader[1],
-                                    Name = (string)reader[2],
-                                    Order = (int)reader[3],
-                                    Icon = LgbConvert.ReadValue(reader[4], string.Empty),
-                                    Url = LgbConvert.ReadValue(reader[5], string.Empty),
-                                    Category = (string)reader[6],
-                                    Active = (string)reader[7] == "" ? "" : "checked"
+                                    ID = (int)reader[0]
                                 });
                             }
                         }
