@@ -1,4 +1,4 @@
-/*!
+﻿/*!
  * Bootstrap v3.3.7 (http://getbootstrap.com)
  * Copyright 2011-2016 Twitter, Inc.
  * Licensed under the MIT license
@@ -1166,8 +1166,7 @@ if (typeof jQuery === 'undefined') {
 
         // added by Argo
         var $modal_dialog = $(this.$element[0]).find('.modal-dialog');
-        var m_top = Math.max(0, ($(document).height() - $modal_dialog.height()) / 2);
-        $modal_dialog.css({ 'margin': m_top + 'px auto' });
+        $modal_dialog.adjustDialog();
     }
 
     Modal.prototype.resetAdjustments = function () {

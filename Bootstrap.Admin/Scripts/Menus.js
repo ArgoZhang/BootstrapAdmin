@@ -17,16 +17,18 @@
                 id: 'btn_assignRole',
                 click: function (row) {
                     Role.getRolesByMenuId(row.ID, function (data) {
-                        $("#dialogRole .modal-title").text($.format('{0}-角色授权窗口', row.Name));
-                        $('#dialogRole form').html(data);
-                        $('#dialogRole').modal('show');
+                        var dialog = $('#dialogRole');
+                        dialog.find('.modal-title').text($.format('{0}-角色授权窗口', row.Name));
+                        dialog.find('form').html(data);
+                        dialog.modal('show');
                     });
                 }
             }, {
                 id: 'btnSubmitRole',
                 click: function (row) {
                     var menuId = row.ID;
-                    var roleIds = $('#dialogRole :checked').map(function (index, element) {
+                    var dialog = $('#dialogRole');
+                    var roleIds = dialog.find('input:checked').map(function (index, element) {
                         return $(element).val();
                     }).toArray().join(',');
                     Role.saveRolesByMenuId(menuId, roleIds, { modal: 'dialogRole' });
@@ -69,31 +71,40 @@
         }
     });
 
-    $('.fontawesome-icon-list ul li').addClass('col-md-3 col-sm-4 col-sm-6');
+    var $dialog = $('#dialogNew');
+    var $pickIcon = $('#pickIcon');
+    var $iconList = $('#iconTab').find('div.fontawesome-icon-list');
+    var $dialogNew = $dialog.find('div.modal-dialog');
+    var $dialogIcon = $('#dialogIcon');
+    var $dialogMenu = $('#dialogSubMenu').find('.modal-content');
+    var $btnSubmitMenu = $('btnSubmitMenu');
+    var $btnPickIcon = $('#btnIcon');
+    var $inputIcon = $('#icon');
 
-    $('.fontawesome-icon-list .fa-hover a, .fontawesome-icon-list ul li').click(function () {
-        $('.icon-content .modal-footer i').attr('class', $(this).children('i, span:first').attr('class'));
+    $iconList.find('ul li').addClass('col-md-3 col-sm-4 col-sm-6');
+    $iconList.on('click', 'div.fa-hover a, ul li', function () {
+        $pickIcon.attr('class', $(this).find('i, span:first').attr('class'));
         return false;
     });
 
-    $('#btnIcon').click(function () {
-        $('.icon-content').show();
+    $btnPickIcon.on('click', function () {
+        $dialogIcon.show();
     });
 
-    $('.icon-content button').click(function () {
-        $('.icon-content').hide();
+    $dialogIcon.find('div.modal-header, div.modal-footer').on('click', 'button', function () {
+        $dialogIcon.hide();
     });
 
-    $('.icon-content button:last').click(function () {
-        var icon = $('.icon-content .modal-footer i').attr('class');
+    $dialogIcon.find('div.modal-footer').on('click', 'button:last', function () {
+        var icon = $pickIcon.attr('class');
         $('#icon').val(icon);
-        $('#btnIcon i').attr('class', icon);
+        $('#btnIcon').find('i').attr('class', icon);
     });
 
     // 排序按钮
-    $('#btnMenuOrder').click(function () {
-        $('#dialogNew div.modal-dialog').hide();
-        $('.menu-content button:last').data('type', 'order');
+    $('#btnMenuOrder').on('click', function () {
+        $dialogNew.hide();
+        $btnSubmitMenu.data('type', 'order');
         // handler new menu
         if ($('#menuID').val() == "") {
             var menuName = $('#name').val();
@@ -107,14 +118,14 @@
         $('div.dd > ol.dd-list > li.dd-item').remove('[data-id="0"]');
         $('div.dd > ol.dd-list > li.dd-item').hide();
         $('div.dd > ol.dd-list > li[data-category="' + $('#category').selectpicker('val') + '"]').show();
-        $('.menu-content').show();
+        $dialogMenu.show().adjustDialog();
     });
 
     // 选择父节点按钮
-    $('#btnMenuParent').click(function () {
-        $('#dialogNew div.modal-dialog').hide();
-        $('.menu-content button:last').data('type', 'parent');
-        $('.menu-content').show();
+    $('#btnMenuParent').on('click', function () {
+        $dialogNew.hide();
+        $btnSubmitMenu.data('type', 'parent');
+        $dialogMenu.show().adjustDialog();
         $('li.dd-item').remove('[data-id="0"]');
         $('div.dd :checkbox').hide();
         $('div.dd > ol.dd-list > li.dd-item').hide();
@@ -122,15 +133,15 @@
         $('div.dd :radio').show();
     });
 
-    $('.menu-content button').click(function () {
+    $dialogMenu.find('div.modal-header, div.modal-footer').on('click', 'button', function () {
         // remove active css
         $('div.dd li span').removeClass('active');
-        $('.menu-content').hide();
-        $('#dialogNew div.modal-dialog').show();
+        $dialogMenu.hide();
+        $dialogNew.show();
     });
 
-    $('.menu-content button:last').click(function () {
-        var type = $('.menu-content button:last').data('type');
+    $btnSubmitMenu.on('click', function () {
+        var type = $(this).data('type');
         switch (type) {
             case "parent":
                 $('#parentId').val($('.dd3-content :radio:checked').val());
@@ -140,7 +151,6 @@
                 var data = $('#nestable_menu').nestable('serialize');
                 var mid = $('#menuID').val();
                 for (index in data) {
-                    window.console.log(index);
                     if (data[index].id == mid || data[index] == 0) {
                         $('#order').val(10 + index * 10);
                         break;
@@ -150,6 +160,13 @@
             default:
                 break;
         }
+    });
+
+    // Dialog shown event
+    $dialog.on('show.bs.modal', function () {
+        var icon = $inputIcon.val();
+        if (icon == "") icon = "fa fa-dashboard";
+        $btnPickIcon.find('i').attr('class', icon);
     });
 
     $('#nestable_menu').nestable();

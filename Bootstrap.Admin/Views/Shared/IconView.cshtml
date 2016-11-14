@@ -1,4 +1,4 @@
-﻿<div class="modal-content icon-content">
+﻿<div id="dialogIcon" class="modal-content icon-content">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h4 class="modal-title" id="myIconModalLabel">请选择图标</h4>
@@ -10,7 +10,7 @@
                 <li role="presentation" class="active"><a href="#Fontawesome" data-toggle="tab">Fontawesome 图标</a></li>
                 <li role="presentation"><a href="#Glyphicons" data-toggle="tab">Glyphicons 图标</a></li>
             </ul>
-            <div class="tab-content">
+            <div id="iconTab" class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="Fontawesome">@Html.Partial("AwesomeIcon")</div>
                 <div role="tabpanel" class="tab-pane" id="Glyphicons">@Html.Partial("Glyphicons")</div>
             </div>
@@ -42,7 +42,7 @@
         <i id="fa-bottom"></i>
     </div>
     <div class="modal-footer">
-        <span>被选择的图标：</span><i></i>
+        <span>被选择的图标：</span><i id="pickIcon"></i>
         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
         <button type="button" class="btn btn-primary" id="btnSubmitIcon">保存</button>
     </div>

@@ -111,6 +111,12 @@
     }
 
     $.fn.extend({
+        adjustDialog: function () {
+            var $modal_dialog = this;
+            var m_top = Math.max(0, ($(window).height() - $modal_dialog.height()) / 2);
+            $modal_dialog.css({ 'margin': m_top + 'px auto' });
+            return this;
+        },
         autoCenter: function () {
             var that = this;
             var getHeight = function () {
