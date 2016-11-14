@@ -167,7 +167,6 @@
 
         .dd3-content label span {
             position: absolute;
-            padding-left: 2px;
         }
 
             .dd3-content label span.active {
@@ -179,8 +178,10 @@
             }
 
         .dd3-content label input {
-            margin-right: 6px;
+            margin-right: 10px;
             cursor: pointer;
+            vertical-align: middle;
+            margin-top: 0;
         }
 
 .dd-dragel > .dd3-item > .dd3-content {
