@@ -181,6 +181,7 @@
     <Content Include="Content\js\Longbow.Common.js" />
     <Content Include="Content\js\messages_zh.js" />
     <Content Include="Content\js\messages_zh.min.js" />
+    <Content Include="DeviceTest.htm" />
     <Content Include="Scripts\Content.js" />
     <Content Include="Scripts\Dicts.js" />
     <Content Include="Scripts\Exceptions.js" />
