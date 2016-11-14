@@ -175,8 +175,10 @@ ul.sidebar-menu {
 }
 
     .modal-body .checkbox label input[type='checkbox'] {
-        margin-right: 6px;
-        top: 2px;
+        margin: 0 4px 0 0;
+        vertical-align: middle;
+        position: relative;
+        top: -1px;
     }
 
 .toolbar {

@@ -47,10 +47,6 @@
         white-space: nowrap;
         text-overflow: ellipsis;
     }
-
-    .modal-body .checkbox label input[type='checkbox'] {
-        top: 4px;
-    }
 }
 
 @media (max-width: 548px) {
