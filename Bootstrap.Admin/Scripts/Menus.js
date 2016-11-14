@@ -120,7 +120,7 @@
             if (menuName == "") menuName = "新建菜单-未命名";
             $nestMenu.find('ol.dd-list:first').append($.format('<li class="dd-item dd3-item" data-id="0" data-category="{1}"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><label><span>{0}</span></label></div></li>', menuName, menuCate));
         }
-        $nestMenu.find('li[data-id="' + did + '"] span').addClass('active');
+        $nestMenu.find('li[data-id="' + did + '"] > div.dd3-content span').addClass('active');
         $dialogMenu.show().adjustDialog();
     });
 
