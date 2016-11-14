@@ -6,7 +6,7 @@ SET IDENTITY_INSERT [dbo].[Users] ON
 insert into Users (ID, UserName, Password, PassSalt, DisplayName, RegisterTime, ApprovedTime,ApprovedBy, [Description]) values (1, 'Admin', 'Es7WVgNsJuELwWK8daCqufUBknCsSC0IYDphQZAiGOo=', 'W5vpBEOYRGHkQXatN0t+ECM/U8cHDuEgrq56+zZBk4J481xH', 'Administrator', GetDate(), GetDate(), 'system', N'系统默认创建')
 SET IDENTITY_INSERT [dbo].[Users] OFF
 
-DELETE From Dicts where ID < 15
+DELETE From Dicts
 SET IDENTITY_INSERT [dbo].[Dicts] ON 
 INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (1, N'菜单', N'系统菜单', N'0', 0)
 INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (2, N'菜单', N'外部菜单', N'1', 0)
@@ -21,7 +21,9 @@ INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (10, N'
 INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (11, N'处理结果', N'拒绝', N'1', 0)
 INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (12, N'消息状态', N'未读', N'0', 0)
 INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (13, N'消息状态', N'已读', N'1', 0)
-INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (14, N'消息状态', N'删除', N'2', 0)
+INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (14, N'消息标签', N'一般', N'0', 0)
+INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (15, N'消息标签', N'紧要', N'1', 0)
+
 SET IDENTITY_INSERT [dbo].[Dicts] OFF
 
 DELETE FROM Navigations

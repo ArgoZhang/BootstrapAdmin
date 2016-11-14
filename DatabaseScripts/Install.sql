@@ -313,11 +313,14 @@ GO
 ALTER TABLE [dbo].[Notifications] ADD  CONSTRAINT [DF_Notifications_Status]  DEFAULT ((0)) FOR [Status]
 GO
 
-/****** Object:  Table [dbo].[Messages]    Script Date: 11/12/2016 11:18:31 ******/
+/****** Object:  Table [dbo].[Messages]    Script Date: 11/14/2016 13:59:21 ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
 GO
 
 CREATE TABLE [dbo].[Messages](
@@ -328,10 +331,16 @@ CREATE TABLE [dbo].[Messages](
 	[To] [varchar](50) NOT NULL,
 	[SendTime] [datetime] NOT NULL,
 	[Status] [nvarchar](50) NOT NULL,
+	[Mark] [nvarchar](50) NOT NULL,
+	[IsDelete] [int] NOT NULL,
+	[Label] [nvarchar](50) NOT NULL,
  CONSTRAINT [PK_Messages] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
+GO
+
+SET ANSI_PADDING OFF
 GO

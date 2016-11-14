@@ -24,6 +24,8 @@ namespace Bootstrap.Admin.Models
             var msgs = MessageHelper.RetrieveMessagesHeader(UserName);
             MessageCount = msgs.Count();
             Messages = msgs.Take(6);
+            MessageList = MessageHelper.RetrieveMessages(UserName);
+
         }
         public string UserName { get; protected set; }
         /// <summary>
@@ -62,5 +64,10 @@ namespace Bootstrap.Admin.Models
         /// 获得/设置 消息数量
         /// </summary>
         public int MessageCount { get; set; }
+        /// <summary>
+        /// 获得/设置 消息列表
+        /// </summary>
+        public IEnumerable<Message> MessageList { get; set; }
+
     }
 }

@@ -37,11 +37,23 @@ namespace Bootstrap.DataAccess
         /// </summary>
         public DateTime SendTime { get; set; }
         /// <summary>
-        /// 消息状态：0-未读，1-已读，2-删除
+        /// 消息状态：0-未读，1-已读
         /// 和Dict表的通知消息关联
         /// </summary>
         public string  Status { get; set; }
-
+        /// <summary>
+        /// 标旗状态：0-未标旗，1-已标旗
+        /// </summary>
+        public int Mark { get; set; }
+        /// <summary>
+        /// 删除状态：0-未删除，1-已删除
+        /// </summary>
+        public int IsDelete { get; set; }
+        /// <summary>
+        /// 消息标签：0-一般，1-紧要
+        /// 和Dict表的消息标签关联
+        /// </summary>
+        public string Label { get; set; }
         /// <summary>
         /// 获得/设置 时间描述 2分钟内为刚刚
         /// </summary>
