@@ -152,6 +152,7 @@
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     border-radius: 3px;
+    cursor: pointer;
 }
 
     .dd3-content:hover {
@@ -166,10 +167,15 @@
 
         .dd3-content label span {
             position: absolute;
+            padding-left: 2px;
         }
 
             .dd3-content label span.active {
                 color: darkred;
+            }
+
+            .dd3-content label span i {
+                width: 22px;
             }
 
         .dd3-content label input {

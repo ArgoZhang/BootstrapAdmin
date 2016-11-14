@@ -4,7 +4,7 @@
     {
         <li class="dd-item dd3-item" data-id="@menu.ID" data-category="@menu.Category">
             <div class="dd-handle dd3-handle"></div>
-            <div class="dd3-content"><label><input name="menuParent" type="checkbox" value="@menu.ID" /><input type="radio" name="menu" value="@menu.ID" /><span>@menu.Name</span></label></div>
+            <div class="dd3-content"><label><input type="checkbox" value="@menu.ID" /><span><i class="@menu.Icon"></i>@menu.Name</span></label><label><input type="radio" name="menu" value="@menu.ID" /><span><i class="@menu.Icon"></i>@menu.Name</span></label></div>
             @if (menu.Menus.Count() > 0)
             {
                 @Html.Partial("SubMenuTree", menu.Menus)

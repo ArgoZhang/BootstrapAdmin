@@ -62,7 +62,6 @@
                         });
                         $('#dialogMenu').modal('show');
                         $('.menu-content').show();
-                        $('div.dd3-content :radio').hide();
                     })
                 }
             },
@@ -86,7 +85,11 @@
         }
     });
 
-    $('#nestable_menu').nestable();
+    var $nestMenu = $('#nestable_menu');
+    var $nestMenuInput = $nestMenu.find('div.dd3-content');
+    $nestMenuInput.find('label:last').hide();
+
+    $nestMenu.nestable();
 
     $('table').smartTable({
         url: '../api/Roles',            //请求后台的URL（*）

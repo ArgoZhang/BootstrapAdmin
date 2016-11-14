@@ -80,6 +80,9 @@
     var $btnSubmitMenu = $('btnSubmitMenu');
     var $btnPickIcon = $('#btnIcon');
     var $inputIcon = $('#icon');
+    var $nestMenu = $('#nestable_menu');
+    var $nestMenuInput = $nestMenu.find('div.dd3-content');
+    $nestMenuInput.find('label:first').hide();
 
     $iconList.find('ul li').addClass('col-md-3 col-sm-4 col-sm-6');
     $iconList.on('click', 'div.fa-hover a, ul li', function () {
@@ -105,19 +108,19 @@
     $('#btnMenuOrder').on('click', function () {
         $dialogNew.hide();
         $btnSubmitMenu.data('type', 'order');
+        $nestMenuInput.find('label:last').find('input').hide();
+        $nestMenu.find('li.dd-item').hide().remove('[data-id="0"]');
+        $nestMenu.find('li[data-category="' + $('#category').selectpicker('val') + '"]').show();
         // handler new menu
-        if ($('#menuID').val() == "") {
-            var menuName = $('#name').val();
-            if (menuName == "") menuName = "新建菜单-未命名";
-            $('div.dd > ol.dd-list').append($.format('<li class="dd-item dd3-item" data-id="0"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><label><span>{0}</span></label></div></li>', menuName));
-        }
         var did = $('#menuID').val();
         if (did == "") did = 0;
-        $('div.dd input').hide();
-        $('div.dd li[data-id="' + did + '"] span').addClass('active');
-        $('div.dd > ol.dd-list > li.dd-item').remove('[data-id="0"]');
-        $('div.dd > ol.dd-list > li.dd-item').hide();
-        $('div.dd > ol.dd-list > li[data-category="' + $('#category').selectpicker('val') + '"]').show();
+        if (did == 0) {
+            var menuName = $('#name').val();
+            var menuCate = $('select').selectpicker('val');
+            if (menuName == "") menuName = "新建菜单-未命名";
+            $nestMenu.find('ol.dd-list:first').append($.format('<li class="dd-item dd3-item" data-id="0" data-category="{1}"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><label><span>{0}</span></label></div></li>', menuName, menuCate));
+        }
+        $nestMenu.find('li[data-id="' + did + '"] span').addClass('active');
         $dialogMenu.show().adjustDialog();
     });
 
@@ -125,17 +128,15 @@
     $('#btnMenuParent').on('click', function () {
         $dialogNew.hide();
         $btnSubmitMenu.data('type', 'parent');
+        $nestMenuInput.find('label:last').find('input').show();
+        $nestMenu.find('li.dd-item').hide().remove('[data-id="0"]');
+        $nestMenu.find('li[data-category="' + $('#category').selectpicker('val') + '"]').show();
         $dialogMenu.show().adjustDialog();
-        $('li.dd-item').remove('[data-id="0"]');
-        $('div.dd :checkbox').hide();
-        $('div.dd > ol.dd-list > li.dd-item').hide();
-        $('div.dd > ol.dd-list > li[data-category="' + $('#category').selectpicker('val') + '"]').show();
-        $('div.dd :radio').show();
     });
 
     $dialogMenu.find('div.modal-header, div.modal-footer').on('click', 'button', function () {
         // remove active css
-        $('div.dd li span').removeClass('active');
+        $nestMenu.find('li span').removeClass('active');
         $dialogMenu.hide();
         $dialogNew.show();
     });
@@ -169,7 +170,7 @@
         $btnPickIcon.find('i').attr('class', icon);
     });
 
-    $('#nestable_menu').nestable();
+    $nestMenu.nestable();
 
     // select
     $('select').selectpicker();
