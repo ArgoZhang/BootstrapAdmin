@@ -5,6 +5,7 @@
             map: {
                 ID: "menuID",
                 ParentId: "parentId",
+                ParentName: "parentName",
                 Name: "name",
                 Order: "order",
                 Icon: "icon",
@@ -77,11 +78,13 @@
     var $dialogNew = $dialog.find('div.modal-dialog');
     var $dialogIcon = $('#dialogIcon');
     var $dialogMenu = $('#dialogSubMenu').find('.modal-content');
-    var $btnSubmitMenu = $('btnSubmitMenu');
+    var $btnSubmitMenu = $('#btnSubmitMenu');
     var $btnPickIcon = $('#btnIcon');
     var $inputIcon = $('#icon');
     var $nestMenu = $('#nestable_menu');
     var $nestMenuInput = $nestMenu.find('div.dd3-content');
+    var $parentMenuID = $('#parentId');
+    var $parentMenuName = $('#parentName');
     $nestMenuInput.find('label:first').hide();
 
     $iconList.find('ul li').addClass('col-md-3 col-sm-4 col-sm-6');
@@ -131,6 +134,12 @@
         $nestMenuInput.find('label:last').find('input').show();
         $nestMenu.find('li.dd-item').hide().remove('[data-id="0"]');
         $nestMenu.find('li[data-category="' + $('#category').selectpicker('val') + '"]').show();
+        var pid = $parentMenuID.val();
+        if (pid != "") {
+            // set active class
+            var radio = $nestMenuInput.find('input[value=' + pid + ']').filter(':radio');
+            radio.next('span').addClass('active');
+        }
         $dialogMenu.show().adjustDialog();
     });
 
@@ -145,8 +154,8 @@
         var type = $(this).data('type');
         switch (type) {
             case "parent":
-                $('#parentId').val($('.dd3-content :radio:checked').val());
-                $('#parentName').val($('.dd3-content :radio:checked').next('span').text());
+                $parentMenuID.val($nestMenuInput.find('input').filter(':radio:checked').val());
+                $parentMenuName.val($nestMenuInput.find('input').filter(':radio:checked').next('span').text());
                 break;
             case "order":
                 var data = $('#nestable_menu').nestable('serialize');
