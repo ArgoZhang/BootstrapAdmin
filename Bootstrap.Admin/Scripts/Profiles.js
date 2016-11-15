@@ -36,6 +36,7 @@
     var html = '<li class="list-primary"><i class="fa fa-ellipsis-v"></i><div class="task-title"><span class="task-title-sp tooltips" data-placement="right" title="{1}">{2}</span><span class="badge badge-sm label-success">{0}</span><span class="task-value tooltips" data-placement="top" data-original-title="{3}">{3}</span><div class="pull-right hidden-phone"><button class="btn btn-danger btn-xs fa fa-trash-o" data-key="{1}"></button></div></div></li>';
 
     function listCache(options) {
+        options = $.extend({ url: '../../CacheList.axd' }, options);
         $.ajax({
             url: options.url,
             type: 'POST',
@@ -62,6 +63,7 @@
         });
     }
 
-    listCache({ url: '../../CacheList.axd' });
-    $('a.fa-refresh').click(function () { listCache({ url: '../../CacheList.axd' }); });
+    listCache();
+    $('#refreshCache').click(function () { listCache(); });
+    $('#clearCache').click(function () { listCache({ url: '../../CacheList.axd?clear=clear' }); });
 })

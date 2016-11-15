@@ -1,4 +1,23 @@
-﻿.has-error input {
+﻿.clearcache {
+    position: absolute;
+    right: 60px;
+    font-size: 17px;
+    color: #d9534f;
+    margin-top: -1px;
+    -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .15), 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .15), 0 1px 1px rgba(0, 0, 0, .075);
+}
+
+    .clearcache:hover, .clearcache:focus {
+        color: #c12e2a;
+    }
+
+    .clearcache:active:hover {
+        color: #ac2925;
+    }
+
+
+.has-error input {
     background-repeat: no-repeat;
     background-image: url('../images/error.png');
     background-position: right 8px center;
