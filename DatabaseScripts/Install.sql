@@ -28,6 +28,7 @@ CREATE TABLE [dbo].[Users](
 	[RejectedBy] [varchar](50) NULL,
 	[RejectedTime] [datetime] NULL,
 	[RejectedReason] [nvarchar](50) NULL,
+	[HeadImg] [varchar](500) NULL,
  CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC

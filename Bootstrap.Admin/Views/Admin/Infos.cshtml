@@ -3,7 +3,13 @@
     ViewBag.Title = "个人中心";
     Layout = "~/Views/Shared/_Admin.cshtml";
 }
+@section Javascript {
+    <script src="~/Content/js/ajaxfileupload.js"></script>
+<script src="~/content/js/sweetalert.js"></script>
+    <script src="~/scripts/Infos.js"></script>
+}
 @section css {
+    <link href="~/Content/css/sweetalert.css" rel="stylesheet" />
     <link href="~/Content/css/tasks.css" rel="stylesheet" />
 }
 @section header {
@@ -18,24 +24,12 @@
         <form class="form-inline" id="infoDataForm" name="infoDataForm" role="form">
             <div class="row">
                 <div class="form-group col-xs-12 col-sm-6">
-                    <label class="control-label" for="realName">真实姓名</label>
-                    <input type="text" class="form-control" id="realName" name="realName" maxlength="50" />
+                    <label class="control-label" for="userName">登陆名称</label>
+                    <input type="text" class="form-control" id="userName" name="userName" placeholder="不可为空" maxlength="50" />
                 </div>
                 <div class="form-group col-xs-12 col-sm-6">
-                    <label class="control-label" for="email">邮箱</label>
-                    <input type="text" class="form-control" id="email" name="email" maxlength="50" />
-                </div>
-                <div class="form-group col-xs-12 col-sm-6">
-                    <label class="control-label" for="phoneNumber">手机号码</label>
-                    <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" />
-                </div>
-                <div class="form-group col-xs-12 col-sm-6">
-                    <label class="control-label" for="birthday">出生年月</label>
-                    <input type="text" class="form-control" id="birthday" name="birthday" />
-                </div>
-                <div class="form-group col-xs-12">
-                    <label class="control-label" for="profiles">个人简介</label>
-                    <textarea class="form-control" cols="50" rows="3" id="profiles" name="profiles"></textarea>
+                    <label class="control-label" for="DisplayName">显示名称</label>
+                    <input type="text" class="form-control" id="DisplayName" name="DisplayName" placeholder="不可为空" maxlength="50" />
                 </div>
             </div>
         </form>
@@ -71,18 +65,18 @@
 <div class="panel panel-default">
     <div class="panel-heading">修改头像</div>
     <div class="panel-body">
-        <form class="form-inline" id="imgDataForm" name="imgDataForm" role="form">
+        <form class="form-inline" id="imgDataForm" name="imgDataForm" role="form" >
             <div class="row">
                 <div class="form-group col-xs-12">
                     <label class="control-label" for="uploadImg">上传头像: </label>
-                    <img class="form-control" src="" id="headImg" width="100" height="100" />
+                    <img class="form-control" src="" id="headImg" width="200" height="200" />
                     <input class="form-control btn btn-default" type="file" name="uploadImg" id="uploadImg"
                            accept="image/png,image/gif,image/jpeg,image/tiff,image/vnd.dwg,image/vnd.dxf,image/vnd.svf" />
                 </div>
             </div>
         </form>
         <div class="modal-footer">
-            <button class="btn btn-default" type="button">保存</button>
+            <button class="btn btn-default" type="button" id="btn_img">保存</button>
         </div>
     </div>
 </div>

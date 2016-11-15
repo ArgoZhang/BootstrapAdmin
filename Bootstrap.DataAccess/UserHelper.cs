@@ -70,7 +70,7 @@ namespace Bootstrap.DataAccess
             return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RetrieveUsersByNameDataKey), k =>
             {
                 User user = null;
-                string sql = "select ID, UserName, [Password], PassSalt, DisplayName, RegisterTime, ApprovedTime from Users where ApprovedTime is not null and UserName = @UserName";
+                string sql = "select ID, UserName, [Password], PassSalt, DisplayName, RegisterTime, ApprovedTime, HeadImg from Users where ApprovedTime is not null and UserName = @UserName";
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                 try
                 {
@@ -87,7 +87,8 @@ namespace Bootstrap.DataAccess
                                 PassSalt = (string)reader[3],
                                 DisplayName = (string)reader[4],
                                 RegisterTime = (DateTime)reader[5],
-                                ApprovedTime = (DateTime)reader[6]
+                                ApprovedTime = (DateTime)reader[6],
+                                HeadImg = (string)reader[7]
                             };
                         }
                     }
@@ -358,6 +359,32 @@ namespace Bootstrap.DataAccess
                     ExceptionManager.Publish(ex);
                     transaction.RollbackTransaction();
                 }
+            }
+            return ret;
+        }
+        /// <summary>
+        /// 根据用户名修改用户头像
+        /// </summary>
+        /// <param name="headImg"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public static bool SaveUserHeadImgByName(string headImg, string userName)
+        {
+            bool ret = false;
+            try
+            {
+                string sql = "Update Users set HeadImg=@HeadImg where UserName=@UserName";
+                using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
+                {
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@HeadImg", headImg, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserName", userName, ParameterDirection.Input));
+                    DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
+                    ret = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.Publish(ex);
             }
             return ret;
         }

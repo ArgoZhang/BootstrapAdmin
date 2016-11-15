@@ -190,7 +190,14 @@
         <!-- user login dropdown start-->
         <li class="dropdown">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                <img alt="" src="~/content/images/logo6.jpg">
+                @if (Model.HeadImg == null)
+                {
+                    <img id="header_img" alt="" src="~/content/images/logo6.jpg">
+                }
+                else
+                {
+                    <img id="header_img" alt="" src="@Model.HeadImg">
+                }
                 <span class="username">@Model.DisplayName</span>
                 <b class="caret"></b>
                 <input id="userId" type="text" class="hide" value="@Model.UserID" />

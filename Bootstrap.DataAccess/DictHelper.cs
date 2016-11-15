@@ -185,5 +185,15 @@ namespace Bootstrap.DataAccess
             }
             return ret;
         }
+        /// <summary>
+        /// 获取头像路径
+        /// </summary>
+        /// <returns></returns>
+        public static string RetrieveUrl()
+        {
+            var urls = DictHelper.RetrieveDicts(16);
+            var url = urls.FirstOrDefault(d => d.Name == "头像路径");
+            return url.Code;
+        }
     }
 }

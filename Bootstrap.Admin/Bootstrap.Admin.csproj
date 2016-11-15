@@ -132,6 +132,7 @@
     <Content Include="Content\images\logo4.jpg" />
     <Content Include="Content\images\logo5.jpg" />
     <Content Include="Content\images\logo6.jpg" />
+    <Content Include="Content\js\ajaxfileupload.js" />
     <Content Include="Content\js\bootstrap-datetimepicker.js" />
     <Content Include="Content\js\bootstrap-select.js" />
     <Content Include="Content\js\bootstrap-select.min.js" />
@@ -188,6 +189,7 @@
     <Content Include="Scripts\Exceptions.js" />
     <Content Include="Scripts\Groups.js" />
     <Content Include="Scripts\icon.js" />
+    <Content Include="Scripts\Infos.js" />
     <Content Include="Scripts\lock.js" />
     <Content Include="Scripts\Login.js" />
     <Content Include="Scripts\Logs.js" />
@@ -212,7 +214,9 @@
     <Content Include="Content\js\framework.js" />
     <Content Include="Scripts\well.js" />
     <Content Include="Views\Shared\Readme.txt" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
@@ -230,6 +234,7 @@
     <Compile Include="Controllers\ExceptionsController.cs" />
     <Compile Include="Controllers\GroupsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InfosController.cs" />
     <Compile Include="Controllers\LogsController.cs" />
     <Compile Include="Controllers\MenusController.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
@@ -304,7 +309,10 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Content\images\uploader\" />
+    <Folder Include="Views\Infos\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Bootstrap.DataAccess\Bootstrap.DataAccess.csproj">
       <Project>{af16ca71-b8c6-4f51-b38c-0c0300fdebd7}</Project>

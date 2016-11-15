@@ -59,5 +59,9 @@ namespace Bootstrap.DataAccess
         /// 获得/设置 拒绝时刻
         /// </summary>
         public string RejectedTime { get; set; }
+        /// <summary>
+        /// 获取/设置 用户头像
+        /// </summary>
+        public string HeadImg { get; set; }
     }
 }
