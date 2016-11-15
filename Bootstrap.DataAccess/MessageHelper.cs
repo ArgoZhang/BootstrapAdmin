@@ -27,7 +27,7 @@ namespace Bootstrap.DataAccess
         {
             var messageRet = CacheManager.GetOrAdd(RetrieveMessageDataKey, CacheSection.RetrieveIntervalByKey(RetrieveMessageDataKey), key =>
             {
-                string sql = "select * from [Messages] where [To]=@UserName or [From]=@UserName";
+                string sql = "select m.*, d.Name from [Messages] m left join Dicts d on m.Label = d.Code and d.Category = N'消息状态' and d.Define = 0 where[To] = @UserName or [From] = @UserName";
                 List<Message> messages = new List<Message>();
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                 try
@@ -46,10 +46,10 @@ namespace Bootstrap.DataAccess
                                 To = (string)reader[4],
                                 SendTime = LgbConvert.ReadValue(reader[5], DateTime.MinValue),
                                 Status = (string)reader[6],
-                                Mark=(int)reader[7],
-                                IsDelete=(int)reader[8],
-                                Label=(string)reader[9]
-
+                                Mark = (int)reader[7],
+                                IsDelete = (int)reader[8],
+                                Label = (string)reader[9],
+                                LabelName = LgbConvert.ReadValue(reader[10], string.Empty)
                             });
                         }
                     }
@@ -64,7 +64,7 @@ namespace Bootstrap.DataAccess
         /// 收件箱
         /// </summary>
         /// <param name="id"></param>
-        
+
         public static IEnumerable<Message> Inbox(string userName)
         {
             var messageRet = RetrieveMessages(userName);
@@ -88,7 +88,7 @@ namespace Bootstrap.DataAccess
         public static IEnumerable<Message> Trash(string userName)
         {
             var messageRet = RetrieveMessages(userName);
-            return messageRet.Where(n => n.IsDelete==1).Select(n => n);
+            return messageRet.Where(n => n.IsDelete == 1).Select(n => n);
         }
         /// <summary>
         /// 标旗
@@ -98,7 +98,7 @@ namespace Bootstrap.DataAccess
         public static IEnumerable<Message> Mark(string userName)
         {
             var messageRet = RetrieveMessages(userName);
-            return messageRet.Where(n => n.Mark==1).Select(n => n);
+            return messageRet.Where(n => n.Mark == 1).Select(n => n);
         }
         /// <summary>
         /// 获取Header处显示的消息列表

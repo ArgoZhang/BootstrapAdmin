@@ -331,7 +331,7 @@ CREATE TABLE [dbo].[Messages](
 	[To] [varchar](50) NOT NULL,
 	[SendTime] [datetime] NOT NULL,
 	[Status] [nvarchar](50) NOT NULL,
-	[Mark] [nvarchar](50) NOT NULL,
+	[Flag] [int] NOT NULL,
 	[IsDelete] [int] NOT NULL,
 	[Label] [nvarchar](50) NOT NULL,
  CONSTRAINT [PK_Messages] PRIMARY KEY CLUSTERED 
@@ -343,4 +343,13 @@ CREATE TABLE [dbo].[Messages](
 GO
 
 SET ANSI_PADDING OFF
+GO
+
+ALTER TABLE [dbo].[Messages] ADD  CONSTRAINT [DF_Messages_Mark]  DEFAULT ((0)) FOR [Flag]
+GO
+
+ALTER TABLE [dbo].[Messages] ADD  CONSTRAINT [DF_Messages_IsDelete]  DEFAULT ((0)) FOR [IsDelete]
+GO
+
+ALTER TABLE [dbo].[Messages] ADD  CONSTRAINT [DF_Messages_Label]  DEFAULT ((0)) FOR [Label]
 GO
