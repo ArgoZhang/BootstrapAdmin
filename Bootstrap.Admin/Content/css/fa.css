@@ -11,7 +11,8 @@
 
 .form-group .input-group .input-group-btn .btn i {
     color: #187c9a;
-    padding-right: 6px;
+    width: 22px;
+    text-align: left;
 }
 
 .icon-body {
