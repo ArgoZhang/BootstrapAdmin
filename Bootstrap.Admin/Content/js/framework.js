@@ -33,9 +33,11 @@
         if (this.options.modal && this.options.modal.constructor === String) {
             $('#' + this.options.modal).on('show.bs.modal', function (e) {
                 if (that.options.validateForm.constructor === String) {
-                    var v = $('#' + that.options.validateForm).validate();
-                    v.currentElements.each(function () { $(this).popover('destroy'); })
-                    v.resetForm();
+                    var v = $('#' + that.options.validateForm);
+                    var vf = v.validate();
+                    vf.currentElements.each(function () { $(this).popover('destroy'); })
+                    vf.resetForm();
+                    v.find('div.form-group').removeClass("has-error has-success");
                 }
             });
         }
