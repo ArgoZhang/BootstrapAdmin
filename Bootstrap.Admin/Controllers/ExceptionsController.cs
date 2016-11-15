@@ -28,7 +28,9 @@ namespace Bootstrap.Admin.Controllers
         public IEnumerable<string> Post()
         {
             var filePath = HttpContext.Current.Server.MapPath("~/App_Data/ErrorLog");
-            return Directory.GetFiles(filePath).Select(f => Path.GetFileNameWithoutExtension(f)).OrderByDescending(s => s);
+            return Directory.GetFiles(filePath)
+                .Where(f => Path.GetExtension(f).Equals(".log", System.StringComparison.OrdinalIgnoreCase))
+                .Select(f => Path.GetFileNameWithoutExtension(f)).OrderByDescending(s => s);
         }
         /// <summary>
         /// 
@@ -41,7 +43,7 @@ namespace Bootstrap.Admin.Controllers
             if (!File.Exists(logName)) return new { content = string.Empty };
             using (StreamReader reader = new StreamReader(logName))
             {
-                return new { content = reader.ReadToEnd().Replace("\r\n", "</br>") };
+                return new { content = reader.ReadToEnd().Replace("<", "&lt;").Replace(">", "&gt;").Replace("\r\n", "</br>") };
             }
         }
     }

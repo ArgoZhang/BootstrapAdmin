@@ -200,6 +200,17 @@ ul.sidebar-menu {
         top: -1px;
     }
 
+.modal-body .affix {
+    position: fixed;
+    bottom: 95px;
+    right: 50px;
+}
+
+    .modal-body .affix a {
+        font-size: 20px;
+        margin-top: 16px;
+    }
+
 .toolbar {
     position: relative;
     margin-top: 10px;
