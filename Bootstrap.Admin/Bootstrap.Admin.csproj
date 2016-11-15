@@ -101,6 +101,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\ErrorLog\Readme.txt" />
     <Content Include="Content\css\admin-responsive.css" />
     <Content Include="Content\css\admin.css" />
     <Content Include="Content\css\blue.css" />
@@ -294,7 +295,6 @@
     <Content Include="Views\Home\Register.cshtml" />
     <Content Include="Views\Admin\Notifications.cshtml" />
     <Content Include="Views\Admin\Infos.cshtml" />
-    <Content Include="Views\Admin\Excep.cshtml" />
     <Content Include="Views\Admin\Exceptions.cshtml" />
     <Content Include="Views\Admin\Messages.cshtml" />
     <None Include="Web.Debug.config">
@@ -304,9 +304,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Bootstrap.DataAccess\Bootstrap.DataAccess.csproj">
       <Project>{af16ca71-b8c6-4f51-b38c-0c0300fdebd7}</Project>

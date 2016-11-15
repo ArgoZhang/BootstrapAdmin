@@ -6,6 +6,7 @@
 @section css {
     <link href="~/Content/css/bootstrap-table.css" rel="stylesheet" />
     <link href="~/Content/css/bootstrap-datetimepicker.css" rel="stylesheet" />
+    <link href="~/Content/css/fa.css" rel="stylesheet" />
 }
 @section Javascript {
     <script src="~/content/js/bootstrap-table.js"></script>
@@ -48,9 +49,20 @@
                     <label class="sr-only"></label>
                     <button type="button" id="btn_query" class="btn btn-primary form-control"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询</button>
                 </div>
+                <div class="toolbar btn-group dropdown">
+                    <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button"><i class="fa fa-gear"></i></button>
+                    <div class="dropdown-menu">
+                        <a id="tb_view" href="#" title="查看明细"><i class="fa fa-file-text-o"></i></a>
+                    </div>
+                </div>
             </div>
         </form>
     </div>
+</div>
+<div id="toolbar" class="btn-group">
+    <button id="btn_view" type="button" class="btn btn-danger">
+        <span class="fa fa-file-text-o" aria-hidden="true"></span>服务器日志
+    </button>
 </div>
 <div class="panel panel-default">
     <div class="panel-heading">
@@ -60,3 +72,37 @@
         <table></table>
     </div>
 </div>
+@section modal {
+    <div class="modal fade" id="dialogNew" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div id="errorList" class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">程序异常日志窗口</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-inline" id="dataForm" name="dataForm" role="form"><div class="row"></div></form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        关闭
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="errorDetail" class="modal-content icon-content">
+        <div class="modal-header">
+            <button type="button" class="close" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myDetailModalLabel">程序异常日志窗口</h4>
+        </div>
+        <div class="modal-body">
+            <div id="dataFormDetail"><div class="text-center"><i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i></div></div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default">
+                关闭
+            </button>
+        </div>
+    </div>
+}

@@ -1,35 +1,23 @@
 ﻿$(function () {
-    var bsa = new BootstrapAdmin({
-        url: '../api/Exceptions',
-        dataEntity: new DataEntity({
-            map: {
-                ID: "ID",
-                AppDomainName: "appDomainName",
-                ErrorPage: "errorPage",
-                UserID: "userId",
-                UserIp: "userIp",
-                Message: "message",
-                StackTrace: "stackTrace",
-                LogTime:"logTime"
-            }
-        }), 
-    })
+    var $dialog = $('#dialogNew');
+    var $dataForm = $('#dataForm');
+    var $dataFormDetail = $('#dataFormDetail');
+    var $errorList = $('#errorList');
+    var $errorDetail = $('#errorDetail');
+    var $errorDetailTitle = $('#myDetailModalLabel');
+
     $('table').smartTable({
-        url: '../api/Exceptions',            //请求后台的URL（*）
-        sortName: 'AppDomainName',
-        queryParams: function (params) { return $.extend(params, {  OperateTimeStart: $("#txt_operate_start").val(), OperateTimeEnd: $("#txt_operate_end").val() }); },           //传递参数（*）
+        url: '../api/Exceptions',
+        sortName: 'ErrorPage',
+        queryParams: function (params) { return $.extend(params, { OperateTimeStart: $("#txt_operate_start").val(), OperateTimeEnd: $("#txt_operate_end").val() }); },
         columns: [{ checkbox: true },
-            { title: "APP域名", field: "AppDomainName", sortable: true },
-            { title: "错误页", field: "ErrorPage", sortable: false },
+            { title: "请求网址", field: "ErrorPage", sortable: false },
+            { title: "用户名", field: "UserID", sortable: false },
+            { title: "IP", field: "UserIp", sortable: false },
+            { title: "错误", field: "Message", sortable: false },
             {
-                title: "用户名", field: "UserID", sortable: false,
-            },
-            { title: "用户IP", field: "UserIp", sortable: false },
-            { title: "备注", field: "Message", sortable: false },
-            { title: "栈记录", field: "StackTrace", sortable: false },
-            { title: "异常捕获时间", field: "LogTime", sortable: false,
-                formatter: function (value, row, index) {
-                    return value.substring(0, 19).replace("T", " ");
+                title: "异常捕获时间", field: "LogTime", sortable: true, formatter: function (value, row, index) {
+                    return new Date(value).format("yyyy-MM-dd HH:mm:ss");
                 }
             }
         ]
@@ -38,5 +26,28 @@
     $('input[type="datetime"]').parent().datetimepicker({
         locale: "zh-cn",
         format: "YYYY-MM-DD"
+    });
+
+    $('#btn_view').on('click', function (row) {
+        Exceptions.getFiles(function (data) {
+            $dataForm.children('div').html(data);
+        });
+        $dialog.modal('show');
+    });
+
+    $dialog.on('click', 'a', function () {
+        var fileName = $(this).text();
+        $errorDetailTitle.text(fileName);
+        $errorList.hide();
+        $errorDetail.show();
+        $dataFormDetail.html('<div class="text-center"><i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i></div>');
+        Exceptions.getFileByName(fileName, function (data) {
+            $dataFormDetail.html(data.content);
+        });
+    });
+
+    $errorDetail.on('click', 'button', function () {
+        $errorDetail.hide();
+        $errorList.show();
     });
 });

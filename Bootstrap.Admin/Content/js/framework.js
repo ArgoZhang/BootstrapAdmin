@@ -246,7 +246,7 @@
     var htmlTemplate = '<div class="form-group checkbox col-lg-3 col-xs-4"><label class="tooltips" data-placement="top" data-original-title="{3}" title="{3}"><input type="checkbox" value="{0}" {2}/>{1}</label></div>';
 
     var processData = function (options) {
-        var data = $.extend({ data: { type: "" }, remote: true, method: "POST", Id: "", url: this.url, title: this.title, html: this.html }, options);
+        var data = $.extend({ data: { type: "" }, remote: true, method: "POST", Id: "", url: this.url, title: this.title, html: this.html, swal: true }, options);
 
         if (data.remote) {
             $.ajax({
@@ -275,14 +275,14 @@
             else if ($.isPlainObject(data.callback) && data.callback.modal !== undefined) {
                 $("#" + data.callback.modal).modal('hide');
             }
-            if (data.remote) {
+            if (data.swal) {
                 if (result) { swal("成功", data.title, "success"); }
                 else { swal("失败", data.title, "error"); }
             }
             if ($.isFunction(data.callback)) data.callback(result);
         }
     }
-    // Role
+    // Roles
     Role = {
         url: '../api/Roles/',
         title: "授权角色",
@@ -354,7 +354,8 @@
     Group.saveGroupsByRoleId = function (roleId, groupIds, callback) {
         processData.call(this, { Id: roleId, callback: callback, method: "PUT", data: { type: "role", groupIds: groupIds } });
     };
-    //Menus
+
+    // Menus
     Menu = {
         url: '../api/Menus/',
         title: "授权菜单",
@@ -387,6 +388,7 @@
     Menu.saveMenusByRoleId = function (roleId, menuIds, callback) {
         processData.call(this, { Id: roleId, callback: callback, method: "PUT", data: { type: "role", menuIds: menuIds } });
     };
+
     //Profiles
     Profiles = {
         url: '../api/Profiles/',
@@ -394,5 +396,22 @@
     }
     Profiles.saveWebSite = function (options) {
         processData.call(this, { data: options });
+    }
+
+    // Exceptions
+    Exceptions = {
+        url: '../api/Exceptions/',
+        title: "程序异常日志",
+        html: function (result) {
+            return result.map(function (ele) {
+                return $.format('<div class="form-group col-lg-3 col-md-3 col-sm-4 col-xs-6"><a href="#">{0}</a></div>', ele);
+            }).join('');
+        }
+    }
+    Exceptions.getFiles = function (callback) {
+        processData.call(this, { Id: "", callback: callback });
+    }
+    Exceptions.getFileByName = function (fileName, callback) {
+        processData.call(this, { Id: "", callback: callback, method: "PUT", swal: false, data: { "": fileName } });
     }
 })(jQuery);

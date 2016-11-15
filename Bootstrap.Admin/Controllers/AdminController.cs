@@ -113,18 +113,6 @@ namespace Bootstrap.Admin.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        public ActionResult Excep()
-        {
-            using (System.IO.StreamReader reader = new System.IO.StreamReader(Server.MapPath("~/App_Data/ErrorLog/Error2016-11-11.log")))
-            {
-                ViewBag.Content = new MvcHtmlString(reader.ReadToEnd().Replace("\r\n", "</br>"));
-            }
-            return View();
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public ActionResult Exceptions()
         {
             var v = new NavigatorBarModel("~/Admin/Exceptions");
