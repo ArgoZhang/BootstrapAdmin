@@ -61,6 +61,17 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 
         /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<Menu> RetrieveAllMenusByUserName(string userName)
+        {
+            var navs = RetrieveMenus(userName);
+            var root = navs.Where(m => m.ParentId == 0).OrderBy(m => m.Order);
+            CascadeMenu(navs, root);
+            return root;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
         public static IEnumerable<Menu> RetrieveNavigationsByUserName(string userName)

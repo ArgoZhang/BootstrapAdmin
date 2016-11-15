@@ -1,4 +1,9 @@
 ﻿(function ($) {
+    var handlerCallback = function (callback, e, data) {
+        if ($.isFunction(callback)) callback.call(e, data);
+        if ($.isFunction(this.options.callback)) this.options.callback.call(e, data);
+    }
+
     BootstrapAdmin = function (options) {
         var that = this;
         options = options || {};
@@ -47,8 +52,8 @@
             source.data('click', name);
             if (event !== null) source.data('event', event);
             source.click(function () {
-                var method = $(this).data('click');
-                BootstrapAdmin.prototype[method].call(that, this, $(this).data('event'));
+                var method = source.data('click');
+                BootstrapAdmin.prototype[method].call(that, this, source.data('event'));
             });
         }
     };
@@ -94,71 +99,83 @@
             }
         },
 
-        query: function () {
+        query: function (e, callback) {
             if (this.options.bootstrapTable.constructor === String) $(this.options.bootstrapTable).bootstrapTable('refresh');
+            handlerCallback.call(this, callback, e, { oper: 'query' });
         },
 
-        create: function () {
+        create: function (e, callback) {
             if (this.dataEntity instanceof DataEntity) this.dataEntity.reset();
             if (this.options.modal.constructor === String) $('#' + this.options.modal).modal("show");
             if (this.options.bootstrapTable.constructor === String) $(this.options.bootstrapTable).bootstrapTable('uncheckAll');
+            handlerCallback.call(this, callback, e, { oper: 'create' });
         },
 
-        edit: function () {
+        edit: function (e, callback) {
             var options = this.options;
-            if (options.bootstrapTable.constructor !== String) return;
-            var arrselections = $(options.bootstrapTable).bootstrapTable('getSelections');
-            if (arrselections.length == 0) {
-                swal('请选择要编辑的数据', "编辑操作", "warning");
+            var data = {};
+            if (options.bootstrapTable.constructor === String) {
+                var arrselections = $(options.bootstrapTable).bootstrapTable('getSelections');
+                if (arrselections.length == 0) {
+                    swal('请选择要编辑的数据', "编辑操作", "warning");
+                    return;
+                }
+                else if (arrselections.length > 1) {
+                    swal('请选择一个要编辑的数据', "编辑操作", "warning");
+                    return;
+                }
+                else {
+                    data = arrselections[0];
+                    if (this.dataEntity instanceof DataEntity) this.dataEntity.load(data);
+                    if (options.modal.constructor === String) $('#' + options.modal).modal("show");
+                }
             }
-            else if (arrselections.length > 1) {
-                swal('请选择一个要编辑的数据', "编辑操作", "warning");
-            }
-            else {
-                if (this.dataEntity instanceof DataEntity) this.dataEntity.load(arrselections[0]);
-                if (options.modal.constructor === String) $('#' + options.modal).modal("show");
-            }
+            handlerCallback.call(this, callback, e, { oper: 'edit', data: data });
         },
 
-        del: function () {
+        del: function (e, callback) {
+            var that = this;
             var options = this.options;
-            if (options.bootstrapTable.constructor !== String) return;
-            var arrselections = $(options.bootstrapTable).bootstrapTable('getSelections');
-            if (arrselections.length == 0) {
-                swal('请选择要删除的数据', "删除操作", "warning");
-                return;
-            }
-            else {
-                swal({
-                    title: "您确定要删除吗？",
-                    text: "删除操作",
-                    type: "warning",
-                    showCancelButton: true,
-                    closeOnConfirm: true,
-                    confirmButtonText: "是的，我要删除",
-                    confirmButtonColor: "#d9534f",
-                    cancelButtonText: "取消"
-                }, function () {
-                    var iDs = arrselections.map(function (element, index) { return element.ID }).join(",");
-                    options.IDs = iDs;
-                    $.ajax({
-                        url: options.url,
-                        data: { "": iDs },
-                        type: 'DELETE',
-                        success: function (result) {
-                            if ($.isFunction(options.success)) options.success('del', options);
-                            if (result) setTimeout(function () { swal("成功！", "删除数据", "success"); $(options.bootstrapTable).bootstrapTable('refresh'); }, 100);
-                            else setTimeout(function () { swal("失败", "删除数据", "error"); }, 200);
-                        },
-                        error: function (XMLHttpRequest, textStatus, errorThrown) {
-                            swal("失败", "删除数据", "error");
-                        }
+            if (options.bootstrapTable.constructor === String) {
+                var arrselections = $(options.bootstrapTable).bootstrapTable('getSelections');
+                if (arrselections.length == 0) {
+                    swal('请选择要删除的数据', "删除操作", "warning");
+                    return;
+                }
+                else {
+                    swal({
+                        title: "您确定要删除吗？",
+                        text: "删除操作",
+                        type: "warning",
+                        showCancelButton: true,
+                        closeOnConfirm: true,
+                        confirmButtonText: "是的，我要删除",
+                        confirmButtonColor: "#d9534f",
+                        cancelButtonText: "取消"
+                    }, function () {
+                        var iDs = arrselections.map(function (element, index) { return element.ID }).join(",");
+                        options.IDs = iDs;
+                        $.ajax({
+                            url: options.url,
+                            data: { "": iDs },
+                            type: 'DELETE',
+                            success: function (result) {
+                                if (result) { swal("成功！", "删除数据", "success"); $(options.bootstrapTable).bootstrapTable('refresh'); }
+                                else swal("失败", "删除数据", "error");
+                                handlerCallback.call(that, callback, e, { oper: 'del', success: !!result, data: iDs });
+                            },
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                swal("失败", "删除数据", "error");
+                                handlerCallback.call(that, callback, e, { oper: 'del', success: false });
+                            }
+                        });
                     });
-                });
+                }
             }
         },
 
-        save: function () {
+        save: function (e, callback) {
+            var that = this;
             var options = $.extend({ data: {} }, this.options);
             if (this.dataEntity instanceof DataEntity) options = $.extend(options, { data: this.dataEntity.get() });
             if (options.validateForm.constructor === String && !$("#" + options.validateForm).valid()) return;
@@ -167,22 +184,24 @@
                 data: options.data,
                 type: 'POST',
                 success: function (result) {
+                    var finalData = null;
+                    var index = 0;
                     if (result) {
-                        if ($.isFunction(options.success)) options.success('save', options.data);
                         if (options.bootstrapTable.constructor === String && options.data.ID.constructor === String) {
                             // 更新表格
                             if (options.data.ID > 0) {
                                 var allTableData = $(options.bootstrapTable).bootstrapTable('getData');
                                 for (index = 0; index < allTableData.length; index++) {
-                                    var temp = allTableData[index];
-                                    if (temp.ID == options.data.ID) {
-                                        $(options.bootstrapTable).bootstrapTable('updateRow', { index: index, row: $.extend(temp, options.data) });
+                                    finalData = allTableData[index];
+                                    if (finalData.ID == options.data.ID) {
+                                        $(options.bootstrapTable).bootstrapTable('updateRow', { index: index, row: $.extend(finalData, options.data) });
                                         break;
                                     }
                                 }
                             }
                             else {
                                 $(options.bootstrapTable).bootstrapTable('refresh');
+                                finalData = options.data;
                             }
                         }
                         if (options.modal.constructor === String) $('#' + options.modal).modal("hide");
@@ -191,14 +210,16 @@
                     else {
                         swal("失败", "保存数据", "error");
                     }
+                    handlerCallback.call(that, callback, e, { oper: 'save', success: !!result, index: index, data: finalData });
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     swal("失败", "保存数据失败", "error");
+                    handlerCallback.call(that, callback, e, { oper: 'save', success: false });
                 }
             });
         },
 
-        assign: function (eventSrc, callback) {
+        assign: function (e, callback) {
             var options = this.options;
             var row = {};
             if (options.bootstrapTable && options.bootstrapTable.constructor === String) {
@@ -215,12 +236,11 @@
                     row = arrselections[0];
                 }
             }
-            if ($.isFunction(callback)) {
-                var data = options.dataEntity;
-                if (data instanceof DataEntity) data = data.get();
-                callback.call(eventSrc, row, $.extend({}, data));
-            }
-        },
+            var data = options.dataEntity;
+            if (data instanceof DataEntity) data = data.get();
+            if ($.isFunction(callback)) callback.call(e, row, $.extend({}, data));
+            if ($.isFunction(this.options.callback)) this.options.callback.call(e, { oper: 'assign', row: row, data: data });
+        }
     };
 
     var htmlTemplate = '<div class="form-group checkbox col-lg-3 col-xs-4"><label class="tooltips" data-placement="top" data-original-title="{3}" title="{3}"><input type="checkbox" value="{0}" {2}/>{1}</label></div>';
@@ -249,7 +269,6 @@
                     var formatData = result;
                     if ($.isFunction(data.html)) formatData = data.html(result);
                     data.callback(formatData);
-                    $('div.checkbox label.tooltips').tooltip();
                     return;
                 }
             }
@@ -338,8 +357,30 @@
     //Menus
     Menu = {
         url: '../api/Menus/',
-        title: "授权菜单"
+        title: "授权菜单",
+        html: function (result) {
+            var htmlString = "";
+            if ($.isArray(result)) {
+                htmlString = Menu.cascadeMenu(result)
+            }
+            return htmlString;
+        }
     }
+    Menu.cascadeMenu = function (menus) {
+        var html = "";
+        $.each(menus, function (index, menu) {
+            if (menu.Menus.length == 0) {
+                html += $.format('<li class="dd-item dd3-item" data-id="{0}" data-category="{3}"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><label><input type="checkbox" value="{0}"><span><i class="{1}"></i>{2}</span></label><label><input type="radio" name="menu" value="{0}"><span><i class="{1}"></i>{2}</span></label></div></li>', menu.ID, menu.Icon, menu.Name, menu.Category);
+            }
+            else {
+                html = $.format('<li class="dd-item dd3-item" data-id="{0}" data-category="{3}"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><label><input type="checkbox" value="{0}"><span><i class="{1}"></i>{2}</span></label><label><input type="radio" name="menu" value="{0}"><span><i class="{1}"></i>{2}</span></label></div></li><ol class="dd-list">{4}</ol>', menu.ID, menu.Icon, menu.Name, menu.Category, Menu.cascadeMenu(menu.Menus));
+            }
+        });
+        return html;
+    }
+    Menu.getMenus = function (callback) {
+        processData.call(this, { Id: 0, callback: callback, data: { type: "user" } });
+    };
     Menu.getMenusByRoleId = function (roleId, callback) {
         processData.call(this, { Id: roleId, callback: callback, data: { type: "role" } });
     };

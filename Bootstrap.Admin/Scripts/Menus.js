@@ -35,6 +35,16 @@
                     Role.saveRolesByMenuId(menuId, roleIds, { modal: 'dialogRole' });
                 }
             }]
+        },
+        callback: function (result) {
+            if (!result.success) return;
+            if ((result.oper == "save") || result.oper == "del") {
+                Menu.getMenus(function (data) {
+                    $nestMenu.find('ol:first').html(data);
+                    $nestMenuInput = $nestMenu.find('div.dd3-content');
+                    $nestMenuInput.find('label:first').hide();
+                });
+            }
         }
     });
 
