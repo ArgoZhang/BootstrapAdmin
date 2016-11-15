@@ -134,12 +134,6 @@
         $nestMenuInput.find('label:last').find('input').show();
         $nestMenu.find('li.dd-item').hide().remove('[data-id="0"]');
         $nestMenu.find('li[data-category="' + $('#category').selectpicker('val') + '"]').show();
-        var pid = $parentMenuID.val();
-        if (pid != "") {
-            // set active class
-            var radio = $nestMenuInput.find('input[value=' + pid + ']').filter(':radio');
-            radio.next('span').addClass('active');
-        }
         $dialogMenu.show().adjustDialog();
     });
 
@@ -154,8 +148,8 @@
         var type = $(this).data('type');
         switch (type) {
             case "parent":
-                $parentMenuID.val($nestMenuInput.find('input').filter(':radio:checked').val());
-                $parentMenuName.val($nestMenuInput.find('input').filter(':radio:checked').next('span').text());
+                $('#parentId').val($('.dd3-content :radio:checked').val());
+                $('#parentName').val($('.dd3-content :radio:checked').next('span').text());
                 break;
             case "order":
                 var data = $('#nestable_menu').nestable('serialize');

@@ -88,7 +88,7 @@ namespace Bootstrap.DataAccess
         public static IEnumerable<Message> Trash(string userName)
         {
             var messageRet = RetrieveMessages(userName);
-            return messageRet.Where(n => n.Trash==1).Select(n => n);
+            return messageRet.Where(n => n.IsDelete==1).Select(n => n);
         }
         /// <summary>
         /// 标旗
