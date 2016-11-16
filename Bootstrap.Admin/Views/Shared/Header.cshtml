@@ -191,9 +191,9 @@
         <li class="dropdown">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                 <img id="headerIcon" alt="" src="@Url.Content(Model.Icon)">
-                <span class="username">@Model.DisplayName</span>
+                <span id="userDisplayName" class="username">@Model.DisplayName</span>
                 <b class="caret"></b>
-                <input id="userId" type="text" class="hide" value="@Model.UserID" />
+                <input id="userId" type="text" class="hidden" value="@Model.UserID" />
             </a>
             <ul class="dropdown-menu logout">
                 <div class="arrow-up"></div>

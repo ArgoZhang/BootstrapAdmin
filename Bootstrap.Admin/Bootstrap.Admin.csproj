@@ -136,6 +136,7 @@
     <Content Include="Content\images\logo4.jpg" />
     <Content Include="Content\images\logo5.jpg" />
     <Content Include="Content\images\logo6.jpg" />
+    <Content Include="Content\images\uploader\Admin.jpg" />
     <Content Include="Content\images\uploader\default.jpg" />
     <Content Include="Content\images\uploader\readme.txt" />
     <Content Include="Content\js\bootstrap-datetimepicker.js" />
@@ -317,9 +318,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Content\images\uploader\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Bootstrap.DataAccess\Bootstrap.DataAccess.csproj">
       <Project>{af16ca71-b8c6-4f51-b38c-0c0300fdebd7}</Project>

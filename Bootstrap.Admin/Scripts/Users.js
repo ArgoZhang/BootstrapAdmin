@@ -50,7 +50,7 @@
         },
         success: function (src, data) {
             if (src === 'save' && data.ID === $('#userId').val()) {
-                $('.username').text(data.DisplayName);
+                $('#userDisplayName').text(data.DisplayName);
             }
         }
     });

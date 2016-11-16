@@ -1,5 +1,6 @@
 ﻿using Bootstrap.Admin.Models;
 using Bootstrap.DataAccess;
+using Longbow.Security.Principal;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,24 @@ namespace Bootstrap.Admin.Controllers
         public QueryData<User> Get([FromUri]QueryUserOption value)
         {
             return value.RetrieveData();
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpPut]
+        public bool Put([FromBody]User value)
+        {
+            var ret = false;
+            var userName = User.Identity.Name;
+            if (value.UserName == userName && !LgbPrincipal.IsAdmin(userName))
+            {
+                if (value.UserStatus == 1)
+                    ret = UserHelper.SaveUserInfoByName(value);
+                else if (value.UserStatus == 2)
+                    ret = UserHelper.ChangePassword(value);
+            }
+            return ret;
         }
         /// <summary>
         /// 

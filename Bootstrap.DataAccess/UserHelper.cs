@@ -381,7 +381,66 @@ namespace Bootstrap.DataAccess
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                     ret = true;
                 }
-                CacheManager.Clear(key => key == RetrieveUsersByNameDataKey);
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.Publish(ex);
+            }
+            return ret;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public static bool SaveUserInfoByName(User user)
+        {
+            bool ret = false;
+            try
+            {
+                string sql = "Update Users set DisplayName = @DisplayName where UserName = @userName";
+                using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
+                {
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@DisplayName", user.DisplayName, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@userName", user.UserName, ParameterDirection.Input));
+                    DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
+                    CacheCleanUtility.ClearCache(userIds: string.Empty);
+                    ret = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.Publish(ex);
+            }
+            return ret;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public static bool ChangePassword(User user)
+        {
+            bool ret = false;
+            try
+            {
+                if (Authenticate(user.UserName, user.Password))
+                {
+                    string sql = "Update Users set Password = @Password, PassSalt = @PassSalt where UserName = @userName";
+                    user.PassSalt = LgbCryptography.GenerateSalt();
+                    user.NewPassword = LgbCryptography.ComputeHash(user.NewPassword, user.PassSalt);
+                    using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
+                    {
+                        cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Password", user.NewPassword, ParameterDirection.Input));
+                        cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@PassSalt", user.PassSalt, ParameterDirection.Input));
+                        cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@userName", user.UserName, ParameterDirection.Input));
+                        DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
+                        string key = string.Format("{0}-{1}", RetrieveUsersByNameDataKey, user.UserName);
+                        CacheManager.Clear(k => k == key);
+                        ret = true;
+                    }
+                }
             }
             catch (Exception ex)
             {

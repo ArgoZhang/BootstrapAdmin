@@ -60,8 +60,12 @@ namespace Bootstrap.DataAccess
         /// </summary>
         public string RejectedTime { get; set; }
         /// <summary>
-        /// 获取/设置 用户头像
+        /// 获得/设置 用户头像
         /// </summary>
         public string Icon { get; set; }
+        /// <summary>
+        /// 获得/设置 新密码
+        /// </summary>
+        public string NewPassword { get; set; }
     }
 }

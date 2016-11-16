@@ -325,13 +325,20 @@
     };
     User.saveUsersByRoleId = function (roleId, userIds, callback) {
         processData.call(this, { Id: roleId, callback: callback, method: "PUT", data: { type: "role", userIds: userIds } });
-    }
+    };
     User.getUsersByGroupeId = function (groupId, callback) {
         processData.call(this, { Id: groupId, callback: callback, data: { type: "group" } });
     };
     User.saveUsersByGroupId = function (groupId, userIds, callback) {
         processData.call(this, { Id: groupId, callback: callback, method: "PUT", data: { type: "group", userIds: userIds } });
+    };
+    User.saveUserDisplayName = function (user, callback) {
+        processData.call(this, { Id: '', callback: callback, method: "PUT", data: user });
+    };
+    User.changePassword = function (user) {
+        processData.call(this, { Id: '', method: "PUT", data: user });
     }
+
     // Groups
     Group = {
         url: '../api/Groups/',
