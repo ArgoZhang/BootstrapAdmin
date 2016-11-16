@@ -16,6 +16,9 @@ namespace Bootstrap.Admin
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            var json = GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings;
+            json.DateFormatString = "yyyy'-'MM'-'dd' 'HH':'mm':'ss";
         }
     }
 }

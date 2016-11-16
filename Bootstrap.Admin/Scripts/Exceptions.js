@@ -8,18 +8,14 @@
 
     $('table').smartTable({
         url: '../api/Exceptions',
-        sortName: 'ErrorPage',
+        sortName: 'LogTime',
         queryParams: function (params) { return $.extend(params, { OperateTimeStart: $("#txt_operate_start").val(), OperateTimeEnd: $("#txt_operate_end").val() }); },
         columns: [{ checkbox: true },
             { title: "请求网址", field: "ErrorPage", sortable: false },
             { title: "用户名", field: "UserID", sortable: false },
             { title: "IP", field: "UserIp", sortable: false },
             { title: "错误", field: "Message", sortable: false },
-            {
-                title: "异常捕获时间", field: "LogTime", sortable: true, formatter: function (value, row, index) {
-                    return new Date(value).format("yyyy-MM-dd HH:mm:ss");
-                }
-            }
+            { title: "记录时间", field: "LogTime", sortable: true }
         ]
     });
 

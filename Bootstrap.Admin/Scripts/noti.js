@@ -16,22 +16,19 @@
                 if (result) {
                     if (category == '0' || category == '') {
                         var content = result.Users.map(function (noti) {
-                            var t = new Date(noti.RegisterTime).format('yyyy-MM-dd HH:mm:ss');
-                            return $.format(htmlNewUsers, noti.Title, noti.Content, t, noti.ID);
+                            return $.format(htmlNewUsers, noti.Title, noti.Content, noti.RegisterTime, noti.ID);
                         }).join('');
                         $('#tasks-users').html(content);
                     }
                     if (category == '1' || category == '') {
                         var content = result.Apps.map(function (noti) {
-                            var t = new Date(noti.RegisterTime).format('yyyy-MM-dd HH:mm:ss');
-                            return $.format(htmlApp, noti.Title, noti.Content, t, noti.ID);
+                            return $.format(htmlApp, noti.Title, noti.Content, noti.RegisterTime, noti.ID);
                         }).join('');
                         $('#tasks-app').html(content);
                     }
                     if (category == '2' || category == '') {
                         var content = result.Dbs.map(function (noti) {
-                            var t = new Date(noti.RegisterTime).format('yyyy-MM-dd HH:mm:ss');
-                            return $.format(htmlDb, noti.Title, noti.Content, t, noti.ID);
+                            return $.format(htmlDb, noti.Title, noti.Content, noti.RegisterTime, noti.ID);
                         }).join('');
                         $('#tasks-db').html(content);
                     }
