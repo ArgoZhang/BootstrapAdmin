@@ -255,10 +255,10 @@ CREATE TABLE [dbo].[Exceptions](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
 	[AppDomainName] [varchar](50) NOT NULL,
 	[ErrorPage] [varchar](50) NOT NULL,
-	[UserID] [varchar](50) NULL,
+	[UserID] [varchar](50) NOT NULL,
 	[UserIp] [varchar](15) NOT NULL,
 	[Message] [nvarchar](max) NOT NULL,
-	[StackTrace] [nvarchar](max) NULL,
+	[StackTrace] [nvarchar](max) NOT NULL,
 	[LogTime] [datetime] NOT NULL,
  CONSTRAINT [PK_Exceptions] PRIMARY KEY CLUSTERED 
 (
