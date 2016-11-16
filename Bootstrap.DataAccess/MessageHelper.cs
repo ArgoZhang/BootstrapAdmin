@@ -17,7 +17,6 @@ namespace Bootstrap.DataAccess
     {
         internal const string RetrieveMessageDataKey = "MessageHelper-RetrieveMessages";
 
-
         /// <summary>
         /// 所有有关userName所有消息列表
         /// </summary>
@@ -68,7 +67,7 @@ namespace Bootstrap.DataAccess
         public static IEnumerable<Message> Inbox(string userName)
         {
             var messageRet = RetrieveMessages(userName);
-            return messageRet.Where(n => n.To.Equals(userName)).Select(n => n);
+            return messageRet.Where(n => n.To.Equals(userName, StringComparison.OrdinalIgnoreCase));
         }
         /// <summary>
         /// 发件箱
@@ -78,7 +77,7 @@ namespace Bootstrap.DataAccess
         public static IEnumerable<Message> SendMail(string userName)
         {
             var messageRet = RetrieveMessages(userName);
-            return messageRet.Where(n => n.To.Equals(userName)).Select(n => n);
+            return messageRet.Where(n => n.From.Equals(userName, StringComparison.OrdinalIgnoreCase));
         }
         /// <summary>
         /// 垃圾箱
@@ -88,7 +87,7 @@ namespace Bootstrap.DataAccess
         public static IEnumerable<Message> Trash(string userName)
         {
             var messageRet = RetrieveMessages(userName);
-            return messageRet.Where(n => n.IsDelete == 1).Select(n => n);
+            return messageRet.Where(n => n.IsDelete == 1);
         }
         /// <summary>
         /// 标旗
@@ -98,7 +97,7 @@ namespace Bootstrap.DataAccess
         public static IEnumerable<Message> Mark(string userName)
         {
             var messageRet = RetrieveMessages(userName);
-            return messageRet.Where(n => n.Mark == 1).Select(n => n);
+            return messageRet.Where(n => n.Mark == 1);
         }
         /// <summary>
         /// 获取Header处显示的消息列表
