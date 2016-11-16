@@ -383,7 +383,7 @@
         processData.call(this, { Id: 0, callback: callback, data: { type: "user" } });
     };
     Menu.getMenusByRoleId = function (roleId, callback) {
-        processData.call(this, { Id: roleId, callback: callback, data: { type: "role" } });
+        processData.call(this, { Id: roleId, callback: callback, data: { type: "role" }, html: null });
     };
     Menu.saveMenusByRoleId = function (roleId, menuIds, callback) {
         processData.call(this, { Id: roleId, callback: callback, method: "PUT", data: { type: "role", menuIds: menuIds } });
