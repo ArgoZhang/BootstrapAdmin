@@ -10,11 +10,18 @@ namespace Bootstrap.DataAccess.Tests
         [TestMethod()]
         public void LogTest()
         {
-            var ex = new Exception("Just for Test");
-            var nv = new NameValueCollection();
-            nv.Add("ErrorPage", "UnitTest_Page");
-            nv.Add("UserIp", "::1");
-            ExceptionHelper.Log(ex, nv);
+            try
+            {
+                throw new Exception("Just for Test", new Exception("Inner Exception"));
+            }
+            catch (Exception ex)
+            {
+                var nv = new NameValueCollection();
+                nv.Add("ErrorPage", "UnitTest_Page");
+                nv.Add("UserIp", "::1");
+                nv.Add("UserId", "UnitTest");
+                ExceptionHelper.Log(ex, nv);
+            }
         }
     }
 }
