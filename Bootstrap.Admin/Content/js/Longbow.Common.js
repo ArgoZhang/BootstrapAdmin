@@ -185,8 +185,8 @@
                 clickToSelect: false,
             }, options);
             $(this).bootstrapTable(settings);
-            $('.toolbar').insertBefore($('.bootstrap-table > .fixed-table-toolbar > .bs-bars'));
-            $('.toolbar a').click(function () {
+            $('div.toolbar').insertBefore($('div.bootstrap-table > div.fixed-table-toolbar > div.bs-bars'));
+            $('div.toolbar').on('click', 'a', function () {
                 var ctl = $('#' + $(this).attr('id').replace('tb_', 'btn_'));
                 ctl.trigger("click");
             });
@@ -195,23 +195,9 @@
 })(jQuery);
 
 $(function () {
-    // breadcrumb
-    var breadcrumb = $('.sidebar-menu > li > a.active > span').text();
-    if (breadcrumb === "") $('.breadcrumb > li + li').hide();
-    else $('.breadcrumb > li + li').text(breadcrumb);
-
     if ($.isFunction($.validator)) {
         jQuery.validator.addMethod("ip", function (value, element) {
             return this.optional(element) || /^(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])$/.test(value);
         }, "请填写正确的IP地址");
     }
-
-    $(".go-top").click(function (e) {
-        e.preventDefault();
-        $('#main-content, .content-body, body').animate({
-            scrollTop: 0
-        }, 200);
-    });
-
-    $('.site-footer div span').text($('#footer').val());
 });
