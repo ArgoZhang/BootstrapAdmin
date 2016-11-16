@@ -51,7 +51,7 @@
         msgImageHeightLarge: '图像文件"{name}"的高度不能超过{size}像素.',
         msgImageResizeError: '无法获取的图像尺寸调整。',
         msgImageResizeException: '错误而调整图像大小。<pre>{errors}</pre>',
-        dropZoneTitle: '拖拽文件到这里 &hellip;<br>支持多文件同时上传',
+        dropZoneTitle: '请选择一个文件',
         dropZoneClickTitle: '<br>(或点击{files}按钮选择文件)',
         fileActionSettings: {
             removeTitle: '删除文件',
