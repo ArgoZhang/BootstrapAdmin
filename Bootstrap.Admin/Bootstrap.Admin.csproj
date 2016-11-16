@@ -311,7 +311,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\images\uploader\" />
-    <Folder Include="Views\Infos\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Bootstrap.DataAccess\Bootstrap.DataAccess.csproj">
