@@ -51,4 +51,5 @@
     });
 
     $('button[data-admin="True"]').attr('disabled', 'disabled');
+    $('#kvFileinputModal').appendTo('body');
 });
