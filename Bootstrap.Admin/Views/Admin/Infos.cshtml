@@ -4,13 +4,15 @@
     Layout = "~/Views/Shared/_Admin.cshtml";
 }
 @section Javascript {
-    <script src="~/Content/js/ajaxfileupload.js"></script>
-<script src="~/content/js/sweetalert.js"></script>
+    <script src="~/content/js/sweetalert.js"></script>
+    <script src="~/Content/js/fileinput.js"></script>
+    <script src="~/Content/js/zh.js"></script>
     <script src="~/scripts/Infos.js"></script>
 }
 @section css {
     <link href="~/Content/css/sweetalert.css" rel="stylesheet" />
     <link href="~/Content/css/tasks.css" rel="stylesheet" />
+    <link href="~/Content/css/fileinput.css" rel="stylesheet" />
 }
 @section header {
     @Html.Partial("Header", Model)
@@ -65,18 +67,10 @@
 <div class="panel panel-default">
     <div class="panel-heading">修改头像</div>
     <div class="panel-body">
-        <form class="form-inline" id="imgDataForm" name="imgDataForm" role="form" >
-            <div class="row">
-                <div class="form-group col-xs-12">
-                    <label class="control-label" for="uploadImg">上传头像: </label>
-                    <img class="form-control" src="" id="headImg" width="200" height="200" />
-                    <input class="form-control btn btn-default" type="file" name="uploadImg" id="uploadImg"
-                           accept="image/png,image/gif,image/jpeg,image/tiff,image/vnd.dwg,image/vnd.dxf,image/vnd.svf" />
-                </div>
+        <form enctype="multipart/form-data">
+            <div class="form-group">
+                <input id="fileIcon" class="file" type="file">
             </div>
         </form>
-        <div class="modal-footer">
-            <button class="btn btn-default" type="button" id="btn_img">保存</button>
-        </div>
     </div>
 </div>

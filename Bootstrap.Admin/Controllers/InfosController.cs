@@ -1,11 +1,11 @@
-﻿using System.IO;
-using System.Web;
-using Bootstrap.DataAccess;
-using System.Web.Script.Serialization;
-using System.Web.Http;
+﻿using Bootstrap.DataAccess;
+using Longbow.ExceptionManagement;
+using Longbow.Security.Principal;
 using System;
-using System.Drawing;
-using System.Drawing.Imaging;
+using System.Collections.Specialized;
+using System.IO;
+using System.Web;
+using System.Web.Http;
 
 namespace Bootstrap.Admin.Controllers
 {
@@ -14,42 +14,32 @@ namespace Bootstrap.Admin.Controllers
         [HttpPost]
         public string Post()
         {
-            bool ret = false;
-            var msg = new { Result = ret, img_str = "" };
-
+            var ret = string.Empty;
+            var userName = User.Identity.Name;
+            if (LgbPrincipal.IsAdmin(userName)) userName = "default";
             var files = HttpContext.Current.Request.Files;
-            if (files.Count > 0)
+            if (files.Count > 0 && !LgbPrincipal.IsAdmin(userName))
             {
-                string userName = HttpContext.Current.User.Identity.Name;
-                if (userName.ToLower() != "argo" && userName.ToLower() != "test")
+                var webSiteUrl = DictHelper.RetrieveIconFolderPath().Code;
+                var fileName = string.Format("{0}.jpg", userName);
+                var fileUrl = string.Format("{0}{1}", webSiteUrl, fileName);
+                var filePath = HttpContext.Current.Server.MapPath(fileUrl);
+                var fileFolder = Path.GetDirectoryName(filePath);
+                try
                 {
-                    string iconUrl = HttpContext.Current.Server.MapPath("~/Content/images/uploader/");
-                    using (Stream inputStream = files[0].InputStream)
-                    {
-                        MemoryStream memoryStream = inputStream as MemoryStream;
-                        if (memoryStream == null)
-                        {
-                            memoryStream = new MemoryStream();
-                            inputStream.CopyTo(memoryStream);
-                        }
-                        Bitmap bmp = new Bitmap(memoryStream);
-                        if (!Directory.Exists(iconUrl))
-                            Directory.CreateDirectory(iconUrl);
-                        string fileName = DateTime.Now.ToShortDateString().Replace("/", "") + DateTime.Now.Hour.ToString()
-                        + DateTime.Now.Minute.ToString() + DateTime.Now.Second.ToString()
-                        + DateTime.Now.Millisecond.ToString() + userName + ".jpg";  //图片名称
-
-                        bmp.Save(iconUrl + fileName, ImageFormat.Jpeg);    //保存图片
-
-                        string headImg = DictHelper.RetrieveUrl() + fileName;
-                        ret = UserHelper.SaveUserHeadImgByName(headImg, userName);
-                        msg = new { Result = ret, img_str = headImg };
-                    }
+                    if (!Directory.Exists(fileFolder)) Directory.CreateDirectory(fileFolder);
+                    files[0].SaveAs(filePath);
+                    ret = string.Format("{0}?q={1}", Url.Content(fileUrl), DateTime.Now.Ticks);
+                    UserHelper.SaveUserIconByName(userName, fileName);
+                }
+                catch (Exception ex)
+                {
+                    var nv = new NameValueCollection();
+                    nv.Add("UpLoadFileName", filePath);
+                    ExceptionManager.Publish(ex, nv);
                 }
             }
-
-            JavaScriptSerializer serializer = new JavaScriptSerializer();
-            return serializer.Serialize(msg);
+            return ret;
         }
     }
 }

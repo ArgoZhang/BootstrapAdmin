@@ -3,7 +3,7 @@ GO
 
 DELETE From Users where ID = 1
 SET IDENTITY_INSERT [dbo].[Users] ON 
-insert into Users (ID, UserName, Password, PassSalt, DisplayName, RegisterTime, ApprovedTime,ApprovedBy, [Description],HeadImg) values (1, 'Admin', 'Es7WVgNsJuELwWK8daCqufUBknCsSC0IYDphQZAiGOo=', 'W5vpBEOYRGHkQXatN0t+ECM/U8cHDuEgrq56+zZBk4J481xH', 'Administrator', GetDate(), GetDate(), 'system', N'系统默认创建','http://118.244.234.207:85/Content/images/logo6.jpg')
+insert into Users (ID, UserName, Password, PassSalt, DisplayName, RegisterTime, ApprovedTime,ApprovedBy, [Description]) values (1, 'Admin', 'Es7WVgNsJuELwWK8daCqufUBknCsSC0IYDphQZAiGOo=', 'W5vpBEOYRGHkQXatN0t+ECM/U8cHDuEgrq56+zZBk4J481xH', 'Administrator', GetDate(), GetDate(), 'system', N'系统默认创建')
 SET IDENTITY_INSERT [dbo].[Users] OFF
 
 DELETE From Dicts
@@ -23,7 +23,7 @@ INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (12, N'
 INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (13, N'消息状态', N'已读', N'1', 0)
 INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (14, N'消息标签', N'一般', N'0', 0)
 INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (15, N'消息标签', N'紧要', N'1', 0)
-INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (16, N'上传文件地址', N'头像路径', N'http://118.244.234.207:85/Content/images/uploader/', 0)
+INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (16, N'头像地址', N'头像路径', N'~/Content/images/uploader/', 0)
 SET IDENTITY_INSERT [dbo].[Dicts] OFF
 
 DELETE FROM Navigations

@@ -62,6 +62,6 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获取/设置 用户头像
         /// </summary>
-        public string HeadImg { get; set; }
+        public string Icon { get; set; }
     }
 }

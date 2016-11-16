@@ -13,7 +13,7 @@ namespace Bootstrap.Admin.Models
         public HeaderBarModel()
         {
             var user = UserHelper.RetrieveUsersByName(HttpContext.Current.User.Identity.Name);
-            HeadImg = user.HeadImg;
+            Icon = user.Icon;
             DisplayName = user.DisplayName;
             UserName = user.UserName;
             UserID = user.ID;
@@ -72,7 +72,7 @@ namespace Bootstrap.Admin.Models
         /// <summary>
         /// 
         /// </summary>
-        public string HeadImg { get; set; }
+        public string Icon { get; set; }
 
     }
 }

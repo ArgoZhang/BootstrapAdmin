@@ -28,7 +28,7 @@ CREATE TABLE [dbo].[Users](
 	[RejectedBy] [varchar](50) NULL,
 	[RejectedTime] [datetime] NULL,
 	[RejectedReason] [nvarchar](50) NULL,
-	[HeadImg] [varchar](500) NULL,
+	[Icon] [varchar](50) NOT NULL,
  CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
@@ -353,4 +353,7 @@ ALTER TABLE [dbo].[Messages] ADD  CONSTRAINT [DF_Messages_IsDelete]  DEFAULT ((0
 GO
 
 ALTER TABLE [dbo].[Messages] ADD  CONSTRAINT [DF_Messages_Label]  DEFAULT ((0)) FOR [Label]
+GO
+
+ALTER TABLE [dbo].[Users] ADD  CONSTRAINT [DF_Users_Icon]  DEFAULT ('default.jpg') FOR [Icon]
 GO

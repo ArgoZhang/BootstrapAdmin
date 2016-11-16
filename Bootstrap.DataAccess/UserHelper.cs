@@ -65,12 +65,12 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static User RetrieveUsersByName(string userName)
         {
-            if (LgbPrincipal.IsAdmin(userName)) return new User() { DisplayName = "网站管理员", UserName = userName };
+            if (LgbPrincipal.IsAdmin(userName)) return new User() { DisplayName = "网站管理员", UserName = userName, Icon = "~/Content/images/uploader/default.jpg" };
             string key = string.Format("{0}-{1}", RetrieveUsersByNameDataKey, userName);
             return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RetrieveUsersByNameDataKey), k =>
             {
                 User user = null;
-                string sql = "select ID, UserName, [Password], PassSalt, DisplayName, RegisterTime, ApprovedTime, HeadImg from Users where ApprovedTime is not null and UserName = @UserName";
+                string sql = "select u.ID, UserName, [Password], PassSalt, DisplayName, RegisterTime, ApprovedTime, case isnull(d.Code, '') when '' then '~/Content/images/uploader/' else d.Code end + Icon from Users u left join Dicts d on d.Define = '0' and d.Category = N'头像地址' and Name = N'头像路径' where ApprovedTime is not null and UserName = @UserName";
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                 try
                 {
@@ -88,7 +88,7 @@ namespace Bootstrap.DataAccess
                                 DisplayName = (string)reader[4],
                                 RegisterTime = (DateTime)reader[5],
                                 ApprovedTime = (DateTime)reader[6],
-                                HeadImg = (string)reader[7]
+                                Icon = (string)reader[7]
                             };
                         }
                     }
@@ -365,22 +365,23 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 根据用户名修改用户头像
         /// </summary>
-        /// <param name="headImg"></param>
         /// <param name="userName"></param>
+        /// <param name="iconName"></param>
         /// <returns></returns>
-        public static bool SaveUserHeadImgByName(string headImg, string userName)
+        public static bool SaveUserIconByName(string userName, string iconName)
         {
             bool ret = false;
             try
             {
-                string sql = "Update Users set HeadImg=@HeadImg where UserName=@UserName";
+                string sql = "Update Users set Icon = @iconName where UserName = @userName";
                 using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
                 {
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@HeadImg", headImg, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserName", userName, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@iconName", iconName, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@userName", userName, ParameterDirection.Input));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                     ret = true;
                 }
+                CacheManager.Clear(key => key == RetrieveUsersByNameDataKey);
             }
             catch (Exception ex)
             {

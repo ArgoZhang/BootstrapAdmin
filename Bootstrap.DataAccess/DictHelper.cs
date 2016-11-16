@@ -14,14 +14,15 @@ namespace Bootstrap.DataAccess
     {
         internal const string RetrieveDictsDataKey = "DictHelper-RetrieveDicts";
         internal const string RetrieveWebSettingsDataKey = "DictHelper-RetrieveDictsWebSettings";
+        internal const string RetrieveIconPathSettingsDataKey = "DictHelper-RetrieveDictsIconPathSettings";
         /// <summary>
         /// 查询所有字典信息
         /// </summary>
         /// <param name="tId"></param>
         /// <returns></returns>
-        public static IEnumerable<Dict> RetrieveDicts(int id = 0)
+        public static IEnumerable<Dict> RetrieveDicts()
         {
-            var ret = CacheManager.GetOrAdd(RetrieveDictsDataKey, CacheSection.RetrieveIntervalByKey(RetrieveDictsDataKey), key =>
+            return CacheManager.GetOrAdd(RetrieveDictsDataKey, CacheSection.RetrieveIntervalByKey(RetrieveDictsDataKey), key =>
             {
                 string sql = "select ID, Category, Name, Code, Define, case Define when 0 then '系统使用' else '自定义' end DefineName from Dicts";
                 List<Dict> Dicts = new List<Dict>();
@@ -47,7 +48,6 @@ namespace Bootstrap.DataAccess
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return Dicts;
             }, CacheSection.RetrieveDescByKey(RetrieveDictsDataKey));
-            return id == 0 ? ret : ret.Where(t => id == t.ID);
         }
         /// <summary>
         /// 删除字典中的数据
@@ -189,11 +189,34 @@ namespace Bootstrap.DataAccess
         /// 获取头像路径
         /// </summary>
         /// <returns></returns>
-        public static string RetrieveUrl()
+        public static Dict RetrieveIconFolderPath()
         {
-            var urls = DictHelper.RetrieveDicts(16);
-            var url = urls.FirstOrDefault(d => d.Name == "头像路径");
-            return url.Code;
+            return CacheManager.GetOrAdd(RetrieveIconPathSettingsDataKey, CacheSection.RetrieveIntervalByKey(RetrieveIconPathSettingsDataKey), key =>
+            {
+                string sql = "select ID, Category, Name, Code, Define, case Define when 0 then '系统使用' else '用户自定义' end DefineName from Dicts where Category = N'头像地址' and Name = N'头像路径' and Define = 0";
+                var dict = new Dict() { Code = "~/Content/images/uploader/" };
+                DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
+                try
+                {
+                    using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
+                    {
+                        if (reader.Read())
+                        {
+                            dict = new Dict()
+                            {
+                                ID = (int)reader[0],
+                                Category = (string)reader[1],
+                                Name = (string)reader[2],
+                                Code = (string)reader[3],
+                                Define = (int)reader[4],
+                                DefineName = (string)reader[5]
+                            };
+                        }
+                    }
+                }
+                catch (Exception ex) { ExceptionManager.Publish(ex); }
+                return dict;
+            }, CacheSection.RetrieveDescByKey(RetrieveIconPathSettingsDataKey));
         }
     }
 }
