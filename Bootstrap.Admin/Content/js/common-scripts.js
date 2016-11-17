@@ -23,7 +23,7 @@
         }, 200);
     });
 
-    $('.site-footer div span').text($('#footer').val());
+    $('footer > div > span').text($('#footer').val());
 
     $('#sidebar .sub-menu > a').click(function () {
         var o = ($(this).offset());
