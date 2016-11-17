@@ -1,7 +1,7 @@
 ﻿using Bootstrap.DataAccess;
-using Longbow.Security.Principal;
 using Longbow.Web.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -13,26 +13,23 @@ namespace Bootstrap.Admin
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
     class BAAuthorizeAttribute : LgbAuthorizeAttribute
     {
-        public override void OnAuthorization(AuthorizationContext filterContext)
-        {
-            if (filterContext.HttpContext.User.Identity.IsAuthenticated)
-            {
-                string username = filterContext.HttpContext.User.Identity.Name;
-                var roles = RoleHelper.RetrieveRolesByUserName(username).Select(r => r.RoleName);
-                filterContext.HttpContext.User = new LgbPrincipal(filterContext.HttpContext.User.Identity, roles);
-            }
-            base.OnAuthorization(filterContext);
-        }
         /// <summary>
         /// 
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        protected override bool AuthenticateRole()
+        protected override IEnumerable<string> RetrieveRolesByUserName(string userName)
         {
-            string url = string.Format("~/{0}/{1}", ControllerName, ActionName);
-            Roles = string.Join(";", RoleHelper.RetrieveRolesByUrl(url).Select(r => r.RoleName));
-            return base.AuthenticateRole();
+            return RoleHelper.RetrieveRolesByUserName(userName).Select(r => r.RoleName);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        protected override IEnumerable<string> RetrieveRolesByUrl(string url)
+        {
+            return RoleHelper.RetrieveRolesByUrl(url).Select(r => r.RoleName);
         }
         /// <summary>
         /// 
@@ -45,7 +42,6 @@ namespace Bootstrap.Admin
                 base.HandleUnauthorizedRequest(filterContext);
                 return;
             }
-
             var view = new ViewResult();
             view.ViewName = "UnAuthorized";
             filterContext.Result = view;
