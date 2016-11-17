@@ -4,6 +4,12 @@
     }
 }
 
+@media (max-width: 940px) {
+    .hidden-tb {
+        display: none;
+    }
+}
+
 @media (max-width: 768px) {
     #sidebar {
         display: none;
@@ -12,20 +18,12 @@
         z-index: 5;
     }
 
-    #sidebar ul li a {
-        padding-right: 25px;
-    }
+        #sidebar ul li a {
+            padding-right: 25px;
+        }
 
     #main-content {
         margin-left: 0;
-    }
-
-    .bs-bars {
-        display: none;
-    }
-
-    .toolbar {
-        display: inline-block;
     }
 
     .modal-dialog {
@@ -62,6 +60,14 @@
 
     input[type="datetime"] {
         min-width: inherit;
+    }
+
+    .bs-bars {
+        display: none;
+    }
+
+    .toolbar {
+        display: inline-block;
     }
 }
 

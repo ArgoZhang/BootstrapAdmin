@@ -1,4 +1,12 @@
-﻿.clearcache {
+﻿.hidden-tb {
+    margin-left: 6px;
+}
+
+.glyphicon-search {
+    padding-right: 6px;
+}
+
+.clearcache {
     position: absolute;
     right: 60px;
     font-size: 17px;
@@ -16,6 +24,64 @@
         color: #ac2925;
     }
 
+
+.form-inline .form-group {
+    margin-bottom: 15px;
+}
+
+    .form-inline .form-group .control-label {
+        margin-right: 10px;
+        width: 80px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        vertical-align: middle;
+    }
+
+.modal-dialog .modal-body, .panel-body {
+    padding-bottom: 0;
+}
+
+    .modal-dialog .modal-body .form-inline .form-group input {
+        padding-right: 30px;
+    }
+
+ul li {
+    list-style: none;
+}
+
+.btn {
+    outline: none !important;
+}
+
+a, a:hover, a:focus {
+    text-decoration: none;
+    outline: none;
+}
+
+.modal-header {
+    background-color: #f5f5f5;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    padding: 10px 15px;
+}
+
+    .modal-header .close {
+        margin-top: 1px;
+    }
+
+.modal-footer {
+    clear: both;
+}
+
+    .modal-footer .btn {
+        padding-left: 22px;
+        padding-right: 22px;
+    }
+
+.fixed-table-loading {
+    padding-top: 5px;
+}
 
 .has-error input {
     background-repeat: no-repeat;
