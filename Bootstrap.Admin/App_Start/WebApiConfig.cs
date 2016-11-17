@@ -7,7 +7,7 @@ namespace Bootstrap.Admin
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
-
+            config.Filters.Add(new BAAPIAuthorizaAttribute());
             // Web API routes
             config.MapHttpAttributeRoutes();
 

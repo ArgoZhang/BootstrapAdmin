@@ -234,6 +234,7 @@
     <Compile Include="..\bldver.cs">
       <Link>bldver.cs</Link>
     </Compile>
+    <Compile Include="App_Start\BAAPIAuthorizaAttribute.cs" />
     <Compile Include="App_Start\BAAuthorizeAttribute.cs" />
     <Compile Include="App_Start\DBPublisher.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
