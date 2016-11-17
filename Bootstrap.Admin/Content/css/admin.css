@@ -1,4 +1,31 @@
-﻿.hidden-tb {
+﻿.logfile {
+    color: #d41404;
+}
+
+    .logfile:focus, .logfile:active, .logfile:hover {
+        color: red;
+    }
+
+    .logfile span {
+        margin-left: 4px;
+    }
+
+.logTs, .logSql, .logDbExcep {
+    color: red;
+    font-weight: 600;
+}
+
+.logExcep {
+    color: #337ab7;
+    font-weight: 600;
+}
+
+.logMsg {
+    color: #ce2520;
+    font-weight: 600;
+}
+
+.hidden-tb {
     margin-left: 6px;
 }
 

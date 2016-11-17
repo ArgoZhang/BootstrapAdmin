@@ -3,6 +3,7 @@ using Bootstrap.DataAccess;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Http;
 
@@ -37,14 +38,27 @@ namespace Bootstrap.Admin.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPut]
-        public dynamic Put([FromBody]string fileName)
+        public string Put([FromBody]string fileName)
         {
             var logName = HttpContext.Current.Server.MapPath(string.Format("~/App_Data/ErrorLog/{0}.log", fileName));
-            if (!File.Exists(logName)) return new { content = string.Empty };
+            if (!File.Exists(logName)) return "无此日志文件";
+            StringBuilder sb = new StringBuilder();
             using (StreamReader reader = new StreamReader(logName))
             {
-                return new { content = reader.ReadToEnd().Replace("<", "&lt;").Replace(">", "&gt;").Replace("\r\n", "</br>") };
+                while (!reader.EndOfStream)
+                {
+                    var line = reader.ReadLine().Replace("<", "&lt;").Replace(">", "&gt;");
+                    if (line == "General Information ") sb.AppendFormat("<h4><b>{0}</b></h4>", line);
+                    else if (line.StartsWith("TimeStamp:")) sb.AppendFormat("<div class='logTs'>{0}</div>", line);
+                    else if (line.EndsWith("Exception Information")) sb.AppendFormat("<div class='logExcep'>{0}</div>", line);
+                    else if (line.StartsWith("Message:")) sb.AppendFormat("<div class='logMsg'>{0}</div>", line);
+                    else if (line.StartsWith("ErrorSql:")) sb.AppendFormat("<div class='logSql'>{0}</div>", line);
+                    else if (line.StartsWith("Exception Type: Longbow.Data.DBAccessException")) sb.AppendFormat("<div class='logDbExcep'>{0}</div>", line);
+                    else if (line.StartsWith("StackTrace Information")) sb.AppendFormat("<b>{0}</b><br>", line);
+                    else sb.AppendFormat("{0}<br>", line);
+                };
             }
+            return sb.ToString();
         }
     }
 }

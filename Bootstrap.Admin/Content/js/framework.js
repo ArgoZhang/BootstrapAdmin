@@ -37,7 +37,7 @@
         // handler modal window show event
         if (this.options.modal && this.options.modal.constructor === String) {
             $('#' + this.options.modal).on('show.bs.modal', function (e) {
-                if (that.options.validateForm.constructor === String) {
+                if (that.options.validateForm && that.options.validateForm.constructor === String) {
                     var v = $('#' + that.options.validateForm);
                     var vf = v.validate();
                     vf.currentElements.each(function () { $(this).popover('destroy'); })
@@ -274,12 +274,11 @@
 
         function success(result) {
             if ($.isFunction(data.callback)) {
+                var formatData = result;
                 if ($.isArray(result)) {
-                    var formatData = result;
                     if ($.isFunction(data.html)) formatData = data.html(result);
-                    data.callback(formatData);
-                    return;
                 }
+                data.callback(formatData);
             }
             else if ($.isPlainObject(data.callback) && data.callback.modal !== undefined) {
                 $("#" + data.callback.modal).modal('hide');
@@ -288,7 +287,6 @@
                 if (result) { swal("成功", data.title, "success"); }
                 else { swal("失败", data.title, "error"); }
             }
-            if ($.isFunction(data.callback)) data.callback(result);
         }
     }
     // Roles
@@ -420,12 +418,12 @@
         title: "程序异常日志",
         html: function (result) {
             return result.map(function (ele) {
-                return $.format('<div class="form-group col-lg-3 col-md-3 col-sm-4 col-xs-6"><a href="#">{0}</a></div>', ele);
+                return $.format('<div class="form-group col-lg-3 col-md-3 col-sm-4 col-xs-6"><a class="logfile" href="#"><i class="fa fa-file-text-o"></i><span>{0}</span></a></div>', ele);
             }).join('');
         }
     }
     Exceptions.getFiles = function (callback) {
-        processData.call(this, { Id: "", callback: callback });
+        processData.call(this, { Id: "", callback: callback, swal: false });
     }
     Exceptions.getFileByName = function (fileName, callback) {
         processData.call(this, { Id: "", callback: callback, method: "PUT", swal: false, data: { "": fileName } });
