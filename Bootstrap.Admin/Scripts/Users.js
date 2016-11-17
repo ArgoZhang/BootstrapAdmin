@@ -6,7 +6,8 @@
                 ID: "userID",
                 UserName: "userName",
                 Password: "password",
-                DisplayName: "displayName"
+                DisplayName: "displayName",
+                NewPassword: "confirm"
             }
         }),
         click: {
@@ -48,9 +49,9 @@
                 }
             }]
         },
-        success: function (src, data) {
-            if (src === 'save' && data.ID === $('#userId').val()) {
-                $('#userDisplayName').text(data.DisplayName);
+        callback: function (data) {
+            if (data && data.success && data.oper === 'save' && data.data.ID === $('#userId').val()) {
+                $('#userDisplayName').text(data.data.DisplayName);
             }
         }
     });
