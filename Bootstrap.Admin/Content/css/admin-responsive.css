@@ -86,6 +86,12 @@
         }
 }
 
+@media (max-width: 374px) {
+    .hidden-400 {
+        display: none;
+    }
+}
+
 @media (min-height: 672px) {
     #sidebar {
         padding-top: 94px;

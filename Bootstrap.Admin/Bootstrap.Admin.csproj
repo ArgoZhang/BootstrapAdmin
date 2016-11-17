@@ -142,6 +142,8 @@
     <Content Include="Content\js\bootstrap-datetimepicker.js" />
     <Content Include="Content\js\bootstrap-select.js" />
     <Content Include="Content\js\bootstrap-select.min.js" />
+    <Content Include="Content\js\bootstrap3-typeahead.js" />
+    <Content Include="Content\js\bootstrap3-typeahead.min.js" />
     <Content Include="Content\js\defaults-zh_CN.js" />
     <Content Include="Content\js\defaults-zh_CN.min.js" />
     <Content Include="Content\js\fileinput.js" />

@@ -15,6 +15,7 @@ namespace Bootstrap.DataAccess
         internal const string RetrieveDictsDataKey = "DictHelper-RetrieveDicts";
         internal const string RetrieveWebSettingsDataKey = "DictHelper-RetrieveDictsWebSettings";
         internal const string RetrieveIconPathSettingsDataKey = "DictHelper-RetrieveDictsIconPathSettings";
+        internal const string RetrieveCategoryDataKey = "DictHelper-RetrieveDictsCategory";
         /// <summary>
         /// 查询所有字典信息
         /// </summary>
@@ -217,6 +218,31 @@ namespace Bootstrap.DataAccess
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return dict;
             }, CacheSection.RetrieveDescByKey(RetrieveIconPathSettingsDataKey));
+        }
+        /// <summary>
+        /// 获取字典分类名称
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<string> RetrieveCategories()
+        {
+            return CacheManager.GetOrAdd(RetrieveCategoryDataKey, CacheSection.RetrieveIntervalByKey(RetrieveCategoryDataKey), key =>
+            {
+                var ret = new List<string>();
+                string sql = "select distinct Category from Dicts";
+                DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
+                try
+                {
+                    using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
+                    {
+                        while (reader.Read())
+                        {
+                            ret.Add((string)reader[0]);
+                        }
+                    }
+                }
+                catch (Exception ex) { ExceptionManager.Publish(ex); }
+                return ret;
+            }, CacheSection.RetrieveDescByKey(RetrieveCategoryDataKey));
         }
     }
 }

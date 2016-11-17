@@ -1,4 +1,5 @@
 ﻿$(function () {
+    $('#panelResultHeader').html('查询结果<span class="hidden-400 text-danger">（仅 Administrators 角色成员可删除数据）<span>');
     var bsa = new BootstrapAdmin({
         url: '../api/Dicts',
         dataEntity: new DataEntity({
@@ -13,13 +14,13 @@
     });
 
     $('table').smartTable({
-        url: '../api/Dicts',            //请求后台的URL（*）
+        url: '../api/Dicts',
         sortName: 'Category',
         queryParams: function (params) { return $.extend(params, { category: $('#txt_dict_cate').val(), name: $("#txt_dict_name").val(), define: $("#txt_dict_define").val() }); },
         columns: [{ checkbox: true },
             { title: "Id", field: "ID", events: bsa.idEvents(), formatter: BootstrapAdmin.idFormatter },
             { title: "字典分项", field: "Category", sortable: true },
-            { title: "字典名称", field: "Name", sortable: true },
+            { title: "字典名称", field: "Name", sortable: false },
             { title: "字典代码", field: "Code", sortable: false },
             { title: "字典类别", field: "DefineName", sortable: true }
         ]
@@ -46,4 +47,12 @@
     });
     // select
     $('select').selectpicker();
+
+    // autocomplete
+    Dicts.retrieveCategories(function (result) {
+        $('#txt_dict_cate').typeahead({
+            source: result,
+            autoSelect: true
+        });
+    });
 });

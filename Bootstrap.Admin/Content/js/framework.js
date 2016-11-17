@@ -160,7 +160,16 @@
                             data: { "": iDs },
                             type: 'DELETE',
                             success: function (result) {
-                                if (result) { swal("成功！", "删除数据", "success"); $(options.bootstrapTable).bootstrapTable('refresh'); }
+                                if (result) {
+                                    if ($.isPlainObject(result)) {
+                                        var info = result.result ? "success" : "error";
+                                        var msg = result.msg
+                                        swal(msg, "删除数据", info);
+                                        result = result.result;
+                                    }
+                                    else swal("成功", "删除数据", "success");
+                                    if (result) $(options.bootstrapTable).bootstrapTable('refresh');
+                                }
                                 else swal("失败", "删除数据", "error");
                                 handlerCallback.call(that, callback, e, { oper: 'del', success: !!result, data: iDs });
                             },
@@ -420,5 +429,13 @@
     }
     Exceptions.getFileByName = function (fileName, callback) {
         processData.call(this, { Id: "", callback: callback, method: "PUT", swal: false, data: { "": fileName } });
+    }
+
+    // Dicts
+    Dicts = {
+        url: '../api/Dicts/'
+    }
+    Dicts.retrieveCategories = function (callback) {
+        processData.call(this, { Id: 1, callback: callback, swal: false, data: { type: 'category' } });
     }
 })(jQuery);
