@@ -129,12 +129,13 @@
             });
             that.animate({ marginTop: "+=" + getHeight() });
         },
-        autoValidate: function (options) {
+        autoValidate: function (options, handler) {
             // validate
-            $(this).validate({
+            var $this = $(this);
+            $this.validate({
                 validClass: "has-success",
                 errorClass: "has-error",
-                ignore: "ignore",
+                ignore: ".ignore",
                 rules: $.extend({}, options),
                 highlight: function (element, errorClass, validClass) {
                     $(element).parents('.form-group').addClass(errorClass).removeClass(validClass);
@@ -156,6 +157,13 @@
                     $(element).popover('show');
                 }
             });
+            if ($.isArray(handler.button)) {
+                $.each(handler.button, function (index, btn) {
+                    $('#' + btn).on('click', function () {
+                        $(this).attr('data-valid', $this.valid());
+                    });
+                });
+            }
         },
         smartTable: function (options) {
             var settings = $.extend({

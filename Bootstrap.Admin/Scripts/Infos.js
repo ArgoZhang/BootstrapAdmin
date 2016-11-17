@@ -19,6 +19,32 @@
         if (!!url) $headerIcon.attr('src', url);
     });
 
+    $('#infoDataForm').autoValidate({
+        displayName: {
+            required: true,
+            maxlength: 50
+        }
+    }, {
+        button: ['btnSaveDisplayName']
+    });
+    $('#passwordDataForm').autoValidate({
+        currentPassword: {
+            required: true,
+            maxlength: 50
+        },
+        newPassword: {
+            required: true,
+            maxlength: 50
+        },
+        confirmPassword: {
+            required: true,
+            equalTo: "#newPassword",
+            maxlength: 50
+        }
+    }, {
+        button: ['btnSavePassword']
+    });
+
     var bsa = new BootstrapAdmin({
         url: '../api/Infos',
         bootstrapTable: null,
@@ -34,18 +60,22 @@
             assign: [{
                 id: 'btnSavePassword',
                 click: function (row, data) {
-                    data.UserStatus = 2;
-                    User.changePassword(data);
+                    if ($(this).attr('data-valid') == "true") {
+                        data.UserStatus = 2;
+                        User.changePassword(data);
+                    }
                 }
             }, {
                 id: 'btnSaveDisplayName',
                 click: function (row, data) {
-                    data.UserStatus = 1;
-                    User.saveUserDisplayName(data, function (result) {
-                        if (result) {
-                            $('#userDisplayName').text(data.DisplayName);
-                        }
-                    });
+                    if ($(this).attr('data-valid') == "true") {
+                        data.UserStatus = 1;
+                        User.saveUserDisplayName(data, function (result) {
+                            if (result) {
+                                $('#userDisplayName').text(data.DisplayName);
+                            }
+                        });
+                    }
                 }
             }]
         }
