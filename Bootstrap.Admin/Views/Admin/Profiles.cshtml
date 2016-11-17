@@ -43,7 +43,7 @@
     </div>
 </div>
 <div class="panel panel-default">
-    <div class="panel-heading">网站缓存<a id="clearCache" href="#" class="clearcache fa fa-times-circle-o" title="全部清除(WebAdmin可用)"></a><a id="refreshCache" href="#" class="pull-right fa fa-refresh" title="点击刷新"></a></div>
+    <div class="panel-heading">网站缓存<a id="clearCache" href="#" class="clearcache fa fa-times-circle-o" data-admin="@LgbPrincipal.IsAdmin(Model.UserName)" title="全部清除(WebAdmin可用)"></a><a id="refreshCache" href="#" class="pull-right fa fa-refresh" title="点击刷新"></a></div>
     <div class="panel-body">
         <div class="tasks-widget">
             <ul id="sortable" class="task-list ui-sortable"></ul>

@@ -1,4 +1,6 @@
 ﻿$(function () {
+    $('a[data-admin="False"]').hide();
+
     var bsa = new BootstrapAdmin({
         url: '../api/Profiles',
         bootstrapTable: null,
