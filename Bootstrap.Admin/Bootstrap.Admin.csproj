@@ -169,7 +169,7 @@
     <Content Include="Content\js\log.js" />
     <Content Include="Content\js\longbow.dataentity.js" />
     <Content Include="Content\js\moment-with-locales.js" />
-    <Content Include="Content\js\zh.js" />
+    <Content Include="Content\js\fileinput.zh.js" />
     <Content Include="Global.asax" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />

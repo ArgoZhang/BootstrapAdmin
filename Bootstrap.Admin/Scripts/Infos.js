@@ -13,6 +13,7 @@
         ],
         initialPreviewAsData: true,
         overwriteInitial: true,
+        dropZoneTitle: "请选择头像"
     }).on('fileuploaded', function (event, data, previewId, index) {
         var url = data.response;
         if (!!url) $headerIcon.attr('src', url);
