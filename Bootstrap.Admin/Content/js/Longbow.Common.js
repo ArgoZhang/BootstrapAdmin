@@ -157,7 +157,7 @@
                     $(element).popover('show');
                 }
             });
-            if ($.isArray(handler.button)) {
+            if (handler && $.isArray(handler.button)) {
                 $.each(handler.button, function (index, btn) {
                     $('#' + btn).on('click', function () {
                         $(this).attr('data-valid', $this.valid());
