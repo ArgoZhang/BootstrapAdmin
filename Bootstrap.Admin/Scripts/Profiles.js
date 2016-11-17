@@ -1,5 +1,21 @@
 ﻿$(function () {
     $('a[data-admin="False"]').hide();
+    $('#headerDataForm').autoValidate({
+        sysName: {
+            required: true,
+            maxlength: 50
+        }
+    }, {
+        button: ['sysSave']
+    });
+    $('#footerDataForm').autoValidate({
+        sysFoot: {
+            required: true,
+            maxlength: 50
+        }
+    }, {
+        button: ['footSave']
+    });
 
     var bsa = new BootstrapAdmin({
         url: '../api/Profiles',
@@ -16,20 +32,16 @@
             assign: [{
                 id: 'sysSave',
                 click: function (row, data) {
-                    if (data.Title == "") {
-                        swal("请输入网站标题内容", "保存操作", "error");
-                        return;
+                    if ($(this).attr('data-valid') == "true") {
+                        Profiles.saveWebSite({ name: '网站标题', code: data.Title, category: '网站设置' });
                     }
-                    Profiles.saveWebSite({ name: '网站标题', code: data.Title, category: '网站设置' });
                 }
             }, {
                 id: 'footSave',
                 click: function (row, data) {
-                    if (data.Title == "") {
-                        swal("请输入网站页脚内容", "保存操作", "error");
-                        return;
+                    if ($(this).attr('data-valid') == "true") {
+                        Profiles.saveWebSite({ name: '网站页脚', code: data.Footer, category: '网站设置' });
                     }
-                    Profiles.saveWebSite({ name: '网站页脚', code: data.Footer, category: '网站设置' });
                 }
             }]
         }
