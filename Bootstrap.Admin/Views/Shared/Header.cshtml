@@ -26,86 +26,41 @@
     <!--  notification start -->
         <ul class="notify-row">
             <!-- settings start -->
-            <li class="dropdown">
-                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                    <i class="fa fa-tasks"></i>
-                    <span class="badge bg-success">5</span>
-                </a>
-                <ul class="dropdown-menu tasks-bar">
-                    <div class="notify-arrow notify-arrow-green"></div>
-                    <li>
-                        <p>您有 5 个待处理的任务</p>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <div>
-                                <div class="desc">任务1</div>
-                                <div class="percent">40%</div>
-                            </div>
-                            <div class="progress progress-striped">
-                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                                    <span class="sr-only">40% Complete (success)</span>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <div>
-                                <div class="desc">任务2</div>
-                                <div class="percent">60%</div>
-                            </div>
-                            <div class="progress progress-striped">
-                                <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-                                    <span class="sr-only">60% Complete (warning)</span>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <div>
-                                <div class="desc">任务3</div>
-                                <div class="percent">87%</div>
-                            </div>
-                            <div class="progress progress-striped">
-                                <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 87%">
-                                    <span class="sr-only">87% Complete</span>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <div>
-                                <div class="desc">任务4</div>
-                                <div class="percent">33%</div>
-                            </div>
-                            <div class="progress progress-striped">
-                                <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 33%">
-                                    <span class="sr-only">33% Complete (danger)</span>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <div>
-                                <div class="desc">任务5</div>
-                                <div class="percent">45%</div>
-                            </div>
-                            <div class="progress progress-striped active">
-                                <div class="progress-bar" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
-                                    <span class="sr-only">45% Complete</span>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">查看所有任务</a>
-                    </li>
-                </ul>
-            </li>
+            @if (Model.TaskCount > 0)
+            {
+                <li class="dropdown">
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <i class="fa fa-tasks"></i>
+                        <span class="badge bg-success">@Model.TaskCount</span>
+                    </a>
+                    <ul class="dropdown-menu tasks-bar">
+                        <div class="notify-arrow notify-arrow-green"></div>
+                        <li>
+                            <p>您有 @Model.TaskCount 个未读的消息</p>
+                        </li>
+                        @foreach (var task in Model.Tasks)
+                        {
+                            var TaskProgress = task.TaskProgress * 100;
+                            <li>
+                                <a href="~/Admin/Tasks?id=@task.ID">
+                                    <div>
+                                        <div class="desc">@task.TaskName</div>
+                                        <div class="percent">@TaskProgress%</div>
+                                    </div>
+                                    <div class="progress progress-striped">
+                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="@TaskProgress" aria-valuemin="0" aria-valuemax="100" style="width: @TaskProgress%">
+                                            <span class="sr-only">@TaskProgress% Complete</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                        }
+                        <li>
+                            <a href="~/Admin/Tasks">查看所有消息</a>
+                        </li>
+                    </ul>
+                </li>
+            }
             <!-- settings end -->
             <!-- message dropdown start-->
             @if (Model.MessageCount > 0)

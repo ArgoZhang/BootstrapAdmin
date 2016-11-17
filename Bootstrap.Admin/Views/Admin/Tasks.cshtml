@@ -1,0 +1,40 @@
+﻿@model NavigatorBarModel
+@{
+    ViewBag.Title = "任务消息";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+@section Javascript {
+    <script src="~/Content/js/sweetalert.js"></script>
+    <script src="~/Scripts/tasks.js"></script>
+}
+@section css {
+    <link href="~/Content/css/sweetalert.css" rel="stylesheet" />
+    <link href="~/Content/css/tasks.css" rel="stylesheet" />
+}
+@section header {
+    @Html.Partial("Header", Model)
+}
+@section navigator {
+    @Html.Partial("Navigator", Model)
+}
+<div class="panel panel-default">
+    <div class="panel-heading">任务消息<span class="pull-right"><a href="javascript:;" class="tooltips fa fa-refresh" data-category="0" data-placement="left" data-original-title="点击刷新"></a></span></div>
+    <div class="panel-body">
+        <div class="tasks-widget">
+            <ul id="list-task" class="task-list ui-sortable">
+                <li class="list-primary">
+                    <i class="fa fa-ellipsis-v"></i>
+                    <div class="task-title notifi">
+                        @*<span class="task-title-sp">Title</span>
+                        <span class="task-value">Content</span>
+                        <span class="task-time">@System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")</span>
+                        <div class="pull-right hidden-phone">
+                            <button class="btn btn-success btn-xs fa fa-check tooltips" data-placement="left" data-original-title="同意授权"></button>
+                            <button class="btn btn-danger btn-xs fa fa-remove tooltips" data-placement="left" data-original-title="拒绝授权"></button>
+                        </div>*@
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

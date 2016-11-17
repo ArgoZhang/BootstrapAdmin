@@ -26,7 +26,9 @@ namespace Bootstrap.Admin.Models
             MessageCount = msgs.Count();
             Messages = msgs.Take(6);
             MessageList = MessageHelper.RetrieveMessages(UserName);
-
+            var tasks = TaskHelper.RetrieveTasks();
+            TaskCount = tasks.Count();
+            Tasks = tasks.Take(6);
         }
         public string UserName { get; protected set; }
         /// <summary>
@@ -73,6 +75,14 @@ namespace Bootstrap.Admin.Models
         /// 
         /// </summary>
         public string Icon { get; set; }
+        /// <summary>
+        /// 获取/设置 任务数量
+        /// </summary>
+        public int TaskCount { get; set; }
+        /// <summary>
+        /// 获取/设置 任务内容集合
+        /// </summary>
+        public IEnumerable<Task> Tasks { get; set; }
 
     }
 }
