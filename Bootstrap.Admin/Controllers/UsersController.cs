@@ -2,7 +2,6 @@
 using Bootstrap.DataAccess;
 using Longbow.Security.Principal;
 using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -66,7 +65,6 @@ namespace Bootstrap.Admin.Controllers
             }
             return ret;
         }
-
         /// <summary>
         /// 
         /// </summary>
@@ -88,7 +86,12 @@ namespace Bootstrap.Admin.Controllers
             value.ApprovedBy = User.Identity.Name;
             return UserHelper.SaveUser(value);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
         [HttpPut]
         public bool Put(int id, [FromBody]JObject value)
         {
@@ -122,7 +125,6 @@ namespace Bootstrap.Admin.Controllers
             }
             return ret;
         }
-
         /// <summary>
         /// 
         /// </summary>

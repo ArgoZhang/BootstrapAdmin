@@ -255,7 +255,7 @@
     var htmlTemplate = '<div class="form-group checkbox col-lg-3 col-xs-4"><label class="tooltips" data-placement="top" data-original-title="{3}" title="{3}"><input type="checkbox" value="{0}" {2}/>{1}</label></div>';
 
     var processData = function (options) {
-        var data = $.extend({ data: { type: "" }, remote: true, method: "POST", Id: "", url: this.url, title: this.title, html: this.html, swal: true }, options);
+        var data = $.extend({ data: {}, remote: true, method: "POST", Id: "", url: this.url, title: this.title, html: this.html, swal: true }, options);
 
         if (data.remote) {
             $.ajax({
@@ -288,7 +288,7 @@
                 else { swal("失败", data.title, "error"); }
             }
         }
-    }
+    };
     // Roles
     Role = {
         url: '../api/Roles/',
@@ -310,10 +310,10 @@
     };
     Role.saveRolesByUserId = function (userId, roleIds, callback) {
         processData.call(this, { Id: userId, callback: callback, method: "PUT", data: { type: "user", roleIds: roleIds } });
-    }
+    };
     Role.saveRolesByGroupId = function (groupId, roleIds, callback) {
         processData.call(this, { Id: groupId, callback: callback, method: "PUT", data: { type: "group", roleIds: roleIds } });
-    }
+    };
     Role.saveRolesByMenuId = function (menuId, roleIds, callback) {
         processData.call(this, { Id: menuId, callback: callback, method: "PUT", data: { type: "menu", roleIds: roleIds } });
     };
@@ -326,7 +326,7 @@
                 return $.format(htmlTemplate, element.ID, element.DisplayName, element.Checked, element.UserName);
             }).join('');
         }
-    }
+    };
     User.getUsersByRoleId = function (roleId, callback) {
         processData.call(this, { Id: roleId, callback: callback, data: { type: "role" } });
     };
@@ -340,12 +340,14 @@
         processData.call(this, { Id: groupId, callback: callback, method: "PUT", data: { type: "group", userIds: userIds } });
     };
     User.saveUserDisplayName = function (user, callback) {
-        processData.call(this, { Id: '', callback: callback, method: "PUT", data: user,title:"修改用户显示名称" });
+        processData.call(this, { Id: '', callback: callback, method: "PUT", data: user, title: "修改用户显示名称" });
     };
     User.changePassword = function (user) {
-        processData.call(this, { Id: '', method: "PUT", data: user, title: "修改密码" });
-    }
-
+        processData.call(this, { Id: '', method: "PUT", data: user });
+    };
+    User.processUser = function (id, result, callback) {
+        processData.call(this, { Id: id, callback: callback, method: "PUT", data: { type: "user", userIds: result }, title: result == "1" ? "授权用户" : "拒绝用户" });
+    };
     // Groups
     Group = {
         url: '../api/Groups/',
@@ -380,7 +382,7 @@
             }
             return htmlString;
         }
-    }
+    };
     Menu.cascadeMenu = function (menus) {
         var html = "";
         $.each(menus, function (index, menu) {
@@ -392,7 +394,7 @@
             }
         });
         return html;
-    }
+    };
     Menu.getMenus = function (callback) {
         processData.call(this, { Id: 0, callback: callback, data: { type: "user" } });
     };
@@ -407,10 +409,10 @@
     Profiles = {
         url: '../api/Profiles/',
         title: "个性化维护"
-    }
+    };
     Profiles.saveWebSite = function (options) {
         processData.call(this, { data: options });
-    }
+    };
 
     // Exceptions
     Exceptions = {
@@ -421,19 +423,30 @@
                 return $.format('<div class="form-group col-lg-3 col-md-3 col-sm-4 col-xs-6"><a class="logfile" href="#"><i class="fa fa-file-text-o"></i><span>{0}</span></a></div>', ele);
             }).join('');
         }
-    }
+    };
     Exceptions.getFiles = function (callback) {
         processData.call(this, { Id: "", callback: callback, swal: false });
     }
     Exceptions.getFileByName = function (fileName, callback) {
         processData.call(this, { Id: "", callback: callback, method: "PUT", swal: false, data: { "": fileName } });
-    }
+    };
 
     // Dicts
     Dicts = {
         url: '../api/Dicts/'
-    }
+    };
     Dicts.retrieveCategories = function (callback) {
         processData.call(this, { Id: 1, callback: callback, swal: false, data: { type: 'category' } });
+    };
+
+    // Notifi
+    Notifications = {
+        url: '../api/Notifications/'
+    };
+    Notifications.retrieveNotifies = function (category, callback) {
+        processData.call(this, { Id: category, callback: callback, method: "GET", swal: false });
+    };
+    Notifications.retrieveAllNotifies = function (callback) {
+        processData.call(this, { Id: "", callback: callback, method: "GET", swal: false });
     }
 })(jQuery);

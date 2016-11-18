@@ -51,9 +51,7 @@ namespace Bootstrap.DataAccess
                 return notifications;
 
             }, CacheSection.RetrieveDescByKey(RetrieveNotificationsDataKey));
-            var users = UserHelper.RetrieveNewUsers().Select(u => new Notification() { ID = u.ID, Category = "0", Content = u.Description, Title = u.DisplayName, RegisterTime = u.RegisterTime }).ToList();
-            var ret = users.Union(notifies);
-            ret.AsParallel().ForAll(n =>
+            notifies.AsParallel().ForAll(n =>
             {
                 var ts = DateTime.Now - n.RegisterTime;
                 if (ts.TotalMinutes < 5) n.Period = "刚刚";
@@ -61,9 +59,8 @@ namespace Bootstrap.DataAccess
                 else if (ts.Hours > 0) n.Period = string.Format("{0}小时", ts.Hours);
                 else if (ts.Minutes > 0) n.Period = string.Format("{0}分钟", ts.Minutes);
             });
-            return ret.OrderByDescending(n => n.RegisterTime);
+            return notifies.OrderByDescending(n => n.RegisterTime);
         }
-
         /// <summary>
         /// 点击某一行用户注册通知的处理成功操作
         /// </summary>
@@ -81,6 +78,32 @@ namespace Bootstrap.DataAccess
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
                 CacheCleanUtility.ClearCache(notifyIds: id);
+                ret = true;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.Publish(ex);
+            }
+            return ret;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="noti"></param>
+        /// <returns></returns>
+        public static bool SaveNotification(Notification noti)
+        {
+            bool ret = false;
+            if (string.IsNullOrEmpty(noti.Title) || string.IsNullOrEmpty(noti.Content)) return ret;
+            try
+            {
+                using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, "Insert into Notifications (Category, Title, Content, RegisterTime) values (N'2', @Title, @Content, GetDate())"))
+                {
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Title", noti.Title, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Content", noti.Content, ParameterDirection.Input));
+                    DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
+                }
+                CacheCleanUtility.ClearCache(notifyIds: string.Empty);
                 ret = true;
             }
             catch (Exception ex)

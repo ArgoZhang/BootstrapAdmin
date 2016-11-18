@@ -23,119 +23,95 @@
     }
     @if (!Model.ShowMenu)
     {
-    <!--  notification start -->
+        <!--  notification start -->
         <ul class="notify-row">
-            <!-- settings start -->
-            @if (Model.TaskCount > 0)
-            {
-                <li class="dropdown">
-                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                        <i class="fa fa-tasks"></i>
-                        <span class="badge bg-success">@Model.TaskCount</span>
-                    </a>
-                    <ul class="dropdown-menu tasks-bar">
-                        <div class="notify-arrow notify-arrow-green"></div>
-                        <li>
-                            <p>您有 @Model.TaskCount 个未读的消息</p>
-                        </li>
-                        @foreach (var task in Model.Tasks)
-                        {
-                            var TaskProgress = task.TaskProgress * 100;
-                            <li>
-                                <a href="~/Admin/Tasks?id=@task.ID">
-                                    <div>
-                                        <div class="desc">@task.TaskName</div>
-                                        <div class="percent">@TaskProgress%</div>
-                                    </div>
-                                    <div class="progress progress-striped">
-                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="@TaskProgress" aria-valuemin="0" aria-valuemax="100" style="width: @TaskProgress%">
-                                            <span class="sr-only">@TaskProgress% Complete</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                        }
-                        <li>
-                            <a href="~/Admin/Tasks">查看所有消息</a>
-                        </li>
-                    </ul>
-                </li>
-            }
-            <!-- settings end -->
+            <!-- tasks start -->
+            <li class="dropdown">
+                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                    <i class="fa fa-tasks"></i>
+                    <span class="badge bg-success"></span>
+                </a>
+                <ul class="dropdown-menu tasks-bar">
+                    <div class="notify-arrow notify-arrow-green"></div>
+                    <li>
+                        <p>您有 0 个未读的消息</p>
+                    </li>
+                    <li>
+                        <a href="~/Admin/Tasks">查看所有消息</a>
+                    </li>
+                </ul>
+            </li>
+            <!-- tasks end -->
             <!-- message dropdown start-->
-            @if (Model.MessageCount > 0)
-            {
-                <li class="dropdown">
-                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                        <i class="fa fa-envelope-o"></i>
-                        <span class="badge bg-important">@Model.MessageCount</span>
-                    </a>
-                    <ul class="dropdown-menu inbox">
-                        <div class="notify-arrow notify-arrow-red"></div>
-                        <li>
-                            <p>您有 @Model.MessageCount 个未读的消息</p>
-                        </li>
-                        @foreach (var mess in Model.Messages)
-                        {
-                            <li>
-                                <a href="~/Admin/Messages?id=@mess.ID">
-                                    <span class="photo"><img alt="avatar" src="~/content/images/logo6.jpg"></span>
-                                    <span class="subject">
-                                        <span class="from">@mess.From</span>
-                                        <span class="time">@mess.Period</span>
-                                    </span>
-                                    <span class="message">@mess.Title</span>
-                                </a>
-                            </li>
-                        }
-                        <li>
-                            <a href="~/Admin/Messages">查看所有消息</a>
-                        </li>
-                    </ul>
-                </li>
-            }
+            <li class="dropdown">
+                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                    <i class="fa fa-envelope"></i>
+                    <span class="badge bg-important"></span>
+                </a>
+                <ul class="dropdown-menu inbox">
+                    <div class="notify-arrow notify-arrow-red"></div>
+                    <li>
+                        <p>您有 0 个未读的消息</p>
+                    </li>
+                    <li>
+                        <a href="~/Admin/Messages">查看所有消息</a>
+                    </li>
+                </ul>
+            </li>
             <!-- message dropdown end -->
-            <!-- notification dropdown start-->
-            @if (Model.NotifiCount > 0)
-            {
-                <li class="dropdown">
-                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                        <i class="fa fa-bell-o"></i>
-                        <span class="badge bg-warning">@Model.NotifiCount</span>
-                    </a>
-                    <ul class="dropdown-menu notification">
-                        <div class="notify-arrow notify-arrow-yellow"></div>
-                        <li>
-                            <p>您有 @Model.NotifiCount 条新通知</p>
-                        </li>
-                        @foreach (var noti in Model.Notifications)
-                        {
-                            <li>
-                                <a href="~/Admin/Notifications?id=@noti.ID&category=@noti.Category">
-                                    @if (noti.Category == "0")
-                                    {
-                                        <span class="label label-success"><i class="fa fa-plus"></i></span><div>@noti.Content</div><span class="small italic">@noti.Period</span>
-                                    }
-                                    else if (noti.Category == "1")
-                                    {
-                                        <span class="label label-warning"><i class="fa fa-bell"></i></span><div>@noti.Content</div><span class="small italic">@noti.Period</span>
-                                    }
-                                    else
-                                    {
-                                        <span class="label label-danger"><i class="fa fa-bolt"></i></span><div>@noti.Content</div><span class="small italic">@noti.Period</span>
-                                    }
-                                </a>
-                            </li>
-                        }
-                        <li>
-                            <a href="~/Admin/Notifications">查看所有通知</a>
-                        </li>
-                    </ul>
-                </li>
-            }
-            <!-- notification dropdown end -->
+            <!-- users dropdown start-->
+            <li class="dropdown">
+                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                    <i class="fa fa-user-plus"></i>
+                    <span id="msgHeaderUserBadge" class="badge bg-warning"></span>
+                </a>
+                <ul class="dropdown-menu notification">
+                    <div class="notify-arrow notify-arrow-yellow"></div>
+                    <li id="msgHeaderUserContent">
+                        <p>您有 <span id="msgHeaderUser">0</span> 条新通知</p>
+                    </li>
+                    <li id="msgHeaderUserFooter">
+                        <a href="~/Admin/Notifications">查看所有通知</a>
+                    </li>
+                </ul>
+            </li>
+            <!-- users dropdown end -->
+            <!-- apps dropdown start-->
+            <li class="dropdown">
+                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                    <i class="fa fa-bug"></i>
+                    <span class="badge bg-warning"></span>
+                </a>
+                <ul class="dropdown-menu notification">
+                    <div class="notify-arrow notify-arrow-yellow"></div>
+                    <li>
+                        <p>您有 0 条新通知</p>
+                    </li>
+                    <li>
+                        <a href="~/Admin/Notifications">查看所有通知</a>
+                    </li>
+                </ul>
+            </li>
+            <!-- apps dropdown end -->
+            <!-- db dropdown start-->
+            <li class="dropdown">
+                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                    <i class="fa fa-database"></i>
+                    <span class="badge bg-warning"></span>
+                </a>
+                <ul class="dropdown-menu notification">
+                    <div class="notify-arrow notify-arrow-yellow"></div>
+                    <li>
+                        <p>您有 0 条新通知</p>
+                    </li>
+                    <li>
+                        <a href="~/Admin/Notifications">查看所有通知</a>
+                    </li>
+                </ul>
+            </li>
+            <!-- db dropdown end -->
         </ul>
-    <!--  notification end -->
+        <!--  notification end -->
     }
     <!--search & user info start-->
     <ul class="pull-right top-menu">
@@ -154,7 +130,7 @@
                 <div class="arrow-up"></div>
                 <li><a href="~/Admin/Infos"><i class=" fa fa-suitcase"></i>个人中心</a></li>
                 <li><a href="~/Admin/Index"><i class="fa fa-cog"></i>设置</a></li>
-                <li><a href="~/Admin/Notifications"><i class="fa fa-bell"></i>通知<span class="badge bg-success">@Model.NotifiCount</span></a></li>
+                <li><a href="~/Admin/Notifications"><i class="fa fa-bell"></i>通知<span id="logoutNoti" class="badge bg-success"></span></a></li>
                 <li><a href="~/Home/Logout"><i class="fa fa-key"></i>注销</a></li>
             </ul>
         </li>

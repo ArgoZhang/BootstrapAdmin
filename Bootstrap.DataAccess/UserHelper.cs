@@ -103,7 +103,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<User> RetrieveNewUsers()
         {
-            var ret = CacheManager.GetOrAdd(RetrieveNewUsersDataKey, CacheSection.RetrieveIntervalByKey(RetrieveNewUsersDataKey), key =>
+            return CacheManager.GetOrAdd(RetrieveNewUsersDataKey, CacheSection.RetrieveIntervalByKey(RetrieveNewUsersDataKey), key =>
             {
                 string sql = "select ID, UserName, DisplayName, RegisterTime, [Description] from Users Where ApprovedTime is null and RejectedTime is null";
                 List<User> Users = new List<User>();
@@ -128,7 +128,6 @@ namespace Bootstrap.DataAccess
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return Users;
             }, CacheSection.RetrieveDescByKey(RetrieveNewUsersDataKey));
-            return ret;
         }
 
         /// <summary>

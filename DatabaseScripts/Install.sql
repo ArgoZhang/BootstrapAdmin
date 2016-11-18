@@ -257,6 +257,7 @@ CREATE TABLE [dbo].[Exceptions](
 	[ErrorPage] [varchar](50) NOT NULL,
 	[UserID] [varchar](50) NOT NULL,
 	[UserIp] [varchar](15) NOT NULL,
+	[ExceptionType] [nvarchar](max) NOT NULL,
 	[Message] [nvarchar](max) NOT NULL,
 	[StackTrace] [nvarchar](max) NOT NULL,
 	[LogTime] [datetime] NOT NULL,

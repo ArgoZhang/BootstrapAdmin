@@ -441,7 +441,7 @@
             padding-top: 2px;
         }
 
-        .notify-row .dropdown-menu.notification > li > a > div {
+        .notify-row .dropdown-menu.notification li a div {
             position: absolute;
             left: 36px;
             right: 44px;

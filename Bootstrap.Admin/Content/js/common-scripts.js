@@ -45,4 +45,19 @@
 
     // custom scrollbar
     if (!$.browser.versions.ios) $("#sidebar").niceScroll({ styler: "fb", cursorcolor: "#e8403f", cursorwidth: '3', cursorborderradius: '10px', background: '#404040', spacebarenabled: false, cursorborder: '', scrollspeed: 60 });
+
+    // load widget data
+    Notifications.retrieveAllNotifies(function (result) {
+        $('#logoutNoti').text(result.NewUsersCount);
+
+        // new users
+        $('#msgHeaderUser').text(result.NewUsersCount);
+        $('#msgHeaderUserBadge').text(result.NewUsersCount);
+        var htmlUserTemplate = '<li><a href="../Admin/Notifications"><span class="label label-success"><i class="fa fa-plus"></i></span><div title="{1}">{0}({1})</div><span class="small italic">{2}</span></a></li>';
+        var html = result.Users.map(function (u) {
+            return $.format(htmlUserTemplate, u.UserName, u.DisplayName, u.Period);
+        }).join('');
+        $(html).insertAfter($('#msgHeaderUserContent'));
+        console.log(result);
+    });
 });
