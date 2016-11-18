@@ -303,13 +303,13 @@
         }
     };
     Role.getRolesByUserId = function (userId, callback) {
-        processData.call(this, { Id: userId, callback: callback, data: { type: "user" } });
+        processData.call(this, { Id: userId, callback: callback, data: { type: "user" }, swal: false });
     };
     Role.getRolesByGroupId = function (groupId, callback) {
-        processData.call(this, { Id: groupId, callback: callback, data: { type: "group" } });
+        processData.call(this, { Id: groupId, callback: callback, data: { type: "group" }, swal: false });
     };
     Role.getRolesByMenuId = function (menuId, callback) {
-        processData.call(this, { Id: menuId, callback: callback, data: { type: "menu" } });
+        processData.call(this, { Id: menuId, callback: callback, data: { type: "menu" }, swal: false });
     };
     Role.saveRolesByUserId = function (userId, roleIds, callback) {
         processData.call(this, { Id: userId, callback: callback, method: "PUT", data: { type: "user", roleIds: roleIds } });
@@ -331,13 +331,13 @@
         }
     };
     User.getUsersByRoleId = function (roleId, callback) {
-        processData.call(this, { Id: roleId, callback: callback, data: { type: "role" } });
+        processData.call(this, { Id: roleId, callback: callback, data: { type: "role" }, swal: false });
     };
     User.saveUsersByRoleId = function (roleId, userIds, callback) {
         processData.call(this, { Id: roleId, callback: callback, method: "PUT", data: { type: "role", userIds: userIds } });
     };
     User.getUsersByGroupeId = function (groupId, callback) {
-        processData.call(this, { Id: groupId, callback: callback, data: { type: "group" } });
+        processData.call(this, { Id: groupId, callback: callback, data: { type: "group" }, swal: false });
     };
     User.saveUsersByGroupId = function (groupId, userIds, callback) {
         processData.call(this, { Id: groupId, callback: callback, method: "PUT", data: { type: "group", userIds: userIds } });
@@ -362,13 +362,13 @@
         }
     };
     Group.getGroupsByUserId = function (userId, callback) {
-        processData.call(this, { Id: userId, callback: callback, data: { type: "user" } });
+        processData.call(this, { Id: userId, callback: callback, data: { type: "user" }, swal: false });
     };
     Group.saveGroupsByUserId = function (userId, groupIds, callback) {
         processData.call(this, { Id: userId, callback: callback, method: "PUT", data: { type: "user", groupIds: groupIds } });
     };
     Group.getGroupsByRoleId = function (roleId, callback) {
-        processData.call(this, { Id: roleId, callback: callback, data: { type: "role" } });
+        processData.call(this, { Id: roleId, callback: callback, data: { type: "role" }, swal: false });
     };
     Group.saveGroupsByRoleId = function (roleId, groupIds, callback) {
         processData.call(this, { Id: roleId, callback: callback, method: "PUT", data: { type: "role", groupIds: groupIds } });
@@ -399,10 +399,10 @@
         return html;
     };
     Menu.getMenus = function (callback) {
-        processData.call(this, { Id: 0, callback: callback, data: { type: "user" } });
+        processData.call(this, { Id: 0, callback: callback, data: { type: "user" }, swal: false });
     };
     Menu.getMenusByRoleId = function (roleId, callback) {
-        processData.call(this, { Id: roleId, callback: callback, data: { type: "role" }, html: null });
+        processData.call(this, { Id: roleId, callback: callback, data: { type: "role" }, swal: false, html: null });
     };
     Menu.saveMenusByRoleId = function (roleId, menuIds, callback) {
         processData.call(this, { Id: roleId, callback: callback, method: "PUT", data: { type: "role", menuIds: menuIds } });
