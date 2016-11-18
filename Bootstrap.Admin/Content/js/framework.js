@@ -289,6 +289,9 @@
             }
         }
     };
+
+    window.bd = processData;
+
     // Roles
     Role = {
         url: '../api/Roles/',
@@ -403,15 +406,6 @@
     };
     Menu.saveMenusByRoleId = function (roleId, menuIds, callback) {
         processData.call(this, { Id: roleId, callback: callback, method: "PUT", data: { type: "role", menuIds: menuIds } });
-    };
-
-    //Profiles
-    Profiles = {
-        url: '../api/Profiles/',
-        title: "个性化维护"
-    };
-    Profiles.saveWebSite = function (options) {
-        processData.call(this, { data: options });
     };
 
     // Exceptions
