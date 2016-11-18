@@ -1,5 +1,4 @@
-﻿using Longbow;
-using Longbow.Caching;
+﻿using Longbow.Caching;
 using Longbow.Caching.Configuration;
 using Longbow.ExceptionManagement;
 using System;
@@ -18,9 +17,9 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<Task> RetrieveTasks()
         {
-            var ret = CacheManager.GetOrAdd(RetrieveTasksDataKey, CacheSection.RetrieveIntervalByKey(RetrieveTasksDataKey), key =>
+            return CacheManager.GetOrAdd(RetrieveTasksDataKey, CacheSection.RetrieveIntervalByKey(RetrieveTasksDataKey), key =>
             {
-                string sql = "select * from Tasks";
+                string sql = "select t.*, u.DisplayName from Tasks t inner join Users u on t.UserName = u.UserName";
                 List<Task> tasks = new List<Task>();
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                 try
@@ -37,7 +36,8 @@ namespace Bootstrap.DataAccess
                                 UserName = (string)reader[3],
                                 TaskTime = (int)reader[4],
                                 TaskProgress = (double)reader[5],
-                                AssignTime = LgbConvert.ReadValue(reader[6], DateTime.MinValue)
+                                AssignTime = (DateTime)reader[6],
+                                AssignDisplayName = (string)reader[7]
                             });
                         }
                     }
@@ -45,7 +45,6 @@ namespace Bootstrap.DataAccess
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return tasks;
             }, CacheSection.RetrieveDescByKey(RetrieveTasksDataKey));
-            return ret;
         }
     }
 }

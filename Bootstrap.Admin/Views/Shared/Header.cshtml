@@ -29,12 +29,12 @@
             <li class="dropdown">
                 <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                     <i class="fa fa-tasks"></i>
-                    <span class="badge bg-success"></span>
+                    <span id="msgHeaderTaskBadge" class="badge bg-success"></span>
                 </a>
                 <ul class="dropdown-menu tasks-bar">
                     <div class="notify-arrow notify-arrow-green"></div>
-                    <li>
-                        <p>您有 0 个未完成的任务</p>
+                    <li id="msgHeaderTaskContent">
+                        <p>您有 <span id="msgHeaderTask">0</span> 个未完成的任务</p>
                     </li>
                     <li>
                         <a href="~/Admin/Tasks">查看所有任务</a>

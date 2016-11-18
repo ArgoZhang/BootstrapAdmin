@@ -396,9 +396,39 @@ a, a:hover, a:focus {
             -webkit-border-radius: 4px 4px 0px 0px;
         }
 
+        .notify-row .dropdown-menu .content {
+            position: absolute;
+            left: 36px;
+            right: 44px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            display: inline-block;
+        }
+
+        .notify-row .dropdown-menu .label {
+            display: inline-block;
+            height: 18px;
+            width: 20px;
+            padding: 5px;
+            margin-right: 5px;
+        }
+
+        .notify-row .dropdown-menu .small {
+            font-size: 10px;
+            font-style: italic;
+            font-weight: bold;
+            float: right;
+            padding-top: 2px;
+        }
+
         .notify-row .dropdown-menu.tasks-bar .desc {
             font-size: 13px;
             font-weight: normal;
+            display: block;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
         }
 
         .notify-row .dropdown-menu.tasks-bar .percent {
@@ -406,13 +436,13 @@ a, a:hover, a:focus {
             float: right;
             font-size: 13px;
             font-weight: 600;
-            padding-left: 10px;
-            margin-top: -4px;
         }
 
         .notify-row .dropdown-menu.tasks-bar .progress {
-            margin-bottom: 0 !important;
+            margin-top: 4px;
             height: 10px;
+            margin-right: 34px;
+            margin-bottom: 0;
         }
 
         .notify-row .dropdown-menu.inbox .photo img {
@@ -449,33 +479,6 @@ a, a:hover, a:focus {
             right: 6px;
             left: 56px;
             margin-top: 2px;
-        }
-
-
-        .notify-row .dropdown-menu .label {
-            display: inline-block;
-            height: 18px;
-            width: 20px;
-            padding: 5px;
-            margin-right: 5px;
-        }
-
-        .notify-row .dropdown-menu .small {
-            font-size: 10px;
-            font-style: italic;
-            font-weight: bold;
-            float: right;
-            padding-top: 2px;
-        }
-
-        .notify-row .dropdown-menu li a div {
-            position: absolute;
-            left: 36px;
-            right: 44px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            display: inline-block;
         }
 
 .dropdown-menu.menu {

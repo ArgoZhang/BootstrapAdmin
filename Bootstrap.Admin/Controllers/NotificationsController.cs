@@ -66,7 +66,6 @@ namespace Bootstrap.Admin.Controllers
                 else if (ts.Minutes > 0) n.Period = string.Format("{0}分钟", ts.Minutes);
             });
             ret.DbExceptionsCount = dbs.Count();
-
             return ret;
         }
         /// <summary>

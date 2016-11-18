@@ -17,6 +17,10 @@ namespace Bootstrap.DataAccess
         /// </summary>
         public string AssignName { get; set; }
         /// <summary>
+        /// 获得/设置 分配人昵称
+        /// </summary>
+        public string AssignDisplayName { get; set; }
+        /// <summary>
         /// 获取/设置  完成任务人
         /// </summary>
         public string UserName { get; set; }
