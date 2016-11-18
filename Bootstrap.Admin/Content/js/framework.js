@@ -150,27 +150,18 @@
                     }, function () {
                         var iDs = arrselections.map(function (element, index) { return element.ID }).join(",");
                         options.IDs = iDs;
-                        $.ajax({
-                            url: options.url,
-                            data: { "": iDs },
-                            type: 'DELETE',
-                            success: function (result) {
-                                if (result) {
-                                    if ($.isPlainObject(result)) {
-                                        var info = result.result ? "success" : "error";
-                                        var msg = result.msg
-                                        swal(msg, "删除数据", info);
-                                        result = result.result;
-                                    }
-                                    else setTimeout(function () { swal("成功！", "删除数据", "success") }, 100);
-                                    if (result) $(options.bootstrapTable).bootstrapTable('refresh');
+                        $.bc({
+                            url: options.url, data: { "": iDs }, method: 'DELETE', title: '删除数据',
+                            callback: function (result) {
+                                if ($.isPlainObject(result)) {
+                                    var info = result.result ? "success" : "error";
+                                    var msg = result.msg
+                                    swal(msg, "删除数据", info);
+                                    result = result.result;
+                                    this.swal = false;
                                 }
-                                else swal("失败", "删除数据", "error");
-                                handlerCallback.call(that, callback, e, { oper: 'del', success: !!result, data: iDs });
-                            },
-                            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                                swal("失败", "删除数据", "error");
-                                handlerCallback.call(that, callback, e, { oper: 'del', success: false });
+                                if (result) $(options.bootstrapTable).bootstrapTable('refresh');
+                                handlerCallback.call(that, callback, e, { oper: 'del', success: result });
                             }
                         });
                     });
@@ -183,11 +174,9 @@
             var options = $.extend({ data: {} }, this.options);
             if (this.dataEntity instanceof DataEntity) options = $.extend(options, { data: this.dataEntity.get() });
             if (options.validateForm.constructor === String && !$("#" + options.validateForm).valid()) return;
-            $.ajax({
-                url: options.url,
-                data: options.data,
-                type: 'POST',
-                success: function (result) {
+            $.bc({
+                url: options.url, data: options.data, title: "保存数据", modal: options.modal,
+                callback: function (result) {
                     var finalData = null;
                     var index = 0;
                     if (result) {
@@ -208,17 +197,8 @@
                                 finalData = options.data;
                             }
                         }
-                        if (options.modal.constructor === String) $('#' + options.modal).modal("hide");
-                        swal("成功", "保存数据", "success");
                     }
-                    else {
-                        swal("失败", "保存数据", "error");
-                    }
-                    handlerCallback.call(that, callback, e, { oper: 'save', success: !!result, index: index, data: finalData });
-                },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    swal("失败", "保存数据失败", "error");
-                    handlerCallback.call(that, callback, e, { oper: 'save', success: false });
+                    handlerCallback.call(that, callback, e, { oper: 'save', success: result, index: index, data: finalData });
                 }
             });
         },
@@ -294,8 +274,10 @@
                     $("#" + data.modal).modal('hide');
                 }
                 if (data.swal) {
-                    if (result) { swal("成功", data.title, "success"); }
-                    else { swal("失败", data.title, "error"); }
+                    setTimeout(function () {
+                        if (result) { swal("成功", data.title, "success"); }
+                        else { swal("失败", data.title, "error"); }
+                    }, 100);
                 }
             }
         }
