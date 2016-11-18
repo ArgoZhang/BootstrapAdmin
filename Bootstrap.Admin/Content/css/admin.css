@@ -73,17 +73,8 @@
         padding-right: 30px;
     }
 
-ul li {
-    list-style: none;
-}
-
 .btn {
     outline: none !important;
-}
-
-a, a:hover, a:focus {
-    text-decoration: none;
-    outline: none;
 }
 
 .modal-header {

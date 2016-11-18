@@ -10,6 +10,15 @@
     -moz-font-smoothing: antialiased;
 }
 
+ul li {
+    list-style: none;
+}
+
+a, a:hover, a:focus {
+    text-decoration: none;
+    outline: none;
+}
+
 .dropdown-menu {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.176) !important;
 }
