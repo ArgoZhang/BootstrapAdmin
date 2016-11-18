@@ -99,7 +99,6 @@
                 return $.format(htmlUserTemplate, u.ID, u.FromIcon, u.FromDisplayName, u.Title, u.Period, u.Content);
             }).join('');
             $(html).insertAfter($('#msgHeaderMsgContent'));
-            console.log(result);
         }
     });
 });
