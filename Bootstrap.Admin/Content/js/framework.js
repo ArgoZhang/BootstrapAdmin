@@ -167,7 +167,7 @@
                                         swal(msg, "删除数据", info);
                                         result = result.result;
                                     }
-                                    else swal("成功", "删除数据", "success");
+                                    else setTimeout(function () { swal("成功！", "删除数据", "success") }, 100);
                                     if (result) $(options.bootstrapTable).bootstrapTable('refresh');
                                 }
                                 else swal("失败", "删除数据", "error");
