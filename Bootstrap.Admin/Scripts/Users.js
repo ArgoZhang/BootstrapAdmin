@@ -1,6 +1,13 @@
 ﻿$(function () {
+    var $dialogRole = $('#dialogRole');
+    var $dialogRoleHeader = $('#myRoleModalLabel');
+    var $dialogRoleForm = $('#roleForm');
+    var $dialogGroup = $("#dialogGroup");
+    var $dialogGroupHeader = $('#myGroupModalLabel');
+    var $dialogGroupForm = $('#groupForm');
+
     var bsa = new BootstrapAdmin({
-        url: '../api/Users',
+        url: User.url,
         dataEntity: new DataEntity({
             map: {
                 ID: "userID",
@@ -14,38 +21,52 @@
             assign: [{
                 id: 'btn_assignRole',
                 click: function (row) {
-                    Role.getRolesByUserId(row.ID, function (data) {
-                        $("#dialogRole .modal-title").text($.format('{0}-角色授权窗口', row.DisplayName));
-                        $('#dialogRole form').html(data);
-                        $('#dialogRole').modal('show');
+                    $.bc({
+                        Id: row.ID, url: Role.url, data: { type: "user" }, swal: false,
+                        callback: function (result) {
+                            var htmlTemplate = this.htmlTemplate;
+                            var html = $.map(result, function (element, index) {
+                                return $.format(htmlTemplate, element.ID, element.RoleName, element.Checked, element.Description);
+                            }).join('')
+                            $dialogRoleHeader.text($.format('{0}-角色授权窗口', row.DisplayName));
+                            $dialogRoleForm.html(html);
+                            $dialogRole.modal('show');
+                        }
                     });
                 }
             }, {
                 id: 'btn_assignGroup',
                 click: function (row) {
-                    Group.getGroupsByUserId(row.ID, function (data) {
-                        $("#dialogGroup .modal-title").text($.format('{0}-部门授权窗口', row.DisplayName));
-                        $('#dialogGroup form').html(data);
-                        $('#dialogGroup').modal('show');
+                    $.bc({
+                        Id: row.ID, url: Group.url, data: { type: "user" }, swal: false,
+                        callback: function (result) {
+                            var htmlTemplate = this.htmlTemplate;
+                            var html = $.map(result, function (element, index) {
+                                return $.format(htmlTemplate, element.ID, element.GroupName, element.Checked, element.Description);
+                            }).join('');
+                            $dialogGroupHeader.text($.format('{0}-部门授权窗口', row.DisplayName));
+                            $dialogGroupForm.html(html);
+                            $dialogGroup.modal('show');
+                        }
                     });
                 }
             }, {
                 id: 'btnSubmitRole',
                 click: function (row) {
                     var userId = row.ID;
-                    var roleIds = $('#dialogRole :checked').map(function (index, element) {
+                    var roleIds = $dialogRole.find(':checked').map(function (index, element) {
                         return $(element).val();
                     }).toArray().join(',');
-                    Role.saveRolesByUserId(userId, roleIds, { modal: 'dialogRole' });
+                    $.bc({ Id: userId, url: Role.url, method: 'PUT', data: { type: "user", roleIds: roleIds }, title: Role.title, modal: 'dialogRole' });
                 }
             }, {
                 id: 'btnSubmitGroup',
                 click: function (row) {
                     var userId = row.ID;
-                    var groupIds = $('#dialogGroup :checked').map(function (index, element) {
+                    var groupIds = $dialogGroup.find(':checked').map(function (index, element) {
                         return $(element).val();
                     }).toArray().join(',');
-                    Group.saveGroupsByUserId(userId, groupIds, { modal: 'dialogGroup' });
+                    $.bc({ Id: userId, url: Group.url, method: 'PUT', data: { type: "user", groupIds: groupIds }, title: Group.title, modal: 'dialogGroup' });
                 }
             }]
         },
@@ -57,13 +78,13 @@
     });
 
     $('table').smartTable({
-        url: '../api/Users',            //请求后台的URL（*）
-        sortName: 'UserName',
+        url: User.url,            //请求后台的URL（*）
+        sortName: 'DisplayName',
         queryParams: function (params) { return $.extend(params, { name: $("#txt_search_name").val(), displayName: $('#txt_display_name').val() }); },           //传递参数（*）
         columns: [{ checkbox: true },
             { title: "Id", field: "ID", events: bsa.idEvents(), formatter: BootstrapAdmin.idFormatter },
             { title: "登陆名称", field: "UserName", sortable: true },
-            { title: "显示名称", field: "DisplayName", sortable: false }
+            { title: "显示名称", field: "DisplayName", sortable: true }
         ]
     });
 

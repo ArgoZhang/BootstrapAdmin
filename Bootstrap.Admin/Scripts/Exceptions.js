@@ -32,8 +32,14 @@
     });
 
     $('#btn_view').on('click', function (row) {
-        Exceptions.getFiles(function (data) {
-            $dataForm.children('div').html(data);
+        $.bc({
+            Id: "", url: Exceptions.url, swal: false,
+            callback: function (result) {
+                var html = result.map(function (ele) {
+                    return $.format('<div class="form-group col-lg-3 col-md-3 col-sm-4 col-xs-6"><a class="logfile" href="#"><i class="fa fa-file-text-o"></i><span>{0}</span></a></div>', ele);
+                }).join('');
+                $dataForm.children('div').html(html);
+            }
         });
         $dialog.modal('show');
     });
@@ -44,8 +50,11 @@
         $errorList.hide();
         $errorDetail.show();
         $dataFormDetail.html('<div class="text-center"><i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i></div>');
-        Exceptions.getFileByName(fileName, function (data) {
-            $dataFormDetail.html(data);
+        $.bc({
+            Id: "", url: Exceptions.url, method: "PUT", swal: false, data: { "": fileName },
+            callback: function (result) {
+                $dataFormDetail.html(result);
+            }
         });
     });
 

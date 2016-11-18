@@ -2,7 +2,7 @@
     var $headerIcon = $('#headerIcon');
     var preIcon = $headerIcon.attr('src');
     $('#fileIcon').fileinput({
-        uploadUrl: '../api/Infos',
+        uploadUrl: Infos.url,
         language: 'zh',
         allowedFileExtensions: ['jpg'],
         initialPreview: [
@@ -62,7 +62,7 @@
                 click: function (row, data) {
                     if ($(this).attr('data-valid') == "true") {
                         data.UserStatus = 2;
-                        User.changePassword(data);
+                        $.bc({ url: User.url, method: "PUT", data: data, title: "更改密码" });
                     }
                 }
             }, {
@@ -70,9 +70,12 @@
                 click: function (row, data) {
                     if ($(this).attr('data-valid') == "true") {
                         data.UserStatus = 1;
-                        User.saveUserDisplayName(data, function (result) {
-                            if (result) {
-                                $('#userDisplayName').text(data.DisplayName);
+                        $.bc({
+                            url: User.url, method: "PUT", data: data, title: "修改用户显示名称",
+                            callback: function (result) {
+                                if (result) {
+                                    $('#userDisplayName').text(data.DisplayName);
+                                }
                             }
                         });
                     }

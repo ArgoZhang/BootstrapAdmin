@@ -1,4 +1,22 @@
 ﻿$(function () {
+    var $dialog = $('#dialogNew');
+    var $pickIcon = $('#pickIcon');
+    var $iconList = $('#iconTab').find('div.fontawesome-icon-list');
+    var $dialogNew = $dialog.find('div.modal-dialog');
+    var $dialogIcon = $('#dialogIcon');
+    var $dialogMenu = $('#dialogSubMenu').find('.modal-content');
+    var $dialogRole = $('#dialogRole');
+    var $dialogRoleHeader = $('#myRoleModalLabel');
+    var $dialogRoleForm = $('#roleForm');
+    var $btnSubmitMenu = $('#btnSubmitMenu');
+    var $btnPickIcon = $('#btnIcon');
+    var $inputIcon = $('#icon');
+    var $nestMenu = $('#nestable_menu');
+    var $nestMenuInput = $nestMenu.find('div.dd3-content');
+    var $parentMenuID = $('#parentId');
+    var $parentMenuName = $('#parentName');
+    $nestMenuInput.find('label:first').hide();
+
     var bsa = new BootstrapAdmin({
         url: '../api/Menus',
         dataEntity: new DataEntity({
@@ -17,39 +35,62 @@
             assign: [{
                 id: 'btn_assignRole',
                 click: function (row) {
-                    Role.getRolesByMenuId(row.ID, function (data) {
-                        var dialog = $('#dialogRole');
-                        dialog.find('.modal-title').text($.format('{0}-角色授权窗口', row.Name));
-                        dialog.find('form').html(data);
-                        dialog.modal('show');
+                    $.bc({
+                        Id: row.ID, url: Role.url, data: { type: "menu" }, swal: false,
+                        callback: function (result) {
+                            var htmlTemplate = this.htmlTemplate;
+                            var html = $.map(result, function (element, index) {
+                                return $.format(htmlTemplate, element.ID, element.RoleName, element.Checked, element.Description);
+                            }).join('')
+                            $dialogRoleHeader.text($.format('{0}-角色授权窗口', row.Name));
+                            $dialogRoleForm.html(html);
+                            $dialogRole.modal('show');
+                        }
                     });
                 }
             }, {
                 id: 'btnSubmitRole',
                 click: function (row) {
                     var menuId = row.ID;
-                    var dialog = $('#dialogRole');
-                    var roleIds = dialog.find('input:checked').map(function (index, element) {
+                    var roleIds = $dialogRole.find('input:checked').map(function (index, element) {
                         return $(element).val();
                     }).toArray().join(',');
-                    Role.saveRolesByMenuId(menuId, roleIds, { modal: 'dialogRole' });
+                    $.bc({ Id: menuId, url: Role.url, method: "PUT", data: { type: "menu", roleIds: roleIds }, title: Role.title, modal: 'dialogRole' });
                 }
             }]
         },
         callback: function (result) {
             if (!result.success) return;
             if ((result.oper == "save") || result.oper == "del") {
-                Menu.getMenus(function (data) {
-                    $nestMenu.find('ol:first').html(data);
-                    $nestMenuInput = $nestMenu.find('div.dd3-content');
-                    $nestMenuInput.find('label:first').hide();
+                $.bc({
+                    Id: 0, url: Menu.url, data: { type: "user" }, swal: false,
+                    callback: function (result) {
+                        var html = "";
+                        if ($.isArray(result)) html = cascadeMenu(result);
+                        $nestMenu.find('ol:first').html(html);
+                        $nestMenuInput = $nestMenu.find('div.dd3-content');
+                        $nestMenuInput.find('label:first').hide();
+                    }
                 });
             }
         }
     });
 
+    var cascadeMenu = function (menus) {
+        var html = "";
+        $.each(menus, function (index, menu) {
+            if (menu.Menus.length == 0) {
+                html += $.format('<li class="dd-item dd3-item" data-id="{0}" data-category="{3}"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><label><input type="checkbox" value="{0}"><span><i class="{1}"></i>{2}</span></label><label><input type="radio" name="menu" value="{0}"><span><i class="{1}"></i>{2}</span></label></div></li>', menu.ID, menu.Icon, menu.Name, menu.Category);
+            }
+            else {
+                html = $.format('<li class="dd-item dd3-item" data-id="{0}" data-category="{3}"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><label><input type="checkbox" value="{0}"><span><i class="{1}"></i>{2}</span></label><label><input type="radio" name="menu" value="{0}"><span><i class="{1}"></i>{2}</span></label></div></li><ol class="dd-list">{4}</ol>', menu.ID, menu.Icon, menu.Name, menu.Category, cascadeMenu(menu.Menus));
+            }
+        });
+        return html;
+    };
+
     $('table').smartTable({
-        url: '../api/Menus',            //请求后台的URL（*）
+        url: Menu.url,            //请求后台的URL（*）
         sortName: 'Order',
         queryParams: function (params) { return $.extend(params, { parentName: $('#txt_parent_menus_name').val(), name: $("#txt_menus_name").val(), category: $('#sel_menus_category').val() }); },           //传递参数（*）
         columns: [{ checkbox: true },
@@ -81,21 +122,6 @@
             maxlength: 50
         }
     });
-
-    var $dialog = $('#dialogNew');
-    var $pickIcon = $('#pickIcon');
-    var $iconList = $('#iconTab').find('div.fontawesome-icon-list');
-    var $dialogNew = $dialog.find('div.modal-dialog');
-    var $dialogIcon = $('#dialogIcon');
-    var $dialogMenu = $('#dialogSubMenu').find('.modal-content');
-    var $btnSubmitMenu = $('#btnSubmitMenu');
-    var $btnPickIcon = $('#btnIcon');
-    var $inputIcon = $('#icon');
-    var $nestMenu = $('#nestable_menu');
-    var $nestMenuInput = $nestMenu.find('div.dd3-content');
-    var $parentMenuID = $('#parentId');
-    var $parentMenuName = $('#parentName');
-    $nestMenuInput.find('label:first').hide();
 
     $iconList.find('ul li').addClass('col-md-3 col-sm-4 col-sm-6');
     $iconList.on('click', 'div.fa-hover a, ul li', function () {
@@ -182,9 +208,7 @@
         if (icon == "") icon = "fa fa-dashboard";
         $btnPickIcon.find('i').attr('class', icon);
     });
-
     $nestMenu.nestable();
-
     // select
     $('select').selectpicker();
 });

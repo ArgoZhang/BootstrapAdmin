@@ -47,7 +47,7 @@
     if (!$.browser.versions.ios) $("#sidebar").niceScroll({ styler: "fb", cursorcolor: "#e8403f", cursorwidth: '3', cursorborderradius: '10px', background: '#404040', spacebarenabled: false, cursorborder: '', scrollspeed: 60 });
 
     // load widget data
-    bd({
+    $.bc({
         url: '../api/Notifications/',
         swal: false,
         method: 'GET',

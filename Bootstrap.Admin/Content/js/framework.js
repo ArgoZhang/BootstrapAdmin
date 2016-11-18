@@ -1,9 +1,4 @@
 ﻿(function ($) {
-    var handlerCallback = function (callback, e, data) {
-        if ($.isFunction(callback)) callback.call(e, data);
-        if ($.isFunction(this.options.callback)) this.options.callback.call(e, data);
-    }
-
     BootstrapAdmin = function (options) {
         var that = this;
         options = options || {};
@@ -252,184 +247,118 @@
         }
     };
 
-    var htmlTemplate = '<div class="form-group checkbox col-lg-3 col-xs-4"><label class="tooltips" data-placement="top" data-original-title="{3}" title="{3}"><input type="checkbox" value="{0}" {2}/>{1}</label></div>';
+    var handlerCallback = function (callback, e, data) {
+        if ($.isFunction(callback)) callback.call(e, data);
+        if ($.isFunction(this.options.callback)) this.options.callback.call(e, data);
+    }
 
-    var processData = function (options) {
-        var data = $.extend({ data: {}, remote: true, method: "POST", Id: "", url: this.url, title: this.title, html: this.html, swal: true }, options);
 
-        if (data.remote) {
-            $.ajax({
-                url: data.url + data.Id,
-                data: data.data,
-                type: data.method,
-                success: function (result) {
-                    success(result);
-                },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    if ($.isFunction(data.callback)) data.callback(false);
+    $.extend({
+        bc: function (options, callback) {
+            var data = $.extend({
+                remote: true,
+                Id: "",
+                url: this.url,
+                data: {},
+                method: "POST",
+                htmlTemplate: '<div class="form-group checkbox col-lg-3 col-xs-4"><label class="tooltips" data-placement="top" data-original-title="{3}" title="{3}"><input type="checkbox" value="{0}" {2}/>{1}</label></div>',
+                title: this.title,
+                swal: true,
+                modal: null,
+                callback: null
+            }, options);
+
+            if (!data.url || data.url == "") {
+                swal('参数错误', '未设置请求地址Url', 'error');
+                return;
+            }
+
+            if (data.remote && data.url) {
+                $.ajax({
+                    url: data.url + data.Id,
+                    data: data.data,
+                    type: data.method,
+                    success: function (result) {
+                        success(result);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        if ($.isFunction(data.callback)) data.callback(false);
+                    }
+                });
+            }
+            function success(result) {
+                if ($.isFunction(data.callback)) {
+                    data.callback(result);
                 }
-            });
-        }
-        else success()
-
-        function success(result) {
-            if ($.isFunction(data.callback)) {
-                var formatData = result;
-                if ($.isArray(result)) {
-                    if ($.isFunction(data.html)) formatData = data.html(result);
+                if (data.modal !== null) {
+                    $("#" + data.modal).modal('hide');
                 }
-                data.callback(formatData);
-            }
-            else if ($.isPlainObject(data.callback) && data.callback.modal !== undefined) {
-                $("#" + data.callback.modal).modal('hide');
-            }
-            if (data.swal) {
-                if (result) { swal("成功", data.title, "success"); }
-                else { swal("失败", data.title, "error"); }
+                if (data.swal) {
+                    if (result) { swal("成功", data.title, "success"); }
+                    else { swal("失败", data.title, "error"); }
+                }
             }
         }
-    };
-
-    window.bd = processData;
+    });
 
     // Roles
     Role = {
         url: '../api/Roles/',
-        title: "授权角色",
-        html: function (result) {
-            return $.map(result, function (element, index) {
-                return $.format(htmlTemplate, element.ID, element.RoleName, element.Checked, element.Description);
-            }).join('');
-        }
+        title: "授权角色"
     };
-    Role.getRolesByUserId = function (userId, callback) {
-        processData.call(this, { Id: userId, callback: callback, data: { type: "user" }, swal: false });
-    };
-    Role.getRolesByGroupId = function (groupId, callback) {
-        processData.call(this, { Id: groupId, callback: callback, data: { type: "group" }, swal: false });
-    };
-    Role.getRolesByMenuId = function (menuId, callback) {
-        processData.call(this, { Id: menuId, callback: callback, data: { type: "menu" }, swal: false });
-    };
-    Role.saveRolesByUserId = function (userId, roleIds, callback) {
-        processData.call(this, { Id: userId, callback: callback, method: "PUT", data: { type: "user", roleIds: roleIds } });
-    };
-    Role.saveRolesByGroupId = function (groupId, roleIds, callback) {
-        processData.call(this, { Id: groupId, callback: callback, method: "PUT", data: { type: "group", roleIds: roleIds } });
-    };
-    Role.saveRolesByMenuId = function (menuId, roleIds, callback) {
-        processData.call(this, { Id: menuId, callback: callback, method: "PUT", data: { type: "menu", roleIds: roleIds } });
-    };
+
     // Users
     User = {
         url: '../api/Users/',
-        title: "授权用户",
-        html: function (result) {
-            return $.map(result, function (element, index) {
-                return $.format(htmlTemplate, element.ID, element.DisplayName, element.Checked, element.UserName);
-            }).join('');
-        }
+        title: "授权用户"
     };
-    User.getUsersByRoleId = function (roleId, callback) {
-        processData.call(this, { Id: roleId, callback: callback, data: { type: "role" }, swal: false });
-    };
-    User.saveUsersByRoleId = function (roleId, userIds, callback) {
-        processData.call(this, { Id: roleId, callback: callback, method: "PUT", data: { type: "role", userIds: userIds } });
-    };
-    User.getUsersByGroupeId = function (groupId, callback) {
-        processData.call(this, { Id: groupId, callback: callback, data: { type: "group" }, swal: false });
-    };
-    User.saveUsersByGroupId = function (groupId, userIds, callback) {
-        processData.call(this, { Id: groupId, callback: callback, method: "PUT", data: { type: "group", userIds: userIds } });
-    };
-    User.saveUserDisplayName = function (user, callback) {
-        processData.call(this, { Id: '', callback: callback, method: "PUT", data: user, title: "修改用户显示名称" });
-    };
-    User.changePassword = function (user) {
-        processData.call(this, { Id: '', method: "PUT", data: user });
-    };
-    User.processUser = function (id, result, callback) {
-        processData.call(this, { Id: id, callback: callback, method: "PUT", data: { type: "user", userIds: result }, title: result == "1" ? "授权用户" : "拒绝用户" });
-    };
+
     // Groups
     Group = {
         url: '../api/Groups/',
-        title: "授权部门",
-        html: function (result) {
-            return $.map(result, function (element, index) {
-                return $.format(htmlTemplate, element.ID, element.GroupName, element.Checked, element.Description);
-            }).join('');
-        }
-    };
-    Group.getGroupsByUserId = function (userId, callback) {
-        processData.call(this, { Id: userId, callback: callback, data: { type: "user" }, swal: false });
-    };
-    Group.saveGroupsByUserId = function (userId, groupIds, callback) {
-        processData.call(this, { Id: userId, callback: callback, method: "PUT", data: { type: "user", groupIds: groupIds } });
-    };
-    Group.getGroupsByRoleId = function (roleId, callback) {
-        processData.call(this, { Id: roleId, callback: callback, data: { type: "role" }, swal: false });
-    };
-    Group.saveGroupsByRoleId = function (roleId, groupIds, callback) {
-        processData.call(this, { Id: roleId, callback: callback, method: "PUT", data: { type: "role", groupIds: groupIds } });
+        title: "授权部门"
     };
 
     // Menus
     Menu = {
         url: '../api/Menus/',
-        title: "授权菜单",
-        html: function (result) {
-            var htmlString = "";
-            if ($.isArray(result)) {
-                htmlString = Menu.cascadeMenu(result)
-            }
-            return htmlString;
-        }
-    };
-    Menu.cascadeMenu = function (menus) {
-        var html = "";
-        $.each(menus, function (index, menu) {
-            if (menu.Menus.length == 0) {
-                html += $.format('<li class="dd-item dd3-item" data-id="{0}" data-category="{3}"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><label><input type="checkbox" value="{0}"><span><i class="{1}"></i>{2}</span></label><label><input type="radio" name="menu" value="{0}"><span><i class="{1}"></i>{2}</span></label></div></li>', menu.ID, menu.Icon, menu.Name, menu.Category);
-            }
-            else {
-                html = $.format('<li class="dd-item dd3-item" data-id="{0}" data-category="{3}"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><label><input type="checkbox" value="{0}"><span><i class="{1}"></i>{2}</span></label><label><input type="radio" name="menu" value="{0}"><span><i class="{1}"></i>{2}</span></label></div></li><ol class="dd-list">{4}</ol>', menu.ID, menu.Icon, menu.Name, menu.Category, Menu.cascadeMenu(menu.Menus));
-            }
-        });
-        return html;
-    };
-    Menu.getMenus = function (callback) {
-        processData.call(this, { Id: 0, callback: callback, data: { type: "user" }, swal: false });
-    };
-    Menu.getMenusByRoleId = function (roleId, callback) {
-        processData.call(this, { Id: roleId, callback: callback, data: { type: "role" }, swal: false, html: null });
-    };
-    Menu.saveMenusByRoleId = function (roleId, menuIds, callback) {
-        processData.call(this, { Id: roleId, callback: callback, method: "PUT", data: { type: "role", menuIds: menuIds } });
+        title: "授权菜单"
     };
 
     // Exceptions
     Exceptions = {
         url: '../api/Exceptions/',
-        title: "程序异常日志",
-        html: function (result) {
-            return result.map(function (ele) {
-                return $.format('<div class="form-group col-lg-3 col-md-3 col-sm-4 col-xs-6"><a class="logfile" href="#"><i class="fa fa-file-text-o"></i><span>{0}</span></a></div>', ele);
-            }).join('');
-        }
-    };
-    Exceptions.getFiles = function (callback) {
-        processData.call(this, { Id: "", callback: callback, swal: false });
-    }
-    Exceptions.getFileByName = function (fileName, callback) {
-        processData.call(this, { Id: "", callback: callback, method: "PUT", swal: false, data: { "": fileName } });
+        title: "程序异常日志"
     };
 
     // Dicts
     Dicts = {
         url: '../api/Dicts/'
     };
-    Dicts.retrieveCategories = function (callback) {
-        processData.call(this, { Id: 1, callback: callback, swal: false, data: { type: 'category' } });
-    };
+
+    // Infos
+    Infos = {
+        url: '../api/Infos/'
+    }
+
+    // Profiles
+    Profiles = {
+        url: '../api/Profiles/',
+        title: '网站设置'
+    }
+
+    // Messages
+    Messages = {
+        url: '../api/Messages/'
+    }
+
+    // Tasks
+    Tasks = {
+        url: '../api/Tasks/'
+    }
+
+    // Notifications
+    Notifications = {
+        url: '../api/Notifications/'
+    }
 })(jQuery);

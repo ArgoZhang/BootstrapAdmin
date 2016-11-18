@@ -18,20 +18,13 @@
     @Html.Partial("Navigator", Model)
 }
 <div class="panel panel-default">
-    <div class="panel-heading">任务消息<span class="pull-right"><a href="javascript:;" class="tooltips fa fa-refresh" data-category="0" data-placement="left" data-original-title="点击刷新"></a></span></div>
+    <div class="panel-heading">任务消息<span class="pull-right"><a id="refreshTask" href="javascript:;" class="fa fa-refresh"></a></span></div>
     <div class="panel-body">
         <div class="tasks-widget">
             <ul id="list-task" class="task-list ui-sortable">
                 <li class="list-primary">
                     <i class="fa fa-ellipsis-v"></i>
                     <div class="task-title notifi">
-                        @*<span class="task-title-sp">Title</span>
-                        <span class="task-value">Content</span>
-                        <span class="task-time">@System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")</span>
-                        <div class="pull-right hidden-phone">
-                            <button class="btn btn-success btn-xs fa fa-check tooltips" data-placement="left" data-original-title="同意授权"></button>
-                            <button class="btn btn-danger btn-xs fa fa-remove tooltips" data-placement="left" data-original-title="拒绝授权"></button>
-                        </div>*@
                     </div>
                 </li>
             </ul>

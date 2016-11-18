@@ -17,10 +17,8 @@
         button: ['footSave']
     });
 
-    var options = { url: '../api/Profiles', title: '网站设置' };
-
     var bsa = new BootstrapAdmin({
-        url: options.url,
+        url: Profiles.url,
         bootstrapTable: null,
         validateForm: null,
         modal: null,
@@ -35,26 +33,24 @@
                 id: 'sysSave',
                 click: function (row, data) {
                     if ($(this).attr('data-valid') == "true") {
-                        var op = $.extend({
-                            data: { name: '网站标题', code: data.Title, category: '网站设置' },
+                        $.bc({
+                            url: Profiles.url, data: { name: '网站标题', code: data.Title, category: Profiles.title }, title: Profiles.title,
                             callback: function (result) {
-                                $('#websiteTitle').text(data.Title);
+                                if (result) $('#websiteTitle').text(data.Title);
                             }
-                        }, options)
-                        bd(op);
+                        });
                     }
                 }
             }, {
                 id: 'footSave',
                 click: function (row, data) {
                     if ($(this).attr('data-valid') == "true") {
-                        var op = $.extend({
-                            data: { name: '网站页脚', code: data.Footer, category: '网站设置' },
+                        $.bc({
+                            url: Profiles.url, data: { name: '网站页脚', code: data.Footer, category: Profiles.title }, title: Profiles.title,
                             callback: function (result) {
-                                $('#websiteFooter').text(data.Footer);
+                                if (result) $('#websiteFooter').text(data.Footer);
                             }
-                        }, options)
-                        bd(op);
+                        });
                     }
                 }
             }]
@@ -63,7 +59,7 @@
 
     function listCache(options) {
         options = $.extend({ url: '../../CacheList.axd' }, options);
-        bd({
+        $.bc({
             url: options.url,
             swal: false,
             callback: function (result) {

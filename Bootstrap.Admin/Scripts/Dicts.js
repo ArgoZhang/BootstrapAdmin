@@ -1,7 +1,7 @@
 ﻿$(function () {
     $('#panelResultHeader').html('查询结果<span class="hidden-400 text-danger">（仅 Administrators 角色成员可删除数据）<span>');
     var bsa = new BootstrapAdmin({
-        url: '../api/Dicts',
+        url: Dicts.url,
         dataEntity: new DataEntity({
             map: {
                 ID: "dictID",
@@ -14,7 +14,7 @@
     });
 
     $('table').smartTable({
-        url: '../api/Dicts',
+        url: Dicts.url,
         sortName: 'Category',
         queryParams: function (params) { return $.extend(params, { category: $('#txt_dict_cate').val(), name: $("#txt_dict_name").val(), define: $("#txt_dict_define").val() }); },
         columns: [{ checkbox: true },
@@ -49,10 +49,13 @@
     $('select').selectpicker();
 
     // autocomplete
-    Dicts.retrieveCategories(function (result) {
-        $('#txt_dict_cate').typeahead({
-            source: result,
-            autoSelect: true
-        });
+    $.bc({
+        Id: 1, url: Dicts.url, data: { type: 'category' }, swal: false,
+        callback: function (result) {
+            $('#txt_dict_cate').typeahead({
+                source: result,
+                autoSelect: true
+            });
+        }
     });
 });
