@@ -63,9 +63,10 @@ namespace Bootstrap.DataAccess
                                 ErrorPage = (string)reader[2],
                                 UserID = (string)reader[3],
                                 UserIp = (string)reader[4],
-                                Message = (string)reader[5],
-                                StackTrace = (string)reader[6],
-                                LogTime = (DateTime)reader[7],
+                                ExceptionType = (string)reader[5],
+                                Message = (string)reader[6],
+                                StackTrace = (string)reader[7],
+                                LogTime = (DateTime)reader[8],
                             });
                         }
                     }

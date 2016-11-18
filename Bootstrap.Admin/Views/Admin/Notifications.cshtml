@@ -18,7 +18,7 @@
     @Html.Partial("Navigator", Model)
 }
 <div class="panel panel-default">
-    <div class="panel-heading">用户注册<span class="pull-right"><a href="javascript:;" class="fa fa-refresh" data-category="newusers"></a></span></div>
+    <div class="panel-heading">用户注册<span class="pull-right"><a id="refreshUsers" href="javascript:;" class="fa fa-refresh"></a></span></div>
     <div class="panel-body">
         <div class="tasks-widget">
             <ul id="tasks-users" class="task-list ui-sortable">
@@ -26,22 +26,3 @@
         </div>
     </div>
 </div>
-<div class="panel panel-default">
-    <div class="panel-heading">程序错误<a href="javascript:;" class="pull-right fa fa-refresh" data-category="apps"></a></div>
-    <div class="panel-body">
-        <div class="tasks-widget">
-            <ul id="tasks-app" class="task-list ui-sortable">
-            </ul>
-        </div>
-    </div>
-</div>
-<div class="panel panel-default">
-    <div class="panel-heading">数据库错误<span class="pull-right"><a href="javascript:;" class="fa fa-refresh" data-category="dbs"></a></span></div>
-    <div class="panel-body">
-        <div class="tasks-widget">
-            <ul id="tasks-db" class="task-list ui-sortable">
-            </ul>
-        </div>
-    </div>
-</div>
-

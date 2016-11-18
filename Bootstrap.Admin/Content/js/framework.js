@@ -432,15 +432,4 @@
     Dicts.retrieveCategories = function (callback) {
         processData.call(this, { Id: 1, callback: callback, swal: false, data: { type: 'category' } });
     };
-
-    // Notifi
-    Notifications = {
-        url: '../api/Notifications/'
-    };
-    Notifications.retrieveNotifies = function (category, callback) {
-        processData.call(this, { Id: category, callback: callback, method: "GET", swal: false });
-    };
-    Notifications.retrieveAllNotifies = function (callback) {
-        processData.call(this, { Id: "", callback: callback, method: "GET", swal: false });
-    }
 })(jQuery);

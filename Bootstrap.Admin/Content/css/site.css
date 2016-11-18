@@ -149,6 +149,7 @@ a, a:hover, a:focus {
             background: none;
             margin-right: 0;
             display: block;
+            white-space: nowrap;
         }
 
             .top-menu > li > a:hover .caret {
@@ -273,8 +274,16 @@ a, a:hover, a:focus {
         background: #ff6c60;
     }
 
+    .notify-row .bg-user, .notify-row .dropdown-menu.users li p {
+        background: #5cb85c;
+    }
+
     .notify-row .bg-warning, .notify-row .dropdown-menu.notification li p {
         background: #FCB322;
+    }
+
+    .notify-row .bg-db, .notify-row .dropdown-menu.dbs li p {
+        background: #d03633;
     }
 
     .notify-row > li {
@@ -345,6 +354,18 @@ a, a:hover, a:focus {
                 border-top-color: #ff6c60;
             }
 
+            .notify-row .dropdown-menu .notify-arrow.notify-arrow-db {
+                border-color: transparent transparent #d03633;
+                border-bottom-color: #d03633;
+                border-top-color: #d03633;
+            }
+
+            .notify-row .dropdown-menu .notify-arrow.notify-arrow-user {
+                border-color: transparent transparent #5cb85c;
+                border-bottom-color: #5cb85c;
+                border-top-color: #5cb85c;
+            }
+
         .notify-row .dropdown-menu li:last-child, .notify-row .dropdown-menu li:last-child a:hover {
             border-radius: 0 0 4px 4px;
         }
@@ -365,14 +386,6 @@ a, a:hover, a:focus {
             .notify-row .dropdown-menu li a:hover {
                 background-color: #F7F8F9;
                 color: #2E2E2E;
-            }
-
-        .notify-row .dropdown-menu .label {
-            padding: 0.5em 0.8em;
-        }
-
-            .notify-row .dropdown-menu .label.label-danger {
-                background-color: #FF6C60;
             }
 
         .notify-row .dropdown-menu p {
@@ -424,17 +437,22 @@ a, a:hover, a:focus {
                 font-size: 11px;
                 font-style: italic;
                 font-weight: bold;
-                position: absolute;
-                right: 5px;
+                float: right;
             }
 
         .notify-row .dropdown-menu.inbox .message {
-            display: block !important;
             font-size: 11px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            position: absolute;
+            right: 6px;
+            left: 56px;
+            margin-top: 2px;
         }
 
 
-        .notify-row .dropdown-menu.notification .label {
+        .notify-row .dropdown-menu .label {
             display: inline-block;
             height: 18px;
             width: 20px;
@@ -442,7 +460,7 @@ a, a:hover, a:focus {
             margin-right: 5px;
         }
 
-        .notify-row .dropdown-menu.notification .small {
+        .notify-row .dropdown-menu .small {
             font-size: 10px;
             font-style: italic;
             font-weight: bold;
@@ -450,7 +468,7 @@ a, a:hover, a:focus {
             padding-top: 2px;
         }
 
-        .notify-row .dropdown-menu.notification li a div {
+        .notify-row .dropdown-menu li a div {
             position: absolute;
             left: 36px;
             right: 44px;

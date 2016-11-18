@@ -60,5 +60,13 @@ namespace Bootstrap.DataAccess
         /// 获得/设置 时间描述 2分钟内为刚刚
         /// </summary>
         public string Period { get; set; }
+        /// <summary>
+        /// 获得/设置 发件人头像
+        /// </summary>
+        public string FromIcon { get; set; }
+        /// <summary>
+        /// 获得/设置 发件人昵称
+        /// </summary>
+        public string FromDisplayName { get; set; }
     }
 }

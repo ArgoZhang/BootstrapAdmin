@@ -34,10 +34,10 @@
                 <ul class="dropdown-menu tasks-bar">
                     <div class="notify-arrow notify-arrow-green"></div>
                     <li>
-                        <p>您有 0 个未读的消息</p>
+                        <p>您有 0 个未完成的任务</p>
                     </li>
                     <li>
-                        <a href="~/Admin/Tasks">查看所有消息</a>
+                        <a href="~/Admin/Tasks">查看所有任务</a>
                     </li>
                 </ul>
             </li>
@@ -46,12 +46,12 @@
             <li class="dropdown">
                 <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                     <i class="fa fa-envelope"></i>
-                    <span class="badge bg-important"></span>
+                    <span id="msgHeaderMsgBadge" class="badge bg-important"></span>
                 </a>
                 <ul class="dropdown-menu inbox">
                     <div class="notify-arrow notify-arrow-red"></div>
-                    <li>
-                        <p>您有 0 个未读的消息</p>
+                    <li id="msgHeaderMsgContent">
+                        <p>您有 <span id="msgHeaderMsg">0</span> 个未读的消息</p>
                     </li>
                     <li>
                         <a href="~/Admin/Messages">查看所有消息</a>
@@ -63,14 +63,14 @@
             <li class="dropdown">
                 <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                     <i class="fa fa-user-plus"></i>
-                    <span id="msgHeaderUserBadge" class="badge bg-warning"></span>
+                    <span id="msgHeaderUserBadge" class="badge bg-user"></span>
                 </a>
-                <ul class="dropdown-menu notification">
-                    <div class="notify-arrow notify-arrow-yellow"></div>
+                <ul class="dropdown-menu users">
+                    <div class="notify-arrow notify-arrow-user"></div>
                     <li id="msgHeaderUserContent">
-                        <p>您有 <span id="msgHeaderUser">0</span> 条新通知</p>
+                        <p>您有 <span id="msgHeaderUser">0</span> 条新用户通知</p>
                     </li>
-                    <li id="msgHeaderUserFooter">
+                    <li>
                         <a href="~/Admin/Notifications">查看所有通知</a>
                     </li>
                 </ul>
@@ -80,15 +80,15 @@
             <li class="dropdown">
                 <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                     <i class="fa fa-bug"></i>
-                    <span class="badge bg-warning"></span>
+                    <span id="msgHeaderAppBadge" class="badge bg-warning"></span>
                 </a>
                 <ul class="dropdown-menu notification">
                     <div class="notify-arrow notify-arrow-yellow"></div>
-                    <li>
-                        <p>您有 0 条新通知</p>
+                    <li id="msgHeaderAppContent">
+                        <p>您有 <span id="msgHeaderApp">0</span> 条程序异常通知</p>
                     </li>
                     <li>
-                        <a href="~/Admin/Notifications">查看所有通知</a>
+                        <a href="~/Admin/Exceptions">查看所有异常</a>
                     </li>
                 </ul>
             </li>
@@ -97,15 +97,15 @@
             <li class="dropdown">
                 <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                     <i class="fa fa-database"></i>
-                    <span class="badge bg-warning"></span>
+                    <span id="msgHeaderDbBadge" class="badge bg-db"></span>
                 </a>
-                <ul class="dropdown-menu notification">
-                    <div class="notify-arrow notify-arrow-yellow"></div>
-                    <li>
-                        <p>您有 0 条新通知</p>
+                <ul class="dropdown-menu dbs">
+                    <div class="notify-arrow notify-arrow-db"></div>
+                    <li id="msgHeaderDbContent">
+                        <p>您有 <span id="msgHeaderDb">0</span> 条数据库异常通知</p>
                     </li>
                     <li>
-                        <a href="~/Admin/Notifications">查看所有通知</a>
+                        <a href="~/Admin/Exceptions">查看所有异常</a>
                     </li>
                 </ul>
             </li>
@@ -115,9 +115,6 @@
     }
     <!--search & user info start-->
     <ul class="pull-right top-menu">
-        <li>
-            <input type="text" class="form-control search" placeholder="搜索">
-        </li>
         <!-- user login dropdown start-->
         <li class="dropdown">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
