@@ -30,6 +30,41 @@ namespace Bootstrap.Admin.Controllers
             ret.NewUsersCount = user.Count();
 
             // Tasks
+            var task = TaskHelper.RetrieveTasks();
+            ret.Tasks = task.Take(6).OrderByDescending(u => u.AssignTime).ToList();
+            ret.TasksCount = task.Count();
+
+            //Message
+            var message = MessageHelper.RetrieveMessagesHeader(User.Identity.Name);
+            ret.Messages = message.Take(6).ToList();
+            ret.MessagesCount = message.Count();
+
+            //Apps
+            var apps = ExceptionHelper.RetrieveExceptions().Where(n => n.ExceptionType != "Longbow.Data.DBAccessException");
+            ret.Apps = apps.Take(6).OrderByDescending(a => a.LogTime).ToList();
+            ret.Apps.AsParallel().ForAll(n =>
+            {
+                var ts = DateTime.Now - n.LogTime;
+                if (ts.TotalMinutes < 5) n.Period = "刚刚";
+                else if (ts.Days > 0) n.Period = string.Format("{0}天", ts.Days);
+                else if (ts.Hours > 0) n.Period = string.Format("{0}小时", ts.Hours);
+                else if (ts.Minutes > 0) n.Period = string.Format("{0}分钟", ts.Minutes);
+            });
+            ret.AppExceptionsCount = apps.Count();
+
+            //Dbs
+            var dbs = ExceptionHelper.RetrieveExceptions().Where(n => n.ExceptionType == "Longbow.Data.DBAccessException");
+            ret.Dbs = dbs.Take(6).OrderByDescending(d => d.LogTime).ToList();
+            ret.Dbs.AsParallel().ForAll(n =>
+            {
+                var ts = DateTime.Now - n.LogTime;
+                if (ts.TotalMinutes < 5) n.Period = "刚刚";
+                else if (ts.Days > 0) n.Period = string.Format("{0}天", ts.Days);
+                else if (ts.Hours > 0) n.Period = string.Format("{0}小时", ts.Hours);
+                else if (ts.Minutes > 0) n.Period = string.Format("{0}分钟", ts.Minutes);
+            });
+            ret.DbExceptionsCount = dbs.Count();
+
             return ret;
         }
         /// <summary>
@@ -42,8 +77,8 @@ namespace Bootstrap.Admin.Controllers
         {
             var ret = new Notifications();
             if (id == "newusers" || id == "all") ret.Users = UserHelper.RetrieveNewUsers().OrderByDescending(u => u.RegisterTime).ToList();
-            else if (id == "apps" || id == "all") ret.Apps = new List<Exceptions>();
-            else if (id == "dbs" || id == "all") ret.Dbs = new List<Exceptions>();
+            else if (id == "apps" || id == "all") ret.Apps = ExceptionHelper.RetrieveExceptions().Where(n => n.ExceptionType != "Longbow.Data.DBAccessException").OrderByDescending(a => a.LogTime).ToList();
+            else if (id == "dbs" || id == "all") ret.Dbs = ExceptionHelper.RetrieveExceptions().Where(n => n.ExceptionType == "Longbow.Data.DBAccessException").OrderByDescending(d => d.LogTime).ToList();
             return ret;
         }
 

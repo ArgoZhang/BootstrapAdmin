@@ -42,5 +42,9 @@ namespace Bootstrap.DataAccess
         /// 
         /// </summary>
         public string ExceptionType { get; set; }
+        /// <summary>
+        /// 获得/设置 时间描述 2分钟内为刚刚
+        /// </summary>
+        public string Period { get; set; }
     }
 }
