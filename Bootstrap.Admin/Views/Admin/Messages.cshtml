@@ -3,7 +3,9 @@
     ViewBag.Title = "站内消息";
     Layout = "~/Views/Shared/_Admin.cshtml";
 }
-
+@section Javascript {
+    <script src="~/Scripts/message.js"></script>
+}
 @section header {
     @Html.Partial("Header", Model)
 }
@@ -38,30 +40,16 @@
             </li>
         </ul>
     </aside>
-    
+
     <aside class="lg-side">
         <div class="inbox-head">
             <h3>消息列表</h3>
         </div>
         <div class="inbox-body">
             <table class="table table-inbox table-hover">
-                <tbody>
-                    @foreach (var mess in Model.MessageList)
-                    {   
-                        <tr >
-                          <td class="inbox-small-cells"><input type="checkbox" class="mail-checkbox"></td>
-                        @if(mess.Mark==0)
-                        { <td class="inbox-small-cells"><i class="fa fa-star"></i></td> }
-                        else
-                        { <td class="inbox-small-cells"><i class="fa fa-star inbox-started"></i></td> }
-                          <td class="view-message  dont-show">@mess.From</td>
-                          <td class="view-message  dont-show">@mess.To</td>
-                          <td class="view-message ">@mess.Title</td>
-                          <td class="view-message  text-right">@mess.SendTime</td>
-                       </tr>
-                    }
-                        </tbody>
-                    </table>
-                </div>
-            </aside>
+                <tbody id="tbMsg">
+                </tbody>
+            </table>
         </div>
+    </aside>
+</div>

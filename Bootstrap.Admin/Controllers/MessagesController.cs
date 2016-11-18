@@ -1,35 +1,23 @@
-﻿using Bootstrap.Admin.Models;
-using Bootstrap.DataAccess;
-using System.Web.Mvc;
+﻿using Bootstrap.DataAccess;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Http;
 
 namespace Bootstrap.Admin.Controllers
 {
-    public class MessagesController : Controller
+    public class MessagesController : ApiController
     {
-        public ActionResult Inbox()
-        {       
-            var v = new NavigatorBarModel("~/Admin/Messages/Inbox");
-            v.MessageList = MessageHelper.Inbox(User.Identity.Name);
-            return View(v);
-        }
-        public ActionResult SendMail()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public IEnumerable<Message> Get(string id)
         {
-            var v = new NavigatorBarModel("~/Admin/Messages/SendMail");
-            v.MessageList = MessageHelper.SendMail(User.Identity.Name);
-            return View(v);
+            var ret = new List<Message>();
+            if (id == "inbox") ret = MessageHelper.Inbox(User.Identity.Name).ToList();
+            return ret;
         }
-        public ActionResult Mark()
-        {
-            var v = new NavigatorBarModel("~/Admin/Messages/Mark");
-            v.MessageList = MessageHelper.Mark(User.Identity.Name);
-            return View(v);
-        }
-        public ActionResult Trash()
-        {
-            var v = new NavigatorBarModel("~/Admin/Messages/Trash");
-            v.MessageList = MessageHelper.Trash(User.Identity.Name);
-            return View(v);
-        }
-
     }
 }

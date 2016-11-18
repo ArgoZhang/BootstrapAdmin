@@ -41,10 +41,6 @@ namespace Bootstrap.Admin.Models
         /// </summary>
         public IEnumerable<Menu> Menus { get; private set; }
         /// <summary>
-        /// 获得/设置 消息列表
-        /// </summary>
-        public IEnumerable<Message> MessageList { get; set; }
-        /// <summary>
         /// 获得/设置 用户头像地址
         /// </summary>
         public string Icon { get; set; }

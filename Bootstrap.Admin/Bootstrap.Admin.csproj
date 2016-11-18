@@ -205,6 +205,7 @@
     <Content Include="Scripts\Login.js" />
     <Content Include="Scripts\Logs.js" />
     <Content Include="Scripts\Menus.js" />
+    <Content Include="Scripts\message.js" />
     <Content Include="Scripts\noti.js" />
     <Content Include="Scripts\Profiles.js" />
     <Content Include="Scripts\register.js" />
