@@ -340,10 +340,10 @@
         processData.call(this, { Id: groupId, callback: callback, method: "PUT", data: { type: "group", userIds: userIds } });
     };
     User.saveUserDisplayName = function (user, callback) {
-        processData.call(this, { Id: '', callback: callback, method: "PUT", data: user });
+        processData.call(this, { Id: '', callback: callback, method: "PUT", data: user,title:"修改用户显示名称" });
     };
     User.changePassword = function (user) {
-        processData.call(this, { Id: '', method: "PUT", data: user });
+        processData.call(this, { Id: '', method: "PUT", data: user, title: "修改密码" });
     }
 
     // Groups
