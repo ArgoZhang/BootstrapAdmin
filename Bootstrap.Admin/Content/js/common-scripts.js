@@ -11,11 +11,6 @@
         classExpand: 'dcjq-current-parent'
     });
 
-    // breadcrumb
-    var breadcrumb = $('.sidebar-menu > li > a.active > span').text();
-    if (breadcrumb === "") $('.breadcrumb > li + li').hide();
-    else $('.breadcrumb > li + li').text(breadcrumb);
-
     $("#gotoTop").on('click', function (e) {
         e.preventDefault();
         $('#main-content, .content-body, body').animate({
