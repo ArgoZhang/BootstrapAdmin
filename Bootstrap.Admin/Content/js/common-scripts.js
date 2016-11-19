@@ -16,7 +16,7 @@
     if (breadcrumb === "") $('.breadcrumb > li + li').hide();
     else $('.breadcrumb > li + li').text(breadcrumb);
 
-    $(".go-top").click(function (e) {
+    $("#gotoTop").on('click', function (e) {
         e.preventDefault();
         $('#main-content, .content-body, body').animate({
             scrollTop: 0
