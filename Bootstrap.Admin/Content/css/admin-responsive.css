@@ -26,6 +26,10 @@
         margin-left: 0;
     }
 
+        #main-content.open {
+            display: none;
+        }
+
     .modal-dialog {
         width: 540px;
         margin: 20px auto;

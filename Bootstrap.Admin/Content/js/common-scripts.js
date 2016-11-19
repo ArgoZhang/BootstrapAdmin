@@ -1,4 +1,7 @@
 ﻿$(function () {
+    var $sidebar = $("#sidebar");
+    var $main = $('#main-content');
+
     $('#nav-accordion').dcAccordion({
         eventType: 'click',
         autoClose: true,
@@ -20,21 +23,22 @@
 
     $('#websiteFooter').text($('#footer').val());
 
-    $('#sidebar').on('click', 'a', function () {
+    $sidebar.on('click', 'a', function () {
         var o = ($(this).offset());
         diff = 300 - o.top;
         if (diff > 0)
-            $("#sidebar").scrollTo("-=" + Math.abs(diff), 500);
+            $sidebar.scrollTo("-=" + Math.abs(diff), 500);
         else
-            $("#sidebar").scrollTo("+=" + Math.abs(diff), 500);
+            $sidebar.scrollTo("+=" + Math.abs(diff), 500);
     });
 
-    $('.sidebar-toggle-box').click(function () {
-        if ($('#sidebar').is(":visible") === true) {
-            $(".sidebar").addClass("sidebar-closed");
+    $('.sidebar-toggle-box').on('click', function () {
+        if ($sidebar.is(":visible") === true) {
+            $sidebar.hide();
+            $main.addClass('closed').removeClass('open');
         } else {
-            $(".sidebar").removeClass("sidebar-closed");
-            $("#sidebar").show();
+            $sidebar.show();
+            $main.addClass('open').removeClass('closed');
         }
     });
 
