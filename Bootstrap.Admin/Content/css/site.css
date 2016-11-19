@@ -83,6 +83,32 @@ a, a:hover, a:focus {
     padding: 10px 4px;
     height: 40px;
 }
+
+.desktop .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+}
+
+.desktop .site-footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 50;
+}
+
+.desktop #main-content {
+    margin-top: 0;
+    position: fixed;
+    left: 0;
+    bottom: 40px;
+    right: 0;
+    top: 94px;
+    overflow: auto;
+}
 /*end title*/
 
 .go-top {

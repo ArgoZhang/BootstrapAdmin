@@ -153,6 +153,13 @@
         position: relative;
     }
 
+.desktop #sidebar {
+    top: 94px;
+    bottom: 40px;
+    position: absolute;
+    overflow-y: auto;
+}
+
 ul.sidebar-menu {
     padding: 20px 0 15px 0;
     margin-bottom: 0;
