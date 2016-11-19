@@ -148,22 +148,24 @@
                         confirmButtonColor: "#d9534f",
                         cancelButtonText: "取消"
                     }, function () {
-                        var iDs = arrselections.map(function (element, index) { return element.ID }).join(",");
-                        options.IDs = iDs;
-                        $.bc({
-                            url: options.url, data: { "": iDs }, method: 'DELETE', title: '删除数据',
-                            callback: function (result) {
-                                if ($.isPlainObject(result)) {
-                                    var info = result.result ? "success" : "error";
-                                    var msg = result.msg
-                                    swal(msg, "删除数据", info);
-                                    result = result.result;
-                                    this.swal = false;
+                        setTimeout(function () {
+                            var iDs = arrselections.map(function (element, index) { return element.ID }).join(",");
+                            options.IDs = iDs;
+                            $.bc({
+                                url: options.url, data: { "": iDs }, method: 'DELETE', title: '删除数据',
+                                callback: function (result) {
+                                    if ($.isPlainObject(result)) {
+                                        var info = result.result ? "success" : "error";
+                                        var msg = result.msg
+                                        swal(msg, "删除数据", info);
+                                        result = result.result;
+                                        this.swal = false;
+                                    }
+                                    if (result) $(options.bootstrapTable).bootstrapTable('refresh');
+                                    handlerCallback.call(that, callback, e, { oper: 'del', success: result });
                                 }
-                                if (result) $(options.bootstrapTable).bootstrapTable('refresh');
-                                handlerCallback.call(that, callback, e, { oper: 'del', success: result });
-                            }
-                        });
+                            });
+                        }, 100);
                     });
                 }
             }
@@ -274,10 +276,8 @@
                     $("#" + data.modal).modal('hide');
                 }
                 if (data.swal) {
-                    setTimeout(function () {
-                        if (result) { swal("成功", data.title, "success"); }
-                        else { swal("失败", data.title, "error"); }
-                    }, 100);
+                    if (result) { swal("成功", data.title, "success"); }
+                    else { swal("失败", data.title, "error"); }
                 }
             }
         }
