@@ -262,6 +262,7 @@
     </Compile>
     <Compile Include="Models\ContentModel.cs" />
     <Compile Include="Models\LockModel.cs" />
+    <Compile Include="Models\MessageCountModel.cs" />
     <Compile Include="Models\QueryDictOption.cs" />
     <Compile Include="Models\QueryExceptionOption.cs" />
     <Compile Include="Models\QueryGroupOption.cs" />

@@ -1,14 +1,16 @@
-﻿using Bootstrap.DataAccess;
+﻿using Bootstrap.Admin.Models;
+using Bootstrap.DataAccess;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+
 
 namespace Bootstrap.Admin.Controllers
 {
     public class MessagesController : ApiController
     {
         /// <summary>
-        /// 
+        /// 根据Id返回不同的消息列表
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
@@ -16,8 +18,8 @@ namespace Bootstrap.Admin.Controllers
         public IEnumerable<Message> Get(string id)
         {
             var ret = new List<Message>();
-            switch(id)
-            { 
+            switch (id)
+            {
                 case "inbox": ret = MessageHelper.Inbox(User.Identity.Name).ToList();
                     break;
                 case "sendmail": ret = MessageHelper.SendMail(User.Identity.Name).ToList();
@@ -26,8 +28,24 @@ namespace Bootstrap.Admin.Controllers
                     break;
                 case "trash": ret = MessageHelper.Trash(User.Identity.Name).ToList();
                     break;
-             }
+            }
             return ret;
+        }
+
+        /// <summary>
+        /// 返回各个消息列表的文件个数
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public MessageCountModel Get()
+        {
+            MessageCountModel mcm = new MessageCountModel();
+            mcm.inboxCount = MessageHelper.Inbox(User.Identity.Name).Count();
+            mcm.sendmailCount = MessageHelper.SendMail(User.Identity.Name).Count();
+            mcm.markCount = MessageHelper.Mark(User.Identity.Name).Count();
+            mcm.trashCount = MessageHelper.Trash(User.Identity.Name).Count();
+            return mcm;
         }
     }
 }

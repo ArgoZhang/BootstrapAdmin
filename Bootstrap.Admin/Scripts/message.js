@@ -1,5 +1,20 @@
 ﻿$(function () {
-    var html = '<tr {0}><td class="inbox-small-cells"><input type="checkbox" class="mail-checkbox"></td><td class="inbox-small-cells"><i class="fa fa-star {1}"></i></td><td class="view-message  dont-show">{2}</td><td class="view-message  dont-show">{3}</td><td class="view-message ">{4}</td><td class="view-message text-right">{5}</td></tr>';
+
+    function loadData() {
+        $.bc({
+            url: Messages.url, method: 'GET', swal: false,
+            callback: function (result) {
+                if (result) {                
+                    $('#s_inbox').text(result.inboxCount);
+                    $('#s_sendmail').text(result.sendmailCount);
+                    $('#s_mark').text(result.markCount);
+                    $('#s_trash').text(result.trashCount);
+                }
+            }
+        });
+    }
+
+    var html = '<tr {0}><td class="inbox-small-cells"><input type="checkbox" class="mail-checkbox"></td><td class="inbox-small-cells"><i class="fa fa-star {1}"></i></td><td class="view-message  dont-show">{2}<span class="label {3} pull-right">{4}</span></td><td class="view-message  dont-show">{5}</td><td class="view-message ">{6}</td><td class="view-message text-right">{7}</td></tr>';
 
     function listData(options) {
 
@@ -16,7 +31,11 @@
                             mailMark = "inbox-started";
                         else
                             mailMark = " ";
-                        return $.format(html, mailStatus, mailMark, mail.FromDisplayName, mail.Title, mail.Content, mail.SendTime);
+                        if (mail.Label == '0')
+                            mailLabel = 'label-success';
+                        else
+                            mailLabel = 'label-warning';
+                        return $.format(html, mailStatus, mailMark, mail.FromDisplayName, mailLabel, mail.LabelName, mail.Title, mail.Content, mail.SendTime);
                     }).join('');
                     $('#tbMsg').html(content);
                 }
@@ -25,6 +44,7 @@
     }
 
     listData({ Id: 'inbox' });
+    loadData();
 
     $('#mailBox').on('click', 'a', function () {
         listData({ Id: $(this).attr('data-id') });
