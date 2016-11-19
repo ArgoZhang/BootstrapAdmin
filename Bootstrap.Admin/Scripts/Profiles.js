@@ -67,7 +67,9 @@
                     result = $.parseJSON(result);
                     if ($.isArray(result)) {
                         var html = '<li class="{4}"><i class="fa fa-ellipsis-v"></i><div class="task-title"><span class="task-title-sp tooltips" data-placement="right" title="{1}">{2}</span><span class="badge badge-sm label-success">{0}</span><span class="task-value tooltips" data-placement="top" data-original-title="{3}">{3}</span><div class="pull-right hidden-phone"><button class="btn btn-danger btn-xs fa fa-trash-o" data-key="{1}"></button></div></div></li>';
-                        var content = result.map(function (ele) {
+                        var content = result.sort(function (x, y) {
+                            return x.Key > y.Key ? 1 : -1;
+                        }).map(function (ele) {
                             var key = ele.Key.split('-')[0];
                             var css = 'list-default';
                             switch (key) {
