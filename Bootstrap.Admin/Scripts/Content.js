@@ -3,9 +3,7 @@
     function setActive(ele) {
         ele.addClass('active');
         ele.parents("ul").first().find('p').addClass('active');
-        var breadcrumb = ele.text();
-        if (breadcrumb === "") $breadNav.hide();
-        else $breadNav.text(breadcrumb);
+        $breadNav.text(ele.text()).show();
     }
     $('#navbar').attr('data-toggle', "dropdown").addClass('dropdown-toggle');
     var $subMenu = $('#submenu');
@@ -19,6 +17,7 @@
         setActive($this);
         $('iframe').attr('src', $this.attr('href'));
     });
+    $breadNav.hide();
     $subMenu.find('a').each(function (index, ele) {
         var $this = $(this);
         if ($this.attr('href') == window.location.pathname) setActive($this);

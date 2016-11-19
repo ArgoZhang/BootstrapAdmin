@@ -21,9 +21,7 @@
 
     // breadcrumb
     var arch = $('#nav-accordion').find('a.active').last();
-    var breadcrumb = arch.text();
-    if (breadcrumb === "") $breadNav.hide();
-    else $breadNav.text(breadcrumb);
+    $breadNav.text(arch.text());
     var top = arch.offset().top;
     if (top > $sidebar.height()) $sidebar.animate({ scrollTop: top + 300 - $sidebar.height() }, 800);
 
