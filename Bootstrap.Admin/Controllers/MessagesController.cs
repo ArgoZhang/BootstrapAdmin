@@ -16,7 +16,17 @@ namespace Bootstrap.Admin.Controllers
         public IEnumerable<Message> Get(string id)
         {
             var ret = new List<Message>();
-            if (id == "inbox") ret = MessageHelper.Inbox(User.Identity.Name).ToList();
+            switch(id)
+            { 
+                case "inbox": ret = MessageHelper.Inbox(User.Identity.Name).ToList();
+                    break;
+                case "sendmail": ret = MessageHelper.SendMail(User.Identity.Name).ToList();
+                    break;
+                case "mark": ret = MessageHelper.Mark(User.Identity.Name).ToList();
+                    break;
+                case "trash": ret = MessageHelper.Trash(User.Identity.Name).ToList();
+                    break;
+             }
             return ret;
         }
     }

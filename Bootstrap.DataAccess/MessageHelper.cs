@@ -26,7 +26,7 @@ namespace Bootstrap.DataAccess
         {
             var messageRet = CacheManager.GetOrAdd(RetrieveMessageDataKey, CacheSection.RetrieveIntervalByKey(RetrieveMessageDataKey), key =>
             {
-                string sql = "select m.*, d.Name, isnull(i.Code + u.Icon, '~/Content/images/uploader/default.jpg'), u.DisplayName from[Messages] m left join Dicts d on m.Label = d.Code and d.Category = N'消息状态' and d.Define = 0 left join Dicts i on i.Category = N'头像地址' and i.Name = N'头像路径' and i.Define = 0 inner join Users u on m.[From] = u.UserName where [To] = @UserName or [From] = @UserName";
+                string sql = "select m.*, d.Name, isnull(i.Code + u.Icon, '~/Content/images/uploader/default.jpg'), u.DisplayName from[Messages] m left join Dicts d on m.Label = d.Code and d.Category = N'消息标签' and d.Define = 0 left join Dicts i on i.Category = N'头像地址' and i.Name = N'头像路径' and i.Define = 0 inner join Users u on m.[From] = u.UserName where [To] = @UserName or [From] = @UserName";
                 List<Message> messages = new List<Message>();
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                 try
