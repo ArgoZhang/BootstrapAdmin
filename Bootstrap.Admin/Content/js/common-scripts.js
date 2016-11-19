@@ -20,7 +20,7 @@
 
     $('#websiteFooter').text($('#footer').val());
 
-    $('#sidebar .sub-menu > a').click(function () {
+    $('#sidebar').on('click', 'a', function () {
         var o = ($(this).offset());
         diff = 300 - o.top;
         if (diff > 0)
