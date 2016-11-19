@@ -1,5 +1,6 @@
 ﻿.logfile {
     color: #d41404;
+    white-space: nowrap;
 }
 
     .logfile:focus, .logfile:active, .logfile:hover {

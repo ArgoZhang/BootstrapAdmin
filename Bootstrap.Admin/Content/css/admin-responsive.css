@@ -99,3 +99,10 @@
         padding-bottom: 54px;
     }
 }
+
+@media (max-height: 400px) {
+    .modal-body {
+        height: 180px;
+        overflow-y: auto;
+    }
+}
