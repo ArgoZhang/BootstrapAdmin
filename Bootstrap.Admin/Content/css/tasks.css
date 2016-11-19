@@ -194,6 +194,27 @@
     border-left: 3px solid #BEC3C7;
 }
 
+.ui-sortable li.list-default {
+    border-left: 3px solid #BEC3C7;
+}
+
+.ui-sortable li.list-Exception {
+    border-left: 3px solid red;
+}
+
+.ui-sortable li.list-Message {
+    border-left: 3px solid #00ff00;
+}
+
+.ui-sortable li.list-Task {
+    border-left: 3px solid #2083a0;
+}
+
+.ui-sortable li.list-Notification {
+    border-left: 3px solid #b7d8e2;
+}
+
+
 @media (max-width: 548px) {
     .tasks-widget .task-list li .task-title.notifi .task-value {
         right: 66px;

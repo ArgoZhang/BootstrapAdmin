@@ -66,9 +66,45 @@
                 if (result) {
                     result = $.parseJSON(result);
                     if ($.isArray(result)) {
-                        var html = '<li class="list-primary"><i class="fa fa-ellipsis-v"></i><div class="task-title"><span class="task-title-sp tooltips" data-placement="right" title="{1}">{2}</span><span class="badge badge-sm label-success">{0}</span><span class="task-value tooltips" data-placement="top" data-original-title="{3}">{3}</span><div class="pull-right hidden-phone"><button class="btn btn-danger btn-xs fa fa-trash-o" data-key="{1}"></button></div></div></li>';
+                        var html = '<li class="{4}"><i class="fa fa-ellipsis-v"></i><div class="task-title"><span class="task-title-sp tooltips" data-placement="right" title="{1}">{2}</span><span class="badge badge-sm label-success">{0}</span><span class="task-value tooltips" data-placement="top" data-original-title="{3}">{3}</span><div class="pull-right hidden-phone"><button class="btn btn-danger btn-xs fa fa-trash-o" data-key="{1}"></button></div></div></li>';
                         var content = result.map(function (ele) {
-                            return $.format(html, ele.Interval, ele.Key, ele.Desc, ele.Value);
+                            var key = ele.Key.split('-')[0];
+                            var css = 'list-default';
+                            switch (key) {
+                                case "MenuHelper":
+                                    css = 'list-primary';
+                                    break;
+                                case "UserHelper":
+                                    css = 'list-success';
+                                    break;
+                                case "RoleHelper":
+                                    css = 'list-danger';
+                                    break;
+                                case "GroupHelper":
+                                    css = 'list-warning';
+                                    break;
+                                case "LogHelper":
+                                    css = 'list-info';
+                                    break;
+                                case "DictHelper":
+                                    css = 'list-inverse';
+                                    break;
+                                case "ExceptionHelper":
+                                    css = 'list-Exception';
+                                    break;
+                                case "MessageHelper":
+                                    css = 'list-Message';
+                                    break;
+                                case "TaskHelper":
+                                    css = 'list-Task';
+                                    break;
+                                case "NotificationHelper":
+                                    css = 'list-Notification';
+                                    break;
+                                default:
+                                    break;
+                            }
+                            return $.format(html, ele.Interval, ele.Key, ele.Desc, ele.Value, css);
                         }).join('');
                         $('#sortable').html(content);
                         $('.tooltips').tooltip();
