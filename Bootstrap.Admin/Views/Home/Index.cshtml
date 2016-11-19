@@ -8,4 +8,6 @@
 @section header {
     @Html.Partial("Header", Model)
 }
-@Html.Partial("Content", Model)
+<div class="content-body">
+    <iframe src="@Model.Url"></iframe>
+</div>

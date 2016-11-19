@@ -9,10 +9,10 @@
     <!--logo end-->
     @if (Model.Menus.Count() > 0 && Model.ShowMenu)
     {
-        <ul class="dropdown-menu menu">
+        <ul id="menu" class="dropdown-menu menu">
             <div class="arrow-up"></div>
             <li>
-                <div class="menu-submenu">
+                <div id="submenu" class="menu-submenu">
                     @foreach (var menu in Model.Menus)
                     {
                         @Html.Partial("SubMenu", menu)

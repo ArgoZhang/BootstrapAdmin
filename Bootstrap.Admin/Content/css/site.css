@@ -514,10 +514,6 @@ a, a:hover, a:focus {
             margin-bottom: 14px;
         }
 
-            .dropdown-menu.menu .menu-submenu li p.active {
-                color: #FF6C60;
-            }
-
         .dropdown-menu.menu .menu-submenu li a {
             margin-bottom: 15px;
             display: inline-block;
@@ -525,12 +521,12 @@ a, a:hover, a:focus {
             font-size: 13px;
         }
 
-            .dropdown-menu.menu .menu-submenu li a.active {
-                color: #FF6C60;
+            .dropdown-menu.menu .menu-submenu li a.active, .dropdown-menu.menu .menu-submenu li p.active {
+                color: #0376d8;
             }
 
             .dropdown-menu.menu .menu-submenu li a:hover {
-                color: #FF6C60;
+                color: #2e6da4;
             }
 
             .dropdown-menu.menu .menu-submenu li a i {

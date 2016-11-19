@@ -303,7 +303,6 @@
     <Content Include="Views\Shared\UserConfig.cshtml" />
     <Content Include="Views\Shared\GroupConfig.cshtml" />
     <Content Include="Views\Admin\Logs.cshtml" />
-    <Content Include="Views\Shared\Content.cshtml" />
     <Content Include="Views\Admin\Profiles.cshtml" />
     <Content Include="Views\Shared\Footer.cshtml" />
     <Content Include="Views\Shared\MenuTree.cshtml" />
