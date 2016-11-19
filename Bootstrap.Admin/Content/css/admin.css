@@ -123,9 +123,14 @@
 }
 
 #main-content {
+    padding: 15px 15px 0 15px;
     margin-left: 210px;
     height: auto;
 }
+
+    #main-content > .panel:last-child .panel-body {
+        padding-bottom: 0;
+    }
 
     #main-content > .panel > .panel-body > .modal-footer {
         text-align: left;

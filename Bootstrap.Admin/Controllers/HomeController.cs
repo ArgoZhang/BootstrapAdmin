@@ -19,7 +19,6 @@ namespace Bootstrap.Admin.Controllers
         public ActionResult Index()
         {
             var v = new ContentModel();
-            v.Url = "/Content/html/dummy.html";
             return View(v);
         }
         /// <summary>

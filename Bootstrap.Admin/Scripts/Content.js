@@ -1,16 +1,13 @@
 ﻿$(function () {
-    $('#navbar').attr('data-toggle', "dropdown").addClass('dropdown-toggle');
-    function iframeResposive() {
-        try {
-            var fra = $('iframe').get(0);
-            fra.height = fra.contentDocument.body.offsetHeight;
-        }
-        catch (e) {
-        }
+    if ($.browser.versions.ios) $('#content').css({ 'overflow': 'auto', '-webkit-overflow-scrolling': 'touch' });
+    function setActive(ele) {
+        ele.addClass('active');
+        ele.parents("ul").first().find('p').addClass('active');
+        var breadcrumb = ele.text();
+        if (breadcrumb === "") $breadNav.hide();
+        else $breadNav.text(breadcrumb);
     }
-    $(window).on('load', iframeResposive);
-    $(window).on('resize', iframeResposive);
-
+    $('#navbar').attr('data-toggle', "dropdown").addClass('dropdown-toggle');
     var $subMenu = $('#submenu');
     var $breadNav = $('#breadNav');
     $subMenu.on('click', 'a', function (event) {
@@ -26,11 +23,4 @@
         var $this = $(this);
         if ($this.attr('href') == window.location.pathname) setActive($this);
     });
-    function setActive(ele) {
-        ele.addClass('active');
-        ele.parents("ul").first().find('p').addClass('active');
-        var breadcrumb = ele.text();
-        if (breadcrumb === "") $breadNav.hide();
-        else $breadNav.text(breadcrumb);
-    }
 });

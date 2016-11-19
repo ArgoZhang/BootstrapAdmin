@@ -27,14 +27,6 @@ a, a:hover, a:focus {
     color: #fff;
 }
 
-#main-content {
-    padding: 15px 15px 0 15px;
-}
-
-    #main-content > .panel:last-child .panel-body {
-        padding-bottom: 0;
-    }
-
 .header, .footer {
     padding: 0 15px;
 }
@@ -558,7 +550,19 @@ ul.breadcrumb {
         padding-right: 6px;
     }
 
-.content-body iframe {
-    width: 100%;
-    border: none;
+
+.content-body {
+    position: fixed;
+    left: 0;
+    bottom: 40px;
+    right: 0;
+    top: 94px;
+    background-image: url('../images/bg.jpg');
+    overflow: hidden;
 }
+
+    .content-body iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+    }

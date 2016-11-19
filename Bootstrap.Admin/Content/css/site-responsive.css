@@ -69,19 +69,4 @@
         top: 94px;
         overflow: auto;
     }
-
-    .content-body {
-        position: fixed;
-        left: 0;
-        bottom: 40px;
-        right: 0;
-        top: 94px;
-        overflow: auto;
-    }
-
-        .content-body iframe {
-            width: 100%;
-            border: none;
-            overflow: hidden;
-        }
 }
