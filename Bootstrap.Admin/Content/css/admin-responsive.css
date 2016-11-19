@@ -98,9 +98,10 @@
 
 @media (min-height: 672px) {
     #sidebar {
-        padding-top: 94px;
-        height: 100%;
-        padding-bottom: 54px;
+        top: 94px;
+        bottom: 40px;
+        position: absolute;
+        overflow-y: auto;
     }
 }
 

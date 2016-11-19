@@ -137,11 +137,7 @@
 
 #sidebar {
     width: 210px;
-    height: auto;
     background: #2a3542;
-    overflow-y: scroll;
-    position: absolute;
-    padding-bottom: 15px;
 }
 
     #sidebar .sub-menu > .sub li {
@@ -153,17 +149,13 @@
     }
 
 ul.sidebar-menu {
-    margin-top: 20px !important;
+    padding: 20px 0 15px 0;
+    margin-bottom: 0;
 }
 
     ul.sidebar-menu, ul.sidebar-menu li ul.sub {
-        margin: -2px 0 0;
-        padding: 0;
+        padding-left: 0;
     }
-
-        ul.sidebar-menu ul li {
-            list-style: none;
-        }
 
         ul.sidebar-menu .dcjq-icon {
             height: 17px;
