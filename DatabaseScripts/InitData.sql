@@ -42,9 +42,13 @@ INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [C
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (12, 0, N'通知管理', 120, N'fa fa-bell', N'~/Admin/Notifications', N'0')
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (13, 0, N'系统日志', 130, N'fa fa-gears', N'~/Admin/Logs', N'0')
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (14, 0, N'程序异常', 140, N'fa fa-cubes', N'~/Admin/Exceptions', N'0')
-INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (15, 0, N'锁定屏幕', 150, N'fa fa-lock', N'~/Home/Lock', N'0')
+INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (15, 0, N'锁定屏幕', 10, N'fa fa-lock', N'~/Home/Lock', N'0')
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (16, 0, N'锁定屏幕', 10, N'fa fa-lock', N'~/Home/Lock', N'1')
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (17, 16, N'锁定屏幕', 10, N'fa fa-lock', N'~/Home/Lock', N'1')
+INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (18, 0, N'工具集合', 160, N'fa fa-gavel', N'#', N'0')
+INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (19, 18, N'客户端测试', 10, N'fa fa-wrench', N'~/Admin/Mobile', N'0')
+INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (20, 0, N'工具集合', 20, N'fa fa-gavel', N'#', N'1')
+INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (21, 20, N'客户端测试', 10, N'fa fa-wrench', N'../Content/html/DeviceTest.htm', N'1')
 SET IDENTITY_INSERT [dbo].[Navigations] OFF
 
 DELETE FROM GROUPS WHERE ID = 1
@@ -58,17 +62,17 @@ INSERT [dbo].[Roles] ([ID], [RoleName], [Description]) VALUES (1, N'Administrato
 INSERT [dbo].[Roles] ([ID], [RoleName], [Description]) VALUES (2, N'Default', N'默认用户，可访问前台页面')
 SET IDENTITY_INSERT [dbo].[Roles] OFF
 
-DELETE FROM RoleGroup where ID in (1)
+DELETE FROM RoleGroup
 SET IDENTITY_INSERT [dbo].[RoleGroup] ON 
 INSERT [dbo].[RoleGroup] ([ID], [RoleID], [GroupID]) VALUES (1, 1, 1)
 SET IDENTITY_INSERT [dbo].[RoleGroup] OFF
 
-DELETE FROM UserGroup where ID in (1)
+DELETE FROM UserGroup
 SET IDENTITY_INSERT [dbo].[UserGroup] ON 
 INSERT [dbo].[UserGroup] ([ID], [UserID], [GroupID]) VALUES (1, 1, 1)
 SET IDENTITY_INSERT [dbo].[UserGroup] OFF
 
-DELETE FROM UserRole where ID in (1)
+DELETE FROM UserRole
 SET IDENTITY_INSERT [dbo].[UserRole] ON 
 INSERT [dbo].[UserRole] ([ID], [UserID], [RoleID]) VALUES (1, 1, 1)
 SET IDENTITY_INSERT [dbo].[UserRole] OFF
@@ -97,4 +101,14 @@ INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (19, 2, 2)
 INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (20, 3, 2)
 INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (21, 16, 2)
 INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (22, 17, 2)
+INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (23, 18, 1)
+INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (24, 19, 1)
+INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (25, 18, 2)
+INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (26, 19, 2)
+INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (27, 20, 1)
+INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (28, 21, 1)
+INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (29, 20, 2)
+INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (30, 21, 2)
+INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (31, 10, 2)
+INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (32, 15, 2)
 SET IDENTITY_INSERT [dbo].[NavigationRole] OFF

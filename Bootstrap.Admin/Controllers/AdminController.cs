@@ -127,9 +127,23 @@ namespace Bootstrap.Admin.Controllers
             var v = new NavigatorBarModel("~/Admin/Messages");
             return View(v);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Tasks()
         {
             var v = new NavigatorBarModel("~/Admin/Tasks");
+            return View(v);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [AllowAnonymous]
+        public ActionResult Mobile()
+        {
+            var v = new NavigatorBarModel("~/Admin/Mobile");
             return View(v);
         }
     }
