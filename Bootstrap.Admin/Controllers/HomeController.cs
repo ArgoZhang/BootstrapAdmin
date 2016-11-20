@@ -85,5 +85,14 @@ namespace Bootstrap.Admin.Controllers
             else
                 return View();
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [AllowAnonymous]
+        public ActionResult Mobile()
+        {
+            return View();
+        }
     }
 }

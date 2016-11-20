@@ -10,65 +10,10 @@
         }
     </style>
 }
-@section Javascript {
-    <script>
-        $(function () {
-            var browser = $.browser;
-            $('#language').text(browser.language);
-            $('#mobile').text(browser.versions.mobile);
-            $('#webapp').text(browser.versions.webApp);
-            $('#webkit').text(browser.versions.webKit);
-            $('#ios').text(browser.versions.ios);
-            $('#android').text(browser.versions.android);
-            $('#iphone').text(browser.versions.iPhone);
-            $('#ipad').text(browser.versions.iPad);
-            $('#useragent').text(navigator.userAgent);
-            $('#versions').text(JSON.stringify(browser.versions));
-        });
-    </script>
-}
 @section header {
     @Html.Partial("Header", Model)
 }
 @section navigator {
     @Html.Partial("Navigator", Model)
 }
-<div class="form-group">
-    <label class="control-label">语言版本：</label>
-    <label id="language" class="form-control-static"></label>
-</div>
-<div class="form-group">
-    <label class="control-label">是否为移动终端：</label>
-    <label id="mobile" class="form-control-static"></label>
-</div>
-<div class="form-group">
-    <label class="control-label">webApp：</label>
-    <label id="webapp" class="form-control-static"></label>
-</div>
-<div class="form-group">
-    <label class="control-label">webKit：</label>
-    <label id="webkit" class="form-control-static"></label>
-</div>
-<div class="form-group">
-    <label class="control-label">ios终端：</label>
-    <label id="ios" class="form-control-static"></label>
-</div>
-<div class="form-group">
-    <label class="control-label">android终端：</label>
-    <label id="android" class="form-control-static"></label>
-</div>
-<div class="form-group">
-    <label class="control-label">是否为iPhone：</label>
-    <label id="iphone" class="form-control-static"></label>
-</div>
-<div class="form-group">
-    <label class="control-label">是否iPad：</label>
-    <label id="ipad" class="form-control-static"></label>
-</div><div class="form-group">
-    <label class="control-label">userAgent：</label>
-    <label id="useragent" class="form-control-static"></label>
-</div>
-<div class="form-group">
-    <label class="control-label">versions：</label>
-    <label id="versions" class="form-control-static"></label>
-</div>
+@Html.Partial("_Mobile")

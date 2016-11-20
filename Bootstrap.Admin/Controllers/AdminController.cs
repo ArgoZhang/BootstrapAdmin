@@ -140,7 +140,6 @@ namespace Bootstrap.Admin.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        [AllowAnonymous]
         public ActionResult Mobile()
         {
             var v = new NavigatorBarModel("~/Admin/Mobile");
