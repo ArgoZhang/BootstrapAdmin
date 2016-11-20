@@ -67,6 +67,15 @@ a, a:hover, a:focus {
     padding: 10px 4px;
     height: 40px;
 }
+
+.site-footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 50;
+}
+
 /*end title*/
 
 .go-top {

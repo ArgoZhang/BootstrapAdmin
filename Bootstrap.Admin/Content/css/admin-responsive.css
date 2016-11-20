@@ -49,6 +49,10 @@
         white-space: nowrap;
         text-overflow: ellipsis;
     }
+
+    .site-footer {
+        position: relative;
+    }
 }
 
 @media (max-width: 548px) {
@@ -111,6 +115,13 @@
         bottom: 40px;
         position: absolute;
         overflow-y: auto;
+    }
+
+    .site-footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        right: 0;
     }
 }
 
