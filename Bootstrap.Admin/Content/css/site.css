@@ -61,53 +61,11 @@ a, a:hover, a:focus {
     text-transform: uppercase;
 }
 
-    .sidebar-toggle-box:hover, .sidebar-toggle-box:focus {
-        text-decoration: none;
-        outline: none;
-        color: #337ab7;
-    }
-
-    .sidebar-toggle-box span {
-        padding-left: 6px;
-    }
-
-    .sidebar-toggle-box .fa-bars {
-        cursor: pointer;
-        display: inline-block;
-        font-size: 20px;
-    }
-
 .site-footer {
     background: #5b6e84;
     color: #fff;
     padding: 10px 4px;
     height: 40px;
-}
-
-.desktop .header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 50;
-}
-
-.desktop .site-footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    z-index: 50;
-}
-
-.desktop #main-content {
-    margin-top: 0;
-    position: fixed;
-    left: 0;
-    bottom: 40px;
-    right: 0;
-    top: 94px;
-    overflow: auto;
 }
 /*end title*/
 

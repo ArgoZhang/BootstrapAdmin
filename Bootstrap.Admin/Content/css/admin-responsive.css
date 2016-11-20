@@ -96,6 +96,15 @@
     }
 }
 
+@media (min-width: 768px) {
+    #sidebar {
+        top: 94px;
+        bottom: 40px;
+        position: absolute;
+        overflow-y: auto;
+    }
+}
+
 @media (min-height: 672px) {
     #sidebar {
         top: 94px;
