@@ -23,16 +23,10 @@
     var arch = $('#nav-accordion').find('a.active').last();
     $breadNav.text(arch.text());
     var top = arch.offset().top;
-    if (top > $sidebar.height()) $sidebar.animate({ scrollTop: top + 300 - $sidebar.height() }, 800);
-
-    $sidebar.on('click', 'a', function () {
-        var o = ($(this).offset());
-        diff = 300 - o.top;
-        if (diff > 0)
-            $sidebar.scrollTo("-=" + Math.abs(diff), 500);
-        else
-            $sidebar.scrollTo("+=" + Math.abs(diff), 500);
-    });
+    if (top > 0) {
+        var middle = $('header').outerHeight() + $sidebar.outerHeight() / 2;
+        if (top > middle) $sidebar.animate({ scrollTop: top + arch.outerHeight() / 2 - middle }, 800);
+    }
 
     $('.sidebar-toggle-box').on('click', function () {
         if ($sidebar.is(":visible") === true) {
