@@ -115,6 +115,19 @@
 }
 @section customModal {
     @Html.Partial("RoleConfig")
-    @Html.Partial("IconView")
+    <div id="dialogIcon" class="modal-content icon-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myIconModalLabel">请选择图标</h4>
+        </div>
+        <div class="modal-body" data-spy="scroll" data-target=".fb-timeliner">
+            @Html.Partial("IconView")
+        </div>
+        <div class="modal-footer">
+            <span>被选择的图标：</span><i id="pickIcon"></i>
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            <button type="button" class="btn btn-primary" id="btnSubmitIcon">保存</button>
+        </div>
+    </div>
     @Html.Partial("MenuTree", Model.Navigations.Union(Model.Menus))
 }

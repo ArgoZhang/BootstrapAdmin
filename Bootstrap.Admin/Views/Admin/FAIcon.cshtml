@@ -4,24 +4,14 @@
 }
 @section css {
     <link href="~/Content/css/fa.css" rel="stylesheet" />
+    <link href="~/Content/css/fa.responsive.css" rel="stylesheet" />
     <link href="~/Content/css/font-awesome.css" rel="stylesheet" />
 }
 @section javascript {
     <script src="~/Scripts/icon.js"></script>
 }
 <section class="container">
-    <section>
-        <div class="row">
-            <div class="col-lg-12">
-                <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active"><a href="#Fontawesome" data-toggle="tab">Fontawesome 图标</a></li>
-                    <li role="presentation"><a href="#Glyphicons" data-toggle="tab">Glyphicons 图标</a></li>
-                </ul>
-                <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active" id="Fontawesome">@Html.Partial("AwesomeIcon")</div>
-                    <div role="tabpanel" class="tab-pane" id="Glyphicons">@Html.Partial("Glyphicons")</div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <div class="panel-body" data-spy="scroll" data-target=".fb-timeliner">
+        @Html.Partial("IconView")
+    </div>
 </section>

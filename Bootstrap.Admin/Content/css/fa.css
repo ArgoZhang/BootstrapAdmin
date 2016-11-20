@@ -1,4 +1,9 @@
-﻿.modal-body #fa-top {
+﻿body {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 13px;
+}
+
+.modal-body #fa-top {
     float: left;
     margin-top: -15px;
 }

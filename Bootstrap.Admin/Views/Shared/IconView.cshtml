@@ -1,49 +1,36 @@
-﻿<div id="dialogIcon" class="modal-content icon-content">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myIconModalLabel">请选择图标</h4>
-    </div>
-    <div class="modal-body" data-spy="scroll" data-target=".fb-timeliner">
-        <i id="fa-top"></i>
-        <div class="icon-body">
-            <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#Fontawesome" data-toggle="tab">Fontawesome 图标</a></li>
-                <li role="presentation"><a href="#Glyphicons" data-toggle="tab">Glyphicons 图标</a></li>
-            </ul>
-            <div id="iconTab" class="tab-content">
-                <div role="tabpanel" class="tab-pane active" id="Fontawesome">@Html.Partial("AwesomeIcon")</div>
-                <div role="tabpanel" class="tab-pane" id="Glyphicons">@Html.Partial("Glyphicons")</div>
-            </div>
-        </div>
-        <div class="fb-timeliner">
-            <h2 class="recent-highlight">图标分类</h2>
-            <ul class="nav navbar">
-                <li><a href="#new">新图标</a></li>
-                <li><a href="#web-application">Web 图标</a></li>
-                <li><a href="#accessibility">辅助图标</a></li>
-                <li><a href="#hand">手形图标</a></li>
-                <li><a href="#transportation">交通运输图标</a></li>
-                <li><a href="#gender">性别图标</a></li>
-                <li><a href="#file-type">文件类型图标</a></li>
-                <li><a href="#spinner">微调控制项图标</a></li>
-                <li><a href="#form-control">格式控制图标</a></li>
-                <li><a href="#payment">支付图标</a></li>
-                <li><a href="#chart">图表图标</a></li>
-                <li><a href="#currency">货币图标</a></li>
-                <li><a href="#text-editor">文本编辑图标</a></li>
-                <li><a href="#directional">方向图标</a></li>
-                <li><a href="#video-player">影像播放器图标</a></li>
-                <li><a href="#brand">品牌图标</a></li>
-                <li><a href="#medical">医疗图标</a></li>
-                <li><a href="#fa-top">返回顶部</a></li>
-                <li><a href="#fa-bottom">返回底部</a></li>
-            </ul>
-        </div>
-        <i id="fa-bottom"></i>
-    </div>
-    <div class="modal-footer">
-        <span>被选择的图标：</span><i id="pickIcon"></i>
-        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-        <button type="button" class="btn btn-primary" id="btnSubmitIcon">保存</button>
+﻿<i id="fa-top"></i>
+<div class="icon-body">
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#Fontawesome" data-toggle="tab">Fontawesome 图标</a></li>
+        <li role="presentation"><a href="#Glyphicons" data-toggle="tab">Glyphicons 图标</a></li>
+    </ul>
+    <div id="iconTab" class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="Fontawesome">@Html.Partial("AwesomeIcon")</div>
+        <div role="tabpanel" class="tab-pane" id="Glyphicons">@Html.Partial("Glyphicons")</div>
     </div>
 </div>
+<div class="fb-timeliner">
+    <h2 class="recent-highlight">图标分类</h2>
+    <ul class="nav navbar">
+        <li><a href="#new">新图标</a></li>
+        <li><a href="#web-application">Web 图标</a></li>
+        <li><a href="#accessibility">辅助图标</a></li>
+        <li><a href="#hand">手形图标</a></li>
+        <li><a href="#transportation">交通运输图标</a></li>
+        <li><a href="#gender">性别图标</a></li>
+        <li><a href="#file-type">文件类型图标</a></li>
+        <li><a href="#spinner">微调控制项图标</a></li>
+        <li><a href="#form-control">格式控制图标</a></li>
+        <li><a href="#payment">支付图标</a></li>
+        <li><a href="#chart">图表图标</a></li>
+        <li><a href="#currency">货币图标</a></li>
+        <li><a href="#text-editor">文本编辑图标</a></li>
+        <li><a href="#directional">方向图标</a></li>
+        <li><a href="#video-player">影像播放器图标</a></li>
+        <li><a href="#brand">品牌图标</a></li>
+        <li><a href="#medical">医疗图标</a></li>
+        <li><a href="#fa-top">返回顶部</a></li>
+        <li><a href="#fa-bottom">返回底部</a></li>
+    </ul>
+</div>
+<i id="fa-bottom"></i>
