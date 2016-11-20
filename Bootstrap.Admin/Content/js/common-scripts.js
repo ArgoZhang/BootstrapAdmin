@@ -17,8 +17,6 @@
         }, 200);
     });
 
-    $('#websiteFooter').text($('#footer').val());
-
     // breadcrumb
     var arch = $('#nav-accordion').find('a.active').last();
     $breadNav.text(arch.text());
