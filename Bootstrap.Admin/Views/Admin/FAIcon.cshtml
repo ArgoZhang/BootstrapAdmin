@@ -1,17 +1,21 @@
-﻿@{
-    ViewBag.Title = "Icon";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+﻿@model NavigatorBarModel
+@{
+    ViewBag.Title = "图标集";
+    Layout = "~/Views/Shared/_Admin.cshtml";
 }
 @section css {
     <link href="~/Content/css/fa.css" rel="stylesheet" />
     <link href="~/Content/css/fa.responsive.css" rel="stylesheet" />
-    <link href="~/Content/css/font-awesome.css" rel="stylesheet" />
 }
 @section javascript {
     <script src="~/Scripts/icon.js"></script>
 }
-<section class="container">
-    <div class="panel-body" data-spy="scroll" data-target=".fb-timeliner">
-        @Html.Partial("IconView")
-    </div>
-</section>
+@section header {
+    @Html.Partial("Header", Model)
+}
+@section navigator {
+    @Html.Partial("Navigator", Model)
+}
+<div class="faicon">
+    @Html.Partial("IconView")
+</div>

@@ -75,10 +75,10 @@ namespace Bootstrap.Admin.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        [AllowAnonymous]
         public ActionResult FAIcon()
         {
-            return View();
+            var v = new NavigatorBarModel("~/Admin/FAIcon");
+            return View(v);
         }
         /// <summary>
         /// 

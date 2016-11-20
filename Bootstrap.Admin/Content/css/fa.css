@@ -1,9 +1,4 @@
-﻿body {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 13px;
-}
-
-.modal-body #fa-top {
+﻿.modal-body #fa-top {
     float: left;
     margin-top: -15px;
 }
@@ -30,9 +25,9 @@
 
 .fb-timeliner {
     position: fixed;
-    top: 80px;
-    right: 40px;
-    width: 150px;
+    top: 96px;
+    right: 46px;
+    width: 140px;
     bottom: 100px;
 }
 
@@ -177,6 +172,7 @@
         padding-bottom: 4px;
         height: 32px;
         vertical-align: middle;
+        color: #222;
     }
 
         .fontawesome-icon-list ul li:hover {
@@ -210,4 +206,18 @@
 
     .menu-content .dd {
         max-width: inherit;
+    }
+
+.faicon {
+    padding-bottom: 15px;
+}
+
+    .faicon .fb-timeliner {
+        top: 130px;
+        right: 32px;
+        bottom: 70px;
+    }
+
+    .faicon .nav-tabs > li.active > a, .faicon .nav-tabs > li.active > a:hover, .faicon .nav-tabs > li.active > a:focus {
+        background-color: #41CAC0;
     }
