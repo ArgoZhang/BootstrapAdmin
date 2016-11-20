@@ -38,7 +38,7 @@
 
     // load widget data
     $.bc({
-        url: '../api/Notifications/',
+        url: Notifications.url,
         swal: false,
         method: 'GET',
         callback: function (result) {
