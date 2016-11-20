@@ -114,9 +114,30 @@
     }
 }
 
-@media (max-height: 400px) {
+@media (min-height: 568px) {
     .modal-body {
-        height: 180px;
+        max-height: 440px;
+        overflow-y: auto;
+    }
+}
+
+@media (max-height: 567px) {
+    .modal-body {
+        height: 260px;
+        overflow-y: auto;
+    }
+}
+
+@media (max-height: 414px) {
+    .modal-body {
+        height: 190px;
+        overflow-y: auto;
+    }
+}
+
+@media (max-height: 320px) {
+    .modal-body {
+        height: 150px;
         overflow-y: auto;
     }
 }

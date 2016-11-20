@@ -97,6 +97,8 @@
         top: 62px;
         bottom: 80px;
         overflow: auto;
+        max-height: inherit;
+        height: inherit;
     }
 
     .icon-content .modal-footer {
