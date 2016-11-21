@@ -65,6 +65,7 @@ namespace Bootstrap.Admin.Controllers
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
+            LgbPrincipal.UndoImpersonate();
             return RedirectToAction("Login");
         }
         /// <summary>
