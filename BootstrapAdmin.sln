@@ -29,6 +29,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{5864
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bootstrap.DataAccessTests", "Bootstrap.DataAccessTests\Bootstrap.DataAccessTests.csproj", "{D3A9D339-6E5E-416D-BB71-D3AAE105BD16}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bootstrap.Client", "Bootstrap.Client\Bootstrap.Client.csproj", "{6B261B2C-9E70-467C-BE76-13C0E280A683}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{D3A9D339-6E5E-416D-BB71-D3AAE105BD16}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3A9D339-6E5E-416D-BB71-D3AAE105BD16}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3A9D339-6E5E-416D-BB71-D3AAE105BD16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B261B2C-9E70-467C-BE76-13C0E280A683}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B261B2C-9E70-467C-BE76-13C0E280A683}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B261B2C-9E70-467C-BE76-13C0E280A683}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B261B2C-9E70-467C-BE76-13C0E280A683}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
