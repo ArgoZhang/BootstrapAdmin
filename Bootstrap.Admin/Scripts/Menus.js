@@ -122,8 +122,7 @@
             digits: true
         },
         url: {
-            required: true,
-            maxlength: 50
+            required: true
         },
         category: {
             required: true,
