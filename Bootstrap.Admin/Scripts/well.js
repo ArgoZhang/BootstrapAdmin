@@ -1,5 +1,5 @@
 ﻿$(function () {
-    $('#main-content').css('backgroundImage', 'url("../../content/images/bg.jpg")');
+    $('#main-content').css('backgroundImage', 'url("../content/images/bg.jpg")');
     function resposive() {
         var height = $(window).height();
         if (height > 672)
