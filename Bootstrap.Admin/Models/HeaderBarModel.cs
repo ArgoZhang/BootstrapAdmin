@@ -31,7 +31,7 @@ namespace Bootstrap.Admin.Models
         /// <summary>
         /// 
         /// </summary>
-        public bool ShowMenu { get; protected set; }
+        public bool ShowMenu { get; set; }
         /// <summary>
         /// 
         /// </summary>

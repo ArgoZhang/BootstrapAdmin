@@ -18,7 +18,8 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public ActionResult Index()
         {
-            var v = new ContentModel();
+            var v = new HeaderBarModel();
+            v.ShowMenu = true;
             return View(v);
         }
         /// <summary>

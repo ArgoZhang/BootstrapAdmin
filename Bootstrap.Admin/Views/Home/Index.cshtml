@@ -1,5 +1,6 @@
-﻿@model ContentModel
+﻿@model HeaderBarModel
 @{
+    ViewBag.Title = "首页";
     Layout = "~/Views/Shared/_Normal.cshtml";
 }
 @section javascript {
@@ -9,5 +10,4 @@
     @Html.Partial("Header", Model)
 }
 <div id="content" class="content-body">
-    <iframe src="@Model.Url"><a href="@Model.Url">你的浏览器不支持iframe页面嵌套，请点击这里访问页面内容。</a></iframe>
 </div>

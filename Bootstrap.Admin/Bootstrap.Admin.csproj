@@ -259,7 +259,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\ContentModel.cs" />
     <Compile Include="Models\LockModel.cs" />
     <Compile Include="Models\MessageCountModel.cs" />
     <Compile Include="Models\QueryDictOption.cs" />
