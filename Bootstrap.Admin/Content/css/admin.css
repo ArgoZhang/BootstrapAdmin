@@ -122,34 +122,34 @@
     border-color: #3c763d;
 }
 
-#main-content {
+.main-content {
     padding: 15px 15px 0 15px;
     margin-left: 210px;
     height: auto;
 }
 
-    #main-content > .panel:last-child .panel-body {
+    .main-content > .panel:last-child .panel-body {
         padding-bottom: 0;
     }
 
-    #main-content > .panel > .panel-body > .modal-footer {
+    .main-content > .panel > .panel-body > .modal-footer {
         text-align: left;
     }
 
-    #main-content.closed {
+    .main-content.closed {
         margin-left: 0;
     }
 
-#sidebar {
+.sidebar {
     width: 210px;
     background: #2a3542;
 }
 
-    #sidebar .sub-menu > .sub li {
+    .sidebar .sub-menu > .sub li {
         padding-left: 32px;
     }
 
-    #sidebar ul li {
+    .sidebar ul li {
         position: relative;
     }
 

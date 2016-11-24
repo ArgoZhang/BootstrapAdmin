@@ -1,7 +1,4 @@
 @media (max-width: 930px) {
-    /*#main-content {
-        margin: 0px !important;
-    }*/
 }
 
 @media (max-width: 666px) {
@@ -47,7 +44,7 @@
         z-index: 50;
     }
 
-    #main-content {
+    .main-content {
         margin-top: 0;
         position: fixed;
         left: 0;
@@ -72,7 +69,7 @@
         z-index: 50;
     }
 
-    #main-content {
+    .main-content {
         margin-top: 0;
         position: fixed;
         left: 0;

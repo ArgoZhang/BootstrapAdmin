@@ -11,22 +11,22 @@
 }
 
 @media (max-width: 768px) {
-    #sidebar {
+    .sidebar {
         display: none;
         overflow-y: auto;
         width: 100%;
         z-index: 5;
     }
 
-        #sidebar ul li a {
+        .sidebar ul li a {
             padding-right: 25px;
         }
 
-    #main-content {
+    .main-content {
         margin-left: 0;
     }
 
-        #main-content.open {
+        .main-content.open {
             display: none;
         }
 
@@ -97,7 +97,7 @@
 }
 
 @media (min-width: 768px) {
-    #sidebar {
+    .sidebar {
         top: 94px;
         bottom: 40px;
         position: absolute;
@@ -106,7 +106,7 @@
 }
 
 @media (min-height: 672px) {
-    #sidebar {
+    .sidebar {
         top: 94px;
         bottom: 40px;
         position: absolute;
