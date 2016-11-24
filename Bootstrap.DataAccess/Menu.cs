@@ -48,6 +48,10 @@ namespace Bootstrap.DataAccess
         /// </summary>
         public string Active { get; set; }
         /// <summary>
+        /// 获得/设置 链接目标
+        /// </summary>
+        public string Target { get; set; }
+        /// <summary>
         /// 
         /// </summary>
         public IEnumerable<Menu> Menus { get; set; }

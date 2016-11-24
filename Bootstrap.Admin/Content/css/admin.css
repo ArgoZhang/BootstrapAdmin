@@ -66,6 +66,10 @@
         vertical-align: middle;
     }
 
+.form-group .form-control-url {
+    width: 83%;
+}
+
 .modal-dialog .modal-body, .panel-body {
     padding-bottom: 0;
 }

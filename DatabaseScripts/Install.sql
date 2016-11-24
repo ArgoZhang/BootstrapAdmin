@@ -173,6 +173,7 @@ CREATE TABLE [dbo].[Navigations](
 	[Icon] [varchar](50) NULL,
 	[Url] [varchar](4000) NULL,
 	[Category] [nvarchar](50) NOT NULL,
+	[Target] [varchar](10) NOT NULL,
  CONSTRAINT [PK_Navigations] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
@@ -357,6 +358,9 @@ ALTER TABLE [dbo].[Messages] ADD  CONSTRAINT [DF_Messages_Label]  DEFAULT ((0)) 
 GO
 
 ALTER TABLE [dbo].[Users] ADD  CONSTRAINT [DF_Users_Icon]  DEFAULT ('default.jpg') FOR [Icon]
+GO
+
+ALTER TABLE [dbo].[Navigations] ADD  CONSTRAINT [DF_Navigations_Target]  DEFAULT ('_self') FOR [Target]
 GO
 
 /****** Object:  Table [dbo].[Tasks]    Script Date: 11/16/2016 15:40:02 ******/

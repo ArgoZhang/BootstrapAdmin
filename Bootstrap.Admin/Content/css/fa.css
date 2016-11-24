@@ -15,6 +15,10 @@
     text-align: left;
 }
 
+    .form-group .input-group .input-group-btn .btn i.fa-remove {
+        width: auto;
+    }
+
 .icon-body {
     margin-right: 160px;
 }

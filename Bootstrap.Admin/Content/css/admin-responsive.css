@@ -1,6 +1,10 @@
-﻿@media (min-width: 990px) {
+﻿@media (min-width: 992px) {
     .modal-dialog {
-        width: 800px;
+        width: 900px;
+    }
+
+    .form-group .form-control-url {
+        width: 87%;
     }
 }
 
@@ -11,6 +15,10 @@
 }
 
 @media (max-width: 768px) {
+    .form-group .form-control-url {
+        width: 100%;
+    }
+
     .sidebar {
         display: none;
         overflow-y: auto;

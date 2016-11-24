@@ -28,7 +28,8 @@
                 Order: "order",
                 Icon: "icon",
                 Url: "url",
-                Category: "category"
+                Category: "category",
+                Target: "target"
             }
         }),
         click: {
@@ -108,7 +109,29 @@
             { title: "菜单序号", field: "Order", sortable: true },
             { title: "菜单图标", field: "Icon", sortable: false },
             { title: "菜单路径", field: "Url", sortable: false },
-            { title: "菜单类别", field: "CategoryName", sortable: true }
+            { title: "菜单类别", field: "CategoryName", sortable: true },
+            {
+                title: "目标", field: "Target", sortable: true, formatter: function (value, row, index) {
+                    var ret = value;
+                    switch (value) {
+                        case "_self":
+                            ret = "本窗口";
+                            break;
+                        case "_blank":
+                            ret = "新窗口";
+                            break;
+                        case "_parent":
+                            ret = "父级窗口";
+                            break;
+                        case "_top":
+                            ret = "顶级窗口";
+                            break;
+                        default:
+                            break;
+                    }
+                    return ret;
+                }
+            }
         ]
     });
 
@@ -186,6 +209,10 @@
         $nestMenu.find('li span').removeClass('active');
         $dialogMenu.hide();
         $dialogNew.show();
+    });
+
+    $('#btnClearIcon, #btnMenuClearParent').on('click', function () {
+        $(this).parent().prev().val("");
     });
 
     $btnSubmitMenu.on('click', function () {
