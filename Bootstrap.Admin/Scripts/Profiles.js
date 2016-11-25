@@ -57,16 +57,40 @@
         }
     });
 
-    function listCache(options) {
-        options = $.extend({ url: '../../CacheList.axd' }, options);
+    var $sortable = $('#sortable');
+    var listCacheUrl = function (options) {
+        options = $.extend({ clear: false }, options);
+        $sortable.html('');
+        $.bc({
+            url: Profiles.url,
+            method: 'GET',
+            swal: false,
+            callback: function (result) {
+                if (result && $.isArray(result)) {
+                    $.each(result, function (index, item) {
+                        listCache($.extend({ item: item, url: item.Url }, options));
+                    });
+                }
+            }
+        });
+    }
+
+    var listCache = function (options) {
+        options = $.extend({ clear: false, key: '' }, options);
+        if (options.key != '') {
+            options.url = $.format(options.url, options.key);
+        }
+        if (options.clear) {
+            options.url += '&clear=clear';
+        }
         $.bc({
             url: options.url,
             swal: false,
             callback: function (result) {
-                if (result) {
+                if (result && options.key == '') {
                     result = $.parseJSON(result);
                     if ($.isArray(result)) {
-                        var html = '<li class="{4}"><i class="fa fa-ellipsis-v"></i><div class="task-title"><span class="task-title-sp tooltips" data-placement="right" title="{1}">{2}</span><span class="badge badge-sm label-success">{0}</span><span class="task-value tooltips" data-placement="top" data-original-title="{3}">{3}</span><div class="pull-right hidden-phone"><button class="btn btn-danger btn-xs fa fa-trash-o" data-key="{1}"></button></div></div></li>';
+                        var html = '<li class="{4}"><i class="fa fa-ellipsis-v"></i><div class="task-title"><span class="task-title-sp tooltips" data-placement="right" title="{1}">{2}</span><span class="badge badge-sm label-success">{0}</span><span class="task-value tooltips" data-placement="top" data-original-title="{3}">{3}</span><div class="pull-right hidden-phone"><button class="btn btn-danger btn-xs fa fa-trash-o" data-key="{1}" data-url="{5}"></button></div></div></li>';
                         var content = result.sort(function (x, y) {
                             return x.Key > y.Key ? 1 : -1;
                         }).map(function (ele) {
@@ -106,19 +130,22 @@
                                 default:
                                     break;
                             }
-                            return $.format(html, ele.Interval, ele.Key, ele.Desc, ele.Value, css);
+                            return $.format(html, ele.Interval, ele.Key, ele.Desc, ele.Value, css, options.url);
                         }).join('');
-                        $('#sortable').html(content);
+                        $sortable.append($.format('<li class="title">{0}-{1}</li>', options.item.Desc, options.item.Key));
+                        $sortable.append(content);
+                        $('.tooltips').tooltip('destroy');
                         $('.tooltips').tooltip();
-                        $('#sortable .btn').click(function () {
-                            listCache({ url: $.format('../../CacheList.axd?cacheKey={0}', $(this).attr('data-key')) });
-                        });
                     }
                 }
             }
         });
     }
-    listCache();
-    $('#refreshCache').click(function () { listCache(); });
-    $('#clearCache').click(function () { listCache({ url: '../../CacheList.axd?clear=clear' }); });
+    $('#refreshCache').click(function () { listCacheUrl(); }).trigger('click');
+    $('#clearCache').click(function () { listCacheUrl({ clear: true }); });
+    $sortable.on('click', '.btn', function () {
+        console.log($(this).attr('data-key'));
+        listCache({ key: $(this).attr('data-key'), url: $(this).attr('data-url') });
+        listCacheUrl();
+    });
 })

@@ -163,12 +163,27 @@
 }
 
 .ui-sortable > li {
-    padding-left: 35px !important;
+    padding-left: 35px;
     position: relative;
     background: #f5f6f8;
     margin-bottom: 2px;
-    border-bottom: none !important;
+    border-bottom: none;
 }
+
+.ui-sortable li.title {
+    font-size: 14px;
+    color: #0077de;
+    background-color: #b5f1b6;
+    padding: 10px 15px;
+}
+
+    .ui-sortable li.title:hover {
+        background-color: #b5f1b6;
+    }
+
+    .ui-sortable li.title:first-child {
+        border-radius: 4px 4px 0 0;
+    }
 
 .ui-sortable li.list-primary {
     border-left: 3px solid #41CAC0;
