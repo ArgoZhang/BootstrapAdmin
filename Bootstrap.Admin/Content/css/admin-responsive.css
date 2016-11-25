@@ -131,14 +131,14 @@
 
 @media (min-height: 568px) {
     .modal-body {
-        max-height: 440px;
+        max-height: 480px;
         overflow-y: auto;
     }
 }
 
-@media (max-height: 567px) {
+@media (max-height: 568px) {
     .modal-body {
-        height: 260px;
+        height: 300px;
         overflow-y: auto;
     }
 }
