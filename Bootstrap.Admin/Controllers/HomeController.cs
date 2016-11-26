@@ -53,7 +53,6 @@ namespace Bootstrap.Admin.Controllers
             model.UserName = userName;
             if (LgbPrincipal.IsAdmin(userName) || UserHelper.Authenticate(userName, password))
             {
-                LgbPrincipal.SavePrincipalCookie(new LgbUser() { RealUserName = userName });
                 FormsAuthentication.RedirectFromLoginPage(userName, false);
             }
             return View(model);
@@ -66,7 +65,6 @@ namespace Bootstrap.Admin.Controllers
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
-            LgbPrincipal.UndoImpersonate();
             return RedirectToAction("Login");
         }
         /// <summary>
