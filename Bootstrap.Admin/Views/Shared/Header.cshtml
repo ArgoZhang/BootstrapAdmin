@@ -21,7 +21,7 @@
             </li>
         </ul>
     }
-    @if (!Model.ShowMenu)
+    @if (!Model.ShowMenu && (LgbPrincipal.IsAdmin(User.Identity.Name) || User.IsInRole("Administrators")))
     {
         <!--  notification start -->
         <ul class="notify-row">
