@@ -147,22 +147,18 @@
                 messages: $.extend({}, messages),
                 highlight: function (element, errorClass, validClass) {
                     $(element).parents('.form-group').addClass(errorClass).removeClass(validClass);
+                    $(element).tipso({
+                        useTitle: false,
+                        position: 'top',
+                        background: '#a94442'
+                    });
                 },
                 unhighlight: function (element, errorClass, validClass) {
                     $(element).parents('.form-group').removeClass(errorClass).addClass(validClass);
-                    $(element).popover('destroy');
+                    $(element).tipso('hide').tipso('destroy');
                 },
                 errorPlacement: function (label, element) {
-                    $(element).popover('destroy');
-                    $(element).popover({
-                        animation: true,
-                        delay: { "show": 100, "hide": 100 },
-                        container: 'form',
-                        trigger: 'manual',
-                        content: $(label).text(),
-                        placement: 'auto'
-                    });
-                    $(element).popover('show');
+                    $(element).tipso('update', 'content', $(label).text());
                 }
             });
             if (handler && $.isArray(handler.button)) {

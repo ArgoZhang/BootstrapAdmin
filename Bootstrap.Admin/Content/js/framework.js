@@ -35,7 +35,10 @@
                 if (that.options.validateForm && that.options.validateForm.constructor === String) {
                     var v = $('#' + that.options.validateForm);
                     var vf = v.validate();
-                    vf.currentElements.each(function () { $(this).popover('destroy'); })
+                    vf.currentElements.each(function () {
+                        var $this = $(this);
+                        if ($this.hasClass('tipso_style')) $this.tipso('hide').tipso('destroy');
+                    })
                     vf.resetForm();
                     v.find('div.form-group').removeClass("has-error has-success");
                 }
