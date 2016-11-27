@@ -92,7 +92,14 @@
     $('#dataForm').autoValidate({
         userName: {
             required: true,
-            maxlength: 50
+            maxlength: 50,
+            remote: {
+                url: "../api/Users/",
+                type: "PUT",
+                data: {
+                    UserStatus: 9
+                }
+            }
         },
         password: {
             required: true,
@@ -105,6 +112,10 @@
         displayName: {
             required: true,
             maxlength: 50
+        }
+    }, {
+        userName: {
+            remote: "此登陆名称已存在"
         }
     });
 });

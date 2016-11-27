@@ -40,7 +40,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         public string Description { get; set; }
         /// <summary>
-        /// 获得/设置 用户当前状态 0 表示管理员注册用户 1 表示用户自己注册 2 表示管理员批复
+        /// 获得/设置 用户当前状态 0 表示管理员注册用户 1 表示用户自己注册 2 表示管理员批复 9 表示前台remote validate
         /// </summary>
         public int UserStatus { get; set; }
         /// <summary>

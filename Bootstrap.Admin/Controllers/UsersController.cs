@@ -30,6 +30,11 @@ namespace Bootstrap.Admin.Controllers
         [HttpPut]
         public bool Put([FromBody]User value)
         {
+            if (value.UserStatus == 9)
+            {
+                // vlaidate userName
+                return UserHelper.RetrieveUsersByName(value.UserName) == null;
+            }
             var ret = false;
             var userName = User.Identity.Name;
             if (value.UserName == userName && !LgbPrincipal.IsAdmin(userName))
@@ -71,9 +76,9 @@ namespace Bootstrap.Admin.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public User Get(int id)
+        public User Get(string userName)
         {
-            return UserHelper.RetrieveUsers().FirstOrDefault(t => t.ID == id);
+            return UserHelper.RetrieveUsersByName(userName);
         }
         /// <summary>
         /// 

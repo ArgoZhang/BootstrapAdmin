@@ -129,14 +129,22 @@
             });
             that.animate({ marginTop: "+=" + getHeight() });
         },
-        autoValidate: function (options, handler) {
+        autoValidate: function (rules, messages, handler) {
             // validate
             var $this = $(this);
+            if (messages && $.isArray(messages.button)) {
+                handler = messages;
+                messages = {};
+            }
+            else {
+                messages = $.extend({}, messages);
+            }
             $this.validate({
                 validClass: "has-success",
                 errorClass: "has-error",
                 ignore: ".ignore",
-                rules: $.extend({}, options),
+                rules: $.extend({}, rules),
+                messages: $.extend({}, messages),
                 highlight: function (element, errorClass, validClass) {
                     $(element).parents('.form-group').addClass(errorClass).removeClass(validClass);
                 },
