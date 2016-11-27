@@ -148,7 +148,7 @@
                 highlight: function (element, errorClass, validClass) {
                     var $ele = $(element);
                     $ele.parents('.form-group').addClass(errorClass).removeClass(validClass);
-                    if ($ele.hasClass('tipso_style')) $ele.tipso({
+                    if ($.isFunction($ele.tipso)) $ele.tipso({
                         useTitle: false,
                         position: 'top',
                         background: '#a94442'
@@ -161,7 +161,7 @@
                 },
                 errorPlacement: function (label, element) {
                     var $ele = $(element);
-                    if ($ele.hasClass('tipso_style')) $ele.tipso('update', 'content', $(label).text());
+                    if ($.isFunction($ele.tipso)) $ele.tipso('update', 'content', $(label).text());
                 }
             });
             if (handler && $.isArray(handler.button)) {
