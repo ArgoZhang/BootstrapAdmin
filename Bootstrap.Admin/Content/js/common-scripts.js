@@ -15,7 +15,8 @@
         $('#main-content, .content-body, body').animate({
             scrollTop: 0
         }, 200);
-    }).tipso({ position: 'left', background: '#333', width: 70 });
+    });
+    if (!$.browser.versions.mobile) $("#gotoTop").tipso({ position: 'left', background: '#333', width: 70 });
 
     // breadcrumb
     var arch = $('#nav-accordion').find('a.active').last();
