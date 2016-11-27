@@ -15,7 +15,7 @@
         $('#main-content, .content-body, body').animate({
             scrollTop: 0
         }, 200);
-    }).tipso({ position: 'left', background: '#333' });
+    }).tipso({ position: 'left', background: '#333', width: 70 });
 
     // breadcrumb
     var arch = $('#nav-accordion').find('a.active').last();

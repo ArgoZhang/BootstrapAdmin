@@ -90,7 +90,7 @@
                 if (result && options.key == '') {
                     result = $.parseJSON(result);
                     if ($.isArray(result)) {
-                        var html = '<li class="{4}"><i class="fa fa-ellipsis-v"></i><div class="task-title"><span class="task-title-sp tipso_style" title="{1}">{2}</span><span class="badge badge-sm label-success">{0}</span><span class="task-value tipso_style" title="{3}">{3}</span><div class="pull-right hidden-phone"><button class="btn btn-danger btn-xs fa fa-trash-o" data-key="{1}" data-url="{5}"></button></div></div></li>';
+                        var html = '<li class="{4}"><i class="fa fa-ellipsis-v"></i><div class="task-title"><span class="task-title-sp" title="{1}">{2}</span><span class="badge badge-sm label-success">{0}</span><span class="task-value" title="{3}">{3}</span><div class="pull-right hidden-phone"><button class="btn btn-danger btn-xs fa fa-trash-o" title="{1}" data-key="{1}" data-url="{5}"></button></div></div></li>';
                         var content = result.sort(function (x, y) {
                             return x.Key > y.Key ? 1 : -1;
                         }).map(function (ele) {
@@ -134,14 +134,13 @@
                         }).join('');
                         $sortable.append($.format('<li class="title">{0}-{1}</li>', options.item.Desc, options.item.Key));
                         $sortable.append(content);
-                        $('.tipso_style').tipso();
                     }
                 }
             }
         });
     }
-    $('#refreshCache').tipso({ position: 'left' }).click(function () { listCacheUrl(); }).trigger('click');
-    $('#clearCache').tipso({ position: 'left' }).click(function () { listCacheUrl({ clear: true }); });
+    $('#refreshCache').tipso({ position: 'left', width: 70 }).click(function () { listCacheUrl(); }).trigger('click');
+    $('#clearCache').tipso({ position: 'left', width: 70 }).click(function () { listCacheUrl({ clear: true }); });
     $sortable.on('click', '.btn', function () {
         console.log($(this).attr('data-key'));
         listCache({ key: $(this).attr('data-key'), url: $(this).attr('data-url') });
