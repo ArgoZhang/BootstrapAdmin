@@ -146,19 +146,22 @@
                 rules: $.extend({}, rules),
                 messages: $.extend({}, messages),
                 highlight: function (element, errorClass, validClass) {
-                    $(element).parents('.form-group').addClass(errorClass).removeClass(validClass);
-                    $(element).tipso({
+                    var $ele = $(element);
+                    $ele.parents('.form-group').addClass(errorClass).removeClass(validClass);
+                    if ($ele.hasClass('tipso_style')) $ele.tipso({
                         useTitle: false,
                         position: 'top',
                         background: '#a94442'
                     });
                 },
                 unhighlight: function (element, errorClass, validClass) {
-                    $(element).parents('.form-group').removeClass(errorClass).addClass(validClass);
-                    $(element).tipso('hide').tipso('destroy');
+                    var $ele = $(element);
+                    $ele.parents('.form-group').removeClass(errorClass).addClass(validClass);
+                    if ($ele.hasClass('tipso_style')) $ele.tipso('hide').tipso('destroy');
                 },
                 errorPlacement: function (label, element) {
-                    $(element).tipso('update', 'content', $(label).text());
+                    var $ele = $(element);
+                    if ($ele.hasClass('tipso_style')) $ele.tipso('update', 'content', $(label).text());
                 }
             });
             if (handler && $.isArray(handler.button)) {
