@@ -143,7 +143,8 @@
     $('#refreshCache').click(function () { listCacheUrl(); }).trigger('click');
     $('#clearCache').click(function () { listCacheUrl({ clear: true }); });
     if (!$.browser.versions.mobile) {
-        $('#refreshCache, #clearCache').tipso({ width: 70, position: 'left' });
+        $('#refreshCache').tipso({ width: 70, position: 'left' });
+        $('#clearCache').tipso({ width: 180, position: 'left' });
     }
     $sortable.on('click', '.btn', function () {
         console.log($(this).attr('data-key'));
