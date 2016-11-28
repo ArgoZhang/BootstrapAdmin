@@ -103,6 +103,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\ErrorLog\Readme.txt" />
+    <Content Include="favicon.ico" />
     <Content Include="Content\css\admin-responsive.css" />
     <Content Include="Content\css\admin.css" />
     <Content Include="Content\css\blue.css" />
