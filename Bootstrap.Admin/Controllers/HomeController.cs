@@ -51,9 +51,9 @@ namespace Bootstrap.Admin.Controllers
             var model = new LoginModel();
             if (string.IsNullOrEmpty(userName)) return View(model);
             model.UserName = userName;
-            if (LgbPrincipal.IsAdmin(userName) || UserHelper.Authenticate(userName, password))
+            if (LgbPrincipal.IsAdmin(userName, password) || UserHelper.Authenticate(userName, password))
             {
-                FormsAuthentication.RedirectFromLoginPage(userName, false);
+                FormsAuthentication.RedirectFromLoginPage(userName, remember == "true");
             }
             return View(model);
         }
