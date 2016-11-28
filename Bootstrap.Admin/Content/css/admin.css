@@ -492,3 +492,18 @@ input[type="datetime"] {
                 .mail-box .lg-side .table-inbox tr td:hover {
                     cursor: pointer;
                 }
+
+.btn-select {
+}
+
+    .btn-select .dropdown-menu {
+        padding: 0;
+    }
+
+        .btn-select .dropdown-menu li a {
+            padding: 6px 20px;
+        }
+
+        .btn-select .dropdown-menu .divider {
+            margin: 0;
+        }

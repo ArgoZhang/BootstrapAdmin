@@ -15,6 +15,7 @@
     var $nestMenuInput = $nestMenu.find('div.dd3-content');
     var $parentMenuID = $('#parentId');
     var $parentMenuName = $('#parentName');
+    var $category = $('#category');
     $nestMenuInput.find('label:first').hide();
 
     var bsa = new BootstrapAdmin({
@@ -101,7 +102,7 @@
     $('table').smartTable({
         url: Menu.url,            //请求后台的URL（*）
         sortName: 'Order',
-        queryParams: function (params) { return $.extend(params, { parentName: $('#txt_parent_menus_name').val(), name: $("#txt_menus_name").val(), category: $('#sel_menus_category').val() }); },           //传递参数（*）
+        queryParams: function (params) { return $.extend(params, { parentName: $('#txt_parent_menus_name').val(), name: $("#txt_menus_name").val(), category: $('#sel_menus_category').selectval() }); },           //传递参数（*）
         columns: [{ checkbox: true },
             { title: "Id", field: "ID", events: bsa.idEvents(), formatter: BootstrapAdmin.idFormatter },
             { title: "父级菜单", field: "ParentName", sortable: true },
@@ -180,13 +181,13 @@
         $btnSubmitMenu.data('type', 'order');
         $nestMenuInput.find('label:last').find('input').hide();
         $nestMenu.find('li.dd-item').hide().remove('[data-id="0"]');
-        $nestMenu.find('li[data-category="' + $('#category').selectpicker('val') + '"]').show();
+        $nestMenu.find('li[data-category="' + $category.selectval() + '"]').show();
         // handler new menu
         var did = $('#menuID').val();
         if (did == "") did = 0;
         if (did == 0) {
             var menuName = $('#name').val();
-            var menuCate = $('select').selectpicker('val');
+            var menuCate = $category.selectval();
             if (menuName == "") menuName = "新建菜单-未命名";
             $nestMenu.find('ol.dd-list:first').append($.format('<li class="dd-item dd3-item" data-id="0" data-category="{1}"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><label><span>{0}</span></label></div></li>', menuName, menuCate));
         }
@@ -200,7 +201,7 @@
         $btnSubmitMenu.data('type', 'parent');
         $nestMenuInput.find('label:last').find('input').show();
         $nestMenu.find('li.dd-item').hide().remove('[data-id="0"]');
-        $nestMenu.find('li[data-category="' + $('#category').selectpicker('val') + '"]').show();
+        $nestMenu.find('li[data-category="' + $category.selectval() + '"]').show();
         $dialogMenu.show().adjustDialog();
     });
 
@@ -245,5 +246,5 @@
     });
     $nestMenu.nestable();
     // select
-    $('select').selectpicker();
+    $('.btn-select').select();
 });

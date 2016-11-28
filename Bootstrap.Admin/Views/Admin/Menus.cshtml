@@ -31,11 +31,19 @@
             </div>
             <div class="form-group col-xs-12 col-sm-6 col-md-3 col-lg-3">
                 <label class="control-label" for="sel_menus_category">菜单类别</label>
-                <select class="form-control selectpicker" data-width="auto" id="sel_menus_category">
-                    <option value="">全部</option>
-                    <option value="0">系统菜单</option>
-                    <option value="1">外部菜单</option>
-                </select>
+                <div class="btn-group btn-select">
+                    <button id="sel_menus_category" type="button" class="btn btn-success" data-val="">全部</button>
+                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                        <span class="sr-only">下拉菜单</span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#" data-val="">全部</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#" data-val="0">系统菜单</a></li>
+                        <li><a href="#" data-val="1">外部菜单</a></li>
+                    </ul>
+                </div>
             </div>
             <div class="form-group col-xs-12 col-sm-6 col-md-2 col-lg-2">
                 <button type="button" id="btn_query" class="btn btn-primary form-control"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询</button>
@@ -104,21 +112,35 @@
                     <label class="control-label" for="url">路径</label>
                     <input type="text" class="form-control form-control-url" id="url" name="url" placeholder="不可为空" />
                 </div>
-                <div class="form-group col-xs-12">
+                <div class="form-group col-sm-6 col-xs-12">
                     <label class="control-label" for="category">菜单类别</label>
-                    <select class="selectpicker" data-style="btn-danger" data-width="auto" id="category" data-default-val="1">
-                        <option value="0">系统菜单</option>
-                        <option value="1">外部菜单</option>
-                    </select>
+                    <div class="btn-group dropup btn-select">
+                        <button id="category" type="button" class="btn btn-success" data-default-val="1" data-val="1">外部菜单</button>
+                        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span>
+                            <span class="sr-only">下拉菜单</span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#" data-val="0">系统菜单</a></li>
+                            <li><a href="#" data-val="1">外部菜单</a></li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="form-group col-xs-12">
+                <div class="form-group col-sm-6 col-xs-12">
                     <label class="control-label" for="target">目标</label>
-                    <select class="form-control-select selectpicker" data-style="btn-info" data-width="auto" id="target" data-default-val="_self">
-                        <option value="_self">本窗口</option>
-                        <option value="_blank">新窗口</option>
-                        <option value="_parent">父级窗口</option>
-                        <option value="_top">顶级窗口</option>
-                    </select>
+                    <div class="btn-group dropup btn-select">
+                        <button id="target" type="button" class="btn btn-info" data-default-val="_self" data-val="_self">本窗口</button>
+                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span>
+                            <span class="sr-only">下拉菜单</span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#" data-val="_self">本窗口</a></li>
+                            <li><a href="#" data-val="_blank">新窗口</a></li>
+                            <li><a href="#" data-val="_parent">父级窗口</a></li>
+                            <li><a href="#" data-val="_top">顶级窗口</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </form>

@@ -11,7 +11,7 @@
         load: function (value) {
             for (name in this.options.map) {
                 var ctl = $("#" + this.options.map[name]);
-                if (ctl.hasClass('selectpicker')) ctl.selectpicker('val', value[name]);
+                if (ctl.hasClass('select')) ctl.selectval(value[name]);
                 else ctl.val(value[name]);
             }
         },
@@ -20,7 +20,7 @@
                 var ctl = $("#" + this.options.map[name]);
                 var dv = ctl.attr("data-default-val");
                 if (dv === undefined) dv = "";
-                if (ctl.hasClass('selectpicker')) ctl.selectpicker('val', dv);
+                if (ctl.hasClass('select')) ctl.selectval(dv);
                 else ctl.val(dv);
             }
         },
@@ -28,9 +28,8 @@
             var target = {};
             for (name in this.options.map) {
                 var ctl = $("#" + this.options.map[name]);
-                if (ctl.hasClass('selectpicker')) {
-                    target[name] = ctl.selectpicker('val');
-                    target[name + 'Name'] = ctl.parentsUntil('bootstrap-select').children('button[data-id="' + this.options.map[name] + '"]').attr('title');
+                if (ctl.hasClass('select')) {
+                    target[name] = ctl.selectval();
                 }
                 else {
                     var dv = ctl.attr('data-default-val');

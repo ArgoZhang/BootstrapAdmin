@@ -205,6 +205,30 @@
                 var ctl = $('#' + $(this).attr('id').replace('tb_', 'btn_'));
                 ctl.trigger("click");
             });
+        },
+        select: function () {
+            var $this = $(this);
+            $this.each(function (index, element) {
+                var $element = $(element);
+                var $select = $element.find('button').first();
+                var $options = $element.find('.dropdown-menu > li > a');
+                $select.addClass('select').data('options', $options);
+                $options.on('click', function () {
+                    var $op = $(this);
+                    $select.text($op.text()).attr('data-val', $op.attr('data-val'));
+                });
+            });
+        },
+        selectval: function (value) {
+            var $this = $(this);
+            if (value == undefined) return $this.attr('data-val');
+            $this.data('options').each(function (index, element) {
+                var $op = $(element);
+                var val = $op.attr('data-val');
+                if (value == val) {
+                    $this.text($op.text()).attr('data-val', val);
+                }
+            });
         }
     });
 })(jQuery);

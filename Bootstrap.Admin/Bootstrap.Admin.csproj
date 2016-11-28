@@ -108,8 +108,6 @@
     <Content Include="Content\css\admin.css" />
     <Content Include="Content\css\blue.css" />
     <Content Include="Content\css\bootstrap-datetimepicker.css" />
-    <Content Include="Content\css\bootstrap-select.css" />
-    <Content Include="Content\css\bootstrap-select.min.css" />
     <Content Include="Content\css\fa.css" />
     <Content Include="Content\css\fileinput.css" />
     <Content Include="Content\css\fileinput.min.css" />
@@ -144,12 +142,8 @@
     <Content Include="Content\images\uploader\default.jpg" />
     <Content Include="Content\images\uploader\readme.txt" />
     <Content Include="Content\js\bootstrap-datetimepicker.js" />
-    <Content Include="Content\js\bootstrap-select.js" />
-    <Content Include="Content\js\bootstrap-select.min.js" />
     <Content Include="Content\js\bootstrap3-typeahead.js" />
     <Content Include="Content\js\bootstrap3-typeahead.min.js" />
-    <Content Include="Content\js\defaults-zh_CN.js" />
-    <Content Include="Content\js\defaults-zh_CN.min.js" />
     <Content Include="Content\js\fileinput.js" />
     <Content Include="Content\js\fileinput.min.js" />
     <Content Include="Content\js\jquery.nestable.js" />
@@ -225,8 +219,6 @@
     <Content Include="Content\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\fonts\FontAwesome.otf" />
     <Content Include="Content\css\fa.responsive.css" />
-    <Content Include="Content\css\bootstrap-select.css.map" />
-    <Content Include="Content\js\bootstrap-select.js.map" />
     <Content Include="packages.config" />
     <None Include="Scripts\_references.js" />
     <Content Include="Content\js\framework.js" />
