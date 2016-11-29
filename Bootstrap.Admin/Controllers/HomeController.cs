@@ -26,15 +26,15 @@ namespace Bootstrap.Admin.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        public ActionResult Lock(LockModel model)
+        [AllowAnonymous]
+        public ActionResult Lock()
         {
-            if (!string.IsNullOrEmpty(model.Password))
-            {
-                return RedirectToAction("Login", new { userName = model.UserName, password = model.Password });
-            }
             var user = UserHelper.RetrieveUsersByName(User.Identity.Name);
+            var model = new LockModel();
             model.UserName = user.UserName;
             model.DisplayName = user.DisplayName;
+            model.ReturnUrl = Url.Encode(Request.UrlReferrer.AbsoluteUri);
+            FormsAuthentication.SignOut();
             return View(model);
         }
         /// <summary>
@@ -47,7 +47,6 @@ namespace Bootstrap.Admin.Controllers
         [AllowAnonymous]
         public ActionResult Login(string userName, string password, string remember)
         {
-            //UNDONE: 本方法有严重安全漏洞，发布前需要修正
             var model = new LoginModel();
             if (string.IsNullOrEmpty(userName)) return View(model);
             model.UserName = userName;
