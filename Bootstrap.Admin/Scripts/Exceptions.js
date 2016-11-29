@@ -9,7 +9,6 @@
 
     var bsa = new BootstrapAdmin({
         url: url,
-        bootstrapTable: null,
         validateForm: null
     });
 
@@ -17,7 +16,7 @@
         url: url,
         sortName: 'LogTime',
         queryParams: function (params) { return $.extend(params, { StartTime: $("#txt_operate_start").val(), EndTime: $("#txt_operate_end").val() }); },
-        columns: [{ checkbox: true },
+        columns: [
             { title: "请求网址", field: "ErrorPage", sortable: true },
             { title: "用户名", field: "UserID", sortable: true },
             { title: "IP", field: "UserIp", sortable: true },
@@ -26,9 +25,17 @@
         ]
     });
 
-    $('input[type="datetime"]').parent().datetimepicker({
-        locale: "zh-cn",
-        format: "YYYY-MM-DD"
+    $('.form_date').datetimepicker({
+        language: 'zh-CN',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        forceParse: 0,
+        format: 'yyyy-mm-dd',
+        pickerPosition: 'bottom-left'
     });
 
     $('#btn_view').on('click', function (row) {

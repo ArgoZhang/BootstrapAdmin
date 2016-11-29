@@ -29,7 +29,7 @@ namespace Bootstrap.Admin.Models
             }
             if (EndTime > DateTime.MinValue)
             {
-                data = data.Where(t => t.LogTime < EndTime);
+                data = data.Where(t => t.LogTime < EndTime.AddDays(1));
             }
             var ret = new QueryData<Exceptions>();
             ret.total = data.Count();

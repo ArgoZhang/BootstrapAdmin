@@ -103,11 +103,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\ErrorLog\Readme.txt" />
+    <Content Include="Content\css\bootstrap-datetimepicker.css" />
+    <Content Include="Content\css\bootstrap-datetimepicker.min.css" />
+    <Content Include="Content\js\bootstrap-datetimepicker.js" />
+    <Content Include="Content\js\bootstrap-datetimepicker.min.js" />
+    <Content Include="Content\js\bootstrap-datetimepicker.zh-CN.js" />
     <Content Include="favicon.ico" />
     <Content Include="Content\css\admin-responsive.css" />
     <Content Include="Content\css\admin.css" />
     <Content Include="Content\css\blue.css" />
-    <Content Include="Content\css\bootstrap-datetimepicker.css" />
     <Content Include="Content\css\fa.css" />
     <Content Include="Content\css\fileinput.css" />
     <Content Include="Content\css\fileinput.min.css" />
@@ -141,7 +145,6 @@
     <Content Include="Content\images\uploader\Admin.jpg" />
     <Content Include="Content\images\uploader\default.jpg" />
     <Content Include="Content\images\uploader\readme.txt" />
-    <Content Include="Content\js\bootstrap-datetimepicker.js" />
     <Content Include="Content\js\bootstrap3-typeahead.js" />
     <Content Include="Content\js\bootstrap3-typeahead.min.js" />
     <Content Include="Content\js\fileinput.js" />
@@ -168,7 +171,6 @@
     <Content Include="Content\js\jquery.scrollTo.min.js" />
     <Content Include="Content\js\log.js" />
     <Content Include="Content\js\longbow.dataentity.js" />
-    <Content Include="Content\js\moment-with-locales.js" />
     <Content Include="Content\js\fileinput.zh.js" />
     <Content Include="Content\js\tipso.js" />
     <Content Include="Content\js\tipso.min.js" />

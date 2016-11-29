@@ -15,11 +15,11 @@ namespace Bootstrap.Admin.Models
         /// <summary>
         /// 
         /// </summary>
-        public string OperateTimeStart { get; set; }
+        public DateTime OperateTimeStart { get; set; }
         /// <summary>
         /// 
         /// </summary>
-        public string OperateTimeEnd { get; set; }
+        public DateTime OperateTimeEnd { get; set; }
         /// <summary>
         /// 
         /// </summary>
@@ -32,44 +32,40 @@ namespace Bootstrap.Admin.Models
                 data = data.Where(t => t.CRUD.ToString().Contains(OperateType));
             }
 
-            if (!string.IsNullOrEmpty(OperateTimeStart))
+            if (OperateTimeStart > DateTime.MinValue)
             {
-                DateTime opTimeStart = StringToDateTime(OperateTimeStart);
-                if (opTimeStart != null)
-                    data = data.Where(t => IsSmallThen(opTimeStart, t.LogTime));
+                data = data.Where(t => t.LogTime > OperateTimeStart);
             }
-            if (!string.IsNullOrEmpty(OperateTimeEnd))
+            if (OperateTimeEnd > DateTime.MinValue)
             {
-                DateTime opTimeEnd = StringToDateTime(OperateTimeEnd);
-                if (opTimeEnd != null)
-                    data = data.Where(t => IsSmallThen(t.LogTime, opTimeEnd));
+                data = data.Where(t => t.LogTime < OperateTimeEnd.AddDays(1));
             }
 
             var ret = new QueryData<Log>();
             ret.total = data.Count();
+            switch (Sort)
+            {
+                case "CRUD":
+                    data = Order == "asc" ? data.OrderBy(t => t.CRUD) : data.OrderByDescending(t => t.CRUD);
+                    break;
+                case "UserName":
+                    data = Order == "asc" ? data.OrderBy(t => t.UserName) : data.OrderByDescending(t => t.UserName);
+                    break;
+                case "LogTime":
+                    data = Order == "asc" ? data.OrderBy(t => t.LogTime) : data.OrderByDescending(t => t.LogTime);
+                    break;
+                case "ClientIp":
+                    data = Order == "asc" ? data.OrderBy(t => t.ClientIp) : data.OrderByDescending(t => t.ClientIp);
+                    break;
+                case "RequestUrl":
+                    data = Order == "asc" ? data.OrderBy(t => t.RequestUrl) : data.OrderByDescending(t => t.RequestUrl);
+                    break;
+                default:
+                    break;
+            }
             data = Order == "asc" ? data.OrderBy(t => t.CRUD) : data.OrderByDescending(t => t.CRUD);
             ret.rows = data.Skip(Offset).Take(Limit);
             return ret;
-        }
-        private static DateTime StringToDateTime(string dt_str)
-        {
-            DateTime dt;
-            DateTimeFormatInfo dtFormat = new DateTimeFormatInfo();
-            dtFormat.ShortDatePattern = "yyyy-MM-dd HH:mm:ss";
-            dt = Convert.ToDateTime(dt_str, dtFormat);
-            return dt;
-        }
-        /// <summary>
-        /// 比较两个DateTime
-        /// (去掉了毫秒)
-        /// </summary>
-        /// <param name="d1"></param>
-        /// <param name="d2"></param>
-        /// <returns></returns>
-        private static bool IsSmallThen(DateTime d1, DateTime d2)
-        {
-            return new DateTime(d1.Year, d1.Month, d1.Day, d1.Hour, d1.Minute, d1.Second) <=
-                new DateTime(d2.Year, d2.Month, d2.Day, d2.Hour, d2.Minute, d2.Second);
         }
     }
 }

@@ -4,11 +4,7 @@
         options = options || {};
         options.click = $.extend({}, BootstrapAdmin.settings.click, options.click);
         this.options = $.extend({}, BootstrapAdmin.settings, options);
-
         this.dataEntity = options.dataEntity;
-        if (!(this.dataEntity instanceof DataEntity) && window.console) {
-            window.console.log('初始化参数中没有DataEntity实例');
-        }
 
         // handler click event
         for (name in this.options.click) {
