@@ -147,7 +147,7 @@
         $('#clearCache').tipso({ width: 180, position: 'left' });
     }
     $sortable.on('click', '.btn', function () {
-        console.log($(this).attr('data-key'));
+        if ($(this).hasClass('tipso_style')) $(this).tipso('hide').tipso('destroy');
         listCache({ key: $(this).attr('data-key'), url: $(this).attr('data-url') });
         listCacheUrl();
     });
