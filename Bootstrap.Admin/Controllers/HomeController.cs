@@ -26,7 +26,6 @@ namespace Bootstrap.Admin.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        [AllowAnonymous]
         public ActionResult Lock()
         {
             var user = UserHelper.RetrieveUsersByName(User.Identity.Name);
