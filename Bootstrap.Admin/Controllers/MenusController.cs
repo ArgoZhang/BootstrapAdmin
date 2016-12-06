@@ -1,6 +1,6 @@
 ﻿using Bootstrap.Admin.Models;
 using Bootstrap.DataAccess;
-using Longbow.Security.Principal;
+using Longbow.Web.Mvc;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Linq;
