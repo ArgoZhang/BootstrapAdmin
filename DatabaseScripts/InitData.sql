@@ -24,6 +24,9 @@ INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (13, N'
 INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (14, N'消息标签', N'一般', N'0', 0)
 INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (15, N'消息标签', N'紧要', N'1', 0)
 INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (16, N'头像地址', N'头像路径', N'~/Content/images/uploader/', 0)
+INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (17, N'网站样式', N'默认样式', N'site.css', 0)
+INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (18, N'网站样式', N'蓝色样式', N'blue.css', 0)
+INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (19, N'当前样式', N'使用样式', N'site.css', 0)
 SET IDENTITY_INSERT [dbo].[Dicts] OFF
 
 DELETE FROM Navigations

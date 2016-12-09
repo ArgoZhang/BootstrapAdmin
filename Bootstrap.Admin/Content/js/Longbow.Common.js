@@ -110,6 +110,115 @@
         language: (navigator.browserLanguage || navigator.language).toLowerCase()
     }
 
+    $.extend({
+        bc: function (options, callback) {
+            var data = $.extend({
+                remote: true,
+                Id: "",
+                url: this.url,
+                data: {},
+                method: "POST",
+                htmlTemplate: '<div class="form-group checkbox col-lg-3 col-xs-4"><label class="tooltips" data-placement="top" data-original-title="{3}" title="{3}"><input type="checkbox" value="{0}" {2}/>{1}</label></div>',
+                title: this.title,
+                swal: true,
+                modal: null,
+                callback: null
+            }, options);
+
+            if (!data.url || data.url == "") {
+                swal('参数错误', '未设置请求地址Url', 'error');
+                return;
+            }
+
+            if (data.remote && data.url) {
+                $.ajax({
+                    url: data.url + data.Id,
+                    data: data.data,
+                    type: data.method,
+                    success: function (result) {
+                        success(result);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        if ($.isFunction(data.callback)) data.callback(false);
+                    }
+                });
+            }
+            function success(result) {
+                if ($.isFunction(data.callback)) {
+                    data.callback(result);
+                }
+                if (data.modal !== null) {
+                    $("#" + data.modal).modal('hide');
+                }
+                if (data.swal) {
+                    if (result) { swal("成功", data.title, "success"); }
+                    else { swal("失败", data.title, "error"); }
+                }
+            }
+        }
+    });
+
+    // Roles
+    Role = {
+        url: '../api/Roles/',
+        title: "授权角色"
+    };
+
+    // Users
+    User = {
+        url: '../api/Users/',
+        title: "授权用户"
+    };
+
+    // Groups
+    Group = {
+        url: '../api/Groups/',
+        title: "授权部门"
+    };
+
+    // Menus
+    Menu = {
+        url: '../api/Menus/',
+        title: "授权菜单"
+    };
+
+    // Exceptions
+    Exceptions = {
+        url: '../api/Exceptions/',
+        title: "程序异常日志"
+    };
+
+    // Dicts
+    Dicts = {
+        url: '../api/Dicts/'
+    };
+
+    // Infos
+    Infos = {
+        url: '../api/Infos/'
+    }
+
+    // Profiles
+    Profiles = {
+        url: '../api/Profiles/',
+        title: '网站设置'
+    }
+
+    // Messages
+    Messages = {
+        url: '../api/Messages/'
+    }
+
+    // Tasks
+    Tasks = {
+        url: '../api/Tasks/'
+    }
+
+    // Notifications
+    Notifications = {
+        url: '../api/Notifications/'
+    }
+
     $.fn.extend({
         adjustDialog: function () {
             var $modal_dialog = this;
@@ -234,6 +343,13 @@
 })(jQuery);
 
 $(function () {
+    // loading customer css
+    $.bc({
+        Id: 1, url: Dicts.url, data: { type: 'activeCss' }, swal: false,
+        callback: function (result) {
+            $('head').append($.format('<link href="../Content/css/{0}" rel="stylesheet" type="text/css" />', result[0].Code));
+        }
+    });
     if ($.isFunction($.validator)) {
         jQuery.validator.addMethod("ip", function (value, element) {
             return this.optional(element) || /^(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])$/.test(value);

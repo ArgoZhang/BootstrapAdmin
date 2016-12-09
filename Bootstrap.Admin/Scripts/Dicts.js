@@ -22,7 +22,7 @@
             { title: "字典分项", field: "Category", sortable: true },
             { title: "字典名称", field: "Name", sortable: false },
             { title: "字典代码", field: "Code", sortable: false },
-            { title: "字典类别", field: "DefineName", sortable: true }
+            { title: "字典类别", field: "Define", sortable: true, formatter: function (value, row, index) { return value == "0" ? "系统使用" : "自定义"; } }
         ]
     });
 
@@ -52,8 +52,9 @@
     $.bc({
         Id: 1, url: Dicts.url, data: { type: 'category' }, swal: false,
         callback: function (result) {
+            var data = result.map(function (ele, index) { return ele.Category; });
             $('#txt_dict_cate').typeahead({
-                source: result,
+                source: data,
                 autoSelect: true
             });
         }

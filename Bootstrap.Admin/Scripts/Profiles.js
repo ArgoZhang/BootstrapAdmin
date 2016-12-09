@@ -53,6 +53,21 @@
                         });
                     }
                 }
+            }, {
+                id: 'cssSave',
+                click: function (row, data) {
+                    var cssDefine = $('#dictCssDefine').attr('data-val');
+                    if (cssDefine) {
+                        $.bc({
+                            url: Profiles.url, data: { name: '使用样式', code: cssDefine, category: '当前样式' }, title: '网站样式',
+                            callback: function (result) {
+                                if (result) {
+                                    window.setTimeout(function () { window.location.reload(true); }, 1000);
+                                }
+                            }
+                        });
+                    }
+                }
             }]
         }
     });
@@ -150,5 +165,20 @@
         if ($(this).hasClass('tipso_style')) $(this).tipso('hide').tipso('destroy');
         listCache({ key: $(this).attr('data-key'), url: $(this).attr('data-url') });
         listCacheUrl();
+    });
+
+    $.bc({
+        Id: 1, url: Dicts.url, data: { type: 'css' }, swal: false,
+        callback: function (result) {
+            var html = result.map(function (ele, index) { return $.format('<li><a href="#" data-val="{1}">{0}</a></li>', ele.Name, ele.Code); }).join('');
+            $('#cssContainer').html(html);
+            $('.btn-select').select();
+            $.bc({
+                Id: 1, url: Dicts.url, data: { type: 'activeCss' }, swal: false,
+                callback: function (result) {
+                    $('#dictCssDefine').selectval(result[0].Code);
+                }
+            });
+        }
     });
 })

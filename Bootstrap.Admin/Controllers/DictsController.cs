@@ -45,14 +45,21 @@ namespace Bootstrap.Admin.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public IEnumerable<string> Post(int id, [FromBody]JObject value)
+        [AllowAnonymous]
+        public IEnumerable<Dict> Post(int id, [FromBody]JObject value)
         {
-            var ret = new List<string>();
+            IEnumerable<Dict> ret = new List<Dict>();
             dynamic json = value;
             switch ((string)json.type)
             {
                 case "category":
-                    ret = DictHelper.RetrieveCategories().ToList();
+                    ret = DictHelper.RetrieveCategories();
+                    break;
+                case "css":
+                    ret = DictHelper.RetrieveWebCss();
+                    break;
+                case "activeCss":
+                    ret = DictHelper.RetrieveActiveCss();
                     break;
                 default:
                     break;

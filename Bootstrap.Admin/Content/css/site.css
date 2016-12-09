@@ -145,7 +145,6 @@ a, a:hover, a:focus {
             .top-menu > li > a:hover, .top-menu > li > a:focus {
                 border: 1px solid #f0f0f8 !important;
                 background-color: #fff !important;
-                border-color: #f0f0f8 !important;
                 text-decoration: none;
                 border-radius: 4px;
                 -webkit-border-radius: 4px;
@@ -542,7 +541,6 @@ ul.breadcrumb {
     ul.breadcrumb > li > a > i {
         padding-right: 6px;
     }
-
 
 .content-body {
     position: fixed;

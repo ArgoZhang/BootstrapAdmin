@@ -47,6 +47,27 @@
     </div>
 </div>
 <div class="panel panel-default">
+    <div class="panel-heading">网站样式</div>
+    <div class="panel-body">
+        <form id="CssDataForm" class="form-inline" name="CssDataForm">
+            <div class="form-group col-xs-12">
+                <label class="control-label" for="dictDefine">网站样式</label>
+                <div class="btn-group btn-select">
+                    <button id="dictCssDefine" type="button" class="btn btn-success" data-default-val="site.css" data-val="site.css">默认样式</button>
+                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                        <span class="sr-only">网站样式</span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" id="cssContainer">
+                        <li><a href="#" data-val="site.css">默认样式</a></li>
+                    </ul>
+                </div>
+                <button class="btn btn-default pull-right" type="button" id="cssSave">保存</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="panel panel-default">
     <div class="panel-heading">网站缓存<a id="clearCache" href="#" class="clearcache fa fa-times-circle-o" data-admin="@LgbPrincipal.IsAdmin(Model.UserName)" title="全部清除(WebAdmin可用)"></a><a id="refreshCache" href="#" class="pull-right fa fa-refresh" title="点击刷新"></a></div>
     <div class="panel-body">
         <div class="tasks-widget">

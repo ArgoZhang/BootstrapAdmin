@@ -27,9 +27,5 @@
         /// 1表示系统使用，0表示用户自定义 默认为1
         /// </summary>
         public int Define { get; set; }
-        /// <summary>
-        /// 获得/设置 字典定义类别名称
-        /// </summary>
-        public string DefineName { get; set; }
     }
 }

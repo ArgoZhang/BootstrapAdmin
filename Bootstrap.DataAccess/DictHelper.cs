@@ -25,7 +25,7 @@ namespace Bootstrap.DataAccess
         {
             return CacheManager.GetOrAdd(RetrieveDictsDataKey, CacheSection.RetrieveIntervalByKey(RetrieveDictsDataKey), key =>
             {
-                string sql = "select ID, Category, Name, Code, Define, case Define when 0 then '系统使用' else '自定义' end DefineName from Dicts";
+                string sql = "select ID, Category, Name, Code, Define from Dicts";
                 List<Dict> Dicts = new List<Dict>();
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                 try
@@ -40,8 +40,7 @@ namespace Bootstrap.DataAccess
                                 Category = (string)reader[1],
                                 Name = (string)reader[2],
                                 Code = (string)reader[3],
-                                Define = (int)reader[4],
-                                DefineName = (string)reader[5]
+                                Define = (int)reader[4]
                             });
                         }
                     }
@@ -114,7 +113,7 @@ namespace Bootstrap.DataAccess
         {
             return CacheManager.GetOrAdd(RetrieveWebSettingsDataKey, CacheSection.RetrieveIntervalByKey(RetrieveWebSettingsDataKey), key =>
             {
-                string sql = "select ID, Category, Name, Code, Define, case Define when 0 then '系统使用' else '用户自定义' end DefineName from Dicts where Category = N'网站设置' and Define = 0";
+                string sql = "select ID, Category, Name, Code, Define from Dicts where Category = N'网站设置' and Define = 0";
                 List<Dict> Dicts = new List<Dict>();
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                 try
@@ -129,8 +128,7 @@ namespace Bootstrap.DataAccess
                                 Category = (string)reader[1],
                                 Name = (string)reader[2],
                                 Code = (string)reader[3],
-                                Define = (int)reader[4],
-                                DefineName = (string)reader[5]
+                                Define = (int)reader[4]
                             });
                         }
                     }
@@ -158,6 +156,24 @@ namespace Bootstrap.DataAccess
             return (settings.FirstOrDefault(d => d.Name == "网站页脚") ?? new Dict() { Code = "2016 © 通用后台管理系统" }).Code;
         }
         /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<Dict> RetrieveWebCss()
+        {
+            var data = RetrieveDicts();
+            return data.Where(d => d.Category == "网站样式");
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<Dict> RetrieveActiveCss()
+        {
+            var data = RetrieveDicts();
+            return data.Where(d => d.Category == "当前样式");
+        }
+        /// <summary>
         /// 保存网站个性化设置
         /// </summary>
         /// <param name="name"></param>
@@ -177,7 +193,7 @@ namespace Bootstrap.DataAccess
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Category", category, ParameterDirection.Input));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
-                CacheManager.Clear(key => key == RetrieveWebSettingsDataKey);
+                CacheManager.Clear(key => key.Contains(RetrieveDictsDataKey));
                 ret = true;
             }
             catch (DbException ex)
@@ -194,7 +210,7 @@ namespace Bootstrap.DataAccess
         {
             return CacheManager.GetOrAdd(RetrieveIconPathSettingsDataKey, CacheSection.RetrieveIntervalByKey(RetrieveIconPathSettingsDataKey), key =>
             {
-                string sql = "select ID, Category, Name, Code, Define, case Define when 0 then '系统使用' else '用户自定义' end DefineName from Dicts where Category = N'头像地址' and Name = N'头像路径' and Define = 0";
+                string sql = "select ID, Category, Name, Code, Define from Dicts where Category = N'头像地址' and Name = N'头像路径' and Define = 0";
                 var dict = new Dict() { Code = "~/Content/images/uploader/" };
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                 try
@@ -209,8 +225,7 @@ namespace Bootstrap.DataAccess
                                 Category = (string)reader[1],
                                 Name = (string)reader[2],
                                 Code = (string)reader[3],
-                                Define = (int)reader[4],
-                                DefineName = (string)reader[5]
+                                Define = (int)reader[4]
                             };
                         }
                     }
@@ -223,11 +238,11 @@ namespace Bootstrap.DataAccess
         /// 获取字典分类名称
         /// </summary>
         /// <returns></returns>
-        public static IEnumerable<string> RetrieveCategories()
+        public static IEnumerable<Dict> RetrieveCategories()
         {
             return CacheManager.GetOrAdd(RetrieveCategoryDataKey, CacheSection.RetrieveIntervalByKey(RetrieveCategoryDataKey), key =>
             {
-                var ret = new List<string>();
+                var ret = new List<Dict>();
                 string sql = "select distinct Category from Dicts";
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                 try
@@ -236,7 +251,7 @@ namespace Bootstrap.DataAccess
                     {
                         while (reader.Read())
                         {
-                            ret.Add((string)reader[0]);
+                            ret.Add(new Dict() { Category = (string)reader[0] });
                         }
                     }
                 }
