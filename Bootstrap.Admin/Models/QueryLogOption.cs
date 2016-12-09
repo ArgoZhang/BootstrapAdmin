@@ -63,7 +63,6 @@ namespace Bootstrap.Admin.Models
                 default:
                     break;
             }
-            data = Order == "asc" ? data.OrderBy(t => t.CRUD) : data.OrderByDescending(t => t.CRUD);
             ret.rows = data.Skip(Offset).Take(Limit);
             return ret;
         }

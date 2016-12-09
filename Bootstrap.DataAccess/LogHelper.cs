@@ -23,7 +23,7 @@ namespace Bootstrap.DataAccess
         {
             var ret = CacheManager.GetOrAdd(RetrieveLogsDataKey, CacheSection.RetrieveIntervalByKey(RetrieveLogsDataKey), key =>
             {
-                string sql = "select * from Logs";
+                string sql = "select top 1000 * from Logs";
                 List<Log> Logs = new List<Log>();
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                 try
