@@ -50,6 +50,9 @@ namespace Bootstrap.Admin.Models
                 case "CategoryName":
                     data = Order == "asc" ? data.OrderBy(t => t.CategoryName) : data.OrderByDescending(t => t.CategoryName);
                     break;
+                case "Target":
+                    data = Order == "asc" ? data.OrderBy(t => t.Target) : data.OrderByDescending(t => t.Target);
+                    break;
                 default:
                     break;
             }
