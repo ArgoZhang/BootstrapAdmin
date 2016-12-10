@@ -4,12 +4,13 @@
     $('#fileIcon').fileinput({
         uploadUrl: Infos.url,
         language: 'zh',
+        maxFileSize: 5000,
         allowedFileExtensions: ['jpg', 'png', 'bmp', 'gif', 'jpeg'],
         initialPreview: [
             preIcon
         ],
         initialPreviewConfig: [
-            { caption: "现在头像", size: 730, showZoom: false },
+            { caption: "现在头像", size: $('#fileIcon').attr('data-init'), showZoom: false },
         ],
         initialPreviewAsData: true,
         overwriteInitial: true,

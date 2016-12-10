@@ -1,4 +1,4 @@
-﻿@model NavigatorBarModel
+﻿@model InfosModel
 @{
     ViewBag.Title = "个人中心";
     Layout = "~/Views/Shared/_Admin.cshtml";
@@ -72,7 +72,7 @@
     <div class="panel-body">
         <form enctype="multipart/form-data">
             <div class="form-group">
-                <input id="fileIcon" class="file" type="file">
+                <input id="fileIcon" class="file" type="file" data-init="@Model.Size">
             </div>
         </form>
     </div>

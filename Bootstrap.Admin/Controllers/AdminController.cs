@@ -106,7 +106,7 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public ActionResult Infos()
         {
-            var v = new NavigatorBarModel("~/Admin/Infos");
+            var v = new InfosModel("~/Admin/Infos");
             return View(v);
         }
         /// <summary>
