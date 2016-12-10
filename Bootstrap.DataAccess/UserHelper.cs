@@ -378,6 +378,8 @@ namespace Bootstrap.DataAccess
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@iconName", iconName, ParameterDirection.Input));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@userName", userName, ParameterDirection.Input));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
+                    string key = string.Format("{0}-{1}", RetrieveUsersByNameDataKey, userName);
+                    CacheManager.Clear(k => key == k);
                     ret = true;
                 }
             }
