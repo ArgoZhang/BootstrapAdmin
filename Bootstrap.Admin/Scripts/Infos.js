@@ -4,7 +4,7 @@
     $('#fileIcon').fileinput({
         uploadUrl: Infos.url,
         language: 'zh',
-        allowedFileExtensions: ['jpg'],
+        allowedFileExtensions: ['jpg', 'png', 'bmp', 'gif', 'jpeg'],
         initialPreview: [
             preIcon
         ],

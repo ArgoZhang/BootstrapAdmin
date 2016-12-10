@@ -21,7 +21,7 @@ namespace Bootstrap.Admin.Controllers
             if (files.Count > 0 && !LgbPrincipal.IsAdmin(userName))
             {
                 var webSiteUrl = DictHelper.RetrieveIconFolderPath().Code;
-                var fileName = string.Format("{0}.jpg", userName);
+                var fileName = string.Format("{0}{1}", userName, Path.GetExtension(files[0].FileName));
                 var fileUrl = string.Format("{0}{1}", webSiteUrl, fileName);
                 var filePath = HttpContext.Current.Server.MapPath(fileUrl);
                 var fileFolder = Path.GetDirectoryName(filePath);
