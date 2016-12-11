@@ -133,4 +133,12 @@
             maxlength: 50
         }
     });
+
+    $nestMenuInput.on('click', ':checkbox', function () {
+        var val = $(this).prop('checked');
+        var child = $(this).parent().parent().next();
+        if (child.hasClass('dd-list')) {
+            child.find(':checkbox').prop('checked', val);
+        }
+    });
 });
