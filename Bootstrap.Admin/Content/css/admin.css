@@ -26,6 +26,12 @@
     font-weight: 600;
 }
 
+.bs-icon {
+    color: #2e6da4;
+    width: 100%;
+    text-align: center;
+}
+
 .hidden-tb {
     margin-left: 6px;
 }

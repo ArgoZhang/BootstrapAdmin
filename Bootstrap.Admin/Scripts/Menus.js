@@ -108,7 +108,14 @@
             { title: "父级菜单", field: "ParentName", sortable: true },
             { title: "菜单名称", field: "Name", sortable: true },
             { title: "菜单序号", field: "Order", sortable: true },
-            { title: "菜单图标", field: "Icon", sortable: false },
+            {
+                title: "菜单图标", field: "Icon", sortable: false, formatter: function (value, row, index) {
+                    if (value) {
+                        return $.format('<i class="bs-icon {0}"></i>', value);
+                    }
+                    return "";
+                }
+            },
             { title: "菜单路径", field: "Url", sortable: false },
             { title: "菜单类别", field: "CategoryName", sortable: true },
             {
