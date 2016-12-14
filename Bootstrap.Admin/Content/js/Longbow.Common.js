@@ -306,7 +306,7 @@
                 showToggle: true,                   //是否显示详细视图和列表视图的切换按钮
                 cardView: false,                    //是否显示详细视图
                 detailView: false,                  //是否显示父子表
-                clickToSelect: false,
+                clickToSelect: false
             }, options);
             $(this).bootstrapTable(settings);
             $('div.toolbar').insertBefore($('div.bootstrap-table > div.fixed-table-toolbar > div.bs-bars'));

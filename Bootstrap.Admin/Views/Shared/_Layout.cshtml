@@ -9,9 +9,18 @@
     <!-- 新 Bootstrap 核心 CSS 文件 -->
     <link href="~/Content/css/bootstrap.css" rel="stylesheet">
     <link href="~/Content/css/bootstrap-theme.css" rel="stylesheet">
+    <!--[if lte IE 9 ]>
+    <link href="../Content/css/IE8.css" rel="stylesheet" />
+    <![endif]-->
     @RenderSection("css", false)
 </head>
 <body>
+    <!--[if lte IE 9 ]>
+    <div id="ieAlert" class="alert alert-danger alert-dismissible">
+        <div>你的浏览器版本太低，不能完美的支持本系统，请升级到至少IE9 <a href="../IE/IE9.exe" target="_blank">速速点击下载</a> ！</div>
+        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
+    </div>
+    <![endif]-->
     @RenderBody()
     <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
     <script src="~/content/js/jquery-1.10.2.js"></script>

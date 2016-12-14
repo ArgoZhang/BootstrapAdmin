@@ -107,6 +107,7 @@
     <Content Include="App_Data\ErrorLog\Readme.txt" />
     <Content Include="Content\css\bootstrap-datetimepicker.css" />
     <Content Include="Content\css\bootstrap-datetimepicker.min.css" />
+    <Content Include="Content\css\IE8.css" />
     <Content Include="Content\images\error_icon.png" />
     <Content Include="Content\js\bootstrap-datetimepicker.js" />
     <Content Include="Content\js\bootstrap-datetimepicker.min.js" />
