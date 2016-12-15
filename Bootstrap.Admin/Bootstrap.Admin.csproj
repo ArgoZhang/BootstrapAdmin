@@ -156,7 +156,6 @@
     <Content Include="Content\js\jquery.nestable.js" />
     <Content Include="Content\css\site-responsive.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
-    <Content Include="Content\html\dummy.html" />
     <Content Include="Content\images\arrow-up.png" />
     <Content Include="Content\images\avatar1_small.jpg" />
     <Content Include="Content\images\error.png" />
