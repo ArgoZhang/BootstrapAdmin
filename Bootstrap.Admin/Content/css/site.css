@@ -2,8 +2,8 @@
     color: #797979;
     background: #f1f2f7;
     font-family: 'Open Sans', sans-serif;
-    padding: 0px !important;
-    margin: 0px !important;
+    padding: 0px;
+    margin: 0px;
     font-size: 13px;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -20,7 +20,7 @@ a, a:hover, a:focus {
 }
 
 .dropdown-menu {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.176) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.176);
 }
 
 .well-bg {
@@ -143,12 +143,12 @@ a, a:hover, a:focus {
             }
 
             .top-menu > li > a:hover, .top-menu > li > a:focus {
-                border: 1px solid #f0f0f8 !important;
-                background-color: #fff !important;
+                border: 1px solid #f0f0f8;
+                background-color: #fff;
                 text-decoration: none;
                 border-radius: 4px;
                 -webkit-border-radius: 4px;
-                color: #2E2E2E !important;
+                color: #2E2E2E;
             }
 
     .top-menu .caret {
@@ -157,7 +157,7 @@ a, a:hover, a:focus {
     }
 
     .top-menu .dropdown-menu.logout {
-        width: 268px !important;
+        width: 268px;
         top: 50px;
         left: auto;
         right: 0;
@@ -192,7 +192,7 @@ a, a:hover, a:focus {
             }
 
                 .top-menu .dropdown-menu.logout li a:hover {
-                    background: none !important;
+                    background: none;
                     color: #337ab7;
                 }
 
@@ -294,13 +294,13 @@ a, a:hover, a:focus {
 
     .notify-row .dropdown-menu {
         float: left;
-        max-width: 300px !important;
-        min-width: 160px !important;
+        max-width: 300px;
+        min-width: 160px;
         top: 32px;
         left: -74px;
-        width: 235px !important;
+        width: 235px;
         padding: 0;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.176) !important;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.176);
         border: none;
     }
 
