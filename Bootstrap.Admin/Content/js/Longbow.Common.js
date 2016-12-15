@@ -309,11 +309,11 @@
                 clickToSelect: false
             }, options);
             $(this).bootstrapTable(settings);
-            $('div.toolbar').insertBefore($('div.bootstrap-table > div.fixed-table-toolbar > div.bs-bars'));
+            var $toolbar = $('div.toolbar');
             $('div.toolbar').on('click', 'a', function () {
                 var ctl = $('#' + $(this).attr('id').replace('tb_', 'btn_'));
                 ctl.trigger("click");
-            });
+            }).insertBefore($('div.bootstrap-table > div.fixed-table-toolbar > div.bs-bars'));
         },
         select: function () {
             var $this = $(this);
