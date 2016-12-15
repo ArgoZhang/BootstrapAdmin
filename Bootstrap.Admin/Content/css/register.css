@@ -1,4 +1,12 @@
-﻿ol {
+﻿header h2 {
+    text-align: center;
+}
+
+h3 {
+    margin-bottom: 20px;
+}
+
+ol {
     display: block;
     list-style-type: decimal;
     -webkit-margin-before: 1em;
@@ -8,17 +16,34 @@
     -webkit-padding-start: 40px;
 }
 
+.has-error input {
+    background-repeat: no-repeat;
+    background-image: url('../images/error.png');
+    background-position: right 8px center;
+}
+
+.has-success input {
+    background-repeat: no-repeat;
+    background-image: url('../images/success.png');
+    background-position: right 8px center;
+}
+
 .setup-wrapper {
-    width: 750px;
-    padding-top: 30px;
     margin: 0 auto;
 }
 
+form input {
+    padding-right: 30px !important;
+}
+
 .setup-header {
-    padding-bottom: 20px;
-    margin: 0 auto 30px;
-    overflow: hidden;
+    margin: 0 auto;
     text-align: left;
+}
+
+.setup-main, .setup-confirm {
+    float: left;
+    width: 450px;
 }
 
 .setup-confirm {
@@ -29,30 +54,19 @@
         padding: 6px 0;
     }
 
-    .setup-confirm div {
-        padding-top: 30px;
-    }
-
-    .setup-confirm button {
-        margin-top: 30px;
-    }
-
-.setup-main, .setup-confirm {
-    float: left;
-    width: 450px;
+.setup-main span {
+    top: 0;
 }
 
-    .setup-main span {
-        top: 0;
-    }
-
-    .setup-main .input-group {
-        margin-bottom: 15px;
-    }
+.setup-main .input-group {
+    margin-bottom: 15px;
+}
 
 .setup-secondary {
+    display: inline-block;
     float: right;
     width: 250px;
+    margin-top: 70px;
 }
 
 .setup-info-module {
@@ -69,6 +83,10 @@
         overflow: hidden;
         border-bottom: 1px solid #ddd;
         margin-top: 0;
+        background-color: #5cb85c;
+        color: #000;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
     }
 
 .features-list {
@@ -117,13 +135,13 @@
     }
 
     .steps li.current {
-        color: #333;
-        background-color: #fff;
+        color: #000;
+        background-color: #5cb85c;
     }
 
     .steps li {
         display: table-cell;
-        width: 33.3%;
+        width: 50%;
         padding: 10px 15px;
         color: #ccc;
         cursor: default;
@@ -134,3 +152,23 @@
         .steps li .step {
             display: block;
         }
+
+@media (max-width: 767px) {
+    .steps {
+        display: inherit;
+    }
+
+        .steps li {
+            display: inherit;
+            width: inherit;
+        }
+
+    .setup-secondary {
+        display: none;
+    }
+
+    .setup-main, .setup-confirm {
+        float: inherit;
+        width: inherit;
+    }
+}
