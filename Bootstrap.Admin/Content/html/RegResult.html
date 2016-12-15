@@ -1,37 +1,52 @@
 ﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="zh-cn">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title></title>
-    <link href="/Content/css/bootstrap.css" rel="stylesheet">
-    <link href="/Content/css/bootstrap-theme.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>注册成功</title>
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link href="../css/bootstrap.css" rel="stylesheet">
+    <link href="../css/bootstrap-theme.css" rel="stylesheet">
+    <style type="text/css">
+        body {
+            background: #02bac6 url("../images/lock-bg.jpg");
+            background-size: cover;
+            background-repeat: repeat;
+        }
+
+        .container {
+            margin-top: 30px;
+        }
+
+        h2 {
+            margin: 15px auto;
+            color: green;
+        }
+
+        div a {
+            display: block;
+            margin-top: 15px;
+            color: green;
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
     <div class="container" align="center">
-        <form id="login" class="form-signin" method="post">
-            <h2 class="form-signin-heading">注册成功！</h2>
-            <div class="login-wrap">
-                <div class="input-group">
-                    <span >你需要等待管理员的审核</span>                  
-                </div>  
-                <div class="input-group">
-                    <span>才能开启账号，请耐心等待！</span>
-                </div>
-                <input id="btnClose" type="button" value="关闭本页" onclick="custom_close()" />        
+        <h2>注册成功</h2>
+        <div>
+            <div>
+                你需要等待管理员的审核
             </div>
-        </form>
+            <div>
+                才能开启账号，请耐心等待
+            </div>
+        </div>
+        <div>
+            <a href="../../Home/Login">返回登陆页</a>
+        </div>
     </div>
-
 </body>
 </html>
-
-<script language="javascript">
-function custom_close() {
- if(confirm("您确定要关闭本页吗？")) {
-            window.opener = null;
-            window.open('', '_self');
-            window.close();
-        }
-        else { }
-    }
-</script>
