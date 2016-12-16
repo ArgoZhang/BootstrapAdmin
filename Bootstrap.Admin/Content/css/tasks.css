@@ -1,5 +1,4 @@
 /*--------------Tasks Widget--------------*/
-
 .task-content {
     margin-bottom: 30px;
 }
@@ -30,7 +29,6 @@
 
     .tasks-widget .task-list > li {
         position: relative;
-        border-bottom: 1px dashed #eaeaea;
         font-size: 12px;
     }
 
@@ -56,7 +54,7 @@
             position: absolute;
             left: 190px;
             right: 40px;
-            top: 17px;
+            top: 15px;
             display: inline-block;
         }
 
@@ -80,7 +78,7 @@
         }
 
         .tasks-widget .task-list li > .task-title .hidden-phone {
-            padding-top: 14px;
+            padding-top: 12px;
             margin-right: 4px;
         }
 
@@ -112,15 +110,14 @@
     .tasks-widget .task-list li .task-title.notifi .task-time {
         position: absolute;
         right: 66px;
-        top: 17px;
+        top: 15px;
         display: inline-block;
-        color: #3c763d;
     }
 
     .tasks-widget .task-list li .task-title .task-title-sp {
         margin-right: 5px;
         max-width: 150px;
-        padding-top: 17px;
+        padding-top: 15px;
     }
 
     .tasks-widget .task-list li.task-done .task-title-sp {
@@ -152,7 +149,7 @@
     .tasks-widget .task-list li i {
         position: absolute;
         left: 6px;
-        padding: 19px 10px;
+        padding: 17px 10px;
         cursor: pointer;
     }
 
@@ -229,6 +226,19 @@
     border-left: 3px solid #b7d8e2;
 }
 
+.task-header {
+    font-size: 14px !important;
+    font-weight: 600;
+    background-color: #5cb85c !important;
+    color: #fff;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.task-oper {
+    padding-top: 15px;
+    padding-right: 20px;
+}
 
 @media (max-width: 548px) {
     .tasks-widget .task-list li .task-title.notifi .task-value {
