@@ -56,8 +56,8 @@
 
             // tasks
             // new users
-            $('#msgHeaderTask').text(result.NewUsersCount);
-            $('#msgHeaderTaskBadge').text(result.NewUsersCount);
+            $('#msgHeaderTask').text(result.TasksCount);
+            $('#msgHeaderTaskBadge').text(result.TasksCount);
             var htmlUserTemplate = '<li><a href="../Admin/Tasks?id={3}"><span class="desc">{0}-{2}</span><span class="percent">{1}%</span></span><div class="progress progress-striped"><div class="progress-bar" role="progressbar" aria-valuenow="{1}" aria-valuemin="0" aria-valuemax="100" style="width: {1}%"><span class="sr-only">{1}% 完成</span></div></div></a></li>';
             var html = result.Tasks.map(function (u) {
                 return $.format(htmlUserTemplate, u.TaskName, u.TaskProgress, u.AssignDisplayName, u.ID);
