@@ -19,7 +19,7 @@ namespace Bootstrap.DataAccess
         {
             return CacheManager.GetOrAdd(RetrieveTasksDataKey, CacheSection.RetrieveIntervalByKey(RetrieveTasksDataKey), key =>
             {
-                string sql = "select t.*, u.DisplayName from Tasks t inner join Users u on t.UserName = u.UserName";
+                string sql = "select top 1000 t.*, u.DisplayName from Tasks t inner join Users u on t.UserName = u.UserName order by AssignTime desc";
                 List<Task> tasks = new List<Task>();
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                 try

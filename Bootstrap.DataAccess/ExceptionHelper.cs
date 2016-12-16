@@ -47,7 +47,7 @@ namespace Bootstrap.DataAccess
         {
             return CacheManager.GetOrAdd(RetrieveExceptionsDataKey, CacheSection.RetrieveIntervalByKey(RetrieveExceptionsDataKey), key =>
             {
-                string sql = "select top 1000 * from Exceptions";
+                string sql = "select top 1000 * from Exceptions order by LogTime desc";
                 List<Exceptions> Exceptions = new List<Exceptions>();
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                 try

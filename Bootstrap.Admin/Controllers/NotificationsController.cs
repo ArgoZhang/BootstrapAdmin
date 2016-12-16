@@ -18,7 +18,7 @@ namespace Bootstrap.Admin.Controllers
             var ret = new Notifications();
             // New Users
             var user = UserHelper.RetrieveNewUsers();
-            ret.Users = user.Take(6).OrderByDescending(u => u.RegisterTime).ToList();
+            ret.Users = user.Take(6).ToList();
             ret.Users.AsParallel().ForAll(n =>
               {
                   var ts = DateTime.Now - n.RegisterTime;
@@ -31,7 +31,7 @@ namespace Bootstrap.Admin.Controllers
 
             // Tasks
             var task = TaskHelper.RetrieveTasks();
-            ret.Tasks = task.Take(6).OrderByDescending(u => u.AssignTime).ToList();
+            ret.Tasks = task.Take(6).ToList();
             ret.TasksCount = task.Count();
 
             //Message
@@ -42,7 +42,7 @@ namespace Bootstrap.Admin.Controllers
 
             //Apps
             var apps = ExceptionHelper.RetrieveExceptions().Where(n => n.ExceptionType != "Longbow.Data.DBAccessException");
-            ret.Apps = apps.Take(6).OrderByDescending(a => a.LogTime).ToList();
+            ret.Apps = apps.Take(6).ToList();
             ret.Apps.AsParallel().ForAll(n =>
             {
                 n.ExceptionType = n.ExceptionType.Split('.').Last();
@@ -56,7 +56,7 @@ namespace Bootstrap.Admin.Controllers
 
             //Dbs
             var dbs = ExceptionHelper.RetrieveExceptions().Where(n => n.ExceptionType == "Longbow.Data.DBAccessException");
-            ret.Dbs = dbs.Take(6).OrderByDescending(d => d.LogTime).ToList();
+            ret.Dbs = dbs.Take(6).ToList();
             ret.Dbs.AsParallel().ForAll(n =>
             {
                 var ts = DateTime.Now - n.LogTime;

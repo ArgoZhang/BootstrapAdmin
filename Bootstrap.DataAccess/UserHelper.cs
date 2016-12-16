@@ -105,7 +105,7 @@ namespace Bootstrap.DataAccess
         {
             return CacheManager.GetOrAdd(RetrieveNewUsersDataKey, CacheSection.RetrieveIntervalByKey(RetrieveNewUsersDataKey), key =>
             {
-                string sql = "select ID, UserName, DisplayName, RegisterTime, [Description] from Users Where ApprovedTime is null and RejectedTime is null";
+                string sql = "select ID, UserName, DisplayName, RegisterTime, [Description] from Users Where ApprovedTime is null and RejectedTime is null order by RegisterTime desc";
                 List<User> Users = new List<User>();
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                 try
