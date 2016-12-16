@@ -176,7 +176,8 @@
             $.bc({
                 Id: 1, url: Dicts.url, data: { type: 'activeCss' }, swal: false,
                 callback: function (result) {
-                    $('#dictCssDefine').selectval(result[0].Code);
+                    if (result.length > 0)
+                        $('#dictCssDefine').selectval(result[0].Code);
                 }
             });
         }

@@ -171,7 +171,7 @@ namespace Bootstrap.DataAccess
         public static IEnumerable<Dict> RetrieveActiveCss()
         {
             var data = RetrieveDicts();
-            return data.Where(d => d.Category == "当前样式");
+            return data.Where(d => d.Category == "当前样式" && !d.Code.Equals("site.css", StringComparison.OrdinalIgnoreCase));
         }
         /// <summary>
         /// 保存网站个性化设置
