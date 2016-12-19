@@ -548,7 +548,6 @@ ul.breadcrumb {
     bottom: 40px;
     right: 0;
     top: 94px;
-    background-image: url('../images/bg.jpg');
     overflow: hidden;
 }
 
@@ -557,3 +556,8 @@ ul.breadcrumb {
         height: 100%;
         border: none;
     }
+
+.welcome-bg {
+    background-image: url('../images/bg.jpg');
+    background-size: 100% 100%;
+}
