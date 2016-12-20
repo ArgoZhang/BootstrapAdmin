@@ -184,9 +184,30 @@
 
     .dd3-content > span {
         position: absolute;
-        right: 15px;
         top: 6px;
     }
+
+    .dd3-content .menuOrder {
+        right: 15px;
+    }
+
+    .dd3-content .menuType {
+        right: 45px;
+    }
+
+@media (max-width: 480px) {
+    .dd3-content .menuType {
+        display: none;
+    }
+
+    li[data-category="1"] .dd3-content .menuOrder {
+        color: green;
+    }
+}
+
+li[data-category="1"] .dd3-content .menuType {
+    color: green;
+}
 
 .dd-dragel > .dd3-item > .dd3-content {
     margin: 0;
