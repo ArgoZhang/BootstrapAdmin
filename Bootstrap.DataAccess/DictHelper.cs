@@ -13,8 +13,6 @@ namespace Bootstrap.DataAccess
     public static class DictHelper
     {
         internal const string RetrieveDictsDataKey = "DictHelper-RetrieveDicts";
-        internal const string RetrieveWebSettingsDataKey = "DictHelper-RetrieveDictsWebSettings";
-        internal const string RetrieveIconPathSettingsDataKey = "DictHelper-RetrieveDictsIconPathSettings";
         internal const string RetrieveCategoryDataKey = "DictHelper-RetrieveDictsCategory";
         /// <summary>
         /// 查询所有字典信息
@@ -109,70 +107,6 @@ namespace Bootstrap.DataAccess
             }
             return ret;
         }
-        public static IEnumerable<Dict> RetrieveWebSettings()
-        {
-            return CacheManager.GetOrAdd(RetrieveWebSettingsDataKey, CacheSection.RetrieveIntervalByKey(RetrieveWebSettingsDataKey), key =>
-            {
-                string sql = "select ID, Category, Name, Code, Define from Dicts where Category = N'网站设置' and Define = 0";
-                List<Dict> Dicts = new List<Dict>();
-                DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
-                try
-                {
-                    using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
-                    {
-                        while (reader.Read())
-                        {
-                            Dicts.Add(new Dict()
-                            {
-                                ID = (int)reader[0],
-                                Category = (string)reader[1],
-                                Name = (string)reader[2],
-                                Code = (string)reader[3],
-                                Define = (int)reader[4]
-                            });
-                        }
-                    }
-                }
-                catch (Exception ex) { ExceptionManager.Publish(ex); }
-                return Dicts;
-            }, CacheSection.RetrieveDescByKey(RetrieveWebSettingsDataKey));
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public static string RetrieveWebTitle()
-        {
-            var settings = DictHelper.RetrieveWebSettings();
-            return (settings.FirstOrDefault(d => d.Name == "网站标题") ?? new Dict() { Code = "后台管理系统" }).Code;
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public static string RetrieveWebFooter()
-        {
-            var settings = DictHelper.RetrieveWebSettings();
-            return (settings.FirstOrDefault(d => d.Name == "网站页脚") ?? new Dict() { Code = "2016 © 通用后台管理系统" }).Code;
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public static IEnumerable<Dict> RetrieveWebCss()
-        {
-            var data = RetrieveDicts();
-            return data.Where(d => d.Category == "网站样式");
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public static IEnumerable<Dict> RetrieveActiveCss()
-        {
-            var data = RetrieveDicts();
-            return data.Where(d => d.Category == "当前样式" && !d.Code.Equals("site.css", StringComparison.OrdinalIgnoreCase));
-        }
         /// <summary>
         /// 保存网站个性化设置
         /// </summary>
@@ -203,38 +137,6 @@ namespace Bootstrap.DataAccess
             return ret;
         }
         /// <summary>
-        /// 获取头像路径
-        /// </summary>
-        /// <returns></returns>
-        public static Dict RetrieveIconFolderPath()
-        {
-            return CacheManager.GetOrAdd(RetrieveIconPathSettingsDataKey, CacheSection.RetrieveIntervalByKey(RetrieveIconPathSettingsDataKey), key =>
-            {
-                string sql = "select ID, Category, Name, Code, Define from Dicts where Category = N'头像地址' and Name = N'头像路径' and Define = 0";
-                var dict = new Dict() { Code = "~/Content/images/uploader/" };
-                DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
-                try
-                {
-                    using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
-                    {
-                        if (reader.Read())
-                        {
-                            dict = new Dict()
-                            {
-                                ID = (int)reader[0],
-                                Category = (string)reader[1],
-                                Name = (string)reader[2],
-                                Code = (string)reader[3],
-                                Define = (int)reader[4]
-                            };
-                        }
-                    }
-                }
-                catch (Exception ex) { ExceptionManager.Publish(ex); }
-                return dict;
-            }, CacheSection.RetrieveDescByKey(RetrieveIconPathSettingsDataKey));
-        }
-        /// <summary>
         /// 获取字典分类名称
         /// </summary>
         /// <returns></returns>
@@ -258,6 +160,51 @@ namespace Bootstrap.DataAccess
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return ret;
             }, CacheSection.RetrieveDescByKey(RetrieveCategoryDataKey));
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static string RetrieveWebTitle()
+        {
+            var settings = RetrieveDicts();
+            return (settings.FirstOrDefault(d => d.Name == "网站标题" && d.Category == "网站设置" && d.Define == 0) ?? new Dict() { Code = "后台管理系统" }).Code;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static string RetrieveWebFooter()
+        {
+            var settings = RetrieveDicts();
+            return (settings.FirstOrDefault(d => d.Name == "网站页脚" && d.Category == "网站设置" && d.Define == 0) ?? new Dict() { Code = "2016 © 通用后台管理系统" }).Code;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<Dict> RetrieveWebCss()
+        {
+            var data = RetrieveDicts();
+            return data.Where(d => d.Category == "网站样式");
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<Dict> RetrieveActiveCss()
+        {
+            var data = RetrieveDicts();
+            return data.Where(d => d.Name == "使用样式" && d.Category == "当前样式" && d.Define == 0 && !d.Code.Equals("site.css", StringComparison.OrdinalIgnoreCase));
+        }
+        /// <summary>
+        /// 获取头像路径
+        /// </summary>
+        /// <returns></returns>
+        public static Dict RetrieveIconFolderPath()
+        {
+            var data = RetrieveDicts();
+            return data.FirstOrDefault(d => d.Name == "头像路径" && d.Category == "头像地址" && d.Define == 0) ?? new Dict() { Code = "~/Content/images/uploader/" };
         }
     }
 }
