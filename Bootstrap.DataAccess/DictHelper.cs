@@ -206,5 +206,14 @@ namespace Bootstrap.DataAccess
             var data = RetrieveDicts();
             return data.FirstOrDefault(d => d.Name == "头像路径" && d.Category == "头像地址" && d.Define == 0) ?? new Dict() { Code = "~/Content/images/uploader/" };
         }
+        /// <summary>
+        /// 获得默认的前台首页地址，默认为~/Home/Index
+        /// </summary>
+        /// <returns></returns>
+        public static string RetrieveHomeUrl()
+        {
+            var settings = RetrieveDicts();
+            return (settings.FirstOrDefault(d => d.Name == "前台首页" && d.Category == "网站设置" && d.Define == 0) ?? new Dict() { Code = "~/Home/Index" }).Code;
+        }
     }
 }

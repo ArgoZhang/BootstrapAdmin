@@ -27,6 +27,7 @@ INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (16, N'
 INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (17, N'网站样式', N'默认样式', N'site.css', 0)
 INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (18, N'网站样式', N'蓝色样式', N'blue.css', 0)
 INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (19, N'当前样式', N'使用样式', N'site.css', 0)
+INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (20, N'网站设置', N'前台首页', N'~/Home/Index', 0)
 SET IDENTITY_INSERT [dbo].[Dicts] OFF
 
 DELETE FROM Navigations

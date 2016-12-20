@@ -1,7 +1,6 @@
 ﻿using Bootstrap.Admin.Models;
 using Bootstrap.DataAccess;
 using Longbow.Security.Principal;
-using System;
 using System.Web.Mvc;
 using System.Web.Security;
 
@@ -19,8 +18,10 @@ namespace Bootstrap.Admin.Controllers
         public ActionResult Index()
         {
             var v = new HeaderBarModel();
+            v.HomeUrl = DictHelper.RetrieveHomeUrl();
             v.ShowMenu = true;
-            return View(v);
+            if (v.HomeUrl.StartsWith("~/")) return View(v);
+            else return Redirect(v.HomeUrl);
         }
         /// <summary>
         /// 

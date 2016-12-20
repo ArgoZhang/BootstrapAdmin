@@ -16,7 +16,6 @@ namespace Bootstrap.Admin.Models
             DisplayName = user.DisplayName;
             UserName = user.UserName;
             UserID = user.ID;
-            HomeUrl = "~/";
             Menus = MenuHelper.RetrieveLinksByUserName(UserName);
         }
         public string UserName { get; protected set; }
@@ -35,7 +34,7 @@ namespace Bootstrap.Admin.Models
         /// <summary>
         /// 
         /// </summary>
-        public string HomeUrl { get; protected set; }
+        public string HomeUrl { get; set; }
         /// <summary>
         /// 获得/设置 前台菜单
         /// </summary>
