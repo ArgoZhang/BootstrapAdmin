@@ -99,6 +99,7 @@ a, a:hover, a:focus {
 /*Right Profile*/
 .top-menu {
     margin-top: 7px;
+    padding-left: 0px;
 }
 
     .top-menu .username {
