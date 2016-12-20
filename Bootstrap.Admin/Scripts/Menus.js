@@ -16,10 +16,14 @@
     var $parentMenuID = $('#parentId');
     var $parentMenuName = $('#parentName');
     var $category = $('#category');
-    $nestMenuInput.find('label:first').hide();
+
+    var initNestMenu = function () {
+        $nestMenuInput = $nestMenu.find('div.dd3-content');
+        $nestMenuInput.find('label:first').hide();
+    }
 
     var bsa = new BootstrapAdmin({
-        url: '../api/Menus',
+        url: Menu.url,
         dataEntity: new DataEntity({
             map: {
                 ID: "menuID",
@@ -64,40 +68,10 @@
         callback: function (result) {
             if (!result.success) return;
             if ((result.oper == "save") || result.oper == "del") {
-                $.bc({
-                    Id: 0, url: Menu.url, data: { type: "user" }, swal: false,
-                    callback: function (result) {
-                        var html = "";
-                        if ($.isArray(result)) html = cascadeMenu(result);
-                        $nestMenu.find('ol:first').html(html);
-                        $nestMenuInput = $nestMenu.find('div.dd3-content');
-                        $nestMenuInput.find('label:first').hide();
-                    }
-                });
+                $nestMenu.nestMenu(initNestMenu);
             }
         }
     });
-
-    var cascadeMenu = function (menus) {
-        var html = "";
-        $.each(menus, function (index, menu) {
-            if (menu.Menus.length == 0) {
-                html += $.format('<li class="dd-item dd3-item" data-id="{0}" data-category="{3}"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><label><input type="checkbox" value="{0}"><span><i class="{1}"></i>{2}</span></label><label><input type="radio" name="menu" value="{0}"><span><i class="{1}"></i>{2}</span></label></div></li>', menu.ID, menu.Icon, menu.Name, menu.Category);
-            }
-            else {
-                html += $.format('<li class="dd-item dd3-item" data-id="{0}" data-category="{3}"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><label><input type="checkbox" value="{0}"><span><i class="{1}"></i>{2}</span></label><label><input type="radio" name="menu" value="{0}"><span><i class="{1}"></i>{2}</span></label></div></li><ol class="dd-list">{4}</ol>', menu.ID, menu.Icon, menu.Name, menu.Category, cascadeSubMenu(menu.Menus));
-            }
-        });
-        return html;
-    };
-
-    var cascadeSubMenu = function (menus) {
-        var html = ""
-        $.each(menus, function (index, menu) {
-            html += $.format('<li class="dd-item dd3-item" data-id="{0}" data-category="{3}"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><label><input type="checkbox" value="{0}"><span><i class="{1}"></i>{2}</span></label><label><input type="radio" name="menu" value="{0}"><span><i class="{1}"></i>{2}</span></label></div></li>', menu.ID, menu.Icon, menu.Name, menu.Category);
-        });
-        return html;
-    }
 
     $('table').smartTable({
         url: Menu.url,            //请求后台的URL（*）
@@ -178,8 +152,8 @@
 
     $dialogIcon.find('div.modal-footer').on('click', 'button:last', function () {
         var icon = $pickIcon.attr('class');
-        $('#icon').val(icon);
-        $('#btnIcon').find('i').attr('class', icon);
+        $inputIcon.val(icon);
+        $btnPickIcon.find('i').attr('class', icon);
     });
 
     // 排序按钮
@@ -196,7 +170,7 @@
             var menuName = $('#name').val();
             var menuCate = $category.selectval();
             if (menuName == "") menuName = "新建菜单-未命名";
-            $nestMenu.find('ol.dd-list:first').append($.format('<li class="dd-item dd3-item" data-id="0" data-category="{1}"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><label><span>{0}</span></label></div></li>', menuName, menuCate));
+            $nestMenu.find('ol.dd-list:first').append($.format('<li class="dd-item dd3-item" data-id="0" data-order="10" data-category="{1}"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><label><span>{0}</span></label></div></li>', menuName, menuCate));
         }
         $nestMenu.find('li[data-id="' + did + '"] > div.dd3-content span').addClass('active');
         $dialogMenu.show().adjustDialog();
@@ -227,15 +201,17 @@
         var type = $(this).data('type');
         switch (type) {
             case "parent":
-                $('#parentId').val($('.dd3-content :radio:checked').val());
-                $('#parentName').val($('.dd3-content :radio:checked').next('span').text());
+                $parentMenuID.val($('.dd3-content :radio:checked').val());
+                $parentMenuName.val($('.dd3-content :radio:checked').next('span').text());
                 break;
             case "order":
-                var data = $('#nestable_menu').nestable('serialize');
+                var data = $nestMenu.find('li:visible');
                 var mid = $('#menuID').val();
                 for (index in data) {
-                    if (data[index].id == mid || data[index] == 0) {
-                        $('#order').val(10 + index * 10);
+                    var $data = $(data[index]);
+                    if ($data.attr('data-id') == mid || $data.attr('data-id') == 0) {
+                        if (index > 0) index--;
+                        $('#order').val($(data[index]).attr('data-order'));
                         break;
                     }
                 }
@@ -251,7 +227,8 @@
         if (icon == "") icon = "fa fa-dashboard";
         $btnPickIcon.find('i').attr('class', icon);
     });
-    $nestMenu.nestable();
+
+    $nestMenu.nestMenu(initNestMenu);
     // select
     $('.btn-select').select();
 });

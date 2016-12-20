@@ -101,7 +101,9 @@
   <ItemGroup>
     <Content Include="Global.asax" />
     <Content Include="Login\Login.html" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>

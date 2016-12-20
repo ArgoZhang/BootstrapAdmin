@@ -182,6 +182,12 @@
             cursor: pointer;
         }
 
+    .dd3-content > span {
+        position: absolute;
+        right: 15px;
+        top: 6px;
+    }
+
 .dd-dragel > .dd3-item > .dd3-content {
     margin: 0;
 }

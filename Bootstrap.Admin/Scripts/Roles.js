@@ -11,7 +11,6 @@
     var $btnSubmitMenu = $('#btnSubmitMenu');
     var $nestMenu = $('#nestable_menu');
     var $nestMenuInput = $nestMenu.find('div.dd3-content');
-    $nestMenuInput.find('label:last').hide();
 
     var bsa = new BootstrapAdmin({
         url: Role.url,
@@ -113,8 +112,6 @@
         }
     });
 
-    $nestMenu.nestable();
-
     $('table').smartTable({
         url: Role.url,            //请求后台的URL（*）
         sortName: 'RoleName',
@@ -134,11 +131,14 @@
         }
     });
 
-    $nestMenuInput.on('click', ':checkbox', function () {
-        var val = $(this).prop('checked');
-        var child = $(this).parent().parent().next();
-        if (child.hasClass('dd-list')) {
-            child.find(':checkbox').prop('checked', val);
-        }
+    $nestMenu.nestMenu(function () {
+        $nestMenuInput = $nestMenu.find('div.dd3-content');
+        $nestMenuInput.on('click', ':checkbox', function () {
+            var val = $(this).prop('checked');
+            var child = $(this).parent().parent().next();
+            if (child.hasClass('dd-list')) {
+                child.find(':checkbox').prop('checked', val);
+            }
+        }).find('label:last').hide();
     });
 });

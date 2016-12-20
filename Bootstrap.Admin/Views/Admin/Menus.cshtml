@@ -99,6 +99,7 @@
                     <div class="input-group">
                         <input type="text" class="form-control" id="order" name="order" data-default-val="10" placeholder="默认为10" maxlength="8" />
                         <span class="input-group-btn">
+                            <button id="btnClearIcon" class="btn btn-default" type="button"><i class="fa fa-remove"></i></button>
                             <button id="btnMenuOrder" class="btn btn-default" type="button"><i class="fa fa-list-ol"></i>调整</button>
                         </span>
                     </div>
@@ -162,5 +163,5 @@
             <button type="button" class="btn btn-primary" id="btnSubmitIcon">保存</button>
         </div>
     </div>
-    @Html.Partial("MenuTree", Model.Navigations.Union(Model.Menus))
+    @Html.Partial("MenuTree")
 }
