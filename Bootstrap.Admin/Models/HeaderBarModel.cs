@@ -16,7 +16,7 @@ namespace Bootstrap.Admin.Models
             DisplayName = user.DisplayName;
             UserName = user.UserName;
             UserID = user.ID;
-            Menus = MenuHelper.RetrieveLinksByUserName(UserName);
+            Menus = new List<Menu>();
         }
         public string UserName { get; protected set; }
         /// <summary>
@@ -30,15 +30,11 @@ namespace Bootstrap.Admin.Models
         /// <summary>
         /// 
         /// </summary>
-        public bool ShowMenu { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
         public string HomeUrl { get; set; }
         /// <summary>
         /// 获得/设置 前台菜单
         /// </summary>
-        public IEnumerable<Menu> Menus { get; private set; }
+        public IEnumerable<Menu> Menus { get; set; }
         /// <summary>
         /// 获得/设置 用户头像地址
         /// </summary>

@@ -7,7 +7,7 @@
         <span id="websiteTitle">@Model.Title</span>
     </a>
     <!--logo end-->
-    @if (Model.Menus.Count() > 0 && Model.ShowMenu)
+    @if (Model.Menus.Count() > 0)
     {
         <ul id="menu" class="dropdown-menu menu">
             <div class="arrow-up"></div>
@@ -21,7 +21,7 @@
             </li>
         </ul>
     }
-    @if (!Model.ShowMenu && (LgbPrincipal.IsAdmin(User.Identity.Name) || User.IsInRole("Administrators")))
+    @if (LgbPrincipal.IsAdmin(User.Identity.Name) || User.IsInRole("Administrators"))
     {
         <!--  notification start -->
         <ul class="notify-row">

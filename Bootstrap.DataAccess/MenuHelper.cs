@@ -83,9 +83,9 @@ namespace Bootstrap.DataAccess
             return root;
         }
         /// <summary>
-        /// 
+        /// 通过当前用户名获得前台菜单
         /// </summary>
-        /// <param name="userId"></param>
+        /// <param name="userName">当前登陆的用户名</param>
         /// <returns></returns>
         public static IEnumerable<Menu> RetrieveLinksByUserName(string userName)
         {
