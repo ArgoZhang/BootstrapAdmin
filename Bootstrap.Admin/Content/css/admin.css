@@ -510,3 +510,7 @@ input[type="datetime"] {
     .dropdown-menu .divider {
         margin: 0;
     }
+
+.bootstrap-table {
+    padding-bottom: 15px;
+}
