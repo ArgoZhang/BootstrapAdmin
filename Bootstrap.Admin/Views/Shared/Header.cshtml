@@ -7,20 +7,6 @@
         <span id="websiteTitle">@Model.Title</span>
     </a>
     <!--logo end-->
-    @if (Model.Menus.Count() > 0)
-    {
-        <ul id="menu" class="dropdown-menu menu">
-            <div class="arrow-up"></div>
-            <li>
-                <div id="submenu" class="menu-submenu">
-                    @foreach (var menu in Model.Menus)
-                    {
-                        @Html.Partial("SubMenu", menu)
-                    }
-                </div>
-            </li>
-        </ul>
-    }
     @if (LgbPrincipal.IsAdmin(User.Identity.Name) || User.IsInRole("Administrators"))
     {
         <!--  notification start -->
