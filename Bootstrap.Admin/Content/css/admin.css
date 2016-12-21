@@ -69,7 +69,6 @@
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
-        vertical-align: middle;
     }
 
 .form-group .form-control-url {
