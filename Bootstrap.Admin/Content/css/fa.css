@@ -110,6 +110,7 @@
         left: 16px;
         right: 16px;
         bottom: 15px;
+        white-space: nowrap;
     }
 
         .icon-content .modal-footer span {
@@ -121,10 +122,13 @@
         .icon-content .modal-footer i {
             vertical-align: middle;
             font-size: 22px;
-            width: 30px;
+            margin: 0 4px 0 8px;
             text-align: center;
             color: #337ab7;
             display: inline-block;
+            border: solid 1px;
+            padding: 3px;
+            border-radius: 4px;
         }
 
 .fontawesome-icon-list .fa-hover a {
