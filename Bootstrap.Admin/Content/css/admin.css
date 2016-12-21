@@ -108,10 +108,6 @@
         padding-right: 22px;
     }
 
-.fixed-table-loading {
-    padding-top: 5px;
-}
-
 .has-error input {
     background-repeat: no-repeat;
     background-image: url('../images/error.png');
@@ -511,6 +507,11 @@ input[type="datetime"] {
         margin: 0;
     }
 
+/*Bootstrap Table BUG */
+.fixed-table-loading {
+    padding-top: 5px;
+}
+
 .bootstrap-table {
     padding-bottom: 15px;
 }
@@ -518,3 +519,4 @@ input[type="datetime"] {
     .bootstrap-table .table {
         border-bottom: none !important;
     }
+/*Bootstrap Table BUG END*/
