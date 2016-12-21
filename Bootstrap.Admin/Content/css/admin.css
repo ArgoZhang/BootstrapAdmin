@@ -514,3 +514,7 @@ input[type="datetime"] {
 .bootstrap-table {
     padding-bottom: 15px;
 }
+
+    .bootstrap-table .table {
+        border-bottom: none !important;
+    }
