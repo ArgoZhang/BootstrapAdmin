@@ -60,32 +60,29 @@ a, a:hover, a:focus {
     margin-top: 15px;
     text-transform: uppercase;
 }
+/*end title*/
 
 .site-footer {
     background: #5b6e84;
     color: #fff;
     padding: 10px 4px;
     height: 40px;
-}
-
-.site-footer {
     position: fixed;
     left: 0;
     bottom: 0;
     right: 0;
     z-index: 50;
+    white-space: nowrap;
 }
 
-/*end title*/
-
 .go-top {
-    margin-right: 1%;
-    float: right;
     background: rgba(255,255,255,.5);
     width: 20px;
     height: 20px;
     border-radius: 50%;
     -webkit-border-radius: 50%;
+    position: absolute;
+    right: 10px;
 }
 
     .go-top:hover {
