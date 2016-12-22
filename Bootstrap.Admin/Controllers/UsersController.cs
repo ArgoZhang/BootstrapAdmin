@@ -38,7 +38,7 @@ namespace Bootstrap.Admin.Controllers
             }
             var ret = false;
             var userName = User.Identity.Name;
-            if (value.UserName.Equals(userName, System.StringComparison.OrdinalIgnoreCase) && !LgbPrincipal.IsAdmin(userName))
+            if (value.UserName.Equals(userName, System.StringComparison.OrdinalIgnoreCase) || LgbPrincipal.IsAdmin(userName))
             {
                 if (value.UserStatus == 1)
                     ret = UserHelper.SaveUserInfoByName(value);
