@@ -45,7 +45,7 @@
             headers: options.headers,
             success: function (result) {
                 if (!options.test) {
-                    var $body = $('body');
+                    var $body = $('#main-content');
                     $body.append('<section></section>');
                     var $section = $body.find('section').last();
                     $section.append($.format('<h3>{0}</h3>', options.title));

@@ -145,5 +145,14 @@ namespace Bootstrap.Admin.Controllers
             var v = new NavigatorBarModel("~/Admin/Mobile");
             return View(v);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Api()
+        {
+            var v = new NavigatorBarModel("~/Admin/Api");
+            return View(v);
+        }
     }
 }

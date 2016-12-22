@@ -105,6 +105,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\ErrorLog\Readme.txt" />
+    <Content Include="Content\css\api.css" />
     <Content Include="Content\css\bootstrap-datetimepicker.css" />
     <Content Include="Content\css\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\css\IE8.css" />
@@ -322,6 +323,7 @@
     <Content Include="Views\Shared\_Mobile.cshtml" />
     <Content Include="Views\Home\Mobile.cshtml" />
     <Content Include="Views\Shared\SubMenu.cshtml" />
+    <Content Include="Views\Admin\Api.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
