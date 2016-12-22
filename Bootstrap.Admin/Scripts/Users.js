@@ -74,6 +74,12 @@
             if (data && data.success && data.oper === 'save' && data.data.ID === $('#userId').val()) {
                 $('#userDisplayName').text(data.data.DisplayName);
             }
+            if (data && data.oper === 'create') {
+                $('#userName').removeProp('readonly').removeClass("ignore");
+            }
+            else if (data && data.oper === 'edit') {
+                $('#userName').prop('readonly', true).addClass("ignore");
+            }
         }
     });
 

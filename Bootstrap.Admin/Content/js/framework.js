@@ -81,13 +81,15 @@
             var op = {
                 dataEntity: $.extend({}, this.options.dataEntity),
                 table: this.options.bootstrapTable,
-                modal: this.options.modal
+                modal: this.options.modal,
+                src: this
             };
             return {
                 'click .edit': function (e, value, row, index) {
                     op.dataEntity.load(row);
                     $(op.table).bootstrapTable('uncheckAll');
                     $(op.table).bootstrapTable('check', index);
+                    handlerCallback.call(op.src, null, e, { oper: 'edit' });
                     $('#' + op.modal).modal("show");
                 }
             }
