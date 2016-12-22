@@ -19,11 +19,7 @@ namespace Bootstrap.Admin.Controllers
         {
             var v = new HeaderBarModel();
             v.HomeUrl = DictHelper.RetrieveHomeUrl();
-            if (v.HomeUrl.StartsWith("~/"))
-            {
-                v.Menus = MenuHelper.RetrieveLinksByUserName(User.Identity.Name);
-                return View(v);
-            }
+            if (v.HomeUrl.StartsWith("~/")) return View(v);
             else return Redirect(v.HomeUrl);
         }
         /// <summary>
@@ -56,6 +52,7 @@ namespace Bootstrap.Admin.Controllers
             if (LgbPrincipal.IsAdmin(userName, password) || UserHelper.Authenticate(userName, password))
             {
                 FormsAuthentication.RedirectFromLoginPage(userName, remember == "true");
+                return new EmptyResult();
             }
             return View(model);
         }
