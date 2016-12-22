@@ -56,7 +56,7 @@
                     $section.append($.format('<div><label class="control-label">传递参数</label><div>{0}</div></div>', JSON.stringify(options.data)));
                     $section.append($.format('<div><label class="control-label">返回值</label><div>{0}</div></div>', JSON.stringify(result)));
                     $section.append('<div><label class="control-label">试一试</label></div>');
-                    $section.append($.format('<div class="input-group"><input type="text" class="form-control" value=\'{1}\' data-val=\'{0}\' /><span class="input-group-btn"><button class="btn btn-default" type="button">试一试</button></span></div>', JSON.stringify(options), JSON.stringify(options.data)));
+                    $section.append($.format('<div class="input-group"><input type="text" class="form-control" value=\'{1}\' data-val=\'{0}\' /><span class="input-group-btn"><button class="btn btn-default btn-success" type="button">试一试</button></span></div>', JSON.stringify(options), JSON.stringify(options.data)));
                     $section.append('<div class="test"></div>')
                     options.success(result);
                 }
@@ -82,11 +82,44 @@
         ajax(options);
     });
 
+    // 接口调用
     ajax({
         title: '用户登陆调用接口',
         anonymous: true,
         url: 'api/login', method: 'POST', data: { userName: 'Test', password: '1' }, success: function (result) {
-            ajax({ title: '用户登陆信息接口', url: 'api/login', method: 'GET', headers: { Token: result.Token } });
+            var token = result.Token;
+            ajax({
+                title: '用户登陆信息接口', url: 'api/login', headers: { Token: token },
+                method: 'GET'
+            });
+            ajax({
+                title: '指定用户信息接口', url: 'api/Users', headers: { Token: token },
+                method: 'GET', data: { userName: "Test" }
+            });
+            ajax({
+                title: '检查当前用户名是否可用接口', url: 'api/Users', headers: { Token: token },
+                method: 'PUT', data: { UserName: "101", UserStatus: 9 }
+            });
+            ajax({
+                title: '更改用户显示名称接口', url: 'api/Users', headers: { Token: token },
+                method: 'PUT', data: { UserName: "101", UserStatus: 1, DisplayName: "1010" }
+            });
+            ajax({
+                title: '更改用户密码接口', url: 'api/Users', headers: { Token: token },
+                method: 'PUT', data: { UserName: "101", UserStatus: 2, Password: "1", NewPassword: "2" }
+            });
+            ajax({
+                title: '新建用户接口', url: 'api/Users', headers: { Token: token },
+                method: 'POST', data: { ID: 0, UserName: "102", Password: "1", DisplayName: "102" }
+            });
+            ajax({
+                title: '更新用户接口', url: 'api/Users', headers: { Token: token },
+                method: 'POST', data: { ID: 21, UserName: "102", Password: "1", DisplayName: "102" }
+            });
+            ajax({
+                title: '删除用户接口', url: 'api/Users', headers: { Token: token },
+                method: 'DELETE', data: { "": "50,51" }
+            });
         }
     });
 });
