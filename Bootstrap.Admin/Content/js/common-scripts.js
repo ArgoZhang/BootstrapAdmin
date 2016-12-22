@@ -59,8 +59,8 @@ $(function () {
 
     // breadcrumb
     var arch = $('#nav-accordion').find('a.active').last();
-    $breadNav.text(arch.text());
-    var top = arch.offset().top;
+    $breadNav.text(arch.text() || $('title').text());
+    var top = (arch.offset() || { top: 0 }).top;
     if (top > 0) {
         var middle = $('header').outerHeight() + $sidebar.outerHeight() / 2;
         if (top > middle) $sidebar.animate({ scrollTop: top + arch.outerHeight() / 2 - middle }, 500);
