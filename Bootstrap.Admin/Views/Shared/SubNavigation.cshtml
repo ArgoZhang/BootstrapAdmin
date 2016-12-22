@@ -2,12 +2,6 @@
 <ul class="sub">
     @foreach (var menu in Model)
     {
-        <li class="sub-menu">
-            <a href="@Url.Content(menu.Url)" class="@menu.Active"><i class="@menu.Icon"></i>@menu.Name</a>
-            @if (menu.Menus.Count() > 0)
-            {
-                @Html.Partial("SubNavigation", menu.Menus)
-            }
-        </li>
+        @Html.Partial("SubMenu", menu)
     }
 </ul>
