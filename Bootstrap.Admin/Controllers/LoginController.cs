@@ -1,6 +1,10 @@
 ﻿using Bootstrap.DataAccess;
+using Bootstrap.Security.Mvc;
 using Longbow.Caching;
+using Longbow.Security.Principal;
+using Newtonsoft.Json.Linq;
 using System;
+using System.Linq;
 using System.Web.Http;
 using System.Web.Security;
 
@@ -14,7 +18,8 @@ namespace Bootstrap.Admin.Controllers
         [HttpGet]
         public LoginInfo Get()
         {
-            return new LoginInfo() { UserName = User.Identity.Name, Token = string.Empty };
+            var token = Request.Headers.GetValues("Token").First();
+            return new LoginInfo() { UserName = User.Identity.Name, Token = token };
         }
         /// <summary>
         /// 
@@ -24,28 +29,17 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPost]
-        public LoginInfo Post(string userName, string password)
+        public LoginInfo Post([FromBody]JObject value)
         {
-            if (UserHelper.Authenticate(userName, password))
+            dynamic user = value;
+            string userName = user.userName;
+            string password = user.password;
+            if (LgbPrincipal.IsAdmin(userName, password) || UserHelper.Authenticate(userName, password))
             {
                 var token = Guid.NewGuid().ToString();
                 return CacheManager.AddOrUpdate(token, int.Parse(Math.Round(FormsAuthentication.Timeout.TotalSeconds).ToString()), k => new LoginInfo() { UserName = userName, Token = token }, (k, info) => info, "Token 数据缓存");
             }
             return new LoginInfo();
         }
-    }
-    /// <summary>
-    /// 
-    /// </summary>
-    public class LoginInfo
-    {
-        /// <summary>
-        /// 
-        /// </summary>
-        public string UserName { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public string Token { get; set; }
     }
 }
