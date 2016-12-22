@@ -108,6 +108,7 @@
     <Content Include="Content\css\bootstrap-datetimepicker.css" />
     <Content Include="Content\css\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\css\IE8.css" />
+    <Content Include="Content\html\api.html" />
     <Content Include="Content\images\error_icon.png" />
     <Content Include="Content\js\bootstrap-datetimepicker.js" />
     <Content Include="Content\js\bootstrap-datetimepicker.min.js" />
@@ -215,6 +216,7 @@
     <Content Include="Scripts\register.js" />
     <Content Include="Scripts\Roles.js" />
     <Content Include="Scripts\tasks.js" />
+    <Content Include="Scripts\apidoc.js" />
     <Content Include="Scripts\Users.js" />
     <Content Include="Content\js\jquery-1.10.2.js" />
     <Content Include="Content\js\jquery-1.10.2.min.js" />
