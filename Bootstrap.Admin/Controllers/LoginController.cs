@@ -36,10 +36,12 @@ namespace Bootstrap.Admin.Controllers
             string password = user.password;
             if (LgbPrincipal.IsAdmin(userName, password) || UserHelper.Authenticate(userName, password))
             {
-                var token = Guid.NewGuid().ToString();
-                return CacheManager.AddOrUpdate(token, int.Parse(Math.Round(FormsAuthentication.Timeout.TotalSeconds).ToString()), k => new LoginInfo() { UserName = userName, Token = token }, (k, info) => info, "Token 数据缓存");
+                var interval = int.Parse(Math.Round(FormsAuthentication.Timeout.TotalSeconds).ToString());
+                var token = CacheManager.AddOrUpdate(string.Format("WebApi-{0}", userName), interval, k => new LoginInfo() { UserName = userName, Token = Guid.NewGuid().ToString() }, (k, info) => info, "WebApi 数据缓存");
+                CacheManager.AddOrUpdate(token.Token, interval, k => token, (k, info) => info, "Token 数据缓存");
+                return token;
             }
-            return new LoginInfo();
+            return new LoginInfo() { UserName = userName };
         }
         /// <summary>
         /// 
