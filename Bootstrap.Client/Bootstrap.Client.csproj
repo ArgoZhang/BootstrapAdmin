@@ -99,8 +99,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\css\api.css" />
+    <Content Include="Content\css\bootstrap-theme.css" />
+    <Content Include="Content\css\bootstrap.css" />
+    <Content Include="Content\js\bootstrap.js" />
+    <Content Include="Content\js\jquery-1.10.2.js" />
     <Content Include="Global.asax" />
     <Content Include="Login\Login.html" />
+    <Content Include="Scripts\apidoc.js" />
+    <Content Include="Content\html\api.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -129,7 +136,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Scripts\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
