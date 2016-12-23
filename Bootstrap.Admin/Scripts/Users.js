@@ -75,7 +75,7 @@
                 $('#userDisplayName').text(data.data.DisplayName);
             }
             if (data && data.oper === 'create') {
-                $('#userName').removeProp('readonly').removeClass("ignore");
+                $('#userName').prop('readonly', false).removeClass("ignore");
             }
             else if (data && data.oper === 'edit') {
                 $('#userName').prop('readonly', true).addClass("ignore");
