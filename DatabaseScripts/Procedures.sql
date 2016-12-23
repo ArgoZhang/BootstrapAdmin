@@ -203,7 +203,7 @@ BEGIN
 			if(@id = 0 and not exists (select 1 from Users Where UserName = @userName))
 				Insert Into Users (UserName, [Password], PassSalt, DisplayName, RegisterTime, ApprovedTime, [Description]) values (@userName, @password, @passSalt, @displayName, GETDATE(), @approveTime, @description)
 			else 
-				Update Users set UserName = @userName, Password = @password, PassSalt = @passSalt, DisplayName = @displayName where ID = @id
+				Update Users set [Password] = @password, PassSalt = @passSalt, DisplayName = @displayName where ID = @id
 		end
 END
 GO
