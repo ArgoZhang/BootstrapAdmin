@@ -176,10 +176,10 @@ CREATE PROCEDURE [dbo].[Proc_SaveUsers]
 	@password varchar(50),
 	@passSalt varchar(50),
 	@displayName nvarchar(50),
-	@approvedBy varchar(50),
+	@approvedBy varchar(50) = null,
 	@description nvarchar(500),
-	@rejectedBy varchar(50),
-	@rejectedReason nvarchar(500),
+	@rejectedBy varchar(50) = null,
+	@rejectedReason nvarchar(500) = null,
 	@userStatus int = 0 --0表示管理员创建 1标示用户注册 2标示管理员批复
 	WITH ENCRYPTION
 AS
