@@ -41,5 +41,15 @@ namespace Bootstrap.Admin.Controllers
             }
             return new LoginInfo();
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpOptions]
+        public string Options()
+        {
+            return null;
+        }
     }
 }

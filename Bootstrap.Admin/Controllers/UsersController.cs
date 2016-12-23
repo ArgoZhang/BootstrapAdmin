@@ -140,5 +140,15 @@ namespace Bootstrap.Admin.Controllers
         {
             return UserHelper.DeleteUser(value);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpOptions]
+        public string Options()
+        {
+            return null;
+        }
     }
 }
