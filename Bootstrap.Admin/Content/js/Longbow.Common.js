@@ -351,10 +351,5 @@ $(function () {
                 $('head').append($.format('<link href="../Content/css/{0}" rel="stylesheet" type="text/css" />', result[0].Code));
         }
     });
-    if ($.isFunction($.validator)) {
-        jQuery.validator.addMethod("ip", function (value, element) {
-            return this.optional(element) || /^(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])$/.test(value);
-        }, "请填写正确的IP地址");
-    }
     $('#websiteFooter').text($('#footer').val());
 });
