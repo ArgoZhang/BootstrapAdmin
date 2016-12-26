@@ -43,8 +43,8 @@ namespace Bootstrap.DataAccess
                             roles.Add(new Role()
                             {
                                 ID = (int)reader[0],
-                                RoleName = LgbConvert.ReadValue(reader[1], string.Empty),
-                                Description = LgbConvert.ReadValue(reader[2], string.Empty)
+                                RoleName = (string)reader[1],
+                                Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2]
                             });
                         }
                     }
@@ -125,7 +125,7 @@ namespace Bootstrap.DataAccess
                             {
                                 ID = (int)reader[0],
                                 RoleName = (string)reader[1],
-                                Description = (string)reader[2],
+                                Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
                                 Checked = (string)reader[3]
                             });
                         }
@@ -215,7 +215,7 @@ namespace Bootstrap.DataAccess
                             {
                                 ID = (int)reader[0],
                                 RoleName = (string)reader[1],
-                                Description = (string)reader[2],
+                                Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
                                 Checked = (string)reader[3]
                             });
                         }
@@ -291,7 +291,7 @@ namespace Bootstrap.DataAccess
                             {
                                 ID = (int)reader[0],
                                 RoleName = (string)reader[1],
-                                Description = (string)reader[2],
+                                Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
                                 Checked = (string)reader[3]
                             });
                         }
