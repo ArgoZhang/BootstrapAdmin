@@ -44,7 +44,7 @@ namespace Bootstrap.DataAccess
                             {
                                 ID = (int)reader[0],
                                 GroupName = (string)reader[1],
-                                Description = LgbConvert.ReadValue(reader[2], string.Empty)
+                                Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2]
                             });
                         }
                     }
@@ -134,7 +134,7 @@ namespace Bootstrap.DataAccess
                             {
                                 ID = (int)reader[0],
                                 GroupName = (string)reader[1],
-                                Description = (string)reader[2],
+                                Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
                                 Checked = (string)reader[3]
                             });
                         }
@@ -216,7 +216,7 @@ namespace Bootstrap.DataAccess
                             {
                                 ID = (int)reader[0],
                                 GroupName = (string)reader[1],
-                                Description = (string)reader[2],
+                                Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
                                 Checked = (string)reader[3]
                             });
                         }
