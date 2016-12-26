@@ -272,16 +272,20 @@ ul.sidebar-menu {
 
 /*Modal Dialog Checkbox*/
 .modal-body .checkbox {
-    padding: 5px;
+    padding: 0px;
     margin-top: 0;
 }
 
-    .modal-body .checkbox label input[type='checkbox'] {
-        margin: 0 4px 0 0;
-        vertical-align: middle;
-        position: relative;
-        top: -1px;
+    .modal-body .checkbox label {
+        padding-left: 0;
     }
+
+        .modal-body .checkbox label input[type='checkbox'] {
+            margin: 0 4px 0 0;
+            vertical-align: middle;
+            position: relative;
+            top: -1px;
+        }
 
 .modal-body .affix {
     position: fixed;
