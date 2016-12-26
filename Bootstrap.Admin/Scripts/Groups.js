@@ -27,7 +27,9 @@
                                 return $.format(htmlTemplate, element.ID, element.RoleName, element.Checked, element.Description);
                             }).join('')
                             $dialogRoleHeader.text($.format('{0}-角色授权窗口', row.GroupName));
-                            $dialogRoleForm.html(html);
+                            $dialogRoleForm.html(html).find('.tipso_style').each(function (index, label) {
+                                if (label.title == "") label.title = "未设置";
+                            }).tipso();
                             $dialogRole.modal('show');
                         }
                     });
@@ -43,7 +45,9 @@
                                 return $.format(htmlTemplate, element.ID, element.DisplayName, element.Checked, element.UserName);
                             }).join('');
                             $dialogUserHeader.text($.format('{0}-用户授权窗口', row.GroupName));
-                            $dialogUserForm.html(html);
+                            $dialogUserForm.html(html).find('.tipso_style').each(function (index, label) {
+                                if (label.title == "") label.title = "未设置";
+                            }).tipso();
                             $dialogUser.modal('show');
                         }
                     });
