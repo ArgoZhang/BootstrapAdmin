@@ -89,7 +89,7 @@
                     op.dataEntity.load(row);
                     $(op.table).bootstrapTable('uncheckAll');
                     $(op.table).bootstrapTable('check', index);
-                    handlerCallback.call(op.src, null, e, { oper: 'edit' });
+                    handlerCallback.call(op.src, null, e, { oper: 'edit', data: row });
                     $('#' + op.modal).modal("show");
                 }
             }
