@@ -129,7 +129,6 @@ namespace Bootstrap.DataAccess
                 return Users;
             }, CacheSection.RetrieveDescByKey(RetrieveNewUsersDataKey));
         }
-
         /// <summary>
         /// 删除用户
         /// </summary>
@@ -418,7 +417,6 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="userName"></param>
         /// <param name="user"></param>
         /// <returns></returns>
         public static bool ChangePassword(User user)
