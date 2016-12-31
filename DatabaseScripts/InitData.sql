@@ -80,6 +80,7 @@ SET IDENTITY_INSERT [dbo].[UserGroup] OFF
 DELETE FROM UserRole
 SET IDENTITY_INSERT [dbo].[UserRole] ON 
 INSERT [dbo].[UserRole] ([ID], [UserID], [RoleID]) VALUES (1, 1, 1)
+INSERT [dbo].[UserRole] ([ID], [UserID], [RoleID]) VALUES (2, 1, 2)
 SET IDENTITY_INSERT [dbo].[UserRole] OFF
 
 DELETE FROM NavigationRole

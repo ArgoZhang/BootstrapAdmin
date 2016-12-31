@@ -201,7 +201,10 @@ BEGIN
 			declare @approveTime datetime = null
 			if @userStatus = 0 set @approveTime = GETDATE() 
 			if(@id = 0 and not exists (select 1 from Users Where UserName = @userName))
+			begin
 				Insert Into Users (UserName, [Password], PassSalt, DisplayName, RegisterTime, ApprovedTime, [Description]) values (@userName, @password, @passSalt, @displayName, GETDATE(), @approveTime, @description)
+				insert into UserRole (UserID, RoleID) select @@IDENTITY, ID from Roles where RoleName = N'Default'
+			end
 			else 
 				Update Users set [Password] = @password, PassSalt = @passSalt, DisplayName = @displayName where ID = @id
 		end
