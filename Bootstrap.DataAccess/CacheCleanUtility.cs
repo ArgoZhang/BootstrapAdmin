@@ -42,7 +42,7 @@ namespace Bootstrap.DataAccess
                 });
                 cacheKeys.Add(UserHelper.RetrieveNewUsersDataKey);
                 // final cleanup 
-                CacheManager.Clear(key => cacheKeys.Any(k => k == key) || key.Contains(UserHelper.RetrieveUsersDataKey) || key.Contains(RoleHelper.RetrieveRolesByUserNameDataKey));
+                CacheManager.Clear(key => cacheKeys.Any(k => k == key) || key.Contains(UserHelper.RetrieveUsersDataKey));
                 cacheKeys.Clear();
             }
             if (groupIds != null)

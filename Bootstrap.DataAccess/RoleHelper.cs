@@ -1,5 +1,4 @@
-﻿using Longbow;
-using Longbow.Caching;
+﻿using Longbow.Caching;
 using Longbow.Caching.Configuration;
 using Longbow.Data;
 using Longbow.ExceptionManagement;
@@ -17,7 +16,6 @@ namespace Bootstrap.DataAccess
     /// </summary>
     public static class RoleHelper
     {
-        internal const string RetrieveRolesByUserNameDataKey = "RoleHelper-RetrieveRolesByUserName";
         internal const string RetrieveRolesDataKey = "RoleHelper-RetrieveRoles";
         internal const string RetrieveRolesByUserIDDataKey = "RoleHelper-RetrieveRolesByUserId";
         internal const string RetrieveRolesByMenuIDDataKey = "RoleHelper-RetrieveRolesByMenuId";
