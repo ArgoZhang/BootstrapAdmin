@@ -308,16 +308,14 @@ ul.sidebar-menu {
 }
 
     .toolbar .dropdown-menu {
-        padding: 0;
         margin-top: 4px;
-        white-space: nowrap;
-        min-width: 40px;
+        min-width: inherit;
     }
 
         .toolbar .dropdown-menu a {
-            padding: 8px 20px;
+            padding: 0 20px;
             border-left: solid 1px #aeb2b7;
-            border-right: none;
+            display: table-cell;
             color: #504d4d;
         }
 

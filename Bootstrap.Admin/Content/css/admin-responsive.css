@@ -86,7 +86,7 @@
 @media (max-width: 400px) {
     .toolbar .dropdown-menu a {
         border-left: none;
-        padding: 8px;
+        padding: 0 8px;
     }
 
         .toolbar .dropdown-menu a:first-child {
