@@ -109,14 +109,13 @@
     <Content Include="Content\css\bootstrap-datetimepicker.css" />
     <Content Include="Content\css\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\css\IE8.css" />
-    <Content Include="Content\css\pace-theme-minimal.css" />
+    <Content Include="Content\css\jquery.ajaxLoadingBar.css" />
     <Content Include="Content\html\api.html" />
     <Content Include="Content\images\error_icon.png" />
     <Content Include="Content\js\bootstrap-datetimepicker.js" />
     <Content Include="Content\js\bootstrap-datetimepicker.min.js" />
     <Content Include="Content\js\bootstrap-datetimepicker.zh-CN.js" />
-    <Content Include="Content\js\pace.js" />
-    <Content Include="Content\js\pace.min.js" />
+    <Content Include="Content\js\jquery.ajaxLoadingBar.js" />
     <Content Include="favicon.ico" />
     <Content Include="Content\css\admin-responsive.css" />
     <Content Include="Content\css\admin.css" />

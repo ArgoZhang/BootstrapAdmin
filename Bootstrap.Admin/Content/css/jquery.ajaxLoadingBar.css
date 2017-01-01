@@ -1,0 +1,11 @@
+#pageLoader {
+  -webkit-box-shadow: 0 0 5px #2980b9;
+  -moz-box-shadow: 0 0 5px #2980b9;
+  box-shadow: 0 0 5px #2980b9;
+  background: #3498db;
+  height: 2px;
+  position: fixed;
+  top: 0;
+  width: 50px;
+  z-index: 9999999;
+}
