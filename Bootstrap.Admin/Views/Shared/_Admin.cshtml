@@ -20,12 +20,10 @@
     <script src="~/Content/js/framework.js"></script>
     @RenderSection("Javascript", false)
 }
-<section>
-    @RenderSection("header", false)
-    @RenderSection("navigator", false)
-    <section id="main-content" class="main-content">
-        @RenderBody()
-    </section>
-    @Html.Partial("Footer")
+@RenderSection("header", false)
+@RenderSection("navigator", false)
+<section id="main-content" class="main-content">
+    @RenderBody()
 </section>
+@Html.Partial("Footer")
 @RenderSection("modal", false)
