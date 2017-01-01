@@ -326,6 +326,7 @@
     <Content Include="Views\Home\Mobile.cshtml" />
     <Content Include="Views\Shared\SubMenu.cshtml" />
     <Content Include="Views\Admin\Api.cshtml" />
+    <Content Include="Views\Shared\_ButtonBarGroup.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

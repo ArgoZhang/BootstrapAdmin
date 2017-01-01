@@ -310,10 +310,11 @@
             }, options);
             $(this).bootstrapTable(settings);
             var $toolbar = $('div.toolbar');
-            $('div.toolbar').on('click', 'a', function () {
+            $toolbar.on('click', 'a', function () {
                 var ctl = $('#' + $(this).attr('id').replace('tb_', 'btn_'));
                 ctl.trigger("click");
             }).insertBefore($('div.bootstrap-table > div.fixed-table-toolbar > div.bs-bars'));
+            $(settings.toolbar).removeClass('hidden');
         },
         select: function () {
             var $this = $(this);

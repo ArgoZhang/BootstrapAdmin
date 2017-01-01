@@ -30,14 +30,12 @@
                 <input type="text" class="form-control" id="txt_role_desc" />
             </div>
             <div class="form-group col-lg-2">
-                <button type="button" id="btn_query" class="btn btn-primary form-control"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询</button>
+                <button type="button" id="btn_query" class="btn btn-primary form-control"><i class="fa fa-search" aria-hidden="true"></i><span>查询</span></button>
             </div>
             <div class="toolbar btn-group dropdown">
                 <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button"><i class="fa fa-gear"></i></button>
                 <div class="dropdown-menu">
-                    <a id="tb_add" href="#" title="新增"><i class="glyphicon glyphicon-plus"></i></a>
-                    <a id="tb_delete" href="#" title="删除"><i class="glyphicon glyphicon-remove"></i></a>
-                    <a id="tb_edit" href="#" title="编辑"><i class="glyphicon glyphicon-pencil"></i></a>
+                    @Html.Partial("_ButtonBarGroup")
                     <a id="tb_assignUser" href="#" title="指派用户"><i class="fa fa-user"></i></a>
                     <a id="tb_assignGroup" href="#" title="指派部门"><i class="fa fa-bank"></i></a>
                     <a id="tb_assignMenu" href="#" title="指派菜单"><i class="fa fa-dashboard"></i></a>

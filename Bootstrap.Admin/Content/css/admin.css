@@ -32,14 +32,6 @@
     text-align: center;
 }
 
-.hidden-tb {
-    margin-left: 6px;
-}
-
-.glyphicon-search {
-    padding-right: 6px;
-}
-
 .clearcache {
     position: absolute;
     right: 60px;
@@ -87,6 +79,10 @@
 .btn {
     outline: none !important;
 }
+
+    .btn span {
+        margin-left: 4px;
+    }
 
 .modal-header {
     background-color: #f5f5f5;
