@@ -105,6 +105,15 @@
         height: inherit;
     }
 
+        .icon-content .modal-body .loadIconView {
+            text-align: center;
+            font-size: 16px;
+        }
+
+            .icon-content .modal-body .loadIconView span {
+                margin-left: 6px;
+            }
+
     .icon-content .modal-footer {
         position: fixed;
         left: 16px;

@@ -153,7 +153,7 @@
             <h4 class="modal-title" id="myIconModalLabel">请选择图标</h4>
         </div>
         <div class="modal-body" data-spy="scroll" data-target=".fb-timeliner">
-            @Html.Partial("IconView")
+            <div class="loadIconView"><i class="fa fa-spinner fa-pulse"></i><span>正在加载图标...请稍等</span></div>
         </div>
         <div class="modal-footer">
             <span>被选择的图标</span><i id="pickIcon"></i>

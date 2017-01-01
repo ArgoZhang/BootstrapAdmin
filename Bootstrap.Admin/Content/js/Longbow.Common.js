@@ -135,6 +135,7 @@
                     url: data.url + data.Id,
                     data: data.data,
                     type: data.method,
+                    async: true,
                     success: function (result) {
                         success(result);
                     },
@@ -179,6 +180,7 @@
     // Menus
     Menu = {
         url: '../api/Menus/',
+        iconView: '../Admin/IconView',
         title: "授权菜单"
     };
 

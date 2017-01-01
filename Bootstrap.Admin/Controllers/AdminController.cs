@@ -84,6 +84,14 @@ namespace Bootstrap.Admin.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
+        public PartialViewResult IconView()
+        {
+            return PartialView("IconView");
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Profiles()
         {
             var v = new NavigatorBarModel("~/Admin/Profiles");
