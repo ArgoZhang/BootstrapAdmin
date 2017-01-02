@@ -26,14 +26,6 @@
             <div class="form-group col-lg-2">
                 <button type="button" id="btn_query" class="btn btn-primary form-control"><i class="fa fa-search" aria-hidden="true"></i><span>查询</span></button>
             </div>
-            <div class="toolbar btn-group dropdown">
-                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button"><i class="fa fa-gear"></i></button>
-                <div class="dropdown-menu">
-                    @Html.Partial("_ButtonBarGroup")
-                    <a id="tb_assignRole" href="#" title="指派角色"><i class="fa fa-sitemap"></i></a>
-                    <a id="tb_assignGroup" href="#" title="指派部门"><i class="fa fa-bank"></i></a>
-                </div>
-            </div>
         </div>
     </form>
     <input id="userId" type="text" class="hidden" value="@Model.UserID" />
@@ -45,6 +37,14 @@
     <button id="btn_assignGroup" type="button" class="btn btn-info">
         <span class="fa fa-bank" aria-hidden="true"></span><span class="hidden-tb">指派部门</span>
     </button>
+    <div class="toolbar btn-group dropdown">
+        <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button"><i class="fa fa-gear"></i></button>
+        <div class="dropdown-menu">
+            @Html.Partial("_ButtonBarGroup")
+            <a id="tb_assignRole" href="#" title="指派角色"><i class="fa fa-sitemap"></i></a>
+            <a id="tb_assignGroup" href="#" title="指派部门"><i class="fa fa-bank"></i></a>
+        </div>
+    </div>
 }
 @section modal {
     <div class="modal-header">

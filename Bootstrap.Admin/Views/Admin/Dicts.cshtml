@@ -43,14 +43,16 @@
             <div class="form-group col-lg-2">
                 <button type="button" id="btn_query" class="btn btn-primary form-control"><span class="fa fa-search" aria-hidden="true"></span>查询</button>
             </div>
-            <div class="toolbar btn-group dropdown">
-                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button"><i class="fa fa-gear"></i></button>
-                <div class="dropdown-menu">
-                    @Html.Partial("_ButtonBarGroup")
-                </div>
-            </div>
         </div>
     </form>
+}
+@section toolbar {
+    <div class="toolbar btn-group dropdown">
+        <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button"><i class="fa fa-gear"></i></button>
+        <div class="dropdown-menu">
+            @Html.Partial("_ButtonBarGroup")
+        </div>
+    </div>
 }
 @section modal {
     <div class="modal-header">
