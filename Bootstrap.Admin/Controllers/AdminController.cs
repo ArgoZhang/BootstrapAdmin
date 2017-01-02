@@ -84,6 +84,7 @@ namespace Bootstrap.Admin.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
+        [OutputCache(CacheProfile = "IconView")]
         public PartialViewResult IconView()
         {
             return PartialView("IconView");
