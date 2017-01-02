@@ -54,6 +54,7 @@ INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [C
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (20, 0, N'工具集合', 20, N'fa fa-gavel', N'#', N'1')
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (21, 20, N'客户端测试', 10, N'fa fa-wrench', N'../Home/Mobile', N'1')
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (22, 18, N'API文档', 10, N'fa fa-wrench', N'~/Admin/Api', N'0')
+INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (23, 18, N'图标集', 10, N'fa fa-dashboard', N'~/Admin/FAIcon', N'0')
 SET IDENTITY_INSERT [dbo].[Navigations] OFF
 
 DELETE FROM GROUPS WHERE ID = 1
