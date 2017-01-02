@@ -84,9 +84,9 @@
             { title: "菜单名称", field: "Name", sortable: true },
             { title: "菜单序号", field: "Order", sortable: true },
             {
-                title: "菜单图标", field: "Icon", sortable: false, formatter: function (value, row, index) {
+                title: "菜单图标", field: "Icon", sortable: false, align: 'center', formatter: function (value, row, index) {
                     if (value) {
-                        return $.format('<i class="bs-icon {0}"></i>', value);
+                        return $.format('<i class="text-primary {0}"></i>', value);
                     }
                     return "";
                 }
