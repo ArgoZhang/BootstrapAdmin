@@ -312,7 +312,8 @@
             }, options);
             $(this).bootstrapTable(settings);
             var $toolbar = $('div.toolbar');
-            $toolbar.on('click', 'a', function () {
+            $toolbar.on('click', 'a', function (e) {
+                e.preventDefault();
                 var ctl = $('#' + $(this).attr('id').replace('tb_', 'btn_'));
                 ctl.trigger("click");
             }).insertBefore($('div.bootstrap-table > div.fixed-table-toolbar > div.bs-bars'));

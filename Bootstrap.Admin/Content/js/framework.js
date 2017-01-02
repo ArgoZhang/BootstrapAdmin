@@ -45,7 +45,8 @@
             var source = $("#" + cId);
             source.data('click', name);
             if (event !== null) source.data('event', event);
-            source.click(function () {
+            source.click(function (e) {
+                e.preventDefault();
                 var method = source.data('click');
                 BootstrapAdmin.prototype[method].call(that, this, source.data('event'));
             });
