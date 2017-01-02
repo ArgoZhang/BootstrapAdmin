@@ -235,6 +235,6 @@
         bottom: 70px;
     }
 
-    .faicon .nav-tabs > li.active > a, .faicon .nav-tabs > li.active > a:hover, .faicon .nav-tabs > li.active > a:focus {
-        background-color: #41CAC0;
-    }
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    background-color: #41CAC0;
+}
