@@ -103,6 +103,7 @@
         overflow: auto;
         max-height: inherit;
         height: inherit;
+        -webkit-overflow-scrolling: touch;
     }
 
         .icon-content .modal-body .loadIconView {
