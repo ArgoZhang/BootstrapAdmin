@@ -67,5 +67,13 @@ namespace Bootstrap.DataAccess
         /// 获得/设置 新密码
         /// </summary>
         public string NewPassword { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return string.Format("{0} ({1})", UserName, DisplayName);
+        }
     }
 }
