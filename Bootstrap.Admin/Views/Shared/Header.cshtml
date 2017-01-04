@@ -1,15 +1,11 @@
 ﻿@model HeaderBarModel
-<!--header start-->
 <header class="header white-bg">
     <a id="navbar" href="#" class="sidebar-toggle-box">
         <i class="fa fa-bars"></i>
-        <!--logo start-->
         <span id="websiteTitle">@Model.Title</span>
     </a>
-    <!--logo end-->
     @if (LgbPrincipal.IsAdmin(User.Identity.Name) || User.IsInRole("Administrators"))
     {
-        <!--  notification start -->
         <ul class="notify-row">
             <!-- tasks start -->
             <li class="dropdown">
@@ -97,11 +93,8 @@
             </li>
             <!-- db dropdown end -->
         </ul>
-        <!--  notification end -->
     }
-    <!--search & user info start-->
     <ul class="pull-right top-menu">
-        <!-- user login dropdown start-->
         <li class="dropdown">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                 <img id="headerIcon" alt="" src="@Url.Content(Model.Icon)">
@@ -116,15 +109,17 @@
                 <li><a href="~/Home/Logout"><i class="fa fa-key"></i>注销</a></li>
             </ul>
         </li>
-        <!-- user login dropdown end -->
     </ul>
-    <!--search & user info end-->
-    <!--breadcrumbs start -->
     <ul class="breadcrumb">
         <li><a href="@Url.Content(Model.HomeUrl)"><i class="fa fa-home"></i>首页</a></li>
         <li id="breadNav"></li>
     </ul>
-    <!--breadcrumbs end -->
-    <input id="footer" type="text" class="hidden" value="@Model.Footer" />
 </header>
-<!--header end-->
+<footer class="site-footer">
+    <div class="text-center">
+        <span id="websiteFooter">@Model.Footer</span>
+        <a id="gotoTop" href="#" class="go-top" title="返回顶部">
+            <i class="fa fa-angle-up"></i>
+        </a>
+    </div>
+</footer>

@@ -355,5 +355,4 @@ $(function () {
                 $('head').append($.format('<link href="../Content/css/{0}" rel="stylesheet" type="text/css" />', result[0].Code));
         }
     });
-    $('#websiteFooter').text($('#footer').val());
 });

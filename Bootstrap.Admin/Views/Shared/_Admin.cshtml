@@ -20,8 +20,8 @@
     <script src="~/Content/js/framework.js"></script>
     @RenderSection("Javascript", false)
 }
-@RenderSection("header", false)
-@RenderSection("navigator", false)
+@Html.Partial("Header")
+@Html.Partial("navigator")
 <section id="main-content" class="main-content">
     @RenderBody()
 </section>

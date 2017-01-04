@@ -12,11 +12,9 @@
 @section javascript {
     @RenderSection("Javascript", false)
 }
-<section>
-    @RenderSection("header", false)
-    <section id="main-content">
-        @RenderBody()
-    </section>
-    @Html.Partial("Footer")
+@Html.Partial("Header")
+<section id="main-content">
+    @RenderBody()
 </section>
+@Html.Partial("Footer")
 @RenderSection("modal", false)
