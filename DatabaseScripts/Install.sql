@@ -260,7 +260,7 @@ CREATE TABLE [dbo].[Exceptions](
 	[UserIp] [varchar](15) NOT NULL,
 	[ExceptionType] [nvarchar](max) NOT NULL,
 	[Message] [nvarchar](max) NOT NULL,
-	[StackTrace] [nvarchar](max) NOT NULL,
+	[StackTrace] [nvarchar](max) NULL,
 	[LogTime] [datetime] NOT NULL,
  CONSTRAINT [PK_Exceptions] PRIMARY KEY CLUSTERED 
 (

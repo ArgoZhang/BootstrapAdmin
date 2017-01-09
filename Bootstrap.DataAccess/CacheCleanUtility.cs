@@ -1,12 +1,16 @@
 ﻿using Longbow.Caching;
+using Longbow.Caching.Configuration;
+using Longbow.ExceptionManagement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 
 namespace Bootstrap.DataAccess
 {
     internal static class CacheCleanUtility
     {
+        private const string CacheListKey = "bd";
         /// <summary>
         /// 
         /// </summary>
@@ -64,6 +68,26 @@ namespace Bootstrap.DataAccess
                 });
                 // final cleanup 
                 CacheManager.Clear(key => cacheKeys.Any(k => k == key) || key.Contains(MenuHelper.RetrieveMenusDataKey));
+                var section = CacheListSection.GetSection();
+                section.Items.Where(item => item.Enabled && item.Key != CacheListKey).AsParallel().ForAll(ele =>
+                {
+                    System.Threading.Tasks.Task.Factory.StartNew(() =>
+                    {
+                        try
+                        {
+                            var client = new WebClient();
+                            client.OpenRead(new Uri(string.Format(ele.Url, MenuHelper.RetrieveMenusDataKey + "*")));
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Collections.Specialized.NameValueCollection nv = new System.Collections.Specialized.NameValueCollection();
+                            nv["ErrorPage"] = ele.Url;
+                            nv["UserId"] = "system";
+                            nv["UserIp"] = "::1";
+                            ExceptionManager.Publish(ex, nv);
+                        }
+                    });
+                });
                 cacheKeys.Clear();
             }
             if (dictIds != null)
