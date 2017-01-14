@@ -36,7 +36,7 @@
                         if ($this.hasClass('tipso_style')) $this.tipso('hide').tipso('destroy');
                     })
                     vf.resetForm();
-                    v.find('div.form-group').removeClass("has-error has-success");
+                    v.find('.has-error, .has-success').removeClass("has-error has-success");
                 }
             });
         }
