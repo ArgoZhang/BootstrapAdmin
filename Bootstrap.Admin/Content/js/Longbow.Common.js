@@ -276,7 +276,8 @@
                     var $ele = $(element);
                     if (!$ele.attr('data-original-title')) $ele.lgbTooltip({ container: parent });
                     $ele.attr('data-original-title', $(label).text());
-                    $ele.lgbTooltip('show')
+                    $ele.lgbTooltip('show');
+                    $('#' + $ele.attr('aria-describedby')).addClass(this.errorClass);
                 }
             });
             if (handler && $.isArray(handler.button)) {
