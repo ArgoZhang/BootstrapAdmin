@@ -118,7 +118,7 @@
                 url: this.url,
                 data: {},
                 method: "POST",
-                htmlTemplate: '<div class="form-group checkbox col-md-3 col-sm-4 col-xs-6"><label class="tipso_style" title="{3}"><input type="checkbox" value="{0}" {2}/>{1}</label></div>',
+                htmlTemplate: '<div class="form-group checkbox col-md-3 col-sm-4 col-xs-6"><label role="tooltip" title="{3}"><input type="checkbox" value="{0}" {2}/>{1}</label></div>',
                 title: this.title,
                 swal: true,
                 modal: null,

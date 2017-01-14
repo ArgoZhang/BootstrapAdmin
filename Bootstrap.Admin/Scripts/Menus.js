@@ -48,9 +48,9 @@
                                 return $.format(htmlTemplate, element.ID, element.RoleName, element.Checked, element.Description);
                             }).join('')
                             $dialogRoleHeader.text($.format('{0}-角色授权窗口', row.Name));
-                            $dialogRoleForm.html(html).find('.tipso_style').each(function (index, label) {
+                            $dialogRoleForm.html(html).find('[role="tooltip"]').each(function (index, label) {
                                 if (label.title == "") label.title = "未设置";
-                            }).tipso();
+                            }).tooltip({ container: 'body', delay: { "show": 500, "hide": 100 } });
                             $dialogRole.modal('show');
                         }
                     });
