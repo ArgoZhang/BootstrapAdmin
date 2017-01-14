@@ -241,6 +241,9 @@
             that.animate({ marginTop: "+=" + getHeight() });
         },
         autoValidate: function (rules, messages, handler) {
+            var parent = 'body';
+            var $wrapper = $('#dialogNew');
+            if ($wrapper.length == 1) parent = '#dialogNew';
             // validate
             var $this = $(this);
             if (messages && $.isArray(messages.button)) {
@@ -264,7 +267,7 @@
                 },
                 errorPlacement: function (label, element) {
                     var $ele = $(element);
-                    if (!$ele.attr('data-original-title')) $ele.tooltip({ container: '#dialogNew', delay: { "show": 500, "hide": 100 } });
+                    if (!$ele.attr('data-original-title')) $ele.tooltip({ container: parent, delay: { "show": 500, "hide": 100 } });
                     $ele.attr('data-original-title', $(label).text());
                     $ele.tooltip('show')
                 }
