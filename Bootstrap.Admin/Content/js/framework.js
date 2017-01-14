@@ -31,6 +31,7 @@
                 if (that.options.validateForm && that.options.validateForm.constructor === String) {
                     var v = $('#' + that.options.validateForm);
                     v.validate().resetForm();
+                    v.find('[data-original-title]').lgbTooltip('destroy');
                     v.find('.has-error, .has-success').removeClass("has-error has-success");
                 }
             });

@@ -149,7 +149,7 @@
                         }).join('');
                         $sortable.append($.format('<li class="title">{0}-{1}</li>', options.item.Desc, options.item.Key));
                         $sortable.append(content);
-                        if (!$.browser.versions.mobile) $sortable.find('[role="tooltip"]').tooltip({ container: 'body', delay: { "show": 500, "hide": 100 } });
+                        if (!$.browser.versions.mobile) $sortable.find('[role="tooltip"]').lgbTooltip();
                     }
                 }
             }
@@ -158,7 +158,7 @@
     $('#refreshCache').click(function () { listCacheUrl(); }).trigger('click');
     $('#clearCache').click(function () { listCacheUrl({ clear: true }); });
     $sortable.on('click', '.btn', function () {
-        $(this).tooltip('destroy');
+        $(this).lgbTooltip('destroy');
         listCache({ key: $(this).attr('data-key'), url: $(this).attr('data-url') });
         listCacheUrl();
     });

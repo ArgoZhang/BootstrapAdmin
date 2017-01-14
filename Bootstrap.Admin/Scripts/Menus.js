@@ -50,7 +50,7 @@
                             $dialogRoleHeader.text($.format('{0}-角色授权窗口', row.Name));
                             $dialogRoleForm.html(html).find('[role="tooltip"]').each(function (index, label) {
                                 if (label.title == "") label.title = "未设置";
-                            }).tooltip({ container: 'body', delay: { "show": 500, "hide": 100 } });
+                            }).lgbTooltip();
                             $dialogRole.modal('show');
                         }
                     });

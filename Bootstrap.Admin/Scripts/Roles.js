@@ -35,7 +35,7 @@
                             $dialogUserHeader.text($.format('{0}-用户授权窗口', row.RoleName));
                             $dialogUserForm.html(html).find('[role="tooltip"]').each(function (index, label) {
                                 if (label.title == "") label.title = "未设置";
-                            }).tooltip({ container: 'body', delay: { "show": 500, "hide": 100 } });
+                            }).lgbTooltip();
                             $dialogUser.modal('show');
                         }
                     });
@@ -53,7 +53,7 @@
                             $dialogGroupHeader.text($.format('{0}-部门授权窗口', row.RoleName));
                             $dialogGroupForm.html(html).find('[role="tooltip"]').each(function (index, label) {
                                 if (label.title == "") label.title = "未设置";
-                            }).tooltip({ container: 'body', delay: { "show": 500, "hide": 100 } });
+                            }).lgbTooltip();
                             $dialogGroup.modal('show');
                         }
                     });

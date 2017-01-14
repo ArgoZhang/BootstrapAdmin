@@ -240,6 +240,13 @@
             });
             that.animate({ marginTop: "+=" + getHeight() });
         },
+        lgbTooltip: function (option) {
+            if (option == undefined) option = { container: 'body', delay: { "show": 500, "hide": 100 } };
+            else if (typeof option == "object") option = $.extend({ container: 'body', delay: { "show": 500, "hide": 100 } }, option);
+            $(this).tooltip(option);
+            if (option == 'destroy') $(this).removeAttr('data-original-title');
+            return this;
+        },
         autoValidate: function (rules, messages, handler) {
             var parent = 'body';
             var $wrapper = $('#dialogNew');
@@ -263,13 +270,13 @@
                     $(element).parents('.form-group').addClass(errorClass).removeClass(validClass);
                 },
                 unhighlight: function (element, errorClass, validClass) {
-                    $(element).tooltip('destroy').removeAttr('data-original-title').parents('.form-group').removeClass(errorClass).addClass(validClass);
+                    $(element).lgbTooltip('destroy').parents('.form-group').removeClass(errorClass).addClass(validClass);
                 },
                 errorPlacement: function (label, element) {
                     var $ele = $(element);
-                    if (!$ele.attr('data-original-title')) $ele.tooltip({ container: parent, delay: { "show": 500, "hide": 100 } });
+                    if (!$ele.attr('data-original-title')) $ele.lgbTooltip({ container: parent });
                     $ele.attr('data-original-title', $(label).text());
-                    $ele.tooltip('show')
+                    $ele.lgbTooltip('show')
                 }
             });
             if (handler && $.isArray(handler.button)) {
