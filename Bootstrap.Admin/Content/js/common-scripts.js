@@ -55,7 +55,7 @@ $(function () {
             scrollTop: 0
         }, 200);
     });
-    if (!$.browser.versions.mobile) $("#gotoTop").tipso({ position: 'left', background: '#333', width: 70 });
+    if (!$.browser.versions.mobile) $('[role="tooltip"]').tooltip({ delay: { "show": 500, "hide": 100 } });
 
     // breadcrumb
     var arch = $('#nav-accordion').find('a.active').last();
