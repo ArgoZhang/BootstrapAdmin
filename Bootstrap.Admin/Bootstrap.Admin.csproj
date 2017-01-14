@@ -136,8 +136,6 @@
     <Content Include="Content\css\login.css" />
     <Content Include="Content\css\register.css" />
     <Content Include="Content\css\tasks.css" />
-    <Content Include="Content\css\tipso.css" />
-    <Content Include="Content\css\tipso.min.css" />
     <Content Include="Content\html\RegResult.html" />
     <Content Include="Content\images\bg.jpg" />
     <Content Include="Content\images\loading-sm.gif" />
@@ -179,8 +177,6 @@
     <Content Include="Content\js\log.js" />
     <Content Include="Content\js\longbow.dataentity.js" />
     <Content Include="Content\js\fileinput.zh.js" />
-    <Content Include="Content\js\tipso.js" />
-    <Content Include="Content\js\tipso.min.js" />
     <Content Include="Global.asax" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
