@@ -257,22 +257,16 @@
                 rules: $.extend({}, rules),
                 messages: $.extend({}, messages),
                 highlight: function (element, errorClass, validClass) {
-                    var $ele = $(element);
-                    $ele.parents('.form-group').addClass(errorClass).removeClass(validClass);
-                    if (!$.browser.versions.mobile && $.isFunction($ele.tipso)) $ele.tipso({
-                        useTitle: false,
-                        position: 'top',
-                        background: '#a94442'
-                    });
+                    $(element).parents('.form-group').addClass(errorClass).removeClass(validClass);
                 },
                 unhighlight: function (element, errorClass, validClass) {
-                    var $ele = $(element);
-                    $ele.parents('.form-group').removeClass(errorClass).addClass(validClass);
-                    if ($ele.hasClass('tipso_style')) $ele.tipso('hide').tipso('destroy');
+                    $(element).tooltip('destroy').removeAttr('data-original-title').parents('.form-group').removeClass(errorClass).addClass(validClass);
                 },
                 errorPlacement: function (label, element) {
                     var $ele = $(element);
-                    if (!$.browser.versions.mobile && $.isFunction($ele.tipso)) $ele.tipso('update', 'content', $(label).text());
+                    if (!$ele.attr('data-original-title')) $ele.tooltip({ container: '#dialogNew', delay: { "show": 500, "hide": 100 } });
+                    $ele.attr('data-original-title', $(label).text());
+                    $ele.tooltip('show')
                 }
             });
             if (handler && $.isArray(handler.button)) {
