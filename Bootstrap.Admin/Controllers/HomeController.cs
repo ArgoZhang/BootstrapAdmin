@@ -64,7 +64,7 @@ namespace Bootstrap.Admin.Controllers
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
-            return RedirectToAction("Login");
+            return Redirect(FormsAuthentication.LoginUrl);
         }
         /// <summary>
         /// 
