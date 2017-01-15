@@ -149,7 +149,7 @@
                         }).join('');
                         $sortable.append($.format('<li class="title">{0}-{1}</li>', options.item.Desc, options.item.Key));
                         $sortable.append(content);
-                        if (!$.browser.versions.mobile) $sortable.find('[role="tooltip"]').lgbTooltip();
+                        $sortable.find('[role="tooltip"]').lgbTooltip();
                     }
                 }
             }

@@ -15,7 +15,7 @@
                         return $.format(htmlNewUsers, noti.UserName, noti.Description, noti.RegisterTime, noti.ID, noti.DisplayName);
                     }).join('');
                     $taskUsers.append(content);
-                    if (!$.browser.versions.mobile) $('#tasks-users').find('[role="tooltip"]').lgbTooltip();
+                    $('#tasks-users').find('[role="tooltip"]').lgbTooltip();
                 }
                 $btnRefreshUser.toggleClass('fa-spin');
             }
@@ -23,10 +23,9 @@
     }
     listData();
 
-    $btnRefreshUser.on('click', function () {
+    $btnRefreshUser.lgbTooltip().on('click', function () {
         listData();
     });
-    if (!$.browser.versions.mobile) $btnRefreshUser.lgbTooltip();
 
     $('#tasks-users').on('click', 'button', function () {
         var id = $(this).attr('data-id');

@@ -55,7 +55,7 @@ $(function () {
             scrollTop: 0
         }, 200);
     });
-    if (!$.browser.versions.mobile) $('[role="tooltip"]').lgbTooltip();
+    $('[role="tooltip"]').lgbTooltip();
 
     // breadcrumb
     var arch = $('#nav-accordion').find('a.active').last();
