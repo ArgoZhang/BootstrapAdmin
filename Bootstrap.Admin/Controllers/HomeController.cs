@@ -78,7 +78,7 @@ namespace Bootstrap.Admin.Controllers
             var result = UserHelper.SaveUser(p);
             if (result)
             {
-                return Redirect("/Content/html/RegResult.html");
+                return Redirect("~/Content/html/RegResult.html");
             }
 
             else
