@@ -331,7 +331,8 @@
                 var $select = $element.find('button').first();
                 var $options = $element.find('.dropdown-menu > li > a');
                 $select.addClass('select').data('options', $options);
-                $options.on('click', function () {
+                $options.on('click', function (e) {
+                    e.preventDefault();
                     var $op = $(this);
                     $select.text($op.text()).attr('data-val', $op.attr('data-val'));
                 });
