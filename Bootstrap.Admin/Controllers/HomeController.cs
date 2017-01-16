@@ -1,5 +1,6 @@
 ﻿using Bootstrap.Admin.Models;
 using Bootstrap.DataAccess;
+using Bootstrap.Security;
 using Longbow.Security.Principal;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -49,7 +50,7 @@ namespace Bootstrap.Admin.Controllers
             var model = new LoginModel();
             if (string.IsNullOrEmpty(userName)) return View(model);
             model.UserName = userName;
-            if (LgbPrincipal.IsAdmin(userName, password) || UserHelper.Authenticate(userName, password))
+            if (LgbPrincipal.IsAdmin(userName, password) || BootstrapUser.Authenticate(userName, password))
             {
                 FormsAuthentication.RedirectFromLoginPage(userName, remember == "true");
                 return new EmptyResult();

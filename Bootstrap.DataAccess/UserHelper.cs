@@ -1,4 +1,5 @@
-﻿using Longbow;
+﻿using Bootstrap.Security;
+using Longbow;
 using Longbow.Caching;
 using Longbow.Caching.Configuration;
 using Longbow.Data;
@@ -70,7 +71,7 @@ namespace Bootstrap.DataAccess
             return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RetrieveUsersByNameDataKey), k =>
             {
                 User user = null;
-                string sql = "select u.ID, UserName, [Password], PassSalt, DisplayName, RegisterTime, ApprovedTime, case isnull(d.Code, '') when '' then '~/Content/images/uploader/' else d.Code end + Icon from Users u left join Dicts d on d.Define = '0' and d.Category = N'头像地址' and Name = N'头像路径' where ApprovedTime is not null and UserName = @UserName";
+                string sql = "select u.ID, UserName, DisplayName, RegisterTime, ApprovedTime, case isnull(d.Code, '') when '' then '~/Content/images/uploader/' else d.Code end + Icon from Users u left join Dicts d on d.Define = '0' and d.Category = N'头像地址' and Name = N'头像路径' where ApprovedTime is not null and UserName = @UserName";
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                 try
                 {
@@ -83,12 +84,10 @@ namespace Bootstrap.DataAccess
                             {
                                 ID = (int)reader[0],
                                 UserName = (string)reader[1],
-                                Password = (string)reader[2],
-                                PassSalt = (string)reader[3],
-                                DisplayName = (string)reader[4],
-                                RegisterTime = (DateTime)reader[5],
-                                ApprovedTime = (DateTime)reader[6],
-                                Icon = (string)reader[7]
+                                DisplayName = (string)reader[2],
+                                RegisterTime = (DateTime)reader[3],
+                                ApprovedTime = (DateTime)reader[4],
+                                Icon = (string)reader[5]
                             };
                         }
                     }
@@ -192,17 +191,6 @@ namespace Bootstrap.DataAccess
                 ExceptionManager.Publish(ex);
             }
             return ret;
-        }
-        /// <summary>
-        /// 验证用户登陆账号与密码正确
-        /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        public static bool Authenticate(string userName, string password)
-        {
-            var user = RetrieveUsersByName(userName);
-            return user != null && user.Password == LgbCryptography.ComputeHash(password, user.PassSalt);
         }
         /// <summary>
         /// 通过roleId获取所有用户
@@ -424,7 +412,7 @@ namespace Bootstrap.DataAccess
             bool ret = false;
             try
             {
-                if (Authenticate(user.UserName, user.Password))
+                if (BootstrapUser.Authenticate(user.UserName, user.Password))
                 {
                     string sql = "Update Users set Password = @Password, PassSalt = @PassSalt where UserName = @userName";
                     user.PassSalt = LgbCryptography.GenerateSalt();
