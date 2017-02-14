@@ -52,6 +52,10 @@ namespace Bootstrap.DataAccess
         /// </summary>
         public string Target { get; set; }
         /// <summary>
+        /// 获得/设置 是否为资源文件
+        /// </summary>
+        public int IsResource { get; set; }
+        /// <summary>
         /// 
         /// </summary>
         public IEnumerable<Menu> Menus { get; set; }

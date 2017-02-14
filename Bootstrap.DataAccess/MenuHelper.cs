@@ -48,8 +48,9 @@ namespace Bootstrap.DataAccess
                                     Url = LgbConvert.ReadValue(reader[5], string.Empty),
                                     Category = (string)reader[6],
                                     Target = (string)reader[7],
-                                    CategoryName = (string)reader[8],
-                                    ParentName = LgbConvert.ReadValue(reader[9], string.Empty)
+                                    IsResource = (bool)reader[8] ? 1 : 0,
+                                    CategoryName = (string)reader[9],
+                                    ParentName = LgbConvert.ReadValue(reader[10], string.Empty)
                                 });
                             }
                         }
@@ -140,8 +141,8 @@ namespace Bootstrap.DataAccess
             if (p.Icon != null && p.Icon.Length > 50) p.Icon.Substring(0, 50);
             if (p.Url != null && p.Url.Length > 50) p.Url.Substring(0, 50);
             string sql = p.ID == 0 ?
-                "Insert Into Navigations (ParentId, Name, [Order], Icon, Url, Category, Target) Values (@ParentId, @Name, @Order, @Icon, @Url, @Category, @Target)" :
-                "Update Navigations set ParentId = @ParentId, Name = @Name, [Order] = @Order, Icon = @Icon, Url = @Url, Category = @Category, Target = @Target where ID = @ID";
+                "Insert Into Navigations (ParentId, Name, [Order], Icon, Url, Category, Target, IsResource) Values (@ParentId, @Name, @Order, @Icon, @Url, @Category, @Target, @IsResource)" :
+                "Update Navigations set ParentId = @ParentId, Name = @Name, [Order] = @Order, Icon = @Icon, Url = @Url, Category = @Category, Target = @Target, IsResource = @IsResource where ID = @ID";
             try
             {
                 using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
@@ -154,6 +155,7 @@ namespace Bootstrap.DataAccess
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Url", DBAccess.ToDBValue(p.Url), ParameterDirection.Input));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Category", p.Category, ParameterDirection.Input));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Target", p.Target, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@IsResource", p.IsResource, ParameterDirection.Input));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
                 CacheCleanUtility.ClearCache(menuIds: p.ID == 0 ? string.Empty : p.ID.ToString());

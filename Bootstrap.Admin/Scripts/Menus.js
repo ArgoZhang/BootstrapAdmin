@@ -33,7 +33,8 @@
                 Icon: "icon",
                 Url: "url",
                 Category: "category",
-                Target: "target"
+                Target: "target",
+                IsResource: "isRes"
             }
         }),
         click: {
