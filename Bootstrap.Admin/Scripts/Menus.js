@@ -78,7 +78,7 @@
     $('table').smartTable({
         url: Menu.url,            //请求后台的URL（*）
         sortName: 'Order',
-        queryParams: function (params) { return $.extend(params, { parentName: $('#txt_parent_menus_name').val(), name: $("#txt_menus_name").val(), category: $('#sel_menus_category').val() }); },           //传递参数（*）
+        queryParams: function (params) { return $.extend(params, { parentName: $('#txt_parent_menus_name').val(), name: $("#txt_menus_name").val(), category: $('#sel_menus_category').val(), isresource: $('#sel_menus_res').val() }); },           //传递参数（*）
         columns: [{ checkbox: true },
             { title: "Id", field: "ID", events: bsa.idEvents(), formatter: BootstrapAdmin.idFormatter },
             { title: "父级菜单", field: "ParentName", sortable: true },

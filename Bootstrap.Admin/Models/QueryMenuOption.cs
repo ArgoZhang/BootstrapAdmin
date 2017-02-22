@@ -18,6 +18,10 @@ namespace Bootstrap.Admin.Models
         /// 
         /// </summary>
         public string Category { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string IsResource { get; set; }
 
         public QueryData<Menu> RetrieveData(string userName)
         {
@@ -33,6 +37,10 @@ namespace Bootstrap.Admin.Models
             if (!string.IsNullOrEmpty(Category))
             {
                 data = data.Where(t => t.Category.Contains(Category));
+            }
+            if (!string.IsNullOrEmpty(IsResource))
+            {
+                data = data.Where(t => t.IsResource.ToString() == IsResource);
             }
             var ret = new QueryData<Menu>();
             ret.total = data.Count();
@@ -52,6 +60,9 @@ namespace Bootstrap.Admin.Models
                     break;
                 case "Target":
                     data = Order == "asc" ? data.OrderBy(t => t.Target) : data.OrderByDescending(t => t.Target);
+                    break;
+                case "IsResource":
+                    data = Order == "asc" ? data.OrderBy(t => t.IsResource) : data.OrderByDescending(t => t.IsResource);
                     break;
                 default:
                     break;
