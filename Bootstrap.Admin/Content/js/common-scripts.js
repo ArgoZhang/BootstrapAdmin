@@ -85,6 +85,8 @@ $(function () {
         }
     });
 
+    $('.lgbDropdown').lgbDropdown();
+
     // load widget data
     $.bc({
         url: Notifications.url,

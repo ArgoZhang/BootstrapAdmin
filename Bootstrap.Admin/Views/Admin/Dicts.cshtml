@@ -20,12 +20,11 @@
             </div>
             <div class="form-group col-sm-6 col-lg-3">
                 <label class="control-label" for="txt_dict_define">字典类别</label>
-                <div class="btn-group btn-select">
-                    <button id="txt_dict_define" type="button" class="btn btn-success" data-val="">全部</button>
-                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                <div class="dropdown lgbDropdown">
+                    <a id="txt_dict_define" class="btn btn-success" data-toggle="dropdown">
+                        <span>全部</span>
                         <span class="caret"></span>
-                        <span class="sr-only">下拉菜单</span>
-                    </button>
+                    </a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="#" data-val="">全部</a></li>
                         <li class="divider"></li>
@@ -35,7 +34,7 @@
                 </div>
             </div>
             <div class="form-group col-sm-6 col-lg-3">
-                <button type="button" id="btn_query" class="btn btn-primary form-control"><span class="fa fa-search" aria-hidden="true"></span>查询</button>
+                <button type="button" id="btn_query" class="btn btn-primary form-control"><i class="fa fa-search" aria-hidden="true"></i><span>查询</span></button>
             </div>
         </div>
     </form>
@@ -71,12 +70,10 @@
                 </div>
                 <div class="form-group col-lg-6">
                     <label class="control-label" for="dictDefine">字典类别</label>
-                    <div class="btn-group dropup btn-select">
-                        <button id="dictDefine" type="button" class="btn btn-success" data-default-val="1" data-val="">全部</button>
-                        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-                            <span class="caret"></span>
-                            <span class="sr-only">下拉菜单</span>
-                        </button>
+                    <div class="dropdown lgbDropdown dropup">
+                        <a id="dictDefine" class="btn btn-success" data-toggle="dropdown" data-default-val="1">
+                            <span>全部</span><span class="caret"></span>
+                        </a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="#" data-val="0">系统使用</a></li>
                             <li><a href="#" data-val="1">自定义</a></li>

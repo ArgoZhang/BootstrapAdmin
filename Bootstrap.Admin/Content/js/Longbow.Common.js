@@ -324,30 +324,25 @@
             }).insertBefore($('div.bootstrap-table > div.fixed-table-toolbar > div.bs-bars'));
             $(settings.toolbar).removeClass('hidden');
         },
-        select: function () {
+        lgbDropdown: function (options) {
             var $this = $(this);
-            $this.each(function (index, element) {
-                var $element = $(element);
-                var $select = $element.find('button').first();
-                var $options = $element.find('.dropdown-menu > li > a');
-                $select.addClass('select').data('options', $options);
-                $options.on('click', function (e) {
-                    e.preventDefault();
-                    var $op = $(this);
-                    $select.text($op.text()).attr('data-val', $op.attr('data-val'));
-                });
-            });
-        },
-        selectval: function (value) {
-            var $this = $(this);
-            if (value == undefined) return $this.attr('data-val');
-            $this.data('options').each(function (index, element) {
-                var $op = $(element);
-                var val = $op.attr('data-val');
-                if (value == val) {
-                    $this.text($op.text()).attr('data-val', val);
+            var op = typeof options == 'object' && options;
+            if (/val/.test(options)) {
+                if (arguments.length == 1)
+                    return $this.first().children('a').val();
+                else {
+                    $this.first().children(':first').children(':first').text($this.find('[data-val="' + arguments[1] + '"]').text())
                 }
-            });
+            }
+            else {
+                $this.each(function () {
+                    $(this).on('click', '.dropdown-menu a', { $parent: $(this) }, function (event) {
+                        event.preventDefault();
+                        var $op = $(this);
+                        event.data.$parent.children('a').val($op.attr('data-val')).children(':first').text($op.text());
+                    });
+                });
+            }
         }
     });
 })(jQuery);

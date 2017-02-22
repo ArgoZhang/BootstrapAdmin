@@ -1,4 +1,8 @@
-﻿.logfile {
+﻿.lgbDropdown {
+    display: inline-block;
+}
+
+.logfile {
     color: #d41404;
     white-space: nowrap;
 }
@@ -74,7 +78,7 @@
     outline: none !important;
 }
 
-    .btn span {
+    .btn span:last-child {
         margin-left: 4px;
     }
 

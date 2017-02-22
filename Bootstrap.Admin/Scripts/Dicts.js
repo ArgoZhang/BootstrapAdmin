@@ -16,7 +16,7 @@
     $('table').smartTable({
         url: Dicts.url,
         sortName: 'Category',
-        queryParams: function (params) { return $.extend(params, { category: $('#txt_dict_cate').val(), name: $("#txt_dict_name").val(), define: $("#txt_dict_define").selectval() }); },
+        queryParams: function (params) { return $.extend(params, { category: $('#txt_dict_cate').val(), name: $("#txt_dict_name").val(), define: $("#txt_dict_define").val() }); },
         columns: [{ checkbox: true },
             { title: "Id", field: "ID", events: bsa.idEvents(), formatter: BootstrapAdmin.idFormatter },
             { title: "字典分项", field: "Category", sortable: true },
@@ -45,8 +45,6 @@
             maxlength: 50
         }
     });
-    // select
-    $('.btn-select').select();
 
     // autocomplete
     $.bc({

@@ -47,12 +47,11 @@
             <div class="row">
                 <div class="form-group col-xs-12">
                     <label class="control-label" for="dictDefine">网站样式</label>
-                    <div class="btn-group btn-select">
-                        <button id="dictCssDefine" type="button" class="btn btn-success" data-default-val="site.css" data-val="site.css">默认样式</button>
-                        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                    <div class="dropdown lgbDropdown">
+                        <a id="dictCssDefine" class="btn btn-success" data-toggle="dropdown" data-default-val="site.css">
+                            <span>默认样式</span>
                             <span class="caret"></span>
-                            <span class="sr-only">网站样式</span>
-                        </button>
+                        </a>
                         <ul class="dropdown-menu" role="menu" id="cssContainer">
                             <li><a href="#" data-val="site.css">默认样式</a></li>
                         </ul>

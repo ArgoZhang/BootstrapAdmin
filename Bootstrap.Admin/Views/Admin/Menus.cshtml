@@ -25,12 +25,11 @@
             </div>
             <div class="form-group col-sm-6 col-lg-3">
                 <label class="control-label" for="sel_menus_category">菜单类别</label>
-                <div class="btn-group btn-select">
-                    <button id="sel_menus_category" type="button" class="btn btn-success" data-val="">全部</button>
-                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                <div class="dropdown lgbDropdown">
+                    <a id="sel_menus_category" class="btn btn-success" data-toggle="dropdown">
+                        <span>全部</span>
                         <span class="caret"></span>
-                        <span class="sr-only">下拉菜单</span>
-                    </button>
+                    </a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="#" data-val="">全部</a></li>
                         <li class="divider"></li>
@@ -107,12 +106,11 @@
                 </div>
                 <div class="form-group col-sm-6 col-xs-12">
                     <label class="control-label" for="category">菜单类别</label>
-                    <div class="btn-group dropup btn-select">
-                        <button id="category" type="button" class="btn btn-success" data-default-val="1" data-val="1">外部菜单</button>
-                        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                    <div class="dropdown lgbDropdown dropup">
+                        <a id="category" class="btn btn-success" data-toggle="dropdown" data-default-val="1">
+                            <span>外部菜单</span>
                             <span class="caret"></span>
-                            <span class="sr-only">下拉菜单</span>
-                        </button>
+                        </a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="#" data-val="0">系统菜单</a></li>
                             <li><a href="#" data-val="1">外部菜单</a></li>
@@ -121,12 +119,11 @@
                 </div>
                 <div class="form-group col-sm-6 col-xs-12">
                     <label class="control-label" for="target">目标</label>
-                    <div class="btn-group dropup btn-select">
-                        <button id="target" type="button" class="btn btn-info" data-default-val="_self" data-val="_self">本窗口</button>
-                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                    <div class="dropdown lgbDropdown dropup">
+                        <a id="target" class="btn btn-info" data-toggle="dropdown" data-default-val="_self">
+                            <span>本窗口</span>
                             <span class="caret"></span>
-                            <span class="sr-only">下拉菜单</span>
-                        </button>
+                        </a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="#" data-val="_self">本窗口</a></li>
                             <li><a href="#" data-val="_blank">新窗口</a></li>
@@ -137,12 +134,11 @@
                 </div>
                 <div class="form-group col-sm-6 col-xs-12">
                     <label class="control-label" for="isRes">菜单类型</label>
-                    <div class="btn-group dropup btn-select">
-                        <button id="isRes" type="button" class="btn btn-success" data-default-val="0" data-val="0">菜单</button>
-                        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                    <div class="dropdown lgbDropdown dropup">
+                        <a id="isRes" class="btn btn-success" data-toggle="dropdown" data-default-val="0">
+                            <span>菜单</span>
                             <span class="caret"></span>
-                            <span class="sr-only">下拉菜单</span>
-                        </button>
+                        </a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="#" data-val="0">菜单</a></li>
                             <li><a href="#" data-val="1">资源</a></li>
