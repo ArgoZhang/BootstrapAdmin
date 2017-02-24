@@ -162,13 +162,13 @@
         $btnSubmitMenu.data('type', 'order');
         $nestMenuInput.find('label:last').find('input').hide();
         $nestMenu.find('li.dd-item').hide().remove('[data-id="0"]');
-        $nestMenu.find('li[data-category="' + $category.selectval() + '"]').show();
+        $nestMenu.find('li[data-category="' + $category.val() + '"]').show();
         // handler new menu
         var did = $('#menuID').val();
         if (did == "") did = 0;
         if (did == 0) {
             var menuName = $('#name').val();
-            var menuCate = $category.selectval();
+            var menuCate = $category.val();
             if (menuName == "") menuName = "新建菜单-未命名";
             $nestMenu.find('ol.dd-list:first').append($.format('<li class="dd-item dd3-item" data-id="0" data-order="10" data-category="{1}"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><label><span>{0}</span></label></div></li>', menuName, menuCate));
         }
@@ -182,7 +182,7 @@
         $btnSubmitMenu.data('type', 'parent');
         $nestMenuInput.find('label:last').find('input').show();
         $nestMenu.find('li.dd-item').hide().remove('[data-id="0"]');
-        $nestMenu.find('li[data-category="' + $category.selectval() + '"]').show();
+        $nestMenu.find('li[data-category="' + $category.val() + '"]').show();
         $dialogMenu.show().adjustDialog();
     });
 
