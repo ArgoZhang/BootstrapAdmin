@@ -6,6 +6,7 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-font-smoothing: antialiased;
+    -webkit-overflow-scrolling: touch;
 }
 
 ul li {
