@@ -7,28 +7,26 @@ insert into Users (ID, UserName, Password, PassSalt, DisplayName, RegisterTime, 
 SET IDENTITY_INSERT [dbo].[Users] OFF
 
 DELETE From Dicts
-SET IDENTITY_INSERT [dbo].[Dicts] ON 
-INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (1, N'菜单', N'系统菜单', N'0', 0)
-INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (2, N'菜单', N'外部菜单', N'1', 0)
-INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (3, N'网站设置', N'网站标题', N'后台管理系统', 0)
-INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (4, N'网站设置', N'网站页脚', N'2016 © 通用后台管理系统', 0)
-INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (5, N'系统通知', N'用户注册', N'0', 0)
-INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (6, N'系统通知', N'程序异常', N'1', 0)
-INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (7, N'系统通知', N'数据库连接', N'2', 0)
-INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (8, N'通知状态', N'未处理', N'0', 0)
-INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (9, N'通知状态', N'已处理', N'1', 0)
-INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (10, N'处理结果', N'同意', N'0', 0)
-INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (11, N'处理结果', N'拒绝', N'1', 0)
-INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (12, N'消息状态', N'未读', N'0', 0)
-INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (13, N'消息状态', N'已读', N'1', 0)
-INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (14, N'消息标签', N'一般', N'0', 0)
-INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (15, N'消息标签', N'紧要', N'1', 0)
-INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (16, N'头像地址', N'头像路径', N'~/Content/images/uploader/', 0)
-INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (17, N'网站样式', N'默认样式', N'site.css', 0)
-INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (18, N'网站样式', N'蓝色样式', N'blue.css', 0)
-INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (19, N'当前样式', N'使用样式', N'site.css', 0)
-INSERT [dbo].[Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (20, N'网站设置', N'前台首页', N'~/Home/Index', 0)
-SET IDENTITY_INSERT [dbo].[Dicts] OFF
+INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'菜单', N'系统菜单', N'0', 0)
+INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'菜单', N'外部菜单', N'1', 0)
+INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'网站设置', N'网站标题', N'后台管理系统', 0)
+INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'网站设置', N'网站页脚', N'2016 © 通用后台管理系统', 0)
+INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'系统通知', N'用户注册', N'0', 0)
+INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'系统通知', N'程序异常', N'1', 0)
+INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'系统通知', N'数据库连接', N'2', 0)
+INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'通知状态', N'未处理', N'0', 0)
+INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'通知状态', N'已处理', N'1', 0)
+INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'处理结果', N'同意', N'0', 0)
+INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'处理结果', N'拒绝', N'1', 0)
+INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'消息状态', N'未读', N'0', 0)
+INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'消息状态', N'已读', N'1', 0)
+INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'消息标签', N'一般', N'0', 0)
+INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'消息标签', N'紧要', N'1', 0)
+INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'头像地址', N'头像路径', N'~/Content/images/uploader/', 0)
+INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'网站样式', N'默认样式', N'site.css', 0)
+INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'网站样式', N'蓝色样式', N'blue.css', 0)
+INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'当前样式', N'使用样式', N'site.css', 0)
+INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'网站设置', N'前台首页', N'~/Home/Index', 0)
 
 DELETE FROM Navigations
 SET IDENTITY_INSERT [dbo].[Navigations] ON 
@@ -47,14 +45,10 @@ INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [C
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (13, 0, N'系统日志', 130, N'fa fa-gears', N'~/Admin/Logs', N'0')
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (14, 0, N'程序异常', 140, N'fa fa-cubes', N'~/Admin/Exceptions', N'0')
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (15, 0, N'锁定屏幕', 10, N'fa fa-lock', N'~/Home/Lock', N'0')
-INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (16, 0, N'锁定屏幕', 10, N'fa fa-lock', N'~/Home/Lock', N'1')
-INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (17, 16, N'锁定屏幕', 10, N'fa fa-lock', N'~/Home/Lock', N'1')
-INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (18, 0, N'工具集合', 160, N'fa fa-gavel', N'#', N'0')
-INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (19, 18, N'客户端测试', 10, N'fa fa-wrench', N'~/Admin/Mobile', N'0')
-INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (20, 0, N'工具集合', 20, N'fa fa-gavel', N'#', N'1')
-INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (21, 20, N'客户端测试', 10, N'fa fa-wrench', N'../Home/Mobile', N'1')
-INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (22, 18, N'API文档', 10, N'fa fa-wrench', N'~/Admin/Api', N'0')
-INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (23, 18, N'图标集', 10, N'fa fa-dashboard', N'~/Admin/FAIcon', N'0')
+INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (16, 0, N'工具集合', 160, N'fa fa-gavel', N'#', N'0')
+INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (17, 16, N'客户端测试', 10, N'fa fa-wrench', N'~/Admin/Mobile', N'0')
+INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (18, 16, N'API文档', 10, N'fa fa-wrench', N'~/Admin/Api', N'0')
+INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (19, 16, N'图标集', 10, N'fa fa-dashboard', N'~/Admin/FAIcon', N'0')
 SET IDENTITY_INSERT [dbo].[Navigations] OFF
 
 DELETE FROM GROUPS WHERE ID = 1
@@ -69,53 +63,23 @@ INSERT [dbo].[Roles] ([ID], [RoleName], [Description]) VALUES (2, N'Default', N'
 SET IDENTITY_INSERT [dbo].[Roles] OFF
 
 DELETE FROM RoleGroup
-SET IDENTITY_INSERT [dbo].[RoleGroup] ON 
-INSERT [dbo].[RoleGroup] ([ID], [RoleID], [GroupID]) VALUES (1, 1, 1)
-SET IDENTITY_INSERT [dbo].[RoleGroup] OFF
+INSERT [dbo].[RoleGroup] ([RoleID], [GroupID]) VALUES (1, 1)
 
 DELETE FROM UserGroup
-SET IDENTITY_INSERT [dbo].[UserGroup] ON 
-INSERT [dbo].[UserGroup] ([ID], [UserID], [GroupID]) VALUES (1, 1, 1)
-SET IDENTITY_INSERT [dbo].[UserGroup] OFF
+INSERT [dbo].[UserGroup] ([UserID], [GroupID]) VALUES (1, 1)
 
 DELETE FROM UserRole
-SET IDENTITY_INSERT [dbo].[UserRole] ON 
-INSERT [dbo].[UserRole] ([ID], [UserID], [RoleID]) VALUES (1, 1, 1)
-INSERT [dbo].[UserRole] ([ID], [UserID], [RoleID]) VALUES (2, 1, 2)
-SET IDENTITY_INSERT [dbo].[UserRole] OFF
+INSERT [dbo].[UserRole] ([UserID], [RoleID]) VALUES (1, 1)
+INSERT [dbo].[UserRole] ([UserID], [RoleID]) VALUES (1, 2)
 
 DELETE FROM NavigationRole
-SET IDENTITY_INSERT [dbo].[NavigationRole] ON 
-INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (1, 1, 1)
-INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (2, 2, 1)
-INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (3, 3, 1)
-INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (4, 4, 1)
-INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (5, 5, 1)
-INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (6, 6, 1)
-INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (7, 7, 1)
-INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (8, 8, 1)
-INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (9, 9, 1)
-INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (10, 10, 1)
-INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (11, 11, 1)
-INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (12, 12, 1)
-INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (13, 13, 1)
-INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (14, 14, 1)
-INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (15, 15, 1)
-INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (16, 16, 1)
-INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (17, 17, 1)
-INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (18, 1, 2)
-INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (19, 2, 2)
-INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (20, 3, 2)
-INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (21, 16, 2)
-INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (22, 17, 2)
-INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (23, 18, 1)
-INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (24, 19, 1)
-INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (25, 18, 2)
-INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (26, 19, 2)
-INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (27, 20, 1)
-INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (28, 21, 1)
-INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (29, 20, 2)
-INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (30, 21, 2)
-INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (31, 10, 2)
-INSERT [dbo].[NavigationRole] ([ID], [NavigationID], [RoleID]) VALUES (32, 15, 2)
-SET IDENTITY_INSERT [dbo].[NavigationRole] OFF
+INSERT INTO NavigationRole SELECT id, 1 FROM navigations
+INSERT [dbo].[NavigationRole] ([NavigationID], [RoleID]) VALUES (1, 2)
+INSERT [dbo].[NavigationRole] ([NavigationID], [RoleID]) VALUES (2, 2)
+INSERT [dbo].[NavigationRole] ([NavigationID], [RoleID]) VALUES (3, 2)
+INSERT [dbo].[NavigationRole] ([NavigationID], [RoleID]) VALUES (10, 2)
+INSERT [dbo].[NavigationRole] ([NavigationID], [RoleID]) VALUES (15, 2)
+INSERT [dbo].[NavigationRole] ([NavigationID], [RoleID]) VALUES (16, 2)
+INSERT [dbo].[NavigationRole] ([NavigationID], [RoleID]) VALUES (17, 2)
+INSERT [dbo].[NavigationRole] ([NavigationID], [RoleID]) VALUES (18, 2)
+INSERT [dbo].[NavigationRole] ([NavigationID], [RoleID]) VALUES (19, 2)
