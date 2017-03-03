@@ -121,6 +121,10 @@
                 title: "菜单类型", field: "IsResource", sortable: true, formatter: function (value, row, index) {
                     return value == 0 ? "菜单" : "资源";
                 }
+            }, {
+                title: "所属应用", field: "ApplicationCode", sortable: true, formatter: function (value, row, index) {
+                    return $('#app').next().find('[data-val="' + value + '"]:first').text();
+                }
             }
         ]
     });

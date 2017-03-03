@@ -64,6 +64,9 @@ namespace Bootstrap.Admin.Models
                 case "IsResource":
                     data = Order == "asc" ? data.OrderBy(t => t.IsResource) : data.OrderByDescending(t => t.IsResource);
                     break;
+                case "ApplicationCode":
+                    data = Order == "asc" ? data.OrderBy(t => t.ApplicationCode) : data.OrderByDescending(t => t.ApplicationCode);
+                    break;
                 default:
                     break;
             }
