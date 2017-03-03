@@ -13,7 +13,9 @@
                 var ctl = $("#" + this.options.map[name]);
                 ctl.val(value[name]);
                 if (ctl.attr('data-toggle') == "dropdown") {
-                    ctl.children(':first').text(ctl.next().find('[data-val="' + value[name] + '"]').text());
+                    var val = value[name];
+                    if (!val) val = ctl.attr('data-default-val');
+                    ctl.children(':first').text(ctl.next().find('[data-val="' + val + '"]').text());
                 }
             }
         },
