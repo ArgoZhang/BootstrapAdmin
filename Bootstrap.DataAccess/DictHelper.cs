@@ -215,5 +215,14 @@ namespace Bootstrap.DataAccess
             var settings = RetrieveDicts();
             return (settings.FirstOrDefault(d => d.Name == "前台首页" && d.Category == "网站设置" && d.Define == 0) ?? new Dict() { Code = "~/Home/Index" }).Code;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<KeyValuePair<string, string>> RetrieveApps()
+        {
+            var settings = RetrieveDicts();
+            return settings.Where(d => d.Category == "应用程序" && d.Define == 0).Select(d => new KeyValuePair<string, string>(d.Code, d.Name)).OrderBy(d => d.Key);
+        }
     }
 }

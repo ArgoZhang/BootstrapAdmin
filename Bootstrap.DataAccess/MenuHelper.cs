@@ -49,8 +49,9 @@ namespace Bootstrap.DataAccess
                                     Category = (string)reader[6],
                                     Target = (string)reader[7],
                                     IsResource = (bool)reader[8] ? 1 : 0,
-                                    CategoryName = (string)reader[9],
-                                    ParentName = LgbConvert.ReadValue(reader[10], string.Empty)
+                                    ApplicationCode = reader.IsDBNull(9) ? string.Empty : (string)reader[9],
+                                    CategoryName = (string)reader[10],
+                                    ParentName = LgbConvert.ReadValue(reader[11], string.Empty)
                                 });
                             }
                         }
@@ -141,8 +142,8 @@ namespace Bootstrap.DataAccess
             if (p.Icon != null && p.Icon.Length > 50) p.Icon.Substring(0, 50);
             if (p.Url != null && p.Url.Length > 50) p.Url.Substring(0, 50);
             string sql = p.ID == 0 ?
-                "Insert Into Navigations (ParentId, Name, [Order], Icon, Url, Category, Target, IsResource) Values (@ParentId, @Name, @Order, @Icon, @Url, @Category, @Target, @IsResource)" :
-                "Update Navigations set ParentId = @ParentId, Name = @Name, [Order] = @Order, Icon = @Icon, Url = @Url, Category = @Category, Target = @Target, IsResource = @IsResource where ID = @ID";
+                "Insert Into Navigations (ParentId, Name, [Order], Icon, Url, Category, Target, IsResource, [Application]) Values (@ParentId, @Name, @Order, @Icon, @Url, @Category, @Target, @IsResource, @ApplicationCode)" :
+                "Update Navigations set ParentId = @ParentId, Name = @Name, [Order] = @Order, Icon = @Icon, Url = @Url, Category = @Category, Target = @Target, IsResource = @IsResource, Application = @ApplicationCode where ID = @ID";
             try
             {
                 using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
@@ -156,6 +157,7 @@ namespace Bootstrap.DataAccess
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Category", p.Category, ParameterDirection.Input));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Target", p.Target, ParameterDirection.Input));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@IsResource", p.IsResource, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ApplicationCode", p.ApplicationCode, ParameterDirection.Input));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
                 CacheCleanUtility.ClearCache(menuIds: p.ID == 0 ? string.Empty : p.ID.ToString());

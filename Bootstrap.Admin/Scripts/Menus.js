@@ -34,7 +34,8 @@
                 Url: "url",
                 Category: "category",
                 Target: "target",
-                IsResource: "isRes"
+                IsResource: "isRes",
+                ApplicationCode: "app"
             }
         }),
         click: {

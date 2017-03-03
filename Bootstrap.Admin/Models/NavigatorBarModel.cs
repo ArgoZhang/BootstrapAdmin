@@ -10,6 +10,7 @@ namespace Bootstrap.Admin.Models
         public NavigatorBarModel(string url)
         {
             Navigations = MenuHelper.RetrieveNavigationsByUserName(UserName).Where(m => m.IsResource == 0);
+            Applications = DictHelper.RetrieveApps();
             ActiveMenu(null, Navigations.ToList(), url);
             HomeUrl = "~/Admin/Index";
         }
@@ -27,5 +28,9 @@ namespace Bootstrap.Admin.Models
         /// 
         /// </summary>
         public IEnumerable<Menu> Navigations { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public IEnumerable<KeyValuePair<string, string>> Applications { get; set; }
     }
 }

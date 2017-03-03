@@ -160,6 +160,21 @@
                         </ul>
                     </div>
                 </div>
+                <div class="form-group col-sm-6 col-xs-12">
+                    <label class="control-label" for="app">所属应用</label>
+                    <div class="dropdown lgbDropdown dropup">
+                        <a id="app" class="btn btn-info" data-toggle="dropdown" data-default-val="0">
+                            <span>未设置</span>
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            @foreach (var kv in Model.Applications)
+                            {
+                                <li><a href="#" data-val="@kv.Key">@kv.Value</a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
             </div>
         </form>
     </div>

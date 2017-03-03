@@ -126,11 +126,11 @@ BEGIN
 	SET XACT_ABORT ON;
     -- Insert statements for procedure here
 	if @userName = '' or @userName is null
-		select n.*, d.Name as CategoryName, ln.Name as ParentName 
+		select n.ID, n.ParentId, n.Name, n.[Order], n.Icon, n.Url, n.Category, n.Target, n.IsResource, n.[Application], d.Name as CategoryName, ln.Name as ParentName 
 		from Navigations n inner join Dicts d on n.Category = d.Code and d.Category = N'菜单' and d.Define = 0 
 		left join Navigations ln on n.ParentId = ln.ID
 	else
-		select n.*, d.Name as CategoryName, ln.Name as ParentName 
+		select n.ID, n.ParentId, n.Name, n.[Order], n.Icon, n.Url, n.Category, n.Target, n.IsResource, n.[Application], d.Name as CategoryName, ln.Name as ParentName 
 		from Navigations n inner join Dicts d on n.Category = d.Code and d.Category = N'菜单' and d.Define = 0 
 		left join Navigations ln on n.ParentId = ln.ID
 		inner join (

@@ -175,6 +175,7 @@ CREATE TABLE [dbo].[Navigations](
 	[Category] [nvarchar](50) NOT NULL,
 	[Target] [varchar](10) NOT NULL,
 	[IsResource] [bit] NOT NULL,
+	[Application] [nvarchar](200) NOT NULL,
  CONSTRAINT [PK_Navigations] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
@@ -318,6 +319,9 @@ ALTER TABLE [dbo].[Notifications] ADD  CONSTRAINT [DF_Notifications_Status]  DEF
 GO
 
 ALTER TABLE [dbo].[Navigations] ADD  CONSTRAINT [DF_Navigations_IsResource]  DEFAULT ((0)) FOR [IsResource]
+GO
+
+ALTER TABLE [dbo].[Navigations] ADD  CONSTRAINT [DF_Navigations_Application]  DEFAULT ((0)) FOR [Application]
 GO
 
 /****** Object:  Table [dbo].[Messages]    Script Date: 11/14/2016 13:59:21 ******/
