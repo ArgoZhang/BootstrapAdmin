@@ -1,5 +1,4 @@
 ﻿$(function () {
-    var url = '../api/Exceptions/';
     var $dialog = $('#dialogNew');
     var $dataForm = $('#dataForm');
     var $dataFormDetail = $('#dataFormDetail');
@@ -8,12 +7,12 @@
     var $errorDetailTitle = $('#myDetailModalLabel');
 
     var bsa = new BootstrapAdmin({
-        url: url,
+        url: Exceptions.url,
         validateForm: null
     });
 
     $('table').smartTable({
-        url: url,
+        url: Exceptions.url,
         sortName: 'LogTime',
         queryParams: function (params) { return $.extend(params, { StartTime: $("#txt_operate_start").val(), EndTime: $("#txt_operate_end").val() }); },
         columns: [
