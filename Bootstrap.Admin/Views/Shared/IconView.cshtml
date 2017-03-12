@@ -1,16 +1,9 @@
-﻿<i id="fa-top"></i>
-<div class="icon-body">
-    <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active"><a href="#Fontawesome" data-toggle="tab">Fontawesome 图标</a></li>
-        <li role="presentation"><a href="#Glyphicons" data-toggle="tab">Glyphicons 图标</a></li>
-    </ul>
-    <div id="iconTab" class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="Fontawesome">@Html.Partial("AwesomeIcon")</div>
-        <div role="tabpanel" class="tab-pane" id="Glyphicons">@Html.Partial("Glyphicons")</div>
-    </div>
+﻿<i id="fa-top" class="fa-target"></i>
+<div class="fa-icons">
+    @Html.Partial("AwesomeIcon")
 </div>
-<div id="timeline" class="fb-timeliner">
-    <h2 class="recent-highlight">图标分类</h2>
+<div class="fa-nav">
+    <h2>图标分类</h2>
     <ul class="nav navbar">
         <li><a href="#new">新图标</a></li>
         <li><a href="#web-application">Web 图标</a></li>
@@ -33,4 +26,4 @@
         <li><a href="#fa-bottom">返回底部</a></li>
     </ul>
 </div>
-<i id="fa-bottom"></i>
+<i id="fa-bottom" class="fa-target"></i>

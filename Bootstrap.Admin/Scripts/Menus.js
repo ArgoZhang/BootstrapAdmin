@@ -242,13 +242,12 @@
         callback: function (result) {
             if (result) {
                 $dialogIcon.find('.modal-body').html(result);
-                var $iconList = $('#iconTab').find('div.fontawesome-icon-list');
-                $iconList.find('ul li').addClass('col-md-3 col-sm-4 col-xs-6');
-                $iconList.find('div').addClass('col-xs-6');
-                $iconList.on('click', 'div.fa-hover a, ul li', function () {
+                var $iconList = $('div.fontawesome-icon-list').on('click', 'div.fa-hover a, ul li', function () {
                     $pickIcon.attr('class', $(this).find('i, span:first').attr('class'));
                     return false;
                 });
+                $iconList.find('ul li').addClass('col-md-3 col-sm-4 col-xs-6');
+                $iconList.find('div').addClass('col-xs-6');
             }
         }
     });

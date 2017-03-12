@@ -1,12 +1,85 @@
-﻿.modal-body #fa-top {
-    float: left;
-    margin-top: -15px;
+﻿.page-header {
+    margin-top: 40px;
 }
 
-.modal-body #fa-bottom {
-    clear: both;
-    float: right;
-    margin-bottom: -15px;
+.fa-target {
+    height: 16px;
+    display: block;
+}
+
+.fa-nav {
+    display: none;
+}
+
+    .fa-nav h2 {
+        background: #FF6C60;
+        color: #fff;
+        margin-top: 0;
+        padding: 10px 15px;
+        font-size: 16px;
+        border-radius: 4px;
+        font-weight: 300;
+    }
+
+    .fa-nav ul {
+        top: 44px;
+        bottom: 0;
+        position: absolute;
+        overflow-y: auto;
+    }
+
+        .fa-nav ul li {
+            margin-bottom: 3px;
+        }
+
+            .fa-nav ul li.active a {
+                color: #7a7a7a;
+                border-left: 4px solid #5bc0de;
+                padding-left: 10px;
+            }
+
+            .fa-nav ul li a {
+                color: #999797;
+                border-left: 4px solid #d3d7dd;
+                padding-left: 10px;
+                padding-top: 3px;
+                padding-bottom: 3px;
+                display: block;
+            }
+
+                .fa-nav ul li a:hover {
+                    color: #999797;
+                    border-left: 4px solid #d9534f;
+                    padding-left: 10px;
+                }
+
+@media (min-width: 768px) {
+    .fa-nav {
+        display: block;
+        position: fixed;
+        top: 130px;
+        right: 32px;
+        width: 140px;
+        bottom: 70px;
+    }
+
+    .fa-icons {
+        margin-right: 160px;
+    }
+}
+
+@media (max-width: 360px) {
+    .icon-content .modal-footer span {
+        display: none;
+    }
+}
+
+@media (max-height: 768px) {
+    .menu-content {
+        top: 20px;
+        position: fixed;
+        width: inherit;
+    }
 }
 
 .form-group .input-group .input-group-btn .btn i {
@@ -19,71 +92,6 @@
         width: auto;
     }
 
-.icon-body {
-    margin-right: 160px;
-}
-
-    .icon-body .page-header {
-        padding: 16px 0;
-    }
-
-.fb-timeliner {
-    position: fixed;
-    top: 96px;
-    right: 46px;
-    width: 140px;
-    bottom: 100px;
-}
-
-    .fb-timeliner ul {
-        top: 44px;
-        width: 150px;
-        bottom: 0;
-        position: absolute;
-        overflow-y: auto;
-        padding-left: 6px;
-    }
-
-        .fb-timeliner ul li {
-            margin-bottom: 3px;
-        }
-
-            .fb-timeliner ul li.active a {
-                color: #7a7a7a;
-                border-left: 4px solid #5bc0de;
-                padding-left: 10px;
-            }
-
-            .fb-timeliner ul li a {
-                color: #999797;
-                border-left: 4px solid #d3d7dd;
-                padding-left: 10px;
-                padding-top: 3px;
-                padding-bottom: 3px;
-                display: block;
-            }
-
-                .fb-timeliner ul li a:hover {
-                    color: #999797;
-                    border-left: 4px solid #d9534f;
-                    padding-left: 10px;
-                }
-
-    .fb-timeliner h2 {
-        background: #828283;
-        color: #fff;
-        margin-top: 0;
-        padding: 10px 15px;
-        font-size: 16px;
-        border-radius: 4px;
-        -webkit-border-radius: 4px;
-        font-weight: 300;
-    }
-
-.recent-highlight {
-    background: #FF6C60 !important;
-}
-
 .icon-content {
     position: fixed;
     top: 15px;
@@ -93,6 +101,12 @@
     z-index: 1051;
     display: none;
 }
+
+    .icon-content .fa-nav {
+        right: 46px;
+        top: 86px;
+        bottom: 100px;
+    }
 
     .icon-content .modal-body {
         position: fixed;
@@ -225,17 +239,3 @@
     .menu-content .dd {
         max-width: inherit;
     }
-
-.faicon {
-    padding-bottom: 15px;
-}
-
-    .faicon .fb-timeliner {
-        top: 130px;
-        right: 32px;
-        bottom: 70px;
-    }
-
-.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
-    background-color: #41CAC0;
-}
