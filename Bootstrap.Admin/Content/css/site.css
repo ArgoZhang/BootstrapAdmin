@@ -562,3 +562,15 @@ ul.breadcrumb {
     background-image: url('../images/bg.jpg');
     background-size: 100% 100%;
 }
+
+.tooltip-inner {
+    max-width: 768px;
+}
+
+.tooltip.has-error .tooltip-inner {
+    background-color: #a94442;
+}
+
+.tooltip.has-error .tooltip-arrow {
+    border-top-color: #a94442;
+}

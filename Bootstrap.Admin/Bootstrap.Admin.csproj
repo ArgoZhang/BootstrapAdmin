@@ -108,7 +108,6 @@
     <Content Include="Content\css\api.css" />
     <Content Include="Content\css\bootstrap-datetimepicker.css" />
     <Content Include="Content\css\bootstrap-datetimepicker.min.css" />
-    <Content Include="Content\css\fix.css" />
     <Content Include="Content\css\IE8.css" />
     <Content Include="Content\css\nprogress.css" />
     <Content Include="Content\html\api.html" />
