@@ -33,7 +33,7 @@
             </div>
         </form>
         <div class="modal-footer">
-            <button id="btnSaveDisplayName" class="btn btn-default" type="button" data-admin="@LgbPrincipal.IsAdmin(Model.UserName)"><i class="fa fa-save"></i><span>保存</span></button>
+            <button id="btnSaveDisplayName" class="btn btn-default" type="button" disabled data-admin="@LgbPrincipal.IsAdmin(Model.UserName)"><i class="fa fa-save"></i><span>保存</span></button>
         </div>
     </div>
 </div>
@@ -42,22 +42,22 @@
     <div class="panel-body">
         <form id="passwordDataForm" name="passwordDataForm" class="form-inline" role="form">
             <div class="row">
-                <div class="form-group col-lg4 col-md-4 col-sm-12 col-xs-12">
-                    <label class="control-label" for="currentPassword">当前密码: </label>
-                    <input type="password" class="form-control" id="currentPassword" name="currentPassword" placeholder="登陆密码" maxlength="50" />
+                <div class="form-group col-md-4 col-xs-12">
+                    <label class="control-label" for="currentPassword">原密码: </label>
+                    <input type="password" class="form-control" id="currentPassword" name="currentPassword" placeholder="原密码" maxlength="50" />
                 </div>
-                <div class="form-group col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                    <label class="control-label" for="newPassword">最新密码: </label>
+                <div class="form-group col-md-4 col-sm-6 col-xs-12">
+                    <label class="control-label" for="newPassword">新密码: </label>
                     <input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="新密码" maxlength="50" />
                 </div>
-                <div class="form-group col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                <div class="form-group col-md-4 col-sm-6 col-xs-12">
                     <label class="control-label" for="confirmPassword">确认密码: </label>
                     <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="与新密码一致" maxlength="50" />
                 </div>
             </div>
         </form>
         <div class="modal-footer">
-            <button id="btnSavePassword" class="btn btn-default" type="button" data-admin="@LgbPrincipal.IsAdmin(Model.UserName)"><i class="fa fa-save"></i><span>保存</span></button>
+            <button id="btnSavePassword" class="btn btn-default" type="button" disabled data-admin="@LgbPrincipal.IsAdmin(Model.UserName)"><i class="fa fa-save"></i><span>保存</span></button>
         </div>
     </div>
 </div>

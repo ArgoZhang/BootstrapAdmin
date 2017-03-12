@@ -85,6 +85,6 @@
         }
     });
 
-    $('button[data-admin="True"]').attr('disabled', 'disabled');
+    $('button[data-admin="False"]').removeAttr('disabled');
     $('#kvFileinputModal').appendTo('body');
 });
