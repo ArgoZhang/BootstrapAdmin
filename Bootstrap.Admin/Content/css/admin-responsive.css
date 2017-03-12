@@ -134,6 +134,10 @@
         max-height: 480px;
         overflow-y: auto;
     }
+
+    .file-zoom-dialog .modal-body {
+        max-height: none;
+    }
 }
 
 @media (max-height: 568px) {
