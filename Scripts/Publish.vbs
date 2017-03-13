@@ -115,7 +115,10 @@ Function GetFileName(fileName)
 End Function
 
 Sub ReSignFile(fileName)
+    If Not fso.FileExists(shell.ExpandEnvironmentStrings(signCmd)) Then
+        signCmd = "%ProgramFiles(x86)%\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.1 Tools\sn.exe"
+    End If
     cmd = """"& signCmd &""" -R """ & fileName & """ " & keyFile
     shell.run cmd, 0, True
-    WScript.Echo "Assembly '" & fileName & "' successfully re-signed"
+    WScript.Echo "Assembly '" & fileName & "' successfully re-signed @_@"
 End Sub
