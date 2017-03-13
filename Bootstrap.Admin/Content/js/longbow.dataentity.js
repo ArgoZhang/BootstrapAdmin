@@ -14,7 +14,7 @@
                 ctl.val(value[name]);
                 if (ctl.attr('data-toggle') == "dropdown") {
                     var val = value[name];
-                    if (!val) val = ctl.attr('data-default-val');
+                    if ((typeof val == "string" && val == "") || val == undefined) val = ctl.attr('data-default-val');
                     ctl.children(':first').text(ctl.next().find('[data-val="' + val + '"]').text());
                 }
             }
@@ -35,8 +35,10 @@
             for (name in this.options.map) {
                 var ctl = $("#" + this.options.map[name]);
                 var dv = ctl.attr('data-default-val');
-                if (dv !== undefined && ctl.val().trim() === "") target[name] = dv;
+                if (dv != undefined && ctl.val() == "") target[name] = dv;
                 else target[name] = ctl.val();
+                if (target[name] == "true" || target[name] == "True") target[name] = true;
+                if (target[name] == "false" || target[name] == "False") target[name] = false;
             }
             return target;
         }
