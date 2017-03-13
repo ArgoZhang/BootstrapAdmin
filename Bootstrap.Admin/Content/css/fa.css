@@ -1,5 +1,10 @@
-﻿.page-header {
-    margin-top: 40px;
+﻿.fa-icons > section {
+    padding-top: 1px;
+}
+
+.page-header {
+    margin-top: 16px;
+    margin-bottom: 6px;
 }
 
 .fa-target {
