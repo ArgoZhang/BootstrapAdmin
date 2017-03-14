@@ -18,13 +18,13 @@ ol {
 
 .has-error input {
     background-repeat: no-repeat;
-    background-image: url('../images/error.png');
+    background-image: url('images/error.png');
     background-position: right 8px center;
 }
 
 .has-success input {
     background-repeat: no-repeat;
-    background-image: url('../images/success.png');
+    background-image: url('images/success.png');
     background-position: right 8px center;
 }
 

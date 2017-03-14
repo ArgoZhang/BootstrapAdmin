@@ -44,7 +44,7 @@ a, a:hover, a:focus {
 }
 
 .arrow-up {
-    background: url("../images/arrow-up.png") no-repeat;
+    background: url("images/arrow-up.png") no-repeat;
     width: 20px;
     height: 11px;
     position: absolute;
@@ -223,7 +223,7 @@ a, a:hover, a:focus {
         transition: all .3s ease;
         border: 1px solid #fff;
         box-shadow: none;
-        background: url("../images/search-icon.png") no-repeat 10px 8px;
+        background: url("images/search-icon.png") no-repeat 10px 8px;
         padding: 0 5px 0 35px;
         color: #000;
     }
@@ -560,7 +560,7 @@ ul.breadcrumb {
     bottom: 40px;
     right: 0;
     top: 94px;
-    background-image: url('../images/bg.jpg');
+    background-image: url('images/bg.jpg');
     overflow: hidden;
 }
 
