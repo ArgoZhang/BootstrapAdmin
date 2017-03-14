@@ -352,7 +352,7 @@ $(function () {
         Id: 1, url: Dicts.url, data: { type: 'activeCss' }, swal: false,
         callback: function (result) {
             if (result.length > 0)
-                $('head').append($.format('<link href="../Content/css/{0}" rel="stylesheet" type="text/css" />', result[0].Code));
+                $('head').append($.format('<link href="../Content/{0}" rel="stylesheet" type="text/css" />', result[0].Code));
         }
     });
 });
