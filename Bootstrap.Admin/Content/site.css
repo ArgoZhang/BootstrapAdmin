@@ -26,6 +26,10 @@ a, a:hover, a:focus {
     color: #fff;
 }
 
+.card-view:not(:last-child) {
+    margin-bottom: 6px;
+}
+
 .header {
     padding: 0 15px;
     height: 94px;
@@ -34,7 +38,7 @@ a, a:hover, a:focus {
 }
 
     .header a {
-        transition: all .3s linear;
+        transition: all .25s linear;
     }
 
     .header > .dropdown {
