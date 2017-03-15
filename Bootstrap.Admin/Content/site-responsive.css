@@ -1,37 +1,12 @@
-@media (max-width: 930px) {
+@media (min-width: 320px) {
+    .sidebar-toggle-box span {
+        display: inline-block;
+    }
 }
 
-@media (max-width: 666px) {
+@media (min-width: 568px) {
     .notify-row {
-        display: none;
-    }
-}
-
-@media (max-width: 548px) {
-    .top-menu .search {
-        display: none;
-    }
-}
-
-@media (max-width: 480px) {
-    .sidebar-toggle-box span, .notify-row {
-        display: none;
-    }
-
-    .top-menu > li {
-        float: right;
-    }
-}
-
-@media (max-width: 320px) {
-    .top-menu {
-        position: absolute;
-        right: 15px;
-        left: auto;
-    }
-
-    .dropdown-menu.menu {
-        min-width: inherit;
+        display: inline-block;
     }
 }
 
