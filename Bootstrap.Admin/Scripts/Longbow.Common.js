@@ -344,6 +344,20 @@
             }
         }
     });
+
+    //fix bug
+    $.fn.modal.Constructor.prototype.adjustDialog = function () {
+        var modalIsOverflowing = this.$element[0].scrollHeight > document.documentElement.clientHeight
+
+        this.$element.css({
+            paddingLeft: !this.bodyIsOverflowing && modalIsOverflowing ? this.scrollbarWidth : '',
+            paddingRight: this.bodyIsOverflowing && !modalIsOverflowing ? this.scrollbarWidth : ''
+        })
+
+        // added by Argo
+        var $modal_dialog = $(this.$element[0]).find('.modal-dialog');
+        $modal_dialog.adjustDialog();
+    }
 })(jQuery);
 
 $(function () {
