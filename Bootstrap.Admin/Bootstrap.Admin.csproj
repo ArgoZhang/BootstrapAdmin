@@ -152,13 +152,9 @@
     <Content Include="Content\images\uploader\default.jpg" />
     <Content Include="Content\images\uploader\readme.txt" />
     <Content Include="Content\site-responsive.css" />
-    <Content Include="Content\images\arrow-up.png" />
     <Content Include="Content\images\avatar1_small.jpg" />
     <Content Include="Content\images\error.png" />
-    <Content Include="Content\images\glyphicons-halflings-white.png" />
-    <Content Include="Content\images\glyphicons-halflings.png" />
     <Content Include="Content\images\nav-expand.png" />
-    <Content Include="Content\images\search-icon.png" />
     <Content Include="Content\site.css" />
     <Content Include="Content\sweetalert.css" />
     <Content Include="Content\images\success.png" />
