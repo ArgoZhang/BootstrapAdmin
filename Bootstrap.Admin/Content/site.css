@@ -105,14 +105,15 @@ a, a:hover, a:focus {
                 }
 
                     .header > .dropdown .dropdown-menu li:last-child a {
-                        color: #b14544;
+                        color: #ca3a39;
                         border-radius: 0 0 3px 3px;
                         background: #a9d96c;
                         background-image: linear-gradient(to bottom, #a9d96c 0%, #799e51 100%);
                     }
 
                         .header > .dropdown .dropdown-menu li:last-child a:hover {
-                            color: #a21f1e;
+                            color: #d20100;
+                            background: #6d9046;
                             background-image: linear-gradient(to bottom, #a9d96c 0%, #6d9046 100%);
                         }
 
