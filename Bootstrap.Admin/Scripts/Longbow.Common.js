@@ -277,7 +277,7 @@
                     if (!$ele.attr('data-original-title')) $ele.lgbTooltip({ container: parent });
                     $ele.attr('data-original-title', $(label).text());
                     $ele.lgbTooltip('show');
-                    $('#' + $ele.attr('aria-describedby')).addClass(this.errorClass);
+                    $('#' + $ele.attr('aria-describedby')).addClass(this.settings.errorClass);
                 }
             });
             if (handler && $.isArray(handler.button)) {
