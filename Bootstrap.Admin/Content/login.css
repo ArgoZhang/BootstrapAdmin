@@ -10,8 +10,6 @@
 
 /*Login*/
 .form-signin {
-    width: 300px;
-    max-width: 300px;
     margin: 0 auto;
     background: #fff;
     border-radius: 5px;
@@ -91,3 +89,9 @@
         }
 
 /*end login*/
+
+@media (min-width: 375px) {
+    .form-signin {
+        width: 320px;
+    }
+}
