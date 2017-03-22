@@ -1,7 +1,7 @@
-﻿(function ($) {
+﻿(function($) {
     // 增加Array扩展
     if (!$.isFunction(Array.prototype.filter)) {
-        Array.prototype.filter = function (callback, thisObject) {
+        Array.prototype.filter = function(callback, thisObject) {
             if ($.isFunction(callback)) {
                 var res = new Array();
                 for (var i = 0; i < this.length; i++) {
@@ -14,7 +14,7 @@
 
     // 增加String扩展
     if (!$.isFunction(String.prototype.trim)) {
-        String.prototype.trim = function () {
+        String.prototype.trim = function() {
             if (this == null) return "";
             var trimLeft = /^\s+/, trimRight = /\s+$/;
             return this.replace(trimLeft, "").replace(trimRight, "");
@@ -23,7 +23,7 @@
 
     // 扩展Date
     if (!$.isFunction(Date.prototype.format)) {
-        Date.prototype.format = function (format) {
+        Date.prototype.format = function(format) {
             var o = {
                 "M+": this.getMonth() + 1,
                 "d+": this.getDate(),
@@ -59,7 +59,7 @@
 
     // 扩展format
     $.extend({
-        "format": function (source, params) {
+        "format": function(source, params) {
             if (params === undefined) {
                 return source;
             }
@@ -69,8 +69,8 @@
             if (params.constructor !== Array) {
                 params = [params];
             }
-            $.each(params, function (i, n) {
-                source = source.replace(new RegExp("\\{" + i + "\\}", "g"), function () {
+            $.each(params, function(i, n) {
+                source = source.replace(new RegExp("\\{" + i + "\\}", "g"), function() {
                     return n;
                 });
             });
@@ -81,7 +81,7 @@
     // enhance window.console.log
     if (!window.console) {
         window.console = {
-            log: function () {
+            log: function() {
 
             }
         };
@@ -91,7 +91,7 @@
 
     // client
     jQuery.browser = {
-        versions: function () {
+        versions: function() {
             var u = navigator.userAgent;
             return {         //移动终端浏览器版本信息
                 trident: u.indexOf('Trident') > -1, //IE内核
@@ -111,7 +111,7 @@
     }
 
     $.extend({
-        bc: function (options, callback) {
+        bc: function(options, callback) {
             var data = $.extend({
                 remote: true,
                 Id: "",
@@ -126,7 +126,7 @@
             }, options);
 
             if (!data.url || data.url == "") {
-                swal('参数错误', '未设置请求地址Url', 'error');
+                lgbSwal({ title: '参数错误', text: '未设置请求地址Url', type: 'error' });
                 return;
             }
 
@@ -136,10 +136,10 @@
                     data: data.data,
                     type: data.method,
                     async: true,
-                    success: function (result) {
+                    success: function(result) {
                         success(result);
                     },
-                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
                         if ($.isFunction(data.callback)) data.callback(false);
                     }
                 });
@@ -152,12 +152,19 @@
                     $("#" + data.modal).modal('hide');
                 }
                 if (data.swal) {
-                    if (result) { swal("成功", data.title, "success"); }
-                    else { swal("失败", data.title, "error"); }
+                    if (result) { lgbSwal({ title: data.title, type: 'success' }); }
+                    else { lgbSwal({ title: data.title, type: 'error' }); }
                 }
+            }
+        },
+        lgbSwal: function(options) {
+            if ($.isFunction(swal)) {
+                swal($.extend({ showConfirmButton: false, showCancelButton: false, timer: 800, title: '未设置', type: "success" }, options));
             }
         }
     });
+
+    window.lgbSwal = $.lgbSwal;
 
     // Roles
     Role = {
@@ -222,32 +229,32 @@
     }
 
     $.fn.extend({
-        adjustDialog: function () {
+        adjustDialog: function() {
             var $modal_dialog = this;
             var m_top = Math.max(0, ($(window).height() - $modal_dialog.height()) / 2);
             $modal_dialog.css({ 'margin': m_top + 'px auto' });
             return this;
         },
-        autoCenter: function () {
+        autoCenter: function() {
             var that = this;
-            var getHeight = function () {
+            var getHeight = function() {
                 return ($(window).height() - $(that).outerHeight()) / 2 + $(document).scrollTop();
             }
-            $(window).resize(function () {
+            $(window).resize(function() {
                 $(that).css({
                     marginTop: getHeight()
                 });
             });
             that.animate({ marginTop: "+=" + getHeight() });
         },
-        lgbTooltip: function (option) {
+        lgbTooltip: function(option) {
             if (option == undefined) option = { container: 'body', delay: { "show": 500, "hide": 100 } };
             else if (typeof option == "object") option = $.extend({ container: 'body', delay: { "show": 500, "hide": 100 } }, option);
             $(this).tooltip(option);
             if (option == 'destroy') $(this).removeAttr('data-original-title');
             return this;
         },
-        autoValidate: function (rules, messages, handler) {
+        autoValidate: function(rules, messages, handler) {
             var parent = 'body';
             var $wrapper = $('#dialogNew');
             if ($wrapper.length == 1) parent = '#dialogNew';
@@ -266,13 +273,13 @@
                 ignore: ".ignore",
                 rules: $.extend({}, rules),
                 messages: $.extend({}, messages),
-                highlight: function (element, errorClass, validClass) {
+                highlight: function(element, errorClass, validClass) {
                     $(element).parents('.form-group').addClass(errorClass).removeClass(validClass);
                 },
-                unhighlight: function (element, errorClass, validClass) {
+                unhighlight: function(element, errorClass, validClass) {
                     $(element).lgbTooltip('destroy').parents('.form-group').removeClass(errorClass).addClass(validClass);
                 },
-                errorPlacement: function (label, element) {
+                errorPlacement: function(label, element) {
                     var $ele = $(element);
                     if (!$ele.attr('data-original-title')) $ele.lgbTooltip({ container: parent });
                     $ele.attr('data-original-title', $(label).text());
@@ -281,14 +288,14 @@
                 }
             });
             if (handler && $.isArray(handler.button)) {
-                $.each(handler.button, function (index, btn) {
-                    $('#' + btn).on('click', function () {
+                $.each(handler.button, function(index, btn) {
+                    $('#' + btn).on('click', function() {
                         $(this).attr('data-valid', $this.valid());
                     });
                 });
             }
         },
-        smartTable: function (options) {
+        smartTable: function(options) {
             var settings = $.extend({
                 method: 'get',                      //请求方式（*）
                 toolbar: '#toolbar',                //工具按钮用哪个容器
@@ -316,14 +323,14 @@
                 clickToSelect: false
             }, options);
             $(this).bootstrapTable(settings);
-            $('div.toolbar').on('click', 'a', function (e) {
+            $('div.toolbar').on('click', 'a', function(e) {
                 e.preventDefault();
                 var ctl = $('#' + $(this).attr('id').replace('tb_', 'btn_'));
                 ctl.trigger("click");
             }).insertBefore($('div.bootstrap-table > div.fixed-table-toolbar > div.bs-bars'));
             $(settings.toolbar).removeClass('hidden');
         },
-        lgbDropdown: function (options) {
+        lgbDropdown: function(options) {
             var $this = $(this);
             var op = typeof options == 'object' && options;
             if (/val/.test(options)) {
@@ -334,8 +341,8 @@
                 }
             }
             else {
-                $this.each(function () {
-                    $(this).on('click', '.dropdown-menu a', { $parent: $(this) }, function (event) {
+                $this.each(function() {
+                    $(this).on('click', '.dropdown-menu a', { $parent: $(this) }, function(event) {
                         event.preventDefault();
                         var $op = $(this);
                         event.data.$parent.children('a').val($op.attr('data-val')).children(':first').text($op.text());
@@ -346,7 +353,7 @@
     });
 
     //fix bug
-    $.fn.modal.Constructor.prototype.adjustDialog = function () {
+    $.fn.modal.Constructor.prototype.adjustDialog = function() {
         var modalIsOverflowing = this.$element[0].scrollHeight > document.documentElement.clientHeight
 
         this.$element.css({
@@ -360,11 +367,11 @@
     }
 })(jQuery);
 
-$(function () {
+$(function() {
     // loading customer css
     $.bc({
         Id: 1, url: Dicts.url, data: { type: 'activeCss' }, swal: false,
-        callback: function (result) {
+        callback: function(result) {
             if (result.length > 0)
                 $('head').append($.format('<link href="../Content/{0}" rel="stylesheet" type="text/css" />', result[0].Code));
         }

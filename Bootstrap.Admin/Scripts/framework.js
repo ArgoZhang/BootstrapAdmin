@@ -1,5 +1,5 @@
-﻿(function ($) {
-    BootstrapAdmin = function (options) {
+﻿(function($) {
+    BootstrapAdmin = function(options) {
         var that = this;
         options = options || {};
         options.click = $.extend({}, BootstrapAdmin.settings.click, options.click);
@@ -27,7 +27,7 @@
 
         // handler modal window show event
         if (this.options.modal && this.options.modal.constructor === String) {
-            $('#' + this.options.modal).on('show.bs.modal', function (e) {
+            $('#' + this.options.modal).on('show.bs.modal', function(e) {
                 if (that.options.validateForm && that.options.validateForm.constructor === String) {
                     var v = $('#' + that.options.validateForm);
                     v.validate().resetForm();
@@ -41,7 +41,7 @@
             var source = $("#" + cId);
             source.data('click', name);
             if (event !== null) source.data('event', event);
-            source.click(function (e) {
+            source.click(function(e) {
                 e.preventDefault();
                 var method = source.data('click');
                 BootstrapAdmin.prototype[method].call(that, this, source.data('event'));
@@ -68,13 +68,13 @@
         }
     };
 
-    BootstrapAdmin.idFormatter = function (value, row, index) {
+    BootstrapAdmin.idFormatter = function(value, row, index) {
         return "<a class='edit' href='javascript:void(0)'>" + value + "</a>";
     };
 
     BootstrapAdmin.prototype = {
         constructor: BootstrapAdmin,
-        idEvents: function () {
+        idEvents: function() {
             var op = {
                 dataEntity: $.extend({}, this.options.dataEntity),
                 table: this.options.bootstrapTable,
@@ -82,7 +82,7 @@
                 src: this
             };
             return {
-                'click .edit': function (e, value, row, index) {
+                'click .edit': function(e, value, row, index) {
                     op.dataEntity.load(row);
                     $(op.table).bootstrapTable('uncheckAll');
                     $(op.table).bootstrapTable('check', index);
@@ -92,29 +92,29 @@
             }
         },
 
-        query: function (e, callback) {
+        query: function(e, callback) {
             if (this.options.bootstrapTable.constructor === String) $(this.options.bootstrapTable).bootstrapTable('refresh');
             handlerCallback.call(this, callback, e, { oper: 'query' });
         },
 
-        create: function (e, callback) {
+        create: function(e, callback) {
             if (this.dataEntity instanceof DataEntity) this.dataEntity.reset();
             if (this.options.modal.constructor === String) $('#' + this.options.modal).modal("show");
             if (this.options.bootstrapTable.constructor === String) $(this.options.bootstrapTable).bootstrapTable('uncheckAll');
             handlerCallback.call(this, callback, e, { oper: 'create' });
         },
 
-        edit: function (e, callback) {
+        edit: function(e, callback) {
             var options = this.options;
             var data = {};
             if (options.bootstrapTable.constructor === String) {
                 var arrselections = $(options.bootstrapTable).bootstrapTable('getSelections');
                 if (arrselections.length == 0) {
-                    swal('请选择要编辑的数据', "编辑操作", "warning");
+                    lgbSwal({ title: '请选择要编辑的数据', type: "warning" });
                     return;
                 }
                 else if (arrselections.length > 1) {
-                    swal('请选择一个要编辑的数据', "编辑操作", "warning");
+                    lgbSwal({ title: '请选择一个要编辑的数据', type: "warning" });
                     return;
                 }
                 else {
@@ -126,36 +126,33 @@
             handlerCallback.call(this, callback, e, { oper: 'edit', data: data });
         },
 
-        del: function (e, callback) {
+        del: function(e, callback) {
             var that = this;
             var options = this.options;
             if (options.bootstrapTable.constructor === String) {
                 var arrselections = $(options.bootstrapTable).bootstrapTable('getSelections');
                 if (arrselections.length == 0) {
-                    swal('请选择要删除的数据', "删除操作", "warning");
+                    lgbSwal({ title: '请选择要删除的数据', type: "warning" });
                     return;
                 }
                 else {
                     swal({
                         title: "您确定要删除吗？",
-                        text: "删除操作",
                         type: "warning",
                         showCancelButton: true,
                         closeOnConfirm: true,
                         confirmButtonText: "是的，我要删除",
                         confirmButtonColor: "#d9534f",
                         cancelButtonText: "取消"
-                    }, function () {
-                        setTimeout(function () {
-                            var iDs = arrselections.map(function (element, index) { return element.ID }).join(",");
+                    }, function() {
+                        setTimeout(function() {
+                            var iDs = arrselections.map(function(element, index) { return element.ID }).join(",");
                             options.IDs = iDs;
                             $.bc({
                                 url: options.url, data: { "": iDs }, method: 'DELETE', title: '删除数据',
-                                callback: function (result) {
+                                callback: function(result) {
                                     if ($.isPlainObject(result)) {
-                                        var info = result.result ? "success" : "error";
-                                        var msg = result.msg
-                                        swal(msg, "删除数据", info);
+                                        lgbSwal({ title: result.msg, type: result.result ? "success" : "error" });
                                         result = result.result;
                                         this.swal = false;
                                     }
@@ -169,14 +166,14 @@
             }
         },
 
-        save: function (e, callback) {
+        save: function(e, callback) {
             var that = this;
             var options = $.extend({ data: {} }, this.options);
             if (this.dataEntity instanceof DataEntity) options = $.extend(options, { data: this.dataEntity.get() });
             if (options.validateForm.constructor === String && !$("#" + options.validateForm).valid()) return;
             $.bc({
                 url: options.url, data: options.data, title: "保存数据", modal: options.modal,
-                callback: function (result) {
+                callback: function(result) {
                     var finalData = null;
                     var index = 0;
                     if (result) {
@@ -203,17 +200,17 @@
             });
         },
 
-        assign: function (e, callback) {
+        assign: function(e, callback) {
             var options = this.options;
             var row = {};
             if (options.bootstrapTable && options.bootstrapTable.constructor === String) {
                 var arrselections = $(options.bootstrapTable).bootstrapTable('getSelections');
                 if (arrselections.length == 0) {
-                    swal('请选择要编辑的数据', "编辑操作", "warning");
+                    lgbSwal({ title: '请选择要编辑的数据', type: "warning" });
                     return;
                 }
                 else if (arrselections.length > 1) {
-                    swal('请选择一个要编辑的数据', "编辑操作", "warning");
+                    lgbSwal({ title: '请选择一个要编辑的数据', type: "warning" });
                     return;
                 }
                 else {
@@ -227,7 +224,7 @@
         }
     };
 
-    var handlerCallback = function (callback, e, data) {
+    var handlerCallback = function(callback, e, data) {
         if ($.isFunction(callback)) callback.call(e, data);
         if ($.isFunction(this.options.callback)) this.options.callback.call(e, data);
     }
