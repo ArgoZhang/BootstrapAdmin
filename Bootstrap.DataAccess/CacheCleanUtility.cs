@@ -10,7 +10,6 @@ namespace Bootstrap.DataAccess
 {
     internal static class CacheCleanUtility
     {
-        private const string CacheListKey = "bd";
         /// <summary>
         /// 
         /// </summary>
@@ -31,10 +30,8 @@ namespace Bootstrap.DataAccess
                     cacheKeys.Add(string.Format("{0}-{1}", UserHelper.RetrieveUsersByRoleIDDataKey, id));
                     cacheKeys.Add(string.Format("{0}-{1}", GroupHelper.RetrieveGroupsByRoleIDDataKey, id));
                 });
-
-                // final cleanup 
-                CacheManager.Clear(key => cacheKeys.Any(k => k == key) || key.Contains(RoleHelper.RetrieveRolesDataKey) || key.Contains(MenuHelper.RetrieveMenusDataKey));
-                cacheKeys.Clear();
+                cacheKeys.Add(RoleHelper.RetrieveRolesDataKey + "*");
+                cacheKeys.Add(MenuHelper.RetrieveMenusDataKey + "*");
             }
             if (userIds != null)
             {
@@ -44,10 +41,7 @@ namespace Bootstrap.DataAccess
                     cacheKeys.Add(string.Format("{0}-{1}", GroupHelper.RetrieveGroupsByUserIDDataKey, id));
                     cacheKeys.Add(MenuHelper.RetrieveMenusDataKey);
                 });
-                cacheKeys.Add(UserHelper.RetrieveNewUsersDataKey);
-                // final cleanup 
-                CacheManager.Clear(key => cacheKeys.Any(k => k == key) || key.Contains(UserHelper.RetrieveUsersDataKey));
-                cacheKeys.Clear();
+                cacheKeys.Add(UserHelper.RetrieveNewUsersDataKey + "*");
             }
             if (groupIds != null)
             {
@@ -56,9 +50,8 @@ namespace Bootstrap.DataAccess
                     cacheKeys.Add(string.Format("{0}-{1}", RoleHelper.RetrieveRolesByGroupIDDataKey, id));
                     cacheKeys.Add(string.Format("{0}-{1}", UserHelper.RetrieveUsersByGroupIDDataKey, id));
                 });
-                // final cleanup 
-                CacheManager.Clear(key => cacheKeys.Any(k => k == key) || key.Contains(GroupHelper.RetrieveGroupsDataKey) || key.Contains(MenuHelper.RetrieveMenusDataKey));
-                cacheKeys.Clear();
+                cacheKeys.Add(GroupHelper.RetrieveGroupsDataKey + "*");
+                cacheKeys.Add(MenuHelper.RetrieveMenusDataKey + "*");
             }
             if (menuIds != null)
             {
@@ -66,54 +59,46 @@ namespace Bootstrap.DataAccess
                 {
                     cacheKeys.Add(string.Format("{0}-{1}", RoleHelper.RetrieveRolesByMenuIDDataKey, id));
                 });
-                // final cleanup 
-                CacheManager.Clear(key => cacheKeys.Any(k => k == key) || key.Contains(MenuHelper.RetrieveMenusDataKey));
-                var section = CacheListSection.GetSection();
-                section.Items.Where(item => item.Enabled && item.Key != CacheListKey).AsParallel().ForAll(ele =>
-                {
-                    System.Threading.Tasks.Task.Factory.StartNew(() =>
-                    {
-                        try
-                        {
-                            var client = new WebClient();
-                            client.OpenRead(new Uri(string.Format(ele.Url, MenuHelper.RetrieveMenusDataKey + "*")));
-                        }
-                        catch (Exception ex)
-                        {
-                            System.Collections.Specialized.NameValueCollection nv = new System.Collections.Specialized.NameValueCollection();
-                            nv["ErrorPage"] = ele.Url;
-                            nv["UserId"] = "system";
-                            nv["UserIp"] = "::1";
-                            ExceptionManager.Publish(ex, nv);
-                        }
-                    });
-                });
-                cacheKeys.Clear();
+                cacheKeys.Add(MenuHelper.RetrieveMenusDataKey + "*");
             }
             if (dictIds != null)
             {
-                // final cleanup 
-                CacheManager.Clear(key => key.Contains(DictHelper.RetrieveDictsDataKey));
-                cacheKeys.Clear();
+                cacheKeys.Add(DictHelper.RetrieveDictsDataKey + "*");
             }
             if (logIds != null)
             {
-                // final cleanup 
-                CacheManager.Clear(key => key.Contains(LogHelper.RetrieveLogsDataKey));
-                cacheKeys.Clear();
+                cacheKeys.Add(LogHelper.RetrieveLogsDataKey + "*");
             }
             if (notifyIds != null)
             {
-                // final cleanup 
-                CacheManager.Clear(key => key.Contains(NotificationHelper.RetrieveNotificationsDataKey));
-                cacheKeys.Clear();
+                cacheKeys.Add(NotificationHelper.RetrieveNotificationsDataKey + "*");
             }
             if (exceptionIds != null)
             {
-                // final cleanup 
-                CacheManager.Clear(key => key.Contains(ExceptionHelper.RetrieveExceptionsDataKey));
-                cacheKeys.Clear();
+                cacheKeys.Add(ExceptionHelper.RetrieveExceptionsDataKey + "*");
             }
+
+            var section = CacheListSection.GetSection();
+            section.Items.Where(item => item.Enabled).AsParallel().ForAll(ele =>
+            {
+                System.Threading.Tasks.Task.Factory.StartNew(() =>
+                {
+                    try
+                    {
+                        var client = new WebClient();
+                        cacheKeys.ForEach(k => client.OpenReadAsync(new Uri(string.Format(ele.Url, k))));
+
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Collections.Specialized.NameValueCollection nv = new System.Collections.Specialized.NameValueCollection();
+                        nv["ErrorPage"] = ele.Url;
+                        nv["UserId"] = "system";
+                        nv["UserIp"] = "::1";
+                        ExceptionManager.Publish(ex, nv);
+                    }
+                });
+            });
         }
     }
 }
