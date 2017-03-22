@@ -1,7 +1,7 @@
-﻿(function($) {
+﻿(function ($) {
     // 增加Array扩展
     if (!$.isFunction(Array.prototype.filter)) {
-        Array.prototype.filter = function(callback, thisObject) {
+        Array.prototype.filter = function (callback, thisObject) {
             if ($.isFunction(callback)) {
                 var res = new Array();
                 for (var i = 0; i < this.length; i++) {
@@ -14,8 +14,8 @@
 
     // 增加String扩展
     if (!$.isFunction(String.prototype.trim)) {
-        String.prototype.trim = function() {
-            if (this == null) return "";
+        String.prototype.trim = function () {
+            if (this === null) return "";
             var trimLeft = /^\s+/, trimRight = /\s+$/;
             return this.replace(trimLeft, "").replace(trimRight, "");
         };
@@ -23,11 +23,11 @@
 
     // 扩展Date
     if (!$.isFunction(Date.prototype.format)) {
-        Date.prototype.format = function(format) {
+        Date.prototype.format = function (format) {
             var o = {
                 "M+": this.getMonth() + 1,
                 "d+": this.getDate(),
-                "h+": this.getHours() % 12 == 0 ? 12 : this.getHours() % 12,
+                "h+": this.getHours() % 12 === 0 ? 12 : this.getHours() % 12,
                 "H+": this.getHours(),
                 "m+": this.getMinutes(),
                 "s+": this.getSeconds(),
@@ -48,18 +48,18 @@
                 format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
 
             if (/(E+)/.test(format))
-                format = format.replace(RegExp.$1, ((RegExp.$1.length > 1) ? (RegExp.$1.length > 2 ? "星期" : "周") : "") + week[this.getDay()]);
+                format = format.replace(RegExp.$1, (RegExp.$1.length > 1 ? RegExp.$1.length > 2 ? "星期" : "周" : "") + week[this.getDay()]);
 
             for (var k in o)
                 if (new RegExp("(" + k + ")").test(format))
-                    format = format.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+                    format = format.replace(RegExp.$1, RegExp.$1.length === 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
             return format;
         };
     }
 
     // 扩展format
     $.extend({
-        "format": function(source, params) {
+        "format": function (source, params) {
             if (params === undefined) {
                 return source;
             }
@@ -69,8 +69,8 @@
             if (params.constructor !== Array) {
                 params = [params];
             }
-            $.each(params, function(i, n) {
-                source = source.replace(new RegExp("\\{" + i + "\\}", "g"), function() {
+            $.each(params, function (i, n) {
+                source = source.replace(new RegExp("\\{" + i + "\\}", "g"), function () {
                     return n;
                 });
             });
@@ -81,7 +81,7 @@
     // enhance window.console.log
     if (!window.console) {
         window.console = {
-            log: function() {
+            log: function () {
 
             }
         };
@@ -91,27 +91,27 @@
 
     // client
     jQuery.browser = {
-        versions: function() {
+        versions: function () {
             var u = navigator.userAgent;
             return {         //移动终端浏览器版本信息
                 trident: u.indexOf('Trident') > -1, //IE内核
                 presto: u.indexOf('Presto') > -1, //opera内核
                 webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
-                gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+                gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') === -1, //火狐内核
                 mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
                 ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
                 android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或uc浏览器
                 iPhone: u.indexOf('iPhone') > -1, //是否为iPhone或者QQHD浏览器
                 iPod: u.indexOf('iPod') > -1, //是否为iPod或者QQHD浏览器
                 iPad: u.indexOf('iPad') > -1, //是否iPad
-                webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部
+                webApp: u.indexOf('Safari') === -1 //是否web应该程序，没有头部与底部
             };
         }(),
         language: (navigator.browserLanguage || navigator.language).toLowerCase()
-    }
+    };
 
     $.extend({
-        bc: function(options, callback) {
+        bc: function (options, callback) {
             var data = $.extend({
                 remote: true,
                 Id: "",
@@ -125,7 +125,7 @@
                 callback: null
             }, options);
 
-            if (!data.url || data.url == "") {
+            if (!data.url || data.url === "") {
                 lgbSwal({ title: '参数错误', text: '未设置请求地址Url', type: 'error' });
                 return;
             }
@@ -136,10 +136,10 @@
                     data: data.data,
                     type: data.method,
                     async: true,
-                    success: function(result) {
+                    success: function (result) {
                         success(result);
                     },
-                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
                         if ($.isFunction(data.callback)) data.callback(false);
                     }
                 });
@@ -157,7 +157,7 @@
                 }
             }
         },
-        lgbSwal: function(options) {
+        lgbSwal: function (options) {
             if ($.isFunction(swal)) {
                 swal($.extend({ showConfirmButton: false, showCancelButton: false, timer: 800, title: '未设置', type: "success" }, options));
             }
@@ -205,59 +205,59 @@
     // Infos
     Infos = {
         url: '../api/Infos/'
-    }
+    };
 
     // Profiles
     Profiles = {
         url: '../api/Profiles/',
         title: '网站设置'
-    }
+    };
 
     // Messages
     Messages = {
         url: '../api/Messages/'
-    }
+    };
 
     // Tasks
     Tasks = {
         url: '../api/Tasks/'
-    }
+    };
 
     // Notifications
     Notifications = {
         url: '../api/Notifications/'
-    }
+    };
 
     $.fn.extend({
-        adjustDialog: function() {
+        adjustDialog: function () {
             var $modal_dialog = this;
             var m_top = Math.max(0, ($(window).height() - $modal_dialog.height()) / 2);
             $modal_dialog.css({ 'margin': m_top + 'px auto' });
             return this;
         },
-        autoCenter: function() {
+        autoCenter: function () {
             var that = this;
-            var getHeight = function() {
+            var getHeight = function () {
                 return ($(window).height() - $(that).outerHeight()) / 2 + $(document).scrollTop();
-            }
-            $(window).resize(function() {
+            };
+            $(window).resize(function () {
                 $(that).css({
                     marginTop: getHeight()
                 });
             });
             that.animate({ marginTop: "+=" + getHeight() });
         },
-        lgbTooltip: function(option) {
-            if (option == undefined) option = { container: 'body', delay: { "show": 500, "hide": 100 } };
-            else if (typeof option == "object") option = $.extend({ container: 'body', delay: { "show": 500, "hide": 100 } }, option);
+        lgbTooltip: function (option) {
+            if (option === undefined) option = { container: 'body', delay: { "show": 500, "hide": 100 } };
+            else if (typeof option === "object") option = $.extend({ container: 'body', delay: { "show": 500, "hide": 100 } }, option);
             $(this).tooltip(option);
-            if (option == 'destroy') $(this).removeAttr('data-original-title');
+            if (option === 'destroy') $(this).removeAttr('data-original-title');
             return this;
         },
-        autoValidate: function(rules, messages, handler) {
+        autoValidate: function (rules, messages, handler) {
             var parent = 'body';
             var $wrapper = $('#dialogNew');
-            if ($wrapper.length == 1) parent = '#dialogNew';
+            if ($wrapper.length === 1) parent = '#dialogNew';
             // validate
             var $this = $(this);
             if (messages && $.isArray(messages.button)) {
@@ -273,13 +273,13 @@
                 ignore: ".ignore",
                 rules: $.extend({}, rules),
                 messages: $.extend({}, messages),
-                highlight: function(element, errorClass, validClass) {
+                highlight: function (element, errorClass, validClass) {
                     $(element).parents('.form-group').addClass(errorClass).removeClass(validClass);
                 },
-                unhighlight: function(element, errorClass, validClass) {
+                unhighlight: function (element, errorClass, validClass) {
                     $(element).lgbTooltip('destroy').parents('.form-group').removeClass(errorClass).addClass(validClass);
                 },
-                errorPlacement: function(label, element) {
+                errorPlacement: function (label, element) {
                     var $ele = $(element);
                     if (!$ele.attr('data-original-title')) $ele.lgbTooltip({ container: parent });
                     $ele.attr('data-original-title', $(label).text());
@@ -288,14 +288,14 @@
                 }
             });
             if (handler && $.isArray(handler.button)) {
-                $.each(handler.button, function(index, btn) {
-                    $('#' + btn).on('click', function() {
+                $.each(handler.button, function (index, btn) {
+                    $('#' + btn).on('click', function () {
                         $(this).attr('data-valid', $this.valid());
                     });
                 });
             }
         },
-        smartTable: function(options) {
+        smartTable: function (options) {
             var settings = $.extend({
                 method: 'get',                      //请求方式（*）
                 toolbar: '#toolbar',                //工具按钮用哪个容器
@@ -319,30 +319,29 @@
                 uniqueId: "Id",                     //每一行的唯一标识，一般为主键列
                 showToggle: true,                   //是否显示详细视图和列表视图的切换按钮
                 cardView: false,                    //是否显示详细视图
-                detailView: false,                  //是否显示父子表
-                clickToSelect: false
+                detailView: false                   //是否显示父子表
             }, options);
             $(this).bootstrapTable(settings);
-            $('div.toolbar').on('click', 'a', function(e) {
+            $('div.toolbar').on('click', 'a', function (e) {
                 e.preventDefault();
                 var ctl = $('#' + $(this).attr('id').replace('tb_', 'btn_'));
                 ctl.trigger("click");
             }).insertBefore($('div.bootstrap-table > div.fixed-table-toolbar > div.bs-bars'));
             $(settings.toolbar).removeClass('hidden');
         },
-        lgbDropdown: function(options) {
+        lgbDropdown: function (options) {
             var $this = $(this);
-            var op = typeof options == 'object' && options;
+            var op = typeof options === 'object' && options;
             if (/val/.test(options)) {
-                if (arguments.length == 1)
+                if (arguments.length === 1)
                     return $this.first().children('a').val();
                 else {
-                    $this.first().children(':first').children(':first').text($this.find('[data-val="' + arguments[1] + '"]').text())
+                    $this.first().children(':first').children(':first').text($this.find('[data-val="' + arguments[1] + '"]').text());
                 }
             }
             else {
-                $this.each(function() {
-                    $(this).on('click', '.dropdown-menu a', { $parent: $(this) }, function(event) {
+                $this.each(function () {
+                    $(this).on('click', '.dropdown-menu a', { $parent: $(this) }, function (event) {
                         event.preventDefault();
                         var $op = $(this);
                         event.data.$parent.children('a').val($op.attr('data-val')).children(':first').text($op.text());
@@ -353,25 +352,25 @@
     });
 
     //fix bug
-    $.fn.modal.Constructor.prototype.adjustDialog = function() {
-        var modalIsOverflowing = this.$element[0].scrollHeight > document.documentElement.clientHeight
+    $.fn.modal.Constructor.prototype.adjustDialog = function () {
+        var modalIsOverflowing = this.$element[0].scrollHeight > document.documentElement.clientHeight;
 
         this.$element.css({
             paddingLeft: !this.bodyIsOverflowing && modalIsOverflowing ? this.scrollbarWidth : '',
             paddingRight: this.bodyIsOverflowing && !modalIsOverflowing ? this.scrollbarWidth : ''
-        })
+        });
 
         // added by Argo
         var $modal_dialog = $(this.$element[0]).find('.modal-dialog');
         $modal_dialog.adjustDialog();
-    }
+    };
 })(jQuery);
 
-$(function() {
+$(function () {
     // loading customer css
     $.bc({
         Id: 1, url: Dicts.url, data: { type: 'activeCss' }, swal: false,
-        callback: function(result) {
+        callback: function (result) {
             if (result.length > 0)
                 $('head').append($.format('<link href="../Content/{0}" rel="stylesheet" type="text/css" />', result[0].Code));
         }
