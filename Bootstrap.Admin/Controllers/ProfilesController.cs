@@ -9,7 +9,7 @@ using System.Web.Http;
 
 namespace Bootstrap.Admin.Controllers
 {
-    public class InfosController : ApiController
+    public class ProfilesController : ApiController
     {
         [HttpPost]
         public string Post()

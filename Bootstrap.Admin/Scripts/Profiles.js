@@ -2,7 +2,7 @@
     var $headerIcon = $('#headerIcon');
     var preIcon = $headerIcon.attr('src');
     $('#fileIcon').fileinput({
-        uploadUrl: Infos.url,
+        uploadUrl: Profiles.url,
         language: 'zh',
         maxFileSize: 5000,
         allowedFileExtensions: ['jpg', 'png', 'bmp', 'gif', 'jpeg'],
@@ -47,7 +47,7 @@
     });
 
     var bsa = new BootstrapAdmin({
-        url: '../api/Infos',
+        url: Profiles.url,
         bootstrapTable: null,
         dataEntity: new DataEntity({
             map: {

@@ -114,9 +114,9 @@ namespace Bootstrap.Admin.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        public ActionResult Infos()
+        public ActionResult Profiles()
         {
-            var v = new InfosModel("~/Admin/Infos");
+            var v = new ProfilesModel("~/Admin/Profiles");
             return View(v);
         }
         /// <summary>

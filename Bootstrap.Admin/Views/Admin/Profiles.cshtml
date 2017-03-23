@@ -1,4 +1,4 @@
-﻿@model InfosModel
+﻿@model ProfilesModel
 @{
     ViewBag.Title = "个人中心";
     Layout = "~/Views/Shared/_Admin.cshtml";
@@ -10,7 +10,7 @@
     <script src="~/Scripts/fileinput.zh.js"></script>
     <script src="~/Scripts/jquery.validate.js"></script>
     <script src="~/Scripts/messages_zh.js"></script>
-    <script src="~/scripts/Infos.js"></script>
+    <script src="~/scripts/Profiles.js"></script>
 }
 @section css {
     <link href="~/Content/sweetalert.css" rel="stylesheet" />
@@ -33,7 +33,7 @@
             </div>
         </form>
         <div class="modal-footer">
-            <button id="btnSaveDisplayName" class="btn btn-default" type="button" disabled data-admin="@LgbPrincipal.IsAdmin(User)"><i class="fa fa-save"></i><span>保存</span></button>
+            <button id="btnSaveDisplayName" class="btn btn-default" type="button" disabled data-admin="@LgbPrincipal.IsWebAdmin(User.Identity.Name)"><i class="fa fa-save"></i><span>保存</span></button>
         </div>
     </div>
 </div>
@@ -57,7 +57,7 @@
             </div>
         </form>
         <div class="modal-footer">
-            <button id="btnSavePassword" class="btn btn-default" type="button" disabled data-admin="@LgbPrincipal.IsAdmin(User)"><i class="fa fa-save"></i><span>保存</span></button>
+            <button id="btnSavePassword" class="btn btn-default" type="button" disabled data-admin="@LgbPrincipal.IsWebAdmin(User.Identity.Name)"><i class="fa fa-save"></i><span>保存</span></button>
         </div>
     </div>
 </div>

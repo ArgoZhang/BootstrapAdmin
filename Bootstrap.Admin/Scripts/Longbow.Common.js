@@ -202,9 +202,9 @@
         url: '../api/Dicts/'
     };
 
-    // Infos
-    Infos = {
-        url: '../api/Infos/'
+    // Profiles
+    Profiles = {
+        url: '../api/Profiles/'
     };
 
     // Settings

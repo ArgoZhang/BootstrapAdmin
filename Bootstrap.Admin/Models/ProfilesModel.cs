@@ -6,7 +6,7 @@ namespace Bootstrap.Admin.Models
     /// <summary>
     /// 
     /// </summary>
-    public class InfosModel : NavigatorBarModel
+    public class ProfilesModel : NavigatorBarModel
     {
         /// <summary>
         /// 获得/设置 头像文件大小
@@ -16,7 +16,7 @@ namespace Bootstrap.Admin.Models
         /// 
         /// </summary>
         /// <param name="url"></param>
-        public InfosModel(string url) : base(url)
+        public ProfilesModel(string url) : base(url)
         {
             var fileName = HttpContext.Current.Server.MapPath(Icon);
             if (File.Exists(fileName))

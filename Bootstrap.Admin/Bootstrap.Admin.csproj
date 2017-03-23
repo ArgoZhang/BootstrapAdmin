@@ -184,7 +184,7 @@
     <Content Include="Scripts\framework.js" />
     <Content Include="Scripts\Groups.js" />
     <Content Include="Scripts\icon.js" />
-    <Content Include="Scripts\Infos.js" />
+    <Content Include="Scripts\Profiles.js" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -255,7 +255,7 @@
     <Compile Include="Controllers\ExceptionsController.cs" />
     <Compile Include="Controllers\GroupsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\InfosController.cs" />
+    <Compile Include="Controllers\ProfilesController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\LogsController.cs" />
     <Compile Include="Controllers\MenusController.cs" />
@@ -268,7 +268,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\InfosModel.cs" />
+    <Compile Include="Models\ProfilesModel.cs" />
     <Compile Include="Models\LockModel.cs" />
     <Compile Include="Models\MessageCountModel.cs" />
     <Compile Include="Models\QueryDictOption.cs" />
@@ -316,7 +316,7 @@
     <Content Include="Views\Home\Lock.cshtml" />
     <Content Include="Views\Home\Register.cshtml" />
     <Content Include="Views\Admin\Notifications.cshtml" />
-    <Content Include="Views\Admin\Infos.cshtml" />
+    <Content Include="Views\Admin\Profiles.cshtml" />
     <Content Include="Views\Admin\Exceptions.cshtml" />
     <Content Include="Views\Admin\Messages.cshtml" />
     <Content Include="Views\Admin\Tasks.cshtml" />
