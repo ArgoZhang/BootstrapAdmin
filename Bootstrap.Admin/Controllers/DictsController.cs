@@ -73,7 +73,7 @@ namespace Bootstrap.Admin.Controllers
         [HttpDelete]
         public dynamic Delete([FromBody]string value)
         {
-            if (!LgbPrincipal.IsAdmin(User.Identity.Name) && !User.IsInRole("Administrators")) return new { result = false, msg = "当前用户权限不够" };
+            if (!LgbPrincipal.IsAdmin(User)) return new { result = false, msg = "当前用户权限不够" };
             var result = DictHelper.DeleteDict(value);
             return new { result = result, msg = result ? "成功！" : "失败" };
         }

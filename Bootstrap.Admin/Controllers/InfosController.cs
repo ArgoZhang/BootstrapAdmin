@@ -16,9 +16,9 @@ namespace Bootstrap.Admin.Controllers
         {
             var ret = string.Empty;
             var userName = User.Identity.Name;
-            if (LgbPrincipal.IsAdmin(userName)) userName = "default";
+            if (LgbPrincipal.IsWebAdmin(userName)) userName = "default";
             var files = HttpContext.Current.Request.Files;
-            if (files.Count > 0 && !LgbPrincipal.IsAdmin(userName))
+            if (files.Count > 0)
             {
                 var webSiteUrl = DictHelper.RetrieveIconFolderPath().Code;
                 var fileName = string.Format("{0}{1}", userName, Path.GetExtension(files[0].FileName));

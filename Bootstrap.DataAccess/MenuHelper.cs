@@ -24,7 +24,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<Menu> RetrieveMenus(string userName = null)
         {
-            userName = LgbPrincipal.IsAdmin(userName) ? string.Empty : userName;
+            userName = LgbPrincipal.IsWebAdmin(userName) ? string.Empty : userName;
             string key = string.Format("{0}-{1}", RetrieveMenusDataKey, userName);
             return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RetrieveMenusDataKey), k =>
             {

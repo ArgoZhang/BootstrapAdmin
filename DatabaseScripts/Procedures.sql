@@ -128,7 +128,7 @@ BEGIN
 	SET NOCOUNT ON;
 	SET XACT_ABORT ON;
     -- Insert statements for procedure here
-	if @userName = '' or @userName is null
+	if @userName = '' or @userName is null or exists(select ur.ID from Users u inner join UserRole ur on u.ID = ur.UserID inner join Roles r on ur.RoleID = r.ID where r.RoleName = 'administrators' and u.UserName = @userName)
 		select n.ID, n.ParentId, n.Name, n.[Order], n.Icon, n.Url, n.Category, n.Target, n.IsResource, n.[Application], d.Name as CategoryName, ln.Name as ParentName 
 		from Navigations n inner join Dicts d on n.Category = d.Code and d.Category = N'菜单' and d.Define = 0 
 		left join Navigations ln on n.ParentId = ln.ID

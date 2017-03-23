@@ -66,7 +66,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static User RetrieveUsersByName(string userName)
         {
-            if (LgbPrincipal.IsAdmin(userName)) return new User() { DisplayName = "网站管理员", UserName = userName, Icon = "~/Content/images/uploader/default.jpg" };
+            if (LgbPrincipal.IsWebAdmin(userName)) return new User() { DisplayName = "网站管理员", UserName = userName, Icon = "~/Content/images/uploader/default.jpg" };
             string key = string.Format("{0}-{1}", RetrieveUsersByNameDataKey, userName);
             return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RetrieveUsersByNameDataKey), k =>
             {

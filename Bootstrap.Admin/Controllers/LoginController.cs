@@ -34,7 +34,7 @@ namespace Bootstrap.Admin.Controllers
             dynamic user = value;
             string userName = user.userName;
             string password = user.password;
-            if (LgbPrincipal.IsAdmin(userName, password) || BootstrapUser.Authenticate(userName, password))
+            if (LgbPrincipal.Authenticate(userName, password) || BootstrapUser.Authenticate(userName, password))
             {
                 var interval = int.Parse(Math.Round(FormsAuthentication.Timeout.TotalSeconds).ToString());
                 var token = CacheManager.AddOrUpdate(string.Format("WebApi-{0}", userName), interval, k => new LoginInfo() { UserName = userName, Token = Guid.NewGuid().ToString() }, (k, info) => info, "WebApi 数据缓存");

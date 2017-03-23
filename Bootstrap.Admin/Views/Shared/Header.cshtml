@@ -4,7 +4,7 @@
         <i class="fa fa-bars"></i>
         <span id="websiteTitle">@Model.Title</span>
     </a>
-    @if (LgbPrincipal.IsAdmin(User.Identity.Name) || User.IsInRole("Administrators"))
+    @if (LgbPrincipal.IsAdmin(User))
     {
         <ul class="notify-row">
             <!-- tasks start -->

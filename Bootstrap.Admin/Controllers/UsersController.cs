@@ -37,8 +37,7 @@ namespace Bootstrap.Admin.Controllers
                 return UserHelper.RetrieveUsersByName(value.UserName) == null;
             }
             var ret = false;
-            var userName = User.Identity.Name;
-            if (value.UserName.Equals(userName, System.StringComparison.OrdinalIgnoreCase) || LgbPrincipal.IsAdmin(userName))
+            if (value.UserName.Equals(User.Identity.Name, System.StringComparison.OrdinalIgnoreCase) || LgbPrincipal.IsAdmin(User))
             {
                 if (value.UserStatus == 1)
                     ret = UserHelper.SaveUserInfoByName(value);
