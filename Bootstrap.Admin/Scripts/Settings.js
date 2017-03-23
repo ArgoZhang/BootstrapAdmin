@@ -18,7 +18,7 @@
     });
 
     var bsa = new BootstrapAdmin({
-        url: Profiles.url,
+        url: Settings.url,
         bootstrapTable: null,
         validateForm: null,
         modal: null,
@@ -34,7 +34,7 @@
                 click: function (row, data) {
                     if ($(this).attr('data-valid') == "true") {
                         $.bc({
-                            url: Profiles.url, data: { name: '网站标题', code: data.Title, category: Profiles.title }, title: Profiles.title,
+                            url: Settings.url, data: { name: '网站标题', code: data.Title, category: Settings.title }, title: Settings.title,
                             callback: function (result) {
                                 if (result) $('#websiteTitle').text(data.Title);
                             }
@@ -46,7 +46,7 @@
                 click: function (row, data) {
                     if ($(this).attr('data-valid') == "true") {
                         $.bc({
-                            url: Profiles.url, data: { name: '网站页脚', code: data.Footer, category: Profiles.title }, title: Profiles.title,
+                            url: Settings.url, data: { name: '网站页脚', code: data.Footer, category: Settings.title }, title: Settings.title,
                             callback: function (result) {
                                 if (result) $('#websiteFooter').text(data.Footer);
                             }
@@ -59,7 +59,7 @@
                     var cssDefine = $('#dictCssDefine').val();
                     if (cssDefine) {
                         $.bc({
-                            url: Profiles.url, data: { name: '使用样式', code: cssDefine, category: '当前样式' }, title: '网站样式',
+                            url: Settings.url, data: { name: '使用样式', code: cssDefine, category: '当前样式' }, title: '网站样式',
                             callback: function (result) {
                                 if (result) {
                                     window.setTimeout(function () { window.location.reload(true); }, 1000);
@@ -77,7 +77,7 @@
         options = $.extend({ clear: false }, options);
         $sortable.html('');
         $.bc({
-            url: Profiles.url,
+            url: Settings.url,
             method: 'GET',
             swal: false,
             callback: function (result) {

@@ -114,7 +114,7 @@ namespace Bootstrap.DataAccess
         /// <param name="code"></param>
         /// <param name="category"></param>
         /// <returns></returns>
-        public static bool SaveProfiles(string name, string code, string category)
+        public static bool SaveSettings(string name, string code, string category)
         {
             var ret = false;
             string sql = "Update Dicts set Code = @Code where Category = @Category and Name = @Name";

@@ -10,7 +10,7 @@ namespace Bootstrap.Admin.Controllers
     /// <summary>
     /// 
     /// </summary>
-    public class ProfilesController : ApiController
+    public class SettingsController : ApiController
     {
         /// <summary>
         /// 
@@ -22,7 +22,7 @@ namespace Bootstrap.Admin.Controllers
         {
             //保存个性化设置
             dynamic json = value;
-            return DictHelper.SaveProfiles((string)json.name, (string)json.code, (string)json.category);
+            return DictHelper.SaveSettings((string)json.name, (string)json.code, (string)json.category);
         }
         /// <summary>
         /// 

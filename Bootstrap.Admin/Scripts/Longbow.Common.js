@@ -207,9 +207,9 @@
         url: '../api/Infos/'
     };
 
-    // Profiles
-    Profiles = {
-        url: '../api/Profiles/',
+    // Settings
+    Settings = {
+        url: '../api/Settings/',
         title: '网站设置'
     };
 

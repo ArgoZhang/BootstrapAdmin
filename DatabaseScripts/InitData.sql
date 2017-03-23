@@ -34,7 +34,7 @@ SET IDENTITY_INSERT [dbo].[Navigations] ON
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (1, 0, N'后台管理', 10, N'fa fa-gear', N'~/Admin/Index', N'0')
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (2, 0, N'个人中心', 20, N'fa fa-suitcase', N'~/Admin/Infos', N'0')
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (3, 0, N'返回前台', 30, N'fa fa-hand-o-left', N'~/Home/Index', N'0')
-INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (4, 0, N'网站设置', 40, N'fa fa-fa', N'~/Admin/Profiles', N'0')
+INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (4, 0, N'网站设置', 40, N'fa fa-fa', N'~/Admin/Settings', N'0')
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (5, 0, N'菜单管理', 50, N'fa fa-dashboard', N'~/Admin/Menus', N'0')
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (6, 0, N'用户管理', 60, N'fa fa-user', N'~/Admin/Users', N'0')
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (7, 0, N'角色管理', 70, N'fa fa-sitemap', N'~/Admin/Roles', N'0')

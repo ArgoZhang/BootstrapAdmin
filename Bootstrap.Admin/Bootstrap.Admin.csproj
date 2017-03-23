@@ -223,7 +223,7 @@
     <Content Include="Scripts\messages_zh.min.js" />
     <Content Include="Scripts\noti.js" />
     <Content Include="Scripts\nprogress.js" />
-    <Content Include="Scripts\Profiles.js" />
+    <Content Include="Scripts\Settings.js" />
     <Content Include="Scripts\register.js" />
     <Content Include="Scripts\Roles.js" />
     <Content Include="Scripts\sweetalert.js" />
@@ -261,7 +261,7 @@
     <Compile Include="Controllers\MenusController.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
     <Compile Include="Controllers\NotificationsController.cs" />
-    <Compile Include="Controllers\ProfilesController.cs" />
+    <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\TasksController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -308,7 +308,7 @@
     <Content Include="Views\Shared\UserConfig.cshtml" />
     <Content Include="Views\Shared\GroupConfig.cshtml" />
     <Content Include="Views\Admin\Logs.cshtml" />
-    <Content Include="Views\Admin\Profiles.cshtml" />
+    <Content Include="Views\Admin\Settings.cshtml" />
     <Content Include="Views\Shared\Footer.cshtml" />
     <Content Include="Views\Shared\MenuTree.cshtml" />
     <Content Include="Views\Shared\NavigatorConfig.cshtml" />

@@ -94,9 +94,9 @@ namespace Bootstrap.Admin.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        public ActionResult Profiles()
+        public ActionResult Settings()
         {
-            var v = new NavigatorBarModel("~/Admin/Profiles");
+            var v = new NavigatorBarModel("~/Admin/Settings");
             return View(v);
         }
 
