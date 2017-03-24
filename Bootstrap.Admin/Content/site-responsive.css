@@ -28,6 +28,10 @@
         top: 94px;
         overflow: auto;
     }
+
+    .form-horizontal .control-label {
+        text-align: left;
+    }
 }
 
 @media (min-height: 672px) {

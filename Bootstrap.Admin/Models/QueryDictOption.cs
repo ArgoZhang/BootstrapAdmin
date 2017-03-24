@@ -48,6 +48,9 @@ namespace Bootstrap.Admin.Models
                 case "Name":
                     data = Order == "asc" ? data.OrderBy(t => t.Name) : data.OrderByDescending(t => t.Name);
                     break;
+                case "Code":
+                    data = Order == "asc" ? data.OrderBy(t => t.Code) : data.OrderByDescending(t => t.Code);
+                    break;
                 case "Define":
                     data = Order == "asc" ? data.OrderBy(t => t.Define) : data.OrderByDescending(t => t.Define);
                     break;

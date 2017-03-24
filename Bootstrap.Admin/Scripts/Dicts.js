@@ -17,12 +17,13 @@
         url: Dicts.url,
         sortName: 'Category',
         queryParams: function (params) { return $.extend(params, { category: $('#txt_dict_cate').val(), name: $("#txt_dict_name").val(), define: $("#txt_dict_define").val() }); },
-        columns: [{ checkbox: true },
+        columns: [
+            { checkbox: true },
             { title: "Id", field: "ID", events: bsa.idEvents(), formatter: BootstrapAdmin.idFormatter },
-            { title: "字典分项", field: "Category", sortable: true },
-            { title: "字典名称", field: "Name", sortable: false },
-            { title: "字典代码", field: "Code", sortable: false },
-            { title: "字典类别", field: "Define", sortable: true, formatter: function (value, row, index) { return value == "0" ? "系统使用" : "自定义"; } }
+            { title: "字典标签", field: "Category", sortable: true },
+            { title: "字典名称", field: "Name", sortable: true },
+            { title: "字典代码", field: "Code", sortable: true },
+            { title: "字典分类", field: "Define", sortable: true, formatter: function (value, row, index) { return value == "0" ? "系统使用" : "自定义"; } }
         ]
     });
 
