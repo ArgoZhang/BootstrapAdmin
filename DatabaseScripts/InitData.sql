@@ -3,6 +3,7 @@ GO
 
 DELETE From Users where ID = 1
 SET IDENTITY_INSERT [dbo].[Users] ON 
+-- ADMIN/123789
 insert into Users (ID, UserName, Password, PassSalt, DisplayName, RegisterTime, ApprovedTime,ApprovedBy, [Description]) values (1, 'Admin', 'Es7WVgNsJuELwWK8daCqufUBknCsSC0IYDphQZAiGOo=', 'W5vpBEOYRGHkQXatN0t+ECM/U8cHDuEgrq56+zZBk4J481xH', 'Administrator', GetDate(), GetDate(), 'system', N'系统默认创建')
 SET IDENTITY_INSERT [dbo].[Users] OFF
 
