@@ -1,31 +1,27 @@
-@media (min-width: 375px) {
-    .sidebar-toggle-box span {
-        display: inline-block;
-    }
-}
-
 @media (min-width: 568px) {
     .notify-row {
         display: inline-block;
     }
 }
 
+@media (min-width: 736px) {
+    .sidebar-toggle-box span {
+        display: unset;
+    }
+}
+
 @media (min-width: 768px) {
-    .header {
+    html, body {
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .header, .site-footer {
         position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 50;
     }
 
     .main-content {
-        margin-top: 0;
         position: fixed;
-        left: 0;
-        bottom: 40px;
-        right: 0;
-        top: 94px;
         overflow: auto;
     }
 
@@ -40,21 +36,12 @@
         overflow: hidden;
     }
 
-    .header {
+    .header, .site-footer {
         position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 50;
     }
 
     .main-content {
-        margin-top: 0;
         position: fixed;
-        left: 0;
-        bottom: 40px;
-        right: 0;
-        top: 94px;
         overflow: auto;
     }
 }

@@ -30,6 +30,10 @@
     font-weight: 600;
 }
 
+.hidden-tb, .hidden-375 {
+    display: none;
+}
+
 .clearcache {
     position: absolute;
     right: 60px;
@@ -61,10 +65,6 @@
         vertical-align: middle;
     }
 
-.form-group .form-control-url {
-    width: 83%;
-}
-
 .modal-dialog .modal-body, .panel-body {
     padding-bottom: 0;
 }
@@ -81,6 +81,11 @@
     margin-left: 4px;
 }
 
+.modal.in .modal-dialog {
+    padding: 0 15px;
+    max-width: 1000px;
+}
+
 .modal-header {
     background-color: #f5f5f5;
     border-top-left-radius: 6px;
@@ -91,6 +96,13 @@
     .modal-header .close {
         margin-top: 1px;
     }
+
+.modal-body .checkbox {
+    min-width: 190px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
 
 .modal-footer {
     clear: both;
@@ -123,9 +135,21 @@
 
 .main-content {
     padding: 15px 15px 0 15px;
-    margin-left: 210px;
+    margin-left: 0;
     height: auto;
+    left: 0;
+    bottom: 40px;
+    right: 0;
+    top: 94px;
 }
+
+    .main-content.open {
+        display: none;
+    }
+
+    .main-content.closed {
+        margin-left: 0;
+    }
 
     .main-content > .panel:last-child .panel-body {
         padding-bottom: 0;
@@ -135,14 +159,17 @@
         text-align: left;
     }
 
-    .main-content.closed {
-        margin-left: 0;
-    }
-
 .sidebar {
-    width: 210px;
+    display: none;
+    overflow-y: auto;
+    width: 100%;
+    z-index: 5;
     background: #2a3542;
 }
+
+    .sidebar ul li a {
+        padding-right: 25px;
+    }
 
     .sidebar .sub-menu > .sub li {
         padding-left: 32px;
@@ -266,12 +293,15 @@ ul.sidebar-menu {
         margin-top: 16px;
     }
 
+.bs-bars {
+    display: none;
+}
+
 .toolbar {
     position: relative;
     margin-top: 10px;
     margin-bottom: 10px;
     line-height: 34px;
-    display: none;
 }
 
     .toolbar .dropdown-menu {
@@ -280,14 +310,18 @@ ul.sidebar-menu {
     }
 
         .toolbar .dropdown-menu a {
-            padding: 0 20px;
-            border-left: solid 1px #aeb2b7;
+            border-left: none;
+            padding: 0 8px;
             display: table-cell;
             color: #504d4d;
         }
 
             .toolbar .dropdown-menu a:first-child {
-                border-left: none;
+                padding-left: 16px;
+            }
+
+            .toolbar .dropdown-menu a:last-child {
+                padding-right: 16px;
             }
 
             .toolbar .dropdown-menu a:hover {

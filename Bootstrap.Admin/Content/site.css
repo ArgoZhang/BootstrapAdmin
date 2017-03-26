@@ -35,6 +35,10 @@ a, a:hover, a:focus {
     height: 94px;
     background: #fff;
     border-bottom: 1px solid #f1f2f7;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
 }
 
     .header a {
@@ -157,7 +161,6 @@ a, a:hover, a:focus {
     color: #fff;
     padding: 10px 4px;
     height: 40px;
-    position: fixed;
     left: 0;
     bottom: 0;
     right: 0;
