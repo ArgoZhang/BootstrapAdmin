@@ -1,69 +1,66 @@
-﻿body {
-    color: #797979;
-    background: #f1f2f7;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 13px;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-font-smoothing: antialiased;
-}
-
-/*Login*/
-.form-signin {
+﻿.form-signin {
     margin: 0 auto;
     background: #fff;
     border-radius: 5px;
-    -webkit-border-radius: 5px;
     border: solid 1px #ddd;
 }
 
-    .form-signin h2.form-signin-heading {
+    .form-signin .form-signin-heading {
         margin: 0;
-        padding: 20px 15px;
+        padding: 15px;
         text-align: center;
         background: #41cac0;
         border-radius: 5px 5px 0 0;
-        -webkit-border-radius: 5px 5px 0 0;
         color: #fff;
-        font-size: 18px;
+        font-size: 34px;
         text-transform: uppercase;
         font-weight: 300;
-        font-family: 'Open Sans', sans-serif;
     }
 
-    .form-signin div.login-wrap {
+    .form-signin .login-wrap {
         padding: 20px;
     }
 
-        .form-signin div.login-wrap .login-footer {
+        .form-signin .login-wrap .login-footer {
             padding-bottom: 15px;
         }
 
-            .form-signin div.login-wrap .login-footer .login-create {
+            .form-signin .login-wrap .login-footer .login-create {
                 float: left;
             }
 
-            .form-signin div.login-wrap .login-footer .login-reset {
+            .form-signin .login-wrap .login-footer .login-reset {
                 float: right;
             }
 
-    .form-signin div.input-group {
+    .form-signin .input-group {
         margin-bottom: 15px;
         border-radius: 5px;
-        -webkit-border-radius: 5px;
-        border: 1px solid #eaeaea;
+        border: 1px solid #089dc9;
         box-shadow: none;
         font-size: 12px;
     }
 
-        .form-signin div.input-group > span {
+        .form-signin .input-group > span {
             top: 0;
             background-color: #5bc0de;
         }
 
-        .form-signin div.input-group > span, div.input-group > input {
-            border-color: #5bc0de;
+        .form-signin .form-control, .form-signin .input-group span {
+            border: none;
         }
+
+    .form-signin .has-success .input-group {
+        border: solid 1px #3c763d;
+    }
+
+    .form-signin .has-error .input-group {
+        border: solid 1px #a94442;
+    }
+
+    .form-signin .form-control, .form-signin .form-control:focus {
+        box-shadow: none;
+    }
 
     .form-signin .btn-login {
         background: #f67a6e;
@@ -86,12 +83,5 @@
 
         .form-signin .checkbox > label {
             padding-left: 4px;
+            color: #333;
         }
-
-/*end login*/
-
-@media (min-width: 375px) {
-    .form-signin {
-        width: 320px;
-    }
-}

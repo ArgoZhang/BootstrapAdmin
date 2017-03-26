@@ -114,6 +114,9 @@
     <Content Include="Content\fileinput.css" />
     <Content Include="Content\fileinput.min.css" />
     <Content Include="Content\IE8.css" />
+    <Content Include="Content\images\bg2.jpg" />
+    <Content Include="Content\images\bg3.png" />
+    <Content Include="Content\login-responsive.css" />
     <Content Include="Content\nprogress.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
@@ -147,7 +150,6 @@
     <Content Include="Content\images\uploader\default.jpg" />
     <Content Include="Content\images\uploader\readme.txt" />
     <Content Include="Content\site-responsive.css" />
-    <Content Include="Content\images\avatar1_small.jpg" />
     <Content Include="Content\images\error.png" />
     <Content Include="Content\images\nav-expand.png" />
     <Content Include="Content\site.css" />

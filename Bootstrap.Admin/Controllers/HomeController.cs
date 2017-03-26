@@ -45,27 +45,15 @@ namespace Bootstrap.Admin.Controllers
         /// <param name="remember"></param>
         /// <returns></returns>
         [AllowAnonymous]
-        public ActionResult Login(string userName, string password, string remember)
-        {
-            var model = new LoginModel();
-            if (string.IsNullOrEmpty(userName)) return View(model);
-            model.UserName = userName;
-            if (LgbPrincipal.Authenticate(userName, password) || BootstrapUser.Authenticate(userName, password))
-            {
-                FormsAuthentication.RedirectFromLoginPage(userName, remember == "true");
-                return new EmptyResult();
-            }
-            return View(model);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        [AllowAnonymous]
-        public ActionResult Logout()
+        public ActionResult Login(LoginModel login)
         {
             FormsAuthentication.SignOut();
-            return Redirect(FormsAuthentication.LoginUrl);
+            if (!string.IsNullOrEmpty(login.UserName) && (LgbPrincipal.Authenticate(login.UserName, login.Password) || BootstrapUser.Authenticate(login.UserName, login.Password)))
+            {
+                FormsAuthentication.RedirectFromLoginPage(login.UserName, login.Remember == "true");
+                return new EmptyResult();
+            }
+            return View(login);
         }
         /// <summary>
         /// 
