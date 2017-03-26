@@ -115,6 +115,7 @@
     <Content Include="Content\fileinput.min.css" />
     <Content Include="Content\IE8.css" />
     <Content Include="Content\images\bg2.jpg" />
+    <Content Include="Content\images\bg4.jpg" />
     <Content Include="Content\images\bg3.png" />
     <Content Include="Content\login-responsive.css" />
     <Content Include="Content\nprogress.css" />
