@@ -80,7 +80,8 @@
         url: Menu.url,            //请求后台的URL（*）
         sortName: 'Order',
         queryParams: function (params) { return $.extend(params, { parentName: $('#txt_parent_menus_name').val(), name: $("#txt_menus_name").val(), category: $('#sel_menus_category').val(), isresource: $('#sel_menus_res').val() }); },           //传递参数（*）
-        columns: [{ checkbox: true },
+        columns: [
+            { checkbox: true },
             { title: "Id", field: "ID", events: bsa.idEvents(), formatter: BootstrapAdmin.idFormatter },
             { title: "父级菜单", field: "ParentName", sortable: true },
             { title: "菜单名称", field: "Name", sortable: true },
@@ -121,7 +122,8 @@
                 title: "菜单类型", field: "IsResource", sortable: true, formatter: function (value, row, index) {
                     return value == 0 ? "菜单" : "资源";
                 }
-            }, {
+            },
+            {
                 title: "所属应用", field: "ApplicationCode", sortable: true, formatter: function (value, row, index) {
                     return $('#app').next().find('[data-val="' + value + '"]:first').text();
                 }
@@ -148,11 +150,13 @@
     });
 
     $btnPickIcon.on('click', function () {
+        $dialogNew.hide();
         $dialogIcon.show();
     });
 
     $dialogIcon.find('div.modal-header, div.modal-footer').on('click', 'button', function () {
         $dialogIcon.hide();
+        $dialogNew.show();
     });
 
     $dialogIcon.find('div.modal-footer').on('click', 'button:last', function () {
@@ -249,6 +253,12 @@
                 $iconList.find('ul li').addClass('col-md-3 col-sm-4 col-xs-6');
                 $iconList.find('div').addClass('col-xs-6');
             }
+        }
+    });
+
+    $(window).on('resize.bs.modal', function () {
+        if ($dialogMenu.is(':visible')) {
+            $dialogMenu.adjustDialog();
         }
     });
 });

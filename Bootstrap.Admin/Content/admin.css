@@ -81,9 +81,13 @@
     margin-left: 4px;
 }
 
-.modal.in .modal-dialog {
+.modal .modal-dialog {
     padding: 0 15px;
     max-width: 1000px;
+}
+
+.modal.file-zoom-dialog .modal-dialog {
+    max-width: none;
 }
 
 .modal-header {

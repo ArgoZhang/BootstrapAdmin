@@ -69,17 +69,6 @@
     }
 }
 
-@media (min-height: 568px) {
-    .modal-body {
-        max-height: 480px;
-        overflow-y: auto;
-    }
-
-    .file-zoom-dialog .modal-body {
-        max-height: none;
-    }
-}
-
 @media (min-height: 672px) {
     .sidebar {
         top: 94px;
@@ -104,26 +93,5 @@
 
     .aside.open {
         transform: translate(0);
-    }
-}
-
-@media (max-height: 568px) {
-    .modal-body {
-        height: 300px;
-        overflow-y: auto;
-    }
-}
-
-@media (max-height: 414px) {
-    .modal-body {
-        height: 190px;
-        overflow-y: auto;
-    }
-}
-
-@media (max-height: 320px) {
-    .modal-body {
-        height: 150px;
-        overflow-y: auto;
     }
 }

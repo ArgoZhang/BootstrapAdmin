@@ -58,35 +58,6 @@
                     padding-left: 10px;
                 }
 
-@media (min-width: 768px) {
-    .fa-nav {
-        display: block;
-        position: fixed;
-        top: 130px;
-        right: 32px;
-        width: 140px;
-        bottom: 70px;
-    }
-
-    .fa-icons {
-        margin-right: 160px;
-    }
-}
-
-@media (max-width: 360px) {
-    .icon-content .modal-footer span {
-        display: none;
-    }
-}
-
-@media (max-height: 768px) {
-    .menu-content {
-        top: 20px;
-        position: fixed;
-        width: inherit;
-    }
-}
-
 .form-group .input-group .input-group-btn .btn i {
     color: #187c9a;
     width: 22px;
@@ -232,15 +203,66 @@
 
 .menu-content {
     display: none;
+    position: fixed;
     z-index: 1051;
+    top: 0;
+    left: 10px;
+    right: 10px;
 }
 
     .menu-content .modal-body {
         overflow-y: auto;
-        max-height: 400px;
+        max-height: 190px;
         padding-bottom: 15px;
     }
 
     .menu-content .dd {
         max-width: inherit;
     }
+
+.icon-content .modal-footer span {
+    display: none;
+}
+
+@media (min-width: 375px) {
+    .icon-content .modal-footer span {
+        display: inline-block;
+    }
+}
+
+@media (min-width: 768px) {
+    .fa-nav {
+        display: block;
+        position: fixed;
+        top: 130px;
+        right: 32px;
+        width: 140px;
+        bottom: 70px;
+    }
+
+    .fa-icons {
+        margin-right: 160px;
+    }
+
+    .menu-content {
+        max-width: 750px;
+    }
+}
+
+@media (min-height: 375px) {
+    .menu-content .modal-body {
+        max-height: 240px;
+    }
+}
+
+@media (min-height: 414px) {
+    .menu-content .modal-body {
+        max-height: 280px;
+    }
+}
+
+@media (min-height: 768px) {
+    .menu-content .modal-body {
+        max-height: 530px;
+    }
+}
