@@ -77,11 +77,13 @@ $(function () {
 
     $('.sidebar-toggle-box').on('click', function () {
         if ($sidebar.is(":visible") === true) {
-            $sidebar.hide();
             $main.addClass('closed').removeClass('open');
+            $sidebar.parent().toggleClass('open')
+            $(window).width() <= 768 ? setTimeout(function () { $sidebar.hide() }, 400) : $sidebar.hide();
         } else {
-            $sidebar.show();
-            $main.addClass('open').removeClass('closed');
+            $sidebar.show()
+            $sidebar.parent().toggleClass('open')
+            $(window).width() <= 768 ? setTimeout(function () { $main.addClass('open').removeClass('closed') }, 400) : $main.addClass('open').removeClass('closed');
         }
     });
 

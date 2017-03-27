@@ -39,9 +39,4 @@
     .header, .site-footer {
         position: fixed;
     }
-
-    .main-content {
-        position: fixed;
-        overflow: auto;
-    }
 }

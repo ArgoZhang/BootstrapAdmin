@@ -48,11 +48,19 @@
 
     .main-content {
         margin-left: 210px;
+        transition: none;
     }
 
         .main-content.open {
             display: unset;
         }
+
+    aside {
+        transition: none;
+        transform: none;
+        top: 0;
+        right: auto;
+    }
 }
 
 @media (min-width: 940px) {
@@ -78,6 +86,24 @@
         bottom: 40px;
         position: absolute;
         overflow-y: auto;
+    }
+
+    .main-content {
+        position: fixed;
+        overflow: auto;
+        transition: none;
+    }
+
+        .main-content.open {
+            display: block;
+        }
+
+    aside {
+        top: 0;
+    }
+
+    .aside.open {
+        transform: translate(0);
     }
 }
 
