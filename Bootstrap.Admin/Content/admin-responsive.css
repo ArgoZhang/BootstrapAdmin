@@ -32,7 +32,7 @@
     }
 
     .modal-dialog {
-        width: unset;
+        width: 700px;
     }
 
     .form-group .form-control-url {
@@ -66,6 +66,10 @@
 @media (min-width: 940px) {
     .hidden-tb {
         display: unset;
+    }
+
+    .modal-dialog {
+        width: 900px;
     }
 }
 
