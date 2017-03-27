@@ -42,6 +42,7 @@ namespace Bootstrap.DataAccess
                     cacheKeys.Add(MenuHelper.RetrieveMenusDataKey);
                 });
                 cacheKeys.Add(UserHelper.RetrieveNewUsersDataKey + "*");
+                cacheKeys.Add(UserHelper.RetrieveUsersDataKey + "*");
             }
             if (groupIds != null)
             {
@@ -86,7 +87,7 @@ namespace Bootstrap.DataAccess
                     try
                     {
                         var client = new WebClient();
-                        cacheKeys.ForEach(k => client.OpenReadAsync(new Uri(string.Format(ele.Url, k))));
+                        cacheKeys.ForEach(k => client.OpenRead(new Uri(string.Format(ele.Url, k))));
 
                     }
                     catch (Exception ex)
