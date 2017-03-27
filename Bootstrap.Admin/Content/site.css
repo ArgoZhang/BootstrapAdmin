@@ -5,7 +5,6 @@
     font-size: 13px;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
-    -moz-font-smoothing: antialiased;
     -webkit-overflow-scrolling: touch;
 }
 
@@ -20,10 +19,6 @@ a, a:hover, a:focus {
 
 .dropdown-menu {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.176);
-}
-
-.well-bg {
-    color: #fff;
 }
 
 .card-view:not(:last-child) {

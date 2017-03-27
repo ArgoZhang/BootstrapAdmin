@@ -232,7 +232,6 @@
     <Content Include="packages.config" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
-    <Content Include="Scripts\well.js" />
     <Content Include="Views\Shared\Readme.txt" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
