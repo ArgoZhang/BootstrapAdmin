@@ -200,6 +200,9 @@
             margin-right: 10px;
         }
 
+.modal .menu-content {
+    position: unset;
+}
 
 .menu-content {
     display: none;
@@ -212,7 +215,7 @@
 
     .menu-content .modal-body {
         overflow-y: auto;
-        max-height: 190px;
+        max-height: 180px;
         padding-bottom: 15px;
     }
 
@@ -261,8 +264,26 @@
     }
 }
 
-@media (min-height: 768px) {
+@media (min-height: 568px) {
+    .menu-content .modal-body {
+        max-height: 430px;
+    }
+}
+
+@media (min-height: 667px) {
     .menu-content .modal-body {
         max-height: 530px;
+    }
+}
+
+@media (min-height: 736px) {
+    .menu-content .modal-body {
+        max-height: 600px;
+    }
+}
+
+@media (min-height: 768px) {
+    .menu-content .modal-body {
+        max-height: 630px;
     }
 }
