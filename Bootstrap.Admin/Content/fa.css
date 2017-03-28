@@ -200,17 +200,9 @@
             margin-right: 10px;
         }
 
-.modal .menu-content {
-    position: unset;
-}
-
 .menu-content {
     display: none;
-    position: fixed;
     z-index: 1051;
-    top: 0;
-    left: 10px;
-    right: 10px;
 }
 
     .menu-content .modal-body {
@@ -245,10 +237,6 @@
 
     .fa-icons {
         margin-right: 160px;
-    }
-
-    .menu-content {
-        max-width: 750px;
     }
 }
 

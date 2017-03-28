@@ -1,6 +1,6 @@
 ﻿@media (min-width: 375px) {
     .hidden-375 {
-        display: unset;
+        display: inline-block;
     }
 
     .toolbar .dropdown-menu a {
@@ -31,10 +31,6 @@
         overflow-y: auto;
     }
 
-    .modal-dialog {
-        width: 700px;
-    }
-
     .form-group .form-control-url {
         width: 85%;
     }
@@ -42,7 +38,7 @@
 
 @media (min-width: 769px) {
     .sidebar {
-        display: unset;
+        display: block;
         width: 210px;
     }
 
@@ -52,7 +48,7 @@
     }
 
         .main-content.open {
-            display: unset;
+            display: block;
         }
 
     aside {
@@ -65,7 +61,7 @@
 
 @media (min-width: 940px) {
     .hidden-tb {
-        display: unset;
+        display: inline;
     }
 
     .modal-dialog {

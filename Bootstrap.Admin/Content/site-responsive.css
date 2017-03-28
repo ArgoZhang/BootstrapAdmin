@@ -6,7 +6,7 @@
 
 @media (min-width: 736px) {
     .sidebar-toggle-box span {
-        display: unset;
+        display: inline;
     }
 }
 

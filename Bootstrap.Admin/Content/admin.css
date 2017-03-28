@@ -69,7 +69,7 @@
     padding-bottom: 0;
 }
 
-    .modal-dialog .modal-body .form-inline .form-group input {
+    .modal-dialog .modal-body .form-inline .form-group input[type="text"], .modal-dialog .modal-body .form-inline .form-group input[type="password"] {
         padding-right: 30px;
     }
 
