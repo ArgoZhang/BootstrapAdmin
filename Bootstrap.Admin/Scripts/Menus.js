@@ -132,7 +132,18 @@
     });
 
     // validate
-    $('#dataForm').autoValidate({
+    $('#dataForm').on('click', '[data-method]', function () {
+        var $this = $(this);
+        var $input = $this.parent().prev();
+        switch ($this.attr('data-method')) {
+            case 'clear':
+                $input.val("");
+                break;
+            case 'sel':
+                $input.select();
+                break;
+        }
+    }).autoValidate({
         name: {
             required: true,
             maxlength: 50
@@ -200,10 +211,6 @@
         $nestMenu.find('li span').removeClass('active');
         $dialogMenu.hide();
         $dialogNew.show();
-    });
-
-    $('#btnClearIcon, #btnMenuClearParent').on('click', function () {
-        $(this).parent().prev().val("");
     });
 
     $btnSubmitMenu.on('click', function () {

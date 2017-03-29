@@ -32,7 +32,7 @@
     }
 
     .form-group .form-control-url {
-        width: 85%;
+        width: 442px;
     }
 }
 
@@ -66,6 +66,10 @@
 
     .modal-dialog {
         width: 900px;
+    }
+
+    .form-group .form-control-url {
+        width: 742px;
     }
 }
 

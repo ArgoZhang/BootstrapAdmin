@@ -15,12 +15,12 @@
     <form class="form-inline" role="form">
         <div class="row">
             <div class="form-group col-sm-6 col-md-3">
-                <label class="control-label" for="txt_parent_menus_name">父级菜单</label>
-                <input type="text" class="form-control" id="txt_parent_menus_name" />
-            </div>
-            <div class="form-group col-sm-6 col-md-3">
                 <label class="control-label" for="txt_menus_name">菜单名称</label>
                 <input type="text" class="form-control" id="txt_menus_name" />
+            </div>
+            <div class="form-group col-sm-6 col-md-3">
+                <label class="control-label" for="txt_parent_menus_name">父级菜单</label>
+                <input type="text" class="form-control" id="txt_parent_menus_name" />
             </div>
             <div class="form-group col-sm-6 col-md-2">
                 <label class="control-label" for="sel_menus_category">菜单类别</label>
@@ -79,23 +79,24 @@
         <form class="form-inline" id="dataForm" name="dataForm" role="form">
             <div class="row">
                 <div class="form-group col-sm-6">
+                    <input type="text" class="form-control hidden" id="menuID" name="menuID" />
+                    <label class="control-label" for="name">菜单名称</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="name" name="name" placeholder="不可为空" maxlength="50" />
+                        <span class="input-group-btn">
+                            <button data-method="clear" class="btn btn-default" type="button"><i class="fa fa-remove"></i></button>
+                            <button data-method="sel" class="btn btn-default" type="button"><i class="fa fa-edit"></i>全选</button>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group col-sm-6">
                     <input type="text" class="form-control hidden" id="parentId" name="parentId" />
                     <label class="control-label" for="parentName">父级菜单</label>
                     <div class="input-group">
                         <input type="text" class="form-control" readonly id="parentName" name="parentName" placeholder="请选择...(可为空)" maxlength="50" />
                         <span class="input-group-btn">
-                            <button id="btnMenuClearParent" class="btn btn-default" type="button"><i class="fa fa-remove"></i></button>
+                            <button data-method="clear" class="btn btn-default" type="button"><i class="fa fa-remove"></i></button>
                             <button id="btnMenuParent" class="btn btn-default" type="button"><i class="fa fa-hand-o-up"></i>选择</button>
-                        </span>
-                    </div>
-                </div>
-                <div class="form-group col-sm-6">
-                    <label class="control-label" for="icon">菜单图标</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control" readonly id="icon" name="icon" placeholder="请选择...(可为空)" maxlength="50" />
-                        <span class="input-group-btn">
-                            <button id="btnClearIcon" class="btn btn-default" type="button"><i class="fa fa-remove"></i></button>
-                            <button id="btnIcon" class="btn btn-default" type="button"><i class="fa fa-dashboard"></i>选择</button>
                         </span>
                     </div>
                 </div>
@@ -104,15 +105,20 @@
                     <div class="input-group">
                         <input type="text" class="form-control" id="order" name="order" data-default-val="10" placeholder="默认为10" maxlength="8" />
                         <span class="input-group-btn">
-                            <button id="btnClearIcon" class="btn btn-default" type="button"><i class="fa fa-remove"></i></button>
+                            <button data-method="clear" class="btn btn-default" type="button"><i class="fa fa-remove"></i></button>
                             <button id="btnMenuOrder" class="btn btn-default" type="button"><i class="fa fa-list-ol"></i>调整</button>
                         </span>
                     </div>
                 </div>
                 <div class="form-group col-sm-6">
-                    <input type="text" class="form-control hidden" id="menuID" name="menuID" />
-                    <label class="control-label" for="name">菜单名称</label>
-                    <input type="text" class="form-control" id="name" name="name" placeholder="不可为空" maxlength="50" />
+                    <label class="control-label" for="icon">菜单图标</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" readonly id="icon" name="icon" placeholder="请选择...(可为空)" maxlength="50" />
+                        <span class="input-group-btn">
+                            <button data-method="clear" class="btn btn-default" type="button"><i class="fa fa-remove"></i></button>
+                            <button id="btnIcon" class="btn btn-default" type="button"><i class="fa fa-dashboard"></i>选择</button>
+                        </span>
+                    </div>
                 </div>
                 <div class="form-group col-xs-12">
                     <label class="control-label" for="url">路径</label>
