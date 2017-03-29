@@ -538,3 +538,7 @@ input[type="datetime"] {
         border-bottom: none;
     }
 /*Bootstrap Table BUG END*/
+
+.input-group.form_date span {
+    border-left: none;
+}

@@ -208,7 +208,7 @@ SET ANSI_PADDING ON
 GO
 CREATE TABLE [dbo].[Logs](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
-	[CRUD] [varchar](50) NOT NULL,
+	[CRUD] [nvarchar](50) NOT NULL,
 	[UserName] [varchar](50) NOT NULL,
 	[LogTime] [datetime] NOT NULL,
 	[ClientIp] [varchar](15) NOT NULL,
