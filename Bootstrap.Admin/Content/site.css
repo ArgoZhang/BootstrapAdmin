@@ -159,7 +159,6 @@ a, a:hover, a:focus {
     left: 0;
     bottom: 0;
     right: 0;
-    z-index: 50;
     white-space: nowrap;
 }
 
