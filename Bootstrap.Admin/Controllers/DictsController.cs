@@ -69,9 +69,9 @@ namespace Bootstrap.Admin.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="value"></param>
         [HttpDelete]
-        public dynamic Delete([FromBody]string value)
+        public object Delete([FromBody]string value)
         {
             if (!LgbPrincipal.IsAdmin(User)) return new { result = false, msg = "当前用户权限不够" };
             var result = DictHelper.DeleteDict(value);

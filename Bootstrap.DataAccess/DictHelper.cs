@@ -13,18 +13,17 @@ namespace Bootstrap.DataAccess
     public static class DictHelper
     {
         internal const string RetrieveDictsDataKey = "DictHelper-RetrieveDicts";
-        internal const string RetrieveCategoryDataKey = "DictHelper-RetrieveDictsCategory";
+        private const string RetrieveCategoryDataKey = "DictHelper-RetrieveDictsCategory";
         /// <summary>
         /// 查询所有字典信息
         /// </summary>
-        /// <param name="tId"></param>
         /// <returns></returns>
         public static IEnumerable<Dict> RetrieveDicts()
         {
             return CacheManager.GetOrAdd(RetrieveDictsDataKey, CacheSection.RetrieveIntervalByKey(RetrieveDictsDataKey), key =>
             {
                 string sql = "select ID, Category, Name, Code, Define from Dicts";
-                List<Dict> Dicts = new List<Dict>();
+                List<Dict> dicts = new List<Dict>();
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                 try
                 {
@@ -32,7 +31,7 @@ namespace Bootstrap.DataAccess
                     {
                         while (reader.Read())
                         {
-                            Dicts.Add(new Dict()
+                            dicts.Add(new Dict()
                             {
                                 ID = (int)reader[0],
                                 Category = (string)reader[1],
@@ -44,7 +43,7 @@ namespace Bootstrap.DataAccess
                     }
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
-                return Dicts;
+                return dicts;
             }, CacheSection.RetrieveDescByKey(RetrieveDictsDataKey));
         }
         /// <summary>
@@ -54,8 +53,8 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static bool DeleteDict(string ids)
         {
+            if (string.IsNullOrEmpty(ids) || ids.Contains("'")) return false;
             var ret = false;
-            if (string.IsNullOrEmpty(ids) || ids.Contains("'")) return ret;
             try
             {
                 string sql = string.Format(CultureInfo.InvariantCulture, "Delete from Dicts where ID in ({0})", ids);
@@ -72,6 +71,7 @@ namespace Bootstrap.DataAccess
             }
             return ret;
         }
+
         /// <summary>
         /// 保存新建/更新的字典信息
         /// </summary>
@@ -79,11 +79,10 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static bool SaveDict(Dict p)
         {
-            if (p == null) throw new ArgumentNullException("p");
             bool ret = false;
-            if (p.Category.Length > 50) p.Category.Substring(0, 50);
-            if (p.Name.Length > 50) p.Name.Substring(0, 50);
-            if (p.Code.Length > 50) p.Code.Substring(0, 50);
+            if (p.Category.Length > 50) p.Category = p.Category.Substring(0, 50);
+            if (p.Name.Length > 50) p.Name = p.Name.Substring(0, 50);
+            if (p.Code.Length > 50) p.Code = p.Code.Substring(0, 50);
             string sql = p.ID == 0 ?
                 "Insert Into Dicts (Category, Name, Code ,Define) Values (@Category, @Name, @Code, @Define)" :
                 "Update Dicts set Category = @Category, Name = @Name, Code = @Code, Define = @Define where ID = @ID";
@@ -91,11 +90,11 @@ namespace Bootstrap.DataAccess
             {
                 using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
                 {
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ID", p.ID, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Category", p.Category, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Name", p.Name, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Code", p.Code, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Define", p.Define, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ID", p.ID));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Category", p.Category));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Name", p.Name));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Code", p.Code));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Define", p.Define));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
                 ret = true;
@@ -122,9 +121,9 @@ namespace Bootstrap.DataAccess
             {
                 using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
                 {
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Name", name, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Code", code, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Category", category, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Name", name));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Code", code));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Category", category));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
                 CacheManager.Clear(key => key.Contains(RetrieveDictsDataKey));
