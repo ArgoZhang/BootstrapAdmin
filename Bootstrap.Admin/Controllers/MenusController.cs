@@ -32,7 +32,7 @@ namespace Bootstrap.Admin.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="value"></param>
         [HttpDelete]
         public bool Delete([FromBody]string value)
         {

@@ -49,7 +49,7 @@ namespace Bootstrap.Admin.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="roleId"></param>
+        /// <param name="id"></param>
         /// <param name="value"></param>
         /// <returns></returns>
         [HttpPost]
@@ -73,7 +73,7 @@ namespace Bootstrap.Admin.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="userName"></param>
         /// <returns></returns>
         [HttpGet]
         public User Get(string userName)
@@ -133,7 +133,7 @@ namespace Bootstrap.Admin.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="value"></param>
         [HttpDelete]
         public bool Delete([FromBody]string value)
         {

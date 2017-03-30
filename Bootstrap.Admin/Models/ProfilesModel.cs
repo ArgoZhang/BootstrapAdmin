@@ -11,7 +11,7 @@ namespace Bootstrap.Admin.Models
         /// <summary>
         /// 获得/设置 头像文件大小
         /// </summary>
-        public long Size { get; set; }
+        public long Size { get; private set; }
         /// <summary>
         /// 
         /// </summary>

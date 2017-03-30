@@ -39,11 +39,11 @@ namespace Bootstrap.Admin.Controllers
 		{
 			return GroupHelper.SaveGroup(value);
 		}
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="id"></param>
-		[HttpDelete]
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        [HttpDelete]
 		public bool Delete([FromBody]string value)
 		{
 			return GroupHelper.DeleteGroup(value);

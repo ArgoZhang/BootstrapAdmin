@@ -4,6 +4,7 @@ using Longbow.Caching;
 using Longbow.Security.Principal;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Web.Http;
 using System.Web.Security;
@@ -24,8 +25,7 @@ namespace Bootstrap.Admin.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="password"></param>
+        /// <param name="value"></param>
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPost]
@@ -36,7 +36,7 @@ namespace Bootstrap.Admin.Controllers
             string password = user.password;
             if (LgbPrincipal.Authenticate(userName, password) || BootstrapUser.Authenticate(userName, password))
             {
-                var interval = int.Parse(Math.Round(FormsAuthentication.Timeout.TotalSeconds).ToString());
+                var interval = int.Parse(Math.Round(FormsAuthentication.Timeout.TotalSeconds).ToString(CultureInfo.InvariantCulture));
                 var token = CacheManager.AddOrUpdate(string.Format("WebApi-{0}", userName), interval, k => new LoginInfo() { UserName = userName, Token = Guid.NewGuid().ToString() }, (k, info) => info, "WebApi 数据缓存");
                 CacheManager.AddOrUpdate(token.Token, interval, k => token, (k, info) => info, "Token 数据缓存");
                 return token;

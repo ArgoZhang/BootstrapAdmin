@@ -7,6 +7,9 @@ namespace Bootstrap.Admin.Models
     /// </summary>
     public class ModelBase
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public ModelBase()
         {
             Title = DictHelper.RetrieveWebTitle();
@@ -15,8 +18,10 @@ namespace Bootstrap.Admin.Models
         /// <summary>
         /// 
         /// </summary>
-        public string Title { get; set; }
-
-        public string Footer { get; set; }
+        public string Title { get; private set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Footer { get; private set; }
     }
 }

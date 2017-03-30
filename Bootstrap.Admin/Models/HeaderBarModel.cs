@@ -14,17 +14,17 @@ namespace Bootstrap.Admin.Models
             Icon = user.Icon;
             DisplayName = user.DisplayName;
             UserName = user.UserName;
-            UserID = user.ID;
+            UserId = user.ID;
         }
-        public string UserName { get; protected set; }
+        public string UserName { get; private set; }
         /// <summary>
         /// 
         /// </summary>
-        public int UserID { get; protected set; }
+        public int UserId { get; private set; }
         /// <summary>
         /// 
         /// </summary>
-        public string DisplayName { get; protected set; }
+        public string DisplayName { get; private set; }
         /// <summary>
         /// 
         /// </summary>
@@ -32,6 +32,6 @@ namespace Bootstrap.Admin.Models
         /// <summary>
         /// 获得/设置 用户头像地址
         /// </summary>
-        public string Icon { get; set; }
+        public string Icon { get; private set; }
     }
 }

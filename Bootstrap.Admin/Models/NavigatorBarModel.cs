@@ -27,10 +27,10 @@ namespace Bootstrap.Admin.Models
         /// <summary>
         /// 
         /// </summary>
-        public IEnumerable<Menu> Navigations { get; set; }
+        public IEnumerable<Menu> Navigations { get; private set; }
         /// <summary>
         /// 
         /// </summary>
-        public IEnumerable<KeyValuePair<string, string>> Applications { get; set; }
+        public IEnumerable<KeyValuePair<string, string>> Applications { get; private set; }
     }
 }

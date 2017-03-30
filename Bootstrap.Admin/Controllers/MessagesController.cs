@@ -12,7 +12,7 @@ namespace Bootstrap.Admin.Controllers
         /// <summary>
         /// 根据Id返回不同的消息列表
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
         public IEnumerable<Message> Get(string id)
@@ -20,13 +20,17 @@ namespace Bootstrap.Admin.Controllers
             var ret = new List<Message>();
             switch (id)
             {
-                case "inbox": ret = MessageHelper.Inbox(User.Identity.Name).ToList();
+                case "inbox":
+                    ret = MessageHelper.Inbox(User.Identity.Name).ToList();
                     break;
-                case "sendmail": ret = MessageHelper.SendMail(User.Identity.Name).ToList();
+                case "sendmail":
+                    ret = MessageHelper.SendMail(User.Identity.Name).ToList();
                     break;
-                case "mark": ret = MessageHelper.Mark(User.Identity.Name).ToList();
+                case "mark":
+                    ret = MessageHelper.Mark(User.Identity.Name).ToList();
                     break;
-                case "trash": ret = MessageHelper.Trash(User.Identity.Name).ToList();
+                case "trash":
+                    ret = MessageHelper.Trash(User.Identity.Name).ToList();
                     break;
             }
             return ret;
@@ -35,16 +39,17 @@ namespace Bootstrap.Admin.Controllers
         /// <summary>
         /// 返回各个消息列表的文件个数
         /// </summary>
-        /// <param name="value"></param>
         /// <returns></returns>
         [HttpGet]
         public MessageCountModel Get()
         {
-            MessageCountModel mcm = new MessageCountModel();
-            mcm.inboxCount = MessageHelper.Inbox(User.Identity.Name).Count();
-            mcm.sendmailCount = MessageHelper.SendMail(User.Identity.Name).Count();
-            mcm.markCount = MessageHelper.Mark(User.Identity.Name).Count();
-            mcm.trashCount = MessageHelper.Trash(User.Identity.Name).Count();
+            var mcm = new MessageCountModel
+            {
+                InboxCount = MessageHelper.Inbox(User.Identity.Name).Count(),
+                SendmailCount = MessageHelper.SendMail(User.Identity.Name).Count(),
+                MarkCount = MessageHelper.Mark(User.Identity.Name).Count(),
+                TrashCount = MessageHelper.Trash(User.Identity.Name).Count()
+            };
             return mcm;
         }
     }

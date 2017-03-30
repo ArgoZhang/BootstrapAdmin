@@ -1,15 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Bootstrap.Admin.Models
+﻿namespace Bootstrap.Admin.Models
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class MessageCountModel
     {
-        public int inboxCount { get; set; }
-        public int sendmailCount { get; set; }
-        public int markCount { get; set; }
-        public int trashCount { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int InboxCount { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int SendmailCount { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int MarkCount { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int TrashCount { get; set; }
     }
 }

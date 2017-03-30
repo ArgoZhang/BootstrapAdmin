@@ -21,10 +21,12 @@ namespace Bootstrap.Admin.Controllers
         {
             return value.RetrieveData();
         }
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="value"></param>
         /// <returns></returns>
         [HttpPost]
         public IEnumerable<Role> Post(int id, [FromBody]JObject value)
@@ -47,9 +49,10 @@ namespace Bootstrap.Admin.Controllers
             }
             return ret;
         }
+
         /// <summary>根据GroupID获取
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="value"></param>
         /// <returns></returns>
         [HttpPut]
         public bool Put(int id, [FromBody]JObject value)
@@ -85,7 +88,7 @@ namespace Bootstrap.Admin.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="value"></param>
         [HttpDelete]
         public bool Delete([FromBody]string value)
         {

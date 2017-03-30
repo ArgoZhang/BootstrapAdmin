@@ -61,7 +61,7 @@ namespace Bootstrap.Admin.Controllers
         {
             if (string.IsNullOrEmpty(p.UserName) || string.IsNullOrEmpty(p.Password) || string.IsNullOrEmpty(p.DisplayName) || string.IsNullOrEmpty(p.Description)) return View();
             p.UserStatus = 1;
-            return UserHelper.SaveUser(p) ? (ActionResult)base.Redirect("~/Content/html/RegResult.html") : View();
+            return UserHelper.SaveUser(p) ? (ActionResult)Redirect("~/Content/html/RegResult.html") : View();
         }
         /// <summary>
         /// 

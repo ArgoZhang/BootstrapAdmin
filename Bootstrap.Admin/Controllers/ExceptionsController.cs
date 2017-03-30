@@ -15,7 +15,7 @@ namespace Bootstrap.Admin.Controllers
         /// <summary>
         /// 显示所有异常
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="value"></param>
         /// <returns></returns>
         [HttpGet]
         public QueryData<Exceptions> Get([FromUri]QueryExceptionOption value)

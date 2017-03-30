@@ -8,13 +8,6 @@
         /// <summary>
         /// 
         /// </summary>
-        public LoginModel()
-        {
-
-        }
-        /// <summary>
-        /// 
-        /// </summary>
         public string UserName { get; set; }
         /// <summary>
         /// 
