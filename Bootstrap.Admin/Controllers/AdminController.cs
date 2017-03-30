@@ -14,8 +14,7 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public ActionResult Index()
         {
-            var v = new NavigatorBarModel("~/Admin/Index");
-            return View(v);
+            return View(new NavigatorBarModel("~/Admin/Index"));
         }
         /// <summary>
         /// 
@@ -23,8 +22,7 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public ActionResult Users()
         {
-            var v = new NavigatorBarModel("~/Admin/Users");
-            return View(v);
+            return View(new NavigatorBarModel("~/Admin/Users"));
         }
         /// <summary>
         /// 
@@ -32,8 +30,7 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public ActionResult Groups()
         {
-            var v = new NavigatorBarModel("~/Admin/Groups");
-            return View(v);
+            return View(new NavigatorBarModel("~/Admin/Groups"));
         }
         /// <summary>
         /// 
@@ -41,8 +38,7 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public ActionResult Dicts()
         {
-            var v = new NavigatorBarModel("~/Admin/Dicts");
-            return View(v);
+            return View(new NavigatorBarModel("~/Admin/Dicts"));
         }
         /// <summary>
         /// 
@@ -50,8 +46,7 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public ActionResult Roles()
         {
-            var v = new NavigatorBarModel("~/Admin/Roles");
-            return View(v);
+            return View(new NavigatorBarModel("~/Admin/Roles"));
         }
         /// <summary>
         /// 
@@ -59,8 +54,7 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public ActionResult Menus()
         {
-            var v = new NavigatorBarModel("~/Admin/Menus");
-            return View(v);
+            return View(new NavigatorBarModel("~/Admin/Menus"));
         }
         /// <summary>
         /// 
@@ -68,8 +62,7 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public ActionResult Logs()
         {
-            var v = new NavigatorBarModel("~/Admin/Logs");
-            return View(v);
+            return View(new NavigatorBarModel("~/Admin/Logs"));
         }
         /// <summary>
         /// 
@@ -77,8 +70,7 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public ActionResult FAIcon()
         {
-            var v = new NavigatorBarModel("~/Admin/FAIcon");
-            return View(v);
+            return View(new NavigatorBarModel("~/Admin/FAIcon"));
         }
         /// <summary>
         /// 
@@ -96,8 +88,7 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public ActionResult Settings()
         {
-            var v = new NavigatorBarModel("~/Admin/Settings");
-            return View(v);
+            return View(new NavigatorBarModel("~/Admin/Settings"));
         }
 
         /// <summary>
@@ -106,8 +97,7 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public ActionResult Notifications()
         {
-            var v = new NavigatorBarModel("~/Admin/Notifications");
-            return View(v);
+            return View(new NavigatorBarModel("~/Admin/Notifications"));
         }
 
         /// <summary>
@@ -116,8 +106,7 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public ActionResult Profiles()
         {
-            var v = new ProfilesModel("~/Admin/Profiles");
-            return View(v);
+            return View(new ProfilesModel("~/Admin/Profiles"));
         }
         /// <summary>
         /// 
@@ -125,8 +114,7 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public ActionResult Exceptions()
         {
-            var v = new NavigatorBarModel("~/Admin/Exceptions");
-            return View(v);
+            return View(new NavigatorBarModel("~/Admin/Exceptions"));
         }
         /// <summary>
         /// 
@@ -134,8 +122,7 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public ActionResult Messages()
         {
-            var v = new NavigatorBarModel("~/Admin/Messages");
-            return View(v);
+            return View(new NavigatorBarModel("~/Admin/Messages"));
         }
         /// <summary>
         /// 
@@ -143,8 +130,7 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public ActionResult Tasks()
         {
-            var v = new NavigatorBarModel("~/Admin/Tasks");
-            return View(v);
+            return View(new NavigatorBarModel("~/Admin/Tasks"));
         }
         /// <summary>
         /// 
@@ -152,8 +138,7 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public ActionResult Mobile()
         {
-            var v = new NavigatorBarModel("~/Admin/Mobile");
-            return View(v);
+            return View(new NavigatorBarModel("~/Admin/Mobile"));
         }
         /// <summary>
         /// 
@@ -161,8 +146,7 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public ActionResult Api()
         {
-            var v = new NavigatorBarModel("~/Admin/Api");
-            return View(v);
+            return View(new NavigatorBarModel("~/Admin/Api"));
         }
     }
 }
