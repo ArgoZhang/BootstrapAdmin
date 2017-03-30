@@ -18,10 +18,8 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public ActionResult Index()
         {
-            var v = new HeaderBarModel();
-            v.HomeUrl = DictHelper.RetrieveHomeUrl();
-            if (v.HomeUrl.StartsWith("~/")) return View(v);
-            else return Redirect(v.HomeUrl);
+            var v = new HeaderBarModel { HomeUrl = DictHelper.RetrieveHomeUrl() };
+            return v.HomeUrl.StartsWith("~/") ? (ActionResult)View(v) : Redirect(v.HomeUrl);
         }
         /// <summary>
         /// 
@@ -29,20 +27,19 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public ActionResult Lock()
         {
-            var user = UserHelper.RetrieveUsersByName(User.Identity.Name);
-            var model = new LockModel();
-            model.UserName = user.UserName;
-            model.DisplayName = user.DisplayName;
-            model.ReturnUrl = Url.Encode(Request.UrlReferrer.AbsoluteUri);
             FormsAuthentication.SignOut();
-            return View(model);
+            var user = UserHelper.RetrieveUsersByName(User.Identity.Name);
+            return View(new LockModel
+            {
+                UserName = user.UserName,
+                DisplayName = user.DisplayName,
+                ReturnUrl = Url.Encode(Request.UrlReferrer == null ? FormsAuthentication.DefaultUrl : Request.UrlReferrer.AbsoluteUri)
+            });
         }
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="password"></param>
-        /// <param name="remember"></param>
+        /// <param name="login"></param>
         /// <returns></returns>
         [AllowAnonymous]
         public ActionResult Login(LoginModel login)
@@ -64,14 +61,7 @@ namespace Bootstrap.Admin.Controllers
         {
             if (string.IsNullOrEmpty(p.UserName) || string.IsNullOrEmpty(p.Password) || string.IsNullOrEmpty(p.DisplayName) || string.IsNullOrEmpty(p.Description)) return View();
             p.UserStatus = 1;
-            var result = UserHelper.SaveUser(p);
-            if (result)
-            {
-                return Redirect("~/Content/html/RegResult.html");
-            }
-
-            else
-                return View();
+            return UserHelper.SaveUser(p) ? (ActionResult)base.Redirect("~/Content/html/RegResult.html") : View();
         }
         /// <summary>
         /// 
