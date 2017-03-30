@@ -10,7 +10,7 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获得/设置 菜单主键ID
         /// </summary>
-        public int ID { set; get; }
+        public int Id { set; get; }
         /// <summary>
         /// 获得/设置 父级菜单ID
         /// </summary>

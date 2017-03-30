@@ -41,7 +41,7 @@ namespace Bootstrap.DataAccess.Tests
             var log = LogHelper.RetrieveLogs().FirstOrDefault(l => l.UserName == Log.UserName);
             if (log == null) LogHelper.SaveLog(Log);
             log = LogHelper.RetrieveLogs().FirstOrDefault(l => l.UserName == Log.UserName);
-            Assert.IsTrue(LogHelper.DeleteLog(log.ID.ToString()), "删除日志信息出错");
+            Assert.IsTrue(LogHelper.DeleteLog(log.Id.ToString()), "删除日志信息出错");
         }
     }
 }

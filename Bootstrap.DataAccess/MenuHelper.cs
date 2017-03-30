@@ -13,10 +13,13 @@ using System.Linq;
 
 namespace Bootstrap.DataAccess
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class MenuHelper
     {
         internal const string RetrieveMenusDataKey = "MenuHelper-RetrieveMenus";
-        internal const string RetrieveMenusByRoleIDDataKey = "MenuHelper-RetrieveMenusByRoleId";
+        private const string RetrieveMenusByRoleIdDataKey = "MenuHelper-RetrieveMenusByRoleId";
         /// <summary>
         /// 查询所有菜单信息
         /// </summary>
@@ -28,7 +31,7 @@ namespace Bootstrap.DataAccess
             string key = string.Format("{0}-{1}", RetrieveMenusDataKey, userName);
             return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RetrieveMenusDataKey), k =>
             {
-                List<Menu> Menus = new List<Menu>();
+                List<Menu> menus = new List<Menu>();
                 try
                 {
                     using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_RetrieveMenus"))
@@ -38,9 +41,9 @@ namespace Bootstrap.DataAccess
                         {
                             while (reader.Read())
                             {
-                                Menus.Add(new Menu()
+                                menus.Add(new Menu()
                                 {
-                                    ID = (int)reader[0],
+                                    Id = (int)reader[0],
                                     ParentId = (int)reader[1],
                                     Name = (string)reader[2],
                                     Order = (int)reader[3],
@@ -58,7 +61,7 @@ namespace Bootstrap.DataAccess
                     }
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
-                return Menus;
+                return menus;
             }, CacheSection.RetrieveDescByKey(RetrieveMenusDataKey));
         }
         /// <summary>
@@ -75,7 +78,7 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="userId"></param>
+        /// <param name="userName"></param>
         /// <returns></returns>
         public static IEnumerable<Menu> RetrieveNavigationsByUserName(string userName)
         {
@@ -100,7 +103,7 @@ namespace Bootstrap.DataAccess
         {
             level.ToList().ForEach(m =>
             {
-                m.Menus = navs.Where(sub => sub.ParentId == m.ID).OrderBy(sub => sub.Order);
+                m.Menus = navs.Where(sub => sub.ParentId == m.Id).OrderBy(sub => sub.Order);
                 CascadeMenu(navs, m.Menus);
             });
         }
@@ -110,13 +113,13 @@ namespace Bootstrap.DataAccess
         /// <param name="ids"></param>
         public static bool DeleteMenu(string ids)
         {
+            if (string.IsNullOrEmpty(ids) || ids.Contains("'")) return false;
             bool ret = false;
-            if (string.IsNullOrEmpty(ids) || ids.Contains("'")) return ret;
             try
             {
                 using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_DeleteMenus"))
                 {
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ids", ids, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ids", ids));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
                 CacheCleanUtility.ClearCache(menuIds: ids);
@@ -135,32 +138,31 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static bool SaveMenu(Menu p)
         {
-            if (p == null) throw new ArgumentNullException("p");
+            if (string.IsNullOrEmpty(p.Name)) return false;
             bool ret = false;
-            if (string.IsNullOrEmpty(p.Name)) return ret;
-            if (p.Name.Length > 50) p.Name.Substring(0, 50);
-            if (p.Icon != null && p.Icon.Length > 50) p.Icon.Substring(0, 50);
-            if (p.Url != null && p.Url.Length > 50) p.Url.Substring(0, 50);
-            string sql = p.ID == 0 ?
+            if (p.Name.Length > 50) p.Name = p.Name.Substring(0, 50);
+            if (p.Icon != null && p.Icon.Length > 50) p.Icon = p.Icon.Substring(0, 50);
+            if (p.Url != null && p.Url.Length > 4000) p.Url = p.Url.Substring(0, 4000);
+            string sql = p.Id == 0 ?
                 "Insert Into Navigations (ParentId, Name, [Order], Icon, Url, Category, Target, IsResource, [Application]) Values (@ParentId, @Name, @Order, @Icon, @Url, @Category, @Target, @IsResource, @ApplicationCode)" :
                 "Update Navigations set ParentId = @ParentId, Name = @Name, [Order] = @Order, Icon = @Icon, Url = @Url, Category = @Category, Target = @Target, IsResource = @IsResource, Application = @ApplicationCode where ID = @ID";
             try
             {
                 using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
                 {
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ID", p.ID, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ParentId", p.ParentId, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Name", p.Name, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Order", p.Order, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Icon", DBAccess.ToDBValue(p.Icon), ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Url", DBAccess.ToDBValue(p.Url), ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Category", p.Category, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Target", p.Target, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@IsResource", p.IsResource, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ApplicationCode", p.ApplicationCode, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ID", p.Id));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ParentId", p.ParentId));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Name", p.Name));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Order", p.Order));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Icon", DBAccess.ToDBValue(p.Icon)));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Url", DBAccess.ToDBValue(p.Url)));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Category", p.Category));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Target", p.Target));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@IsResource", p.IsResource));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ApplicationCode", p.ApplicationCode));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
-                CacheCleanUtility.ClearCache(menuIds: p.ID == 0 ? string.Empty : p.ID.ToString());
+                CacheCleanUtility.ClearCache(menuIds: p.Id == 0 ? string.Empty : p.Id.ToString());
                 ret = true;
             }
             catch (DbException ex)
@@ -177,31 +179,31 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<Menu> RetrieveMenusByRoleId(int roleId)
         {
-            string key = string.Format("{0}-{1}", RetrieveMenusByRoleIDDataKey, roleId);
-            return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RetrieveMenusByRoleIDDataKey), k =>
+            string key = string.Format("{0}-{1}", RetrieveMenusByRoleIdDataKey, roleId);
+            return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RetrieveMenusByRoleIdDataKey), k =>
             {
-                List<Menu> Menus = new List<Menu>();
+                List<Menu> menus = new List<Menu>();
                 try
                 {
                     string sql = "select NavigationID from NavigationRole where RoleID = @RoleID";
                     using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
                     {
-                        cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@RoleID", roleId, ParameterDirection.Input));
+                        cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@RoleID", roleId));
                         using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
                         {
                             while (reader.Read())
                             {
-                                Menus.Add(new Menu()
+                                menus.Add(new Menu()
                                 {
-                                    ID = (int)reader[0]
+                                    Id = (int)reader[0]
                                 });
                             }
                         }
                     }
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
-                return Menus;
-            }, CacheSection.RetrieveDescByKey(RetrieveMenusByRoleIDDataKey));
+                return menus;
+            }, CacheSection.RetrieveDescByKey(RetrieveMenusByRoleIdDataKey));
         }
         /// <summary>
         /// 通过角色ID保存当前授权菜单
@@ -224,7 +226,7 @@ namespace Bootstrap.DataAccess
                     string sql = "delete from NavigationRole where RoleID=@RoleID";
                     using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
                     {
-                        cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@RoleID", id, ParameterDirection.Input));
+                        cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@RoleID", id));
                         DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd, transaction);
                         //批插入菜单角色表
                         using (SqlBulkCopy bulk = new SqlBulkCopy((SqlConnection)transaction.Transaction.Connection, SqlBulkCopyOptions.Default, (SqlTransaction)transaction.Transaction))

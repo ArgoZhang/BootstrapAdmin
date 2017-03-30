@@ -7,7 +7,6 @@ using System.Data;
 using System.Data.Common;
 using System.Globalization;
 using System.Linq;
-using System.Web;
 
 namespace Bootstrap.DataAccess
 {
@@ -24,7 +23,7 @@ namespace Bootstrap.DataAccess
             var ret = CacheManager.GetOrAdd(RetrieveLogsDataKey, CacheSection.RetrieveIntervalByKey(RetrieveLogsDataKey), key =>
             {
                 string sql = "select top 1000 * from Logs";
-                List<Log> Logs = new List<Log>();
+                List<Log> logs = new List<Log>();
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                 try
                 {
@@ -32,9 +31,9 @@ namespace Bootstrap.DataAccess
                     {
                         while (reader.Read())
                         {
-                            Logs.Add(new Log()
+                            logs.Add(new Log()
                             {
-                                ID = (int)reader[0],
+                                Id = (int)reader[0],
                                 CRUD = (string)reader[1],
                                 UserName = (string)reader[2],
                                 LogTime = (DateTime)reader[3],
@@ -46,9 +45,9 @@ namespace Bootstrap.DataAccess
                     }
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
-                return Logs;
+                return logs;
             }, CacheSection.RetrieveDescByKey(RetrieveLogsDataKey));
-            return string.IsNullOrEmpty(tId) ? ret : ret.Where(t => tId.Equals(t.ID.ToString(), StringComparison.OrdinalIgnoreCase));
+            return string.IsNullOrEmpty(tId) ? ret : ret.Where(t => tId.Equals(t.Id.ToString(), StringComparison.OrdinalIgnoreCase));
         }
         /// <summary>
         /// 删除日志信息
@@ -57,8 +56,8 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static bool DeleteLog(string ids)
         {
+            if (string.IsNullOrEmpty(ids) || ids.Contains("'")) return false;
             bool ret = false;
-            if (string.IsNullOrEmpty(ids) || ids.Contains("'")) return ret;
             try
             {
                 string sql = string.Format(CultureInfo.InvariantCulture, "Delete from Logs where ID in ({0})", ids);
@@ -89,14 +88,14 @@ namespace Bootstrap.DataAccess
             {
                 using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
                 {
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@CRUD", p.CRUD, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserName", p.UserName, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ClientIp", p.ClientIp, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ClientAgent", p.ClientAgent, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@RequestUrl", p.RequestUrl, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@CRUD", p.CRUD));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserName", p.UserName));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ClientIp", p.ClientIp));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ClientAgent", p.ClientAgent));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@RequestUrl", p.RequestUrl));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
-                CacheCleanUtility.ClearCache(logIds: p.ID == 0 ? string.Empty : p.ID.ToString());
+                CacheCleanUtility.ClearCache(logIds: p.Id == 0 ? string.Empty : p.Id.ToString());
                 ret = true;
             }
             catch (DbException ex)

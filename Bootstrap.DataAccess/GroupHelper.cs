@@ -1,5 +1,4 @@
-﻿using Longbow;
-using Longbow.Caching;
+﻿using Longbow.Caching;
 using Longbow.Caching.Configuration;
 using Longbow.Data;
 using Longbow.ExceptionManagement;
@@ -8,7 +7,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
-using System.Globalization;
 using System.Linq;
 
 namespace Bootstrap.DataAccess
@@ -20,8 +18,8 @@ namespace Bootstrap.DataAccess
     public static class GroupHelper
     {
         internal const string RetrieveGroupsDataKey = "GroupHelper-RetrieveGroups";
-        internal const string RetrieveGroupsByUserIDDataKey = "GroupHelper-RetrieveGroupsByUserId";
-        internal const string RetrieveGroupsByRoleIDDataKey = "GroupHelper-RetrieveGroupsByRoleId";
+        internal const string RetrieveGroupsByUserIdDataKey = "GroupHelper-RetrieveGroupsByUserId";
+        internal const string RetrieveGroupsByRoleIdDataKey = "GroupHelper-RetrieveGroupsByRoleId";
         /// <summary>
         /// 查询所有群组信息
         /// </summary>
@@ -32,7 +30,7 @@ namespace Bootstrap.DataAccess
             var ret = CacheManager.GetOrAdd(RetrieveGroupsDataKey, CacheSection.RetrieveIntervalByKey(RetrieveGroupsDataKey), key =>
             {
                 string sql = "select * from Groups";
-                List<Group> Groups = new List<Group>();
+                List<Group> groups = new List<Group>();
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                 try
                 {
@@ -40,9 +38,9 @@ namespace Bootstrap.DataAccess
                     {
                         while (reader.Read())
                         {
-                            Groups.Add(new Group()
+                            groups.Add(new Group()
                             {
-                                ID = (int)reader[0],
+                                Id = (int)reader[0],
                                 GroupName = (string)reader[1],
                                 Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2]
                             });
@@ -50,9 +48,9 @@ namespace Bootstrap.DataAccess
                     }
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
-                return Groups;
+                return groups;
             }, CacheSection.RetrieveDescByKey(RetrieveGroupsDataKey));
-            return id == 0 ? ret : ret.Where(t => id == t.ID);
+            return id == 0 ? ret : ret.Where(t => id == t.Id);
         }
         /// <summary>
         /// 删除群组信息
@@ -60,13 +58,13 @@ namespace Bootstrap.DataAccess
         /// <param name="ids"></param>
         public static bool DeleteGroup(string ids)
         {
+            if (string.IsNullOrEmpty(ids) || ids.Contains("'")) return false;
             bool ret = false;
-            if (string.IsNullOrEmpty(ids) || ids.Contains("'")) return ret;
             try
             {
                 using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_DeleteGroups"))
                 {
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ids", ids, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ids", ids));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
                 CacheCleanUtility.ClearCache(groupIds: ids);
@@ -85,23 +83,22 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static bool SaveGroup(Group p)
         {
-            if (p == null) throw new ArgumentNullException("p");
             bool ret = false;
-            if (p.GroupName.Length > 50) p.GroupName.Substring(0, 50);
-            if (!string.IsNullOrEmpty(p.Description) && p.Description.Length > 500) p.Description.Substring(0, 500);
-            string sql = p.ID == 0 ?
+            if (p.GroupName.Length > 50) p.GroupName = p.GroupName.Substring(0, 50);
+            if (!string.IsNullOrEmpty(p.Description) && p.Description.Length > 500) p.Description = p.Description.Substring(0, 500);
+            string sql = p.Id == 0 ?
                 "Insert Into Groups (GroupName, Description) Values (@GroupName, @Description)" :
                 "Update Groups set GroupName = @GroupName, Description = @Description where ID = @ID";
             try
             {
                 using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
                 {
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ID", p.ID, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@GroupName", p.GroupName, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Description", DBAccess.ToDBValue(p.Description), ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ID", p.Id));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@GroupName", p.GroupName));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Description", DBAccess.ToDBValue(p.Description)));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
-                CacheCleanUtility.ClearCache(groupIds: p.ID == 0 ? string.Empty : p.ID.ToString());
+                CacheCleanUtility.ClearCache(groupIds: p.Id == 0 ? string.Empty : p.Id.ToString());
                 ret = true;
             }
             catch (DbException ex)
@@ -117,22 +114,22 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<Group> RetrieveGroupsByUserId(int userId)
         {
-            string key = string.Format("{0}-{1}", RetrieveGroupsByUserIDDataKey, userId);
-            var ret = CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RetrieveGroupsByUserIDDataKey), k =>
+            string key = string.Format("{0}-{1}", RetrieveGroupsByUserIdDataKey, userId);
+            var ret = CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RetrieveGroupsByUserIdDataKey), k =>
             {
                 string sql = "select g.ID,g.GroupName,g.[Description],case ug.GroupID when g.ID then 'checked' else '' end [status] from Groups g left join UserGroup ug on g.ID=ug.GroupID and UserID=@UserID";
-                List<Group> Groups = new List<Group>();
+                List<Group> groups = new List<Group>();
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
-                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserID", userId, ParameterDirection.Input));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserID", userId));
                 try
                 {
                     using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
                     {
                         while (reader.Read())
                         {
-                            Groups.Add(new Group()
+                            groups.Add(new Group()
                             {
-                                ID = (int)reader[0],
+                                Id = (int)reader[0],
                                 GroupName = (string)reader[1],
                                 Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
                                 Checked = (string)reader[3]
@@ -141,15 +138,15 @@ namespace Bootstrap.DataAccess
                     }
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
-                return Groups;
-            }, CacheSection.RetrieveDescByKey(RetrieveGroupsByUserIDDataKey));
+                return groups;
+            }, CacheSection.RetrieveDescByKey(RetrieveGroupsByUserIdDataKey));
             return ret;
         }
         /// <summary>
         /// 保存用户部门关系
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="value"></param>
+        /// <param name="groupIds"></param>
         /// <returns></returns>
         public static bool SaveGroupsByUserId(int id, string groupIds)
         {
@@ -167,7 +164,7 @@ namespace Bootstrap.DataAccess
                     string sql = "delete from UserGroup where UserID=@UserID;";
                     using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
                     {
-                        cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserID", id, ParameterDirection.Input));
+                        cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserID", id));
                         DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd, transaction);
 
                         // insert batch data into config table
@@ -199,22 +196,22 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<Group> RetrieveGroupsByRoleId(int roleId)
         {
-            string k = string.Format("{0}-{1}", RetrieveGroupsByRoleIDDataKey, roleId);
-            return CacheManager.GetOrAdd(k, CacheSection.RetrieveIntervalByKey(RetrieveGroupsByRoleIDDataKey), key =>
+            string k = string.Format("{0}-{1}", RetrieveGroupsByRoleIdDataKey, roleId);
+            return CacheManager.GetOrAdd(k, CacheSection.RetrieveIntervalByKey(RetrieveGroupsByRoleIdDataKey), key =>
             {
-                List<Group> Groups = new List<Group>();
+                List<Group> groups = new List<Group>();
                 string sql = "select g.ID,g.GroupName,g.[Description],case rg.GroupID when g.ID then 'checked' else '' end [status] from Groups g left join RoleGroup rg on g.ID=rg.GroupID and RoleID=@RoleID";
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
-                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@RoleID", roleId, ParameterDirection.Input));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@RoleID", roleId));
                 try
                 {
                     using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
                     {
                         while (reader.Read())
                         {
-                            Groups.Add(new Group()
+                            groups.Add(new Group()
                             {
-                                ID = (int)reader[0],
+                                Id = (int)reader[0],
                                 GroupName = (string)reader[1],
                                 Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
                                 Checked = (string)reader[3]
@@ -223,14 +220,14 @@ namespace Bootstrap.DataAccess
                     }
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
-                return Groups;
-            }, CacheSection.RetrieveDescByKey(RetrieveGroupsByRoleIDDataKey));
+                return groups;
+            }, CacheSection.RetrieveDescByKey(RetrieveGroupsByRoleIdDataKey));
         }
         /// <summary>
         /// 根据角色ID以及选定的部门ID，保到角色部门表
         /// </summary>
-        /// <param name="roleId"></param>
-        /// <param name="value"></param>
+        /// <param name="id"></param>
+        /// <param name="groupIds"></param>
         /// <returns></returns>
         public static bool SaveGroupsByRoleId(int id, string groupIds)
         {
@@ -247,7 +244,7 @@ namespace Bootstrap.DataAccess
                     string sql = "delete from RoleGroup where RoleID=@RoleID";
                     using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
                     {
-                        cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@RoleID", id, ParameterDirection.Input));
+                        cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@RoleID", id));
                         DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd, transaction);
                         //批插入角色部门表
                         using (SqlBulkCopy bulk = new SqlBulkCopy((SqlConnection)transaction.Transaction.Connection, SqlBulkCopyOptions.Default, (SqlTransaction)transaction.Transaction))
@@ -273,4 +270,3 @@ namespace Bootstrap.DataAccess
         }
     }
 }
-

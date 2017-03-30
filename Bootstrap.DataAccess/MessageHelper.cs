@@ -13,16 +13,15 @@ namespace Bootstrap.DataAccess
     /// <summary>
     /// 
     /// </summary>
-    public class MessageHelper
+    public static class MessageHelper
     {
-        internal const string RetrieveMessageDataKey = "MessageHelper-RetrieveMessages";
-
+        private const string RetrieveMessageDataKey = "MessageHelper-RetrieveMessages";
         /// <summary>
         /// 所有有关userName所有消息列表
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="userName"></param>
         /// <returns></returns>
-        public static IEnumerable<Message> RetrieveMessages(string userName)
+        private static IEnumerable<Message> RetrieveMessages(string userName)
         {
             var messageRet = CacheManager.GetOrAdd(RetrieveMessageDataKey, CacheSection.RetrieveIntervalByKey(RetrieveMessageDataKey), key =>
             {
@@ -31,14 +30,14 @@ namespace Bootstrap.DataAccess
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                 try
                 {
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserName", userName, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserName", userName));
                     using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
                     {
                         while (reader.Read())
                         {
                             messages.Add(new Message()
                             {
-                                ID = (int)reader[0],
+                                Id = (int)reader[0],
                                 Title = (string)reader[1],
                                 Content = (string)reader[2],
                                 From = (string)reader[3],
@@ -64,7 +63,7 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 收件箱
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="userName"></param>
 
         public static IEnumerable<Message> Inbox(string userName)
         {
@@ -74,7 +73,7 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 发件箱
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="userName"></param>
         /// <returns></returns>
         public static IEnumerable<Message> SendMail(string userName)
         {
@@ -84,7 +83,7 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 垃圾箱
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="userName"></param>
         /// <returns></returns>
         public static IEnumerable<Message> Trash(string userName)
         {
@@ -94,7 +93,7 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 标旗
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="userName"></param>
         /// <returns></returns>
         public static IEnumerable<Message> Mark(string userName)
         {
@@ -104,7 +103,7 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获取Header处显示的消息列表
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="userName"></param>
         /// <returns></returns>
         public static IEnumerable<Message> RetrieveMessagesHeader(string userName)
         {

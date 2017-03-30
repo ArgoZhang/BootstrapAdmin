@@ -25,7 +25,7 @@
         url: Menu.url,
         dataEntity: new DataEntity({
             map: {
-                ID: "menuID",
+                Id: "menuID",
                 ParentId: "parentId",
                 ParentName: "parentName",
                 Name: "name",
@@ -43,11 +43,11 @@
                 id: 'btn_assignRole',
                 click: function (row) {
                     $.bc({
-                        Id: row.ID, url: Role.url, data: { type: "menu" }, swal: false,
+                        Id: row.Id, url: Role.url, data: { type: "menu" }, swal: false,
                         callback: function (result) {
                             var htmlTemplate = this.htmlTemplate;
                             var html = $.map(result, function (element, index) {
-                                return $.format(htmlTemplate, element.ID, element.RoleName, element.Checked, element.Description);
+                                return $.format(htmlTemplate, element.Id, element.RoleName, element.Checked, element.Description);
                             }).join('')
                             $dialogRoleHeader.text($.format('{0}-角色授权窗口', row.Name));
                             $dialogRoleForm.html(html).find('[role="tooltip"]').each(function (index, label) {
@@ -60,7 +60,7 @@
             }, {
                 id: 'btnSubmitRole',
                 click: function (row) {
-                    var menuId = row.ID;
+                    var menuId = row.Id;
                     var roleIds = $dialogRole.find('input:checked').map(function (index, element) {
                         return $(element).val();
                     }).toArray().join(',');
@@ -82,7 +82,7 @@
         queryParams: function (params) { return $.extend(params, { parentName: $('#txt_parent_menus_name').val(), name: $("#txt_menus_name").val(), category: $('#sel_menus_category').val(), isresource: $('#sel_menus_res').val() }); },           //传递参数（*）
         columns: [
             { checkbox: true },
-            { title: "Id", field: "ID", events: bsa.idEvents(), formatter: BootstrapAdmin.idFormatter },
+            { title: "Id", field: "Id", events: bsa.idEvents(), formatter: BootstrapAdmin.idFormatter },
             { title: "父级菜单", field: "ParentName", sortable: true },
             { title: "菜单名称", field: "Name", sortable: true },
             { title: "菜单序号", field: "Order", sortable: true },

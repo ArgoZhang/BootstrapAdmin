@@ -10,14 +10,15 @@ using System.Linq;
 
 namespace Bootstrap.DataAccess
 {
-    public class NotificationHelper
+    /// <summary>
+    /// 
+    /// </summary>
+    public static class NotificationHelper
     {
-        // UNDOEN: 此处需要继续完善，增强异常的通知管理
         internal const string RetrieveNotificationsDataKey = "NotificationHelper-RetrieveNotifications";
         /// <summary>
         /// 新用户注册的通知的面板显示
         /// </summary>
-        /// <param name="id"></param>
         /// <returns></returns>
         public static IEnumerable<Notification> RetrieveNotifications()
         {
@@ -34,7 +35,7 @@ namespace Bootstrap.DataAccess
                         {
                             notifications.Add(new Notification()
                             {
-                                ID = (int)reader[0],
+                                Id = (int)reader[0],
                                 Category = (string)reader[1],
                                 Title = (string)reader[2],
                                 Content = (string)reader[3],
@@ -68,13 +69,13 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static bool ProcessRegisterUser(string id)
         {
+            if (string.IsNullOrEmpty(id)) return false;
             bool ret = false;
-            if (string.IsNullOrEmpty(id)) return ret;
             try
             {
                 using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_ProcessRegisterUser"))
                 {
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@id", id, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@id", id));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
                 CacheCleanUtility.ClearCache(notifyIds: id);
@@ -93,14 +94,14 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static bool SaveNotification(Notification noti)
         {
+            if (string.IsNullOrEmpty(noti.Title) || string.IsNullOrEmpty(noti.Content)) return false;
             bool ret = false;
-            if (string.IsNullOrEmpty(noti.Title) || string.IsNullOrEmpty(noti.Content)) return ret;
             try
             {
                 using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, "Insert into Notifications (Category, Title, Content, RegisterTime) values (N'2', @Title, @Content, GetDate())"))
                 {
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Title", noti.Title, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Content", noti.Content, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Title", noti.Title));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Content", noti.Content));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
                 CacheCleanUtility.ClearCache(notifyIds: string.Empty);

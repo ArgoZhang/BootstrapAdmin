@@ -39,7 +39,7 @@ namespace Bootstrap.Admin.Models
                     data = Order == "asc" ? data.OrderBy(t => t.ErrorPage) : data.OrderByDescending(t => t.ErrorPage);
                     break;
                 case "UserID":
-                    data = Order == "asc" ? data.OrderBy(t => t.UserID) : data.OrderByDescending(t => t.UserID);
+                    data = Order == "asc" ? data.OrderBy(t => t.UserId) : data.OrderByDescending(t => t.UserId);
                     break;
                 case "UserIp":
                     data = Order == "asc" ? data.OrderBy(t => t.UserIp) : data.OrderByDescending(t => t.UserIp);

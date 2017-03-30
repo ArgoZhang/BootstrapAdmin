@@ -7,7 +7,7 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获取/设置  任务ID
         /// </summary>
-        public int ID { get; set; }
+        public int Id { get; set; }
         /// <summary>
         /// 获取/设置  任务名称
         /// </summary>

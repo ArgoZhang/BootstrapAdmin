@@ -113,7 +113,7 @@ namespace Bootstrap.Admin.Controllers
                     break;
                 case "user":
                     // 此时 userIds 存储的信息是操作结果 1 标示同意 0 标示拒绝
-                    var user = new User() { ID = id, UserStatus = 2 };
+                    var user = new User() { Id = id, UserStatus = 2 };
                     if (userIds == "1")
                     {
                         user.ApprovedBy = User.Identity.Name;

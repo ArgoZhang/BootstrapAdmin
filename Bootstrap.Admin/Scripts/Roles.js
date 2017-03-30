@@ -26,11 +26,11 @@
                 id: 'btn_assignUser',
                 click: function (row) {
                     $.bc({
-                        Id: row.ID, url: User.url, data: { type: "role" }, swal: false,
+                        Id: row.Id, url: User.url, data: { type: "role" }, swal: false,
                         callback: function (result) {
                             var htmlTemplate = this.htmlTemplate;
                             var html = $.map(result, function (element, index) {
-                                return $.format(htmlTemplate, element.ID, element.DisplayName, element.Checked, element.UserName);
+                                return $.format(htmlTemplate, element.Id, element.DisplayName, element.Checked, element.UserName);
                             }).join('');
                             $dialogUserHeader.text($.format('{0}-用户授权窗口', row.RoleName));
                             $dialogUserForm.html(html).find('[role="tooltip"]').each(function (index, label) {
@@ -44,11 +44,11 @@
                 id: 'btn_assignGroup',
                 click: function (row) {
                     $.bc({
-                        Id: row.ID, url: Group.url, data: { type: "role" }, swal: false,
+                        Id: row.Id, url: Group.url, data: { type: "role" }, swal: false,
                         callback: function (result) {
                             var htmlTemplate = this.htmlTemplate;
                             var html = $.map(result, function (element, index) {
-                                return $.format(htmlTemplate, element.ID, element.GroupName, element.Checked, element.Description);
+                                return $.format(htmlTemplate, element.Id, element.GroupName, element.Checked, element.Description);
                             }).join('');
                             $dialogGroupHeader.text($.format('{0}-部门授权窗口', row.RoleName));
                             $dialogGroupForm.html(html).find('[role="tooltip"]').each(function (index, label) {
@@ -62,7 +62,7 @@
                 id: 'btn_assignMenu',
                 click: function (row) {
                     $.bc({
-                        Id: row.ID, url: Menu.url, data: { type: "role" }, swal: false,
+                        Id: row.Id, url: Menu.url, data: { type: "role" }, swal: false,
                         callback: function (result) {
                             $dialogMenuHeader.text($.format('{0}-菜单授权窗口', row.RoleName));
                             $btnSubmitMenu.data('type', 'menu');
@@ -70,7 +70,7 @@
                             var menus = $nestMenu.find('input:checkbox');
                             menus.removeProp('checked');
                             $.each(result, function (index, item) {
-                                var selector = $.format('[value={0}]', item.ID);
+                                var selector = $.format('[value={0}]', item.Id);
                                 menus.filter(selector).prop('checked', 'checked');
                             });
                             $dialogSubMenu.show();
@@ -81,7 +81,7 @@
             }, {
                 id: 'btnSubmitUser',
                 click: function (row) {
-                    var roleId = row.ID;
+                    var roleId = row.Id;
                     var userIds = $dialogUser.find(':checked').map(function (index, element) {
                         return $(element).val();
                     }).toArray().join(',');
@@ -90,7 +90,7 @@
             }, {
                 id: 'btnSubmitGroup',
                 click: function (row) {
-                    var roleId = row.ID;
+                    var roleId = row.Id;
                     var groupIds = $dialogGroup.find(':checked').map(function (index, element) {
                         return $(element).val();
                     }).toArray().join(',');
@@ -99,7 +99,7 @@
             }, {
                 id: 'btnSubmitMenu',
                 click: function (row) {
-                    var roleId = row.ID;
+                    var roleId = row.Id;
                     var type = $btnSubmitMenu.data('type');
                     switch (type) {
                         case "menu":
@@ -121,9 +121,9 @@
         sortName: 'RoleName',
         queryParams: function (params) { return $.extend(params, { roleName: $("#txt_search_name").val(), description: $("#txt_role_desc").val() }); },           //传递参数（*）
         columns: [{ checkbox: true },
-            { title: "Id", field: "ID", events: bsa.idEvents(), formatter: BootstrapAdmin.idFormatter },
-            { title: "角色名称", field: "RoleName", sortable: true },
-            { title: "角色描述", field: "Description", sortable: false }
+        { title: "Id", field: "Id", events: bsa.idEvents(), formatter: BootstrapAdmin.idFormatter },
+        { title: "角色名称", field: "RoleName", sortable: true },
+        { title: "角色描述", field: "Description", sortable: false }
         ]
     });
 

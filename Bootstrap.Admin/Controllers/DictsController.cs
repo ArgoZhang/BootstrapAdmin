@@ -29,7 +29,7 @@ namespace Bootstrap.Admin.Controllers
         [HttpGet]
         public Dict Get(int id)
         {
-            return DictHelper.RetrieveDicts().FirstOrDefault(t => t.ID == id);
+            return DictHelper.RetrieveDicts().FirstOrDefault(t => t.Id == id);
         }
         /// <summary>
         /// 

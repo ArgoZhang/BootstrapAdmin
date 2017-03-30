@@ -19,7 +19,7 @@
     <div class="panel-body">
         <form id="headerDataForm" name="headerDataForm">
             <div class="input-group form-group col-xs-12">
-                <input type="text" class="form-control" id="sysName" name="sysName" placeholder="请输入网站标题" value="@Model.Title" />
+                <input type="text" class="form-control" id="sysName" name="sysName" placeholder="请输入网站标题，50字以内" value="@Model.Title" maxlength="50" />
                 <span class="input-group-btn">
                     <button class="btn btn-default" type="button" id="sysSave">保存</button>
                 </span>
@@ -32,7 +32,7 @@
     <div class="panel-body">
         <form id="footerDataForm" name="footerDataForm">
             <div class="input-group form-group col-xs-12">
-                <input type="text" class="form-control" id="sysFoot" name="sysFoot" placeholder="请输入网站页脚" value="@Model.Footer" />
+                <input type="text" class="form-control" id="sysFoot" name="sysFoot" placeholder="请输入网站页脚，50字以内" value="@Model.Footer" maxlength="50" />
                 <span class="input-group-btn">
                     <button class="btn btn-default" type="button" id="footSave">保存</button>
                 </span>
@@ -46,7 +46,7 @@
         <form id="CssDataForm" class="form-inline" name="CssDataForm">
             <div class="row">
                 <div class="form-group col-xs-12">
-                    <label class="control-label" for="dictDefine">网站样式</label>
+                    <label class="control-label">网站样式</label>
                     <div class="dropdown lgbDropdown">
                         <a id="dictCssDefine" class="btn btn-success" data-toggle="dropdown" data-default-val="site.css">
                             <span>默认样式</span>

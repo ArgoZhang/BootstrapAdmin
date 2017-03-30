@@ -1,11 +1,14 @@
 ﻿namespace Bootstrap.DataAccess
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class Role
     {
         /// <summary>
         /// 获得/设置 角色主键ID
         /// </summary>
-        public int ID { get; set; }
+        public int Id { get; set; }
         /// <summary>
         /// 获得/设置 角色名称
         /// </summary>

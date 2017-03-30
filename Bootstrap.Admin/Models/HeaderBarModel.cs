@@ -14,7 +14,7 @@ namespace Bootstrap.Admin.Models
             Icon = user.Icon;
             DisplayName = user.DisplayName;
             UserName = user.UserName;
-            UserId = user.ID;
+            UserId = user.Id;
         }
         public string UserName { get; private set; }
         /// <summary>

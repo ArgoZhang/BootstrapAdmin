@@ -10,7 +10,7 @@ namespace Bootstrap.DataAccess
 {
     public static class TaskHelper
     {
-        internal const string RetrieveTasksDataKey = "TaskHelper-RetrieveTasks";
+        private const string RetrieveTasksDataKey = "TaskHelper-RetrieveTasks";
         /// <summary>
         /// 查询所有任务
         /// </summary>
@@ -30,7 +30,7 @@ namespace Bootstrap.DataAccess
                         {
                             tasks.Add(new Task()
                             {
-                                ID = (int)reader[0],
+                                Id = (int)reader[0],
                                 TaskName = (string)reader[1],
                                 AssignName = (string)reader[2],
                                 UserName = (string)reader[3],

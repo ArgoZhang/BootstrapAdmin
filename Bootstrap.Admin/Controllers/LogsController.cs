@@ -27,7 +27,7 @@ namespace Bootstrap.Admin.Controllers
         [HttpGet]
         public Log Get(int id)
         {
-            return LogHelper.RetrieveLogs().FirstOrDefault(t => t.ID == id);
+            return LogHelper.RetrieveLogs().FirstOrDefault(t => t.Id == id);
         }
 
         [HttpPost]

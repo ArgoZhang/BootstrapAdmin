@@ -28,7 +28,7 @@ namespace Bootstrap.Admin.Controllers
 		[HttpGet]
 		public Group Get(int id)
 		{
-			return GroupHelper.RetrieveGroups().FirstOrDefault(t => t.ID == id);
+			return GroupHelper.RetrieveGroups().FirstOrDefault(t => t.Id == id);
 		}
 		/// <summary>
 		/// 

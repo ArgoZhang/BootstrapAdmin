@@ -315,7 +315,7 @@
                 minimumCountColumns: 2,             //最少允许的列数
                 clickToSelect: false,               //是否启用点击选中行
                 //height: 500,                      //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
-                idField: "Id",
+                idfield: "Id",
                 uniqueId: "Id",                     //每一行的唯一标识，一般为主键列
                 showToggle: true,                   //是否显示详细视图和列表视图的切换按钮
                 cardView: $(window).width() < 768,                    //是否显示详细视图

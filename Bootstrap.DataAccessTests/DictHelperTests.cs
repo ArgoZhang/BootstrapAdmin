@@ -43,10 +43,10 @@ namespace Bootstrap.DataAccess.Tests
             // 测试更新字典记录方法 ID != 0
             var dict = dicts.FirstOrDefault(d => d.Category == Dict.Category);
             dict.Name = "__测试子字典2__";
-            Assert.IsTrue(DictHelper.SaveDict(dict), string.Format("更新字典记录ID = {0} 操作失败，请检查 DictHelper.SaveDict 方法", dict.ID));
-            var dest = DictHelper.RetrieveDicts().Where(d => d.ID == dict.ID);
+            Assert.IsTrue(DictHelper.SaveDict(dict), string.Format("更新字典记录ID = {0} 操作失败，请检查 DictHelper.SaveDict 方法", dict.Id));
+            var dest = DictHelper.RetrieveDicts().Where(d => d.Id == dict.Id);
             Assert.IsTrue(dest.Count() == 1, "带参数的DictHelper.RetrieveDicts方法调用失败");
-            Assert.AreEqual(dict.Name, dest.First().Name, string.Format("更新字典记录ID = {0} 操作失败，请检查 DictHelper.SaveDict 方法", dict.ID));
+            Assert.AreEqual(dict.Name, dest.First().Name, string.Format("更新字典记录ID = {0} 操作失败，请检查 DictHelper.SaveDict 方法", dict.Id));
         }
 
         [TestMethod]
@@ -56,7 +56,7 @@ namespace Bootstrap.DataAccess.Tests
             var dict = DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == Dict.Category);
             if (dict == null) DictHelper.SaveDict(Dict);
             dict = DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == Dict.Category);
-            Assert.IsTrue(DictHelper.DeleteDict(dict.ID.ToString()), "DictHelper.DeleteDict 方法调用失败");
+            Assert.IsTrue(DictHelper.DeleteDict(dict.Id.ToString()), "DictHelper.DeleteDict 方法调用失败");
         }
     }
 }

@@ -17,9 +17,9 @@ namespace Bootstrap.DataAccess
     public static class RoleHelper
     {
         internal const string RetrieveRolesDataKey = "RoleHelper-RetrieveRoles";
-        internal const string RetrieveRolesByUserIDDataKey = "RoleHelper-RetrieveRolesByUserId";
-        internal const string RetrieveRolesByMenuIDDataKey = "RoleHelper-RetrieveRolesByMenuId";
-        internal const string RetrieveRolesByGroupIDDataKey = "RoleHelper-RetrieveRolesByGroupId";
+        internal const string RetrieveRolesByUserIdDataKey = "RoleHelper-RetrieveRolesByUserId";
+        internal const string RetrieveRolesByMenuIdDataKey = "RoleHelper-RetrieveRolesByMenuId";
+        internal const string RetrieveRolesByGroupIdDataKey = "RoleHelper-RetrieveRolesByGroupId";
         /// <summary>
         /// 查询所有角色
         /// </summary>
@@ -40,7 +40,7 @@ namespace Bootstrap.DataAccess
                         {
                             roles.Add(new Role()
                             {
-                                ID = (int)reader[0],
+                                Id = (int)reader[0],
                                 RoleName = (string)reader[1],
                                 Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2]
                             });
@@ -50,7 +50,7 @@ namespace Bootstrap.DataAccess
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return roles;
             }, CacheSection.RetrieveDescByKey(RetrieveRolesDataKey));
-            return id == 0 ? ret : ret.Where(t => id == t.ID);
+            return id == 0 ? ret : ret.Where(t => id == t.Id);
         }
         /// <summary>
         /// 保存用户角色关系
@@ -74,7 +74,7 @@ namespace Bootstrap.DataAccess
                     string sql = "delete from UserRole where UserID = @UserID;";
                     using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
                     {
-                        cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserID", id, ParameterDirection.Input));
+                        cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserID", id));
                         DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd, transaction);
                         if (dt.Rows.Count > 0)
                         {
@@ -106,22 +106,22 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<Role> RetrieveRolesByUserId(int userId)
         {
-            string key = string.Format("{0}-{1}", RetrieveRolesByUserIDDataKey, userId);
-            return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RetrieveRolesByUserIDDataKey), k =>
+            string key = string.Format("{0}-{1}", RetrieveRolesByUserIdDataKey, userId);
+            return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RetrieveRolesByUserIdDataKey), k =>
             {
-                List<Role> Roles = new List<Role>();
+                List<Role> roles = new List<Role>();
                 string sql = "select r.ID, r.RoleName, r.[Description], case ur.RoleID when r.ID then 'checked' else '' end [status] from Roles r left join UserRole ur on r.ID = ur.RoleID and UserID = @UserID";
                 try
                 {
                     DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserID", userId, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserID", userId));
                     using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
                     {
                         while (reader.Read())
                         {
-                            Roles.Add(new Role()
+                            roles.Add(new Role()
                             {
-                                ID = (int)reader[0],
+                                Id = (int)reader[0],
                                 RoleName = (string)reader[1],
                                 Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
                                 Checked = (string)reader[3]
@@ -130,22 +130,22 @@ namespace Bootstrap.DataAccess
                     }
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
-                return Roles;
-            }, CacheSection.RetrieveDescByKey(RetrieveRolesByUserIDDataKey));
+                return roles;
+            }, CacheSection.RetrieveDescByKey(RetrieveRolesByUserIdDataKey));
         }
         /// <summary>
         /// 删除角色表
         /// </summary>
-        /// <param name="IDs"></param>
+        /// <param name="ids"></param>
         public static bool DeleteRole(string ids)
         {
+            if (string.IsNullOrEmpty(ids) || ids.Contains("'")) return false;
             bool ret = false;
-            if (string.IsNullOrEmpty(ids) || ids.Contains("'")) return ret;
             try
             {
                 using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_DeleteRoles"))
                 {
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ids", ids, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ids", ids));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
                 CacheCleanUtility.ClearCache(roleIds: ids);
@@ -164,23 +164,22 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static bool SaveRole(Role p)
         {
-            if (p == null) throw new ArgumentNullException("p");
             bool ret = false;
             if (!string.IsNullOrEmpty(p.RoleName) && p.RoleName.Length > 50) p.RoleName = p.RoleName.Substring(0, 50);
             if (!string.IsNullOrEmpty(p.Description) && p.Description.Length > 50) p.Description = p.Description.Substring(0, 500);
-            string sql = p.ID == 0 ?
+            string sql = p.Id == 0 ?
                 "Insert Into Roles (RoleName, Description) Values (@RoleName, @Description)" :
                 "Update Roles set RoleName = @RoleName, Description = @Description where ID = @ID";
             try
             {
                 using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
                 {
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ID", p.ID, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@RoleName", p.RoleName, ParameterDirection.Input));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Description", DBAccess.ToDBValue(p.Description), ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ID", p.Id));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@RoleName", p.RoleName));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Description", DBAccess.ToDBValue(p.Description)));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
-                CacheCleanUtility.ClearCache(roleIds: p.ID == 0 ? string.Empty : p.ID.ToString());
+                CacheCleanUtility.ClearCache(roleIds: p.Id == 0 ? string.Empty : p.Id.ToString());
                 ret = true;
             }
             catch (DbException ex)
@@ -196,22 +195,22 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<Role> RetrieveRolesByMenuId(int menuId)
         {
-            string key = string.Format("{0}-{1}", RetrieveRolesByMenuIDDataKey, menuId);
-            var ret = CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RetrieveRolesByMenuIDDataKey), k =>
+            string key = string.Format("{0}-{1}", RetrieveRolesByMenuIdDataKey, menuId);
+            var ret = CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RetrieveRolesByMenuIdDataKey), k =>
             {
                 string sql = "select r.ID, r.RoleName, r.[Description], case ur.RoleID when r.ID then 'checked' else '' end [status] from Roles r left join NavigationRole ur on r.ID = ur.RoleID and NavigationID = @NavigationID";
-                List<Role> Roles = new List<Role>();
+                List<Role> roles = new List<Role>();
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
-                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@NavigationID", menuId, ParameterDirection.Input));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@NavigationID", menuId));
                 try
                 {
                     using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
                     {
                         while (reader.Read())
                         {
-                            Roles.Add(new Role()
+                            roles.Add(new Role()
                             {
-                                ID = (int)reader[0],
+                                Id = (int)reader[0],
                                 RoleName = (string)reader[1],
                                 Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
                                 Checked = (string)reader[3]
@@ -220,8 +219,8 @@ namespace Bootstrap.DataAccess
                     }
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
-                return Roles;
-            }, CacheSection.RetrieveDescByKey(RetrieveRolesByMenuIDDataKey));
+                return roles;
+            }, CacheSection.RetrieveDescByKey(RetrieveRolesByMenuIdDataKey));
             return ret;
         }
         public static bool SavaRolesByMenuId(int id, string roleIds)
@@ -240,7 +239,7 @@ namespace Bootstrap.DataAccess
                     string sql = "delete from NavigationRole where NavigationID=@NavigationID;";
                     using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
                     {
-                        cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@NavigationID", id, ParameterDirection.Input));
+                        cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@NavigationID", id));
                         DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd, transaction);
 
                         // insert batch data into config table
@@ -267,27 +266,27 @@ namespace Bootstrap.DataAccess
         }
         /// <summary>
         /// 根据GroupId查询和该Group有关的所有Roles
-        /// author:liuchun
-        /// <param name="tId"></param>
+        /// </summary>
+        /// <param name="groupId"></param>
         /// <returns></returns>
-        public static IEnumerable<Role> RetrieveRolesByGroupId(int groupID)
+        public static IEnumerable<Role> RetrieveRolesByGroupId(int groupId)
         {
-            string key = string.Format("{0}-{1}", RetrieveRolesByGroupIDDataKey, groupID);
-            return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RetrieveRolesByGroupIDDataKey), k =>
+            string key = string.Format("{0}-{1}", RetrieveRolesByGroupIdDataKey, groupId);
+            return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RetrieveRolesByGroupIdDataKey), k =>
             {
-                List<Role> Roles = new List<Role>();
+                List<Role> roles = new List<Role>();
                 string sql = "select r.ID, r.RoleName, r.[Description], case ur.RoleID when r.ID then 'checked' else '' end [status] from Roles r left join RoleGroup ur on r.ID = ur.RoleID and GroupID = @GroupID";
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                 try
                 {
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@GroupID", groupID, ParameterDirection.Input));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@GroupID", groupId));
                     using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
                     {
                         while (reader.Read())
                         {
-                            Roles.Add(new Role()
+                            roles.Add(new Role()
                             {
-                                ID = (int)reader[0],
+                                Id = (int)reader[0],
                                 RoleName = (string)reader[1],
                                 Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
                                 Checked = (string)reader[3]
@@ -296,14 +295,15 @@ namespace Bootstrap.DataAccess
                     }
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
-                return Roles;
-            }, CacheSection.RetrieveDescByKey(RetrieveRolesByGroupIDDataKey));
+                return roles;
+            }, CacheSection.RetrieveDescByKey(RetrieveRolesByGroupIdDataKey));
         }
 
         /// <summary>
         /// 根据GroupId更新Roles信息，删除旧的Roles信息，插入新的Roles信息
         /// </summary>
-        /// <param name="p"></param>
+        /// <param name="id"></param>
+        /// <param name="roleIds"></param>
         /// <returns></returns>
         public static bool SaveRolesByGroupId(int id, string roleIds)
         {
@@ -321,7 +321,7 @@ namespace Bootstrap.DataAccess
                     string sql = "delete from RoleGroup where GroupID=@GroupID";
                     using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
                     {
-                        cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@GroupID", id, ParameterDirection.Input));
+                        cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@GroupID", id));
                         DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd, transaction);
 
                         // insert batch data into config table

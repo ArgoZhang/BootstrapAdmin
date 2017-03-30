@@ -12,7 +12,7 @@
             callback: function (result) {
                 if (result) {
                     var content = result.Users.map(function (noti) {
-                        return $.format(htmlNewUsers, noti.UserName, noti.Description, noti.RegisterTime, noti.ID, noti.DisplayName);
+                        return $.format(htmlNewUsers, noti.UserName, noti.Description, noti.RegisterTime, noti.Id, noti.DisplayName);
                     }).join('');
                     $taskUsers.append(content);
                     $('#tasks-users').find('[role="tooltip"]').lgbTooltip();

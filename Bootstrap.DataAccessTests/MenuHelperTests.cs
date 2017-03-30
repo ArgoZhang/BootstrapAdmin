@@ -49,7 +49,7 @@ namespace Bootstrap.DataAccess.Tests
             // 测试更新菜单方法 ID != 0
             var menu = menus.FirstOrDefault(m => m.Name == Menu.Name);
             menu.Icon = "fa";
-            Assert.IsTrue(MenuHelper.SaveMenu(menu), string.Format("更新菜单ID = {0} 操作失败，请检查 MenuHelper.SaveMenu 方法", menu.ID));
+            Assert.IsTrue(MenuHelper.SaveMenu(menu), string.Format("更新菜单ID = {0} 操作失败，请检查 MenuHelper.SaveMenu 方法", menu.Id));
         }
 
         [TestMethod]
@@ -59,7 +59,7 @@ namespace Bootstrap.DataAccess.Tests
             var menu = MenuHelper.RetrieveMenus().FirstOrDefault(m => m.Name == Menu.Name);
             if (menu == null) MenuHelper.SaveMenu(Menu);
             menu = MenuHelper.RetrieveMenus().FirstOrDefault(m => m.Name == Menu.Name);
-            Assert.IsTrue(MenuHelper.DeleteMenu(menu.ID.ToString()), "MenuHelper.DeleteMenu 方法调用失败");
+            Assert.IsTrue(MenuHelper.DeleteMenu(menu.Id.ToString()), "MenuHelper.DeleteMenu 方法调用失败");
         }
 
         [TestMethod]
@@ -73,13 +73,13 @@ namespace Bootstrap.DataAccess.Tests
             if (role == null) RoleHelper.SaveRole(Role);
             role = RoleHelper.RetrieveRoles().FirstOrDefault(m => m.RoleName == Role.RoleName);
 
-            Assert.IsTrue(RoleHelper.SavaRolesByMenuId(menu.ID, role.ID.ToString()), "保存菜单角色关系失败");
-            Assert.IsTrue(RoleHelper.RetrieveRolesByMenuId(menu.ID).Count() > 0, string.Format("获取菜单ID={0}的角色关系失败", menu.ID));
+            Assert.IsTrue(RoleHelper.SavaRolesByMenuId(menu.Id, role.Id.ToString()), "保存菜单角色关系失败");
+            Assert.IsTrue(RoleHelper.RetrieveRolesByMenuId(menu.Id).Count() > 0, string.Format("获取菜单ID={0}的角色关系失败", menu.Id));
 
             //删除数据
             string sql = "delete from Navigations where Name='__测试菜单__';";
             sql += "delete from Roles where RoleName='_测试角色_';";
-            sql += string.Format("delete from NavigationRole where NavigationID={0}", menu.ID);
+            sql += string.Format("delete from NavigationRole where NavigationID={0}", menu.Id);
             using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
             {
                 DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
@@ -95,14 +95,14 @@ namespace Bootstrap.DataAccess.Tests
             if (role == null) RoleHelper.SaveRole(Role);
             role = RoleHelper.RetrieveRoles().FirstOrDefault(r => r.RoleName == Role.RoleName);
 
-            Assert.IsTrue(MenuHelper.SaveMenusByRoleId(role.ID, menu.ID.ToString()), "存储角色菜单信息失败");
-            int x = MenuHelper.RetrieveMenusByRoleId(role.ID).Count();
-            Assert.IsTrue(x >= 1, string.Format("获取角色ID={0}的菜单信息失败", role.ID));
+            Assert.IsTrue(MenuHelper.SaveMenusByRoleId(role.Id, menu.Id.ToString()), "存储角色菜单信息失败");
+            int x = MenuHelper.RetrieveMenusByRoleId(role.Id).Count();
+            Assert.IsTrue(x >= 1, string.Format("获取角色ID={0}的菜单信息失败", role.Id));
 
             //删除数据
             string sql = "Delete from Navigations where Name = '__测试菜单__';";
             sql += "Delete from Roles where RoleName='_测试角色_';";
-            sql += string.Format("Delete from NavigationRole where RoleID={0};", role.ID);
+            sql += string.Format("Delete from NavigationRole where RoleID={0};", role.Id);
             using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
             {
                 DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);

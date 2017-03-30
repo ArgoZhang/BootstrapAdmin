@@ -47,10 +47,10 @@ namespace Bootstrap.DataAccess.Tests
             //测试更新部门方法 ID!=0
             var group = groups.FirstOrDefault(g => g.GroupName == Group.GroupName);
             group.Description = "我是测试部门";
-            Assert.IsTrue(GroupHelper.SaveGroup(group), string.Format("更新部门ID={0}操作失败，请检查GroupHelper.SaveGroup方法", group.ID));
-            var ret = GroupHelper.RetrieveGroups(group.ID);
+            Assert.IsTrue(GroupHelper.SaveGroup(group), string.Format("更新部门ID={0}操作失败，请检查GroupHelper.SaveGroup方法", group.Id));
+            var ret = GroupHelper.RetrieveGroups(group.Id);
             Assert.IsTrue(ret.Count() == 1, "带参数的GroupHelper.RetrieveGroups方法失败");
-            Assert.AreEqual(group.Description, ret.First().Description, string.Format("更新部门ID={0}操作失败，请检查GroupHelper.SaveGroup方法", group.ID));
+            Assert.AreEqual(group.Description, ret.First().Description, string.Format("更新部门ID={0}操作失败，请检查GroupHelper.SaveGroup方法", group.Id));
         }
 
         [TestMethod]
@@ -60,7 +60,7 @@ namespace Bootstrap.DataAccess.Tests
             var group = GroupHelper.RetrieveGroups().FirstOrDefault(g => g.GroupName == Group.GroupName);
             if (group == null) GroupHelper.SaveGroup(Group);
             group = GroupHelper.RetrieveGroups().FirstOrDefault(g => g.GroupName == Group.GroupName);
-            Assert.IsTrue(GroupHelper.DeleteGroup(group.ID.ToString()), "GroupHelper.DeleteGroup 方法调用失败");
+            Assert.IsTrue(GroupHelper.DeleteGroup(group.Id.ToString()), "GroupHelper.DeleteGroup 方法调用失败");
         }
 
         [TestMethod]
@@ -73,14 +73,14 @@ namespace Bootstrap.DataAccess.Tests
             if (group == null) GroupHelper.SaveGroup(Group);
             group = GroupHelper.RetrieveGroups().FirstOrDefault(g => g.GroupName == Group.GroupName);
 
-            Assert.IsTrue(GroupHelper.SaveGroupsByUserId(user.ID, group.ID.ToString()), "存储用户部门信息失败");
+            Assert.IsTrue(GroupHelper.SaveGroupsByUserId(user.Id, group.Id.ToString()), "存储用户部门信息失败");
 
-            Assert.IsTrue(GroupHelper.RetrieveGroupsByUserId(user.ID).Count() >= 1, string.Format("获取用户ID={0}的部门失败", user.ID));
+            Assert.IsTrue(GroupHelper.RetrieveGroupsByUserId(user.Id).Count() >= 1, string.Format("获取用户ID={0}的部门失败", user.Id));
 
             //删除数据
             string sql = "Delete from Users where UserName = '_测试用户_';";
             sql += "Delete from Groups where GroupName='_测试部门_';";
-            sql += string.Format("Delete from UserGroup where UserID={0};", user.ID);
+            sql += string.Format("Delete from UserGroup where UserID={0};", user.Id);
             using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
             {
                 DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
@@ -97,14 +97,14 @@ namespace Bootstrap.DataAccess.Tests
             if (role == null) RoleHelper.SaveRole(Role);
             role = RoleHelper.RetrieveRoles().FirstOrDefault(r => r.RoleName == Role.RoleName);
 
-            Assert.IsTrue(GroupHelper.SaveGroupsByRoleId(role.ID, group.ID.ToString()), "存储角色部门信息失败");
+            Assert.IsTrue(GroupHelper.SaveGroupsByRoleId(role.Id, group.Id.ToString()), "存储角色部门信息失败");
 
-            Assert.IsTrue(GroupHelper.RetrieveGroupsByRoleId(role.ID).Count() >= 1, string.Format("获取角色ID={0}的部门信息失败", role.ID));
+            Assert.IsTrue(GroupHelper.RetrieveGroupsByRoleId(role.Id).Count() >= 1, string.Format("获取角色ID={0}的部门信息失败", role.Id));
 
             //删除数据
             string sql = "Delete from Groups where GroupName = '_测试部门_';";
             sql += "Delete from Roles where RoleName='_测试角色_';";
-            sql += string.Format("Delete from RoleGroup where RoleID={0};", role.ID);
+            sql += string.Format("Delete from RoleGroup where RoleID={0};", role.Id);
             using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
             {
                 DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);

@@ -1,5 +1,4 @@
-﻿using Longbow.Caching;
-using Longbow.Caching.Configuration;
+﻿using Longbow.Caching.Configuration;
 using Longbow.ExceptionManagement;
 using System;
 using System.Collections.Generic;
@@ -20,6 +19,7 @@ namespace Bootstrap.DataAccess
         /// <param name="dictIds"></param>
         /// <param name="logIds"></param>
         /// <param name="notifyIds"></param>
+        /// <param name="exceptionIds"></param>
         internal static void ClearCache(string roleIds = null, string userIds = null, string groupIds = null, string menuIds = null, string dictIds = null, string logIds = null, string notifyIds = null, string exceptionIds = null)
         {
             var cacheKeys = new List<string>();
@@ -27,8 +27,8 @@ namespace Bootstrap.DataAccess
             {
                 roleIds.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList().ForEach(id =>
                 {
-                    cacheKeys.Add(string.Format("{0}-{1}", UserHelper.RetrieveUsersByRoleIDDataKey, id));
-                    cacheKeys.Add(string.Format("{0}-{1}", GroupHelper.RetrieveGroupsByRoleIDDataKey, id));
+                    cacheKeys.Add(string.Format("{0}-{1}", UserHelper.RetrieveUsersByRoleIdDataKey, id));
+                    cacheKeys.Add(string.Format("{0}-{1}", GroupHelper.RetrieveGroupsByRoleIdDataKey, id));
                 });
                 cacheKeys.Add(RoleHelper.RetrieveRolesDataKey + "*");
                 cacheKeys.Add(MenuHelper.RetrieveMenusDataKey + "*");
@@ -37,8 +37,8 @@ namespace Bootstrap.DataAccess
             {
                 userIds.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList().ForEach(id =>
                 {
-                    cacheKeys.Add(string.Format("{0}-{1}", RoleHelper.RetrieveRolesByUserIDDataKey, id));
-                    cacheKeys.Add(string.Format("{0}-{1}", GroupHelper.RetrieveGroupsByUserIDDataKey, id));
+                    cacheKeys.Add(string.Format("{0}-{1}", RoleHelper.RetrieveRolesByUserIdDataKey, id));
+                    cacheKeys.Add(string.Format("{0}-{1}", GroupHelper.RetrieveGroupsByUserIdDataKey, id));
                     cacheKeys.Add(MenuHelper.RetrieveMenusDataKey);
                 });
                 cacheKeys.Add(UserHelper.RetrieveNewUsersDataKey + "*");
@@ -48,8 +48,8 @@ namespace Bootstrap.DataAccess
             {
                 groupIds.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList().ForEach(id =>
                 {
-                    cacheKeys.Add(string.Format("{0}-{1}", RoleHelper.RetrieveRolesByGroupIDDataKey, id));
-                    cacheKeys.Add(string.Format("{0}-{1}", UserHelper.RetrieveUsersByGroupIDDataKey, id));
+                    cacheKeys.Add(string.Format("{0}-{1}", RoleHelper.RetrieveRolesByGroupIdDataKey, id));
+                    cacheKeys.Add(string.Format("{0}-{1}", UserHelper.RetrieveUsersByGroupIdDataKey, id));
                 });
                 cacheKeys.Add(GroupHelper.RetrieveGroupsDataKey + "*");
                 cacheKeys.Add(MenuHelper.RetrieveMenusDataKey + "*");
@@ -58,7 +58,7 @@ namespace Bootstrap.DataAccess
             {
                 menuIds.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList().ForEach(id =>
                 {
-                    cacheKeys.Add(string.Format("{0}-{1}", RoleHelper.RetrieveRolesByMenuIDDataKey, id));
+                    cacheKeys.Add(string.Format("{0}-{1}", RoleHelper.RetrieveRolesByMenuIdDataKey, id));
                 });
                 cacheKeys.Add(MenuHelper.RetrieveMenusDataKey + "*");
             }

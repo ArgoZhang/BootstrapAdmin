@@ -6,16 +6,14 @@ using System.Text;
 namespace Bootstrap.DataAccess
 {
     /// <summary>
-    /// 消息表实体
-    /// author:liuchun
-    /// date:2016.11.12
+    /// 
     /// </summary>
     public class Message
     {
         /// <summary>
         /// 消息主键 数据库自增
         /// </summary>
-        public int ID { get; set; }
+        public int Id { get; set; }
         /// <summary>
         /// 标题
         /// </summary>

@@ -49,10 +49,10 @@ namespace Bootstrap.DataAccess.Tests
             var user = users.FirstOrDefault(u => u.UserName == User.UserName);
             user.DisplayName = "测试者2号";
             user.Description = "测试";
-            Assert.IsTrue(UserHelper.SaveUser(user), string.Format("更新用户ID={0}操作失败，请检查UserHelper.SaveUser方法", user.ID));
-            var ret = UserHelper.RetrieveUsers(user.ID);
+            Assert.IsTrue(UserHelper.SaveUser(user), string.Format("更新用户ID={0}操作失败，请检查UserHelper.SaveUser方法", user.Id));
+            var ret = UserHelper.RetrieveUsers(user.Id);
             Assert.IsTrue(ret.Count() == 1, "带参数的UserHelper.RetrieveUsers方法调用失败");
-            Assert.AreEqual(user.DisplayName, ret.First().DisplayName, string.Format("更新用户ID={0}操作失败，请检查UserHelper.SaveUser方法", user.ID));
+            Assert.AreEqual(user.DisplayName, ret.First().DisplayName, string.Format("更新用户ID={0}操作失败，请检查UserHelper.SaveUser方法", user.Id));
         }
 
         [TestMethod]
@@ -62,7 +62,7 @@ namespace Bootstrap.DataAccess.Tests
             var user = UserHelper.RetrieveUsers().FirstOrDefault(u => u.UserName == User.UserName);
             if (user == null) UserHelper.SaveUser(User);
             user = UserHelper.RetrieveUsers().FirstOrDefault(u => u.UserName == User.UserName);
-            Assert.IsTrue(UserHelper.DeleteUser(user.ID.ToString()), "UserHelper.DeleteUserTest方法调用失败");
+            Assert.IsTrue(UserHelper.DeleteUser(user.Id.ToString()), "UserHelper.DeleteUserTest方法调用失败");
         }
 
         [TestMethod]
@@ -75,14 +75,14 @@ namespace Bootstrap.DataAccess.Tests
             if (role == null) RoleHelper.SaveRole(Role);
             role = RoleHelper.RetrieveRoles().FirstOrDefault(r => r.RoleName == Role.RoleName);
 
-            Assert.IsTrue(UserHelper.SaveUsersByRoleId(role.ID, user.ID.ToString()), "存储角色用户信息失败");
+            Assert.IsTrue(UserHelper.SaveUsersByRoleId(role.Id, user.Id.ToString()), "存储角色用户信息失败");
 
-            Assert.IsTrue(UserHelper.RetrieveUsersByRoleId(role.ID).Count() >= 1, string.Format("获取角色ID={0}的用户信息失败", role.ID));
+            Assert.IsTrue(UserHelper.RetrieveUsersByRoleId(role.Id).Count() >= 1, string.Format("获取角色ID={0}的用户信息失败", role.Id));
 
             //删除数据
             string sql = "Delete from Users where UserName = '_测试用户_';";
             sql += "Delete from Roles where RoleName='_测试角色_';";
-            sql += string.Format("Delete from UserRole where RoleID={0};", role.ID);
+            sql += string.Format("Delete from UserRole where RoleID={0};", role.Id);
             using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
             {
                 DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
@@ -99,14 +99,14 @@ namespace Bootstrap.DataAccess.Tests
             if (group == null) GroupHelper.SaveGroup(Group);
             group = GroupHelper.RetrieveGroups().FirstOrDefault(g => g.GroupName == Group.GroupName);
 
-            Assert.IsTrue(UserHelper.SaveUsersByGroupId(group.ID, user.ID.ToString()), "存储部门用户信息失败");
+            Assert.IsTrue(UserHelper.SaveUsersByGroupId(group.Id, user.Id.ToString()), "存储部门用户信息失败");
 
-            Assert.IsTrue(UserHelper.RetrieveUsersByGroupId(group.ID).Count() >= 1, string.Format("获取部门ID={0}的用户失败", group.ID));
+            Assert.IsTrue(UserHelper.RetrieveUsersByGroupId(group.Id).Count() >= 1, string.Format("获取部门ID={0}的用户失败", group.Id));
 
             //删除数据
             string sql = "Delete from Users where UserName = '_测试用户_';";
             sql += "Delete from Groups where GroupName='_测试部门_';";
-            sql += string.Format("Delete from UserGroup where GroupID={0};", group.ID);
+            sql += string.Format("Delete from UserGroup where GroupID={0};", group.Id);
             using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
             {
                 DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);

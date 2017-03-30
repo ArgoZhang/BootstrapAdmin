@@ -10,7 +10,7 @@
         url: Group.url,
         dataEntity: new DataEntity({
             map: {
-                ID: "groupID",
+                Id: "groupID",
                 GroupName: "groupName",
                 Description: "groupDesc"
             }
@@ -20,11 +20,11 @@
                 id: 'btn_assignRole',
                 click: function (row) {
                     $.bc({
-                        Id: row.ID, url: Role.url, data: { type: "group" }, swal: false,
+                        Id: row.Id, url: Role.url, data: { type: "group" }, swal: false,
                         callback: function (result) {
                             var htmlTemplate = this.htmlTemplate;
                             var html = $.map(result, function (element, index) {
-                                return $.format(htmlTemplate, element.ID, element.RoleName, element.Checked, element.Description);
+                                return $.format(htmlTemplate, element.Id, element.RoleName, element.Checked, element.Description);
                             }).join('')
                             $dialogRoleHeader.text($.format('{0}-角色授权窗口', row.GroupName));
                             $dialogRoleForm.html(html).find('[role="tooltip"]').each(function (index, label) {
@@ -38,11 +38,11 @@
                 id: 'btn_assignUser',
                 click: function (row) {
                     $.bc({
-                        Id: row.ID, url: User.url, data: { type: "group" }, swal: false,
+                        Id: row.Id, url: User.url, data: { type: "group" }, swal: false,
                         callback: function (result) {
                             var htmlTemplate = this.htmlTemplate;
                             var html = $.map(result, function (element, index) {
-                                return $.format(htmlTemplate, element.ID, element.DisplayName, element.Checked, element.UserName);
+                                return $.format(htmlTemplate, element.Id, element.DisplayName, element.Checked, element.UserName);
                             }).join('');
                             $dialogUserHeader.text($.format('{0}-用户授权窗口', row.GroupName));
                             $dialogUserForm.html(html).find('[role="tooltip"]').each(function (index, label) {
@@ -55,7 +55,7 @@
             }, {
                 id: 'btnSubmitRole',
                 click: function (row) {
-                    var groupId = row.ID;
+                    var groupId = row.Id;
                     var roleIds = $dialogRole.find('input:checked').map(function (index, element) {
                         return $(element).val();
                     }).toArray().join(',');
@@ -64,7 +64,7 @@
             }, {
                 id: 'btnSubmitUser',
                 click: function (row) {
-                    var groupId = row.ID;
+                    var groupId = row.Id;
                     var userIds = $dialogUser.find(':checked').map(function (index, element) {
                         return $(element).val();
                     }).toArray().join(',');
@@ -79,7 +79,7 @@
         sortName: 'GroupName',
         queryParams: function (params) { return $.extend(params, { groupName: $("#txt_search_name").val(), description: $("#txt_group_desc").val() }); },           //传递参数（*）
         columns: [{ checkbox: true },
-            { title: "Id", field: "ID", events: bsa.idEvents(), formatter: BootstrapAdmin.idFormatter },
+            { title: "Id", field: "Id", events: bsa.idEvents(), formatter: BootstrapAdmin.idFormatter },
             { title: "部门名称", field: "GroupName", sortable: true },
             { title: "部门描述", field: "Description", sortable: false }
         ]

@@ -10,6 +10,9 @@ using System.Linq;
 
 namespace Bootstrap.DataAccess
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class DictHelper
     {
         internal const string RetrieveDictsDataKey = "DictHelper-RetrieveDicts";
@@ -33,7 +36,7 @@ namespace Bootstrap.DataAccess
                         {
                             dicts.Add(new Dict()
                             {
-                                ID = (int)reader[0],
+                                Id = (int)reader[0],
                                 Category = (string)reader[1],
                                 Name = (string)reader[2],
                                 Code = (string)reader[3],
@@ -83,14 +86,14 @@ namespace Bootstrap.DataAccess
             if (p.Category.Length > 50) p.Category = p.Category.Substring(0, 50);
             if (p.Name.Length > 50) p.Name = p.Name.Substring(0, 50);
             if (p.Code.Length > 50) p.Code = p.Code.Substring(0, 50);
-            string sql = p.ID == 0 ?
+            string sql = p.Id == 0 ?
                 "Insert Into Dicts (Category, Name, Code ,Define) Values (@Category, @Name, @Code, @Define)" :
                 "Update Dicts set Category = @Category, Name = @Name, Code = @Code, Define = @Define where ID = @ID";
             try
             {
                 using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
                 {
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ID", p.ID));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ID", p.Id));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Category", p.Category));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Name", p.Name));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Code", p.Code));
@@ -98,7 +101,7 @@ namespace Bootstrap.DataAccess
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
                 ret = true;
-                CacheCleanUtility.ClearCache(dictIds: p.ID == 0 ? string.Empty : p.ID.ToString());
+                CacheCleanUtility.ClearCache(dictIds: p.Id == 0 ? string.Empty : p.Id.ToString());
             }
             catch (DbException ex)
             {
