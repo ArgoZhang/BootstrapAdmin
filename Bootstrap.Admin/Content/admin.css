@@ -37,7 +37,7 @@
 .clearcache {
     position: absolute;
     right: 60px;
-    font-size: 17px;
+    font-size: 1.7rem;
     color: #d9534f;
     margin-top: -1px;
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, .15), 0 1px 1px rgba(0, 0, 0, .075);
@@ -236,7 +236,7 @@ ul.sidebar-menu {
             }
 
             ul.sidebar-menu li a i {
-                font-size: 15px;
+                font-size: 1.5rem;
                 width: 22px;
             }
 
@@ -245,7 +245,7 @@ ul.sidebar-menu {
                 text-decoration: none;
                 display: block;
                 padding: 15px 0 15px 10px;
-                font-size: 12px;
+                font-size: 1.2rem;
                 outline: none;
                 transition: all 0.3s ease;
             }
@@ -277,7 +277,7 @@ ul.sidebar-menu {
                 }
 
                 ul.sidebar-menu li ul.sub li a {
-                    font-size: 12px;
+                    font-size: 1.2rem;
                     padding: 6px 0;
                     line-height: 35px;
                     height: 35px;
@@ -309,7 +309,7 @@ ul.sidebar-menu {
 }
 
     .modal-body .affix a {
-        font-size: 20px;
+        font-size: 2rem;
         margin-top: 16px;
     }
 
@@ -350,7 +350,7 @@ ul.sidebar-menu {
 
 /*cache*/
 .panel .fa-refresh {
-    font-size: 15px;
+    font-size: 1.5rem;
 }
 
 .bootstrap-select .dropdown-menu {
@@ -373,9 +373,10 @@ input[type="datetime"] {
     display: table;
     table-layout: fixed;
     width: 100%;
+    align-content: space-between;
 }
 
-    .mail-box aside {
+    .mail-box > div {
         display: table-cell;
         float: none;
         height: 100%;
@@ -415,7 +416,6 @@ input[type="datetime"] {
             }
 
                 .mail-box .sm-side .user-head .user-name h5 {
-                    font-size: 14px;
                     margin-top: 15px;
                     margin-bottom: 0;
                     font-weight: 300;
@@ -512,18 +512,6 @@ input[type="datetime"] {
                 .mail-box .lg-side .table-inbox tr td:hover {
                     cursor: pointer;
                 }
-
-.dropdown-menu {
-    padding: 0;
-}
-
-    .dropdown-menu li a {
-        padding: 6px 20px;
-    }
-
-    .dropdown-menu .divider {
-        margin: 0;
-    }
 
 /*Bootstrap Table BUG */
 .fixed-table-loading {

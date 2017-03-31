@@ -1,8 +1,12 @@
-﻿body {
+﻿html {
+    font-size: 62.5%;
+}
+
+body {
     color: #797979;
     background: #f1f2f7;
     font-family: 'Open Sans', sans-serif;
-    font-size: 13px;
+    font-size: 1.4rem;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -webkit-overflow-scrolling: touch;
@@ -63,7 +67,6 @@ a, a:hover, a:focus {
             }
 
             .header > .dropdown > a span {
-                font-size: 13px;
                 display: inline-block;
                 min-width: 18px;
             }
@@ -126,7 +129,7 @@ a, a:hover, a:focus {
                     }
 
                     .header > .dropdown .dropdown-menu li a i {
-                        font-size: 17px;
+                        font-size: 1.7rem;
                         display: block;
                         margin-bottom: 4px;
                     }
@@ -140,7 +143,7 @@ a, a:hover, a:focus {
 
 /*Title*/
 .sidebar-toggle-box {
-    font-size: 21px;
+    font-size: 2.1rem;
     color: #333;
     float: left;
     margin-top: 15px;
@@ -216,7 +219,7 @@ a, a:hover, a:focus {
             color: #666666;
             border-radius: 4px;
             -webkit-border-radius: 4px;
-            font-size: 16px;
+            font-size: 1.6rem;
             border: 1px solid #f0f0f8;
             padding: 2px 6px;
             margin-right: 15px;
@@ -292,7 +295,7 @@ a, a:hover, a:focus {
 
         .notify-row .dropdown-menu li a {
             border-bottom: 1px solid #EBEBEB;
-            font-size: 12px;
+            font-size: 1.2rem;
             list-style: none;
             padding: 15px 10px;
         }
@@ -328,15 +331,15 @@ a, a:hover, a:focus {
         }
 
         .notify-row .dropdown-menu .small {
-            font-size: 10px;
             font-style: italic;
             font-weight: bold;
             float: right;
             padding-top: 2px;
+            font-size: 1rem;
         }
 
         .notify-row .dropdown-menu.tasks-bar .desc {
-            font-size: 13px;
+            font-size: 1.3rem;
             font-weight: normal;
             display: block;
             overflow: hidden;
@@ -347,7 +350,7 @@ a, a:hover, a:focus {
         .notify-row .dropdown-menu.tasks-bar .percent {
             display: inline-block;
             float: right;
-            font-size: 13px;
+            font-size: 1.3rem;
             font-weight: 600;
         }
 
@@ -377,14 +380,14 @@ a, a:hover, a:focus {
             }
 
             .notify-row .dropdown-menu.inbox .subject .time {
-                font-size: 11px;
+                font-size: 1.1rem;
                 font-style: italic;
                 font-weight: bold;
                 float: right;
             }
 
         .notify-row .dropdown-menu.inbox .message {
-            font-size: 11px;
+            font-size: 1.1rem;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -393,60 +396,9 @@ a, a:hover, a:focus {
             left: 56px;
             margin-top: 2px;
         }
-
-.dropdown-menu.menu {
-    top: 50px;
-    left: 6px;
-    margin-right: 15px;
-    min-height: 160px;
-    min-width: 280px;
-}
-
-    .dropdown-menu.menu .arrow-up {
-        left: 8px;
-        top: -10px;
-    }
-
-    .dropdown-menu.menu .menu-submenu {
-        padding: 0 16px;
-    }
-
-        .dropdown-menu.menu .menu-submenu ul {
-            float: left;
-            padding-left: 10px;
-            padding-right: 10px;
-        }
-
-        .dropdown-menu.menu .menu-submenu li p {
-            color: #323232;
-            font-size: 14px;
-            text-transform: none;
-            font-weight: bold;
-            border-bottom: solid 1px #a9d86e;
-            padding: 10px 0 4px 0;
-            margin-bottom: 14px;
-        }
-
-        .dropdown-menu.menu .menu-submenu li a {
-            margin-bottom: 15px;
-            display: inline-block;
-            color: #323232;
-            font-size: 13px;
-        }
-
-            .dropdown-menu.menu .menu-submenu li a.active, .dropdown-menu.menu .menu-submenu li p.active {
-                color: #0376d8;
-            }
-
-            .dropdown-menu.menu .menu-submenu li a:hover {
-                color: #2e6da4;
-            }
-
-            .dropdown-menu.menu .menu-submenu li a i {
-                padding-right: 6px;
-            }
 /*end*/
-ul.breadcrumb {
+
+.breadcrumb {
     position: absolute;
     top: 56px;
     left: 15px;
@@ -459,15 +411,15 @@ ul.breadcrumb {
     border-top-right-radius: 0;
 }
 
-    ul.breadcrumb > li.active {
+    .breadcrumb > li.active {
         display: inline-block;
     }
 
-    ul.breadcrumb > li.load {
+    .breadcrumb > li.load {
         display: none;
     }
 
-    ul.breadcrumb > li > a > i {
+    .breadcrumb > li > a > i {
         padding-right: 6px;
     }
 
