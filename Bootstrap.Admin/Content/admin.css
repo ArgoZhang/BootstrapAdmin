@@ -368,24 +368,11 @@ input[type="datetime"] {
 
 /*Messages*/
 .mail-box {
-    border-collapse: collapse;
-    border-spacing: 0;
-    display: table;
-    table-layout: fixed;
-    width: 100%;
-    align-content: space-between;
+    display: flex;
 }
 
-    .mail-box > div {
-        display: table-cell;
-        float: none;
-        height: 100%;
-        padding: 0;
-        vertical-align: top;
-    }
-
     .mail-box .sm-side {
-        width: 25%;
+        flex: 0.4;
         background: #e5e8ef;
         border-radius: 4px 0 0 4px;
     }
@@ -478,7 +465,7 @@ input[type="datetime"] {
                     }
 
     .mail-box .lg-side {
-        width: 75%;
+        flex: 0.6;
         background: #fff;
         border-radius: 0 4px 4px 0;
     }
