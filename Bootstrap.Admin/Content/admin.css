@@ -181,108 +181,79 @@ aside {
 
 .sidebar {
     display: none;
-    overflow-y: auto;
+    overflow: auto;
     width: 100%;
     z-index: 5;
     background: #2a3542;
 }
 
-    .sidebar ul li a {
-        padding-right: 25px;
-    }
-
-    .sidebar .sub-menu > .sub li {
-        padding-left: 32px;
-    }
-
-    .sidebar ul li {
-        position: relative;
-    }
-
-ul.sidebar-menu {
-    padding: 20px 0 15px 0;
+.sidebar-menu {
+    padding: 20px 0;
     margin-bottom: 0;
 }
 
-    ul.sidebar-menu, ul.sidebar-menu li ul.sub {
-        padding-left: 0;
+    .sidebar-menu .dcjq-icon {
+        height: 17px;
+        width: 17px;
+        display: inline-block;
+        background: url(images/nav-expand.png) no-repeat;
+        float: right;
     }
 
-        ul.sidebar-menu .dcjq-icon {
-            height: 17px;
-            width: 17px;
-            display: inline-block;
-            background: url(images/nav-expand.png) no-repeat;
-            background-position: top;
-            position: absolute;
-            right: 10px;
-            top: 15px;
-            border-radius: 3px;
+    .sidebar-menu .active .dcjq-icon {
+        background-position: bottom;
+    }
+
+    .sidebar-menu li {
+        margin: 5px 10px;
+    }
+
+        .sidebar-menu li a {
+            color: #aeb2b7;
+            display: block;
+            padding: 15px 10px;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            border-radius: 4px;
         }
 
-        ul.sidebar-menu .active .dcjq-icon {
-            background-position: bottom;
-        }
-
-        ul.sidebar-menu li {
-            line-height: 20px;
-            margin-bottom: 5px;
-            margin-left: 10px;
-            margin-right: 10px;
-        }
-
-            ul.sidebar-menu li a.active i {
-                color: #FF6C60;
+            .sidebar-menu li a.active, .sidebar-menu li a:hover, .sidebar-menu li a:focus {
+                background: #35404d;
+                color: #fff;
             }
 
-            ul.sidebar-menu li a i {
+                .sidebar-menu li a.active i {
+                    color: #FF6C60;
+                }
+
+            .sidebar-menu li a i {
                 font-size: 1.5rem;
                 width: 22px;
             }
 
-            ul.sidebar-menu li a {
-                color: #aeb2b7;
-                text-decoration: none;
-                display: block;
-                padding: 15px 0 15px 10px;
-                font-size: 1.2rem;
-                outline: none;
-                transition: all 0.3s ease;
-            }
+        .sidebar-menu li .sub {
+            padding-left: 0;
+        }
 
-                ul.sidebar-menu li a.active, ul.sidebar-menu li a:hover, ul.sidebar-menu li a:focus {
-                    background: #35404d;
-                    color: #fff;
-                    display: block;
-                    border-radius: 4px;
-                    transition: all 0.3s ease;
-                }
-
-            ul.sidebar-menu li ul.sub li a:hover, ul.sidebar-menu li ul.sub li.active a {
+            .sidebar-menu li .sub li a:hover, .sidebar-menu li .sub li.active a {
                 color: #FF6C60;
                 transition: all 0.3s ease;
                 display: block;
             }
 
-            ul.sidebar-menu li ul.sub li {
+            .sidebar-menu li .sub li {
                 background: #35404D;
-                margin-bottom: 0;
-                margin-left: 0;
-                margin-right: 0;
+                margin: 0;
+                padding: 0 10px 0 32px;
             }
 
-                ul.sidebar-menu li ul.sub li:last-child {
+                .sidebar-menu li .sub li:last-child {
                     border-radius: 0 0 4px 4px;
                     padding-bottom: 10px;
                 }
 
-                ul.sidebar-menu li ul.sub li a {
-                    font-size: 1.2rem;
-                    padding: 6px 0;
-                    line-height: 35px;
-                    height: 35px;
-                    transition: all 0.3s ease;
-                    color: #aeb2b7;
+                .sidebar-menu li .sub li a {
+                    padding: 12px 0;
                 }
 
 /*Modal Dialog Checkbox*/
