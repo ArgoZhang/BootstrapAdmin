@@ -1,4 +1,5 @@
-﻿using Longbow.Caching.Configuration;
+﻿using Longbow.Caching;
+using Longbow.Caching.Configuration;
 using Longbow.ExceptionManagement;
 using System;
 using System.Collections.Generic;
@@ -79,16 +80,16 @@ namespace Bootstrap.DataAccess
                 cacheKeys.Add(ExceptionHelper.RetrieveExceptionsDataKey + "*");
             }
 
-            var section = CacheListSection.GetSection();
-            section.Items.Where(item => item.Enabled).AsParallel().ForAll(ele =>
+            cacheKeys.AsParallel().ForAll(key => CacheManager.Clear(k => key.EndsWith("*") ? k.Contains(key.TrimEnd('*')) : k.Equals(key)));
+            System.Threading.Tasks.Task.Factory.StartNew(() =>
             {
-                System.Threading.Tasks.Task.Factory.StartNew(() =>
+                var section = CacheListSection.GetSection();
+                section.Items.Where(item => item.Enabled).Skip(1).AsParallel().ForAll(ele =>
                 {
                     try
                     {
                         var client = new WebClient();
                         cacheKeys.ForEach(k => client.OpenRead(new Uri(string.Format(ele.Url, k))));
-
                     }
                     catch (Exception ex)
                     {

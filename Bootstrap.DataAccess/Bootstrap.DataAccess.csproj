@@ -59,7 +59,6 @@
     </Compile>
     <Compile Include="CacheCleanUtility.cs" />
     <Compile Include="DBAccessManager.cs" />
-    <Compile Include="Dict.cs" />
     <Compile Include="DictHelper.cs" />
     <Compile Include="ExceptionHelper.cs" />
     <Compile Include="Exceptions.cs" />

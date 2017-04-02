@@ -1,4 +1,5 @@
 ﻿using Bootstrap.DataAccess;
+using Bootstrap.Security;
 using Longbow.Web.Mvc;
 using System.Linq;
 
@@ -22,7 +23,7 @@ namespace Bootstrap.Admin.Models
         /// 字典表查询
         /// </summary>
         /// <returns></returns>
-        public QueryData<Dict> RetrieveData()
+        public QueryData<BootstrapDict> RetrieveData()
         {
             var data = DictHelper.RetrieveDicts();
             if (!string.IsNullOrEmpty(Category))
@@ -37,7 +38,7 @@ namespace Bootstrap.Admin.Models
             {
                 data = data.Where(t => t.Define.ToString() == Define);
             }
-            var ret = new QueryData<Dict>();
+            var ret = new QueryData<BootstrapDict>();
             ret.total = data.Count();
             // 通过option.Sort属性判断对那列进行排序
             switch (Sort)
