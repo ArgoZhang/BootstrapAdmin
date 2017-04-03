@@ -1,5 +1,6 @@
 ﻿using Bootstrap.Admin.Models;
 using Bootstrap.DataAccess;
+using Bootstrap.Security;
 using Longbow.Web.Mvc;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace Bootstrap.Admin.Controllers
         /// <param name="value"></param>
         /// <returns></returns>
         [HttpGet]
-        public QueryData<Menu> Get([FromUri]QueryMenuOption value)
+        public QueryData<BootstrapMenu> Get([FromUri]QueryMenuOption value)
         {
             return value.RetrieveData(User.Identity.Name);
         }
@@ -25,7 +26,7 @@ namespace Bootstrap.Admin.Controllers
         /// </summary>
         /// <param name="value"></param>
         [HttpPost]
-        public bool Post([FromBody]Menu value)
+        public bool Post([FromBody]BootstrapMenu value)
         {
             return MenuHelper.SaveMenu(value);
         }
@@ -38,10 +39,16 @@ namespace Bootstrap.Admin.Controllers
         {
             return MenuHelper.DeleteMenu(value);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
         [HttpPost]
-        public IEnumerable<Menu> Post(int id, [FromBody]JObject value)
+        public IEnumerable<BootstrapMenu> Post(int id, [FromBody]JObject value)
         {
-            var ret = new List<Menu>();
+            var ret = new List<BootstrapMenu>();
             dynamic json = value;
             switch ((string)json.type)
             {
@@ -49,13 +56,19 @@ namespace Bootstrap.Admin.Controllers
                     ret = MenuHelper.RetrieveMenusByRoleId(id).ToList();
                     break;
                 case "user":
-                    ret = MenuHelper.RetrieveAllMenusByUserName(User.Identity.Name).ToList();
+                    ret = BootstrapMenu.RetrieveAllMenus(User.Identity.Name).ToList();
                     break;
                 default:
                     break;
             }
             return ret;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
         [HttpPut]
         public bool Put(int id, [FromBody]JObject value)
         {

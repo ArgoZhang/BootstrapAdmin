@@ -5,7 +5,6 @@ using Longbow.Caching.Configuration;
 using Longbow.Data;
 using Longbow.ExceptionManagement;
 using Longbow.Security;
-using Longbow.Security.Principal;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -20,23 +19,21 @@ namespace Bootstrap.DataAccess
     /// </summary>
     public static class UserHelper
     {
-        internal const string RetrieveUsersDataKey = "UserHelper-RetrieveUsers";
-        private const string RetrieveUsersByNameDataKey = "UserHelper-RetrieveUsersByName";
-        internal const string RetrieveUsersByRoleIdDataKey = "UserHelper-RetrieveUsersByRoleId";
-        internal const string RetrieveUsersByGroupIdDataKey = "UserHelper-RetrieveUsersByGroupId";
+        private const string RetrieveUsersByNameDataKey = "BootstrapUser-RetrieveUsersByName";
+        internal const string RetrieveUsersByRoleIdDataKey = "BootstrapUser-RetrieveUsersByRoleId";
+        internal const string RetrieveUsersByGroupIdDataKey = "BootstrapUser-RetrieveUsersByGroupId";
         internal const string RetrieveNewUsersDataKey = "UserHelper-RetrieveNewUsers";
         /// <summary>
         /// 查询所有用户
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static IEnumerable<User> RetrieveUsers(int id = 0)
+        public static IEnumerable<User> RetrieveUsers()
         {
-            string sql = "select ID, UserName, DisplayName, RegisterTime, ApprovedTime from Users Where ApprovedTime is not null";
-            var ret = CacheManager.GetOrAdd(RetrieveUsersDataKey, CacheSection.RetrieveIntervalByKey(RetrieveUsersDataKey), key =>
+            return CacheManager.GetOrAdd(BootstrapUser.RetrieveUsersDataKey, CacheSection.RetrieveIntervalByKey(BootstrapUser.RetrieveUsersDataKey), key =>
             {
                 List<User> users = new List<User>();
-                DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
+                DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, "select ID, UserName, DisplayName, RegisterTime, ApprovedTime, ApprovedBy, Description from Users Where ApprovedTime is not null");
                 try
                 {
                     using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
@@ -49,52 +46,16 @@ namespace Bootstrap.DataAccess
                                 UserName = (string)reader[1],
                                 DisplayName = (string)reader[2],
                                 RegisterTime = (DateTime)reader[3],
-                                ApprovedTime = LgbConvert.ReadValue(reader[4], DateTime.MinValue)
+                                ApprovedTime = LgbConvert.ReadValue(reader[4], DateTime.MinValue),
+                                ApprovedBy = reader.IsDBNull(5) ? string.Empty : (string)reader[5],
+                                Description = (string)reader[6]
                             });
                         }
                     }
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return users;
-            }, CacheSection.RetrieveDescByKey(RetrieveUsersDataKey));
-            return id == 0 ? ret : ret.Where(t => id == t.Id);
-        }
-        /// <summary>
-        /// 根据用户名查询用户
-        /// </summary>
-        /// <param name="userName"></param>
-        /// <returns></returns>
-        public static User RetrieveUsersByName(string userName)
-        {
-            if (LgbPrincipal.IsWebAdmin(userName)) return new User() { DisplayName = "网站管理员", UserName = userName, Icon = "~/Content/images/uploader/default.jpg" };
-            string key = string.Format("{0}-{1}", RetrieveUsersByNameDataKey, userName);
-            return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RetrieveUsersByNameDataKey), k =>
-            {
-                User user = null;
-                string sql = "select u.ID, UserName, DisplayName, RegisterTime, ApprovedTime, case isnull(d.Code, '') when '' then '~/Content/images/uploader/' else d.Code end + Icon from Users u left join Dicts d on d.Define = '0' and d.Category = N'头像地址' and Name = N'头像路径' where ApprovedTime is not null and UserName = @UserName";
-                DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
-                try
-                {
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserName", userName));
-                    using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
-                    {
-                        if (reader.Read())
-                        {
-                            user = new User()
-                            {
-                                Id = (int)reader[0],
-                                UserName = (string)reader[1],
-                                DisplayName = (string)reader[2],
-                                RegisterTime = (DateTime)reader[3],
-                                ApprovedTime = (DateTime)reader[4],
-                                Icon = (string)reader[5]
-                            };
-                        }
-                    }
-                }
-                catch (Exception ex) { ExceptionManager.Publish(ex); }
-                return user;
-            }, CacheSection.RetrieveDescByKey(RetrieveUsersByNameDataKey));
+            }, CacheSection.RetrieveDescByKey(BootstrapUser.RetrieveUsersDataKey));
         }
         /// <summary>
         /// 查询所有的新注册用户
@@ -368,65 +329,6 @@ namespace Bootstrap.DataAccess
                     string key = string.Format("{0}-{1}", RetrieveUsersByNameDataKey, userName);
                     CacheManager.Clear(k => key == k);
                     ret = true;
-                }
-            }
-            catch (Exception ex)
-            {
-                ExceptionManager.Publish(ex);
-            }
-            return ret;
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
-        public static bool SaveUserInfoByName(User user)
-        {
-            bool ret = false;
-            try
-            {
-                string sql = "Update Users set DisplayName = @DisplayName where UserName = @userName";
-                using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
-                {
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@DisplayName", user.DisplayName));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@userName", user.UserName));
-                    DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
-                    CacheCleanUtility.ClearCache(userIds: string.Empty);
-                    ret = true;
-                }
-            }
-            catch (Exception ex)
-            {
-                ExceptionManager.Publish(ex);
-            }
-            return ret;
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
-        public static bool ChangePassword(User user)
-        {
-            bool ret = false;
-            try
-            {
-                if (BootstrapUser.Authenticate(user.UserName, user.Password))
-                {
-                    string sql = "Update Users set Password = @Password, PassSalt = @PassSalt where UserName = @userName";
-                    user.PassSalt = LgbCryptography.GenerateSalt();
-                    user.NewPassword = LgbCryptography.ComputeHash(user.NewPassword, user.PassSalt);
-                    using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
-                    {
-                        cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Password", user.NewPassword));
-                        cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@PassSalt", user.PassSalt));
-                        cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@userName", user.UserName));
-                        DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
-                        string key = string.Format("{0}-{1}", RetrieveUsersByNameDataKey, user.UserName);
-                        CacheManager.Clear(k => k == key);
-                        ret = true;
-                    }
                 }
             }
             catch (Exception ex)

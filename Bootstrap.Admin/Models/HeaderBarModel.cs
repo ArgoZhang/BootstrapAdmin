@@ -1,4 +1,5 @@
 ﻿using Bootstrap.DataAccess;
+using Bootstrap.Security;
 using System.Web;
 
 namespace Bootstrap.Admin.Models
@@ -10,17 +11,12 @@ namespace Bootstrap.Admin.Models
     {
         public HeaderBarModel()
         {
-            var user = UserHelper.RetrieveUsersByName(HttpContext.Current.User.Identity.Name);
+            var user = BootstrapUser.RetrieveUserByUserName(HttpContext.Current.User.Identity.Name);
             Icon = user.Icon;
             DisplayName = user.DisplayName;
             UserName = user.UserName;
-            UserId = user.Id;
         }
         public string UserName { get; private set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public int UserId { get; private set; }
         /// <summary>
         /// 
         /// </summary>

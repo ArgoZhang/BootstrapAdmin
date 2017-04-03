@@ -1,4 +1,5 @@
-﻿using Longbow.Caching;
+﻿using Bootstrap.Security;
+using Longbow.Caching;
 using Longbow.Caching.Configuration;
 using Longbow.ExceptionManagement;
 using System;
@@ -32,7 +33,7 @@ namespace Bootstrap.DataAccess
                     cacheKeys.Add(string.Format("{0}-{1}", GroupHelper.RetrieveGroupsByRoleIdDataKey, id));
                 });
                 cacheKeys.Add(RoleHelper.RetrieveRolesDataKey + "*");
-                cacheKeys.Add(MenuHelper.RetrieveMenusDataKey + "*");
+                cacheKeys.Add(BootstrapMenu.RetrieveMenusDataKey + "*");
             }
             if (userIds != null)
             {
@@ -40,10 +41,10 @@ namespace Bootstrap.DataAccess
                 {
                     cacheKeys.Add(string.Format("{0}-{1}", RoleHelper.RetrieveRolesByUserIdDataKey, id));
                     cacheKeys.Add(string.Format("{0}-{1}", GroupHelper.RetrieveGroupsByUserIdDataKey, id));
-                    cacheKeys.Add(MenuHelper.RetrieveMenusDataKey);
+                    cacheKeys.Add(BootstrapMenu.RetrieveMenusDataKey + "*");
                 });
                 cacheKeys.Add(UserHelper.RetrieveNewUsersDataKey + "*");
-                cacheKeys.Add(UserHelper.RetrieveUsersDataKey + "*");
+                cacheKeys.Add(BootstrapUser.RetrieveUsersDataKey + "*");
             }
             if (groupIds != null)
             {
@@ -53,7 +54,7 @@ namespace Bootstrap.DataAccess
                     cacheKeys.Add(string.Format("{0}-{1}", UserHelper.RetrieveUsersByGroupIdDataKey, id));
                 });
                 cacheKeys.Add(GroupHelper.RetrieveGroupsDataKey + "*");
-                cacheKeys.Add(MenuHelper.RetrieveMenusDataKey + "*");
+                cacheKeys.Add(BootstrapMenu.RetrieveMenusDataKey + "*");
             }
             if (menuIds != null)
             {
@@ -61,11 +62,11 @@ namespace Bootstrap.DataAccess
                 {
                     cacheKeys.Add(string.Format("{0}-{1}", RoleHelper.RetrieveRolesByMenuIdDataKey, id));
                 });
-                cacheKeys.Add(MenuHelper.RetrieveMenusDataKey + "*");
+                cacheKeys.Add(BootstrapMenu.RetrieveMenusDataKey + "*");
             }
             if (dictIds != null)
             {
-                cacheKeys.Add(DictHelper.RetrieveDictsDataKey + "*");
+                cacheKeys.Add(BootstrapDict.RetrieveDictsDataKey + "*");
             }
             if (logIds != null)
             {
@@ -88,8 +89,10 @@ namespace Bootstrap.DataAccess
                 {
                     try
                     {
-                        var client = new WebClient();
-                        cacheKeys.ForEach(k => client.OpenRead(new Uri(string.Format(ele.Url, k))));
+                        using (var client = new WebClient())
+                        {
+                            cacheKeys.ForEach(k => client.OpenRead(string.Format(ele.Url, k)));
+                        }
                     }
                     catch (Exception ex)
                     {

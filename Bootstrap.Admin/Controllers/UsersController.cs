@@ -1,5 +1,6 @@
 ﻿using Bootstrap.Admin.Models;
 using Bootstrap.DataAccess;
+using Bootstrap.Security;
 using Longbow.Security.Principal;
 using Longbow.Web.Mvc;
 using Newtonsoft.Json.Linq;
@@ -34,15 +35,15 @@ namespace Bootstrap.Admin.Controllers
             if (value.UserStatus == 9)
             {
                 // vlaidate userName
-                return UserHelper.RetrieveUsersByName(value.UserName) == null;
+                return BootstrapUser.RetrieveUserByUserName(value.UserName) == null;
             }
             var ret = false;
             if (value.UserName.Equals(User.Identity.Name, System.StringComparison.OrdinalIgnoreCase) || LgbPrincipal.IsAdmin(User))
             {
                 if (value.UserStatus == 1)
-                    ret = UserHelper.SaveUserInfoByName(value);
+                    ret = BootstrapUser.SaveUserInfoByName(value.UserName, value.DisplayName);
                 else if (value.UserStatus == 2)
-                    ret = UserHelper.ChangePassword(value);
+                    ret = BootstrapUser.ChangePassword(value.UserName, value.Password, value.NewPassword);
             }
             return ret;
         }
@@ -76,9 +77,9 @@ namespace Bootstrap.Admin.Controllers
         /// <param name="userName"></param>
         /// <returns></returns>
         [HttpGet]
-        public User Get(string userName)
+        public BootstrapUser Get(string userName)
         {
-            return UserHelper.RetrieveUsersByName(userName);
+            return BootstrapUser.RetrieveUserByUserName(userName);
         }
         /// <summary>
         /// 
