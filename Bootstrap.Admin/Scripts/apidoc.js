@@ -39,7 +39,7 @@
             return;
         }
         $.ajax({
-            url: '../' + options.url,
+            url: options.url,
             data: options.data,
             type: options.method,
             headers: options.headers,
