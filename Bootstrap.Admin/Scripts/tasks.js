@@ -10,7 +10,7 @@
             callback: function (result) {
                 if (result) {
                     var content = result.map(function (task) {
-                        return $.format(htmlTask, task.TaskName, task.UserName, task.AssignTime, task.ID);
+                        return $.format(htmlTask, task.TaskName, task.UserName, task.AssignTime, task.Id);
                     }).join('');
                     $('#list-task').html(content);
                 }

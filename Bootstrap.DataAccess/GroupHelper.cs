@@ -1,5 +1,4 @@
 ﻿using Longbow.Caching;
-using Longbow.Caching.Configuration;
 using Longbow.Data;
 using Longbow.ExceptionManagement;
 using System;
@@ -27,7 +26,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<Group> RetrieveGroups(int id = 0)
         {
-            var ret = CacheManager.GetOrAdd(RetrieveGroupsDataKey, CacheSection.RetrieveIntervalByKey(RetrieveGroupsDataKey), key =>
+            var ret = CacheManager.GetOrAdd(RetrieveGroupsDataKey, key =>
             {
                 string sql = "select * from Groups";
                 List<Group> groups = new List<Group>();
@@ -49,7 +48,7 @@ namespace Bootstrap.DataAccess
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return groups;
-            }, CacheSection.RetrieveDescByKey(RetrieveGroupsDataKey));
+            });
             return id == 0 ? ret : ret.Where(t => id == t.Id);
         }
         /// <summary>
@@ -115,7 +114,7 @@ namespace Bootstrap.DataAccess
         public static IEnumerable<Group> RetrieveGroupsByUserId(int userId)
         {
             string key = string.Format("{0}-{1}", RetrieveGroupsByUserIdDataKey, userId);
-            var ret = CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RetrieveGroupsByUserIdDataKey), k =>
+            var ret = CacheManager.GetOrAdd(key, k =>
             {
                 string sql = "select g.ID,g.GroupName,g.[Description],case ug.GroupID when g.ID then 'checked' else '' end [status] from Groups g left join UserGroup ug on g.ID=ug.GroupID and UserID=@UserID";
                 List<Group> groups = new List<Group>();
@@ -139,7 +138,7 @@ namespace Bootstrap.DataAccess
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return groups;
-            }, CacheSection.RetrieveDescByKey(RetrieveGroupsByUserIdDataKey));
+            }, RetrieveGroupsByUserIdDataKey);
             return ret;
         }
         /// <summary>
@@ -197,7 +196,7 @@ namespace Bootstrap.DataAccess
         public static IEnumerable<Group> RetrieveGroupsByRoleId(int roleId)
         {
             string k = string.Format("{0}-{1}", RetrieveGroupsByRoleIdDataKey, roleId);
-            return CacheManager.GetOrAdd(k, CacheSection.RetrieveIntervalByKey(RetrieveGroupsByRoleIdDataKey), key =>
+            return CacheManager.GetOrAdd(k, key =>
             {
                 List<Group> groups = new List<Group>();
                 string sql = "select g.ID,g.GroupName,g.[Description],case rg.GroupID when g.ID then 'checked' else '' end [status] from Groups g left join RoleGroup rg on g.ID=rg.GroupID and RoleID=@RoleID";
@@ -221,7 +220,7 @@ namespace Bootstrap.DataAccess
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return groups;
-            }, CacheSection.RetrieveDescByKey(RetrieveGroupsByRoleIdDataKey));
+            }, RetrieveGroupsByRoleIdDataKey);
         }
         /// <summary>
         /// 根据角色ID以及选定的部门ID，保到角色部门表

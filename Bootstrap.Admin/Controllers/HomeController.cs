@@ -28,7 +28,7 @@ namespace Bootstrap.Admin.Controllers
         public ActionResult Lock()
         {
             FormsAuthentication.SignOut();
-            var user = UserHelper.RetrieveUsersByName(User.Identity.Name);
+            var user = BootstrapUser.RetrieveUserByUserName(User.Identity.Name);
             return View(new LockModel
             {
                 UserName = user.UserName,

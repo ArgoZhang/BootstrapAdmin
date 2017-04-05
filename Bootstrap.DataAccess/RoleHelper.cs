@@ -27,7 +27,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<Role> RetrieveRoles(int id = 0)
         {
-            var ret = CacheManager.GetOrAdd(RetrieveRolesDataKey, CacheSection.RetrieveIntervalByKey(RetrieveRolesDataKey), key =>
+            var ret = CacheManager.GetOrAdd(RetrieveRolesDataKey, key =>
             {
                 string sql = "select * from Roles";
                 List<Role> roles = new List<Role>();
@@ -49,7 +49,7 @@ namespace Bootstrap.DataAccess
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return roles;
-            }, CacheSection.RetrieveDescByKey(RetrieveRolesDataKey));
+            });
             return id == 0 ? ret : ret.Where(t => id == t.Id);
         }
         /// <summary>
@@ -107,7 +107,7 @@ namespace Bootstrap.DataAccess
         public static IEnumerable<Role> RetrieveRolesByUserId(int userId)
         {
             string key = string.Format("{0}-{1}", RetrieveRolesByUserIdDataKey, userId);
-            return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RetrieveRolesByUserIdDataKey), k =>
+            return CacheManager.GetOrAdd(key, k =>
             {
                 List<Role> roles = new List<Role>();
                 string sql = "select r.ID, r.RoleName, r.[Description], case ur.RoleID when r.ID then 'checked' else '' end [status] from Roles r left join UserRole ur on r.ID = ur.RoleID and UserID = @UserID";
@@ -131,7 +131,7 @@ namespace Bootstrap.DataAccess
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return roles;
-            }, CacheSection.RetrieveDescByKey(RetrieveRolesByUserIdDataKey));
+            }, RetrieveRolesByUserIdDataKey);
         }
         /// <summary>
         /// 删除角色表
@@ -196,7 +196,7 @@ namespace Bootstrap.DataAccess
         public static IEnumerable<Role> RetrieveRolesByMenuId(int menuId)
         {
             string key = string.Format("{0}-{1}", RetrieveRolesByMenuIdDataKey, menuId);
-            var ret = CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RetrieveRolesByMenuIdDataKey), k =>
+            var ret = CacheManager.GetOrAdd(key, k =>
             {
                 string sql = "select r.ID, r.RoleName, r.[Description], case ur.RoleID when r.ID then 'checked' else '' end [status] from Roles r left join NavigationRole ur on r.ID = ur.RoleID and NavigationID = @NavigationID";
                 List<Role> roles = new List<Role>();
@@ -220,7 +220,7 @@ namespace Bootstrap.DataAccess
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return roles;
-            }, CacheSection.RetrieveDescByKey(RetrieveRolesByMenuIdDataKey));
+            }, RetrieveRolesByMenuIdDataKey);
             return ret;
         }
         public static bool SavaRolesByMenuId(int id, string roleIds)
@@ -272,7 +272,7 @@ namespace Bootstrap.DataAccess
         public static IEnumerable<Role> RetrieveRolesByGroupId(int groupId)
         {
             string key = string.Format("{0}-{1}", RetrieveRolesByGroupIdDataKey, groupId);
-            return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RetrieveRolesByGroupIdDataKey), k =>
+            return CacheManager.GetOrAdd(key, k =>
             {
                 List<Role> roles = new List<Role>();
                 string sql = "select r.ID, r.RoleName, r.[Description], case ur.RoleID when r.ID then 'checked' else '' end [status] from Roles r left join RoleGroup ur on r.ID = ur.RoleID and GroupID = @GroupID";
@@ -296,7 +296,7 @@ namespace Bootstrap.DataAccess
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return roles;
-            }, CacheSection.RetrieveDescByKey(RetrieveRolesByGroupIdDataKey));
+            }, RetrieveRolesByGroupIdDataKey);
         }
 
         /// <summary>

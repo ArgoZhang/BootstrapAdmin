@@ -1,4 +1,5 @@
 ﻿using Bootstrap.DataAccess;
+using Bootstrap.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,13 +10,13 @@ namespace Bootstrap.Admin.Models
     {
         public NavigatorBarModel(string url)
         {
-            Navigations = MenuHelper.RetrieveNavigationsByUserName(UserName).Where(m => m.IsResource == 0);
+            Navigations = BootstrapMenu.RetrieveSystemMenus(UserName);
             Applications = DictHelper.RetrieveApps();
             ActiveMenu(null, Navigations.ToList(), url);
             HomeUrl = "~/Admin/Index";
         }
 
-        private void ActiveMenu(Menu parent, List<Menu> menus, string url)
+        private void ActiveMenu(BootstrapMenu parent, List<BootstrapMenu> menus, string url)
         {
             menus.ForEach(m =>
             {
@@ -27,7 +28,7 @@ namespace Bootstrap.Admin.Models
         /// <summary>
         /// 
         /// </summary>
-        public IEnumerable<Menu> Navigations { get; private set; }
+        public IEnumerable<BootstrapMenu> Navigations { get; private set; }
         /// <summary>
         /// 
         /// </summary>

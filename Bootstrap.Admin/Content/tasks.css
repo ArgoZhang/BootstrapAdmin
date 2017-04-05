@@ -53,7 +53,7 @@
         .tasks-widget .task-list li > .task-title .task-value {
             position: absolute;
             left: 190px;
-            right: 40px;
+            right: 62px;
             top: 15px;
             display: inline-block;
         }
@@ -81,6 +81,11 @@
             padding-top: 12px;
             margin-right: 4px;
         }
+
+            .tasks-widget .task-list li > .task-title .hidden-phone > span {
+                margin-right: 6px;
+                vertical-align: middle;
+            }
 
             .tasks-widget .task-list li > .task-title .hidden-phone button.btn-xs {
                 font-size: 12px;

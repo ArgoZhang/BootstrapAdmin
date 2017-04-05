@@ -1,5 +1,4 @@
 ﻿using Longbow.Caching;
-using Longbow.Caching.Configuration;
 using Longbow.ExceptionManagement;
 using System;
 using System.Collections.Generic;
@@ -17,7 +16,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<Task> RetrieveTasks()
         {
-            return CacheManager.GetOrAdd(RetrieveTasksDataKey, CacheSection.RetrieveIntervalByKey(RetrieveTasksDataKey), key =>
+            return CacheManager.GetOrAdd(RetrieveTasksDataKey, key =>
             {
                 string sql = "select top 1000 t.*, u.DisplayName from Tasks t inner join Users u on t.UserName = u.UserName order by AssignTime desc";
                 List<Task> tasks = new List<Task>();
@@ -44,7 +43,7 @@ namespace Bootstrap.DataAccess
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return tasks;
-            }, CacheSection.RetrieveDescByKey(RetrieveTasksDataKey));
+            });
         }
     }
 }

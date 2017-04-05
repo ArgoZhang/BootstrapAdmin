@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Bootstrap.Security;
+using System;
 
 namespace Bootstrap.DataAccess
 {
     /// <summary>
     /// 用户表实体类
     /// </summary>
-    public class User : Longbow.Security.Principal.LgbUser
+    public class User : BootstrapUser
     {
         /// <summary>
         /// 获得/设置 用户主键ID
@@ -59,10 +60,6 @@ namespace Bootstrap.DataAccess
         /// 获得/设置 拒绝时刻
         /// </summary>
         public string RejectedTime { get; set; }
-        /// <summary>
-        /// 获得/设置 用户头像
-        /// </summary>
-        public string Icon { get; set; }
         /// <summary>
         /// 获得/设置 新密码
         /// </summary>

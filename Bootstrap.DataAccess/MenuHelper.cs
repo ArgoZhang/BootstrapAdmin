@@ -1,9 +1,7 @@
-﻿using Longbow;
+﻿using Bootstrap.Security;
 using Longbow.Caching;
-using Longbow.Caching.Configuration;
 using Longbow.Data;
 using Longbow.ExceptionManagement;
-using Longbow.Security.Principal;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -18,95 +16,7 @@ namespace Bootstrap.DataAccess
     /// </summary>
     public static class MenuHelper
     {
-        internal const string RetrieveMenusDataKey = "MenuHelper-RetrieveMenus";
         private const string RetrieveMenusByRoleIdDataKey = "MenuHelper-RetrieveMenusByRoleId";
-        /// <summary>
-        /// 查询所有菜单信息
-        /// </summary>
-        /// <param name="userName"></param>
-        /// <returns></returns>
-        public static IEnumerable<Menu> RetrieveMenus(string userName = null)
-        {
-            userName = LgbPrincipal.IsWebAdmin(userName) ? string.Empty : userName;
-            string key = string.Format("{0}-{1}", RetrieveMenusDataKey, userName);
-            return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RetrieveMenusDataKey), k =>
-            {
-                List<Menu> menus = new List<Menu>();
-                try
-                {
-                    using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_RetrieveMenus"))
-                    {
-                        cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@userName", DBAccess.ToDBValue(userName), ParameterDirection.Input));
-                        using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
-                        {
-                            while (reader.Read())
-                            {
-                                menus.Add(new Menu()
-                                {
-                                    Id = (int)reader[0],
-                                    ParentId = (int)reader[1],
-                                    Name = (string)reader[2],
-                                    Order = (int)reader[3],
-                                    Icon = LgbConvert.ReadValue(reader[4], string.Empty),
-                                    Url = LgbConvert.ReadValue(reader[5], string.Empty),
-                                    Category = (string)reader[6],
-                                    Target = (string)reader[7],
-                                    IsResource = (bool)reader[8] ? 1 : 0,
-                                    ApplicationCode = reader.IsDBNull(9) ? string.Empty : (string)reader[9],
-                                    CategoryName = (string)reader[10],
-                                    ParentName = LgbConvert.ReadValue(reader[11], string.Empty)
-                                });
-                            }
-                        }
-                    }
-                }
-                catch (Exception ex) { ExceptionManager.Publish(ex); }
-                return menus;
-            }, CacheSection.RetrieveDescByKey(RetrieveMenusDataKey));
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public static IEnumerable<Menu> RetrieveAllMenusByUserName(string userName)
-        {
-            var navs = RetrieveMenus(userName);
-            var root = navs.Where(m => m.ParentId == 0).OrderBy(m => m.Category).ThenBy(m => m.Order);
-            CascadeMenu(navs, root);
-            return root;
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="userName"></param>
-        /// <returns></returns>
-        public static IEnumerable<Menu> RetrieveNavigationsByUserName(string userName)
-        {
-            var navs = RetrieveMenus(userName).Where(m => m.Category == "0");
-            var root = navs.Where(m => m.ParentId == 0).OrderBy(m => m.Order);
-            CascadeMenu(navs, root);
-            return root;
-        }
-        /// <summary>
-        /// 通过当前用户名获得前台菜单
-        /// </summary>
-        /// <param name="userName">当前登陆的用户名</param>
-        /// <returns></returns>
-        public static IEnumerable<Menu> RetrieveLinksByUserName(string userName)
-        {
-            var navs = RetrieveMenus(userName).Where(m => m.Category == "1");
-            var root = navs.Where(m => m.ParentId == 0).OrderBy(m => m.Order);
-            CascadeMenu(navs, root);
-            return root;
-        }
-        private static void CascadeMenu(IEnumerable<Menu> navs, IEnumerable<Menu> level)
-        {
-            level.ToList().ForEach(m =>
-            {
-                m.Menus = navs.Where(sub => sub.ParentId == m.Id).OrderBy(sub => sub.Order);
-                CascadeMenu(navs, m.Menus);
-            });
-        }
         /// <summary>
         /// 删除菜单信息
         /// </summary>
@@ -136,7 +46,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="p"></param>
         /// <returns></returns>
-        public static bool SaveMenu(Menu p)
+        public static bool SaveMenu(BootstrapMenu p)
         {
             if (string.IsNullOrEmpty(p.Name)) return false;
             bool ret = false;
@@ -177,12 +87,12 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="roleId"></param>
         /// <returns></returns>
-        public static IEnumerable<Menu> RetrieveMenusByRoleId(int roleId)
+        public static IEnumerable<BootstrapMenu> RetrieveMenusByRoleId(int roleId)
         {
             string key = string.Format("{0}-{1}", RetrieveMenusByRoleIdDataKey, roleId);
-            return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RetrieveMenusByRoleIdDataKey), k =>
+            return CacheManager.GetOrAdd(key, k =>
             {
-                List<Menu> menus = new List<Menu>();
+                var menus = new List<BootstrapMenu>();
                 try
                 {
                     string sql = "select NavigationID from NavigationRole where RoleID = @RoleID";
@@ -193,7 +103,7 @@ namespace Bootstrap.DataAccess
                         {
                             while (reader.Read())
                             {
-                                menus.Add(new Menu()
+                                menus.Add(new BootstrapMenu()
                                 {
                                     Id = (int)reader[0]
                                 });
@@ -203,7 +113,7 @@ namespace Bootstrap.DataAccess
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return menus;
-            }, CacheSection.RetrieveDescByKey(RetrieveMenusByRoleIdDataKey));
+            }, RetrieveMenusByRoleIdDataKey);
         }
         /// <summary>
         /// 通过角色ID保存当前授权菜单

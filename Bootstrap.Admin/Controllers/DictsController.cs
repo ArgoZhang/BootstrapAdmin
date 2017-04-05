@@ -1,5 +1,6 @@
 ﻿using Bootstrap.Admin.Models;
 using Bootstrap.DataAccess;
+using Bootstrap.Security;
 using Longbow.Security.Principal;
 using Longbow.Web.Mvc;
 using Newtonsoft.Json.Linq;
@@ -17,7 +18,7 @@ namespace Bootstrap.Admin.Controllers
         /// <param name="value"></param>
         /// <returns></returns>
         [HttpGet]
-        public QueryData<Dict> Get([FromUri]QueryDictOption value)
+        public QueryData<BootstrapDict> Get([FromUri]QueryDictOption value)
         {
             return value.RetrieveData();
         }
@@ -27,7 +28,7 @@ namespace Bootstrap.Admin.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public Dict Get(int id)
+        public BootstrapDict Get(int id)
         {
             return DictHelper.RetrieveDicts().FirstOrDefault(t => t.Id == id);
         }
@@ -36,7 +37,7 @@ namespace Bootstrap.Admin.Controllers
         /// </summary>
         /// <param name="value"></param>
         [HttpPost]
-        public bool Post([FromBody]Dict value)
+        public bool Post([FromBody]BootstrapDict value)
         {
             return DictHelper.SaveDict(value);
         }
@@ -46,9 +47,9 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
-        public IEnumerable<Dict> Post(int id, [FromBody]JObject value)
+        public IEnumerable<BootstrapDict> Post(int id, [FromBody]JObject value)
         {
-            IEnumerable<Dict> ret = new List<Dict>();
+            IEnumerable<BootstrapDict> ret = new List<BootstrapDict>();
             dynamic json = value;
             switch ((string)json.type)
             {

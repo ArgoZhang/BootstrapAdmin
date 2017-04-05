@@ -1,5 +1,4 @@
 ﻿using Longbow.Caching;
-using Longbow.Caching.Configuration;
 using Longbow.ExceptionManagement;
 using System;
 using System.Collections.Generic;
@@ -20,7 +19,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<Log> RetrieveLogs(string tId = null)
         {
-            var ret = CacheManager.GetOrAdd(RetrieveLogsDataKey, CacheSection.RetrieveIntervalByKey(RetrieveLogsDataKey), key =>
+            var ret = CacheManager.GetOrAdd(RetrieveLogsDataKey, key =>
             {
                 string sql = "select top 1000 * from Logs";
                 List<Log> logs = new List<Log>();
@@ -46,7 +45,7 @@ namespace Bootstrap.DataAccess
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return logs;
-            }, CacheSection.RetrieveDescByKey(RetrieveLogsDataKey));
+            });
             return string.IsNullOrEmpty(tId) ? ret : ret.Where(t => tId.Equals(t.Id.ToString(), StringComparison.OrdinalIgnoreCase));
         }
         /// <summary>

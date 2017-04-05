@@ -1,5 +1,5 @@
-﻿using Longbow.Caching;
-using Longbow.Caching.Configuration;
+﻿using Bootstrap.Security;
+using Longbow.Caching;
 using Longbow.ExceptionManagement;
 using System;
 using System.Collections.Generic;
@@ -15,39 +15,17 @@ namespace Bootstrap.DataAccess
     /// </summary>
     public static class DictHelper
     {
-        internal const string RetrieveDictsDataKey = "DictHelper-RetrieveDicts";
+        /// <summary>
+        /// 
+        /// </summary>
         private const string RetrieveCategoryDataKey = "DictHelper-RetrieveDictsCategory";
         /// <summary>
-        /// 查询所有字典信息
+        /// 
         /// </summary>
         /// <returns></returns>
-        public static IEnumerable<Dict> RetrieveDicts()
+        public static IEnumerable<BootstrapDict> RetrieveDicts()
         {
-            return CacheManager.GetOrAdd(RetrieveDictsDataKey, CacheSection.RetrieveIntervalByKey(RetrieveDictsDataKey), key =>
-            {
-                string sql = "select ID, Category, Name, Code, Define from Dicts";
-                List<Dict> dicts = new List<Dict>();
-                DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
-                try
-                {
-                    using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
-                    {
-                        while (reader.Read())
-                        {
-                            dicts.Add(new Dict()
-                            {
-                                Id = (int)reader[0],
-                                Category = (string)reader[1],
-                                Name = (string)reader[2],
-                                Code = (string)reader[3],
-                                Define = (int)reader[4]
-                            });
-                        }
-                    }
-                }
-                catch (Exception ex) { ExceptionManager.Publish(ex); }
-                return dicts;
-            }, CacheSection.RetrieveDescByKey(RetrieveDictsDataKey));
+            return BootstrapDict.RetrieveDicts();
         }
         /// <summary>
         /// 删除字典中的数据
@@ -80,7 +58,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="p"></param>
         /// <returns></returns>
-        public static bool SaveDict(Dict p)
+        public static bool SaveDict(BootstrapDict p)
         {
             bool ret = false;
             if (p.Category.Length > 50) p.Category = p.Category.Substring(0, 50);
@@ -129,7 +107,7 @@ namespace Bootstrap.DataAccess
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Category", category));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
-                CacheManager.Clear(key => key.Contains(RetrieveDictsDataKey));
+                CacheCleanUtility.ClearCache(dictIds: string.Empty);
                 ret = true;
             }
             catch (DbException ex)
@@ -142,11 +120,11 @@ namespace Bootstrap.DataAccess
         /// 获取字典分类名称
         /// </summary>
         /// <returns></returns>
-        public static IEnumerable<Dict> RetrieveCategories()
+        public static IEnumerable<BootstrapDict> RetrieveCategories()
         {
-            return CacheManager.GetOrAdd(RetrieveCategoryDataKey, CacheSection.RetrieveIntervalByKey(RetrieveCategoryDataKey), key =>
+            return CacheManager.GetOrAdd(RetrieveCategoryDataKey, key =>
             {
-                var ret = new List<Dict>();
+                var ret = new List<BootstrapDict>();
                 string sql = "select distinct Category from Dicts";
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                 try
@@ -155,13 +133,13 @@ namespace Bootstrap.DataAccess
                     {
                         while (reader.Read())
                         {
-                            ret.Add(new Dict() { Category = (string)reader[0] });
+                            ret.Add(new BootstrapDict() { Category = (string)reader[0] });
                         }
                     }
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return ret;
-            }, CacheSection.RetrieveDescByKey(RetrieveCategoryDataKey));
+            });
         }
         /// <summary>
         /// 
@@ -170,7 +148,7 @@ namespace Bootstrap.DataAccess
         public static string RetrieveWebTitle()
         {
             var settings = RetrieveDicts();
-            return (settings.FirstOrDefault(d => d.Name == "网站标题" && d.Category == "网站设置" && d.Define == 0) ?? new Dict() { Code = "后台管理系统" }).Code;
+            return (settings.FirstOrDefault(d => d.Name == "网站标题" && d.Category == "网站设置" && d.Define == 0) ?? new BootstrapDict() { Code = "后台管理系统" }).Code;
         }
         /// <summary>
         /// 
@@ -179,13 +157,13 @@ namespace Bootstrap.DataAccess
         public static string RetrieveWebFooter()
         {
             var settings = RetrieveDicts();
-            return (settings.FirstOrDefault(d => d.Name == "网站页脚" && d.Category == "网站设置" && d.Define == 0) ?? new Dict() { Code = "2016 © 通用后台管理系统" }).Code;
+            return (settings.FirstOrDefault(d => d.Name == "网站页脚" && d.Category == "网站设置" && d.Define == 0) ?? new BootstrapDict() { Code = "2016 © 通用后台管理系统" }).Code;
         }
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public static IEnumerable<Dict> RetrieveWebCss()
+        public static IEnumerable<BootstrapDict> RetrieveWebCss()
         {
             var data = RetrieveDicts();
             return data.Where(d => d.Category == "网站样式");
@@ -194,7 +172,7 @@ namespace Bootstrap.DataAccess
         /// 
         /// </summary>
         /// <returns></returns>
-        public static IEnumerable<Dict> RetrieveActiveCss()
+        public static IEnumerable<BootstrapDict> RetrieveActiveCss()
         {
             var data = RetrieveDicts();
             return data.Where(d => d.Name == "使用样式" && d.Category == "当前样式" && d.Define == 0 && !d.Code.Equals("site.css", StringComparison.OrdinalIgnoreCase));
@@ -203,10 +181,10 @@ namespace Bootstrap.DataAccess
         /// 获取头像路径
         /// </summary>
         /// <returns></returns>
-        public static Dict RetrieveIconFolderPath()
+        public static BootstrapDict RetrieveIconFolderPath()
         {
             var data = RetrieveDicts();
-            return data.FirstOrDefault(d => d.Name == "头像路径" && d.Category == "头像地址" && d.Define == 0) ?? new Dict() { Code = "~/Content/images/uploader/" };
+            return data.FirstOrDefault(d => d.Name == "头像路径" && d.Category == "头像地址" && d.Define == 0) ?? new BootstrapDict() { Code = "~/Content/images/uploader/" };
         }
         /// <summary>
         /// 获得默认的前台首页地址，默认为~/Home/Index
@@ -215,7 +193,7 @@ namespace Bootstrap.DataAccess
         public static string RetrieveHomeUrl()
         {
             var settings = RetrieveDicts();
-            return (settings.FirstOrDefault(d => d.Name == "前台首页" && d.Category == "网站设置" && d.Define == 0) ?? new Dict() { Code = "~/Home/Index" }).Code;
+            return (settings.FirstOrDefault(d => d.Name == "前台首页" && d.Category == "网站设置" && d.Define == 0) ?? new BootstrapDict() { Code = "~/Home/Index" }).Code;
         }
         /// <summary>
         /// 

@@ -1,4 +1,4 @@
-﻿using Bootstrap.DataAccess;
+﻿using Bootstrap.Security;
 using Longbow.Web.Mvc;
 using System.Linq;
 
@@ -23,9 +23,9 @@ namespace Bootstrap.Admin.Models
         /// </summary>
         public string IsResource { get; set; }
 
-        public QueryData<Menu> RetrieveData(string userName)
+        public QueryData<BootstrapMenu> RetrieveData(string userName)
         {
-            var data = MenuHelper.RetrieveMenus(userName);
+            var data = BootstrapMenu.RetrieveMenusByUserName(userName);
             if (!string.IsNullOrEmpty(ParentName))
             {
                 data = data.Where(t => t.ParentName.Contains(ParentName));
@@ -42,7 +42,7 @@ namespace Bootstrap.Admin.Models
             {
                 data = data.Where(t => t.IsResource.ToString() == IsResource);
             }
-            var ret = new QueryData<Menu>();
+            var ret = new QueryData<BootstrapMenu>();
             ret.total = data.Count();
             switch (Sort)
             {

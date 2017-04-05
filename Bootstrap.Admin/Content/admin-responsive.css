@@ -28,7 +28,7 @@
         top: 94px;
         bottom: 40px;
         position: absolute;
-        overflow-y: auto;
+        overflow: auto;
     }
 
     .form-group .form-control-url {
@@ -78,7 +78,7 @@
         top: 94px;
         bottom: 40px;
         position: absolute;
-        overflow-y: auto;
+        overflow: auto;
     }
 
     .main-content {

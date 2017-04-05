@@ -1,6 +1,5 @@
 ﻿using Longbow;
 using Longbow.Caching;
-using Longbow.Caching.Configuration;
 using Longbow.ExceptionManagement;
 using System;
 using System.Collections.Generic;
@@ -23,7 +22,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         private static IEnumerable<Message> RetrieveMessages(string userName)
         {
-            var messageRet = CacheManager.GetOrAdd(RetrieveMessageDataKey, CacheSection.RetrieveIntervalByKey(RetrieveMessageDataKey), key =>
+            var messageRet = CacheManager.GetOrAdd(RetrieveMessageDataKey, key =>
             {
                 string sql = "select m.*, d.Name, isnull(i.Code + u.Icon, '~/Content/images/uploader/default.jpg'), u.DisplayName from [Messages] m left join Dicts d on m.Label = d.Code and d.Category = N'消息标签' and d.Define = 0 left join Dicts i on i.Category = N'头像地址' and i.Name = N'头像路径' and i.Define = 0 inner join Users u on m.[From] = u.UserName where [To] = @UserName or [From] = @UserName order by m.SendTime desc";
                 List<Message> messages = new List<Message>();
@@ -57,7 +56,7 @@ namespace Bootstrap.DataAccess
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return messages;
 
-            }, CacheSection.RetrieveDescByKey(RetrieveMessageDataKey));
+            });
             return messageRet.OrderByDescending(n => n.SendTime);
         }
         /// <summary>

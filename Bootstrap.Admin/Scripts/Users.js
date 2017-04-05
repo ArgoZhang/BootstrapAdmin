@@ -75,7 +75,7 @@
             }]
         },
         callback: function (data) {
-            if (data && data.success && data.oper === 'save' && data.data.ID === $('#userId').val()) {
+            if (data && data.success && data.oper === 'save' && data.UserName == $('#userDisplayName').attr('data-userName')) {
                 $('#userDisplayName').text(data.data.DisplayName);
             }
             if (data && data.oper === 'create') {
@@ -90,11 +90,17 @@
     $('table').smartTable({
         url: User.url,            //请求后台的URL（*）
         sortName: 'DisplayName',
+        sortOrder: "asc",
         queryParams: function (params) { return $.extend(params, { name: $("#txt_search_name").val(), displayName: $('#txt_display_name').val() }); },           //传递参数（*）
-        columns: [{ checkbox: true },
+        columns: [
+            { checkbox: true },
             { title: "Id", field: "Id", events: bsa.idEvents(), formatter: BootstrapAdmin.idFormatter },
             { title: "登陆名称", field: "UserName", sortable: true },
-            { title: "显示名称", field: "DisplayName", sortable: true }
+            { title: "显示名称", field: "DisplayName", sortable: true },
+            { title: "注册时间", field: "RegisterTime", sortable: true },
+            { title: "授权时间", field: "ApprovedTime", sortable: true },
+            { title: "授权人", field: "ApprovedBy", sortable: true },
+            { title: "说明", field: "Description", sortable: false }
         ]
     });
 
@@ -124,8 +130,8 @@
             maxlength: 50
         }
     }, {
-        userName: {
-            remote: "此登陆名称已存在"
-        }
-    });
+            userName: {
+                remote: "此登陆名称已存在"
+            }
+        });
 });
