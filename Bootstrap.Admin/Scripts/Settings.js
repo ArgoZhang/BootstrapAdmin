@@ -145,7 +145,7 @@
                                 default:
                                     break;
                             }
-                            return $.format(html, ele.Interval, ele.Key, ele.Desc, ele.Value, css, options.url, Math.max(1, 600 - Math.round((new Date() - new Date(ele.CreateTime)) / 1000)));
+                            return $.format(html, ele.Interval, ele.Key, ele.Desc, ele.Value, css, options.url, Math.max(0, ele.Interval - Math.round((new Date() - new Date(ele.CreateTime)) / 1000)));
                         }).join('');
                         $sortable.append($.format('<li class="title">{0}-{1}</li>', options.item.Desc, options.item.Key));
                         $sortable.append(content);
