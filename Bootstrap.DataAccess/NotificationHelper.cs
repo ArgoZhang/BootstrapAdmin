@@ -1,6 +1,5 @@
 ﻿using Longbow;
 using Longbow.Caching;
-using Longbow.Caching.Configuration;
 using Longbow.ExceptionManagement;
 using System;
 using System.Collections.Generic;
@@ -22,7 +21,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<Notification> RetrieveNotifications()
         {
-            var notifies = CacheManager.GetOrAdd(RetrieveNotificationsDataKey, CacheSection.RetrieveIntervalByKey(RetrieveNotificationsDataKey), key =>
+            var notifies = CacheManager.GetOrAdd(RetrieveNotificationsDataKey, key =>
             {
                 string sql = "select * from Notifications";
                 List<Notification> notifications = new List<Notification>();
@@ -51,7 +50,7 @@ namespace Bootstrap.DataAccess
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return notifications;
 
-            }, CacheSection.RetrieveDescByKey(RetrieveNotificationsDataKey));
+            });
             notifies.AsParallel().ForAll(n =>
             {
                 var ts = DateTime.Now - n.RegisterTime;

@@ -1,6 +1,5 @@
 ﻿using Bootstrap.Security;
 using Longbow.Caching;
-using Longbow.Caching.Configuration;
 using Longbow.Data;
 using Longbow.ExceptionManagement;
 using System;
@@ -91,7 +90,7 @@ namespace Bootstrap.DataAccess
         public static IEnumerable<BootstrapMenu> RetrieveMenusByRoleId(int roleId)
         {
             string key = string.Format("{0}-{1}", RetrieveMenusByRoleIdDataKey, roleId);
-            return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RetrieveMenusByRoleIdDataKey), k =>
+            return CacheManager.GetOrAdd(key, k =>
             {
                 var menus = new List<BootstrapMenu>();
                 try
@@ -114,7 +113,7 @@ namespace Bootstrap.DataAccess
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return menus;
-            }, CacheSection.RetrieveDescByKey(RetrieveMenusByRoleIdDataKey));
+            }, RetrieveMenusByRoleIdDataKey);
         }
         /// <summary>
         /// 通过角色ID保存当前授权菜单

@@ -1,7 +1,6 @@
 ﻿using Bootstrap.Security;
 using Longbow;
 using Longbow.Caching;
-using Longbow.Caching.Configuration;
 using Longbow.Data;
 using Longbow.ExceptionManagement;
 using Longbow.Security;
@@ -30,7 +29,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<User> RetrieveUsers()
         {
-            return CacheManager.GetOrAdd(BootstrapUser.RetrieveUsersDataKey, CacheSection.RetrieveIntervalByKey(BootstrapUser.RetrieveUsersDataKey), key =>
+            return CacheManager.GetOrAdd(BootstrapUser.RetrieveUsersDataKey, key =>
             {
                 List<User> users = new List<User>();
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, "select ID, UserName, DisplayName, RegisterTime, ApprovedTime, ApprovedBy, Description from Users Where ApprovedTime is not null");
@@ -55,7 +54,7 @@ namespace Bootstrap.DataAccess
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return users;
-            }, CacheSection.RetrieveDescByKey(BootstrapUser.RetrieveUsersDataKey));
+            });
         }
         /// <summary>
         /// 查询所有的新注册用户
@@ -63,7 +62,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<User> RetrieveNewUsers()
         {
-            return CacheManager.GetOrAdd(RetrieveNewUsersDataKey, CacheSection.RetrieveIntervalByKey(RetrieveNewUsersDataKey), key =>
+            return CacheManager.GetOrAdd(RetrieveNewUsersDataKey, key =>
             {
                 string sql = "select ID, UserName, DisplayName, RegisterTime, [Description] from Users Where ApprovedTime is null and RejectedTime is null order by RegisterTime desc";
                 List<User> users = new List<User>();
@@ -87,7 +86,7 @@ namespace Bootstrap.DataAccess
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return users;
-            }, CacheSection.RetrieveDescByKey(RetrieveNewUsersDataKey));
+            });
         }
         /// <summary>
         /// 删除用户
@@ -161,7 +160,7 @@ namespace Bootstrap.DataAccess
         public static IEnumerable<User> RetrieveUsersByRoleId(int roleId)
         {
             string key = string.Format("{0}-{1}", RetrieveUsersByRoleIdDataKey, roleId);
-            return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RetrieveUsersByNameDataKey), k =>
+            return CacheManager.GetOrAdd(key, k =>
             {
                 List<User> users = new List<User>();
                 string sql = "select u.ID, u.UserName, u.DisplayName, case ur.UserID when u.ID then 'checked' else '' end [status] from Users u left join UserRole ur on u.ID = ur.UserID and RoleID = @RoleID where u.ApprovedTime is not null";
@@ -185,7 +184,7 @@ namespace Bootstrap.DataAccess
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return users;
-            }, CacheSection.RetrieveDescByKey(RetrieveUsersByRoleIdDataKey));
+            }, RetrieveUsersByRoleIdDataKey);
         }
         /// <summary>
         /// 通过角色ID保存当前授权用户（插入）
@@ -239,7 +238,7 @@ namespace Bootstrap.DataAccess
         public static IEnumerable<User> RetrieveUsersByGroupId(int groupId)
         {
             string key = string.Format("{0}-{1}", RetrieveUsersByGroupIdDataKey, groupId);
-            return CacheManager.GetOrAdd(key, CacheSection.RetrieveIntervalByKey(RetrieveUsersByGroupIdDataKey), k =>
+            return CacheManager.GetOrAdd(key, k =>
             {
                 List<User> users = new List<User>();
                 string sql = "select u.ID, u.UserName, u.DisplayName, case ur.UserID when u.ID then 'checked' else '' end [status] from Users u left join UserGroup ur on u.ID = ur.UserID and GroupID =@groupId where u.ApprovedTime is not null";
@@ -263,7 +262,7 @@ namespace Bootstrap.DataAccess
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return users;
-            }, CacheSection.RetrieveDescByKey(RetrieveUsersByRoleIdDataKey));
+            }, RetrieveUsersByRoleIdDataKey);
         }
         /// <summary>
         /// 通过部门ID保存当前授权用户（插入）

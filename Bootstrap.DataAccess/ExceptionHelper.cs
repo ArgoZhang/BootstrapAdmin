@@ -1,5 +1,4 @@
 ﻿using Longbow.Caching;
-using Longbow.Caching.Configuration;
 using Longbow.Data;
 using Longbow.ExceptionManagement;
 using System;
@@ -53,7 +52,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<Exceptions> RetrieveExceptions()
         {
-            return CacheManager.GetOrAdd(RetrieveExceptionsDataKey, CacheSection.RetrieveIntervalByKey(RetrieveExceptionsDataKey), key =>
+            return CacheManager.GetOrAdd(RetrieveExceptionsDataKey, key =>
             {
                 string sql = "select top 1000 * from Exceptions order by LogTime desc";
                 List<Exceptions> exceptions = new List<Exceptions>();
@@ -81,7 +80,7 @@ namespace Bootstrap.DataAccess
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return exceptions;
-            }, CacheSection.RetrieveDescByKey(RetrieveExceptionsDataKey));
+            });
         }
     }
 }

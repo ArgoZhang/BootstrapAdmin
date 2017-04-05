@@ -1,6 +1,5 @@
 ﻿using Bootstrap.Security;
 using Longbow.Caching;
-using Longbow.Caching.Configuration;
 using Longbow.ExceptionManagement;
 using System;
 using System.Collections.Generic;
@@ -123,7 +122,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<BootstrapDict> RetrieveCategories()
         {
-            return CacheManager.GetOrAdd(RetrieveCategoryDataKey, CacheSection.RetrieveIntervalByKey(RetrieveCategoryDataKey), key =>
+            return CacheManager.GetOrAdd(RetrieveCategoryDataKey, key =>
             {
                 var ret = new List<BootstrapDict>();
                 string sql = "select distinct Category from Dicts";
@@ -140,7 +139,7 @@ namespace Bootstrap.DataAccess
                 }
                 catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return ret;
-            }, CacheSection.RetrieveDescByKey(RetrieveCategoryDataKey));
+            });
         }
         /// <summary>
         /// 
