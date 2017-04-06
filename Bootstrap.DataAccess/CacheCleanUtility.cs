@@ -1,11 +1,9 @@
 ﻿using Bootstrap.Security;
 using Longbow.Caching;
 using Longbow.Caching.Configuration;
-using Longbow.ExceptionManagement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 
 namespace Bootstrap.DataAccess
 {
@@ -81,29 +79,8 @@ namespace Bootstrap.DataAccess
                 cacheKeys.Add(ExceptionHelper.RetrieveExceptionsDataKey + "*");
             }
 
-            cacheKeys.AsParallel().ForAll(key => CacheManager.Clear(k => key.EndsWith("*") ? k.Contains(key.TrimEnd('*')) : k.Equals(key)));
-            System.Threading.Tasks.Task.Factory.StartNew(() =>
-            {
-                var section = CacheListSection.GetSection();
-                section.Items.Where(item => item.Enabled).Skip(1).AsParallel().ForAll(ele =>
-                {
-                    try
-                    {
-                        using (var client = new WebClient())
-                        {
-                            cacheKeys.ForEach(k => client.OpenRead(string.Format(ele.Url, k)));
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        System.Collections.Specialized.NameValueCollection nv = new System.Collections.Specialized.NameValueCollection();
-                        nv["ErrorPage"] = ele.Url;
-                        nv["UserId"] = "system";
-                        nv["UserIp"] = "::1";
-                        ExceptionManager.Publish(ex, nv);
-                    }
-                });
-            });
+            CacheManager.Clear(k => cacheKeys.Any(key => key.EndsWith("*") ? k.Contains(key.TrimEnd('*')) : key == k));
+            CacheListSection.ClearCache(cacheKeys);
         }
     }
 }
