@@ -75,7 +75,7 @@
             }]
         },
         callback: function (data) {
-            if (data && data.success && data.oper === 'save') {
+            if (data && data.success && data.oper === 'save' && data.UserName == $('#userDisplayName').attr('data-userName')) {
                 $('#userDisplayName').text(data.data.DisplayName);
             }
             if (data && data.oper === 'create') {
