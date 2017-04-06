@@ -43,15 +43,18 @@ namespace Bootstrap.Admin.Controllers
             WebSocket socket = arg.WebSocket;
             while (socket.State == WebSocketState.Open)
             {
-                if (!NotificationHelper.Push)
+                if (NotificationHelper.MessagePool.IsEmpty)
                 {
                     await System.Threading.Tasks.Task.Delay(300);
                     continue;
                 }
-                ArraySegment<byte> buffer = new ArraySegment<byte>(new byte[1024]);
-                buffer = new ArraySegment<byte>(Encoding.UTF8.GetBytes(NotificationHelper.Message.ToString()));
-                await socket.SendAsync(buffer, WebSocketMessageType.Text, true, CancellationToken.None);
-                NotificationHelper.Push = false;
+                var msg = new MessageBody();
+                if (NotificationHelper.MessagePool.TryDequeue(out msg))
+                {
+                    ArraySegment<byte> buffer = new ArraySegment<byte>(new byte[1024]);
+                    buffer = new ArraySegment<byte>(Encoding.UTF8.GetBytes(msg.ToString()));
+                    await socket.SendAsync(buffer, WebSocketMessageType.Text, true, CancellationToken.None);
+                }
             }
         }
     }

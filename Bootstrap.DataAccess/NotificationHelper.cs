@@ -2,6 +2,7 @@
 using Longbow.Caching;
 using Longbow.ExceptionManagement;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
@@ -14,7 +15,14 @@ namespace Bootstrap.DataAccess
     /// </summary>
     public static class NotificationHelper
     {
+        /// <summary>
+        /// 
+        /// </summary>
         internal const string RetrieveNotificationsDataKey = "NotificationHelper-RetrieveNotifications";
+        /// <summary>
+        /// 
+        /// </summary>
+        public static readonly ConcurrentQueue<MessageBody> MessagePool = new ConcurrentQueue<MessageBody>();
         /// <summary>
         /// 新用户注册的通知的面板显示
         /// </summary>
@@ -111,22 +119,6 @@ namespace Bootstrap.DataAccess
                 ExceptionManager.Publish(ex);
             }
             return ret;
-        }
-        /// <summary>
-        /// 推送的消息
-        /// </summary>
-        public static MessageBody Message { get; private set; }
-        /// <summary>
-        /// 获得/设置 是否推送消息
-        /// </summary>
-        public static bool Push { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public static void PushMessage(MessageBody message)
-        {
-            Push = true;
-            Message = message;
         }
     }
     /// <summary>
