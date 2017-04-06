@@ -1,4 +1,5 @@
 ﻿using Bootstrap.DataAccess;
+using Longbow.Caching;
 using Longbow.ExceptionManagement;
 using Longbow.ExceptionManagement.Configuration;
 using System;
@@ -21,6 +22,7 @@ namespace Bootstrap.Admin
         {
             if (publisherElement.Mode == PublisherMode.Off) return;
             ExceptionHelper.Log(ex, additionalInfo);
+            CacheManager.Clear(k => k == ExceptionHelper.RetrieveExceptionsDataKey);
         }
     }
 }

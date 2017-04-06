@@ -14,7 +14,10 @@ namespace Bootstrap.DataAccess
     /// </summary>
     public static class ExceptionHelper
     {
-        internal const string RetrieveExceptionsDataKey = "ExceptionHelper-RetrieveExceptions";
+        /// <summary>
+        /// 
+        /// </summary>
+        public static readonly string RetrieveExceptionsDataKey = "ExceptionHelper-RetrieveExceptions";
         /// <summary>
         /// 
         /// </summary>
@@ -32,7 +35,7 @@ namespace Bootstrap.DataAccess
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@AppDomainName", AppDomain.CurrentDomain.FriendlyName));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ErrorPage", additionalInfo["ErrorPage"]));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserID", DBAccess.ToDBValue(additionalInfo["UserId"])));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserIp", additionalInfo["UserIp"]));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserIp", DBAccess.ToDBValue(additionalInfo["UserIp"])));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ExceptionType", ex.GetType().FullName));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Message", ex.Message));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@StackTrace", DBAccess.ToDBValue(ex.StackTrace), ParameterDirection.Input));
@@ -68,8 +71,8 @@ namespace Bootstrap.DataAccess
                                 Id = (int)reader[0],
                                 AppDomainName = (string)reader[1],
                                 ErrorPage = (string)reader[2],
-                                UserId = (string)reader[3],
-                                UserIp = (string)reader[4],
+                                UserId = reader.IsDBNull(3) ? string.Empty : (string)reader[3],
+                                UserIp = reader.IsDBNull(4) ? string.Empty : (string)reader[4],
                                 ExceptionType = (string)reader[5],
                                 Message = (string)reader[6],
                                 StackTrace = (string)reader[7],
