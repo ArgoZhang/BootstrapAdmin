@@ -2,6 +2,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section css {
+    <link href="~/Content/toastr.css" rel="stylesheet" />
     <link href="~/Content/admin.css" rel="stylesheet" />
     <link href="~/Content/admin-responsive.css" rel="stylesheet" />
     @RenderSection("css", false)
@@ -12,6 +13,7 @@
     <script src="~/Scripts/jquery.nicescroll.min.js"></script>
     <script src="~/Scripts/common-scripts.js"></script>
     <script src="~/Scripts/log.js"></script>
+    <script src="~/Scripts/toastr.min.js"></script>
     <script src="~/Scripts/framework.js"></script>
     @RenderSection("Javascript", false)
 }

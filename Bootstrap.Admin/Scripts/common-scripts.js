@@ -33,11 +33,98 @@
                     callback();
                 }
             });
+        },
+        resetWidget() {
+            var widgets = $(this).children('li');
+            widgets.each(function () {
+                var widget = $(this).children('ul');
+                if (widget.children().length === 3) return;
+                var last = widget.children(':last');
+                while (widget.children().length > 3) {
+                    widget.children(':eq(2)').remove();
+                }
+            });
+            return $(this);
+        }
+    });
+
+    $.extend({
+        reloadWidget() {
+            $.bc({
+                url: Notifications.url,
+                swal: false,
+                method: 'GET',
+                callback: function (result) {
+                    $('#logoutNoti').text(result.NewUsersCount);
+                    $('.notify-row').resetWidget();
+                    // tasks
+                    // new users
+                    $('#msgHeaderTask').text(result.TasksCount);
+                    $('#msgHeaderTaskBadge').text(result.TasksCount);
+                    var htmlUserTemplate = '<li><a href="../Admin/Tasks?id={3}"><span class="desc">{0}-{2}</span><span class="percent">{1}%</span></span><div class="progress progress-striped"><div class="progress-bar" role="progressbar" aria-valuenow="{1}" aria-valuemin="0" aria-valuemax="100" style="width: {1}%"><span class="sr-only">{1}% 完成</span></div></div></a></li>';
+                    var html = result.Tasks.map(function (u) {
+                        return $.format(htmlUserTemplate, u.TaskName, u.TaskProgress, u.AssignDisplayName, u.Id);
+                    }).join('');
+                    $(html).insertAfter($('#msgHeaderTaskContent'));
+
+                    // new users
+                    $('#msgHeaderUser').text(result.NewUsersCount);
+                    $('#msgHeaderUserBadge').text(result.NewUsersCount);
+                    htmlUserTemplate = '<li><a href="../Admin/Notifications"><span class="label label-success"><i class="fa fa-plus"></i></span><div title="{2}" class="content">{1}({0})</div><span class="small italic">{3}</span></a></li>';
+                    html = result.Users.map(function (u) {
+                        return $.format(htmlUserTemplate, u.UserName, u.DisplayName, u.Description, u.Period);
+                    }).join('');
+                    $(html).insertAfter($('#msgHeaderUserContent'));
+
+                    // apps
+                    $('#msgHeaderApp').text(result.AppExceptionsCount);
+                    $('#msgHeaderAppBadge').text(result.AppExceptionsCount);
+                    htmlUserTemplate = '<li><a href="../Admin/Exceptions"><span class="label label-warning"><i class="fa fa-bug"></i></span><div title="{1}" class="content">{0}</div><span class="small italic">{2}</span></a></li>';
+                    html = result.Apps.map(function (u) {
+                        return $.format(htmlUserTemplate, u.ExceptionType, u.Message, u.Period);
+                    }).join('');
+                    $(html).insertAfter($('#msgHeaderAppContent'));
+
+                    // dbs
+                    $('#msgHeaderDb').text(result.DbExceptionsCount);
+                    $('#msgHeaderDbBadge').text(result.DbExceptionsCount);
+                    htmlUserTemplate = '<li><a href="../Admin/Exceptions"><span class="label label-danger"><i class="fa fa-bolt"></i></span><div title="{1}" class="content">{0}</div><span class="small italic">{2}</span></a></li>';
+                    html = result.Dbs.map(function (u) {
+                        return $.format(htmlUserTemplate, u.ErrorPage, u.Message, u.Period);
+                    }).join('');
+                    $(html).insertAfter($('#msgHeaderDbContent'));
+
+                    // messages
+                    $('#msgHeaderMsg').text(result.MessagesCount);
+                    $('#msgHeaderMsgBadge').text(result.MessagesCount);
+                    htmlUserTemplate = '<li><a href="../Admin/Messages?id={0}"><span class="photo"><img alt="avatar" src="{1}"></span><span class="subject"><span class="from">{2}</span><span class="time">{4}</span></span><span class="message" title="{5}">{3}</span></a></li>';
+                    html = result.Messages.map(function (u) {
+                        return $.format(htmlUserTemplate, u.Id, u.FromIcon, u.FromDisplayName, u.Title, u.Period, u.Content);
+                    }).join('');
+                    $(html).insertAfter($('#msgHeaderMsgContent'));
+                }
+            });
         }
     });
 })(jQuery);
 
 $(function () {
+    toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "progressBar": true,
+        "positionClass": "toast-bottom-right",
+        "onclick": null,
+        "showDuration": "600",
+        "hideDuration": "2000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }
+
     var $sidebar = $("#sidebar");
     var $main = $('#main-content');
     var $breadNav = $('#breadNav');
@@ -90,58 +177,24 @@ $(function () {
     $('.lgbDropdown').lgbDropdown();
 
     // load widget data
-    $.bc({
-        url: Notifications.url,
-        swal: false,
-        method: 'GET',
-        callback: function (result) {
-            $('#logoutNoti').text(result.NewUsersCount);
+    $.reloadWidget();
 
-            // tasks
-            // new users
-            $('#msgHeaderTask').text(result.TasksCount);
-            $('#msgHeaderTaskBadge').text(result.TasksCount);
-            var htmlUserTemplate = '<li><a href="../Admin/Tasks?id={3}"><span class="desc">{0}-{2}</span><span class="percent">{1}%</span></span><div class="progress progress-striped"><div class="progress-bar" role="progressbar" aria-valuenow="{1}" aria-valuemin="0" aria-valuemax="100" style="width: {1}%"><span class="sr-only">{1}% 完成</span></div></div></a></li>';
-            var html = result.Tasks.map(function (u) {
-                return $.format(htmlUserTemplate, u.TaskName, u.TaskProgress, u.AssignDisplayName, u.Id);
-            }).join('');
-            $(html).insertAfter($('#msgHeaderTaskContent'));
-
-            // new users
-            $('#msgHeaderUser').text(result.NewUsersCount);
-            $('#msgHeaderUserBadge').text(result.NewUsersCount);
-            htmlUserTemplate = '<li><a href="../Admin/Notifications"><span class="label label-success"><i class="fa fa-plus"></i></span><div title="{2}" class="content">{1}({0})</div><span class="small italic">{3}</span></a></li>';
-            html = result.Users.map(function (u) {
-                return $.format(htmlUserTemplate, u.UserName, u.DisplayName, u.Description, u.Period);
-            }).join('');
-            $(html).insertAfter($('#msgHeaderUserContent'));
-
-            // apps
-            $('#msgHeaderApp').text(result.AppExceptionsCount);
-            $('#msgHeaderAppBadge').text(result.AppExceptionsCount);
-            htmlUserTemplate = '<li><a href="../Admin/Exceptions"><span class="label label-warning"><i class="fa fa-bug"></i></span><div title="{1}" class="content">{0}</div><span class="small italic">{2}</span></a></li>';
-            html = result.Apps.map(function (u) {
-                return $.format(htmlUserTemplate, u.ExceptionType, u.Message, u.Period);
-            }).join('');
-            $(html).insertAfter($('#msgHeaderAppContent'));
-
-            // dbs
-            $('#msgHeaderDb').text(result.DbExceptionsCount);
-            $('#msgHeaderDbBadge').text(result.DbExceptionsCount);
-            htmlUserTemplate = '<li><a href="../Admin/Exceptions"><span class="label label-danger"><i class="fa fa-bolt"></i></span><div title="{1}" class="content">{0}</div><span class="small italic">{2}</span></a></li>';
-            html = result.Dbs.map(function (u) {
-                return $.format(htmlUserTemplate, u.ErrorPage, u.Message, u.Period);
-            }).join('');
-            $(html).insertAfter($('#msgHeaderDbContent'));
-
-            // messages
-            $('#msgHeaderMsg').text(result.MessagesCount);
-            $('#msgHeaderMsgBadge').text(result.MessagesCount);
-            htmlUserTemplate = '<li><a href="../Admin/Messages?id={0}"><span class="photo"><img alt="avatar" src="{1}"></span><span class="subject"><span class="from">{2}</span><span class="time">{4}</span></span><span class="message" title="{5}">{3}</span></a></li>';
-            html = result.Messages.map(function (u) {
-                return $.format(htmlUserTemplate, u.Id, u.FromIcon, u.FromDisplayName, u.Title, u.Period, u.Content);
-            }).join('');
-            $(html).insertAfter($('#msgHeaderMsgContent'));
+    var ws = new WebSocket($.format("ws://{0}/api/WS", window.location.host));
+    ws.onerror = function (error) {
+        console.log(error);
+    };
+    ws.onmessage = function (msg) {
+        console.log(msg.data);
+        var data = msg.data.split(';');
+        if (data.length !== 2) return;
+        switch (data[0]) {
+            case "Notification":
+                toastr.error(data[1], "应用程序出现错误");
+                $.reloadWidget();
+                break;
         }
-    });
+    };
+    ws.onclose = function () {
+        console.log("Disconnected!");
+    };
 });
