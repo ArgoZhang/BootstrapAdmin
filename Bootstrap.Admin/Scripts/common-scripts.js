@@ -192,6 +192,10 @@ $(function () {
                 toastr.error(data[1], "应用程序出现错误");
                 $.reloadWidget();
                 break;
+            case "Users":
+                toastr.info(data[1], "新用户注册");
+                $.reloadWidget();
+                break;
         }
     };
     ws.onclose = function () {
