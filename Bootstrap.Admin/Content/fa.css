@@ -218,6 +218,24 @@
             margin-right: 10px;
         }
 
+.logitem {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.logfile {
+    color: #d41404;
+    white-space: nowrap;
+}
+
+    .logfile:focus, .logfile:active, .logfile:hover {
+        color: red;
+    }
+
+    .logfile span {
+        margin-left: 4px;
+    }
+
 @media (min-width: 375px) {
     .icon-content .modal-footer span {
         display: inline-block;

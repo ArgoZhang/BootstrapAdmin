@@ -2,19 +2,6 @@
     display: inline-block;
 }
 
-.logfile {
-    color: #d41404;
-    white-space: nowrap;
-}
-
-    .logfile:focus, .logfile:active, .logfile:hover {
-        color: red;
-    }
-
-    .logfile span {
-        margin-left: 4px;
-    }
-
 .logTs, .logSql, .logDbExcep {
     color: red;
     font-weight: 600;
