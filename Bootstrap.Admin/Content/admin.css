@@ -302,7 +302,7 @@ aside {
 
         .toolbar .dropdown-menu a {
             border-left: none;
-            padding: 0 8px;
+            padding: 0 14px;
             display: table-cell;
             color: #504d4d;
         }
