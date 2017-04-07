@@ -255,12 +255,11 @@
 
 @media (min-height: 672px) {
     .icon-content.menu-content {
-        height: 600px;
         top: 0;
         bottom: 0;
     }
 
     .modal .modal-dialog .menu-content .modal-body {
-        max-height: 486px;
+        max-height: 600px;
     }
 }
