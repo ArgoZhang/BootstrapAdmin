@@ -23,7 +23,7 @@ namespace Bootstrap.Admin
             if (publisherElement.Mode == PublisherMode.Off) return;
             ExceptionHelper.Log(ex, additionalInfo);
             CacheManager.Clear(k => k == ExceptionHelper.RetrieveExceptionsDataKey);
-            NotificationHelper.MessagePool.Enqueue(new MessageBody() { Category = "Notification", Message = ex.Message });
+            NotificationHelper.MessagePool.Add(new MessageBody() { Category = "Notification", Message = ex.Message });
         }
     }
 }

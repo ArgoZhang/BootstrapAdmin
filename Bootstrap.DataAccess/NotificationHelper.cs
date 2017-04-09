@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
+using System.Net.WebSockets;
+using System.Threading;
 
 namespace Bootstrap.DataAccess
 {
@@ -22,7 +24,7 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 
         /// </summary>
-        public static readonly ConcurrentQueue<MessageBody> MessagePool = new ConcurrentQueue<MessageBody>();
+        public static readonly ConcurrentBag<MessageBody> MessagePool = new ConcurrentBag<MessageBody>();
         /// <summary>
         /// 新用户注册的通知的面板显示
         /// </summary>
@@ -124,8 +126,20 @@ namespace Bootstrap.DataAccess
     /// <summary>
     /// 
     /// </summary>
-    public class MessageBody
+    public class MessageBody : IDisposable
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        public MessageBody()
+        {
+            timer = new Timer(state =>
+            {
+                var msg = this;
+                NotificationHelper.MessagePool.TryTake(out msg);
+            }, null, 5000, Timeout.Infinite);
+        }
+        private Timer timer = null;
         /// <summary>
         /// 
         /// </summary>
@@ -140,7 +154,26 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public override string ToString()
         {
-            return string.Format("{0};{1}", Category, Message);
+            return string.Format("{0};{1}-{2}", Category, Message);
+        }
+        private void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (timer != null)
+                {
+                    timer.Dispose();
+                    timer = null;
+                }
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }

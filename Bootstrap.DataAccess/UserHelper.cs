@@ -145,7 +145,7 @@ namespace Bootstrap.DataAccess
                 }
                 CacheCleanUtility.ClearCache(userIds: p.Id == 0 ? string.Empty : p.Id.ToString());
                 ret = true;
-                if (p.UserStatus == 1) NotificationHelper.MessagePool.Enqueue(new MessageBody() { Category = "Users", Message = string.Format("{0}-{1}", p.UserName, p.Description) });
+                if (p.UserStatus == 1) NotificationHelper.MessagePool.Add(new MessageBody() { Category = "Users", Message = string.Format("{0}-{1}", p.UserName, p.Description) });
             }
             catch (DbException ex)
             {

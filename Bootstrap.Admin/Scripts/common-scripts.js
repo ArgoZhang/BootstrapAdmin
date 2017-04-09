@@ -34,7 +34,7 @@
                 }
             });
         },
-        resetWidget() {
+        resetWidget: function () {
             var widgets = $(this).children('li');
             widgets.each(function () {
                 var widget = $(this).children('ul');
@@ -49,7 +49,37 @@
     });
 
     $.extend({
-        reloadWidget() {
+        pullNotification: function () {
+            if ($('.notify-row').length == 0) return;
+            setTimeout(function () {
+                NProgress.status = true;
+                NProgress.configure({ trickle: false });
+                $.bc({
+                    url: '../api/WS',
+                    method: 'GET',
+                    swal: false,
+                    callback: function (result) {
+                        NProgress.status = false;
+                        for (index in result) {
+                            var cate = result[index].Category;
+                            var msg = result[index].Message;
+                            switch (cate) {
+                                case "Notification":
+                                    toastr.error(msg, "应用程序出现错误");
+                                    break;
+                                case "Users":
+                                    toastr.info(msg, "新用户注册");
+                                    break;
+                            }
+                        };
+                        if (result.length > 0) $.reloadWidget();
+                        $.pullNotification();
+                    }
+                });
+            }, 5000);
+        },
+        reloadWidget: function () {
+            if ($('.notify-row').length == 0) return;
             $.bc({
                 url: Notifications.url,
                 swal: false,
@@ -178,27 +208,5 @@ $(function () {
 
     // load widget data
     $.reloadWidget();
-
-    var ws = new WebSocket($.format("ws://{0}/api/WS", window.location.host));
-    ws.onerror = function (error) {
-        console.log(error);
-    };
-    ws.onmessage = function (msg) {
-        console.log(msg.data);
-        var data = msg.data.split(';');
-        if (data.length !== 2) return;
-        switch (data[0]) {
-            case "Notification":
-                toastr.error(data[1], "应用程序出现错误");
-                $.reloadWidget();
-                break;
-            case "Users":
-                toastr.info(data[1], "新用户注册");
-                $.reloadWidget();
-                break;
-        }
-    };
-    ws.onclose = function () {
-        console.log("Disconnected!");
-    };
+    $.pullNotification();
 });
