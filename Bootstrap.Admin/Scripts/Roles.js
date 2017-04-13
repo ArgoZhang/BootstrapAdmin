@@ -120,10 +120,11 @@
         url: Role.url,            //请求后台的URL（*）
         sortName: 'RoleName',
         queryParams: function (params) { return $.extend(params, { roleName: $("#txt_search_name").val(), description: $("#txt_role_desc").val() }); },           //传递参数（*）
-        columns: [{ checkbox: true },
-        { title: "Id", field: "Id", events: bsa.idEvents(), formatter: BootstrapAdmin.idFormatter },
-        { title: "角色名称", field: "RoleName", sortable: true },
-        { title: "角色描述", field: "Description", sortable: false }
+        columns: [
+            { checkbox: true },
+            { title: "编辑", field: "Id", events: bsa.idEvents(), formatter: BootstrapAdmin.idFormatter },
+            { title: "角色名称", field: "RoleName", sortable: true },
+            { title: "角色描述", field: "Description", sortable: false }
         ]
     });
 

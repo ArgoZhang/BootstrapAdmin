@@ -19,7 +19,7 @@
         queryParams: function (params) { return $.extend(params, { category: $('#txt_dict_cate').val(), name: $("#txt_dict_name").val(), define: $("#txt_dict_define").val() }); },
         columns: [
             { checkbox: true },
-            { title: "Id", field: "Id", events: bsa.idEvents(), formatter: BootstrapAdmin.idFormatter },
+            { title: "编辑", field: "Id", events: bsa.idEvents(), formatter: BootstrapAdmin.idFormatter },
             { title: "字典标签", field: "Category", sortable: true },
             { title: "字典名称", field: "Name", sortable: true },
             { title: "字典代码", field: "Code", sortable: true },
