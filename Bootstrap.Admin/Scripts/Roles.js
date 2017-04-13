@@ -16,7 +16,7 @@
         url: Role.url,
         dataEntity: new DataEntity({
             map: {
-                ID: "roleID",
+                Id: "roleID",
                 RoleName: "roleName",
                 Description: "roleDesc"
             }
