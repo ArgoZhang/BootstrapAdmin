@@ -35,7 +35,7 @@ namespace Bootstrap.Admin.Controllers
             if (value.UserStatus == 9)
             {
                 // vlaidate userName
-                return BootstrapUser.RetrieveUserByUserName(value.UserName) == null;
+                return BootstrapUser.RetrieveUserByUserName(value.UserName) == null && !UserHelper.RetrieveNewUsers().Any(u => u.UserName == value.UserName);
             }
             var ret = false;
             if (value.UserName.Equals(User.Identity.Name, System.StringComparison.OrdinalIgnoreCase) || LgbPrincipal.IsAdmin(User))
