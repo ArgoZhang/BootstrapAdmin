@@ -75,6 +75,7 @@
     right: 15px;
     z-index: 1051;
     display: none;
+    min-height: 240px;
 }
 
     .icon-content .fa-nav {
@@ -256,7 +257,7 @@
         margin-right: 160px;
     }
 
-    .icon-content.menu-content {
+    .menu-content {
         top: 0;
         right: auto;
         bottom: 0;
@@ -266,18 +267,17 @@
 }
 
 @media (min-width: 940px) {
-    .icon-content.menu-content {
+    .menu-content {
         width: 900px;
     }
 }
 
 @media (min-height: 672px) {
-    .icon-content.menu-content {
-        top: 0;
-        bottom: 0;
+    .menu-content {
+        height: 600px;
     }
 
-    .modal .modal-dialog .menu-content .modal-body {
-        max-height: 600px;
+    .modal .menu-content .modal-body {
+        height: 490px;
     }
 }
