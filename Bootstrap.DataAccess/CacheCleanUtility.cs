@@ -9,7 +9,6 @@ namespace Bootstrap.DataAccess
 {
     internal static class CacheCleanUtility
     {
-        private const string BootstrapAdminPrincipalDataKey = "BootstrapAdminPrincipal-*";
         /// <summary>
         /// 
         /// </summary>
@@ -34,7 +33,7 @@ namespace Bootstrap.DataAccess
                 });
                 cacheKeys.Add(RoleHelper.RetrieveRolesDataKey + "*");
                 cacheKeys.Add(BootstrapMenu.RetrieveMenusDataKey + "*");
-                cacheKeys.Add(BootstrapAdminPrincipalDataKey);
+                cacheKeys.Add(BootstrapAdminRolePrincipal.RetrieveAllRolesDataKey + "*");
             }
             if (userIds != null)
             {
@@ -56,7 +55,7 @@ namespace Bootstrap.DataAccess
                 });
                 cacheKeys.Add(GroupHelper.RetrieveGroupsDataKey + "*");
                 cacheKeys.Add(BootstrapMenu.RetrieveMenusDataKey + "*");
-                cacheKeys.Add(BootstrapAdminPrincipalDataKey);
+                cacheKeys.Add(BootstrapAdminRolePrincipal.RetrieveAllRolesDataKey + "*");
             }
             if (menuIds != null)
             {
