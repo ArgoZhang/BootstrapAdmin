@@ -77,6 +77,7 @@ namespace Bootstrap.Admin.Controllers
         /// </summary>
         /// <returns></returns>
         [OutputCache(CacheProfile = "IconView")]
+        [AllowAnonymous]
         public PartialViewResult IconView()
         {
             Response.Cache.SetOmitVaryStar(true);
