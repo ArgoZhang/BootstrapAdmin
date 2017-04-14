@@ -23,7 +23,16 @@ a, a:hover, a:focus {
 
 .dropdown-menu {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.176);
+    padding: 0;
 }
+
+    .dropdown-menu > li > a {
+        padding: 6px 20px;
+    }
+
+    .dropdown-menu .divider {
+        margin: 1px 0;
+    }
 
 .card-view:not(:last-child) {
     margin-bottom: 6px;
@@ -47,7 +56,6 @@ a, a:hover, a:focus {
         margin-top: 7px;
         float: right;
     }
-
 
         .header > .dropdown > a {
             border: 1px solid #eee;
@@ -80,7 +88,6 @@ a, a:hover, a:focus {
             top: 50px;
             left: auto;
             right: 0;
-            padding: 0;
         }
 
             .header > .dropdown .dropdown-menu li {
@@ -237,7 +244,6 @@ a, a:hover, a:focus {
         top: 32px;
         left: -74px;
         width: 235px;
-        padding: 0;
         border: none;
     }
 
