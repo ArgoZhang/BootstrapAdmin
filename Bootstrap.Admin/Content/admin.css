@@ -56,6 +56,11 @@
         vertical-align: middle;
     }
 
+.modal-body {
+    height: 160px;
+    overflow: auto;
+}
+
 .modal-dialog .modal-body, .panel-body {
     padding-bottom: 0;
 }

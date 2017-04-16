@@ -90,7 +90,7 @@
         right: 0;
         top: 46px;
         bottom: 65px;
-        overflow: auto;
+        max-height: none;
         -webkit-overflow-scrolling: touch;
     }
 
