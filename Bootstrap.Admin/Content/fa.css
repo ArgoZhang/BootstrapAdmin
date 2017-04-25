@@ -75,7 +75,6 @@
     right: 15px;
     z-index: 1051;
     display: none;
-    min-height: 240px;
 }
 
     .icon-content .fa-nav {
@@ -90,7 +89,7 @@
         right: 0;
         top: 46px;
         bottom: 65px;
-        max-height: none;
+        overflow: auto;
         -webkit-overflow-scrolling: touch;
     }
 
@@ -138,15 +137,15 @@
         margin-bottom: 20px;
     }
 
-.modal .modal-dialog .menu-content {
+.modal .modal-dialog .icon-content {
     position: static;
 }
 
-    .modal .modal-dialog .menu-content .modal-body {
+    .modal .modal-dialog .icon-content .modal-body {
         position: static;
     }
 
-    .modal .modal-dialog .menu-content .modal-footer {
+    .modal .modal-dialog .icon-content .modal-footer {
         position: static;
     }
 
@@ -255,29 +254,5 @@
 
     .fa-icons {
         margin-right: 160px;
-    }
-
-    .menu-content {
-        top: 0;
-        right: auto;
-        bottom: 0;
-        left: auto;
-        width: 600px;
-    }
-}
-
-@media (min-width: 940px) {
-    .menu-content {
-        width: 900px;
-    }
-}
-
-@media (min-height: 672px) {
-    .menu-content {
-        height: 600px;
-    }
-
-    .modal .menu-content .modal-body {
-        height: 490px;
     }
 }

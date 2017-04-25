@@ -56,10 +56,6 @@
         vertical-align: middle;
     }
 
-.modal-body {
-    height: 160px;
-    overflow: auto;
-}
 
 .modal-dialog .modal-body, .panel-body {
     padding-bottom: 0;
@@ -79,6 +75,12 @@
 
 .modal .modal-dialog {
     padding: 0 15px;
+}
+
+.modal .modal-body {
+    max-height: 164px;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .modal.file-zoom-dialog .modal-dialog {
