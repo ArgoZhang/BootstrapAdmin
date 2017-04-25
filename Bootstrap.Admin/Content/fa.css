@@ -236,6 +236,17 @@
         margin-left: 4px;
     }
 
+.modal-header > h4 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-right: 20px;
+}
+
+.ex-content {
+    word-break: break-all;
+}
+
 @media (min-width: 375px) {
     .icon-content .modal-footer span {
         display: inline-block;
