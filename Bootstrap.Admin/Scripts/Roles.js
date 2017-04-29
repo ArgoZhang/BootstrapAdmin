@@ -144,6 +144,6 @@
             if (child.hasClass('dd-list')) {
                 child.find(':checkbox').prop('checked', val);
             }
-        }).find('label:last').hide();
+        }).children('.radio').hide();
     });
 });

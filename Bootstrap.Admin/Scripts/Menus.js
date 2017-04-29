@@ -18,7 +18,7 @@
 
     var initNestMenu = function () {
         $nestMenuInput = $nestMenu.find('div.dd3-content');
-        $nestMenuInput.find('label:first').hide();
+        $nestMenuInput.children('.checkbox').hide();
     }
 
     var bsa = new BootstrapAdmin({

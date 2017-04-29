@@ -176,6 +176,8 @@
             .dd3-content label span i {
                 width: 22px;
                 display: inline-block;
+                text-align: center;
+                margin-right: 4px;
             }
 
         .dd3-content label input {
