@@ -2,12 +2,14 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section css {
+    <link href="~/Content/sweetalert.css" rel="stylesheet" />
     <link href="~/Content/toastr.css" rel="stylesheet" />
     <link href="~/Content/admin.css" rel="stylesheet" />
     <link href="~/Content/admin-responsive.css" rel="stylesheet" />
     @RenderSection("css", false)
 }
 @section javascript {
+    <script src="~/Scripts/sweetalert.js"></script>
     <script src="~/Scripts/jquery.dcjqaccordion.2.7.js"></script>
     <script src="~/Scripts/jquery.scrollTo.js"></script>
     <script src="~/Scripts/jquery.nicescroll.min.js"></script>
