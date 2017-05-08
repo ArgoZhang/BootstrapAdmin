@@ -140,7 +140,7 @@
                         success(result);
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        lgbSwal({ title: errorThrown, text: XMLHttpRequest.responseJSON.Message, type: 'error' });
+                        if (XMLHttpRequest.responseJSON) lgbSwal({ title: errorThrown, text: XMLHttpRequest.responseJSON.Message, type: 'error' });
                     }
                 });
             }
