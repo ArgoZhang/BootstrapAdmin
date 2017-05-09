@@ -33,7 +33,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>Longbow.Utility.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\..\Keys\Longbow.Utility.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <DelaySign>true</DelaySign>
@@ -80,8 +80,10 @@
     <Compile Include="UserHelper.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Keys\Longbow.Utility.snk">
+      <Link>Longbow.Utility.snk</Link>
+    </None>
     <None Include="ClassDiagram1.cd" />
-    <None Include="Longbow.Utility.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

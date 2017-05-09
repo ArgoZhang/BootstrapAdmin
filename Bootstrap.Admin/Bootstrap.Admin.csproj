@@ -198,6 +198,9 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="..\..\Keys\Longbow.Utility.snk">
+      <Link>Longbow.Utility.snk</Link>
+    </Content>
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
@@ -290,7 +293,6 @@
     <Content Include="Views\Shared\_Normal.cshtml" />
     <Content Include="Views\Shared\_Admin.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Longbow.Utility.snk" />
     <Content Include="Views\Shared\_Default.cshtml" />
     <Content Include="Views\Admin\Users.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
@@ -350,7 +352,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>Longbow.Utility.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\..\Keys\Longbow.Utility.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <DelaySign>true</DelaySign>
