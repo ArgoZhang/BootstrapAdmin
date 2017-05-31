@@ -486,3 +486,7 @@ input[type="datetime"] {
 .input-group.form_date span {
     border-left: none;
 }
+
+.barTable {
+    padding: 5px 15px 15px 15px;
+}
