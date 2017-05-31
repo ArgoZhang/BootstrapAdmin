@@ -40,13 +40,19 @@ a, a:hover, a:focus {
 
 .header {
     padding: 0 15px;
-    height: 94px;
+    height: 98px;
     background: #fff;
-    border-bottom: 1px solid #f1f2f7;
+    border-bottom: 1px solid #ddd;
     top: 0;
     left: 0;
     right: 0;
 }
+
+    .header .bg {
+        background-color: #337ab7;
+        height: 4px;
+        margin: 0 -15px;
+    }
 
     .header a {
         transition: all .25s linear;
@@ -405,12 +411,11 @@ a, a:hover, a:focus {
 
 .breadcrumb {
     position: absolute;
-    top: 56px;
+    top: 60px;
     left: 15px;
     right: 15px;
-    border-color: #ddd;
+    border: solid 1px #ddd;
     border-width: 1px 0 0 0;
-    border-style: solid;
     background-color: transparent;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
@@ -433,7 +438,7 @@ a, a:hover, a:focus {
     left: 0;
     bottom: 40px;
     right: 0;
-    top: 94px;
+    top: 98px;
     overflow: hidden;
 }
 

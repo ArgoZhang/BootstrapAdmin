@@ -142,7 +142,7 @@
     left: 0;
     bottom: 40px;
     right: 0;
-    top: 94px;
+    top: 98px;
 }
 
     .main-content.open {
@@ -166,7 +166,7 @@ aside {
     transform: translate(-100%);
     height: 100%;
     position: absolute;
-    top: 94px;
+    top: 98px;
     bottom: 40px;
     left: 0;
     right: 0;
