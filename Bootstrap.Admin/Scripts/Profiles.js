@@ -26,8 +26,8 @@
             maxlength: 50
         }
     }, {
-        button: ['btnSaveDisplayName']
-    });
+            button: ['btnSaveDisplayName']
+        });
     $('#passwordDataForm').autoValidate({
         currentPassword: {
             required: true,
@@ -43,8 +43,8 @@
             maxlength: 50
         }
     }, {
-        button: ['btnSavePassword']
-    });
+            button: ['btnSavePassword']
+        });
 
     var bsa = new BootstrapAdmin({
         url: Profiles.url,
@@ -54,7 +54,8 @@
                 Password: "currentPassword",
                 NewPassword: "newPassword",
                 DisplayName: "displayName",
-                UserName: "userName"
+                UserName: "userName",
+                Css: "css"
             }
         }),
         click: {
@@ -80,6 +81,12 @@
                             }
                         });
                     }
+                }
+            }, {
+                id: 'btnSaveCss',
+                click: function (row, data) {
+                    data.UserStatus = 3;
+                    $.bc({ url: User.url, method: "PUT", data: data, title: "保存样式" });
                 }
             }]
         }

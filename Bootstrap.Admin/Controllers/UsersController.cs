@@ -32,6 +32,10 @@ namespace Bootstrap.Admin.Controllers
         [HttpPut]
         public bool Put([FromBody]User value)
         {
+            if(value.UserStatus == 3)
+            {
+                return UserHelper.SaveUserCssByName(value.UserName, value.Css);
+            }
             if (value.UserStatus == 9)
             {
                 // vlaidate userName

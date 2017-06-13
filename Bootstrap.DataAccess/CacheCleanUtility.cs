@@ -83,8 +83,25 @@ namespace Bootstrap.DataAccess
                 cacheKeys.Add(ExceptionHelper.RetrieveExceptionsDataKey + "*");
             }
 
-            CacheManager.Clear(k => cacheKeys.Any(key => key.EndsWith("*") ? k.Contains(key.TrimEnd('*')) : key == k));
-            CacheListSection.ClearCache(cacheKeys);
+            ClearCache(cacheKeys);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        internal static void ClearCache(string key)
+        {
+            CacheManager.Clear(k => key.EndsWith("*") ? k.Contains(key.TrimEnd('*')) : key == k);
+            CacheListSection.ClearCache(key);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="keys"></param>
+        internal static void ClearCache(IEnumerable<string> keys)
+        {
+            CacheManager.Clear(k => keys.Any(key => key.EndsWith("*") ? k.Contains(key.TrimEnd('*')) : key == k));
+            CacheListSection.ClearCache(keys);
         }
     }
 }
