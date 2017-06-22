@@ -160,7 +160,7 @@ namespace Bootstrap.DataAccess
             return (settings.FirstOrDefault(d => d.Name == "网站页脚" && d.Category == "网站设置" && d.Define == 0) ?? new BootstrapDict() { Code = "2016 © 通用后台管理系统" }).Code;
         }
         /// <summary>
-        /// 
+        /// 获得系统中配置的可以使用的网站样式
         /// </summary>
         /// <returns></returns>
         public static IEnumerable<BootstrapDict> RetrieveWebCss()
@@ -169,7 +169,7 @@ namespace Bootstrap.DataAccess
             return data.Where(d => d.Category == "网站样式");
         }
         /// <summary>
-        /// 
+        /// 获得网站设置中的当前样式
         /// </summary>
         /// <returns></returns>
         public static IEnumerable<BootstrapDict> RetrieveActiveCss()
