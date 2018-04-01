@@ -65,10 +65,6 @@ namespace Bootstrap.DataAccess
         /// </summary>
         public string NewPassword { get; set; }
         /// <summary>
-        /// 获得/设置 使用的样式
-        /// </summary>
-        public string Css { get; set; }
-        /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
