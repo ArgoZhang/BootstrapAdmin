@@ -17,11 +17,11 @@ namespace Bootstrap.Admin.Models
             UserName = user.UserName;
             Css = user.Css;
         }
-        public string UserName { get; }
+        public string UserName { get; private set; }
         /// <summary>
         /// 
         /// </summary>
-        public string DisplayName { get; }
+        public string DisplayName { get; private set; }
         /// <summary>
         /// 
         /// </summary>
@@ -29,10 +29,10 @@ namespace Bootstrap.Admin.Models
         /// <summary>
         /// 获得/设置 用户头像地址
         /// </summary>
-        public string Icon { get; }
+        public string Icon { get; private set; }
         /// <summary>
         /// 
         /// </summary>
-        public string Css { get; }
+        public string Css { get; private set; }
     }
 }
