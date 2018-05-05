@@ -69,7 +69,7 @@
     };
 
     BootstrapAdmin.idFormatter = function (value, row, index) {
-        return "<a class='edit' href='javascript:void(0)'>" + value + "</a>";
+        return "<a class='edit' title='" + value + "' href='javascript:void(0)'>编辑</a>";
     };
 
     BootstrapAdmin.prototype = {

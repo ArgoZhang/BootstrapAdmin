@@ -123,6 +123,8 @@
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\html\api.html" />
     <Content Include="Content\images\error_icon.png" />
+    <Content Include="Content\toastr.css" />
+    <Content Include="Content\toastr.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Content\admin-responsive.css" />
     <Content Include="Content\admin.css" />
@@ -196,6 +198,9 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="..\..\Keys\Longbow.Utility.snk">
+      <Link>Longbow.Utility.snk</Link>
+    </Content>
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
@@ -228,6 +233,7 @@
     <Content Include="Scripts\sweetalert.min.js" />
     <Content Include="Scripts\tasks.js" />
     <Content Include="Scripts\apidoc.js" />
+    <Content Include="Scripts\toastr.min.js" />
     <Content Include="Scripts\Users.js" />
     <Content Include="packages.config" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
@@ -262,6 +268,7 @@
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\TasksController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Controllers\WSController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -286,7 +293,6 @@
     <Content Include="Views\Shared\_Normal.cshtml" />
     <Content Include="Views\Shared\_Admin.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Longbow.Utility.snk" />
     <Content Include="Views\Shared\_Default.cshtml" />
     <Content Include="Views\Admin\Users.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
@@ -307,7 +313,6 @@
     <Content Include="Views\Admin\Logs.cshtml" />
     <Content Include="Views\Admin\Settings.cshtml" />
     <Content Include="Views\Shared\Footer.cshtml" />
-    <Content Include="Views\Shared\MenuTree.cshtml" />
     <Content Include="Views\Shared\NavigatorConfig.cshtml" />
     <Content Include="Views\Shared\SubNavigation.cshtml" />
     <Content Include="Views\Home\Lock.cshtml" />
@@ -323,6 +328,7 @@
     <Content Include="Views\Shared\SubMenu.cshtml" />
     <Content Include="Views\Admin\Api.cshtml" />
     <Content Include="Views\Shared\_ButtonBarGroup.cshtml" />
+    <Content Include="Scripts\toastr.js.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -345,7 +351,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>Longbow.Utility.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\..\Keys\Longbow.Utility.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <DelaySign>true</DelaySign>

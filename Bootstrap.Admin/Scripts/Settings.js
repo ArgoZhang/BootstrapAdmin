@@ -57,16 +57,14 @@
                 id: 'cssSave',
                 click: function (row, data) {
                     var cssDefine = $('#dictCssDefine').val();
-                    if (cssDefine) {
-                        $.bc({
-                            url: Settings.url, data: { name: '使用样式', code: cssDefine, category: '当前样式' }, title: '网站样式',
-                            callback: function (result) {
-                                if (result) {
-                                    window.setTimeout(function () { window.location.reload(true); }, 1000);
-                                }
+                    $.bc({
+                        url: Settings.url, data: { name: '使用样式', code: cssDefine, category: '当前样式' }, title: '网站样式',
+                        callback: function (result) {
+                            if (result) {
+                                window.setTimeout(function () { window.location.reload(true); }, 1000);
                             }
-                        });
-                    }
+                        }
+                    });
                 }
             }]
         }
@@ -145,7 +143,7 @@
                                 default:
                                     break;
                             }
-                            return $.format(html, ele.Interval, ele.Key, ele.Desc, ele.Value, css, options.url, Math.max(0, ele.Interval - Math.round((new Date() - new Date(ele.CreateTime)) / 1000)));
+                            return $.format(html, ele.Interval, ele.Key, ele.Desc, ele.Value, css, options.url, Math.max(0, ele.Interval - Math.round((new Date() - new Date(ele.CreateTime.replace(/-/g, '/'))) / 1000)));
                         }).join('');
                         $sortable.append($.format('<li class="title">{0}-{1}</li>', options.item.Desc, options.item.Key));
                         $sortable.append(content);
@@ -167,7 +165,7 @@
         Id: 1, url: Dicts.url, data: { type: 'css' }, swal: false,
         callback: function (result) {
             var html = result.map(function (ele, index) { return $.format('<li><a href="#" data-val="{1}">{0}</a></li>', ele.Name, ele.Code); }).join('');
-            $('#cssContainer').html(html);
+            $('#cssContainer').append(html);
             $.bc({
                 Id: 1, url: Dicts.url, data: { type: 'activeCss' }, swal: false,
                 callback: function (result) {

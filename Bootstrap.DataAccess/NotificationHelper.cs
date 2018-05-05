@@ -2,10 +2,13 @@
 using Longbow.Caching;
 using Longbow.ExceptionManagement;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
+using System.Net.WebSockets;
+using System.Threading;
 
 namespace Bootstrap.DataAccess
 {
@@ -14,7 +17,14 @@ namespace Bootstrap.DataAccess
     /// </summary>
     public static class NotificationHelper
     {
+        /// <summary>
+        /// 
+        /// </summary>
         internal const string RetrieveNotificationsDataKey = "NotificationHelper-RetrieveNotifications";
+        /// <summary>
+        /// 
+        /// </summary>
+        public static readonly ConcurrentBag<MessageBody> MessagePool = new ConcurrentBag<MessageBody>();
         /// <summary>
         /// 新用户注册的通知的面板显示
         /// </summary>
@@ -111,6 +121,59 @@ namespace Bootstrap.DataAccess
                 ExceptionManager.Publish(ex);
             }
             return ret;
+        }
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    public class MessageBody : IDisposable
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        public MessageBody()
+        {
+            timer = new Timer(state =>
+            {
+                var msg = this;
+                NotificationHelper.MessagePool.TryTake(out msg);
+            }, null, 5000, Timeout.Infinite);
+        }
+        private Timer timer = null;
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Message { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Category { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return string.Format("{0};{1}-{2}", Category, Message);
+        }
+        private void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (timer != null)
+                {
+                    timer.Dispose();
+                    timer = null;
+                }
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }

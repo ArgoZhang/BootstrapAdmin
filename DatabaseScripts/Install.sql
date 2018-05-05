@@ -29,6 +29,7 @@ CREATE TABLE [dbo].[Users](
 	[RejectedTime] [datetime] NULL,
 	[RejectedReason] [nvarchar](50) NULL,
 	[Icon] [varchar](50) NOT NULL,
+	[Css] [varchar](50) NULL,
  CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
@@ -258,8 +259,8 @@ CREATE TABLE [dbo].[Exceptions](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
 	[AppDomainName] [varchar](50) NOT NULL,
 	[ErrorPage] [varchar](50) NOT NULL,
-	[UserID] [varchar](50) NOT NULL,
-	[UserIp] [varchar](15) NOT NULL,
+	[UserID] [varchar](50) NULL,
+	[UserIp] [varchar](15) NULL,
 	[ExceptionType] [nvarchar](max) NOT NULL,
 	[Message] [nvarchar](max) NOT NULL,
 	[StackTrace] [nvarchar](max) NULL,

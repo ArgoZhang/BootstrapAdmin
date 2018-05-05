@@ -5,13 +5,11 @@
 }
 @section Javascript {
     <script src="~/Scripts/longbow.dataentity.js"></script>
-    <script src="~/Scripts/sweetalert.js"></script>
     <script src="~/Scripts/jquery.validate.js"></script>
     <script src="~/Scripts/messages_zh.js"></script>
     <script src="~/Scripts/Settings.js"></script>
 }
 @section css {
-    <link href="~/Content/sweetalert.css" rel="stylesheet" />
     <link href="~/Content/tasks.css" rel="stylesheet" />
 }
 <div class="panel panel-default">
@@ -48,12 +46,12 @@
                 <div class="form-group col-xs-12">
                     <label class="control-label">网站样式</label>
                     <div class="dropdown lgbDropdown">
-                        <a id="dictCssDefine" class="btn btn-success" data-toggle="dropdown" data-default-val="site.css">
+                        <a id="dictCssDefine" class="btn btn-success" data-toggle="dropdown" data-default-val="">
                             <span>默认样式</span>
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu" id="cssContainer">
-                            <li><a href="#" data-val="site.css">默认样式</a></li>
+                            <li><a href="#" data-val="">默认样式</a></li>
                         </ul>
                     </div>
                     <button class="btn btn-default pull-right" type="button" id="cssSave">保存</button>

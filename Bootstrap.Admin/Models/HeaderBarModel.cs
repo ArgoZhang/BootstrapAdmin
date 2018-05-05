@@ -15,6 +15,7 @@ namespace Bootstrap.Admin.Models
             Icon = user.Icon;
             DisplayName = user.DisplayName;
             UserName = user.UserName;
+            Css = user.Css;
         }
         public string UserName { get; private set; }
         /// <summary>
@@ -29,5 +30,9 @@ namespace Bootstrap.Admin.Models
         /// 获得/设置 用户头像地址
         /// </summary>
         public string Icon { get; private set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Css { get; private set; }
     }
 }

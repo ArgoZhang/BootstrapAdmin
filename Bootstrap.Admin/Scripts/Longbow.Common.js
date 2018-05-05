@@ -140,7 +140,7 @@
                         success(result);
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        if ($.isFunction(data.callback)) data.callback(false);
+                        if (XMLHttpRequest.responseJSON) lgbSwal({ title: errorThrown, text: XMLHttpRequest.responseJSON.Message, type: 'error' });
                     }
                 });
             }
@@ -159,7 +159,7 @@
         },
         lgbSwal: function (options) {
             if ($.isFunction(swal)) {
-                swal($.extend({ showConfirmButton: false, showCancelButton: false, timer: 800, title: '未设置', type: "success" }, options));
+                swal($.extend({ showConfirmButton: false, showCancelButton: false, timer: 1000, title: '未设置', type: "success" }, options));
             }
         }
     });

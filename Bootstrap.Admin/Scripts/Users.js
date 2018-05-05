@@ -94,7 +94,7 @@
         queryParams: function (params) { return $.extend(params, { name: $("#txt_search_name").val(), displayName: $('#txt_display_name').val() }); },           //传递参数（*）
         columns: [
             { checkbox: true },
-            { title: "Id", field: "Id", events: bsa.idEvents(), formatter: BootstrapAdmin.idFormatter },
+            { title: "编辑", field: "Id", events: bsa.idEvents(), formatter: BootstrapAdmin.idFormatter },
             { title: "登陆名称", field: "UserName", sortable: true },
             { title: "显示名称", field: "DisplayName", sortable: true },
             { title: "注册时间", field: "RegisterTime", sortable: true },

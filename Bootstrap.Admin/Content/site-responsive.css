@@ -16,8 +16,13 @@
         overflow: hidden;
     }
 
+    .header {
+        border-bottom: none;
+    }
+
     .header, .site-footer {
         position: fixed;
+        z-index: 10;
     }
 
     .main-content {
@@ -38,5 +43,6 @@
 
     .header, .site-footer {
         position: fixed;
+        z-index: 10;
     }
 }

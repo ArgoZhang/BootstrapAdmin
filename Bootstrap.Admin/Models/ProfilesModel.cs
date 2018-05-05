@@ -1,4 +1,7 @@
-﻿using System.IO;
+﻿using Bootstrap.DataAccess;
+using Bootstrap.Security;
+using System.Collections.Generic;
+using System.IO;
 using System.Web;
 
 namespace Bootstrap.Admin.Models
@@ -13,16 +16,23 @@ namespace Bootstrap.Admin.Models
         /// </summary>
         public long Size { get; private set; }
         /// <summary>
+        /// 获得 系统配置的所有样式表
+        /// </summary>
+        public IEnumerable<BootstrapDict> Csss { get; private set; }
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="url"></param>
-        public ProfilesModel(string url) : base(url)
+        public ProfilesModel(string url)
+            : base(url)
         {
             var fileName = HttpContext.Current.Server.MapPath(Icon);
             if (File.Exists(fileName))
             {
                 Size = new FileInfo(fileName).Length;
             }
+
+            Csss = DictHelper.RetrieveWebCss();
         }
     }
 }

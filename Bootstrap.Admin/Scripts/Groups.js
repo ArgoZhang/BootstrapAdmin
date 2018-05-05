@@ -79,7 +79,7 @@
         sortName: 'GroupName',
         queryParams: function (params) { return $.extend(params, { groupName: $("#txt_search_name").val(), description: $("#txt_group_desc").val() }); },           //传递参数（*）
         columns: [{ checkbox: true },
-            { title: "Id", field: "Id", events: bsa.idEvents(), formatter: BootstrapAdmin.idFormatter },
+            { title: "编辑", field: "Id", events: bsa.idEvents(), formatter: BootstrapAdmin.idFormatter },
             { title: "部门名称", field: "GroupName", sortable: true },
             { title: "部门描述", field: "Description", sortable: false }
         ]

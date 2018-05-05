@@ -16,7 +16,10 @@ namespace Bootstrap.DataAccess
     /// </summary>
     public static class MenuHelper
     {
-        private const string RetrieveMenusByRoleIdDataKey = "MenuHelper-RetrieveMenusByRoleId";
+        /// <summary>
+        /// 
+        /// </summary>
+        internal const string RetrieveMenusByRoleIdDataKey = "MenuHelper-RetrieveMenusByRoleId";
         /// <summary>
         /// 删除菜单信息
         /// </summary>

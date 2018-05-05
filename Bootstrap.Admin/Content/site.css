@@ -23,7 +23,16 @@ a, a:hover, a:focus {
 
 .dropdown-menu {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.176);
+    padding: 0;
 }
+
+    .dropdown-menu > li > a {
+        padding: 6px 20px;
+    }
+
+    .dropdown-menu .divider {
+        margin: 1px 0;
+    }
 
 .card-view:not(:last-child) {
     margin-bottom: 6px;
@@ -31,14 +40,19 @@ a, a:hover, a:focus {
 
 .header {
     padding: 0 15px;
-    height: 94px;
+    height: 98px;
     background: #fff;
-    border-bottom: 1px solid #f1f2f7;
+    border-bottom: 1px solid #ddd;
     top: 0;
     left: 0;
     right: 0;
-    z-index: 50;
 }
+
+    .header .bg {
+        background-color: #337ab7;
+        height: 4px;
+        margin: 0 -15px;
+    }
 
     .header a {
         transition: all .25s linear;
@@ -48,7 +62,6 @@ a, a:hover, a:focus {
         margin-top: 7px;
         float: right;
     }
-
 
         .header > .dropdown > a {
             border: 1px solid #eee;
@@ -81,7 +94,6 @@ a, a:hover, a:focus {
             top: 50px;
             left: auto;
             right: 0;
-            padding: 0;
         }
 
             .header > .dropdown .dropdown-menu li {
@@ -163,7 +175,6 @@ a, a:hover, a:focus {
     bottom: 0;
     right: 0;
     white-space: nowrap;
-    z-index: 5;
 }
 
 .go-top {
@@ -239,7 +250,6 @@ a, a:hover, a:focus {
         top: 32px;
         left: -74px;
         width: 235px;
-        padding: 0;
         border: none;
     }
 
@@ -401,12 +411,11 @@ a, a:hover, a:focus {
 
 .breadcrumb {
     position: absolute;
-    top: 56px;
+    top: 60px;
     left: 15px;
     right: 15px;
-    border-color: #ddd;
+    border: solid 1px #ddd;
     border-width: 1px 0 0 0;
-    border-style: solid;
     background-color: transparent;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
@@ -429,7 +438,7 @@ a, a:hover, a:focus {
     left: 0;
     bottom: 40px;
     right: 0;
-    top: 94px;
+    top: 98px;
     overflow: hidden;
 }
 

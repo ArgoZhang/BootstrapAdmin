@@ -145,6 +145,7 @@ namespace Bootstrap.DataAccess
                 }
                 CacheCleanUtility.ClearCache(userIds: p.Id == 0 ? string.Empty : p.Id.ToString());
                 ret = true;
+                if (p.UserStatus == 1) NotificationHelper.MessagePool.Add(new MessageBody() { Category = "Users", Message = string.Format("{0}-{1}", p.UserName, p.Description) });
             }
             catch (DbException ex)
             {
@@ -326,7 +327,35 @@ namespace Bootstrap.DataAccess
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@userName", userName));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                     string key = string.Format("{0}-{1}", RetrieveUsersByNameDataKey, userName);
-                    CacheManager.Clear(k => key == k);
+                    CacheCleanUtility.ClearCache(key);
+                    ret = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.Publish(ex);
+            }
+            return ret;
+        }
+        /// <summary>
+        /// 根据用户名更改用户皮肤
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="cssName"></param>
+        /// <returns></returns>
+        public static bool SaveUserCssByName(string userName, string cssName)
+        {
+            bool ret = false;
+            try
+            {
+                string sql = "Update Users set Css = @cssName where UserName = @userName";
+                using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
+                {
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@cssName", DBAccess.ToDBValue(cssName)));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@userName", userName));
+                    DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
+                    string key = string.Format("{0}-{1}", RetrieveUsersByNameDataKey, userName);
+                    CacheCleanUtility.ClearCache(key);
                     ret = true;
                 }
             }

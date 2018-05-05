@@ -42,12 +42,12 @@
             Id: "", url: Exceptions.url, swal: false,
             callback: function (result) {
                 var html = result.map(function (ele) {
-                    return $.format('<div class="form-group col-lg-3 col-md-3 col-sm-4 col-xs-6"><a class="logfile" href="#"><i class="fa fa-file-text-o"></i><span>{0}</span></a></div>', ele);
+                    return $.format('<div class="form-group col-lg-3 col-md-3 col-sm-4 col-xs-6 logitem"><a class="logfile" title="{0}" href="#"><i class="fa fa-file-text-o"></i><span>{0}</span></a></div>', ele);
                 }).join('');
                 $dataForm.children('div').html(html);
+                $dialog.modal('show');
             }
         });
-        $dialog.modal('show');
     });
 
     $dialog.on('click', 'a', function () {

@@ -1,9 +1,9 @@
 ﻿$(function () {
     var $dialog = $('#dialogNew');
     var $pickIcon = $('#pickIcon');
-    var $dialogNew = $dialog.find('div.modal-dialog');
+    var $dialogNew = $dialog;
     var $dialogIcon = $('#dialogIcon');
-    var $dialogMenu = $('#dialogSubMenu').find('.modal-content');
+    var $dialogMenu = $('#dialogMenu');
     var $dialogRole = $('#dialogRole');
     var $dialogRoleHeader = $('#myRoleModalLabel');
     var $dialogRoleForm = $('#roleForm');
@@ -18,7 +18,7 @@
 
     var initNestMenu = function () {
         $nestMenuInput = $nestMenu.find('div.dd3-content');
-        $nestMenuInput.find('label:first').hide();
+        $nestMenuInput.children('.checkbox').hide();
     }
 
     var bsa = new BootstrapAdmin({
@@ -82,7 +82,7 @@
         queryParams: function (params) { return $.extend(params, { parentName: $('#txt_parent_menus_name').val(), name: $("#txt_menus_name").val(), category: $('#sel_menus_category').val(), isresource: $('#sel_menus_res').val() }); },           //传递参数（*）
         columns: [
             { checkbox: true },
-            { title: "Id", field: "Id", events: bsa.idEvents(), formatter: BootstrapAdmin.idFormatter },
+            { title: "编辑", field: "Id", events: bsa.idEvents(), formatter: BootstrapAdmin.idFormatter },
             { title: "父级菜单", field: "ParentName", sortable: true },
             { title: "菜单名称", field: "Name", sortable: true },
             { title: "菜单序号", field: "Order", sortable: true },
@@ -178,7 +178,6 @@
 
     // 排序按钮
     $('#btnMenuOrder').on('click', function () {
-        $dialogNew.hide();
         $btnSubmitMenu.data('type', 'order');
         $nestMenuInput.find('label:last').find('input').hide();
         $nestMenu.find('li.dd-item').hide().remove('[data-id="0"]');
@@ -193,27 +192,24 @@
             $nestMenu.find('ol.dd-list:first').append($.format('<li class="dd-item dd3-item" data-id="0" data-order="10" data-category="{1}"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><label><span>{0}</span></label></div></li>', menuName, menuCate));
         }
         $nestMenu.find('li[data-id="' + did + '"] > div.dd3-content span').addClass('active');
-        $dialogMenu.show().adjustDialog();
+        $dialogNew.hide();
+        $dialogMenu.modal('show');
     });
 
     // 选择父节点按钮
     $('#btnMenuParent').on('click', function () {
-        $dialogNew.hide();
         $btnSubmitMenu.data('type', 'parent');
         $nestMenuInput.find('label:last').find('input').show();
         $nestMenu.find('li.dd-item').hide().remove('[data-id="0"]');
         $nestMenu.find('li[data-category="' + $category.val() + '"]').show();
-        $dialogMenu.show().adjustDialog();
+        $dialogNew.hide();
+        $dialogMenu.modal('show');
     });
 
-    $dialogMenu.find('div.modal-header, div.modal-footer').on('click', 'button', function () {
-        // remove active css
-        $nestMenu.find('li span').removeClass('active');
-        $dialogMenu.hide();
-        $dialogNew.show();
-    });
+    $dialogMenu.on('hidden.bs.modal', function () { $dialogNew.show().find('.modal-dialog').adjustDialog(); });
 
     $btnSubmitMenu.on('click', function () {
+        $nestMenu.find('li span').removeClass('active');
         var type = $(this).data('type');
         switch (type) {
             case "parent":
@@ -264,8 +260,11 @@
     });
 
     $(window).on('resize.bs.modal', function () {
-        if ($dialogMenu.is(':visible')) {
+        if ($dialogMenu.is(':visible') && ($(window).width() >= 768 || $(window).height() >= 672)) {
             $dialogMenu.adjustDialog();
+        }
+        else {
+            $dialogMenu.css({ margin: "0" });
         }
     });
 });

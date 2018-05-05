@@ -25,7 +25,7 @@
 
 @media (min-width: 768px) {
     .sidebar {
-        top: 94px;
+        top: 98px;
         bottom: 40px;
         position: absolute;
         overflow: auto;
@@ -73,9 +73,39 @@
     }
 }
 
+@media (min-height: 414px) {
+    .modal .modal-body {
+        max-height: 200px;
+    }
+}
+
+@media (min-height: 568px) {
+    .modal .modal-body {
+        max-height: 350px;
+    }
+}
+
+@media (min-height: 667px) {
+    .modal .modal-body {
+        max-height: 450px;
+    }
+}
+
+@media (min-height: 736px) {
+    .modal .modal-body {
+        max-height: 510px;
+    }
+}
+
+@media (min-height: 768px) {
+    .modal .modal-body {
+        max-height: 540px;
+    }
+}
+
 @media (min-height: 672px) {
     .sidebar {
-        top: 94px;
+        top: 98px;
         bottom: 40px;
         position: absolute;
         overflow: auto;

@@ -32,10 +32,14 @@ namespace Bootstrap.Admin.Controllers
         [HttpPut]
         public bool Put([FromBody]User value)
         {
+            if(value.UserStatus == 3)
+            {
+                return UserHelper.SaveUserCssByName(value.UserName, value.Css);
+            }
             if (value.UserStatus == 9)
             {
                 // vlaidate userName
-                return BootstrapUser.RetrieveUserByUserName(value.UserName) == null;
+                return BootstrapUser.RetrieveUserByUserName(value.UserName) == null && !UserHelper.RetrieveNewUsers().Any(u => u.UserName == value.UserName);
             }
             var ret = false;
             if (value.UserName.Equals(User.Identity.Name, System.StringComparison.OrdinalIgnoreCase) || LgbPrincipal.IsAdmin(User))

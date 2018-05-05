@@ -1,11 +1,9 @@
 ﻿using Bootstrap.Security;
 using Longbow.Caching;
 using Longbow.Caching.Configuration;
-using Longbow.ExceptionManagement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 
 namespace Bootstrap.DataAccess
 {
@@ -31,9 +29,11 @@ namespace Bootstrap.DataAccess
                 {
                     cacheKeys.Add(string.Format("{0}-{1}", UserHelper.RetrieveUsersByRoleIdDataKey, id));
                     cacheKeys.Add(string.Format("{0}-{1}", GroupHelper.RetrieveGroupsByRoleIdDataKey, id));
+                    cacheKeys.Add(string.Format("{0}-{1}", MenuHelper.RetrieveMenusByRoleIdDataKey, id));
                 });
                 cacheKeys.Add(RoleHelper.RetrieveRolesDataKey + "*");
                 cacheKeys.Add(BootstrapMenu.RetrieveMenusDataKey + "*");
+                cacheKeys.Add(BootstrapAdminRolePrincipal.RetrieveAllRolesDataKey + "*");
             }
             if (userIds != null)
             {
@@ -55,6 +55,7 @@ namespace Bootstrap.DataAccess
                 });
                 cacheKeys.Add(GroupHelper.RetrieveGroupsDataKey + "*");
                 cacheKeys.Add(BootstrapMenu.RetrieveMenusDataKey + "*");
+                cacheKeys.Add(BootstrapAdminRolePrincipal.RetrieveAllRolesDataKey + "*");
             }
             if (menuIds != null)
             {
@@ -62,6 +63,7 @@ namespace Bootstrap.DataAccess
                 {
                     cacheKeys.Add(string.Format("{0}-{1}", RoleHelper.RetrieveRolesByMenuIdDataKey, id));
                 });
+                cacheKeys.Add(MenuHelper.RetrieveMenusByRoleIdDataKey + "*");
                 cacheKeys.Add(BootstrapMenu.RetrieveMenusDataKey + "*");
             }
             if (dictIds != null)
@@ -81,29 +83,25 @@ namespace Bootstrap.DataAccess
                 cacheKeys.Add(ExceptionHelper.RetrieveExceptionsDataKey + "*");
             }
 
-            cacheKeys.AsParallel().ForAll(key => CacheManager.Clear(k => key.EndsWith("*") ? k.Contains(key.TrimEnd('*')) : k.Equals(key)));
-            System.Threading.Tasks.Task.Factory.StartNew(() =>
-            {
-                var section = CacheListSection.GetSection();
-                section.Items.Where(item => item.Enabled).Skip(1).AsParallel().ForAll(ele =>
-                {
-                    try
-                    {
-                        using (var client = new WebClient())
-                        {
-                            cacheKeys.ForEach(k => client.OpenRead(string.Format(ele.Url, k)));
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        System.Collections.Specialized.NameValueCollection nv = new System.Collections.Specialized.NameValueCollection();
-                        nv["ErrorPage"] = ele.Url;
-                        nv["UserId"] = "system";
-                        nv["UserIp"] = "::1";
-                        ExceptionManager.Publish(ex, nv);
-                    }
-                });
-            });
+            ClearCache(cacheKeys);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        internal static void ClearCache(string key)
+        {
+            CacheManager.Clear(k => key.EndsWith("*") ? k.Contains(key.TrimEnd('*')) : key == k);
+            CacheListSection.ClearCache(key);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="keys"></param>
+        internal static void ClearCache(IEnumerable<string> keys)
+        {
+            CacheManager.Clear(k => keys.Any(key => key.EndsWith("*") ? k.Contains(key.TrimEnd('*')) : key == k));
+            CacheListSection.ClearCache(keys);
         }
     }
 }

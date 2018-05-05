@@ -8,7 +8,6 @@
 }
 
 .fa-target {
-    height: 16px;
     display: block;
 }
 
@@ -85,14 +84,12 @@
     }
 
     .icon-content .modal-body {
-        position: fixed;
-        left: 18px;
-        right: 16px;
-        top: 62px;
-        bottom: 80px;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 46px;
+        bottom: 65px;
         overflow: auto;
-        max-height: inherit;
-        height: inherit;
         -webkit-overflow-scrolling: touch;
     }
 
@@ -106,10 +103,10 @@
             }
 
     .icon-content .modal-footer {
-        position: fixed;
-        left: 16px;
-        right: 16px;
-        bottom: 15px;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
         white-space: nowrap;
     }
 
@@ -130,6 +127,27 @@
             padding: 3px;
             border-radius: 4px;
         }
+
+        .icon-content .modal-footer span {
+            display: none;
+        }
+
+    .icon-content .dd {
+        max-width: 100%;
+        margin-bottom: 20px;
+    }
+
+.modal .modal-dialog .icon-content {
+    position: static;
+}
+
+    .modal .modal-dialog .icon-content .modal-body {
+        position: static;
+    }
+
+    .modal .modal-dialog .icon-content .modal-footer {
+        position: static;
+    }
 
 .fontawesome-icon-list .fa-hover a {
     overflow: hidden;
@@ -200,23 +218,33 @@
             margin-right: 10px;
         }
 
-.menu-content {
-    display: none;
-    z-index: 1051;
+.logitem {
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-    .menu-content .modal-body {
-        overflow-y: auto;
-        max-height: 180px;
-        padding-bottom: 15px;
+.logfile {
+    color: #d41404;
+    white-space: nowrap;
+}
+
+    .logfile:focus, .logfile:active, .logfile:hover {
+        color: red;
     }
 
-    .menu-content .dd {
-        max-width: inherit;
+    .logfile span {
+        margin-left: 4px;
     }
 
-.icon-content .modal-footer span {
-    display: none;
+.modal-header > h4 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-right: 20px;
+}
+
+.ex-content {
+    word-break: break-all;
 }
 
 @media (min-width: 375px) {
@@ -237,41 +265,5 @@
 
     .fa-icons {
         margin-right: 160px;
-    }
-}
-
-@media (min-height: 375px) {
-    .menu-content .modal-body {
-        max-height: 240px;
-    }
-}
-
-@media (min-height: 414px) {
-    .menu-content .modal-body {
-        max-height: 280px;
-    }
-}
-
-@media (min-height: 568px) {
-    .menu-content .modal-body {
-        max-height: 430px;
-    }
-}
-
-@media (min-height: 667px) {
-    .menu-content .modal-body {
-        max-height: 530px;
-    }
-}
-
-@media (min-height: 736px) {
-    .menu-content .modal-body {
-        max-height: 600px;
-    }
-}
-
-@media (min-height: 768px) {
-    .menu-content .modal-body {
-        max-height: 630px;
     }
 }
