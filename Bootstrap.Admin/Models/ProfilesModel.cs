@@ -14,17 +14,16 @@ namespace Bootstrap.Admin.Models
         /// <summary>
         /// 获得/设置 头像文件大小
         /// </summary>
-        public long Size { get; private set; }
+        public long Size { get; }
         /// <summary>
         /// 获得 系统配置的所有样式表
         /// </summary>
-        public IEnumerable<BootstrapDict> Csss { get; private set; }
+        public IEnumerable<BootstrapDict> Csss { get; }
         /// <summary>
         /// 
         /// </summary>
         /// <param name="url"></param>
-        public ProfilesModel(string url)
-            : base(url)
+        public ProfilesModel(string url) : base(url)
         {
             var fileName = HttpContext.Current.Server.MapPath(Icon);
             if (File.Exists(fileName))
