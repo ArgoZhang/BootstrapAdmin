@@ -33,7 +33,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>..\..\Keys\Longbow.Utility.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\Keys\Longbow.Utility.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <DelaySign>false</DelaySign>
@@ -79,14 +79,15 @@
     <Compile Include="UserHelper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Keys\Longbow.Utility.snk">
+    <None Include="..\Keys\Longbow.Utility.snk">
       <Link>Longbow.Utility.snk</Link>
     </None>
     <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>cscript /Nologo $(SolutionDir)Scripts\Publish.vbs $(TargetDir) $(TargetName) $(TargetExt) $(SolutionDir) $(OutDir) $(ConfigurationName)</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

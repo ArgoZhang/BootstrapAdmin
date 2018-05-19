@@ -198,7 +198,7 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
-    <Content Include="..\..\Keys\Longbow.Utility.snk">
+    <Content Include="..\Keys\Longbow.Utility.snk">
       <Link>Longbow.Utility.snk</Link>
     </Content>
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
@@ -351,7 +351,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>..\..\Keys\Longbow.Utility.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\Keys\Longbow.Utility.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <DelaySign>false</DelaySign>
@@ -378,7 +378,8 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PostBuildEvent>cscript /Nologo $(SolutionDir)Scripts\Publish.vbs $(TargetDir) $(TargetName) $(TargetExt) $(SolutionDir) $(OutDir) $(ConfigurationName)</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
