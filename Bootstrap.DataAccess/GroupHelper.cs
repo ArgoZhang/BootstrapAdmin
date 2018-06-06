@@ -1,6 +1,6 @@
-﻿using Longbow.Caching;
+﻿using Longbow.Cache;
 using Longbow.Data;
-using Longbow.ExceptionManagement;
+using Longbow.Logging;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -94,7 +94,7 @@ namespace Bootstrap.DataAccess
                 {
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ID", p.Id));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@GroupName", p.GroupName));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Description", DBAccess.ToDBValue(p.Description)));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Description", DBAccessFactory.ToDBValue(p.Description)));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
                 CacheCleanUtility.ClearCache(groupIds: p.Id == 0 ? string.Empty : p.Id.ToString());

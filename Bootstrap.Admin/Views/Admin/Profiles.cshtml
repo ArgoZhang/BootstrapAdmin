@@ -1,19 +1,19 @@
-﻿@model ProfilesModel
+﻿@model Bootstrap.Admin.Models.ProfilesModel
 @{
     ViewBag.Title = "个人中心";
     Layout = "~/Views/Shared/_Admin.cshtml";
 }
 @section Javascript {
-    <script src="~/Scripts/longbow.dataentity.js"></script>
-    <script src="~/Scripts/fileinput.js"></script>
-    <script src="~/Scripts/fileinput.zh.js"></script>
-    <script src="~/Scripts/jquery.validate.js"></script>
-    <script src="~/Scripts/messages_zh.js"></script>
-    <script src="~/scripts/Profiles.js"></script>
+    <script src="~/js/longbow.dataentity.js"></script>
+    <script src="~/js/fileinput.js"></script>
+    <script src="~/js/fileinput.zh.js"></script>
+    <script src="~/js/jquery.validate.js"></script>
+    <script src="~/js/messages_zh.js"></script>
+    <script src="~/js/Profiles.js"></script>
 }
 @section css {
-    <link href="~/Content/tasks.css" rel="stylesheet" />
-    <link href="~/Content/fileinput.css" rel="stylesheet" />
+    <link href="~/css/tasks.css" rel="stylesheet" />
+    <link href="~/css/fileinput.css" rel="stylesheet" />
 }
 <div class="panel panel-default">
     <div class="panel-heading">基本资料</div>
@@ -31,7 +31,7 @@
             </div>
         </form>
         <div class="modal-footer">
-            <button id="btnSaveDisplayName" class="btn btn-default" type="button" disabled data-admin="@LgbPrincipal.IsWebAdmin(User.Identity.Name)"><i class="fa fa-save"></i><span>保存</span></button>
+            <button id="btnSaveDisplayName" class="btn btn-default" type="button" disabled data-admin="@User.IsInRole("Administrators")"><i class="fa fa-save"></i><span>保存</span></button>
         </div>
     </div>
 </div>
@@ -57,14 +57,14 @@
             </div>
         </form>
         <div class="modal-footer">
-            <button id="btnSavePassword" class="btn btn-default" type="button" disabled data-admin="@LgbPrincipal.IsWebAdmin(User.Identity.Name)"><i class="fa fa-save"></i><span>保存</span></button>
+            <button id="btnSavePassword" class="btn btn-default" type="button" disabled data-admin="@User.IsInRole("Administrators")"><i class="fa fa-save"></i><span>保存</span></button>
         </div>
     </div>
 </div>
 <div class="panel panel-default">
     <div class="panel-heading">网站皮肤</div>
     <div class="panel-body">
-        <form id="infoDataForm" name="cssDataForm" class="form-inline" role="form">
+        <form id="cssDataForm" name="cssDataForm" class="form-inline" role="form">
             <div class="row">
                 <div class="form-group col-xs-12">
                     <label class="control-label" for="userName">样式</label>
@@ -86,7 +86,7 @@
             </div>
         </form>
         <div class="modal-footer">
-            <button id="btnSaveCss" class="btn btn-default" type="button" disabled data-admin="@LgbPrincipal.IsWebAdmin(User.Identity.Name)"><i class="fa fa-save"></i><span>保存</span></button>
+            <button id="btnSaveCss" class="btn btn-default" type="button" disabled data-admin="@User.IsInRole("Administrators")"><i class="fa fa-save"></i><span>保存</span></button>
         </div>
     </div>
 </div>

@@ -1,0 +1,48 @@
+@media (min-width: 568px) {
+    .notify-row {
+        display: inline-block;
+    }
+}
+
+@media (min-width: 736px) {
+    .sidebar-toggle-box span {
+        display: inline;
+    }
+}
+
+@media (min-width: 768px) {
+    html, body {
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .header {
+        border-bottom: none;
+    }
+
+    .header, .site-footer {
+        position: fixed;
+        z-index: 10;
+    }
+
+    .main-content {
+        position: fixed;
+        overflow: auto;
+    }
+
+    .form-horizontal .control-label {
+        text-align: left;
+    }
+}
+
+@media (min-height: 672px) {
+    html, body {
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .header, .site-footer {
+        position: fixed;
+        z-index: 10;
+    }
+}

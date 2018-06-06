@@ -1,20 +1,20 @@
-﻿@model LockModel
+﻿@model Bootstrap.Admin.Models.LockModel
 @{
     ViewBag.Title = "系统登陆";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section css {
-    <link href="~/Content/lock.css" rel="stylesheet" />
+    <link href="~/css/lock.css" rel="stylesheet" />
 }
 @section javascript {
-    <script src="~/Scripts/jquery.validate.js"></script>
-    <script src="~/Scripts/messages_zh.js"></script>
-    <script src="~/Scripts/lock.js"></script>
+    <script src="~/js/jquery.validate.js"></script>
+    <script src="~/js/messages_zh.js"></script>
+    <script src="~/js/lock.js"></script>
 }
 <div class="lock-wrapper">
     <div id="time"></div>
     <div class="lock-box text-center">
-        <img alt="lock avatar" src="~/content/images/logo2.jpg" />
+        <img alt="lock avatar" src="~/images/logo2.jpg" />
         <h1>@Model.DisplayName</h1>
         <span class="locked">系统已锁定</span>
         <form role="form" class="form-inline" method="post" autocomplete="off" action="~/Home/Login?ReturnUrl=@Model.ReturnUrl">

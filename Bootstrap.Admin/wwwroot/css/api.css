@@ -1,0 +1,35 @@
+﻿h3 {
+    margin-top: 0;
+    color: #000;
+}
+
+.btn {
+    text-shadow: none;
+}
+
+.control-label {
+    width: 80px;
+}
+
+.main-content {
+    padding: 15px;
+}
+
+    .main-content > section:not(:first-child) {
+        padding-top: 10px;
+    }
+
+    .main-content > section > div {
+        line-height: 26px;
+    }
+
+        .main-content > section > div > div {
+            display: inline-block;
+            word-break: break-all;
+        }
+
+.test {
+    display: none;
+    padding: 10px 0 0 0;
+    color: #5cb85c;
+}

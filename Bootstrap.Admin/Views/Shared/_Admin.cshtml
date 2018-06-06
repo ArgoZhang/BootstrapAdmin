@@ -2,27 +2,27 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section css {
-    <link href="~/Content/sweetalert.css" rel="stylesheet" />
-    <link href="~/Content/toastr.css" rel="stylesheet" />
-    <link href="~/Content/admin.css" rel="stylesheet" />
-    <link href="~/Content/admin-responsive.css" rel="stylesheet" />
+    <link href="~/css/sweetalert.css" rel="stylesheet" />
+    <link href="~/css/toastr.css" rel="stylesheet" />
+    <link href="~/css/admin.css" rel="stylesheet" />
+    <link href="~/css/admin-responsive.css" rel="stylesheet" />
     @RenderSection("css", false)
 }
 @section javascript {
-    <script src="~/Scripts/sweetalert.js"></script>
-    <script src="~/Scripts/jquery.dcjqaccordion.2.7.js"></script>
-    <script src="~/Scripts/jquery.scrollTo.js"></script>
-    <script src="~/Scripts/jquery.nicescroll.min.js"></script>
-    <script src="~/Scripts/common-scripts.js"></script>
-    <script src="~/Scripts/log.js"></script>
-    <script src="~/Scripts/toastr.min.js"></script>
-    <script src="~/Scripts/framework.js"></script>
+    <script src="~/js/sweetalert.js"></script>
+    <script src="~/js/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="~/js/jquery.scrollTo.js"></script>
+    <script src="~/js/jquery.nicescroll.min.js"></script>
+    <script src="~/js/common-scripts.js"></script>
+    <script src="~/js/log.js"></script>
+    <script src="~/js/toastr.min.js"></script>
+    <script src="~/js/framework.js"></script>
     @RenderSection("Javascript", false)
 }
-@Html.Partial("Header")
 @Html.Partial("navigator")
 <section id="main-content" class="main-content">
     @RenderBody()
 </section>
-@Html.Partial("Footer")
-@RenderSection("modal", false)
+@section modal {
+    @RenderSection("modal", false)
+}

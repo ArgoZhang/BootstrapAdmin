@@ -1,5 +1,6 @@
 ﻿using Bootstrap.Admin.Models;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Bootstrap.Admin.Controllers
 {
@@ -14,7 +15,7 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public ActionResult Index()
         {
-            return View(new NavigatorBarModel("~/Admin/Index"));
+            return View(new NavigatorBarModel(this));
         }
         /// <summary>
         /// 
@@ -22,7 +23,7 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public ActionResult Users()
         {
-            return View(new NavigatorBarModel("~/Admin/Users"));
+            return View(new NavigatorBarModel(this));
         }
         /// <summary>
         /// 
@@ -30,7 +31,7 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public ActionResult Groups()
         {
-            return View(new NavigatorBarModel("~/Admin/Groups"));
+            return View(new NavigatorBarModel(this));
         }
         /// <summary>
         /// 
@@ -38,7 +39,7 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public ActionResult Dicts()
         {
-            return View(new NavigatorBarModel("~/Admin/Dicts"));
+            return View(new NavigatorBarModel(this));
         }
         /// <summary>
         /// 
@@ -46,7 +47,7 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public ActionResult Roles()
         {
-            return View(new NavigatorBarModel("~/Admin/Roles"));
+            return View(new NavigatorBarModel(this));
         }
         /// <summary>
         /// 
@@ -54,7 +55,7 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public ActionResult Menus()
         {
-            return View(new NavigatorBarModel("~/Admin/Menus"));
+            return View(new NavigatorBarModel(this));
         }
         /// <summary>
         /// 
@@ -62,7 +63,7 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public ActionResult Logs()
         {
-            return View(new NavigatorBarModel("~/Admin/Logs"));
+            return View(new NavigatorBarModel(this));
         }
         /// <summary>
         /// 
@@ -70,17 +71,15 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public ActionResult FAIcon()
         {
-            return View(new NavigatorBarModel("~/Admin/FAIcon"));
+            return View(new NavigatorBarModel(this));
         }
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        [OutputCache(CacheProfile = "IconView")]
         [AllowAnonymous]
         public PartialViewResult IconView()
         {
-            Response.Cache.SetOmitVaryStar(true);
             return PartialView("IconView");
         }
         /// <summary>
@@ -89,7 +88,7 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public ActionResult Settings()
         {
-            return View(new NavigatorBarModel("~/Admin/Settings"));
+            return View(new NavigatorBarModel(this));
         }
 
         /// <summary>
@@ -98,7 +97,7 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public ActionResult Notifications()
         {
-            return View(new NavigatorBarModel("~/Admin/Notifications"));
+            return View(new NavigatorBarModel(this));
         }
 
         /// <summary>
@@ -107,7 +106,7 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public ActionResult Profiles()
         {
-            return View(new ProfilesModel("~/Admin/Profiles"));
+            return View(new ProfilesModel(this));
         }
         /// <summary>
         /// 
@@ -115,7 +114,7 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public ActionResult Exceptions()
         {
-            return View(new NavigatorBarModel("~/Admin/Exceptions"));
+            return View(new NavigatorBarModel(this));
         }
         /// <summary>
         /// 
@@ -123,7 +122,7 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public ActionResult Messages()
         {
-            return View(new NavigatorBarModel("~/Admin/Messages"));
+            return View(new NavigatorBarModel(this));
         }
         /// <summary>
         /// 
@@ -131,7 +130,7 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public ActionResult Tasks()
         {
-            return View(new NavigatorBarModel("~/Admin/Tasks"));
+            return View(new NavigatorBarModel(this));
         }
         /// <summary>
         /// 
@@ -139,7 +138,7 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public ActionResult Mobile()
         {
-            return View(new NavigatorBarModel("~/Admin/Mobile"));
+            return View(new NavigatorBarModel(this));
         }
         /// <summary>
         /// 
@@ -147,7 +146,7 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public ActionResult Api()
         {
-            return View(new NavigatorBarModel("~/Admin/Api"));
+            return View(new NavigatorBarModel(this));
         }
     }
 }

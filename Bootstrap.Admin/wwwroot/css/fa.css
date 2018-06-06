@@ -1,0 +1,269 @@
+﻿.fa-icons > section {
+    padding-top: 1px;
+}
+
+.page-header {
+    margin-top: 16px;
+    margin-bottom: 6px;
+}
+
+.fa-target {
+    display: block;
+}
+
+.fa-nav {
+    display: none;
+}
+
+    .fa-nav h2 {
+        background: #FF6C60;
+        color: #fff;
+        margin-top: 0;
+        padding: 10px 15px;
+        font-size: 16px;
+        border-radius: 4px;
+        font-weight: 300;
+    }
+
+    .fa-nav ul {
+        top: 44px;
+        bottom: 0;
+        position: absolute;
+        overflow-y: auto;
+    }
+
+        .fa-nav ul li {
+            margin-bottom: 3px;
+        }
+
+            .fa-nav ul li.active a {
+                color: #7a7a7a;
+                border-left: 4px solid #5bc0de;
+                padding-left: 10px;
+            }
+
+            .fa-nav ul li a {
+                color: #999797;
+                border-left: 4px solid #d3d7dd;
+                padding-left: 10px;
+                padding-top: 3px;
+                padding-bottom: 3px;
+                display: block;
+            }
+
+                .fa-nav ul li a:hover {
+                    color: #999797;
+                    border-left: 4px solid #d9534f;
+                    padding-left: 10px;
+                }
+
+.form-group .input-group .input-group-btn .btn i {
+    color: #187c9a;
+    width: 22px;
+    text-align: left;
+}
+
+    .form-group .input-group .input-group-btn .btn i.fa-remove {
+        width: auto;
+    }
+
+.icon-content {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    bottom: 15px;
+    right: 15px;
+    z-index: 1051;
+    display: none;
+}
+
+    .icon-content .fa-nav {
+        right: 46px;
+        top: 86px;
+        bottom: 100px;
+    }
+
+    .icon-content .modal-body {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 46px;
+        bottom: 65px;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+        .icon-content .modal-body .loadIconView {
+            text-align: center;
+            font-size: 16px;
+        }
+
+            .icon-content .modal-body .loadIconView span {
+                margin-left: 6px;
+            }
+
+    .icon-content .modal-footer {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        white-space: nowrap;
+    }
+
+        .icon-content .modal-footer span {
+            vertical-align: middle;
+            font-size: 14px;
+            color: #000;
+        }
+
+        .icon-content .modal-footer i {
+            vertical-align: middle;
+            font-size: 22px;
+            margin: 0 4px 0 8px;
+            text-align: center;
+            color: #337ab7;
+            display: inline-block;
+            border: solid 1px;
+            padding: 3px;
+            border-radius: 4px;
+        }
+
+        .icon-content .modal-footer span {
+            display: none;
+        }
+
+    .icon-content .dd {
+        max-width: 100%;
+        margin-bottom: 20px;
+    }
+
+.modal .modal-dialog .icon-content {
+    position: static;
+}
+
+    .modal .modal-dialog .icon-content .modal-body {
+        position: static;
+    }
+
+    .modal .modal-dialog .icon-content .modal-footer {
+        position: static;
+    }
+
+.fontawesome-icon-list .fa-hover a {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 32px;
+    padding-left: 10px;
+    display: block;
+    color: #222;
+    height: 32px;
+    border-radius: 4px;
+}
+
+    .fontawesome-icon-list .fa-hover a:hover {
+        background-color: #1d9d74;
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .fontawesome-icon-list .fa-hover a .fa {
+        width: 32px;
+        font-size: 14px;
+        display: inline-block;
+        text-align: right;
+        margin-right: 10px;
+    }
+
+    .fontawesome-icon-list .fa-hover a:hover .fa {
+        font-size: 28px;
+        vertical-align: -6px;
+    }
+
+.fontawesome-icon-list ul {
+    display: block;
+    margin-left: -28px;
+}
+
+    .fontawesome-icon-list ul li {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        line-height: 32px;
+        padding-left: 10px;
+        list-style: none;
+        float: left;
+        padding-right: 15px;
+        padding-top: 2px;
+        padding-bottom: 4px;
+        height: 32px;
+        vertical-align: middle;
+        color: #222;
+    }
+
+        .fontawesome-icon-list ul li:hover {
+            background-color: #1d9d74;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+            .fontawesome-icon-list ul li:hover span:nth-child(1) {
+                font-size: 28px;
+                vertical-align: middle;
+            }
+
+        .fontawesome-icon-list ul li span:nth-child(1) {
+            margin-right: 10px;
+        }
+
+.logitem {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.logfile {
+    color: #d41404;
+    white-space: nowrap;
+}
+
+    .logfile:focus, .logfile:active, .logfile:hover {
+        color: red;
+    }
+
+    .logfile span {
+        margin-left: 4px;
+    }
+
+.modal-header > h4 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-right: 20px;
+}
+
+.ex-content {
+    word-break: break-all;
+}
+
+@media (min-width: 375px) {
+    .icon-content .modal-footer span {
+        display: inline-block;
+    }
+}
+
+@media (min-width: 768px) {
+    .fa-nav {
+        display: block;
+        position: fixed;
+        top: 130px;
+        right: 32px;
+        width: 140px;
+        bottom: 70px;
+    }
+
+    .fa-icons {
+        margin-right: 160px;
+    }
+}

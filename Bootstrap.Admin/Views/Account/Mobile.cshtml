@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "客户端测试";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section css {
+    <style type="text/css">
+        label {
+            word-break: break-all;
+        }
+
+        section {
+            padding-top: 15px;
+        }
+    </style>
+}
+<section class="container-fluid">
+    @Html.Partial("_Mobile")
+</section>

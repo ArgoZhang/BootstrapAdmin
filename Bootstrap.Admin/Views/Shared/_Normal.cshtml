@@ -2,16 +2,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section css {
-    <link href="~/Content/bootstrap-table.css" rel="stylesheet" />
-    <link href="~/Content/sweetalert.css" rel="stylesheet" />
+    <link href="~/css/bootstrap-table.css" rel="stylesheet" />
+    <link href="~/css/sweetalert.css" rel="stylesheet" />
     @RenderSection("css", false)
 }
 @section javascript {
     @RenderSection("Javascript", false)
 }
-@Html.Partial("Header")
 <section id="main-content">
     @RenderBody()
 </section>
-@Html.Partial("Footer")
-@RenderSection("modal", false)

@@ -1,6 +1,6 @@
 ﻿using Bootstrap.Security;
-using Longbow.Caching;
-using Longbow.ExceptionManagement;
+using Longbow.Cache;
+using Longbow.Logging;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -184,7 +184,7 @@ namespace Bootstrap.DataAccess
         public static BootstrapDict RetrieveIconFolderPath()
         {
             var data = RetrieveDicts();
-            return data.FirstOrDefault(d => d.Name == "头像路径" && d.Category == "头像地址" && d.Define == 0) ?? new BootstrapDict() { Code = "~/Content/images/uploader/" };
+            return data.FirstOrDefault(d => d.Name == "头像路径" && d.Category == "头像地址" && d.Define == 0) ?? new BootstrapDict() { Code = "~/images/uploader/" };
         }
         /// <summary>
         /// 获得默认的前台首页地址，默认为~/Home/Index

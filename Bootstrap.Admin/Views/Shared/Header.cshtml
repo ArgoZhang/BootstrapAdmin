@@ -1,4 +1,4 @@
-﻿@model HeaderBarModel
+﻿@model Bootstrap.Admin.Models.HeaderBarModel
 <header class="header">
     <div class="bg">
     </div>
@@ -6,7 +6,7 @@
         <i class="fa fa-bars"></i>
         <span id="websiteTitle">@Model.Title</span>
     </a>
-    @if (LgbPrincipal.IsAdmin(User))
+    @if (User.IsInRole("Administrators"))
     {
         <ul class="notify-row">
             <!-- tasks start -->

@@ -1,13 +1,13 @@
-﻿@model NavigatorBarModel
+﻿@model Bootstrap.Admin.Models.NavigatorBarModel
 @{
     ViewBag.Title = "通知管理";
     Layout = "~/Views/Shared/_Admin.cshtml";
 }
 @section Javascript {
-    <script src="~/Scripts/noti.js"></script>
+    <script src="~/js/noti.js"></script>
 }
 @section css {
-    <link href="~/Content/tasks.css" rel="stylesheet" />
+    <link href="~/css/tasks.css" rel="stylesheet" />
 }
 <div class="panel panel-default">
     <div class="panel-heading">用户注册<span class="pull-right"><a id="refreshUsers" href="javascript:;" class="fa fa-refresh" title="点击刷新" role="tooltip" data-placement="left"></a></span></div>

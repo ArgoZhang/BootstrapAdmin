@@ -1,0 +1,492 @@
+﻿.lgbDropdown {
+    display: inline-block;
+}
+
+    .lgbDropdown .dropdown-menu > li > a:hover {
+        background: #007AC0;
+        color: #fff;
+    }
+
+.logTs, .logSql, .logDbExcep {
+    color: red;
+    font-weight: 600;
+}
+
+.logExcep {
+    color: #337ab7;
+    font-weight: 600;
+}
+
+.logMsg {
+    color: #ce2520;
+    font-weight: 600;
+}
+
+.hidden-tb, .hidden-375 {
+    display: none;
+}
+
+.clearcache {
+    position: absolute;
+    right: 60px;
+    font-size: 1.7rem;
+    color: #d9534f;
+    margin-top: -1px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .15), 0 1px 1px rgba(0, 0, 0, .075);
+}
+
+    .clearcache:hover, .clearcache:focus {
+        color: #c12e2a;
+    }
+
+    .clearcache:active:hover {
+        color: #ac2925;
+    }
+
+.form-inline .form-group {
+    margin-bottom: 15px;
+}
+
+    .form-inline .form-group .control-label {
+        margin-right: 10px;
+        width: 80px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        vertical-align: middle;
+    }
+
+
+.modal-dialog .modal-body, .panel-body {
+    padding-bottom: 0;
+}
+
+    .modal-dialog .modal-body .form-inline .form-group input[type="text"], .modal-dialog .modal-body .form-inline .form-group input[type="password"] {
+        padding-right: 30px;
+    }
+
+.btn:focus, .btn:active:focus {
+    outline: none;
+}
+
+.btn span:last-child {
+    margin-left: 4px;
+}
+
+.modal .modal-dialog {
+    padding: 0 15px;
+}
+
+.modal .modal-body {
+    max-height: 164px;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.modal.file-zoom-dialog .modal-dialog {
+    max-width: none;
+}
+
+.modal-header {
+    background-color: #f5f5f5;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    padding: 10px 15px;
+}
+
+    .modal-header .close {
+        margin-top: 1px;
+    }
+
+.modal-body .checkbox, .modal-body .radio {
+    min-width: 190px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.modal-footer {
+    clear: both;
+}
+
+    .modal-footer .btn {
+        padding-left: 22px;
+        padding-right: 22px;
+    }
+
+.has-error input {
+    background-repeat: no-repeat;
+    background-image: url('../images/error.png');
+    background-position: right 8px center;
+}
+
+.has-error .input-group-btn button, .has-error .input-group-btn button:active:focus {
+    border-color: #a94442;
+}
+
+.has-success input {
+    background-repeat: no-repeat;
+    background-image: url('../images/success.png');
+    background-position: right 8px center;
+}
+
+.has-success .input-group-btn button, .has-success .input-group-btn button:active:focus {
+    border-color: #3c763d;
+}
+
+.main-content {
+    transition: all .4s ease-in-out;
+    padding: 15px 15px 0 15px;
+    margin-left: 0;
+    height: auto;
+    left: 0;
+    bottom: 40px;
+    right: 0;
+    top: 98px;
+}
+
+    .main-content.open {
+        display: none;
+    }
+
+    .main-content.closed {
+        margin-left: 0;
+    }
+
+    .main-content > .panel:last-child .panel-body {
+        padding-bottom: 0;
+    }
+
+    .main-content > .panel > .panel-body > .modal-footer {
+        text-align: left;
+    }
+
+aside {
+    transition: transform .4s ease-in-out;
+    transform: translate(-100%);
+    height: 100%;
+    position: absolute;
+    top: 98px;
+    bottom: 40px;
+    left: 0;
+    right: 0;
+    z-index: 5;
+}
+
+    aside.open {
+        transform: translate(0);
+    }
+
+.sidebar {
+    display: none;
+    overflow: auto;
+    width: 100%;
+    z-index: 5;
+    background: #2a3542;
+}
+
+.sidebar-menu {
+    padding: 20px 0;
+    margin-bottom: 0;
+}
+
+    .sidebar-menu .dcjq-icon {
+        height: 17px;
+        width: 17px;
+        display: inline-block;
+        background: url(../images/nav-expand.png) no-repeat;
+        float: right;
+    }
+
+    .sidebar-menu .active .dcjq-icon {
+        background-position: bottom;
+    }
+
+    .sidebar-menu li {
+        margin: 5px 10px;
+    }
+
+        .sidebar-menu li a {
+            color: #aeb2b7;
+            display: block;
+            padding: 15px 10px;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+        }
+
+            .sidebar-menu li a.active, .sidebar-menu li a:hover, .sidebar-menu li a:focus {
+                background: #35404d;
+                color: #fff;
+            }
+
+                .sidebar-menu li a.active i {
+                    color: #FF6C60;
+                }
+
+            .sidebar-menu li a i {
+                font-size: 1.5rem;
+                width: 22px;
+            }
+
+        .sidebar-menu li .sub {
+            padding-left: 0;
+        }
+
+            .sidebar-menu li .sub li a:hover, .sidebar-menu li .sub li.active a {
+                color: #FF6C60;
+                transition: all 0.3s ease;
+                display: block;
+            }
+
+            .sidebar-menu li .sub li {
+                background: #35404D;
+                margin: 0;
+                padding: 0 10px 0 32px;
+            }
+
+                .sidebar-menu li .sub li:last-child {
+                    border-radius: 0 0 4px 4px;
+                    padding-bottom: 10px;
+                }
+
+                .sidebar-menu li .sub li a {
+                    padding: 12px 0;
+                }
+
+/*Modal Dialog Checkbox*/
+.modal-body .checkbox, .modal-dialog .radio {
+    padding: 0;
+    margin-top: 0;
+}
+
+    .modal-body .checkbox label, .modal-body .radio label {
+        padding-left: 0;
+    }
+
+        .modal-body .checkbox label input[type='checkbox'], .modal-body .radio label input[type='radio'] {
+            margin: 0 4px 0 0;
+            vertical-align: middle;
+            position: relative;
+            top: -1px;
+        }
+
+.modal-body .affix {
+    position: fixed;
+    bottom: 95px;
+    right: 50px;
+}
+
+    .modal-body .affix a {
+        font-size: 2rem;
+        margin-top: 16px;
+    }
+
+.bs-bars {
+    display: none;
+}
+
+.toolbar {
+    position: relative;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    line-height: 34px;
+}
+
+    .toolbar .dropdown-menu {
+        margin-top: 4px;
+        min-width: inherit;
+    }
+
+        .toolbar .dropdown-menu a {
+            border-left: none;
+            padding: 0 14px;
+            display: table-cell;
+            color: #504d4d;
+        }
+
+            .toolbar .dropdown-menu a:first-child {
+                padding-left: 16px;
+            }
+
+            .toolbar .dropdown-menu a:last-child {
+                padding-right: 16px;
+            }
+
+            .toolbar .dropdown-menu a:hover {
+                color: #235e90;
+            }
+
+/*cache*/
+.panel .fa-refresh {
+    font-size: 1.5rem;
+}
+
+.bootstrap-select .dropdown-menu {
+    padding: 0;
+}
+
+    .bootstrap-select .dropdown-menu > li > a {
+        padding-top: 7px;
+        padding-bottom: 7px;
+    }
+
+input[type="datetime"] {
+    min-width: 220px;
+}
+
+/*Messages*/
+.mail-box {
+    display: flex;
+}
+
+    .mail-box .sm-side {
+        flex: 0.4;
+        background: #e5e8ef;
+        border-radius: 4px 0 0 4px;
+    }
+
+        .mail-box .sm-side .user-head {
+            background: #00a8b3;
+            border-radius: 4px 0 0 0;
+            padding: 10px;
+            color: #fff;
+            min-height: 80px;
+        }
+
+            .mail-box .sm-side .user-head .inbox-avatar {
+                width: 65px;
+                float: left;
+            }
+
+                .mail-box .sm-side .user-head .inbox-avatar img {
+                    height: 65px;
+                    border-radius: 4px;
+                    border: 0;
+                    vertical-align: middle;
+                }
+
+            .mail-box .sm-side .user-head .user-name {
+                display: inline-block;
+                margin: 0 0 0 10px;
+            }
+
+                .mail-box .sm-side .user-head .user-name h5 {
+                    margin-top: 15px;
+                    margin-bottom: 0;
+                    font-weight: 300;
+                }
+
+                    .mail-box .sm-side .user-head .user-name h5 a {
+                        color: #fff;
+                    }
+
+        .mail-box .sm-side .inbox-body, .mail-box .lg-side .inbox-body {
+            padding: 20px;
+        }
+
+            .mail-box .sm-side .inbox-body .btn-compose {
+                background: #ff6c60;
+                padding: 12px 0;
+                text-align: center;
+                width: 100%;
+                color: #fff;
+            }
+
+                .mail-box .sm-side .inbox-body .btn-compose:hover {
+                    background: #f5675c;
+                    color: #fff;
+                }
+
+        .mail-box .sm-side ul.inbox-nav {
+            display: inline-block;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+            .mail-box .sm-side ul.inbox-nav li {
+                display: inline-block;
+                line-height: 45px;
+                width: 100%;
+            }
+
+                .mail-box .sm-side ul.inbox-nav li a {
+                    color: #6a6a6a;
+                    line-height: 45px;
+                    width: 100%;
+                    display: inline-block;
+                    padding: 0 20px;
+                }
+
+                    .mail-box .sm-side ul.inbox-nav li a:hover, .mail-box .sm-side ul.inbox-nav li.active a, .mail-box .sm-side ul.inbox-nav li a:focus {
+                        color: #6a6a6a;
+                        background: #d5d7de;
+                    }
+
+                    .mail-box .sm-side ul.inbox-nav li a .label {
+                        margin-top: 13px;
+                        padding: 0.5em 0.8em;
+                    }
+
+                    .mail-box .sm-side ul.inbox-nav li a i {
+                        width: 18px;
+                    }
+
+    .mail-box .lg-side {
+        flex: 0.6;
+        background: #fff;
+        border-radius: 0 4px 4px 0;
+    }
+
+        .mail-box .lg-side .inbox-head {
+            padding: 12px;
+            background: #41cac0;
+            color: #fff;
+            border-radius: 0 4px 0 0;
+            min-height: 80px;
+        }
+
+        .mail-box .lg-side .table-inbox {
+            border: 1px solid #d3d3d3;
+            margin-bottom: 0;
+        }
+
+            .mail-box .lg-side .table-inbox .unread td {
+                font-weight: 600;
+                background: #f7f7f7;
+            }
+
+            .mail-box .lg-side .table-inbox tr td {
+                padding: 12px;
+            }
+
+                .mail-box .lg-side .table-inbox tr td .fa-star.inbox-started, .mail-box .lg-side .table-inbox tr td .fa-star:hover {
+                    color: #f78a09;
+                }
+
+                .mail-box .lg-side .table-inbox tr td:hover {
+                    cursor: pointer;
+                }
+
+/*Bootstrap Table BUG */
+.fixed-table-loading {
+    padding-top: 5px;
+}
+
+.bootstrap-table {
+    padding-bottom: 15px;
+}
+
+    .bootstrap-table .fixed-table-body .table {
+        border-bottom: none;
+    }
+/*Bootstrap Table BUG END*/
+
+.input-group.form_date span {
+    border-left: none;
+}
+
+.barTable {
+    padding: 5px 15px 15px 15px;
+}

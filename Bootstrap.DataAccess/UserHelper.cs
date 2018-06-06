@@ -1,8 +1,8 @@
 ﻿using Bootstrap.Security;
 using Longbow;
-using Longbow.Caching;
+using Longbow.Cache;
 using Longbow.Data;
-using Longbow.ExceptionManagement;
+using Longbow.Logging;
 using Longbow.Security;
 using System;
 using System.Collections.Generic;
@@ -132,14 +132,14 @@ namespace Bootstrap.DataAccess
                 using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_SaveUsers"))
                 {
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@id", p.Id));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@userName", DBAccess.ToDBValue(p.UserName)));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@password", DBAccess.ToDBValue(p.Password)));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@passSalt", DBAccess.ToDBValue(p.PassSalt)));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@displayName", DBAccess.ToDBValue(p.DisplayName)));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@description", DBAccess.ToDBValue(p.Description)));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@approvedBy", DBAccess.ToDBValue(p.ApprovedBy)));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@rejectedBy", DBAccess.ToDBValue(p.RejectedBy)));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@rejectedReason", DBAccess.ToDBValue(p.RejectedReason)));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@userName", DBAccessFactory.ToDBValue(p.UserName)));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@password", DBAccessFactory.ToDBValue(p.Password)));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@passSalt", DBAccessFactory.ToDBValue(p.PassSalt)));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@displayName", DBAccessFactory.ToDBValue(p.DisplayName)));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@description", DBAccessFactory.ToDBValue(p.Description)));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@approvedBy", DBAccessFactory.ToDBValue(p.ApprovedBy)));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@rejectedBy", DBAccessFactory.ToDBValue(p.RejectedBy)));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@rejectedReason", DBAccessFactory.ToDBValue(p.RejectedReason)));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@userStatus", p.UserStatus));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
@@ -351,7 +351,7 @@ namespace Bootstrap.DataAccess
                 string sql = "Update Users set Css = @cssName where UserName = @userName";
                 using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
                 {
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@cssName", DBAccess.ToDBValue(cssName)));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@cssName", DBAccessFactory.ToDBValue(cssName)));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@userName", userName));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                     string key = string.Format("{0}-{1}", RetrieveUsersByNameDataKey, userName);

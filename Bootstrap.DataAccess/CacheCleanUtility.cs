@@ -1,6 +1,5 @@
 ﻿using Bootstrap.Security;
-using Longbow.Caching;
-using Longbow.Caching.Configuration;
+using Longbow.Cache;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +8,7 @@ namespace Bootstrap.DataAccess
 {
     internal static class CacheCleanUtility
     {
+        const string RetrieveAllRolesDataKey = "BootstrapAdminRoleMiddleware-RetrieveRoles";
         /// <summary>
         /// 
         /// </summary>
@@ -33,7 +33,7 @@ namespace Bootstrap.DataAccess
                 });
                 cacheKeys.Add(RoleHelper.RetrieveRolesDataKey + "*");
                 cacheKeys.Add(BootstrapMenu.RetrieveMenusDataKey + "*");
-                cacheKeys.Add(BootstrapAdminRolePrincipal.RetrieveAllRolesDataKey + "*");
+                cacheKeys.Add(RetrieveAllRolesDataKey + "*");
             }
             if (userIds != null)
             {
@@ -55,7 +55,7 @@ namespace Bootstrap.DataAccess
                 });
                 cacheKeys.Add(GroupHelper.RetrieveGroupsDataKey + "*");
                 cacheKeys.Add(BootstrapMenu.RetrieveMenusDataKey + "*");
-                cacheKeys.Add(BootstrapAdminRolePrincipal.RetrieveAllRolesDataKey + "*");
+                cacheKeys.Add(RetrieveAllRolesDataKey + "*");
             }
             if (menuIds != null)
             {
@@ -91,8 +91,8 @@ namespace Bootstrap.DataAccess
         /// <param name="key"></param>
         internal static void ClearCache(string key)
         {
-            CacheManager.Clear(k => key.EndsWith("*") ? k.Contains(key.TrimEnd('*')) : key == k);
-            CacheListSection.ClearCache(key);
+            CacheManager.Clear(key);
+            CacheManager.CorsClear(new List<string> { key });
         }
         /// <summary>
         /// 
@@ -100,8 +100,8 @@ namespace Bootstrap.DataAccess
         /// <param name="keys"></param>
         internal static void ClearCache(IEnumerable<string> keys)
         {
-            CacheManager.Clear(k => keys.Any(key => key.EndsWith("*") ? k.Contains(key.TrimEnd('*')) : key == k));
-            CacheListSection.ClearCache(keys);
+            CacheManager.Clear(k => keys.Any(key => key == k));
+            CacheManager.CorsClear(keys);
         }
     }
 }

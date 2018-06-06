@@ -1,0 +1,104 @@
+﻿.lock-screen {
+    background: #02bac6 url("../images/lock-bg.jpg");
+    background-size: cover;
+    background-repeat: repeat;
+}
+
+.lock-wrapper {
+    margin: 6% auto;
+    max-width: 330px;
+}
+
+.lock-box {
+    background: rgba(255,255,255,.3);
+    padding: 20px;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    position: relative;
+}
+
+    .lock-box .form-group {
+        float: inherit !important;
+    }
+
+.lock-wrapper img {
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border: 5px solid #fff;
+    width: 250px;
+    height: 250px;
+}
+
+.lock-wrapper h1 {
+    text-align: center;
+    color: #fff;
+    font-size: 18px;
+    text-transform: uppercase;
+    padding: 20px 0 0 0;
+}
+
+.lock-wrapper .locked {
+    margin-bottom: 20px;
+    display: inline-block;
+    color: #026f7a;
+}
+
+.btn-lock, .btn-lock:hover {
+    background: #02b5c2;
+    color: #fff;
+}
+
+.lock-input {
+    width: 83%;
+    border: none;
+    float: left;
+    margin-right: 3px;
+}
+
+#time {
+    width: 100%;
+    color: #fff;
+    font-size: 60px;
+    display: inline-block;
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+}
+
+.btn-lock, .btn-lock:hover {
+    background: #02b5c2;
+    color: #fff;
+    outline: none !important;
+    border-color: #2e6da4;
+    border-left: none;
+}
+
+.has-error .btn-lock {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #a94442;
+}
+
+.has-success .btn-lock {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #3c763d;
+}
+
+div.input-group span {
+    top: 0;
+    background: #02b5c2;
+    border-color: #2e6da4;
+    color: #fff;
+}
+
+div.input-group input, div.input-group input:hover, div.input-group input:focus {
+    border-color: #2e6da4;
+    border-left: none;
+    border-right: none;
+}
+
+    div.input-group input.error {
+        background-color: #dcc4c4;
+        border-color: #e21717;
+    }

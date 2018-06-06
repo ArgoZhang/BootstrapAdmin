@@ -1,16 +1,16 @@
-﻿@model NavigatorBarModel
+﻿@model Bootstrap.Admin.Models.NavigatorBarModel
 @{
     ViewBag.Title = "网站设置";
     Layout = "~/Views/Shared/_Admin.cshtml";
 }
 @section Javascript {
-    <script src="~/Scripts/longbow.dataentity.js"></script>
-    <script src="~/Scripts/jquery.validate.js"></script>
-    <script src="~/Scripts/messages_zh.js"></script>
-    <script src="~/Scripts/Settings.js"></script>
+    <script src="~/js/longbow.dataentity.js"></script>
+    <script src="~/js/jquery.validate.js"></script>
+    <script src="~/js/messages_zh.js"></script>
+    <script src="~/js/Settings.js"></script>
 }
 @section css {
-    <link href="~/Content/tasks.css" rel="stylesheet" />
+    <link href="~/css/tasks.css" rel="stylesheet" />
 }
 <div class="panel panel-default">
     <div class="panel-heading">系统名称设置</div>
@@ -61,7 +61,7 @@
     </div>
 </div>
 <div class="panel panel-default">
-    <div class="panel-heading">网站缓存<a id="clearCache" href="#" class="clearcache fa fa-times-circle-o" data-admin="@LgbPrincipal.IsAdmin(User)" title="全部清除(WebAdmin可用)" role="tooltip" data-placement="left"></a><a id="refreshCache" href="#" class="pull-right fa fa-refresh" title="点击刷新" role="tooltip"></a></div>
+    <div class="panel-heading">网站缓存<a id="clearCache" href="#" class="clearcache fa fa-times-circle-o" data-admin="@User.IsInRole("Administrators")" title="全部清除(WebAdmin可用)" role="tooltip" data-placement="left"></a><a id="refreshCache" href="#" class="pull-right fa fa-refresh" title="点击刷新" role="tooltip"></a></div>
     <div class="panel-body">
         <div class="tasks-widget">
             <ul id="sortable" class="task-list ui-sortable"></ul>

@@ -1,8 +1,9 @@
 ﻿using Bootstrap.DataAccess;
 using Bootstrap.Security;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Web;
 
 namespace Bootstrap.Admin.Models
 {
@@ -22,10 +23,11 @@ namespace Bootstrap.Admin.Models
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="url"></param>
-        public ProfilesModel(string url) : base(url)
+        /// <param name="controller"></param>
+        public ProfilesModel(ControllerBase controller) : base(controller)
         {
-            var fileName = HttpContext.Current.Server.MapPath(Icon);
+            // TODO: 找到MapPath方法
+            var fileName = AppContext.BaseDirectory + Icon;
             if (File.Exists(fileName))
             {
                 Size = new FileInfo(fileName).Length;

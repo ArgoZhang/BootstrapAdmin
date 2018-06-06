@@ -1,6 +1,6 @@
 ﻿using Longbow;
-using Longbow.Caching;
-using Longbow.ExceptionManagement;
+using Longbow.Cache;
+using Longbow.Logging;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;

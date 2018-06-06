@@ -1,7 +1,7 @@
 ﻿using Bootstrap.Security;
-using Longbow.Caching;
+using Longbow.Cache;
 using Longbow.Data;
-using Longbow.ExceptionManagement;
+using Longbow.Logging;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -67,8 +67,8 @@ namespace Bootstrap.DataAccess
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ParentId", p.ParentId));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Name", p.Name));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Order", p.Order));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Icon", DBAccess.ToDBValue(p.Icon)));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Url", DBAccess.ToDBValue(p.Url)));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Icon", DBAccessFactory.ToDBValue(p.Icon)));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Url", DBAccessFactory.ToDBValue(p.Url)));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Category", p.Category));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Target", p.Target));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@IsResource", p.IsResource));
