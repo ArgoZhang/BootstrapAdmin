@@ -22,7 +22,7 @@
                 id: 'btn_assignRole',
                 click: function (row) {
                     $.bc({
-                        Id: row.Id, url: Role.url, data: { type: "user" }, swal: false,
+                        id: row.Id, url: Role.url, data: { type: "user" }, swal: false,
                         callback: function (result) {
                             var htmlTemplate = this.htmlTemplate;
                             var html = $.map(result, function (element, index) {
@@ -40,7 +40,7 @@
                 id: 'btn_assignGroup',
                 click: function (row) {
                     $.bc({
-                        Id: row.Id, url: Group.url, data: { type: "user" }, swal: false,
+                        id: row.Id, url: Group.url, data: { type: "user" }, swal: false,
                         callback: function (result) {
                             var htmlTemplate = this.htmlTemplate;
                             var html = $.map(result, function (element, index) {
@@ -61,7 +61,7 @@
                     var roleIds = $dialogRole.find(':checked').map(function (index, element) {
                         return $(element).val();
                     }).toArray().join(',');
-                    $.bc({ Id: userId, url: Role.url, method: 'PUT', data: { type: "user", roleIds: roleIds }, title: Role.title, modal: 'dialogRole' });
+                    $.bc({ id: userId, url: Role.url, method: 'PUT', data: { type: "user", roleIds: roleIds }, title: Role.title, modal: 'dialogRole' });
                 }
             }, {
                 id: 'btnSubmitGroup',
@@ -75,7 +75,7 @@
             }]
         },
         callback: function (data) {
-            if (data && data.success && data.oper === 'save' && data.UserName == $('#userDisplayName').attr('data-userName')) {
+            if (data && data.success && data.oper === 'save' && data.data.UserName == $('#userDisplayName').attr('data-userName')) {
                 $('#userDisplayName').text(data.data.DisplayName);
             }
             if (data && data.oper === 'create') {
@@ -103,35 +103,4 @@
             { title: "说明", field: "Description", sortable: false }
         ]
     });
-
-    // validate
-    $('#dataForm').autoValidate({
-        userName: {
-            required: true,
-            maxlength: 50,
-            remote: {
-                url: $.formatUrl("/api/Users/"),
-                type: "PUT",
-                data: {
-                    UserStatus: 9
-                }
-            }
-        },
-        password: {
-            required: true,
-            maxlength: 50
-        },
-        confirm: {
-            required: true,
-            equalTo: "#password"
-        },
-        displayName: {
-            required: true,
-            maxlength: 50
-        }
-    }, {
-            userName: {
-                remote: "此登陆名称已存在"
-            }
-        });
 });

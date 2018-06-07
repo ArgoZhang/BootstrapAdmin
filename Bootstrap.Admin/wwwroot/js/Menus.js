@@ -43,7 +43,7 @@
                 id: 'btn_assignRole',
                 click: function (row) {
                     $.bc({
-                        Id: row.Id, url: Role.url, data: { type: "menu" }, swal: false,
+                        id: row.Id, url: Role.url, data: { type: "menu" }, swal: false,
                         callback: function (result) {
                             var htmlTemplate = this.htmlTemplate;
                             var html = $.map(result, function (element, index) {
@@ -64,7 +64,7 @@
                     var roleIds = $dialogRole.find('input:checked').map(function (index, element) {
                         return $(element).val();
                     }).toArray().join(',');
-                    $.bc({ Id: menuId, url: Role.url, method: "PUT", data: { type: "menu", roleIds: roleIds }, title: Role.title, modal: 'dialogRole' });
+                    $.bc({ id: menuId, url: Role.url, method: "PUT", data: { type: "menu", roleIds: roleIds }, title: Role.title, modal: 'dialogRole' });
                 }
             }]
         },

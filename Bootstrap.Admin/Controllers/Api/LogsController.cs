@@ -34,11 +34,10 @@ namespace Bootstrap.Admin.Controllers.Api
         }
 
         [HttpPost]
-        public bool Post(Log value)
+        public bool Post([FromBody]Log value)
         {
-            var request = Request;
-            //value.ClientAgent = request.UserAgent;
-            //value.ClientIp = request.UserHostAddress;
+            value.ClientAgent = Request.Headers["User-Agent"];
+            value.ClientIp = HttpContext.Connection.RemoteIpAddress.ToString();
             value.UserName = User.Identity.Name;
             return LogHelper.SaveLog(value);
         }

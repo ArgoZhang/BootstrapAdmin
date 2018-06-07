@@ -30,7 +30,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPost]
-        public object Post(JObject value)
+        public object Post([FromBody]JObject value)
         {
             dynamic user = value;
             string userName = user.userName;

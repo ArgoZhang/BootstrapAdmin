@@ -30,7 +30,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// </summary>
         /// <param name="value"></param>
         [HttpPost]
-        public bool Post(BootstrapMenu value)
+        public bool Post([FromBody]BootstrapMenu value)
         {
             return MenuHelper.SaveMenu(value);
         }
@@ -50,7 +50,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="value"></param>
         /// <returns></returns>
         [HttpPost("{id}")]
-        public IEnumerable<BootstrapMenu> Post(int id, JObject value)
+        public IEnumerable<BootstrapMenu> Post(int id, [FromBody]JObject value)
         {
             var ret = new List<BootstrapMenu>();
             dynamic json = value;
@@ -74,7 +74,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="value"></param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public bool Put(int id, JObject value)
+        public bool Put(int id, [FromBody]JObject value)
         {
             var ret = false;
             dynamic json = value;

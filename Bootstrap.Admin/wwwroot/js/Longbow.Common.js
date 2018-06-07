@@ -115,13 +115,13 @@
             options = $.extend({
                 remote: true,
                 id: "",
-                url: this.url,
+                url: "",
                 data: {},
                 contentType: 'application/json',
                 dataType: 'json',
                 method: "post",
                 htmlTemplate: '<div class="form-group checkbox col-md-3 col-sm-4 col-xs-6"><label role="tooltip" title="{3}"><input type="checkbox" value="{0}" {2}/>{1}</label></div>',
-                title: this.title,
+                title: "",
                 swal: true,
                 modal: null,
                 loading: false,
@@ -170,7 +170,7 @@
             function success(result) {
                 var interval = 10;
                 if ($.isFunction(options.callback)) {
-                    options.callback.call(options.$element == null ? this : options.$element, result);
+                    options.callback.call(options.$element == null ? options : options.$element, result);
                 }
                 if (options.modal !== null && (result || options.loading)) {
                     $(options.modal).modal('hide');

@@ -26,7 +26,7 @@
                 id: 'btn_assignUser',
                 click: function (row) {
                     $.bc({
-                        Id: row.Id, url: User.url, data: { type: "role" }, swal: false,
+                        id: row.Id, url: User.url, data: { type: "role" }, swal: false,
                         callback: function (result) {
                             var htmlTemplate = this.htmlTemplate;
                             var html = $.map(result, function (element, index) {
@@ -44,7 +44,7 @@
                 id: 'btn_assignGroup',
                 click: function (row) {
                     $.bc({
-                        Id: row.Id, url: Group.url, data: { type: "role" }, swal: false,
+                        id: row.Id, url: Group.url, data: { type: "role" }, swal: false,
                         callback: function (result) {
                             var htmlTemplate = this.htmlTemplate;
                             var html = $.map(result, function (element, index) {
@@ -62,7 +62,7 @@
                 id: 'btn_assignMenu',
                 click: function (row) {
                     $.bc({
-                        Id: row.Id, url: Menu.url, data: { type: "role" }, swal: false,
+                        id: row.Id, url: Menu.url, data: { type: "role" }, swal: false,
                         callback: function (result) {
                             $dialogMenuHeader.text($.format('{0}-菜单授权窗口', row.RoleName));
                             $btnSubmitMenu.data('type', 'menu');
