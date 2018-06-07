@@ -6,6 +6,7 @@
 @section Javascript {
     <script src="~/js/longbow.dataentity.js"></script>
     <script src="~/js/jquery.validate.js"></script>
+    <script src="~/js/longbow.validate.js"></script>
     <script src="~/js/messages_zh.js"></script>
     <script src="~/js/Settings.js"></script>
 }
@@ -14,28 +15,24 @@
 }
 <div class="panel panel-default">
     <div class="panel-heading">系统名称设置</div>
-    <div class="panel-body">
-        <form id="headerDataForm" name="headerDataForm">
-            <div class="input-group form-group col-xs-12">
-                <input type="text" class="form-control" id="sysName" name="sysName" placeholder="请输入网站标题，50字以内" value="@Model.Title" maxlength="50" />
-                <span class="input-group-btn">
-                    <button class="btn btn-default" type="button" id="sysSave">保存</button>
-                </span>
-            </div>
-        </form>
+    <div class="panel-body" data-toggle="LgbValidate" data-valid-button="#sysSave">
+        <div class="input-group form-group col-xs-12">
+            <input type="text" class="form-control" id="sysName" placeholder="请输入网站标题，50字以内" value="@Model.Title" maxlength="50" data-valid="true" />
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button" data-method="title">保存</button>
+            </span>
+        </div>
     </div>
 </div>
 <div class="panel panel-default">
     <div class="panel-heading">页脚设置</div>
-    <div class="panel-body">
-        <form id="footerDataForm" name="footerDataForm">
-            <div class="input-group form-group col-xs-12">
-                <input type="text" class="form-control" id="sysFoot" name="sysFoot" placeholder="请输入网站页脚，50字以内" value="@Model.Footer" maxlength="50" />
-                <span class="input-group-btn">
-                    <button class="btn btn-default" type="button" id="footSave">保存</button>
-                </span>
-            </div>
-        </form>
+    <div class="panel-body" data-toggle="LgbValidate" data-valid-button="#footSave">
+        <div class="input-group form-group col-xs-12">
+            <input type="text" class="form-control" id="sysFoot" placeholder="请输入网站页脚，50字以内" value="@Model.Footer" maxlength="50" data-valid="true" />
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button" data-method="footer">保存</button>
+            </span>
+        </div>
     </div>
 </div>
 <div class="panel panel-default">
@@ -54,7 +51,7 @@
                             <li><a href="#" data-val="">默认样式</a></li>
                         </ul>
                     </div>
-                    <button class="btn btn-default pull-right" type="button" id="cssSave">保存</button>
+                    <button class="btn btn-default pull-right" type="button" data-method="css">保存</button>
                 </div>
             </div>
         </form>

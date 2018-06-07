@@ -1,21 +1,5 @@
 ﻿$(function () {
     $('a[data-admin="False"]').hide();
-    $('#headerDataForm').autoValidate({
-        sysName: {
-            required: true,
-            maxlength: 50
-        }
-    }, {
-            button: ['sysSave']
-        });
-    $('#footerDataForm').autoValidate({
-        sysFoot: {
-            required: true,
-            maxlength: 50
-        }
-    }, {
-            button: ['footSave']
-        });
 
     var bsa = new BootstrapAdmin({
         url: Settings.url,
@@ -27,46 +11,41 @@
                 Title: "sysName",
                 Footer: "sysFoot"
             }
-        }),
-        click: {
-            assign: [{
-                id: 'sysSave',
-                click: function (row, data) {
-                    if ($(this).attr('data-valid') == "true") {
-                        $.bc({
-                            url: Settings.url, data: { name: '网站标题', code: data.Title, category: Settings.title }, title: Settings.title,
-                            callback: function (result) {
-                                if (result) $('#websiteTitle').text(data.Title);
-                            }
-                        });
+        })
+    });
+
+    $('button[data-method]').on('click', function (e) {
+        var $this = $(this);
+        switch ($this.attr('data-method')) {
+            case 'footer':
+                var data = bsa.dataEntity.get();
+                $.bc({
+                    url: Settings.url, data: { name: '网站页脚', code: data.Footer, category: Settings.title }, title: Settings.title,
+                    callback: function (result) {
+                        if (result) $('#websiteFooter').text(data.Footer);
                     }
-                }
-            }, {
-                id: 'footSave',
-                click: function (row, data) {
-                    if ($(this).attr('data-valid') == "true") {
-                        $.bc({
-                            url: Settings.url, data: { name: '网站页脚', code: data.Footer, category: Settings.title }, title: Settings.title,
-                            callback: function (result) {
-                                if (result) $('#websiteFooter').text(data.Footer);
-                            }
-                        });
+                });
+                break;
+            case 'title':
+                var data = bsa.dataEntity.get();
+                $.bc({
+                    url: Settings.url, data: { name: '网站标题', code: data.Title, category: Settings.title }, title: Settings.title,
+                    callback: function (result) {
+                        if (result) $('#websiteTitle').text(data.Title);
                     }
-                }
-            }, {
-                id: 'cssSave',
-                click: function (row, data) {
-                    var cssDefine = $('#dictCssDefine').val();
-                    $.bc({
-                        url: Settings.url, data: { name: '使用样式', code: cssDefine, category: '当前样式' }, title: '网站样式',
-                        callback: function (result) {
-                            if (result) {
-                                window.setTimeout(function () { window.location.reload(true); }, 1000);
-                            }
+                });
+                break;
+            case 'css':
+                var cssDefine = $('#dictCssDefine').val();
+                $.bc({
+                    url: Settings.url, data: { name: '使用样式', code: cssDefine, category: '当前样式' }, title: '网站样式',
+                    callback: function (result) {
+                        if (result) {
+                            window.setTimeout(function () { window.location.reload(true); }, 1000);
                         }
-                    });
-                }
-            }]
+                    }
+                });
+                break;
         }
     });
 
