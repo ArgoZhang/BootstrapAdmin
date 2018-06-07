@@ -39,7 +39,8 @@
             },
             escapeCssMeta: function (string) {
                 return string.replace(/([\\!"#$%&'()*+,./:;<=>?@\[\]^`{|}~])/g, "\\$1");
-            }
+            },
+            settings: $.validator.defaults
         }, this.defaults(), options)
         this.$element.on('input.lgb.validate', this.options.childClass, function () {
             if (!that.validElement(this)) $(this).lgbTooltip('show');
