@@ -20,32 +20,6 @@
         if (!!url) $headerIcon.attr('src', url);
     });
 
-    $('#infoDataForm').autoValidate({
-        displayName: {
-            required: true,
-            maxlength: 50
-        }
-    }, {
-            button: ['btnSaveDisplayName']
-        });
-    $('#passwordDataForm').autoValidate({
-        currentPassword: {
-            required: true,
-            maxlength: 50
-        },
-        newPassword: {
-            required: true,
-            maxlength: 50
-        },
-        confirmPassword: {
-            required: true,
-            equalTo: "#newPassword",
-            maxlength: 50
-        }
-    }, {
-            button: ['btnSavePassword']
-        });
-
     var bsa = new BootstrapAdmin({
         url: Profiles.url,
         bootstrapTable: null,
@@ -57,41 +31,34 @@
                 UserName: "userName",
                 Css: "css"
             }
-        }),
-        click: {
-            assign: [{
-                id: 'btnSavePassword',
-                click: function (row, data) {
-                    if ($(this).attr('data-valid') == "true") {
-                        data.UserStatus = 2;
-                        $.bc({ url: User.url, method: "PUT", data: data, title: "更改密码" });
-                    }
-                }
-            }, {
-                id: 'btnSaveDisplayName',
-                click: function (row, data) {
-                    if ($(this).attr('data-valid') == "true") {
-                        data.UserStatus = 1;
-                        $.bc({
-                            url: User.url, method: "PUT", data: data, title: "修改用户显示名称",
-                            callback: function (result) {
-                                if (result) {
-                                    $('#userDisplayName').text(data.DisplayName);
-                                }
-                            }
-                        });
-                    }
-                }
-            }, {
-                id: 'btnSaveCss',
-                click: function (row, data) {
-                    data.UserStatus = 3;
-                    $.bc({ url: User.url, method: "PUT", data: data, title: "保存样式" });
-                }
-            }]
-        }
+        })
     });
 
+    $('button[data-method]').on('click', function (e) {
+        var $this = $(this);
+        var data = bsa.dataEntity.get();
+        switch ($this.attr('data-method')) {
+            case 'password':
+                data.UserStatus = 2;
+                $.bc({ url: User.url, method: "PUT", data: data, title: "更改密码" });
+                break;
+            case 'user':
+                data.UserStatus = 1;
+                $.bc({
+                    url: User.url, method: "PUT", data: data, title: "修改用户显示名称",
+                    callback: function (result) {
+                        if (result) {
+                            $('#userDisplayName').text(data.DisplayName);
+                        }
+                    }
+                });
+                break;
+            case 'css':
+                data.UserStatus = 3;
+                $.bc({ url: User.url, method: "PUT", data: data, title: "保存样式" });
+                break;
+        }
+    });
     $('button[data-admin="False"]').removeAttr('disabled');
     $('#kvFileinputModal').appendTo('body');
 });

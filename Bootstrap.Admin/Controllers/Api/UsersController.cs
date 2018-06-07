@@ -31,9 +31,9 @@ namespace Bootstrap.Admin.Controllers.Api
         /// </summary>
         /// <returns></returns>
         [HttpPut]
-        public bool Put(User value)
+        public bool Put([FromBody]User value)
         {
-            if(value.UserStatus == 3)
+            if (value.UserStatus == 3)
             {
                 return UserHelper.SaveUserCssByName(value.UserName, value.Css);
             }
@@ -79,19 +79,9 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="userName"></param>
-        /// <returns></returns>
-        [HttpGet]
-        public BootstrapUser Get(string userName)
-        {
-            return BootstrapUser.RetrieveUserByUserName(userName);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="value"></param>
         [HttpPost]
-        public bool Post(User value)
+        public bool Post([FromBody]User value)
         {
             value.Description = string.Format("管理员{0}创建用户", User.Identity.Name);
             value.ApprovedBy = User.Identity.Name;

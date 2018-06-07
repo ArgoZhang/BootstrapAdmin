@@ -94,7 +94,7 @@ namespace Bootstrap.DataAccess
         /// <param name="code"></param>
         /// <param name="category"></param>
         /// <returns></returns>
-        public static bool SaveSettings(string name, string code, string category)
+        public static bool SaveSettings(BootstrapDict dict)
         {
             var ret = false;
             string sql = "Update Dicts set Code = @Code where Category = @Category and Name = @Name";
@@ -102,9 +102,9 @@ namespace Bootstrap.DataAccess
             {
                 using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
                 {
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Name", name));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Code", code));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Category", category));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Name", dict.Name));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Code", dict.Code));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Category", dict.Category));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
                 CacheCleanUtility.ClearCache(dictIds: string.Empty);

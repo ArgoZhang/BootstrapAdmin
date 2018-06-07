@@ -244,7 +244,7 @@
     // Menus
     Menu = {
         url: 'api/Menus/',
-        iconView: '../Admin/IconView',
+        iconView: 'Admin/IconView',
         title: "授权菜单"
     };
 
@@ -256,7 +256,8 @@
 
     // Dicts
     Dicts = {
-        url: 'api/Dicts/'
+        url: 'api/Dicts/',
+        css: 'api/Css/',
     };
 
     // Profiles
@@ -454,7 +455,7 @@
 $(function () {
     // loading customer css
     $.bc({
-        url: "api/Home", swal: false, method: 'get',
+        url: Dicts.css, swal: false, method: 'get',
         callback: function (result) {
             if (result.length > 0)
                 $('head').append($.format('<link href="{0}css/{1}" rel="stylesheet" type="text/css" />', $('#pathBase').attr('href'), result));

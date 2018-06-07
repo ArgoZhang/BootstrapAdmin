@@ -1,9 +1,8 @@
 ﻿using Bootstrap.DataAccess;
+using Bootstrap.Security;
 using Longbow.Cache;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Bootstrap.Admin.Controllers.Api
 {
@@ -19,11 +18,10 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="value"></param>
         /// <returns></returns>
         [HttpPost]
-        public bool Post(JObject value)
+        public bool Post([FromBody]BootstrapDict value)
         {
             //保存个性化设置
-            dynamic json = value;
-            return DictHelper.SaveSettings((string)json.name, (string)json.code, (string)json.category);
+            return DictHelper.SaveSettings(value);
         }
         /// <summary>
         /// 

@@ -8,7 +8,7 @@ using System.Linq;
 namespace Bootstrap.Admin.Controllers.Api
 {
     [Route("api/[controller]")]
-    public class HomeController : Controller
+    public class CssController : Controller
     {
         /// <summary>
         /// 获得当前样式接口

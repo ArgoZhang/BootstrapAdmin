@@ -110,7 +110,7 @@
             required: true,
             maxlength: 50,
             remote: {
-                url: "../api/Users/",
+                url: $.formatUrl("/api/Users/"),
                 type: "PUT",
                 data: {
                     UserStatus: 9

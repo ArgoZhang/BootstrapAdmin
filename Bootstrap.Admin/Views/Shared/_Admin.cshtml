@@ -4,9 +4,9 @@
 @section css {
     <link href="~/css/sweetalert.css" rel="stylesheet" />
     <link href="~/css/toastr.css" rel="stylesheet" />
+    @RenderSection("css", false)
     <link href="~/css/admin.css" rel="stylesheet" />
     <link href="~/css/admin-responsive.css" rel="stylesheet" />
-    @RenderSection("css", false)
 }
 @section javascript {
     <script src="~/js/sweetalert.js"></script>

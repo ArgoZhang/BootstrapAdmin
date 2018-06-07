@@ -8,6 +8,7 @@
     <script src="~/js/fileinput.js"></script>
     <script src="~/js/fileinput.zh.js"></script>
     <script src="~/js/jquery.validate.js"></script>
+    <script src="~/js/longbow.validate.js"></script>
     <script src="~/js/messages_zh.js"></script>
     <script src="~/js/Profiles.js"></script>
 }
@@ -17,8 +18,8 @@
 }
 <div class="panel panel-default">
     <div class="panel-heading">基本资料</div>
-    <div class="panel-body">
-        <form id="infoDataForm" name="infoDataForm" class="form-inline" role="form">
+    <div class="panel-body" data-toggle="LgbValidate" data-valid-button="#btnSaveDisplayName">
+        <form class="form-inline" role="form">
             <div class="row">
                 <div class="form-group col-xs-12 col-sm-6">
                     <label class="control-label" for="userName">登陆名称</label>
@@ -26,45 +27,45 @@
                 </div>
                 <div class="form-group col-xs-12 col-sm-6">
                     <label class="control-label" for="DisplayName">显示名称</label>
-                    <input type="text" class="form-control" id="displayName" name="displayName" value="@Model.DisplayName" placeholder="不可为空，50字以内" maxlength="50" />
+                    <input type="text" class="form-control" id="displayName" name="displayName" value="@Model.DisplayName" placeholder="不可为空，50字以内" maxlength="50" data-valid="true" />
                 </div>
             </div>
         </form>
         <div class="modal-footer">
-            <button id="btnSaveDisplayName" class="btn btn-default" type="button" disabled data-admin="@User.IsInRole("Administrators")"><i class="fa fa-save"></i><span>保存</span></button>
+            <button id="btnSaveDisplayName" data-method="user" class="btn btn-default" type="button" disabled data-admin="@User.IsInRole("Administrators")"><i class="fa fa-save"></i><span>保存</span></button>
         </div>
     </div>
 </div>
 <div class="panel panel-default">
     <div class="panel-heading">修改密码</div>
-    <div class="panel-body">
-        <form id="passwordDataForm" name="passwordDataForm" class="form-inline" role="form">
+    <div class="panel-body" data-toggle="LgbValidate" data-valid-button="#btnSavePassword">
+        <form class="form-inline" role="form">
             <div class="row">
                 <div class="form-group col-xs-12">
                     <label class="control-label" for="currentPassword">原密码: </label>
-                    <input type="password" class="form-control" id="currentPassword" name="currentPassword" placeholder="原密码，50字以内" maxlength="50" />
+                    <input type="password" class="form-control" id="currentPassword" name="currentPassword" placeholder="原密码，50字以内" maxlength="50" data-valid="true" />
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-sm-6 col-xs-12">
                     <label class="control-label" for="newPassword">新密码: </label>
-                    <input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="新密码，50字以内" maxlength="50" />
+                    <input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="新密码，50字以内" maxlength="50" data-valid="true" />
                 </div>
                 <div class="form-group col-sm-6 col-xs-12">
                     <label class="control-label" for="confirmPassword">确认密码: </label>
-                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="与新密码一致，50字以内" maxlength="50" />
+                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="与新密码一致，50字以内" maxlength="50" data-valid="true" />
                 </div>
             </div>
         </form>
         <div class="modal-footer">
-            <button id="btnSavePassword" class="btn btn-default" type="button" disabled data-admin="@User.IsInRole("Administrators")"><i class="fa fa-save"></i><span>保存</span></button>
+            <button id="btnSavePassword" data-method="password" class="btn btn-default" type="button" disabled data-admin="@User.IsInRole("Administrators")"><i class="fa fa-save"></i><span>保存</span></button>
         </div>
     </div>
 </div>
 <div class="panel panel-default">
     <div class="panel-heading">网站皮肤</div>
     <div class="panel-body">
-        <form id="cssDataForm" name="cssDataForm" class="form-inline" role="form">
+        <form class="form-inline" role="form">
             <div class="row">
                 <div class="form-group col-xs-12">
                     <label class="control-label" for="userName">样式</label>
@@ -86,7 +87,7 @@
             </div>
         </form>
         <div class="modal-footer">
-            <button id="btnSaveCss" class="btn btn-default" type="button" disabled data-admin="@User.IsInRole("Administrators")"><i class="fa fa-save"></i><span>保存</span></button>
+            <button id="btnSaveCss" data-method="css" class="btn btn-default" type="button" disabled data-admin="@User.IsInRole("Administrators")"><i class="fa fa-save"></i><span>保存</span></button>
         </div>
     </div>
 </div>

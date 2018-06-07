@@ -162,12 +162,12 @@
     });
 
     $.bc({
-        url: 'api/Home', swal: false,
+        url: Dicts.css, swal: false,
         callback: function (result) {
             var html = result.map(function (ele, index) { return $.format('<li><a href="#" data-val="{1}">{0}</a></li>', ele.Name, ele.Code); }).join('');
             $('#cssContainer').append(html);
             $.bc({
-                url: 'api/Home', swal: false, method: 'get',
+                url: Dicts.css, swal: false, method: 'get',
                 callback: function (result) {
                     if (result.length > 0)
                         $('.lgbDropdown').lgbDropdown('val', result);

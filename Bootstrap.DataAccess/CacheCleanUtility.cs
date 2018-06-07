@@ -100,7 +100,7 @@ namespace Bootstrap.DataAccess
         /// <param name="keys"></param>
         internal static void ClearCache(IEnumerable<string> keys)
         {
-            CacheManager.Clear(k => keys.Any(key => key == k));
+            CacheManager.Clear(keys);
             CacheManager.CorsClear(keys);
         }
     }

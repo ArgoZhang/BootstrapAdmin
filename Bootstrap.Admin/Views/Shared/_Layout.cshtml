@@ -4,11 +4,11 @@
 @section css {
     <link href="~/css/bootstrap.css" rel="stylesheet">
     <link href="~/css/bootstrap-theme.css" rel="stylesheet">
-    <link href="~/css/nprogress.css" rel="stylesheet" />
     <link href="~/css/font-awesome.css" rel="stylesheet" />
+    <link href="~/css/nprogress.css" rel="stylesheet" />
+    @RenderSection("css", false)
     <link href="~/css/site.css" rel="stylesheet" />
     <link href="~/css/site-responsive.css" rel="stylesheet" />
-    @RenderSection("css", false)
 }
 @section javascript {
     <script src="~/js/bootstrap.js"></script>
@@ -16,7 +16,6 @@
     <script src="~/js/Longbow.Common.js"></script>
     @RenderSection("Javascript", false)
 }
-<a id="pathBase" href="~/" class="hidden"></a>
 @Html.Partial("Header")
 @RenderBody()
 @Html.Partial("Footer")
