@@ -24,7 +24,7 @@
         nestMenu: function (callback) {
             var $this = $(this);
             $.bc({
-                Id: 0, url: Menu.url, data: { type: "user" }, swal: false,
+                id: 0, url: Menu.url, data: { type: "user" }, swal: false,
                 callback: function (result) {
                     var html = "";
                     if ($.isArray(result)) html = cascadeMenu(result);
