@@ -55,16 +55,16 @@
         <h4 class="modal-title" id="myModalLabel">角色编辑窗口</h4>
     </div>
     <div class="modal-body">
-        <form class="form-inline" id="dataForm" name="dataForm" role="form">
+        <form class="form-inline" id="dataForm" role="form">
             <div class="row">
                 <div class="form-group col-sm-6">
                     <label class="control-label" for="roleName">角色名称</label>
-                    <input type="text" class="form-control" id="roleName" name="roleName" placeholder="不可为空，50字以内" maxlength="50" />
+                    <input type="text" class="form-control" id="roleName" placeholder="不可为空，50字以内" maxlength="50" />
                 </div>
                 <div class="form-group col-sm-6">
-                    <input type="text" class="form-control hidden" id="roleID" name="roleID" />
+                    <input type="text" class="form-control hidden" id="roleID" data-default-val="0" />
                     <label class="control-label" for="roleDesc">角色描述</label>
-                    <input type="text" class="form-control" id="roleDesc" name="roleDesc" placeholder="描述信息(可为空)，50字以内" maxlength="50" />
+                    <input type="text" class="form-control" id="roleDesc" placeholder="描述信息(可为空)，50字以内" maxlength="50" />
                 </div>
             </div>
         </form>
