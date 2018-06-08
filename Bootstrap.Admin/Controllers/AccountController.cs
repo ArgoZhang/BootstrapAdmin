@@ -29,7 +29,7 @@ namespace Bootstrap.Admin.Controllers
             {
                 var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
                 identity.AddClaim(new Claim(ClaimTypes.Name, userName));
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity), new AuthenticationProperties() { IsPersistent = remember == "true" });
                 return Redirect("~/");
             }
             var mobile = true; //Request.Browser.IsMobileDevice;
