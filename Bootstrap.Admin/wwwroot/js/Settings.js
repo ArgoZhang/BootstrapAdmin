@@ -51,7 +51,7 @@
 
     var $sortable = $('#sortable');
     var listCacheUrl = function (options) {
-        options = $.extend({ clear: false }, options);
+        options = $.extend({ key: '' }, options);
         $sortable.html('');
         $.bc({
             url: Settings.url,
@@ -60,7 +60,63 @@
             callback: function (result) {
                 if (result && $.isArray(result)) {
                     $.each(result, function (index, item) {
-                        listCache($.extend({ item: item, url: item.Url }, options));
+                        $.bc({
+                            url: $.format(item.Url, options.key),
+                            crossDomain: !item.Self,
+                            xhrFields: {
+                                withCredentials: !item.Self
+                            },
+                            swal: false,
+                            callback: function (result) {
+                                if ($.isArray(result)) {
+                                    var html = '<li class="{4}"><i class="fa fa-ellipsis-v"></i><div class="task-title"><span class="task-title-sp" role="tooltip" title="{1}">{2}</span><span class="badge badge-sm label-success">{0}</span><span class="task-value" title="{3}">{3}</span><div class="pull-right hidden-phone"><span>{7}</span><button class="btn btn-danger btn-xs fa fa-trash-o" title="{1}" data-url="{5}" role="tooltip" data-self="{6}" data-placement="left"></button></div></div></li>';
+                                    var content = result.sort(function (x, y) {
+                                        return x.Key > y.Key ? 1 : -1;
+                                    }).map(function (ele) {
+                                        var key = ele.Key.split('-')[0];
+                                        var css = 'list-default';
+                                        switch (key) {
+                                            case "MenuHelper":
+                                                css = 'list-primary';
+                                                break;
+                                            case "UserHelper":
+                                                css = 'list-success';
+                                                break;
+                                            case "RoleHelper":
+                                                css = 'list-danger';
+                                                break;
+                                            case "GroupHelper":
+                                                css = 'list-warning';
+                                                break;
+                                            case "LogHelper":
+                                                css = 'list-info';
+                                                break;
+                                            case "DictHelper":
+                                                css = 'list-inverse';
+                                                break;
+                                            case "ExceptionHelper":
+                                                css = 'list-Exception';
+                                                break;
+                                            case "MessageHelper":
+                                                css = 'list-Message';
+                                                break;
+                                            case "TaskHelper":
+                                                css = 'list-Task';
+                                                break;
+                                            case "NotificationHelper":
+                                                css = 'list-Notification';
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                        return $.format(html, ele.Interval, ele.Key, ele.Desc, ele.Value, css, $.format(item.Url, ele.Key), item.Self, Math.max(0, ele.Interval - Math.round((new Date() - new Date(ele.CreateTime.replace(/-/g, '/'))) / 1000)));
+                                    }).join('');
+                                    $sortable.append($.format('<li class="title">{0}</li>', item.Desc));
+                                    $sortable.append(content);
+                                    $sortable.find('[role="tooltip"]').lgbTooltip({ container: 'body' });
+                                }
+                            }
+                        });
                     });
                 }
             }
@@ -68,75 +124,19 @@
     }
 
     var listCache = function (options) {
-        options = $.extend({ clear: false, key: '' }, options);
-        if (options.key != '') {
-            options.url = $.format(options.url, options.key);
-        }
-        if (options.clear) {
-            options.url += '&clear=clear';
-        }
         $.bc({
             url: options.url,
-            swal: false,
-            callback: function (result) {
-                if (result && options.key == '') {
-                    result = $.parseJSON(result);
-                    if ($.isArray(result)) {
-                        var html = '<li class="{4}"><i class="fa fa-ellipsis-v"></i><div class="task-title"><span class="task-title-sp" role="tooltip" title="{1}">{2}</span><span class="badge badge-sm label-success">{0}</span><span class="task-value" title="{3}">{3}</span><div class="pull-right hidden-phone"><span>{6}</span><button class="btn btn-danger btn-xs fa fa-trash-o" title="{1}" data-key="{1}" data-url="{5}" role="tooltip" data-placement="left"></button></div></div></li>';
-                        var content = result.sort(function (x, y) {
-                            return x.Key > y.Key ? 1 : -1;
-                        }).map(function (ele) {
-                            var key = ele.Key.split('-')[0];
-                            var css = 'list-default';
-                            switch (key) {
-                                case "MenuHelper":
-                                    css = 'list-primary';
-                                    break;
-                                case "UserHelper":
-                                    css = 'list-success';
-                                    break;
-                                case "RoleHelper":
-                                    css = 'list-danger';
-                                    break;
-                                case "GroupHelper":
-                                    css = 'list-warning';
-                                    break;
-                                case "LogHelper":
-                                    css = 'list-info';
-                                    break;
-                                case "DictHelper":
-                                    css = 'list-inverse';
-                                    break;
-                                case "ExceptionHelper":
-                                    css = 'list-Exception';
-                                    break;
-                                case "MessageHelper":
-                                    css = 'list-Message';
-                                    break;
-                                case "TaskHelper":
-                                    css = 'list-Task';
-                                    break;
-                                case "NotificationHelper":
-                                    css = 'list-Notification';
-                                    break;
-                                default:
-                                    break;
-                            }
-                            return $.format(html, ele.Interval, ele.Key, ele.Desc, ele.Value, css, options.url, Math.max(0, ele.Interval - Math.round((new Date() - new Date(ele.CreateTime.replace(/-/g, '/'))) / 1000)));
-                        }).join('');
-                        $sortable.append($.format('<li class="title">{0}-{1}</li>', options.item.Desc, options.item.Key));
-                        $sortable.append(content);
-                        $sortable.find('[role="tooltip"]').lgbTooltip();
-                    }
-                }
-            }
+            crossDomain: !options.self,
+            xhrFields: {
+                withCredentials: !options.self
+            },
+            swal: false
         });
     }
     $('#refreshCache').click(function () { listCacheUrl(); }).trigger('click');
-    $('#clearCache').click(function () { listCacheUrl({ clear: true }); });
     $sortable.on('click', '.btn', function () {
         $(this).lgbTooltip('destroy');
-        listCache({ key: $(this).attr('data-key'), url: $(this).attr('data-url') });
+        listCache({ self: $(this).attr('data-self') === "true", url: $(this).attr('data-url') });
         listCacheUrl();
     });
 

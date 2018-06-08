@@ -129,7 +129,8 @@
                 callback: null,
                 $element: null,
                 async: true,
-                toastr: false
+                toastr: false,
+                crossDomain: null
             }, options);
 
             if (!options.url || options.url === "") {
@@ -155,6 +156,8 @@
                     contentType: options.contentType,
                     dataType: options.dataType,
                     async: options.async,
+                    crossDomain: options.crossDomain,
+                    xhrFields: options.xhrFields,
                     success: function (result) {
                         success(result);
                     },

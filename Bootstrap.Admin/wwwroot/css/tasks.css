@@ -122,7 +122,7 @@
     .tasks-widget .task-list li .task-title .task-title-sp {
         margin-right: 5px;
         max-width: 120px;
-        padding-top: 15px;
+        margin-top: 15px;
     }
 
     .tasks-widget .task-list li.task-done .task-title-sp {

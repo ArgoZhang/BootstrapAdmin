@@ -75,7 +75,6 @@
     <None Include="wwwroot\images\logo6.jpg" />
     <None Include="wwwroot\images\nav-expand.png" />
     <None Include="wwwroot\images\success.png" />
-    <None Include="wwwroot\images\uploader\Admin.jpg" />
     <None Include="wwwroot\images\uploader\default.jpg" />
     <None Include="wwwroot\images\uploader\readme.txt" />
     <None Include="wwwroot\css\jquery.nestable.css" />
