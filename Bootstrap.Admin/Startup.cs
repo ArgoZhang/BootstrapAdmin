@@ -62,6 +62,7 @@ namespace Bootstrap.Admin
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+            app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials());
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseCacheManagerCorsHandler();
