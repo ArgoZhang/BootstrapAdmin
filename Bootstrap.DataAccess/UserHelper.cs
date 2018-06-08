@@ -91,13 +91,13 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 删除用户
         /// </summary>
-        /// <param name="ids"></param>
-        public static bool DeleteUser(string ids)
+        /// <param name="value"></param>
+        public static bool DeleteUser(IEnumerable<int> value)
         {
-            if (string.IsNullOrEmpty(ids) || ids.Contains("'")) return false;
             bool ret = false;
             try
             {
+                var ids = string.Join(",", value);
                 using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_DeleteUsers"))
                 {
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ids", ids));

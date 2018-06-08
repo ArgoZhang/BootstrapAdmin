@@ -39,7 +39,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// </summary>
         /// <param name="value"></param>
         [HttpDelete]
-        public bool Delete(string value)
+        public bool Delete([FromBody]IEnumerable<int> value)
         {
             return MenuHelper.DeleteMenu(value);
         }

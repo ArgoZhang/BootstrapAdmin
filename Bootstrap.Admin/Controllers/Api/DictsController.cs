@@ -4,6 +4,7 @@ using Bootstrap.Security;
 using Longbow.Web.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace Bootstrap.Admin.Controllers.Api
 {
@@ -38,7 +39,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="value"></param>
         [HttpDelete]
         [Authorize(Roles = "Administrators")]
-        public object Delete(string value)
+        public object Delete(IEnumerable<int> value)
         {
             var result = DictHelper.DeleteDict(value);
             return new { result, msg = result ? "成功！" : "失败" };

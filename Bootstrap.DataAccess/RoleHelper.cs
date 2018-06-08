@@ -135,13 +135,13 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 删除角色表
         /// </summary>
-        /// <param name="ids"></param>
-        public static bool DeleteRole(string ids)
+        /// <param name="value"></param>
+        public static bool DeleteRole(IEnumerable<int> value)
         {
-            if (string.IsNullOrEmpty(ids) || ids.Contains("'")) return false;
             bool ret = false;
             try
             {
+                var ids = string.Join(",", value);
                 using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_DeleteRoles"))
                 {
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ids", ids));

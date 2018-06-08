@@ -30,14 +30,14 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 删除字典中的数据
         /// </summary>
-        /// <param name="ids">需要删除的IDs</param>
+        /// <param name="value">需要删除的IDs</param>
         /// <returns></returns>
-        public static bool DeleteDict(string ids)
+        public static bool DeleteDict(IEnumerable<int> value)
         {
-            if (string.IsNullOrEmpty(ids) || ids.Contains("'")) return false;
             var ret = false;
             try
             {
+                var ids = string.Join(",", value);
                 string sql = string.Format(CultureInfo.InvariantCulture, "Delete from Dicts where ID in ({0})", ids);
                 using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
                 {

@@ -55,12 +55,12 @@ namespace Bootstrap.DataAccess
         /// 删除群组信息
         /// </summary>
         /// <param name="ids"></param>
-        public static bool DeleteGroup(string ids)
+        public static bool DeleteGroup(IEnumerable<int> value)
         {
-            if (string.IsNullOrEmpty(ids) || ids.Contains("'")) return false;
             bool ret = false;
             try
             {
+                var ids = string.Join(",", value);
                 using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_DeleteGroups"))
                 {
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ids", ids));

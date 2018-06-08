@@ -51,14 +51,14 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 删除日志信息
         /// </summary>
-        /// <param name="ids"></param>
+        /// <param name="value"></param>
         /// <returns></returns>
-        public static bool DeleteLog(string ids)
+        public static bool DeleteLog(IEnumerable<int> value)
         {
-            if (string.IsNullOrEmpty(ids) || ids.Contains("'")) return false;
             bool ret = false;
             try
             {
+                var ids = string.Join(",", value);
                 string sql = string.Format(CultureInfo.InvariantCulture, "Delete from Logs where ID in ({0})", ids);
                 using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
                 {
