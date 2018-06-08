@@ -76,13 +76,13 @@
         <h4 class="modal-title" id="myModalLabel">菜单编辑窗口</h4>
     </div>
     <div class="modal-body">
-        <form class="form-inline" id="dataForm" name="dataForm" role="form">
+        <form class="form-inline" id="dataForm" role="form">
             <div class="row">
                 <div class="form-group col-sm-6">
                     <input type="text" class="form-control hidden" id="menuID" name="menuID" data-default-val="0" />
                     <label class="control-label" for="name">菜单名称</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" id="name" name="name" placeholder="不可为空，50字以内" maxlength="50" />
+                        <input type="text" class="form-control" id="name" name="name" placeholder="不可为空，50字以内" maxlength="50" data-valid="true" />
                         <span class="input-group-btn">
                             <button data-method="clear" class="btn btn-default" type="button"><i class="fa fa-remove"></i></button>
                             <button data-method="sel" class="btn btn-default" type="button"><i class="fa fa-edit"></i>全选</button>
@@ -90,7 +90,7 @@
                     </div>
                 </div>
                 <div class="form-group col-sm-6">
-                    <input type="text" class="form-control hidden" id="parentId" name="parentId" />
+                    <input type="text" class="form-control hidden" id="parentId" data-default-val="0" />
                     <label class="control-label" for="parentName">父级菜单</label>
                     <div class="input-group">
                         <input type="text" class="form-control" readonly id="parentName" name="parentName" placeholder="请选择...(可为空)，50字以内" maxlength="50" />
@@ -103,7 +103,7 @@
                 <div class="form-group col-sm-6">
                     <label class="control-label" for="order">菜单序号</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" id="order" name="order" data-default-val="10" placeholder="默认为10" maxlength="8" />
+                        <input type="text" class="form-control" id="order" name="order" data-default-val="10" placeholder="默认为10" maxlength="8" data-valid="true" />
                         <span class="input-group-btn">
                             <button data-method="clear" class="btn btn-default" type="button"><i class="fa fa-remove"></i></button>
                             <button id="btnMenuOrder" class="btn btn-default" type="button"><i class="fa fa-list-ol"></i>调整</button>
@@ -122,7 +122,7 @@
                 </div>
                 <div class="form-group col-xs-12">
                     <label class="control-label" for="url">路径</label>
-                    <input type="text" class="form-control form-control-url" id="url" placeholder="不可为空，4000字以内" maxlength="4000" />
+                    <input type="text" class="form-control form-control-url" id="url" placeholder="不可为空，4000字以内" maxlength="4000" data-valid="true" />
                 </div>
                 <div class="form-group col-sm-6 col-xs-12">
                     <label class="control-label" for="category">菜单类别</label>

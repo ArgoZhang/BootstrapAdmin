@@ -166,28 +166,30 @@
             $.bc({
                 url: options.url, data: options.data, title: "保存数据", modal: options.modal,
                 callback: function (result) {
-                    var finalData = null;
-                    var index = 0;
                     if (result) {
-                        if (options.bootstrapTable.constructor === String && options.data.Id.constructor === String) {
-                            // 更新表格
-                            if (options.data.Id > 0) {
-                                var allTableData = $(options.bootstrapTable).bootstrapTable('getData');
-                                for (index = 0; index < allTableData.length; index++) {
-                                    finalData = allTableData[index];
-                                    if (finalData.Id == options.data.Id) {
-                                        $(options.bootstrapTable).bootstrapTable('updateRow', { index: index, row: $.extend(finalData, options.data) });
-                                        break;
+                        var finalData = null;
+                        var index = 0;
+                        if (result) {
+                            if (options.bootstrapTable.constructor === String && options.data.Id.constructor === String) {
+                                // 更新表格
+                                if (options.data.Id > 0) {
+                                    var allTableData = $(options.bootstrapTable).bootstrapTable('getData');
+                                    for (index = 0; index < allTableData.length; index++) {
+                                        finalData = allTableData[index];
+                                        if (finalData.Id == options.data.Id) {
+                                            break;
+                                        }
                                     }
                                 }
-                            }
-                            else {
-                                $(options.bootstrapTable).bootstrapTable('refresh');
-                                finalData = options.data;
+                                else {
+                                    $(options.bootstrapTable).bootstrapTable('refresh');
+                                    finalData = options.data;
+                                }
                             }
                         }
+                        $(options.bootstrapTable).bootstrapTable('refresh');
+                        handlerCallback.call(that, callback, e, { oper: 'save', success: result, index: index, data: finalData });
                     }
-                    handlerCallback.call(that, callback, e, { oper: 'save', success: result, index: index, data: finalData });
                 }
             });
         },

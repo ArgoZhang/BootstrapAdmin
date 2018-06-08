@@ -61,7 +61,7 @@
                     var roleIds = $dialogRole.find(':checked').map(function (index, element) {
                         return $(element).val();
                     }).toArray().join(',');
-                    $.bc({ id: userId, url: Role.url, method: 'PUT', data: { type: "user", roleIds: roleIds }, title: Role.title, modal: 'dialogRole' });
+                    $.bc({ id: userId, url: Role.url, method: 'PUT', data: { type: "user", roleIds: roleIds }, title: Role.title, modal: '#dialogRole' });
                 }
             }, {
                 id: 'btnSubmitGroup',
@@ -70,7 +70,7 @@
                     var groupIds = $dialogGroup.find(':checked').map(function (index, element) {
                         return $(element).val();
                     }).toArray().join(',');
-                    $.bc({ Id: userId, url: Group.url, method: 'PUT', data: { type: "user", groupIds: groupIds }, title: Group.title, modal: 'dialogGroup' });
+                    $.bc({ id: userId, url: Group.url, method: 'PUT', data: { type: "user", groupIds: groupIds }, title: Group.title, modal: '#dialogGroup' });
                 }
             }]
         },

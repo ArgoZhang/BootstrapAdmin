@@ -64,7 +64,7 @@
                     var roleIds = $dialogRole.find('input:checked').map(function (index, element) {
                         return $(element).val();
                     }).toArray().join(',');
-                    $.bc({ id: menuId, url: Role.url, method: "PUT", data: { type: "menu", roleIds: roleIds }, title: Role.title, modal: 'dialogRole' });
+                    $.bc({ id: menuId, url: Role.url, method: "PUT", data: { type: "menu", roleIds: roleIds }, title: Role.title, modal: '#dialogRole' });
                 }
             }]
         },
@@ -142,21 +142,6 @@
             case 'sel':
                 $input.select();
                 break;
-        }
-    }).autoValidate({
-        name: {
-            required: true,
-            maxlength: 50
-        },
-        order: {
-            digits: true
-        },
-        url: {
-            required: true
-        },
-        category: {
-            required: true,
-            maxlength: 50
         }
     });
 

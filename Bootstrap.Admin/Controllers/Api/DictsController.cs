@@ -39,7 +39,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="value"></param>
         [HttpDelete]
         [Authorize(Roles = "Administrators")]
-        public object Delete(IEnumerable<int> value)
+        public object Delete([FromBody]IEnumerable<int> value)
         {
             var result = DictHelper.DeleteDict(value);
             return new { result, msg = result ? "成功！" : "失败" };

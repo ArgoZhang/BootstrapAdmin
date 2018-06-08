@@ -45,7 +45,12 @@
 
     var log = function (url, data) {
         $.extend(data, { requestUrl: window.location.pathname });
-        $.post(url, data);
+        $.post({
+            url: url,
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            dataType: 'json'
+        });
     }
 })(jQuery);
 

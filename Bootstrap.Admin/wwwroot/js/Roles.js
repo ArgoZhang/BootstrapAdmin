@@ -85,7 +85,7 @@
                     var userIds = $dialogUser.find(':checked').map(function (index, element) {
                         return $(element).val();
                     }).toArray().join(',');
-                    $.bc({ Id: roleId, url: User.url, method: "PUT", data: { type: "role", userIds: userIds }, modal: 'dialogUser', title: User.title });
+                    $.bc({ id: roleId, url: User.url, method: "PUT", data: { type: "role", userIds: userIds }, modal: '#dialogUser', title: User.title });
                 }
             }, {
                 id: 'btnSubmitGroup',
@@ -94,7 +94,7 @@
                     var groupIds = $dialogGroup.find(':checked').map(function (index, element) {
                         return $(element).val();
                     }).toArray().join(',');
-                    $.bc({ Id: roleId, url: Group.url, method: "PUT", data: { type: "role", groupIds: groupIds }, modal: 'dialogGroup', title: Group.title });
+                    $.bc({ id: roleId, url: Group.url, method: "PUT", data: { type: "role", groupIds: groupIds }, modal: '#dialogGroup', title: Group.title });
                 }
             }, {
                 id: 'btnSubmitMenu',
@@ -110,7 +110,7 @@
                         default:
                             break;
                     }
-                    $.bc({ Id: roleId, url: Menu.url, method: "PUT", data: { type: "role", menuIds: menuIds }, modal: 'dialogMenu', title: Menu.title });
+                    $.bc({ id: roleId, url: Menu.url, method: "PUT", data: { type: "role", menuIds: menuIds }, modal: '#dialogMenu', title: Menu.title });
                 }
             }]
         }
