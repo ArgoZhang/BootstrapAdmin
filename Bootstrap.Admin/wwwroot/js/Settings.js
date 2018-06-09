@@ -51,7 +51,7 @@
 
     var $sortable = $('#sortable');
     var listCacheUrl = function (options) {
-        options = $.extend({ key: '' }, options);
+        options = $.extend({ clear: false }, options);
         $sortable.html('');
         $.bc({
             url: Settings.url,
@@ -60,16 +60,17 @@
             callback: function (result) {
                 if (result && $.isArray(result)) {
                     $.each(result, function (index, item) {
+                        if (options.clear) options.url = item.Url + "?clear=clear";
+                        else options.url = item.Url;
                         $.bc({
-                            url: $.format(item.Url, options.key),
-                            crossDomain: !item.Self,
+                            url: options.url,
                             xhrFields: {
-                                withCredentials: !item.Self
+                                withCredentials: true
                             },
                             swal: false,
                             callback: function (result) {
                                 if ($.isArray(result)) {
-                                    var html = '<li class="{4}"><i class="fa fa-ellipsis-v"></i><div class="task-title"><span class="task-title-sp" role="tooltip" title="{1}">{2}</span><span class="badge badge-sm label-success">{0}</span><span class="task-value" title="{3}">{3}</span><div class="pull-right hidden-phone"><span>{7}</span><button class="btn btn-danger btn-xs fa fa-trash-o" title="{1}" data-url="{5}" role="tooltip" data-self="{6}" data-placement="left"></button></div></div></li>';
+                                    var html = '<li class="{4}"><i class="fa fa-ellipsis-v"></i><div class="task-title"><span class="task-title-sp" role="tooltip" title="{1}">{2}</span><span class="badge badge-sm label-success">{0}</span><span class="task-value" title="{3}">{3}</span><div class="pull-right hidden-phone"><span>{7}</span><button class="btn btn-danger btn-xs fa fa-trash-o" title="{1}" data-url="{5}?cacheKey={1}" role="tooltip" data-self="{6}" data-placement="left"></button></div></div></li>';
                                     var content = result.sort(function (x, y) {
                                         return x.Key > y.Key ? 1 : -1;
                                     }).map(function (ele) {
@@ -126,17 +127,29 @@
     var listCache = function (options) {
         $.bc({
             url: options.url,
-            crossDomain: !options.self,
             xhrFields: {
-                withCredentials: !options.self
+                withCredentials: true
             },
             swal: false
         });
     }
-    $('#refreshCache').click(function () { listCacheUrl(); }).trigger('click');
+    $('a[data-method]').on('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var $this = $(this);
+        var options = {};
+        switch ($this.attr('data-method')) {
+            case 'clear':
+                options.clear = true;
+                break;
+            case 'refresh':
+                break;
+        }
+        listCacheUrl(options);
+    }).last().trigger('click');
     $sortable.on('click', '.btn', function () {
         $(this).lgbTooltip('destroy');
-        listCache({ self: $(this).attr('data-self') === "true", url: $(this).attr('data-url') });
+        listCache({ url: $(this).attr('data-url') });
         listCacheUrl();
     });
 

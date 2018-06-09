@@ -5,15 +5,15 @@
       {
         "Enabled": true,
         "Name": "ba",
-        "Url": "http://localhost:50852/CacheList.axd?cacheKey={0}",
+        "Url": "http://localhost:50852/CacheList.axd",
         "Desc": "后台管理数据缓存接口",
         "Self": true
       },
       {
         "Enabled": true,
-        "Name": "ba",
-        "Url": "http://localhost:49823/CacheList.axd?cacheKey={0}",
-        "Desc": "托盘组垛系统数据缓存接口",
+        "Name": "Pallet",
+        "Url": "http://localhost:49823/CacheList.axd",
+        "Desc": "托盘组垛系统",
         "Self": false
       }
     ],

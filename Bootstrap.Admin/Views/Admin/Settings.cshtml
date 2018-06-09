@@ -58,7 +58,7 @@
     </div>
 </div>
 <div class="panel panel-default">
-    <div class="panel-heading">网站缓存<a id="refreshCache" href="#" class="pull-right fa fa-refresh" title="点击刷新" data-placement="left" role="tooltip"></a></div>
+    <div class="panel-heading">网站缓存<a data-method="clear" href="#" class="clearcache fa fa-times-circle-o" data-admin="@User.IsInRole("Administrators")" title="全部清除" role="tooltip" data-placement="left"></a><a data-method="refresh" href="#" class="pull-right fa fa-refresh" title="点击刷新" role="tooltip"></a></div>
     <div class="panel-body">
         <div class="tasks-widget">
             <ul id="sortable" class="task-list ui-sortable"></ul>
