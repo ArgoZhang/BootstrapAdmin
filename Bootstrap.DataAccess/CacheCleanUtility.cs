@@ -20,9 +20,10 @@ namespace Bootstrap.DataAccess
         /// <param name="logIds"></param>
         /// <param name="notifyIds"></param>
         /// <param name="exceptionIds"></param>
-        internal static void ClearCache(string roleIds = null, string userIds = null, string groupIds = null, string menuIds = null, string dictIds = null, string logIds = null, string notifyIds = null, string exceptionIds = null)
+        internal static void ClearCache(string roleIds = null, string userIds = null, string groupIds = null, string menuIds = null, string dictIds = null, string logIds = null, string notifyIds = null, string exceptionIds = null, string cacheKey = null)
         {
             var cacheKeys = new List<string>();
+            var corsKeys = new List<string>();
             if (roleIds != null)
             {
                 roleIds.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList().ForEach(id =>
@@ -34,6 +35,7 @@ namespace Bootstrap.DataAccess
                 cacheKeys.Add(RoleHelper.RetrieveRolesDataKey + "*");
                 cacheKeys.Add(BootstrapMenu.RetrieveMenusDataKey + "*");
                 cacheKeys.Add(RetrieveAllRolesDataKey + "*");
+                corsKeys.Add(BootstrapMenu.RetrieveMenusDataKey + "*");
             }
             if (userIds != null)
             {
@@ -42,9 +44,11 @@ namespace Bootstrap.DataAccess
                     cacheKeys.Add(string.Format("{0}-{1}", RoleHelper.RetrieveRolesByUserIdDataKey, id));
                     cacheKeys.Add(string.Format("{0}-{1}", GroupHelper.RetrieveGroupsByUserIdDataKey, id));
                     cacheKeys.Add(BootstrapMenu.RetrieveMenusDataKey + "*");
+                    corsKeys.Add(BootstrapMenu.RetrieveMenusDataKey + "*");
                 });
                 cacheKeys.Add(UserHelper.RetrieveNewUsersDataKey + "*");
                 cacheKeys.Add(BootstrapUser.RetrieveUsersDataKey + "*");
+                corsKeys.Add(BootstrapUser.RetrieveUsersDataKey + "*");
             }
             if (groupIds != null)
             {
@@ -55,6 +59,7 @@ namespace Bootstrap.DataAccess
                 });
                 cacheKeys.Add(GroupHelper.RetrieveGroupsDataKey + "*");
                 cacheKeys.Add(BootstrapMenu.RetrieveMenusDataKey + "*");
+                corsKeys.Add(BootstrapMenu.RetrieveMenusDataKey + "*");
                 cacheKeys.Add(RetrieveAllRolesDataKey + "*");
             }
             if (menuIds != null)
@@ -65,10 +70,12 @@ namespace Bootstrap.DataAccess
                 });
                 cacheKeys.Add(MenuHelper.RetrieveMenusByRoleIdDataKey + "*");
                 cacheKeys.Add(BootstrapMenu.RetrieveMenusDataKey + "*");
+                corsKeys.Add(BootstrapMenu.RetrieveMenusDataKey + "*");
             }
             if (dictIds != null)
             {
                 cacheKeys.Add(BootstrapDict.RetrieveDictsDataKey + "*");
+                corsKeys.Add(BootstrapDict.RetrieveDictsDataKey + "*");
             }
             if (logIds != null)
             {
@@ -78,30 +85,16 @@ namespace Bootstrap.DataAccess
             {
                 cacheKeys.Add(NotificationHelper.RetrieveNotificationsDataKey + "*");
             }
-            if (exceptionIds != null)
+            if (exceptionIds != null) 
             {
                 cacheKeys.Add(ExceptionHelper.RetrieveExceptionsDataKey + "*");
             }
-
-            ClearCache(cacheKeys);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="key"></param>
-        internal static void ClearCache(string key)
-        {
-            CacheManager.Clear(key);
-            CacheManager.CorsClear(new List<string> { key });
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="keys"></param>
-        internal static void ClearCache(IEnumerable<string> keys)
-        {
-            CacheManager.Clear(keys);
-            CacheManager.CorsClear(keys);
+            if (cacheKey != null)
+            {
+                cacheKeys.Add(cacheKey);
+            }
+            CacheManager.Clear(cacheKeys);
+            CacheManager.CorsClear(corsKeys);
         }
     }
 }

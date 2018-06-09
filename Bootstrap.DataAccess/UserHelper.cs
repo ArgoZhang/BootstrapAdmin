@@ -327,7 +327,7 @@ namespace Bootstrap.DataAccess
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@userName", userName));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                     string key = string.Format("{0}-{1}", RetrieveUsersByNameDataKey, userName);
-                    CacheCleanUtility.ClearCache(key);
+                    CacheCleanUtility.ClearCache(cacheKey: key);
                     ret = true;
                 }
             }
@@ -355,7 +355,7 @@ namespace Bootstrap.DataAccess
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@userName", userName));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                     string key = string.Format("{0}-{1}", RetrieveUsersByNameDataKey, userName);
-                    CacheCleanUtility.ClearCache(key);
+                    CacheCleanUtility.ClearCache(cacheKey: key);
                     ret = true;
                 }
             }
