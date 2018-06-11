@@ -23,7 +23,7 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 
         /// </summary>
-        public static readonly ConcurrentBag<MessageBody> MessagePool = new ConcurrentBag<MessageBody>();
+        public static ConcurrentBag<MessageBody> MessagePool { get; } = new ConcurrentBag<MessageBody>();
         /// <summary>
         /// 新用户注册的通知的面板显示
         /// </summary>

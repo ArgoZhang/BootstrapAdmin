@@ -1,11 +1,16 @@
 ﻿@{
     ViewBag.Title = "注册新用户";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Root.cshtml";
 }
 @section css {
+    <link href="~/css/bootstrap.css" rel="stylesheet">
+    <link href="~/css/bootstrap-theme.css" rel="stylesheet">
+    <link href="~/css/font-awesome.css" rel="stylesheet" />
     <link href="~/css/register.css" rel="stylesheet" />
 }
 @section javascript {
+    <script src="~/js/bootstrap.js"></script>
+    <script src="~/js/Longbow.Common.js"></script>
     <script src="~/js/jquery.validate.js"></script>
     <script src="~/js/messages_zh.js"></script>
     <script src="~/js/sweetalert.js"></script>

@@ -5,12 +5,14 @@ using Longbow.Cache.Middleware;
 using Longbow.Configuration;
 using Longbow.Data;
 using Longbow.Logging;
+using Longbow.Web.WebSockets;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.IO;
@@ -46,6 +48,7 @@ namespace Bootstrap.Admin
             {
                 options.SerializerSettings.ContractResolver = new DefaultContractResolver();
                 options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
+                JsonConvert.DefaultSettings = () => options.SerializerSettings;
             });
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
         }
