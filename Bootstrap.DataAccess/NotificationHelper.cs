@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
-using System.Net.WebSockets;
 using System.Threading;
 
 namespace Bootstrap.DataAccess
@@ -154,7 +153,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public override string ToString()
         {
-            return string.Format("{0};{1}-{2}", Category, Message);
+            return string.Format("{0}-{1}", Category, Message);
         }
         private void Dispose(bool disposing)
         {

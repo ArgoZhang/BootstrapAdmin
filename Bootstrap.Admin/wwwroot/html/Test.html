@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>测试WebSocket</title>
+    <script src="../js/jquery-3.1.1.js"></script>
+    <script language="javascript" type="text/javascript">
+        var socket;
+        var uri = "ws://" + window.location.host + "/Foo";
+        var output;
+        var text = "test echo";
+
+        function write(s) {
+            var p = document.createElement("p");
+            p.innerHTML = s;
+            output.appendChild(p);
+        }
+
+        function doConnect() {
+            socket = new WebSocket(uri);
+            socket.onopen = function (e) { write("opened " + uri); doSend(); };
+            socket.onclose = function (e) { write("closed"); };
+            socket.onmessage = function (e) {
+                write("Received: " + e.data); //socket.close();
+            };
+            socket.onerror = function (e) { write("Error: " + e.data); };
+        }
+
+        function doSend() {
+            write("Sending: " + text);
+            //socket.send(text);
+        }
+
+        function onInit() {
+            output = document.getElementById("output");
+            doConnect();
+        }
+
+        window.onload = onInit;
+
+    </script>
+</head>
+<body>
+    <div id="output">
+
+    </div>
+</body>
+</html>

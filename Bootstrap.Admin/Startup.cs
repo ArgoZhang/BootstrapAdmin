@@ -66,6 +66,7 @@ namespace Bootstrap.Admin
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseBootstrapRoleAuthorization();
+            app.UseWebSocketHandler();
             app.UseCacheManagerCorsHandler();
             app.UseMvc(routes =>
             {
