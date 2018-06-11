@@ -62,6 +62,7 @@ namespace Bootstrap.Admin
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+            app.UseStatusCodePagesWithReExecute("/Home/Error/{0}");
             app.UseCors(builder => builder.WithOrigins(Configuration["AllowOrigins"].Split(',', StringSplitOptions.RemoveEmptyEntries)).AllowAnyHeader().AllowAnyMethod().AllowCredentials());
             app.UseStaticFiles();
             app.UseAuthentication();

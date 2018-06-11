@@ -22,11 +22,12 @@ namespace Bootstrap.Admin.Controllers
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="id"></param>
         /// <returns></returns>
         [AllowAnonymous]
-        public ActionResult Error()
+        public IActionResult Error(int id)
         {
-            return View();
+            return id == 404 ? View("NotFound") : View();
         }
     }
 }
