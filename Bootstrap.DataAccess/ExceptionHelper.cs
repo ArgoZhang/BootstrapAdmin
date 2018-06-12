@@ -24,9 +24,8 @@ namespace Bootstrap.DataAccess
         /// <param name="ex"></param>
         /// <param name="additionalInfo"></param>
         /// <returns></returns>
-        public static bool Log(Exception ex, NameValueCollection additionalInfo)
+        public static void Log(Exception ex, NameValueCollection additionalInfo)
         {
-            bool ret = false;
             try
             {
                 var sql = "insert into Exceptions (AppDomainName, ErrorPage, UserID, UserIp, ExceptionType, Message, StackTrace, LogTime) values (@AppDomainName, @ErrorPage, @UserID, @UserIp, @ExceptionType, @Message, @StackTrace, GetDate())";
@@ -41,13 +40,11 @@ namespace Bootstrap.DataAccess
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@StackTrace", DBAccessFactory.ToDBValue(ex.StackTrace)));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
-                ret = true;
             }
             catch (Exception e)
             {
                 throw new Exception("Excetion Log Error", e);
             }
-            return ret;
         }
         /// <summary>
         /// 查询所有异常

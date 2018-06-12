@@ -1,10 +1,12 @@
-﻿using Bootstrap.Security.Filter;
+﻿using Bootstrap.DataAccess;
+using Bootstrap.Security.Filter;
 using Bootstrap.Security.Middleware;
 using Longbow.Cache;
 using Longbow.Cache.Middleware;
 using Longbow.Configuration;
 using Longbow.Data;
 using Longbow.Logging;
+using Longbow.Web;
 using Longbow.Web.WebSockets;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -15,6 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
+using System.Collections.Specialized;
 using System.IO;
 
 namespace Bootstrap.Admin
@@ -32,7 +35,7 @@ namespace Bootstrap.Admin
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
-            services.AddLogging(builder => builder.AddFileLogger());
+            services.AddLogging(builder => builder.AddFileLogger().AddDBLogger(ExceptionHelper.Log));
             services.AddConfigurationManager();
             services.AddCacheManager();
             services.AddDBAccessFactory();
@@ -43,7 +46,7 @@ namespace Bootstrap.Admin
             services.AddMvc(options =>
             {
                 options.Filters.Add<BootstrapAdminAuthorizeFilter>();
-                options.Filters.Add<BootstrapAdminExceptionFilter>();
+                options.Filters.Add<ExceptionFilter>();
             }).AddJsonOptions(options =>
             {
                 options.SerializerSettings.ContractResolver = new DefaultContractResolver();

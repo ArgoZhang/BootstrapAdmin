@@ -33,26 +33,23 @@ namespace Bootstrap.DataAccess
             {
                 List<User> users = new List<User>();
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, "select ID, UserName, DisplayName, RegisterTime, ApprovedTime, ApprovedBy, Description from Users Where ApprovedTime is not null");
-                try
+
+                using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
                 {
-                    using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
+                    while (reader.Read())
                     {
-                        while (reader.Read())
+                        users.Add(new User()
                         {
-                            users.Add(new User()
-                            {
-                                Id = (int)reader[0],
-                                UserName = (string)reader[1],
-                                DisplayName = (string)reader[2],
-                                RegisterTime = (DateTime)reader[3],
-                                ApprovedTime = LgbConvert.ReadValue(reader[4], DateTime.MinValue),
-                                ApprovedBy = reader.IsDBNull(5) ? string.Empty : (string)reader[5],
-                                Description = (string)reader[6]
-                            });
-                        }
+                            Id = (int)reader[0],
+                            UserName = (string)reader[1],
+                            DisplayName = (string)reader[2],
+                            RegisterTime = (DateTime)reader[3],
+                            ApprovedTime = LgbConvert.ReadValue(reader[4], DateTime.MinValue),
+                            ApprovedBy = reader.IsDBNull(5) ? string.Empty : (string)reader[5],
+                            Description = (string)reader[6]
+                        });
                     }
                 }
-                catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return users;
             });
         }
@@ -67,24 +64,20 @@ namespace Bootstrap.DataAccess
                 string sql = "select ID, UserName, DisplayName, RegisterTime, [Description] from Users Where ApprovedTime is null and RejectedTime is null order by RegisterTime desc";
                 List<User> users = new List<User>();
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
-                try
+                using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
                 {
-                    using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
+                    while (reader.Read())
                     {
-                        while (reader.Read())
+                        users.Add(new User()
                         {
-                            users.Add(new User()
-                            {
-                                Id = (int)reader[0],
-                                UserName = (string)reader[1],
-                                DisplayName = (string)reader[2],
-                                RegisterTime = (DateTime)reader[3],
-                                Description = (string)reader[4]
-                            });
-                        }
+                            Id = (int)reader[0],
+                            UserName = (string)reader[1],
+                            DisplayName = (string)reader[2],
+                            RegisterTime = (DateTime)reader[3],
+                            Description = (string)reader[4]
+                        });
                     }
                 }
-                catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return users;
             });
         }
@@ -95,21 +88,14 @@ namespace Bootstrap.DataAccess
         public static bool DeleteUser(IEnumerable<int> value)
         {
             bool ret = false;
-            try
+            var ids = string.Join(",", value);
+            using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_DeleteUsers"))
             {
-                var ids = string.Join(",", value);
-                using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_DeleteUsers"))
-                {
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ids", ids));
-                    DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
-                }
-                CacheCleanUtility.ClearCache(userIds: ids);
-                ret = true;
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ids", ids));
+                DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
             }
-            catch (Exception ex)
-            {
-                ExceptionManager.Publish(ex);
-            }
+            CacheCleanUtility.ClearCache(userIds: ids);
+            ret = true;
             return ret;
         }
         /// <summary>
@@ -127,30 +113,23 @@ namespace Bootstrap.DataAccess
                 p.Password = LgbCryptography.ComputeHash(p.Password, p.PassSalt);
             }
             bool ret = false;
-            try
+            using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_SaveUsers"))
             {
-                using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_SaveUsers"))
-                {
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@id", p.Id));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@userName", DBAccessFactory.ToDBValue(p.UserName)));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@password", DBAccessFactory.ToDBValue(p.Password)));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@passSalt", DBAccessFactory.ToDBValue(p.PassSalt)));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@displayName", DBAccessFactory.ToDBValue(p.DisplayName)));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@description", DBAccessFactory.ToDBValue(p.Description)));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@approvedBy", DBAccessFactory.ToDBValue(p.ApprovedBy)));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@rejectedBy", DBAccessFactory.ToDBValue(p.RejectedBy)));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@rejectedReason", DBAccessFactory.ToDBValue(p.RejectedReason)));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@userStatus", p.UserStatus));
-                    DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
-                }
-                CacheCleanUtility.ClearCache(userIds: p.Id == 0 ? string.Empty : p.Id.ToString());
-                ret = true;
-                if (p.UserStatus == 1) NotificationHelper.MessagePool.Add(new MessageBody() { Category = "Users", Message = string.Format("{0}-{1}", p.UserName, p.Description) });
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@id", p.Id));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@userName", DBAccessFactory.ToDBValue(p.UserName)));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@password", DBAccessFactory.ToDBValue(p.Password)));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@passSalt", DBAccessFactory.ToDBValue(p.PassSalt)));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@displayName", DBAccessFactory.ToDBValue(p.DisplayName)));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@description", DBAccessFactory.ToDBValue(p.Description)));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@approvedBy", DBAccessFactory.ToDBValue(p.ApprovedBy)));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@rejectedBy", DBAccessFactory.ToDBValue(p.RejectedBy)));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@rejectedReason", DBAccessFactory.ToDBValue(p.RejectedReason)));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@userStatus", p.UserStatus));
+                DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
             }
-            catch (DbException ex)
-            {
-                ExceptionManager.Publish(ex);
-            }
+            CacheCleanUtility.ClearCache(userIds: p.Id == 0 ? string.Empty : p.Id.ToString());
+            ret = true;
+            if (p.UserStatus == 1) NotificationHelper.MessagePool.Add(new MessageBody() { Category = "Users", Message = string.Format("{0}-{1}", p.UserName, p.Description) });
             return ret;
         }
         /// <summary>
@@ -167,23 +146,19 @@ namespace Bootstrap.DataAccess
                 string sql = "select u.ID, u.UserName, u.DisplayName, case ur.UserID when u.ID then 'checked' else '' end [status] from Users u left join UserRole ur on u.ID = ur.UserID and RoleID = @RoleID where u.ApprovedTime is not null";
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@RoleID", roleId));
-                try
+                using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
                 {
-                    using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
+                    while (reader.Read())
                     {
-                        while (reader.Read())
+                        users.Add(new User()
                         {
-                            users.Add(new User()
-                            {
-                                Id = (int)reader[0],
-                                UserName = (string)reader[1],
-                                DisplayName = (string)reader[2],
-                                Checked = (string)reader[3]
-                            });
-                        }
+                            Id = (int)reader[0],
+                            UserName = (string)reader[1],
+                            DisplayName = (string)reader[2],
+                            Checked = (string)reader[3]
+                        });
                     }
                 }
-                catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return users;
             }, RetrieveUsersByRoleIdDataKey);
         }
@@ -225,8 +200,8 @@ namespace Bootstrap.DataAccess
                 }
                 catch (Exception ex)
                 {
-                    ExceptionManager.Publish(ex);
                     transaction.RollbackTransaction();
+                    throw ex;
                 }
             }
             return ret;
@@ -245,23 +220,19 @@ namespace Bootstrap.DataAccess
                 string sql = "select u.ID, u.UserName, u.DisplayName, case ur.UserID when u.ID then 'checked' else '' end [status] from Users u left join UserGroup ur on u.ID = ur.UserID and GroupID =@groupId where u.ApprovedTime is not null";
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@GroupID", groupId));
-                try
+                using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
                 {
-                    using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
+                    while (reader.Read())
                     {
-                        while (reader.Read())
+                        users.Add(new User()
                         {
-                            users.Add(new User()
-                            {
-                                Id = (int)reader[0],
-                                UserName = (string)reader[1],
-                                DisplayName = (string)reader[2],
-                                Checked = (string)reader[3]
-                            });
-                        }
+                            Id = (int)reader[0],
+                            UserName = (string)reader[1],
+                            DisplayName = (string)reader[2],
+                            Checked = (string)reader[3]
+                        });
                     }
                 }
-                catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return users;
             }, RetrieveUsersByRoleIdDataKey);
         }
@@ -303,8 +274,8 @@ namespace Bootstrap.DataAccess
                 }
                 catch (Exception ex)
                 {
-                    ExceptionManager.Publish(ex);
                     transaction.RollbackTransaction();
+                    throw ex;
                 }
             }
             return ret;
@@ -318,22 +289,15 @@ namespace Bootstrap.DataAccess
         public static bool SaveUserIconByName(string userName, string iconName)
         {
             bool ret = false;
-            try
+            string sql = "Update Users set Icon = @iconName where UserName = @userName";
+            using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
             {
-                string sql = "Update Users set Icon = @iconName where UserName = @userName";
-                using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
-                {
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@iconName", iconName));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@userName", userName));
-                    DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
-                    string key = string.Format("{0}-{1}", RetrieveUsersByNameDataKey, userName);
-                    CacheCleanUtility.ClearCache(cacheKey: key);
-                    ret = true;
-                }
-            }
-            catch (Exception ex)
-            {
-                ExceptionManager.Publish(ex);
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@iconName", iconName));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@userName", userName));
+                DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
+                string key = string.Format("{0}-{1}", RetrieveUsersByNameDataKey, userName);
+                CacheCleanUtility.ClearCache(cacheKey: key);
+                ret = true;
             }
             return ret;
         }
@@ -346,22 +310,15 @@ namespace Bootstrap.DataAccess
         public static bool SaveUserCssByName(string userName, string cssName)
         {
             bool ret = false;
-            try
+            string sql = "Update Users set Css = @cssName where UserName = @userName";
+            using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
             {
-                string sql = "Update Users set Css = @cssName where UserName = @userName";
-                using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
-                {
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@cssName", DBAccessFactory.ToDBValue(cssName)));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@userName", userName));
-                    DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
-                    string key = string.Format("{0}-{1}", RetrieveUsersByNameDataKey, userName);
-                    CacheCleanUtility.ClearCache(cacheKey: key);
-                    ret = true;
-                }
-            }
-            catch (Exception ex)
-            {
-                ExceptionManager.Publish(ex);
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@cssName", DBAccessFactory.ToDBValue(cssName)));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@userName", userName));
+                DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
+                string key = string.Format("{0}-{1}", RetrieveUsersByNameDataKey, userName);
+                CacheCleanUtility.ClearCache(cacheKey: key);
+                ret = true;
             }
             return ret;
         }
