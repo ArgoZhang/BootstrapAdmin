@@ -14,10 +14,11 @@
     $('table').smartTable({
         url: Exceptions.url,
         sortName: 'LogTime',
+        sortOrder: 'desc',
         queryParams: function (params) { return $.extend(params, { StartTime: $("#txt_operate_start").val(), EndTime: $("#txt_operate_end").val() }); },
         columns: [
             { title: "请求网址", field: "ErrorPage", sortable: true },
-            { title: "用户名", field: "UserID", sortable: true },
+            { title: "用户名", field: "UserId", sortable: true },
             { title: "IP", field: "UserIp", sortable: true },
             { title: "错误", field: "Message", sortable: false },
             { title: "记录时间", field: "LogTime", sortable: true }
