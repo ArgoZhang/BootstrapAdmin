@@ -51,6 +51,7 @@
     $.extend({
         pullNotification: function () {
             if ($('.notify-row').length == 0) return;
+            return;
             setTimeout(function () {
                 NProgress.status = true;
                 NProgress.configure({ trickle: false });
