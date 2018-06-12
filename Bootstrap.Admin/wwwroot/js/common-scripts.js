@@ -51,33 +51,25 @@
     $.extend({
         pullNotification: function () {
             if ($('.notify-row').length == 0) return;
-            return;
-            setTimeout(function () {
-                NProgress.status = true;
-                NProgress.configure({ trickle: false });
-                $.bc({
-                    url: 'api/WS',
-                    method: 'GET',
-                    swal: false,
-                    callback: function (result) {
-                        NProgress.status = false;
-                        for (index in result) {
-                            var cate = result[index].Category;
-                            var msg = result[index].Message;
-                            switch (cate) {
-                                case "Notification":
-                                    toastr.error(msg, "应用程序出现错误");
-                                    break;
-                                case "Users":
-                                    toastr.info(msg, "新用户注册");
-                                    break;
-                            }
-                        };
-                        if (result.length > 0) $.reloadWidget();
-                        $.pullNotification();
+
+            var uri = "ws://" + window.location.host + "/WS";
+            var socket = new WebSocket(uri);
+            socket.onmessage = function (e) {
+                var result = JSON.parse(e.data);
+                for (index in result) {
+                    var cate = result[index].Category;
+                    var msg = result[index].Message;
+                    switch (cate) {
+                        case "Notification":
+                            toastr.error(msg, "应用程序出现错误");
+                            break;
+                        case "Users":
+                            toastr.info(msg, "新用户注册");
+                            break;
                     }
-                });
-            }, 5000);
+                };
+                if (result.length > 0) $.reloadWidget();
+            };
         },
         reloadWidget: function () {
             if ($('.notify-row').length == 0) return;

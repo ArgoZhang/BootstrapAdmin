@@ -1,6 +1,7 @@
 ﻿using Longbow.Cache;
 using Longbow.Data;
 using Longbow.Logging;
+using Longbow.Web.WebSockets;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -39,6 +40,8 @@ namespace Bootstrap.DataAccess
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Message", ex.Message));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@StackTrace", DBAccessFactory.ToDBValue(ex.StackTrace)));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
+                    CacheManager.Clear(RetrieveExceptionsDataKey);
+                    WebSocketPushManager.SendAsync(new List<object> { new { Category = "Notification", ex.Message } });
                 }
             }
             catch (Exception e)
