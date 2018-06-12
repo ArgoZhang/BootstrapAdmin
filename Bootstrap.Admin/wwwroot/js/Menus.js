@@ -230,6 +230,8 @@
     $.bc({
         url: Menu.iconView,
         swal: false,
+        contentType: 'text/html',
+        dataType: 'html',
         method: 'GET',
         callback: function (result) {
             if (result) {
