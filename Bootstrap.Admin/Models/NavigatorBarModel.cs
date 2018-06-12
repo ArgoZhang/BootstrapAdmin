@@ -9,7 +9,7 @@ namespace Bootstrap.Admin.Models
     {
         public NavigatorBarModel(ControllerBase controller) : base(controller.User.Identity)
         {
-            Navigations = BootstrapMenu.RetrieveSystemMenus(UserName, $"~/{controller.ControllerContext.ActionDescriptor.ControllerName}/{controller.ControllerContext.ActionDescriptor.ActionName}");
+            Navigations = BootstrapMenu.RetrieveSystemMenus(UserName, $"~{controller.HttpContext.Request.Path}");
             Applications = DictHelper.RetrieveApps();
             HomeUrl = "~/Admin/Index";
         }
