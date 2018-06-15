@@ -2,11 +2,13 @@
 using Longbow.Data;
 using Longbow.Logging;
 using Longbow.Web.WebSockets;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Data;
 using System.Data.Common;
+using System.Text;
 
 namespace Bootstrap.DataAccess
 {
@@ -41,7 +43,7 @@ namespace Bootstrap.DataAccess
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@StackTrace", DBAccessFactory.ToDBValue(ex.StackTrace)));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                     CacheManager.Clear(RetrieveExceptionsDataKey);
-                    WebSocketPushManager.SendAsync(new List<object> { new { Category = "Notification", ex.Message } });
+                    WebSocketServerManager.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(new List<object> { new { Category = "Notification", ex.Message } }))));
                 }
             }
             catch (Exception e)

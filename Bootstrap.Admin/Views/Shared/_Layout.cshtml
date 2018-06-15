@@ -16,7 +16,7 @@
     <script src="~/js/Longbow.Common.js"></script>
     @RenderSection("Javascript", false)
 }
-@Html.Partial("Header")
+@await Html.PartialAsync("Header")
 @RenderBody()
-@Html.Partial("Footer")
+@await Html.PartialAsync("Footer")
 @RenderSection("modal", false)

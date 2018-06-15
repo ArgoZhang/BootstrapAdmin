@@ -33,7 +33,7 @@
     <div class="toolbar btn-group dropdown">
         <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button"><i class="fa fa-gear"></i></button>
         <div class="dropdown-menu">
-            @Html.Partial("_ButtonBarGroup")
+            @await Html.PartialAsync("_ButtonBarGroup")
             <a id="tb_assignRole" href="#" title="指派角色"><i class="fa fa-sitemap"></i></a>
             <a id="tb_assignGroup" href="#" title="指派部门"><i class="fa fa-bank"></i></a>
         </div>
@@ -69,6 +69,6 @@
     </div>
 }
 @section customModal {
-    @Html.Partial("RoleConfig")
-    @Html.Partial("GroupConfig")
+    @await Html.PartialAsync("RoleConfig")
+    @await Html.PartialAsync("GroupConfig")
 }

@@ -17,7 +17,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
-using System.Collections.Specialized;
 using System.IO;
 
 namespace Bootstrap.Admin

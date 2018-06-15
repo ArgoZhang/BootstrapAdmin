@@ -19,7 +19,7 @@
     <script src="~/js/framework.js"></script>
     @RenderSection("Javascript", false)
 }
-@Html.Partial("navigator")
+@await Html.PartialAsync("navigator")
 <section id="main-content" class="main-content">
     @RenderBody()
 </section>

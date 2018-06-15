@@ -65,7 +65,7 @@
     <div class="toolbar btn-group dropdown">
         <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button"><i class="fa fa-gear"></i></button>
         <div class="dropdown-menu">
-            @Html.Partial("_ButtonBarGroup")
+            @await Html.PartialAsync("_ButtonBarGroup")
             <a id="tb_assignRole" href="#" title="指派角色"><i class="fa fa-sitemap"></i></a>
         </div>
     </div>
@@ -185,7 +185,7 @@
     </div>
 }
 @section customModal {
-    @Html.Partial("RoleConfig")
+    @await Html.PartialAsync("RoleConfig")
     <div id="dialogIcon" class="modal-content icon-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -200,5 +200,5 @@
             <button type="button" class="btn btn-primary" id="btnSubmitIcon">保存</button>
         </div>
     </div>
-    @Html.Partial("NavigatorConfig")
+    @await Html.PartialAsync("NavigatorConfig")
 }
