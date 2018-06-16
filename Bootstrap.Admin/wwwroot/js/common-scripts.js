@@ -52,7 +52,7 @@
         pullNotification: function () {
             if ($('.notify-row').length == 0) return;
 
-            var uri = "ws://" + window.location.host + "/WS";
+            var uri = "ws://" + window.location.host + $.formatUrl("WS");
             var socket = new WebSocket(uri);
             socket.onmessage = function (e) {
                 var result = JSON.parse(e.data);
