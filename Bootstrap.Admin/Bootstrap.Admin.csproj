@@ -2,165 +2,23 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\Keys\Longbow.Utility.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Bootstrap.Security.Mvc" Version="1.0.0" />
     <PackageReference Include="Longbow.Web" Version="1.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.0" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
-    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.4" />
+    <None Include="..\Keys\Longbow.Utility.snk" Link="Longbow.Utility.snk" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Bootstrap.DataAccess\Bootstrap.DataAccess.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Update="appsettings.Development.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Update="appsettings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Update="cache.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="wwwroot\css\admin-responsive.css" />
-    <None Include="wwwroot\css\admin.css" />
-    <None Include="wwwroot\css\api.css" />
-    <None Include="wwwroot\css\blue.css" />
-    <None Include="wwwroot\css\bootstrap-datetimepicker.css" />
-    <None Include="wwwroot\css\bootstrap-datetimepicker.min.css" />
-    <None Include="wwwroot\css\bootstrap-table.css" />
-    <None Include="wwwroot\css\bootstrap-table.min.css" />
-    <None Include="wwwroot\css\bootstrap-theme.css" />
-    <None Include="wwwroot\css\bootstrap-theme.css.map" />
-    <None Include="wwwroot\css\bootstrap-theme.min.css" />
-    <None Include="wwwroot\css\bootstrap-theme.min.css.map" />
-    <None Include="wwwroot\css\bootstrap.css" />
-    <None Include="wwwroot\css\bootstrap.css.map" />
-    <None Include="wwwroot\css\bootstrap.min.css" />
-    <None Include="wwwroot\css\bootstrap.min.css.map" />
-    <None Include="wwwroot\css\fa.css" />
-    <None Include="wwwroot\css\fileinput.css" />
-    <None Include="wwwroot\css\fileinput.min.css" />
-    <None Include="wwwroot\css\font-awesome.css" />
-    <None Include="wwwroot\css\font-awesome.min.css" />
-    <None Include="wwwroot\html\api.html" />
-    <None Include="wwwroot\html\RegResult.html" />
-    <None Include="wwwroot\css\IE8.css" />
-    <None Include="wwwroot\favicon.ico" />
-    <None Include="wwwroot\images\bg.jpg" />
-    <None Include="wwwroot\images\bg2.jpg" />
-    <None Include="wwwroot\images\bg3.png" />
-    <None Include="wwwroot\images\bg4.jpg" />
-    <None Include="wwwroot\images\error.png" />
-    <None Include="wwwroot\images\error_icon.png" />
-    <None Include="wwwroot\images\loading-sm.gif" />
-    <None Include="wwwroot\images\loading.gif" />
-    <None Include="wwwroot\images\lock-bg.jpg" />
-    <None Include="wwwroot\images\logo.jpg" />
-    <None Include="wwwroot\images\logo1.jpg" />
-    <None Include="wwwroot\images\logo2.jpg" />
-    <None Include="wwwroot\images\logo3.jpg" />
-    <None Include="wwwroot\images\logo4.jpg" />
-    <None Include="wwwroot\images\logo5.jpg" />
-    <None Include="wwwroot\images\logo6.jpg" />
-    <None Include="wwwroot\images\nav-expand.png" />
-    <None Include="wwwroot\images\success.png" />
-    <None Include="wwwroot\images\uploader\default.jpg" />
-    <None Include="wwwroot\images\uploader\readme.txt" />
-    <None Include="wwwroot\css\jquery.nestable.css" />
-    <None Include="wwwroot\css\lock.css" />
-    <None Include="wwwroot\css\login-responsive.css" />
-    <None Include="wwwroot\css\login.css" />
-    <None Include="wwwroot\css\nprogress.css" />
-    <None Include="wwwroot\css\register.css" />
-    <None Include="wwwroot\css\site-responsive.css" />
-    <None Include="wwwroot\css\site.css" />
-    <None Include="wwwroot\css\sweetalert.css" />
-    <None Include="wwwroot\css\tasks.css" />
-    <None Include="wwwroot\css\toastr.css" />
-    <None Include="wwwroot\css\toastr.min.css" />
-    <None Include="wwwroot\fonts\fontawesome-webfont.eot" />
-    <None Include="wwwroot\fonts\fontawesome-webfont.svg" />
-    <None Include="wwwroot\fonts\fontawesome-webfont.ttf" />
-    <None Include="wwwroot\fonts\fontawesome-webfont.woff" />
-    <None Include="wwwroot\fonts\fontawesome-webfont.woff2" />
-    <None Include="wwwroot\fonts\FontAwesome.otf" />
-    <None Include="wwwroot\fonts\glyphicons-halflings-regular.eot" />
-    <None Include="wwwroot\fonts\glyphicons-halflings-regular.svg" />
-    <None Include="wwwroot\fonts\glyphicons-halflings-regular.ttf" />
-    <None Include="wwwroot\fonts\glyphicons-halflings-regular.woff" />
-    <None Include="wwwroot\fonts\glyphicons-halflings-regular.woff2" />
-    <None Include="wwwroot\js\additional-methods.js" />
-    <None Include="wwwroot\js\additional-methods.min.js" />
-    <None Include="wwwroot\js\apidoc.js" />
-    <None Include="wwwroot\js\bootstrap-datetimepicker.js" />
-    <None Include="wwwroot\js\bootstrap-datetimepicker.min.js" />
-    <None Include="wwwroot\js\bootstrap-datetimepicker.zh-CN.js" />
-    <None Include="wwwroot\js\bootstrap-table-zh-CN.js" />
-    <None Include="wwwroot\js\bootstrap-table-zh-CN.min.js" />
-    <None Include="wwwroot\js\bootstrap-table.js" />
-    <None Include="wwwroot\js\bootstrap-table.min.js" />
-    <None Include="wwwroot\js\bootstrap.js" />
-    <None Include="wwwroot\js\bootstrap.min.js" />
-    <None Include="wwwroot\js\bootstrap3-typeahead.js" />
-    <None Include="wwwroot\js\bootstrap3-typeahead.min.js" />
-    <None Include="wwwroot\js\common-scripts.js" />
-    <None Include="wwwroot\js\Content.js" />
-    <None Include="wwwroot\js\Dicts.js" />
-    <None Include="wwwroot\js\Exceptions.js" />
-    <None Include="wwwroot\js\fileinput.js" />
-    <None Include="wwwroot\js\fileinput.min.js" />
-    <None Include="wwwroot\js\fileinput.zh.js" />
-    <None Include="wwwroot\js\framework.js" />
-    <None Include="wwwroot\js\Groups.js" />
-    <None Include="wwwroot\js\icon.js" />
-    <None Include="wwwroot\js\jquery-3.1.1.intellisense.js" />
-    <None Include="wwwroot\js\jquery-3.1.1.js" />
-    <None Include="wwwroot\js\jquery-3.1.1.min.js" />
-    <None Include="wwwroot\js\jquery-3.1.1.min.map" />
-    <None Include="wwwroot\js\jquery-3.1.1.slim.js" />
-    <None Include="wwwroot\js\jquery-3.1.1.slim.min.js" />
-    <None Include="wwwroot\js\jquery-3.1.1.slim.min.map" />
-    <None Include="wwwroot\js\jquery.dcjqaccordion.2.7.js" />
-    <None Include="wwwroot\js\jquery.nestable.js" />
-    <None Include="wwwroot\js\jquery.nicescroll.min.js" />
-    <None Include="wwwroot\js\jquery.scrollTo.js" />
-    <None Include="wwwroot\js\jquery.scrollTo.min.js" />
-    <None Include="wwwroot\js\jquery.validate-vsdoc.js" />
-    <None Include="wwwroot\js\jquery.validate.js" />
-    <None Include="wwwroot\js\jquery.validate.min.js" />
-    <None Include="wwwroot\js\lock.js" />
-    <None Include="wwwroot\js\log.js" />
-    <None Include="wwwroot\js\Login.js" />
-    <None Include="wwwroot\js\Logs.js" />
-    <None Include="wwwroot\js\Longbow.Common.js" />
-    <None Include="wwwroot\js\longbow.dataentity.js" />
-    <None Include="wwwroot\js\Menus.js" />
-    <None Include="wwwroot\js\message.js" />
-    <None Include="wwwroot\js\messages_zh.js" />
-    <None Include="wwwroot\js\messages_zh.min.js" />
-    <None Include="wwwroot\js\noti.js" />
-    <None Include="wwwroot\js\nprogress.js" />
-    <None Include="wwwroot\js\Profiles.js" />
-    <None Include="wwwroot\js\register.js" />
-    <None Include="wwwroot\js\Roles.js" />
-    <None Include="wwwroot\js\Settings.js" />
-    <None Include="wwwroot\js\sweetalert.js" />
-    <None Include="wwwroot\js\sweetalert.min.js" />
-    <None Include="wwwroot\js\tasks.js" />
-    <None Include="wwwroot\js\toastr.js.map" />
-    <None Include="wwwroot\js\toastr.min.js" />
-    <None Include="wwwroot\js\Users.js" />
   </ItemGroup>
 
 </Project>
