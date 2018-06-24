@@ -2,7 +2,8 @@
     var $headerIcon = $('#headerIcon');
     var preIcon = $headerIcon.attr('src');
     $('#fileIcon').fileinput({
-        uploadUrl: Profiles.url,
+        uploadUrl: $.formatUrl(Profiles.url),
+        browseOnZoneClick: true,
         language: 'zh',
         maxFileSize: 5000,
         allowedFileExtensions: ['jpg', 'png', 'bmp', 'gif', 'jpeg'],
@@ -10,13 +11,13 @@
             preIcon
         ],
         initialPreviewConfig: [
-            { caption: "现在头像", size: $('#fileIcon').attr('data-init'), showZoom: false },
+            { caption: "现在头像", size: $('#fileIcon').attr('data-init'), showZoom: true },
         ],
         initialPreviewAsData: true,
         overwriteInitial: true,
         dropZoneTitle: "请选择头像"
     }).on('fileuploaded', function (event, data, previewId, index) {
-        var url = data.response;
+        var url = data.response.initialPreview[0];
         if (!!url) $headerIcon.attr('src', url);
     });
 
@@ -60,5 +61,4 @@
         }
     });
     $('button[data-admin="False"]').removeAttr('disabled');
-    $('#kvFileinputModal').appendTo('body');
 });
