@@ -27,26 +27,6 @@
         ]
     });
 
-    // validate
-    $('#dataForm').autoValidate({
-        dictCate: {
-            required: true,
-            maxlength: 50
-        },
-        dictName: {
-            required: true,
-            maxlength: 50
-        },
-        dictCode: {
-            required: true,
-            maxlength: 50
-        },
-        dictDefine: {
-            required: false,
-            maxlength: 50
-        }
-    });
-
     // autocomplete
     $.bc({
         url: "api/Category", swal: false, method: 'get',

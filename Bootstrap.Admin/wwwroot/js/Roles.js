@@ -128,14 +128,6 @@
         ]
     });
 
-    // validate
-    $('#dataForm').autoValidate({
-        roleName: {
-            required: true,
-            maxlength: 50
-        }
-    });
-
     $nestMenu.nestMenu(function () {
         $nestMenuInput = $nestMenu.find('div.dd3-content');
         $nestMenuInput.on('click', ':checkbox', function () {

@@ -84,12 +84,4 @@
             { title: "部门描述", field: "Description", sortable: false }
         ]
     });
-
-    // validate
-    $('#dataForm').autoValidate({
-        groupName: {
-            required: true,
-            maxlength: 50
-        }
-    });
 });
