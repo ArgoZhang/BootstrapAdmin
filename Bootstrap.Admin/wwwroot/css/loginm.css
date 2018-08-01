@@ -86,3 +86,25 @@
         width: 320px;
     }
 }
+
+.tooltip.has-error .tooltip-inner {
+    background-color: #a94442;
+}
+
+.tooltip.has-error .arrow:before {
+    border-top-color: #a94442;
+}
+
+.form-control:focus {
+    box-shadow: none;
+}
+
+.input-group-text {
+    background-color: #6bc3f4;
+    border: 1px solid #6bc3f4;
+    line-height: 2;
+}
+
+.form-check-input {
+    margin-top: 0.4rem;
+}

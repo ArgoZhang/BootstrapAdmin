@@ -2,16 +2,26 @@
     Layout = "~/Views/Shared/_Root.cshtml";
 }
 @section css {
-    <link href="~/css/bootstrap.css" rel="stylesheet">
-    <link href="~/css/bootstrap-theme.css" rel="stylesheet">
-    <link href="~/css/font-awesome.css" rel="stylesheet" />
+    <environment include="Development">
+        <link href="~/css/bootstrap.css" rel="stylesheet">
+        <link href="~/css/font-awesome.css" rel="stylesheet" />
+    </environment>
+    <environment exclude="Development">
+        <link href="~/css/bootstrap.min.css" rel="stylesheet">
+        <link href="~/css/font-awesome.min.css" rel="stylesheet" />
+    </environment>
     <link href="~/css/nprogress.css" rel="stylesheet" />
     @RenderSection("css", false)
     <link href="~/css/site.css" rel="stylesheet" />
     <link href="~/css/site-responsive.css" rel="stylesheet" />
 }
 @section javascript {
-    <script src="~/js/bootstrap.js"></script>
+    <environment include="Development">
+        <script src="~/js/bootstrap.bundle.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/bootstrap.bundle.min.js"></script>
+    </environment>
     <script src="~/js/nprogress.js"></script>
     <script src="~/js/Longbow.Common.js"></script>
     @RenderSection("Javascript", false)

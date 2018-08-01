@@ -1,22 +1,8 @@
 ﻿@model Bootstrap.Admin.Models.ModelBase
 @{
     ViewBag.Title = Model.Title;
-    Layout = "~/Views/Shared/_Root.cshtml";
+    Layout = "~/Views/Shared/_Login.cshtml";
 }
 @section css {
-    <link href="~/css/bootstrap.css" rel="stylesheet">
     <link href="~/css/loginm.css" rel="stylesheet" />
 }
-@section javascript {
-    <script src="~/js/bootstrap.js"></script>
-    <script src="~/js/Longbow.Common.js"></script>
-    <script src="~/js/jquery.validate.js"></script>
-    <script src="~/js/messages_zh.js"></script>
-    <script src="~/js/Login.js"></script>
-}
-<div class="container">
-    <form id="login" class="form-signin" method="post">
-        @await Html.PartialAsync("SignIn")
-    </form>
-</div>
-

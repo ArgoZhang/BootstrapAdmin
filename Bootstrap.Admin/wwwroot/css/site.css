@@ -461,10 +461,19 @@ a, a:hover, a:focus {
     background-color: #a94442;
 }
 
-.tooltip.has-error .tooltip-arrow {
+.tooltip.has-error .arrow {
     border-top-color: #a94442;
 }
 
 .file-drop-zone.clickable:hover {
     border: 1px dashed #999;
+}
+
+/*bs v4.1.3*/
+.form-control:focus {
+    box-shadow: none;
+}
+
+.form-check-input {
+    margin-top: 0.4rem;
 }

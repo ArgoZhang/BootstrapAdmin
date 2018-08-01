@@ -1,9 +1,9 @@
 /*!
- * jQuery Validation Plugin v1.15.0
+ * jQuery Validation Plugin v1.17.0
  *
- * http://jqueryvalidation.org/
+ * https://jqueryvalidation.org/
  *
- * Copyright (c) 2016 Jörn Zaefferer
+ * Copyright (c) 2017 Jörn Zaefferer
  * Released under the MIT license
  */
 (function( factory ) {
@@ -48,8 +48,8 @@ $.validator.addMethod( "accept", function( value, element, param ) {
 
 	// Split mime on commas in case we have multiple types we can accept
 	var typeParam = typeof param === "string" ? param.replace( /\s/g, "" ) : "image/*",
-	optionalValue = this.optional( element ),
-	i, file, regex;
+		optionalValue = this.optional( element ),
+		i, file, regex;
 
 	// Element is optional
 	if ( optionalValue ) {
@@ -59,9 +59,12 @@ $.validator.addMethod( "accept", function( value, element, param ) {
 	if ( $( element ).attr( "type" ) === "file" ) {
 
 		// Escape string to be used in the regex
-		// see: http://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex
+		// see: https://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex
 		// Escape also "/*" as "/.*" as a wildcard
-		typeParam = typeParam.replace( /[\-\[\]\/\{\}\(\)\+\?\.\\\^\$\|]/g, "\\$&" ).replace( /,/g, "|" ).replace( "\/*", "/.*" );
+		typeParam = typeParam
+				.replace( /[\-\[\]\/\{\}\(\)\+\?\.\\\^\$\|]/g, "\\$&" )
+				.replace( /,/g, "|" )
+				.replace( /\/\*/g, "/.*" );
 
 		// Check if the element has a FileList before checking each file
 		if ( element.files && element.files.length ) {
@@ -141,62 +144,115 @@ $.validator.addMethod( "bic", function( value, element ) {
 /*
  * Código de identificación fiscal ( CIF ) is the tax identification code for Spanish legal entities
  * Further rules can be found in Spanish on http://es.wikipedia.org/wiki/C%C3%B3digo_de_identificaci%C3%B3n_fiscal
+ *
+ * Spanish CIF structure:
+ *
+ * [ T ][ P ][ P ][ N ][ N ][ N ][ N ][ N ][ C ]
+ *
+ * Where:
+ *
+ * T: 1 character. Kind of Organization Letter: [ABCDEFGHJKLMNPQRSUVW]
+ * P: 2 characters. Province.
+ * N: 5 characters. Secuencial Number within the province.
+ * C: 1 character. Control Digit: [0-9A-J].
+ *
+ * [ T ]: Kind of Organizations. Possible values:
+ *
+ *   A. Corporations
+ *   B. LLCs
+ *   C. General partnerships
+ *   D. Companies limited partnerships
+ *   E. Communities of goods
+ *   F. Cooperative Societies
+ *   G. Associations
+ *   H. Communities of homeowners in horizontal property regime
+ *   J. Civil Societies
+ *   K. Old format
+ *   L. Old format
+ *   M. Old format
+ *   N. Nonresident entities
+ *   P. Local authorities
+ *   Q. Autonomous bodies, state or not, and the like, and congregations and religious institutions
+ *   R. Congregations and religious institutions (since 2008 ORDER EHA/451/2008)
+ *   S. Organs of State Administration and regions
+ *   V. Agrarian Transformation
+ *   W. Permanent establishments of non-resident in Spain
+ *
+ * [ C ]: Control Digit. It can be a number or a letter depending on T value:
+ * [ T ]  -->  [ C ]
+ * ------    ----------
+ *   A         Number
+ *   B         Number
+ *   E         Number
+ *   H         Number
+ *   K         Letter
+ *   P         Letter
+ *   Q         Letter
+ *   S         Letter
+ *
  */
-$.validator.addMethod( "cifES", function( value ) {
+$.validator.addMethod( "cifES", function( value, element ) {
 	"use strict";
 
-	var num = [],
-		controlDigit, sum, i, count, tmp, secondDigit;
+	if ( this.optional( element ) ) {
+		return true;
+	}
 
-	value = value.toUpperCase();
+	var cifRegEx = new RegExp( /^([ABCDEFGHJKLMNPQRSUVW])(\d{7})([0-9A-J])$/gi );
+	var letter  = value.substring( 0, 1 ), // [ T ]
+		number  = value.substring( 1, 8 ), // [ P ][ P ][ N ][ N ][ N ][ N ][ N ]
+		control = value.substring( 8, 9 ), // [ C ]
+		all_sum = 0,
+		even_sum = 0,
+		odd_sum = 0,
+		i, n,
+		control_digit,
+		control_letter;
+
+	function isOdd( n ) {
+		return n % 2 === 0;
+	}
 
 	// Quick format test
-	if ( !value.match( "((^[A-Z]{1}[0-9]{7}[A-Z0-9]{1}$|^[T]{1}[A-Z0-9]{8}$)|^[0-9]{8}[A-Z]{1}$)" ) ) {
+	if ( value.length !== 9 || !cifRegEx.test( value ) ) {
 		return false;
 	}
 
-	for ( i = 0; i < 9; i++ ) {
-		num[ i ] = parseInt( value.charAt( i ), 10 );
+	for ( i = 0; i < number.length; i++ ) {
+		n = parseInt( number[ i ], 10 );
+
+		// Odd positions
+		if ( isOdd( i ) ) {
+
+			// Odd positions are multiplied first.
+			n *= 2;
+
+			// If the multiplication is bigger than 10 we need to adjust
+			odd_sum += n < 10 ? n : n - 9;
+
+		// Even positions
+		// Just sum them
+		} else {
+			even_sum += n;
+		}
 	}
 
-	// Algorithm for checking CIF codes
-	sum = num[ 2 ] + num[ 4 ] + num[ 6 ];
-	for ( count = 1; count < 8; count += 2 ) {
-		tmp = ( 2 * num[ count ] ).toString();
-		secondDigit = tmp.charAt( 1 );
+	all_sum = even_sum + odd_sum;
+	control_digit = ( 10 - ( all_sum ).toString().substr( -1 ) ).toString();
+	control_digit = parseInt( control_digit, 10 ) > 9 ? "0" : control_digit;
+	control_letter = "JABCDEFGHI".substr( control_digit, 1 ).toString();
 
-		sum += parseInt( tmp.charAt( 0 ), 10 ) + ( secondDigit === "" ? 0 : parseInt( secondDigit, 10 ) );
+	// Control must be a digit
+	if ( letter.match( /[ABEH]/ ) ) {
+		return control === control_digit;
+
+	// Control must be a letter
+	} else if ( letter.match( /[KPQS]/ ) ) {
+		return control === control_letter;
 	}
 
-	/* The first (position 1) is a letter following the following criteria:
-	 *	A. Corporations
-	 *	B. LLCs
-	 *	C. General partnerships
-	 *	D. Companies limited partnerships
-	 *	E. Communities of goods
-	 *	F. Cooperative Societies
-	 *	G. Associations
-	 *	H. Communities of homeowners in horizontal property regime
-	 *	J. Civil Societies
-	 *	K. Old format
-	 *	L. Old format
-	 *	M. Old format
-	 *	N. Nonresident entities
-	 *	P. Local authorities
-	 *	Q. Autonomous bodies, state or not, and the like, and congregations and religious institutions
-	 *	R. Congregations and religious institutions (since 2008 ORDER EHA/451/2008)
-	 *	S. Organs of State Administration and regions
-	 *	V. Agrarian Transformation
-	 *	W. Permanent establishments of non-resident in Spain
-	 */
-	if ( /^[ABCDEFGHJNPQRSUVW]{1}/.test( value ) ) {
-		sum += "";
-		controlDigit = 10 - parseInt( sum.charAt( sum.length - 1 ), 10 );
-		value += controlDigit;
-		return ( num[ 8 ].toString() === String.fromCharCode( 64 + controlDigit ) || num[ 8 ].toString() === value.charAt( value.length - 1 ) );
-	}
-
-	return false;
+	// Can be either
+	return control === control_digit || control === control_letter;
 
 }, "Please specify a valid CIF number." );
 
@@ -261,8 +317,8 @@ $.validator.addMethod( "cpfBR", function( value ) {
 
 }, "Please specify a valid CPF number" );
 
-// http://jqueryvalidation.org/creditcard-method/
-// based on http://en.wikipedia.org/wiki/Luhn_algorithm
+// https://jqueryvalidation.org/creditcard-method/
+// based on https://en.wikipedia.org/wiki/Luhn_algorithm
 $.validator.addMethod( "creditcard", function( value, element ) {
 	if ( this.optional( element ) ) {
 		return "dependency-mismatch";
@@ -281,7 +337,7 @@ $.validator.addMethod( "creditcard", function( value, element ) {
 	value = value.replace( /\D/g, "" );
 
 	// Basing min and max length on
-	// http://developer.ean.com/general_info/Valid_Credit_Card_Types
+	// https://developer.ean.com/general_info/Valid_Credit_Card_Types
 	if ( value.length < 13 || value.length > 19 ) {
 		return false;
 	}
@@ -496,6 +552,16 @@ $.validator.addMethod( "iban", function( value, element ) {
 		cOperator = "",
 		countrycode, ibancheck, charAt, cChar, bbanpattern, bbancountrypatterns, ibanregexp, i, p;
 
+	// Check for IBAN code length.
+	// It contains:
+	// country code ISO 3166-1 - two letters,
+	// two check digits,
+	// Basic Bank Account Number (BBAN) - up to 30 chars
+	var minimalIBANlength = 5;
+	if ( iban.length < minimalIBANlength ) {
+		return false;
+	}
+
 	// Check the country code and find the country specific format
 	countrycode = iban.substring( 0, 2 );
 	bbancountrypatterns = {
@@ -640,46 +706,59 @@ $.validator.addMethod( "mobileUK", function( phone_number, element ) {
 		phone_number.match( /^(?:(?:(?:00\s?|\+)44\s?|0)7(?:[1345789]\d{2}|624)\s?\d{3}\s?\d{3})$/ );
 }, "Please specify a valid mobile number" );
 
+$.validator.addMethod( "netmask", function( value, element ) {
+    return this.optional( element ) || /^(254|252|248|240|224|192|128)\.0\.0\.0|255\.(254|252|248|240|224|192|128|0)\.0\.0|255\.255\.(254|252|248|240|224|192|128|0)\.0|255\.255\.255\.(254|252|248|240|224|192|128|0)/i.test( value );
+}, "Please enter a valid netmask." );
+
 /*
- * The número de identidad de extranjero ( NIE )is a code used to identify the non-nationals in Spain
+ * The NIE (Número de Identificación de Extranjero) is a Spanish tax identification number assigned by the Spanish
+ * authorities to any foreigner.
+ *
+ * The NIE is the equivalent of a Spaniards Número de Identificación Fiscal (NIF) which serves as a fiscal
+ * identification number. The CIF number (Certificado de Identificación Fiscal) is equivalent to the NIF, but applies to
+ * companies rather than individuals. The NIE consists of an 'X' or 'Y' followed by 7 or 8 digits then another letter.
  */
-$.validator.addMethod( "nieES", function( value ) {
+$.validator.addMethod( "nieES", function( value, element ) {
 	"use strict";
 
-	value = value.toUpperCase();
+	if ( this.optional( element ) ) {
+		return true;
+	}
 
-	// Basic format test
-	if ( !value.match( "((^[A-Z]{1}[0-9]{7}[A-Z0-9]{1}$|^[T]{1}[A-Z0-9]{8}$)|^[0-9]{8}[A-Z]{1}$)" ) ) {
+	var nieRegEx = new RegExp( /^[MXYZ]{1}[0-9]{7,8}[TRWAGMYFPDXBNJZSQVHLCKET]{1}$/gi );
+	var validChars = "TRWAGMYFPDXBNJZSQVHLCKET",
+		letter = value.substr( value.length - 1 ).toUpperCase(),
+		number;
+
+	value = value.toString().toUpperCase();
+
+	// Quick format test
+	if ( value.length > 10 || value.length < 9 || !nieRegEx.test( value ) ) {
 		return false;
 	}
 
-	// Test NIE
-	//T
-	if ( /^[T]{1}/.test( value ) ) {
-		return ( value[ 8 ] === /^[T]{1}[A-Z0-9]{8}$/.test( value ) );
-	}
+	// X means same number
+	// Y means number + 10000000
+	// Z means number + 20000000
+	value = value.replace( /^[X]/, "0" )
+		.replace( /^[Y]/, "1" )
+		.replace( /^[Z]/, "2" );
 
-	//XYZ
-	if ( /^[XYZ]{1}/.test( value ) ) {
-		return (
-			value[ 8 ] === "TRWAGMYFPDXBNJZSQVHLCKE".charAt(
-				value.replace( "X", "0" )
-					.replace( "Y", "1" )
-					.replace( "Z", "2" )
-					.substring( 0, 8 ) % 23
-			)
-		);
-	}
+	number = value.length === 9 ? value.substr( 0, 8 ) : value.substr( 0, 9 );
 
-	return false;
+	return validChars.charAt( parseInt( number, 10 ) % 23 ) === letter;
 
 }, "Please specify a valid NIE number." );
 
 /*
  * The Número de Identificación Fiscal ( NIF ) is the way tax identification used in Spain for individuals
  */
-$.validator.addMethod( "nifES", function( value ) {
+$.validator.addMethod( "nifES", function( value, element ) {
 	"use strict";
+
+	if ( this.optional( element ) ) {
+		return true;
+	}
 
 	value = value.toUpperCase();
 
@@ -695,14 +774,37 @@ $.validator.addMethod( "nifES", function( value ) {
 
 	// Test specials NIF (starts with K, L or M)
 	if ( /^[KLM]{1}/.test( value ) ) {
-		return ( value[ 8 ] === String.fromCharCode( 64 ) );
+		return ( value[ 8 ] === "TRWAGMYFPDXBNJZSQVHLCKE".charAt( value.substring( 8, 1 ) % 23 ) );
 	}
 
 	return false;
 
 }, "Please specify a valid NIF number." );
 
-jQuery.validator.addMethod( "notEqualTo", function( value, element, param ) {
+/*
+ * Numer identyfikacji podatkowej ( NIP ) is the way tax identification used in Poland for companies
+ */
+$.validator.addMethod( "nipPL", function( value ) {
+	"use strict";
+
+	value = value.replace( /[^0-9]/g, "" );
+
+	if ( value.length !== 10 ) {
+		return false;
+	}
+
+	var arrSteps = [ 6, 5, 7, 2, 3, 4, 5, 6, 7 ];
+	var intSum = 0;
+	for ( var i = 0; i < 9; i++ ) {
+		intSum += arrSteps[ i ] * value[ i ];
+	}
+	var int2 = intSum % 11;
+	var intControlNr = ( int2 === 10 ) ? 0 : int2;
+
+	return ( intControlNr === parseInt( value[ 9 ], 10 ) );
+}, "Please specify a valid NIP number." );
+
+$.validator.addMethod( "notEqualTo", function( value, element, param ) {
 	return this.optional( element ) || !$.validator.methods.equalTo.call( this, value, element, param );
 }, "Please enter a different value, values must not be the same." );
 
@@ -748,6 +850,22 @@ $.validator.addMethod( "phoneNL", function( value, element ) {
  * A number of very detailed GB telephone number RegEx patterns can also be found at:
  * http://www.aa-asterisk.org.uk/index.php/Regular_Expressions_for_Validating_and_Formatting_GB_Telephone_Numbers
  */
+
+// Matches UK landline + mobile, accepting only 01-3 for landline or 07 for mobile to exclude many premium numbers
+$.validator.addMethod( "phonesUK", function( phone_number, element ) {
+	phone_number = phone_number.replace( /\(|\)|\s+|-/g, "" );
+	return this.optional( element ) || phone_number.length > 9 &&
+		phone_number.match( /^(?:(?:(?:00\s?|\+)44\s?|0)(?:1\d{8,9}|[23]\d{9}|7(?:[1345789]\d{8}|624\d{6})))$/ );
+}, "Please specify a valid uk phone number" );
+
+/* For UK phone functions, do the following server side processing:
+ * Compare original input with this RegEx pattern:
+ * ^\(?(?:(?:00\)?[\s\-]?\(?|\+)(44)\)?[\s\-]?\(?(?:0\)?[\s\-]?\(?)?|0)([1-9]\d{1,4}\)?[\s\d\-]+)$
+ * Extract $1 and set $prefix to '+44<space>' if $1 is '44', otherwise set $prefix to '0'
+ * Extract $2 and remove hyphens, spaces and parentheses. Phone number is combined $prefix and $2.
+ * A number of very detailed GB telephone number RegEx patterns can also be found at:
+ * http://www.aa-asterisk.org.uk/index.php/Regular_Expressions_for_Validating_and_Formatting_GB_Telephone_Numbers
+ */
 $.validator.addMethod( "phoneUK", function( phone_number, element ) {
 	phone_number = phone_number.replace( /\(|\)|\s+|-/g, "" );
 	return this.optional( element ) || phone_number.length > 9 &&
@@ -776,21 +894,17 @@ $.validator.addMethod( "phoneUS", function( phone_number, element ) {
 		phone_number.match( /^(\+?1-?)?(\([2-9]([02-9]\d|1[02-9])\)|[2-9]([02-9]\d|1[02-9]))-?[2-9]([02-9]\d|1[02-9])-?\d{4}$/ );
 }, "Please specify a valid phone number" );
 
-/* For UK phone functions, do the following server side processing:
- * Compare original input with this RegEx pattern:
- * ^\(?(?:(?:00\)?[\s\-]?\(?|\+)(44)\)?[\s\-]?\(?(?:0\)?[\s\-]?\(?)?|0)([1-9]\d{1,4}\)?[\s\d\-]+)$
- * Extract $1 and set $prefix to '+44<space>' if $1 is '44', otherwise set $prefix to '0'
- * Extract $2 and remove hyphens, spaces and parentheses. Phone number is combined $prefix and $2.
- * A number of very detailed GB telephone number RegEx patterns can also be found at:
- * http://www.aa-asterisk.org.uk/index.php/Regular_Expressions_for_Validating_and_Formatting_GB_Telephone_Numbers
- */
-
-// Matches UK landline + mobile, accepting only 01-3 for landline or 07 for mobile to exclude many premium numbers
-$.validator.addMethod( "phonesUK", function( phone_number, element ) {
-	phone_number = phone_number.replace( /\(|\)|\s+|-/g, "" );
-	return this.optional( element ) || phone_number.length > 9 &&
-		phone_number.match( /^(?:(?:(?:00\s?|\+)44\s?|0)(?:1\d{8,9}|[23]\d{9}|7(?:[1345789]\d{8}|624\d{6})))$/ );
-}, "Please specify a valid uk phone number" );
+/*
+* Valida CEPs do brasileiros:
+*
+* Formatos aceitos:
+* 99999-999
+* 99.999-999
+* 99999999
+*/
+$.validator.addMethod( "postalcodeBR", function( cep_value, element ) {
+	return this.optional( element ) || /^\d{2}.\d{3}-\d{3}?$|^\d{5}-?\d{3}?$/.test( cep_value );
+}, "Informe um CEP válido." );
 
 /**
  * Matches a valid Canadian Postal Code
@@ -808,18 +922,6 @@ $.validator.addMethod( "phonesUK", function( phone_number, element ) {
 $.validator.addMethod( "postalCodeCA", function( value, element ) {
 	return this.optional( element ) || /^[ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVWXYZ] *\d[ABCEGHJKLMNPRSTVWXYZ]\d$/i.test( value );
 }, "Please specify a valid postal code" );
-
-/*
-* Valida CEPs do brasileiros:
-*
-* Formatos aceitos:
-* 99999-999
-* 99.999-999
-* 99999999
-*/
-$.validator.addMethod( "postalcodeBR", function( cep_value, element ) {
-	return this.optional( element ) || /^\d{2}.\d{3}-\d{3}?$|^\d{5}-?\d{3}?$/.test( cep_value );
-}, "Informe um CEP válido." );
 
 /* Matches Italian postcode (CAP) */
 $.validator.addMethod( "postalcodeIT", function( value, element ) {
@@ -1052,5 +1154,5 @@ $.validator.addMethod( "zipcodeUS", function( value, element ) {
 $.validator.addMethod( "ziprange", function( value, element ) {
 	return this.optional( element ) || /^90[2-5]\d\{2\}-\d{4}$/.test( value );
 }, "Your ZIP-code must be in the range 902xx-xxxx to 905xx-xxxx" );
-
+return $;
 }));
