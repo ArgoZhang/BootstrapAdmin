@@ -130,6 +130,16 @@
     background-position: right 8px center;
 }
 
+.pending {
+    background-repeat: no-repeat;
+    background-image: url(../img/loading-sm.gif);
+    background-position: right 8px center;
+}
+
+.has-success .pending, .has-error .pending {
+    background-image: url(../img/loading-sm.gif);
+}
+
 .has-success .input-group-btn button, .has-success .input-group-btn button:active:focus {
     border-color: #3c763d;
 }

@@ -49,7 +49,7 @@
             <div class="row">
                 <div class="form-group col-sm-6">
                     <label class="control-label" for="userName">登陆名称</label>
-                    <input type="text" class="form-control" id="userName" placeholder="不可为空，50字以内" maxlength="50" data-valid="true" />
+                    <input type="text" class="form-control" id="userName" placeholder="不可为空，50字以内" minlength="4" maxlength="50" remote="api/New/" data-remote-msg="此用户已存在" data-valid="true" />
                 </div>
                 <div class="form-group col-sm-6">
                     <input type="text" class="form-control hidden" id="userID" data-default-val="0" />

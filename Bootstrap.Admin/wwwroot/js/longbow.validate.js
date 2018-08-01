@@ -5,7 +5,11 @@
         var that = this;
         this.$element = $(element)
         this.options = $.extend({
+            pendingRequest: 0,
+            pending: {},
+            successList: [],
             optional: function () { return false; },
+            invalid: {},
             getLength: function (value, element) {
                 switch (element.nodeName.toLowerCase()) {
                     case "select":
@@ -39,6 +43,46 @@
             },
             escapeCssMeta: function (string) {
                 return string.replace(/([\\!"#$%&'()*+,./:;<=>?@\[\]^`{|}~])/g, "\\$1");
+            },
+            previousValue: function (element, method) {
+                method = typeof method === "string" && method || "remote";
+                return $.data(element, "previousValue") || $.data(element, "previousValue", {
+                    old: null,
+                    valid: true,
+                    message: "请修正本字段"
+                });
+            },
+            startRequest: function (element) {
+                if (!this.pending[element.name]) {
+                    this.pendingRequest++;
+                    $(element).addClass(this.settings.pendingClass);
+                    this.pending[element.name] = true;
+                }
+            },
+            stopRequest: function (element, valid) {
+                this.pendingRequest--;
+
+                // Sometimes synchronization fails, make sure pendingRequest is never < 0
+                if (this.pendingRequest < 0) {
+                    this.pendingRequest = 0;
+                }
+                delete this.pending[element.name];
+                $(element).removeClass(this.settings.pendingClass);
+            },
+            showErrors: function (errors) {
+                for (var name in errors) {
+                    var element = document.getElementById(name);
+                    var $element = $(element);
+                    that.tooltip.call(that, element, false);
+                    $element.lgbTooltip('show');
+                }
+            },
+            defaultMessage: function (element, rule) {
+                return that.defaultMessage(element, rule);
+            },
+            resetInternals: function () { },
+            errorsFor: function (element) {
+                that.tooltip.call(that, element, true);
             },
             settings: $.validator.defaults
         }, this.defaults(), options)
@@ -98,29 +142,31 @@
     };
 
     Validate.prototype.validElement = function (element) {
-        var $parent = $(element).parent();
-        var op = this.options;
         var result = this.check(element);
         this.tooltip(element, result);
-        if (!result) {
-            $parent.removeClass(op.validClass).addClass(op.errorClass);
-        }
-        else {
-            $parent.removeClass(op.errorClass).addClass(op.validClass);
-        }
         return result
     };
 
     Validate.prototype.tooltip = function (element, valid) {
+        if (valid == "pending") return;
+
+        var op = this.options;
         var $this = $(element);
+        var $parent = $this.parent();
         try {
             if (valid) $this.lgbTooltip('destroy');
             else {
-                if (!$this.parent().hasClass('has-error')) $this.lgbTooltip({ container: $(window).width() > 768 ? this.options.container : (this.$element.find('.modal-body') || this.$element.find('.panel-body') || this.options.container) });
+                if (!$parent.hasClass('has-error')) $this.lgbTooltip({ container: $(window).width() > 768 ? op.container : (this.$element.find('.modal-body') || this.$element.find('.panel-body') || op.container) });
             }
         }
         catch (e) {
 
+        }
+        if (!valid) {
+            $parent.removeClass(op.validClass).addClass(op.errorClass);
+        }
+        else {
+            $parent.removeClass(op.errorClass).addClass(op.validClass);
         }
     };
 
@@ -132,7 +178,7 @@
         for (var rule in methods) {
             if ($.isFunction($.validator.methods[rule])) {
                 result = $.validator.methods[rule].call(this.options, $this.val(), element, methods[rule]);
-                if (!result) {
+                if (!result || result === "pending") {
                     $this.attr('data-original-title', this.defaultMessage(element, { method: rule, parameters: methods[rule] }));
                     break;
                 }
@@ -170,6 +216,13 @@
                 });
             }
         });
+        $.each(["remote"], function () {
+            if (element.getAttribute(this)) {
+                if (element.name === "") element.name = element.id;
+                var para = $(element).attr(this);
+                rules[this] = $.formatUrl(para);
+            }
+        });
         return rules;
     };
 
@@ -195,10 +248,10 @@
     $.fn.lgbValidate = Plugin;
     $.fn.lgbValidate.Constructor = Validate;
     $.fn.lgbValidator = function () {
-        return $(this).data('lgb.Validate');
+        return this.data('lgb.Validate');
     };
     $.fn.lgbValid = function () {
-        var $this = $(this);
+        var $this = this;
         return $this.attr(Validate.DEFAULTS.validResult) == 'true';
     };
 
