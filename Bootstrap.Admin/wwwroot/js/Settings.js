@@ -148,7 +148,7 @@
         listCacheUrl(options);
     }).last().trigger('click');
     $sortable.on('click', '.btn', function () {
-        $(this).lgbTooltip('destroy');
+        $(this).lgbTooltip('dispose');
         listCache({ url: $(this).attr('data-url') });
         listCacheUrl();
     });

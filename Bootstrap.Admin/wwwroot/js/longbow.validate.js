@@ -124,7 +124,7 @@
         var css = this.options.validClass + ' ' + this.options.errorClass;
         this.$element.find(this.options.childClass).each(function () {
             var $this = $(this);
-            $this.lgbTooltip('destroy');
+            $this.lgbTooltip('dispose');
             $this.parent().removeClass(css);
         });
     };
@@ -154,7 +154,7 @@
         var $this = $(element);
         var $parent = $this.parent();
         try {
-            if (valid) $this.lgbTooltip('destroy');
+            if (valid) $this.lgbTooltip('dispose');
             else {
                 if (!$parent.hasClass('has-error')) $this.lgbTooltip({ container: $(window).width() > 768 ? op.container : (this.$element.find('.modal-body') || this.$element.find('.panel-body') || op.container) });
             }

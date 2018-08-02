@@ -326,9 +326,9 @@
             return ($(op.header).outerHeight() + $(op.content).outerHeight() + this.outerHeight() > $(window).height()) ? this.removeClass('fixed') : this.addClass('fixed');
         },
         lgbTooltip: function (options) {
-            if (/show|hide|destroy/.test(options)) {
+            if (/show|hide|dispose/.test(options)) {
                 this.tooltip(options);
-                if (options === 'destroy') this.removeAttr('data-original-title');
+                if (options === 'dispose') this.removeAttr('data-original-title');
             }
             else {
                 this.tooltip($.extend({ delay: { "show": 100, "hide": 100 } }, options));
@@ -336,9 +336,9 @@
             return this;
         },
         lgbPopover: function (options) {
-            if (/show|hide|destroy/.test(options)) {
+            if (/show|hide|dispose/.test(options)) {
                 this.popover(options);
-                if (options === 'destroy') this.removeAttr('data-original-title');
+                if (options === 'dispose') this.removeAttr('data-original-title');
             }
             else {
                 this.popover($.extend({ placement: 'auto' }, options));
@@ -369,7 +369,7 @@
                     $(element).parents('.form-group').addClass(errorClass).removeClass(validClass);
                 },
                 unhighlight: function (element, errorClass, validClass) {
-                    $(element).lgbTooltip('destroy').parents('.form-group').removeClass(errorClass).addClass(validClass);
+                    $(element).lgbTooltip('dispose').parents('.form-group').removeClass(errorClass).addClass(validClass);
                 },
                 errorPlacement: function (label, element) {
                     var $ele = $(element);
