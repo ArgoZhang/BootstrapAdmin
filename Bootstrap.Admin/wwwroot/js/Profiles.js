@@ -4,6 +4,7 @@
     $('#fileIcon').fileinput({
         uploadUrl: $.formatUrl(Profiles.url),
         browseOnZoneClick: true,
+        theme: 'fa',
         language: 'zh',
         maxFileSize: 5000,
         allowedFileExtensions: ['jpg', 'png', 'bmp', 'gif', 'jpeg'],

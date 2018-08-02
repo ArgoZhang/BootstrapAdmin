@@ -84,7 +84,7 @@ a, a:hover, a:focus {
             color: #777;
         }
 
-            .header > .dropdown > a:hover, .header > .dropdown.open > a, .notify-row > li > a:hover {
+            .header > .dropdown > a:hover, .header > .dropdown.show > a, .notify-row > li > a:hover {
                 border: 1px solid #777;
                 color: #333
             }
