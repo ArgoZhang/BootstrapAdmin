@@ -423,6 +423,7 @@ a, a:hover, a:focus {
     background-color: transparent;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+    padding: 7.5px 10px;
 }
 
     .breadcrumb > li.active {
@@ -474,14 +475,6 @@ a, a:hover, a:focus {
 }
 
 /*bs v4.1.3*/
-.form-control:focus {
-    box-shadow: none;
-}
-
-.form-check-input {
-    margin-top: 0.4rem;
-}
-
 .card {
     margin-bottom: 15px;
 }
