@@ -22,10 +22,12 @@
 <div class="card">
     <div class="card-header">系统名称设置</div>
     <div class="card-body" data-toggle="LgbValidate" data-valid-button="#sysSave">
-        <div class="input-group form-group col-xs-12">
-            <input type="text" class="form-control" id="sysName" placeholder="请输入网站标题，50字以内" value="@Model.Title" maxlength="50" data-valid="true" />
-            <div class="input-group-append">
-                <button class="btn btn-secondary" type="button" data-method="title">保存</button>
+        <div class="form-group">
+            <div class="input-group">
+                <input type="text" class="form-control" id="sysName" placeholder="请输入网站标题，50字以内" value="@Model.Title" maxlength="50" data-valid="true" />
+                <div class="input-group-append">
+                    <button class="btn btn-secondary" type="button" data-method="title">保存</button>
+                </div>
             </div>
         </div>
     </div>
@@ -33,10 +35,12 @@
 <div class="card">
     <div class="card-header">页脚设置</div>
     <div class="card-body" data-toggle="LgbValidate" data-valid-button="#footSave">
-        <div class="input-group form-group col-xs-12">
-            <input type="text" class="form-control" id="sysFoot" placeholder="请输入网站页脚，50字以内" value="@Model.Footer" maxlength="50" data-valid="true" />
-            <div class="input-group-append">
-                <button class="btn btn-secondary" type="button" data-method="footer">保存</button>
+        <div class="form-group">
+            <div class="input-group">
+                <input type="text" class="form-control" id="sysFoot" placeholder="请输入网站页脚，50字以内" value="@Model.Footer" maxlength="50" data-valid="true" />
+                <div class="input-group-append">
+                    <button class="btn btn-secondary" type="button" data-method="footer">保存</button>
+                </div>
             </div>
         </div>
     </div>
@@ -45,19 +49,17 @@
     <div class="card-header">网站样式</div>
     <div class="card-body">
         <form id="CssDataForm" class="form-inline">
-            <div class="form-row">
-                <div class="form-group col-xs-12">
-                    <div class="dropdown lgbDropdown">
-                        <a id="dictCssDefine" class="btn btn-success dropdown-toggle" data-toggle="dropdown" data-default-val="">
-                            <span>默认样式</span>
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu" role="menu" id="cssContainer">
-                            <li><a href="#" data-val="">默认样式</a></li>
-                        </ul>
-                    </div>
-                    <button class="btn btn-secondary" type="button" data-method="css">保存</button>
+            <div class="form-group">
+                <div class="dropdown lgbDropdown">
+                    <button id="dictCssDefine" class="btn btn-success dropdown-toggle" data-toggle="dropdown" data-default-val="">
+                        <span>默认样式</span>
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" id="cssContainer">
+                        <li><a href="#" data-val="">默认样式</a></li>
+                    </ul>
                 </div>
+                <button class="btn btn-secondary" type="button" data-method="css">保存</button>
             </div>
         </form>
     </div>

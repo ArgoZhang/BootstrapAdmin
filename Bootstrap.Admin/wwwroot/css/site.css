@@ -32,12 +32,12 @@ a, a:hover, a:focus {
 .dropdown-menu {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.176);
     padding: 0;
-    margin-top: 1rem;
     font-size: 0.875rem;
 }
 
     .dropdown-menu > li > a {
         padding: 6px 20px;
+        display: block;
     }
 
     .dropdown-menu .divider {
@@ -101,6 +101,7 @@ a, a:hover, a:focus {
 
         .header > .dropdown .dropdown-menu {
             width: 268px;
+            margin-top: 10px;
         }
 
             .header > .dropdown .dropdown-menu li {
@@ -248,7 +249,7 @@ a, a:hover, a:focus {
             .notify-row > li > a .badge {
                 position: absolute;
                 top: -14px;
-                left: 38px;
+                left: 24px;
                 z-index: 1;
                 opacity: 0.8;
             }

@@ -421,7 +421,7 @@
             var op = typeof options === 'object' && options;
             if (/val/.test(options)) {
                 if (arguments.length === 1)
-                    return $this.first().children('a').val();
+                    return $this.first().children('button').attr("data-val");
                 else {
                     $this.first().children(':first').children(':first').text($this.find('[data-val="' + arguments[1] + '"]').text());
                 }
@@ -431,7 +431,7 @@
                     $(this).on('click', '.dropdown-menu a', { $parent: $(this) }, function (event) {
                         event.preventDefault();
                         var $op = $(this);
-                        event.data.$parent.children('a').val($op.attr('data-val')).children(':first').text($op.text());
+                        event.data.$parent.children('button').attr('data-val', $op.attr('data-val')).children(':first').text($op.text());
                     });
                 });
             }

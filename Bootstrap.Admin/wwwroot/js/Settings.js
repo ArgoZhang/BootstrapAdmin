@@ -36,7 +36,7 @@
                 });
                 break;
             case 'css':
-                var cssDefine = $('#dictCssDefine').val();
+                var cssDefine = $('#dictCssDefine').attr("data-val");
                 $.bc({
                     url: Settings.url, data: { name: '使用样式', code: cssDefine, category: '当前样式' }, title: '网站样式',
                     callback: function (result) {

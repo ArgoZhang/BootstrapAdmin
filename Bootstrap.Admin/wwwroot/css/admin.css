@@ -55,7 +55,7 @@
 
 
 .modal-dialog .modal-body, .card-body {
-    padding-bottom: 0;
+    padding: 15px 15px 0 15px;
 }
 
     .modal-dialog .modal-body .form-inline .form-group input[type="text"], .modal-dialog .modal-body .form-inline .form-group input[type="password"] {
