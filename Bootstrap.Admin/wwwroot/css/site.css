@@ -16,6 +16,14 @@ ul li {
     list-style: none;
 }
 
+.btn {
+    font-size: 1.4rem;
+}
+
+    .btn:focus {
+        box-shadow: none;
+    }
+
 a, a:hover, a:focus {
     text-decoration: none;
     outline: none;
@@ -239,8 +247,10 @@ a, a:hover, a:focus {
 
             .notify-row > li > a .badge {
                 position: absolute;
-                top: -10px;
+                top: -1.6rem;
+                left: 3.2rem;
                 z-index: 1;
+                opacity: 0.8;
             }
 
     .notify-row .dropdown-menu {
@@ -249,7 +259,7 @@ a, a:hover, a:focus {
         min-width: 160px;
         width: 235px;
         border: none;
-        margin-left: -7.4rem;
+        margin-left: -7.2rem;
     }
 
         .notify-row .dropdown-menu .notify-arrow {
