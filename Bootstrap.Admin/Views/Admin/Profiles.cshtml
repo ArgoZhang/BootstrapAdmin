@@ -4,24 +4,36 @@
     Layout = "~/Views/Shared/_Admin.cshtml";
 }
 @section Javascript {
-    <script src="~/js/longbow.dataentity.js"></script>
-    <script src="~/js/fileinput.js"></script>
+    <environment include="Development">
+        <script src="~/js/fileinput.js"></script>
+        <script src="~/js/jquery.validate.js"></script>
+        <script src="~/js/messages_zh.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/fileinput.min.js"></script>
+        <script src="~/js/jquery.validate.min.js"></script>
+        <script src="~/js/messages_zh.min.js"></script>
+    </environment>
     <script src="~/js/fileinput.zh.js"></script>
-    <script src="~/js/jquery.validate.js"></script>
+    <script src="~/js/longbow.dataentity.js"></script>
     <script src="~/js/longbow.validate.js"></script>
-    <script src="~/js/messages_zh.js"></script>
     <script src="~/js/Profiles.js"></script>
     <script src="~/js/theme.js"></script>
 }
 @section css {
+    <environment include="Development">
+        <link href="~/css/fileinput.css" rel="stylesheet" />
+    </environment>
+    <environment exclude="Development">
+        <link href="~/css/fileinput.min.css" rel="stylesheet" />
+    </environment>
     <link href="~/css/tasks.css" rel="stylesheet" />
-    <link href="~/css/fileinput.css" rel="stylesheet" />
 }
-<div class="panel panel-default">
-    <div class="panel-heading">基本资料</div>
-    <div class="panel-body" data-toggle="LgbValidate" data-valid-button="#btnSaveDisplayName">
-        <form class="form-inline" role="form">
-            <div class="row">
+<div class="card">
+    <div class="card-header">基本资料</div>
+    <div class="card-body" data-toggle="LgbValidate" data-valid-button="#btnSaveDisplayName">
+        <form class="form-inline">
+            <div class="form-row">
                 <div class="form-group col-xs-12 col-sm-6">
                     <label class="control-label" for="userName">登陆名称</label>
                     <input type="text" class="form-control ignore" id="userName" name="userName" value="@Model.UserName" readonly />
@@ -33,21 +45,21 @@
             </div>
         </form>
         <div class="modal-footer">
-            <button id="btnSaveDisplayName" data-method="user" class="btn btn-default" type="button" disabled data-admin="@User.IsInRole("Administrators")"><i class="fa fa-save"></i><span>保存</span></button>
+            <button id="btnSaveDisplayName" data-method="user" class="btn btn-secondary" type="button" disabled data-admin="@User.IsInRole("Administrators")"><i class="fa fa-save"></i><span>保存</span></button>
         </div>
     </div>
 </div>
-<div class="panel panel-default">
-    <div class="panel-heading">修改密码</div>
-    <div class="panel-body" data-toggle="LgbValidate" data-valid-button="#btnSavePassword">
-        <form class="form-inline" role="form">
-            <div class="row">
+<div class="card">
+    <div class="card-header">修改密码</div>
+    <div class="card-body" data-toggle="LgbValidate" data-valid-button="#btnSavePassword">
+        <form class="form-inline">
+            <div class="form-row">
                 <div class="form-group col-xs-12">
                     <label class="control-label" for="currentPassword">原密码: </label>
                     <input type="password" class="form-control" id="currentPassword" placeholder="原密码，50字以内" maxlength="50" data-valid="true" />
                 </div>
             </div>
-            <div class="row">
+            <div class="form-row">
                 <div class="form-group col-sm-6 col-xs-12">
                     <label class="control-label" for="newPassword">新密码: </label>
                     <input type="password" class="form-control" id="newPassword" placeholder="新密码，50字以内" maxlength="50" data-valid="true" />
@@ -59,15 +71,15 @@
             </div>
         </form>
         <div class="modal-footer">
-            <button id="btnSavePassword" data-method="password" class="btn btn-default" type="button" disabled data-admin="@User.IsInRole("Administrators")"><i class="fa fa-save"></i><span>保存</span></button>
+            <button id="btnSavePassword" data-method="password" class="btn btn-secondary" type="button" disabled data-admin="@User.IsInRole("Administrators")"><i class="fa fa-save"></i><span>保存</span></button>
         </div>
     </div>
 </div>
-<div class="panel panel-default">
-    <div class="panel-heading">网站皮肤</div>
-    <div class="panel-body">
-        <form class="form-inline" role="form">
-            <div class="row">
+<div class="card">
+    <div class="card-header">网站皮肤</div>
+    <div class="card-body">
+        <form class="form-inline">
+            <div class="form-row">
                 <div class="form-group col-xs-12">
                     <label class="control-label" for="userName">样式</label>
                     <select id="css" class="select form-control">
@@ -88,13 +100,13 @@
             </div>
         </form>
         <div class="modal-footer">
-            <button id="btnSaveCss" data-method="css" class="btn btn-default" type="button" disabled data-admin="@User.IsInRole("Administrators")"><i class="fa fa-save"></i><span>保存</span></button>
+            <button id="btnSaveCss" data-method="css" class="btn btn-secondary" type="button" disabled data-admin="@User.IsInRole("Administrators")"><i class="fa fa-save"></i><span>保存</span></button>
         </div>
     </div>
 </div>
-<div class="panel panel-default">
-    <div class="panel-heading">修改头像</div>
-    <div class="panel-body">
+<div class="card">
+    <div class="card-header">修改头像</div>
+    <div class="card-body">
         <form enctype="multipart/form-data">
             <div class="form-group">
                 <input id="fileIcon" class="file" type="file" data-init="@Model.Size">

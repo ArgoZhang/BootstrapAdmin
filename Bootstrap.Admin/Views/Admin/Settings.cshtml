@@ -4,46 +4,51 @@
     Layout = "~/Views/Shared/_Admin.cshtml";
 }
 @section Javascript {
+    <environment include="Development">
+        <script src="~/js/jquery.validate.js"></script>
+        <script src="~/js/messages_zh.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/jquery.validate.min.js"></script>
+        <script src="~/js/messages_zh.min.js"></script>
+    </environment>
     <script src="~/js/longbow.dataentity.js"></script>
-    <script src="~/js/jquery.validate.js"></script>
     <script src="~/js/longbow.validate.js"></script>
-    <script src="~/js/messages_zh.js"></script>
     <script src="~/js/Settings.js"></script>
 }
 @section css {
     <link href="~/css/tasks.css" rel="stylesheet" />
 }
-<div class="panel panel-default">
-    <div class="panel-heading">系统名称设置</div>
-    <div class="panel-body" data-toggle="LgbValidate" data-valid-button="#sysSave">
+<div class="card">
+    <div class="card-header">系统名称设置</div>
+    <div class="card-body" data-toggle="LgbValidate" data-valid-button="#sysSave">
         <div class="input-group form-group col-xs-12">
             <input type="text" class="form-control" id="sysName" placeholder="请输入网站标题，50字以内" value="@Model.Title" maxlength="50" data-valid="true" />
-            <span class="input-group-btn">
-                <button class="btn btn-default" type="button" data-method="title">保存</button>
-            </span>
+            <div class="input-group-append">
+                <button class="btn btn-secondary" type="button" data-method="title">保存</button>
+            </div>
         </div>
     </div>
 </div>
-<div class="panel panel-default">
-    <div class="panel-heading">页脚设置</div>
-    <div class="panel-body" data-toggle="LgbValidate" data-valid-button="#footSave">
+<div class="card">
+    <div class="card-header">页脚设置</div>
+    <div class="card-body" data-toggle="LgbValidate" data-valid-button="#footSave">
         <div class="input-group form-group col-xs-12">
             <input type="text" class="form-control" id="sysFoot" placeholder="请输入网站页脚，50字以内" value="@Model.Footer" maxlength="50" data-valid="true" />
-            <span class="input-group-btn">
-                <button class="btn btn-default" type="button" data-method="footer">保存</button>
-            </span>
+            <div class="input-group-append">
+                <button class="btn btn-secondary" type="button" data-method="footer">保存</button>
+            </div>
         </div>
     </div>
 </div>
-<div class="panel panel-default">
-    <div class="panel-heading">网站样式</div>
-    <div class="panel-body">
+<div class="card">
+    <div class="card-header">网站样式</div>
+    <div class="card-body">
         <form id="CssDataForm" class="form-inline">
-            <div class="row">
+            <div class="form-row">
                 <div class="form-group col-xs-12">
-                    <label class="control-label">网站样式</label>
                     <div class="dropdown lgbDropdown">
-                        <a id="dictCssDefine" class="btn btn-success" data-toggle="dropdown" data-default-val="">
+                        <a id="dictCssDefine" class="btn btn-success dropdown-toggle" data-toggle="dropdown" data-default-val="">
                             <span>默认样式</span>
                             <span class="caret"></span>
                         </a>
@@ -51,15 +56,15 @@
                             <li><a href="#" data-val="">默认样式</a></li>
                         </ul>
                     </div>
-                    <button class="btn btn-default pull-right" type="button" data-method="css">保存</button>
+                    <button class="btn btn-secondary" type="button" data-method="css">保存</button>
                 </div>
             </div>
         </form>
     </div>
 </div>
-<div class="panel panel-default">
-    <div class="panel-heading">网站缓存<a data-method="clear" href="#" class="clearcache fa fa-times-circle-o" data-admin="@User.IsInRole("Administrators")" title="全部清除" role="tooltip" data-placement="left"></a><a data-method="refresh" href="#" class="pull-right fa fa-refresh" title="点击刷新" role="tooltip"></a></div>
-    <div class="panel-body">
+<div class="card">
+    <div class="card-header">网站缓存<a data-method="clear" href="#" class="clearcache fa fa-times-circle-o" data-admin="@User.IsInRole("Administrators")" title="全部清除" role="tooltip" data-placement="left"></a><a data-method="refresh" href="#" class="pull-right fa fa-refresh" title="点击刷新" role="tooltip"></a></div>
+    <div class="card-body">
         <div class="tasks-widget">
             <ul id="sortable" class="task-list ui-sortable"></ul>
         </div>

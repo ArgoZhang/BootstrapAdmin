@@ -12,8 +12,8 @@
     <script src="~/js/Menus.js"></script>
 }
 @section query {
-    <form class="form-inline" role="form">
-        <div class="row">
+    <form class="form-inline">
+        <div class="form-row">
             <div class="form-group col-sm-12 col-md-6 col-lg-5">
                 <label class="control-label" for="txt_menus_name">菜单名称</label>
                 <input type="text" class="form-control" id="txt_menus_name" />
@@ -76,16 +76,16 @@
         <h4 class="modal-title" id="myModalLabel">菜单编辑窗口</h4>
     </div>
     <div class="modal-body">
-        <form class="form-inline" id="dataForm" role="form">
-            <div class="row">
+        <form class="form-inline" id="dataForm">
+            <div class="form-row">
                 <div class="form-group col-sm-6">
                     <input type="text" class="form-control hidden" id="menuID" name="menuID" data-default-val="0" />
                     <label class="control-label" for="name">菜单名称</label>
                     <div class="input-group">
                         <input type="text" class="form-control" id="name" name="name" placeholder="不可为空，50字以内" maxlength="50" data-valid="true" />
                         <span class="input-group-btn">
-                            <button data-method="clear" class="btn btn-default" type="button"><i class="fa fa-remove"></i></button>
-                            <button data-method="sel" class="btn btn-default" type="button"><i class="fa fa-edit"></i>全选</button>
+                            <button data-method="clear" class="btn btn-secondary" type="button"><i class="fa fa-remove"></i></button>
+                            <button data-method="sel" class="btn btn-secondary" type="button"><i class="fa fa-edit"></i>全选</button>
                         </span>
                     </div>
                 </div>
@@ -95,8 +95,8 @@
                     <div class="input-group">
                         <input type="text" class="form-control" readonly id="parentName" name="parentName" placeholder="请选择...(可为空)，50字以内" maxlength="50" />
                         <span class="input-group-btn">
-                            <button data-method="clear" class="btn btn-default" type="button"><i class="fa fa-remove"></i></button>
-                            <button id="btnMenuParent" class="btn btn-default" type="button"><i class="fa fa-hand-o-up"></i>选择</button>
+                            <button data-method="clear" class="btn btn-secondary" type="button"><i class="fa fa-remove"></i></button>
+                            <button id="btnMenuParent" class="btn btn-secondary" type="button"><i class="fa fa-hand-o-up"></i>选择</button>
                         </span>
                     </div>
                 </div>
@@ -105,8 +105,8 @@
                     <div class="input-group">
                         <input type="text" class="form-control digits" id="order" name="order" data-default-val="10" placeholder="默认为10" maxlength="8" data-valid="true" />
                         <span class="input-group-btn">
-                            <button data-method="clear" class="btn btn-default" type="button"><i class="fa fa-remove"></i></button>
-                            <button id="btnMenuOrder" class="btn btn-default" type="button"><i class="fa fa-list-ol"></i>调整</button>
+                            <button data-method="clear" class="btn btn-secondary" type="button"><i class="fa fa-remove"></i></button>
+                            <button id="btnMenuOrder" class="btn btn-secondary" type="button"><i class="fa fa-list-ol"></i>调整</button>
                         </span>
                     </div>
                 </div>
@@ -115,8 +115,8 @@
                     <div class="input-group">
                         <input type="text" class="form-control" readonly id="icon" data-default-val="fa fa-fa" placeholder="请选择...(可为空)，50字以内" maxlength="50" />
                         <span class="input-group-btn">
-                            <button data-method="clear" class="btn btn-default" type="button"><i class="fa fa-remove"></i></button>
-                            <button id="btnIcon" class="btn btn-default" type="button"><i class="fa fa-dashboard"></i>选择</button>
+                            <button data-method="clear" class="btn btn-secondary" type="button"><i class="fa fa-remove"></i></button>
+                            <button id="btnIcon" class="btn btn-secondary" type="button"><i class="fa fa-dashboard"></i>选择</button>
                         </span>
                     </div>
                 </div>
@@ -196,7 +196,7 @@
         </div>
         <div class="modal-footer">
             <span>被选择的图标</span><i id="pickIcon"></i>
-            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
             <button type="button" class="btn btn-primary" id="btnSubmitIcon">保存</button>
         </div>
     </div>
