@@ -25,6 +25,7 @@ a, a:hover, a:focus {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.176);
     padding: 0;
     font-size: 1.4rem;
+    margin-top: 1rem;
 }
 
     .dropdown-menu > li > a {
@@ -92,7 +93,6 @@ a, a:hover, a:focus {
 
         .header > .dropdown .dropdown-menu {
             width: 268px;
-            margin-top: 1rem;
         }
 
             .header > .dropdown .dropdown-menu li {
@@ -247,10 +247,9 @@ a, a:hover, a:focus {
         float: left;
         max-width: 300px;
         min-width: 160px;
-        top: 32px;
-        left: -74px;
         width: 235px;
         border: none;
+        margin-left: -7.4rem;
     }
 
         .notify-row .dropdown-menu .notify-arrow {
@@ -301,14 +300,14 @@ a, a:hover, a:focus {
 
         .notify-row .dropdown-menu li:last-child a {
             border-bottom: 0;
-            border-radius: 0 0 4px 4px;
         }
 
         .notify-row .dropdown-menu li a {
-            border-bottom: 1px solid #EBEBEB;
+            border-bottom: 0.1rem solid #EBEBEB;
             font-size: 1.2rem;
             list-style: none;
-            padding: 15px 10px;
+            padding: 1.5rem 1rem;
+            display: block;
         }
 
             .notify-row .dropdown-menu li a:hover {
@@ -319,14 +318,13 @@ a, a:hover, a:focus {
             color: #fff;
             margin: 0;
             padding: 10px;
-            border-radius: 4px 4px 0px 0px;
-            -webkit-border-radius: 4px 4px 0px 0px;
+            border-radius: 0.4rem 0.4rem 0 0;
         }
 
         .notify-row .dropdown-menu .content {
             position: absolute;
-            left: 36px;
-            right: 44px;
+            left: 3.6rem;
+            right: 4.4rem;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -334,19 +332,18 @@ a, a:hover, a:focus {
         }
 
         .notify-row .dropdown-menu .label {
-            display: inline-block;
             height: 18px;
             width: 20px;
-            padding: 5px;
-            margin-right: 5px;
+            padding: 0.5rem;
+            margin-right: 0.5rem;
         }
 
         .notify-row .dropdown-menu .small {
             font-style: italic;
             font-weight: bold;
             float: right;
-            padding-top: 2px;
             font-size: 1rem;
+            line-height: 1.8rem;
         }
 
         .notify-row .dropdown-menu.tasks-bar .desc {
