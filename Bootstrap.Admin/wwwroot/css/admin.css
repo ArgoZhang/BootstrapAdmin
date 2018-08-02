@@ -57,7 +57,7 @@
     }
 
 
-.modal-dialog .modal-body, .panel-body {
+.modal-dialog .modal-body, .card-body {
     padding-bottom: 0;
 }
 
@@ -220,7 +220,6 @@ aside {
             color: #aeb2b7;
             display: block;
             padding: 15px 10px;
-            font-size: 1.2rem;
             transition: all 0.3s ease;
             border-radius: 4px;
         }
@@ -235,7 +234,6 @@ aside {
                 }
 
             .sidebar-menu li a i {
-                font-size: 1.5rem;
                 width: 22px;
             }
 
@@ -498,5 +496,5 @@ input[type="datetime"] {
 }
 
 .barTable {
-    padding: 5px 15px 15px 15px;
+    padding: 5px 15px 0px 15px;
 }
