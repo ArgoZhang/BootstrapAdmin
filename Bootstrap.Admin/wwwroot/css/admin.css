@@ -51,6 +51,7 @@
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
+        justify-content: flex-start;
     }
 
 
@@ -61,10 +62,6 @@
     .modal-dialog .modal-body .form-inline .form-group input[type="text"], .modal-dialog .modal-body .form-inline .form-group input[type="password"] {
         padding-right: 30px;
     }
-
-.btn:focus, .btn:active:focus {
-    outline: none;
-}
 
 .btn span:last-child {
     margin-left: 4px;
@@ -91,10 +88,6 @@
     padding: 10px 15px;
 }
 
-    .modal-header .close {
-        margin-top: 1px;
-    }
-
 .modal-body .checkbox, .modal-body .radio {
     min-width: 190px;
     overflow: hidden;
@@ -117,8 +110,8 @@
     background-position: right 8px center;
 }
 
-.has-error .input-group-btn button, .has-error .input-group-btn button:active:focus {
-    border-color: #a94442;
+.has-error .form-control, .has-error .input-group-btn button, .has-error .input-group-btn button:active:focus {
+    border-color: #dc3545;
 }
 
 .has-success input {
@@ -137,8 +130,8 @@
     background-image: url(../img/loading-sm.gif);
 }
 
-.has-success .input-group-btn button, .has-success .input-group-btn button:active:focus {
-    border-color: #3c763d;
+.has-success .form-control, .has-success .input-group-btn button, .has-success .input-group-btn button:active:focus {
+    border-color: #28a745;
 }
 
 .main-content {

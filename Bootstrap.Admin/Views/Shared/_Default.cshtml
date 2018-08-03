@@ -29,7 +29,7 @@
 }
 @section modal {
     <div class="modal fade" id="dialogNew" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content" data-toggle="LgbValidate" data-valid-button="#btnSubmit">
                 @RenderSection("modal", false)
                 <div class="modal-footer">
@@ -51,7 +51,7 @@
         @RenderSection("query", false)
     </div>
 </div>
-<div id="toolbar" class="btn-group hidden">
+<div id="toolbar" class="btn-group d-none">
     <button id="btn_add" type="button" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i><span class="hidden-tb">新增</span></button>
     <button id="btn_delete" type="button" class="btn btn-danger"><i class="fa fa-remove" aria-hidden="true"></i><span class="hidden-tb">删除</span></button>
     <button id="btn_edit" type="button" class="btn btn-primary"><i class="fa fa-pencil" aria-hidden="true"></i><span class="hidden-tb">编辑</span></button>

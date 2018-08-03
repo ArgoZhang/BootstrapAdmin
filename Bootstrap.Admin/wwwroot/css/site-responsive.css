@@ -4,6 +4,13 @@
     }
 }
 
+@media(min-width: 576px) {
+    .form-inline label {
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+}
+
 @media (min-width: 736px) {
     .sidebar-toggle-box span {
         display: inline;

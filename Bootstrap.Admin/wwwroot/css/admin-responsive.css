@@ -59,6 +59,14 @@
     }
 }
 
+@media (max-width: 939px) {
+    .modal-dialog {
+        max-width: calc(90%);
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
 @media (min-width: 940px) {
     .hidden-tb {
         display: inline;
@@ -66,6 +74,7 @@
 
     .modal-dialog {
         width: 900px;
+        max-width: 900px;
     }
 
     .form-group .form-control-url {
@@ -81,7 +90,7 @@
 
 @media (min-height: 568px) {
     .modal .modal-body {
-        max-height: 350px;
+        max-height: 380px;
     }
 }
 

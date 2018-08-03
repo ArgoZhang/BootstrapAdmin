@@ -16,8 +16,8 @@ ul li {
     list-style: none;
 }
 
-.btn:focus {
-    box-shadow: none;
+.btn {
+    font-size: 0.875rem;
 }
 
 .form-control {
@@ -477,8 +477,9 @@ a, a:hover, a:focus {
     background-color: #a94442;
 }
 
-.tooltip.has-error .arrow {
+.tooltip.has-error .arrow:before {
     border-top-color: #a94442;
+    border-bottom-color: #a94442;
 }
 
 .file-drop-zone.clickable:hover {
@@ -488,4 +489,12 @@ a, a:hover, a:focus {
 /*bs v4.1.3*/
 .card {
     margin-bottom: 15px;
+}
+
+label.dropdown-item:first-child {
+    margin-top: 0.5rem;
+}
+
+.fixed-table-toolbar .bs-bars, .fixed-table-toolbar .search, .fixed-table-toolbar .columns {
+    line-height: normal;
 }
