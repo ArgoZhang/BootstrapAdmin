@@ -15,7 +15,7 @@
                         return $.format(htmlNewUsers, noti.UserName, noti.Description, noti.RegisterTime, noti.Id, noti.DisplayName);
                     }).join('');
                     $taskUsers.append(content);
-                    $('#tasks-users').find('[role="tooltip"]').lgbTooltip();
+                    $('#tasks-users').find('[role="tooltip"]').tooltip();
                 }
                 $btnRefreshUser.toggleClass('fa-spin');
             }
@@ -23,7 +23,7 @@
     }
     listData();
 
-    $btnRefreshUser.lgbTooltip().on('click', function () {
+    $btnRefreshUser.tooltip().on('click', function () {
         listData();
     });
 

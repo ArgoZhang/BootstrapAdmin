@@ -29,7 +29,7 @@
 
     .tasks-widget .task-list > li {
         position: relative;
-        font-size: 12px;
+        font-size: 0.75rem;
     }
 
     .tasks-widget .task-list li.last-line {
@@ -69,12 +69,8 @@
         .tasks-widget .task-list li > .task-title .badge {
             position: relative;
             display: inline-block;
-            top: -19px;
+            top: -16px;
             left: -12px;
-        }
-
-        .tasks-widget .task-list li > .task-title .label-success {
-            background-color: #5cb85c;
         }
 
         .tasks-widget .task-list li > .task-title .hidden-phone {

@@ -74,7 +74,7 @@
                     var element = document.getElementById(name);
                     var $element = $(element);
                     that.tooltip.call(that, element, false);
-                    $element.lgbTooltip('show');
+                    $element.tooltip('show');
                 }
             },
             defaultMessage: function (element, rule) {
@@ -87,7 +87,7 @@
             settings: $.validator.defaults
         }, this.defaults(), options)
         this.$element.on('input.lgb.validate', this.options.childClass, function () {
-            if (!that.validElement(this)) $(this).lgbTooltip('show');
+            if (!that.validElement(this)) $(this).tooltip('show');
         }).on('inserted.bs.tooltip', this.options.childClass, function () {
             $('#' + $(this).attr('aria-describedby')).addClass(that.options.errorClass);
         });
@@ -124,7 +124,7 @@
         var css = this.options.validClass + ' ' + this.options.errorClass;
         this.$element.find(this.options.childClass).each(function () {
             var $this = $(this);
-            $this.lgbTooltip('dispose');
+            $this.tooltip('dispose');
             $this.parent().removeClass(css);
         });
     };
@@ -154,9 +154,9 @@
         var $this = $(element);
         var $parent = $this.parent();
         try {
-            if (valid) $this.lgbTooltip('dispose');
+            if (valid) $this.tooltip('dispose');
             else {
-                if (!$parent.hasClass('has-error')) $this.lgbTooltip({ container: $(window).width() > 768 ? op.container : (this.$element.find('.modal-body') || this.$element.find('.panel-body') || op.container) });
+                if (!$parent.hasClass('has-error')) $this.tooltip();
             }
         }
         catch (e) {

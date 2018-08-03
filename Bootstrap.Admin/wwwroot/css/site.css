@@ -502,3 +502,7 @@ label.dropdown-item:first-child {
 .form-inline .form-row, .form-inline .row {
     width: 100%;
 }
+
+.btn-xs {
+    padding: 1px 5px;
+}

@@ -325,16 +325,6 @@
             var op = $.extend({ header: "header", content: ".main-content" }, options);
             return ($(op.header).outerHeight() + $(op.content).outerHeight() + this.outerHeight() > $(window).height()) ? this.removeClass('fixed') : this.addClass('fixed');
         },
-        lgbTooltip: function (options) {
-            if (/show|hide|dispose/.test(options)) {
-                this.tooltip(options);
-                if (options === 'dispose') this.removeAttr('data-original-title');
-            }
-            else {
-                this.tooltip($.extend({ delay: { "show": 100, "hide": 100 } }, options));
-            }
-            return this;
-        },
         lgbPopover: function (options) {
             if (/show|hide|dispose/.test(options)) {
                 this.popover(options);
@@ -369,13 +359,13 @@
                     $(element).parents('.form-group').addClass(errorClass).removeClass(validClass);
                 },
                 unhighlight: function (element, errorClass, validClass) {
-                    $(element).lgbTooltip('dispose').parents('.form-group').removeClass(errorClass).addClass(validClass);
+                    $(element).tooltip('dispose').parents('.form-group').removeClass(errorClass).addClass(validClass);
                 },
                 errorPlacement: function (label, element) {
                     var $ele = $(element);
-                    if (!$ele.attr('data-original-title')) $ele.lgbTooltip({ container: parent });
+                    if (!$ele.attr('data-original-title')) $ele.tooltip({ container: parent });
                     $ele.attr('data-original-title', $(label).text());
-                    $ele.lgbTooltip('show');
+                    $ele.tooltip('show');
                     $('#' + $ele.attr('aria-describedby')).addClass(this.settings.errorClass);
                 }
             });
