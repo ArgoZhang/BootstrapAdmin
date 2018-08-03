@@ -13,6 +13,12 @@
         }
 }
 
+@media (min-width: 576px) {
+    .form-group .form-control-url {
+        width: calc(100% - 90px);
+    }
+}
+
 @media (min-width: 568px) {
     .toolbar {
         display: none;
@@ -29,10 +35,6 @@
         bottom: 40px;
         position: absolute;
         overflow: auto;
-    }
-
-    .form-group .form-control-url {
-        width: calc(100% - 90px);
     }
 }
 
