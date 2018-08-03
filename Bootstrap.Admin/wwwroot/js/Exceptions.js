@@ -35,7 +35,8 @@
         minView: 2,
         forceParse: 0,
         format: 'yyyy-mm-dd',
-        pickerPosition: 'bottom-left'
+        pickerPosition: 'bottom-left',
+        fontAwesome: true
     });
 
     $('#btn_view').on('click', function (row) {
