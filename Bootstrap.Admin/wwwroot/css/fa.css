@@ -57,13 +57,13 @@
                     padding-left: 10px;
                 }
 
-.form-group .input-group .input-group-btn .btn i {
+.form-group .input-group .input-group-append .btn i {
     color: #187c9a;
     width: 22px;
     text-align: left;
 }
 
-    .form-group .input-group .input-group-btn .btn i.fa-remove {
+    .form-group .input-group .input-group-append .btn i.fa-remove {
         width: auto;
     }
 
@@ -75,6 +75,7 @@
     right: 15px;
     z-index: 1051;
     display: none;
+    width: auto;
 }
 
     .icon-content .fa-nav {

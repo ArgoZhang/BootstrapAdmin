@@ -120,7 +120,7 @@
                 contentType: 'application/json',
                 dataType: 'json',
                 method: "post",
-                htmlTemplate: '<div class="form-group checkbox col-md-3 col-sm-4 col-xs-6"><label role="tooltip" title="{3}"><input type="checkbox" value="{0}" {2}/>{1}</label></div>',
+                htmlTemplate: '<div class="form-group checkbox col-md-3 col-sm-4 col-6"><label role="tooltip" title="{3}"><input type="checkbox" value="{0}" {2}/>{1}</label></div>',
                 title: "",
                 swal: true,
                 modal: null,
@@ -437,20 +437,6 @@
             }
         }
     });
-
-    //fix bug
-    $.fn.modal.Constructor.prototype.adjustDialog = function () {
-        var modalIsOverflowing = this.$element[0].scrollHeight > document.documentElement.clientHeight;
-
-        this.$element.css({
-            paddingLeft: !this.bodyIsOverflowing && modalIsOverflowing ? this.scrollbarWidth : '',
-            paddingRight: this.bodyIsOverflowing && !modalIsOverflowing ? this.scrollbarWidth : ''
-        });
-
-        // added by Argo
-        var $modal_dialog = $(this.$element[0]).find('.modal-dialog');
-        $modal_dialog.adjustDialog();
-    };
 })(jQuery);
 
 $(function () {
