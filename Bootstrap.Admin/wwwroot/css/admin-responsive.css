@@ -63,11 +63,6 @@
     .hidden-tb {
         display: inline;
     }
-
-    .modal-dialog {
-        width: 900px;
-        max-width: 900px;
-    }
 }
 
 @media (min-height: 414px) {
