@@ -191,7 +191,7 @@
         $dialogMenu.modal('show');
     });
 
-    $dialogMenu.on('hidden.bs.modal', function () { $dialogNew.show().find('.modal-dialog').adjustDialog(); });
+    $dialogMenu.on('hidden.bs.modal', function () { $dialogNew.show(); });
 
     $btnSubmitMenu.on('click', function () {
         $nestMenu.find('li span').removeClass('active');

@@ -63,16 +63,6 @@
     margin-left: 4px;
 }
 
-.modal .modal-body {
-    max-height: 164px;
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
-}
-
-.modal.file-zoom-dialog .modal-dialog {
-    max-width: none;
-}
-
 .modal-header {
     background-color: #f5f5f5;
     border-top-left-radius: 6px;
