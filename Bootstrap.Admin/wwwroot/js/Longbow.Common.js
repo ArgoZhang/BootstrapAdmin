@@ -325,17 +325,6 @@
             var op = $.extend({ header: "header", content: ".main-content" }, options);
             return ($(op.header).outerHeight() + $(op.content).outerHeight() + this.outerHeight() > $(window).height()) ? this.removeClass('fixed') : this.addClass('fixed');
         },
-        lgbPopover: function (options) {
-            if (/show|hide|dispose/.test(options)) {
-                this.popover(options);
-                if (options === 'dispose') this.removeAttr('data-original-title');
-            }
-            else {
-                this.popover($.extend({ placement: 'auto' }, options));
-                this.on('click', function (e) { e.preventDefault(); });
-            }
-            return this;
-        },
         autoValidate: function (rules, messages, handler) {
             var parent = 'body';
             var $wrapper = $('#dialogNew');
