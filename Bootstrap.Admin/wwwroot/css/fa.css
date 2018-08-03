@@ -11,6 +11,17 @@
     display: block;
 }
 
+.modal-body .iconview {
+    height: calc(100%);
+}
+
+.iconview {
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+    padding-right: 15px;
+}
+
 .fa-nav {
     display: none;
 }
@@ -25,37 +36,39 @@
         font-weight: 300;
     }
 
-    .fa-nav ul {
+    .fa-nav nav {
         top: 44px;
         bottom: 0;
         position: absolute;
         overflow-y: auto;
     }
 
-        .fa-nav ul li {
-            margin-bottom: 3px;
+        .fa-nav nav a {
+            color: #999797;
+            border-left: 4px solid #d3d7dd;
+            padding-left: 10px;
+            padding-top: 3px;
+            padding-bottom: 3px;
+            padding-right: 3px;
+            display: block;
+            margin-top: 1px;
         }
 
-            .fa-nav ul li.active a {
+            .fa-nav nav a:last-child {
+                margin-bottom: 5px;
+            }
+
+            .fa-nav nav a.active {
                 color: #7a7a7a;
                 border-left: 4px solid #5bc0de;
                 padding-left: 10px;
             }
 
-            .fa-nav ul li a {
+            .fa-nav nav a:hover {
                 color: #999797;
-                border-left: 4px solid #d3d7dd;
+                border-left: 4px solid #d9534f;
                 padding-left: 10px;
-                padding-top: 3px;
-                padding-bottom: 3px;
-                display: block;
             }
-
-                .fa-nav ul li a:hover {
-                    color: #999797;
-                    border-left: 4px solid #d9534f;
-                    padding-left: 10px;
-                }
 
 .form-group .input-group .input-group-append .btn i {
     color: #187c9a;
@@ -79,24 +92,24 @@
 }
 
     .icon-content .fa-nav {
-        right: 46px;
-        top: 86px;
-        bottom: 100px;
+        right: 33px;
+        top: 68px;
+        bottom: 84px;
     }
 
     .icon-content .modal-body {
         position: absolute;
         left: 0;
         right: 0;
-        top: 46px;
-        bottom: 65px;
-        overflow: auto;
+        top: 51px;
+        bottom: 68px;
         -webkit-overflow-scrolling: touch;
+        padding: 0 0 0 15px;
     }
 
         .icon-content .modal-body .loadIconView {
             text-align: center;
-            font-size: 16px;
+            font-size: 1rem;
         }
 
             .icon-content .modal-body .loadIconView span {
@@ -136,18 +149,6 @@
     .icon-content .dd {
         max-width: 100%;
         margin-bottom: 20px;
-    }
-
-.modal .modal-dialog .icon-content {
-    position: static;
-}
-
-    .modal .modal-dialog .icon-content .modal-body {
-        position: static;
-    }
-
-    .modal .modal-dialog .icon-content .modal-footer {
-        position: static;
     }
 
 .fontawesome-icon-list .fa-hover a {
@@ -255,13 +256,17 @@
     .fa-nav {
         display: block;
         position: fixed;
-        top: 130px;
-        right: 32px;
+        top: 98px;
+        right: 17px;
         width: 140px;
-        bottom: 70px;
+        bottom: 40px;
     }
 
     .fa-icons {
-        margin-right: 160px;
+        margin-right: 120px;
+    }
+
+    .modal-body .fa-icons {
+        margin-right: 148px;
     }
 }

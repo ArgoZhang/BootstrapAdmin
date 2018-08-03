@@ -77,14 +77,10 @@
     text-overflow: ellipsis;
 }
 
-.modal-footer {
-    clear: both;
+.modal-footer .btn {
+    padding-left: 22px;
+    padding-right: 22px;
 }
-
-    .modal-footer .btn {
-        padding-left: 22px;
-        padding-right: 22px;
-    }
 
 .has-error input {
     background-repeat: no-repeat;

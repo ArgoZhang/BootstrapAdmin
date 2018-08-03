@@ -253,6 +253,9 @@
                 });
                 $iconList.find('ul li').addClass('col-xl-2 col-md-3 col-sm-4 col-6');
                 $iconList.find('div').addClass('col-xl-2 col-6');
+                $('[data-spy="scroll"]').each(function () {
+                    $(this).scrollspy({ target: $(this).attr('data-target') });
+                });
             }
         }
     });
