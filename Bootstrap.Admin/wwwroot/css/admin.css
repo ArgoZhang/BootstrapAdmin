@@ -1,11 +1,7 @@
-﻿.lgbDropdown {
-    display: inline-block;
+﻿.lgbDropdown .dropdown-menu > li > a:hover {
+    background: #007AC0;
+    color: #fff;
 }
-
-    .lgbDropdown .dropdown-menu > li > a:hover {
-        background: #007AC0;
-        color: #fff;
-    }
 
 .logTs, .logSql, .logDbExcep {
     color: red;

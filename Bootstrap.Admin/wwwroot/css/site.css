@@ -498,3 +498,7 @@ label.dropdown-item:first-child {
 .fixed-table-toolbar .bs-bars, .fixed-table-toolbar .search, .fixed-table-toolbar .columns {
     line-height: normal;
 }
+
+.form-inline .form-row, .form-inline .row {
+    width: 100%;
+}

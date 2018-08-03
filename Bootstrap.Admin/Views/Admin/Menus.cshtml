@@ -22,13 +22,12 @@
                 <label class="control-label" for="txt_parent_menus_name">父级菜单</label>
                 <input type="text" class="form-control" id="txt_parent_menus_name" />
             </div>
-            <div class="form-group col-sm-6 col-md-6 col-lg-5">
+            <div class="form-group col-6 col-lg-5">
                 <label class="control-label" for="sel_menus_category">菜单类别</label>
-                <div class="dropdown lgbDropdown">
-                    <a id="sel_menus_category" class="btn btn-success" data-toggle="dropdown">
-                        <span>全部</span>
-                        <span class="caret"></span>
-                    </a>
+                <div class="lgbDropdown">
+                    <button id="sel_menus_category" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                        全部
+                    </button>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="#" data-val="">全部</a></li>
                         <li class="divider"></li>
@@ -37,13 +36,12 @@
                     </ul>
                 </div>
             </div>
-            <div class="form-group col-sm-6 col-md-6 col-lg-5">
+            <div class="form-group col-6 col-lg-5">
                 <label class="control-label" for="sel_menus_category">菜单类型</label>
-                <div class="dropdown lgbDropdown">
-                    <a id="sel_menus_res" class="btn btn-success" data-toggle="dropdown">
-                        <span>全部</span>
-                        <span class="caret"></span>
-                    </a>
+                <div class="lgbDropdown">
+                    <button id="sel_menus_res" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                        全部
+                    </button>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="#" data-val="">全部</a></li>
                         <li class="divider"></li>
@@ -81,7 +79,7 @@
         <form class="form-inline" id="dataForm">
             <div class="form-row">
                 <div class="form-group col-sm-6">
-                    <input type="text" class="form-control hidden" id="menuID" name="menuID" data-default-val="0" />
+                    <input type="text" class="form-control d-none" id="menuID" name="menuID" data-default-val="0" />
                     <label class="control-label" for="name">菜单名称</label>
                     <div class="input-group">
                         <input type="text" class="form-control" id="name" name="name" placeholder="不可为空，50字以内" maxlength="50" data-valid="true" />
@@ -92,7 +90,7 @@
                     </div>
                 </div>
                 <div class="form-group col-sm-6">
-                    <input type="text" class="form-control hidden" id="parentId" data-default-val="0" />
+                    <input type="text" class="form-control d-none" id="parentId" data-default-val="0" />
                     <label class="control-label" for="parentName">父级菜单</label>
                     <div class="input-group">
                         <input type="text" class="form-control" readonly id="parentName" name="parentName" placeholder="请选择...(可为空)，50字以内" maxlength="50" />
@@ -122,16 +120,15 @@
                         </span>
                     </div>
                 </div>
-                <div class="form-group col-xs-12">
+                <div class="form-group col-12">
                     <label class="control-label" for="url">路径</label>
                     <input type="text" class="form-control form-control-url" id="url" placeholder="不可为空，4000字以内" maxlength="4000" data-valid="true" />
                 </div>
                 <div class="form-group col-sm-6 col-xs-12">
                     <label class="control-label" for="category">菜单类别</label>
-                    <div class="dropdown lgbDropdown dropup">
+                    <div class="dropdown lgbDropdown dropdown-toggle">
                         <a id="category" class="btn btn-success" data-toggle="dropdown" data-default-val="1">
                             <span>外部菜单</span>
-                            <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="#" data-val="0">系统菜单</a></li>

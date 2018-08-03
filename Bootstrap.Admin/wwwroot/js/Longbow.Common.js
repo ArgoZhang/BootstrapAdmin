@@ -410,7 +410,7 @@
             }, options);
             settings.url = $.formatUrl(settings.url);
             this.bootstrapTable(settings);
-            $(settings.toolbar).removeClass('hidden').find('.toolbar').on('click', 'a', function (e) {
+            $(settings.toolbar).removeClass('d-none').find('.toolbar').on('click', 'a', function (e) {
                 e.preventDefault();
                 $('#' + $(this).attr('id').replace('tb_', 'btn_')).trigger("click");
             }).insertBefore(this.parents('.bootstrap-table').find('.fixed-table-toolbar > .bs-bars'));
@@ -431,7 +431,7 @@
                     $(this).on('click', '.dropdown-menu a', { $parent: $(this) }, function (event) {
                         event.preventDefault();
                         var $op = $(this);
-                        event.data.$parent.children('button').attr('data-val', $op.attr('data-val')).children(':first').text($op.text());
+                        event.data.$parent.children('button').attr('data-val', $op.attr('data-val')).text($op.text());
                     });
                 });
             }
