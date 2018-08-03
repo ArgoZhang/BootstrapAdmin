@@ -21,6 +21,8 @@
         $nestMenuInput.children('.checkbox').hide();
     }
 
+    var state = [];
+
     var bsa = new BootstrapAdmin({
         url: Menu.url,
         dataEntity: new DataEntity({
@@ -177,8 +179,7 @@
             $nestMenu.find('ol.dd-list:first').append($.format('<li class="dd-item dd3-item" data-id="0" data-order="10" data-category="{1}"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><label><span>{0}</span></label></div></li>', menuName, menuCate));
         }
         $nestMenu.find('li[data-id="' + did + '"] > div.dd3-content span').addClass('active');
-        $dialogNew.hide();
-        $dialogMenu.modal('show');
+        showDialog();
     });
 
     // 选择父节点按钮
@@ -187,11 +188,21 @@
         $nestMenuInput.find('label:last').find('input').show();
         $nestMenu.find('li.dd-item').hide().remove('[data-id="0"]');
         $nestMenu.find('li[data-category="' + $category.val() + '"]').show();
-        $dialogNew.hide();
-        $dialogMenu.modal('show');
+        showDialog();
     });
 
-    $dialogMenu.on('hidden.bs.modal', function () { $dialogNew.show(); });
+    function showDialog() {
+        state.push({ css: $('body').attr("class"), style: $('body').attr("style") });
+        $dialogNew.hide();
+        $dialogMenu.modal('show');
+    };
+
+    $dialogMenu.on('hidden.bs.modal', function () {
+        var sta = state.pop();
+        $('body').attr('class', sta.css);
+        $('body').attr('style', sta.style);
+        $dialogNew.show();
+    });
 
     $btnSubmitMenu.on('click', function () {
         $nestMenu.find('li span').removeClass('active');
@@ -243,15 +254,6 @@
                 $iconList.find('ul li').addClass('col-md-3 col-sm-4 col-xs-6');
                 $iconList.find('div').addClass('col-xs-6');
             }
-        }
-    });
-
-    $(window).on('resize.bs.modal', function () {
-        if ($dialogMenu.is(':visible') && ($(window).width() >= 768 || $(window).height() >= 672)) {
-            $dialogMenu.adjustDialog();
-        }
-        else {
-            $dialogMenu.css({ margin: "0" });
         }
     });
 });
