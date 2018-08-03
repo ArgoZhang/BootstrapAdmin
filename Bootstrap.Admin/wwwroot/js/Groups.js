@@ -27,7 +27,7 @@
                                 return $.format(htmlTemplate, element.Id, element.RoleName, element.Checked, element.Description);
                             }).join('')
                             $dialogRoleHeader.text($.format('{0}-角色授权窗口', row.GroupName));
-                            $dialogRoleForm.html(html).find('[role="tooltip"]').each(function (index, label) {
+                            $dialogRoleForm.html(html).find('[data-toggle="tooltip"]').each(function (index, label) {
                                 if (label.title == "") label.title = "未设置";
                             }).tooltip();
                             $dialogRole.modal('show');
@@ -45,7 +45,7 @@
                                 return $.format(htmlTemplate, element.Id, element.DisplayName, element.Checked, element.UserName);
                             }).join('');
                             $dialogUserHeader.text($.format('{0}-用户授权窗口', row.GroupName));
-                            $dialogUserForm.html(html).find('[role="tooltip"]').each(function (index, label) {
+                            $dialogUserForm.html(html).find('[data-toggle="tooltip"]').each(function (index, label) {
                                 if (label.title == "") label.title = "未设置";
                             }).tooltip();
                             $dialogUser.modal('show');
@@ -79,9 +79,9 @@
         sortName: 'GroupName',
         queryParams: function (params) { return $.extend(params, { groupName: $("#txt_search_name").val(), description: $("#txt_group_desc").val() }); },           //传递参数（*）
         columns: [{ checkbox: true },
-            { title: "编辑", field: "Id", events: bsa.idEvents(), formatter: BootstrapAdmin.idFormatter },
-            { title: "部门名称", field: "GroupName", sortable: true },
-            { title: "部门描述", field: "Description", sortable: false }
+        { title: "编辑", field: "Id", events: bsa.idEvents(), formatter: BootstrapAdmin.idFormatter },
+        { title: "部门名称", field: "GroupName", sortable: true },
+        { title: "部门描述", field: "Description", sortable: false }
         ]
     });
 });

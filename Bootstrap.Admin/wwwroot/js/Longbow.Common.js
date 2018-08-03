@@ -120,7 +120,7 @@
                 contentType: 'application/json',
                 dataType: 'json',
                 method: "post",
-                htmlTemplate: '<div class="form-group checkbox col-md-3 col-sm-4 col-6"><label role="tooltip" title="{3}"><input type="checkbox" value="{0}" {2}/>{1}</label></div>',
+                htmlTemplate: '<div class="form-group col-md-3 col-sm-4 col-6"><div class="form-check"><label class="form-check-label" title="{3}" data-toggle="tooltip"><input type="checkbox" class="form-check-input" value="{0}" {2}/>{1}</label></div></div>',
                 title: "",
                 swal: true,
                 modal: null,

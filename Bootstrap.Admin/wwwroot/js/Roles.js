@@ -33,7 +33,7 @@
                                 return $.format(htmlTemplate, element.Id, element.DisplayName, element.Checked, element.UserName);
                             }).join('');
                             $dialogUserHeader.text($.format('{0}-用户授权窗口', row.RoleName));
-                            $dialogUserForm.html(html).find('[role="tooltip"]').each(function (index, label) {
+                            $dialogUserForm.html(html).find('[data-toggle="tooltip"]').each(function (index, label) {
                                 if (label.title == "") label.title = "未设置";
                             }).tooltip();
                             $dialogUser.modal('show');
@@ -51,7 +51,7 @@
                                 return $.format(htmlTemplate, element.Id, element.GroupName, element.Checked, element.Description);
                             }).join('');
                             $dialogGroupHeader.text($.format('{0}-部门授权窗口', row.RoleName));
-                            $dialogGroupForm.html(html).find('[role="tooltip"]').each(function (index, label) {
+                            $dialogGroupForm.html(html).find('[data-toggle="tooltip"]').each(function (index, label) {
                                 if (label.title == "") label.title = "未设置";
                             }).tooltip();
                             $dialogGroup.modal('show');

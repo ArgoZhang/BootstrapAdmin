@@ -165,7 +165,7 @@ $(function () {
             scrollTop: 0
         }, 200);
     });
-    $('[role="tooltip"]').tooltip();
+    $('[data-toggle="tooltip"]').tooltip();
 
     // breadcrumb
     var arch = $('#nav-accordion').find('a.active').last();

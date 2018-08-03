@@ -70,7 +70,7 @@
                             swal: false,
                             callback: function (result) {
                                 if ($.isArray(result)) {
-                                    var html = '<li class="{4}"><i class="fa fa-ellipsis-v"></i><div class="task-title"><span class="task-title-sp" role="tooltip" title="{1}">{2}</span><span class="badge badge-success">{0}</span><span class="task-value" title="{3}">{3}</span><div class="pull-right hidden-phone"><span>{7}</span><button class="btn btn-danger btn-xs fa fa-trash-o" title="{1}" data-url="{5}?cacheKey={1}" role="tooltip" data-self="{6}" data-placement="left"></button></div></div></li>';
+                                    var html = '<li class="{4}"><i class="fa fa-ellipsis-v"></i><div class="task-title"><span class="task-title-sp" data-toggle="tooltip" title="{1}">{2}</span><span class="badge badge-success">{0}</span><span class="task-value" title="{3}">{3}</span><div class="pull-right hidden-phone"><span>{7}</span><button class="btn btn-danger btn-xs fa fa-trash-o" title="{1}" data-url="{5}?cacheKey={1}" data-toggle="tooltip" data-self="{6}" data-placement="left"></button></div></div></li>';
                                     var content = result.sort(function (x, y) {
                                         return x.Key > y.Key ? 1 : -1;
                                     }).map(function (ele) {
@@ -114,7 +114,7 @@
                                     }).join('');
                                     $sortable.append($.format('<li class="title">{0}</li>', item.Desc));
                                     $sortable.append(content);
-                                    $sortable.find('[role="tooltip"]').tooltip();
+                                    $sortable.find('[data-toggle="tooltip"]').tooltip();
                                 }
                             }
                         });

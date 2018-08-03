@@ -506,3 +506,7 @@ label.dropdown-item:first-child {
 .btn-xs {
     padding: 1px 5px;
 }
+
+.form-check-label {
+    cursor: pointer;
+}
