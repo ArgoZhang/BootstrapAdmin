@@ -155,7 +155,6 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     line-height: 32px;
-    padding-left: 10px;
     display: block;
     color: #222;
     height: 32px;
@@ -169,8 +168,6 @@
     }
 
     .fontawesome-icon-list .fa-hover a .fa {
-        width: 32px;
-        font-size: 14px;
         display: inline-block;
         text-align: right;
         margin-right: 10px;

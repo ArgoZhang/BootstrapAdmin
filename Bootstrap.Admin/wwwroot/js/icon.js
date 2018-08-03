@@ -4,8 +4,8 @@
         return false;
     });
 
-    $iconList.find('ul li').addClass('col-md-3 col-sm-4 col-xs-6');
-    $iconList.find('div').addClass('col-xs-6');
+    $iconList.find('ul li').addClass('col-xl-2 col-md-3 col-sm-4 col-6');
+    $iconList.find('div').addClass('col-xl-2 col-6');
 
     $('#main-content').scrollspy({ offset: 150, target: '.fa-nav' });
 });
