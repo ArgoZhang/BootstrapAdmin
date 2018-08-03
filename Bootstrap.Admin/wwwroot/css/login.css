@@ -13,16 +13,15 @@
 }
 
 .form-signin-heading {
-    padding: 15px;
+    padding: 28px 0;
     text-align: center;
     color: #fff;
-    font-size: 32px;
+    font-size: 2rem;
     font-weight: 300;
-    margin-top: 10px;
 }
 
 .login-wrap {
-    margin: 62px 0 0 370px;
+    margin: 22px 0 0 370px;
     width: 280px;
     height: 200px;
 }
