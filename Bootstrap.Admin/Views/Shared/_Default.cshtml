@@ -30,7 +30,7 @@
 @section modal {
     <div class="modal fade" id="dialogNew" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content" data-toggle="LgbValidate" data-valid-button="#btnSubmit">
+            <div class="modal-content" data-toggle="LgbValidate" data-valid-button="#btnSubmit" data-valid-modal="#dialogNew">
                 @RenderSection("modal", false)
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">

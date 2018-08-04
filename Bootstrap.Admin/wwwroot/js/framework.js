@@ -26,13 +26,6 @@
         }
 
         // handler modal window show event
-        if (this.options.modal) {
-            $(this.options.modal).on('show.bs.modal', function (e) {
-                var $validator = $(this).find('[data-toggle="LgbValidate"]');
-                if ($.isFunction($validator.lgbValidator)) $validator.lgbValidator().reset();
-            });
-        }
-
         function handler(cid, event) {
             var source = $("#" + cId);
             source.data('click', name);

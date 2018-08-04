@@ -100,6 +100,11 @@
                 e.stopImmediatePropagation();
             }
         });
+        if (this.options.modal) {
+            $(this.options.modal).on('show.bs.modal', function (e) {
+                that.reset();
+            });
+        }
     };
 
     Validate.VERSION = '2.0';
@@ -112,11 +117,11 @@
     };
 
     Validate.prototype.defaults = function () {
-        return $.extend({ container: this.$element }, Validate.DEFAULTS, {
+        return $.extend(Validate.DEFAULTS, {
             validClass: this.$element.attr('data-validclass'),
             errorClass: this.$element.attr('data-errorclass'),
             validButtons: this.$element.attr('data-valid-button'),
-            container: this.$element.attr('data-container')
+            modal: this.$element.attr('data-valid-modal')
         });
     };
 
