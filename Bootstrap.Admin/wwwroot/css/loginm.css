@@ -46,6 +46,7 @@
     box-shadow: 0 4px #e56b60;
     margin-bottom: 20px;
     outline: none !important;
+    margin-top: -8px;
 }
 
 @media (min-width: 375px) {

@@ -41,9 +41,9 @@
     color: #fff;
     text-transform: uppercase;
     font-weight: 300;
-    font-family: 'Open Sans', sans-serif;
     box-shadow: 1px 1px #e56b60;
     margin-bottom: 20px;
+    margin-top: -8px;
 }
 
 .form-control:focus, .form-control.is-valid:focus, .form-control.is-invalid:focus, .btn:focus, .btn:focus:active {
