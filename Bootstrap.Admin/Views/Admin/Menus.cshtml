@@ -61,7 +61,7 @@
         <span class="fa fa-sitemap" aria-hidden="true"></span><span>指派角色</span>
     </button>
     <div class="toolbar btn-group">
-        <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button"><i class="fa fa-gear"></i></button>
+        <button class="btn dropdown-toggle" data-toggle="dropdown" type="button"><i class="fa fa-gear"></i></button>
         <div class="dropdown-menu">
             @await Html.PartialAsync("_ButtonBarGroup")
             <a id="tb_assignRole" href="#" title="指派角色"><i class="fa fa-sitemap"></i></a>
@@ -84,8 +84,8 @@
                     <div class="input-group">
                         <input type="text" class="form-control" id="name" name="name" placeholder="不可为空，50字以内" maxlength="50" data-valid="true" />
                         <div class="input-group-append">
-                            <button data-method="clear" class="btn btn-default" type="button"><i class="fa fa-remove"></i></button>
-                            <button data-method="sel" class="btn btn-default" type="button"><i class="fa fa-edit"></i>全选</button>
+                            <button data-method="clear" class="btn" type="button"><i class="fa fa-remove"></i></button>
+                            <button data-method="sel" class="btn" type="button"><i class="fa fa-edit"></i>全选</button>
                         </div>
                     </div>
                 </div>
@@ -95,8 +95,8 @@
                     <div class="input-group">
                         <input type="text" class="form-control" readonly id="parentName" name="parentName" placeholder="请选择...(可为空)，50字以内" maxlength="50" />
                         <div class="input-group-append">
-                            <button data-method="clear" class="btn btn-default" type="button"><i class="fa fa-remove"></i></button>
-                            <button id="btnMenuParent" class="btn btn-default" type="button"><i class="fa fa-hand-o-up"></i>选择</button>
+                            <button data-method="clear" class="btn" type="button"><i class="fa fa-remove"></i></button>
+                            <button id="btnMenuParent" class="btn" type="button"><i class="fa fa-hand-o-up"></i>选择</button>
                         </div>
                     </div>
                 </div>
@@ -105,8 +105,8 @@
                     <div class="input-group">
                         <input type="text" class="form-control digits" id="order" name="order" data-default-val="10" placeholder="默认为10" maxlength="8" data-valid="true" />
                         <div class="input-group-append">
-                            <button data-method="clear" class="btn btn-default" type="button"><i class="fa fa-remove"></i></button>
-                            <button id="btnMenuOrder" class="btn btn-default" type="button"><i class="fa fa-list-ol"></i>调整</button>
+                            <button data-method="clear" class="btn" type="button"><i class="fa fa-remove"></i></button>
+                            <button id="btnMenuOrder" class="btn" type="button"><i class="fa fa-list-ol"></i>调整</button>
                         </div>
                     </div>
                 </div>
@@ -115,8 +115,8 @@
                     <div class="input-group">
                         <input type="text" class="form-control" readonly id="icon" data-default-val="fa fa-fa" placeholder="请选择...(可为空)，50字以内" maxlength="50" />
                         <div class="input-group-append">
-                            <button data-method="clear" class="btn btn-default" type="button"><i class="fa fa-remove"></i></button>
-                            <button id="btnIcon" class="btn btn-default" type="button"><i class="fa fa-dashboard"></i>选择</button>
+                            <button data-method="clear" class="btn" type="button"><i class="fa fa-remove"></i></button>
+                            <button id="btnIcon" class="btn" type="button"><i class="fa fa-dashboard"></i>选择</button>
                         </div>
                     </div>
                 </div>
@@ -195,7 +195,7 @@
         </div>
         <div class="modal-footer">
             <span>被选择的图标</span><i id="pickIcon"></i>
-            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            <button type="button" class="btn" data-dismiss="modal">关闭</button>
             <button type="button" class="btn btn-primary" id="btnSubmitIcon">保存</button>
         </div>
     </div>
