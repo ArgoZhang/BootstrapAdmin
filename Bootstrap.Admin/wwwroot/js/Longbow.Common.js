@@ -325,47 +325,6 @@
             var op = $.extend({ header: "header", content: ".main-content" }, options);
             return ($(op.header).outerHeight() + $(op.content).outerHeight() + this.outerHeight() > $(window).height()) ? this.removeClass('fixed') : this.addClass('fixed');
         },
-        autoValidate: function (rules, messages, handler) {
-            var parent = 'body';
-            var $wrapper = $('#dialogNew');
-            if ($wrapper.length === 1) parent = '#dialogNew';
-            // validate
-            var $this = $(this);
-            if (messages && $.isArray(messages.button)) {
-                handler = messages;
-                messages = {};
-            }
-            else {
-                messages = $.extend({}, messages);
-            }
-            $this.validate({
-                validClass: "has-success",
-                errorClass: "has-error",
-                ignore: ".ignore",
-                rules: $.extend({}, rules),
-                messages: $.extend({}, messages),
-                highlight: function (element, errorClass, validClass) {
-                    $(element).parents('.form-group').addClass(errorClass).removeClass(validClass);
-                },
-                unhighlight: function (element, errorClass, validClass) {
-                    $(element).tooltip('dispose').parents('.form-group').removeClass(errorClass).addClass(validClass);
-                },
-                errorPlacement: function (label, element) {
-                    var $ele = $(element);
-                    if (!$ele.attr('data-original-title')) $ele.tooltip({ container: parent });
-                    $ele.attr('data-original-title', $(label).text());
-                    $ele.tooltip('show');
-                    $('#' + $ele.attr('aria-describedby')).addClass(this.settings.errorClass);
-                }
-            });
-            if (handler && $.isArray(handler.button)) {
-                $.each(handler.button, function (index, btn) {
-                    $('#' + btn).on('click', function () {
-                        $(this).attr('data-valid', $this.valid());
-                    });
-                });
-            }
-        },
         smartTable: function (options) {
             var settings = $.extend({
                 method: 'get',                      //请求方式（*）

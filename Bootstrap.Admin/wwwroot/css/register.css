@@ -16,13 +16,13 @@ ol {
     -webkit-padding-start: 40px;
 }
 
-.has-error input {
+input.is-invalid {
     background-repeat: no-repeat;
     background-image: url('../images/error.png');
     background-position: right 8px center;
 }
 
-.has-success input {
+input.is-valid {
     background-repeat: no-repeat;
     background-image: url('../images/success.png');
     background-position: right 8px center;

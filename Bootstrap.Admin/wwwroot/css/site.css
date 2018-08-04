@@ -473,13 +473,13 @@ a, a:hover, a:focus {
     max-width: 768px;
 }
 
-.tooltip.has-error .tooltip-inner {
-    background-color: #a94442;
+.is-invalid .tooltip-inner {
+    background-color: #dc3545;
 }
 
-.tooltip.has-error .arrow:before {
-    border-top-color: #a94442;
-    border-bottom-color: #a94442;
+.is-invalid .arrow:before {
+    border-top-color: #dc3545;
+    border-bottom-color: #dc3545;
 }
 
 .file-drop-zone.clickable:hover {

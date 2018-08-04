@@ -102,11 +102,11 @@
         });
     };
 
-    Validate.VERSION = '1.0';
+    Validate.VERSION = '2.0';
 
     Validate.DEFAULTS = {
-        validClass: 'has-success',
-        errorClass: 'has-error',
+        validClass: 'is-valid',
+        errorClass: 'is-invalid',
         childClass: '[data-valid="true"]',
         validResult: 'data-valid-result'
     };
@@ -125,7 +125,7 @@
         this.$element.find(this.options.childClass).each(function () {
             var $this = $(this);
             $this.tooltip('dispose');
-            $this.parent().removeClass(css);
+            $this.removeClass(css);
         });
     };
 
@@ -152,21 +152,20 @@
 
         var op = this.options;
         var $this = $(element);
-        var $parent = $this.parent();
         try {
             if (valid) $this.tooltip('dispose');
             else {
-                if (!$parent.hasClass('has-error')) $this.tooltip();
+                if (!$this.hasClass(op.errorClass)) $this.tooltip();
             }
         }
         catch (e) {
 
         }
         if (!valid) {
-            $parent.removeClass(op.validClass).addClass(op.errorClass);
+            $this.removeClass(op.validClass).addClass(op.errorClass);
         }
         else {
-            $parent.removeClass(op.errorClass).addClass(op.validClass);
+            $this.removeClass(op.errorClass).addClass(op.validClass);
         }
     };
 

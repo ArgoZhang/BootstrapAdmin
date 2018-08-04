@@ -87,11 +87,11 @@
     }
 }
 
-.tooltip.has-error .tooltip-inner {
+.is-invalid .tooltip-inner {
     background-color: #a94442;
 }
 
-.tooltip.has-error .arrow:before {
+.is-invalid .arrow:before {
     border-top-color: #a94442;
 }
 
