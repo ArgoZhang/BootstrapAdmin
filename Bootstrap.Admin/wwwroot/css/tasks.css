@@ -84,7 +84,7 @@
             }
 
             .tasks-widget .task-list li > .task-title .hidden-phone button.btn-xs {
-                font-size: 12px;
+                font-size: 0.75rem;
                 line-height: 1.5;
                 margin-right: 4px;
             }
