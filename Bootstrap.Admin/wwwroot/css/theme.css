@@ -11,6 +11,75 @@
     border-bottom-color: #dc3545;
 }
 
+input.is-invalid {
+    background-repeat: no-repeat;
+    background-image: url('../images/error.png');
+    background-position: right 8px center;
+}
+
+input.is-valid {
+    background-repeat: no-repeat;
+    background-image: url('../images/success.png');
+    background-position: right 8px center;
+}
+
+input.pending {
+    background-repeat: no-repeat;
+    background-image: url(../img/loading-sm.gif);
+    background-position: right 8px center;
+}
+
 .form-check-input {
     margin-top: 6.4px;
 }
+
+.form-inline .form-group {
+    margin-bottom: 15px;
+}
+
+    .form-inline .form-group .control-label {
+        margin-right: 10px;
+        width: 80px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        justify-content: flex-start;
+    }
+
+.modal-header {
+    background-color: #f5f5f5;
+    padding: 10px 15px;
+}
+
+.modal-body, .card-body {
+    padding: 15px 15px 0 15px;
+}
+
+.btn span:last-child {
+    margin-left: 4px;
+}
+
+input[data-valid="true"] {
+    padding-right: 30px;
+}
+
+.form-check-input + span, .form-check-input + label {
+    max-width: 148px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+/*Bootstrap Table BUG */
+.fixed-table-loading {
+    padding: 8px;
+}
+
+.bootstrap-table .fixed-table-body .table {
+    border-bottom: none;
+}
+
+.card-body .bootstrap-table {
+    margin-top: -10px;
+}
+/*Bootstrap Table BUG END*/

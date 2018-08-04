@@ -44,16 +44,16 @@
             url: Exceptions.url, swal: false,
             callback: function (result) {
                 var html = result.map(function (ele) {
-                    return $.format('<div class="form-group col-lg-3 col-md-3 col-sm-4 col-xs-6 logitem"><a class="logfile" title="{0}" href="#"><i class="fa fa-file-text-o"></i><span>{0}</span></a></div>', ele);
+                    return $.format('<div class="form-group col-lg-3 col-md-3 col-sm-4 col-6"><a class="logfile" data-toggle="tooltip" title="{0}" href="#"><i class="fa fa-file-text-o"></i><span>{0}</span></a></div>', ele);
                 }).join('');
-                $dataForm.children('div').html(html);
+                $dataForm.children('div').html(html).find('[data-toggle="tooltip"]').tooltip();
                 $dialog.modal('show');
             }
         });
     });
 
     $dialog.on('click', 'a', function () {
-        var fileName = $(this).find('span').text();
+        var fileName = $(this).tooltip('hide').find('span').text();
         $errorDetailTitle.text(fileName);
         $errorList.hide();
         $errorDetail.show();

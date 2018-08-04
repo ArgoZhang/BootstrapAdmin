@@ -217,14 +217,8 @@
             margin-right: 10px;
         }
 
-.logitem {
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
 .logfile {
     color: #d41404;
-    white-space: nowrap;
 }
 
     .logfile:focus, .logfile:active, .logfile:hover {
@@ -233,6 +227,12 @@
 
     .logfile span {
         margin-left: 4px;
+        max-width: 146px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        display: inline-block;
+        vertical-align: middle;
     }
 
 .modal-header > h4 {

@@ -37,69 +37,6 @@
         color: #ac2925;
     }
 
-.form-inline .form-group {
-    margin-bottom: 15px;
-}
-
-    .form-inline .form-group .control-label {
-        margin-right: 10px;
-        width: 80px;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
-        justify-content: flex-start;
-    }
-
-
-.modal-dialog .modal-body, .card-body {
-    padding: 15px 15px 0 15px;
-}
-
-    .modal-dialog .modal-body .form-inline .form-group input[type="text"], .modal-dialog .modal-body .form-inline .form-group input[type="password"] {
-        padding-right: 30px;
-    }
-
-.btn span:last-child {
-    margin-left: 4px;
-}
-
-.modal-header {
-    background-color: #f5f5f5;
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
-    padding: 10px 15px;
-}
-
-.modal-body .checkbox, .modal-body .radio {
-    min-width: 190px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-
-.modal-footer .btn {
-    padding-left: 22px;
-    padding-right: 22px;
-}
-
-input.is-invalid {
-    background-repeat: no-repeat;
-    background-image: url('../images/error.png');
-    background-position: right 8px center;
-}
-
-input.is-valid {
-    background-repeat: no-repeat;
-    background-image: url('../images/success.png');
-    background-position: right 8px center;
-}
-
-input.pending {
-    background-repeat: no-repeat;
-    background-image: url(../img/loading-sm.gif);
-    background-position: right 8px center;
-}
-
 .main-content {
     transition: all .4s ease-in-out;
     padding: 15px 15px 0 15px;
@@ -218,30 +155,13 @@ aside {
                     padding: 12px 0;
                 }
 
-/*Modal Dialog Checkbox*/
-.modal-body .checkbox, .modal-dialog .radio {
-    padding: 0;
-    margin-top: 0;
-}
-
-    .modal-body .checkbox label, .modal-body .radio label {
-        padding-left: 0;
-    }
-
-        .modal-body .checkbox label input[type='checkbox'], .modal-body .radio label input[type='radio'] {
-            margin: 0 4px 0 0;
-            vertical-align: middle;
-            position: relative;
-            top: -1px;
-        }
-
-.modal-body .affix {
+.affix {
     position: fixed;
     bottom: 95px;
     right: 50px;
 }
 
-    .modal-body .affix a {
+    .affix a {
         font-size: 2rem;
         margin-top: 16px;
     }
@@ -280,24 +200,6 @@ aside {
             .toolbar .dropdown-menu a:hover {
                 color: #235e90;
             }
-
-/*cache*/
-.panel .fa-refresh {
-    font-size: 1.5rem;
-}
-
-.bootstrap-select .dropdown-menu {
-    padding: 0;
-}
-
-    .bootstrap-select .dropdown-menu > li > a {
-        padding-top: 7px;
-        padding-bottom: 7px;
-    }
-
-input[type="datetime"] {
-    min-width: 220px;
-}
 
 /*Messages*/
 .mail-box {
@@ -432,25 +334,3 @@ input[type="datetime"] {
                 .mail-box .lg-side .table-inbox tr td:hover {
                     cursor: pointer;
                 }
-
-/*Bootstrap Table BUG */
-.fixed-table-loading {
-    padding-top: 5px;
-}
-
-.bootstrap-table {
-    padding-bottom: 15px;
-}
-
-    .bootstrap-table .fixed-table-body .table {
-        border-bottom: none;
-    }
-/*Bootstrap Table BUG END*/
-
-.input-group.form_date span {
-    border-left: none;
-}
-
-.barTable {
-    padding: 5px 15px 0px 15px;
-}
