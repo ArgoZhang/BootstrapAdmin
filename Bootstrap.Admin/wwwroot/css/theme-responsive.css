@@ -1,0 +1,21 @@
+﻿@media (min-width: 576px) {
+    .form-group .form-control-url {
+        width: calc(100% - 90px);
+    }
+}
+
+@media (min-width: 568px) {
+    .toolbar {
+        display: none;
+    }
+
+    .bs-bars {
+        display: inline-block;
+    }
+}
+
+@media (min-width: 940px) {
+    .btn span:last-child {
+        display: inline;
+    }
+}

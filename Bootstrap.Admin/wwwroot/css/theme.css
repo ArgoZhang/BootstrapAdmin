@@ -57,6 +57,7 @@ input.pending {
 
 .btn span:last-child {
     margin-left: 4px;
+    display: none;
 }
 
 input[data-valid="true"] {
