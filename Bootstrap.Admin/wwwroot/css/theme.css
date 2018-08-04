@@ -1,8 +1,4 @@
-﻿.btn {
-    font-size: 0.875rem;
-}
-
-.form-control {
+﻿body, .form-control, .dropdown-menu, .btn:not(.btn-lg), .input-group-text {
     font-size: 0.875rem;
 }
 
