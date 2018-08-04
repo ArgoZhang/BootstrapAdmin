@@ -25,6 +25,10 @@ a, a:hover, a:focus {
     font-size: 0.875rem;
 }
 
+    .dropdown-menu a {
+        transition: all .25s linear;
+    }
+
     .dropdown-menu > li > a {
         padding: 6px 20px;
         display: block;
@@ -48,10 +52,6 @@ a, a:hover, a:focus {
         background-color: #337ab7;
         height: 4px;
         margin: 0 -15px;
-    }
-
-    .header a {
-        transition: all .25s linear;
     }
 
     .header > .dropdown {
@@ -243,7 +243,7 @@ a, a:hover, a:focus {
     .notify-row .dropdown-menu {
         width: 235px;
         border: none;
-        margin-left: -72px;
+        margin-left: -74px;
         margin-top: 12px;
     }
 
@@ -307,9 +307,10 @@ a, a:hover, a:focus {
             font-size: 0.75rem;
         }
 
-            .notify-row .dropdown-menu li a:hover {
-                color: #222;
-            }
+        .notify-row .dropdown-menu li:not(:last-child) a:hover {
+            color: #fff;
+            background-color: #4b9fd0;
+        }
 
         .notify-row .dropdown-menu p {
             color: #fff;
@@ -338,6 +339,7 @@ a, a:hover, a:focus {
             font-weight: bold;
             float: right;
             font-size: 0.75rem;
+            padding-right: 5px;
         }
 
         .notify-row .dropdown-menu.tasks-bar .desc {
