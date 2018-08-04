@@ -4,17 +4,6 @@
     }
 }
 
-@media(min-width: 576px) {
-    .form-inline label {
-        padding-top: 5px;
-        padding-bottom: 5px;
-    }
-
-    .modal-lg {
-        max-width: calc(90%);
-    }
-}
-
 @media (min-width: 736px) {
     .sidebar-toggle-box span {
         display: inline;
@@ -39,16 +28,6 @@
     .main-content {
         position: fixed;
         overflow: auto;
-    }
-
-    .form-horizontal .control-label {
-        text-align: left;
-    }
-}
-
-@media (min-width: 992px) {
-    .modal-lg {
-        max-width: 900px;
     }
 }
 

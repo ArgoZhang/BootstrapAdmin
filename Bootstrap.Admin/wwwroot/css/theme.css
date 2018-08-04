@@ -1,4 +1,12 @@
-﻿.tooltip-inner {
+﻿.btn {
+    font-size: 0.875rem;
+}
+
+.form-control {
+    font-size: 0.875rem;
+}
+
+.tooltip-inner {
     max-width: 768px;
 }
 
@@ -64,6 +72,10 @@ input[data-valid="true"] {
     padding-right: 30px;
 }
 
+.form-check-label {
+    cursor: pointer;
+}
+
 .form-check-input + span, .form-check-input + label {
     max-width: 148px;
     overflow: hidden;
@@ -72,15 +84,39 @@ input[data-valid="true"] {
 }
 
 /*Bootstrap Table BUG */
+.fixed-table-toolbar .bs-bars, .fixed-table-toolbar .search, .fixed-table-toolbar .columns {
+    line-height: normal;
+}
+
+.card-view:not(:last-child) {
+    margin-bottom: 6px;
+}
+
 .fixed-table-loading {
     padding: 8px;
 }
 
-.bootstrap-table .fixed-table-body .table {
-    border-bottom: none;
+.bootstrap-table {
+    margin-bottom: 15px;
+}
+
+    .bootstrap-table .fixed-table-body .table {
+        border-bottom: none;
+    }
+
+.card {
+    margin-bottom: 15px;
 }
 
 .card-body .bootstrap-table {
     margin-top: -10px;
 }
 /*Bootstrap Table BUG END*/
+
+.file-drop-zone.clickable:hover {
+    border: 1px dashed #999;
+}
+
+.form-inline .form-row, .form-inline .row {
+    width: 100%;
+}
