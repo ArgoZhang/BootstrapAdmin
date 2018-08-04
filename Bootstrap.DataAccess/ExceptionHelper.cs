@@ -29,6 +29,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static void Log(Exception ex, NameValueCollection additionalInfo)
         {
+            if (additionalInfo["ErrorPage"] == null) return;
             var sql = "insert into Exceptions (AppDomainName, ErrorPage, UserID, UserIp, ExceptionType, Message, StackTrace, LogTime) values (@AppDomainName, @ErrorPage, @UserID, @UserIp, @ExceptionType, @Message, @StackTrace, GetDate())";
             using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
             {
