@@ -469,19 +469,6 @@ a, a:hover, a:focus {
     background-size: 100% 100%;
 }
 
-.tooltip-inner {
-    max-width: 768px;
-}
-
-.is-invalid .tooltip-inner {
-    background-color: #dc3545;
-}
-
-.is-invalid .arrow:before {
-    border-top-color: #dc3545;
-    border-bottom-color: #dc3545;
-}
-
 .file-drop-zone.clickable:hover {
     border: 1px dashed #999;
 }

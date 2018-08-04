@@ -16,8 +16,6 @@
     padding: 28px 0;
     text-align: center;
     color: #fff;
-    font-size: 2rem;
-    font-weight: 300;
 }
 
 .login-wrap {
@@ -38,22 +36,6 @@
             float: right;
         }
 
-.input-group {
-    margin-bottom: 15px;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-    border: solid 1px #1ca0e9;
-}
-
-    .input-group > span {
-        top: 0;
-        background-color: #5bc0de;
-    }
-
-    .input-group > span, div.input-group > input {
-        border-color: #5bc0de;
-    }
-
 .btn-login {
     background: #f67a6e;
     color: #fff;
@@ -64,40 +46,16 @@
     margin-bottom: 20px;
 }
 
-.checkbox {
-    padding-left: 24px;
-}
-
-    .checkbox > input {
-        top: -1px;
-    }
-
-    .checkbox > label {
-        padding-left: 4px;
-    }
-
-.is-invalid .tooltip-inner {
-    background-color: #a94442;
-}
-
-.is-invalid .arrow:before {
-    border-top-color: #a94442;
-}
-
-.form-control:focus {
+.form-control:focus, .form-control.is-valid:focus, .form-control.is-invalid:focus, .btn:focus, .btn:focus:active {
     box-shadow: none;
 }
 
 .input-group-text {
     background-color: #6bc3f4;
-    border: 1px solid #6bc3f4;
+    border-color: #1ca0e9;
     line-height: 1.5;
 }
 
-.form-check-input {
-    margin-top: 0.4rem;
-}
-
-.btn:focus {
-    box-shadow: 1px 1px #e56b60;
+.form-control {
+    border-color: #1ca0e9;
 }
