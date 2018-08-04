@@ -359,9 +359,11 @@
             var op = typeof options === 'object' && options;
             if (/val/.test(options)) {
                 if (arguments.length === 1)
-                    return $this.first().children('button').attr("data-val");
+                    return $this.find('[data-toggle="dropdown"').attr("data-val");
                 else {
-                    $this.first().children(':first').children(':first').text($this.find('[data-val="' + arguments[1] + '"]').text());
+                    var $element = $this.find('[data-toggle="dropdown"]');
+                    $element.text($this.find('[data-val="' + arguments[1] + '"]').text());
+                    $element.attr('data-val', arguments[1]);
                 }
             }
             else {

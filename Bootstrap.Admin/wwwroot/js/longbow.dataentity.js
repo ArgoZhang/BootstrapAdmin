@@ -11,15 +11,16 @@
         load: function (value) {
             for (name in this.options.map) {
                 var ctl = $("#" + this.options.map[name]);
-                ctl.val(value[name]);
                 if (ctl.attr('data-toggle') == "dropdown") {
                     var val = value[name];
                     if ((typeof val == "string" && val == "") || val == undefined) val = ctl.attr('data-default-val');
-                    ctl.children(':first').text(ctl.next().find('[data-val="' + val + '"]').text());
+                    ctl.text(ctl.parent().find('.dropdown-menu [data-val="' + val + '"]').text());
+                    ctl.attr('data-val', val);
                 }
                 else if (ctl.attr('data-toggle') == 'toggle') {
                     ctl.bootstrapToggle(value[name] ? 'on' : 'off');
                 }
+                else ctl.val(value[name]);
             }
         },
         reset: function () {
@@ -27,13 +28,13 @@
                 var ctl = $("#" + this.options.map[name]);
                 var dv = ctl.attr("data-default-val");
                 if (dv === undefined) dv = "";
-                ctl.val(dv);
                 if (ctl.attr('data-toggle') == "dropdown") {
-                    ctl.children(':first').text(ctl.next().find('[data-val="' + dv + '"]').text());
+                    ctl.text(ctl.parent().find('.dropdown-menu [data-val="' + dv + '"]').text());
                 }
                 else if (ctl.attr('data-toggle') == 'toggle') {
                     ctl.bootstrapToggle(dv == "true" ? 'on' : 'off');
                 }
+                else ctl.val(dv);
             }
         },
         get: function () {
@@ -43,6 +44,10 @@
                 var dv = ctl.attr('data-default-val');
                 if (ctl.attr('data-toggle') == 'toggle') {
                     target[name] = ctl.prop('checked');
+                    continue;
+                }
+                else if (ctl.attr('data-toggle') == 'dropdown') {
+                    target[name] = ctl.attr('data-val');
                     continue;
                 }
                 else if (dv != undefined && ctl.val() == "") target[name] = dv;
