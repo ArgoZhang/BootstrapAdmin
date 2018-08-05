@@ -27,9 +27,6 @@ a, a:hover, a:focus {
 
     .dropdown-menu a {
         transition: all .25s linear;
-    }
-
-    .dropdown-menu > li > a {
         padding: 6px 20px;
         display: block;
     }
@@ -232,13 +229,13 @@ a, a:hover, a:focus {
             margin-right: 15px;
         }
 
-            .notify-row > li > a .badge {
-                position: absolute;
-                top: -14px;
-                left: 24px;
-                z-index: 1;
-                opacity: 0.8;
-            }
+    .notify-row .badge {
+        position: absolute;
+        top: -14px;
+        left: 24px;
+        z-index: 1;
+        opacity: 0.8;
+    }
 
     .notify-row .dropdown-menu {
         width: 235px;
@@ -415,27 +412,27 @@ a, a:hover, a:focus {
     padding: 7.5px 10px;
 }
 
-    .breadcrumb > li {
+    .breadcrumb li {
         padding-right: 5px;
     }
 
-        .breadcrumb > li.active {
+        .breadcrumb li.active {
             display: inline-block;
         }
 
-        .breadcrumb > li.load {
+        .breadcrumb li.load {
             display: none;
         }
 
-        .breadcrumb > li > a > i {
-            padding-right: 6px;
-        }
+    .breadcrumb i {
+        padding-right: 6px;
+    }
 
-        .breadcrumb > li + li:before {
-            padding: 0 5px;
-            color: #ccc;
-            content: "/\00a0";
-        }
+    .breadcrumb li + li:before {
+        padding: 0 5px;
+        color: #ccc;
+        content: "/\00a0";
+    }
 
 .content-body {
     position: fixed;
