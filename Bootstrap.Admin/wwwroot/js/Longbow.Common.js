@@ -354,27 +354,22 @@
             }).insertBefore(this.parents('.bootstrap-table').find('.fixed-table-toolbar > .bs-bars'));
             return this;
         },
-        lgbDropdown: function (options) {
-            var $this = $(this);
-            var op = typeof options === 'object' && options;
-            if (/val/.test(options)) {
-                if (arguments.length === 1)
-                    return $this.find('[data-toggle="dropdown"').attr("data-val");
-                else {
-                    var $element = $this.find('[data-toggle="dropdown"]');
-                    $element.text($this.find('[data-val="' + arguments[1] + '"]').text());
-                    $element.attr('data-val', arguments[1]);
-                }
-            }
-            else {
-                $this.each(function () {
-                    $(this).on('click', '.dropdown-menu a', { $parent: $(this) }, function (event) {
-                        event.preventDefault();
-                        var $op = $(this);
-                        event.data.$parent.children('button').attr('data-val', $op.attr('data-val')).text($op.text());
-                    });
-                });
-            }
+    });
+
+    //extend dropdown method
+    $.extend($.fn.dropdown.Constructor.prototype, {
+        val: function () {
+            var $element = $(this._element);
+            var $op = $(this._menu).find('[data-val="' + $element.val() + '"]:first');
+            $element.text($op.text());
+        },
+        select: function () {
+            var $element = $(this._element);
+            $(this._menu).on('click', 'a', function (event) {
+                event.preventDefault();
+                var $op = $(this);
+                $element.text($op.text()).val($op.attr('data-val'));
+            });
         }
     });
 })(jQuery);

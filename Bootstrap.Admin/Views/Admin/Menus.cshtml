@@ -24,8 +24,8 @@
             </div>
             <div class="form-group col-6 col-lg-5">
                 <label class="control-label" for="sel_menus_category">菜单类别</label>
-                <div class="lgbDropdown">
-                    <button id="sel_menus_category" class="btn btn-success dropdown-toggle" data-toggle="dropdown">全部</button>
+                <div class="dropdown">
+                    <button id="sel_menus_category" class="btn btn-success dropdown-select dropdown-toggle" data-toggle="dropdown">全部</button>
                     <ul class="dropdown-menu">
                         <li><a href="#" data-val="">全部</a></li>
                         <li class="divider"></li>
@@ -36,8 +36,8 @@
             </div>
             <div class="form-group col-6 col-lg-5">
                 <label class="control-label" for="sel_menus_category">菜单类型</label>
-                <div class="lgbDropdown">
-                    <button id="sel_menus_res" class="btn btn-success dropdown-toggle" data-toggle="dropdown">全部</button>
+                <div class="dropdown">
+                    <button id="sel_menus_res" class="btn btn-success dropdown-select dropdown-toggle" data-toggle="dropdown">全部</button>
                     <ul class="dropdown-menu">
                         <li><a href="#" data-val="">全部</a></li>
                         <li class="divider"></li>
@@ -122,8 +122,8 @@
                 </div>
                 <div class="form-group col-6">
                     <label class="control-label" for="category">菜单类别</label>
-                    <div class="lgbDropdown">
-                        <button id="category" class="btn btn-success dropdown-toggle" data-toggle="dropdown" data-default-val="1">外部菜单</button>
+                    <div class="dropup">
+                        <button id="category" class="btn btn-success dropdown-select dropdown-toggle" data-toggle="dropdown" data-default-val="1">外部菜单</button>
                         <ul class="dropdown-menu">
                             <li><a href="#" data-val="0">系统菜单</a></li>
                             <li><a href="#" data-val="1">外部菜单</a></li>
@@ -132,8 +132,8 @@
                 </div>
                 <div class="form-group col-6">
                     <label class="control-label" for="target">目标</label>
-                    <div class="lgbDropdown">
-                        <button id="target" class="btn btn-info dropdown-toggle" data-toggle="dropdown" data-default-val="_self">本窗口</button>
+                    <div class="dropup">
+                        <button id="target" class="btn btn-info dropdown-select dropdown-toggle" data-toggle="dropdown" data-default-val="_self">本窗口</button>
                         <ul class="dropdown-menu">
                             <li><a href="#" data-val="_self">本窗口</a></li>
                             <li><a href="#" data-val="_blank">新窗口</a></li>
@@ -144,8 +144,8 @@
                 </div>
                 <div class="form-group col-6">
                     <label class="control-label" for="isRes">菜单类型</label>
-                    <div class="lgbDropdown">
-                        <button id="isRes" class="btn btn-success dropdown-toggle" data-toggle="dropdown" data-default-val="0">菜单</button>
+                    <div class="dropup">
+                        <button id="isRes" class="btn btn-success dropdown-select dropdown-toggle" data-toggle="dropdown" data-default-val="0">菜单</button>
                         <ul class="dropdown-menu">
                             <li><a href="#" data-val="0">菜单</a></li>
                             <li><a href="#" data-val="1">资源</a></li>
@@ -154,8 +154,8 @@
                 </div>
                 <div class="form-group col-6">
                     <label class="control-label" for="app">所属应用</label>
-                    <div class="lgbDropdown">
-                        <button id="app" class="btn btn-info dropdown-toggle" data-toggle="dropdown" data-default-val="0">未设置</button>
+                    <div class="dropup">
+                        <button id="app" class="btn btn-info dropdown-select dropdown-toggle" data-toggle="dropdown" data-default-val="0">未设置</button>
                         <ul class="dropdown-menu">
                             @foreach (var kv in Model.Applications)
                             {

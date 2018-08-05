@@ -1,4 +1,4 @@
-﻿.lgbDropdown .dropdown-menu > li > a:hover {
+﻿.dropdown-select + .dropdown-menu a:hover {
     background: #007AC0;
     color: #fff;
 }

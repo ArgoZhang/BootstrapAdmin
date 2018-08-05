@@ -12,10 +12,7 @@
             for (name in this.options.map) {
                 var ctl = $("#" + this.options.map[name]);
                 if (ctl.attr('data-toggle') == "dropdown") {
-                    var val = value[name];
-                    if ((typeof val == "string" && val == "") || val == undefined) val = ctl.attr('data-default-val');
-                    ctl.text(ctl.parent().find('.dropdown-menu [data-val="' + val + '"]').text());
-                    ctl.attr('data-val', val);
+                    ctl.val(value[name]).dropdown('val');
                 }
                 else if (ctl.attr('data-toggle') == 'toggle') {
                     ctl.bootstrapToggle(value[name] ? 'on' : 'off');
@@ -29,7 +26,7 @@
                 var dv = ctl.attr("data-default-val");
                 if (dv === undefined) dv = "";
                 if (ctl.attr('data-toggle') == "dropdown") {
-                    ctl.text(ctl.parent().find('.dropdown-menu [data-val="' + dv + '"]').text());
+                    ctl.val(dv).dropdown('val');
                 }
                 else if (ctl.attr('data-toggle') == 'toggle') {
                     ctl.bootstrapToggle(dv == "true" ? 'on' : 'off');
@@ -46,15 +43,10 @@
                     target[name] = ctl.prop('checked');
                     continue;
                 }
-                else if (ctl.attr('data-toggle') == 'dropdown') {
-                    target[name] = ctl.attr('data-val');
-                    continue;
-                }
                 else if (dv != undefined && ctl.val() == "") target[name] = dv;
                 else target[name] = ctl.val();
                 if (target[name] == "true" || target[name] == "True") target[name] = true;
                 if (target[name] == "false" || target[name] == "False") target[name] = false;
-
             }
             return target;
         }

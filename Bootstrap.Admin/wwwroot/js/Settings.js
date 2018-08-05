@@ -36,7 +36,7 @@
                 });
                 break;
             case 'css':
-                var cssDefine = $('#dictCssDefine').attr("data-val");
+                var cssDefine = $css.val();
                 $.bc({
                     url: Settings.url, data: { name: '使用样式', code: cssDefine, category: '当前样式' }, title: '网站样式',
                     callback: function (result) {
@@ -153,6 +153,7 @@
         listCacheUrl();
     });
 
+    var $css = $('#dictCssDefine');
     $.bc({
         url: Dicts.css, swal: false,
         callback: function (result) {
@@ -162,7 +163,7 @@
                 url: Dicts.css, swal: false, method: 'get',
                 callback: function (result) {
                     if (result.length > 0)
-                        $('.lgbDropdown').lgbDropdown('val', result);
+                        $css.val(result).dropdown('val');
                 }
             });
         }

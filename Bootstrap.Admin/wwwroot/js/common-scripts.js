@@ -197,7 +197,7 @@ $(function () {
         }
     });
 
-    $('.lgbDropdown').lgbDropdown();
+    $('[data-toggle="dropdown"].dropdown-select').dropdown('select');
 
     // load widget data
     $.reloadWidget();
