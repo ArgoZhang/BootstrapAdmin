@@ -110,8 +110,10 @@
             <li><a href="~/Account/Logout"><i class="fa fa-key"></i>注销</a></li>
         </ul>
     </div>
-    <ul class="breadcrumb">
-        <li><a href="@Url.Content(Model.HomeUrl)"><i class="fa fa-home"></i>首页</a></li>
-        <li id="breadNav"></li>
-    </ul>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Content(Model.HomeUrl)"><i class="fa fa-home"></i>首页</a></li>
+            <li class="breadcrumb-item d-none" id="breadNav"></li>
+        </ol>
+    </nav>
 </header>

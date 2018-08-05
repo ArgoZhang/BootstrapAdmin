@@ -169,7 +169,7 @@ $(function () {
 
     // breadcrumb
     var arch = $('#nav-accordion').find('a.active').last();
-    $breadNav.text(arch.text() || $('title').text());
+    if (arch.text() !== "") $breadNav.removeClass('d-none').text(arch.text());
     var top = (arch.offset() || { top: 0 }).top;
     if (top > 0) {
         var middle = $('header').outerHeight() + $sidebar.outerHeight() / 2;

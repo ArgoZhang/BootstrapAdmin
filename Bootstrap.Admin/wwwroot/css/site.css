@@ -412,26 +412,8 @@ a, a:hover, a:focus {
     padding: 7.5px 10px;
 }
 
-    .breadcrumb li {
-        padding-right: 5px;
-    }
-
-        .breadcrumb li.active {
-            display: inline-block;
-        }
-
-        .breadcrumb li.load {
-            display: none;
-        }
-
     .breadcrumb i {
         padding-right: 6px;
-    }
-
-    .breadcrumb li + li:before {
-        padding: 0 5px;
-        color: #ccc;
-        content: "/\00a0";
     }
 
 .content-body {
