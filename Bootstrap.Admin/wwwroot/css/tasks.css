@@ -29,7 +29,6 @@
 
     .tasks-widget .task-list > li {
         position: relative;
-        font-size: 0.75rem;
     }
 
     .tasks-widget .task-list li.last-line {
@@ -54,7 +53,7 @@
             position: absolute;
             left: 190px;
             right: 84px;
-            top: 15px;
+            top: 14px;
             display: none;
         }
 
@@ -118,7 +117,7 @@
     .tasks-widget .task-list li .task-title .task-title-sp {
         margin-right: 5px;
         max-width: 120px;
-        margin-top: 15px;
+        margin-top: 14px;
     }
 
     .tasks-widget .task-list li.task-done .task-title-sp {
@@ -150,8 +149,9 @@
     .tasks-widget .task-list li i {
         position: absolute;
         left: 6px;
-        padding: 17px 10px;
+        padding: 16px 10px;
         cursor: pointer;
+        margin-top: 2px;
     }
 
 #sortable {
@@ -169,7 +169,6 @@
 }
 
 .ui-sortable li.title {
-    font-size: 14px;
     color: #0077de;
     background-color: #b5f1b6;
     padding: 10px 15px;
