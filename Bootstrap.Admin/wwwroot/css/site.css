@@ -444,3 +444,56 @@ label.dropdown-item:first-child {
 .btn-xs {
     padding: 1px 5px;
 }
+
+.cache-title {
+    font-weight: bold;
+    color: #0077de;
+    background-color: #b5f1b6;
+    padding: 10px 15px;
+    border-radius: 4px 4px 0 0;
+}
+
+.cache-item {
+    display: flex;
+    align-items: center;
+    padding: 4px 4px 10px 4px;
+}
+
+    .cache-item:last-child {
+        margin-bottom: 5px;
+    }
+
+    .cache-item :not(:first-child) {
+        margin-left: 10px;
+        display: flex;
+    }
+
+    .cache-item :nth-child(2) {
+        flex: 1 1 auto;
+    }
+
+        .cache-item :nth-child(2) span:not(.badge) {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            display: inline-block;
+            width: 152px;
+        }
+
+    .cache-item :nth-child(3) {
+        flex: 1 1 auto;
+        display: none;
+    }
+
+    .cache-item .badge {
+        display: inline-block;
+        position: relative;
+        top: -12px;
+        margin-left: 4px;
+        line-height: normal;
+    }
+
+    .cache-item .btn {
+        margin-left: 5px;
+        font-size: 0.75rem;
+    }

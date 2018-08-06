@@ -2,6 +2,17 @@
     .notify-row {
         display: inline-block;
     }
+
+    .cache-item :nth-child(2) {
+        flex: 0 0 auto;
+    }
+
+    .cache-item :nth-child(3) {
+        display: block;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
 }
 
 @media (min-width: 736px) {

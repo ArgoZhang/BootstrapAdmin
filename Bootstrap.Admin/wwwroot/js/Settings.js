@@ -70,49 +70,13 @@
                             swal: false,
                             callback: function (result) {
                                 if ($.isArray(result)) {
-                                    var html = '<li class="{4}"><i class="fa fa-ellipsis-v"></i><div class="task-title"><span class="task-title-sp" data-toggle="tooltip" title="{2}">{2}</span><span class="badge badge-pill badge-success">{0}</span><span class="task-value" title="{3}">{3}</span><div class="pull-right hidden-phone"><span>{7}</span><button class="btn btn-danger btn-xs fa fa-trash-o" title="{1}" data-url="{5}?cacheKey={1}" data-toggle="tooltip" data-self="{6}" data-placement="left"></button></div></div></li>';
+                                    var html = '<div class="cache-item"><i class="fa fa-ellipsis-v"></i><div><span data-toggle="tooltip" title="{2}">{2}</span><span class="badge badge-pill badge-success">{0}</span></div><span title="{3}">{3}</span><div><span>{7}</span><button class="btn btn-danger btn-xs" title="{1}" data-url="{5}?cacheKey={1}" data-toggle="tooltip" data-self="{6}" data-placement="left"><i class="fa fa-trash-o"></i></button></div></div>';
                                     var content = result.sort(function (x, y) {
                                         return x.Key > y.Key ? 1 : -1;
                                     }).map(function (ele) {
-                                        var key = ele.Key.split('-')[0];
-                                        var css = 'list-default';
-                                        switch (key) {
-                                            case "MenuHelper":
-                                                css = 'list-primary';
-                                                break;
-                                            case "UserHelper":
-                                                css = 'list-success';
-                                                break;
-                                            case "RoleHelper":
-                                                css = 'list-danger';
-                                                break;
-                                            case "GroupHelper":
-                                                css = 'list-warning';
-                                                break;
-                                            case "LogHelper":
-                                                css = 'list-info';
-                                                break;
-                                            case "DictHelper":
-                                                css = 'list-inverse';
-                                                break;
-                                            case "ExceptionHelper":
-                                                css = 'list-Exception';
-                                                break;
-                                            case "MessageHelper":
-                                                css = 'list-Message';
-                                                break;
-                                            case "TaskHelper":
-                                                css = 'list-Task';
-                                                break;
-                                            case "NotificationHelper":
-                                                css = 'list-Notification';
-                                                break;
-                                            default:
-                                                break;
-                                        }
-                                        return $.format(html, ele.Interval, ele.Key, ele.Desc, ele.Value, css, $.format(item.Url, ele.Key), item.Self, Math.max(0, ele.Interval - Math.round((new Date() - new Date(ele.CreateTime.replace(/-/g, '/'))) / 1000)));
+                                        return $.format(html, ele.Interval, ele.Key, ele.Desc, ele.Value, '', $.format(item.Url, ele.Key), item.Self, Math.max(0, ele.Interval - Math.round((new Date() - new Date(ele.CreateTime.replace(/-/g, '/'))) / 1000)));
                                     }).join('');
-                                    $sortable.append($.format('<li class="title">{0}</li>', item.Desc));
+                                    $sortable.append($.format('<h6 class="cache-title">{0}</h6>', item.Desc));
                                     $sortable.append(content);
                                     $sortable.find('[data-toggle="tooltip"]').tooltip();
                                 }
@@ -136,7 +100,7 @@
     $('a[data-method]').on('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
-        var $this = $(this);
+        var $this = $(this).tooltip('hide');
         var options = {};
         switch ($this.attr('data-method')) {
             case 'clear':
