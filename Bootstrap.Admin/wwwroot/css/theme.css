@@ -2,6 +2,16 @@
     font-size: 0.875rem;
 }
 
+    .form-control:focus {
+        border-color: #66afe9;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6);
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6);
+    }
+
+.btn:focus {
+    box-shadow: none !important;
+}
+
 .tooltip-inner {
     max-width: 768px;
 }
@@ -60,10 +70,6 @@ input.pending {
     display: none;
 }
 
-input[data-valid="true"] {
-    padding-right: 30px;
-}
-
 .form-check-label {
     cursor: pointer;
 }
@@ -109,6 +115,20 @@ input[data-valid="true"] {
     border: 1px dashed #999;
 }
 
-.form-inline .form-row, .form-inline .row {
-    width: 100%;
+.form-row, .row {
+    flex: 1 1 auto;
+}
+
+[data-toggle="LgbValidate"] input[type="text"], [data-toggle="LgbValidate"] input[type="password"] {
+    padding-right: 30px;
+}
+
+.was-validated .form-control:invalid:focus, .form-control.is-invalid:focus, .was-validated .custom-select:invalid:focus, .custom-select.is-invalid:focus {
+    border-color: #dc3545;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(220, 53, 69,.6);
+}
+
+.was-validated .form-control:valid:focus, .form-control.is-valid:focus, .was-validated .custom-select:valid:focus, .custom-select.is-valid:focus {
+    border-color: #28a745;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(40, 167, 69,.6);
 }
