@@ -74,7 +74,7 @@
                     var element = document.getElementById(name);
                     var $element = $(element);
                     that.tooltip.call(that, element, false);
-                    $element.tooltip('show');
+                    $element.attr('data-original-title', errors[name]).tooltip('show');
                 }
             },
             defaultMessage: function (element, rule) {
@@ -181,7 +181,7 @@
         for (var rule in methods) {
             if ($.isFunction($.validator.methods[rule])) {
                 result = $.validator.methods[rule].call(this.options, $this.val(), element, methods[rule]);
-                if (!result || result === "pending") {
+                if (!result) {
                     $this.attr('data-original-title', this.defaultMessage(element, { method: rule, parameters: methods[rule] }));
                     break;
                 }
