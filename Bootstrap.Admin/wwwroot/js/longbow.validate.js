@@ -112,14 +112,13 @@
     Validate.DEFAULTS = {
         validClass: 'is-valid',
         errorClass: 'is-invalid',
+        ignoreClass: '.ignore',
         childClass: '[data-valid="true"]',
         validResult: 'data-valid-result'
     };
 
     Validate.prototype.defaults = function () {
         return $.extend(Validate.DEFAULTS, {
-            validClass: this.$element.attr('data-validclass'),
-            errorClass: this.$element.attr('data-errorclass'),
             validButtons: this.$element.attr('data-valid-button'),
             modal: this.$element.attr('data-valid-modal')
         });
@@ -139,7 +138,7 @@
         var op = this.options;
         var $firstElement = null;
 
-        this.$element.find(this.options.childClass + ':visible').each(function () {
+        this.$element.find(op.childClass + ':visible').not(op.ignoreClass).each(function () {
             if (!that.validElement(this) && $firstElement == null) $firstElement = $(this);
         });
         if ($firstElement) $firstElement.tooltip('show');
