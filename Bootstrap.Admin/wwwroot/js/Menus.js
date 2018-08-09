@@ -91,7 +91,7 @@
             {
                 title: "菜单图标", field: "Icon", sortable: false, align: 'center', formatter: function (value, row, index) {
                     if (value) {
-                        return $.format('<i class="text-primary {0}"></i>', value);
+                        return $.format('<i class="text-info {0}"></i>', value);
                     }
                     return "";
                 }
