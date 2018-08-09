@@ -49,8 +49,8 @@
     });
 
     $.extend({
-        pullNotification: function () {
-            if ($('.notify-row').length == 0) return;
+        pullNotification: function (nav) {
+            if (nav.length == 0) return;
 
             var uri = "ws://" + window.location.host + $.formatUrl("WS");
             var socket = new WebSocket(uri);
@@ -68,23 +68,26 @@
                             break;
                     }
                 };
-                if (result.length > 0) $.reloadWidget();
+                if (result.length > 0) nav.reloadWidget();
             };
-        },
+        }
+    });
+    $.fn.extend({
         reloadWidget: function () {
-            if ($('.notify-row').length == 0) return;
+            if (this.length === 0) return this;
+            var that = this;
             $.bc({
                 url: Notifications.url,
                 swal: false,
                 method: 'GET',
                 callback: function (result) {
                     $('#logoutNoti').text(result.NewUsersCount);
-                    $('.notify-row').resetWidget();
+                    that.resetWidget();
                     // tasks
                     // new users
                     $('#msgHeaderTask').text(result.TasksCount);
                     $('#msgHeaderTaskBadge').text(result.TasksCount);
-                    var htmlUserTemplate = '<li><a href="../Admin/Tasks?id={3}"><span class="desc">{0}-{2}</span><span class="percent">{1}%</span></span><div class="progress progress-striped"><div class="progress-bar" role="progressbar" aria-valuenow="{1}" aria-valuemin="0" aria-valuemax="100" style="width: {1}%"><span class="sr-only">{1}% 完成</span></div></div></a></li>';
+                    var htmlUserTemplate = '<a class="dropdown-item" href="../Admin/Tasks?id={3}"><span class="desc">{0}-{2}</span><span class="percent">{1}%</span></span><div class="progress progress-striped"><div class="progress-bar" role="progressbar" aria-valuenow="{1}" aria-valuemin="0" aria-valuemax="100" style="width: {1}%"><span class="sr-only">{1}% 完成</span></div></div></a>';
                     var html = result.Tasks.map(function (u) {
                         return $.format(htmlUserTemplate, u.TaskName, u.TaskProgress, u.AssignDisplayName, u.Id);
                     }).join('');
@@ -102,7 +105,7 @@
                     // apps
                     $('#msgHeaderApp').text(result.AppExceptionsCount);
                     $('#msgHeaderAppBadge').text(result.AppExceptionsCount);
-                    htmlUserTemplate = '<li><a href="../Admin/Exceptions"><span class="label label-warning"><i class="fa fa-bug"></i></span><div title="{1}" class="content">{0}</div><span class="small italic">{2}</span></a></li>';
+                    htmlUserTemplate = '<a class="dropdown-item" href="../Admin/Exceptions"><span class="label label-warning"><i class="fa fa-bug"></i></span><div title="{1}" class="content">{0}</div><span class="small italic">{2}</span></a>';
                     html = result.Apps.map(function (u) {
                         return $.format(htmlUserTemplate, u.ExceptionType, u.Message, u.Period);
                     }).join('');
@@ -111,7 +114,7 @@
                     // dbs
                     $('#msgHeaderDb').text(result.DbExceptionsCount);
                     $('#msgHeaderDbBadge').text(result.DbExceptionsCount);
-                    htmlUserTemplate = '<li><a href="../Admin/Exceptions"><span class="label label-danger"><i class="fa fa-bolt"></i></span><div title="{1}" class="content">{0}</div><span class="small italic">{2}</span></a></li>';
+                    htmlUserTemplate = '<a class="dropdown-item" href="../Admin/Exceptions"><span class="label label-danger"><i class="fa fa-bolt"></i></span><div title="{1}" class="content">{0}</div><span class="small italic">{2}</span></a>';
                     html = result.Dbs.map(function (u) {
                         return $.format(htmlUserTemplate, u.ErrorPage, u.Message, u.Period);
                     }).join('');
@@ -127,6 +130,7 @@
                     $(html).insertAfter($('#msgHeaderMsgContent'));
                 }
             });
+            return this;
         }
     });
 })(jQuery);
@@ -200,6 +204,5 @@ $(function () {
     $('[data-toggle="dropdown"].dropdown-select').dropdown('select');
 
     // load widget data
-    $.reloadWidget();
-    $.pullNotification();
+    $.pullNotification($('.header .nav').reloadWidget());
 });

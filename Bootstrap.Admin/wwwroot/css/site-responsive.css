@@ -1,6 +1,6 @@
 @media (min-width: 568px) {
-    .notify-row {
-        display: inline-block;
+    .sidebar-toggle-box span {
+        display: inline;
     }
 
     .cache-item :nth-child(2) {
@@ -15,21 +15,24 @@
     }
 }
 
-@media (min-width: 736px) {
-    .sidebar-toggle-box span {
-        display: inline;
-    }
-}
-
 @media (min-width: 768px) {
     html, body {
         height: 100%;
         overflow: hidden;
     }
 
+    .sidebar-toggle-box {
+        flex: 0 1 auto;
+    }
+
     .header {
         border-bottom: none;
     }
+
+        .header .nav {
+            display: flex;
+            flex: 1 1 auto;
+        }
 
     .header, .site-footer {
         position: fixed;

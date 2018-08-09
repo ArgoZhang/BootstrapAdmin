@@ -1,114 +1,108 @@
 ﻿@model Bootstrap.Admin.Models.HeaderBarModel
 <header class="header">
-    <div class="bg">
-    </div>
-    <a id="navbar" href="#" class="sidebar-toggle-box">
-        <i class="fa fa-bars"></i>
-        <span id="websiteTitle">@Model.Title</span>
-    </a>
-    @if (User.IsInRole("Administrators"))
-    {
-        <ul class="notify-row">
-            <!-- tasks start -->
-            <li class="dropdown">
-                <a data-toggle="dropdown" href="#">
-                    <i class="fa fa-tasks"></i>
-                    <span id="msgHeaderTaskBadge" class="badge badge-pill bg-success"></span>
-                </a>
-                <ul class="dropdown-menu tasks-bar">
-                    <li class="notify-arrow notify-arrow-green"></li>
-                    <li id="msgHeaderTaskContent">
-                        <p>您有 <span id="msgHeaderTask">0</span> 个未完成的任务</p>
-                    </li>
-                    <li>
-                        <a href="~/Admin/Tasks">查看所有任务</a>
-                    </li>
-                </ul>
-            </li>
-            <!-- tasks end -->
-            <!-- message dropdown start-->
-            <li class="dropdown">
-                <a data-toggle="dropdown" href="#">
-                    <i class="fa fa-envelope"></i>
-                    <span id="msgHeaderMsgBadge" class="badge badge-pill bg-important"></span>
-                </a>
-                <ul class="dropdown-menu inbox">
-                    <li class="notify-arrow notify-arrow-red"></li>
-                    <li id="msgHeaderMsgContent">
-                        <p>您有 <span id="msgHeaderMsg">0</span> 个未读的消息</p>
-                    </li>
-                    <li>
-                        <a href="~/Admin/Messages">查看所有消息</a>
-                    </li>
-                </ul>
-            </li>
-            <!-- message dropdown end -->
-            <!-- users dropdown start-->
-            <li class="dropdown">
-                <a data-toggle="dropdown" href="#">
-                    <i class="fa fa-user-plus"></i>
-                    <span id="msgHeaderUserBadge" class="badge badge-pill bg-user"></span>
-                </a>
-                <ul class="dropdown-menu users">
-                    <li class="notify-arrow notify-arrow-user"></li>
-                    <li id="msgHeaderUserContent">
-                        <p>您有 <span id="msgHeaderUser">0</span> 条新用户通知</p>
-                    </li>
-                    <li>
-                        <a href="~/Admin/Notifications">查看所有通知</a>
-                    </li>
-                </ul>
-            </li>
-            <!-- users dropdown end -->
-            <!-- apps dropdown start-->
-            <li class="dropdown">
-                <a data-toggle="dropdown" href="#">
-                    <i class="fa fa-bug"></i>
-                    <span id="msgHeaderAppBadge" class="badge badge-pill bg-warning"></span>
-                </a>
-                <ul class="dropdown-menu notification">
-                    <li class="notify-arrow notify-arrow-yellow"></li>
-                    <li id="msgHeaderAppContent">
-                        <p>您有 <span id="msgHeaderApp">0</span> 条程序异常通知</p>
-                    </li>
-                    <li>
-                        <a href="~/Admin/Exceptions">查看所有异常</a>
-                    </li>
-                </ul>
-            </li>
-            <!-- apps dropdown end -->
-            <!-- db dropdown start-->
-            <li class="dropdown">
-                <a data-toggle="dropdown" href="#">
-                    <i class="fa fa-database"></i>
-                    <span id="msgHeaderDbBadge" class="badge badge-pill bg-db"></span>
-                </a>
-                <ul class="dropdown-menu dbs">
-                    <li class="notify-arrow notify-arrow-db"></li>
-                    <li id="msgHeaderDbContent">
-                        <p>您有 <span id="msgHeaderDb">0</span> 条数据库异常通知</p>
-                    </li>
-                    <li>
-                        <a href="~/Admin/Exceptions">查看所有异常</a>
-                    </li>
-                </ul>
-            </li>
-            <!-- db dropdown end -->
-        </ul>
-    }
-    <div class="dropdown">
-        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-            <img id="headerIcon" alt="" src="@Url.Content(Model.Icon)">
-            <span id="userDisplayName" data-userName="@Model.UserName" class="username">@Model.DisplayName</span>
-            <b class="caret"></b>
+    <div class="bg"></div>
+    <div class="d-flex align-items-center">
+        <a id="navbar" href="#" class="sidebar-toggle-box">
+            <i class="fa fa-bars"></i>
+            <span id="websiteTitle">@Model.Title</span>
         </a>
-        <ul class="dropdown-menu dropdown-menu-right">
-            <li></li>
-            <li><a href="~/Admin/Profiles"><i class=" fa fa-suitcase"></i>个人中心</a></li>
-            <li><a href="~/Admin/Index"><i class="fa fa-cog"></i>设置</a></li>
-            <li><a href="~/Admin/Notifications"><i class="fa fa-bell"></i>通知<span id="logoutNoti" class="badge badge-pill"></span></a></li>
-            <li><a href="~/Account/Logout"><i class="fa fa-key"></i>注销</a></li>
-        </ul>
+        @if (User.IsInRole("Administrators"))
+        {
+            <div class="nav">
+                <!-- tasks start -->
+                <div class="dropdown">
+                    <a data-toggle="dropdown" class="shadow-primary" href="#">
+                        <i class="fa fa-tasks"></i>
+                        <span id="msgHeaderTaskBadge" class="badge badge-pill badge-primary"></span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-arrow arrow-primary"></div>
+                        <div id="msgHeaderTaskContent" class="dropdown-header bg-primary">您有 <span id="msgHeaderTask">0</span> 个未完成的任务</div>
+                        <div class="dropdown-footer">
+                            <a href="~/Admin/Tasks">查看所有任务</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- tasks end -->
+                <!-- message dropdown start-->
+                <div class="dropdown">
+                    <a data-toggle="dropdown" class="shadow-info" href="#">
+                        <i class="fa fa-envelope"></i>
+                        <span id="msgHeaderMsgBadge" class="badge badge-pill badge-info"></span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-arrow arrow-info"></div>
+                        <div id="msgHeaderMsgContent" class="dropdown-header bg-info">您有 <span id="msgHeaderMsg">0</span> 个未读的消息</div>
+                        <div class="dropdown-footer">
+                            <a href="~/Admin/Messages">查看所有消息</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- message dropdown end -->
+                <!-- users dropdown start-->
+                <div class="dropdown">
+                    <a data-toggle="dropdown" class="shadow-success" href="#">
+                        <i class="fa fa-user-plus"></i>
+                        <span id="msgHeaderUserBadge" class="badge badge-pill badge-success"></span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-arrow arrow-success"></div>
+                        <div id="msgHeaderUserContent" class="dropdown-header bg-success">您有 <span id="msgHeaderUser">0</span> 条新用户通知</div>
+                        <div class="dropdown-footer">
+                            <a href="~/Admin/Notifications">查看所有通知</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- users dropdown end -->
+                <!-- apps dropdown start-->
+                <div class="dropdown">
+                    <a data-toggle="dropdown" class="shadow-warning" href="#">
+                        <i class="fa fa-bug"></i>
+                        <span id="msgHeaderAppBadge" class="badge badge-pill badge-warning"></span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-arrow arrow-warning"></div>
+                        <div id="msgHeaderAppContent" class="dropdown-header bg-warning">您有 <span id="msgHeaderApp">0</span> 条程序异常通知</div>
+                        <div class="dropdown-footer">
+                            <a href="~/Admin/Exceptions">查看所有异常</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- apps dropdown end -->
+                <!-- db dropdown start-->
+                <div class="dropdown">
+                    <a data-toggle="dropdown" class="shadow-danger" href="#">
+                        <i class="fa fa-database"></i>
+                        <span id="msgHeaderDbBadge" class="badge badge-pill badge-danger"></span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-arrow arrow-danger"></div>
+                        <div id="msgHeaderDbContent" class="dropdown-header bg-danger">您有 <span id="msgHeaderDb">0</span> 条数据库异常通知</div>
+                        <div class="dropdown-footer">
+                            <a href="~/Admin/Exceptions">查看所有异常</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- db dropdown end -->
+            </div>
+        }
+        <div class="dropdown userinfo">
+            <a data-toggle="dropdown" class="dropdown-toggle shadow-default" href="#">
+                <img id="headerIcon" alt="" src="@Url.Content(Model.Icon)">
+                <span id="userDisplayName" data-userName="@Model.UserName" class="username">@Model.DisplayName</span>
+                <b class="caret"></b>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right">
+                <div class="dropdown-item">
+                    <a href="~/Admin/Profiles"><i class=" fa fa-suitcase"></i>个人中心</a>
+                    <a href="~/Admin/Index"><i class="fa fa-cog"></i>设置</a>
+                    <a href="~/Admin/Notifications"><i class="fa fa-bell"></i>通知<span id="logoutNoti" class="badge badge-pill badge-success"></span></a>
+                </div>
+                <div class="dropdown-item">
+                    <a href="~/Account/Logout"><i class="fa fa-key"></i>注销</a>
+                </div>
+            </div>
+        </div>
     </div>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
