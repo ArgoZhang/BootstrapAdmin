@@ -21,6 +21,10 @@
     .modal-lg {
         max-width: calc(90%);
     }
+
+    .btn-fill {
+        width: auto;
+    }
 }
 
 @media (min-width: 940px) {
