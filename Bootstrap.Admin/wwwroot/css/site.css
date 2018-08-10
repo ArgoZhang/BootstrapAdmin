@@ -161,8 +161,7 @@ a, a:hover, a:focus {
         text-align: center;
         color: #777;
         padding: 15px 10px;
-        width: 33.333%;
-        flex: 1 1 auto;
+        flex: 1 1 33.333%;
     }
 
         .userinfo .dropdown-item a i {
@@ -180,7 +179,6 @@ a, a:hover, a:focus {
             border-radius: 0 0 0.15rem 0.15rem;
             background: #a9d96c;
             background-image: linear-gradient(to bottom, #a9d96c 0%, #799e51 100%);
-            width: 100%;
         }
 
 .userinfo .badge {
