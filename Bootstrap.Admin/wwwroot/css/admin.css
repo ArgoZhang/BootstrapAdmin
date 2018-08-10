@@ -177,29 +177,19 @@ aside {
     line-height: 34px;
 }
 
-    .toolbar .dropdown-menu {
-        margin-top: 4px;
-        min-width: inherit;
+    .toolbar .dropdown-menu a {
+        padding: 0 14px;
+        display: table-cell;
+        color: #504d4d;
     }
 
-        .toolbar .dropdown-menu a {
-            border-left: none;
-            padding: 0 14px;
-            display: table-cell;
-            color: #504d4d;
+        .toolbar .dropdown-menu a:not(:first-child) {
+            border-left: solid 1px #aeb2b7;
         }
 
-            .toolbar .dropdown-menu a:first-child {
-                padding-left: 16px;
-            }
-
-            .toolbar .dropdown-menu a:last-child {
-                padding-right: 16px;
-            }
-
-            .toolbar .dropdown-menu a:hover {
-                color: #235e90;
-            }
+        .toolbar .dropdown-menu a:hover {
+            color: #235e90;
+        }
 
 /*Messages*/
 .mail-box {
