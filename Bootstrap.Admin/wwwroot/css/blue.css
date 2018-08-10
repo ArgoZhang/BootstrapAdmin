@@ -2,9 +2,13 @@
     border: 1px solid #5198cb;
 }
 
-    .card .card-header, .modal-header {
-        background-color: #5899c8;
-        border-color: #3581b8;
+.card-header, .modal-header {
+    background-color: #5899c8;
+    border-color: #3581b8;
+    color: #fff;
+}
+
+    .card-header a, .modal-header a {
         color: #fff;
     }
 
