@@ -8,7 +8,6 @@
     margin: 0;
     padding: 0;
     list-style: none;
-    font-size: 13px;
     line-height: 20px;
 }
 
@@ -36,7 +35,6 @@
     margin: 0;
     padding: 0;
     min-height: 20px;
-    font-size: 13px;
     line-height: 20px;
 }
 
@@ -78,7 +76,6 @@
     overflow: hidden;
     border: 0;
     background: transparent;
-    font-size: 12px;
     line-height: 1;
     text-align: center;
     font-weight: bold;
@@ -164,27 +161,24 @@
         cursor: pointer;
     }
 
-        .dd3-content label span {
-            position: absolute;
+        .dd3-content label span.active {
+            color: darkred;
         }
 
-            .dd3-content label span.active {
-                color: darkred;
-            }
-
-            .dd3-content label span i {
-                width: 22px;
-                display: inline-block;
-                text-align: center;
-                margin-right: 4px;
-            }
+        .dd3-content label span i {
+            width: 22px;
+            display: inline-block;
+            text-align: center;
+            margin-right: 4px;
+        }
 
         .dd3-content label input {
             margin-right: 10px;
             cursor: pointer;
+            margin-top: 4px;
         }
 
-    .dd3-content > span {
+    .dd3-content span {
         position: absolute;
         top: 6px;
     }
