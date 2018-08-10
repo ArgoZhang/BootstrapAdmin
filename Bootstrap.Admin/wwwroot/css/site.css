@@ -196,7 +196,18 @@ a, a:hover, a:focus {
     left: 0;
     bottom: 0;
     right: 0;
-    white-space: nowrap;
+    display: flex;
+}
+
+    .site-footer > span {
+        flex: 1 1 auto;
+        text-align: center;
+        margin-left: 4px;
+    }
+
+.fixed {
+    position: fixed;
+    z-index: 100;
 }
 
 .go-top {
@@ -205,8 +216,10 @@ a, a:hover, a:focus {
     height: 20px;
     border-radius: 50%;
     -webkit-border-radius: 50%;
-    position: absolute;
-    right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 4px;
 }
 
     .go-top:hover {
