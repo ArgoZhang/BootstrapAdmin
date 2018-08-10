@@ -78,6 +78,7 @@ namespace Bootstrap.Admin.Controllers
         /// </summary>
         /// <returns></returns>
         [AllowAnonymous]
+        [ResponseCache(Duration = 600)]
         public PartialViewResult IconView()
         {
             return PartialView("IconView");
