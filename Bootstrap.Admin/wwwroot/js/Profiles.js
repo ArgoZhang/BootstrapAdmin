@@ -66,4 +66,5 @@
     if ($('[enctype="multipart/form-data"]').is(":hidden")) {
         $('.card-img').removeClass('d-none');
     }
+    $('#css').dropdown('val');
 });
