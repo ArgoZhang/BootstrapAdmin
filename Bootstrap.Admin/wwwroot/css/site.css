@@ -327,3 +327,7 @@ label.dropdown-item:first-child {
         font-size: 0.75rem;
         padding: 1px 5px;
     }
+
+.card-img {
+    max-width: 258px;
+}

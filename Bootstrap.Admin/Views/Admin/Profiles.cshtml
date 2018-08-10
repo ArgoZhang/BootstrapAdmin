@@ -78,27 +78,26 @@
 <div class="card">
     <div class="card-header">网站皮肤</div>
     <div class="card-body">
-        <form class="form-inline">
-            <div class="form-row">
-                <div class="form-group">
-                    <label class="control-label" for="userName">样式</label>
-                    <select id="css" class="select form-control">
-                        <option value="">默认样式</option>
-                        @foreach (var css in Model.Themes)
+        <div class="form-group">
+            <div class="btn-group" role="group">
+                <button id="dictCssDefine" class="btn btn-success dropdown-select dropdown-toggle" data-toggle="dropdown" data-default-val="" value="@Model.Theme">默认样式</button>
+                <ul class="dropdown-menu" role="menu" id="cssContainer">
+                    <li><a href="#" data-val="">默认样式</a></li>
+                    @foreach (var css in Model.Themes)
+                    {
+                        if (css.Code == Model.Css)
                         {
-                            if (css.Code == Model.Css)
-                            {
-                                <option selected value="@css.Code">@css.Name</option>
-                            }
-                            else
-                            {
-                                <option value="@css.Code">@css.Name</option>
-                            }
+                            <li><a href="#" data-val="@css.Code">@css.Name</a></li>
                         }
-                    </select>
-                </div>
+                        else
+                        {
+                            <li><a href="#" data-val="@css.Code">@css.Name</a></li>
+                        }
+                    }
+
+                </ul>
             </div>
-        </form>
+        </div>
         <div class="modal-footer d-none" data-admin="@User.IsInRole("Administrators")">
             <button id="btnSaveCss" data-method="css" class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
         </div>
@@ -107,10 +106,11 @@
 <div class="card">
     <div class="card-header">修改头像</div>
     <div class="card-body">
-        <form enctype="multipart/form-data">
+        <form enctype="multipart/form-data" class="d-none" data-admin="@User.IsInRole("Administrators")">
             <div class="form-group">
                 <input id="fileIcon" class="file" type="file" data-init="@Model.Size">
             </div>
         </form>
+        <img class="card-img d-none" src="@Url.Content(Model.Icon)" />
     </div>
 </div>

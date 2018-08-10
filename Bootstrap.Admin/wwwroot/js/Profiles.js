@@ -62,5 +62,8 @@
                 break;
         }
     });
-    $('button[data-admin="False"]').removeClass('d-none');
+    $('[data-admin="False"]').removeClass('d-none');
+    if ($('[enctype="multipart/form-data"]').is(":hidden")) {
+        $('.card-img').removeClass('d-none');
+    }
 });
