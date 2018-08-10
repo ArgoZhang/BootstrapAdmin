@@ -38,6 +38,7 @@
 
     $('button[data-method]').on('click', function (e) {
         var $this = $(this);
+        if ($this.parent().attr("data-admin") === "True") return false;
         var data = bsa.dataEntity.get();
         switch ($this.attr('data-method')) {
             case 'password':
@@ -61,5 +62,5 @@
                 break;
         }
     });
-    $('button[data-admin="False"]').removeAttr('disabled');
+    $('button[data-admin="False"]').removeClass('d-none');
 });

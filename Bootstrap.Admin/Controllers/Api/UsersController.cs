@@ -33,16 +33,13 @@ namespace Bootstrap.Admin.Controllers.Api
         [HttpPut]
         public bool Put([FromBody]User value)
         {
+            if (User.IsInRole("Administrators")) return false;
+
+            var ret = false;
             if (value.UserStatus == 3)
             {
                 return UserHelper.SaveUserCssByName(value.UserName, value.Css);
             }
-            if (value.UserStatus == 9)
-            {
-                // vlaidate userName
-                return BootstrapUser.RetrieveUserByUserName(value.UserName) == null && !UserHelper.RetrieveNewUsers().Any(u => u.UserName == value.UserName);
-            }
-            var ret = false;
             if (value.UserName.Equals(User.Identity.Name, System.StringComparison.OrdinalIgnoreCase))
             {
                 if (value.UserStatus == 1)
