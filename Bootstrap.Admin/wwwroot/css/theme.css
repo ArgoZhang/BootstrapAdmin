@@ -114,6 +114,10 @@ input.pending {
 .card-body .bootstrap-table {
     margin-top: -10px;
 }
+
+.fixed-table-toolbar .dropdown-menu {
+    min-width: unset;
+}
 /*Bootstrap Table BUG END*/
 
 .file-drop-zone.clickable:hover {
