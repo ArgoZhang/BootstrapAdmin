@@ -3,11 +3,11 @@
         display: inline;
     }
 
-    .cache-item :nth-child(2) {
+    .cache-item > :nth-child(2) {
         flex: 0 0 auto;
     }
 
-    .cache-item :nth-child(3) {
+    .cache-item > :nth-child(3) {
         display: block;
         text-overflow: ellipsis;
         overflow: hidden;

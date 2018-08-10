@@ -258,10 +258,6 @@ label.dropdown-item:first-child {
     margin-top: 0.5rem;
 }
 
-.btn-xs {
-    padding: 1px 5px;
-}
-
 .cache-title {
     font-weight: bold;
     color: #0077de;
@@ -273,23 +269,25 @@ label.dropdown-item:first-child {
 .cache-item {
     display: flex;
     align-items: center;
-    padding: 4px 4px 10px 4px;
+    padding: 6px 4px 10px 4px;
+    margin-bottom: 4px;
+    border-bottom: 1px solid #EBEBEB;
 }
 
     .cache-item:last-child {
-        margin-bottom: 5px;
+        border-bottom: none;
     }
 
-    .cache-item :not(:first-child) {
+    .cache-item > :not(:first-child) {
         margin-left: 10px;
         display: flex;
     }
 
-    .cache-item :nth-child(2) {
+    .cache-item > :nth-child(2) {
         flex: 1 1 auto;
     }
 
-        .cache-item :nth-child(2) span:not(.badge) {
+        .cache-item > :nth-child(2) span:not(.badge) {
             text-overflow: ellipsis;
             overflow: hidden;
             white-space: nowrap;
@@ -297,20 +295,24 @@ label.dropdown-item:first-child {
             width: 152px;
         }
 
-    .cache-item :nth-child(3) {
+    .cache-item > :nth-child(3) {
         flex: 1 1 auto;
         display: none;
     }
 
+    .cache-item + .cache-title {
+        margin-top: 12px;
+    }
+
     .cache-item .badge {
-        display: inline-block;
         position: relative;
-        top: -12px;
-        margin-left: 4px;
+        top: -8px;
+        margin-left: 0;
         line-height: normal;
     }
 
     .cache-item .btn {
         margin-left: 5px;
         font-size: 0.75rem;
+        padding: 1px 5px;
     }
