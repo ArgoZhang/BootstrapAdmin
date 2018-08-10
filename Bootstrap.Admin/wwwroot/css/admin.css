@@ -99,6 +99,7 @@ aside {
         display: inline-block;
         background: url(../images/nav-expand.png) no-repeat;
         float: right;
+        margin-top: 3px;
     }
 
     .sidebar-menu .active .dcjq-icon {
