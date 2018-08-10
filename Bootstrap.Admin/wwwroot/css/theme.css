@@ -75,10 +75,11 @@ input.pending {
 }
 
 .form-check-input + span, .form-check-input + label {
-    max-width: 148px;
+    max-width: 98px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    display: inline-block;
 }
 
 /*Bootstrap Table BUG */
