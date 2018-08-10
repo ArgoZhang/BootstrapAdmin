@@ -117,19 +117,5 @@
         listCacheUrl();
     });
 
-    var $css = $('#dictCssDefine');
-    $.bc({
-        url: Dicts.css, swal: false,
-        callback: function (result) {
-            var html = result.map(function (ele, index) { return $.format('<li><a href="#" data-val="{1}">{0}</a></li>', ele.Name, ele.Code); }).join('');
-            $('#cssContainer').append(html);
-            $.bc({
-                url: Dicts.css, swal: false, method: 'get',
-                callback: function (result) {
-                    if (result.length > 0)
-                        $css.val(result).dropdown('val');
-                }
-            });
-        }
-    });
+    var $css = $('#dictCssDefine').dropdown('val');
 })

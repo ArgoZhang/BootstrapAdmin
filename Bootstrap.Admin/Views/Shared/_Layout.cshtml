@@ -1,4 +1,5 @@
-﻿@{
+﻿@model ModelBase
+@{
     Layout = "~/Views/Shared/_Root.cshtml";
 }
 @section css {
@@ -16,6 +17,10 @@
     <link href="~/css/theme-responsive.css" rel="stylesheet" />
     <link href="~/css/site.css" rel="stylesheet" />
     <link href="~/css/site-responsive.css" rel="stylesheet" />
+    @if (!string.IsNullOrEmpty(Model.Theme))
+    {
+        <link href="~/css/@Model.Theme" rel="stylesheet" />
+    }
 }
 @section javascript {
     <environment include="Development">

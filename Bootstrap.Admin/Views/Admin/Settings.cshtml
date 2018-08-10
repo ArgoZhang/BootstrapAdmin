@@ -1,4 +1,4 @@
-﻿@model Bootstrap.Admin.Models.NavigatorBarModel
+﻿@model Bootstrap.Admin.Models.ThemeModel
 @{
     ViewBag.Title = "网站设置";
     Layout = "~/Views/Shared/_Admin.cshtml";
@@ -48,9 +48,21 @@
         <form id="CssDataForm" class="form-inline">
             <div class="form-group">
                 <div class="dropdown">
-                    <button id="dictCssDefine" class="btn btn-success dropdown-select dropdown-toggle" data-toggle="dropdown" data-default-val="">默认样式</button>
+                    <button id="dictCssDefine" class="btn btn-success dropdown-select dropdown-toggle" data-toggle="dropdown" data-default-val="" value="@Model.Theme">默认样式</button>
                     <ul class="dropdown-menu" role="menu" id="cssContainer">
                         <li><a href="#" data-val="">默认样式</a></li>
+                        @foreach (var css in Model.Themes)
+                        {
+                            if (css.Code == Model.Css)
+                            {
+                                <li><a href="#" data-val="@css.Code">@css.Name</a></li>
+                            }
+                            else
+                            {
+                                <li><a href="#" data-val="@css.Code">@css.Name</a></li>
+                            }
+                        }
+
                     </ul>
                 </div>
                 <button class="btn btn-secondary" type="button" data-method="css">保存</button>

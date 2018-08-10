@@ -14,6 +14,7 @@ namespace Bootstrap.Admin.Models
         {
             Title = DictHelper.RetrieveWebTitle();
             Footer = DictHelper.RetrieveWebFooter();
+            Theme = DictHelper.RetrieveActiveTheme();
         }
         /// <summary>
         /// 
@@ -23,5 +24,9 @@ namespace Bootstrap.Admin.Models
         /// 
         /// </summary>
         public string Footer { get; private set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Theme { get; private set; }
     }
 }

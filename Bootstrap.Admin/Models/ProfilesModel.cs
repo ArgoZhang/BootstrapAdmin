@@ -10,16 +10,12 @@ namespace Bootstrap.Admin.Models
     /// <summary>
     /// 
     /// </summary>
-    public class ProfilesModel : NavigatorBarModel
+    public class ProfilesModel : ThemeModel
     {
         /// <summary>
         /// 获得/设置 头像文件大小
         /// </summary>
         public long Size { get; }
-        /// <summary>
-        /// 获得 系统配置的所有样式表
-        /// </summary>
-        public IEnumerable<BootstrapDict> Csss { get; }
         /// <summary>
         /// 
         /// </summary>
@@ -32,8 +28,6 @@ namespace Bootstrap.Admin.Models
             {
                 Size = new FileInfo(fileName).Length;
             }
-
-            Csss = DictHelper.RetrieveWebCss();
         }
     }
 }

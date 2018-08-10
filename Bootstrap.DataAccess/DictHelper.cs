@@ -163,7 +163,7 @@ namespace Bootstrap.DataAccess
         /// 获得系统中配置的可以使用的网站样式
         /// </summary>
         /// <returns></returns>
-        public static IEnumerable<BootstrapDict> RetrieveWebCss()
+        public static IEnumerable<BootstrapDict> RetrieveThemes()
         {
             var data = RetrieveDicts();
             return data.Where(d => d.Category == "网站样式");
@@ -172,10 +172,11 @@ namespace Bootstrap.DataAccess
         /// 获得网站设置中的当前样式
         /// </summary>
         /// <returns></returns>
-        public static IEnumerable<BootstrapDict> RetrieveActiveCss()
+        public static string RetrieveActiveTheme()
         {
             var data = RetrieveDicts();
-            return data.Where(d => d.Name == "使用样式" && d.Category == "当前样式" && d.Define == 0 && !d.Code.Equals("site.css", StringComparison.OrdinalIgnoreCase));
+            var theme = data.Where(d => d.Name == "使用样式" && d.Category == "当前样式" && d.Define == 0).FirstOrDefault();
+            return theme == null ? string.Empty : (theme.Code.Equals("site.css", StringComparison.OrdinalIgnoreCase) ? string.Empty : theme.Code);
         }
         /// <summary>
         /// 获取头像路径

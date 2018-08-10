@@ -89,7 +89,7 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public ActionResult Settings()
         {
-            return View(new NavigatorBarModel(this));
+            return View(new ThemeModel(this));
         }
 
         /// <summary>

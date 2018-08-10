@@ -257,8 +257,7 @@
 
     // Dicts
     Dicts = {
-        url: 'api/Dicts/',
-        css: 'api/Css/',
+        url: 'api/Dicts/'
     };
 
     // Profiles
@@ -373,14 +372,3 @@
         }
     });
 })(jQuery);
-
-$(function () {
-    // loading customer css
-    $.bc({
-        url: Dicts.css, swal: false, method: 'get',
-        callback: function (result) {
-            if (result.length > 0)
-                $('head').append($.format('<link href="{0}css/{1}" rel="stylesheet" type="text/css" />', $('#pathBase').attr('href'), result));
-        }
-    });
-});
