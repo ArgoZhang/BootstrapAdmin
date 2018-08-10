@@ -6,9 +6,9 @@
             <i class="fa fa-bars"></i>
             <span id="websiteTitle">@Model.Title</span>
         </a>
-        @if (User.IsInRole("Administrators"))
-        {
-            <div class="nav">
+        <div class="nav">
+            @if (User.IsInRole("Administrators"))
+            {
                 <!-- tasks start -->
                 <div class="dropdown">
                     <a data-toggle="dropdown" class="shadow-primary" href="#">
@@ -84,13 +84,12 @@
                     </div>
                 </div>
                 <!-- db dropdown end -->
-            </div>
-        }
+            }
+        </div>
         <div class="dropdown userinfo">
             <a data-toggle="dropdown" class="dropdown-toggle shadow-default" href="#">
                 <img id="headerIcon" alt="" src="@Url.Content(Model.Icon)">
                 <span id="userDisplayName" data-userName="@Model.UserName" class="username">@Model.DisplayName</span>
-                <b class="caret"></b>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
                 <div class="dropdown-item">
