@@ -24,6 +24,8 @@
 
     .btn-fill {
         width: auto;
+        align-self: flex-end;
+        margin-bottom: 2px;
     }
 }
 
