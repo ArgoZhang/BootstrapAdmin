@@ -24,18 +24,18 @@
     </form>
 }
 @section toolbar {
-    <button id="btn_assignRole" type="button" class="btn btn-warning">
-        <span class="fa fa-sitemap" aria-hidden="true"></span><span>指派角色</span>
-    </button>
     <button id="btn_assignGroup" type="button" class="btn btn-info">
-        <span class="fa fa-bank" aria-hidden="true"></span><span>指派部门</span>
+        <span class="fa fa-bank" aria-hidden="true"></span><span>分配部门</span>
+    </button>
+    <button id="btn_assignRole" type="button" class="btn btn-warning">
+        <span class="fa fa-sitemap" aria-hidden="true"></span><span>分配角色</span>
     </button>
     <div class="toolbar btn-group">
         <button class="btn dropdown-toggle" data-toggle="dropdown" type="button"><i class="fa fa-gear"></i></button>
         <div class="dropdown-menu">
             @await Html.PartialAsync("_ButtonBarGroup")
-            <a id="tb_assignRole" href="#" title="指派角色"><i class="fa fa-sitemap"></i></a>
-            <a id="tb_assignGroup" href="#" title="指派部门"><i class="fa fa-bank"></i></a>
+            <a id="tb_assignRole" href="#" title="分配角色"><i class="fa fa-sitemap"></i></a>
+            <a id="tb_assignGroup" href="#" title="分配部门"><i class="fa fa-bank"></i></a>
         </div>
     </div>
 }

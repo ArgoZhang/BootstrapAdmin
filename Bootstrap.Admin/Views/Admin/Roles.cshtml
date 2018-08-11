@@ -31,21 +31,21 @@
 }
 @section toolbar{
     <button id="btn_assignUser" type="button" class="btn btn-info">
-        <span class="fa fa-user" aria-hidden="true"></span><span>指派用户</span>
+        <span class="fa fa-user" aria-hidden="true"></span><span>分配用户</span>
     </button>
     <button id="btn_assignGroup" type="button" class="btn btn-warning">
-        <span class="fa fa-bank" aria-hidden="true"></span><span>指派部门</span>
+        <span class="fa fa-bank" aria-hidden="true"></span><span>分配部门</span>
     </button>
     <button id="btn_assignMenu" type="button" class="btn btn-secondary">
-        <span class="fa fa-dashboard" aria-hidden="true"></span><span>指派菜单</span>
+        <span class="fa fa-dashboard" aria-hidden="true"></span><span>分配菜单</span>
     </button>
     <div class="toolbar btn-group">
         <button class="btn dropdown-toggle" data-toggle="dropdown" type="button"><i class="fa fa-gear"></i></button>
         <div class="dropdown-menu">
             @await Html.PartialAsync("_ButtonBarGroup")
-            <a id="tb_assignUser" href="#" title="指派用户"><i class="fa fa-user"></i></a>
-            <a id="tb_assignGroup" href="#" title="指派部门"><i class="fa fa-bank"></i></a>
-            <a id="tb_assignMenu" href="#" title="指派菜单"><i class="fa fa-dashboard"></i></a>
+            <a id="tb_assignUser" href="#" title="分配用户"><i class="fa fa-user"></i></a>
+            <a id="tb_assignGroup" href="#" title="分配部门"><i class="fa fa-bank"></i></a>
+            <a id="tb_assignMenu" href="#" title="分配菜单"><i class="fa fa-dashboard"></i></a>
         </div>
     </div>
 }
