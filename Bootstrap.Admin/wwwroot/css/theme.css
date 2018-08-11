@@ -73,6 +73,10 @@ input.pending {
     display: inline;
 }
 
+.card-header a {
+    color: #797979;
+}
+
 .btn span:last-child {
     margin-left: 4px;
     display: none;
