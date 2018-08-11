@@ -50,16 +50,18 @@
     });
 
     var $sortable = $('#sortable');
+    var $refresh = $('a[data-method="refresh"]');
     var listCacheUrl = function (options) {
+        $refresh.addClass('fa-spin');
         options = $.extend({ clear: false }, options);
         $sortable.html('');
         $.bc({
             url: Settings.url,
             method: 'GET',
             swal: false,
-            callback: function (result) {
-                if (result && $.isArray(result)) {
-                    $.each(result, function (index, item) {
+            callback: function (urls) {
+                if (urls && $.isArray(urls)) {
+                    $.each(urls, function (index, item) {
                         if (options.clear) options.url = item.Url + "?clear=clear";
                         else options.url = item.Url;
                         $.bc({
@@ -80,10 +82,12 @@
                                     $sortable.append(content);
                                     $sortable.find('[data-toggle="tooltip"]').tooltip();
                                 }
+                                if (index == urls.length - 1) $refresh.removeClass('fa-spin');
                             }
                         });
                     });
                 }
+                else $refresh.removeClass('fa-spin');
             }
         });
     }
