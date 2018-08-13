@@ -148,6 +148,7 @@
     });
 
     $btnPickIcon.on('click', function () {
+        $dialogNew.find('[data-toggle="LgbValidate"] [aria-describedby]').tooltip('hide');
         $dialogNew.hide();
         $dialogIcon.show();
     });
@@ -193,6 +194,7 @@
 
     function showDialog() {
         state.push({ css: $('body').attr("class"), style: $('body').attr("style") });
+        $dialogNew.find('[data-toggle="LgbValidate"] [aria-describedby]').tooltip('hide');
         $dialogNew.hide();
         $dialogMenu.modal('show');
     };
