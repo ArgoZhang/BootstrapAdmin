@@ -282,7 +282,7 @@ CREATE TABLE [dbo].[Dicts](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
 	[Category] [nvarchar](50) NOT NULL,
 	[Name] [nvarchar](50) NOT NULL,
-	[Code] [nvarchar](50) NOT NULL,
+	[Code] [nvarchar](500) NOT NULL,
 	[Define] [int] NOT NULL,
  CONSTRAINT [PK_dbo.Dict] PRIMARY KEY CLUSTERED 
 (

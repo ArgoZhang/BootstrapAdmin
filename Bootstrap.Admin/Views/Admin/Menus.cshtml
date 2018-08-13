@@ -1,183 +1,167 @@
-﻿@model NavigatorBarModel
+﻿@model Bootstrap.Admin.Models.NavigatorBarModel
 @{
     ViewBag.Title = "菜单管理";
     Layout = "~/Views/Shared/_Default.cshtml";
 }
 @section css {
-    <link href="~/Content/fa.css" rel="stylesheet" />
-    <link href="~/Content/jquery.nestable.css" rel="stylesheet" />
+    <link href="~/css/fa.css" rel="stylesheet" />
+    <link href="~/css/jquery.nestable.css" rel="stylesheet" />
 }
 @section Javascript {
-    <script src="~/Scripts/jquery.nestable.js"></script>
-    <script src="~/scripts/Menus.js"></script>
+    <script src="~/js/jquery.nestable.js"></script>
+    <script src="~/js/Menus.js"></script>
 }
 @section query {
-    <form class="form-inline" role="form">
-        <div class="row">
-            <div class="form-group col-sm-12 col-md-6 col-lg-5">
+    <form class="form-inline">
+        <div class="form-row">
+            <div class="form-group col-sm-12 col-md-5">
                 <label class="control-label" for="txt_menus_name">菜单名称</label>
                 <input type="text" class="form-control" id="txt_menus_name" />
             </div>
-            <div class="form-group col-sm-12 col-md-6 col-lg-5">
+            <div class="form-group col-sm-12 col-md-5">
                 <label class="control-label" for="txt_parent_menus_name">父级菜单</label>
                 <input type="text" class="form-control" id="txt_parent_menus_name" />
             </div>
-            <div class="form-group col-sm-6 col-md-6 col-lg-5">
+            <div class="form-group col-6 col-md-5">
                 <label class="control-label" for="sel_menus_category">菜单类别</label>
-                <div class="dropdown lgbDropdown">
-                    <a id="sel_menus_category" class="btn btn-success" data-toggle="dropdown">
-                        <span>全部</span>
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="#" data-val="">全部</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#" data-val="0">系统菜单</a></li>
-                        <li><a href="#" data-val="1">外部菜单</a></li>
-                    </ul>
+                <div class="dropdown">
+                    <button id="sel_menus_category" class="btn btn-success dropdown-select dropdown-toggle" data-toggle="dropdown">全部</button>
+                    <div class="dropdown-menu">
+                        <a href="#" data-val="">全部</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" data-val="0">系统菜单</a>
+                        <a href="#" data-val="1">外部菜单</a>
+                    </div>
                 </div>
             </div>
-            <div class="form-group col-sm-6 col-md-6 col-lg-5">
+            <div class="form-group col-6 col-md-5">
                 <label class="control-label" for="sel_menus_category">菜单类型</label>
-                <div class="dropdown lgbDropdown">
-                    <a id="sel_menus_res" class="btn btn-success" data-toggle="dropdown">
-                        <span>全部</span>
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="#" data-val="">全部</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#" data-val="0">菜单</a></li>
-                        <li><a href="#" data-val="1">资源</a></li>
-                    </ul>
+                <div class="dropdown">
+                    <button id="sel_menus_res" class="btn btn-success dropdown-select dropdown-toggle" data-toggle="dropdown">全部</button>
+                    <div class="dropdown-menu">
+                        <a href="#" data-val="">全部</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" data-val="0">菜单</a>
+                        <a href="#" data-val="1">资源</a>
+                    </div>
                 </div>
             </div>
-            <div class="form-group col-lg-2">
-                <button type="button" id="btn_query" class="btn btn-primary form-control"><i class="fa fa-search" aria-hidden="true"></i><span>查询</span></button>
+            <div class="form-group col-md-2">
+                <button type="button" id="btn_query" class="btn btn-primary btn-fill"><i class="fa fa-search" aria-hidden="true"></i><span>查询</span></button>
             </div>
         </div>
     </form>
 }
 @section toolbar {
     <button id="btn_assignRole" type="button" class="btn btn-info">
-        <span class="fa fa-sitemap" aria-hidden="true"></span><span class="hidden-tb">指派角色</span>
+        <span class="fa fa-sitemap" aria-hidden="true"></span><span>分配角色</span>
     </button>
-    <div class="toolbar btn-group dropdown">
-        <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button"><i class="fa fa-gear"></i></button>
+    <div class="toolbar btn-group">
+        <button class="btn dropdown-toggle" data-toggle="dropdown" type="button"><i class="fa fa-gear"></i></button>
         <div class="dropdown-menu">
-            @Html.Partial("_ButtonBarGroup")
-            <a id="tb_assignRole" href="#" title="指派角色"><i class="fa fa-sitemap"></i></a>
+            @await Html.PartialAsync("_ButtonBarGroup")
+            <a id="tb_assignRole" href="#" title="分配角色"><i class="fa fa-sitemap"></i></a>
         </div>
     </div>
 }
 @section modal {
     <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">菜单编辑窗口</h4>
+        <h5 class="modal-title" id="myModalLabel">菜单编辑窗口</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
     <div class="modal-body">
-        <form class="form-inline" id="dataForm" name="dataForm" role="form">
-            <div class="row">
+        <form class="form-inline" id="dataForm">
+            <div class="form-row">
                 <div class="form-group col-sm-6">
-                    <input type="text" class="form-control hidden" id="menuID" name="menuID" />
+                    <input type="text" class="form-control d-none" id="menuID" name="menuID" data-default-val="0" />
                     <label class="control-label" for="name">菜单名称</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" id="name" name="name" placeholder="不可为空，50字以内" maxlength="50" />
-                        <span class="input-group-btn">
-                            <button data-method="clear" class="btn btn-default" type="button"><i class="fa fa-remove"></i></button>
-                            <button data-method="sel" class="btn btn-default" type="button"><i class="fa fa-edit"></i>全选</button>
-                        </span>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="不可为空，50字以内" maxlength="50" data-valid="true" />
+                        <div class="input-group-append">
+                            <button data-method="clear" class="btn" type="button"><i class="fa fa-remove"></i></button>
+                            <button data-method="sel" class="btn" type="button"><i class="fa fa-edit"></i>全选</button>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group col-sm-6">
-                    <input type="text" class="form-control hidden" id="parentId" name="parentId" />
+                    <input type="text" class="form-control d-none" id="parentId" data-default-val="0" />
                     <label class="control-label" for="parentName">父级菜单</label>
                     <div class="input-group">
                         <input type="text" class="form-control" readonly id="parentName" name="parentName" placeholder="请选择...(可为空)，50字以内" maxlength="50" />
-                        <span class="input-group-btn">
-                            <button data-method="clear" class="btn btn-default" type="button"><i class="fa fa-remove"></i></button>
-                            <button id="btnMenuParent" class="btn btn-default" type="button"><i class="fa fa-hand-o-up"></i>选择</button>
-                        </span>
+                        <div class="input-group-append">
+                            <button data-method="clear" class="btn" type="button"><i class="fa fa-remove"></i></button>
+                            <button id="btnMenuParent" class="btn" type="button"><i class="fa fa-hand-o-up"></i>选择</button>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group col-sm-6">
                     <label class="control-label" for="order">菜单序号</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" id="order" name="order" data-default-val="10" placeholder="默认为10" maxlength="8" />
-                        <span class="input-group-btn">
-                            <button data-method="clear" class="btn btn-default" type="button"><i class="fa fa-remove"></i></button>
-                            <button id="btnMenuOrder" class="btn btn-default" type="button"><i class="fa fa-list-ol"></i>调整</button>
-                        </span>
+                        <input type="text" class="form-control digits" id="order" name="order" data-default-val="10" placeholder="默认为10" maxlength="8" data-valid="true" />
+                        <div class="input-group-append">
+                            <button data-method="clear" class="btn" type="button"><i class="fa fa-remove"></i></button>
+                            <button id="btnMenuOrder" class="btn" type="button"><i class="fa fa-list-ol"></i>调整</button>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group col-sm-6">
                     <label class="control-label" for="icon">菜单图标</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" readonly id="icon" name="icon" data-default-val="fa fa-fa" placeholder="请选择...(可为空)，50字以内" maxlength="50" />
-                        <span class="input-group-btn">
-                            <button data-method="clear" class="btn btn-default" type="button"><i class="fa fa-remove"></i></button>
-                            <button id="btnIcon" class="btn btn-default" type="button"><i class="fa fa-dashboard"></i>选择</button>
-                        </span>
+                        <input type="text" class="form-control" readonly id="icon" data-default-val="fa fa-fa" placeholder="请选择...(可为空)，50字以内" maxlength="50" />
+                        <div class="input-group-append">
+                            <button data-method="clear" class="btn" type="button"><i class="fa fa-remove"></i></button>
+                            <button id="btnIcon" class="btn" type="button"><i class="fa fa-dashboard"></i>选择</button>
+                        </div>
                     </div>
                 </div>
-                <div class="form-group col-xs-12">
+                <div class="form-group col-12">
                     <label class="control-label" for="url">路径</label>
-                    <input type="text" class="form-control form-control-url" id="url" name="url" placeholder="不可为空，4000字以内" maxlength="4000" />
+                    <input type="text" class="form-control form-control-url" id="url" placeholder="不可为空，4000字以内" maxlength="4000" data-valid="true" />
                 </div>
-                <div class="form-group col-sm-6 col-xs-12">
+                <div class="form-group col-6">
                     <label class="control-label" for="category">菜单类别</label>
-                    <div class="dropdown lgbDropdown dropup">
-                        <a id="category" class="btn btn-success" data-toggle="dropdown" data-default-val="1">
-                            <span>外部菜单</span>
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="#" data-val="0">系统菜单</a></li>
-                            <li><a href="#" data-val="1">外部菜单</a></li>
-                        </ul>
+                    <div class="dropup">
+                        <button id="category" class="btn btn-success dropdown-select dropdown-toggle" data-toggle="dropdown" data-default-val="1">外部菜单</button>
+                        <div class="dropdown-menu">
+                            <a href="#" data-val="0">系统菜单</a>
+                            <a href="#" data-val="1">外部菜单</a>
+                        </div>
                     </div>
                 </div>
-                <div class="form-group col-sm-6 col-xs-12">
+                <div class="form-group col-6">
                     <label class="control-label" for="target">目标</label>
-                    <div class="dropdown lgbDropdown dropup">
-                        <a id="target" class="btn btn-info" data-toggle="dropdown" data-default-val="_self">
-                            <span>本窗口</span>
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="#" data-val="_self">本窗口</a></li>
-                            <li><a href="#" data-val="_blank">新窗口</a></li>
-                            <li><a href="#" data-val="_parent">父级窗口</a></li>
-                            <li><a href="#" data-val="_top">顶级窗口</a></li>
-                        </ul>
+                    <div class="dropup">
+                        <button id="target" class="btn btn-info dropdown-select dropdown-toggle" data-toggle="dropdown" data-default-val="_self">本窗口</button>
+                        <div class="dropdown-menu">
+                            <a href="#" data-val="_self">本窗口</a>
+                            <a href="#" data-val="_blank">新窗口</a>
+                            <a href="#" data-val="_parent">父级窗口</a>
+                            <a href="#" data-val="_top">顶级窗口</a>
+                        </div>
                     </div>
                 </div>
-                <div class="form-group col-sm-6 col-xs-12">
+                <div class="form-group col-6">
                     <label class="control-label" for="isRes">菜单类型</label>
-                    <div class="dropdown lgbDropdown dropup">
-                        <a id="isRes" class="btn btn-success" data-toggle="dropdown" data-default-val="0">
-                            <span>菜单</span>
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="#" data-val="0">菜单</a></li>
-                            <li><a href="#" data-val="1">资源</a></li>
-                        </ul>
+                    <div class="dropup">
+                        <button id="isRes" class="btn btn-success dropdown-select dropdown-toggle" data-toggle="dropdown" data-default-val="0">菜单</button>
+                        <div class="dropdown-menu">
+                            <a href="#" data-val="0">菜单</a>
+                            <a href="#" data-val="1">资源</a>
+                        </div>
                     </div>
                 </div>
-                <div class="form-group col-sm-6 col-xs-12">
+                <div class="form-group col-6">
                     <label class="control-label" for="app">所属应用</label>
-                    <div class="dropdown lgbDropdown dropup">
-                        <a id="app" class="btn btn-info" data-toggle="dropdown" data-default-val="0">
-                            <span>未设置</span>
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu" role="menu">
+                    <div class="dropup">
+                        <button id="app" class="btn btn-info dropdown-select dropdown-toggle" data-toggle="dropdown" data-default-val="0">未设置</button>
+                        <div class="dropdown-menu">
                             @foreach (var kv in Model.Applications)
                             {
-                                <li><a href="#" data-val="@kv.Key">@kv.Value</a></li>
+                                <a href="#" data-val="@kv.Key">@kv.Value</a>
                             }
-                        </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -185,20 +169,20 @@
     </div>
 }
 @section customModal {
-    @Html.Partial("RoleConfig")
+    @await Html.PartialAsync("RoleConfig")
     <div id="dialogIcon" class="modal-content icon-content">
         <div class="modal-header">
+            <h5 class="modal-title" id="myIconModalLabel">请选择图标</h5>
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title" id="myIconModalLabel">请选择图标</h4>
         </div>
-        <div class="modal-body" data-spy="scroll" data-target=".fa-nav">
+        <div class="modal-body">
             <div class="loadIconView"><i class="fa fa-spinner fa-pulse"></i><span>正在加载图标...请稍等</span></div>
         </div>
         <div class="modal-footer">
             <span>被选择的图标</span><i id="pickIcon"></i>
-            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            <button type="button" class="btn" data-dismiss="modal">关闭</button>
             <button type="button" class="btn btn-primary" id="btnSubmitIcon">保存</button>
         </div>
     </div>
-    @Html.Partial("NavigatorConfig")
+    @await Html.PartialAsync("NavigatorConfig")
 }

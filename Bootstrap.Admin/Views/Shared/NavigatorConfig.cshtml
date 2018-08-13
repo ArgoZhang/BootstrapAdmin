@@ -1,9 +1,9 @@
 ﻿<div class="modal fade" id="dialogMenu" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myMenuModalLabel" aria-hidden="true">
-    <div id="dialogSubMenu" class="modal-dialog">
+    <div id="dialogSubMenu" class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
+                <h5 class="modal-title" id="myMenuModalLabel">请选择菜单</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myMenuModalLabel">请选择菜单</h4>
             </div>
             <div class="modal-body">
                 <div class="dd" id="nestable_menu">
@@ -11,8 +11,14 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal" id="btnSubmitMenu">保存</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    <i class="fa fa-times"></i>
+                    <span>关闭</span>
+                </button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" id="btnSubmitMenu">
+                    <i class="fa fa-save"></i>
+                    <span>保存</span>
+                </button>
             </div>
         </div>
     </div>

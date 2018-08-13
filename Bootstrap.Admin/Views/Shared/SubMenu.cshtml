@@ -3,6 +3,6 @@
     <a href="@Url.Content(Model.Url)" class="@Model.Active" target="@Model.Target"><i class="@Model.Icon"></i>@Model.Name</a>
     @if (Model.Menus.Count() > 0)
     {
-        @Html.Partial("SubNavigation", Model.Menus)
+        @await Html.PartialAsync("SubNavigation", Model.Menus)
     }
 </li>

@@ -1,17 +1,24 @@
 ﻿<div class="modal fade" id="dialogRole" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myRoleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
+                <h5 class="modal-title" id="myRoleModalLabel">角色授权窗口</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myRoleModalLabel">角色授权窗口</h4>
             </div>
             <div class="modal-body">
-                <form id="roleForm" class="form-inline" role="form">
+                <form class="form-inline">
+                    <div class="row" id="roleForm"></div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary" id="btnSubmitRole">保存</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    <i class="fa fa-times"></i>
+                    <span>关闭</span>
+                </button>
+                <button type="button" class="btn btn-primary" id="btnSubmitRole">
+                    <i class="fa fa-save"></i>
+                    <span>保存</span>
+                </button>
             </div>
         </div>
     </div>

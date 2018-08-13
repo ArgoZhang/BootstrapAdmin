@@ -1,13 +1,12 @@
 ﻿using Longbow;
-using Longbow.Caching;
-using Longbow.ExceptionManagement;
+using Longbow.Cache;
+using Longbow.Logging;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
-using System.Net.WebSockets;
 using System.Threading;
 
 namespace Bootstrap.DataAccess
@@ -24,7 +23,7 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 
         /// </summary>
-        public static readonly ConcurrentBag<MessageBody> MessagePool = new ConcurrentBag<MessageBody>();
+        public static ConcurrentBag<MessageBody> MessagePool { get; } = new ConcurrentBag<MessageBody>();
         /// <summary>
         /// 新用户注册的通知的面板显示
         /// </summary>
@@ -154,7 +153,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public override string ToString()
         {
-            return string.Format("{0};{1}-{2}", Category, Message);
+            return string.Format("{0}-{1}", Category, Message);
         }
         private void Dispose(bool disposing)
         {

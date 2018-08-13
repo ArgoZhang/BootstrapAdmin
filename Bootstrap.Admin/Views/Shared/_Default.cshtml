@@ -2,28 +2,44 @@
     Layout = "~/Views/Shared/_Admin.cshtml";
 }
 @section css {
-    <link href="~/Content/bootstrap-table.css" rel="stylesheet" />
+    <environment include="Development">
+        <link href="~/css/bootstrap-table.css" rel="stylesheet" />
+    </environment>
+    <environment exclude="Development">
+        <link href="~/css/bootstrap-table.min.css" rel="stylesheet" />
+    </environment>
     @RenderSection("css", false)
 }
 @section javascript {
-    <script src="~/Scripts/longbow.dataentity.js"></script>
-    <script src="~/Scripts/bootstrap-table.js"></script>
-    <script src="~/Scripts/bootstrap-table-zh-CN.js"></script>
-    <script src="~/Scripts/jquery.validate.js"></script>
-    <script src="~/Scripts/messages_zh.js"></script>
+    <environment include="Development">
+        <script src="~/js/bootstrap-table.js"></script>
+        <script src="~/js/bootstrap-table-zh-CN.js"></script>
+        <script src="~/js/jquery.validate.js"></script>
+        <script src="~/js/messages_zh.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/bootstrap-table.min.js"></script>
+        <script src="~/js/bootstrap-table-zh-CN.min.js"></script>
+        <script src="~/js/jquery.validate.min.js"></script>
+        <script src="~/js/messages_zh.min.js"></script>
+    </environment>
+    <script src="~/js/longbow.dataentity.js"></script>
+    <script src="~/js/longbow.validate.js"></script>
     @RenderSection("Javascript", false)
 }
 @section modal {
     <div class="modal fade" id="dialogNew" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content" data-toggle="LgbValidate" data-valid-button="#btnSubmit" data-valid-modal="#dialogNew">
                 @RenderSection("modal", false)
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                        关闭
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        <i class="fa fa-times"></i>
+                        <span>关闭</span>
                     </button>
                     <button type="button" class="btn btn-primary" id="btnSubmit">
-                        提交更改
+                        <i class="fa fa-save"></i>
+                        <span>提交更改</span>
                     </button>
                 </div>
             </div>
@@ -31,23 +47,23 @@
     </div>
     @RenderSection("customModal", false)
 }
-<div class="panel panel-default">
-    <div class="panel-heading">查询条件</div>
-    <div class="panel-body">
+<div class="card">
+    <div class="card-header">查询条件</div>
+    <div class="card-body">
         @RenderSection("query", false)
     </div>
 </div>
-<div id="toolbar" class="btn-group hidden">
-    <button id="btn_add" type="button" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i><span class="hidden-tb">新增</span></button>
-    <button id="btn_delete" type="button" class="btn btn-danger"><i class="fa fa-remove" aria-hidden="true"></i><span class="hidden-tb">删除</span></button>
-    <button id="btn_edit" type="button" class="btn btn-primary"><i class="fa fa-pencil" aria-hidden="true"></i><span class="hidden-tb">编辑</span></button>
+<div id="toolbar" class="btn-group d-none">
+    <button id="btn_add" type="button" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i><span>新增</span></button>
+    <button id="btn_delete" type="button" class="btn btn-danger"><i class="fa fa-remove" aria-hidden="true"></i><span>删除</span></button>
+    <button id="btn_edit" type="button" class="btn btn-primary"><i class="fa fa-pencil" aria-hidden="true"></i><span>编辑</span></button>
     @RenderSection("toolbar", false)
 </div>
-<div id="panelResult" class="panel panel-default">
-    <div id="panelResultHeader" class="panel-heading">
+<div id="panelResult" class="card">
+    <div id="panelResultHeader" class="card-header">
         查询结果
     </div>
-    <div class="panel-body barTable">
+    <div class="card-body">
         <table></table>
     </div>
 </div>

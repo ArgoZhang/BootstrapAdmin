@@ -1,77 +1,77 @@
-﻿@model NavigatorBarModel
+﻿@model Bootstrap.Admin.Models.NavigatorBarModel
 @{
     ViewBag.Title = "角色管理";
     Layout = "~/Views/Shared/_Default.cshtml";
 }
 @section css {
-    <link href="~/Content/fa.css" rel="stylesheet" />
-    <link href="~/Content/jquery.nestable.css" rel="stylesheet" />
+    <link href="~/css/fa.css" rel="stylesheet" />
+    <link href="~/css/jquery.nestable.css" rel="stylesheet" />
 }
 @section Javascript {
-    <script src="~/Scripts/jquery.nestable.js"></script>
-    <script src="~/scripts/Roles.js"></script>
+    <script src="~/js/jquery.nestable.js"></script>
+    <script src="~/js/Roles.js"></script>
 
 }
 @section query {
-    <form class="form-inline" role="form">
-        <div class="row">
-            <div class="form-group col-md-5">
+    <form class="form-inline">
+        <div class="form-row">
+            <div class="form-group col-sm-6 col-md-5">
                 <label class="control-label" for="txt_search_name">角色名称</label>
                 <input type="text" class="form-control" id="txt_search_name" />
             </div>
-            <div class="form-group col-md-5">
+            <div class="form-group col-sm-6 col-md-5">
                 <label class="control-label" for="txt_role_desc">角色描述</label>
                 <input type="text" class="form-control" id="txt_role_desc" />
             </div>
-            <div class="form-group col-md-2">
-                <button type="button" id="btn_query" class="btn btn-primary form-control"><i class="fa fa-search" aria-hidden="true"></i><span>查询</span></button>
+            <div class="form-group col-sm-12 col-md-2">
+                <button type="button" id="btn_query" class="btn btn-primary btn-fill"><i class="fa fa-search" aria-hidden="true"></i><span>查询</span></button>
             </div>
         </div>
     </form>
 }
 @section toolbar{
     <button id="btn_assignUser" type="button" class="btn btn-info">
-        <span class="fa fa-user" aria-hidden="true"></span><span class="hidden-tb">指派用户</span>
+        <span class="fa fa-user" aria-hidden="true"></span><span>分配用户</span>
     </button>
-    <button id="btn_assignGroup" type="button" class="btn btn-info">
-        <span class="fa fa-bank" aria-hidden="true"></span><span class="hidden-tb">指派部门</span>
+    <button id="btn_assignGroup" type="button" class="btn btn-warning">
+        <span class="fa fa-bank" aria-hidden="true"></span><span>分配部门</span>
     </button>
-    <button id="btn_assignMenu" type="button" class="btn btn-info">
-        <span class="fa fa-dashboard" aria-hidden="true"></span><span class="hidden-tb">指派菜单</span>
+    <button id="btn_assignMenu" type="button" class="btn btn-secondary">
+        <span class="fa fa-dashboard" aria-hidden="true"></span><span>分配菜单</span>
     </button>
-    <div class="toolbar btn-group dropdown">
-        <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button"><i class="fa fa-gear"></i></button>
+    <div class="toolbar btn-group">
+        <button class="btn dropdown-toggle" data-toggle="dropdown" type="button"><i class="fa fa-gear"></i></button>
         <div class="dropdown-menu">
-            @Html.Partial("_ButtonBarGroup")
-            <a id="tb_assignUser" href="#" title="指派用户"><i class="fa fa-user"></i></a>
-            <a id="tb_assignGroup" href="#" title="指派部门"><i class="fa fa-bank"></i></a>
-            <a id="tb_assignMenu" href="#" title="指派菜单"><i class="fa fa-dashboard"></i></a>
+            @await Html.PartialAsync("_ButtonBarGroup")
+            <a id="tb_assignUser" href="#" title="分配用户"><i class="fa fa-user"></i></a>
+            <a id="tb_assignGroup" href="#" title="分配部门"><i class="fa fa-bank"></i></a>
+            <a id="tb_assignMenu" href="#" title="分配菜单"><i class="fa fa-dashboard"></i></a>
         </div>
     </div>
 }
 @section modal {
     <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel">角色编辑窗口</h5>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">角色编辑窗口</h4>
     </div>
     <div class="modal-body">
-        <form class="form-inline" id="dataForm" name="dataForm" role="form">
-            <div class="row">
+        <form class="form-inline">
+            <div class="form-row">
                 <div class="form-group col-sm-6">
                     <label class="control-label" for="roleName">角色名称</label>
-                    <input type="text" class="form-control" id="roleName" name="roleName" placeholder="不可为空，50字以内" maxlength="50" />
+                    <input type="text" class="form-control" id="roleName" placeholder="不可为空，50字以内" maxlength="50" data-valid="true" />
                 </div>
                 <div class="form-group col-sm-6">
-                    <input type="text" class="form-control hidden" id="roleID" name="roleID" />
+                    <input type="text" class="form-control d-none" id="roleID" data-default-val="0" />
                     <label class="control-label" for="roleDesc">角色描述</label>
-                    <input type="text" class="form-control" id="roleDesc" name="roleDesc" placeholder="描述信息(可为空)，50字以内" maxlength="50" />
+                    <input type="text" class="form-control" id="roleDesc" placeholder="描述信息(可为空)，50字以内" maxlength="50" />
                 </div>
             </div>
         </form>
     </div>
 }
 @section customModal{
-    @Html.Partial("UserConfig")
-    @Html.Partial("GroupConfig")
-    @Html.Partial("NavigatorConfig")
+    @await Html.PartialAsync("UserConfig")
+    @await Html.PartialAsync("GroupConfig")
+    @await Html.PartialAsync("NavigatorConfig")
 }

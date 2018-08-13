@@ -1,6 +1,6 @@
 ﻿using Bootstrap.Security;
-using Longbow.Caching;
-using Longbow.ExceptionManagement;
+using Longbow.Cache;
+using Longbow.Logging;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -30,14 +30,14 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 删除字典中的数据
         /// </summary>
-        /// <param name="ids">需要删除的IDs</param>
+        /// <param name="value">需要删除的IDs</param>
         /// <returns></returns>
-        public static bool DeleteDict(string ids)
+        public static bool DeleteDict(IEnumerable<int> value)
         {
-            if (string.IsNullOrEmpty(ids) || ids.Contains("'")) return false;
             var ret = false;
             try
             {
+                var ids = string.Join(",", value);
                 string sql = string.Format(CultureInfo.InvariantCulture, "Delete from Dicts where ID in ({0})", ids);
                 using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
                 {
@@ -94,7 +94,7 @@ namespace Bootstrap.DataAccess
         /// <param name="code"></param>
         /// <param name="category"></param>
         /// <returns></returns>
-        public static bool SaveSettings(string name, string code, string category)
+        public static bool SaveSettings(BootstrapDict dict)
         {
             var ret = false;
             string sql = "Update Dicts set Code = @Code where Category = @Category and Name = @Name";
@@ -102,9 +102,9 @@ namespace Bootstrap.DataAccess
             {
                 using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
                 {
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Name", name));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Code", code));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Category", category));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Name", dict.Name));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Code", dict.Code));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Category", dict.Category));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
                 CacheCleanUtility.ClearCache(dictIds: string.Empty);
@@ -163,7 +163,7 @@ namespace Bootstrap.DataAccess
         /// 获得系统中配置的可以使用的网站样式
         /// </summary>
         /// <returns></returns>
-        public static IEnumerable<BootstrapDict> RetrieveWebCss()
+        public static IEnumerable<BootstrapDict> RetrieveThemes()
         {
             var data = RetrieveDicts();
             return data.Where(d => d.Category == "网站样式");
@@ -172,10 +172,11 @@ namespace Bootstrap.DataAccess
         /// 获得网站设置中的当前样式
         /// </summary>
         /// <returns></returns>
-        public static IEnumerable<BootstrapDict> RetrieveActiveCss()
+        public static string RetrieveActiveTheme()
         {
             var data = RetrieveDicts();
-            return data.Where(d => d.Name == "使用样式" && d.Category == "当前样式" && d.Define == 0 && !d.Code.Equals("site.css", StringComparison.OrdinalIgnoreCase));
+            var theme = data.Where(d => d.Name == "使用样式" && d.Category == "当前样式" && d.Define == 0).FirstOrDefault();
+            return theme == null ? string.Empty : (theme.Code.Equals("site.css", StringComparison.OrdinalIgnoreCase) ? string.Empty : theme.Code);
         }
         /// <summary>
         /// 获取头像路径
@@ -184,7 +185,7 @@ namespace Bootstrap.DataAccess
         public static BootstrapDict RetrieveIconFolderPath()
         {
             var data = RetrieveDicts();
-            return data.FirstOrDefault(d => d.Name == "头像路径" && d.Category == "头像地址" && d.Define == 0) ?? new BootstrapDict() { Code = "~/Content/images/uploader/" };
+            return data.FirstOrDefault(d => d.Name == "头像路径" && d.Category == "头像地址" && d.Define == 0) ?? new BootstrapDict() { Code = "~/images/uploader/" };
         }
         /// <summary>
         /// 获得默认的前台首页地址，默认为~/Home/Index

@@ -1,74 +1,74 @@
-﻿@model NavigatorBarModel
+﻿@model Bootstrap.Admin.Models.NavigatorBarModel
 @{
     ViewBag.Title = "用户管理";
     Layout = "~/Views/Shared/_Default.cshtml";
 }
 @section Javascript {
-    <script src="~/scripts/Users.js"></script>
+    <script src="~/js/Users.js"></script>
 }
 @section query {
-    <form class="form-inline" role="form">
-        <div class="row">
-            <div class="form-group col-md-5">
+    <form class="form-inline">
+        <div class="form-row">
+            <div class="form-group col-sm-6 col-md-5">
                 <label class="control-label" for="txt_search_name">登陆名称</label>
                 <input type="text" class="form-control" id="txt_search_name" />
             </div>
-            <div class="form-group col-md-5">
+            <div class="form-group col-sm-6 col-md-5">
                 <label class="control-label" for="txt_display_name">显示名称</label>
                 <input type="text" class="form-control" id="txt_display_name" />
             </div>
-            <div class="form-group col-md-2">
-                <button type="button" id="btn_query" class="btn btn-primary form-control"><i class="fa fa-search" aria-hidden="true"></i><span>查询</span></button>
+            <div class="form-group col-sm-12 col-md-2">
+                <button type="button" id="btn_query" class="btn btn-primary btn-fill"><i class="fa fa-search" aria-hidden="true"></i><span>查询</span></button>
             </div>
         </div>
     </form>
 }
 @section toolbar {
-    <button id="btn_assignRole" type="button" class="btn btn-info">
-        <span class="fa fa-sitemap" aria-hidden="true"></span><span class="hidden-tb">指派角色</span>
-    </button>
     <button id="btn_assignGroup" type="button" class="btn btn-info">
-        <span class="fa fa-bank" aria-hidden="true"></span><span class="hidden-tb">指派部门</span>
+        <span class="fa fa-bank" aria-hidden="true"></span><span>分配部门</span>
     </button>
-    <div class="toolbar btn-group dropdown">
-        <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button"><i class="fa fa-gear"></i></button>
+    <button id="btn_assignRole" type="button" class="btn btn-warning">
+        <span class="fa fa-sitemap" aria-hidden="true"></span><span>分配角色</span>
+    </button>
+    <div class="toolbar btn-group">
+        <button class="btn dropdown-toggle" data-toggle="dropdown" type="button"><i class="fa fa-gear"></i></button>
         <div class="dropdown-menu">
-            @Html.Partial("_ButtonBarGroup")
-            <a id="tb_assignRole" href="#" title="指派角色"><i class="fa fa-sitemap"></i></a>
-            <a id="tb_assignGroup" href="#" title="指派部门"><i class="fa fa-bank"></i></a>
+            @await Html.PartialAsync("_ButtonBarGroup")
+            <a id="tb_assignRole" href="#" title="分配角色"><i class="fa fa-sitemap"></i></a>
+            <a id="tb_assignGroup" href="#" title="分配部门"><i class="fa fa-bank"></i></a>
         </div>
     </div>
 }
 @section modal {
     <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel">用户编辑窗口</h5>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">用户编辑窗口</h4>
     </div>
     <div class="modal-body">
-        <form class="form-inline" id="dataForm" name="dataForm" role="form">
-            <div class="row">
+        <form class="form-inline">
+            <input type="text" class="form-control" hidden id="userID" data-default-val="0" />
+            <div class="form-row">
                 <div class="form-group col-sm-6">
                     <label class="control-label" for="userName">登陆名称</label>
-                    <input type="text" class="form-control" id="userName" name="userName" placeholder="不可为空，50字以内" maxlength="50" />
+                    <input type="text" class="form-control" id="userName" placeholder="不可为空，50字以内" minlength="4" maxlength="50" remote="api/New/" data-remote-msg="此用户已存在" data-valid="true" />
                 </div>
                 <div class="form-group col-sm-6">
-                    <input type="text" class="form-control hidden" id="userID" name="userID" />
-                    <label class="control-label" for="userName">显示名称</label>
-                    <input type="text" class="form-control" id="displayName" name="displayName" placeholder="不可为空，50字以内" maxlength="50" />
+                    <label class="control-label" for="displayName">显示名称</label>
+                    <input type="text" class="form-control" id="displayName" placeholder="不可为空，50字以内" maxlength="50" data-valid="true" />
                 </div>
                 <div class="form-group col-sm-6">
                     <label class="control-label" for="password">登录密码</label>
-                    <input type="password" class="form-control" id="password" name="password" placeholder="不可为空，50字以内" maxlength="50" />
+                    <input type="password" class="form-control" id="password" placeholder="不可为空，50字以内" maxlength="50" data-valid="true" />
                 </div>
                 <div class="form-group col-sm-6">
                     <label class="control-label" for="confirm">确认密码</label>
-                    <input type="password" class="form-control" id="confirm" name="confirm" placeholder="与登陆密码一致，50字以内" maxlength="50" />
+                    <input type="password" class="form-control" id="confirm" placeholder="与登陆密码一致，50字以内" maxlength="50" equalTo="#password" data-valid="true" />
                 </div>
             </div>
         </form>
     </div>
 }
 @section customModal {
-    @Html.Partial("RoleConfig")
-    @Html.Partial("GroupConfig")
+    @await Html.PartialAsync("RoleConfig")
+    @await Html.PartialAsync("GroupConfig")
 }

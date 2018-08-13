@@ -1,9 +1,7 @@
-﻿@model HeaderBarModel
+﻿@model ModelBase
 <footer class="site-footer">
-    <div class="text-center">
-        <span id="websiteFooter">@Model.Footer</span>
-        <a id="gotoTop" href="#" class="go-top" title="返回顶部" role="tooltip" data-placement="left">
-            <i class="fa fa-angle-up"></i>
-        </a>
-    </div>
+    <span id="websiteFooter">@Model.Footer</span>
+    <a id="gotoTop" href="#" class="go-top" title="返回顶部" data-toggle="tooltip" data-placement="left">
+        <i class="fa fa-angle-up"></i>
+    </a>
 </footer>

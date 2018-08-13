@@ -1,17 +1,17 @@
-﻿@model NavigatorBarModel
+﻿@model Bootstrap.Admin.Models.NavigatorBarModel
 @{
     ViewBag.Title = "任务管理";
     Layout = "~/Views/Shared/_Admin.cshtml";
 }
 @section Javascript {
-    <script src="~/Scripts/tasks.js"></script>
+    <script src="~/js/tasks.js"></script>
 }
 @section css {
-    <link href="~/Content/tasks.css" rel="stylesheet" />
+    <link href="~/css/tasks.css" rel="stylesheet" />
 }
-<div class="panel panel-default">
-    <div class="panel-heading">任务消息<span class="pull-right"><a id="refreshTask" href="javascript:;" class="fa fa-refresh"></a></span></div>
-    <div class="panel-body">
+<div class="card">
+    <div class="card-header">任务消息<span class="pull-right"><a id="refreshTask" href="javascript:;" class="fa fa-refresh"></a></span></div>
+    <div class="card-body">
         <div class="tasks-widget">
             <ul id="list-task" class="task-list ui-sortable">
             </ul>

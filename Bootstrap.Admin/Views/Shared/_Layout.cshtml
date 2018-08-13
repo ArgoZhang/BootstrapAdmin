@@ -1,37 +1,39 @@
-﻿<!DOCTYPE html>
-<html lang="zh-cn">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@ViewBag.Title</title>
-    <link rel="shortcut icon" href="~/favicon.ico" />
-    <!-- 新 Bootstrap 核心 CSS 文件 -->
-    <link href="~/Content/bootstrap.css" rel="stylesheet">
-    <link href="~/Content/bootstrap-theme.css" rel="stylesheet">
-    <link href="~/Content/nprogress.css" rel="stylesheet" />
-    <link href="~/Content/font-awesome.css" rel="stylesheet" />
-    <link href="~/Content/site.css" rel="stylesheet" />
-    <link href="~/Content/site-responsive.css" rel="stylesheet" />
-    <!--[if lt IE 9 ]>
-    <link href="../Content/IE8.css" rel="stylesheet" />
-    <![endif]-->
+﻿@model ModelBase
+@{
+    Layout = "~/Views/Shared/_Root.cshtml";
+}
+@section css {
+    <environment include="Development">
+        <link href="~/css/bootstrap.css" rel="stylesheet">
+        <link href="~/css/font-awesome.css" rel="stylesheet" />
+    </environment>
+    <environment exclude="Development">
+        <link href="~/css/bootstrap.min.css" rel="stylesheet">
+        <link href="~/css/font-awesome.min.css" rel="stylesheet" />
+    </environment>
+    <link href="~/css/nprogress.css" rel="stylesheet" />
     @RenderSection("css", false)
-</head>
-<body>
-    <!--[if lt IE 9 ]>
-    <div id="ieAlert" class="alert alert-danger alert-dismissible">
-        <div>你的浏览器版本太低，不能完美的支持本系统，请升级到至少IE9 <a href="../IE/IE9.exe" target="_blank">速速点击下载</a> <a href="https://support.microsoft.com/zh-cn/help/17621/internet-explorer-downloads" target="_blank">微软官方下载</a> ！</div>
-        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
-    </div>
-    <![endif]-->
-    @RenderBody()
-    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
-    <script src="~/Scripts/jquery-3.1.1.js"></script>
-    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-    <script src="~/Scripts/bootstrap.js"></script>
-    <script src="~/Scripts/nprogress.js"></script>
-    <script src="~/Scripts/Longbow.Common.js"></script>
+    <link href="~/css/theme.css" rel="stylesheet" />
+    <link href="~/css/theme-responsive.css" rel="stylesheet" />
+    <link href="~/css/site.css" rel="stylesheet" />
+    <link href="~/css/site-responsive.css" rel="stylesheet" />
+    @if (!string.IsNullOrEmpty(Model.Theme))
+    {
+        <link href="~/css/@Model.Theme" rel="stylesheet" />
+    }
+}
+@section javascript {
+    <environment include="Development">
+        <script src="~/js/bootstrap.bundle.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/bootstrap.bundle.min.js"></script>
+    </environment>
+    <script src="~/js/nprogress.js"></script>
+    <script src="~/js/Longbow.Common.js"></script>
     @RenderSection("Javascript", false)
-</body>
-</html>
+}
+@await Html.PartialAsync("Header")
+@RenderBody()
+@await Html.PartialAsync("Footer")
+@RenderSection("modal", false)

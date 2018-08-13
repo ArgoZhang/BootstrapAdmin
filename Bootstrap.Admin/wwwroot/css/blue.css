@@ -1,0 +1,21 @@
+﻿.card {
+    border: 1px solid #5198cb;
+}
+
+.card-header, .modal-header {
+    background-color: #5899c8;
+    border-color: #3581b8;
+    color: #fff;
+}
+
+    .card-header a, .modal-header a {
+        color: #fff;
+    }
+
+.close {
+    text-shadow: none;
+}
+
+.modal-footer {
+    border-top-color: #5198cb;
+}

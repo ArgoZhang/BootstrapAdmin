@@ -1,16 +1,16 @@
-﻿@model NavigatorBarModel
+﻿@model Bootstrap.Admin.Models.NavigatorBarModel
 @{
     ViewBag.Title = "站内消息";
     Layout = "~/Views/Shared/_Admin.cshtml";
 }
 @section Javascript {
-    <script src="~/Scripts/message.js"></script>
+    <script src="~/js/message.js"></script>
 }
 <div class="mail-box">
     <div class="sm-side">
         <div class="user-head">
             <a href="javascript:;" class="inbox-avatar">
-                <img src="../content/images/logo6.jpg" alt="">
+                <img src="../images/logo6.jpg" alt="">
             </a>
             <div class="user-name"><h5><a href="#">@Model.DisplayName</a></h5></div>
         </div>

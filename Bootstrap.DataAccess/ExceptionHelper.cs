@@ -1,11 +1,14 @@
-﻿using Longbow.Caching;
+﻿using Longbow.Cache;
 using Longbow.Data;
-using Longbow.ExceptionManagement;
+using Longbow.Logging;
+using Longbow.Web.WebSockets;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Data;
 using System.Data.Common;
+using System.Text;
 
 namespace Bootstrap.DataAccess
 {
@@ -24,30 +27,24 @@ namespace Bootstrap.DataAccess
         /// <param name="ex"></param>
         /// <param name="additionalInfo"></param>
         /// <returns></returns>
-        public static bool Log(Exception ex, NameValueCollection additionalInfo)
+        public static void Log(Exception ex, NameValueCollection additionalInfo)
         {
-            bool ret = false;
-            try
+            if (additionalInfo["ErrorPage"] == null) return;
+            var sql = "insert into Exceptions (AppDomainName, ErrorPage, UserID, UserIp, ExceptionType, Message, StackTrace, LogTime) values (@AppDomainName, @ErrorPage, @UserID, @UserIp, @ExceptionType, @Message, @StackTrace, GetDate())";
+            using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
             {
-                var sql = "insert into Exceptions (AppDomainName, ErrorPage, UserID, UserIp, ExceptionType, Message, StackTrace, LogTime) values (@AppDomainName, @ErrorPage, @UserID, @UserIp, @ExceptionType, @Message, @StackTrace, GetDate())";
-                using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
-                {
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@AppDomainName", AppDomain.CurrentDomain.FriendlyName));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ErrorPage", additionalInfo["ErrorPage"]));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserID", DBAccess.ToDBValue(additionalInfo["UserId"])));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserIp", DBAccess.ToDBValue(additionalInfo["UserIp"])));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ExceptionType", ex.GetType().FullName));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Message", ex.Message));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@StackTrace", DBAccess.ToDBValue(ex.StackTrace), ParameterDirection.Input));
-                    DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
-                }
-                ret = true;
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@AppDomainName", AppDomain.CurrentDomain.FriendlyName));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ErrorPage", DBAccessFactory.ToDBValue(additionalInfo["ErrorPage"])));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserID", DBAccessFactory.ToDBValue(additionalInfo["UserId"])));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserIp", DBAccessFactory.ToDBValue(additionalInfo["UserIp"])));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ExceptionType", ex.GetType().FullName));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Message", ex.Message));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@StackTrace", DBAccessFactory.ToDBValue(ex.StackTrace)));
+                DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
+                CacheManager.Clear(RetrieveExceptionsDataKey);
+                if (ex.GetType().IsSubclassOf(typeof(DbException)))
+                    WebSocketServerManager.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(new List<object> { new { Category = "Notification", ex.Message } }))));
             }
-            catch (Exception e)
-            {
-                throw new Exception("Excetion Log Error", e);
-            }
-            return ret;
         }
         /// <summary>
         /// 查询所有异常

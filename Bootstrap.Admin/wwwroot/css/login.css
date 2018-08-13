@@ -1,0 +1,61 @@
+﻿body {
+    background-color: #5bc0de;
+    background: url('../images/bg2.jpg') fixed no-repeat;
+    background-size: 100% 100%;
+}
+
+.container {
+    background: url('../images/bg3.png') no-repeat;
+    background-size: contain;
+    width: 704px;
+    height: 404px;
+    margin: 0 auto;
+}
+
+.form-signin-heading {
+    padding: 28px 0;
+    text-align: center;
+    color: #fff;
+}
+
+.login-wrap {
+    margin: 22px 0 0 370px;
+    width: 280px;
+    height: 200px;
+}
+
+    .login-wrap .login-footer {
+        padding-bottom: 15px;
+    }
+
+        .login-wrap .login-footer .login-create {
+            float: left;
+        }
+
+        .login-wrap .login-footer .login-reset {
+            float: right;
+        }
+
+.btn-login {
+    background: #f67a6e;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 300;
+    box-shadow: 1px 1px #e56b60;
+    margin-bottom: 20px;
+    margin-top: -8px;
+}
+
+.form-control:focus, .form-control.is-valid:focus, .form-control.is-invalid:focus, .btn:focus, .btn:focus:active {
+    box-shadow: none;
+}
+
+.input-group-text {
+    background-color: #6bc3f4;
+    border-color: #1ca0e9;
+    line-height: 1.5;
+}
+
+.form-control {
+    border-color: #1ca0e9;
+}

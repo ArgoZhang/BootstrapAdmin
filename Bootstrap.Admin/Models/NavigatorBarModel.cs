@@ -1,14 +1,15 @@
 ﻿using Bootstrap.DataAccess;
 using Bootstrap.Security;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
 namespace Bootstrap.Admin.Models
 {
     public class NavigatorBarModel : HeaderBarModel
     {
-        public NavigatorBarModel(string url)
+        public NavigatorBarModel(ControllerBase controller) : base(controller.User.Identity)
         {
-            Navigations = BootstrapMenu.RetrieveSystemMenus(UserName, url);
+            Navigations = BootstrapMenu.RetrieveSystemMenus(UserName, $"~{controller.HttpContext.Request.Path}");
             Applications = DictHelper.RetrieveApps();
             HomeUrl = "~/Admin/Index";
         }

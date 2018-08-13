@@ -1,6 +1,6 @@
-﻿using Longbow.Caching;
+﻿using Longbow.Cache;
 using Longbow.Data;
-using Longbow.ExceptionManagement;
+using Longbow.Logging;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -55,12 +55,12 @@ namespace Bootstrap.DataAccess
         /// 删除群组信息
         /// </summary>
         /// <param name="ids"></param>
-        public static bool DeleteGroup(string ids)
+        public static bool DeleteGroup(IEnumerable<int> value)
         {
-            if (string.IsNullOrEmpty(ids) || ids.Contains("'")) return false;
             bool ret = false;
             try
             {
+                var ids = string.Join(",", value);
                 using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_DeleteGroups"))
                 {
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ids", ids));
@@ -94,7 +94,7 @@ namespace Bootstrap.DataAccess
                 {
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ID", p.Id));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@GroupName", p.GroupName));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Description", DBAccess.ToDBValue(p.Description)));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Description", DBAccessFactory.ToDBValue(p.Description)));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
                 CacheCleanUtility.ClearCache(groupIds: p.Id == 0 ? string.Empty : p.Id.ToString());

@@ -1,4 +1,5 @@
-﻿@model NavigatorBarModel
+﻿@model Bootstrap.Admin.Models.ModelBase
+NavigatorBarModel
 @{
     ViewBag.Title = "客户端测试";
     Layout = "~/Views/Shared/_Admin.cshtml";
@@ -14,4 +15,4 @@
         }
     </style>
 }
-@Html.Partial("_Mobile")
+@await Html.PartialAsync("_Mobile")

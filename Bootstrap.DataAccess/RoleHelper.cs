@@ -1,7 +1,6 @@
-﻿using Longbow.Caching;
-using Longbow.Caching.Configuration;
+﻿using Longbow.Cache;
 using Longbow.Data;
-using Longbow.ExceptionManagement;
+using Longbow.Logging;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -136,13 +135,13 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 删除角色表
         /// </summary>
-        /// <param name="ids"></param>
-        public static bool DeleteRole(string ids)
+        /// <param name="value"></param>
+        public static bool DeleteRole(IEnumerable<int> value)
         {
-            if (string.IsNullOrEmpty(ids) || ids.Contains("'")) return false;
             bool ret = false;
             try
             {
+                var ids = string.Join(",", value);
                 using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_DeleteRoles"))
                 {
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ids", ids));
@@ -176,7 +175,7 @@ namespace Bootstrap.DataAccess
                 {
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ID", p.Id));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@RoleName", p.RoleName));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Description", DBAccess.ToDBValue(p.Description)));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Description", DBAccessFactory.ToDBValue(p.Description)));
                     DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 }
                 CacheCleanUtility.ClearCache(roleIds: p.Id == 0 ? string.Empty : p.Id.ToString());
