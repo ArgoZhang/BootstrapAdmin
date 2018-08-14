@@ -6,6 +6,7 @@
     background-color: #5899c8;
     border-color: #3581b8;
     color: #fff;
+    border-radius: 4px 4px 0 0;
 }
 
     .card-header a, .modal-header a {
