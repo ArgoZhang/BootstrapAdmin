@@ -87,45 +87,45 @@
                     // new users
                     $('#msgHeaderTask').text(result.TasksCount);
                     $('#msgHeaderTaskBadge').text(result.TasksCount);
-                    var htmlUserTemplate = '<a class="dropdown-item" href="../Admin/Tasks?id={3}"><span class="desc">{0}-{2}</span><span class="percent">{1}%</span></span><div class="progress progress-striped"><div class="progress-bar" role="progressbar" aria-valuenow="{1}" aria-valuemin="0" aria-valuemax="100" style="width: {1}%"><span class="sr-only">{1}% 完成</span></div></div></a>';
+                    var htmlUserTemplate = '<a class="dropdown-item" href="{4}Admin/Tasks?id={3}"><span class="desc">{0}-{2}</span><span class="percent">{1}%</span></span><div class="progress progress-striped"><div class="progress-bar" role="progressbar" aria-valuenow="{1}" aria-valuemin="0" aria-valuemax="100" style="width: {1}%"><span class="sr-only">{1}% 完成</span></div></div></a>';
                     var html = result.Tasks.map(function (u) {
-                        return $.format(htmlUserTemplate, u.TaskName, u.TaskProgress, u.AssignDisplayName, u.Id);
+                        return $.format(htmlUserTemplate, u.TaskName, u.TaskProgress, u.AssignDisplayName, u.Id, $.formatUrl());
                     }).join('');
                     $(html).insertAfter($('#msgHeaderTaskContent'));
 
                     // new users
                     $('#msgHeaderUser').text(result.NewUsersCount);
                     $('#msgHeaderUserBadge').text(result.NewUsersCount);
-                    htmlUserTemplate = '<li><a href="../Admin/Notifications"><span class="label label-success"><i class="fa fa-plus"></i></span><div title="{2}" class="content">{1}({0})</div><span class="small italic">{3}</span></a></li>';
+                    htmlUserTemplate = '<li><a href="{4}Admin/Notifications"><span class="label label-success"><i class="fa fa-plus"></i></span><div title="{2}" class="content">{1}({0})</div><span class="small italic">{3}</span></a></li>';
                     html = result.Users.map(function (u) {
-                        return $.format(htmlUserTemplate, u.UserName, u.DisplayName, u.Description, u.Period);
+                        return $.format(htmlUserTemplate, u.UserName, u.DisplayName, u.Description, u.Period, $.formatUrl());
                     }).join('');
                     $(html).insertAfter($('#msgHeaderUserContent'));
 
                     // apps
                     $('#msgHeaderApp').text(result.AppExceptionsCount);
                     $('#msgHeaderAppBadge').text(result.AppExceptionsCount);
-                    htmlUserTemplate = '<a class="dropdown-item" href="../Admin/Exceptions"><span class="label label-warning"><i class="fa fa-bug"></i></span><div title="{1}" class="content">{0}</div><span class="small italic">{2}</span></a>';
+                    htmlUserTemplate = '<a class="dropdown-item" href="{3}Admin/Exceptions"><span class="label label-warning"><i class="fa fa-bug"></i></span><div title="{1}" class="content">{0}</div><span class="small italic">{2}</span></a>';
                     html = result.Apps.map(function (u) {
-                        return $.format(htmlUserTemplate, u.ExceptionType, u.Message, u.Period);
+                        return $.format(htmlUserTemplate, u.ExceptionType, u.Message, u.Period, $.formatUrl());
                     }).join('');
                     $(html).insertAfter($('#msgHeaderAppContent'));
 
                     // dbs
                     $('#msgHeaderDb').text(result.DbExceptionsCount);
                     $('#msgHeaderDbBadge').text(result.DbExceptionsCount);
-                    htmlUserTemplate = '<a class="dropdown-item" href="../Admin/Exceptions"><span class="label label-danger"><i class="fa fa-bolt"></i></span><div title="{1}" class="content">{0}</div><span class="small italic">{2}</span></a>';
+                    htmlUserTemplate = '<a class="dropdown-item" href="{3}Admin/Exceptions"><span class="label label-danger"><i class="fa fa-bolt"></i></span><div title="{1}" class="content">{0}</div><span class="small italic">{2}</span></a>';
                     html = result.Dbs.map(function (u) {
-                        return $.format(htmlUserTemplate, u.ErrorPage, u.Message, u.Period);
+                        return $.format(htmlUserTemplate, u.ErrorPage, u.Message, u.Period, $.formatUrl());
                     }).join('');
                     $(html).insertAfter($('#msgHeaderDbContent'));
 
                     // messages
                     $('#msgHeaderMsg').text(result.MessagesCount);
                     $('#msgHeaderMsgBadge').text(result.MessagesCount);
-                    htmlUserTemplate = '<li><a href="../Admin/Messages?id={0}"><span class="photo"><img alt="avatar" src="{1}"></span><span class="subject"><span class="from">{2}</span><span class="time">{4}</span></span><span class="message" title="{5}">{3}</span></a></li>';
+                    htmlUserTemplate = '<li><a href="{6}Admin/Messages?id={0}"><span class="photo"><img alt="avatar" src="{1}"></span><span class="subject"><span class="from">{2}</span><span class="time">{4}</span></span><span class="message" title="{5}">{3}</span></a></li>';
                     html = result.Messages.map(function (u) {
-                        return $.format(htmlUserTemplate, u.Id, u.FromIcon, u.FromDisplayName, u.Title, u.Period, u.Content);
+                        return $.format(htmlUserTemplate, u.Id, u.FromIcon, u.FromDisplayName, u.Title, u.Period, u.Content, $.formatUrl());
                     }).join('');
                     $(html).insertAfter($('#msgHeaderMsgContent'));
                 }
