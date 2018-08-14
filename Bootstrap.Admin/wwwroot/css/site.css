@@ -297,6 +297,7 @@ label.dropdown-item:first-child {
 
     .cache-item:last-child {
         border-bottom: none;
+        margin-bottom: 15px;
     }
 
     .cache-item > :not(:first-child) {
