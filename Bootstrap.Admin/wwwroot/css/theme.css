@@ -103,6 +103,10 @@ input.pending {
 }
 
 /*Bootstrap Table BUG */
+.fixed-table-container {
+    border-top: none;
+}
+
 .fixed-table-toolbar .bs-bars, .fixed-table-toolbar .search, .fixed-table-toolbar .columns {
     line-height: normal;
 }
