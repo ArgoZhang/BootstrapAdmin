@@ -12,6 +12,11 @@
     box-shadow: none !important;
 }
 
+.input-group .btn {
+    background-color: #e9ecef;
+    border-color: #ced4da;
+}
+
 .close:focus {
     outline: none;
 }
