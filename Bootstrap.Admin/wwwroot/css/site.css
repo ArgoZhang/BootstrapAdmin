@@ -14,6 +14,10 @@ ul li {
     list-style: none;
 }
 
+.modal-body .dd {
+    margin-bottom: 15px;
+}
+
 a, a:hover, a:focus {
     text-decoration: none;
     outline: none;
