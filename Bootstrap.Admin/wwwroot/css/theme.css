@@ -12,7 +12,7 @@
     box-shadow: none !important;
 }
 
-.input-group .btn {
+.input-group .btn:not(.btn-secondary) {
     background-color: #e9ecef;
     border-color: #ced4da;
 }
