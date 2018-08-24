@@ -75,6 +75,7 @@ a, a:hover, a:focus {
         border-radius: 4px;
         padding: 6px 12px;
         color: #777;
+        transition: all .25s linear;
     }
 
         .header [data-toggle="dropdown"]:hover {
