@@ -23,5 +23,13 @@ namespace Bootstrap.Admin.Controllers
         {
             return BootstrapUser.RetrieveUserByUserName(userName) == null && !UserHelper.RetrieveNewUsers().Any(u => u.UserName == userName);
         }
+        [HttpPost]
+        [AllowAnonymous]
+        public bool Post([FromBody] User user)
+        {
+            var ret = false;
+            if (string.IsNullOrEmpty(user.UserName) || string.IsNullOrEmpty(user.Password) || string.IsNullOrEmpty(user.DisplayName) || string.IsNullOrEmpty(user.Description)) return ret;
+            return UserHelper.SaveUser(user);
+        }
     }
 }

@@ -12,26 +12,99 @@
         <link href="~/css/bootstrap.min.css" rel="stylesheet">
         <link href="~/css/font-awesome.min.css" rel="stylesheet" />
     </environment>
+    <link href="~/css/sweetalert.css" rel="stylesheet" />
     <link href="~/css/theme.css" rel="stylesheet" />
     @RenderSection("css", false)
+    @if (!string.IsNullOrEmpty(Model.Theme))
+    {
+        <link href="~/css/@Model.Theme" rel="stylesheet" />
+    }
 }
 @section javascript {
     <environment include="Development">
         <script src="~/js/bootstrap.bundle.js"></script>
         <script src="~/js/jquery.validate.js"></script>
         <script src="~/js/messages_zh.js"></script>
+        <script src="~/js/sweetalert.js"></script>
     </environment>
     <environment exclude="Development">
         <script src="~/js/bootstrap.bundle.min.js"></script>
         <script src="~/js/jquery.validate.min.js"></script>
         <script src="~/js/messages_zh.min.js"></script>
+        <script src="~/js/sweetalert.min.js"></script>
     </environment>
     <script src="~/js/longbow.Common.js"></script>
     <script src="~/js/longbow.validate.js"></script>
     <script src="~/js/login.js"></script>
 }
-<div class="container">
-    <form id="login" method="post" class="form-signin">
-        @await Html.PartialAsync("SignIn")
-    </form>
+@await Html.PartialAsync("SignIn")
+<div class="modal fade" id="dialogNew" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content" data-toggle="LgbValidate" data-valid-button="#btnSubmit" data-valid-modal="#dialogNew">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">新用户注册</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="userName">登陆账号：</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <span class="fa fa-user"></span>
+                            </div>
+                        </div>
+                        <input type="text" id="userName" autocomplete="off" class="form-control" placeholder="登陆账号不可为空" value="" maxlength="50" remote="api/New/" data-remote-msg="此用户已存在" data-valid="true" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="displayName">显示名称：</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <span class="fa fa-user"></span>
+                            </div>
+                        </div>
+                        <input type="text" id="displayName" class="form-control" value="" placeholder="显示名称不可为空" maxlength="50" data-valid="true" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">密码：</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <span class="fa fa-lock"></span>
+                            </div>
+                        </div>
+                        <input type="password" id="password" class="form-control" value="" placeholder="密码不可为空" maxlength="50" data-valid="true" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="assurePassword">确认密码：</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <span class="fa fa-lock"></span>
+                            </div>
+                        </div>
+                        <input type="password" id="assurePassword" class="form-control" value="" placeholder="确认密码" maxlength="50" equalTo="#password" data-valid="true" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="description">申请理由：</label>
+                    <textarea id="description" class="form-control" placeholder="申请理由，500字以内" rows="6" maxlength="500" data-valid="true"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    <i class="fa fa-times"></i>
+                    <span>关闭</span>
+                </button>
+                <button type="button" class="btn btn-primary" id="btnSubmit">
+                    <i class="fa fa-save"></i>
+                    <span>提交</span>
+                </button>
+            </div>
+        </div>
+    </div>
 </div>

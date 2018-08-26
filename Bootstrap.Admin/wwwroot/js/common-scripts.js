@@ -84,7 +84,6 @@
                     $('#logoutNoti').text(result.NewUsersCount);
                     that.resetWidget();
                     // tasks
-                    // new users
                     $('#msgHeaderTask').text(result.TasksCount);
                     $('#msgHeaderTaskBadge').text(result.TasksCount);
                     var htmlUserTemplate = '<a class="dropdown-item" href="{4}Admin/Tasks?id={3}"><span class="desc">{0}-{2}</span><span class="percent">{1}%</span></span><div class="progress progress-striped"><div class="progress-bar" role="progressbar" aria-valuenow="{1}" aria-valuemin="0" aria-valuemax="100" style="width: {1}%"><span class="sr-only">{1}% 完成</span></div></div></a>';
@@ -96,7 +95,7 @@
                     // new users
                     $('#msgHeaderUser').text(result.NewUsersCount);
                     $('#msgHeaderUserBadge').text(result.NewUsersCount);
-                    htmlUserTemplate = '<li><a href="{4}Admin/Notifications"><span class="label label-success"><i class="fa fa-plus"></i></span><div title="{2}" class="content">{1}({0})</div><span class="small italic">{3}</span></a></li>';
+                    htmlUserTemplate = '<a class="dropdown-item" href="{4}Admin/Notifications"><span class="label label-success"><i class="fa fa-plus"></i></span><div title="{2}" class="content">{1}({0})</div><span class="small italic">{3}</span></a>';
                     html = result.Users.map(function (u) {
                         return $.format(htmlUserTemplate, u.UserName, u.DisplayName, u.Description, u.Period, $.formatUrl());
                     }).join('');
@@ -123,7 +122,7 @@
                     // messages
                     $('#msgHeaderMsg').text(result.MessagesCount);
                     $('#msgHeaderMsgBadge').text(result.MessagesCount);
-                    htmlUserTemplate = '<li><a href="{6}Admin/Messages?id={0}"><span class="photo"><img alt="avatar" src="{1}"></span><span class="subject"><span class="from">{2}</span><span class="time">{4}</span></span><span class="message" title="{5}">{3}</span></a></li>';
+                    htmlUserTemplate = '<a class="dropdown-item" href="{6}Admin/Messages?id={0}"><span class="photo"><img alt="avatar" src="{1}"></span><span class="subject"><span class="from">{2}</span><span class="time">{4}</span></span><span class="message" title="{5}">{3}</span></a>';
                     html = result.Messages.map(function (u) {
                         return $.format(htmlUserTemplate, u.Id, u.FromIcon, u.FromDisplayName, u.Title, u.Period, u.Content, $.formatUrl());
                     }).join('');

@@ -58,16 +58,6 @@ namespace Bootstrap.Admin.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        public ActionResult Register(User p)
-        {
-            if (string.IsNullOrEmpty(p.UserName) || string.IsNullOrEmpty(p.Password) || string.IsNullOrEmpty(p.DisplayName) || string.IsNullOrEmpty(p.Description)) return View();
-            p.UserStatus = 1;
-            return UserHelper.SaveUser(p) ? (ActionResult)Redirect("~/html/RegResult.html") : View();
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public ActionResult Mobile()
         {
             return View();
