@@ -285,8 +285,9 @@ label.dropdown-item:first-child {
     font-weight: bold;
     color: #0077de;
     background-color: #b5f1b6;
-    padding: 10px 15px;
+    padding: 12px 15px;
     border-radius: 4px 4px 0 0;
+    margin-bottom: 0;
 }
 
 .cache-item {
