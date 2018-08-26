@@ -216,7 +216,7 @@
             return this;
         },
         formatUrl: function (url) {
-            if (!url) url = "";
+            if (!url) return url;
             if (url.substr(0, 4) == "http") return url;
             var base = $('#pathBase').attr('href');
             return base + url;
