@@ -339,7 +339,7 @@ label.dropdown-item:first-child {
         line-height: normal;
     }
 
-    .cache-item .btn {
+    .cache-item .btn, td .btn:not(.btn-lg) {
         margin-left: 5px;
         font-size: 0.75rem;
         padding: 1px 5px;

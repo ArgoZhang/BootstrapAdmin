@@ -108,7 +108,7 @@ input.pending {
 }
 
 /*Bootstrap Table BUG */
-.fixed-table-container {
+.bootstrap-table .table thead > tr > th {
     border-top: none;
 }
 
