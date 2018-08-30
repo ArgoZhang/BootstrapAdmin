@@ -1,30 +1,38 @@
-﻿@model Bootstrap.Admin.Models.ModelBase
-<h2 class="form-signin-heading">@Model.Title</h2>
-<div class="login-wrap" data-toggle="LgbValidate" data-valid-button="#btnSubmit">
-    <div class="form-group">
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <span class="fa fa-user input-group-text"></span>
+﻿@model ModelBase
+<div class="container">
+    <form id="login" method="post" class="form-signin">
+        <h2 class="form-signin-heading">@Model.Title</h2>
+        <div class="login-wrap" data-toggle="LgbValidate" data-valid-button="button[type='submit']">
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <span class="fa fa-user"></span>
+                        </div>
+                    </div>
+                    <input type="text" name="userName" class="form-control" placeholder="用户名" data-required-msg="请输入用户名" value="" autofocus data-valid="true" />
+                </div>
             </div>
-            <input type="text" name="userName" class="form-control" placeholder="用户名" data-required-msg="请输入用户名" value="" autofocus data-valid="true" />
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <span class="fa fa-lock input-group-text"></span>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <span class="fa fa-lock"></span>
+                        </div>
+                    </div>
+                    <input type="password" name="password" class="form-control" value="" placeholder="密码" data-required-msg="请输入密码" data-valid="true" />
+                </div>
             </div>
-            <input type="password" name="password" class="form-control" value="" placeholder="密码" data-required-msg="请输入密码" data-valid="true" />
+            <div class="form-group">
+                <div class="form-check">
+                    <input id="remember" name="remember" type="checkbox" class="form-check-input" value="true" /><label for="remember" class="form-check-label">记住我</label>
+                </div>
+            </div>
+            <button class="btn btn-lg btn-login btn-block" type="submit">登 陆</button>
+            <div class="login-footer">
+                <a href="#" data-method="register">申请账号</a>
+                <a href="#" data-method="forgot">忘记密码</a>
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <div class="form-check">
-            <input id="remember" name="remember" type="checkbox" class="form-check-input" value="true" /><label for="remember" class="form-check-label">记住我</label>
-        </div>
-    </div>
-    <button class="btn btn-lg btn-login btn-block" type="submit" id="btnSubmit">登 陆</button>
-    <div class="login-footer">
-        <div class="login-create"><a href="Register">申请账号</a></div>
-        <div class="login-reset"><a href="#">忘记密码</a></div>
-    </div>
+    </form>
 </div>

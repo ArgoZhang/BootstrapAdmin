@@ -12,6 +12,11 @@
     box-shadow: none !important;
 }
 
+.input-group .btn:not(.btn-secondary) {
+    background-color: #e9ecef;
+    border-color: #ced4da;
+}
+
 .close:focus {
     outline: none;
 }
@@ -103,8 +108,20 @@ input.pending {
 }
 
 /*Bootstrap Table BUG */
+.bootstrap-table .table thead > tr > th {
+    border-top: none;
+}
+
 .fixed-table-toolbar .bs-bars, .fixed-table-toolbar .search, .fixed-table-toolbar .columns {
     line-height: normal;
+}
+
+.table-condensed > thead > tr > th, .table-condensed > tbody > tr > th, .table-condensed > tfoot > tr > th, .table-condensed > thead > tr > td, .table-condensed > tbody > tr > td, .table-condensed > tfoot > tr > td {
+    padding: 5px;
+}
+
+.datetimepicker table tr td span {
+    white-space: nowrap;
 }
 
 .card-view:not(:last-child) {

@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Default.cshtml";
 }
 @section Javascript {
-    <script src="~/js/Users.js"></script>
+    <script src="~/js/users.js"></script>
 }
 @section query {
     <form class="form-inline">
@@ -31,7 +31,7 @@
         <span class="fa fa-sitemap" aria-hidden="true"></span><span>分配角色</span>
     </button>
     <div class="toolbar btn-group">
-        <button class="btn dropdown-toggle" data-toggle="dropdown" type="button"><i class="fa fa-gear"></i></button>
+        <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" type="button"><i class="fa fa-gear"></i></button>
         <div class="dropdown-menu">
             @await Html.PartialAsync("_ButtonBarGroup")
             <a id="tb_assignRole" href="#" title="分配角色"><i class="fa fa-sitemap"></i></a>

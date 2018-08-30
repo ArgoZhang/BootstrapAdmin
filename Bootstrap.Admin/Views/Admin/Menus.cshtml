@@ -9,7 +9,7 @@
 }
 @section Javascript {
     <script src="~/js/jquery.nestable.js"></script>
-    <script src="~/js/Menus.js"></script>
+    <script src="~/js/menus.js"></script>
 }
 @section query {
     <form class="form-inline">
@@ -57,7 +57,7 @@
         <span class="fa fa-sitemap" aria-hidden="true"></span><span>分配角色</span>
     </button>
     <div class="toolbar btn-group">
-        <button class="btn dropdown-toggle" data-toggle="dropdown" type="button"><i class="fa fa-gear"></i></button>
+        <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" type="button"><i class="fa fa-gear"></i></button>
         <div class="dropdown-menu">
             @await Html.PartialAsync("_ButtonBarGroup")
             <a id="tb_assignRole" href="#" title="分配角色"><i class="fa fa-sitemap"></i></a>
@@ -179,9 +179,15 @@
             <div class="loadIconView"><i class="fa fa-spinner fa-pulse"></i><span>正在加载图标...请稍等</span></div>
         </div>
         <div class="modal-footer">
-            <span>被选择的图标</span><i id="pickIcon"></i>
-            <button type="button" class="btn" data-dismiss="modal">关闭</button>
-            <button type="button" class="btn btn-primary" id="btnSubmitIcon">保存</button>
+            <span>被选择的图标</span><i class="fa fa-fa" id="pickIcon"></i>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                <i class="fa fa-times"></i>
+                <span>关闭</span>
+            </button>
+            <button type="button" class="btn btn-primary" id="btnSubmitIcon">
+                <i class="fa fa-save"></i>
+                <span>确定</span>
+            </button>
         </div>
     </div>
     @await Html.PartialAsync("NavigatorConfig")

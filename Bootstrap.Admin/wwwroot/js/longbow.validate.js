@@ -176,7 +176,7 @@
     Validate.prototype.check = function (element) {
         var result = true;
         var $this = $(element);
-
+        if ($this.is(':hidden')) return result;
         var methods = this.rules(element);
         for (var rule in methods) {
             if ($.isFunction($.validator.methods[rule])) {

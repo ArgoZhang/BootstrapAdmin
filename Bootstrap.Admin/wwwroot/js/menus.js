@@ -150,6 +150,8 @@
     $btnPickIcon.on('click', function () {
         $dialogNew.find('[data-toggle="LgbValidate"] [aria-describedby]').tooltip('hide');
         $dialogNew.hide();
+        var icon = $inputIcon.val();
+        if (icon) $pickIcon.attr('class', icon);
         $dialogIcon.show();
     });
 

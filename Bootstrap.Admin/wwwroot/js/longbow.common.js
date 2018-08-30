@@ -189,7 +189,7 @@
         },
         lgbSwal: function (options) {
             if ($.isFunction(swal)) {
-                swal($.extend({ showConfirmButton: false, showCancelButton: false, timer: 1000, title: '未设置', type: "success" }, options));
+                swal($.extend({ html: true, showConfirmButton: false, showCancelButton: false, timer: 1000, title: '未设置', type: "success" }, options));
             }
         },
         getUID: function (prefix) {
@@ -216,6 +216,7 @@
             return this;
         },
         formatUrl: function (url) {
+            if (!url) return url;
             if (url.substr(0, 4) == "http") return url;
             var base = $('#pathBase').attr('href');
             return base + url;

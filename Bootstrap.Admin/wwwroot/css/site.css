@@ -14,6 +14,10 @@ ul li {
     list-style: none;
 }
 
+.modal-body .dd {
+    margin-bottom: 15px;
+}
+
 a, a:hover, a:focus {
     text-decoration: none;
     outline: none;
@@ -71,6 +75,7 @@ a, a:hover, a:focus {
         border-radius: 4px;
         padding: 6px 12px;
         color: #777;
+        transition: all .25s linear;
     }
 
         .header [data-toggle="dropdown"]:hover {
@@ -113,6 +118,9 @@ a, a:hover, a:focus {
 
 .nav .dropdown-footer {
     padding: 6px 0;
+    background-color: #f1f2f7;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
 }
 
 .nav .dropdown-item {
@@ -121,6 +129,10 @@ a, a:hover, a:focus {
     padding: 10px 12px;
     font-size: 0.75rem;
 }
+
+    .nav .dropdown-item:nth-of-type(odd) {
+        background-color: #F7F8F9;
+    }
 
     .nav .dropdown-item:hover {
         background-color: #93c9e8;
@@ -273,20 +285,25 @@ label.dropdown-item:first-child {
     font-weight: bold;
     color: #0077de;
     background-color: #b5f1b6;
-    padding: 10px 15px;
+    padding: 12px 15px;
     border-radius: 4px 4px 0 0;
+    margin-bottom: 0;
 }
 
 .cache-item {
     display: flex;
     align-items: center;
-    padding: 6px 4px 10px 4px;
-    margin-bottom: 4px;
+    padding: 10px 4px;
     border-bottom: 1px solid #EBEBEB;
 }
 
+    .cache-item:nth-of-type(odd) {
+        background-color: #F7F8F9;
+    }
+
     .cache-item:last-child {
         border-bottom: none;
+        margin-bottom: 15px;
     }
 
     .cache-item > :not(:first-child) {
@@ -322,7 +339,7 @@ label.dropdown-item:first-child {
         line-height: normal;
     }
 
-    .cache-item .btn {
+    .cache-item .btn, td .btn:not(.btn-lg) {
         margin-left: 5px;
         font-size: 0.75rem;
         padding: 1px 5px;

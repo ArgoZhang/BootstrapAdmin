@@ -78,10 +78,10 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="value"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public Notifications Get(string id)
+        public object Get(string id)
         {
-            var ret = new Notifications();
-            if (id == "newusers" || id == "all") ret.Users = UserHelper.RetrieveNewUsers().OrderByDescending(u => u.RegisterTime).ToList();
+            var ret = new object();
+            if (id == "newusers") ret = UserHelper.RetrieveNewUsers().ToList();
             return ret;
         }
 

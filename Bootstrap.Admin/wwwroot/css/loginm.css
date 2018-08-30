@@ -25,17 +25,9 @@
     padding: 20px;
 }
 
-    .login-wrap .login-footer {
-        padding-bottom: 15px;
-    }
-
-        .login-wrap .login-footer .login-create {
-            float: left;
-        }
-
-        .login-wrap .login-footer .login-reset {
-            float: right;
-        }
+.login-footer a:last-child {
+    float: right;
+}
 
 .btn-login {
     background: #f67a6e;

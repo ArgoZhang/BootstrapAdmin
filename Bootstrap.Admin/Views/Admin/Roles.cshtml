@@ -9,7 +9,7 @@
 }
 @section Javascript {
     <script src="~/js/jquery.nestable.js"></script>
-    <script src="~/js/Roles.js"></script>
+    <script src="~/js/roles.js"></script>
 
 }
 @section query {
@@ -40,7 +40,7 @@
         <span class="fa fa-dashboard" aria-hidden="true"></span><span>分配菜单</span>
     </button>
     <div class="toolbar btn-group">
-        <button class="btn dropdown-toggle" data-toggle="dropdown" type="button"><i class="fa fa-gear"></i></button>
+        <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" type="button"><i class="fa fa-gear"></i></button>
         <div class="dropdown-menu">
             @await Html.PartialAsync("_ButtonBarGroup")
             <a id="tb_assignUser" href="#" title="分配用户"><i class="fa fa-user"></i></a>

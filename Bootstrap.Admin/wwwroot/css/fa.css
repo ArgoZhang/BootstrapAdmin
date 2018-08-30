@@ -124,22 +124,20 @@
         white-space: nowrap;
     }
 
-        .icon-content .modal-footer span {
-            vertical-align: middle;
-            font-size: 14px;
+        .icon-content .modal-footer > span {
             color: #000;
         }
 
-        .icon-content .modal-footer i {
-            vertical-align: middle;
+        .icon-content .modal-footer > i {
             font-size: 22px;
-            margin: 0 4px 0 8px;
-            text-align: center;
             color: #337ab7;
-            display: inline-block;
             border: solid 1px;
-            padding: 3px;
             border-radius: 4px;
+            min-width: 36px;
+            min-height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .icon-content .modal-footer span {

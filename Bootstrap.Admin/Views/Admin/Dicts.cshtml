@@ -5,7 +5,7 @@
 }
 @section Javascript {
     <script src="~/js/bootstrap3-typeahead.js"></script>
-    <script src="~/js/Dicts.js"></script>
+    <script src="~/js/dicts.js"></script>
 }
 @section query {
     <form class="form-inline">
@@ -38,7 +38,7 @@
 }
 @section toolbar {
     <div class="toolbar btn-group dropdown">
-        <button class="btn dropdown-toggle" data-toggle="dropdown" type="button"><i class="fa fa-gear"></i></button>
+        <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" type="button"><i class="fa fa-gear"></i></button>
         <div class="dropdown-menu">
             @await Html.PartialAsync("_ButtonBarGroup")
         </div>
@@ -51,26 +51,28 @@
     </div>
     <div class="modal-body">
         <form class="form-inline">
-            <input type="text" class="form-control d-none" id="dictID" data-default-val="0" />
-            <div class="form-group col-12">
-                <label class="control-label" for="dictCate">字典标签</label>
-                <input type="text" class="form-control form-control-url" id="dictCate" placeholder="不可为空，50字以内" maxlength="50" data-valid="true" />
-            </div>
-            <div class="form-group col-12">
-                <label class="control-label" for="dictName">字典名称</label>
-                <input type="text" class="form-control form-control-url" id="dictName" placeholder="不可为空，50字以内" maxlength="50" data-valid="true" />
-            </div>
-            <div class="form-group col-12">
-                <label class="control-label" for="dictCode">字典代码</label>
-                <input type="text" class="form-control form-control-url" id="dictCode" placeholder="不可为空，50字以内" maxlength="50" data-valid="true" />
-            </div>
-            <div class="form-group col-12">
-                <label class="control-label" for="dictDefine">字典类型</label>
-                <div class="dropdown">
-                    <button id="dictDefine" class="btn btn-success dropdown-select dropdown-toggle" data-toggle="dropdown" data-default-val="1">全部</button>
-                    <div class="dropdown-menu">
-                        <a href="#" data-val="0">系统使用</a>
-                        <a href="#" data-val="1">自定义</a>
+            <div class="form-row">
+                <input type="text" class="form-control d-none" id="dictID" data-default-val="0" />
+                <div class="form-group col-12">
+                    <label class="control-label" for="dictCate">字典标签</label>
+                    <input type="text" class="form-control form-control-url" id="dictCate" placeholder="不可为空，50字以内" maxlength="50" data-valid="true" />
+                </div>
+                <div class="form-group col-12">
+                    <label class="control-label" for="dictName">字典名称</label>
+                    <input type="text" class="form-control form-control-url" id="dictName" placeholder="不可为空，50字以内" maxlength="50" data-valid="true" />
+                </div>
+                <div class="form-group col-12">
+                    <label class="control-label" for="dictCode">字典代码</label>
+                    <input type="text" class="form-control form-control-url" id="dictCode" placeholder="不可为空，50字以内" maxlength="50" data-valid="true" />
+                </div>
+                <div class="form-group col-12">
+                    <label class="control-label" for="dictDefine">字典类型</label>
+                    <div class="dropdown">
+                        <button id="dictDefine" class="btn btn-success dropdown-select dropdown-toggle" data-toggle="dropdown" data-default-val="1">全部</button>
+                        <div class="dropdown-menu">
+                            <a href="#" data-val="0">系统使用</a>
+                            <a href="#" data-val="1">自定义</a>
+                        </div>
                     </div>
                 </div>
             </div>
