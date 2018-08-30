@@ -62,7 +62,7 @@ StyleCopReport.xml
 # Files built by Visual Studio
 *_i.c
 *_p.c
-*_i.h
+*_h.h
 *.ilk
 *.meta
 *.obj
@@ -331,11 +331,16 @@ ASALocalRun/
 # MFractors (Xamarin productivity tool) working folder
 .mfractor/
 
+# Local History for Visual Studio
+.localhistory/
+
 # MAC Files
 **/.DS_Store
 
 # Windows db files
 **/[tT]humbs.db
 
-###### -- Custom Ignore Section, Make sure all files you add to the git repo are below this line  --  ######
+# Net Core Keys
+[Kk]eys/
 
+###### -- Custom Ignore Section, Make sure all files you add to the git repo are below this line  --  ######
