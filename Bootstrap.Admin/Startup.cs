@@ -46,10 +46,10 @@ namespace Bootstrap.Admin
             services.AddConfigurationManager();
             services.AddCacheManager();
             services.AddDBAccessFactory();
-            services.AddDataProtection(op => op.ApplicationDiscriminator = "BootstrapAdmin")
-                .SetApplicationName("__bd__")
-                .DisableAutomaticKeyGeneration()
-                .PersistKeysToFileSystem(new DirectoryInfo(ConfigurationManager.AppSettings["KeyPath"]));
+            var dataProtectionBuilder = services.AddDataProtection(op => op.ApplicationDiscriminator = Configuration["ApplicationDiscriminator"])
+                .SetApplicationName(Configuration["ApplicationName"])
+                .PersistKeysToFileSystem(new DirectoryInfo(Configuration["KeyPath"]));
+            if (Configuration["DisableAutomaticKeyGeneration"] == "True") dataProtectionBuilder.DisableAutomaticKeyGeneration();
             services.AddMvc(options =>
             {
                 options.Filters.Add<BootstrapAdminAuthorizeFilter>();
