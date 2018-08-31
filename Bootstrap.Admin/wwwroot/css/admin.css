@@ -18,10 +18,6 @@
     font-weight: 600;
 }
 
-.hidden-375 {
-    display: none;
-}
-
 .clearcache {
     position: absolute;
     right: 60px;

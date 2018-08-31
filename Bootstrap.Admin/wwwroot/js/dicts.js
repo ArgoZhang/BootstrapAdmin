@@ -1,5 +1,4 @@
 ﻿$(function () {
-    $('#panelResultHeader').html('查询结果<span class="hidden-375 text-danger">(仅 Administrators 角色成员可删除数据)<span>');
     var bsa = new BootstrapAdmin({
         url: Dicts.url,
         dataEntity: new DataEntity({

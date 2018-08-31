@@ -1,8 +1,4 @@
 ﻿@media (min-width: 375px) {
-    .hidden-375 {
-        display: inline-block;
-    }
-
     .toolbar .dropdown-menu a {
         padding: 0 20px;
     }
