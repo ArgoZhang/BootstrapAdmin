@@ -161,6 +161,10 @@ a, a:hover, a:focus {
     padding: 6px;
 }
 
+    .userinfo .dropdown-toggle:after {
+        vertical-align: middle;
+    }
+
 .userinfo .dropdown-item {
     display: flex;
     flex-wrap: wrap;
@@ -192,6 +196,11 @@ a, a:hover, a:focus {
             background: #a9d96c;
             background-image: linear-gradient(to bottom, #a9d96c 0%, #799e51 100%);
         }
+
+.userinfo .username {
+    max-width: 90px;
+    vertical-align: middle;
+}
 
 .userinfo .badge {
     left: 234px;
