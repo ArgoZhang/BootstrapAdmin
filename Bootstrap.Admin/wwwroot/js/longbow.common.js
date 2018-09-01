@@ -171,7 +171,7 @@
             function success(result) {
                 var interval = 10;
                 if ($.isFunction(options.callback)) {
-                    options.callback.call(options.$element == null ? options : options.$element, result);
+                    options.callback.call(options.$element === null ? options : options.$element, result);
                 }
                 if (options.modal !== null && (result || options.loading)) {
                     $(options.modal).modal('hide');
@@ -182,7 +182,7 @@
                         lgbSwal({ title: options.title + (result ? "成功" : "失败"), type: result ? 'success' : 'error' });
                     }
                     if ($.isFunction(callback)) {
-                        callback.call(options.$element == null ? this : options.$element);
+                        callback.call(options.$element === null ? this : options.$element);
                     }
                 }, interval);
             }
@@ -199,7 +199,7 @@
             return prefix;
         },
         fullScreenStatus: function fullScreenStatus(value) {
-            if (value != undefined) window.fullscreen = value;
+            if (value !== undefined) window.fullscreen = value;
             return document.fullscreen ||
                 document.mozFullScreen ||
                 document.webkitIsFullScreen || window.fullscreen ||
@@ -217,7 +217,7 @@
         },
         formatUrl: function (url) {
             if (!url) return url;
-            if (url.substr(0, 4) == "http") return url;
+            if (url.substr(0, 4) === "http") return url;
             var base = $('#pathBase').attr('href');
             return base + url;
         }
@@ -293,7 +293,7 @@
             var $collapse = $root.find('a[data-toggle="collapse"]:visible');
             $collapse.each(function () {
                 var $this = $(this);
-                if ($this.attr('href') != '#') return;
+                if ($this.attr('href') !== '#') return;
                 var $target = $this.parent().next();
                 var tId = $.getUID('collapse');
                 $target.attr('id', tId);
@@ -325,6 +325,20 @@
             var op = $.extend({ header: "header", content: ".main-content" }, options);
             return ($(op.header).outerHeight() + $(op.content).outerHeight() + this.outerHeight() > $(window).height()) ? this.removeClass('fixed') : this.addClass('fixed');
         },
+        lgbTable: function (options) {
+            var bsa = new DataTable($.extend(options.dataBinder, { url: options.url }));
+
+            var settings = $.extend({
+                url: options.url,
+                checkbox: true,
+                edit: true,
+                editTitle: "编辑",
+                editField: "Id"
+            }, options.smartTable);
+            if (settings.edit) settings.columns.unshift({ title: settings.editTitle, field: settings.editField, events: bsa.idEvents(), formatter: DataTable.idFormatter });
+            if (settings.checkbox) settings.columns.unshift({ checkbox: true });
+            this.smartTable(settings);
+        },
         smartTable: function (options) {
             var settings = $.extend({
                 method: 'get',                      //请求方式（*）
@@ -353,7 +367,7 @@
                 $('#' + $(this).attr('id').replace('tb_', 'btn_')).trigger("click");
             }).insertBefore(this.parents('.bootstrap-table').find('.fixed-table-toolbar > .bs-bars'));
             return this;
-        },
+        }
     });
 
     //extend dropdown method

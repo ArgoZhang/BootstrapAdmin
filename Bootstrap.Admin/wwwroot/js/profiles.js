@@ -19,27 +19,21 @@
         dropZoneTitle: "请选择头像"
     }).on('fileuploaded', function (event, data, previewId, index) {
         var url = data.response.initialPreview[0];
-        if (!!url) $headerIcon.attr('src', url);
+        if (!!url === true) $headerIcon.attr('src', url);
     });
 
-    var bsa = new BootstrapAdmin({
-        url: Profiles.url,
-        bootstrapTable: null,
-        dataEntity: new DataEntity({
-            map: {
-                Password: "currentPassword",
-                NewPassword: "newPassword",
-                DisplayName: "displayName",
-                UserName: "userName",
-                Css: "css"
-            }
-        })
+    var dataBinder = new DataEntity({
+        Password: "#currentPassword",
+        NewPassword: "#newPassword",
+        DisplayName: "#displayName",
+        UserName: "#userName",
+        Css: "#css"
     });
 
     $('button[data-method]').on('click', function (e) {
         var $this = $(this);
         if ($this.parent().attr("data-admin") === "True") return false;
-        var data = bsa.dataEntity.get();
+        var data = dataBinder.get();
         switch ($this.attr('data-method')) {
             case 'password':
                 data.UserStatus = 2;

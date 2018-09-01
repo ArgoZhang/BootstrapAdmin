@@ -1,24 +1,17 @@
 ﻿$(function () {
     $('a[data-admin="False"]').hide();
 
-    var bsa = new BootstrapAdmin({
-        url: Settings.url,
-        bootstrapTable: null,
-        validateForm: null,
-        modal: null,
-        dataEntity: new DataEntity({
-            map: {
-                Title: "sysName",
-                Footer: "sysFoot"
-            }
-        })
+    var dataBinder = new DataEntity({
+        Title: "#sysName",
+        Footer: "#sysFoot"
     });
 
     $('button[data-method]').on('click', function (e) {
         var $this = $(this);
+        var data = {};
         switch ($this.attr('data-method')) {
             case 'footer':
-                var data = bsa.dataEntity.get();
+                data = dataBinder.get();
                 $.bc({
                     url: Settings.url, data: { name: '网站页脚', code: data.Footer, category: Settings.title }, title: Settings.title,
                     callback: function (result) {
@@ -27,7 +20,7 @@
                 });
                 break;
             case 'title':
-                var data = bsa.dataEntity.get();
+                data = dataBinder.get();
                 $.bc({
                     url: Settings.url, data: { name: '网站标题', code: data.Title, category: Settings.title }, title: Settings.title,
                     callback: function (result) {
@@ -100,7 +93,7 @@
             },
             swal: false
         });
-    }
+    };
     $('a[data-method]').on('click', function (e) {
         e.preventDefault();
         e.stopPropagation();

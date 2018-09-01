@@ -12,19 +12,16 @@
     var $nestMenu = $('#nestable_menu');
     var $nestMenuInput = $nestMenu.find('div.dd3-content');
 
-    var bsa = new BootstrapAdmin({
+    $('table').lgbTable({
         url: Role.url,
-        dataEntity: new DataEntity({
+        dataBinder: {
             map: {
-                Id: "roleID",
-                RoleName: "roleName",
-                Description: "roleDesc"
-            }
-        }),
-        click: {
-            assign: [{
-                id: 'btn_assignUser',
-                click: function (row) {
+                Id: "#roleID",
+                RoleName: "#roleName",
+                Description: "#roleDesc"
+            },
+            events: {
+                '#btn_assignUser': function (row) {
                     $.bc({
                         id: row.Id, url: User.url, data: { type: "role" }, swal: false,
                         callback: function (result) {
@@ -34,15 +31,13 @@
                             }).join('');
                             $dialogUserHeader.text($.format('{0}-用户授权窗口', row.RoleName));
                             $dialogUserForm.html(html).find('[data-toggle="tooltip"]').each(function (index, label) {
-                                if (label.title == "") label.title = "未设置";
+                                if (label.title === "") label.title = "未设置";
                             }).tooltip();
                             $dialogUser.modal('show');
                         }
                     });
-                }
-            }, {
-                id: 'btn_assignGroup',
-                click: function (row) {
+                },
+                '#btn_assignGroup': function (row) {
                     $.bc({
                         id: row.Id, url: Group.url, data: { type: "role" }, swal: false,
                         callback: function (result) {
@@ -52,15 +47,13 @@
                             }).join('');
                             $dialogGroupHeader.text($.format('{0}-部门授权窗口', row.RoleName));
                             $dialogGroupForm.html(html).find('[data-toggle="tooltip"]').each(function (index, label) {
-                                if (label.title == "") label.title = "未设置";
+                                if (label.title === "") label.title = "未设置";
                             }).tooltip();
                             $dialogGroup.modal('show');
                         }
                     });
-                }
-            }, {
-                id: 'btn_assignMenu',
-                click: function (row) {
+                },
+                '#btn_assignMenu': function (row) {
                     $.bc({
                         id: row.Id, url: Menu.url, data: { type: "role" }, swal: false,
                         callback: function (result) {
@@ -77,28 +70,22 @@
                             $dialogMenu.modal('show');
                         }
                     });
-                }
-            }, {
-                id: 'btnSubmitUser',
-                click: function (row) {
+                },
+                '#btnSubmitUser': function (row) {
                     var roleId = row.Id;
                     var userIds = $dialogUser.find(':checked').map(function (index, element) {
                         return $(element).val();
                     }).toArray().join(',');
                     $.bc({ id: roleId, url: User.url, method: "PUT", data: { type: "role", userIds: userIds }, modal: '#dialogUser', title: User.title });
-                }
-            }, {
-                id: 'btnSubmitGroup',
-                click: function (row) {
+                },
+                '#btnSubmitGroup': function (row) {
                     var roleId = row.Id;
                     var groupIds = $dialogGroup.find(':checked').map(function (index, element) {
                         return $(element).val();
                     }).toArray().join(',');
                     $.bc({ id: roleId, url: Group.url, method: "PUT", data: { type: "role", groupIds: groupIds }, modal: '#dialogGroup', title: Group.title });
-                }
-            }, {
-                id: 'btnSubmitMenu',
-                click: function (row) {
+                },
+                '#btnSubmitMenu': function (row) {
                     var roleId = row.Id;
                     var type = $btnSubmitMenu.data('type');
                     switch (type) {
@@ -112,20 +99,16 @@
                     }
                     $.bc({ id: roleId, url: Menu.url, method: "PUT", data: { type: "role", menuIds: menuIds }, modal: '#dialogMenu', title: Menu.title });
                 }
-            }]
+            }
+        },
+        smartTable: {
+            sortName: 'RoleName',
+            queryParams: function (params) { return $.extend(params, { roleName: $("#txt_search_name").val(), description: $("#txt_role_desc").val() }); },           //传递参数（*）
+            columns: [
+                { title: "角色名称", field: "RoleName", sortable: true },
+                { title: "角色描述", field: "Description", sortable: false }
+            ]
         }
-    });
-
-    $('table').smartTable({
-        url: Role.url,            //请求后台的URL（*）
-        sortName: 'RoleName',
-        queryParams: function (params) { return $.extend(params, { roleName: $("#txt_search_name").val(), description: $("#txt_role_desc").val() }); },           //传递参数（*）
-        columns: [
-            { checkbox: true },
-            { title: "编辑", field: "Id", events: bsa.idEvents(), formatter: BootstrapAdmin.idFormatter },
-            { title: "角色名称", field: "RoleName", sortable: true },
-            { title: "角色描述", field: "Description", sortable: false }
-        ]
     });
 
     $nestMenu.nestMenu(function () {

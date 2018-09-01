@@ -6,11 +6,6 @@
     var $errorDetail = $('#errorDetail');
     var $errorDetailTitle = $('#myDetailModalLabel');
 
-    var bsa = new BootstrapAdmin({
-        url: Exceptions.url,
-        validateForm: null
-    });
-
     $('table').smartTable({
         url: Exceptions.url,
         sortName: 'LogTime',

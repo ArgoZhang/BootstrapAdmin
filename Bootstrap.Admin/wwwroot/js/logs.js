@@ -1,9 +1,5 @@
 ﻿$(function () {
-    var url = '../api/Logs/';
-    var bsa = new BootstrapAdmin({
-        url: url,
-        validateForm: null
-    });
+    var url = 'api/Logs/';
 
     $('table').smartTable({
         url: url,

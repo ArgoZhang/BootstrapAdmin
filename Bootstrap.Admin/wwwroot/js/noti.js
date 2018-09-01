@@ -21,7 +21,7 @@
         var id = $this.attr('data-id');
         var result = $this.attr('data-result');
         $.bc({
-            id: id, url: User.url, method: "PUT", data: { type: "user", userIds: result }, title: result == "1" ? "授权用户" : "拒绝用户",
+            id: id, url: User.url, method: "PUT", data: { type: "user", userIds: result }, title: result === "1" ? "授权用户" : "拒绝用户",
             callback: function (result) {
                 $table.bootstrapTable('refresh');
                 $.pullNotification($('.header .nav').reloadWidget());
