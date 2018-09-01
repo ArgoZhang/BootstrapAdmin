@@ -1,4 +1,10 @@
-﻿@media (min-width: 568px) {
+﻿@media (min-width: 375px) {
+    .form-check-input + span, .form-check-input + label {
+        max-width: 146px;
+    }
+}
+
+@media (min-width: 568px) {
     .toolbar {
         display: none;
     }
@@ -32,6 +38,10 @@
 @media (min-width: 940px) {
     .btn span:last-child {
         display: inline;
+    }
+
+    .form-check-input + span, .form-check-input + label {
+        max-width: 192px;
     }
 }
 
