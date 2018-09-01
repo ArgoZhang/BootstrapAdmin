@@ -3,7 +3,7 @@
 
     var Validate = function (element, options) {
         var that = this;
-        this.$element = $(element)
+        this.$element = $(element);
         this.options = $.extend({
             pendingRequest: 0,
             pending: {},
@@ -85,7 +85,7 @@
                 that.tooltip.call(that, element, true);
             },
             settings: $.validator.defaults
-        }, this.defaults(), options)
+        }, this.defaults(), options);
         this.$element.on('input.lgb.validate', this.options.childClass, function () {
             if (!that.validElement(this)) $(this).tooltip('show');
         }).on('inserted.bs.tooltip', this.options.childClass, function () {
