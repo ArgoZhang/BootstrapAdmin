@@ -138,7 +138,7 @@
             }
 
             if (options.loading && options.modal) {
-                $(options.modal).find('.close').addClass('hidden')
+                $(options.modal).find('.close').addClass('hidden');
                 $(options.modal).modal('show');
                 setTimeout(function () {
                     $(options.modal).find('.close').removeClass('hidden');
@@ -148,8 +148,8 @@
             if (options.remote && options.url) {
                 $.ajax({
                     url: $.formatUrl(options.url) + options.id,
-                    data: (options.contentType === 'application/json' &&
-                        (options.method.toLowerCase() === 'post' || options.method.toLowerCase() === 'put' || options.method.toLowerCase() === 'delete'))
+                    data: options.contentType === 'application/json' &&
+                        (options.method.toLowerCase() === 'post' || options.method.toLowerCase() === 'put' || options.method.toLowerCase() === 'delete')
                         ? JSON.stringify(options.data) : options.data,
                     type: options.method,
                     contentType: options.contentType,
@@ -194,8 +194,8 @@
         },
         getUID: function (prefix) {
             if (!prefix) prefix = 'lgb';
-            do prefix += ~~(Math.random() * 1000000)
-            while (document.getElementById(prefix))
+            do prefix += ~~(Math.random() * 1000000);
+            while (document.getElementById(prefix));
             return prefix;
         },
         fullScreenStatus: function fullScreenStatus(value) {
@@ -323,7 +323,7 @@
         footer: function (options) {
             if ($(window).width() >= 768) { this.addClass('fixed'); return this; }
             var op = $.extend({ header: "header", content: ".main-content" }, options);
-            return ($(op.header).outerHeight() + $(op.content).outerHeight() + this.outerHeight() > $(window).height()) ? this.removeClass('fixed') : this.addClass('fixed');
+            return $(op.header).outerHeight() + $(op.content).outerHeight() + this.outerHeight() > $(window).height() ? this.removeClass('fixed') : this.addClass('fixed');
         },
         lgbTable: function (options) {
             var bsa = new DataTable($.extend(options.dataBinder, { url: options.url }));
@@ -337,7 +337,7 @@
             }, options.smartTable);
             if (settings.edit) settings.columns.unshift({ title: settings.editTitle, field: settings.editField, events: bsa.idEvents(), formatter: DataTable.idFormatter });
             if (settings.checkbox) settings.columns.unshift({ checkbox: true });
-            this.smartTable(settings);
+            return this.smartTable(settings);
         },
         smartTable: function (options) {
             var settings = $.extend({
