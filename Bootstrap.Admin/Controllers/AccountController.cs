@@ -1,7 +1,5 @@
 ﻿using Bootstrap.Admin.Models;
-using Bootstrap.DataAccess;
 using Bootstrap.Security;
-using Longbow.Web;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -33,9 +31,7 @@ namespace Bootstrap.Admin.Controllers
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity), new AuthenticationProperties() { IsPersistent = remember == "true" });
                 return Redirect("~/");
             }
-            var mobile = Request.IsMobileDevice();
-            var model = Request.IPad();
-            return mobile && !model ? View("Loginm", new ModelBase()) : View("Login", new ModelBase());
+            return View("Login", new ModelBase());
         }
         /// <summary>
         /// Logout this instance.

@@ -1,27 +1,19 @@
 ﻿body {
-    background-color: #5bc0de;
-    background: url('../images/bg2.jpg') fixed no-repeat;
-    background-size: 100% 100%;
-}
-
-.container {
-    background: url('../images/bg3.png') no-repeat;
-    background-size: contain;
-    width: 704px;
-    height: 404px;
-    margin: 0 auto;
+    color: #797979;
+    background-color: #f1f2f7;
 }
 
 .form-signin-heading {
-    padding: 28px 0;
+    margin: 0;
+    padding: 20px 15px;
     text-align: center;
+    background-color: #41cac0;
+    border-radius: 5px 5px 0 0;
     color: #fff;
 }
 
 .login-wrap {
-    margin: 36px 0 0 370px;
-    width: 280px;
-    height: 200px;
+    padding: 20px;
 }
 
 .login-footer a:last-child {
@@ -33,8 +25,10 @@
     color: #fff;
     text-transform: uppercase;
     font-weight: 300;
-    box-shadow: 1px 1px #e56b60;
+    font-family: 'Open Sans', sans-serif;
+    box-shadow: 0 4px #e56b60;
     margin-bottom: 20px;
+    outline: none !important;
     margin-top: -8px;
 }
 
