@@ -34,24 +34,16 @@
                 }
             });
         },
-        resetWidget: function () {
-            var widgets = $(this).children('li');
-            widgets.each(function () {
-                var widget = $(this).children('ul');
-                if (widget.children().length === 3) return;
-                var last = widget.children(':last');
-                while (widget.children().length > 3) {
-                    widget.children(':eq(2)').remove();
-                }
+        clearWidgetItems: function () {
+            this.children('.dropdown').each(function () {
+                $(this).children('.dropdown-menu').each(function () {
+                    $(this).children('a').remove();
+                });
             });
-            return $(this);
-        }
-    });
-
-    $.extend({
-        pullNotification: function (nav) {
-            if (nav.length === 0) return;
-
+            return this;
+        },
+        pullNotification: function () {
+            var that = this;
             var uri = "ws://" + window.location.host + $.formatUrl("WS");
             var socket = new WebSocket(uri);
             socket.onmessage = function (e) {
@@ -68,11 +60,10 @@
                             break;
                     }
                 }
-                if (result.length > 0) nav.reloadWidget();
+                if (result.length > 0) that.reloadWidget();
             };
-        }
-    });
-    $.fn.extend({
+            return this;
+        },
         reloadWidget: function () {
             if (this.length === 0) return this;
             var that = this;
@@ -82,7 +73,7 @@
                 method: 'GET',
                 callback: function (result) {
                     $('#logoutNoti').text(result.NewUsersCount === 0 ? "" : result.NewUsersCount);
-                    that.resetWidget();
+                    that.clearWidgetItems();
                     // tasks
                     $('#msgHeaderTask').text(result.TasksCount);
                     $('#msgHeaderTaskBadge').text(result.TasksCount === 0 ? "" : result.TasksCount);
@@ -203,5 +194,5 @@ $(function () {
     $('[data-toggle="dropdown"].dropdown-select').dropdown('select');
 
     // load widget data
-    $.pullNotification($('.header .nav').reloadWidget());
+    $('.header .nav').reloadWidget().pullNotification();
 });
