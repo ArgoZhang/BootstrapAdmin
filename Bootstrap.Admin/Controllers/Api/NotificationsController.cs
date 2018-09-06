@@ -20,6 +20,8 @@ namespace Bootstrap.Admin.Controllers.Api
         public Notifications Get()
         {
             var ret = new Notifications();
+            if (!User.IsInRole("Administrators")) return ret;
+
             // New Users
             var user = UserHelper.RetrieveNewUsers();
             ret.Users = user.Take(6).ToList();

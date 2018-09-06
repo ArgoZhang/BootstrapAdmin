@@ -2,7 +2,7 @@
     var cascadeMenu = function (menus) {
         var html = "";
         $.each(menus, function (index, menu) {
-            if (menu.Menus.length == 0) {
+            if (menu.Menus.length === 0) {
                 html += $.format('<li class="dd-item dd3-item" data-id="{0}" data-order="{4}" data-category="{3}"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><div class="checkbox"><label><input type="checkbox" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><div class="radio"><label><input type="radio" name="menu" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><span class="menuType">{5}</span><span class="menuOrder">{4}</span></div></li>', menu.Id, menu.Icon, menu.Name, menu.Category, menu.Order, menu.CategoryName);
             }
             else {
@@ -13,7 +13,7 @@
     };
 
     var cascadeSubMenu = function (menus) {
-        var html = ""
+        var html = "";
         $.each(menus, function (index, menu) {
             html += $.format('<li class="dd-item dd3-item" data-id="{0}" data-order="{4}" data-category="{3}"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><div class="checkbox"><label><input type="checkbox" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><div class="radio"><label><input type="radio" name="menu" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><span class="menuType">{5}</span><span class="menuOrder">{4}</span></div></li>', menu.Id, menu.Icon, menu.Name, menu.Category, menu.Order, menu.CategoryName);
         });
@@ -50,7 +50,7 @@
 
     $.extend({
         pullNotification: function (nav) {
-            if (nav.length == 0) return;
+            if (nav.length === 0) return;
 
             var uri = "ws://" + window.location.host + $.formatUrl("WS");
             var socket = new WebSocket(uri);
@@ -67,7 +67,7 @@
                             toastr.info(msg, "新用户注册");
                             break;
                     }
-                };
+                }
                 if (result.length > 0) nav.reloadWidget();
             };
         }
@@ -81,11 +81,11 @@
                 swal: false,
                 method: 'GET',
                 callback: function (result) {
-                    $('#logoutNoti').text(result.NewUsersCount);
+                    $('#logoutNoti').text(result.NewUsersCount === 0 ? "" : result.NewUsersCount);
                     that.resetWidget();
                     // tasks
                     $('#msgHeaderTask').text(result.TasksCount);
-                    $('#msgHeaderTaskBadge').text(result.TasksCount);
+                    $('#msgHeaderTaskBadge').text(result.TasksCount === 0 ? "" : result.TasksCount);
                     var htmlUserTemplate = '<a class="dropdown-item" href="{4}?id={3}"><span class="desc">{0}-{2}</span><span class="percent">{1}%</span></span><div class="progress progress-striped"><div class="progress-bar" role="progressbar" aria-valuenow="{1}" aria-valuemin="0" aria-valuemax="100" style="width: {1}%"><span class="sr-only">{1}% 完成</span></div></div></a>';
                     var html = result.Tasks.map(function (u) {
                         return $.format(htmlUserTemplate, u.TaskName, u.TaskProgress, u.AssignDisplayName, u.Id, $.formatUrl('Admin/Tasks'));
@@ -94,7 +94,7 @@
 
                     // new users
                     $('#msgHeaderUser').text(result.NewUsersCount);
-                    $('#msgHeaderUserBadge').text(result.NewUsersCount);
+                    $('#msgHeaderUserBadge').text(result.NewUsersCount === 0 ? "" : result.NewUsersCount);
                     htmlUserTemplate = '<a class="dropdown-item" href="{4}"><span class="label label-success"><i class="fa fa-plus"></i></span><div title="{2}" class="content">{1}({0})</div><span class="small italic">{3}</span></a>';
                     html = result.Users.map(function (u) {
                         return $.format(htmlUserTemplate, u.UserName, u.DisplayName, u.Description, u.Period, $.formatUrl('Admin/Notifications'));
@@ -103,7 +103,7 @@
 
                     // apps
                     $('#msgHeaderApp').text(result.AppExceptionsCount);
-                    $('#msgHeaderAppBadge').text(result.AppExceptionsCount);
+                    $('#msgHeaderAppBadge').text(result.AppExceptionsCount === 0 ? "" : result.AppExceptionsCount);
                     htmlUserTemplate = '<a class="dropdown-item" href="{3}"><span class="label label-warning"><i class="fa fa-bug"></i></span><div title="{1}" class="content">{0}</div><span class="small italic">{2}</span></a>';
                     html = result.Apps.map(function (u) {
                         return $.format(htmlUserTemplate, u.ExceptionType, u.Message, u.Period, $.formatUrl('Admin/Exceptions'));
@@ -112,7 +112,7 @@
 
                     // dbs
                     $('#msgHeaderDb').text(result.DbExceptionsCount);
-                    $('#msgHeaderDbBadge').text(result.DbExceptionsCount);
+                    $('#msgHeaderDbBadge').text(result.DbExceptionsCount === 0 ? "" : result.DbExceptionsCount);
                     htmlUserTemplate = '<a class="dropdown-item" href="{3}"><span class="label label-danger"><i class="fa fa-bolt"></i></span><div title="{1}" class="content">{0}</div><span class="small italic">{2}</span></a>';
                     html = result.Dbs.map(function (u) {
                         return $.format(htmlUserTemplate, u.ErrorPage, u.Message, u.Period, $.formatUrl('Admin/Exceptions'));
@@ -121,7 +121,7 @@
 
                     // messages
                     $('#msgHeaderMsg').text(result.MessagesCount);
-                    $('#msgHeaderMsgBadge').text(result.MessagesCount);
+                    $('#msgHeaderMsgBadge').text(result.MessagesCount === 0 ? "" : result.MessagesCount);
                     htmlUserTemplate = '<a class="dropdown-item" href="{6}?id={0}"><span class="photo"><img alt="avatar" src="{1}"></span><span class="subject"><span class="from">{2}</span><span class="time">{4}</span></span><span class="message" title="{5}">{3}</span></a>';
                     html = result.Messages.map(function (u) {
                         return $.format(htmlUserTemplate, u.Id, u.FromIcon, u.FromDisplayName, u.Title, u.Period, u.Content, $.formatUrl('Admin/Messages'));
@@ -149,7 +149,7 @@ $(function () {
         "hideEasing": "linear",
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
-    }
+    };
 
     var $sidebar = $("#sidebar");
     var $main = $('#main-content');
@@ -180,7 +180,7 @@ $(function () {
     }
 
     $sidebar.on('click', 'a.dcjq-parent', function () {
-        var o = ($(this).offset());
+        var o = $(this).offset();
         diff = 110 - o.top;
         if (diff > 0)
             $sidebar.scrollTo("-=" + Math.abs(diff), 500);
@@ -189,14 +189,14 @@ $(function () {
     });
 
     $('.sidebar-toggle-box').on('click', function () {
-        if ($sidebar.is(":visible") === true) {
+        if ($sidebar.is(":visible")) {
             $main.addClass('closed').removeClass('open');
-            $sidebar.parent().toggleClass('open')
-            $(window).width() <= 768 ? setTimeout(function () { $sidebar.hide() }, 400) : $sidebar.hide();
+            $sidebar.parent().toggleClass('open');
+            $(window).width() <= 768 ? setTimeout(function () { $sidebar.hide(); }, 400) : $sidebar.hide();
         } else {
-            $sidebar.show()
-            $sidebar.parent().toggleClass('open')
-            $(window).width() <= 768 ? setTimeout(function () { $main.addClass('open').removeClass('closed') }, 400) : $main.addClass('open').removeClass('closed');
+            $sidebar.show();
+            $sidebar.parent().toggleClass('open');
+            $(window).width() <= 768 ? setTimeout(function () { $main.addClass('open').removeClass('closed'); }, 400) : $main.addClass('open').removeClass('closed');
         }
     });
 
