@@ -259,7 +259,7 @@
             return this;
         },
         footer: function (options) {
-            if ($(window).width() >= 768) { this.addClass('fixed'); return this; }
+            if ($(window).width() >= 768) { return this.addClass('fixed'); }
             var op = $.extend({ header: "header", content: ".main-content" }, options);
             return $(op.header).outerHeight() + $(op.content).outerHeight() + this.outerHeight() > $(window).height() ? this.removeClass('fixed') : this.addClass('fixed');
         },

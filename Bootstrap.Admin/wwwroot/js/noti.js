@@ -1,4 +1,6 @@
 ﻿$(function () {
+    $('.site-footer').footer();
+
     var $table = $('table').smartTable({
         url: Notifications.url + "newusers",
         sidePagination: "client",
