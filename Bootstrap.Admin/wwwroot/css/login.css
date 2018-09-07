@@ -45,3 +45,7 @@
 .form-control {
     border-color: #1ca0e9;
 }
+
+.form-check-label {
+    color: #333;
+}
