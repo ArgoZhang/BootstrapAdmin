@@ -5,6 +5,7 @@ using Longbow.Web.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -36,15 +37,15 @@ namespace Bootstrap.Admin.Controllers.Api
             if (User.IsInRole("Administrators")) return false;
 
             var ret = false;
-            if (value.UserStatus == 3)
+            if (value.UserStatus == UserStates.ChangeTheme)
             {
                 return UserHelper.SaveUserCssByName(value.UserName, value.Css);
             }
             if (value.UserName.Equals(User.Identity.Name, System.StringComparison.OrdinalIgnoreCase))
             {
-                if (value.UserStatus == 1)
+                if (value.UserStatus == UserStates.ChangeDisplayName)
                     ret = BootstrapUser.SaveUserInfoByName(value.UserName, value.DisplayName);
-                else if (value.UserStatus == 2)
+                else if (value.UserStatus == UserStates.ChangePassword)
                     ret = BootstrapUser.ChangePassword(value.UserName, value.Password, value.NewPassword);
             }
             return ret;
@@ -82,6 +83,7 @@ namespace Bootstrap.Admin.Controllers.Api
         {
             value.Description = string.Format("管理员{0}创建用户", User.Identity.Name);
             value.ApprovedBy = User.Identity.Name;
+            value.ApprovedTime = DateTime.Now;
             return UserHelper.SaveUser(value);
         }
         /// <summary>
@@ -103,20 +105,6 @@ namespace Bootstrap.Admin.Controllers.Api
                     break;
                 case "group":
                     ret = UserHelper.SaveUsersByGroupId(id, userIds);
-                    break;
-                case "user":
-                    // 此时 userIds 存储的信息是操作结果 1 标示同意 0 标示拒绝
-                    var user = new User() { Id = id, UserStatus = 2 };
-                    if (userIds == "1")
-                    {
-                        user.ApprovedBy = User.Identity.Name;
-                    }
-                    else
-                    {
-                        user.RejectedReason = "无原因";
-                        user.RejectedBy = User.Identity.Name;
-                    }
-                    ret = UserHelper.SaveUser(user);
                     break;
                 default:
                     break;

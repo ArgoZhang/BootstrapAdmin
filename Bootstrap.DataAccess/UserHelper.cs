@@ -2,7 +2,6 @@
 using Longbow;
 using Longbow.Cache;
 using Longbow.Data;
-using Longbow.Logging;
 using Longbow.Security;
 using System;
 using System.Collections.Generic;
@@ -106,30 +105,63 @@ namespace Bootstrap.DataAccess
         public static bool SaveUser(User p)
         {
             if (p.Id == 0 && p.Description.Length > 500) p.Description = p.Description.Substring(0, 500);
-            if (p.UserStatus != 2)
-            {
-                if (p.UserName.Length > 50) p.UserName = p.UserName.Substring(0, 50);
-                p.PassSalt = LgbCryptography.GenerateSalt();
-                p.Password = LgbCryptography.ComputeHash(p.Password, p.PassSalt);
-            }
-            bool ret = false;
+            if (p.UserName.Length > 50) p.UserName = p.UserName.Substring(0, 50);
+            p.PassSalt = LgbCryptography.GenerateSalt();
+            p.Password = LgbCryptography.ComputeHash(p.Password, p.PassSalt);
             using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_SaveUsers"))
             {
-                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@id", p.Id));
-                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@userName", DBAccessFactory.ToDBValue(p.UserName)));
-                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@password", DBAccessFactory.ToDBValue(p.Password)));
-                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@passSalt", DBAccessFactory.ToDBValue(p.PassSalt)));
-                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@displayName", DBAccessFactory.ToDBValue(p.DisplayName)));
-                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@description", DBAccessFactory.ToDBValue(p.Description)));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@userName", p.UserName));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@password", p.Password));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@passSalt", p.PassSalt));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@displayName", p.DisplayName));
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@approvedBy", DBAccessFactory.ToDBValue(p.ApprovedBy)));
-                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@rejectedBy", DBAccessFactory.ToDBValue(p.RejectedBy)));
-                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@rejectedReason", DBAccessFactory.ToDBValue(p.RejectedReason)));
-                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@userStatus", p.UserStatus));
+                object approvedTime = p.ApprovedTime;
+                if (p.ApprovedTime == DateTime.MinValue) approvedTime = DBNull.Value;
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@approvedTime", approvedTime));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@description", p.Description));
                 DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
             }
             CacheCleanUtility.ClearCache(userIds: p.Id == 0 ? string.Empty : p.Id.ToString());
-            ret = true;
-            if (p.UserStatus == 1) NotificationHelper.MessagePool.Add(new MessageBody() { Category = "Users", Message = string.Format("{0}-{1}", p.UserName, p.Description) });
+            return true;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="approvedBy"></param>
+        /// <returns></returns>
+        public static bool ApproveUser(int id, string approvedBy)
+        {
+            var ret = false;
+            var sql = "update Users set ApprovedTime = GETDATE(), ApprovedBy = @approvedBy where ID = @id";
+            using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
+            {
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@id", id));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@approvedBy", approvedBy));
+                ret = DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd) == 1;
+            }
+            CacheCleanUtility.ClearCache(userIds: id.ToString());
+            return ret;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="rejectBy"></param>
+        /// <param name="reason"></param>
+        /// <returns></returns>
+        public static bool RejectUser(int id, string rejectBy)
+        {
+            var ret = false;
+            var sql = "update Users set RejectedTime = GETDATE(), RejectedBy = @rejectedBy, RejectedReason = @rejectedReason where ID = @id";
+            using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
+            {
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@id", id));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@rejectedBy", rejectBy));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@rejectedReason", "未填写"));
+                ret = DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd) == 1;
+            }
+            CacheCleanUtility.ClearCache(userIds: id.ToString());
             return ret;
         }
         /// <summary>

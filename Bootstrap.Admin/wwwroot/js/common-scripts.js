@@ -42,28 +42,6 @@
             });
             return this;
         },
-        pullNotification: function () {
-            var that = this;
-            var uri = "ws://" + window.location.host + $.formatUrl("WS");
-            var socket = new WebSocket(uri);
-            socket.onmessage = function (e) {
-                var result = JSON.parse(e.data);
-                for (index in result) {
-                    var cate = result[index].Category;
-                    var msg = result[index].Message;
-                    switch (cate) {
-                        case "Notification":
-                            toastr.error(msg, "应用程序出现错误");
-                            break;
-                        case "Users":
-                            toastr.info(msg, "新用户注册");
-                            break;
-                    }
-                }
-                if (result.length > 0) that.reloadWidget();
-            };
-            return this;
-        },
         reloadWidget: function () {
             if (this.length === 0) return this;
             var that = this;
@@ -134,7 +112,7 @@ $(function () {
         "onclick": null,
         "showDuration": "600",
         "hideDuration": "2000",
-        "timeOut": "5000",
+        "timeOut": "4000",
         "extendedTimeOut": "1000",
         "showEasing": "swing",
         "hideEasing": "linear",
@@ -194,5 +172,25 @@ $(function () {
     $('[data-toggle="dropdown"].dropdown-select').dropdown('select');
 
     // load widget data
-    $('.header .nav').reloadWidget().pullNotification();
+    $('.header .nav').reloadWidget().socketHandler({
+        onmessage: function (e) {
+            var result = JSON.parse(e.data);
+            for (index in result) {
+                var cate = result[index].Category;
+                var msg = result[index].Message;
+                switch (cate) {
+                    case "Notification":
+                        toastr.error(msg, "应用程序出现错误");
+                        break;
+                    case "Users":
+                        toastr.success(msg, "新用户注册");
+                        break;
+                    case "Exception":
+                        toastr.warning(msg, "程序发生异常");
+                        break;
+                }
+            }
+            if (result.length > 0) this.reloadWidget();
+        }
+    });
 });

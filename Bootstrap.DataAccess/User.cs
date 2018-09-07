@@ -41,9 +41,9 @@ namespace Bootstrap.DataAccess
         /// </summary>
         public string Description { get; set; }
         /// <summary>
-        /// 获得/设置 用户当前状态 0 表示管理员注册用户 1 表示用户自己注册 2 表示管理员批复 3 表示更改个人皮肤 9 表示前台remote validate
+        /// 获得/设置 用户当前状态 0 表示管理员注册用户 1 表示用户注册 2 表示更改密码 3 表示更改个人皮肤 4 表示更改显示名称 5 批复新用户注册操作
         /// </summary>
-        public int UserStatus { get; set; }
+        public UserStates UserStatus { get; set; }
         /// <summary>
         /// 获得/设置 通知描述 2分钟内为刚刚
         /// </summary>
@@ -72,5 +72,31 @@ namespace Bootstrap.DataAccess
         {
             return string.Format("{0} ({1})", UserName, DisplayName);
         }
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    public enum UserStates
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        ChangePassword,
+        /// <summary>
+        /// 
+        /// </summary>
+        ChangeTheme,
+        /// <summary>
+        /// 
+        /// </summary>
+        ChangeDisplayName,
+        /// <summary>
+        /// 
+        /// </summary>
+        ApproveUser,
+        /// <summary>
+        /// 
+        /// </summary>
+        RejectUser
     }
 }

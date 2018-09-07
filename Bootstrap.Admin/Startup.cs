@@ -82,7 +82,7 @@ namespace Bootstrap.Admin
             app.UseCookiePolicy();
             app.UseAuthentication();
             app.UseBootstrapRoleAuthorization();
-            app.UseWebSocketHandler(options => options.UseAuthentication = true);
+            app.UseWebSocketHandler(options => options.UseAuthentication = true, WSHelper.WebSocketMessageHandler);
             app.UseCacheManagerCorsHandler();
             app.UseMvc(routes =>
             {

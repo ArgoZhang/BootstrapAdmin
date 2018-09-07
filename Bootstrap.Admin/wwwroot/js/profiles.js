@@ -36,11 +36,11 @@
         var data = dataBinder.get();
         switch ($this.attr('data-method')) {
             case 'password':
-                data.UserStatus = 2;
+                data.UserStatus = 'ChangePassword';
                 $.bc({ url: User.url, method: "PUT", data: data, title: "更改密码" });
                 break;
             case 'user':
-                data.UserStatus = 1;
+                data.UserStatus = 'ChangeDisplayName';
                 $.bc({
                     url: User.url, method: "PUT", data: data, title: "修改用户显示名称",
                     callback: function (result) {
@@ -51,7 +51,7 @@
                 });
                 break;
             case 'css':
-                data.UserStatus = 3;
+                data.UserStatus = 'ChangeTheme';
                 $.bc({ url: User.url, method: "PUT", data: data, title: "保存样式" });
                 break;
         }

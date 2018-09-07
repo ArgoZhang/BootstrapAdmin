@@ -225,68 +225,6 @@
 
     window.lgbSwal = $.lgbSwal;
 
-    // Roles
-    Role = {
-        url: 'api/Roles/',
-        title: "授权角色"
-    };
-
-    // Users
-    User = {
-        url: 'api/Users/',
-        title: "授权用户"
-    };
-
-    // Groups
-    Group = {
-        url: 'api/Groups/',
-        title: "授权部门"
-    };
-
-    // Menus
-    Menu = {
-        url: 'api/Menus/',
-        iconView: 'Admin/IconView',
-        title: "授权菜单"
-    };
-
-    // Exceptions
-    Exceptions = {
-        url: 'api/Exceptions/',
-        title: "程序异常日志"
-    };
-
-    // Dicts
-    Dicts = {
-        url: 'api/Dicts/'
-    };
-
-    // Profiles
-    Profiles = {
-        url: 'api/Profiles/'
-    };
-
-    // Settings
-    Settings = {
-        url: 'api/Settings/',
-        title: '网站设置'
-    };
-
-    // Messages
-    Messages = {
-        url: 'api/Messages/'
-    };
-
-    // Tasks
-    Tasks = {
-        url: 'api/Tasks/'
-    };
-
-    // Notifications
-    Notifications = {
-        url: 'api/Notifications/'
-    };
-
     $.fn.extend({
         fixCollapse: function () {
             var $root = this;
@@ -367,6 +305,77 @@
                 $('#' + $(this).attr('id').replace('tb_', 'btn_')).trigger("click");
             }).insertBefore(this.parents('.bootstrap-table').find('.fixed-table-toolbar > .bs-bars'));
             return this;
+        },
+        msgHandler: function (options) {
+            var settings = {
+                url: 'api/WS/',
+                interval: 10000,
+                sendMessage: '',
+                timerHandler: null,
+                onopen: function (e) { },
+                onmessage: function (e) { },
+                onclose: function (e) { },
+                errorHandler: function (e) { if (toastr && $.isFunction(toastr.error)) toastr.error("连接服务器失败！", "系统错误"); },
+                loop: function () {
+                    var that = this;
+                    var uri = window.location.protocol + "//" + window.location.host + $.formatUrl(settings.url);
+                    $.bc({
+                        url: uri,
+                        id: this.sendMessage,
+                        swal: false,
+                        toastr: false,
+                        callback: function (result) {
+                            if (!result) {
+                                that.errorHandler.call(that.target);
+                                return;
+                            }
+                            that.onmessage.call(that.target, { data: JSON.stringify(result) });
+                        }
+                    });
+
+                    if (this.timerHandler !== null) clearTimeout(this.timerHandler);
+                    this.timerHandler = setTimeout(function () { that.loop(); }, that.interval);
+                }
+            };
+            $.extend(settings, options, { target: this });
+            settings.loop();
+            return this;
+        },
+        socketHandler: function (options) {
+            // WebSocket消息处理方法
+            var settings = {
+                url: 'WS',
+                interval: 30000,
+                sendMessage: 'keepalive',
+                timerHandler: null,
+                onopen: function (e) { },
+                onerror: function (e) { },
+                errorHandler: function (e) { if (window.toastr && $.isFunction(window.toastr.error)) toastr.error("连接服务器失败！", "系统错误"); },
+                onmessage: function (e) { },
+                onclose: function (e) { },
+                loop: function (socket) {
+                    var that = this;
+                    if (socket.readyState === 1) {
+                        socket.send(this.sendMessage);
+                        if (this.timerHandler !== null) clearTimeout(this.timerHandler);
+                        this.timerHandler = setTimeout(function () { that.loop(socket); }, that.interval);
+                    }
+                    else {
+                        this.errorHandler();
+                    }
+                }
+            };
+            $.extend(settings, options, { target: this });
+            var uri = "ws://" + window.location.host + $.formatUrl(settings.url);
+            var socket = new WebSocket(uri);
+            socket.onopen = function (e) { settings.onopen.call(settings.target, e); settings.loop(socket); };
+            socket.onerror = function (e) {
+                settings.onerror.call(settings.target, e);
+                settings.target.msgHandler(options);
+            };
+            socket.onmessage = function (e) { settings.onmessage.call(settings.target, e); };
+            socket.onclose = function (e) { settings.onclose.call(settings.target, e); };
+            return this;
         }
     });
 
@@ -386,4 +395,66 @@
             });
         }
     });
+
+    // Roles
+    Role = {
+        url: 'api/Roles/',
+        title: "授权角色"
+    };
+
+    // Users
+    User = {
+        url: 'api/Users/',
+        title: "授权用户"
+    };
+
+    // Groups
+    Group = {
+        url: 'api/Groups/',
+        title: "授权部门"
+    };
+
+    // Menus
+    Menu = {
+        url: 'api/Menus/',
+        iconView: 'Admin/IconView',
+        title: "授权菜单"
+    };
+
+    // Exceptions
+    Exceptions = {
+        url: 'api/Exceptions/',
+        title: "程序异常日志"
+    };
+
+    // Dicts
+    Dicts = {
+        url: 'api/Dicts/'
+    };
+
+    // Profiles
+    Profiles = {
+        url: 'api/Profiles/'
+    };
+
+    // Settings
+    Settings = {
+        url: 'api/Settings/',
+        title: '网站设置'
+    };
+
+    // Messages
+    Messages = {
+        url: 'api/Messages/'
+    };
+
+    // Tasks
+    Tasks = {
+        url: 'api/Tasks/'
+    };
+
+    // Notifications
+    Notifications = {
+        url: 'api/Notifications/'
+    };
 })(jQuery);

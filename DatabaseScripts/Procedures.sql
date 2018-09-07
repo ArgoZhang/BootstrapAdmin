@@ -174,16 +174,13 @@ GO
 -- =============================================
 CREATE PROCEDURE [dbo].[Proc_SaveUsers]
 	-- Add the parameters for the stored procedure here
-	@id int,
 	@userName varchar(50),
 	@password varchar(50),
 	@passSalt varchar(50),
 	@displayName nvarchar(50),
-	@approvedBy varchar(50) = null,
-	@description nvarchar(500),
-	@rejectedBy varchar(50) = null,
-	@rejectedReason nvarchar(500) = null,
-	@userStatus int = 0 --0表示管理员创建 1标示用户注册 2标示管理员批复
+	@approvedBy nvarchar(50),
+	@approvedTime datetime,
+	@description nvarchar(500)
 	WITH ENCRYPTION
 AS
 BEGIN
@@ -192,50 +189,12 @@ BEGIN
 	SET NOCOUNT ON;
 	SET XACT_ABORT ON;
     -- Insert statements for procedure here
-	if @userStatus = 2
+	begin
+		if(not exists (select 1 from Users Where UserName = @userName))
 		begin
-			if @approvedBy is not null
-				update Users set ApprovedTime = GETDATE(), ApprovedBy = @approvedBy where ID = @id
-			else
-				update Users set RejectedTime = GETDATE(), RejectedBy = @rejectedBy, RejectedReason = @rejectedReason where ID = @id
+			Insert Into Users (UserName, [Password], PassSalt, DisplayName, RegisterTime, ApprovedBy, ApprovedTime, [Description]) values (@userName, @password, @passSalt, @displayName, GETDATE(), @approvedBy, @approvedTime, @description)
+			insert into UserRole (UserID, RoleID) select @@IDENTITY, ID from Roles where RoleName = N'Default'
 		end
-	else 
-		begin
-			declare @approveTime datetime = null
-			if @userStatus = 0 set @approveTime = GETDATE() 
-			if(@id = 0 and not exists (select 1 from Users Where UserName = @userName))
-			begin
-				Insert Into Users (UserName, [Password], PassSalt, DisplayName, RegisterTime, ApprovedTime, [Description]) values (@userName, @password, @passSalt, @displayName, GETDATE(), @approveTime, @description)
-				insert into UserRole (UserID, RoleID) select @@IDENTITY, ID from Roles where RoleName = N'Default'
-			end
-			else 
-				Update Users set [Password] = @password, PassSalt = @passSalt, DisplayName = @displayName where ID = @id
-		end
+	end
 END
 GO
-
-Drop PROCEDURE Proc_ProcessRegisterUser
-GO
--- =============================================
--- Author:		XiaTiantian
--- Create date: 2016-11-10
--- Description:	
--- =============================================
-Create PROCEDURE Proc_ProcessRegisterUser
-	-- Add the parameters for the stored procedure here
-	@id int
-	WITH ENCRYPTION
-AS
-BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	SET NOCOUNT ON;
-	SET XACT_ABORT ON;
-    -- Insert statements for procedure here
-	update Users set ApprovedTime=GETDATE() where UserName=(select Title from Notifications where ID=@id)
-	update Notifications set Status='1',ProcessTime=GETDATE(),ProcessResult='0' where ID=@id
-END
-GO
-
-
-
