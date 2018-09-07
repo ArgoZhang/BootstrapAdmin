@@ -27,6 +27,6 @@ namespace Bootstrap.Admin.Models
         /// <summary>
         /// 
         /// </summary>
-        public string Theme { get; private set; }
+        public string Theme { get; protected set; }
     }
 }

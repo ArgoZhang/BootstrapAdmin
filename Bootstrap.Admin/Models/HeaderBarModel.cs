@@ -1,7 +1,5 @@
-﻿using Bootstrap.DataAccess;
-using Bootstrap.Security;
+﻿using Bootstrap.Security;
 using System.Security.Principal;
-using System.Web;
 
 namespace Bootstrap.Admin.Models
 {
@@ -16,7 +14,7 @@ namespace Bootstrap.Admin.Models
             Icon = user.Icon;
             DisplayName = user.DisplayName;
             UserName = user.UserName;
-            Css = user.Css;
+            if (!string.IsNullOrEmpty(user.Css)) Theme = user.Css;
         }
         public string UserName { get; }
         /// <summary>
@@ -31,9 +29,5 @@ namespace Bootstrap.Admin.Models
         /// 获得/设置 用户头像地址
         /// </summary>
         public string Icon { get; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public string Css { get; }
     }
 }

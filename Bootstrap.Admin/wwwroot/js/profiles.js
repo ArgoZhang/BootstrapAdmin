@@ -52,7 +52,13 @@
                 break;
             case 'css':
                 data.UserStatus = 'ChangeTheme';
-                $.bc({ url: User.url, method: "PUT", data: data, title: "保存样式" });
+                $.bc({
+                    url: User.url, method: "PUT", data: data, title: "保存样式", callback: function (result) {
+                        if (result) {
+                            window.setTimeout(function () { window.location.reload(true); }, 1000);
+                        }
+                    }
+                });
                 break;
         }
     });
