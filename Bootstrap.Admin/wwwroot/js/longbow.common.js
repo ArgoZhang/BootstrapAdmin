@@ -271,7 +271,8 @@
                 checkbox: true,
                 edit: true,
                 editTitle: "编辑",
-                editField: "Id"
+                editField: "Id",
+                queryButton: false
             }, options.smartTable);
             if (settings.edit) settings.columns.unshift({ title: settings.editTitle, field: settings.editField, events: bsa.idEvents(), formatter: DataTable.idFormatter });
             if (settings.checkbox) settings.columns.unshift({ checkbox: true });
@@ -294,6 +295,7 @@
                 showToggle: true,                   //是否显示详细视图和列表视图的切换按钮
                 cardView: $(window).width() < 768,                    //是否显示详细视图
                 footer: '.site-footer',
+                queryButton: '#btn_query',
                 onLoadSuccess: function () {
                     $(settings.footer).footer();
                 }
@@ -304,6 +306,11 @@
                 e.preventDefault();
                 $('#' + $(this).attr('id').replace('tb_', 'btn_')).trigger("click");
             }).insertBefore(this.parents('.bootstrap-table').find('.fixed-table-toolbar > .bs-bars'));
+            if (settings.queryButton) {
+                $(settings.queryButton).on('click', this, function (e) {
+                    e.data.bootstrapTable('refresh');
+                });
+            }
             return this;
         },
         msgHandler: function (options) {
