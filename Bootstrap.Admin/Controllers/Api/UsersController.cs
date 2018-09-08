@@ -44,7 +44,7 @@ namespace Bootstrap.Admin.Controllers.Api
             if (value.UserName.Equals(User.Identity.Name, System.StringComparison.OrdinalIgnoreCase))
             {
                 if (value.UserStatus == UserStates.ChangeDisplayName)
-                    ret = BootstrapUser.SaveUserInfoByName(value.UserName, value.DisplayName);
+                    ret = BootstrapUser.SaveDisplayName(value.UserName, value.DisplayName);
                 else if (value.UserStatus == UserStates.ChangePassword)
                     ret = BootstrapUser.ChangePassword(value.UserName, value.Password, value.NewPassword);
             }
