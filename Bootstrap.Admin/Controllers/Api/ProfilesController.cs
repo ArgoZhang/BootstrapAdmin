@@ -1,10 +1,8 @@
 ﻿using Bootstrap.DataAccess;
-using Longbow.Logging;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Specialized;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -33,25 +31,13 @@ namespace Bootstrap.Admin.Controllers.Api
                 var filePath = Path.Combine(env.WebRootPath, webSiteUrl.Replace("~", string.Empty).Replace("/", "\\").TrimStart('\\') + fileName);
                 var fileFolder = Path.GetDirectoryName(filePath);
                 fileSize = uploadFile.Length;
-                try
+                if (!Directory.Exists(fileFolder)) Directory.CreateDirectory(fileFolder);
+                using (var fs = new FileStream(filePath, FileMode.Create))
                 {
-                    if (!Directory.Exists(fileFolder)) Directory.CreateDirectory(fileFolder);
-                    using (var fs = new FileStream(filePath, FileMode.Create))
-                    {
-                        await uploadFile.CopyToAsync(fs);
-                    }
-                    previewUrl = string.Format("{0}?q={1}", Url.Content(fileUrl), DateTime.Now.Ticks);
-                    UserHelper.SaveUserIconByName(userName, fileName);
+                    await uploadFile.CopyToAsync(fs);
                 }
-                catch (Exception ex)
-                {
-                    var nv = new NameValueCollection
-                    {
-                        { "UpLoadFileName", filePath }
-                    };
-                    error = ex.Message;
-                    ExceptionManager.Publish(ex, nv);
-                }
+                previewUrl = string.Format("{0}?q={1}", Url.Content(fileUrl), DateTime.Now.Ticks);
+                UserHelper.SaveUserIconByName(userName, fileName);
             }
             return new JsonResult(new
             {
