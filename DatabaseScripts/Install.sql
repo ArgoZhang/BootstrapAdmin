@@ -407,3 +407,41 @@ EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'完成进度' 
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'分配时间' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Tasks', @level2type=N'COLUMN',@level2name=N'AssignTime'
 GO
+
+/****** Object:  Table [dbo].[RejectUsers]    Script Date: 09/08/2018 15:34:25 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[RejectUsers](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[UserName] [varchar](50) NOT NULL,
+	[DisplayName] [nvarchar](50) NOT NULL,
+	[RegisterTime] [datetime] NOT NULL,
+	[RejectedBy] [varchar](50) NULL,
+	[RejectedTime] [datetime] NULL,
+	[RejectedReason] [nvarchar](50) NULL,
+ CONSTRAINT [PK_RejectUsers] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'用户名' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'RejectUsers', @level2type=N'COLUMN',@level2name=N'UserName'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'显示名称' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'RejectUsers', @level2type=N'COLUMN',@level2name=N'DisplayName'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'注册时间' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'RejectUsers', @level2type=N'COLUMN',@level2name=N'RegisterTime'
+GO

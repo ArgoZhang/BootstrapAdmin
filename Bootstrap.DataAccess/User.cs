@@ -49,18 +49,6 @@ namespace Bootstrap.DataAccess
         /// </summary>
         public string Period { get; set; }
         /// <summary>
-        /// 获得/设置 拒绝人
-        /// </summary>
-        public string RejectedBy { get; set; }
-        /// <summary>
-        /// 获得/设置 拒绝原因
-        /// </summary>
-        public string RejectedReason { get; set; }
-        /// <summary>
-        /// 获得/设置 拒绝时刻
-        /// </summary>
-        public string RejectedTime { get; set; }
-        /// <summary>
         /// 获得/设置 新密码
         /// </summary>
         public string NewPassword { get; set; }

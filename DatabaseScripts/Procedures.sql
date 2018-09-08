@@ -198,3 +198,40 @@ BEGIN
 	end
 END
 GO
+
+Drop PROCEDURE Proc_RejectUsers
+GO
+-- =============================================
+-- Author:		Argo
+-- Create date: 2018-09-07
+-- Description:	
+-- =============================================
+CREATE PROCEDURE [dbo].[Proc_RejectUsers]
+	-- Add the parameters for the stored procedure here
+	@id int,
+	@rejectedBy varchar(50),
+	@rejectedReason nvarchar(50)
+	WITH ENCRYPTION
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+	SET XACT_ABORT ON;
+    -- Insert statements for procedure here
+	begin
+		declare @registerTime datetime
+		declare @userName varchar(50)
+		declare @displayName nvarchar(50)
+		select @registerTime = Registertime, @userName = UserName, @displayName = DisplayName from Users where ID = @id
+
+		if @userName is not null 
+		begin
+			begin tran
+				insert into RejectUsers (UserName, DisplayName, RegisterTime, RejectedBy, RejectedTime, RejectedReason) values (@userName, @displayName, @registerTime, @rejectedBy, GETDATE(), @rejectedReason)
+				delete from users where ID = @id
+			commit tran
+		end
+	end
+END
+GO

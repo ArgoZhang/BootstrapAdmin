@@ -60,7 +60,7 @@ namespace Bootstrap.DataAccess
         {
             return CacheManager.GetOrAdd(RetrieveNewUsersDataKey, key =>
             {
-                string sql = "select ID, UserName, DisplayName, RegisterTime, [Description] from Users Where ApprovedTime is null and RejectedTime is null order by RegisterTime desc";
+                string sql = "select ID, UserName, DisplayName, RegisterTime, [Description] from Users Where ApprovedTime is null order by RegisterTime desc";
                 List<User> users = new List<User>();
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                 using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
@@ -153,13 +153,12 @@ namespace Bootstrap.DataAccess
         public static bool RejectUser(int id, string rejectBy)
         {
             var ret = false;
-            var sql = "update Users set RejectedTime = GETDATE(), RejectedBy = @rejectedBy, RejectedReason = @rejectedReason where ID = @id";
-            using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
+            using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_RejectUsers"))
             {
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@id", id));
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@rejectedBy", rejectBy));
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@rejectedReason", "未填写"));
-                ret = DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd) == 1;
+                ret = DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd) == -1;
             }
             CacheCleanUtility.ClearCache(userIds: id.ToString());
             return ret;
