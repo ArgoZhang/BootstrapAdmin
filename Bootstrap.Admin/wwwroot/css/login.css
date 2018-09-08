@@ -32,14 +32,13 @@
     margin-top: -8px;
 }
 
-.form-control:focus, .form-control.is-valid:focus, .form-control.is-invalid:focus, .btn:focus, .btn:focus:active {
-    box-shadow: none;
-}
+    .btn-login:focus {
+        box-shadow: 0 4px #e56b60;
+    }
 
 .input-group-text {
     background-color: #6bc3f4;
     border-color: #1ca0e9;
-    line-height: 1.5;
 }
 
 .form-control {
