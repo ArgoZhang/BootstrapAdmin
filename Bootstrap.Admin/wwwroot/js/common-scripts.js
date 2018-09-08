@@ -179,14 +179,14 @@ $(function () {
                 var cate = result[index].Category;
                 var msg = result[index].Message;
                 switch (cate) {
-                    case "Notification":
-                        toastr.error(msg, "应用程序出现错误");
+                    case "DB":
+                        toastr.error(msg, "数据库操作发生异常");
                         break;
                     case "Users":
                         toastr.success(msg, "新用户注册");
                         break;
-                    case "Exception":
-                        toastr.warning(msg, "程序发生异常");
+                    case "App":
+                        toastr.warning(msg, "应用程序发生异常");
                         break;
                 }
             }

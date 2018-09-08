@@ -29,12 +29,12 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static void Log(Exception ex, NameValueCollection additionalInfo)
         {
-            if (additionalInfo["ErrorPage"] == null) return;
+            var errorPage = additionalInfo["ErrorPage"] ?? ex.Message.Substring(0, 50);
             var sql = "insert into Exceptions (AppDomainName, ErrorPage, UserID, UserIp, ExceptionType, Message, StackTrace, LogTime) values (@AppDomainName, @ErrorPage, @UserID, @UserIp, @ExceptionType, @Message, @StackTrace, GetDate())";
             using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
             {
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@AppDomainName", AppDomain.CurrentDomain.FriendlyName));
-                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ErrorPage", DBAccessFactory.ToDBValue(additionalInfo["ErrorPage"])));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ErrorPage", errorPage));
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserID", DBAccessFactory.ToDBValue(additionalInfo["UserId"])));
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserIp", DBAccessFactory.ToDBValue(additionalInfo["UserIp"])));
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ExceptionType", ex.GetType().FullName));
@@ -42,8 +42,9 @@ namespace Bootstrap.DataAccess
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@StackTrace", DBAccessFactory.ToDBValue(ex.StackTrace)));
                 DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 CacheManager.Clear(RetrieveExceptionsDataKey);
-                if (ex.GetType().IsSubclassOf(typeof(DbException)))
-                    WebSocketServerManager.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(new List<object> { new { Category = "Notification", ex.Message } }))));
+                var category = "App";
+                if (ex.GetType().IsSubclassOf(typeof(DbException))) category = "DB";
+                WebSocketServerManager.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(new MessageBody[] { new MessageBody() { Category = category, Message = ex.Message } }))));
             }
         }
         /// <summary>
@@ -67,7 +68,7 @@ namespace Bootstrap.DataAccess
                             {
                                 Id = (int)reader[0],
                                 AppDomainName = (string)reader[1],
-                                ErrorPage = (string)reader[2],
+                                ErrorPage = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
                                 UserId = reader.IsDBNull(3) ? string.Empty : (string)reader[3],
                                 UserIp = reader.IsDBNull(4) ? string.Empty : (string)reader[4],
                                 ExceptionType = (string)reader[5],
