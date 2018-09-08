@@ -104,6 +104,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static bool SaveUser(User p)
         {
+            var ret = false;
             if (p.Id == 0 && p.Description.Length > 500) p.Description = p.Description.Substring(0, 500);
             if (p.UserName.Length > 50) p.UserName = p.UserName.Substring(0, 50);
             p.PassSalt = LgbCryptography.GenerateSalt();
@@ -119,10 +120,10 @@ namespace Bootstrap.DataAccess
                 if (p.ApprovedTime == DateTime.MinValue) approvedTime = DBNull.Value;
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@approvedTime", approvedTime));
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@description", p.Description));
-                DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
+                ret = DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd) == -1;
             }
             CacheCleanUtility.ClearCache(userIds: p.Id == 0 ? string.Empty : p.Id.ToString());
-            return true;
+            return ret;
         }
         /// <summary>
         /// 
