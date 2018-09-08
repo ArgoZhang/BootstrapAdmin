@@ -24,7 +24,7 @@
 
     // autocomplete
     $.bc({
-        url: "api/Category", swal: false, method: 'get',
+        url: "api/Category", method: 'get',
         callback: function (result) {
             var data = result.map(function (ele, index) { return ele.Category; });
             $('#txt_dict_cate').typeahead({

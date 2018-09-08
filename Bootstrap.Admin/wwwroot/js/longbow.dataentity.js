@@ -145,10 +145,6 @@
                                 $.bc({
                                     url: options.url, data: iDs, method: 'DELETE', title: '删除数据',
                                     callback: function (result) {
-                                        if ($.isPlainObject(result)) {
-                                            lgbSwal({ title: result.msg, type: result.result ? "success" : "error" });
-                                            result = result.result;
-                                        }
                                         if (result) $(options.bootstrapTable).bootstrapTable('refresh');
                                         handlerCallback.call(that, null, element, { oper: 'del', success: result });
                                     }
@@ -162,7 +158,7 @@
                 var that = this;
                 var options = $.extend(true, {}, this.options, { data: this.dataEntity.get() });
                 $.bc({
-                    url: options.url, data: options.data, title: "保存数据", modal: options.modal,
+                    url: options.url, data: options.data, title: "保存数据", modal: options.modal, info: true,
                     callback: function (result) {
                         if (result) {
                             var finalData = null;
@@ -192,10 +188,6 @@
                 });
             }
         }
-    };
-
-    DataTable.idFormatter = function (value, row, index) {
-        return "<a class='edit' title='" + value + "' href='javascript:void(0)'>编辑</a>";
     };
 
     DataTable.prototype = {

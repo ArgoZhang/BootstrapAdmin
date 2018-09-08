@@ -17,7 +17,7 @@
             events: {
                 '#btn_assignRole': function (row) {
                     $.bc({
-                        id: row.Id, url: Role.url, data: { type: "group" }, swal: false,
+                        id: row.Id, url: Role.url, data: { type: "group" },
                         callback: function (result) {
                             var htmlTemplate = this.htmlTemplate;
                             var html = $.map(result, function (element, index) {
@@ -33,7 +33,7 @@
                 },
                 '#btn_assignUser': function (row) {
                     $.bc({
-                        id: row.Id, url: User.url, data: { type: "group" }, swal: false,
+                        id: row.Id, url: User.url, data: { type: "group" },
                         callback: function (result) {
                             var htmlTemplate = this.htmlTemplate;
                             var html = $.map(result, function (element, index) {
@@ -52,14 +52,14 @@
                     var roleIds = $dialogRole.find('input:checked').map(function (index, element) {
                         return $(element).val();
                     }).toArray().join(',');
-                    $.bc({ id: groupId, url: Role.url, method: "PUT", data: { type: "group", roleIds: roleIds }, title: Role.title, modal: '#dialogRole' });
+                    $.bc({ id: groupId, url: Role.url, method: "PUT", data: { type: "group", roleIds: roleIds }, title: Role.title, modal: '#dialogRole', info: true });
                 },
                 '#btnSubmitUser': function (row) {
                     var groupId = row.Id;
                     var userIds = $dialogUser.find(':checked').map(function (index, element) {
                         return $(element).val();
                     }).toArray().join(',');
-                    $.bc({ id: groupId, url: User.url, method: "PUT", data: { type: "group", userIds: userIds }, title: User.title, modal: '#dialogUser' });
+                    $.bc({ id: groupId, url: User.url, method: "PUT", data: { type: "group", userIds: userIds }, title: User.title, modal: '#dialogUser', info: true });
                 }
             }
         },

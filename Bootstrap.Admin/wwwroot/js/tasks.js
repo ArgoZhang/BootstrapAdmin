@@ -7,7 +7,7 @@
         var that = $(this);
         that.toggleClass('fa-spin');
         $.bc({
-            url: Tasks.url, method: 'GET', swal: false,
+            url: Tasks.url, method: 'GET',
             callback: function (result) {
                 if (result) {
                     var content = result.map(function (task) {

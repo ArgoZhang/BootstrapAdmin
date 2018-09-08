@@ -51,7 +51,6 @@
         $.bc({
             url: Settings.url,
             method: 'GET',
-            swal: false,
             callback: function (urls) {
                 if (urls && $.isArray(urls)) {
                     $.each(urls, function (index, item) {
@@ -62,7 +61,6 @@
                             xhrFields: {
                                 withCredentials: true
                             },
-                            swal: false,
                             callback: function (result) {
                                 if ($.isArray(result)) {
                                     var html = '<div class="cache-item"><i class="fa fa-ellipsis-v"></i><div><span data-toggle="tooltip" title="{2}">{2}</span><span class="badge badge-pill badge-success">{0}</span></div><span title="{3}">{3}</span><div><span>{7}</span><button class="btn btn-danger" title="{1}" data-url="{5}?cacheKey={1}" data-toggle="tooltip" data-self="{6}" data-placement="left"><i class="fa fa-trash-o"></i></button></div></div>';
@@ -75,7 +73,7 @@
                                     $sortable.append(content);
                                     $sortable.find('[data-toggle="tooltip"]').tooltip();
                                 }
-                                if (index == urls.length - 1) $refresh.removeClass('fa-spin');
+                                if (index === urls.length - 1) $refresh.removeClass('fa-spin');
                             }
                         });
                     });
@@ -83,15 +81,14 @@
                 else $refresh.removeClass('fa-spin');
             }
         });
-    }
+    };
 
     var listCache = function (options) {
         $.bc({
             url: options.url,
             xhrFields: {
                 withCredentials: true
-            },
-            swal: false
+            }
         });
     };
     $('a[data-method]').on('click', function (e) {
@@ -115,4 +112,4 @@
     });
 
     var $css = $('#dictCssDefine').dropdown('val');
-})
+});

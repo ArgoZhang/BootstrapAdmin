@@ -36,7 +36,7 @@
 
     $('#btn_view').on('click', function (row) {
         $.bc({
-            url: Exceptions.url, swal: false,
+            url: Exceptions.url,
             callback: function (result) {
                 var html = result.map(function (ele) {
                     return $.format('<div class="form-group col-lg-3 col-md-3 col-sm-4 col-6"><a class="logfile" data-toggle="tooltip" title="{0}" href="#"><i class="fa fa-file-text-o"></i><span>{0}</span></a></div>', ele);
@@ -54,7 +54,7 @@
         $errorDetail.show();
         $dataFormDetail.html('<div class="text-center"><i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i></div>');
         $.bc({
-            url: Exceptions.url, method: "PUT", swal: false, data: { FileName: fileName },
+            url: Exceptions.url, method: "PUT", data: { FileName: fileName },
             callback: function (result) {
                 $dataFormDetail.html(result);
             }

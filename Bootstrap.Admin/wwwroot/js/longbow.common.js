@@ -122,18 +122,17 @@
                 method: "post",
                 htmlTemplate: '<div class="form-group col-md-3 col-sm-4 col-6"><div class="form-check"><label class="form-check-label" title="{3}" data-toggle="tooltip"><input type="checkbox" class="form-check-input" value="{0}" {2}/><span>{1}</span></label></div></div>',
                 title: "",
-                swal: true,
                 modal: null,
                 loading: false,
                 loadingTimeout: 10000,
                 callback: null,
                 $element: null,
                 async: true,
-                toastr: false
+                info: false
             }, options);
 
             if (!options.url || options.url === "") {
-                lgbSwal({ title: '参数错误', text: '未设置请求地址Url', type: 'error' });
+                toastr.error('参数错误: 未设置请求地址Url');
                 return;
             }
 
@@ -160,31 +159,21 @@
                         success(result);
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        if (options.toastr && toastr) {
-                            options.toastr = $.extend({ msg: "未设置", title: "系统错误" }, options.toastr);
-                            toastr.error(options.toastr.msg, options.toastr.title);
-                        }
                         success(false);
                     }
                 });
             }
             function success(result) {
-                var interval = 10;
                 if ($.isFunction(options.callback)) {
                     options.callback.call(options.$element === null ? options : options.$element, result);
                 }
                 if (options.modal !== null && (result || options.loading)) {
                     $(options.modal).modal('hide');
-                    interval = 400;
                 }
-                window.setTimeout(function () {
-                    if (options.swal) {
-                        lgbSwal({ title: options.title + (result ? "成功" : "失败"), type: result ? 'success' : 'error' });
-                    }
-                    if ($.isFunction(callback)) {
-                        callback.call(options.$element === null ? this : options.$element);
-                    }
-                }, interval);
+                if (options.info) toastr[result ? 'success' : 'error'](options.title + (result ? "成功" : "失败"));
+                if ($.isFunction(callback)) {
+                    callback.call(options.$element === null ? this : options.$element);
+                }
             }
         },
         lgbSwal: function (options) {
@@ -274,7 +263,14 @@
                 editField: "Id",
                 queryButton: false
             }, options.smartTable);
-            if (settings.edit) settings.columns.unshift({ title: settings.editTitle, field: settings.editField, events: bsa.idEvents(), formatter: DataTable.idFormatter });
+            if (settings.edit) settings.columns.unshift({
+                title: settings.editTitle,
+                field: settings.editField,
+                events: bsa.idEvents(),
+                formatter: function (value, row, index) {
+                    return "<a class='edit' title='" + value + "' href='javascript:void(0)'>" + this.title + "</a>";
+                }
+            });
             if (settings.checkbox) settings.columns.unshift({ checkbox: true });
             return this.smartTable(settings);
         },
@@ -329,8 +325,6 @@
                     $.bc({
                         url: uri,
                         id: this.sendMessage,
-                        swal: false,
-                        toastr: false,
                         callback: function (result) {
                             if (!result) {
                                 that.errorHandler.call(that.target);
