@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="Bootstrap.Security.Mvc" Version="1.0.0" />
-    <PackageReference Include="Longbow.Logging" Version="1.0.1" />
+    <PackageReference Include="Longbow.Logging" Version="1.0.2" />
     <PackageReference Include="Longbow.Web" Version="1.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.0" PrivateAssets="All" />
