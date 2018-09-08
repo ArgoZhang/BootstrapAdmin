@@ -1,5 +1,4 @@
 ﻿using Longbow.Cache;
-using Longbow.Logging;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -24,26 +23,22 @@ namespace Bootstrap.DataAccess
                 string sql = "select top 1000 * from Logs";
                 List<Log> logs = new List<Log>();
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
-                try
+                using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
                 {
-                    using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
+                    while (reader.Read())
                     {
-                        while (reader.Read())
+                        logs.Add(new Log()
                         {
-                            logs.Add(new Log()
-                            {
-                                Id = (int)reader[0],
-                                CRUD = (string)reader[1],
-                                UserName = (string)reader[2],
-                                LogTime = (DateTime)reader[3],
-                                ClientIp = (string)reader[4],
-                                ClientAgent = (string)reader[5],
-                                RequestUrl = (string)reader[6]
-                            });
-                        }
+                            Id = (int)reader[0],
+                            CRUD = (string)reader[1],
+                            UserName = (string)reader[2],
+                            LogTime = (DateTime)reader[3],
+                            ClientIp = (string)reader[4],
+                            ClientAgent = (string)reader[5],
+                            RequestUrl = (string)reader[6]
+                        });
                     }
                 }
-                catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return logs;
             });
             return string.IsNullOrEmpty(tId) ? ret : ret.Where(t => tId.Equals(t.Id.ToString(), StringComparison.OrdinalIgnoreCase));
@@ -56,20 +51,12 @@ namespace Bootstrap.DataAccess
         public static bool DeleteLog(IEnumerable<int> value)
         {
             bool ret = false;
-            try
+            var ids = string.Join(",", value);
+            string sql = string.Format(CultureInfo.InvariantCulture, "Delete from Logs where ID in ({0})", ids);
+            using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
             {
-                var ids = string.Join(",", value);
-                string sql = string.Format(CultureInfo.InvariantCulture, "Delete from Logs where ID in ({0})", ids);
-                using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
-                {
-                    DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
-                    CacheCleanUtility.ClearCache(logIds: ids);
-                    ret = true;
-                }
-            }
-            catch (Exception ex)
-            {
-                ExceptionManager.Publish(ex);
+                ret = DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd) == value.Count();
+                CacheCleanUtility.ClearCache(logIds: ids);
             }
             return ret;
         }
@@ -83,24 +70,16 @@ namespace Bootstrap.DataAccess
             if (p == null) throw new ArgumentNullException("p");
             bool ret = false;
             string sql = "Insert Into Logs (CRUD, UserName, LogTime, ClientIp, ClientAgent, RequestUrl) Values (@CRUD, @UserName, GetDate(), @ClientIp, @ClientAgent, @RequestUrl)";
-            try
+            using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
             {
-                using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
-                {
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@CRUD", p.CRUD));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserName", p.UserName));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ClientIp", p.ClientIp));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ClientAgent", p.ClientAgent));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@RequestUrl", p.RequestUrl));
-                    DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
-                }
-                CacheCleanUtility.ClearCache(logIds: p.Id == 0 ? string.Empty : p.Id.ToString());
-                ret = true;
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@CRUD", p.CRUD));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserName", p.UserName));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ClientIp", p.ClientIp));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ClientAgent", p.ClientAgent));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@RequestUrl", p.RequestUrl));
+                ret = DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd) == 1;
             }
-            catch (DbException ex)
-            {
-                ExceptionManager.Publish(ex);
-            }
+            CacheCleanUtility.ClearCache(logIds: p.Id == 0 ? string.Empty : p.Id.ToString());
             return ret;
         }
     }

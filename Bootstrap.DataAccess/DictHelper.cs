@@ -1,6 +1,5 @@
 ﻿using Bootstrap.Security;
 using Longbow.Cache;
-using Longbow.Logging;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -35,20 +34,12 @@ namespace Bootstrap.DataAccess
         public static bool DeleteDict(IEnumerable<int> value)
         {
             var ret = false;
-            try
+            var ids = string.Join(",", value);
+            string sql = string.Format(CultureInfo.InvariantCulture, "Delete from Dicts where ID in ({0})", ids);
+            using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
             {
-                var ids = string.Join(",", value);
-                string sql = string.Format(CultureInfo.InvariantCulture, "Delete from Dicts where ID in ({0})", ids);
-                using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
-                {
-                    DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
-                    CacheCleanUtility.ClearCache(dictIds: ids);
-                    ret = true;
-                }
-            }
-            catch (Exception ex)
-            {
-                ExceptionManager.Publish(ex);
+                ret = DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd) == value.Count();
+                CacheCleanUtility.ClearCache(dictIds: ids);
             }
             return ret;
         }
@@ -67,24 +58,16 @@ namespace Bootstrap.DataAccess
             string sql = p.Id == 0 ?
                 "Insert Into Dicts (Category, Name, Code ,Define) Values (@Category, @Name, @Code, @Define)" :
                 "Update Dicts set Category = @Category, Name = @Name, Code = @Code, Define = @Define where ID = @ID";
-            try
+            using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
             {
-                using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
-                {
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ID", p.Id));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Category", p.Category));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Name", p.Name));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Code", p.Code));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Define", p.Define));
-                    DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
-                }
-                ret = true;
-                CacheCleanUtility.ClearCache(dictIds: p.Id == 0 ? string.Empty : p.Id.ToString());
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ID", p.Id));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Category", p.Category));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Name", p.Name));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Code", p.Code));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Define", p.Define));
+                ret = DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd) == 1;
             }
-            catch (DbException ex)
-            {
-                ExceptionManager.Publish(ex);
-            }
+            CacheCleanUtility.ClearCache(dictIds: p.Id == 0 ? string.Empty : p.Id.ToString());
             return ret;
         }
         /// <summary>
@@ -98,22 +81,14 @@ namespace Bootstrap.DataAccess
         {
             var ret = false;
             string sql = "Update Dicts set Code = @Code where Category = @Category and Name = @Name";
-            try
+            using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
             {
-                using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
-                {
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Name", dict.Name));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Code", dict.Code));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Category", dict.Category));
-                    DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
-                }
-                CacheCleanUtility.ClearCache(dictIds: string.Empty);
-                ret = true;
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Name", dict.Name));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Code", dict.Code));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Category", dict.Category));
+                ret = DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd) == 1;
             }
-            catch (DbException ex)
-            {
-                ExceptionManager.Publish(ex);
-            }
+            CacheCleanUtility.ClearCache(dictIds: string.Empty);
             return ret;
         }
         /// <summary>
@@ -127,17 +102,13 @@ namespace Bootstrap.DataAccess
                 var ret = new List<BootstrapDict>();
                 string sql = "select distinct Category from Dicts";
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
-                try
+                using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
                 {
-                    using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
+                    while (reader.Read())
                     {
-                        while (reader.Read())
-                        {
-                            ret.Add(new BootstrapDict() { Category = (string)reader[0] });
-                        }
+                        ret.Add(new BootstrapDict() { Category = (string)reader[0] });
                     }
                 }
-                catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return ret;
             });
         }

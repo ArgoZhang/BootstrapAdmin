@@ -1,6 +1,5 @@
 ﻿using Longbow.Cache;
 using Longbow.Data;
-using Longbow.Logging;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -31,22 +30,18 @@ namespace Bootstrap.DataAccess
                 string sql = "select * from Roles";
                 List<Role> roles = new List<Role>();
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
-                try
+                using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
                 {
-                    using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
+                    while (reader.Read())
                     {
-                        while (reader.Read())
+                        roles.Add(new Role()
                         {
-                            roles.Add(new Role()
-                            {
-                                Id = (int)reader[0],
-                                RoleName = (string)reader[1],
-                                Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2]
-                            });
-                        }
+                            Id = (int)reader[0],
+                            RoleName = (string)reader[1],
+                            Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2]
+                        });
                     }
                 }
-                catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return roles;
             });
             return id == 0 ? ret : ret.Where(t => id == t.Id);
@@ -93,8 +88,8 @@ namespace Bootstrap.DataAccess
                 }
                 catch (Exception ex)
                 {
-                    ExceptionManager.Publish(ex);
                     transaction.RollbackTransaction();
+                    throw ex;
                 }
             }
             return ret;
@@ -110,25 +105,21 @@ namespace Bootstrap.DataAccess
             {
                 List<Role> roles = new List<Role>();
                 string sql = "select r.ID, r.RoleName, r.[Description], case ur.RoleID when r.ID then 'checked' else '' end [status] from Roles r left join UserRole ur on r.ID = ur.RoleID and UserID = @UserID";
-                try
+                DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserID", userId));
+                using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
                 {
-                    DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserID", userId));
-                    using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
+                    while (reader.Read())
                     {
-                        while (reader.Read())
+                        roles.Add(new Role()
                         {
-                            roles.Add(new Role()
-                            {
-                                Id = (int)reader[0],
-                                RoleName = (string)reader[1],
-                                Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
-                                Checked = (string)reader[3]
-                            });
-                        }
+                            Id = (int)reader[0],
+                            RoleName = (string)reader[1],
+                            Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
+                            Checked = (string)reader[3]
+                        });
                     }
                 }
-                catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return roles;
             }, RetrieveRolesByUserIdDataKey);
         }
@@ -139,21 +130,13 @@ namespace Bootstrap.DataAccess
         public static bool DeleteRole(IEnumerable<int> value)
         {
             bool ret = false;
-            try
+            var ids = string.Join(",", value);
+            using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_DeleteRoles"))
             {
-                var ids = string.Join(",", value);
-                using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_DeleteRoles"))
-                {
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ids", ids));
-                    DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
-                }
-                CacheCleanUtility.ClearCache(roleIds: ids);
-                ret = true;
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ids", ids));
+                ret = DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd) == -1;
             }
-            catch (Exception ex)
-            {
-                ExceptionManager.Publish(ex);
-            }
+            CacheCleanUtility.ClearCache(roleIds: ids);
             return ret;
         }
         /// <summary>
@@ -169,22 +152,14 @@ namespace Bootstrap.DataAccess
             string sql = p.Id == 0 ?
                 "Insert Into Roles (RoleName, Description) Values (@RoleName, @Description)" :
                 "Update Roles set RoleName = @RoleName, Description = @Description where ID = @ID";
-            try
+            using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
             {
-                using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
-                {
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ID", p.Id));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@RoleName", p.RoleName));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Description", DBAccessFactory.ToDBValue(p.Description)));
-                    DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
-                }
-                CacheCleanUtility.ClearCache(roleIds: p.Id == 0 ? string.Empty : p.Id.ToString());
-                ret = true;
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ID", p.Id));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@RoleName", p.RoleName));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Description", DBAccessFactory.ToDBValue(p.Description)));
+                ret = DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd) == 1;
             }
-            catch (DbException ex)
-            {
-                ExceptionManager.Publish(ex);
-            }
+            CacheCleanUtility.ClearCache(roleIds: p.Id == 0 ? string.Empty : p.Id.ToString());
             return ret;
         }
         /// <summary>
@@ -201,23 +176,19 @@ namespace Bootstrap.DataAccess
                 List<Role> roles = new List<Role>();
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@NavigationID", menuId));
-                try
+                using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
                 {
-                    using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
+                    while (reader.Read())
                     {
-                        while (reader.Read())
+                        roles.Add(new Role()
                         {
-                            roles.Add(new Role()
-                            {
-                                Id = (int)reader[0],
-                                RoleName = (string)reader[1],
-                                Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
-                                Checked = (string)reader[3]
-                            });
-                        }
+                            Id = (int)reader[0],
+                            RoleName = (string)reader[1],
+                            Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
+                            Checked = (string)reader[3]
+                        });
                     }
                 }
-                catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return roles;
             }, RetrieveRolesByMenuIdDataKey);
             return ret;
@@ -257,8 +228,8 @@ namespace Bootstrap.DataAccess
                 }
                 catch (Exception ex)
                 {
-                    ExceptionManager.Publish(ex);
                     transaction.RollbackTransaction();
+                    throw ex;
                 }
             }
             return ret;
@@ -276,24 +247,20 @@ namespace Bootstrap.DataAccess
                 List<Role> roles = new List<Role>();
                 string sql = "select r.ID, r.RoleName, r.[Description], case ur.RoleID when r.ID then 'checked' else '' end [status] from Roles r left join RoleGroup ur on r.ID = ur.RoleID and GroupID = @GroupID";
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
-                try
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@GroupID", groupId));
+                using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
                 {
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@GroupID", groupId));
-                    using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
+                    while (reader.Read())
                     {
-                        while (reader.Read())
+                        roles.Add(new Role()
                         {
-                            roles.Add(new Role()
-                            {
-                                Id = (int)reader[0],
-                                RoleName = (string)reader[1],
-                                Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
-                                Checked = (string)reader[3]
-                            });
-                        }
+                            Id = (int)reader[0],
+                            RoleName = (string)reader[1],
+                            Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
+                            Checked = (string)reader[3]
+                        });
                     }
                 }
-                catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return roles;
             }, RetrieveRolesByGroupIdDataKey);
         }
@@ -339,8 +306,8 @@ namespace Bootstrap.DataAccess
                 }
                 catch (Exception ex)
                 {
-                    ExceptionManager.Publish(ex);
                     transaction.RollbackTransaction();
+                    throw ex;
                 }
             }
             return ret;

@@ -1,6 +1,5 @@
 ﻿using Longbow.Cache;
 using Longbow.Data;
-using Longbow.Logging;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -31,22 +30,18 @@ namespace Bootstrap.DataAccess
                 string sql = "select * from Groups";
                 List<Group> groups = new List<Group>();
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
-                try
+                using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
                 {
-                    using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
+                    while (reader.Read())
                     {
-                        while (reader.Read())
+                        groups.Add(new Group()
                         {
-                            groups.Add(new Group()
-                            {
-                                Id = (int)reader[0],
-                                GroupName = (string)reader[1],
-                                Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2]
-                            });
-                        }
+                            Id = (int)reader[0],
+                            GroupName = (string)reader[1],
+                            Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2]
+                        });
                     }
                 }
-                catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return groups;
             });
             return id == 0 ? ret : ret.Where(t => id == t.Id);
@@ -58,21 +53,13 @@ namespace Bootstrap.DataAccess
         public static bool DeleteGroup(IEnumerable<int> value)
         {
             bool ret = false;
-            try
+            var ids = string.Join(",", value);
+            using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_DeleteGroups"))
             {
-                var ids = string.Join(",", value);
-                using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_DeleteGroups"))
-                {
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ids", ids));
-                    DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
-                }
-                CacheCleanUtility.ClearCache(groupIds: ids);
-                ret = true;
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ids", ids));
+                ret = DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd) == -1;
             }
-            catch (Exception ex)
-            {
-                ExceptionManager.Publish(ex);
-            }
+            CacheCleanUtility.ClearCache(groupIds: ids);
             return ret;
         }
         /// <summary>
@@ -88,22 +75,14 @@ namespace Bootstrap.DataAccess
             string sql = p.Id == 0 ?
                 "Insert Into Groups (GroupName, Description) Values (@GroupName, @Description)" :
                 "Update Groups set GroupName = @GroupName, Description = @Description where ID = @ID";
-            try
+            using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
             {
-                using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
-                {
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ID", p.Id));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@GroupName", p.GroupName));
-                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Description", DBAccessFactory.ToDBValue(p.Description)));
-                    DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
-                }
-                CacheCleanUtility.ClearCache(groupIds: p.Id == 0 ? string.Empty : p.Id.ToString());
-                ret = true;
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ID", p.Id));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@GroupName", p.GroupName));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Description", DBAccessFactory.ToDBValue(p.Description)));
+                ret = DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd) == 1;
             }
-            catch (DbException ex)
-            {
-                ExceptionManager.Publish(ex);
-            }
+            CacheCleanUtility.ClearCache(groupIds: p.Id == 0 ? string.Empty : p.Id.ToString());
             return ret;
         }
         /// <summary>
@@ -120,23 +99,19 @@ namespace Bootstrap.DataAccess
                 List<Group> groups = new List<Group>();
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@UserID", userId));
-                try
+                using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
                 {
-                    using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
+                    while (reader.Read())
                     {
-                        while (reader.Read())
+                        groups.Add(new Group()
                         {
-                            groups.Add(new Group()
-                            {
-                                Id = (int)reader[0],
-                                GroupName = (string)reader[1],
-                                Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
-                                Checked = (string)reader[3]
-                            });
-                        }
+                            Id = (int)reader[0],
+                            GroupName = (string)reader[1],
+                            Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
+                            Checked = (string)reader[3]
+                        });
                     }
                 }
-                catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return groups;
             }, RetrieveGroupsByUserIdDataKey);
             return ret;
@@ -182,8 +157,8 @@ namespace Bootstrap.DataAccess
                 }
                 catch (Exception ex)
                 {
-                    ExceptionManager.Publish(ex);
                     transaction.RollbackTransaction();
+                    throw ex;
                 }
             }
             return ret;
@@ -202,23 +177,19 @@ namespace Bootstrap.DataAccess
                 string sql = "select g.ID,g.GroupName,g.[Description],case rg.GroupID when g.ID then 'checked' else '' end [status] from Groups g left join RoleGroup rg on g.ID=rg.GroupID and RoleID=@RoleID";
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@RoleID", roleId));
-                try
+                using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
                 {
-                    using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
+                    while (reader.Read())
                     {
-                        while (reader.Read())
+                        groups.Add(new Group()
                         {
-                            groups.Add(new Group()
-                            {
-                                Id = (int)reader[0],
-                                GroupName = (string)reader[1],
-                                Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
-                                Checked = (string)reader[3]
-                            });
-                        }
+                            Id = (int)reader[0],
+                            GroupName = (string)reader[1],
+                            Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
+                            Checked = (string)reader[3]
+                        });
                     }
                 }
-                catch (Exception ex) { ExceptionManager.Publish(ex); }
                 return groups;
             }, RetrieveGroupsByRoleIdDataKey);
         }
@@ -261,8 +232,8 @@ namespace Bootstrap.DataAccess
                 }
                 catch (Exception ex)
                 {
-                    ExceptionManager.Publish(ex);
                     transaction.RollbackTransaction();
+                    throw ex;
                 }
             }
             return ret;
