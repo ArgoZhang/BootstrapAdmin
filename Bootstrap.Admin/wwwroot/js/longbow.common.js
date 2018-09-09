@@ -394,26 +394,26 @@
     // Roles
     Role = {
         url: 'api/Roles/',
-        title: "授权角色"
+        title: "分配角色"
     };
 
     // Users
     User = {
         url: 'api/Users/',
-        title: "授权用户"
+        title: "分配用户"
     };
 
     // Groups
     Group = {
         url: 'api/Groups/',
-        title: "授权部门"
+        title: "分配部门"
     };
 
     // Menus
     Menu = {
         url: 'api/Menus/',
         iconView: 'Admin/IconView',
-        title: "授权菜单"
+        title: "分配菜单"
     };
 
     // Exceptions
