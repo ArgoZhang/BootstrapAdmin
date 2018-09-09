@@ -1,9 +1,9 @@
 ﻿using Longbow.Cache;
+using Longbow.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-using System.Globalization;
 using System.Linq;
 
 namespace Bootstrap.DataAccess
@@ -48,17 +48,14 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static bool DeleteLog(IEnumerable<int> value)
+        public static void DeleteLogAsync()
         {
-            bool ret = false;
-            var ids = string.Join(",", value);
-            string sql = string.Format(CultureInfo.InvariantCulture, "Delete from Logs where ID in ({0})", ids);
-            using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
+            System.Threading.Tasks.Task.Run(() =>
             {
-                ret = DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd) == value.Count();
-                CacheCleanUtility.ClearCache(logIds: ids);
-            }
-            return ret;
+                string sql = $"delete from Logs where LogTime < DATEADD(MONTH, -{ConfigurationManager.AppSettings["KeepLogsPeriod"]}, GETDATE())";
+                DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
+                DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
+            });
         }
         /// <summary>
         /// 保存新增的日志信息
@@ -80,6 +77,7 @@ namespace Bootstrap.DataAccess
                 ret = DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd) == 1;
             }
             CacheCleanUtility.ClearCache(logIds: p.Id == 0 ? string.Empty : p.Id.ToString());
+            DeleteLogAsync();
             return ret;
         }
     }
