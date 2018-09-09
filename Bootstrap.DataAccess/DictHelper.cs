@@ -95,18 +95,18 @@ namespace Bootstrap.DataAccess
         /// 获取字典分类名称
         /// </summary>
         /// <returns></returns>
-        public static IEnumerable<BootstrapDict> RetrieveCategories()
+        public static IEnumerable<string> RetrieveCategories()
         {
             return CacheManager.GetOrAdd(RetrieveCategoryDataKey, key =>
             {
-                var ret = new List<BootstrapDict>();
+                var ret = new List<string>();
                 string sql = "select distinct Category from Dicts";
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                 using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
                 {
                     while (reader.Read())
                     {
-                        ret.Add(new BootstrapDict() { Category = (string)reader[0] });
+                        ret.Add((string)reader[0]);
                     }
                 }
                 return ret;

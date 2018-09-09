@@ -1,5 +1,4 @@
 ﻿using Bootstrap.DataAccess;
-using Bootstrap.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -15,7 +14,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
-        public IEnumerable<BootstrapDict> Get()
+        public IEnumerable<string> Get()
         {
             return DictHelper.RetrieveCategories();
         }
