@@ -2,7 +2,7 @@
 
     function loadData() {
         $.bc({
-            url: Messages.url, method: 'GET',
+            url: Messages.url,
             callback: function (result) {
                 if (result) {
                     $('#s_inbox').text(result.inboxCount);
@@ -18,7 +18,7 @@
 
     function listData(options) {
         $.bc({
-            id: options.id, url: Messages.url, method: 'GET',
+            id: options.id, url: Messages.url,
             callback: function (result) {
                 if (result) {
                     var content = result.map(function (mail) {

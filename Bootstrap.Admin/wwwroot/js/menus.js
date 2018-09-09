@@ -42,7 +42,7 @@
             events: {
                 '#btn_assignRole': function (row) {
                     $.bc({
-                        id: row.Id, url: Role.url, data: { type: "menu" },
+                        id: row.Id, url: Role.url, data: { type: "menu" }, method: "post",
                         callback: function (result) {
                             var htmlTemplate = this.htmlTemplate;
                             var html = $.map(result, function (element, index) {
@@ -61,7 +61,7 @@
                     var roleIds = $dialogRole.find('input:checked').map(function (index, element) {
                         return $(element).val();
                     }).toArray().join(',');
-                    $.bc({ id: menuId, url: Role.url, method: "PUT", data: { type: "menu", roleIds: roleIds }, title: Role.title, modal: '#dialogRole', info: true });
+                    $.bc({ id: menuId, url: Role.url, method: "put", data: { type: "menu", roleIds: roleIds }, title: Role.title, modal: '#dialogRole' });
                 }
             },
             callback: function (result) {
@@ -237,7 +237,6 @@
         url: Menu.iconView,
         contentType: 'text/html',
         dataType: 'html',
-        method: 'GET',
         callback: function (result) {
             if (result) {
                 $dialogIcon.find('.modal-body').html(result);

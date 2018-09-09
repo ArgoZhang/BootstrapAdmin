@@ -113,22 +113,19 @@
     $.extend({
         bc: function (options, callback) {
             options = $.extend({
-                remote: true,
                 id: "",
                 url: "",
                 data: {},
-                contentType: 'application/json',
-                dataType: 'json',
-                method: "post",
                 htmlTemplate: '<div class="form-group col-md-3 col-sm-4 col-6"><div class="form-check"><label class="form-check-label" title="{3}" data-toggle="tooltip"><input type="checkbox" class="form-check-input" value="{0}" {2}/><span>{1}</span></label></div></div>',
                 title: "",
-                modal: null,
+                modal: false,
                 loading: false,
                 loadingTimeout: 10000,
-                callback: null,
-                $element: null,
-                async: true,
-                info: false
+                callback: false,
+                $element: false,
+                contentType: 'application/json',
+                dataType: 'json',
+                method: 'get'
             }, options);
 
             if (!options.url || options.url === "") {
@@ -144,17 +141,14 @@
                 }, options.loadingTimeout);
             }
 
-            if (options.remote && options.url) {
+            if (options.url) {
+                var data = options.method === 'get' ? options.data : JSON.stringify(options.data);
                 $.ajax({
                     url: $.formatUrl(options.url) + options.id,
-                    data: options.contentType === 'application/json' &&
-                        (options.method.toLowerCase() === 'post' || options.method.toLowerCase() === 'put' || options.method.toLowerCase() === 'delete')
-                        ? JSON.stringify(options.data) : options.data,
-                    type: options.method,
+                    data: data,
+                    method: options.method,
                     contentType: options.contentType,
                     dataType: options.dataType,
-                    async: options.async,
-                    xhrFields: options.xhrFields,
                     success: function (result) {
                         success(result);
                     },
@@ -165,14 +159,14 @@
             }
             function success(result) {
                 if ($.isFunction(options.callback)) {
-                    options.callback.call(options.$element === null ? options : options.$element, result);
+                    options.callback.call(options.$element ? options : options.$element, result);
                 }
-                if (options.modal !== null && (result || options.loading)) {
+                if (options.modal && (result || options.loading)) {
                     $(options.modal).modal('hide');
                 }
-                if (options.info) toastr[result ? 'success' : 'error'](options.title + (result ? "成功" : "失败"));
+                if (options.title) toastr[result ? 'success' : 'error'](options.title + (result ? "成功" : "失败"));
                 if ($.isFunction(callback)) {
-                    callback.call(options.$element === null ? this : options.$element);
+                    callback.call(options.$element ? this : options.$element);
                 }
             }
         },
@@ -276,7 +270,6 @@
         },
         smartTable: function (options) {
             var settings = $.extend({
-                method: 'get',                      //请求方式（*）
                 toolbar: '#toolbar',                //工具按钮用哪个容器
                 striped: true,                      //是否显示行间隔色
                 cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
@@ -325,6 +318,7 @@
                     $.bc({
                         url: uri,
                         id: this.sendMessage,
+                        method: "post",
                         callback: function (result) {
                             if (!result) {
                                 that.errorHandler.call(that.target);
@@ -440,8 +434,7 @@
 
     // Settings
     Settings = {
-        url: 'api/Settings/',
-        title: '网站设置'
+        url: 'api/Settings/'
     };
 
     // Messages

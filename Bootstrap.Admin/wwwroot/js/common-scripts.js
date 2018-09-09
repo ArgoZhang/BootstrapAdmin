@@ -24,7 +24,7 @@
         nestMenu: function (callback) {
             var $this = $(this);
             $.bc({
-                id: 0, url: Menu.url, data: { type: "user" },
+                id: 0, url: Menu.url, data: { type: "user" }, method: "post",
                 callback: function (result) {
                     var html = "";
                     if ($.isArray(result)) html = cascadeMenu(result);
@@ -47,7 +47,6 @@
             var that = this;
             $.bc({
                 url: Notifications.url,
-                method: 'GET',
                 callback: function (result) {
                     $('#logoutNoti').text(result.NewUsersCount === 0 ? "" : result.NewUsersCount);
                     that.clearWidgetItems();

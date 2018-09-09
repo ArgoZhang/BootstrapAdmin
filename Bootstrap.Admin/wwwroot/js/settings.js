@@ -13,7 +13,7 @@
             case 'footer':
                 data = dataBinder.get();
                 $.bc({
-                    url: Settings.url, data: { name: '网站页脚', code: data.Footer, category: Settings.title }, title: Settings.title,
+                    url: Settings.url, data: { name: '网站页脚', code: data.Footer, category: '网站设置' }, title: '保存网站页脚', method: "post",
                     callback: function (result) {
                         if (result) $('#websiteFooter').text(data.Footer);
                     }
@@ -22,7 +22,7 @@
             case 'title':
                 data = dataBinder.get();
                 $.bc({
-                    url: Settings.url, data: { name: '网站标题', code: data.Title, category: Settings.title }, title: Settings.title,
+                    url: Settings.url, data: { name: '网站标题', code: data.Title, category: '网站设置' }, title: '保存网站标题', method: "post",
                     callback: function (result) {
                         if (result) $('#websiteTitle').text(data.Title);
                     }
@@ -31,7 +31,7 @@
             case 'css':
                 var cssDefine = $css.val();
                 $.bc({
-                    url: Settings.url, data: { name: '使用样式', code: cssDefine, category: '当前样式' }, title: '网站样式',
+                    url: Settings.url, data: { name: '使用样式', code: cssDefine, category: '当前样式' }, title: '保存网站样式', method: "post",
                     callback: function (result) {
                         if (result) {
                             window.setTimeout(function () { window.location.reload(true); }, 1000);
@@ -50,7 +50,6 @@
         $sortable.html('');
         $.bc({
             url: Settings.url,
-            method: 'GET',
             callback: function (urls) {
                 if (urls && $.isArray(urls)) {
                     $.each(urls, function (index, item) {
@@ -58,9 +57,7 @@
                         else options.url = item.Url;
                         $.bc({
                             url: options.url,
-                            xhrFields: {
-                                withCredentials: true
-                            },
+                            method: "post",
                             callback: function (result) {
                                 if ($.isArray(result)) {
                                     var html = '<div class="cache-item"><i class="fa fa-ellipsis-v"></i><div><span data-toggle="tooltip" title="{2}">{2}</span><span class="badge badge-pill badge-success">{0}</span></div><span title="{3}">{3}</span><div><span>{7}</span><button class="btn btn-danger" title="{1}" data-url="{5}?cacheKey={1}" data-toggle="tooltip" data-self="{6}" data-placement="left"><i class="fa fa-trash-o"></i></button></div></div>';
@@ -83,14 +80,7 @@
         });
     };
 
-    var listCache = function (options) {
-        $.bc({
-            url: options.url,
-            xhrFields: {
-                withCredentials: true
-            }
-        });
-    };
+    var listCache = function (options) { $.bc({ url: options.url, method: "post" }); };
     $('a[data-method]').on('click', function (e) {
         e.preventDefault();
         e.stopPropagation();

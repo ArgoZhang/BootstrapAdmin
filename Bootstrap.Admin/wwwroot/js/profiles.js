@@ -37,12 +37,12 @@
         switch ($this.attr('data-method')) {
             case 'password':
                 data.UserStatus = 'ChangePassword';
-                $.bc({ url: User.url, method: "PUT", data: data, title: "更改密码" });
+                $.bc({ url: User.url, method: "put", data: data, title: "更改密码" });
                 break;
             case 'user':
                 data.UserStatus = 'ChangeDisplayName';
                 $.bc({
-                    url: User.url, method: "PUT", data: data, title: "修改用户显示名称",
+                    url: User.url, method: "put", data: data, title: "修改用户显示名称",
                     callback: function (result) {
                         if (result) {
                             $('#userDisplayName').text(data.DisplayName);
@@ -53,7 +53,7 @@
             case 'css':
                 data.UserStatus = 'ChangeTheme';
                 $.bc({
-                    url: User.url, method: "PUT", data: data, title: "保存样式", callback: function (result) {
+                    url: User.url, method: "put", data: data, title: "保存样式", callback: function (result) {
                         if (result) {
                             window.setTimeout(function () { window.location.reload(true); }, 1000);
                         }
