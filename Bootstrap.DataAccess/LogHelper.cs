@@ -20,7 +20,7 @@ namespace Bootstrap.DataAccess
         {
             var ret = CacheManager.GetOrAdd(RetrieveLogsDataKey, key =>
             {
-                string sql = "select top 1000 * from Logs";
+                string sql = "select * from Logs where DATEDIFF(Week, LogTime, GETDATE()) = 0";
                 List<Log> logs = new List<Log>();
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql);
                 using (DbDataReader reader = DBAccessManager.SqlDBAccess.ExecuteReader(cmd))
