@@ -15,7 +15,6 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 
         /// </summary>
-        internal const string RetrieveNotificationsDataKey = "NotificationHelper-RetrieveNotifications";
         private const string PullNotificationsIntervalDataKey = "NotificationHelper-PullNotificationsInterval";
         private static readonly List<MessageBody> MessagePool = new List<MessageBody>();
         /// <summary>

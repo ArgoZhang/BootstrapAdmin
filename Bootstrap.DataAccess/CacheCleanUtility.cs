@@ -8,7 +8,7 @@ namespace Bootstrap.DataAccess
 {
     internal static class CacheCleanUtility
     {
-        const string RetrieveAllRolesDataKey = "BootstrapAdminRoleMiddleware-RetrieveRoles";
+        private const string RetrieveAllRolesDataKey = "BootstrapAdminRoleMiddleware-RetrieveRoles";
         /// <summary>
         /// 
         /// </summary>
@@ -17,10 +17,8 @@ namespace Bootstrap.DataAccess
         /// <param name="groupIds"></param>
         /// <param name="menuIds"></param>
         /// <param name="dictIds"></param>
-        /// <param name="logIds"></param>
-        /// <param name="notifyIds"></param>
-        /// <param name="exceptionIds"></param>
-        internal static void ClearCache(string roleIds = null, string userIds = null, string groupIds = null, string menuIds = null, string dictIds = null, string logIds = null, string notifyIds = null, string exceptionIds = null, string cacheKey = null)
+        /// <param name="cacheKey"></param>
+        internal static void ClearCache(string roleIds = null, string userIds = null, string groupIds = null, string menuIds = null, string dictIds = null, string cacheKey = null)
         {
             var cacheKeys = new List<string>();
             var corsKeys = new List<string>();
@@ -75,19 +73,8 @@ namespace Bootstrap.DataAccess
             if (dictIds != null)
             {
                 cacheKeys.Add(BootstrapDict.RetrieveDictsDataKey + "*");
+                cacheKeys.Add(DictHelper.RetrieveCategoryDataKey);
                 corsKeys.Add(BootstrapDict.RetrieveDictsDataKey + "*");
-            }
-            if (logIds != null)
-            {
-                cacheKeys.Add(LogHelper.RetrieveLogsDataKey + "*");
-            }
-            if (notifyIds != null)
-            {
-                cacheKeys.Add(NotificationHelper.RetrieveNotificationsDataKey + "*");
-            }
-            if (exceptionIds != null) 
-            {
-                cacheKeys.Add(ExceptionHelper.RetrieveExceptionsDataKey + "*");
             }
             if (cacheKey != null)
             {

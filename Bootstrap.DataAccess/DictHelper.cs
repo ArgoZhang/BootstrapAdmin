@@ -17,7 +17,7 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 
         /// </summary>
-        private const string RetrieveCategoryDataKey = "DictHelper-RetrieveDictsCategory";
+        internal const string RetrieveCategoryDataKey = "DictHelper-RetrieveDictsCategory";
         /// <summary>
         /// 
         /// </summary>

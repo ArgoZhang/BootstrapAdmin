@@ -20,7 +20,7 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 
         /// </summary>
-        public static readonly string RetrieveExceptionsDataKey = "ExceptionHelper-RetrieveExceptions";
+        private static readonly string RetrieveExceptionsDataKey = "ExceptionHelper-RetrieveExceptions";
         /// <summary>
         /// 
         /// </summary>

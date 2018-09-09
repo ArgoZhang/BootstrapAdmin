@@ -10,7 +10,7 @@ namespace Bootstrap.DataAccess
 {
     public static class LogHelper
     {
-        internal const string RetrieveLogsDataKey = "LogHelper-RetrieveLogs";
+        private const string RetrieveLogsDataKey = "LogHelper-RetrieveLogs";
         /// <summary>
         /// 查询所有日志信息
         /// </summary>
@@ -76,7 +76,7 @@ namespace Bootstrap.DataAccess
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@RequestUrl", p.RequestUrl));
                 ret = DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd) == 1;
             }
-            CacheCleanUtility.ClearCache(logIds: p.Id == 0 ? string.Empty : p.Id.ToString());
+            CacheManager.Clear(RetrieveLogsDataKey);
             DeleteLogAsync();
             return ret;
         }
