@@ -123,6 +123,7 @@
                 loadingTimeout: 10000,
                 callback: false,
                 $element: false,
+                cors: false,
                 contentType: 'application/json',
                 dataType: 'json',
                 method: 'get'
@@ -143,19 +144,25 @@
 
             if (options.url) {
                 var data = options.method === 'get' ? options.data : JSON.stringify(options.data);
-                $.ajax({
+                var ajaxSettings = {
                     url: $.formatUrl(options.url) + options.id,
                     data: data,
                     method: options.method,
                     contentType: options.contentType,
                     dataType: options.dataType,
+                    crossDomain: false,
                     success: function (result) {
                         success(result);
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
                         success(false);
                     }
+                };
+                if (options.cors) $.extend(ajaxSettings, {
+                    xhrFields: { withCredentials: true },
+                    crossDomain: true
                 });
+                $.ajax(ajaxSettings);
             }
             function success(result) {
                 if ($.isFunction(options.callback)) {

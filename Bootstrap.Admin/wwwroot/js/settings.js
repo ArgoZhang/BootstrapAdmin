@@ -57,14 +57,14 @@
                         else options.url = item.Url;
                         $.bc({
                             url: options.url,
-                            method: "post",
+                            cors: !item.Self,
                             callback: function (result) {
                                 if ($.isArray(result)) {
-                                    var html = '<div class="cache-item"><i class="fa fa-ellipsis-v"></i><div><span data-toggle="tooltip" title="{2}">{2}</span><span class="badge badge-pill badge-success">{0}</span></div><span title="{3}">{3}</span><div><span>{7}</span><button class="btn btn-danger" title="{1}" data-url="{5}?cacheKey={1}" data-toggle="tooltip" data-self="{6}" data-placement="left"><i class="fa fa-trash-o"></i></button></div></div>';
+                                    var html = '<div class="cache-item"><i class="fa fa-ellipsis-v"></i><div><span data-toggle="tooltip" title="{2}">{2}</span><span class="badge badge-pill badge-success">{0}</span></div><span title="{3}">{3}</span><div><span>{6}</span><button class="btn btn-danger" title="{1}" data-url="{4}?cacheKey={1}" data-toggle="tooltip" data-self="{5}" data-placement="left"><i class="fa fa-trash-o"></i></button></div></div>';
                                     var content = result.sort(function (x, y) {
                                         return x.Key > y.Key ? 1 : -1;
                                     }).map(function (ele) {
-                                        return $.format(html, ele.Interval, ele.Key, ele.Desc, ele.Value, '', $.format(item.Url, ele.Key), item.Self, Math.max(0, ele.Interval - Math.round((new Date() - new Date(ele.CreateTime.replace(/-/g, '/'))) / 1000)));
+                                        return $.format(html, ele.Interval, ele.Key, ele.Desc, ele.Value, $.format(item.Url, ele.Key), item.Self, Math.max(0, ele.Interval - Math.round((new Date() - new Date(ele.CreateTime.replace(/-/g, '/'))) / 1000)));
                                     }).join('');
                                     $sortable.append($.format('<h6 class="cache-title">{0}</h6>', item.Desc));
                                     $sortable.append(content);
@@ -80,7 +80,6 @@
         });
     };
 
-    var listCache = function (options) { $.bc({ url: options.url, method: "post" }); };
     $('a[data-method]').on('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
@@ -96,8 +95,8 @@
         listCacheUrl(options);
     }).last().trigger('click');
     $sortable.on('click', '.btn', function () {
-        $(this).tooltip('dispose');
-        listCache({ url: $(this).attr('data-url') });
+        var $this =$(this).tooltip('dispose');
+        $.bc({ url: $this.attr('data-url'), cors: $this.attr('data-self') === 'false' });
         listCacheUrl();
     });
 
