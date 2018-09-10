@@ -1,9 +1,7 @@
 ﻿using Bootstrap.Admin.Query;
 using Bootstrap.DataAccess;
 using Longbow.Web.Mvc;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -36,8 +34,9 @@ namespace Bootstrap.Admin.Controllers.Api
         public IEnumerable<string> Post()
         {
             var filePath = Path.Combine(AppContext.BaseDirectory, "Error");
+            if (!Directory.Exists(filePath)) return new List<string>();
             return Directory.GetFiles(filePath)
-                .Where(f => Path.GetExtension(f).Equals(".log", System.StringComparison.OrdinalIgnoreCase))
+                .Where(f => Path.GetExtension(f).Equals(".log", StringComparison.OrdinalIgnoreCase))
                 .Select(f => Path.GetFileNameWithoutExtension(f)).OrderByDescending(s => s);
         }
         /// <summary>
