@@ -1,6 +1,5 @@
 ﻿using Bootstrap.Admin.Query;
 using Bootstrap.DataAccess;
-using Bootstrap.Security;
 using Longbow.Web.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -44,9 +43,9 @@ namespace Bootstrap.Admin.Controllers.Api
             if (value.UserName.Equals(User.Identity.Name, System.StringComparison.OrdinalIgnoreCase))
             {
                 if (value.UserStatus == UserStates.ChangeDisplayName)
-                    ret = BootstrapUser.SaveDisplayName(value.UserName, value.DisplayName);
+                    ret = UserHelper.SaveDisplayName(value.UserName, value.DisplayName);
                 else if (value.UserStatus == UserStates.ChangePassword)
-                    ret = BootstrapUser.ChangePassword(value.UserName, value.Password, value.NewPassword);
+                    ret = UserHelper.ChangePassword(value.UserName, value.Password, value.NewPassword);
             }
             return ret;
         }

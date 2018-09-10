@@ -17,10 +17,11 @@ namespace Bootstrap.DataAccess
     /// </summary>
     public static class UserHelper
     {
-        private const string RetrieveUsersByNameDataKey = "BootstrapUser-RetrieveUsersByName";
+        internal const string RetrieveUsersDataKey = "BootstrapUser-RetrieveUsers";
         internal const string RetrieveUsersByRoleIdDataKey = "BootstrapUser-RetrieveUsersByRoleId";
         internal const string RetrieveUsersByGroupIdDataKey = "BootstrapUser-RetrieveUsersByGroupId";
         internal const string RetrieveNewUsersDataKey = "UserHelper-RetrieveNewUsers";
+
         /// <summary>
         /// 查询所有用户
         /// </summary>
@@ -28,7 +29,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<User> RetrieveUsers()
         {
-            return CacheManager.GetOrAdd(BootstrapUser.RetrieveUsersDataKey, key =>
+            return CacheManager.GetOrAdd(RetrieveUsersDataKey, key =>
             {
                 List<User> users = new List<User>();
                 DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, "select ID, UserName, DisplayName, RegisterTime, ApprovedTime, ApprovedBy, Description from Users Where ApprovedTime is not null");
@@ -142,6 +143,32 @@ namespace Bootstrap.DataAccess
                 ret = DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd) == 1;
             }
             CacheCleanUtility.ClearCache(userIds: id.ToString());
+            return ret;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
+        /// <param name="newPass"></param>
+        /// <returns></returns>
+        public static bool ChangePassword(string userName, string password, string newPass)
+        {
+            bool ret = false;
+            if (BootstrapUser.Authenticate(userName, password))
+            {
+                string sql = "Update Users set Password = @Password, PassSalt = @PassSalt where UserName = @userName";
+                var passSalt = LgbCryptography.GenerateSalt();
+                var newPassword = LgbCryptography.ComputeHash(newPass, passSalt);
+                using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
+                {
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Password", newPassword));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@PassSalt", passSalt));
+                    cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@userName", userName));
+                    DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
+                    ret = true;
+                }
+            }
             return ret;
         }
         /// <summary>
@@ -327,9 +354,27 @@ namespace Bootstrap.DataAccess
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@iconName", iconName));
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@userName", userName));
                 DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
-                string key = string.Format("{0}-{1}", RetrieveUsersByNameDataKey, userName);
-                CacheCleanUtility.ClearCache(cacheKey: key);
+                CacheCleanUtility.ClearCache(cacheKey: $"{RetrieveUsersDataKey}*");
                 ret = true;
+            }
+            return ret;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="displayName"></param>
+        /// <returns></returns>
+        public static bool SaveDisplayName(string userName, string displayName)
+        {
+            bool ret = false;
+            string sql = "Update Users set DisplayName = @DisplayName where UserName = @userName";
+            using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
+            {
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@DisplayName", displayName));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@userName", userName));
+                ret = DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd) == 1;
+                CacheCleanUtility.ClearCache(cacheKey: $"{RetrieveUsersDataKey}*");
             }
             return ret;
         }
@@ -348,8 +393,7 @@ namespace Bootstrap.DataAccess
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@cssName", DBAccessFactory.ToDBValue(cssName)));
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@userName", userName));
                 DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
-                string key = string.Format("{0}-{1}", RetrieveUsersByNameDataKey, userName);
-                CacheCleanUtility.ClearCache(cacheKey: key);
+                CacheCleanUtility.ClearCache(cacheKey: $"{RetrieveUsersDataKey}*");
                 ret = true;
             }
             return ret;

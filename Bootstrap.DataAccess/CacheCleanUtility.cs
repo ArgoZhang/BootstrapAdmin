@@ -45,8 +45,8 @@ namespace Bootstrap.DataAccess
                     corsKeys.Add(BootstrapMenu.RetrieveMenusDataKey + "*");
                 });
                 cacheKeys.Add(UserHelper.RetrieveNewUsersDataKey + "*");
-                cacheKeys.Add(BootstrapUser.RetrieveUsersDataKey + "*");
-                corsKeys.Add(BootstrapUser.RetrieveUsersDataKey + "*");
+                cacheKeys.Add(UserHelper.RetrieveUsersDataKey + "*");
+                corsKeys.Add(UserHelper.RetrieveUsersDataKey + "*");
             }
             if (groupIds != null)
             {
@@ -79,6 +79,7 @@ namespace Bootstrap.DataAccess
             if (cacheKey != null)
             {
                 cacheKeys.Add(cacheKey);
+                corsKeys.Add(cacheKey);
             }
             CacheManager.Clear(cacheKeys);
             CacheManager.CorsClear(corsKeys);
