@@ -111,7 +111,7 @@
     };
 
     $.extend({
-        bc: function (options, callback) {
+        bc: function (options) {
             options = $.extend({
                 id: "",
                 url: "",
@@ -122,7 +122,6 @@
                 loading: false,
                 loadingTimeout: 10000,
                 callback: false,
-                $element: false,
                 cors: false,
                 contentType: 'application/json',
                 dataType: 'json',
@@ -142,39 +141,36 @@
                 }, options.loadingTimeout);
             }
 
-            if (options.url) {
-                var data = options.method === 'get' ? options.data : JSON.stringify(options.data);
-                var ajaxSettings = {
-                    url: $.formatUrl(options.url) + options.id,
-                    data: data,
-                    method: options.method,
-                    contentType: options.contentType,
-                    dataType: options.dataType,
-                    crossDomain: false,
-                    success: function (result) {
-                        success(result);
-                    },
-                    error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        success(false);
-                    }
-                };
-                if (options.cors) $.extend(ajaxSettings, {
-                    xhrFields: { withCredentials: true },
-                    crossDomain: true
-                });
-                $.ajax(ajaxSettings);
-            }
+
+            var data = options.method === 'get' ? options.data : JSON.stringify(options.data);
+            var ajaxSettings = {
+                url: $.formatUrl(options.url) + options.id,
+                data: data,
+                method: options.method,
+                contentType: options.contentType,
+                dataType: options.dataType,
+                crossDomain: false,
+                success: function (result) {
+                    success(result);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    success(false);
+                }
+            };
+            if (options.cors) $.extend(ajaxSettings, {
+                xhrFields: { withCredentials: true },
+                crossDomain: true
+            });
+            $.ajax(ajaxSettings);
+
             function success(result) {
                 if ($.isFunction(options.callback)) {
-                    options.callback.call(options.$element ? options : options.$element, result);
+                    options.callback.call(options, result);
                 }
                 if (options.modal && (result || options.loading)) {
                     $(options.modal).modal('hide');
                 }
                 if (options.title) toastr[result ? 'success' : 'error'](options.title + (result ? "成功" : "失败"));
-                if ($.isFunction(callback)) {
-                    callback.call(options.$element ? this : options.$element);
-                }
             }
         },
         lgbSwal: function (options) {
