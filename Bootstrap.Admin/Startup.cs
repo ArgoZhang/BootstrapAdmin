@@ -79,7 +79,6 @@ namespace Bootstrap.Admin
             app.UseCors(builder => builder.WithOrigins(Configuration["AllowOrigins"].Split(',', StringSplitOptions.RemoveEmptyEntries)).AllowAnyHeader().AllowAnyMethod().AllowCredentials());
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseCookiePolicy();
             app.UseAuthentication();
             app.UseBootstrapRoleAuthorization();
             app.UseWebSocketHandler(options => options.UseAuthentication = true, WSHelper.WebSocketMessageHandler);
