@@ -29,7 +29,10 @@ namespace Bootstrap.Admin.Controllers
                 var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
                 identity.AddClaim(new Claim(ClaimTypes.Name, userName));
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity), new AuthenticationProperties() { IsPersistent = remember == "true" });
-                return Redirect("~/");
+
+                // redirect origin url
+                var originUrl = Request.Query[CookieAuthenticationDefaults.ReturnUrlParameter];
+                return Redirect(originUrl.Count == 1 ? originUrl[0] : "~/");
             }
             return View("Login", new ModelBase());
         }
