@@ -80,7 +80,7 @@ namespace Bootstrap.Admin
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseAuthentication();
-            app.UseBootstrapRoleAuthorization();
+            app.UseBootstrapAdminAuthorization();
             app.UseWebSocketHandler(options => options.UseAuthentication = true, WSHelper.WebSocketMessageHandler);
             app.UseCacheManagerCorsHandler();
             app.UseMvc(routes =>
