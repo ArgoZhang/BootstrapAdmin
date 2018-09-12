@@ -49,6 +49,7 @@ namespace Bootstrap.Admin.Controllers
         /// Accesses the denied.
         /// </summary>
         /// <returns>The denied.</returns>
+        [ResponseCache(Duration = 600)]
         public ActionResult AccessDenied()
         {
             return View();
