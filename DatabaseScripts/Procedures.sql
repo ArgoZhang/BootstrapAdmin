@@ -192,8 +192,10 @@ BEGIN
 	begin
 		if(not exists (select 1 from Users Where UserName = @userName))
 		begin
-			Insert Into Users (UserName, [Password], PassSalt, DisplayName, RegisterTime, ApprovedBy, ApprovedTime, [Description]) values (@userName, @password, @passSalt, @displayName, GETDATE(), @approvedBy, @approvedTime, @description)
-			insert into UserRole (UserID, RoleID) select @@IDENTITY, ID from Roles where RoleName = N'Default'
+			begin tran
+				Insert Into Users (UserName, [Password], PassSalt, DisplayName, RegisterTime, ApprovedBy, ApprovedTime, [Description]) values (@userName, @password, @passSalt, @displayName, GETDATE(), @approvedBy, @approvedTime, @description)
+				insert into UserRole (UserID, RoleID) select @@IDENTITY, ID from Roles where RoleName = N'Default'
+			commit tran
 		end
 	end
 END
