@@ -78,10 +78,19 @@ namespace Bootstrap.Admin.Controllers.Api
         [HttpPost]
         public bool Post([FromBody]User value)
         {
-            value.Description = string.Format("管理员{0}创建用户", User.Identity.Name);
-            value.ApprovedBy = User.Identity.Name;
-            value.ApprovedTime = DateTime.Now;
-            return UserHelper.SaveUser(value);
+            var ret = false;
+            if (value.Id == 0)
+            {
+                value.Description = string.Format("管理员{0}创建用户", User.Identity.Name);
+                value.ApprovedBy = User.Identity.Name;
+                value.ApprovedTime = DateTime.Now;
+                ret = UserHelper.SaveUser(value);
+            }
+            else
+            {
+                ret = UserHelper.UpdateUser(value.Id, value.Password, value.DisplayName);
+            }
+            return ret;
         }
         /// <summary>
         /// 

@@ -92,14 +92,13 @@ namespace Bootstrap.DataAccess
             using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_DeleteUsers"))
             {
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ids", ids));
-                DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
+                ret = DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd) == -1;
+                if (ret) CacheCleanUtility.ClearCache(userIds: value);
             }
-            CacheCleanUtility.ClearCache(userIds: value);
-            ret = true;
             return ret;
         }
         /// <summary>
-        /// 保存新建/更新的用户信息
+        /// 保存新建
         /// </summary>
         /// <param name="p"></param>
         /// <returns></returns>
@@ -122,8 +121,32 @@ namespace Bootstrap.DataAccess
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@approvedTime", approvedTime));
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@description", p.Description));
                 ret = DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd) == -1;
+                if (ret) CacheCleanUtility.ClearCache(userIds: p.Id == 0 ? new List<int>() : new List<int>() { p.Id });
             }
-            CacheCleanUtility.ClearCache(userIds: p.Id == 0 ? new List<int>() : new List<int>() { p.Id });
+            return ret;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="password"></param>
+        /// <param name="displayName"></param>
+        /// <returns></returns>
+        public static bool UpdateUser(int id, string password, string displayName)
+        {
+            bool ret = false;
+            string sql = "Update Users set Password = @Password, PassSalt = @PassSalt, DisplayName = @DisplayName where ID = @id";
+            var passSalt = LgbCryptography.GenerateSalt();
+            var newPassword = LgbCryptography.ComputeHash(password, passSalt);
+            using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
+            {
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@id", id));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@DisplayName", displayName));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Password", newPassword));
+                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@PassSalt", passSalt));
+                ret = DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd) == 1;
+                if (ret) CacheCleanUtility.ClearCache(userIds: id == 0 ? new List<int>() : new List<int>() { id });
+            }
             return ret;
         }
         /// <summary>
@@ -141,8 +164,8 @@ namespace Bootstrap.DataAccess
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@id", id));
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@approvedBy", approvedBy));
                 ret = DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd) == 1;
+                if (ret) CacheCleanUtility.ClearCache(userIds: new List<int>() { id });
             }
-            CacheCleanUtility.ClearCache(userIds: new List<int>() { id });
             return ret;
         }
         /// <summary>
@@ -165,8 +188,7 @@ namespace Bootstrap.DataAccess
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Password", newPassword));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@PassSalt", passSalt));
                     cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@userName", userName));
-                    DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
-                    ret = true;
+                    ret = DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd) == 1;
                 }
             }
             return ret;
@@ -187,8 +209,8 @@ namespace Bootstrap.DataAccess
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@rejectedBy", rejectBy));
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@rejectedReason", "未填写"));
                 ret = DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd) == -1;
+                if (ret) CacheCleanUtility.ClearCache(userIds: new List<int>() { id });
             }
-            CacheCleanUtility.ClearCache(userIds: new List<int>() { id });
             return ret;
         }
         /// <summary>
@@ -353,9 +375,8 @@ namespace Bootstrap.DataAccess
             {
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@iconName", iconName));
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@userName", userName));
-                DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
-                CacheCleanUtility.ClearCache(cacheKey: $"{RetrieveUsersDataKey}*");
-                ret = true;
+                ret = DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd) == 1;
+                if (ret) CacheCleanUtility.ClearCache(cacheKey: $"{RetrieveUsersDataKey}*");
             }
             return ret;
         }
@@ -374,7 +395,7 @@ namespace Bootstrap.DataAccess
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@DisplayName", displayName));
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@userName", userName));
                 ret = DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd) == 1;
-                CacheCleanUtility.ClearCache(cacheKey: $"{RetrieveUsersDataKey}*");
+                if (ret) CacheCleanUtility.ClearCache(cacheKey: $"{RetrieveUsersDataKey}*");
             }
             return ret;
         }
@@ -392,9 +413,8 @@ namespace Bootstrap.DataAccess
             {
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@cssName", DBAccessFactory.ToDBValue(cssName)));
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@userName", userName));
-                DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
-                CacheCleanUtility.ClearCache(cacheKey: $"{RetrieveUsersDataKey}*");
-                ret = true;
+                ret = DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd) == 1;
+                if (ret) CacheCleanUtility.ClearCache(cacheKey: $"{RetrieveUsersDataKey}*");
             }
             return ret;
         }
