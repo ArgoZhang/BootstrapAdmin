@@ -59,7 +59,7 @@ namespace Bootstrap.DataAccess
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ids", ids));
                 ret = DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd) == -1;
             }
-            CacheCleanUtility.ClearCache(groupIds: ids);
+            CacheCleanUtility.ClearCache(groupIds: value);
             return ret;
         }
         /// <summary>
@@ -82,7 +82,7 @@ namespace Bootstrap.DataAccess
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Description", DBAccessFactory.ToDBValue(p.Description)));
                 ret = DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd) == 1;
             }
-            CacheCleanUtility.ClearCache(groupIds: p.Id == 0 ? string.Empty : p.Id.ToString());
+            CacheCleanUtility.ClearCache(groupIds: p.Id == 0 ? new List<int>() : new List<int>() { p.Id });
             return ret;
         }
         /// <summary>
@@ -122,14 +122,14 @@ namespace Bootstrap.DataAccess
         /// <param name="id"></param>
         /// <param name="groupIds"></param>
         /// <returns></returns>
-        public static bool SaveGroupsByUserId(int id, string groupIds)
+        public static bool SaveGroupsByUserId(int id, IEnumerable<int> groupIds)
         {
             var ret = false;
             DataTable dt = new DataTable();
             dt.Columns.Add("UserID", typeof(int));
             dt.Columns.Add("GroupID", typeof(int));
             //判断用户是否选定角色
-            if (!string.IsNullOrEmpty(groupIds)) groupIds.Split(',').ToList().ForEach(groupId => dt.Rows.Add(id, groupId));
+            groupIds.ToList().ForEach(groupId => dt.Rows.Add(id, groupId));
             using (TransactionPackage transaction = DBAccessManager.SqlDBAccess.BeginTransaction())
             {
                 try
@@ -152,7 +152,7 @@ namespace Bootstrap.DataAccess
                             transaction.CommitTransaction();
                         }
                     }
-                    CacheCleanUtility.ClearCache(groupIds: groupIds, userIds: id.ToString());
+                    CacheCleanUtility.ClearCache(groupIds: groupIds, userIds: new List<int>() { id });
                     ret = true;
                 }
                 catch (Exception ex)
@@ -199,13 +199,13 @@ namespace Bootstrap.DataAccess
         /// <param name="id"></param>
         /// <param name="groupIds"></param>
         /// <returns></returns>
-        public static bool SaveGroupsByRoleId(int id, string groupIds)
+        public static bool SaveGroupsByRoleId(int id, IEnumerable<int> groupIds)
         {
             bool ret = false;
             DataTable dt = new DataTable();
             dt.Columns.Add("GroupID", typeof(int));
             dt.Columns.Add("RoleID", typeof(int));
-            if (!string.IsNullOrEmpty(groupIds)) groupIds.Split(',').ToList().ForEach(groupId => dt.Rows.Add(groupId, id));
+            groupIds.ToList().ForEach(groupId => dt.Rows.Add(groupId, id));
             using (TransactionPackage transaction = DBAccessManager.SqlDBAccess.BeginTransaction())
             {
                 try
@@ -227,7 +227,7 @@ namespace Bootstrap.DataAccess
                             transaction.CommitTransaction();
                         }
                     }
-                    CacheCleanUtility.ClearCache(groupIds: groupIds, roleIds: id.ToString());
+                    CacheCleanUtility.ClearCache(groupIds: groupIds, roleIds: new List<int>() { id });
                     ret = true;
                 }
                 catch (Exception ex)

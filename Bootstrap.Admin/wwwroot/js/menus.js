@@ -42,7 +42,7 @@
             events: {
                 '#btn_assignRole': function (row) {
                     $.bc({
-                        id: row.Id, url: Role.url, data: { type: "menu" }, method: "post",
+                        id: row.Id, url: Role.url, query: { type: "menu" }, method: "post",
                         callback: function (result) {
                             var htmlTemplate = this.htmlTemplate;
                             var html = $.map(result, function (element, index) {
@@ -60,8 +60,8 @@
                     var menuId = row.Id;
                     var roleIds = $dialogRole.find('input:checked').map(function (index, element) {
                         return $(element).val();
-                    }).toArray().join(',');
-                    $.bc({ id: menuId, url: Role.url, method: "put", data: { type: "menu", roleIds: roleIds }, title: Role.title, modal: '#dialogRole' });
+                    }).toArray();
+                    $.bc({ id: menuId, url: Role.url, method: "put", data: roleIds, query: { type: "menu" }, title: Role.title, modal: '#dialogRole' });
                 }
             },
             callback: function (result) {

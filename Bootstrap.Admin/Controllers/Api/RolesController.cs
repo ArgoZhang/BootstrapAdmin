@@ -25,19 +25,17 @@ namespace Bootstrap.Admin.Controllers.Api
         {
             return value.RetrieveData();
         }
-
         /// <summary>
-        /// 
+        /// 通过指定ID获得所有角色集合
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="value"></param>
+        /// <param name="id">用户ID/部门ID/菜单ID</param>
+        /// <param name="type">类型</param>
         /// <returns></returns>
         [HttpPost("{id}")]
-        public IEnumerable<Role> Post(int id, [FromBody]JObject value)
+        public IEnumerable<Role> Post(int id, [FromQuery]string type)
         {
             var ret = new List<Role>();
-            dynamic json = value;
-            switch ((string)json.type)
+            switch (type)
             {
                 case "user":
                     ret = RoleHelper.RetrieveRolesByUserId(id).ToList();
@@ -53,18 +51,18 @@ namespace Bootstrap.Admin.Controllers.Api
             }
             return ret;
         }
-
-        /// <summary>根据GroupID获取
+        /// <summary>
+        /// 根据GroupID获取
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="id"></param>
+        /// <param name="roleIds"></param>
+        /// <param name="type"></param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public bool Put(int id, [FromBody]JObject value)
+        public bool Put(int id, [FromBody]IEnumerable<int> roleIds, [FromQuery]string type)
         {
             var ret = false;
-            dynamic json = value;
-            string roleIds = json.roleIds;
-            switch ((string)json.type)
+            switch (type)
             {
                 case "user":
                     ret = RoleHelper.SaveRolesByUserId(id, roleIds);

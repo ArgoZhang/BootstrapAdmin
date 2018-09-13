@@ -3,7 +3,6 @@ using Bootstrap.DataAccess;
 using Longbow.Web.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,14 +52,13 @@ namespace Bootstrap.Admin.Controllers.Api
         /// 
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="value"></param>
+        /// <param name="type"></param>
         /// <returns></returns>
         [HttpPost("{id}")]
-        public IEnumerable<User> Post(int id, [FromBody]JObject value)
+        public IEnumerable<User> Post(int id, [FromQuery]string type)
         {
             var ret = new List<User>();
-            dynamic json = value;
-            switch ((string)json.type)
+            switch (type)
             {
                 case "role":
                     ret = UserHelper.RetrieveUsersByRoleId(id).ToList();
@@ -89,15 +87,14 @@ namespace Bootstrap.Admin.Controllers.Api
         /// 
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="value"></param>
+        /// <param name="userIds"></param>
+        /// <param name="type"></param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public bool Put(int id, [FromBody]JObject value)
+        public bool Put(int id, [FromBody]IEnumerable<int> userIds, [FromQuery]string type)
         {
             var ret = false;
-            dynamic json = value;
-            string userIds = json.userIds;
-            switch ((string)json.type)
+            switch (type)
             {
                 case "role":
                     ret = UserHelper.SaveUsersByRoleId(id, userIds);

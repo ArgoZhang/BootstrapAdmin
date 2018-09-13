@@ -1,6 +1,5 @@
 ﻿using Bootstrap.Security;
 using Longbow.Cache;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -18,13 +17,13 @@ namespace Bootstrap.DataAccess
         /// <param name="menuIds"></param>
         /// <param name="dictIds"></param>
         /// <param name="cacheKey"></param>
-        internal static void ClearCache(string roleIds = null, string userIds = null, string groupIds = null, IEnumerable<int> menuIds = null, string dictIds = null, string cacheKey = null)
+        internal static void ClearCache(IEnumerable<int> roleIds = null, IEnumerable<int> userIds = null, IEnumerable<int> groupIds = null, IEnumerable<int> menuIds = null, string dictIds = null, string cacheKey = null)
         {
             var cacheKeys = new List<string>();
             var corsKeys = new List<string>();
             if (roleIds != null)
             {
-                roleIds.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList().ForEach(id =>
+                roleIds.ToList().ForEach(id =>
                 {
                     cacheKeys.Add(string.Format("{0}-{1}", UserHelper.RetrieveUsersByRoleIdDataKey, id));
                     cacheKeys.Add(string.Format("{0}-{1}", GroupHelper.RetrieveGroupsByRoleIdDataKey, id));
@@ -37,7 +36,7 @@ namespace Bootstrap.DataAccess
             }
             if (userIds != null)
             {
-                userIds.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList().ForEach(id =>
+                userIds.ToList().ForEach(id =>
                 {
                     cacheKeys.Add(string.Format("{0}-{1}", RoleHelper.RetrieveRolesByUserIdDataKey, id));
                     cacheKeys.Add(string.Format("{0}-{1}", GroupHelper.RetrieveGroupsByUserIdDataKey, id));
@@ -50,7 +49,7 @@ namespace Bootstrap.DataAccess
             }
             if (groupIds != null)
             {
-                groupIds.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList().ForEach(id =>
+                groupIds.ToList().ForEach(id =>
                 {
                     cacheKeys.Add(string.Format("{0}-{1}", RoleHelper.RetrieveRolesByGroupIdDataKey, id));
                     cacheKeys.Add(string.Format("{0}-{1}", UserHelper.RetrieveUsersByGroupIdDataKey, id));

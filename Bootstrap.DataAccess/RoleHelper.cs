@@ -52,14 +52,14 @@ namespace Bootstrap.DataAccess
         /// <param name="id"></param>
         /// <param name="roleIds"></param>
         /// <returns></returns>
-        public static bool SaveRolesByUserId(int id, string roleIds)
+        public static bool SaveRolesByUserId(int id, IEnumerable<int> roleIds)
         {
             var ret = false;
             DataTable dt = new DataTable();
             dt.Columns.Add("UserID", typeof(int));
             dt.Columns.Add("RoleID", typeof(int));
             //判断用户是否选定角色
-            if (!string.IsNullOrEmpty(roleIds)) roleIds.Split(',').ToList().ForEach(roleId => dt.Rows.Add(id, roleId));
+            roleIds.ToList().ForEach(roleId => dt.Rows.Add(id, roleId));
             using (TransactionPackage transaction = DBAccessManager.SqlDBAccess.BeginTransaction())
             {
                 try
@@ -83,7 +83,7 @@ namespace Bootstrap.DataAccess
                         }
                         transaction.CommitTransaction();
                     }
-                    CacheCleanUtility.ClearCache(userIds: id.ToString(), roleIds: roleIds);
+                    CacheCleanUtility.ClearCache(userIds: new List<int>() { id }, roleIds: roleIds);
                     ret = true;
                 }
                 catch (Exception ex)
@@ -136,7 +136,7 @@ namespace Bootstrap.DataAccess
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ids", ids));
                 ret = DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd) == -1;
             }
-            CacheCleanUtility.ClearCache(roleIds: ids);
+            CacheCleanUtility.ClearCache(roleIds: value);
             return ret;
         }
         /// <summary>
@@ -159,7 +159,7 @@ namespace Bootstrap.DataAccess
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@Description", DBAccessFactory.ToDBValue(p.Description)));
                 ret = DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd) == 1;
             }
-            CacheCleanUtility.ClearCache(roleIds: p.Id == 0 ? string.Empty : p.Id.ToString());
+            CacheCleanUtility.ClearCache(roleIds: p.Id == 0 ? new List<int>() : new List<int> { p.Id });
             return ret;
         }
         /// <summary>
@@ -193,14 +193,20 @@ namespace Bootstrap.DataAccess
             }, RetrieveRolesByMenuIdDataKey);
             return ret;
         }
-        public static bool SavaRolesByMenuId(int id, string roleIds)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="roleIds"></param>
+        /// <returns></returns>
+        public static bool SavaRolesByMenuId(int id, IEnumerable<int> roleIds)
         {
             var ret = false;
             DataTable dt = new DataTable();
             dt.Columns.Add("NavigationID", typeof(int));
             dt.Columns.Add("RoleID", typeof(int));
             //判断用户是否选定角色
-            if (!string.IsNullOrEmpty(roleIds)) roleIds.Split(',').ToList().ForEach(roleId => dt.Rows.Add(id, roleId));
+            roleIds.ToList().ForEach(roleId => dt.Rows.Add(id, roleId));
             using (TransactionPackage transaction = DBAccessManager.SqlDBAccess.BeginTransaction())
             {
                 try
@@ -271,14 +277,14 @@ namespace Bootstrap.DataAccess
         /// <param name="id"></param>
         /// <param name="roleIds"></param>
         /// <returns></returns>
-        public static bool SaveRolesByGroupId(int id, string roleIds)
+        public static bool SaveRolesByGroupId(int id, IEnumerable<int> roleIds)
         {
             var ret = false;
             //构造表格
             DataTable dt = new DataTable();
             dt.Columns.Add("RoleID", typeof(int));
             dt.Columns.Add("GroupID", typeof(int));
-            if (!string.IsNullOrEmpty(roleIds)) roleIds.Split(',').ToList().ForEach(roleId => dt.Rows.Add(roleId, id));
+            roleIds.ToList().ForEach(roleId => dt.Rows.Add(roleId, id));
             using (TransactionPackage transaction = DBAccessManager.SqlDBAccess.BeginTransaction())
             {
                 try
@@ -301,7 +307,7 @@ namespace Bootstrap.DataAccess
                             transaction.CommitTransaction();
                         }
                     }
-                    CacheCleanUtility.ClearCache(roleIds: roleIds, groupIds: id.ToString());
+                    CacheCleanUtility.ClearCache(roleIds: roleIds, groupIds: new List<int>() { id });
                     ret = true;
                 }
                 catch (Exception ex)

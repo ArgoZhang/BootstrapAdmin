@@ -40,7 +40,7 @@
         nestMenu: function (callback) {
             var $this = $(this);
             $.bc({
-                id: 0, url: Menu.url, data: { type: "user" }, method: "post",
+                id: 0, url: Menu.url, query: { type: "user" }, method: "post",
                 callback: function (result) {
                     var html = "";
                     if ($.isArray(result)) html = cascadeMenu(result);

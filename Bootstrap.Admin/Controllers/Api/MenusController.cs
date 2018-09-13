@@ -3,7 +3,6 @@ using Bootstrap.DataAccess;
 using Bootstrap.Security;
 using Longbow.Web.Mvc;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -50,11 +49,10 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="value"></param>
         /// <returns></returns>
         [HttpPost("{id}")]
-        public IEnumerable<BootstrapMenu> Post(int id, [FromBody]JObject value)
+        public IEnumerable<BootstrapMenu> Post(int id, [FromQuery]string type)
         {
             var ret = new List<BootstrapMenu>();
-            dynamic json = value;
-            switch ((string)json.type)
+            switch (type)
             {
                 case "role":
                     ret = MenuHelper.RetrieveMenusByRoleId(id).ToList();

@@ -23,7 +23,7 @@
             events: {
                 '#btn_assignUser': function (row) {
                     $.bc({
-                        id: row.Id, url: User.url, data: { type: "role" }, method: "post",
+                        id: row.Id, url: User.url, query: { type: "role" }, method: "post",
                         callback: function (result) {
                             var htmlTemplate = this.htmlTemplate;
                             var html = $.map(result, function (element, index) {
@@ -39,7 +39,7 @@
                 },
                 '#btn_assignGroup': function (row) {
                     $.bc({
-                        id: row.Id, url: Group.url, data: { type: "role" }, method: "post",
+                        id: row.Id, url: Group.url, query: { type: "role" }, method: "post",
                         callback: function (result) {
                             var htmlTemplate = this.htmlTemplate;
                             var html = $.map(result, function (element, index) {
@@ -55,7 +55,7 @@
                 },
                 '#btn_assignMenu': function (row) {
                     $.bc({
-                        id: row.Id, url: Menu.url, data: { type: "role" }, method: "post",
+                        id: row.Id, url: Menu.url, query: { type: "role" }, method: "post",
                         callback: function (result) {
                             $dialogMenuHeader.text($.format('{0}-菜单授权窗口', row.RoleName));
                             $btnSubmitMenu.data('type', 'menu');
@@ -75,15 +75,15 @@
                     var roleId = row.Id;
                     var userIds = $dialogUser.find(':checked').map(function (index, element) {
                         return $(element).val();
-                    }).toArray().join(',');
-                    $.bc({ id: roleId, url: User.url, method: "put", data: { type: "role", userIds: userIds }, modal: '#dialogUser', title: User.title });
+                    }).toArray();
+                    $.bc({ id: roleId, url: User.url, method: "put", data: userIds, query: { type: "role" }, modal: '#dialogUser', title: User.title });
                 },
                 '#btnSubmitGroup': function (row) {
                     var roleId = row.Id;
                     var groupIds = $dialogGroup.find(':checked').map(function (index, element) {
                         return $(element).val();
-                    }).toArray().join(',');
-                    $.bc({ id: roleId, url: Group.url, method: "put", data: { type: "role", groupIds: groupIds }, modal: '#dialogGroup', title: Group.title });
+                    }).toArray();
+                    $.bc({ id: roleId, url: Group.url, method: "put", data: groupIds, query: { type: "role" }, modal: '#dialogGroup', title: Group.title });
                 },
                 '#btnSubmitMenu': function (row) {
                     var roleId = row.Id;

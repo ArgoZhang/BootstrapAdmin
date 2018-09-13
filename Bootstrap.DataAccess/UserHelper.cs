@@ -94,7 +94,7 @@ namespace Bootstrap.DataAccess
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ids", ids));
                 DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
             }
-            CacheCleanUtility.ClearCache(userIds: ids);
+            CacheCleanUtility.ClearCache(userIds: value);
             ret = true;
             return ret;
         }
@@ -123,7 +123,7 @@ namespace Bootstrap.DataAccess
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@description", p.Description));
                 ret = DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd) == -1;
             }
-            CacheCleanUtility.ClearCache(userIds: p.Id == 0 ? string.Empty : p.Id.ToString());
+            CacheCleanUtility.ClearCache(userIds: p.Id == 0 ? new List<int>() : new List<int>() { p.Id });
             return ret;
         }
         /// <summary>
@@ -142,7 +142,7 @@ namespace Bootstrap.DataAccess
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@approvedBy", approvedBy));
                 ret = DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd) == 1;
             }
-            CacheCleanUtility.ClearCache(userIds: id.ToString());
+            CacheCleanUtility.ClearCache(userIds: new List<int>() { id });
             return ret;
         }
         /// <summary>
@@ -188,7 +188,7 @@ namespace Bootstrap.DataAccess
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@rejectedReason", "未填写"));
                 ret = DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd) == -1;
             }
-            CacheCleanUtility.ClearCache(userIds: id.ToString());
+            CacheCleanUtility.ClearCache(userIds: new List<int>() { id });
             return ret;
         }
         /// <summary>
@@ -227,13 +227,13 @@ namespace Bootstrap.DataAccess
         /// <param name="id">角色ID</param>
         /// <param name="userIds">用户ID数组</param>
         /// <returns></returns>
-        public static bool SaveUsersByRoleId(int id, string userIds)
+        public static bool SaveUsersByRoleId(int id, IEnumerable<int> userIds)
         {
             bool ret = false;
             DataTable dt = new DataTable();
             dt.Columns.Add("RoleID", typeof(int));
             dt.Columns.Add("UserID", typeof(int));
-            if (!string.IsNullOrEmpty(userIds)) userIds.Split(',').ToList().ForEach(userId => dt.Rows.Add(id, userId));
+            userIds.ToList().ForEach(userId => dt.Rows.Add(id, userId));
             using (TransactionPackage transaction = DBAccessManager.SqlDBAccess.BeginTransaction())
             {
                 try
@@ -254,7 +254,7 @@ namespace Bootstrap.DataAccess
                             transaction.CommitTransaction();
                         }
                     }
-                    CacheCleanUtility.ClearCache(userIds: userIds, roleIds: id.ToString());
+                    CacheCleanUtility.ClearCache(userIds: userIds, roleIds: new List<int>() { id });
                     ret = true;
                 }
                 catch (Exception ex)
@@ -301,13 +301,13 @@ namespace Bootstrap.DataAccess
         /// <param name="id">GroupID</param>
         /// <param name="userIds">用户ID数组</param>
         /// <returns></returns>
-        public static bool SaveUsersByGroupId(int id, string userIds)
+        public static bool SaveUsersByGroupId(int id, IEnumerable<int> userIds)
         {
             bool ret = false;
             DataTable dt = new DataTable();
             dt.Columns.Add("UserID", typeof(int));
             dt.Columns.Add("GroupID", typeof(int));
-            if (!string.IsNullOrEmpty(userIds)) userIds.Split(',').ToList().ForEach(userId => dt.Rows.Add(userId, id));
+            userIds.ToList().ForEach(userId => dt.Rows.Add(userId, id));
             using (TransactionPackage transaction = DBAccessManager.SqlDBAccess.BeginTransaction())
             {
                 try
@@ -328,7 +328,7 @@ namespace Bootstrap.DataAccess
                             transaction.CommitTransaction();
                         }
                     }
-                    CacheCleanUtility.ClearCache(userIds: userIds, groupIds: id.ToString());
+                    CacheCleanUtility.ClearCache(userIds: userIds, groupIds: new List<int>() { id });
                     ret = true;
                 }
                 catch (Exception ex)

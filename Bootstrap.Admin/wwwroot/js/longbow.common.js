@@ -143,9 +143,16 @@
 
 
             var data = options.method === 'get' ? options.data : JSON.stringify(options.data);
-            var url = options.id !== '' ? $.formatUrl(options.url) + '/' + options.id : $.formatUrl(options.url);
+            var url = options.id !== '' ? options.url + '/' + options.id : options.url;
+            if (options.query) {
+                var qs = [];
+                for (var key in options.query) {
+                    qs.push($.format("{0}={1}", key, options.query[key]));
+                }
+                url = url + "?" + qs.join('&');
+            }
             var ajaxSettings = {
-                url: url,
+                url: $.formatUrl(url),
                 data: data,
                 method: options.method,
                 contentType: options.contentType,

@@ -19,7 +19,7 @@
             events: {
                 '#btn_assignRole': function (row) {
                     $.bc({
-                        id: row.Id, url: Role.url, data: { type: "user" }, method: "post",
+                        id: row.Id, url: Role.url, query: { type: "user" }, method: "post",
                         callback: function (result) {
                             var htmlTemplate = this.htmlTemplate;
                             var html = $.map(result, function (element, index) {
@@ -35,7 +35,7 @@
                 },
                 '#btn_assignGroup': function (row) {
                     $.bc({
-                        id: row.Id, url: Group.url, data: { type: "user" }, method: "post",
+                        id: row.Id, url: Group.url, query: { type: "user" }, method: "post",
                         callback: function (result) {
                             var htmlTemplate = this.htmlTemplate;
                             var html = $.map(result, function (element, index) {
@@ -53,15 +53,15 @@
                     var userId = row.Id;
                     var roleIds = $dialogRole.find(':checked').map(function (index, element) {
                         return $(element).val();
-                    }).toArray().join(',');
-                    $.bc({ id: userId, url: Role.url, method: 'put', data: { type: "user", roleIds: roleIds }, title: Role.title, modal: '#dialogRole' });
+                    }).toArray();
+                    $.bc({ id: userId, url: Role.url, method: 'put', data: roleIds, query: { type: "user" }, title: Role.title, modal: '#dialogRole' });
                 },
                 '#btnSubmitGroup': function (row) {
                     var userId = row.Id;
                     var groupIds = $dialogGroup.find(':checked').map(function (index, element) {
                         return $(element).val();
-                    }).toArray().join(',');
-                    $.bc({ id: userId, url: Group.url, method: 'put', data: { type: "user", groupIds: groupIds }, title: Group.title, modal: '#dialogGroup' });
+                    }).toArray();
+                    $.bc({ id: userId, url: Group.url, method: 'put', data: groupIds, query: { type: "user" }, title: Group.title, modal: '#dialogGroup' });
                 }
             },
             callback: function (data) {
