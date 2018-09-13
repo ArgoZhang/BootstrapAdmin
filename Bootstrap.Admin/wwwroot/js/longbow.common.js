@@ -143,8 +143,9 @@
 
 
             var data = options.method === 'get' ? options.data : JSON.stringify(options.data);
+            var url = options.id !== '' ? $.formatUrl(options.url) + '/' + options.id : $.formatUrl(options.url);
             var ajaxSettings = {
-                url: $.formatUrl(options.url) + options.id,
+                url: url,
                 data: data,
                 method: options.method,
                 contentType: options.contentType,
@@ -307,7 +308,7 @@
         },
         msgHandler: function (options) {
             var settings = {
-                url: 'api/WS/',
+                url: 'api/WS',
                 interval: 10000,
                 sendMessage: '',
                 timerHandler: null,
@@ -396,62 +397,62 @@
 
     // Roles
     Role = {
-        url: 'api/Roles/',
+        url: 'api/Roles',
         title: "分配角色"
     };
 
     // Users
     User = {
-        url: 'api/Users/',
+        url: 'api/Users',
         title: "分配用户"
     };
 
     // Groups
     Group = {
-        url: 'api/Groups/',
+        url: 'api/Groups',
         title: "分配部门"
     };
 
     // Menus
     Menu = {
-        url: 'api/Menus/',
+        url: 'api/Menus',
         iconView: 'Admin/IconView',
         title: "分配菜单"
     };
 
     // Exceptions
     Exceptions = {
-        url: 'api/Exceptions/',
+        url: 'api/Exceptions',
         title: "程序异常日志"
     };
 
     // Dicts
     Dicts = {
-        url: 'api/Dicts/'
+        url: 'api/Dicts'
     };
 
     // Profiles
     Profiles = {
-        url: 'api/Profiles/'
+        url: 'api/Profiles'
     };
 
     // Settings
     Settings = {
-        url: 'api/Settings/'
+        url: 'api/Settings'
     };
 
     // Messages
     Messages = {
-        url: 'api/Messages/'
+        url: 'api/Messages'
     };
 
     // Tasks
     Tasks = {
-        url: 'api/Tasks/'
+        url: 'api/Tasks'
     };
 
     // Notifications
     Notifications = {
-        url: 'api/Notifications/'
+        url: 'api/Notifications'
     };
 })(jQuery);
