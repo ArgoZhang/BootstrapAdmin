@@ -13,8 +13,18 @@ namespace Bootstrap.Admin.Controllers
     /// Account controller.
     /// </summary>
     [AllowAnonymous]
+    [AutoValidateAntiforgeryToken]
     public class AccountController : Controller
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult Login()
+        {
+            return View("Login", new ModelBase());
+        }
         /// <summary>
         /// Login the specified userName, password and remember.
         /// </summary>
@@ -22,19 +32,18 @@ namespace Bootstrap.Admin.Controllers
         /// <param name="userName">User name.</param>
         /// <param name="password">Password.</param>
         /// <param name="remember">Remember.</param>
+        [HttpPost]
         public async Task<IActionResult> Login(string userName, string password, string remember)
         {
-            if (!string.IsNullOrEmpty(userName) && BootstrapUser.Authenticate(userName, password))
+            if (BootstrapUser.Authenticate(userName, password))
             {
                 var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
                 identity.AddClaim(new Claim(ClaimTypes.Name, userName));
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity), new AuthenticationProperties() { IsPersistent = remember == "true" });
-
-                // redirect origin url
-                var originUrl = Request.Query[CookieAuthenticationDefaults.ReturnUrlParameter];
-                return Redirect(originUrl.Count == 1 ? originUrl[0] : "~/");
             }
-            return View("Login", new ModelBase());
+            // redirect origin url
+            var originUrl = Request.Query[CookieAuthenticationDefaults.ReturnUrlParameter];
+            return Redirect(originUrl.Count == 1 ? originUrl[0] : "~/");
         }
         /// <summary>
         /// Logout this instance.
