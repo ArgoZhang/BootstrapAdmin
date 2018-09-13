@@ -178,8 +178,7 @@ CREATE PROCEDURE [dbo].[Proc_SaveUsers]
 	@password varchar(50),
 	@passSalt varchar(50),
 	@displayName nvarchar(50),
-	@approvedBy nvarchar(50),
-	@approvedTime datetime,
+	@approvedBy nvarchar(50) = null,
 	@description nvarchar(500)
 	WITH ENCRYPTION
 AS
@@ -189,6 +188,9 @@ BEGIN
 	SET NOCOUNT ON;
 	SET XACT_ABORT ON;
     -- Insert statements for procedure here
+	declare @approvedTime datetime
+	if @approvedBy is not null set @approvedTime = GETDATE()
+
 	begin
 		if(not exists (select 1 from Users Where UserName = @userName))
 		begin

@@ -116,9 +116,6 @@ namespace Bootstrap.DataAccess
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@passSalt", p.PassSalt));
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@displayName", p.DisplayName));
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@approvedBy", DBAccessFactory.ToDBValue(p.ApprovedBy)));
-                object approvedTime = p.ApprovedTime;
-                if (p.ApprovedTime == DateTime.MinValue) approvedTime = DBNull.Value;
-                cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@approvedTime", approvedTime));
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@description", p.Description));
                 ret = DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd) == -1;
                 if (ret) CacheCleanUtility.ClearCache(userIds: p.Id == 0 ? new List<int>() : new List<int>() { p.Id });
