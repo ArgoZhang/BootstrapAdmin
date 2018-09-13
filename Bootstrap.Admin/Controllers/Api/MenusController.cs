@@ -16,7 +16,7 @@ namespace Bootstrap.Admin.Controllers.Api
     public class MenusController : Controller
     {
         /// <summary>
-        /// 
+        /// 获得所有菜单列表调用
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
@@ -26,7 +26,7 @@ namespace Bootstrap.Admin.Controllers.Api
             return value.RetrieveData(User.Identity.Name);
         }
         /// <summary>
-        /// 
+        /// 保存菜单调用
         /// </summary>
         /// <param name="value"></param>
         [HttpPost]
@@ -35,7 +35,7 @@ namespace Bootstrap.Admin.Controllers.Api
             return MenuHelper.SaveMenu(value);
         }
         /// <summary>
-        /// 
+        /// 删除菜单调用
         /// </summary>
         /// <param name="value"></param>
         [HttpDelete]
@@ -68,26 +68,15 @@ namespace Bootstrap.Admin.Controllers.Api
             return ret;
         }
         /// <summary>
-        /// 
+        /// 角色管理页面分配菜单时调用
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="value"></param>
+        /// <param name="id">角色ID</param>
+        /// <param name="value">菜单ID集合</param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public bool Put(int id, [FromBody]JObject value)
+        public bool Put(int id, [FromBody]IEnumerable<int> value)
         {
-            var ret = false;
-            dynamic json = value;
-            string menuIds = json.menuIds.ToString();
-            switch ((string)json.type)
-            {
-                case "role":
-                    ret = MenuHelper.SaveMenusByRoleId(id, menuIds);
-                    break;
-                default:
-                    break;
-            }
-            return ret;
+            return MenuHelper.SaveMenusByRoleId(id, value);
         }
     }
 }

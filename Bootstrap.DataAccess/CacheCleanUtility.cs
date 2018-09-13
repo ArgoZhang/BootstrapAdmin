@@ -18,7 +18,7 @@ namespace Bootstrap.DataAccess
         /// <param name="menuIds"></param>
         /// <param name="dictIds"></param>
         /// <param name="cacheKey"></param>
-        internal static void ClearCache(string roleIds = null, string userIds = null, string groupIds = null, string menuIds = null, string dictIds = null, string cacheKey = null)
+        internal static void ClearCache(string roleIds = null, string userIds = null, string groupIds = null, IEnumerable<int> menuIds = null, string dictIds = null, string cacheKey = null)
         {
             var cacheKeys = new List<string>();
             var corsKeys = new List<string>();
@@ -62,7 +62,7 @@ namespace Bootstrap.DataAccess
             }
             if (menuIds != null)
             {
-                menuIds.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList().ForEach(id =>
+                menuIds.ToList().ForEach(id =>
                 {
                     cacheKeys.Add(string.Format("{0}-{1}", RoleHelper.RetrieveRolesByMenuIdDataKey, id));
                 });

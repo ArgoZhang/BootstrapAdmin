@@ -87,17 +87,10 @@
                 },
                 '#btnSubmitMenu': function (row) {
                     var roleId = row.Id;
-                    var type = $btnSubmitMenu.data('type');
-                    switch (type) {
-                        case "menu":
-                            var menuIds = $nestMenuInput.find('input:checkbox:checked').map(function (index, element) {
-                                return $(element).val();
-                            }).toArray().join(',');
-                            break;
-                        default:
-                            break;
-                    }
-                    $.bc({ id: roleId, url: Menu.url, method: "put", data: { type: "role", menuIds: menuIds }, modal: '#dialogMenu', title: Menu.title });
+                    var menuIds = $nestMenuInput.find('input:checkbox:checked').map(function (index, element) {
+                        return $(element).val();
+                    }).toArray();
+                    $.bc({ id: roleId, url: Menu.url, method: "put", data: menuIds, modal: '#dialogMenu', title: Menu.title });
                 }
             }
         },

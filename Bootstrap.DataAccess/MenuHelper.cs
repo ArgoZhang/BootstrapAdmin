@@ -32,7 +32,7 @@ namespace Bootstrap.DataAccess
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ids", ids));
                 ret = DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd) == value.Count();
             }
-            CacheCleanUtility.ClearCache(menuIds: ids);
+            CacheCleanUtility.ClearCache(menuIds: value);
             return ret;
         }
         /// <summary>
@@ -64,7 +64,7 @@ namespace Bootstrap.DataAccess
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@ApplicationCode", p.ApplicationCode));
                 ret = DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd) == 1;
             }
-            CacheCleanUtility.ClearCache(menuIds: p.Id == 0 ? string.Empty : p.Id.ToString());
+            CacheCleanUtility.ClearCache(menuIds: p.Id == 0 ? new List<int>() : new List<int>() { p.Id });
             return ret;
         }
 
@@ -103,13 +103,13 @@ namespace Bootstrap.DataAccess
         /// <param name="id"></param>
         /// <param name="menuIds"></param>
         /// <returns></returns>
-        public static bool SaveMenusByRoleId(int id, string menuIds)
+        public static bool SaveMenusByRoleId(int id, IEnumerable<int> menuIds)
         {
             bool ret = false;
             DataTable dt = new DataTable();
             dt.Columns.Add("RoleID", typeof(int));
             dt.Columns.Add("NavigationID", typeof(int));
-            if (!string.IsNullOrEmpty(menuIds)) menuIds.Split(',').ToList().ForEach(menuId => dt.Rows.Add(id, Convert.ToInt32(menuId)));
+            menuIds.ToList().ForEach(menuId => dt.Rows.Add(id, menuId));
             using (TransactionPackage transaction = DBAccessManager.SqlDBAccess.BeginTransaction())
             {
                 try

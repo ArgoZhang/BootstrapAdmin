@@ -223,7 +223,7 @@ namespace Bootstrap.DataAccess
                             transaction.CommitTransaction();
                         }
                     }
-                    CacheCleanUtility.ClearCache(roleIds: roleIds, menuIds: id.ToString());
+                    CacheCleanUtility.ClearCache(roleIds: roleIds, menuIds: new List<int>() { id });
                     ret = true;
                 }
                 catch (Exception ex)
