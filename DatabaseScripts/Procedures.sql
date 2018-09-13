@@ -233,6 +233,7 @@ BEGIN
 		begin
 			begin tran
 				insert into RejectUsers (UserName, DisplayName, RegisterTime, RejectedBy, RejectedTime, RejectedReason) values (@userName, @displayName, @registerTime, @rejectedBy, GETDATE(), @rejectedReason)
+				delete from UserRole where UserId = @id
 				delete from users where ID = @id
 			commit tran
 		end
