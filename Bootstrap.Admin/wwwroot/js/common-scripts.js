@@ -20,6 +20,22 @@
         return html;
     };
 
+    var setBadge = function (source) {
+        var data = $.extend({
+            TasksCount: 0,
+            AppExceptionsCount: 0,
+            DbExceptionsCount: 0,
+            MessagesCount: 0,
+            NewUsersCount: 0
+        }, source);
+        $('#msgHeaderTaskBadge').text(data.TasksCount === 0 ? "" : data.TasksCount);
+        $('#msgHeaderUserBadge').text(data.NewUsersCount === 0 ? "" : data.NewUsersCount);
+        $('#msgHeaderAppBadge').text(data.AppExceptionsCount === 0 ? "" : data.AppExceptionsCount);
+        $('#msgHeaderDbBadge').text(data.DbExceptionsCount === 0 ? "" : data.DbExceptionsCount);
+        $('#msgHeaderMsgBadge').text(data.MessagesCount === 0 ? "" : data.MessagesCount);
+        $('#logoutNoti').text(data.NewUsersCount === 0 ? "" : data.NewUsersCount);
+    };
+
     $.fn.extend({
         nestMenu: function (callback) {
             var $this = $(this);
@@ -35,6 +51,7 @@
             });
         },
         clearWidgetItems: function () {
+            setBadge(false);
             this.children('.dropdown').each(function () {
                 $(this).children('.dropdown-menu').each(function () {
                     $(this).children('a').remove();
@@ -48,11 +65,13 @@
             $.bc({
                 url: Notifications.url,
                 callback: function (result) {
-                    $('#logoutNoti').text(result.NewUsersCount === 0 ? "" : result.NewUsersCount);
                     that.clearWidgetItems();
+                    if (!result) return;
+
+                    setBadge(result);
+
                     // tasks
                     $('#msgHeaderTask').text(result.TasksCount);
-                    $('#msgHeaderTaskBadge').text(result.TasksCount === 0 ? "" : result.TasksCount);
                     var htmlUserTemplate = '<a class="dropdown-item" href="{4}?id={3}"><span class="desc">{0}-{2}</span><span class="percent">{1}%</span></span><div class="progress progress-striped"><div class="progress-bar" role="progressbar" aria-valuenow="{1}" aria-valuemin="0" aria-valuemax="100" style="width: {1}%"><span class="sr-only">{1}% 完成</span></div></div></a>';
                     var html = result.Tasks.map(function (u) {
                         return $.format(htmlUserTemplate, u.TaskName, u.TaskProgress, u.AssignDisplayName, u.Id, $.formatUrl('Admin/Tasks'));
@@ -61,7 +80,6 @@
 
                     // new users
                     $('#msgHeaderUser').text(result.NewUsersCount);
-                    $('#msgHeaderUserBadge').text(result.NewUsersCount === 0 ? "" : result.NewUsersCount);
                     htmlUserTemplate = '<a class="dropdown-item" href="{4}"><span class="label label-success"><i class="fa fa-plus"></i></span><div title="{2}" class="content">{1}({0})</div><span class="small italic">{3}</span></a>';
                     html = result.Users.map(function (u) {
                         return $.format(htmlUserTemplate, u.UserName, u.DisplayName, u.Description, u.Period, $.formatUrl('Admin/Notifications'));
@@ -70,7 +88,6 @@
 
                     // apps
                     $('#msgHeaderApp').text(result.AppExceptionsCount);
-                    $('#msgHeaderAppBadge').text(result.AppExceptionsCount === 0 ? "" : result.AppExceptionsCount);
                     htmlUserTemplate = '<a class="dropdown-item" href="{3}"><span class="label label-warning"><i class="fa fa-bug"></i></span><div title="{1}" class="content">{0}</div><span class="small italic">{2}</span></a>';
                     html = result.Apps.map(function (u) {
                         return $.format(htmlUserTemplate, u.ExceptionType, u.Message, u.Period, $.formatUrl('Admin/Exceptions'));
@@ -79,7 +96,6 @@
 
                     // dbs
                     $('#msgHeaderDb').text(result.DbExceptionsCount);
-                    $('#msgHeaderDbBadge').text(result.DbExceptionsCount === 0 ? "" : result.DbExceptionsCount);
                     htmlUserTemplate = '<a class="dropdown-item" href="{3}"><span class="label label-danger"><i class="fa fa-bolt"></i></span><div title="{1}" class="content">{0}</div><span class="small italic">{2}</span></a>';
                     html = result.Dbs.map(function (u) {
                         return $.format(htmlUserTemplate, u.ErrorPage, u.Message, u.Period, $.formatUrl('Admin/Exceptions'));
@@ -88,7 +104,6 @@
 
                     // messages
                     $('#msgHeaderMsg').text(result.MessagesCount);
-                    $('#msgHeaderMsgBadge').text(result.MessagesCount === 0 ? "" : result.MessagesCount);
                     htmlUserTemplate = '<a class="dropdown-item" href="{6}?id={0}"><span class="photo"><img alt="avatar" src="{1}"></span><span class="subject"><span class="from">{2}</span><span class="time">{4}</span></span><span class="message" title="{5}">{3}</span></a>';
                     html = result.Messages.map(function (u) {
                         return $.format(htmlUserTemplate, u.Id, u.FromIcon, u.FromDisplayName, u.Title, u.Period, u.Content, $.formatUrl('Admin/Messages'));

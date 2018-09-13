@@ -14,7 +14,7 @@
 
     $('#btnSubmit').on('click', function () {
         $.bc({
-            url: 'api/New',
+            url: "api/New/",
             data: { UserName: $('#userName').val(), Password: $('#password').val(), DisplayName: $('#displayName').val(), Description: $('#description').val() },
             modal: '#dialogNew',
             method: "post",

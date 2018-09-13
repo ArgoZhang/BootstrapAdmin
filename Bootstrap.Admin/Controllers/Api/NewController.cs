@@ -1,7 +1,7 @@
 ﻿using Bootstrap.DataAccess;
-using Bootstrap.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Bootstrap.Admin.Controllers
@@ -13,15 +13,20 @@ namespace Bootstrap.Admin.Controllers
     public class NewController : Controller
     {
         /// <summary>
-        /// 登录页面注册新用户remote validate调用
+        /// 通知管理页面获得所有新用户方法调用
         /// </summary>
-        /// <param name="value"></param>
         /// <returns></returns>
         [HttpGet]
-        [AllowAnonymous]
-        public bool Get(string userName)
+        public IEnumerable<object> Get()
         {
-            return BootstrapUser.RetrieveUserByUserName(userName) == null && !UserHelper.RetrieveNewUsers().Any(u => u.UserName == userName);
+            return UserHelper.RetrieveNewUsers().Select(user => new
+            {
+                user.Id,
+                user.UserName,
+                user.DisplayName,
+                user.Description,
+                user.RegisterTime
+            });
         }
         /// <summary>
         /// 登录页面注册新用户提交按钮调用

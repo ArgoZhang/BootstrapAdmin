@@ -1,8 +1,9 @@
 ﻿$(function () {
     $('.site-footer').footer();
 
+    var apiUrl = "api/New/";
     var $table = $('table').smartTable({
-        url: Notifications.url + "newusers",
+        url: apiUrl,
         sidePagination: "client",
         showToggle: false,
         showRefresh: false,
@@ -23,7 +24,7 @@
         var id = $this.attr('data-id');
         var result = $this.attr('data-result');
         $.bc({
-            id: id, url: 'api/New/', method: "put", data: { Id: id, UserStatus: result }, title: result === "ApproveUser" ? "授权用户" : "拒绝用户",
+            id: id, url: apiUrl, method: "put", data: { Id: id, UserStatus: result }, title: result === "ApproveUser" ? "授权用户" : "拒绝用户",
             callback: function (result) {
                 if (!result) return;
                 $table.bootstrapTable('refresh');
