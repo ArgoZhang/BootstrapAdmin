@@ -144,6 +144,7 @@
         var icon = $inputIcon.val();
         if (icon) $pickIcon.attr('class', icon);
         $dialogIcon.show();
+        $scroll.resize();
     });
 
     $dialogIcon.find('div.modal-header, div.modal-footer').on('click', 'button', function () {
@@ -190,7 +191,7 @@
         $dialogNew.find('[data-toggle="LgbValidate"] [aria-describedby]').tooltip('hide');
         $dialogNew.hide();
         $dialogMenu.modal('show');
-    };
+    }
 
     $dialogMenu.on('hidden.bs.modal', function () {
         var sta = state.pop();
@@ -233,13 +234,14 @@
 
     $nestMenu.nestMenu(initNestMenu);
 
+    var $scroll = null;
     $.bc({
         url: Menu.iconView,
         contentType: 'text/html',
         dataType: 'html',
         callback: function (result) {
             if (result) {
-                $dialogIcon.find('.modal-body').html(result);
+                var $html = $dialogIcon.find('.modal-body').html(result);
                 var $iconList = $('div.fontawesome-icon-list').on('click', 'div.fa-hover a, ul li', function () {
                     $pickIcon.attr('class', $(this).find('i, span:first').attr('class'));
                     return false;
@@ -249,6 +251,8 @@
                 $('[data-spy="scroll"]').each(function () {
                     $(this).scrollspy({ target: $(this).attr('data-target') });
                 });
+
+                if (!$.browser.versions.ios) $scroll = $html.find('.fa-nav .nav').niceScroll({ cursorcolor: "#e8403f", cursorwidth: '3px', background: '#fff', spacebarenabled: false, cursorborder: '' });
             }
         }
     });

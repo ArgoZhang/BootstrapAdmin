@@ -142,7 +142,7 @@ $(function () {
     });
 
     // custom scrollbar
-    if (!$.browser.versions.ios) $("#sidebar").niceScroll({ styler: "fb", cursorcolor: "#e8403f", cursorwidth: '3', cursorborderradius: '10px', background: '#404040', spacebarenabled: false, cursorborder: '', scrollspeed: 60 });
+    if (!$.browser.versions.ios) $("#sidebar").niceScroll({ cursorcolor: "#e8403f", cursorwidth: '3px', background: '#2a3542', spacebarenabled: false, cursorborder: '' });
 
     $("#gotoTop").on('click', function (e) {
         e.preventDefault();
