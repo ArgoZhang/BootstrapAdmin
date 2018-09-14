@@ -92,9 +92,9 @@
 }
 
     .icon-content .fa-nav {
-        right: 33px;
-        top: 68px;
-        bottom: 84px;
+        right: 34px;
+        top: 83px;
+        bottom: 99px;
     }
 
     .icon-content .modal-body {
@@ -254,10 +254,10 @@
     .fa-nav {
         display: block;
         position: fixed;
-        top: 98px;
+        top: 113px;
         right: 17px;
         width: 140px;
-        bottom: 40px;
+        bottom: 55px;
     }
 
     .fa-icons {
