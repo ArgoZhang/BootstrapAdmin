@@ -11,7 +11,6 @@ namespace Bootstrap.Admin.Models
         {
             Navigations = BootstrapMenu.RetrieveSystemMenus(UserName, $"~{controller.HttpContext.Request.Path}");
             Applications = DictHelper.RetrieveApps();
-            HomeUrl = "~/Admin/Index";
         }
         /// <summary>
         /// 

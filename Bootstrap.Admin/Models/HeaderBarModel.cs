@@ -22,10 +22,6 @@ namespace Bootstrap.Admin.Models
         /// </summary>
         public string DisplayName { get; }
         /// <summary>
-        /// 
-        /// </summary>
-        public string HomeUrl { get; set; }
-        /// <summary>
         /// 获得/设置 用户头像地址
         /// </summary>
         public string Icon { get; }
