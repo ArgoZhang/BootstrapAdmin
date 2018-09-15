@@ -1,7 +1,7 @@
-﻿@model Bootstrap.Admin.Models.HeaderBarModel
+﻿@model HeaderBarModel
 @{
     ViewBag.Title = "首页";
-    Layout = "~/Views/Shared/_Normal.cshtml";
+    Layout = "~/Views/Shared/_Bootstrap.cshtml";
 }
 @section css {
     <style>
@@ -10,8 +10,7 @@
         }
     </style>
 }
-@section javascript {
-    <script src="~/js/content.js"></script>
-}
-<div id="content" class="content-body welcome-bg">
-</div>
+<section id="main-content">
+    <div id="content" class="content-body welcome-bg">
+    </div>
+</section>

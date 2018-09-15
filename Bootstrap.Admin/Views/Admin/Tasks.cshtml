@@ -1,4 +1,4 @@
-﻿@model Bootstrap.Admin.Models.NavigatorBarModel
+﻿@model NavigatorBarModel
 @{
     ViewBag.Title = "任务管理";
     Layout = "~/Views/Shared/_Admin.cshtml";
@@ -13,8 +13,7 @@
     <div class="card-header">任务消息<span class="pull-right"><a id="refreshTask" href="javascript:;" class="fa fa-refresh"></a></span></div>
     <div class="card-body">
         <div class="tasks-widget">
-            <ul id="list-task" class="task-list ui-sortable">
-            </ul>
+            <ul id="list-task" class="task-list ui-sortable"></ul>
         </div>
     </div>
 </div>
