@@ -1,6 +1,4 @@
 ﻿$(function () {
-    $('.site-footer').footer();
-
     var apiUrl = "api/New";
     var $table = $('table').smartTable({
         url: apiUrl,
