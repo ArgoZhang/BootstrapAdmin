@@ -253,9 +253,9 @@
             return this;
         },
         footer: function (options) {
-            if ($(window).width() >= 768) { return this.addClass('fixed'); }
+            if ($(window).width() >= 768) { return this.addClass('position-fixed'); }
             var op = $.extend({ header: "header", content: ".main-content" }, options);
-            return $(op.header).outerHeight() + $(op.content).outerHeight() + this.outerHeight() > $(window).height() ? this.removeClass('fixed') : this.addClass('fixed');
+            return $(op.header).outerHeight() + $(op.content).outerHeight() + this.outerHeight() > $(window).height() ? this.removeClass('position-fixed') : this.addClass('position-fixed');
         },
         lgbTable: function (options) {
             var bsa = new DataTable($.extend(options.dataBinder, { url: options.url }));

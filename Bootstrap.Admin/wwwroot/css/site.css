@@ -226,11 +226,6 @@ a, a:hover, a:focus {
         margin-left: 4px;
     }
 
-.fixed {
-    position: fixed;
-    z-index: 100;
-}
-
 .go-top {
     background: rgba(255,255,255,.5);
     width: 20px;
