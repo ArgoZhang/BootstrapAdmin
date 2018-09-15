@@ -114,14 +114,14 @@ aside {
             border-radius: 4px;
         }
 
-            .sidebar-menu li a.active, .sidebar-menu li a:hover, .sidebar-menu li a:focus {
+            .sidebar-menu li a:hover, .sidebar-menu li a:focus {
                 background: #35404d;
                 color: #fff;
             }
 
-                .sidebar-menu li a.active i {
-                    color: #FF6C60;
-                }
+            .sidebar-menu li a.active {
+                color: #FF6C60;
+            }
 
             .sidebar-menu li a i {
                 width: 22px;
