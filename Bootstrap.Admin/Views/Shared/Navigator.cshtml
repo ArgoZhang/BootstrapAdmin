@@ -2,7 +2,7 @@
 <aside>
     <div id="sidebar" class="sidebar">
         <!-- sidebar menu start-->
-        <ul class="sidebar-menu" id="nav-accordion">
+        <ul class="sidebar-menu">
             @foreach (var menu in Model.Navigations)
             {
                 @await Html.PartialAsync("SubMenu", menu)

@@ -134,10 +134,11 @@ $(function () {
     };
 
     var $sidebar = $("#sidebar");
+    var $sideMenu = $sidebar.find('.sidebar-menu');
     var $main = $('#main-content');
     var $breadNav = $('#breadNav');
 
-    $('#nav-accordion').dcAccordion({
+    $sideMenu.dcAccordion({
         autoExpand: true
     });
 
@@ -153,7 +154,7 @@ $(function () {
     $('[data-toggle="tooltip"]').tooltip();
 
     // breadcrumb
-    var arch = $('#nav-accordion').find('a.active').last();
+    var arch = $sideMenu.find('a.active').last();
     if (arch.text() !== "") $breadNav.removeClass('d-none').text(arch.text());
     var top = (arch.offset() || { top: 0 }).top;
     if (top > 0) {
