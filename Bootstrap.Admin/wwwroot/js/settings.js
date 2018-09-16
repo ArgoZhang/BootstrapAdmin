@@ -64,7 +64,7 @@
                                     var content = result.sort(function (x, y) {
                                         return x.Key > y.Key ? 1 : -1;
                                     }).map(function (ele) {
-                                        return $.format(html, ele.Interval, ele.Key, ele.Desc, ele.Value, $.format(item.Url, ele.Key), item.Self, Math.max(0, ele.Interval - Math.round((new Date() - new Date(ele.CreateTime.replace(/-/g, '/'))) / 1000)));
+                                        return $.format(html, ele.Interval, ele.Key, ele.Desc, ele.Value, $.format(item.Url, ele.Key), item.Self, ele.ElapsedSeconds);
                                     }).join('');
                                     $sortable.append($.format('<h6 class="cache-title">{0}</h6>', item.Desc));
                                     $sortable.append(content);
@@ -95,7 +95,7 @@
         listCacheUrl(options);
     }).last().trigger('click');
     $sortable.on('click', '.btn', function () {
-        var $this =$(this).tooltip('dispose');
+        var $this = $(this).tooltip('dispose');
         $.bc({ url: $this.attr('data-url'), cors: $this.attr('data-self') === 'false' });
         listCacheUrl();
     });
