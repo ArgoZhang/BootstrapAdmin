@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -42,8 +43,8 @@ namespace Bootstrap.Admin.Controllers
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity), new AuthenticationProperties() { IsPersistent = remember == "true" });
             }
             // redirect origin url
-            var originUrl = Request.Query[CookieAuthenticationDefaults.ReturnUrlParameter];
-            return Redirect(originUrl.Count == 1 ? originUrl[0] : "~/");
+            var originUrl = Request.Query[CookieAuthenticationDefaults.ReturnUrlParameter].FirstOrDefault() ?? "~/Home/Index";
+            return Redirect(originUrl);
         }
         /// <summary>
         /// Logout this instance.
