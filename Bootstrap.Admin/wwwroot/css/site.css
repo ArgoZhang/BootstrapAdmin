@@ -10,6 +10,98 @@ body {
     -webkit-overflow-scrolling: touch;
 }
 
+aside {
+    transition: transform .4s ease-in-out;
+    transform: translate(-100%);
+    height: 100%;
+    position: absolute;
+    top: 98px;
+    bottom: 40px;
+    left: 0;
+    right: 0;
+    z-index: 5;
+}
+
+    aside.open {
+        transform: translate(0);
+    }
+
+.sidebar {
+    display: none;
+    overflow: auto;
+    width: 100%;
+    z-index: 5;
+    background: #2a3542;
+}
+
+.sidebar-menu {
+    padding: 20px 0;
+    margin-bottom: 0;
+}
+
+    .sidebar-menu .dcjq-icon {
+        height: 17px;
+        width: 17px;
+        display: inline-block;
+        background: url(../images/nav-expand.png) no-repeat;
+        float: right;
+        margin-top: 3px;
+    }
+
+    .sidebar-menu .active .dcjq-icon {
+        background-position: bottom;
+    }
+
+    .sidebar-menu li {
+        margin: 5px 10px;
+    }
+
+        .sidebar-menu li a {
+            color: #aeb2b7;
+            display: block;
+            padding: 15px 10px;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+        }
+
+            .sidebar-menu li a:hover, .sidebar-menu li a:focus {
+                background: #35404d;
+                color: #fff;
+            }
+
+            .sidebar-menu li a.active {
+                color: #FF6C60;
+            }
+
+            .sidebar-menu li a i {
+                width: 22px;
+            }
+
+        .sidebar-menu li .sub {
+            padding-left: 0;
+        }
+
+            .sidebar-menu li .sub li a:hover, .sidebar-menu li .sub li.active a {
+                color: #FF6C60;
+                transition: all 0.3s ease;
+                display: block;
+            }
+
+            .sidebar-menu li .sub li {
+                background: #35404D;
+                margin: 0;
+                padding: 0 10px 0 32px;
+            }
+
+                .sidebar-menu li .sub li:last-child {
+                    border-radius: 0 0 4px 4px;
+                    padding-bottom: 10px;
+                }
+
+                .sidebar-menu li .sub li a {
+                    padding: 12px 0;
+                }
+
 ul li {
     list-style: none;
 }

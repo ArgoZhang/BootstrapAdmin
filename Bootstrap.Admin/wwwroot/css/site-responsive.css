@@ -31,6 +31,13 @@
         flex: 0 1 auto;
     }
 
+    .sidebar {
+        top: 98px;
+        bottom: 40px;
+        position: absolute;
+        overflow: auto;
+    }
+
     .header {
         border-bottom: none;
     }
@@ -42,10 +49,19 @@
     .header, .site-footer {
         position: fixed;
     }
+}
 
-    .main-content {
-        position: fixed;
-        overflow: auto;
+@media (min-width: 769px) {
+    .sidebar {
+        display: block;
+        width: 210px;
+    }
+
+    aside {
+        transition: none;
+        transform: none;
+        top: 0;
+        right: auto;
     }
 }
 
@@ -57,5 +73,20 @@
 
     .header, .site-footer {
         position: fixed;
+    }
+
+    .sidebar {
+        top: 98px;
+        bottom: 40px;
+        position: absolute;
+        overflow: auto;
+    }
+
+    aside {
+        top: 0;
+    }
+
+    .aside.open {
+        transform: translate(0);
     }
 }
