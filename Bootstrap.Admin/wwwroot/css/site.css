@@ -115,6 +115,11 @@ a, a:hover, a:focus {
     outline: none;
 }
 
+.dropdown-select + .dropdown-menu a:hover {
+    background: #007AC0;
+    color: #fff;
+}
+
 .dropdown-menu a {
     transition: all .25s linear;
     padding: 6px 20px;

@@ -1,9 +1,4 @@
-﻿.dropdown-select + .dropdown-menu a:hover {
-    background: #007AC0;
-    color: #fff;
-}
-
-.logTs, .logSql, .logDbExcep {
+﻿.logTs, .logSql, .logDbExcep {
     color: red;
     font-weight: 600;
 }
@@ -17,21 +12,6 @@
     color: #ce2520;
     font-weight: 600;
 }
-
-.clearcache {
-    position: absolute;
-    right: 60px;
-    color: #d9534f;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .15), 0 1px 1px rgba(0, 0, 0, .075);
-}
-
-    .clearcache:hover, .clearcache:focus {
-        color: #c12e2a;
-    }
-
-    .clearcache:active:hover {
-        color: #ac2925;
-    }
 
 .main-content {
     transition: all .4s ease-in-out;
