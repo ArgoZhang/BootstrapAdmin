@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "未授权请求";
+    Layout = "_Root";
+}
+@section css {
+    <link href="~/css/error.css" rel="stylesheet" />
+}
+@section Javascript {
+    <script src="~/js/error.js"></script>
+}
+<section class="error-wrapper">
+    <img src="~/images/error_icon.png" />
+    <h1>网页拒绝访问</h1>
+    <h3>您无权访问本页面请联系网站管理员授权后再查看</h3>
+    <br />
+    <a href="~/Home/Index" target="_top">返回首页</a>
+</section>

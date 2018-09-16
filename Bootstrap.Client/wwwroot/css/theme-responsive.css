@@ -1,0 +1,52 @@
+﻿@media (min-width: 375px) {
+    .form-check-input + span, .form-check-input + label {
+        max-width: 146px;
+    }
+}
+
+@media (min-width: 568px) {
+    .toolbar {
+        display: none;
+    }
+
+    .bs-bars {
+        display: inline-block;
+    }
+}
+
+@media (min-width: 576px) {
+    .form-group .form-control-url {
+        width: calc(100% - 90px);
+    }
+
+    .form-inline .control-label {
+        padding-top: 6px;
+        padding-bottom: 6px;
+    }
+
+    .modal-lg {
+        max-width: calc(90%);
+    }
+
+    .btn-fill {
+        width: auto;
+        align-self: flex-end;
+        margin-bottom: 2px;
+    }
+}
+
+@media (min-width: 940px) {
+    .btn span:last-child {
+        display: inline;
+    }
+
+    .form-check-input + span, .form-check-input + label {
+        max-width: 192px;
+    }
+}
+
+@media (min-width: 992px) {
+    .modal-lg {
+        max-width: 900px;
+    }
+}

@@ -1,0 +1,59 @@
+﻿@model NavigatorBarModel
+<header class="header">
+    <div class="bg">
+        <div class="cloud">
+            <div class="d-flex align-items-center bird">
+                <a id="navbar" href="#" class="sidebar-toggle-box">
+                    <i class="fa fa-bars"></i>
+                    <span id="websiteTitle">@Model.Title</span>
+                </a>
+                <div class="nav">
+                </div>
+                <div class="dropdown userinfo">
+                    <a data-toggle="dropdown" class="dropdown-toggle shadow-default" href="#">
+                        <img id="headerIcon" alt="" src="@Url.Content(Model.Icon)">
+                        <span id="userDisplayName" data-userName="@Model.UserName" class="username text-truncate d-inline-block">@Model.DisplayName</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <div class="dropdown-item">
+                            <a href="@Model.ProfilesUrl"><i class=" fa fa-suitcase"></i>个人中心</a>
+                            <a href="@Model.SettingsUrl"><i class="fa fa-cog"></i>设置</a>
+                            <a href="#"><i class="fa fa-bell"></i>通知<span id="logoutNoti" class="badge badge-pill badge-success"></span></a>
+                        </div>
+                        <div class="dropdown-item">
+                            <a href="~/Account/Logout"><i class="fa fa-key"></i>注销</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <nav class="navbar navbar-expand navbar-light d-none d-md-flex">
+        <div class="collapse navbar-collapse" id="navMenu">
+            <div class="navbar-nav">
+                @foreach (var menu in Model.Navigations)
+                {
+                    @if (menu.Menus.Count() > 0)
+                    {
+                        <div class="nav-item dropdown @menu.Active">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" href="#">@menu.Name</a>
+                            @await Html.PartialAsync("Menu", menu.Menus)
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="nav-item @menu.Active">
+                            <a class="nav-link" target="@menu.Target" href="@Url.Content(menu.Url)">@menu.Name</a>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </nav>
+    <nav aria-label="breadcrumb">
+        <div class="breadcrumb">
+            <div class="breadcrumb-item"><a href="~/Home/Index"><i class="fa fa-home"></i>首页</a></div>
+            <div class="breadcrumb-item d-none" id="breadNav"></div>
+        </div>
+    </nav>
+</header>

@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "资源未找到";
+    Layout = "_Root";
+}
+@section css {
+    <link href="~/css/error.css" rel="stylesheet" />
+}
+@section Javascript {
+    <script src="~/js/error.js"></script>
+}
+<section class="error-wrapper">
+    <img src="~/images/404_icon.png" />
+    <h1>请求资源未找到</h1>
+    <h3>相关错误信息已经记录到日志中，请登录服务器查看</h3>
+    <br />
+    <a href="~/Home/Index" target="_top">返回首页</a>
+</section>

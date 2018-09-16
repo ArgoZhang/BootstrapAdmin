@@ -1,15 +1,49 @@
-﻿<!DOCTYPE html>
-<html lang="zh-cn">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@ViewBag.Title</title>
-    <!-- 新 Bootstrap 核心 CSS 文件 -->
+﻿@model ModelBase
+@{
+    Layout = "_Root";
+}
+@section css {
+    <environment include="Development">
+        <link href="~/css/bootstrap.css" rel="stylesheet">
+        <link href="~/css/font-awesome.css" rel="stylesheet" />
+        <link href="~/css/toastr.css" rel="stylesheet" />
+    </environment>
+    <environment exclude="Development">
+        <link href="~/css/bootstrap.min.css" rel="stylesheet">
+        <link href="~/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="~/css/toastr.min.css" rel="stylesheet" />
+    </environment>
     @RenderSection("css", false)
-</head>
-<body>
-    @RenderBody()
+    <link href="~/css/theme.css" rel="stylesheet" />
+    <link href="~/css/theme-responsive.css" rel="stylesheet" />
+    <link href="~/css/site.css" rel="stylesheet" />
+    <link href="~/css/site-responsive.css" rel="stylesheet" />
+    @if (!string.IsNullOrEmpty(Model.Theme))
+    {
+        <link href="~/css/@Model.Theme" rel="stylesheet" />
+    }
+}
+@section javascript {
+    <environment include="Development">
+        <script src="~/js/bootstrap.bundle.js"></script>
+        <script src="~/js/jquery.scrollTo.js"></script>
+        <script src="~/js/jquery.nicescroll.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/jquery.scrollTo.min.js"></script>
+        <script src="~/js/jquery.nicescroll.min.js"></script>
+    </environment>
+    <script src="~/js/toastr.min.js"></script>
+    <script src="~/js/longbow.common.js"></script>
+    <script src="~/js/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="~/js/common-scripts.js"></script>
     @RenderSection("Javascript", false)
-</body>
-</html>
+}
+@await Html.PartialAsync("Header")
+@await Html.PartialAsync("navigator")
+<section class="container-fluid">
+    @RenderBody()
+</section>
+@await Html.PartialAsync("Footer")
+@RenderSection("modal", false)
