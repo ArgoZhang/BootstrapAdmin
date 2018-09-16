@@ -36,6 +36,7 @@
         bottom: 40px;
         position: absolute;
         overflow: auto;
+        height: auto;
     }
 
     .header {
@@ -80,6 +81,7 @@
         bottom: 40px;
         position: absolute;
         overflow: auto;
+        height: auto;
     }
 
     aside {
