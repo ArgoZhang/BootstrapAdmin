@@ -29,25 +29,23 @@
         </div>
     </div>
     <nav class="navbar navbar-expand navbar-light d-none d-md-flex">
-        <div class="collapse navbar-collapse" id="navMenu">
-            <div class="navbar-nav">
-                @foreach (var menu in Model.Navigations)
+        <div class="navbar-nav">
+            @foreach (var menu in Model.Navigations)
+            {
+                @if (menu.Menus.Count() > 0)
                 {
-                    @if (menu.Menus.Count() > 0)
-                    {
-                        <div class="nav-item dropdown @menu.Active">
-                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" href="#">@menu.Name</a>
-                            @await Html.PartialAsync("Menu", menu.Menus)
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="nav-item @menu.Active">
-                            <a class="nav-link" target="@menu.Target" href="@Url.Content(menu.Url)">@menu.Name</a>
-                        </div>
-                    }
+                    <div class="nav-item dropdown @menu.Active">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" href="#">@menu.Name</a>
+                        @await Html.PartialAsync("Menu", menu.Menus)
+                    </div>
                 }
-            </div>
+                else
+                {
+                    <div class="nav-item @menu.Active">
+                        <a class="nav-link" target="@menu.Target" href="@Url.Content(menu.Url)">@menu.Name</a>
+                    </div>
+                }
+            }
         </div>
     </nav>
     <nav aria-label="breadcrumb">
