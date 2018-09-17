@@ -1,16 +1,15 @@
 ﻿@model NavigatorBarModel
 @{
     ViewBag.Title = "角色管理";
-    Layout = "~/Views/Shared/_Default.cshtml";
+    Layout = "_Default";
 }
 @section css {
-    <link href="~/css/fa.css" rel="stylesheet" />
-    <link href="~/css/jquery.nestable.css" rel="stylesheet" />
+    <link href="~/css/fa.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/jquery.nestable.css" rel="stylesheet" asp-append-version="true" />
 }
-@section Javascript {
-    <script src="~/js/jquery.nestable.js"></script>
-    <script src="~/js/roles.js"></script>
-
+@section javascript {
+    <script src="~/js/jquery.nestable.js" asp-append-version="true"></script>
+    <script src="~/js/roles.js" asp-append-version="true"></script>
 }
 @section query {
     <form class="form-inline">

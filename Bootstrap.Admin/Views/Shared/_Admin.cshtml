@@ -1,35 +1,35 @@
 ﻿@{
-    Layout = "~/Views/Shared/_Bootstrap.cshtml";
+    Layout = "_Bootstrap";
 }
 @section css {
-    <link href="~/css/nprogress.css" rel="stylesheet" />
-    <link href="~/css/sweetalert.css" rel="stylesheet" />
+    <link href="~/css/nprogress.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/sweetalert.css" rel="stylesheet" asp-append-version="true" />
     <environment include="Development">
-        <link href="~/css/toastr.css" rel="stylesheet" />
+        <link href="~/css/toastr.css" rel="stylesheet" asp-append-version="true" />
     </environment>
     <environment exclude="Development">
-        <link href="~/css/toastr.min.css" rel="stylesheet" />
+        <link href="~/css/toastr.min.css" rel="stylesheet" asp-append-version="true" />
     </environment>
     @RenderSection("css", false)
-    <link href="~/css/admin.css" rel="stylesheet" />
-    <link href="~/css/admin-responsive.css" rel="stylesheet" />
+    <link href="~/css/admin.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/admin-responsive.css" rel="stylesheet" asp-append-version="true" />
 }
 @section javascript {
     <environment include="Development">
-        <script src="~/js/sweetalert.js"></script>
-        <script src="~/js/jquery.scrollTo.js"></script>
-        <script src="~/js/jquery.nicescroll.js"></script>
+        <script src="~/js/sweetalert.js" asp-append-version="true"></script>
+        <script src="~/js/jquery.scrollTo.js" asp-append-version="true"></script>
+        <script src="~/js/jquery.nicescroll.js" asp-append-version="true"></script>
     </environment>
     <environment exclude="Development">
-        <script src="~/js/sweetalert.min.js"></script>
-        <script src="~/js/jquery.scrollTo.min.js"></script>
-        <script src="~/js/jquery.nicescroll.min.js"></script>
+        <script src="~/js/sweetalert.min.js" asp-append-version="true"></script>
+        <script src="~/js/jquery.scrollTo.min.js" asp-append-version="true"></script>
+        <script src="~/js/jquery.nicescroll.min.js" asp-append-version="true"></script>
     </environment>
-    <script src="~/js/jquery.dcjqaccordion.2.7.js"></script>
-    <script src="~/js/common-scripts.js"></script>
-    <script src="~/js/log.js"></script>
-    <script src="~/js/toastr.min.js"></script>
-    @RenderSection("Javascript", false)
+    <script src="~/js/jquery.dcjqaccordion.2.7.js" asp-append-version="true"></script>
+    <script src="~/js/common-scripts.js" asp-append-version="true"></script>
+    <script src="~/js/log.js" asp-append-version="true"></script>
+    <script src="~/js/toastr.min.js" asp-append-version="true"></script>
+    @RenderSection("javascript", false)
 }
 @await Html.PartialAsync("navigator")
 <section id="main-content" class="main-content">

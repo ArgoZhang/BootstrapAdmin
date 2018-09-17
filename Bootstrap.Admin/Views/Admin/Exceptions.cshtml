@@ -1,19 +1,19 @@
 ﻿@model NavigatorBarModel
 @{
     ViewBag.Title = "程序异常";
-    Layout = "~/Views/Shared/_Admin.cshtml";
+    Layout = "_Admin";
 }
 @section css {
-    <link href="~/css/bootstrap-table.css" rel="stylesheet" />
-    <link href="~/css/bootstrap-datetimepicker.css" rel="stylesheet" />
-    <link href="~/css/fa.css" rel="stylesheet" />
+    <link href="~/css/bootstrap-table.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/bootstrap-datetimepicker.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/fa.css" rel="stylesheet" asp-append-version="true" />
 }
-@section Javascript {
-    <script src="~/js/bootstrap-table.js"></script>
-    <script src="~/js/bootstrap-table-zh-CN.js"></script>
-    <script src="~/js/bootstrap-datetimepicker.js"></script>
-    <script src="~/js/bootstrap-datetimepicker.zh-CN.js"></script>
-    <script src="~/js/exceptions.js"></script>
+@section javascript {
+    <script src="~/js/bootstrap-table.js" asp-append-version="true"></script>
+    <script src="~/js/bootstrap-table-zh-CN.js" asp-append-version="true"></script>
+    <script src="~/js/bootstrap-datetimepicker.js" asp-append-version="true"></script>
+    <script src="~/js/bootstrap-datetimepicker.zh-CN.js" asp-append-version="true"></script>
+    <script src="~/js/exceptions.js" asp-append-version="true"></script>
 }
 <div class="card">
     <div class="card-header">查询条件</div>

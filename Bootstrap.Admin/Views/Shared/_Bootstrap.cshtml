@@ -1,36 +1,36 @@
 ﻿@model ModelBase
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "_Layout";
 }
 @section css {
     <environment include="Development">
-        <link href="~/css/bootstrap.css" rel="stylesheet">
-        <link href="~/css/font-awesome.css" rel="stylesheet" />
+        <link href="~/css/bootstrap.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/css/font-awesome.css" rel="stylesheet" asp-append-version="true" />
     </environment>
     <environment exclude="Development">
-        <link href="~/css/bootstrap.min.css" rel="stylesheet">
-        <link href="~/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="~/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/css/font-awesome.min.css" rel="stylesheet" asp-append-version="true" />
     </environment>
     @RenderSection("css", false)
-    <link href="~/css/theme.css" rel="stylesheet" />
-    <link href="~/css/theme-responsive.css" rel="stylesheet" />
-    <link href="~/css/site.css" rel="stylesheet" />
-    <link href="~/css/site-responsive.css" rel="stylesheet" />
+    <link href="~/css/theme.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/theme-responsive.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/site-responsive.css" rel="stylesheet" asp-append-version="true" />
     @if (!string.IsNullOrEmpty(Model.Theme))
     {
-        <link href="~/css/@Model.Theme" rel="stylesheet" />
+        <link href="~/css/@Model.Theme" rel="stylesheet" asp-append-version="true" />
     }
 }
 @section javascript {
     <environment include="Development">
-        <script src="~/js/bootstrap.bundle.js"></script>
+        <script src="~/js/bootstrap.bundle.js" asp-append-version="true"></script>
     </environment>
     <environment exclude="Development">
-        <script src="~/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
     </environment>
-    <script src="~/js/nprogress.js"></script>
-    <script src="~/js/longbow.common.js"></script>
-    @RenderSection("Javascript", false)
+    <script src="~/js/nprogress.js" asp-append-version="true"></script>
+    <script src="~/js/longbow.common.js" asp-append-version="true"></script>
+    @RenderSection("javascript", false)
 }
 @await Html.PartialAsync("Header")
 @RenderBody()

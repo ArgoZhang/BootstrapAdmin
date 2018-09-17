@@ -1,10 +1,10 @@
 ﻿@model NavigatorBarModel
 @{
     ViewBag.Title = "部门管理";
-    Layout = "~/Views/Shared/_Default.cshtml";
+    Layout = "_Default";
 }
-@section Javascript {
-    <script src="~/js/groups.js"></script>
+@section javascript {
+    <script src="~/js/groups.js" asp-append-version="true"></script>
 }
 @section query {
     <form class="form-inline">

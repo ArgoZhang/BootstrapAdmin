@@ -1,13 +1,13 @@
 ﻿@model NavigatorBarModel
 @{
     ViewBag.Title = "Api 文档";
-    Layout = "~/Views/Shared/_Admin.cshtml";
+    Layout = "_Admin";
 }
 @section javascript {
-    <script src="~/js/apidoc.js"></script>
+    <script src="~/js/apidoc.js" asp-append-version="true"></script>
 }
 @section css {
-    <link href="~/css/api.css" rel="stylesheet" />
+    <link href="~/css/api.css" rel="stylesheet" asp-append-version="true" />
 }
 <section>
     <div><h3>接口返回值定义</h3></div>
