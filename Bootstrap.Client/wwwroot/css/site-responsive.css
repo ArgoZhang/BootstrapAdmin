@@ -35,22 +35,11 @@
         flex: 1 1 auto;
     }
 
-    .site-footer {
-        position: fixed;
+    .sidebar-open aside {
+        transform: translate(-100%);
     }
 
-    aside {
-        display: none;
-    }
-}
-
-@media (min-height: 672px) {
-    html, body {
-        height: 100%;
-        overflow: hidden;
-    }
-
-    .site-footer {
-        position: fixed;
+    .sidebar-open .site-footer {
+        display: flex;
     }
 }

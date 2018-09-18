@@ -133,17 +133,11 @@ $(function () {
         "hideMethod": "fadeOut"
     };
 
-    var $sidebar = $("#sidebar");
-    var $sideMenu = $sidebar.find('.sidebar-menu');
-    var $main = $('#main-content');
-    var $breadNav = $('#breadNav');
+    var $sideMenu = $(".sidebar");
 
     $sideMenu.dcAccordion({
         autoExpand: true
     });
-
-    // custom scrollbar
-    if (!$.browser.versions.ios) $("#sidebar").niceScroll({ cursorcolor: "#e8403f", cursorwidth: '3px', background: '#2a3542', spacebarenabled: false, cursorborder: '' });
 
     $("#gotoTop").on('click', function (e) {
         e.preventDefault();
@@ -153,38 +147,52 @@ $(function () {
     });
 
     // breadcrumb
+    var $breadNav = $('#breadNav');
     var arch = $sideMenu.find('a.active').last();
     if (arch.text() !== "") $breadNav.removeClass('d-none').text(arch.text());
 
-    // sidebar scroll animate
-    var top = (arch.offset() || { top: 0 }).top;
-    if (top > 0) {
-        var middle = $('header').outerHeight() + $sidebar.outerHeight() / 2;
-        if (top > middle) $sidebar.animate({ scrollTop: top + arch.outerHeight() / 2 - middle }, 500);
-    }
+    $.fn.extend({
+        autoScrollSidebar: function (options) {
+            var $this = this;
+            var option = $.extend({ target: null, offsetTop: 0 }, options);
+            var navItem = option.target;
+            var top = navItem.offset().top + $this.scrollTop() - $('header').outerHeight() + option.offsetTop;
 
-    $sidebar.on('click', 'a.dcjq-parent', function () {
-        var o = $(this).offset();
-        diff = 110 - o.top;
-        if (diff > 0)
-            $sidebar.scrollTo("-=" + Math.abs(diff), 500);
-        else
-            $sidebar.scrollTo("+=" + Math.abs(diff), 500);
+            // sidebar scroll animate
+            var middle = $this.outerHeight() / 2;
+            if (top > middle) $this.animate({ scrollTop: top - middle }, 500, function () {
+                $this.resizeNiceScroll();
+            });
+            return this;
+        },
+        resizeNiceScroll: function () {
+            if (!$.browser.versions.ios) this.getNiceScroll().resize();
+            return this;
+        },
+        addNiceScroll: function () {
+            if (!$.browser.versions.ios) {
+                var nice = this.data('__nicescroll') || false;
+                if (!nice) this.niceScroll({ cursorcolor: "#e8403f", cursorwidth: '3px', background: '#2a3542', spacebarenabled: false, cursorborder: '' });
+            }
+            return this;
+        }
+    });
 
-        // resize nicscroll
-        $sidebar.getNiceScroll().resize();
+    // custom scrollbar
+    var $sidebar = $('aside').addNiceScroll();
+    $sidebar.autoScrollSidebar({ target: arch.parent(), offsetTop: arch.parent().innerHeight() / 2 });
+
+    $sideMenu.on('click', 'a.dcjq-parent', function () {
+        var $this = $(this);
+        if (!$this.hasClass('active')) {
+            setTimeout(function () { $sidebar.resizeNiceScroll(); }, 500);
+            return;
+        }
+        $sidebar.autoScrollSidebar({ target: $(this).parent(), offsetTop: 25.5 });
     });
 
     $('.sidebar-toggle-box').on('click', function () {
-        if ($sidebar.is(":visible")) {
-            $main.addClass('closed').removeClass('open');
-            $sidebar.parent().toggleClass('open');
-            $(window).width() <= 768 ? setTimeout(function () { $sidebar.hide(); }, 400) : $sidebar.hide();
-        } else {
-            $sidebar.show();
-            $sidebar.parent().toggleClass('open');
-            $(window).width() <= 768 ? setTimeout(function () { $main.addClass('open').removeClass('closed'); }, 400) : $main.addClass('open').removeClass('closed');
-        }
+        $('body').toggleClass('sidebar-open');
     });
 
     $('[data-toggle="dropdown"].dropdown-select').dropdown('select');
@@ -212,6 +220,15 @@ $(function () {
                 }
             }
             if (result.length > 0) this.reloadWidget();
+        }
+    });
+
+    $(window).on('resize', function () {
+        if ($(window).width() > 768) {
+            $sidebar.addNiceScroll();
+        }
+        else {
+            $sidebar.removeAttr('style').getNiceScroll().remove();
         }
     });
 });

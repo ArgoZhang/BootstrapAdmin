@@ -10,6 +10,14 @@ body {
     -webkit-overflow-scrolling: touch;
 }
 
+.sidebar-open aside {
+    transform: translate(0);
+}
+
+.sidebar-open .site-footer {
+    display: none;
+}
+
 aside {
     transition: transform .4s ease-in-out;
     transform: translate(-100%);
@@ -18,31 +26,25 @@ aside {
     bottom: 0;
     left: 0;
     right: 0;
-    height: auto;
-    z-index: 5;
+    z-index: 4;
+    background: #2a3542;
 }
-
-    aside.open {
-        transform: translate(0);
-    }
 
 .sidebar {
-    overflow: auto;
-    width: 100%;
-    z-index: 5;
-    height: 100%;
-    background: #2a3542;
-    background-image: url('../images/bird.png');
-    background-repeat: no-repeat;
-    background-position: 96% 98%;
-}
-
-.sidebar-menu {
     padding: 20px 0;
     margin-bottom: 0;
+    background: inherit;
 }
 
-    .sidebar-menu .dcjq-icon {
+    .sidebar .dcjq-parent-li, .sidebar li a.active, .sidebar li a.active + .sub {
+        background: #35404D;
+    }
+
+    .sidebar .sub .dcjq-parent-li, .sidebar .sub li a.active, .sidebar .sub li a.active + .sub {
+        background: #3a4756;
+    }
+
+    .sidebar .dcjq-icon {
         height: 17px;
         width: 17px;
         display: inline-block;
@@ -51,15 +53,15 @@ aside {
         margin-top: 3px;
     }
 
-    .sidebar-menu .active .dcjq-icon {
+    .sidebar .active .dcjq-icon {
         background-position: bottom;
     }
 
-    .sidebar-menu li {
+    .sidebar li {
         margin: 5px 10px;
     }
 
-        .sidebar-menu li a {
+        .sidebar li a {
             color: #aeb2b7;
             display: block;
             padding: 15px 10px;
@@ -67,43 +69,46 @@ aside {
             border-radius: 4px;
         }
 
-            .sidebar-menu li a:hover, .sidebar-menu li a:focus {
+            .sidebar li a:hover, .sidebar li a:focus {
                 background: #35404d;
                 color: #fff;
             }
 
-            .sidebar-menu li a.active {
+            .sidebar li a.active {
                 color: #FF6C60;
             }
 
-            .sidebar-menu li a i {
+            .sidebar li a i {
                 width: 22px;
             }
 
-        .sidebar-menu li .sub {
+        .sidebar li .sub {
             padding-left: 0;
         }
 
-            .sidebar-menu li .sub li a:hover, .sidebar-menu li .sub li.active a {
-                color: #FF6C60;
-                transition: all 0.3s ease;
-                display: block;
-            }
+    .sidebar > li > .sub a:hover, .sidebar > li > .sub .active > a {
+        color: #FF6C60;
+        transition: all 0.3s ease;
+        display: block;
+    }
 
-            .sidebar-menu li .sub li {
-                background: #35404D;
-                margin: 0;
-                padding: 0 10px 0 32px;
-            }
+    .sidebar > li > .sub a:hover, .sidebar > li > .sub a:focus {
+        background: none;
+    }
 
-                .sidebar-menu li .sub li:last-child {
-                    border-radius: 0 0 4px 4px;
-                    padding-bottom: 10px;
-                }
+    .sidebar li .sub li {
+        margin: 0;
+        padding: 0 10px 0 32px;
+    }
 
-                .sidebar-menu li .sub li a {
-                    padding: 12px 0;
-                }
+        .sidebar li .sub li:last-child {
+            border-radius: 0 0 4px 4px;
+            padding-bottom: 10px;
+        }
+
+        .sidebar li .sub li a {
+            padding: 12px 0;
+        }
 
 ul li {
     list-style: none;

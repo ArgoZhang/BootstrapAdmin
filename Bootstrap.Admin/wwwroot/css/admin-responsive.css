@@ -16,24 +16,17 @@
 }
 
 @media (min-width: 769px) {
+    body {
+        overflow: hidden;
+    }
+
+    .sidebar-open .main-content {
+        margin-left: 0;
+        display: block;
+    }
+
     .main-content {
         margin-left: 210px;
         transition: none;
     }
-
-        .main-content.open {
-            display: block;
-        }
-}
-
-@media (min-height: 672px) {
-    .main-content {
-        position: fixed;
-        overflow: auto;
-        transition: none;
-    }
-
-        .main-content.open {
-            display: block;
-        }
 }

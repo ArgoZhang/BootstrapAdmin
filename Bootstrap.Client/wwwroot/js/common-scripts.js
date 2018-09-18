@@ -15,8 +15,8 @@
         "hideMethod": "fadeOut"
     };
 
-    var $sidebar = $("#sidebar");
-    var $sideMenu = $sidebar.find('.sidebar-menu');
+    var $sidebar = $('aside');
+    var $sideMenu = $(".sidebar");
     var $breadNav = $('#breadNav');
 
     $sideMenu.dcAccordion({
@@ -44,7 +44,7 @@
         if (top > middle) $sidebar.animate({ scrollTop: top + arch.outerHeight() / 2 - middle }, 500);
     }
 
-    $sidebar.on('click', 'a.dcjq-parent', function () {
+    $sideMenu.on('click', 'a.dcjq-parent', function () {
         var o = $(this).offset();
         diff = 110 - o.top;
         if (diff > 0)
@@ -56,9 +56,8 @@
         $sidebar.getNiceScroll().resize();
     });
 
-    $('.sidebar-toggle-box').on('click', function (e) {
-        e.preventDefault();
-        if ($(window).width() < 768) $sidebar.parent().toggleClass('open');
+    $('.sidebar-toggle-box').on('click', function () {
+        $('body').toggleClass('sidebar-open');
     });
 
     $('[data-toggle="dropdown"].dropdown-select').dropdown('select');

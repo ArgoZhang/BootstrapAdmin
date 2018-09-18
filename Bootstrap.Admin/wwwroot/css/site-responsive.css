@@ -22,30 +22,17 @@
 }
 
 @media (min-width: 768px) {
-    html, body {
-        height: 100%;
-        overflow: hidden;
-    }
-
     .sidebar-toggle-box {
         flex: 0 1 auto;
     }
 
-    .sidebar {
-        top: 98px;
-        bottom: 40px;
-        position: absolute;
-        overflow: auto;
-        height: auto;
+    .sidebar-open aside {
+        transform: translate(0);
     }
 
-    .header {
-        border-bottom: none;
+    .header .nav {
+        flex: 1 1 auto;
     }
-
-        .header .nav {
-            flex: 1 1 auto;
-        }
 
     .header, .site-footer {
         position: fixed;
@@ -53,42 +40,19 @@
 }
 
 @media (min-width: 769px) {
-    .sidebar {
-        display: block;
-        width: 210px;
+    .sidebar-open aside {
+        transform: translate(-100%);
+    }
+
+    .sidebar-open .site-footer {
+        display: flex;
     }
 
     aside {
         transition: none;
-        transform: none;
-        top: 0;
-        right: auto;
-    }
-}
-
-@media (min-height: 672px) {
-    html, body {
-        height: 100%;
-        overflow: hidden;
-    }
-
-    .header, .site-footer {
-        position: fixed;
-    }
-
-    .sidebar {
-        top: 98px;
-        bottom: 40px;
-        position: absolute;
-        overflow: auto;
-        height: auto;
-    }
-
-    aside {
-        top: 0;
-    }
-
-    .aside.open {
         transform: translate(0);
+        width: 210px;
+        overflow: auto;
+        bottom: 40px;
     }
 }

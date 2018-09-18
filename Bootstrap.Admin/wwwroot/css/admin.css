@@ -13,24 +13,18 @@
     font-weight: 600;
 }
 
+.sidebar-open .main-content {
+    display: none;
+}
+
 .main-content {
-    transition: all .4s ease-in-out;
     padding: 15px 15px 0 15px;
     margin-left: 0;
-    height: auto;
     left: 0;
     bottom: 40px;
     right: 0;
     top: 98px;
 }
-
-    .main-content.open {
-        display: none;
-    }
-
-    .main-content.closed {
-        margin-left: 0;
-    }
 
     .main-content > .panel:last-child .panel-body {
         padding-bottom: 0;
