@@ -22,6 +22,8 @@
         if (!!url === true) $headerIcon.attr('src', url);
     });
 
+    $('.site-footer').footer();
+
     var dataBinder = new DataEntity({
         Password: "#currentPassword",
         NewPassword: "#newPassword",
