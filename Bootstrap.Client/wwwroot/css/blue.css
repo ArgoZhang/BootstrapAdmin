@@ -2,8 +2,6 @@
     border-color: #5198cb;
 }
 
-
-
 .navbar-light .navbar-nav .show > .nav-link, .navbar-light .navbar-nav .active > .nav-link, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .nav-link.active {
     color: rgb(51, 122, 183);
 }
@@ -54,11 +52,11 @@
     text-shadow: none;
 }
 
-.navbar {
+.header .navbar {
     padding-bottom: 0;
 }
 
-.nav-item.active {
+.header .nav-item.active {
     border-bottom: solid 1px #307eb6;
 }
 

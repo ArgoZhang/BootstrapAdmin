@@ -1,10 +1,10 @@
 ﻿@model NavigatorBarModel
 <aside>
     <!-- sidebar menu start-->
-    <ul class="sidebar">
+    <ul class="sidebar nav nav-pills flex-column flex-nowrap">
         @foreach (var menu in Model.Navigations)
         {
-            @await Html.PartialAsync("SubMenu", menu)
+            @await Html.PartialAsync("SubNavItem", menu)
         }
     </ul>
     <!-- sidebar menu end-->
