@@ -73,6 +73,10 @@ input.pending {
         justify-content: flex-start;
     }
 
+.form-inline .form-row, .form-inline .row {
+    flex: 1 1 auto;
+}
+
 .modal-header {
     background-color: #f5f5f5;
     padding: 10px 15px;
@@ -155,10 +159,6 @@ input.pending {
 
 .file-drop-zone.clickable:hover {
     border: 1px dashed #999;
-}
-
-.form-row, .row {
-    flex: 1 1 auto;
 }
 
 [data-toggle="LgbValidate"] input[type="text"], [data-toggle="LgbValidate"] input[type="password"] {
