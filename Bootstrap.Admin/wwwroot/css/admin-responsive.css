@@ -16,10 +16,6 @@
 }
 
 @media (min-width: 769px) {
-    body {
-        overflow: hidden;
-    }
-
     .sidebar-open .main-content {
         margin-left: 0;
         display: block;

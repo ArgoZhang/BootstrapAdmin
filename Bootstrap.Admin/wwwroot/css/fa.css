@@ -41,6 +41,7 @@
         bottom: 0;
         position: absolute;
         overflow-y: auto;
+        width: 100%;
     }
 
         .fa-nav nav a {
@@ -69,6 +70,10 @@
                 border-left: 4px solid #d9534f;
                 padding-left: 10px;
             }
+
+    .fa-nav .mCS-minimal-dark.mCSB_scrollTools_vertical {
+        margin: 0;
+    }
 
 .form-group .input-group .input-group-append .btn i {
     color: #187c9a;

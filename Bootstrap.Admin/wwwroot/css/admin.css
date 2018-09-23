@@ -17,6 +17,10 @@
     display: none;
 }
 
+.mCSB_scrollTools {
+    width: 10px;
+}
+
 .main-content {
     padding: 15px 15px 0 15px;
     margin-left: 0;

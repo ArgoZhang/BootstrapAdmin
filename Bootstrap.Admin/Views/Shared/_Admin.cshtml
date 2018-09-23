@@ -6,9 +6,11 @@
     <link href="~/css/sweetalert.css" rel="stylesheet" asp-append-version="true" />
     <environment include="Development">
         <link href="~/css/toastr.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/css/jquery.mCustomScrollbar.css" rel="stylesheet" />
     </environment>
     <environment exclude="Development">
         <link href="~/css/toastr.min.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/css/jquery.mCustomScrollbar.min.css" rel="stylesheet" />
     </environment>
     @RenderSection("css", false)
     <link href="~/css/admin.css" rel="stylesheet" asp-append-version="true" />
@@ -17,11 +19,11 @@
 @section javascript {
     <environment include="Development">
         <script src="~/js/sweetalert.js" asp-append-version="true"></script>
-        <script src="~/js/jquery.nicescroll.js" asp-append-version="true"></script>
+        <script src="~/js/jquery.mCustomScrollbar.js"></script>
     </environment>
     <environment exclude="Development">
         <script src="~/js/sweetalert.min.js" asp-append-version="true"></script>
-        <script src="~/js/jquery.nicescroll.min.js" asp-append-version="true"></script>
+        <script src="~/js/jquery.mCustomScrollbar.concat.min.js"></script>
     </environment>
     <script src="~/js/jquery.dcjqaccordion.2.7.js" asp-append-version="true"></script>
     <script src="~/js/common-scripts.js" asp-append-version="true"></script>

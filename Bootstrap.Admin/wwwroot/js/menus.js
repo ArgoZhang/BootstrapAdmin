@@ -252,7 +252,7 @@
                     $(this).scrollspy({ target: $(this).attr('data-target') });
                 });
 
-                if (!$.browser.versions.ios) $scroll = $html.find('.fa-nav .nav').niceScroll({ cursorcolor: "#e8403f", cursorwidth: '3px', background: '#fff', spacebarenabled: false, cursorborder: '' });
+                if (!$.browser.versions.ios) $scroll = $html.find('.fa-nav .nav').mCustomScrollbar({ theme: 'minimal-dark' });
             }
         }
     });
