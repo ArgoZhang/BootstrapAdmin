@@ -153,16 +153,26 @@ $(function () {
 
     $.fn.extend({
         autoScrollSidebar: function (options) {
-            if (!this.hasClass('mCustomScrollbar')) return;
             var option = $.extend({ target: null, offsetTop: 0 }, options);
             var $navItem = option.target;
-            if ($navItem === null) return;
+            if ($navItem === null) return this;
 
             // sidebar scroll animate
             var middle = this.outerHeight() / 2;
-            var top = $navItem.offset().top - $('header').outerHeight() + option.offsetTop;
-            if (top > middle) this.mCustomScrollbar('scrollTo', top - middle);
-
+            var top = 0;
+            if (this.hasClass('mCustomScrollbar')) {
+                top = $navItem.offset().top - $('header').outerHeight() + option.offsetTop;
+                if (top > middle) {
+                    this.mCustomScrollbar('scrollTo', top - middle);
+                }
+            }
+            else {
+                top = $navItem.offset().top + option.offsetTop;
+                if (top > middle)
+                    this.animate({
+                        scrollTop: top - middle
+                    });
+            }
             return this;
         },
         addNiceScroll: function () {
@@ -183,12 +193,16 @@ $(function () {
     var $sidebar = $('aside').addNiceScroll().autoScrollSidebar({ target: arch.parent(), offsetTop: arch.parent().innerHeight() / 2 });
 
     $sideMenu.on('click', 'a.dcjq-parent', function () {
+        var $this = $(this);
         if (!$.browser.versions.ios && $(window).width() > 768) {
-            var $this = $(this);
             setTimeout(function () {
                 var offsetScroll = parseInt($this.parents('.mCSB_container').css('top').replace('px', ''));
                 $sidebar.autoScrollSidebar({ target: $this.parent(), offsetTop: 25.5 - offsetScroll });
             }, 600);
+        }
+        else if ($.browser.versions.ios && $(window).width() > 768) {
+            var offsetScroll = parseInt($this.parents('aside').scrollTop());
+            $sidebar.autoScrollSidebar({ target: $this.parent(), offsetTop: 25.5 + offsetScroll });
         }
     });
 
