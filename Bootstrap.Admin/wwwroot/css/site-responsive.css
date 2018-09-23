@@ -18,20 +18,17 @@
 @media (min-width: 667px) {
     .header .nav {
         display: flex;
+        flex: 1 1 auto;
+    }
+
+    .sidebar-toggle-box {
+        flex: 0 1 auto;
     }
 }
 
 @media (min-width: 768px) {
-    .sidebar-toggle-box {
-        flex: 0 1 auto;
-    }
-
     .sidebar-open aside {
         transform: translate(0);
-    }
-
-    .header .nav {
-        flex: 1 1 auto;
     }
 
     .header, .site-footer {
