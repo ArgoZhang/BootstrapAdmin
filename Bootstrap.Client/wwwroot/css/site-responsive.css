@@ -42,4 +42,8 @@
     .sidebar-open .site-footer {
         display: flex;
     }
+
+    .breadcrumb {
+        border-color: #ddd;
+    }
 }

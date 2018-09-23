@@ -367,7 +367,7 @@ a, a:hover, a:focus {
 /*notify bar*/
 
 .breadcrumb {
-    border-top: solid 1px #ddd;
+    border-top: solid 1px #fff;
     background-color: transparent;
     border-radius: 0;
     padding: 8px 10px;
