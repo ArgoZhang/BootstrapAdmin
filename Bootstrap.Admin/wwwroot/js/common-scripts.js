@@ -166,7 +166,10 @@ $(function () {
             return this;
         },
         addNiceScroll: function () {
-            if (!$.browser.versions.ios && $(window).width() > 768) {
+            if ($.browser.versions.ios && $(window).width() > 768) {
+                this.css('overflow', 'auto');
+            }
+            else if (!$.browser.versions.ios && $(window).width() > 768) {
                 this.mCustomScrollbar({ theme: 'minimal' });
             }
             else {
@@ -180,12 +183,13 @@ $(function () {
     var $sidebar = $('aside').addNiceScroll().autoScrollSidebar({ target: arch.parent(), offsetTop: arch.parent().innerHeight() / 2 });
 
     $sideMenu.on('click', 'a.dcjq-parent', function () {
-        if ($(window).width() <= 768) return;
-        var $this = $(this);
-        setTimeout(function () {
-            var offsetScroll = parseInt($this.parents('.mCSB_container').css('top').replace('px', ''));
-            $sidebar.autoScrollSidebar({ target: $this.parent(), offsetTop: 25.5 - offsetScroll });
-        }, 600);
+        if (!$.browser.versions.ios && $(window).width() > 768) {
+            var $this = $(this);
+            setTimeout(function () {
+                var offsetScroll = parseInt($this.parents('.mCSB_container').css('top').replace('px', ''));
+                $sidebar.autoScrollSidebar({ target: $this.parent(), offsetTop: 25.5 - offsetScroll });
+            }, 600);
+        }
     });
 
     $('.sidebar-toggle-box').on('click', function () {
