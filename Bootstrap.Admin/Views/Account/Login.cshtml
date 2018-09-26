@@ -62,10 +62,10 @@
                     <input type="password" name="password" class="form-control" value="" placeholder="密码" data-required-msg="请输入密码" data-valid="true" />
                 </div>
             </div>
-            <div class="form-group">
-                <div class="form-check">
-                    <input id="remember" name="remember" type="checkbox" class="form-check-input" value="true" /><label for="remember" class="form-check-label">记住我</label>
-                </div>
+            <div class="form-group rememberPwd" onselectstart="return false">
+                <i class="fa fa-square-o"></i>
+                <span>记住密码自动登录</span>
+                <input id="remember" name="remember" type="hidden" value="false" />
             </div>
             <button class="btn btn-lg btn-login btn-block" type="submit">登 陆</button>
             <div class="login-footer">

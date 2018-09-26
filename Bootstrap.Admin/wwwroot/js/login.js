@@ -24,4 +24,17 @@
             }
         });
     });
-})
+
+    $('.rememberPwd').on('click', function () {
+        var $this = $(this);
+        var $check = $this.find('i');
+        var $rem = $('#remember');
+        if ($check.hasClass('fa-square-o')) {
+            $check.addClass('fa-check-square-o').removeClass('fa-square-o');
+            $rem.val('true');
+        } else {
+            $check.addClass('fa-square-o').removeClass('fa-check-square-o');
+            $rem.val('false');
+        }
+    });
+});

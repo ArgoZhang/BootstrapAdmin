@@ -16,6 +16,15 @@
     padding: 20px;
 }
 
+    .login-wrap .rememberPwd {
+        cursor: pointer;
+        color: #333;
+    }
+
+        .login-wrap .rememberPwd i {
+            width: 13px;
+        }
+
 .login-footer a:last-child {
     float: right;
 }
@@ -29,7 +38,7 @@
     box-shadow: 0 4px #e56b60;
     margin-bottom: 20px;
     outline: none !important;
-    margin-top: -8px;
+    margin-top: -4px;
 }
 
     .btn-login:focus {
@@ -43,8 +52,4 @@
 
 .form-control {
     border-color: #1ca0e9;
-}
-
-.form-check-label {
-    color: #333;
 }
