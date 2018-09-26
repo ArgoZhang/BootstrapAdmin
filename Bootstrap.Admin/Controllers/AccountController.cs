@@ -1,9 +1,12 @@
 ﻿using Bootstrap.Admin.Models;
 using Bootstrap.Security;
+using Longbow;
+using Longbow.Configuration;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -24,7 +27,7 @@ namespace Bootstrap.Admin.Controllers
         [HttpGet]
         public ActionResult Login()
         {
-            return View("Login", new ModelBase());
+            return User.Identity.IsAuthenticated ? (ActionResult)Redirect("~/Home/Index") : View("Login", new ModelBase());
         }
         /// <summary>
         /// Login the specified userName, password and remember.
@@ -40,7 +43,7 @@ namespace Bootstrap.Admin.Controllers
             {
                 var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
                 identity.AddClaim(new Claim(ClaimTypes.Name, userName));
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity), new AuthenticationProperties() { IsPersistent = remember == "true" });
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity), new AuthenticationProperties() { ExpiresUtc = DateTimeOffset.Now.AddDays(LgbConvert.ReadValue(ConfigurationManager.AppSettings["CookieExpiresDays"], 7)), IsPersistent = remember == "true" });
             }
             // redirect origin url
             var originUrl = Request.Query[CookieAuthenticationDefaults.ReturnUrlParameter].FirstOrDefault() ?? "~/Home/Index";
