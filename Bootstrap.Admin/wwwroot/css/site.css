@@ -393,11 +393,11 @@ label.dropdown-item:first-child {
     display: flex;
     align-items: center;
     padding: 10px 4px;
-    border-bottom: 1px solid #EBEBEB;
+    border: 1px solid #eee;
+    border-width: 0 1px 1px 1px;
 }
 
     .cache-item:last-child {
-        border-bottom: none;
         margin-bottom: 15px;
     }
 
