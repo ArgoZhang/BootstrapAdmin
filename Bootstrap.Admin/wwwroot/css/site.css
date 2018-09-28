@@ -430,8 +430,8 @@ label.dropdown-item:first-child {
     .cache-item .badge {
         position: relative;
         top: -8px;
-        margin-left: 0;
-        line-height: normal;
+        display: flex;
+        align-items: center;
     }
 
     .cache-item .btn, td .btn:not(.btn-lg) {
