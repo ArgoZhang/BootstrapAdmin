@@ -16,6 +16,10 @@ namespace Bootstrap.Admin.Models
         /// <summary>
         /// 
         /// </summary>
+        public string FileName { get; }
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="controller"></param>
         public ProfilesModel(ControllerBase controller) : base(controller)
         {
@@ -25,6 +29,7 @@ namespace Bootstrap.Admin.Models
             if (File.Exists(fileName))
             {
                 Size = new FileInfo(fileName).Length;
+                FileName = Path.GetFileName(fileName);
             }
         }
     }
