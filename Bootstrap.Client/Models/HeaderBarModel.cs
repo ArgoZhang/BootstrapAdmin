@@ -1,5 +1,6 @@
 ﻿using Bootstrap.Client.DataAccess;
 using Bootstrap.Security;
+using Longbow.Configuration;
 using System.Security.Principal;
 
 namespace Bootstrap.Client.Models
@@ -13,10 +14,10 @@ namespace Bootstrap.Client.Models
         /// 
         /// </summary>
         /// <param name="identity"></param>
-        public HeaderBarModel(IIdentity identity) 
+        public HeaderBarModel(IIdentity identity)
         {
             var user = BootstrapUser.RetrieveUserByUserName(identity.Name);
-            Icon = user.Icon;
+            Icon = $"{ConfigurationManager.AppSettings["AuthHost"]}/{user.Icon.TrimStart('~', '/')}";
             DisplayName = user.DisplayName;
             UserName = user.UserName;
             SettingsUrl = DictHelper.RetrieveSettingsUrl();
