@@ -12,7 +12,7 @@
             preIcon
         ],
         initialPreviewConfig: [
-            { caption: "现在头像", size: $('#fileIcon').attr('data-init'), showZoom: true },
+            { caption: "现在头像", size: $('#fileIcon').attr('data-init'), showZoom: true }
         ],
         initialPreviewAsData: true,
         overwriteInitial: true,

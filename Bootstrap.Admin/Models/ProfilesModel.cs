@@ -1,8 +1,5 @@
-﻿using Bootstrap.DataAccess;
-using Bootstrap.Security;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.IO;
 
 namespace Bootstrap.Admin.Models
@@ -22,8 +19,9 @@ namespace Bootstrap.Admin.Models
         /// <param name="controller"></param>
         public ProfilesModel(ControllerBase controller) : base(controller)
         {
-            // TODO: 找到MapPath方法
-            var fileName = AppContext.BaseDirectory + Icon;
+            var host = controller.HttpContext.RequestServices.GetService(typeof(IHostingEnvironment)) as IHostingEnvironment;
+            if (host == null) return;
+            var fileName = Path.Combine(host.WebRootPath, Icon.TrimStart('~', '/').Replace('/', '\\'));
             if (File.Exists(fileName))
             {
                 Size = new FileInfo(fileName).Length;
