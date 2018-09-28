@@ -254,9 +254,9 @@ a, a:hover, a:focus {
         vertical-align: middle;
     }
 
-    .userinfo .dropdown-toggle:hover {
+    .userinfo .dropdown-toggle:hover, .userinfo.show .dropdown-toggle {
         color: #fff;
-        border: 1px solid #fff !important;
+        border: 1px solid #fff;
     }
 
 .userinfo .dropdown-item {
