@@ -269,15 +269,23 @@ a, a:hover, a:focus {
 
     .userinfo .dropdown-item a {
         text-align: center;
-        color: #777;
         padding: 15px 10px;
         flex: 1 1 33.333%;
+        color: #777;
     }
 
         .userinfo .dropdown-item a i {
             font-size: 1.025rem;
             display: block;
             margin-bottom: 4px;
+        }
+
+    .userinfo .dropdown-item:first-child {
+        border-radius: 4px 4px 0 0;
+    }
+
+        .userinfo .dropdown-item:first-child a:hover {
+            color: #333;
         }
 
     .userinfo .dropdown-item:last-child {
@@ -290,6 +298,10 @@ a, a:hover, a:focus {
             background: #a9d96c;
             background-image: linear-gradient(to bottom, #a9d96c 0%, #799e51 100%);
         }
+
+            .userinfo .dropdown-item:last-child a:hover {
+                color: #d40c0b;
+            }
 
 .userinfo .username {
     max-width: 90px;

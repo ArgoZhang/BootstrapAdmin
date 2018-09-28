@@ -268,6 +268,14 @@ a, a:hover, a:focus {
             margin-bottom: 4px;
         }
 
+    .userinfo .dropdown-item:first-child {
+        border-radius: 4px 4px 0 0;
+    }
+
+        .userinfo .dropdown-item:first-child a:hover {
+            color: #333;
+        }
+
     .userinfo .dropdown-item:last-child {
         border-radius: 0 0 4px 4px;
     }
@@ -278,6 +286,10 @@ a, a:hover, a:focus {
             background: #a9d96c;
             background-image: linear-gradient(to bottom, #a9d96c 0%, #799e51 100%);
         }
+
+            .userinfo .dropdown-item:last-child a:hover {
+                color: #d40c0b;
+            }
 
 .userinfo .username {
     max-width: 90px;
