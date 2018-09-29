@@ -90,10 +90,6 @@ aside {
         background: #3a4756;
     }
 
-.modal-body .dd {
-    margin-bottom: 15px;
-}
-
 a, a:hover, a:focus {
     text-decoration: none;
     outline: none;
@@ -352,7 +348,6 @@ a, a:hover, a:focus {
     .go-top i {
         color: #2A3542;
     }
-/*notify bar*/
 
 .breadcrumb {
     border-top: solid 1px #fff;
@@ -366,91 +361,6 @@ a, a:hover, a:focus {
         padding-right: 6px;
     }
 
-.content-body {
-    position: fixed;
-    left: 0;
-    bottom: 40px;
-    right: 0;
-    top: 98px;
-    overflow: hidden;
-}
-
-    .content-body iframe {
-        width: 100%;
-        height: 100%;
-        border: none;
-    }
-
-.welcome-bg {
-    background-image: url('../images/bg.jpg');
-    background-size: 100% 100%;
-}
-
-/*bs v4.1.3*/
-label.dropdown-item:first-child {
-    margin-top: 0.5rem;
-}
-
-.cache-title {
-    font-weight: bold;
-    color: #0077de;
-    background-color: #b5f1b6;
-    padding: 12px 15px;
-    border-radius: 4px 4px 0 0;
-    margin-bottom: 0;
-}
-
-.cache-item {
-    display: flex;
-    align-items: center;
-    padding: 10px 4px;
-    border-bottom: 1px solid #EBEBEB;
-}
-
-    .cache-item:last-child {
-        border-bottom: none;
-        margin-bottom: 15px;
-    }
-
-    .cache-item > :not(:first-child) {
-        margin-left: 10px;
-        display: flex;
-    }
-
-    .cache-item > :nth-child(2) {
-        flex: 1 1 auto;
-    }
-
-        .cache-item > :nth-child(2) span:not(.badge) {
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
-            display: inline-block;
-            width: 152px;
-        }
-
-    .cache-item > :nth-child(3) {
-        flex: 1 1 auto;
-        display: none;
-    }
-
-    .cache-item + .cache-title {
-        margin-top: 12px;
-    }
-
-    .cache-item .badge {
-        position: relative;
-        top: -8px;
-        margin-left: 0;
-        line-height: normal;
-    }
-
-    .cache-item .btn, td .btn:not(.btn-lg) {
-        margin-left: 5px;
-        font-size: 0.75rem;
-        padding: 1px 5px;
-    }
-
-.card-img {
-    max-width: 258px;
+.container-fluid {
+    padding-top: 15px;
 }

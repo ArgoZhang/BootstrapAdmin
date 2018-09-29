@@ -2,17 +2,6 @@
     .sidebar-toggle-box span {
         display: inline;
     }
-
-    .cache-item > :nth-child(2) {
-        flex: 0 0 auto;
-    }
-
-    .cache-item > :nth-child(3) {
-        display: block;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
-    }
 }
 
 @media (min-width: 667px) {
@@ -22,11 +11,6 @@
 }
 
 @media (min-width: 768px) {
-    html, body {
-        height: 100%;
-        overflow: hidden;
-    }
-
     .sidebar-toggle-box {
         flex: 0 1 auto;
     }
