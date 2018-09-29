@@ -31,7 +31,7 @@
     // breadcrumb
     var $breadNav = $('#breadNav');
     var arch = $sideMenu.find('a.active').last();
-    if (arch.text() !== "") $breadNav.removeClass('d-none').text(arch.text());
+    $breadNav.removeClass('d-none').text(arch.text() || $('title').text());
 
     $('.sidebar-toggle-box').on('click', function () {
         if ($(window).width() >= 768) return;

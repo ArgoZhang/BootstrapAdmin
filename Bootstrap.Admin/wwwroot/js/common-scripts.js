@@ -149,7 +149,7 @@ $(function () {
     // breadcrumb
     var $breadNav = $('#breadNav');
     var arch = $sideMenu.find('a.active').last();
-    if (arch.text() !== "") $breadNav.removeClass('d-none').text(arch.text());
+    $breadNav.removeClass('d-none').text(arch.text() || $('title').text());
 
     $.fn.extend({
         autoScrollSidebar: function (options) {
