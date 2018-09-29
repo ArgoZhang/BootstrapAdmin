@@ -12,10 +12,10 @@
         <link href="~/css/font-awesome.min.css" rel="stylesheet" asp-append-version="true" />
     </environment>
     @RenderSection("css", false)
-    <link href="~/css/theme.css" rel="stylesheet" asp-append-version="true" />
-    <link href="~/css/theme-responsive.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/css/site-responsive.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/theme.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/theme-responsive.css" rel="stylesheet" asp-append-version="true" />
     @if (!string.IsNullOrEmpty(Model.Theme))
     {
         <link href="~/css/@Model.Theme" rel="stylesheet" asp-append-version="true" />

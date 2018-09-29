@@ -340,7 +340,6 @@ a, a:hover, a:focus {
     .go-top i {
         color: #2A3542;
     }
-/*notify bar*/
 
 .breadcrumb {
     border: solid 1px #ddd;
@@ -355,29 +354,9 @@ a, a:hover, a:focus {
         padding-right: 6px;
     }
 
-.content-body {
-    position: fixed;
-    left: 0;
-    bottom: 40px;
-    right: 0;
-    top: 98px;
-    overflow: hidden;
-}
-
-    .content-body iframe {
-        width: 100%;
-        height: 100%;
-        border: none;
-    }
-
 .welcome-bg {
     background-image: url('../images/bg.jpg');
     background-size: 100% 100%;
-}
-
-/*bs v4.1.3*/
-label.dropdown-item:first-child {
-    margin-top: 0.5rem;
 }
 
 .cache-title {
