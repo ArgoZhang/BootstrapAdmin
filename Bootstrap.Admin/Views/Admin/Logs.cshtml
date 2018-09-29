@@ -30,12 +30,8 @@
     <div class="card-header">查询条件</div>
     <div class="card-body">
         <form class="form-inline">
-            <div class="form-row">
-                <div class="form-group col-12">
-                    <label class="control-label" for="txt_operate_type">操作类型</label>
-                    <input type="text" class="form-control" id="txt_operate_type" />
-                </div>
-                <div class="form-group col-sm-6 col-lg-5">
+            <div class="row">
+                <div class="form-group col-sm-auto">
                     <label class="control-label" for="txt_operate_start">起始时间</label>
                     <div class="input-group date form_date">
                         <input id="txt_operate_start" class="form-control" size="16" type="text" value="" readonly>
@@ -47,7 +43,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group col-sm-6 col-lg-5">
+                <div class="form-group col-sm-auto">
                     <label class="control-label" for="txt_operate_end">终止时间</label>
                     <div class="input-group date form_date">
                         <input id="txt_operate_end" class="form-control" size="16" type="text" value="" readonly>
@@ -59,7 +55,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group col-lg-2">
+                <div class="form-group col-sm-auto">
+                    <label class="control-label" for="txt_operate_type">操作类型</label>
+                    <input type="text" class="form-control" id="txt_operate_type" />
+                </div>
+                <div class="form-group col-sm-auto flex-sm-fill justify-content-sm-end">
                     <button type="button" id="btn_query" class="btn btn-primary btn-fill"><i class="fa fa-search" aria-hidden="true"></i><span>查询</span></button>
                 </div>
             </div>

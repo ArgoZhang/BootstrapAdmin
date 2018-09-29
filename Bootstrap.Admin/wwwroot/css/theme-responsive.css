@@ -33,6 +33,10 @@
         align-self: flex-end;
         margin-bottom: 2px;
     }
+
+    .input-group.date.form_date {
+        width: 186px;
+    }
 }
 
 @media (min-width: 940px) {
