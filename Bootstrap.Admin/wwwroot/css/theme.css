@@ -17,9 +17,13 @@
     border-color: #ced4da;
 }
 
-.close:focus {
-    outline: none;
+.close {
+    transition: all .25s linear;
 }
+
+    .close:focus {
+        outline: none;
+    }
 
 .dropdown-divider {
     margin: 0.125rem 0;
@@ -142,6 +146,10 @@ input.pending {
 
     .bootstrap-table .fixed-table-body .table {
         border-bottom: none;
+    }
+
+    .bootstrap-table .fixed-table-toolbar .columns-right .btn-group .dropdown-menu {
+        padding: 10px 0;
     }
 
 .card {
