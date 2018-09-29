@@ -1,7 +1,6 @@
 ﻿using Bootstrap.Client.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 
 namespace Bootstrap.Client.Controllers
 {
@@ -26,7 +25,7 @@ namespace Bootstrap.Client.Controllers
         [AllowAnonymous]
         public IActionResult Error(int id)
         {
-            return id == 404 ? View("NotFound") : View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return id == 404 ? View("NotFound") : View();
         }
     }
 }
