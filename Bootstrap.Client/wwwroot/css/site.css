@@ -228,10 +228,6 @@ a, a:hover, a:focus {
         font-weight: bold;
     }
 
-.nav-link {
-    transition: color .25s linear;
-}
-
 .userinfo img {
     height: 29px;
     width: 29px;

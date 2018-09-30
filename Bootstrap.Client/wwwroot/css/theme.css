@@ -21,6 +21,10 @@
     border-color: #ced4da;
 }
 
+.nav-link {
+    transition: color .25s linear;
+}
+
 .close {
     transition: all .25s linear;
 }
