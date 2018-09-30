@@ -25,7 +25,6 @@
 @media (min-width: 576px) {
     .btn-fill {
         width: auto;
-        align-self: flex-end;
     }
 }
 
