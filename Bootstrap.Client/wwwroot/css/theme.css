@@ -34,11 +34,16 @@
     color: #fff;
 }
 
-.dropdown-menu a {
-    transition: all .25s linear;
-    padding: 6px 20px;
-    display: block;
+.dropdown-menu {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.176);
+    padding: 0;
 }
+
+    .dropdown-menu a {
+        transition: all .25s linear;
+        padding: 6px 20px;
+        display: block;
+    }
 
 .dropdown-divider {
     margin: 0.125rem 0;
@@ -152,18 +157,6 @@ input.pending {
     display: inline-block;
 }
 
-.date > input {
-    cursor: pointer;
-}
-
-.datetimepicker {
-    padding: 4px;
-}
-
-    .datetimepicker table tr td span {
-        white-space: nowrap;
-    }
-
 .bootstrap-table .table thead > tr > th {
     border-top: none;
 }
@@ -196,10 +189,14 @@ input.pending {
         padding-top: 8px;
     }
 
-    .bootstrap-table .fixed-table-container .card-view .value > a, .bootstrap-table .fixed-table-container .card-view .value > div {
-        min-width: 60px;
-        display: inline-block;
+    .bootstrap-table .fixed-table-container .card-view .value {
+        word-break: break-all;
     }
+
+        .bootstrap-table .fixed-table-container .card-view .value > a, .bootstrap-table .fixed-table-container .card-view .value > div {
+            min-width: 60px;
+            display: inline-block;
+        }
 
     .bootstrap-table .card-view:not(:last-child) {
         margin-bottom: 6px;
@@ -240,11 +237,6 @@ input.pending {
 .was-validated .form-control:valid:focus, .form-control.is-valid:focus, .was-validated .custom-select:valid:focus, .custom-select.is-valid:focus {
     border-color: #28a745;
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(40, 167, 69,.6);
-}
-
-.dropdown-menu {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.176);
-    padding: 0;
 }
 
 .arrow-primary {
@@ -312,3 +304,15 @@ input.pending {
     margin-left: 6px;
     color: #5bc0de;
 }
+
+.date > input {
+    cursor: pointer;
+}
+
+.datetimepicker {
+    padding: 4px;
+}
+
+    .datetimepicker table tr td span {
+        white-space: nowrap;
+    }
