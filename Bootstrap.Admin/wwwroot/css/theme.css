@@ -8,13 +8,21 @@
         box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6);
     }
 
+.container-fluid {
+    padding-top: 15px;
+}
+
 .input-group .btn:focus, .btn-group .btn:focus, .page-link:focus {
-    box-shadow: none !important;
+    box-shadow: none;
 }
 
 .input-group .btn:not(.btn-secondary):not(.btn-primary):not(.btn-warning):not(.btn-info):not(.btn-danger) {
     background-color: #e9ecef;
     border-color: #ced4da;
+}
+
+.nav-link {
+    transition: color .25s linear;
 }
 
 .close {
@@ -30,11 +38,16 @@
     color: #fff;
 }
 
-.dropdown-menu a {
-    transition: all .25s linear;
-    padding: 6px 20px;
-    display: block;
+.dropdown-menu {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.176);
+    padding: 0;
 }
+
+    .dropdown-menu a {
+        transition: all .25s linear;
+        padding: 6px 20px;
+        display: block;
+    }
 
 .dropdown-divider {
     margin: 0.125rem 0;
@@ -93,6 +106,12 @@ input.pending {
     padding: 10px 15px;
 }
 
+.modal-title {
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .modal-body, .card-body {
     padding: 15px 15px 0 15px;
 }
@@ -101,9 +120,29 @@ input.pending {
     display: inline;
 }
 
-.card-header a {
-    color: #797979;
+.card {
+    margin-bottom: 15px;
 }
+
+    .card .card-header a {
+        color: #797979;
+    }
+
+        .card .card-header a[data-toggle="collapse"] {
+            display: block;
+        }
+
+            .card .card-header a[data-toggle="collapse"] i {
+                transition: all .25s linear;
+            }
+
+            .card .card-header a[data-toggle="collapse"].collapsed i {
+                transform: rotate(-90deg);
+            }
+
+            .card .card-header a[data-toggle="collapse"] span {
+                margin-left: 6px;
+            }
 
 .btn span:last-child {
     margin-left: 4px;
@@ -122,7 +161,6 @@ input.pending {
     display: inline-block;
 }
 
-/*Bootstrap Table BUG */
 .bootstrap-table .table thead > tr > th {
     border-top: none;
 }
@@ -133,14 +171,6 @@ input.pending {
 
 .table-condensed > thead > tr > th, .table-condensed > tbody > tr > th, .table-condensed > tfoot > tr > th, .table-condensed > thead > tr > td, .table-condensed > tbody > tr > td, .table-condensed > tfoot > tr > td {
     padding: 5px;
-}
-
-.datetimepicker table tr td span {
-    white-space: nowrap;
-}
-
-.card-view:not(:last-child) {
-    margin-bottom: 6px;
 }
 
 .fixed-table-loading {
@@ -155,13 +185,26 @@ input.pending {
         border-bottom: none;
     }
 
+        .bootstrap-table .fixed-table-body .table td > a {
+            display: block;
+        }
+
     .bootstrap-table .fixed-table-toolbar .columns-right .btn-group .dropdown-menu {
         padding-top: 8px;
     }
 
-.card {
-    margin-bottom: 15px;
-}
+    .bootstrap-table .fixed-table-container .card-view .value {
+        word-break: break-all;
+    }
+
+        .bootstrap-table .fixed-table-container .card-view .value > a, .bootstrap-table .fixed-table-container .card-view .value > div {
+            min-width: 60px;
+            display: inline-block;
+        }
+
+    .bootstrap-table .card-view:not(:last-child) {
+        margin-bottom: 6px;
+    }
 
 .card-body .bootstrap-table {
     margin-top: -10px;
@@ -170,7 +213,17 @@ input.pending {
 .fixed-table-toolbar .dropdown-menu {
     min-width: unset;
 }
-/*Bootstrap Table BUG END*/
+
+.popover {
+    max-width: 320px;
+    padding: 0;
+}
+
+.popover-content {
+    max-height: 240px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
 
 .file-drop-zone.clickable:hover {
     border: 1px dashed #999;
@@ -188,11 +241,6 @@ input.pending {
 .was-validated .form-control:valid:focus, .form-control.is-valid:focus, .was-validated .custom-select:valid:focus, .custom-select.is-valid:focus {
     border-color: #28a745;
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(40, 167, 69,.6);
-}
-
-.dropdown-menu {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.176);
-    padding: 0;
 }
 
 .arrow-primary {
@@ -218,35 +266,35 @@ input.pending {
 .shadow-primary:hover {
     -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(0, 123, 255, 0.5);
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(0, 123, 255, 0.5);
-    border-color: #007bff !important;
+    border-color: #007bff;
 }
 
 .shadow-success:hover {
     -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(40, 167, 69, 0.5);
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(40, 167, 69, 0.5);
-    border-color: #28a745 !important;
+    border-color: #28a745;
 }
 
 .shadow-info:hover {
     -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(23, 162, 184, 0.5);
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(23, 162, 184, 0.5);
-    border-color: #17a2b8 !important;
+    border-color: #17a2b8;
 }
 
 .shadow-warning:hover {
     -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(255, 193, 7, 0.5);
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(255, 193, 7, 0.5);
-    border-color: #ffc107 !important;
+    border-color: #ffc107;
 }
 
 .shadow-danger:hover {
-    border: 1px solid #dc3545 !important;
+    border: 1px solid #dc3545;
     -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(220, 53, 69, 0.5);
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(220, 53, 69, 0.5);
 }
 
-.show .shadow-default, .shadow-default:hover {
-    border: 1px solid #337ab7 !important;
+.shadow-default, .shadow-default:hover {
+    border: 1px solid #337ab7;
     color: #333;
     -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6);
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6);
@@ -255,3 +303,20 @@ input.pending {
 .mCSB_scrollTools {
     width: 10px;
 }
+
+.control-label > a {
+    margin-left: 6px;
+    color: #5bc0de;
+}
+
+.date > input {
+    cursor: pointer;
+}
+
+.datetimepicker {
+    padding: 4px;
+}
+
+    .datetimepicker table tr td span {
+        white-space: nowrap;
+    }

@@ -95,15 +95,6 @@ a, a:hover, a:focus {
     outline: none;
 }
 
-.dropdown-menu a {
-    transition: all .25s linear;
-    padding: 6px 20px;
-}
-
-.dropdown-menu .divider {
-    margin: 1px 0;
-}
-
 /*Title*/
 .sidebar-toggle-box {
     font-size: 1.25rem;
@@ -111,15 +102,14 @@ a, a:hover, a:focus {
     flex: 1 1 auto;
     padding: 12px 0;
     transition: color .3s linear;
-    cursor: pointer;
 }
-
-    .sidebar-toggle-box span {
-        display: none;
-    }
 
     .sidebar-toggle-box:hover {
         color: #fff;
+    }
+
+    .sidebar-toggle-box span {
+        display: none;
     }
 
 .header {
@@ -168,7 +158,7 @@ a, a:hover, a:focus {
     background-color: rgba(0, 0, 0, 0.05);
 }
 
-.dropdown-item span {
+.dropdown-item i + span {
     margin-left: 6px;
 }
 
@@ -261,9 +251,9 @@ a, a:hover, a:focus {
 
     .userinfo .dropdown-item a {
         text-align: center;
+        color: #777;
         padding: 15px 10px;
         flex: 1 1 33.333%;
-        color: #777;
     }
 
         .userinfo .dropdown-item a i {
@@ -315,7 +305,7 @@ a, a:hover, a:focus {
     left: 0;
     bottom: 0;
     right: 0;
-    z-index: 1;
+    z-index: 100;
     display: flex;
 }
 
@@ -356,7 +346,7 @@ a, a:hover, a:focus {
     .breadcrumb i {
         padding-right: 6px;
     }
-    
+
 .bs-bars {
     display: none;
 }
@@ -364,3 +354,24 @@ a, a:hover, a:focus {
 .btn-fill {
     width: 100%;
 }
+
+.toolbar {
+    position: relative;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    line-height: 34px;
+}
+
+    .toolbar .dropdown-menu a {
+        padding: 0 14px;
+        display: table-cell;
+        color: #504d4d;
+    }
+
+        .toolbar .dropdown-menu a:not(:first-child) {
+            border-left: solid 1px #aeb2b7;
+        }
+
+        .toolbar .dropdown-menu a:hover {
+            color: #235e90;
+        }

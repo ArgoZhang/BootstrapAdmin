@@ -9,16 +9,16 @@
 }
 
 @media (min-width: 568px) {
-    .sidebar-toggle-box span {
-        display: inline;
-    }
-
     .toolbar {
         display: none;
     }
 
     .bs-bars {
         display: inline-block;
+    }
+
+    .sidebar-toggle-box span {
+        display: inline;
     }
 }
 
@@ -31,6 +31,11 @@
 @media (min-width: 667px) {
     .header .nav {
         display: flex;
+        flex: 1 1 auto;
+    }
+
+    .sidebar-toggle-box {
+        flex: 0 1 auto;
     }
 }
 

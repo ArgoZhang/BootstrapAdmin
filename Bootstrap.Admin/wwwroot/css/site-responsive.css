@@ -1,4 +1,22 @@
+@media (min-width: 375px) {
+    .toolbar .dropdown-menu a {
+        padding: 0 20px;
+    }
+
+        .toolbar .dropdown-menu a:first-child {
+            border-left: none;
+        }
+}
+
 @media (min-width: 568px) {
+    .toolbar {
+        display: none;
+    }
+
+    .bs-bars {
+        display: inline-block;
+    }
+
     .sidebar-toggle-box span {
         display: inline;
     }
@@ -12,6 +30,12 @@
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
+    }
+}
+
+@media (min-width: 576px) {
+    .btn-fill {
+        width: auto;
     }
 }
 
@@ -34,6 +58,11 @@
     .header, .site-footer {
         position: fixed;
     }
+
+    .main-content {
+        position: fixed;
+        overflow: auto;
+    }
 }
 
 @media (min-width: 769px) {
@@ -51,5 +80,15 @@
         width: 210px;
         overflow: hidden;
         bottom: 40px;
+    }
+
+    .sidebar-open .main-content {
+        margin-left: 0;
+        display: block;
+    }
+
+    .main-content {
+        margin-left: 210px;
+        transition: none;
     }
 }
