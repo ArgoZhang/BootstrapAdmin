@@ -139,31 +139,26 @@
         var $firstElement = null;
 
         this.$element.find(op.childClass + ':visible').not(op.ignoreClass).each(function () {
-            if (!that.validElement(this) && $firstElement == null) $firstElement = $(this);
+            if (!that.validElement(this) && $firstElement === null) $firstElement = $(this);
         });
         if ($firstElement) $firstElement.tooltip('show');
-        return $firstElement == null;
+        return $firstElement === null;
     };
 
     Validate.prototype.validElement = function (element) {
         var result = this.check(element);
         this.tooltip(element, result);
-        return result
+        return result;
     };
 
     Validate.prototype.tooltip = function (element, valid) {
-        if (valid == "pending") return;
+        if (valid === "pending") return;
 
         var op = this.options;
         var $this = $(element);
-        try {
-            if (valid) $this.tooltip('dispose');
-            else {
-                if (!$this.hasClass(op.errorClass)) $this.tooltip();
-            }
-        }
-        catch (e) {
-
+        if (valid) $this.tooltip('dispose');
+        else {
+            if (!$this.hasClass(op.errorClass)) $this.tooltip();
         }
         if (!valid) {
             $this.removeClass(op.validClass).addClass(op.errorClass);
@@ -194,7 +189,7 @@
     };
 
     Validate.prototype.defaultMessage = function (element, rule) {
-        var message = $(element).attr('data-' + rule.method + '-msg') || (rule.method == 'required' && $(element).attr('placeholder')) || $.validator.messages[rule.method];
+        var message = $(element).attr('data-' + rule.method + '-msg') || rule.method === 'required' && $(element).attr('placeholder') || $.validator.messages[rule.method];
         var theregex = /\$?\{(\d+)\}/g;
         if (typeof message === "function") {
             message = message.call(this, rule.parameters, element);
@@ -232,7 +227,7 @@
     Validate.prototype.rules = function (element) {
         var $this = $(element);
         var rules = $this.data('lgb.Validate.Rules');
-        if (!rules) $this.data('lgb.Validate.Rules', (rules = $.validator.normalizeRules($.extend({ required: true }, $.validator.classRules(element), $.validator.attributeRules(element), this.attributeRules(element)))));
+        if (!rules) $this.data('lgb.Validate.Rules', rules = $.validator.normalizeRules($.extend({ required: true }, $.validator.classRules(element), $.validator.attributeRules(element), this.attributeRules(element))));
         return rules;
     };
 
@@ -240,13 +235,13 @@
         return this.each(function () {
             var $this = $(this);
             var data = $this.data('lgb.Validate');
-            var options = typeof option == 'object' && option;
+            var options = typeof option === 'object' && option;
 
-            if (!data && /valid|defaults/.test(option)) return
-            if (!data) $this.data('lgb.Validate', (data = new Validate(this, options)));
-            if (typeof option == 'string') data[option]();
-        })
-    };
+            if (!data && /valid|defaults/.test(option)) return;
+            if (!data) $this.data('lgb.Validate', data = new Validate(this, options));
+            if (typeof option === 'string') data[option]();
+        });
+    }
 
     $.fn.lgbValidate = Plugin;
     $.fn.lgbValidate.Constructor = Validate;
@@ -255,10 +250,15 @@
     };
     $.fn.lgbValid = function () {
         var $this = this;
-        return $this.attr(Validate.DEFAULTS.validResult) == 'true';
+        return $this.attr(Validate.DEFAULTS.validResult) === 'true';
     };
 
     $(function () {
+        if ($.isFunction($.validator)) {
+            $.validator.addMethod("ip", function (value, element) {
+                return this.optional(element) || /^(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])$/.test(value);
+            }, "请填写正确的IP地址");
+        }
         $('[data-toggle="LgbValidate"]').lgbValidate();
     });
 })(jQuery);

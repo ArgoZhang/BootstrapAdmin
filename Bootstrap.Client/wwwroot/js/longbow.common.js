@@ -116,7 +116,6 @@
                 id: "",
                 url: "",
                 data: {},
-                htmlTemplate: '<div class="form-group col-md-3 col-sm-4 col-6"><div class="form-check"><label class="form-check-label" title="{3}" data-toggle="tooltip"><input type="checkbox" class="form-check-input" value="{0}" {2}/><span>{1}</span></label></div></div>',
                 title: "",
                 modal: false,
                 loading: false,
@@ -192,23 +191,6 @@
             while (document.getElementById(prefix));
             return prefix;
         },
-        fullScreenStatus: function fullScreenStatus(value) {
-            if (value !== undefined) window.fullscreen = value;
-            return document.fullscreen ||
-                document.mozFullScreen ||
-                document.webkitIsFullScreen || window.fullscreen ||
-                false;
-        },
-        formatter: function (key) {
-            if (!this[key]) {
-                this[key] = {};
-                var that = this;
-                $.each($('#' + key).children(), function (index, element) {
-                    that[key][$(element).attr('value')] = $(element).text();
-                });
-            }
-            return this;
-        },
         formatUrl: function (url) {
             if (!url) return url;
             if (url.substr(0, 4) === "http") return url;
@@ -220,25 +202,6 @@
     window.lgbSwal = $.lgbSwal;
 
     $.fn.extend({
-        fixCollapse: function () {
-            var $root = this;
-            var $collapse = $root.find('a[data-toggle="collapse"]:visible');
-            $collapse.each(function () {
-                var $this = $(this);
-                if ($this.attr('href') !== '#') return;
-                var $target = $this.parent().next();
-                var tId = $.getUID('collapse');
-                $target.attr('id', tId);
-                $this.attr('href', '#' + tId);
-            });
-            return this;
-        },
-        adjustDialog: function () {
-            var $modal_dialog = this;
-            var m_top = Math.max(0, ($(window).height() - $modal_dialog.height()) / 2);
-            $modal_dialog.css({ 'margin': m_top + 'px auto' });
-            return this;
-        },
         autoCenter: function (options) {
             options = $.extend({ top: 0 }, options);
             var that = this;
@@ -253,8 +216,7 @@
             return this;
         },
         footer: function (options) {
-            if ($(window).width() >= 768) { return this.addClass('position-fixed'); }
-            var op = $.extend({ header: "header", content: ".main-content" }, options);
+            var op = $.extend({ header: "header", content: ".container-fluid" }, options);
             return $(op.header).outerHeight() + $(op.content).outerHeight() + this.outerHeight() > $(window).height() ? this.removeClass('position-fixed') : this.addClass('position-fixed');
         },
         lgbTable: function (options) {
@@ -312,6 +274,102 @@
                 });
             }
             return this;
+        },
+        lgbDatePicker: function (options) {
+            if (!$.isFunction(this.datetimepicker)) return this;
+            var option = $.extend({
+                language: 'zh-CN',
+                weekStart: 1,
+                todayBtn: 1,
+                autoclose: 1,
+                todayHighlight: 1,
+                startView: 2,
+                minView: 2,
+                forceParse: 0,
+                format: 'yyyy-mm-dd',
+                pickerPosition: 'bottom-left',
+                fontAwesome: true
+            }, options);
+            this.datetimepicker(option);
+            return this;
+        },
+        lgbIndicator: function (options) {
+            if (/update/.test(options)) {
+                var $indicator = this.data('radialIndicator');
+                if ($indicator.indOption.percentage) $indicator.animate(this.attr('data-val') * 100 / this.attr('data-max'));
+                else $indicator.value(this.attr('data-val'));
+                return this;
+            }
+            this.each(function () {
+                var op = $.extend({
+                    barColor: {
+                        0: '#33CC33',
+                        70: '#c5c521',
+                        80: '#e46121',
+                        90: '#c92b2b',
+                        100: '#FF0000'
+                    },
+                    radius: 34,
+                    interaction: false,
+                    barWidth: 5,
+                    roundCorner: true,
+                    percentage: true,
+                }, options);
+                var $this = $(this);
+                $this.radialIndicator(op);
+                if ($this.attr('data-val')) {
+                    var $indicator = $this.data('radialIndicator');
+                    if ($indicator.indOption.percentage) $indicator.animate($this.attr('data-val') * 100 / $this.attr('data-max'));
+                    else $indicator.value($this.attr('data-val'));
+                }
+            });
+            return this;
+        },
+        lgbCountUp: function (options) {
+            options = $.extend({}, options);
+            this.each(function () {
+                var option = {
+                    useEasing: true,
+                    useGrouping: false,
+                    separator: ',',
+                    decimal: '.'
+                };
+                var $element = $(this);
+                var startVal = options.startVal || 0;
+                var endVal = $element.text() || 100;
+                var decimals = options.decimals || 0;
+                var count = new CountUp(this, startVal, endVal, decimals, 1, $.extend(option, options));
+                count.start();
+            });
+            return this;
+        },
+        lgbInfo: function (option) {
+            this.each(function () {
+                var $element = $(this);
+                $element.append($.format('<a href="#" tabindex="-1" role="button" data-toggle="popover"><i class="fa fa-question-circle"></i></a>'));
+            });
+            var container = $(this).parent().attr('data-container') || '#dialogNew';
+            this.find('[data-toggle="popover"]').popover($.extend({
+                title: function () {
+                    return $(this).parent().text();
+                }, content: function () {
+                    return $(this).parent().attr('data-content');
+                }, trigger: 'focus', html: true, container: container
+            }, option));
+            return this;
+        },
+        getTextByValue: function (key, value) {
+            // 通过Key指定一个下拉框，通过value获得下拉框value值的text属性
+            if (this.length !== 1) throw 'element must be one';
+            var ele = this.get(0);
+            if (!ele[key]) {
+                ele[key] = {};
+                var that = ele;
+                $.each($('#' + key).children(), function (index, element) {
+                    that[key][$(element).attr('value')] = $(element).text();
+                });
+            }
+            return ele[key][value];
         },
         msgHandler: function (options) {
             var settings = {
@@ -400,5 +458,13 @@
                 $element.text($op.text()).val($op.attr('data-val'));
             });
         }
+    });
+
+    $(function () {
+        $('[data-toggle="dropdown"].dropdown-select').dropdown('select');
+        $('[data-toggle="tooltip"]').tooltip();
+        $('[data-toggle="popover"]').popover();
+        $('[data-toggle="lgbinfo"]').lgbInfo();
+        $('.date').lgbDatePicker();
     });
 })(jQuery);
