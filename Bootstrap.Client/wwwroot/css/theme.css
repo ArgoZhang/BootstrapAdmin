@@ -307,3 +307,8 @@ input.pending {
 .mCSB_scrollTools {
     width: 10px;
 }
+
+.control-label > a {
+    margin-left: 6px;
+    color: #5bc0de;
+}
