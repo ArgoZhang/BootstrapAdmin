@@ -1,6 +1,31 @@
+@media (min-width: 375px) {
+    .toolbar .dropdown-menu a {
+        padding: 0 20px;
+    }
+
+        .toolbar .dropdown-menu a:first-child {
+            border-left: none;
+        }
+}
+
 @media (min-width: 568px) {
     .sidebar-toggle-box span {
         display: inline;
+    }
+
+    .toolbar {
+        display: none;
+    }
+
+    .bs-bars {
+        display: inline-block;
+    }
+}
+
+@media (min-width: 576px) {
+    .btn-fill {
+        width: auto;
+        align-self: flex-end;
     }
 }
 

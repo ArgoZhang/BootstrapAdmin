@@ -4,19 +4,9 @@
     }
 }
 
-@media (min-width: 568px) {
-    .toolbar {
-        display: none;
-    }
-
-    .bs-bars {
-        display: inline-block;
-    }
-}
-
 @media (min-width: 576px) {
     .form-group .form-control-url {
-        width: calc(100% - 90px);
+        width: calc(100% - 125px);
     }
 
     .form-inline .control-label {
@@ -28,13 +18,7 @@
         max-width: calc(90%);
     }
 
-    .btn-fill {
-        width: auto;
-        align-self: flex-end;
-        margin-bottom: 2px;
-    }
-
-    .input-group.date.form_date {
+    .input-group.date {
         width: 186px;
     }
 }

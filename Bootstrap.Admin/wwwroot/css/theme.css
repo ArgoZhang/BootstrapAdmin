@@ -25,12 +25,19 @@
         outline: none;
     }
 
-.dropdown-divider {
-    margin: 0.125rem 0;
+.dropdown-select + .dropdown-menu a:hover {
+    background: #007AC0;
+    color: #fff;
 }
 
-.btn-fill {
-    width: 100%;
+.dropdown-menu a {
+    transition: all .25s linear;
+    padding: 6px 20px;
+    display: block;
+}
+
+.dropdown-divider {
+    margin: 0.125rem 0;
 }
 
 .tooltip-inner {
@@ -149,7 +156,7 @@ input.pending {
     }
 
     .bootstrap-table .fixed-table-toolbar .columns-right .btn-group .dropdown-menu {
-        padding: 10px 0;
+        padding-top: 8px;
     }
 
 .card {
@@ -243,4 +250,8 @@ input.pending {
     color: #333;
     -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6);
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6);
+}
+
+.mCSB_scrollTools {
+    width: 10px;
 }

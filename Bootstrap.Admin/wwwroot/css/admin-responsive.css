@@ -8,6 +8,24 @@
         }
 }
 
+@media (min-width: 568px) {
+    .toolbar {
+        display: none;
+    }
+
+    .bs-bars {
+        display: inline-block;
+    }
+}
+
+@media (min-width: 576px) {
+    .btn-fill {
+        width: auto;
+        align-self: flex-end;
+        margin-bottom: 2px;
+    }
+}
+
 @media (min-width: 768px) {
     .main-content {
         position: fixed;

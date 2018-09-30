@@ -17,10 +17,6 @@
     display: none;
 }
 
-.mCSB_scrollTools {
-    width: 10px;
-}
-
 .main-content {
     padding: 15px 15px 0 15px;
     margin-left: 0;
@@ -73,6 +69,10 @@
         .toolbar .dropdown-menu a:hover {
             color: #235e90;
         }
+
+.btn-fill {
+    width: 100%;
+}
 
 /*Messages*/
 .mail-box {

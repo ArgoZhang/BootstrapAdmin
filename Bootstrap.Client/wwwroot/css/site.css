@@ -360,7 +360,11 @@ a, a:hover, a:focus {
     .breadcrumb i {
         padding-right: 6px;
     }
+    
+.bs-bars {
+    display: none;
+}
 
-.container-fluid {
-    padding-top: 15px;
+.btn-fill {
+    width: 100%;
 }
