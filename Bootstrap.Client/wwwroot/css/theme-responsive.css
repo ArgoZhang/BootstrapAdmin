@@ -42,3 +42,9 @@
         max-width: 900px;
     }
 }
+
+@media (min-width: 1200px) {
+    .modal-lg {
+        max-width: calc(100% - 200px);
+    }
+}
