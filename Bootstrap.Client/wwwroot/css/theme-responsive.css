@@ -41,10 +41,14 @@
     .modal-lg {
         max-width: 900px;
     }
+
+    .modal-xl {
+        max-width: calc(100% - 100px);
+    }
 }
 
 @media (min-width: 1200px) {
-    .modal-lg {
-        max-width: calc(100% - 200px);
+    .modal-xl {
+        max-width: 1100px;
     }
 }
