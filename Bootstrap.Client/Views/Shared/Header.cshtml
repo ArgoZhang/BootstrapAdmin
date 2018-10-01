@@ -8,6 +8,19 @@
                     <span id="websiteTitle">@Model.Title</span>
                 </a>
                 <div class="nav">
+                    <div class="dropdown">
+                        <a data-toggle="dropdown" class="shadow-default" href="#">
+                            <i class="fa fa-bell-o"></i>
+                            <span id="msgHeaderMsgBadge" class="badge badge-pill badge-success"></span>
+                        </a>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-arrow arrow-success"></div>
+                            <div id="msgHeaderMsgContent" class="dropdown-header bg-success">您有 <span id="msgHeaderMsg">0</span> 个未读的消息</div>
+                            <div class="dropdown-footer">
+                                <a href="#">查看所有消息</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="dropdown userinfo">
                     <a data-toggle="dropdown" class="dropdown-toggle shadow-default" href="#">

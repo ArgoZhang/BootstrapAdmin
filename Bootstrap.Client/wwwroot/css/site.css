@@ -163,16 +163,10 @@ a, a:hover, a:focus {
 }
 
 .nav [data-toggle="dropdown"] {
-    border: 1px solid #eee;
     border-radius: 4px;
     padding: 6px 12px;
-    color: #777;
     transition: all .25s linear;
 }
-
-    .nav [data-toggle="dropdown"]:hover {
-        color: #333;
-    }
 
 .nav .dropdown-menu {
     width: 235px;
@@ -238,17 +232,20 @@ a, a:hover, a:focus {
 .userinfo .dropdown-toggle {
     display: block;
     padding: 6px;
-    border: 1px solid rgba(204, 204, 204, 0.5);
     border-radius: 4px;
-    color: #eee;
     transition: all .25s linear;
+}
+
+.userinfo .dropdown-toggle, .nav [data-toggle="dropdown"] {
+    border: 1px solid rgba(204, 204, 204, 0.5);
+    color: #eee;
 }
 
     .userinfo .dropdown-toggle:after {
         vertical-align: middle;
     }
 
-    .userinfo .dropdown-toggle:hover, .userinfo.show .dropdown-toggle {
+    .userinfo .dropdown-toggle:hover, .userinfo.show .dropdown-toggle, .nav [data-toggle="dropdown"]:hover {
         color: #fff;
         border: 1px solid #fff;
     }
