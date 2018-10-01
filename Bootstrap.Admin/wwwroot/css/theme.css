@@ -210,6 +210,14 @@ input.pending {
     margin-top: -10px;
 }
 
+.card-header a.fa {
+    transition: color .3s linear;
+}
+
+    .card-header a.fa:hover {
+        color: #333;
+    }
+
 .fixed-table-toolbar .dropdown-menu {
     min-width: unset;
 }
