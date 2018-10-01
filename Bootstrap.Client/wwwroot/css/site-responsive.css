@@ -51,4 +51,8 @@
     .breadcrumb {
         border-color: #ddd;
     }
+
+    .modal-body .bootstrap-table {
+        margin-top: -15px;
+    }
 }
