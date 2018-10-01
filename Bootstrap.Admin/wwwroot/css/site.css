@@ -170,7 +170,7 @@ a, a:hover, a:focus {
 .nav .dropdown-menu {
     width: 235px;
     border: none;
-    margin-left: -74px;
+    margin-left: -98px;
     margin-top: 12px;
 }
 
@@ -178,7 +178,7 @@ a, a:hover, a:focus {
     border-style: solid;
     border-width: 0 9px 9px;
     position: absolute;
-    left: 85px;
+    left: 108px;
     top: -9px;
 }
 
