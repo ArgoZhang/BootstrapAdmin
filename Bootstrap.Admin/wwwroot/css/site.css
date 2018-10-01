@@ -145,6 +145,11 @@ a, a:hover, a:focus {
         opacity: 0.8;
     }
 
+.dropdown-item.active, .dropdown-item:active {
+    color: rgba(0, 0, 0, 0.9);
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
 .dropdown-item i + span {
     margin-left: 6px;
 }
@@ -194,8 +199,8 @@ a, a:hover, a:focus {
         background-color: rgba(0, 0, 0, 0.05);
     }
 
-    .nav .dropdown-item:hover {
-        background-color: #93c9e8;
+    .nav .dropdown-item.active, .nav .dropdown-item:active {
+        color: #212529;
     }
 
     .nav .dropdown-item > :nth-child(2) {
