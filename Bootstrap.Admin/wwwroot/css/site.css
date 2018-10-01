@@ -138,18 +138,6 @@ a, a:hover, a:focus {
             margin-right: 6px;
         }
 
-    .header [data-toggle="dropdown"] {
-        border: 1px solid #eee;
-        border-radius: 4px;
-        padding: 6px 12px;
-        color: #777;
-        transition: all .25s linear;
-    }
-
-        .header [data-toggle="dropdown"]:hover {
-            color: #333;
-        }
-
     .header .badge {
         position: absolute;
         right: -6px;
@@ -157,14 +145,14 @@ a, a:hover, a:focus {
         opacity: 0.8;
     }
 
-    .header .dropdown-item.active, .header .dropdown-item:active {
-        color: #fff;
-        text-decoration: none;
-        background-color: transparent;
-    }
-
 .dropdown-item i + span {
     margin-left: 6px;
+}
+
+.nav [data-toggle="dropdown"] {
+    border-radius: 4px;
+    padding: 6px 12px;
+    transition: all .25s linear;
 }
 
 .nav .dropdown-menu {
@@ -231,10 +219,21 @@ a, a:hover, a:focus {
 .userinfo .dropdown-toggle {
     display: block;
     padding: 6px;
+    border-radius: 4px;
+    transition: all .25s linear;
+}
+
+.userinfo .dropdown-toggle, .nav [data-toggle="dropdown"] {
+    border: 1px solid #eee;
+    color: #777;
 }
 
     .userinfo .dropdown-toggle:after {
         vertical-align: middle;
+    }
+
+    .userinfo .dropdown-toggle:hover, .userinfo.show .dropdown-toggle, .nav [data-toggle="dropdown"]:hover {
+        color: #333;
     }
 
 .userinfo .dropdown-item {
