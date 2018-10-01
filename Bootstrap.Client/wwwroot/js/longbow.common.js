@@ -150,6 +150,17 @@
                 }
                 url = url + "?" + qs.join('&');
             }
+
+            function success(result) {
+                if ($.isFunction(options.callback)) {
+                    options.callback.call(options, result);
+                }
+                if (options.modal && (result || options.loading)) {
+                    $(options.modal).modal('hide');
+                }
+                if (options.title) toastr[result ? 'success' : 'error'](options.title + (result ? "成功" : "失败"));
+            }
+
             var ajaxSettings = {
                 url: $.formatUrl(url),
                 data: data,
@@ -169,16 +180,6 @@
                 crossDomain: true
             });
             $.ajax(ajaxSettings);
-
-            function success(result) {
-                if ($.isFunction(options.callback)) {
-                    options.callback.call(options, result);
-                }
-                if (options.modal && (result || options.loading)) {
-                    $(options.modal).modal('hide');
-                }
-                if (options.title) toastr[result ? 'success' : 'error'](options.title + (result ? "成功" : "失败"));
-            }
         },
         lgbSwal: function (options) {
             if ($.isFunction(swal)) {
@@ -202,6 +203,15 @@
     window.lgbSwal = $.lgbSwal;
 
     $.fn.extend({
+        bc: function (options) {
+            if (this.attr('lgb_click')) return this;
+            this.attr('lgb_click', true);
+            const callback = options.callback;
+            const that = this;
+            options.callback = function () { that.removeAttr('lgb_click'); if ($.isFunction(callback)) callback.apply(arguments); };
+            $.bc(options);
+            return this;
+        },
         autoCenter: function (options) {
             options = $.extend({ top: 0 }, options);
             var that = this;

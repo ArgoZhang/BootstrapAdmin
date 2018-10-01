@@ -151,6 +151,17 @@
                 }
                 url = url + "?" + qs.join('&');
             }
+
+            function success(result) {
+                if ($.isFunction(options.callback)) {
+                    options.callback.call(options, result);
+                }
+                if (options.modal && (result || options.loading)) {
+                    $(options.modal).modal('hide');
+                }
+                if (options.title) toastr[result ? 'success' : 'error'](options.title + (result ? "成功" : "失败"));
+            }
+
             var ajaxSettings = {
                 url: $.formatUrl(url),
                 data: data,
@@ -170,16 +181,6 @@
                 crossDomain: true
             });
             $.ajax(ajaxSettings);
-
-            function success(result) {
-                if ($.isFunction(options.callback)) {
-                    options.callback.call(options, result);
-                }
-                if (options.modal && (result || options.loading)) {
-                    $(options.modal).modal('hide');
-                }
-                if (options.title) toastr[result ? 'success' : 'error'](options.title + (result ? "成功" : "失败"));
-            }
         },
         lgbSwal: function (options) {
             if ($.isFunction(swal)) {
@@ -192,23 +193,6 @@
             while (document.getElementById(prefix));
             return prefix;
         },
-        fullScreenStatus: function fullScreenStatus(value) {
-            if (value !== undefined) window.fullscreen = value;
-            return document.fullscreen ||
-                document.mozFullScreen ||
-                document.webkitIsFullScreen || window.fullscreen ||
-                false;
-        },
-        formatter: function (key) {
-            if (!this[key]) {
-                this[key] = {};
-                var that = this;
-                $.each($('#' + key).children(), function (index, element) {
-                    that[key][$(element).attr('value')] = $(element).text();
-                });
-            }
-            return this;
-        },
         formatUrl: function (url) {
             if (!url) return url;
             if (url.substr(0, 4) === "http") return url;
@@ -220,23 +204,13 @@
     window.lgbSwal = $.lgbSwal;
 
     $.fn.extend({
-        fixCollapse: function () {
-            var $root = this;
-            var $collapse = $root.find('a[data-toggle="collapse"]:visible');
-            $collapse.each(function () {
-                var $this = $(this);
-                if ($this.attr('href') !== '#') return;
-                var $target = $this.parent().next();
-                var tId = $.getUID('collapse');
-                $target.attr('id', tId);
-                $this.attr('href', '#' + tId);
-            });
-            return this;
-        },
-        adjustDialog: function () {
-            var $modal_dialog = this;
-            var m_top = Math.max(0, ($(window).height() - $modal_dialog.height()) / 2);
-            $modal_dialog.css({ 'margin': m_top + 'px auto' });
+        bc: function (options) {
+            if (this.attr('lgb_click')) return this;
+            this.attr('lgb_click', true);
+            const callback = options.callback;
+            const that = this;
+            options.callback = function () { that.removeAttr('lgb_click'); if ($.isFunction(callback)) callback.apply(arguments); };
+            $.bc(options);
             return this;
         },
         autoCenter: function (options) {
