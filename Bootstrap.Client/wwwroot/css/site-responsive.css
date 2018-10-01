@@ -40,14 +40,6 @@
 }
 
 @media (min-width: 768px) {
-    .sidebar-toggle-box {
-        flex: 0 1 auto;
-    }
-
-    .header .nav {
-        flex: 1 1 auto;
-    }
-
     .sidebar-open aside {
         transform: translate(-100%);
     }

@@ -162,10 +162,22 @@ a, a:hover, a:focus {
     margin-left: 6px;
 }
 
+.nav [data-toggle="dropdown"] {
+    border: 1px solid #eee;
+    border-radius: 4px;
+    padding: 6px 12px;
+    color: #777;
+    transition: all .25s linear;
+}
+
+    .nav [data-toggle="dropdown"]:hover {
+        color: #333;
+    }
+
 .nav .dropdown-menu {
     width: 235px;
     border: none;
-    margin-left: -74px;
+    margin-left: -98px;
     margin-top: 12px;
 }
 
@@ -173,7 +185,7 @@ a, a:hover, a:focus {
     border-style: solid;
     border-width: 0 9px 9px;
     position: absolute;
-    left: 85px;
+    left: 108px;
     top: -9px;
 }
 
