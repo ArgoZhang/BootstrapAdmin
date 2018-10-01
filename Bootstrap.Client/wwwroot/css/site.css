@@ -14,7 +14,7 @@ body {
     transform: translate(0);
 }
 
-.sidebar-open .site-footer {
+.sidebar-open .site-footer, .sidebar-open .container-fluid {
     display: none;
 }
 
