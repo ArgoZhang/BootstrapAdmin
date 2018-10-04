@@ -16,7 +16,7 @@
         ]
     });
 
-    $('.form_date').datetimepicker({
+    $('.date').datetimepicker({
         language: 'zh-CN',
         weekStart: 1,
         todayBtn: 1,
