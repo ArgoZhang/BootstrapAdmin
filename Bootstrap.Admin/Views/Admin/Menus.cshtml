@@ -14,15 +14,15 @@
 @section query {
     <form class="form-inline">
         <div class="row">
-            <div class="form-group col-6 col-md-5 col-xl-auto">
+            <div class="form-group col-sm-6 col-md-5 col-xl-auto">
                 <label class="control-label" for="txt_menus_name">菜单名称</label>
                 <input type="text" class="form-control" id="txt_menus_name" />
             </div>
-            <div class="form-group col-6 col-md-5 col-xl-auto">
+            <div class="form-group col-sm-6 col-md-5 col-xl-auto">
                 <label class="control-label" for="txt_parent_menus_name">父级菜单</label>
                 <input type="text" class="form-control" id="txt_parent_menus_name" />
             </div>
-            <div class="form-group col-6 col-md-5 col-xl-auto">
+            <div class="form-group form-group-dropdown col-sm-6 col-md-5 col-xl-auto">
                 <label class="control-label" for="sel_menus_category">菜单类别</label>
                 <div class="dropdown">
                     <button id="sel_menus_category" class="btn btn-success dropdown-select dropdown-toggle" data-toggle="dropdown">全部</button>
@@ -34,8 +34,8 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group col-6 col-md-5 col-xl-auto">
-                <label class="control-label" for="sel_menus_category">菜单类型</label>
+            <div class="form-group form-group-dropdown col-sm-6 col-md-5 col-xl-auto">
+                <label class="control-label" for="sel_menus_res">菜单类型</label>
                 <div class="dropdown">
                     <button id="sel_menus_res" class="btn btn-success dropdown-select dropdown-toggle" data-toggle="dropdown">全部</button>
                     <div class="dropdown-menu">
@@ -46,7 +46,7 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group col-md-2 col-xl-auto flex-xl-fill justify-content-xl-end">
+            <div class="form-group col-xl-auto flex-xl-fill justify-content-xl-end">
                 <button type="button" id="btn_query" class="btn btn-primary btn-fill"><i class="fa fa-search" aria-hidden="true"></i><span>查询</span></button>
             </div>
         </div>
@@ -120,7 +120,7 @@
                     <label class="control-label" for="url">路径</label>
                     <input type="text" class="form-control form-control-url" id="url" placeholder="不可为空，4000字以内" maxlength="4000" data-valid="true" />
                 </div>
-                <div class="form-group col-6">
+                <div class="form-group form-group-dropdown col-sm-6">
                     <label class="control-label" for="category">菜单类别</label>
                     <div class="dropup">
                         <button id="category" class="btn btn-success dropdown-select dropdown-toggle" data-toggle="dropdown" data-default-val="1">外部菜单</button>
@@ -130,7 +130,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group col-6">
+                <div class="form-group form-group-dropdown col-sm-6">
                     <label class="control-label" for="target">目标</label>
                     <div class="dropup">
                         <button id="target" class="btn btn-info dropdown-select dropdown-toggle" data-toggle="dropdown" data-default-val="_self">本窗口</button>
@@ -142,7 +142,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group col-6">
+                <div class="form-group form-group-dropdown col-sm-6">
                     <label class="control-label" for="isRes">菜单类型</label>
                     <div class="dropup">
                         <button id="isRes" class="btn btn-success dropdown-select dropdown-toggle" data-toggle="dropdown" data-default-val="0">菜单</button>
@@ -152,7 +152,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group col-6">
+                <div class="form-group form-group-dropdown col-sm-6">
                     <label class="control-label" for="app">所属应用</label>
                     <div class="dropup">
                         <button id="app" class="btn btn-info dropdown-select dropdown-toggle" data-toggle="dropdown" data-default-val="0">未设置</button>

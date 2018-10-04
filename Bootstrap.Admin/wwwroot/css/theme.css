@@ -321,3 +321,17 @@ input.pending {
     .datetimepicker table tr td span {
         white-space: nowrap;
     }
+
+.form-inline .form-group-dropdown {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+    .form-inline .form-group-dropdown .control-label {
+        padding: 6px 0;
+        margin: 0 10px 0 0;
+    }
+
+    .form-inline .form-group-dropdown .dropdown, .form-inline .form-group-dropdown .dropup {
+        display: inline-block;
+    }
