@@ -37,7 +37,7 @@
     border-style: solid;
 }
 
-.card-header, .modal-header {
+.card-header, .modal-header, .popover-header {
     background-color: #5899c8;
     border-color: #3581b8;
     color: #fff;
@@ -59,6 +59,86 @@
 .header .nav-item.active {
     border-bottom: solid 1px #307eb6;
 }
+
+.card, input.form-control, select.form-control, textarea.form-control, .fixed-table-container, .popover,
+.date .form-control[readonly] + .input-group-append .input-group-text,
+.date .form-control[readonly] + .input-group-append + .input-group-append .input-group-text {
+    border-color: #5198cb;
+}
+
+    .card .card-header, .modal-header {
+        background-image: linear-gradient(to bottom, #5893be 0%, #63a6d7 100%);
+        background-color: #5899c8;
+        border-color: #3581b8;
+    }
+
+        .card .card-header, a[data-toggle="collapse"], .modal-header, .modal-header .close, .popover-header {
+            color: #fff;
+        }
+
+            .card .card-header a {
+                color: #eee;
+            }
+
+                .card .card-header a:hover {
+                    color: #fff;
+                }
+
+.control-label {
+    color: #467fa7;
+}
+
+.breadcrumb > li + li:before, .breadcrumb, .pagination-detail {
+    color: #337ab7;
+}
+
+.date .form-control[readonly], .form-control[disabled], .form-control[readonly],
+.date .form-control[readonly] + .input-group-append .input-group-text,
+.date .form-control[readonly] + .input-group-append + .input-group-append .input-group-text {
+    background-color: rgba(84, 189, 220, 0.21);
+}
+
+.bs-popover-right .arrow::before, .bs-popover-auto[x-placement^="right"] .arrow::before {
+    border-right-color: #305873;
+}
+
+.table thead {
+    background-color: #7fb8d5;
+    color: #fff;
+    background-image: linear-gradient(to bottom, #5893be 0%, #63a6d7 100%);
+}
+
+.fixed-table-container thead th .th-inner, .fixed-table-container tbody td .th-inner {
+    line-height: 20px;
+}
+
+.fixed-table-container thead th .sortable {
+    padding-right: 8px;
+}
+
+.fixed-table-container thead th .both, .fixed-table-container thead th .desc, .fixed-table-container thead th .asc {
+    background-image: none;
+}
+
+    .fixed-table-container thead th .both:before {
+        display: inline-block;
+        font: normal normal normal 14px/1 FontAwesome;
+        font-size: inherit;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        margin-right: 8px;
+        content: "\f0dc";
+    }
+
+    .fixed-table-container thead th .desc:before {
+        content: "\f0dd";
+        color: #2e6da4;
+    }
+
+    .fixed-table-container thead th .asc:before {
+        content: "\f0de";
+        color: #2e6da4;
+    }
 
 @media (min-width: 768px) {
     .breadcrumb {
