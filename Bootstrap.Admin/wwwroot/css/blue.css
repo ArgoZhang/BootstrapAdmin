@@ -60,7 +60,8 @@
     border-bottom: solid 1px #307eb6;
 }
 
-.header, .card, .modal-footer, .form-control, .popover, .date .input-group-text {
+.header, .card, .modal-footer, .form-control, .popover, .date .input-group-text,
+.input-group .btn:not(.btn-secondary):not(.btn-primary):not(.btn-warning):not(.btn-info):not(.btn-danger) {
     border-color: #5198cb;
 }
 
@@ -90,7 +91,8 @@
     color: #337ab7;
 }
 
-.form-control[disabled], .form-control[readonly], .date .form-control, .date .input-group-text {
+.form-control[disabled], .form-control[readonly], .date .form-control, .date .input-group-text,
+.input-group .btn:not(.btn-secondary):not(.btn-primary):not(.btn-warning):not(.btn-info):not(.btn-danger) {
     background-color: rgba(84, 189, 220, 0.21);
 }
 
