@@ -26,6 +26,7 @@
     }
 
     .cache-item > :nth-child(3) {
+        flex: 1 1 auto;
         display: block;
         text-overflow: ellipsis;
         overflow: hidden;

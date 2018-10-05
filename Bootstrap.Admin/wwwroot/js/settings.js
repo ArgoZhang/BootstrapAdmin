@@ -66,8 +66,11 @@
                                     }).map(function (ele) {
                                         return $.format(html, ele.Interval, ele.Key, ele.Desc, ele.Value, $.format(item.Url, ele.Key), item.Self, ele.ElapsedSeconds);
                                     }).join('');
-                                    $sortable.append($.format('<h6 class="cache-title">{0}</h6>', item.Desc));
-                                    $sortable.append(content);
+
+                                    let cache = $('<div class="card-cache"></div>');
+                                    cache.append($.format('<h6>{0}</h6>', item.Desc));
+                                    cache.append(content);
+                                    $sortable.append(cache);
                                     $sortable.find('[data-toggle="tooltip"]').tooltip();
                                 }
                                 if (index === urls.length - 1) $refresh.removeClass('fa-spin');

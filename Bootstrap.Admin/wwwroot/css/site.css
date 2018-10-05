@@ -381,14 +381,18 @@ a, a:hover, a:focus {
     background-size: 100% 100%;
 }
 
-.cache-title {
-    font-weight: bold;
-    color: #0077de;
-    background-color: #b5f1b6;
-    padding: 12px 15px;
-    border-radius: 4px 4px 0 0;
-    margin-bottom: 0;
+.card-cache {
+    margin-bottom: 15px;
 }
+
+    .card-cache h6 {
+        font-weight: bold;
+        color: #0077de;
+        background-color: #b5f1b6;
+        padding: 12px 15px;
+        border-radius: 4px 4px 0 0;
+        margin-bottom: 0;
+    }
 
 .cache-item {
     display: flex;
@@ -398,13 +402,10 @@ a, a:hover, a:focus {
     border-width: 0 1px 1px 1px;
 }
 
-    .cache-item:last-child {
-        margin-bottom: 15px;
-    }
-
     .cache-item > :not(:first-child) {
         margin-left: 10px;
         display: flex;
+        align-items: center;
     }
 
     .cache-item > :nth-child(2) {
@@ -415,24 +416,18 @@ a, a:hover, a:focus {
             text-overflow: ellipsis;
             overflow: hidden;
             white-space: nowrap;
-            display: inline-block;
-            width: 152px;
+            width: 146px;
+            padding-right: 6px;
         }
 
     .cache-item > :nth-child(3) {
-        flex: 1 1 auto;
         display: none;
-    }
-
-    .cache-item + .cache-title {
-        margin-top: 12px;
     }
 
     .cache-item .badge {
         position: relative;
         top: -8px;
-        display: flex;
-        align-items: center;
+        height: 17px;
     }
 
     .cache-item .btn, td .btn:not(.btn-lg) {
