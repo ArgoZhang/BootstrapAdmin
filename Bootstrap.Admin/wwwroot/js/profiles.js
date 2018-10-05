@@ -23,11 +23,8 @@
     }).on('fileuploaded', function (event, data, previewId, index) {
         var url = data.response.initialPreview[0];
         if (!!url === true) $headerIcon.attr('src', url);
-    }).on('filebeforedelete', function (e, file) {
-        if (file === "default.jpg") {
-            swal({ showConfirmButton: false, showCancelButton: false, timer: 1500, title: '默认头像不能删除', type: "info" });
-            return true;
-        }
+    }).on('filebeforedelete', function (e, key) {
+        if (key === "default.jpg") return true;
         return new Promise(function (resolve, reject) {
             swal({
                 title: "您确定要删除吗？",

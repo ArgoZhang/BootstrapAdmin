@@ -20,7 +20,7 @@
             method: "post",
             callback: function (result) {
                 var title = result ? "提交成功<br/>等待管理员审批" : "提交失败";
-                swal({ html: true, showConfirmButton: false, showCancelButton: false, timer: 1500, title: title, type: result ? "success" : "error" });
+                lgbSwal({ timer: 1500, title: title, type: result ? "success" : "error" });
             }
         });
     });
