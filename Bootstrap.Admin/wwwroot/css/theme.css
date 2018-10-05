@@ -1,4 +1,4 @@
-﻿body, .form-control, .dropdown-menu, .btn:not(.btn-lg), .input-group-text {
+﻿body, .form-control, .dropdown-menu, .btn:not(.btn-lg), .input-group-text, .popover-header {
     font-size: 0.875rem;
 }
 
