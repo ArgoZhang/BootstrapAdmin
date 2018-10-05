@@ -141,7 +141,7 @@ $(function () {
 
     $("#gotoTop").on('click', function (e) {
         e.preventDefault();
-        $('#main-content, .content-body, body').animate({
+        $('.main-content, html').animate({
             scrollTop: 0
         }, 200);
     });
