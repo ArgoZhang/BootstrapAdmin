@@ -29,7 +29,7 @@
 
     $("#gotoTop").on('click', function (e) {
         e.preventDefault();
-        $('html').animate({
+        $('html, body').animate({
             scrollTop: 0
         }, 200);
     });
