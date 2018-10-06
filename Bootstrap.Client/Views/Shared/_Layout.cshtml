@@ -4,15 +4,15 @@
 }
 @section css {
     <environment include="Development">
-        <link href="~/css/bootstrap.css" rel="stylesheet" asp-append-version="true" />
-        <link href="~/css/font-awesome.css" rel="stylesheet" asp-append-version="true" />
-        <link href="~/css/toastr.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/css/bootstrap.css" rel="stylesheet" />
+        <link href="~/css/font-awesome.css" rel="stylesheet" />
+        <link href="~/css/toastr.css" rel="stylesheet" />
         <link href="~/css/jquery.mCustomScrollbar.css" rel="stylesheet" />
     </environment>
     <environment exclude="Development">
-        <link href="~/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true">
-        <link href="~/css/font-awesome.min.css" rel="stylesheet" asp-append-version="true" />
-        <link href="~/css/toastr.min.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/css/bootstrap.min.css" rel="stylesheet">
+        <link href="~/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="~/css/toastr.min.css" rel="stylesheet" />
         <link href="~/css/jquery.mCustomScrollbar.min.css" rel="stylesheet" />
     </environment>
     @RenderSection("css", false)
@@ -27,16 +27,16 @@
 }
 @section javascript {
     <environment include="Development">
-        <script src="~/js/bootstrap.bundle.js" asp-append-version="true"></script>
+        <script src="~/js/bootstrap.bundle.js"></script>
         <script src="~/js/jquery.mCustomScrollbar.js"></script>
     </environment>
     <environment exclude="Development">
-        <script src="~/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
+        <script src="~/js/bootstrap.bundle.min.js"></script>
         <script src="~/js/jquery.mCustomScrollbar.concat.min.js"></script>
     </environment>
-    <script src="~/js/toastr.min.js" asp-append-version="true"></script>
+    <script src="~/js/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="~/js/toastr.min.js"></script>
     <script src="~/js/longbow.common.js" asp-append-version="true"></script>
-    <script src="~/js/jquery.dcjqaccordion.2.7.js" asp-append-version="true"></script>
     <script src="~/js/common-scripts.js" asp-append-version="true"></script>
     @RenderSection("javascript", false)
 }
