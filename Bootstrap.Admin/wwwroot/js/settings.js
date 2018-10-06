@@ -60,7 +60,7 @@
                             cors: !item.Self,
                             callback: function (result) {
                                 if ($.isArray(result)) {
-                                    var html = '<div class="cache-item"><i class="fa fa-ellipsis-v"></i><div><span data-toggle="tooltip" title="{2}">{2}</span><span class="badge badge-pill badge-success">{0}</span></div><span title="{3}">{3}</span><div><span>{6}</span><button class="btn btn-danger" title="{1}" data-url="{4}?cacheKey={1}" data-toggle="tooltip" data-self="{5}" data-placement="left"><i class="fa fa-trash-o"></i></button></div></div>';
+                                    var html = '<div class="cache-item"><i class="fa fa-ellipsis-v"></i><span data-toggle="tooltip" title="{2}">{2}</span><span class="badge badge-pill badge-success">{0}</span><span title="{3}">{3}</span><div><span>{6}</span><button class="btn btn-danger" title="{1}" data-url="{4}?cacheKey={1}" data-toggle="tooltip" data-self="{5}" data-placement="left"><i class="fa fa-trash-o"></i></button></div></div>';
                                     var content = result.sort(function (x, y) {
                                         return x.Key > y.Key ? 1 : -1;
                                     }).map(function (ele) {

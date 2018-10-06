@@ -23,14 +23,16 @@
 
     .cache-item > :nth-child(2) {
         flex: 0 0 auto;
+        width: 136px;
     }
 
-    .cache-item > :nth-child(3) {
+    .cache-item > :nth-child(4) {
         flex: 1 1 auto;
         display: block;
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
+        margin-left: 10px;
     }
 }
 

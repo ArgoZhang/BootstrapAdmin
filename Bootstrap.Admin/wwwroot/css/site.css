@@ -404,27 +404,28 @@ a, a:hover, a:focus {
     border-width: 0 1px 1px 1px;
 }
 
-    .cache-item > :not(:first-child) {
+    .cache-item > :nth-child(2) {
+        flex: 1 1 auto;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
         margin-left: 10px;
+    }
+
+    .cache-item > :nth-child(4) {
+        display: none;
+    }
+
+    .cache-item > :nth-child(5) {
         display: flex;
         align-items: center;
     }
 
-    .cache-item > :nth-child(2) {
-        flex: 1 1 auto;
-    }
-
-        .cache-item > :nth-child(2) span:not(.badge) {
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
-            width: 138px;
-            padding-right: 6px;
+        .cache-item > :nth-child(5) span {
+            margin-left: 6px;
+            width: 24px;
+            text-align: right;
         }
-
-    .cache-item > :nth-child(3) {
-        display: none;
-    }
 
     .cache-item .badge {
         position: relative;
