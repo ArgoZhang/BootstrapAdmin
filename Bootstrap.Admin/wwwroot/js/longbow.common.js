@@ -207,8 +207,8 @@
         bc: function (options) {
             if (this.attr('lgb_click')) return this;
             this.attr('lgb_click', true);
-            const callback = options.callback;
-            const that = this;
+            var callback = options.callback;
+            var that = this;
             options.callback = function () { that.removeAttr('lgb_click'); if ($.isFunction(callback)) callback.apply(arguments); };
             $.bc(options);
             return this;

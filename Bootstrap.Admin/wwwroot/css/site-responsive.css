@@ -52,6 +52,10 @@
 }
 
 @media (min-width: 768px) {
+    html {
+        -ms-overflow-style: none;
+    }
+
     .sidebar-open aside {
         transform: translate(0);
     }
@@ -63,6 +67,7 @@
     .main-content {
         position: fixed;
         overflow: auto;
+        -ms-overflow-style: auto;
     }
 }
 

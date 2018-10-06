@@ -67,7 +67,7 @@
                                         return $.format(html, ele.Interval, ele.Key, ele.Desc, ele.Value, $.format(item.Url, ele.Key), item.Self, ele.ElapsedSeconds);
                                     }).join('');
 
-                                    let cache = $('<div class="card-cache"></div>');
+                                    var cache = $('<div class="card-cache"></div>');
                                     cache.append($.format('<h6>{0}</h6>', item.Desc));
                                     cache.append(content);
                                     $sortable.append(cache);

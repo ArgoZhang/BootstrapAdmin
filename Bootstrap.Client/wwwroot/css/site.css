@@ -1,5 +1,6 @@
 ﻿html {
     font-size: 16px;
+    -ms-overflow-style: auto;
 }
 
 body {
@@ -97,6 +98,7 @@ a, a:hover, a:focus {
 
 /*Title*/
 .sidebar-toggle-box {
+    display: block;
     font-size: 1.25rem;
     color: #eee;
     flex: 1 1 auto;
@@ -249,7 +251,6 @@ a, a:hover, a:focus {
 
 .userinfo .dropdown-item {
     display: flex;
-    flex-wrap: wrap;
     width: 270px;
     padding: 0;
     justify-content: space-around;
@@ -319,6 +320,7 @@ a, a:hover, a:focus {
         flex: 1 1 auto;
         text-align: center;
         margin-left: 4px;
+        display: inline-block;
     }
 
 .go-top {
