@@ -40,13 +40,8 @@
 .card-header, .modal-header, .popover-header {
     background-color: #5899c8;
     border-color: #3581b8;
-    color: #fff;
     border-radius: 4px 4px 0 0;
 }
-
-    .card-header a, .modal-header a {
-        color: #fff;
-    }
 
 .close {
     text-shadow: none;
@@ -71,17 +66,17 @@
         border-color: #3581b8;
     }
 
-        .card .card-header, a[data-toggle="collapse"], .modal-header, .modal-header .close, .popover-header {
+        .card .card-header, a[data-toggle="collapse"], .modal-header, .modal-header .close, .popover-header,
+        .card .card-header a, .modal-header a,
+        .card .card-header a:hover,
+        .close:not(:disabled):not(.disabled):hover,
+        .close:not(:disabled):not(.disabled):focus {
             color: #fff;
         }
 
             .card .card-header a {
                 color: #eee;
             }
-
-                .card .card-header a:hover {
-                    color: #fff;
-                }
 
 .control-label {
     color: #467fa7;
