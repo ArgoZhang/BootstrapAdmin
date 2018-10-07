@@ -22,8 +22,7 @@
     }
 
     .cache-item > :nth-child(2) {
-        flex: 0 0 auto;
-        width: 136px;
+        flex: 0 0 144px;
     }
 
     .cache-item > :nth-child(4) {
