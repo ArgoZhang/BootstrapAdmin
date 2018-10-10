@@ -1,6 +1,10 @@
 ﻿using Bootstrap.Client.Models;
+using Longbow.Configuration;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace Bootstrap.Client.Controllers
 {
@@ -21,11 +25,11 @@ namespace Bootstrap.Client.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         [AllowAnonymous]
         public IActionResult Error(int id)
         {
-            return id == 404 ? View("NotFound") : View();
+            var uriBuilder = new UriBuilder(ConfigurationManager.AppSettings["AuthHost"]) { Path = Request.Path, Query = QueryString.Create(CookieAuthenticationDefaults.ReturnUrlParameter, $"{Request.Scheme}://{Request.Host}{Request.PathBase}").ToString() };
+            return Redirect(uriBuilder.ToString());
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Bootstrap.Admin.Models;
 using Bootstrap.DataAccess;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,6 +28,7 @@ namespace Bootstrap.Admin.Controllers
         [AllowAnonymous]
         public IActionResult Error(int id)
         {
+            ViewBag.ReturnUrl = Request.Query[CookieAuthenticationDefaults.ReturnUrlParameter].ToString() ?? Url.Content("~/Home/Index");
             return id == 404 ? View("NotFound") : View();
         }
     }
