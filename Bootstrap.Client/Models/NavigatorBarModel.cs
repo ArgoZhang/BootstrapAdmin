@@ -20,6 +20,6 @@ namespace Bootstrap.Client.Models
         /// <summary>
         /// 
         /// </summary>
-        public IEnumerable<BootstrapMenu> Navigations { get; private set; }
+        public IEnumerable<BootstrapMenu> Navigations { get;}
     }
 }

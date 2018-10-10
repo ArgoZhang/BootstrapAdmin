@@ -53,7 +53,11 @@ namespace Bootstrap.Client
                 options.Filters.Add<BootstrapAdminAuthorizeFilter>();
                 options.Filters.Add<ExceptionFilter>();
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options => options.Cookie.Path = "/");
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+            {
+                options.Cookie.Path = "/";
+                options.RebuildRedirectUri(ConfigurationManager.AppSettings["AuthHost"]);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -19,11 +19,11 @@ namespace Bootstrap.Client.Models
         /// <summary>
         /// 
         /// </summary>
-        public string Title { get; private set; }
+        public string Title { get; }
         /// <summary>
         /// 
         /// </summary>
-        public string Footer { get; private set; }
+        public string Footer { get; }
         /// <summary>
         /// 
         /// </summary>
