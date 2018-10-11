@@ -1,5 +1,4 @@
 ﻿using Bootstrap.DataAccess;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,19 +26,6 @@ namespace Bootstrap.Admin.Controllers
                 user.Description,
                 user.RegisterTime
             });
-        }
-        /// <summary>
-        /// 登录页面注册新用户提交按钮调用
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
-        [HttpPost]
-        [AllowAnonymous]
-        public bool Post([FromBody] User user)
-        {
-            var ret = UserHelper.SaveUser(user);
-            if (ret) NotificationHelper.PushMessage(new MessageBody() { Category = "Users", Message = string.Format("{0}-{1}", user.UserName, user.Description) });
-            return ret;
         }
         /// <summary>
         /// 新用户授权/拒绝接口
