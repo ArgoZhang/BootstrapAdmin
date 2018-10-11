@@ -7,6 +7,7 @@
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 # User-specific files
+*.rsuser
 *.suo
 *.user
 *.userosscache
@@ -79,6 +80,7 @@ StyleCopReport.xml
 *.tlh
 *.tmp
 *.tmp_proj
+*_wpftmp.csproj
 *.log
 *.vspscc
 *.vssscc
@@ -293,8 +295,8 @@ paket-files/
 .idea/
 *.sln.iml
 
-# CodeRush
-.cr/
+# CodeRush personal settings
+.cr/personal
 
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
@@ -342,5 +344,7 @@ ASALocalRun/
 
 # Net Core Keys
 [Kk]eys/
+lib/
 
 ###### -- Custom Ignore Section, Make sure all files you add to the git repo are below this line  --  ######
+
