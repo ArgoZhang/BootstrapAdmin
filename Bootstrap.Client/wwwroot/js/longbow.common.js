@@ -132,11 +132,19 @@
                 return;
             }
 
+            var loadFlag = "loading";
             if (options.loading && options.modal) {
-                $(options.modal).find('.close').addClass('hidden');
-                $(options.modal).modal('show');
+                var $modal = $(options.modal);
+                if (!$modal.hasClass('event')) {
+                    $modal.on('shown.bs.modal', function () {
+                        var $this = $(this);
+                        if ($this.hasClass(loadFlag)) return;
+                        $this.modal('hide');
+                    });
+                }
+                $(options.modal).addClass(loadFlag).modal('show');
                 setTimeout(function () {
-                    $(options.modal).find('.close').removeClass('hidden');
+                    $(options.modal).find('.close').removeClass('d-none');
                 }, options.loadingTimeout);
             }
 
@@ -203,15 +211,6 @@
     window.lgbSwal = $.lgbSwal;
 
     $.fn.extend({
-        bc: function (options) {
-            if (this.attr('lgb_click')) return this;
-            this.attr('lgb_click', true);
-            const callback = options.callback;
-            const that = this;
-            options.callback = function () { that.removeAttr('lgb_click'); if ($.isFunction(callback)) callback.apply(arguments); };
-            $.bc(options);
-            return this;
-        },
         autoCenter: function (options) {
             options = $.extend({ top: 0 }, options);
             var that = this;
