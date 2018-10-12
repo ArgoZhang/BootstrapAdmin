@@ -1,14 +1,12 @@
 ﻿using Longbow.Cache;
 using Longbow.Configuration;
 using Longbow.Data;
-using Longbow.Web.WebSockets;
-using Newtonsoft.Json;
+using Longbow.Web.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Data;
 using System.Data.Common;
-using System.Text;
 
 namespace Bootstrap.DataAccess
 {
@@ -42,16 +40,18 @@ namespace Bootstrap.DataAccess
                 cmd.Parameters.Add(DBAccessManager.SqlDBAccess.CreateParameter("@StackTrace", DBAccessFactory.ToDBValue(ex.StackTrace)));
                 DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 CacheManager.Clear(RetrieveExceptionsDataKey);
+                ClearExceptions();
+
                 var category = "App";
                 if (ex.GetType().IsSubclassOf(typeof(DbException))) category = "DB";
-                WebSocketServerManager.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(new MessageBody[] { new MessageBody() { Category = category, Message = ex.Message } }))));
-                ClearExceptionsAsync();
+                var message = new MessageBody() { Category = category, Message = ex.Message };
+                SignalRManager.Get().SendAll(message);
             }
         }
         /// <summary>
         /// 
         /// </summary>
-        private static void ClearExceptionsAsync()
+        private static void ClearExceptions()
         {
             System.Threading.Tasks.Task.Run(() =>
             {

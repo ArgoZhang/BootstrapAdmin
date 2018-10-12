@@ -286,74 +286,18 @@
             }
             return this;
         },
-        msgHandler: function (options) {
-            var settings = {
-                url: 'api/WS',
-                interval: 10000,
-                sendMessage: '',
-                timerHandler: null,
-                onopen: function (e) { },
-                onmessage: function (e) { },
-                onclose: function (e) { },
-                errorHandler: function (e) { if (toastr && $.isFunction(toastr.error)) toastr.error("连接服务器失败！", "系统错误"); },
-                loop: function () {
-                    var that = this;
-                    var uri = window.location.protocol + "//" + window.location.host + $.formatUrl(settings.url);
-                    $.bc({
-                        url: uri,
-                        id: this.sendMessage,
-                        method: "post",
-                        callback: function (result) {
-                            if (!result) {
-                                that.errorHandler.call(that.target);
-                                return;
-                            }
-                            that.onmessage.call(that.target, { data: JSON.stringify(result) });
-                        }
-                    });
-
-                    if (this.timerHandler !== null) clearTimeout(this.timerHandler);
-                    this.timerHandler = setTimeout(function () { that.loop(); }, that.interval);
+        notifi: function (options) {
+            var op = $.extend({ url: '', method: 'rev', callback: false }, options);
+            var connection = new signalR.HubConnectionBuilder().withUrl($.formatUrl(op.url)).build();
+            var that = this;
+            connection.on(op.method, function () {
+                if ($.isFunction(op.callback)) {
+                    op.callback.apply(that, arguments);
                 }
-            };
-            $.extend(settings, options, { target: this });
-            settings.loop();
-            return this;
-        },
-        socketHandler: function (options) {
-            // WebSocket消息处理方法
-            var settings = {
-                url: 'WS',
-                interval: 30000,
-                sendMessage: 'keepalive',
-                timerHandler: null,
-                onopen: function (e) { },
-                onerror: function (e) { },
-                errorHandler: function (e) { if (window.toastr && $.isFunction(window.toastr.error)) toastr.error("连接服务器失败！", "系统错误"); },
-                onmessage: function (e) { },
-                onclose: function (e) { },
-                loop: function (socket) {
-                    var that = this;
-                    if (socket.readyState === 1) {
-                        socket.send(this.sendMessage);
-                        if (this.timerHandler !== null) clearTimeout(this.timerHandler);
-                        this.timerHandler = setTimeout(function () { that.loop(socket); }, that.interval);
-                    }
-                    else {
-                        this.errorHandler();
-                    }
-                }
-            };
-            $.extend(settings, options, { target: this });
-            var uri = "ws://" + window.location.host + $.formatUrl(settings.url);
-            var socket = new WebSocket(uri);
-            socket.onopen = function (e) { settings.onopen.call(settings.target, e); settings.loop(socket); };
-            socket.onerror = function (e) {
-                settings.onerror.call(settings.target, e);
-                settings.target.msgHandler(options);
-            };
-            socket.onmessage = function (e) { settings.onmessage.call(settings.target, e); };
-            socket.onclose = function (e) { settings.onclose.call(settings.target, e); };
+            });
+            connection.start().catch(function (err) {
+                return console.error(err.toString());
+            });
             return this;
         }
     });

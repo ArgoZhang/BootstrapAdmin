@@ -216,25 +216,23 @@ $(function () {
     $('[data-toggle="tooltip"]').tooltip();
 
     // load widget data
-    $('.header .nav').reloadWidget().socketHandler({
-        onmessage: function (e) {
-            var result = JSON.parse(e.data);
-            for (index in result) {
-                var cate = result[index].Category;
-                var msg = result[index].Message;
-                switch (cate) {
-                    case "DB":
-                        toastr.error(msg, "数据库操作发生异常");
-                        break;
-                    case "Users":
-                        toastr.success(msg, "新用户注册");
-                        break;
-                    case "App":
-                        toastr.warning(msg, "应用程序发生异常");
-                        break;
-                }
+    $('.header .nav').reloadWidget().notifi({
+        url: 'NotiHub',
+        callback: function (result) {
+            var cate = result.Category;
+            var msg = result.Message;
+            switch (cate) {
+                case "DB":
+                    toastr.error(msg, "数据库操作发生异常");
+                    break;
+                case "Users":
+                    toastr.success(msg, "新用户注册");
+                    break;
+                case "App":
+                    toastr.warning(msg, "应用程序发生异常");
+                    break;
             }
-            if (result.length > 0) this.reloadWidget();
+            if (result) this.reloadWidget();
         }
     });
 
