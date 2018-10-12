@@ -6,6 +6,7 @@ using Longbow.Configuration;
 using Longbow.Data;
 using Longbow.Logging;
 using Longbow.Web;
+using Longbow.Web.SignalR;
 using Longbow.Web.WebSockets;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -49,7 +50,7 @@ namespace Bootstrap.Client
                 .SetApplicationName(Configuration["ApplicationName"])
                 .PersistKeysToFileSystem(new DirectoryInfo(Configuration["KeyPath"]));
             if (Configuration["DisableAutomaticKeyGeneration"] == "True") dataProtectionBuilder.DisableAutomaticKeyGeneration();
-
+            services.AddSignalRManager();
             services.AddMvc(options =>
             {
                 options.Filters.Add<BootstrapAdminAuthorizeFilter>();
@@ -89,6 +90,7 @@ namespace Bootstrap.Client
             app.UseBootstrapAdminAuthorization();
             app.UseWebSocketHandler(options => options.UseAuthentication = true);
             app.UseCacheManagerCorsHandler();
+            app.UseSignalR(routes => { routes.MapHub("/NotiHub"); });
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
