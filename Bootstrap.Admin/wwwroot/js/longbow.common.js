@@ -165,7 +165,7 @@
                     options.callback.call(options, result);
                 }
                 if (options.modal && (result || options.loading)) {
-                    $(options.modal).modal('hide');
+                    $(options.modal).removeClass(loadFlag).modal('hide');
                 }
                 if (options.title) toastr[result ? 'success' : 'error'](options.title + (result ? "成功" : "失败"));
             }
@@ -320,16 +320,17 @@
             return this;
         },
         notifi: function (options) {
-            var op = $.extend({ url: '', method: 'rev', callback: false }, options);
+            var op = $.extend({ url: '', method: 'rev', invoke: false, callback: false }, options);
             var connection = new signalR.HubConnectionBuilder().withUrl($.formatUrl(op.url)).build();
             var that = this;
             connection.on(op.method, function () {
-                if ($.isFunction(op.callback)) {
-                    op.callback.apply(that, arguments);
-                }
+                if ($.isFunction(op.callback)) op.callback.apply(that, arguments);
             });
             connection.start().catch(function (err) {
+                if ($.isFunction(op.callback)) op.callback.apply(that, arguments);
                 return console.error(err.toString());
+            }).then(function () {
+                if (op.invoke) op.invoke(connection).catch(err => console.error(err.toString()));
             });
             return this;
         }
