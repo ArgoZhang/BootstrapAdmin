@@ -210,11 +210,6 @@ $(function () {
         $('body').toggleClass('sidebar-open');
     });
 
-    $('[data-toggle="dropdown"].dropdown-select').dropdown('select');
-
-    // tooltip
-    $('[data-toggle="tooltip"]').tooltip();
-
     // load widget data
     $('.header .nav').reloadWidget().notifi({
         url: 'NotiHub',

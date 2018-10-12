@@ -286,6 +286,39 @@
             }
             return this;
         },
+        lgbDatePicker: function (options) {
+            if (!$.isFunction(this.datetimepicker)) return this;
+            var option = $.extend({
+                language: 'zh-CN',
+                weekStart: 1,
+                todayBtn: 1,
+                autoclose: 1,
+                todayHighlight: 1,
+                startView: 2,
+                minView: 2,
+                forceParse: 0,
+                format: 'yyyy-mm-dd',
+                pickerPosition: 'bottom-left',
+                fontAwesome: true
+            }, options);
+            this.datetimepicker(option);
+            return this;
+        },
+        lgbInfo: function (option) {
+            this.each(function () {
+                var $element = $(this);
+                $element.append($.format('<a href="#" tabindex="-1" role="button" data-toggle="popover"><i class="fa fa-question-circle"></i></a>'));
+            });
+            var container = $(this).parent().attr('data-container') || '#dialogNew';
+            this.find('[data-toggle="popover"]').popover($.extend({
+                title: function () {
+                    return $(this).parent().text();
+                }, content: function () {
+                    return $(this).parent().attr('data-content');
+                }, trigger: 'focus', html: true, container: container
+            }, option));
+            return this;
+        },
         notifi: function (options) {
             var op = $.extend({ url: '', method: 'rev', callback: false }, options);
             var connection = new signalR.HubConnectionBuilder().withUrl($.formatUrl(op.url)).build();
@@ -317,6 +350,14 @@
                 $element.text($op.text()).val($op.attr('data-val'));
             });
         }
+    });
+
+    $(function () {
+        $('[data-toggle="dropdown"].dropdown-select').dropdown('select');
+        $('[data-toggle="tooltip"]').tooltip();
+        $('[data-toggle="popover"]').popover();
+        $('[data-toggle="lgbinfo"]').lgbInfo();
+        $('.date').lgbDatePicker();
     });
 
     // Roles
