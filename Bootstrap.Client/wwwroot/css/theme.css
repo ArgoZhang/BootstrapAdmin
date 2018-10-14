@@ -140,9 +140,9 @@ input.pending {
                 transform: rotate(-90deg);
             }
 
-            .card .card-header a[data-toggle="collapse"] span {
-                margin-left: 6px;
-            }
+        .card .card-header i + span {
+            margin-left: 6px;
+        }
 
 .btn span:last-child {
     margin-left: 4px;
