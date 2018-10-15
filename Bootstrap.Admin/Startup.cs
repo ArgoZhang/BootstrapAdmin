@@ -50,11 +50,13 @@ namespace Bootstrap.Admin
                 .SetApplicationName(Configuration["ApplicationName"])
                 .PersistKeysToFileSystem(new DirectoryInfo(Configuration["KeyPath"]));
             if (Configuration["DisableAutomaticKeyGeneration"] == "True") dataProtectionBuilder.DisableAutomaticKeyGeneration();
-            services.AddSignalRManager();
+            services.AddSignalR().AddJsonProtocalDefault();
+            services.AddSignalRExceptionFilterHandler<SignalRHub>(async (client, ex) => await SignalRManager.Send(client, ex));
             services.AddMvc(options =>
             {
                 options.Filters.Add<BootstrapAdminAuthorizeFilter>();
                 options.Filters.Add<ExceptionFilter>();
+                options.Filters.Add<SignalRExceptionFilter<SignalRHub>>();
             }).AddJsonOptions(options =>
             {
                 options.SerializerSettings.ContractResolver = new DefaultContractResolver();
@@ -83,7 +85,7 @@ namespace Bootstrap.Admin
             app.UseAuthentication();
             app.UseBootstrapAdminAuthorization();
             app.UseCacheManagerCorsHandler();
-            app.UseSignalR(routes => { routes.MapHub("/NotiHub"); });
+            app.UseSignalR(routes => { routes.MapHub<SignalRHub>("/NotiHub"); });
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

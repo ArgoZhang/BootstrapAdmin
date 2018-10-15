@@ -3,7 +3,9 @@ using Bootstrap.Security;
 using Longbow.Web.SignalR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Bootstrap.Admin.Controllers.Api
 {
@@ -27,10 +29,10 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="user"></param>
         /// <returns></returns>
         [HttpPost]
-        public bool Post([FromServices]ISignalRHubContext<SignalRHub> hub, [FromBody]User user)
+        public async Task<bool> Post([FromServices]IHubContext<SignalRHub> hub, [FromBody]User user)
         {
             var ret = UserHelper.SaveUser(user);
-            if (ret) hub.SendAll(new MessageBody() { Category = "Users", Message = string.Format("{0}-{1}", user.UserName, user.Description) });
+            if (ret) await SignalRManager.Send(hub.Clients.All, new MessageBody() { Category = "Users", Message = string.Format("{0}-{1}", user.UserName, user.Description) });
             return ret;
         }
     }

@@ -50,7 +50,7 @@ namespace Bootstrap.Client
                 .SetApplicationName(Configuration["ApplicationName"])
                 .PersistKeysToFileSystem(new DirectoryInfo(Configuration["KeyPath"]));
             if (Configuration["DisableAutomaticKeyGeneration"] == "True") dataProtectionBuilder.DisableAutomaticKeyGeneration();
-            services.AddSignalRManager();
+            services.AddSignalR().AddJsonProtocalDefault();
             services.AddMvc(options =>
             {
                 options.Filters.Add<BootstrapAdminAuthorizeFilter>();
@@ -83,14 +83,14 @@ namespace Bootstrap.Client
 
             app.UseStatusCodePagesWithReExecute("/Home/Error/{0}");
             app.UseCors(builder => builder.WithOrigins(Configuration["AllowOrigins"].Split(',', StringSplitOptions.RemoveEmptyEntries)).AllowAnyHeader().AllowAnyMethod().AllowCredentials());
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();
             app.UseBootstrapAdminAuthorization();
             app.UseWebSocketHandler(options => options.UseAuthentication = true);
             app.UseCacheManagerCorsHandler();
-            app.UseSignalR(routes => { routes.MapHub("/NotiHub"); });
+            app.UseSignalR(routes => { routes.MapHub<SignalRHub>("/NotiHub"); });
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
