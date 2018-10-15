@@ -1,7 +1,6 @@
 ﻿using Longbow.Cache;
 using Longbow.Configuration;
 using Longbow.Data;
-using Longbow.Web.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -27,6 +26,15 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static void Log(Exception ex, NameValueCollection additionalInfo)
         {
+            if (additionalInfo == null)
+            {
+                additionalInfo = new NameValueCollection
+                {
+                    ["UserId"] = null,
+                    ["UserIp"] = null,
+                    ["ErrorPage"] = null
+                };
+            }
             var errorPage = additionalInfo["ErrorPage"] ?? (nameof(ex).Length > 50 ? nameof(ex).Substring(0, 50) : nameof(ex));
             var sql = "insert into Exceptions (AppDomainName, ErrorPage, UserID, UserIp, ExceptionType, Message, StackTrace, LogTime) values (@AppDomainName, @ErrorPage, @UserID, @UserIp, @ExceptionType, @Message, @StackTrace, GetDate())";
             using (DbCommand cmd = DBAccessManager.SqlDBAccess.CreateCommand(CommandType.Text, sql))
@@ -41,11 +49,6 @@ namespace Bootstrap.DataAccess
                 DBAccessManager.SqlDBAccess.ExecuteNonQuery(cmd);
                 CacheManager.Clear(RetrieveExceptionsDataKey);
                 ClearExceptions();
-
-                var category = "App";
-                if (ex.GetType().IsSubclassOf(typeof(DbException))) category = "DB";
-                var message = new MessageBody() { Category = category, Message = ex.Message };
-                SignalRManager.Get().SendAll(message);
             }
         }
         /// <summary>
