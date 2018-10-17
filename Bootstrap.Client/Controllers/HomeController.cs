@@ -29,7 +29,7 @@ namespace Bootstrap.Client.Controllers
         public IActionResult Error(int id)
         {
             var uriBuilder = new UriBuilder(ConfigurationManager.AppSettings["AuthHost"]) { Query = QueryString.Create(CookieAuthenticationDefaults.ReturnUrlParameter, $"{Request.Scheme}://{Request.Host}{Request.PathBase}").ToString() };
-            uriBuilder.Path += Request.Path;
+            uriBuilder.Path = uriBuilder.Path == "/" ? Request.Path.Value : uriBuilder.Path + Request.Path.Value;
             return Redirect(uriBuilder.ToString());
         }
     }
