@@ -309,13 +309,15 @@
                 var $element = $(this);
                 $element.append($.format('<a href="#" tabindex="-1" role="button" data-toggle="popover"><i class="fa fa-question-circle"></i></a>'));
             });
-            var container = $(this).parent().attr('data-container') || '#dialogNew';
+            var container = this.attr('data-container') || '#dialogNew';
             this.find('[data-toggle="popover"]').popover($.extend({
                 title: function () {
                     return $(this).parent().text();
                 }, content: function () {
                     return $(this).parent().attr('data-content');
-                }, trigger: 'focus', html: true, container: container
+                }, trigger: 'focus', html: true, container: container, placement: function () {
+                    return $(this.element).parent().attr('data-placement') || 'auto';
+                }
             }, option));
             return this;
         },
