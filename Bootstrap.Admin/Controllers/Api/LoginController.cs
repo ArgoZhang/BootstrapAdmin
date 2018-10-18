@@ -21,17 +21,16 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPost]
-        public ActionResult Post([FromBody]JObject value)
+        public string Post([FromBody]JObject value)
         {
             dynamic user = value;
             string userName = user.userName;
             string password = user.password;
             if (BootstrapUser.Authenticate(userName, password))
             {
-                var token = BootstrapAdminJwtTokenHandler.CreateToken(userName);
-                return new JsonResult(new { token });
+                return BootstrapAdminJwtTokenHandler.CreateToken(userName);
             }
-            return new NoContentResult();
+            return null;
         }
         /// <summary>
         /// 
