@@ -1,5 +1,5 @@
 ﻿using Bootstrap.Admin.Models;
-using Bootstrap.Security;
+using Bootstrap.DataAccess;
 using Longbow;
 using Longbow.Configuration;
 using Microsoft.AspNetCore.Authentication;
@@ -39,7 +39,7 @@ namespace Bootstrap.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(string userName, string password, string remember)
         {
-            if (BootstrapUser.Authenticate(userName, password))
+            if (UserHelper.Authenticate(userName, password))
             {
                 var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
                 identity.AddClaim(new Claim(ClaimTypes.Name, userName));

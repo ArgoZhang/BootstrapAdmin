@@ -20,6 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Bootstrap.DataAccess.SQLite\Bootstrap.DataAccess.SQLite.csproj" />
+    <ProjectReference Include="..\Bootstrap.DataAccess.SQLServer\Bootstrap.DataAccess.SQLServer.csproj" />
     <ProjectReference Include="..\Bootstrap.DataAccess\Bootstrap.DataAccess.csproj" />
   </ItemGroup>
 

@@ -21,7 +21,7 @@ namespace Bootstrap.Admin.Controllers.Api
         [HttpGet]
         public bool Get(string userName)
         {
-            return BootstrapUser.RetrieveUserByUserName(userName) == null && !UserHelper.RetrieveNewUsers().Any(u => u.UserName == userName);
+            return UserHelper.RetrieveUserByUserName(userName) == null && !UserHelper.RetrieveNewUsers().Any(u => u.UserName == userName);
         }
         /// <summary>
         /// 登录页面注册新用户提交按钮调用

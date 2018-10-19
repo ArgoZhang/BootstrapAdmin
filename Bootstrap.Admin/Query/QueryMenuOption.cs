@@ -1,4 +1,5 @@
-﻿using Bootstrap.Security;
+﻿using Bootstrap.DataAccess;
+using Bootstrap.Security;
 using Longbow.Web.Mvc;
 using System.Linq;
 
@@ -25,7 +26,7 @@ namespace Bootstrap.Admin.Query
 
         public QueryData<BootstrapMenu> RetrieveData(string userName)
         {
-            var data = BootstrapMenu.RetrieveMenusByUserName(userName);
+            var data = MenuHelper.RetrieveMenusByUserName(userName);
             if (!string.IsNullOrEmpty(ParentName))
             {
                 data = data.Where(t => t.ParentName.Contains(ParentName));

@@ -1,4 +1,5 @@
-﻿using Bootstrap.Security;
+﻿using Bootstrap.Client.DataAccess;
+using Bootstrap.Security;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -15,11 +16,11 @@ namespace Bootstrap.Client.Models
         /// <param name="controller"></param>
         public NavigatorBarModel(ControllerBase controller) : base(controller.User.Identity)
         {
-            Navigations = BootstrapMenu.RetrieveAppMenus(UserName, $"~/{controller.ControllerContext.ActionDescriptor.ControllerName}/{controller.ControllerContext.ActionDescriptor.ActionName}");
+            Navigations = MenuHelper.RetrieveAppMenus(UserName, $"~/{controller.ControllerContext.ActionDescriptor.ControllerName}/{controller.ControllerContext.ActionDescriptor.ActionName}");
         }
         /// <summary>
         /// 
         /// </summary>
-        public IEnumerable<BootstrapMenu> Navigations { get;}
+        public IEnumerable<BootstrapMenu> Navigations { get; }
     }
 }

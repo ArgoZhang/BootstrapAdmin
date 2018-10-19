@@ -12,6 +12,9 @@
 
   <ItemGroup>
     <PackageReference Include="Bootstrap.Security" Version="1.0.4" />
+    <PackageReference Include="Longbow" Version="1.0.2" />
+    <PackageReference Include="Longbow.Configuration" Version="1.0.3" />
+    <PackageReference Include="Longbow.Data" Version="1.0.3" />
     <PackageReference Include="Longbow.Web" Version="1.0.1" />
   </ItemGroup>
 

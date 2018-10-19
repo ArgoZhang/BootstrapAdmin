@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+
 namespace Bootstrap.DataAccess
 {
     /// <summary>
@@ -6,6 +9,10 @@ namespace Bootstrap.DataAccess
     /// </summary>
     public class Exceptions
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        protected const string RetrieveExceptionsDataKey = "ExceptionHelper-RetrieveExceptions";
         /// <summary>
         /// 
         /// </summary>
@@ -46,5 +53,17 @@ namespace Bootstrap.DataAccess
         /// 获得/设置 时间描述 2分钟内为刚刚
         /// </summary>
         public string Period { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ex"></param>
+        /// <param name="additionalInfo"></param>
+        /// <returns></returns>
+        public virtual void Log(Exception ex, NameValueCollection additionalInfo) => throw new NotImplementedException();
+        /// <summary>
+        /// 查询一周内所有异常
+        /// </summary>
+        /// <returns></returns>
+        public virtual IEnumerable<Exceptions> RetrieveExceptions() => throw new NotImplementedException();
     }
 }

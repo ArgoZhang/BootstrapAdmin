@@ -8,9 +8,11 @@ namespace Bootstrap.DataAccess
     /// </summary>
     public static class DBAccessManager
     {
-        private static readonly Lazy<IDBAccess> db = new Lazy<IDBAccess>(() => DBAccessFactory.CreateDB("ba"), true);
-
-        public static IDBAccess SqlDBAccess
+        private static readonly Lazy<IDbAccess> db = new Lazy<IDbAccess>(() => DbAccessFactory.CreateDB("ba"), true);
+        /// <summary>
+        /// 
+        /// </summary>
+        public static IDbAccess DBAccess
         {
             get { return db.Value; }
         }

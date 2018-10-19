@@ -1,5 +1,9 @@
 ﻿using Bootstrap.Security;
+using Longbow.Security;
 using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Common;
 
 namespace Bootstrap.DataAccess
 {
@@ -8,6 +12,11 @@ namespace Bootstrap.DataAccess
     /// </summary>
     public class User : BootstrapUser
     {
+        public const string RetrieveUsersDataKey = "BootstrapUser-RetrieveUsers";
+        public const string RetrieveUsersByRoleIdDataKey = "BootstrapUser-RetrieveUsersByRoleId";
+        public const string RetrieveUsersByGroupIdDataKey = "BootstrapUser-RetrieveUsersByGroupId";
+        public const string RetrieveNewUsersDataKey = "UserHelper-RetrieveNewUsers";
+        protected const string RetrieveUsersByNameDataKey = "BootstrapUser-RetrieveUsersByName";
         /// <summary>
         /// 获得/设置 用户主键ID
         /// </summary>
@@ -52,6 +61,156 @@ namespace Bootstrap.DataAccess
         /// 获得/设置 新密码
         /// </summary>
         public string NewPassword { get; set; }
+        /// <summary>
+        /// 验证用户登陆账号与密码正确
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public virtual bool Authenticate(string userName, string password)
+        {
+            if (string.IsNullOrEmpty(userName) && string.IsNullOrEmpty(password)) return false;
+            string oldPassword = null;
+            string passwordSalt = null;
+            string sql = "select [Password], PassSalt from Users where ApprovedTime is not null and UserName = @UserName";
+            var db = DBAccessManager.DBAccess;
+            using (DbCommand cmd = db.CreateCommand(CommandType.Text, sql))
+            {
+                cmd.Parameters.Add(db.CreateParameter("@UserName", userName));
+                using (DbDataReader reader = db.ExecuteReader(cmd))
+                {
+                    if (reader.Read())
+                    {
+                        oldPassword = (string)reader[0];
+                        passwordSalt = (string)reader[1];
+                    }
+                }
+            }
+            return !string.IsNullOrEmpty(passwordSalt) && oldPassword == LgbCryptography.ComputeHash(password, passwordSalt);
+        }
+        /// <summary>
+        /// 查询所有用户
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public virtual IEnumerable<User> RetrieveUsers() => throw new NotImplementedException();
+        /// <summary>
+        /// 查询所有的新注册用户
+        /// </summary>
+        /// <returns></returns>
+        public virtual IEnumerable<User> RetrieveNewUsers() => throw new NotImplementedException();
+        /// <summary>
+        /// 删除用户
+        /// </summary>
+        /// <param name="value"></param>
+        public virtual bool DeleteUser(IEnumerable<int> value) => throw new NotImplementedException();
+        /// <summary>
+        /// 保存新建
+        /// </summary>
+        /// <param name="p"></param>
+        /// <returns></returns>
+        public virtual bool SaveUser(User p) => throw new NotImplementedException();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="password"></param>
+        /// <param name="displayName"></param>
+        /// <returns></returns>
+        public virtual bool UpdateUser(int id, string password, string displayName) => throw new NotImplementedException();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="approvedBy"></param>
+        /// <returns></returns>
+        public virtual bool ApproveUser(int id, string approvedBy) => throw new NotImplementedException();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
+        /// <param name="newPass"></param>
+        /// <returns></returns>
+        public virtual bool ChangePassword(string userName, string password, string newPass)
+        {
+            bool ret = false;
+            if (Authenticate(userName, password))
+            {
+                string sql = "Update Users set Password = @Password, PassSalt = @PassSalt where UserName = @userName";
+                var passSalt = LgbCryptography.GenerateSalt();
+                var newPassword = LgbCryptography.ComputeHash(newPass, passSalt);
+                using (DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
+                {
+                    cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@Password", newPassword));
+                    cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@PassSalt", passSalt));
+                    cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@userName", userName));
+                    ret = DBAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
+                }
+            }
+            return ret;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="rejectBy"></param>
+        /// <param name="reason"></param>
+        /// <returns></returns>
+        public virtual bool RejectUser(int id, string rejectBy) => throw new NotImplementedException();
+        /// <summary>
+        /// 通过roleId获取所有用户
+        /// </summary>
+        /// <param name="roleId"></param>
+        /// <returns></returns>
+        public virtual IEnumerable<User> RetrieveUsersByRoleId(int roleId) => throw new NotImplementedException();
+        /// <summary>
+        /// 通过角色ID保存当前授权用户（插入）
+        /// </summary>
+        /// <param name="id">角色ID</param>
+        /// <param name="userIds">用户ID数组</param>
+        /// <returns></returns>
+        public virtual bool SaveUsersByRoleId(int id, IEnumerable<int> userIds) => throw new NotImplementedException();
+        /// <summary>
+        /// 通过groupId获取所有用户
+        /// </summary>
+        /// <param name="groupId"></param>
+        /// <returns></returns>
+        public virtual IEnumerable<User> RetrieveUsersByGroupId(int groupId) => throw new NotImplementedException();
+        /// <summary>
+        /// 通过部门ID保存当前授权用户（插入）
+        /// </summary>
+        /// <param name="id">GroupID</param>
+        /// <param name="userIds">用户ID数组</param>
+        /// <returns></returns>
+        public virtual bool SaveUsersByGroupId(int id, IEnumerable<int> userIds) => throw new NotImplementedException();
+        /// <summary>
+        /// 根据用户名修改用户头像
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="iconName"></param>
+        /// <returns></returns>
+        public virtual bool SaveUserIconByName(string userName, string iconName) => throw new NotImplementedException();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param namve="userName"></param>
+        /// <param name="displayName"></param>
+        /// <returns></returns>
+        public virtual bool SaveDisplayName(string userName, string displayName) => throw new NotImplementedException();
+        /// <summary>
+        /// 根据用户名更改用户皮肤
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="cssName"></param>
+        /// <returns></returns>
+        public virtual bool SaveUserCssByName(string userName, string cssName) => throw new NotImplementedException();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public virtual BootstrapUser RetrieveUserByUserName(string name) => throw new NotImplementedException();
         /// <summary>
         /// 
         /// </summary>

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Bootstrap.DataAccess
 {
@@ -10,6 +8,7 @@ namespace Bootstrap.DataAccess
     /// </summary>
     public class Message
     {
+        protected const string RetrieveMessageDataKey = "MessageHelper-RetrieveMessages";
         /// <summary>
         /// 消息主键 数据库自增
         /// </summary>
@@ -66,5 +65,34 @@ namespace Bootstrap.DataAccess
         /// 获得/设置 发件人昵称
         /// </summary>
         public string FromDisplayName { get; set; }
+        /// <summary>
+        /// 收件箱
+        /// </summary>
+        /// <param name="userName"></param>
+        public virtual IEnumerable<Message> Inbox(string userName) => throw new NotImplementedException();
+        /// <summary>
+        /// 发件箱
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public virtual IEnumerable<Message> SendMail(string userName) => throw new NotImplementedException();
+        /// <summary>
+        /// 垃圾箱
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public virtual IEnumerable<Message> Trash(string userName) => throw new NotImplementedException();
+        /// <summary>
+        /// 标旗
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public virtual IEnumerable<Message> Flag(string userName) => throw new NotImplementedException();
+        /// <summary>
+        /// 获取Header处显示的消息列表
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public virtual IEnumerable<Message> RetrieveMessagesHeader(string userName) => throw new NotImplementedException();
     }
 }

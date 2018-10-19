@@ -22,7 +22,7 @@ namespace Bootstrap.Admin.Query
         /// <returns></returns>
         public QueryData<Exceptions> RetrieveData()
         {
-            var data = ExceptionHelper.RetrieveExceptions();
+            var data = ExceptionsHelper.RetrieveExceptions();
             if (StartTime > DateTime.MinValue)
             {
                 data = data.Where(t => t.LogTime > StartTime);

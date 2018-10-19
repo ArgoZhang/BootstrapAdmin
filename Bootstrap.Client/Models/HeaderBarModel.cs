@@ -1,5 +1,4 @@
 ﻿using Bootstrap.Client.DataAccess;
-using Bootstrap.Security;
 using Longbow.Configuration;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System;
@@ -18,7 +17,7 @@ namespace Bootstrap.Client.Models
         /// <param name="identity"></param>
         public HeaderBarModel(IIdentity identity)
         {
-            var user = BootstrapUser.RetrieveUserByUserName(identity.Name);
+            var user = UserHelper.RetrieveUserByUserName(identity.Name);
             Icon = $"{ConfigurationManager.AppSettings["AuthHost"]}/{user.Icon.TrimStart('~', '/')}";
             DisplayName = user.DisplayName;
             UserName = user.UserName;

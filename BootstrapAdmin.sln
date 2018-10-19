@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2047
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.DataAccess", "Bootstrap.DataAccess\Bootstrap.DataAccess.csproj", "{AF16CA71-B8C6-4F51-B38C-0C0300FDEBD7}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sql", "sql", "{87319AF5-7C40-4362-B67C-35F9DD737DB4}"
 	ProjectSection(SolutionItems) = preProject
 		DatabaseScripts\InitData.sql = DatabaseScripts\InitData.sql
@@ -31,7 +29,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.Client", "Bootstr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{C7F51A14-2D89-4D1F-AD78-C42B79AB0BF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bootstrap.Client.DataAccess", "Bootstrap.Client.DataAccess\Bootstrap.Client.DataAccess.csproj", "{B6B29DE5-D7B0-4A4D-9E7A-AADC68E9C43F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.Client.DataAccess", "Bootstrap.Client.DataAccess\Bootstrap.Client.DataAccess.csproj", "{B6B29DE5-D7B0-4A4D-9E7A-AADC68E9C43F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.DataAccess", "Bootstrap.DataAccess\Bootstrap.DataAccess.csproj", "{8D62BE79-BE13-43C8-969B-C9B00B3C84B7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.DataAccess.SQLite", "Bootstrap.DataAccess.SQLite\Bootstrap.DataAccess.SQLite.csproj", "{BC18A24F-5C99-4DF5-803D-72A912BCBD57}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQLite", "SQLite", "{523515EC-2AD7-4282-9AF4-9D20371183B0}"
+	ProjectSection(SolutionItems) = preProject
+		DatabaseScripts\SQLite\InitData.sql = DatabaseScripts\SQLite\InitData.sql
+		DatabaseScripts\SQLite\Install.sql = DatabaseScripts\SQLite\Install.sql
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.DataAccess.SQLServer", "Bootstrap.DataAccess.SQLServer\Bootstrap.DataAccess.SQLServer.csproj", "{555BB7E8-36A4-4EDE-88A9-BEF3E6ACE71B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,10 +49,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AF16CA71-B8C6-4F51-B38C-0C0300FDEBD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AF16CA71-B8C6-4F51-B38C-0C0300FDEBD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AF16CA71-B8C6-4F51-B38C-0C0300FDEBD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AF16CA71-B8C6-4F51-B38C-0C0300FDEBD7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7B2B7043-3CB2-4C5A-BDF2-8C47F1A5471A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7B2B7043-3CB2-4C5A-BDF2-8C47F1A5471A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B2B7043-3CB2-4C5A-BDF2-8C47F1A5471A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -55,6 +61,18 @@ Global
 		{B6B29DE5-D7B0-4A4D-9E7A-AADC68E9C43F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6B29DE5-D7B0-4A4D-9E7A-AADC68E9C43F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6B29DE5-D7B0-4A4D-9E7A-AADC68E9C43F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D62BE79-BE13-43C8-969B-C9B00B3C84B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D62BE79-BE13-43C8-969B-C9B00B3C84B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D62BE79-BE13-43C8-969B-C9B00B3C84B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D62BE79-BE13-43C8-969B-C9B00B3C84B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC18A24F-5C99-4DF5-803D-72A912BCBD57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC18A24F-5C99-4DF5-803D-72A912BCBD57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC18A24F-5C99-4DF5-803D-72A912BCBD57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC18A24F-5C99-4DF5-803D-72A912BCBD57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{555BB7E8-36A4-4EDE-88A9-BEF3E6ACE71B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{555BB7E8-36A4-4EDE-88A9-BEF3E6ACE71B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{555BB7E8-36A4-4EDE-88A9-BEF3E6ACE71B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{555BB7E8-36A4-4EDE-88A9-BEF3E6ACE71B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

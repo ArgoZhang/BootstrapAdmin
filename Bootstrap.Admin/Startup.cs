@@ -42,7 +42,7 @@ namespace Bootstrap.Admin
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
             services.AddCors();
-            services.AddLogging(builder => builder.AddFileLogger().AddDBLogger(ExceptionHelper.Log));
+            services.AddLogging(builder => builder.AddFileLogger().AddDBLogger(ExceptionsHelper.Log));
             services.AddConfigurationManager();
             services.AddCacheManager();
             services.AddDBAccessFactory();
@@ -83,7 +83,7 @@ namespace Bootstrap.Admin
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseAuthentication();
-            app.UseBootstrapAdminAuthorization();
+            app.UseBootstrapAdminAuthorization(userName => RoleHelper.RetrieveRolesByUserName(userName), url => RoleHelper.RetrieveRolesByUrl(url));
             app.UseCacheManagerCorsHandler();
             app.UseSignalR(routes => { routes.MapHub<SignalRHub>("/NotiHub"); });
             app.UseMvc(routes =>

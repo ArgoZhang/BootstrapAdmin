@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Bootstrap.DataAccess
 {
     public class Task
     {
+        protected const string RetrieveTasksDataKey = "TaskHelper-RetrieveTasks";
         /// <summary>
         /// 获取/设置  任务ID
         /// </summary>
@@ -36,5 +38,10 @@ namespace Bootstrap.DataAccess
         /// 获取/设置  分配时间
         /// </summary>
         public DateTime AssignTime { get; set; }
+        /// <summary>
+        /// 查询所有任务
+        /// </summary>
+        /// <returns></returns>
+        public virtual IEnumerable<Task> RetrieveTasks() => throw new NotImplementedException();
     }
 }

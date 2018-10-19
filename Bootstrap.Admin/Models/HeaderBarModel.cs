@@ -1,4 +1,4 @@
-﻿using Bootstrap.Security;
+﻿using Bootstrap.DataAccess;
 using System.Security.Principal;
 
 namespace Bootstrap.Admin.Models
@@ -10,7 +10,7 @@ namespace Bootstrap.Admin.Models
     {
         public HeaderBarModel(IIdentity identity)
         {
-            var user = BootstrapUser.RetrieveUserByUserName(identity.Name);
+            var user = UserHelper.RetrieveUserByUserName(identity.Name);
             Icon = user.Icon;
             DisplayName = user.DisplayName;
             UserName = user.UserName;
