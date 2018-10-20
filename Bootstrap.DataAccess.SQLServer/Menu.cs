@@ -23,10 +23,10 @@ namespace Bootstrap.DataAccess.SQLServer
         {
             bool ret = false;
             var ids = string.Join(",", value);
-            using (DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_DeleteMenus"))
+            using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_DeleteMenus"))
             {
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@ids", ids));
-                ret = DBAccessManager.DBAccess.ExecuteNonQuery(cmd) == -1;
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@ids", ids));
+                ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == -1;
             }
             CacheCleanUtility.ClearCache(menuIds: value);
             return ret;
@@ -46,19 +46,19 @@ namespace Bootstrap.DataAccess.SQLServer
             string sql = p.Id == 0 ?
                 "Insert Into Navigations (ParentId, Name, [Order], Icon, Url, Category, Target, IsResource, [Application]) Values (@ParentId, @Name, @Order, @Icon, @Url, @Category, @Target, @IsResource, @ApplicationCode)" :
                 "Update Navigations set ParentId = @ParentId, Name = @Name, [Order] = @Order, Icon = @Icon, Url = @Url, Category = @Category, Target = @Target, IsResource = @IsResource, Application = @ApplicationCode where ID = @ID";
-            using (DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
+            using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
             {
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@ID", p.Id));
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@ParentId", p.ParentId));
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@Name", p.Name));
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@Order", p.Order));
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@Icon", DbAccessFactory.ToDBValue(p.Icon)));
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@Url", DbAccessFactory.ToDBValue(p.Url)));
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@Category", p.Category));
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@Target", p.Target));
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@IsResource", p.IsResource));
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@ApplicationCode", p.ApplicationCode));
-                ret = DBAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@ID", p.Id));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@ParentId", p.ParentId));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Name", p.Name));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Order", p.Order));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Icon", DbAccessFactory.ToDBValue(p.Icon)));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Url", DbAccessFactory.ToDBValue(p.Url)));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Category", p.Category));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Target", p.Target));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@IsResource", p.IsResource));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@ApplicationCode", p.ApplicationCode));
+                ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
             }
             CacheCleanUtility.ClearCache(menuIds: p.Id == 0 ? new List<int>() : new List<int>() { p.Id });
             return ret;
@@ -76,10 +76,10 @@ namespace Bootstrap.DataAccess.SQLServer
             {
                 var menus = new List<BootstrapMenu>();
                 string sql = "select NavigationID from NavigationRole where RoleID = @RoleID";
-                using (DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
+                using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
                 {
-                    cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@RoleID", roleId));
-                    using (DbDataReader reader = DBAccessManager.DBAccess.ExecuteReader(cmd))
+                    cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@RoleID", roleId));
+                    using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
                     {
                         while (reader.Read())
                         {
@@ -106,16 +106,16 @@ namespace Bootstrap.DataAccess.SQLServer
             dt.Columns.Add("RoleID", typeof(int));
             dt.Columns.Add("NavigationID", typeof(int));
             menuIds.ToList().ForEach(menuId => dt.Rows.Add(id, menuId));
-            using (TransactionPackage transaction = DBAccessManager.DBAccess.BeginTransaction())
+            using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
             {
                 try
                 {
                     //删除菜单角色表该角色所有的菜单
                     string sql = "delete from NavigationRole where RoleID=@RoleID";
-                    using (DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
+                    using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
                     {
-                        cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@RoleID", id));
-                        DBAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+                        cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@RoleID", id));
+                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
                         //批插入菜单角色表
                         using (SqlBulkCopy bulk = new SqlBulkCopy((SqlConnection)transaction.Transaction.Connection, SqlBulkCopyOptions.Default, (SqlTransaction)transaction.Transaction))
                         {

@@ -100,7 +100,7 @@ namespace Bootstrap.DataAccess
             return CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveRolesByUserNameDataKey, userName), r =>
             {
                 var entities = new List<string>();
-                var db = DBAccessManager.DBAccess;
+                var db = DbAccessManager.DBAccess;
                 using (DbCommand cmd = db.CreateCommand(CommandType.Text, "select r.RoleName from Roles r inner join UserRole ur on r.ID=ur.RoleID inner join Users u on ur.UserID = u.ID and u.UserName = @UserName union select r.RoleName from Roles r inner join RoleGroup rg on r.ID = rg.RoleID inner join Groups g on rg.GroupID = g.ID inner join UserGroup ug on ug.GroupID = g.ID inner join Users u on ug.UserID = u.ID and u.UserName=@UserName"))
                 {
                     cmd.Parameters.Add(db.CreateParameter("@UserName", userName));
@@ -127,7 +127,7 @@ namespace Bootstrap.DataAccess
             {
                 string sql = "select distinct r.RoleName, r.[Description] from Roles r inner join NavigationRole nr on r.ID = nr.RoleID inner join Navigations n on nr.NavigationID = n.ID and n.[Application] = @AppId and n.Url like @Url";
                 var Roles = new List<string> { "Administrators" };
-                var db = DBAccessManager.DBAccess;
+                var db = DbAccessManager.DBAccess;
                 var cmd = db.CreateCommand(CommandType.Text, sql);
                 cmd.Parameters.Add(db.CreateParameter("@Url", string.Format("{0}%", url)));
                 cmd.Parameters.Add(db.CreateParameter("@AppId", LgbConvert.ReadValue(ConfigurationManager.AppSettings["AppId"], "0")));

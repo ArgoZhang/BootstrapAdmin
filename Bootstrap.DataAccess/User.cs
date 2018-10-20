@@ -73,7 +73,7 @@ namespace Bootstrap.DataAccess
             string oldPassword = null;
             string passwordSalt = null;
             string sql = "select [Password], PassSalt from Users where ApprovedTime is not null and UserName = @UserName";
-            var db = DBAccessManager.DBAccess;
+            var db = DbAccessManager.DBAccess;
             using (DbCommand cmd = db.CreateCommand(CommandType.Text, sql))
             {
                 cmd.Parameters.Add(db.CreateParameter("@UserName", userName));
@@ -140,12 +140,12 @@ namespace Bootstrap.DataAccess
                 string sql = "Update Users set Password = @Password, PassSalt = @PassSalt where UserName = @userName";
                 var passSalt = LgbCryptography.GenerateSalt();
                 var newPassword = LgbCryptography.ComputeHash(newPass, passSalt);
-                using (DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
+                using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
                 {
-                    cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@Password", newPassword));
-                    cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@PassSalt", passSalt));
-                    cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@userName", userName));
-                    ret = DBAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
+                    cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Password", newPassword));
+                    cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@PassSalt", passSalt));
+                    cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@userName", userName));
+                    ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
                 }
             }
             return ret;

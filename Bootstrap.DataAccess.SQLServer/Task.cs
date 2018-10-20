@@ -18,8 +18,8 @@ namespace Bootstrap.DataAccess.SQLServer
             {
                 string sql = "select top 1000 t.*, u.DisplayName from Tasks t inner join Users u on t.UserName = u.UserName order by AssignTime desc";
                 List<Task> tasks = new List<Task>();
-                DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-                using (DbDataReader reader = DBAccessManager.DBAccess.ExecuteReader(cmd))
+                DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
+                using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
                 {
                     while (reader.Read())
                     {

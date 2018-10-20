@@ -24,9 +24,9 @@ namespace Bootstrap.DataAccess.SQLServer
             {
                 string sql = "select m.*, d.Name, isnull(i.Code + u.Icon, '~/images/uploader/default.jpg'), u.DisplayName from [Messages] m left join Dicts d on m.Label = d.Code and d.Category = N'消息标签' and d.Define = 0 left join Dicts i on i.Category = N'头像地址' and i.Name = N'头像路径' and i.Define = 0 inner join Users u on m.[From] = u.UserName where [To] = @UserName or [From] = @UserName order by m.SendTime desc";
                 List<Message> messages = new List<Message>();
-                DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@UserName", userName));
-                using (DbDataReader reader = DBAccessManager.DBAccess.ExecuteReader(cmd))
+                DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@UserName", userName));
+                using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
                 {
                     while (reader.Read())
                     {

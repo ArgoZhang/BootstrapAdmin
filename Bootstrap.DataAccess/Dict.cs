@@ -89,7 +89,7 @@ namespace Bootstrap.DataAccess
         {
             string sql = "select ID, Category, Name, Code, Define from Dicts";
             var Dicts = new List<BootstrapDict>();
-            var db = DBAccessManager.DBAccess;
+            var db = DbAccessManager.DBAccess;
             var cmd = db.CreateCommand(CommandType.Text, sql);
             using (var reader = db.ExecuteReader(cmd))
             {

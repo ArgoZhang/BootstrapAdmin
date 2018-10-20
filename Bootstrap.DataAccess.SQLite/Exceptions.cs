@@ -34,16 +34,16 @@ namespace Bootstrap.DataAccess.SQLite
             }
             var errorPage = additionalInfo["ErrorPage"] ?? (nameof(ex).Length > 50 ? nameof(ex).Substring(0, 50) : nameof(ex));
             var sql = "insert into Exceptions (ID, AppDomainName, ErrorPage, UserID, UserIp, ExceptionType, Message, StackTrace, LogTime) values (NULL, @AppDomainName, @ErrorPage, @UserID, @UserIp, @ExceptionType, @Message, @StackTrace, datetime('now', 'localtime'))";
-            using (DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
+            using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
             {
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@AppDomainName", AppDomain.CurrentDomain.FriendlyName));
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@ErrorPage", errorPage));
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@UserID", DbAccessFactory.ToDBValue(additionalInfo["UserId"])));
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@UserIp", DbAccessFactory.ToDBValue(additionalInfo["UserIp"])));
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@ExceptionType", ex.GetType().FullName));
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@Message", ex.Message));
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@StackTrace", DbAccessFactory.ToDBValue(ex.StackTrace)));
-                DBAccessManager.DBAccess.ExecuteNonQuery(cmd);
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@AppDomainName", AppDomain.CurrentDomain.FriendlyName));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@ErrorPage", errorPage));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@UserID", DbAccessFactory.ToDBValue(additionalInfo["UserId"])));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@UserIp", DbAccessFactory.ToDBValue(additionalInfo["UserIp"])));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@ExceptionType", ex.GetType().FullName));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Message", ex.Message));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@StackTrace", DbAccessFactory.ToDBValue(ex.StackTrace)));
+                DbAccessManager.DBAccess.ExecuteNonQuery(cmd);
                 CacheManager.Clear(RetrieveExceptionsDataKey);
                 ClearExceptions();
             }
@@ -56,8 +56,8 @@ namespace Bootstrap.DataAccess.SQLite
             System.Threading.Tasks.Task.Run(() =>
             {
                 string sql = $"delete from Exceptions where LogTime < datetime('now', 'localtime', '-{ConfigurationManager.AppSettings["KeepExceptionsPeriod"]} month')";
-                DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-                DBAccessManager.DBAccess.ExecuteNonQuery(cmd);
+                DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
+                DbAccessManager.DBAccess.ExecuteNonQuery(cmd);
             });
         }
         /// <summary>
@@ -70,8 +70,8 @@ namespace Bootstrap.DataAccess.SQLite
             {
                 string sql = "select * from Exceptions where LogTime > datetime('now', 'localtime', '-7 day') order by LogTime desc";
                 List<Exceptions> exceptions = new List<Exceptions>();
-                DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-                using (DbDataReader reader = DBAccessManager.DBAccess.ExecuteReader(cmd))
+                DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
+                using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
                 {
                     while (reader.Read())
                     {

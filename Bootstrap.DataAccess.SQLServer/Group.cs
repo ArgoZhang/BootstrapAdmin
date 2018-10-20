@@ -26,8 +26,8 @@ namespace Bootstrap.DataAccess.SQLServer
             {
                 string sql = "select * from Groups";
                 List<Group> groups = new List<Group>();
-                DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-                using (DbDataReader reader = DBAccessManager.DBAccess.ExecuteReader(cmd))
+                DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
+                using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
                 {
                     while (reader.Read())
                     {
@@ -51,10 +51,10 @@ namespace Bootstrap.DataAccess.SQLServer
         {
             bool ret = false;
             var ids = string.Join(",", value);
-            using (DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_DeleteGroups"))
+            using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_DeleteGroups"))
             {
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@ids", ids));
-                ret = DBAccessManager.DBAccess.ExecuteNonQuery(cmd) == -1;
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@ids", ids));
+                ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == -1;
             }
             CacheCleanUtility.ClearCache(groupIds: value);
             return ret;
@@ -72,12 +72,12 @@ namespace Bootstrap.DataAccess.SQLServer
             string sql = p.Id == 0 ?
                 "Insert Into Groups (GroupName, Description) Values (@GroupName, @Description)" :
                 "Update Groups set GroupName = @GroupName, Description = @Description where ID = @ID";
-            using (DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
+            using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
             {
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@ID", p.Id));
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@GroupName", p.GroupName));
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@Description", DbAccessFactory.ToDBValue(p.Description)));
-                ret = DBAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@ID", p.Id));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@GroupName", p.GroupName));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Description", DbAccessFactory.ToDBValue(p.Description)));
+                ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
             }
             CacheCleanUtility.ClearCache(groupIds: p.Id == 0 ? new List<int>() : new List<int>() { p.Id });
             return ret;
@@ -94,9 +94,9 @@ namespace Bootstrap.DataAccess.SQLServer
             {
                 string sql = "select g.ID,g.GroupName,g.[Description],case ug.GroupID when g.ID then 'checked' else '' end [status] from Groups g left join UserGroup ug on g.ID=ug.GroupID and UserID=@UserID";
                 List<Group> groups = new List<Group>();
-                DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@UserID", userId));
-                using (DbDataReader reader = DBAccessManager.DBAccess.ExecuteReader(cmd))
+                DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@UserID", userId));
+                using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
                 {
                     while (reader.Read())
                     {
@@ -127,16 +127,16 @@ namespace Bootstrap.DataAccess.SQLServer
             dt.Columns.Add("GroupID", typeof(int));
             //判断用户是否选定角色
             groupIds.ToList().ForEach(groupId => dt.Rows.Add(id, groupId));
-            using (TransactionPackage transaction = DBAccessManager.DBAccess.BeginTransaction())
+            using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
             {
                 try
                 {
                     //删除用户部门表中该用户所有的部门关系
                     string sql = "delete from UserGroup where UserID=@UserID;";
-                    using (DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
+                    using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
                     {
-                        cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@UserID", id));
-                        DBAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+                        cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@UserID", id));
+                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
 
                         // insert batch data into config table
                         using (SqlBulkCopy bulk = new SqlBulkCopy((SqlConnection)transaction.Transaction.Connection, SqlBulkCopyOptions.Default, (SqlTransaction)transaction.Transaction))
@@ -172,9 +172,9 @@ namespace Bootstrap.DataAccess.SQLServer
             {
                 List<Group> groups = new List<Group>();
                 string sql = "select g.ID,g.GroupName,g.[Description],case rg.GroupID when g.ID then 'checked' else '' end [status] from Groups g left join RoleGroup rg on g.ID=rg.GroupID and RoleID=@RoleID";
-                DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@RoleID", roleId));
-                using (DbDataReader reader = DBAccessManager.DBAccess.ExecuteReader(cmd))
+                DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@RoleID", roleId));
+                using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
                 {
                     while (reader.Read())
                     {
@@ -203,16 +203,16 @@ namespace Bootstrap.DataAccess.SQLServer
             dt.Columns.Add("GroupID", typeof(int));
             dt.Columns.Add("RoleID", typeof(int));
             groupIds.ToList().ForEach(groupId => dt.Rows.Add(groupId, id));
-            using (TransactionPackage transaction = DBAccessManager.DBAccess.BeginTransaction())
+            using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
             {
                 try
                 {
                     //删除角色部门表该角色所有的部门
                     string sql = "delete from RoleGroup where RoleID=@RoleID";
-                    using (DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
+                    using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
                     {
-                        cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@RoleID", id));
-                        DBAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+                        cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@RoleID", id));
+                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
                         //批插入角色部门表
                         using (SqlBulkCopy bulk = new SqlBulkCopy((SqlConnection)transaction.Transaction.Connection, SqlBulkCopyOptions.Default, (SqlTransaction)transaction.Transaction))
                         {

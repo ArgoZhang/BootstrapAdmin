@@ -28,9 +28,9 @@ namespace Bootstrap.DataAccess.SQLServer
             return CacheManager.GetOrAdd(RetrieveUsersDataKey, key =>
             {
                 List<User> users = new List<User>();
-                DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.Text, "select ID, UserName, DisplayName, RegisterTime, ApprovedTime, ApprovedBy, Description from Users Where ApprovedTime is not null");
+                DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, "select ID, UserName, DisplayName, RegisterTime, ApprovedTime, ApprovedBy, Description from Users Where ApprovedTime is not null");
 
-                using (DbDataReader reader = DBAccessManager.DBAccess.ExecuteReader(cmd))
+                using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
                 {
                     while (reader.Read())
                     {
@@ -59,8 +59,8 @@ namespace Bootstrap.DataAccess.SQLServer
             {
                 string sql = "select ID, UserName, DisplayName, RegisterTime, [Description] from Users Where ApprovedTime is null order by RegisterTime desc";
                 List<User> users = new List<User>();
-                DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-                using (DbDataReader reader = DBAccessManager.DBAccess.ExecuteReader(cmd))
+                DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
+                using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
                 {
                     while (reader.Read())
                     {
@@ -85,10 +85,10 @@ namespace Bootstrap.DataAccess.SQLServer
         {
             bool ret = false;
             var ids = string.Join(",", value);
-            using (DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_DeleteUsers"))
+            using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_DeleteUsers"))
             {
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@ids", ids));
-                ret = DBAccessManager.DBAccess.ExecuteNonQuery(cmd) == -1;
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@ids", ids));
+                ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == -1;
                 if (ret) CacheCleanUtility.ClearCache(userIds: value);
             }
             return ret;
@@ -105,15 +105,15 @@ namespace Bootstrap.DataAccess.SQLServer
             if (p.UserName.Length > 50) p.UserName = p.UserName.Substring(0, 50);
             p.PassSalt = LgbCryptography.GenerateSalt();
             p.Password = LgbCryptography.ComputeHash(p.Password, p.PassSalt);
-            using (DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_SaveUsers"))
+            using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_SaveUsers"))
             {
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@userName", p.UserName));
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@password", p.Password));
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@passSalt", p.PassSalt));
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@displayName", p.DisplayName));
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@approvedBy", DbAccessFactory.ToDBValue(p.ApprovedBy)));
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@description", p.Description));
-                ret = DBAccessManager.DBAccess.ExecuteNonQuery(cmd) == -1;
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@userName", p.UserName));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@password", p.Password));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@passSalt", p.PassSalt));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@displayName", p.DisplayName));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@approvedBy", DbAccessFactory.ToDBValue(p.ApprovedBy)));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@description", p.Description));
+                ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == -1;
                 if (ret) CacheCleanUtility.ClearCache(userIds: p.Id == 0 ? new List<int>() : new List<int>() { p.Id });
             }
             return ret;
@@ -131,13 +131,13 @@ namespace Bootstrap.DataAccess.SQLServer
             string sql = "Update Users set Password = @Password, PassSalt = @PassSalt, DisplayName = @DisplayName where ID = @id";
             var passSalt = LgbCryptography.GenerateSalt();
             var newPassword = LgbCryptography.ComputeHash(password, passSalt);
-            using (DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
+            using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
             {
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@id", id));
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@DisplayName", displayName));
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@Password", newPassword));
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@PassSalt", passSalt));
-                ret = DBAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@id", id));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@DisplayName", displayName));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Password", newPassword));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@PassSalt", passSalt));
+                ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
                 if (ret) CacheCleanUtility.ClearCache(userIds: id == 0 ? new List<int>() : new List<int>() { id });
             }
             return ret;
@@ -152,11 +152,11 @@ namespace Bootstrap.DataAccess.SQLServer
         {
             var ret = false;
             var sql = "update Users set ApprovedTime = GETDATE(), ApprovedBy = @approvedBy where ID = @id";
-            using (DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
+            using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
             {
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@id", id));
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@approvedBy", approvedBy));
-                ret = DBAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@id", id));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@approvedBy", approvedBy));
+                ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
                 if (ret) CacheCleanUtility.ClearCache(userIds: new List<int>() { id });
             }
             return ret;
@@ -171,12 +171,12 @@ namespace Bootstrap.DataAccess.SQLServer
         public override bool RejectUser(int id, string rejectBy)
         {
             var ret = false;
-            using (DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_RejectUsers"))
+            using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_RejectUsers"))
             {
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@id", id));
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@rejectedBy", rejectBy));
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@rejectedReason", "未填写"));
-                ret = DBAccessManager.DBAccess.ExecuteNonQuery(cmd) == -1;
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@id", id));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@rejectedBy", rejectBy));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@rejectedReason", "未填写"));
+                ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == -1;
                 if (ret) CacheCleanUtility.ClearCache(userIds: new List<int>() { id });
             }
             return ret;
@@ -193,9 +193,9 @@ namespace Bootstrap.DataAccess.SQLServer
             {
                 List<User> users = new List<User>();
                 string sql = "select u.ID, u.UserName, u.DisplayName, case ur.UserID when u.ID then 'checked' else '' end [status] from Users u left join UserRole ur on u.ID = ur.UserID and RoleID = @RoleID where u.ApprovedTime is not null";
-                DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@RoleID", roleId));
-                using (DbDataReader reader = DBAccessManager.DBAccess.ExecuteReader(cmd))
+                DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@RoleID", roleId));
+                using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
                 {
                     while (reader.Read())
                     {
@@ -224,16 +224,16 @@ namespace Bootstrap.DataAccess.SQLServer
             dt.Columns.Add("RoleID", typeof(int));
             dt.Columns.Add("UserID", typeof(int));
             userIds.ToList().ForEach(userId => dt.Rows.Add(id, userId));
-            using (TransactionPackage transaction = DBAccessManager.DBAccess.BeginTransaction())
+            using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
             {
                 try
                 {
                     //删除用户角色表该角色所有的用户
                     string sql = "delete from UserRole where RoleID=@RoleID";
-                    using (DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
+                    using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
                     {
-                        cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@RoleID", id));
-                        DBAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+                        cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@RoleID", id));
+                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
                         //批插入用户角色表
                         using (SqlBulkCopy bulk = new SqlBulkCopy((SqlConnection)transaction.Transaction.Connection, SqlBulkCopyOptions.Default, (SqlTransaction)transaction.Transaction))
                         {
@@ -267,9 +267,9 @@ namespace Bootstrap.DataAccess.SQLServer
             {
                 List<User> users = new List<User>();
                 string sql = "select u.ID, u.UserName, u.DisplayName, case ur.UserID when u.ID then 'checked' else '' end [status] from Users u left join UserGroup ur on u.ID = ur.UserID and GroupID =@groupId where u.ApprovedTime is not null";
-                DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@GroupID", groupId));
-                using (DbDataReader reader = DBAccessManager.DBAccess.ExecuteReader(cmd))
+                DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@GroupID", groupId));
+                using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
                 {
                     while (reader.Read())
                     {
@@ -298,16 +298,16 @@ namespace Bootstrap.DataAccess.SQLServer
             dt.Columns.Add("UserID", typeof(int));
             dt.Columns.Add("GroupID", typeof(int));
             userIds.ToList().ForEach(userId => dt.Rows.Add(userId, id));
-            using (TransactionPackage transaction = DBAccessManager.DBAccess.BeginTransaction())
+            using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
             {
                 try
                 {
                     //删除用户角色表该角色所有的用户
                     string sql = "delete from UserGroup where GroupID = @GroupID";
-                    using (DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
+                    using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
                     {
-                        cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@GroupID", id));
-                        DBAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+                        cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@GroupID", id));
+                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
                         //批插入用户角色表
                         using (SqlBulkCopy bulk = new SqlBulkCopy((SqlConnection)transaction.Transaction.Connection, SqlBulkCopyOptions.Default, (SqlTransaction)transaction.Transaction))
                         {
@@ -339,11 +339,11 @@ namespace Bootstrap.DataAccess.SQLServer
         {
             bool ret = false;
             string sql = "Update Users set Icon = @iconName where UserName = @userName";
-            using (DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
+            using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
             {
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@iconName", iconName));
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@userName", userName));
-                ret = DBAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@iconName", iconName));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@userName", userName));
+                ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
                 if (ret) CacheCleanUtility.ClearCache(cacheKey: $"{RetrieveUsersDataKey}*");
             }
             return ret;
@@ -358,11 +358,11 @@ namespace Bootstrap.DataAccess.SQLServer
         {
             bool ret = false;
             string sql = "Update Users set DisplayName = @DisplayName where UserName = @userName";
-            using (DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
+            using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
             {
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@DisplayName", displayName));
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@userName", userName));
-                ret = DBAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@DisplayName", displayName));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@userName", userName));
+                ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
                 if (ret) CacheCleanUtility.ClearCache(cacheKey: $"{RetrieveUsersDataKey}*");
             }
             return ret;
@@ -377,11 +377,11 @@ namespace Bootstrap.DataAccess.SQLServer
         {
             bool ret = false;
             string sql = "Update Users set Css = @cssName where UserName = @userName";
-            using (DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
+            using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
             {
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@cssName", DbAccessFactory.ToDBValue(cssName)));
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@userName", userName));
-                ret = DBAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@cssName", DbAccessFactory.ToDBValue(cssName)));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@userName", userName));
+                ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
                 if (ret) CacheCleanUtility.ClearCache(cacheKey: $"{RetrieveUsersDataKey}*");
             }
             return ret;
@@ -398,7 +398,7 @@ namespace Bootstrap.DataAccess.SQLServer
             {
                 BootstrapUser user = null;
                 var sql = "select UserName, DisplayName, case isnull(d.Code, '') when '' then '~/images/uploader/' else d.Code end + Icon Icon, u.Css from Users u left join Dicts d on d.Define = '0' and d.Category = N'头像地址' and Name = N'头像路径' where ApprovedTime is not null and UserName = @UserName";
-                var db = DBAccessManager.DBAccess;
+                var db = DbAccessManager.DBAccess;
                 var cmd = db.CreateCommand(CommandType.Text, sql);
                 cmd.Parameters.Add(db.CreateParameter("@UserName", userName));
                 using (DbDataReader reader = db.ExecuteReader(cmd))

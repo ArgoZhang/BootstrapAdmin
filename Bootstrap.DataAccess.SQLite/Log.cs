@@ -25,8 +25,8 @@ namespace Bootstrap.DataAccess.SQLite
             {
                 string sql = "select * from Logs where LogTime > datetime('now', 'localtime', '-7 day')";
                 List<Log> logs = new List<Log>();
-                DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-                using (DbDataReader reader = DBAccessManager.DBAccess.ExecuteReader(cmd))
+                DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
+                using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
                 {
                     while (reader.Read())
                     {
@@ -56,8 +56,8 @@ namespace Bootstrap.DataAccess.SQLite
             System.Threading.Tasks.Task.Run(() =>
             {
                 string sql = $"delete from Logs where LogTime < datetime('now', 'localtime', '-{ConfigurationManager.AppSettings["KeepLogsPeriod"]} month')";
-                DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-                DBAccessManager.DBAccess.ExecuteNonQuery(cmd);
+                DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
+                DbAccessManager.DBAccess.ExecuteNonQuery(cmd);
             });
         }
         /// <summary>
@@ -70,14 +70,14 @@ namespace Bootstrap.DataAccess.SQLite
             if (p == null) throw new ArgumentNullException("p");
             bool ret = false;
             string sql = "Insert Into Logs (CRUD, UserName, LogTime, ClientIp, ClientAgent, RequestUrl) Values (@CRUD, @UserName, datetime('now', 'localtime'), @ClientIp, @ClientAgent, @RequestUrl)";
-            using (DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
+            using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
             {
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@CRUD", p.CRUD));
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@UserName", p.UserName));
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@ClientIp", p.ClientIp));
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@ClientAgent", p.ClientAgent));
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@RequestUrl", p.RequestUrl));
-                ret = DBAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@CRUD", p.CRUD));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@UserName", p.UserName));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@ClientIp", p.ClientIp));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@ClientAgent", p.ClientAgent));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@RequestUrl", p.RequestUrl));
+                ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
             }
             CacheManager.Clear(RetrieveLogsDataKey);
             DeleteLogAsync();

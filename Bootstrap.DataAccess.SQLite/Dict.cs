@@ -24,9 +24,9 @@ namespace Bootstrap.DataAccess.SQLite
             var ret = false;
             var ids = string.Join(",", value);
             string sql = string.Format(CultureInfo.InvariantCulture, "Delete from Dicts where ID in ({0})", ids);
-            using (DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
+            using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
             {
-                ret = DBAccessManager.DBAccess.ExecuteNonQuery(cmd) == value.Count();
+                ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == value.Count();
                 CacheCleanUtility.ClearCache(dictIds: ids);
             }
             return ret;
@@ -46,14 +46,14 @@ namespace Bootstrap.DataAccess.SQLite
             string sql = dict.Id == 0 ?
                 "Insert Into Dicts (Category, Name, Code ,Define) Values (@Category, @Name, @Code, @Define)" :
                 "Update Dicts set Category = @Category, Name = @Name, Code = @Code, Define = @Define where ID = @ID";
-            using (DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
+            using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
             {
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@ID", dict.Id));
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@Category", dict.Category));
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@Name", dict.Name));
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@Code", dict.Code));
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@Define", dict.Define));
-                ret = DBAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@ID", dict.Id));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Category", dict.Category));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Name", dict.Name));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Code", dict.Code));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Define", dict.Define));
+                ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
             }
             CacheCleanUtility.ClearCache(dictIds: dict.Id == 0 ? string.Empty : dict.Id.ToString());
             return ret;
@@ -69,12 +69,12 @@ namespace Bootstrap.DataAccess.SQLite
         {
             var ret = false;
             string sql = "Update Dicts set Code = @Code where Category = @Category and Name = @Name";
-            using (DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
+            using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
             {
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@Name", dict.Name));
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@Code", dict.Code));
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@Category", dict.Category));
-                ret = DBAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Name", dict.Name));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Code", dict.Code));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Category", dict.Category));
+                ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
             }
             CacheCleanUtility.ClearCache(dictIds: string.Empty);
             return ret;
@@ -89,8 +89,8 @@ namespace Bootstrap.DataAccess.SQLite
             {
                 var ret = new List<string>();
                 string sql = "select distinct Category from Dicts";
-                DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-                using (DbDataReader reader = DBAccessManager.DBAccess.ExecuteReader(cmd))
+                DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
+                using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
                 {
                     while (reader.Read())
                     {

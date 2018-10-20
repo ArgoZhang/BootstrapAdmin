@@ -88,7 +88,7 @@ namespace Bootstrap.DataAccess
             return CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveGroupsByUserNameDataKey, userName), r =>
             {
                 var entities = new List<string>();
-                var db = DBAccessManager.DBAccess;
+                var db = DbAccessManager.DBAccess;
                 using (DbCommand cmd = db.CreateCommand(CommandType.Text, "select g.GroupName, g.[Description] from Groups g inner join UserGroup ug on g.ID = ug.GroupID inner join Users u on ug.UserID = u.ID where UserName = @UserName"))
                 {
                     cmd.Parameters.Add(db.CreateParameter("@UserName", userName));

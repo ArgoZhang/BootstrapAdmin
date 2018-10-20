@@ -26,8 +26,8 @@ namespace Bootstrap.DataAccess.SQLite
             {
                 string sql = "select * from Roles";
                 var roles = new List<Role>();
-                DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-                using (DbDataReader reader = DBAccessManager.DBAccess.ExecuteReader(cmd))
+                DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
+                using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
                 {
                     while (reader.Read())
                     {
@@ -57,16 +57,16 @@ namespace Bootstrap.DataAccess.SQLite
             dt.Columns.Add("RoleID", typeof(int));
             //判断用户是否选定角色
             roleIds.ToList().ForEach(roleId => dt.Rows.Add(id, roleId));
-            using (TransactionPackage transaction = DBAccessManager.DBAccess.BeginTransaction())
+            using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
             {
                 try
                 {
                     // delete user from config table
                     string sql = "delete from UserRole where UserID = @UserID;";
-                    using (DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
+                    using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
                     {
-                        cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@UserID", id));
-                        DBAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+                        cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@UserID", id));
+                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
                         if (dt.Rows.Count > 0)
                         {
                             // insert batch data into config table
@@ -102,9 +102,9 @@ namespace Bootstrap.DataAccess.SQLite
             {
                 List<Role> roles = new List<Role>();
                 string sql = "select r.ID, r.RoleName, r.[Description], case ur.RoleID when r.ID then 'checked' else '' end [status] from Roles r left join UserRole ur on r.ID = ur.RoleID and UserID = @UserID";
-                DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@UserID", userId));
-                using (DbDataReader reader = DBAccessManager.DBAccess.ExecuteReader(cmd))
+                DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@UserID", userId));
+                using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
                 {
                     while (reader.Read())
                     {
@@ -128,10 +128,10 @@ namespace Bootstrap.DataAccess.SQLite
         {
             bool ret = false;
             var ids = string.Join(",", value);
-            using (DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_DeleteRoles"))
+            using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_DeleteRoles"))
             {
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@ids", ids));
-                ret = DBAccessManager.DBAccess.ExecuteNonQuery(cmd) == -1;
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@ids", ids));
+                ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == -1;
             }
             CacheCleanUtility.ClearCache(roleIds: value);
             return ret;
@@ -149,12 +149,12 @@ namespace Bootstrap.DataAccess.SQLite
             string sql = p.Id == 0 ?
                 "Insert Into Roles (RoleName, Description) Values (@RoleName, @Description)" :
                 "Update Roles set RoleName = @RoleName, Description = @Description where ID = @ID";
-            using (DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
+            using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
             {
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@ID", p.Id));
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@RoleName", p.RoleName));
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@Description", DbAccessFactory.ToDBValue(p.Description)));
-                ret = DBAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@ID", p.Id));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@RoleName", p.RoleName));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Description", DbAccessFactory.ToDBValue(p.Description)));
+                ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
             }
             CacheCleanUtility.ClearCache(roleIds: p.Id == 0 ? new List<int>() : new List<int> { p.Id });
             return ret;
@@ -171,9 +171,9 @@ namespace Bootstrap.DataAccess.SQLite
             {
                 string sql = "select r.ID, r.RoleName, r.[Description], case ur.RoleID when r.ID then 'checked' else '' end [status] from Roles r left join NavigationRole ur on r.ID = ur.RoleID and NavigationID = @NavigationID";
                 List<Role> roles = new List<Role>();
-                DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@NavigationID", menuId));
-                using (DbDataReader reader = DBAccessManager.DBAccess.ExecuteReader(cmd))
+                DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@NavigationID", menuId));
+                using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
                 {
                     while (reader.Read())
                     {
@@ -204,16 +204,16 @@ namespace Bootstrap.DataAccess.SQLite
             dt.Columns.Add("RoleID", typeof(int));
             //判断用户是否选定角色
             roleIds.ToList().ForEach(roleId => dt.Rows.Add(id, roleId));
-            using (TransactionPackage transaction = DBAccessManager.DBAccess.BeginTransaction())
+            using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
             {
                 try
                 {
                     // delete role from config table
                     string sql = "delete from NavigationRole where NavigationID=@NavigationID;";
-                    using (DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
+                    using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
                     {
-                        cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@NavigationID", id));
-                        DBAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+                        cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@NavigationID", id));
+                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
 
                         // insert batch data into config table
                         using (SqlBulkCopy bulk = new SqlBulkCopy((SqlConnection)transaction.Transaction.Connection, SqlBulkCopyOptions.Default, (SqlTransaction)transaction.Transaction))
@@ -249,9 +249,9 @@ namespace Bootstrap.DataAccess.SQLite
             {
                 List<Role> roles = new List<Role>();
                 string sql = "select r.ID, r.RoleName, r.[Description], case ur.RoleID when r.ID then 'checked' else '' end [status] from Roles r left join RoleGroup ur on r.ID = ur.RoleID and GroupID = @GroupID";
-                DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-                cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@GroupID", groupId));
-                using (DbDataReader reader = DBAccessManager.DBAccess.ExecuteReader(cmd))
+                DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@GroupID", groupId));
+                using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
                 {
                     while (reader.Read())
                     {
@@ -282,16 +282,16 @@ namespace Bootstrap.DataAccess.SQLite
             dt.Columns.Add("RoleID", typeof(int));
             dt.Columns.Add("GroupID", typeof(int));
             roleIds.ToList().ForEach(roleId => dt.Rows.Add(roleId, id));
-            using (TransactionPackage transaction = DBAccessManager.DBAccess.BeginTransaction())
+            using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
             {
                 try
                 {
                     // delete user from config table
                     string sql = "delete from RoleGroup where GroupID=@GroupID";
-                    using (DbCommand cmd = DBAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
+                    using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
                     {
-                        cmd.Parameters.Add(DBAccessManager.DBAccess.CreateParameter("@GroupID", id));
-                        DBAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+                        cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@GroupID", id));
+                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
 
                         // insert batch data into config table
                         using (SqlBulkCopy bulk = new SqlBulkCopy((SqlConnection)transaction.Transaction.Connection, SqlBulkCopyOptions.Default, (SqlTransaction)transaction.Transaction))
