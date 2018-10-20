@@ -1,5 +1,4 @@
 ﻿using Bootstrap.DataAccess;
-using Bootstrap.Security;
 using Longbow.Web.SignalR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
