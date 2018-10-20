@@ -110,54 +110,6 @@ BEGIN
 END
 GO
 
-Drop PROCEDURE Proc_RetrieveMenus
-GO
--- =============================================
--- Author:		Argo Zhang
--- Create date: 2016-11-08
--- Description:	
--- =============================================
-Create PROCEDURE Proc_RetrieveMenus
-	-- Add the parameters for the stored procedure here
-	@userName varchar(50) = null
-	WITH ENCRYPTION
-AS
-BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	SET NOCOUNT ON;
-	SET XACT_ABORT ON;
-    -- Insert statements for procedure here
-	if @userName = '' or @userName is null or exists(select ur.ID from Users u inner join UserRole ur on u.ID = ur.UserID inner join Roles r on ur.RoleID = r.ID where r.RoleName = 'administrators' and u.UserName = @userName)
-		select n.ID, n.ParentId, n.Name, n.[Order], n.Icon, n.Url, n.Category, n.Target, n.IsResource, n.[Application], d.Name as CategoryName, ln.Name as ParentName 
-		from Navigations n inner join Dicts d on n.Category = d.Code and d.Category = N'菜单' and d.Define = 0 
-		left join Navigations ln on n.ParentId = ln.ID
-	else
-		select n.ID, n.ParentId, n.Name, n.[Order], n.Icon, n.Url, n.Category, n.Target, n.IsResource, n.[Application], d.Name as CategoryName, ln.Name as ParentName 
-		from Navigations n inner join Dicts d on n.Category = d.Code and d.Category = N'菜单' and d.Define = 0 
-		left join Navigations ln on n.ParentId = ln.ID
-		inner join (
-			select nr.NavigationID from Users u 
-			inner join UserRole ur on ur.UserID = u.ID 
-			inner join NavigationRole nr on nr.RoleID = ur.RoleID
-			where u.UserName = @userName
-			union
-			select nr.NavigationID from Users u 
-			inner join UserGroup ug on u.ID = ug.UserID
-			inner join RoleGroup rg on rg.GroupID = ug.GroupID 
-			inner join NavigationRole nr on nr.RoleID = rg.RoleID
-			where u.UserName = @userName
-			union
-			select n.ID from Navigations n
-			where EXISTS (select UserName from Users u 
-				inner join UserRole ur on u.ID = ur.UserID
-				inner join Roles r on ur.RoleID = r.ID
-				where u.UserName = @userName and r.RoleName = N'Administrators'
-			)
-		) nav on n.ID = nav.NavigationID
-END
-GO
-
 /****** Object:  StoredProcedure [dbo].[Proc_SaveUsers]    Script Date: 11/11/2016 08:51:44 ******/
 SET ANSI_NULLS ON
 GO
