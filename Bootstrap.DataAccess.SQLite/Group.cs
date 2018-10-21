@@ -1,6 +1,4 @@
-﻿using Longbow;
-using Longbow.Cache;
-using Longbow.Data;
+﻿using Longbow.Data;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -16,33 +14,6 @@ namespace Bootstrap.DataAccess.SQLite
     public class Group : DataAccess.Group
     {
         /// <summary>
-        /// 查询所有群组信息
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public override IEnumerable<DataAccess.Group> RetrieveGroups(int id = 0)
-        {
-            var ret = CacheManager.GetOrAdd(RetrieveGroupsDataKey, key =>
-            {
-                string sql = "select * from Groups";
-                List<Group> groups = new List<Group>();
-                DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-                using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
-                {
-                    while (reader.Read())
-                    {
-                        groups.Add(new Group()
-                        {
-                            Id = LgbConvert.ReadValue(reader[0], 0),
-                            GroupName = (string)reader[1],
-                            Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2]
-                        });
-                    }
-                }
-                return groups;
-            });
-            return id == 0 ? ret : ret.Where(t => id == t.Id);
-        }
         /// <summary>
         /// 删除群组信息
         /// </summary>
@@ -57,60 +28,6 @@ namespace Bootstrap.DataAccess.SQLite
                 ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == -1;
             }
             CacheCleanUtility.ClearCache(groupIds: value);
-            return ret;
-        }
-        /// <summary>
-        /// 保存新建/更新的群组信息
-        /// </summary>
-        /// <param name="p"></param>
-        /// <returns></returns>
-        public override bool SaveGroup(DataAccess.Group p)
-        {
-            bool ret = false;
-            if (p.GroupName.Length > 50) p.GroupName = p.GroupName.Substring(0, 50);
-            if (!string.IsNullOrEmpty(p.Description) && p.Description.Length > 500) p.Description = p.Description.Substring(0, 500);
-            string sql = p.Id == 0 ?
-                "Insert Into Groups (GroupName, Description) Values (@GroupName, @Description)" :
-                "Update Groups set GroupName = @GroupName, Description = @Description where ID = @ID";
-            using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
-            {
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@ID", p.Id));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@GroupName", p.GroupName));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Description", DbAccessFactory.ToDBValue(p.Description)));
-                ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
-            }
-            CacheCleanUtility.ClearCache(groupIds: p.Id == 0 ? new List<int>() : new List<int>() { p.Id });
-            return ret;
-        }
-        /// <summary>
-        /// 根据用户查询部门信息
-        /// </summary>
-        /// <param name="userId"></param>
-        /// <returns></returns>
-        public override IEnumerable<DataAccess.Group> RetrieveGroupsByUserId(int userId)
-        {
-            string key = string.Format("{0}-{1}", RetrieveGroupsByUserIdDataKey, userId);
-            var ret = CacheManager.GetOrAdd(key, k =>
-            {
-                string sql = "select g.ID,g.GroupName,g.[Description],case ug.GroupID when g.ID then 'checked' else '' end [status] from Groups g left join UserGroup ug on g.ID=ug.GroupID and UserID=@UserID";
-                List<Group> groups = new List<Group>();
-                DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@UserID", userId));
-                using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
-                {
-                    while (reader.Read())
-                    {
-                        groups.Add(new Group()
-                        {
-                            Id = LgbConvert.ReadValue(reader[0], 0),
-                            GroupName = (string)reader[1],
-                            Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
-                            Checked = (string)reader[3]
-                        });
-                    }
-                }
-                return groups;
-            }, RetrieveGroupsByUserIdDataKey);
             return ret;
         }
         /// <summary>
@@ -159,36 +76,6 @@ namespace Bootstrap.DataAccess.SQLite
                 }
             }
             return ret;
-        }
-        /// <summary>
-        /// 根据角色ID指派部门
-        /// </summary>
-        /// <param name="roleId"></param>
-        /// <returns></returns>
-        public override IEnumerable<DataAccess.Group> RetrieveGroupsByRoleId(int roleId)
-        {
-            string k = string.Format("{0}-{1}", RetrieveGroupsByRoleIdDataKey, roleId);
-            return CacheManager.GetOrAdd(k, key =>
-            {
-                List<Group> groups = new List<Group>();
-                string sql = "select g.ID,g.GroupName,g.[Description],case rg.GroupID when g.ID then 'checked' else '' end [status] from Groups g left join RoleGroup rg on g.ID=rg.GroupID and RoleID=@RoleID";
-                DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@RoleID", roleId));
-                using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
-                {
-                    while (reader.Read())
-                    {
-                        groups.Add(new Group()
-                        {
-                            Id = LgbConvert.ReadValue(reader[0], 0),
-                            GroupName = (string)reader[1],
-                            Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
-                            Checked = (string)reader[3]
-                        });
-                    }
-                }
-                return groups;
-            }, RetrieveGroupsByRoleIdDataKey);
         }
         /// <summary>
         /// 根据角色ID以及选定的部门ID，保到角色部门表

@@ -56,7 +56,7 @@ namespace Bootstrap.DataAccess
                     {
                         roles.Add(new Role()
                         {
-                            Id = (int)reader[0],
+                            Id = LgbConvert.ReadValue(reader[0], 0),
                             RoleName = (string)reader[1],
                             Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2]
                         });
@@ -133,7 +133,7 @@ namespace Bootstrap.DataAccess
                     {
                         roles.Add(new Role()
                         {
-                            Id = (int)reader[0],
+                            Id = LgbConvert.ReadValue(reader[0], 0),
                             RoleName = (string)reader[1],
                             Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
                             Checked = (string)reader[3]
@@ -202,7 +202,7 @@ namespace Bootstrap.DataAccess
                     {
                         roles.Add(new Role()
                         {
-                            Id = (int)reader[0],
+                            Id = LgbConvert.ReadValue(reader[0], 0),
                             RoleName = (string)reader[1],
                             Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
                             Checked = (string)reader[3]
@@ -280,7 +280,7 @@ namespace Bootstrap.DataAccess
                     {
                         roles.Add(new Role()
                         {
-                            Id = (int)reader[0],
+                            Id = LgbConvert.ReadValue(reader[0], 0),
                             RoleName = (string)reader[1],
                             Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
                             Checked = (string)reader[3]

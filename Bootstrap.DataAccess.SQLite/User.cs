@@ -1,5 +1,4 @@
 ﻿using Bootstrap.Security;
-using Longbow;
 using Longbow.Cache;
 using Longbow.Data;
 using Longbow.Security;
@@ -19,64 +18,6 @@ namespace Bootstrap.DataAccess.SQLite
     public class User : DataAccess.User
     {
         /// <summary>
-        /// 查询所有用户
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public override IEnumerable<DataAccess.User> RetrieveUsers()
-        {
-            return CacheManager.GetOrAdd(RetrieveUsersDataKey, key =>
-            {
-                List<User> users = new List<User>();
-                DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, "select ID, UserName, DisplayName, RegisterTime, ApprovedTime, ApprovedBy, Description from Users Where ApprovedTime is not null");
-
-                using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
-                {
-                    while (reader.Read())
-                    {
-                        users.Add(new User()
-                        {
-                            Id = LgbConvert.ReadValue(reader[0], 0),
-                            UserName = (string)reader[1],
-                            DisplayName = (string)reader[2],
-                            RegisterTime = LgbConvert.ReadValue(reader[3], DateTime.MinValue),
-                            ApprovedTime = LgbConvert.ReadValue(reader[4], DateTime.MinValue),
-                            ApprovedBy = reader.IsDBNull(5) ? string.Empty : (string)reader[5],
-                            Description = (string)reader[6]
-                        });
-                    }
-                }
-                return users;
-            });
-        }
-        /// <summary>
-        /// 查询所有的新注册用户
-        /// </summary>
-        /// <returns></returns>
-        public override IEnumerable<DataAccess.User> RetrieveNewUsers()
-        {
-            return CacheManager.GetOrAdd(RetrieveNewUsersDataKey, key =>
-            {
-                string sql = "select ID, UserName, DisplayName, RegisterTime, [Description] from Users Where ApprovedTime is null order by RegisterTime desc";
-                List<User> users = new List<User>();
-                DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-                using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
-                {
-                    while (reader.Read())
-                    {
-                        users.Add(new User()
-                        {
-                            Id = LgbConvert.ReadValue(reader[0], 0),
-                            UserName = (string)reader[1],
-                            DisplayName = (string)reader[2],
-                            RegisterTime = LgbConvert.ReadValue(reader[3], DateTime.MinValue),
-                            Description = (string)reader[4]
-                        });
-                    }
-                }
-                return users;
-            });
-        }
         /// <summary>
         /// 删除用户
         /// </summary>
@@ -122,30 +63,6 @@ namespace Bootstrap.DataAccess.SQLite
         /// 
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="password"></param>
-        /// <param name="displayName"></param>
-        /// <returns></returns>
-        public override bool UpdateUser(int id, string password, string displayName)
-        {
-            bool ret = false;
-            string sql = "Update Users set Password = @Password, PassSalt = @PassSalt, DisplayName = @DisplayName where ID = @id";
-            var passSalt = LgbCryptography.GenerateSalt();
-            var newPassword = LgbCryptography.ComputeHash(password, passSalt);
-            using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
-            {
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@id", id));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@DisplayName", displayName));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Password", newPassword));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@PassSalt", passSalt));
-                ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
-                if (ret) CacheCleanUtility.ClearCache(userIds: id == 0 ? new List<int>() : new List<int>() { id });
-            }
-            return ret;
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
         /// <param name="approvedBy"></param>
         /// <returns></returns>
         public override bool ApproveUser(int id, string approvedBy)
@@ -180,36 +97,6 @@ namespace Bootstrap.DataAccess.SQLite
                 if (ret) CacheCleanUtility.ClearCache(userIds: new List<int>() { id });
             }
             return ret;
-        }
-        /// <summary>
-        /// 通过roleId获取所有用户
-        /// </summary>
-        /// <param name="roleId"></param>
-        /// <returns></returns>
-        public override IEnumerable<DataAccess.User> RetrieveUsersByRoleId(int roleId)
-        {
-            string key = string.Format("{0}-{1}", RetrieveUsersByRoleIdDataKey, roleId);
-            return CacheManager.GetOrAdd(key, k =>
-            {
-                List<User> users = new List<User>();
-                string sql = "select u.ID, u.UserName, u.DisplayName, case ur.UserID when u.ID then 'checked' else '' end [status] from Users u left join UserRole ur on u.ID = ur.UserID and RoleID = @RoleID where u.ApprovedTime is not null";
-                DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@RoleID", roleId));
-                using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
-                {
-                    while (reader.Read())
-                    {
-                        users.Add(new User()
-                        {
-                            Id = LgbConvert.ReadValue(reader[0], 0),
-                            UserName = (string)reader[1],
-                            DisplayName = (string)reader[2],
-                            Checked = (string)reader[3]
-                        });
-                    }
-                }
-                return users;
-            }, RetrieveUsersByRoleIdDataKey);
         }
         /// <summary>
         /// 通过角色ID保存当前授权用户（插入）
@@ -256,36 +143,6 @@ namespace Bootstrap.DataAccess.SQLite
             return ret;
         }
         /// <summary>
-        /// 通过groupId获取所有用户
-        /// </summary>
-        /// <param name="groupId"></param>
-        /// <returns></returns>
-        public override IEnumerable<DataAccess.User> RetrieveUsersByGroupId(int groupId)
-        {
-            string key = string.Format("{0}-{1}", RetrieveUsersByGroupIdDataKey, groupId);
-            return CacheManager.GetOrAdd(key, k =>
-            {
-                List<User> users = new List<User>();
-                string sql = "select u.ID, u.UserName, u.DisplayName, case ur.UserID when u.ID then 'checked' else '' end [status] from Users u left join UserGroup ur on u.ID = ur.UserID and GroupID =@groupId where u.ApprovedTime is not null";
-                DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@GroupID", groupId));
-                using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
-                {
-                    while (reader.Read())
-                    {
-                        users.Add(new User()
-                        {
-                            Id = LgbConvert.ReadValue(reader[0], 0),
-                            UserName = (string)reader[1],
-                            DisplayName = (string)reader[2],
-                            Checked = (string)reader[3]
-                        });
-                    }
-                }
-                return users;
-            }, RetrieveUsersByRoleIdDataKey);
-        }
-        /// <summary>
         /// 通过部门ID保存当前授权用户（插入）
         /// </summary>
         /// <param name="id">GroupID</param>
@@ -330,66 +187,9 @@ namespace Bootstrap.DataAccess.SQLite
             return ret;
         }
         /// <summary>
-        /// 根据用户名修改用户头像
-        /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="iconName"></param>
-        /// <returns></returns>
-        public override bool SaveUserIconByName(string userName, string iconName)
-        {
-            bool ret = false;
-            string sql = "Update Users set Icon = @iconName where UserName = @userName";
-            using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
-            {
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@iconName", iconName));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@userName", userName));
-                ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
-                if (ret) CacheCleanUtility.ClearCache(cacheKey: $"{RetrieveUsersDataKey}*");
-            }
-            return ret;
-        }
-        /// <summary>
         /// 
         /// </summary>
         /// <param name="userName"></param>
-        /// <param name="displayName"></param>
-        /// <returns></returns>
-        public override bool SaveDisplayName(string userName, string displayName)
-        {
-            bool ret = false;
-            string sql = "Update Users set DisplayName = @DisplayName where UserName = @userName";
-            using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
-            {
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@DisplayName", displayName));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@userName", userName));
-                ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
-                if (ret) CacheCleanUtility.ClearCache(cacheKey: $"{RetrieveUsersDataKey}*");
-            }
-            return ret;
-        }
-        /// <summary>
-        /// 根据用户名更改用户皮肤
-        /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="cssName"></param>
-        /// <returns></returns>
-        public override bool SaveUserCssByName(string userName, string cssName)
-        {
-            bool ret = false;
-            string sql = "Update Users set Css = @cssName where UserName = @userName";
-            using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
-            {
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@cssName", DbAccessFactory.ToDBValue(cssName)));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@userName", userName));
-                ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
-                if (ret) CacheCleanUtility.ClearCache(cacheKey: $"{RetrieveUsersDataKey}*");
-            }
-            return ret;
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="name"></param>
         /// <returns></returns>
         public override BootstrapUser RetrieveUserByUserName(string userName)
         {
@@ -398,9 +198,10 @@ namespace Bootstrap.DataAccess.SQLite
             {
                 BootstrapUser user = null;
                 var sql = "select UserName, DisplayName, case ifnull(d.Code, '') when '' then '~/images/uploader/' else d.Code end || ifnull(Icon, 'default.jpg') Icon, u.Css from Users u left join Dicts d on d.Define = '0' and d.Category = '头像地址' and Name = '头像路径' where ApprovedTime is not null and UserName = @UserName";
-                var cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@UserName", userName));
-                using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
+                var db = DbAccessManager.DBAccess;
+                var cmd = db.CreateCommand(CommandType.Text, sql);
+                cmd.Parameters.Add(db.CreateParameter("@UserName", userName));
+                using (DbDataReader reader = db.ExecuteReader(cmd))
                 {
                     if (reader.Read())
                     {

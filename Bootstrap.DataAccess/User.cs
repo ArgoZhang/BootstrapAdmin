@@ -136,10 +136,10 @@ namespace Bootstrap.DataAccess
                     {
                         users.Add(new User()
                         {
-                            Id = (int)reader[0],
+                            Id = LgbConvert.ReadValue(reader[0], 0),
                             UserName = (string)reader[1],
                             DisplayName = (string)reader[2],
-                            RegisterTime = (DateTime)reader[3],
+                            RegisterTime = LgbConvert.ReadValue(reader[3], DateTime.MinValue),
                             ApprovedTime = LgbConvert.ReadValue(reader[4], DateTime.MinValue),
                             ApprovedBy = reader.IsDBNull(5) ? string.Empty : (string)reader[5],
                             Description = (string)reader[6]
@@ -166,10 +166,10 @@ namespace Bootstrap.DataAccess
                     {
                         users.Add(new User()
                         {
-                            Id = (int)reader[0],
+                            Id = LgbConvert.ReadValue(reader[0], 0),
                             UserName = (string)reader[1],
                             DisplayName = (string)reader[2],
-                            RegisterTime = (DateTime)reader[3],
+                            RegisterTime = LgbConvert.ReadValue(reader[3], DateTime.MinValue),
                             Description = (string)reader[4]
                         });
                     }
@@ -301,7 +301,7 @@ namespace Bootstrap.DataAccess
                     {
                         users.Add(new User()
                         {
-                            Id = (int)reader[0],
+                            Id = LgbConvert.ReadValue(reader[0], 0),
                             UserName = (string)reader[1],
                             DisplayName = (string)reader[2],
                             Checked = (string)reader[3]
@@ -375,7 +375,7 @@ namespace Bootstrap.DataAccess
                     {
                         users.Add(new User()
                         {
-                            Id = (int)reader[0],
+                            Id = LgbConvert.ReadValue(reader[0], 0),
                             UserName = (string)reader[1],
                             DisplayName = (string)reader[2],
                             Checked = (string)reader[3]

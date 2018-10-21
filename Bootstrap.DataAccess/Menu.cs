@@ -93,7 +93,7 @@ namespace Bootstrap.DataAccess
                         {
                             menus.Add(new BootstrapMenu()
                             {
-                                Id = (int)reader[0]
+                                Id = LgbConvert.ReadValue(reader[0], 0)
                             });
                         }
                     }

@@ -18,7 +18,7 @@ namespace Bootstrap.DataAccess.SQLite
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        private static IEnumerable<DataAccess.Message> RetrieveMessages(string userName)
+        protected override IEnumerable<DataAccess.Message> RetrieveMessages(string userName)
         {
             var messageRet = CacheManager.GetOrAdd(RetrieveMessageDataKey, key =>
             {
@@ -52,63 +52,6 @@ namespace Bootstrap.DataAccess.SQLite
 
             });
             return messageRet.OrderByDescending(n => n.SendTime);
-        }
-        /// <summary>
-        /// 收件箱
-        /// </summary>
-        /// <param name="userName"></param>
-        public override IEnumerable<DataAccess.Message> Inbox(string userName)
-        {
-            var messageRet = RetrieveMessages(userName);
-            return messageRet.Where(n => n.To.Equals(userName, StringComparison.OrdinalIgnoreCase));
-        }
-        /// <summary>
-        /// 发件箱
-        /// </summary>
-        /// <param name="userName"></param>
-        /// <returns></returns>
-        public override IEnumerable<DataAccess.Message> SendMail(string userName)
-        {
-            var messageRet = RetrieveMessages(userName);
-            return messageRet.Where(n => n.From.Equals(userName, StringComparison.OrdinalIgnoreCase));
-        }
-        /// <summary>
-        /// 垃圾箱
-        /// </summary>
-        /// <param name="userName"></param>
-        /// <returns></returns>
-        public override IEnumerable<DataAccess.Message> Trash(string userName)
-        {
-            var messageRet = RetrieveMessages(userName);
-            return messageRet.Where(n => n.IsDelete == 1);
-        }
-        /// <summary>
-        /// 标旗
-        /// </summary>
-        /// <param name="userName"></param>
-        /// <returns></returns>
-        public override IEnumerable<DataAccess.Message> Flag(string userName)
-        {
-            var messageRet = RetrieveMessages(userName);
-            return messageRet.Where(n => n.Mark == 1);
-        }
-        /// <summary>
-        /// 获取Header处显示的消息列表
-        /// </summary>
-        /// <param name="userName"></param>
-        /// <returns></returns>
-        public override IEnumerable<DataAccess.Message> RetrieveMessagesHeader(string userName)
-        {
-            var messageRet = Inbox(userName);
-            messageRet.AsParallel().ForAll(n =>
-            {
-                var ts = DateTime.Now - n.SendTime;
-                if (ts.TotalMinutes < 5) n.Period = "刚刚";
-                else if (ts.Days > 0) n.Period = string.Format("{0}天", ts.Days);
-                else if (ts.Hours > 0) n.Period = string.Format("{0}小时", ts.Hours);
-                else if (ts.Minutes > 0) n.Period = string.Format("{0}分钟", ts.Minutes);
-            });
-            return messageRet;
         }
     }
 }

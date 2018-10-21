@@ -75,7 +75,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        private static IEnumerable<Message> RetrieveMessages(string userName)
+        protected virtual IEnumerable<Message> RetrieveMessages(string userName)
         {
             var messageRet = CacheManager.GetOrAdd(RetrieveMessageDataKey, key =>
             {

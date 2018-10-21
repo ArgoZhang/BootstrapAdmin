@@ -18,6 +18,18 @@ namespace Bootstrap.DataAccess.SQLite
         /// <summary>
         /// 
         /// </summary>
+        private static void ClearExceptions()
+        {
+            System.Threading.Tasks.Task.Run(() =>
+            {
+                string sql = $"delete from Exceptions where LogTime < datetime('now', 'localtime', '-{ConfigurationManager.AppSettings["KeepExceptionsPeriod"]} month')";
+                DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
+                DbAccessManager.DBAccess.ExecuteNonQuery(cmd);
+            });
+        }
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="ex"></param>
         /// <param name="additionalInfo"></param>
         /// <returns></returns>
@@ -33,7 +45,7 @@ namespace Bootstrap.DataAccess.SQLite
                 };
             }
             var errorPage = additionalInfo["ErrorPage"] ?? (nameof(ex).Length > 50 ? nameof(ex).Substring(0, 50) : nameof(ex));
-            var sql = "insert into Exceptions (ID, AppDomainName, ErrorPage, UserID, UserIp, ExceptionType, Message, StackTrace, LogTime) values (NULL, @AppDomainName, @ErrorPage, @UserID, @UserIp, @ExceptionType, @Message, @StackTrace, datetime('now', 'localtime'))";
+            var sql = "insert into Exceptions (AppDomainName, ErrorPage, UserID, UserIp, ExceptionType, Message, StackTrace, LogTime) values (@AppDomainName, @ErrorPage, @UserID, @UserIp, @ExceptionType, @Message, @StackTrace, datetime('now', 'localtime'))";
             using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
             {
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@AppDomainName", AppDomain.CurrentDomain.FriendlyName));
@@ -47,18 +59,6 @@ namespace Bootstrap.DataAccess.SQLite
                 CacheManager.Clear(RetrieveExceptionsDataKey);
                 ClearExceptions();
             }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        private static void ClearExceptions()
-        {
-            System.Threading.Tasks.Task.Run(() =>
-            {
-                string sql = $"delete from Exceptions where LogTime < datetime('now', 'localtime', '-{ConfigurationManager.AppSettings["KeepExceptionsPeriod"]} month')";
-                DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-                DbAccessManager.DBAccess.ExecuteNonQuery(cmd);
-            });
         }
         /// <summary>
         /// 查询一周内所有异常
