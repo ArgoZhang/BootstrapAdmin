@@ -65,7 +65,7 @@ namespace Bootstrap.DataAccess.SQLite
         /// </summary>
         /// <param name="p"></param>
         /// <returns></returns>
-        public override bool SaveLog(Bootstrap.DataAccess.Log p)
+        public override bool SaveLog(DataAccess.Log p)
         {
             if (p == null) throw new ArgumentNullException("p");
             bool ret = false;

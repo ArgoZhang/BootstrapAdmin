@@ -64,7 +64,7 @@ namespace Bootstrap.DataAccess.SQLite
         /// </summary>
         /// <param name="p"></param>
         /// <returns></returns>
-        public override bool SaveGroup(Bootstrap.DataAccess.Group p)
+        public override bool SaveGroup(DataAccess.Group p)
         {
             bool ret = false;
             if (p.GroupName.Length > 50) p.GroupName = p.GroupName.Substring(0, 50);
