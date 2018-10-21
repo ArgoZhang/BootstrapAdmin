@@ -50,11 +50,11 @@ namespace Bootstrap.DataAccess.SQLite
             {
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@AppDomainName", AppDomain.CurrentDomain.FriendlyName));
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@ErrorPage", errorPage));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@UserID", DbAccessFactory.ToDBValue(additionalInfo["UserId"])));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@UserIp", DbAccessFactory.ToDBValue(additionalInfo["UserIp"])));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@UserID", DbAdapterManager.ToDBValue(additionalInfo["UserId"])));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@UserIp", DbAdapterManager.ToDBValue(additionalInfo["UserIp"])));
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@ExceptionType", ex.GetType().FullName));
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Message", ex.Message));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@StackTrace", DbAccessFactory.ToDBValue(ex.StackTrace)));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@StackTrace", DbAdapterManager.ToDBValue(ex.StackTrace)));
                 DbAccessManager.DBAccess.ExecuteNonQuery(cmd);
                 CacheManager.Clear(RetrieveExceptionsDataKey);
                 ClearExceptions();

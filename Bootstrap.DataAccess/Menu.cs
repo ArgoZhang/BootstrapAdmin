@@ -60,8 +60,8 @@ namespace Bootstrap.DataAccess
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@ParentId", p.ParentId));
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Name", p.Name));
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Order", p.Order));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Icon", DbAccessFactory.ToDBValue(p.Icon)));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Url", DbAccessFactory.ToDBValue(p.Url)));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Icon", DbAdapterManager.ToDBValue(p.Icon)));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Url", DbAdapterManager.ToDBValue(p.Url)));
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Category", p.Category));
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Target", p.Target));
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@IsResource", p.IsResource));

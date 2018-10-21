@@ -176,7 +176,7 @@ namespace Bootstrap.DataAccess
             {
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@ID", p.Id));
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@RoleName", p.RoleName));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Description", DbAccessFactory.ToDBValue(p.Description)));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Description", DbAdapterManager.ToDBValue(p.Description)));
                 ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
             }
             CacheCleanUtility.ClearCache(roleIds: p.Id == 0 ? new List<int>() : new List<int> { p.Id });

@@ -52,7 +52,7 @@ namespace Bootstrap.DataAccess.SQLite
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@password", p.Password));
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@passSalt", p.PassSalt));
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@displayName", p.DisplayName));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@approvedBy", DbAccessFactory.ToDBValue(p.ApprovedBy)));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@approvedBy", DbAdapterManager.ToDBValue(p.ApprovedBy)));
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@description", p.Description));
                 ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == -1;
                 if (ret) CacheCleanUtility.ClearCache(userIds: p.Id == 0 ? new List<int>() : new List<int>() { p.Id });

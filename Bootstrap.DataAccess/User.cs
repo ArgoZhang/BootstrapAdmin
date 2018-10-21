@@ -211,7 +211,7 @@ namespace Bootstrap.DataAccess
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@password", p.Password));
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@passSalt", p.PassSalt));
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@displayName", p.DisplayName));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@approvedBy", DbAccessFactory.ToDBValue(p.ApprovedBy)));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@approvedBy", DbAdapterManager.ToDBValue(p.ApprovedBy)));
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@description", p.Description));
                 ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == -1;
                 if (ret) CacheCleanUtility.ClearCache(userIds: p.Id == 0 ? new List<int>() : new List<int>() { p.Id });
@@ -479,7 +479,7 @@ namespace Bootstrap.DataAccess
             string sql = "Update Users set Css = @cssName where UserName = @userName";
             using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
             {
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@cssName", DbAccessFactory.ToDBValue(cssName)));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@cssName", DbAdapterManager.ToDBValue(cssName)));
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@userName", userName));
                 ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
                 if (ret) CacheCleanUtility.ClearCache(cacheKey: $"{RetrieveUsersDataKey}*");

@@ -1,5 +1,4 @@
 ﻿using Longbow.Data;
-using System;
 
 namespace Bootstrap.DataAccess
 {
@@ -8,13 +7,12 @@ namespace Bootstrap.DataAccess
     /// </summary>
     public static class DbAccessManager
     {
-        private static readonly Lazy<IDbAccess> db = new Lazy<IDbAccess>(() => DbAccessFactory.CreateDB("ba"), true);
         /// <summary>
         /// 
         /// </summary>
         public static IDbAccess DBAccess
         {
-            get { return db.Value; }
+            get { return DbAdapterManager.CreateDB("ba"); }
         }
     }
 }
