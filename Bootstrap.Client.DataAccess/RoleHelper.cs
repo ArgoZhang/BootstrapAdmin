@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Bootstrap.Security;
+using System.Collections.Generic;
 
 namespace Bootstrap.Client.DataAccess
 {
