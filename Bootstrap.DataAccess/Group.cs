@@ -139,26 +139,25 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 保存用户部门关系
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="userId"></param>
         /// <param name="groupIds"></param>
         /// <returns></returns>
-        public virtual bool SaveGroupsByUserId(int id, IEnumerable<int> groupIds)
+        public virtual bool SaveGroupsByUserId(int userId, IEnumerable<int> groupIds)
         {
             var ret = false;
             DataTable dt = new DataTable();
             dt.Columns.Add("UserID", typeof(int));
             dt.Columns.Add("GroupID", typeof(int));
             //判断用户是否选定角色
-            groupIds.ToList().ForEach(groupId => dt.Rows.Add(id, groupId));
+            groupIds.ToList().ForEach(groupId => dt.Rows.Add(userId, groupId));
             using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
             {
                 try
                 {
                     //删除用户部门表中该用户所有的部门关系
-                    string sql = "delete from UserGroup where UserID=@UserID;";
+                    string sql = $"delete from UserGroup where UserID = {userId}";
                     using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
                     {
-                        cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@UserID", id));
                         DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
 
                         // insert batch data into config table
@@ -172,7 +171,7 @@ namespace Bootstrap.DataAccess
                             transaction.CommitTransaction();
                         }
                     }
-                    CacheCleanUtility.ClearCache(groupIds: groupIds, userIds: new List<int>() { id });
+                    CacheCleanUtility.ClearCache(groupIds: groupIds, userIds: new List<int>() { userId });
                     ret = true;
                 }
                 catch (Exception ex)
@@ -216,25 +215,24 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 根据角色ID以及选定的部门ID，保到角色部门表
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="roleId"></param>
         /// <param name="groupIds"></param>
         /// <returns></returns>
-        public virtual bool SaveGroupsByRoleId(int id, IEnumerable<int> groupIds)
+        public virtual bool SaveGroupsByRoleId(int roleId, IEnumerable<int> groupIds)
         {
             bool ret = false;
             DataTable dt = new DataTable();
             dt.Columns.Add("GroupID", typeof(int));
             dt.Columns.Add("RoleID", typeof(int));
-            groupIds.ToList().ForEach(groupId => dt.Rows.Add(groupId, id));
+            groupIds.ToList().ForEach(groupId => dt.Rows.Add(groupId, roleId));
             using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
             {
                 try
                 {
                     //删除角色部门表该角色所有的部门
-                    string sql = "delete from RoleGroup where RoleID=@RoleID";
+                    string sql = $"delete from RoleGroup where RoleID = {roleId}";
                     using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
                     {
-                        cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@RoleID", id));
                         DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
                         //批插入角色部门表
                         using (SqlBulkCopy bulk = new SqlBulkCopy((SqlConnection)transaction.Transaction.Connection, SqlBulkCopyOptions.Default, (SqlTransaction)transaction.Transaction))
@@ -247,7 +245,7 @@ namespace Bootstrap.DataAccess
                             transaction.CommitTransaction();
                         }
                     }
-                    CacheCleanUtility.ClearCache(groupIds: groupIds, roleIds: new List<int>() { id });
+                    CacheCleanUtility.ClearCache(groupIds: groupIds, roleIds: new List<int>() { roleId });
                     ret = true;
                 }
                 catch (Exception ex)
