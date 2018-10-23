@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-using System.Data.SqlClient;
 using System.Linq;
 
 namespace Bootstrap.DataAccess.SQLite
@@ -21,28 +20,40 @@ namespace Bootstrap.DataAccess.SQLite
         {
             bool ret = false;
             var ids = string.Join(",", value);
-            using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_DeleteMenus"))
+            using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
             {
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@ids", ids));
-                ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == -1;
+                using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, $"delete from NavigationRole where NavigationID in ({ids})"))
+                {
+                    try
+                    {
+                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+
+                        cmd.CommandText = $"delete from Navigations where ID in ({ids})";
+                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+
+                        transaction.CommitTransaction();
+                        CacheCleanUtility.ClearCache(menuIds: value);
+                        ret = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.RollbackTransaction();
+                        throw ex;
+                    }
+                }
             }
-            CacheCleanUtility.ClearCache(menuIds: value);
             return ret;
         }
         /// <summary>
         /// <summary>
         /// 通过角色ID保存当前授权菜单
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="roleId"></param>
         /// <param name="menuIds"></param>
         /// <returns></returns>
-        public override bool SaveMenusByRoleId(int id, IEnumerable<int> menuIds)
+        public override bool SaveMenusByRoleId(int roleId, IEnumerable<int> menuIds)
         {
             bool ret = false;
-            DataTable dt = new DataTable();
-            dt.Columns.Add("RoleID", typeof(int));
-            dt.Columns.Add("NavigationID", typeof(int));
-            menuIds.ToList().ForEach(menuId => dt.Rows.Add(id, menuId));
             using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
             {
                 try
@@ -51,19 +62,16 @@ namespace Bootstrap.DataAccess.SQLite
                     string sql = "delete from NavigationRole where RoleID=@RoleID";
                     using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
                     {
-                        cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@RoleID", id));
                         DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
                         //批插入菜单角色表
-                        using (SqlBulkCopy bulk = new SqlBulkCopy((SqlConnection)transaction.Transaction.Connection, SqlBulkCopyOptions.Default, (SqlTransaction)transaction.Transaction))
+                        menuIds.ToList().ForEach(mId =>
                         {
-                            bulk.DestinationTableName = "NavigationRole";
-                            bulk.ColumnMappings.Add("RoleID", "RoleID");
-                            bulk.ColumnMappings.Add("NavigationID", "NavigationID");
-                            bulk.WriteToServer(dt);
-                            transaction.CommitTransaction();
-                        }
+                            cmd.CommandText = $"Insert Into NavigationRole (NavigationID, RoleID) Values ( {mId}, {roleId})";
+                            DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+                        });
+                        transaction.CommitTransaction();
                     }
-                    CacheCleanUtility.ClearCache(menuIds: menuIds, roleIds: new List<int>() { id });
+                    CacheCleanUtility.ClearCache(menuIds: menuIds, roleIds: new List<int>() { roleId });
                     ret = true;
                 }
                 catch (Exception ex)

@@ -104,25 +104,24 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 通过角色ID保存当前授权菜单
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="roleId"></param>
         /// <param name="menuIds"></param>
         /// <returns></returns>
-        public virtual bool SaveMenusByRoleId(int id, IEnumerable<int> menuIds)
+        public virtual bool SaveMenusByRoleId(int roleId, IEnumerable<int> menuIds)
         {
             bool ret = false;
             DataTable dt = new DataTable();
             dt.Columns.Add("RoleID", typeof(int));
             dt.Columns.Add("NavigationID", typeof(int));
-            menuIds.ToList().ForEach(menuId => dt.Rows.Add(id, menuId));
+            menuIds.ToList().ForEach(menuId => dt.Rows.Add(roleId, menuId));
             using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
             {
                 try
                 {
                     //删除菜单角色表该角色所有的菜单
-                    string sql = "delete from NavigationRole where RoleID=@RoleID";
+                    string sql = $"delete from NavigationRole where RoleID = {roleId}";
                     using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
                     {
-                        cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@RoleID", id));
                         DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
                         //批插入菜单角色表
                         using (SqlBulkCopy bulk = new SqlBulkCopy((SqlConnection)transaction.Transaction.Connection, SqlBulkCopyOptions.Default, (SqlTransaction)transaction.Transaction))
@@ -134,7 +133,7 @@ namespace Bootstrap.DataAccess
                             transaction.CommitTransaction();
                         }
                     }
-                    CacheCleanUtility.ClearCache(menuIds: menuIds, roleIds: new List<int>() { id });
+                    CacheCleanUtility.ClearCache(menuIds: menuIds, roleIds: new List<int>() { roleId });
                     ret = true;
                 }
                 catch (Exception ex)
