@@ -44,8 +44,8 @@ namespace Bootstrap.Client
             });
             services.AddCors();
             services.AddLogging(builder => builder.AddFileLogger());
-            services.AddConfigurationManager();
-            services.AddCacheManager();
+            services.AddConfigurationManager(Configuration);
+            services.AddCacheManager(Configuration);
             services.AddDbAdapter();
             var dataProtectionBuilder = services.AddDataProtection(op => op.ApplicationDiscriminator = Configuration["ApplicationDiscriminator"])
                 .SetApplicationName(Configuration["ApplicationName"])

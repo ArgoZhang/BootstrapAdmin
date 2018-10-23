@@ -44,8 +44,8 @@ namespace Bootstrap.Admin
             });
             services.AddCors();
             services.AddLogging(builder => builder.AddFileLogger().AddDBLogger(ExceptionsHelper.Log));
-            services.AddConfigurationManager();
-            services.AddCacheManager();
+            services.AddConfigurationManager(Configuration);
+            services.AddCacheManager(Configuration);
             services.AddDbAdapter(() => { CacheManager.Clear(); CacheManager.CorsClear(new List<string>() { "*" }); });
             var dataProtectionBuilder = services.AddDataProtection(op => op.ApplicationDiscriminator = Configuration["ApplicationDiscriminator"])
                 .SetApplicationName(Configuration["ApplicationName"])
