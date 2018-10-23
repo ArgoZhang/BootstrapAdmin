@@ -44,7 +44,7 @@ namespace Bootstrap.DataAccess.SQLite
                     ["ErrorPage"] = null
                 };
             }
-            var errorPage = additionalInfo["ErrorPage"] ?? (nameof(ex).Length > 50 ? nameof(ex).Substring(0, 50) : nameof(ex));
+            var errorPage = additionalInfo["ErrorPage"] ?? ex.GetType().Name;
             var sql = "insert into Exceptions (AppDomainName, ErrorPage, UserID, UserIp, ExceptionType, Message, StackTrace, LogTime) values (@AppDomainName, @ErrorPage, @UserID, @UserIp, @ExceptionType, @Message, @StackTrace, datetime('now', 'localtime'))";
             using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
             {
