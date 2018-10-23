@@ -69,26 +69,25 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 保存用户角色关系
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="userId"></param>
         /// <param name="roleIds"></param>
         /// <returns></returns>
-        public virtual bool SaveRolesByUserId(int id, IEnumerable<int> roleIds)
+        public virtual bool SaveRolesByUserId(int userId, IEnumerable<int> roleIds)
         {
             var ret = false;
             DataTable dt = new DataTable();
             dt.Columns.Add("UserID", typeof(int));
             dt.Columns.Add("RoleID", typeof(int));
             //判断用户是否选定角色
-            roleIds.ToList().ForEach(roleId => dt.Rows.Add(id, roleId));
+            roleIds.ToList().ForEach(roleId => dt.Rows.Add(userId, roleId));
             using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
             {
                 try
                 {
                     // delete user from config table
-                    string sql = "delete from UserRole where UserID = @UserID;";
+                    string sql = $"delete from UserRole where UserID = {userId}";
                     using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
                     {
-                        cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@UserID", id));
                         DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
                         if (dt.Rows.Count > 0)
                         {
@@ -103,7 +102,7 @@ namespace Bootstrap.DataAccess
                         }
                         transaction.CommitTransaction();
                     }
-                    CacheCleanUtility.ClearCache(userIds: new List<int>() { id }, roleIds: roleIds);
+                    CacheCleanUtility.ClearCache(userIds: new List<int>() { userId }, roleIds: roleIds);
                     ret = true;
                 }
                 catch (Exception ex)
@@ -216,26 +215,25 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="menuId"></param>
         /// <param name="roleIds"></param>
         /// <returns></returns>
-        public virtual bool SavaRolesByMenuId(int id, IEnumerable<int> roleIds)
+        public virtual bool SavaRolesByMenuId(int menuId, IEnumerable<int> roleIds)
         {
             var ret = false;
             DataTable dt = new DataTable();
             dt.Columns.Add("NavigationID", typeof(int));
             dt.Columns.Add("RoleID", typeof(int));
             //判断用户是否选定角色
-            roleIds.ToList().ForEach(roleId => dt.Rows.Add(id, roleId));
+            roleIds.ToList().ForEach(roleId => dt.Rows.Add(menuId, roleId));
             using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
             {
                 try
                 {
                     // delete role from config table
-                    string sql = "delete from NavigationRole where NavigationID=@NavigationID;";
+                    string sql = $"delete from NavigationRole where NavigationID = {menuId}";
                     using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
                     {
-                        cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@NavigationID", id));
                         DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
 
                         // insert batch data into config table
@@ -249,7 +247,7 @@ namespace Bootstrap.DataAccess
                             transaction.CommitTransaction();
                         }
                     }
-                    CacheCleanUtility.ClearCache(roleIds: roleIds, menuIds: new List<int>() { id });
+                    CacheCleanUtility.ClearCache(roleIds: roleIds, menuIds: new List<int>() { menuId });
                     ret = true;
                 }
                 catch (Exception ex)
@@ -294,26 +292,25 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 根据GroupId更新Roles信息，删除旧的Roles信息，插入新的Roles信息
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="groupId"></param>
         /// <param name="roleIds"></param>
         /// <returns></returns>
-        public virtual bool SaveRolesByGroupId(int id, IEnumerable<int> roleIds)
+        public virtual bool SaveRolesByGroupId(int groupId, IEnumerable<int> roleIds)
         {
             var ret = false;
             //构造表格
             DataTable dt = new DataTable();
             dt.Columns.Add("RoleID", typeof(int));
             dt.Columns.Add("GroupID", typeof(int));
-            roleIds.ToList().ForEach(roleId => dt.Rows.Add(roleId, id));
+            roleIds.ToList().ForEach(roleId => dt.Rows.Add(roleId, groupId));
             using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
             {
                 try
                 {
                     // delete user from config table
-                    string sql = "delete from RoleGroup where GroupID=@GroupID";
+                    string sql = $"delete from RoleGroup where GroupID = {groupId}";
                     using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
                     {
-                        cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@GroupID", id));
                         DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
 
                         // insert batch data into config table
@@ -327,7 +324,7 @@ namespace Bootstrap.DataAccess
                             transaction.CommitTransaction();
                         }
                     }
-                    CacheCleanUtility.ClearCache(roleIds: roleIds, groupIds: new List<int>() { id });
+                    CacheCleanUtility.ClearCache(roleIds: roleIds, groupIds: new List<int>() { groupId });
                     ret = true;
                 }
                 catch (Exception ex)

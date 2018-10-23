@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-using System.Data.SqlClient;
 using System.Linq;
 
 namespace Bootstrap.DataAccess.SQLite
@@ -17,41 +16,30 @@ namespace Bootstrap.DataAccess.SQLite
         /// <summary>
         /// 保存用户角色关系
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="userId"></param>
         /// <param name="roleIds"></param>
         /// <returns></returns>
-        public override bool SaveRolesByUserId(int id, IEnumerable<int> roleIds)
+        public override bool SaveRolesByUserId(int userId, IEnumerable<int> roleIds)
         {
             var ret = false;
-            DataTable dt = new DataTable();
-            dt.Columns.Add("UserID", typeof(int));
-            dt.Columns.Add("RoleID", typeof(int));
             //判断用户是否选定角色
-            roleIds.ToList().ForEach(roleId => dt.Rows.Add(id, roleId));
             using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
             {
                 try
                 {
                     // delete user from config table
-                    string sql = "delete from UserRole where UserID = @UserID;";
+                    string sql = $"delete from UserRole where UserID = {userId}";
                     using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
                     {
-                        cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@UserID", id));
                         DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
-                        if (dt.Rows.Count > 0)
+                        roleIds.ToList().ForEach(rId =>
                         {
-                            // insert batch data into config table
-                            using (SqlBulkCopy bulk = new SqlBulkCopy((SqlConnection)transaction.Transaction.Connection, SqlBulkCopyOptions.Default, (SqlTransaction)transaction.Transaction))
-                            {
-                                bulk.DestinationTableName = "UserRole";
-                                bulk.ColumnMappings.Add("UserID", "UserID");
-                                bulk.ColumnMappings.Add("RoleID", "RoleID");
-                                bulk.WriteToServer(dt);
-                            }
-                        }
+                            cmd.CommandText = $"Insert Into UserRole (UserID, RoleID) Values ( {userId}, {rId})";
+                            DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+                        });
                         transaction.CommitTransaction();
                     }
-                    CacheCleanUtility.ClearCache(userIds: new List<int>() { id }, roleIds: roleIds);
+                    CacheCleanUtility.ClearCache(userIds: new List<int>() { userId }, roleIds: roleIds);
                     ret = true;
                 }
                 catch (Exception ex)
@@ -70,51 +58,64 @@ namespace Bootstrap.DataAccess.SQLite
         {
             bool ret = false;
             var ids = string.Join(",", value);
-            using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_DeleteRoles"))
+            using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
             {
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@ids", ids));
-                ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == -1;
+                using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, $"delete from UserRole where RoleID in ({ids})"))
+                {
+                    try
+                    {
+                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+
+                        cmd.CommandText = $"delete from RoleGroup where RoleID in ({ids})";
+                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+
+                        cmd.CommandText = $"delete from NavigationRole where RoleID in ({ids})";
+                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+
+                        cmd.CommandText = $"delete from Roles where ID in ({ids})";
+                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+
+                        transaction.CommitTransaction();
+                        CacheCleanUtility.ClearCache(roleIds: value);
+                        ret = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.RollbackTransaction();
+                        throw ex;
+                    }
+                }
             }
-            CacheCleanUtility.ClearCache(roleIds: value);
             return ret;
         }
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="menuId"></param>
         /// <param name="roleIds"></param>
         /// <returns></returns>
-        public override bool SavaRolesByMenuId(int id, IEnumerable<int> roleIds)
+        public override bool SavaRolesByMenuId(int menuId, IEnumerable<int> roleIds)
         {
             var ret = false;
-            DataTable dt = new DataTable();
-            dt.Columns.Add("NavigationID", typeof(int));
-            dt.Columns.Add("RoleID", typeof(int));
             //判断用户是否选定角色
-            roleIds.ToList().ForEach(roleId => dt.Rows.Add(id, roleId));
             using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
             {
                 try
                 {
                     // delete role from config table
-                    string sql = "delete from NavigationRole where NavigationID=@NavigationID;";
+                    string sql = $"delete from NavigationRole where NavigationID = {menuId}";
                     using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
                     {
-                        cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@NavigationID", id));
                         DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
-
                         // insert batch data into config table
-                        using (SqlBulkCopy bulk = new SqlBulkCopy((SqlConnection)transaction.Transaction.Connection, SqlBulkCopyOptions.Default, (SqlTransaction)transaction.Transaction))
+                        roleIds.ToList().ForEach(rId =>
                         {
-                            bulk.BatchSize = 1000;
-                            bulk.DestinationTableName = "NavigationRole";
-                            bulk.ColumnMappings.Add("NavigationID", "NavigationID");
-                            bulk.ColumnMappings.Add("RoleID", "RoleID");
-                            bulk.WriteToServer(dt);
-                            transaction.CommitTransaction();
-                        }
+                            cmd.CommandText = $"Insert Into NavigationRole (NavigationID, RoleID) Values ( {menuId}, {rId})";
+                            DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+                        });
+                        transaction.CommitTransaction();
                     }
-                    CacheCleanUtility.ClearCache(roleIds: roleIds, menuIds: new List<int>() { id });
+                    CacheCleanUtility.ClearCache(roleIds: roleIds, menuIds: new List<int>() { menuId });
                     ret = true;
                 }
                 catch (Exception ex)
@@ -128,40 +129,32 @@ namespace Bootstrap.DataAccess.SQLite
         /// <summary>
         /// 根据GroupId更新Roles信息，删除旧的Roles信息，插入新的Roles信息
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="groupId"></param>
         /// <param name="roleIds"></param>
         /// <returns></returns>
-        public override bool SaveRolesByGroupId(int id, IEnumerable<int> roleIds)
+        public override bool SaveRolesByGroupId(int groupId, IEnumerable<int> roleIds)
         {
             var ret = false;
             //构造表格
-            DataTable dt = new DataTable();
-            dt.Columns.Add("RoleID", typeof(int));
-            dt.Columns.Add("GroupID", typeof(int));
-            roleIds.ToList().ForEach(roleId => dt.Rows.Add(roleId, id));
             using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
             {
                 try
                 {
                     // delete user from config table
-                    string sql = "delete from RoleGroup where GroupID=@GroupID";
+                    string sql = $"delete from RoleGroup where GroupID = {groupId}";
                     using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
                     {
-                        cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@GroupID", id));
                         DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
 
                         // insert batch data into config table
-                        using (SqlBulkCopy bulk = new SqlBulkCopy((SqlConnection)transaction.Transaction.Connection, SqlBulkCopyOptions.Default, (SqlTransaction)transaction.Transaction))
+                        roleIds.ToList().ForEach(rId =>
                         {
-                            bulk.BatchSize = 1000;
-                            bulk.DestinationTableName = "RoleGroup";
-                            bulk.ColumnMappings.Add("RoleID", "RoleID");
-                            bulk.ColumnMappings.Add("GroupID", "GroupID");
-                            bulk.WriteToServer(dt);
-                            transaction.CommitTransaction();
-                        }
+                            cmd.CommandText = $"Insert Into RoleGroup (GroupID, RoleID) Values ( {groupId}, {rId})";
+                            DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+                        });
+                        transaction.CommitTransaction();
                     }
-                    CacheCleanUtility.ClearCache(roleIds: roleIds, groupIds: new List<int>() { id });
+                    CacheCleanUtility.ClearCache(roleIds: roleIds, groupIds: new List<int>() { groupId });
                     ret = true;
                 }
                 catch (Exception ex)
