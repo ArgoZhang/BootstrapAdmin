@@ -314,25 +314,24 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 通过角色ID保存当前授权用户（插入）
         /// </summary>
-        /// <param name="id">角色ID</param>
+        /// <param name="roleId">角色ID</param>
         /// <param name="userIds">用户ID数组</param>
         /// <returns></returns>
-        public virtual bool SaveUsersByRoleId(int id, IEnumerable<int> userIds)
+        public virtual bool SaveUsersByRoleId(int roleId, IEnumerable<int> userIds)
         {
             bool ret = false;
             DataTable dt = new DataTable();
             dt.Columns.Add("RoleID", typeof(int));
             dt.Columns.Add("UserID", typeof(int));
-            userIds.ToList().ForEach(userId => dt.Rows.Add(id, userId));
+            userIds.ToList().ForEach(userId => dt.Rows.Add(roleId, userId));
             using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
             {
                 try
                 {
                     //删除用户角色表该角色所有的用户
-                    string sql = "delete from UserRole where RoleID=@RoleID";
+                    string sql = $"delete from UserRole where RoleID = {roleId}";
                     using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
                     {
-                        cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@RoleID", id));
                         DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
                         //批插入用户角色表
                         using (SqlBulkCopy bulk = new SqlBulkCopy((SqlConnection)transaction.Transaction.Connection, SqlBulkCopyOptions.Default, (SqlTransaction)transaction.Transaction))
@@ -344,7 +343,7 @@ namespace Bootstrap.DataAccess
                             transaction.CommitTransaction();
                         }
                     }
-                    CacheCleanUtility.ClearCache(userIds: userIds, roleIds: new List<int>() { id });
+                    CacheCleanUtility.ClearCache(userIds: userIds, roleIds: new List<int>() { roleId });
                     ret = true;
                 }
                 catch (Exception ex)
@@ -388,16 +387,16 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 通过部门ID保存当前授权用户（插入）
         /// </summary>
-        /// <param name="id">GroupID</param>
+        /// <param name="groupId">GroupID</param>
         /// <param name="userIds">用户ID数组</param>
         /// <returns></returns>
-        public virtual bool SaveUsersByGroupId(int id, IEnumerable<int> userIds)
+        public virtual bool SaveUsersByGroupId(int groupId, IEnumerable<int> userIds)
         {
             bool ret = false;
             DataTable dt = new DataTable();
             dt.Columns.Add("UserID", typeof(int));
             dt.Columns.Add("GroupID", typeof(int));
-            userIds.ToList().ForEach(userId => dt.Rows.Add(userId, id));
+            userIds.ToList().ForEach(userId => dt.Rows.Add(userId, groupId));
             using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
             {
                 try
@@ -406,7 +405,7 @@ namespace Bootstrap.DataAccess
                     string sql = "delete from UserGroup where GroupID = @GroupID";
                     using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
                     {
-                        cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@GroupID", id));
+                        cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@GroupID", groupId));
                         DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
                         //批插入用户角色表
                         using (SqlBulkCopy bulk = new SqlBulkCopy((SqlConnection)transaction.Transaction.Connection, SqlBulkCopyOptions.Default, (SqlTransaction)transaction.Transaction))
@@ -418,7 +417,7 @@ namespace Bootstrap.DataAccess
                             transaction.CommitTransaction();
                         }
                     }
-                    CacheCleanUtility.ClearCache(userIds: userIds, groupIds: new List<int>() { id });
+                    CacheCleanUtility.ClearCache(userIds: userIds, groupIds: new List<int>() { groupId });
                     ret = true;
                 }
                 catch (Exception ex)

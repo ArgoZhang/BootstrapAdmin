@@ -147,7 +147,7 @@ BEGIN
 		if(not exists (select 1 from Users Where UserName = @userName))
 		begin
 			begin tran
-				Insert Into Users (UserName, [Password], PassSalt, DisplayName, RegisterTime, ApprovedBy, ApprovedTime, [Description]) values (@userName, @password, @passSalt, @displayName, GETDATE(), @approvedBy, @approvedTime, @description)
+				Insert Into Users (UserName, [Password], PassSalt, DisplayName, RegisterTime, ApprovedBy, ApprovedTime, [Description]) values (@userName, @password, @passSalt, @displayName, GETDATE(), @approvedBy, GETDATE(), @description)
 				insert into UserRole (UserID, RoleID) select @@IDENTITY, ID from Roles where RoleName = N'Default'
 			commit tran
 		end
@@ -186,6 +186,7 @@ BEGIN
 			begin tran
 				insert into RejectUsers (UserName, DisplayName, RegisterTime, RejectedBy, RejectedTime, RejectedReason) values (@userName, @displayName, @registerTime, @rejectedBy, GETDATE(), @rejectedReason)
 				delete from UserRole where UserId = @id
+				delete from UserGroup where UserId = @id
 				delete from users where ID = @id
 			commit tran
 		end

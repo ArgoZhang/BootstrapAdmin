@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-using System.Data.SqlClient;
 using System.Linq;
 
 
@@ -26,11 +25,30 @@ namespace Bootstrap.DataAccess.SQLite
         {
             bool ret = false;
             var ids = string.Join(",", value);
-            using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_DeleteUsers"))
+            using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
             {
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@ids", ids));
-                ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == -1;
-                if (ret) CacheCleanUtility.ClearCache(userIds: value);
+                try
+                {
+                    using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, $"Delete from UserRole where UserID in ({ids})"))
+                    {
+                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd);
+
+                        cmd.CommandText = $"delete from UserGroup where UserID in ({ids})";
+                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+
+                        cmd.CommandText = $"delete from Users where ID in ({ids})";
+                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+
+                        transaction.CommitTransaction();
+                        CacheCleanUtility.ClearCache(userIds: value);
+                        ret = true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    transaction.RollbackTransaction();
+                    throw ex;
+                }
             }
             return ret;
         }
@@ -46,16 +64,40 @@ namespace Bootstrap.DataAccess.SQLite
             if (p.UserName.Length > 50) p.UserName = p.UserName.Substring(0, 50);
             p.PassSalt = LgbCryptography.GenerateSalt();
             p.Password = LgbCryptography.ComputeHash(p.Password, p.PassSalt);
-            using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_SaveUsers"))
+
+            using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
             {
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@userName", p.UserName));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@password", p.Password));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@passSalt", p.PassSalt));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@displayName", p.DisplayName));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@approvedBy", DbAdapterManager.ToDBValue(p.ApprovedBy)));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@description", p.Description));
-                ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == -1;
-                if (ret) CacheCleanUtility.ClearCache(userIds: p.Id == 0 ? new List<int>() : new List<int>() { p.Id });
+                try
+                {
+                    using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, "select UserName from Users Where UserName = @userName"))
+                    {
+                        cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@userName", p.UserName));
+                        var un = DbAccessManager.DBAccess.ExecuteScalar(cmd, transaction);
+                        if (DbAdapterManager.ToObjectValue(un) == null)
+                        {
+                            cmd.CommandText = "Insert Into Users (UserName, [Password], PassSalt, DisplayName, RegisterTime, ApprovedBy, ApprovedTime, [Description]) values (@userName, @password, @passSalt, @displayName, datetime('now', 'localtime'), @approvedBy, datetime('now', 'localtime'), @description)";
+                            cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@password", p.Password));
+                            cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@passSalt", p.PassSalt));
+                            cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@displayName", p.DisplayName));
+                            cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@approvedBy", DbAdapterManager.ToDBValue(p.ApprovedBy)));
+                            cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@description", p.Description));
+                            DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+
+                            cmd.CommandText = $"insert into UserRole (UserID, RoleID) select ID, (select ID from Roles where RoleName = 'Default') RoleId from Users where UserName = '{p.UserName}'";
+                            cmd.Parameters.Clear();
+                            DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+
+                            transaction.CommitTransaction();
+                            CacheCleanUtility.ClearCache(userIds: p.Id == 0 ? new List<int>() : new List<int>() { p.Id });
+                            ret = true;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    transaction.RollbackTransaction();
+                    throw ex;
+                }
             }
             return ret;
         }
@@ -88,50 +130,67 @@ namespace Bootstrap.DataAccess.SQLite
         public override bool RejectUser(int id, string rejectBy)
         {
             var ret = false;
-            using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_RejectUsers"))
+            using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
             {
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@id", id));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@rejectedBy", rejectBy));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@rejectedReason", "未填写"));
-                ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == -1;
-                if (ret) CacheCleanUtility.ClearCache(userIds: new List<int>() { id });
+                try
+                {
+                    using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, $"insert into RejectUsers (UserName, DisplayName, RegisterTime, RejectedBy, RejectedTime, RejectedReason) select UserName, DisplayName, Registertime, '{rejectBy}', datetime('now', 'localtime'), '未填写' from Users where ID = {id}"))
+                    {
+                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+
+                        cmd.CommandText = $"delete from UserRole where UserId = {id}";
+                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+
+                        cmd.CommandText = $"delete from UserGroup where UserId = {id}";
+                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+
+                        cmd.CommandText = $"delete from users where ID = {id}";
+                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+
+                        transaction.CommitTransaction();
+                        CacheCleanUtility.ClearCache(userIds: new List<int>() { id });
+                        ret = true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    transaction.RollbackTransaction();
+                    throw ex;
+                }
             }
             return ret;
         }
         /// <summary>
         /// 通过角色ID保存当前授权用户（插入）
         /// </summary>
-        /// <param name="id">角色ID</param>
+        /// <param name="roleId">角色ID</param>
         /// <param name="userIds">用户ID数组</param>
         /// <returns></returns>
-        public override bool SaveUsersByRoleId(int id, IEnumerable<int> userIds)
+        public override bool SaveUsersByRoleId(int roleId, IEnumerable<int> userIds)
         {
             bool ret = false;
             DataTable dt = new DataTable();
             dt.Columns.Add("RoleID", typeof(int));
             dt.Columns.Add("UserID", typeof(int));
-            userIds.ToList().ForEach(userId => dt.Rows.Add(id, userId));
+            userIds.ToList().ForEach(userId => dt.Rows.Add(roleId, userId));
             using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
             {
                 try
                 {
                     //删除用户角色表该角色所有的用户
-                    string sql = "delete from UserRole where RoleID=@RoleID";
+                    string sql = $"delete from UserRole where RoleID = {roleId}";
                     using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
                     {
-                        cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@RoleID", id));
                         DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
                         //批插入用户角色表
-                        using (SqlBulkCopy bulk = new SqlBulkCopy((SqlConnection)transaction.Transaction.Connection, SqlBulkCopyOptions.Default, (SqlTransaction)transaction.Transaction))
+                        userIds.ToList().ForEach(uId =>
                         {
-                            bulk.DestinationTableName = "UserRole";
-                            bulk.ColumnMappings.Add("RoleID", "RoleID");
-                            bulk.ColumnMappings.Add("UserID", "UserID");
-                            bulk.WriteToServer(dt);
-                            transaction.CommitTransaction();
-                        }
+                            cmd.CommandText = $"Insert Into UserRole (UserID, RoleID) Values ( {uId}, {roleId})";
+                            DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+                        });
+                        transaction.CommitTransaction();
                     }
-                    CacheCleanUtility.ClearCache(userIds: userIds, roleIds: new List<int>() { id });
+                    CacheCleanUtility.ClearCache(userIds: userIds, roleIds: new List<int>() { roleId });
                     ret = true;
                 }
                 catch (Exception ex)
@@ -145,37 +204,30 @@ namespace Bootstrap.DataAccess.SQLite
         /// <summary>
         /// 通过部门ID保存当前授权用户（插入）
         /// </summary>
-        /// <param name="id">GroupID</param>
+        /// <param name="groupId">GroupID</param>
         /// <param name="userIds">用户ID数组</param>
         /// <returns></returns>
-        public override bool SaveUsersByGroupId(int id, IEnumerable<int> userIds)
+        public override bool SaveUsersByGroupId(int groupId, IEnumerable<int> userIds)
         {
             bool ret = false;
-            DataTable dt = new DataTable();
-            dt.Columns.Add("UserID", typeof(int));
-            dt.Columns.Add("GroupID", typeof(int));
-            userIds.ToList().ForEach(userId => dt.Rows.Add(userId, id));
             using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
             {
                 try
                 {
                     //删除用户角色表该角色所有的用户
-                    string sql = "delete from UserGroup where GroupID = @GroupID";
+                    string sql = $"delete from UserGroup where GroupID = {groupId}";
                     using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
                     {
-                        cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@GroupID", id));
                         DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
                         //批插入用户角色表
-                        using (SqlBulkCopy bulk = new SqlBulkCopy((SqlConnection)transaction.Transaction.Connection, SqlBulkCopyOptions.Default, (SqlTransaction)transaction.Transaction))
+                        userIds.ToList().ForEach(uId =>
                         {
-                            bulk.DestinationTableName = "UserGroup";
-                            bulk.ColumnMappings.Add("UserID", "UserID");
-                            bulk.ColumnMappings.Add("GroupID", "GroupID");
-                            bulk.WriteToServer(dt);
-                            transaction.CommitTransaction();
-                        }
+                            cmd.CommandText = $"Insert Into UserGroup (UserID, GroupID) Values ( {uId}, {groupId})";
+                            DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+                        });
+                        transaction.CommitTransaction();
                     }
-                    CacheCleanUtility.ClearCache(userIds: userIds, groupIds: new List<int>() { id });
+                    CacheCleanUtility.ClearCache(userIds: userIds, groupIds: new List<int>() { groupId });
                     ret = true;
                 }
                 catch (Exception ex)
