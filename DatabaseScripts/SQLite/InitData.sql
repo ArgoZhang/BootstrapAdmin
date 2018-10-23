@@ -46,7 +46,7 @@ INSERT INTO [Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Ca
 INSERT INTO [Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (19, 16, '图标集', 10, 'fa fa-dashboard', '~/Admin/FAIco', '0');
 
 DELETE FROM GROUPS WHERE ID = 1;
-INSERT INTO [Groups] ([ID], [GroupName], [Description]) VALUES (1, 'Admi', '系统默认组');
+INSERT INTO [Groups] ([ID], [GroupName], [Description]) VALUES (1, 'Admin', '系统默认组');
 
 DELETE FROM Roles where ID in (1, 2);
 INSERT INTO [Roles] ([ID], [RoleName], [Description]) VALUES (1, 'Administrators', '系统管理员');
