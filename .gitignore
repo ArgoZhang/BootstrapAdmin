@@ -346,6 +346,7 @@ ASALocalRun/
 [Kk]eys/
 lib/
 *.db
+Bootstrap.Admin.xml
 
 ###### -- Custom Ignore Section, Make sure all files you add to the git repo are below this line  --  ######
 

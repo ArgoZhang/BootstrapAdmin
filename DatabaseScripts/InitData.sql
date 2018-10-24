@@ -48,7 +48,7 @@ INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [C
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (14, 0, N'程序异常', 140, N'fa fa-cubes', N'~/Admin/Exceptions', N'0')
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (16, 0, N'工具集合', 160, N'fa fa-gavel', N'#', N'0')
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (17, 16, N'客户端测试', 10, N'fa fa-wrench', N'~/Admin/Mobile', N'0')
-INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (18, 16, N'API文档', 10, N'fa fa-wrench', N'~/Admin/Api', N'0')
+INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (18, 16, N'API文档', 10, N'fa fa-wrench', N'~/swagger', N'0')
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (19, 16, N'图标集', 10, N'fa fa-dashboard', N'~/Admin/FAIcon', N'0')
 SET IDENTITY_INSERT [dbo].[Navigations] OFF
 

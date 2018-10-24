@@ -141,13 +141,5 @@ namespace Bootstrap.Admin.Controllers
         {
             return View(new NavigatorBarModel(this));
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult Api()
-        {
-            return View(new NavigatorBarModel(this));
-        }
     }
 }
