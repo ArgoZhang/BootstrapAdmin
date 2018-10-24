@@ -27,7 +27,7 @@ namespace Bootstrap.Admin.Controllers.Api
             dynamic user = value;
             string userName = user.userName;
             string password = user.password;
-            if (UserHelper.Authenticate(userName, password))
+            if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(password) && UserHelper.Authenticate(userName, password))
             {
                 return BootstrapAdminJwtTokenHandler.CreateToken(userName);
             }
