@@ -8,6 +8,7 @@ using Longbow.Data;
 using Longbow.Logging;
 using Longbow.Web;
 using Longbow.Web.SignalR;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
@@ -122,6 +123,14 @@ namespace Bootstrap.Admin
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+            });
+            app.UseWhen(context => context.Request.Path == "/swagger/index.html", builder =>
+            {
+                builder.Use(async (context, next) =>
+                {
+                    if (!context.User.Identity.IsAuthenticated) await context.ChallengeAsync();
+                    else await next();
+                });
             });
             app.UseSwagger();
             app.UseSwaggerUI(c =>
