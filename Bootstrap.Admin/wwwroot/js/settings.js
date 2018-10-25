@@ -53,7 +53,7 @@
             callback: function (urls) {
                 if (urls && $.isArray(urls)) {
                     $.each(urls, function (index, item) {
-                        if (options.clear) options.url = item.Url + "?clear=clear";
+                        if (options.clear) options.url = item.Url + "?cacheKey=*";
                         else options.url = item.Url;
                         $.bc({
                             url: options.url,
