@@ -23,7 +23,7 @@ aside {
     transition: transform .4s ease-in-out;
     transform: translate(-100%);
     position: absolute;
-    top: 98px;
+    top: 96px;
     bottom: 0;
     left: 0;
     right: 0;
@@ -116,7 +116,6 @@ a, a:hover, a:focus {
 
 .header {
     padding: 0 15px;
-    height: 98px;
     background: #fff;
     border-bottom: 1px solid #ddd;
     top: 0;
@@ -127,7 +126,7 @@ a, a:hover, a:focus {
 
     .header .bg {
         background-color: #337ab7;
-        height: 5px;
+        height: 3px;
         margin: 0 -15px;
     }
 
@@ -472,7 +471,7 @@ a, a:hover, a:focus {
     left: 0;
     bottom: 40px;
     right: 0;
-    top: 98px;
+    top: 96px;
 }
 
     .main-content > .panel:last-child .panel-body {
