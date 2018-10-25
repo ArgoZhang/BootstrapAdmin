@@ -1,6 +1,6 @@
-﻿using Longbow;
+﻿using Bootstrap.Security.SQLServer;
+using Longbow;
 using Longbow.Cache;
-using Longbow.Configuration;
 using Longbow.Data;
 using System;
 using System.Collections.Generic;
@@ -288,7 +288,6 @@ namespace Bootstrap.DataAccess
                 return roles;
             }, RetrieveRolesByGroupIdDataKey);
         }
-
         /// <summary>
         /// 根据GroupId更新Roles信息，删除旧的Roles信息，插入新的Roles信息
         /// </summary>
@@ -340,51 +339,13 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public virtual IEnumerable<string> RetrieveRolesByUserName(string userName)
-        {
-            return CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveRolesByUserNameDataKey, userName), r =>
-            {
-                var entities = new List<string>();
-                var db = DbAccessManager.DBAccess;
-                using (DbCommand cmd = db.CreateCommand(CommandType.Text, "select r.RoleName from Roles r inner join UserRole ur on r.ID=ur.RoleID inner join Users u on ur.UserID = u.ID and u.UserName = @UserName union select r.RoleName from Roles r inner join RoleGroup rg on r.ID = rg.RoleID inner join Groups g on rg.GroupID = g.ID inner join UserGroup ug on ug.GroupID = g.ID inner join Users u on ug.UserID = u.ID and u.UserName=@UserName"))
-                {
-                    cmd.Parameters.Add(db.CreateParameter("@UserName", userName));
-                    using (DbDataReader reader = db.ExecuteReader(cmd))
-                    {
-                        while (reader.Read())
-                        {
-                            entities.Add((string)reader[0]);
-                        }
-                    }
-                }
-                return entities;
-            }, RetrieveRolesByUserNameDataKey);
-        }
+        public virtual IEnumerable<string> RetrieveRolesByUserName(string userName) => BASQLHelper.RetrieveRolesByUserName(userName);
         /// <summary>
         /// 根据菜单url查询某个所拥有的角色
         /// 从NavigatorRole表查
         /// 从Navigators-〉GroupNavigatorRole-〉Role查查询某个用户所拥有的角色
         /// </summary>
         /// <returns></returns>
-        public virtual IEnumerable<string> RetrieveRolesByUrl(string url)
-        {
-            return CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveRolesByUrlDataKey, url), k =>
-            {
-                string sql = "select distinct r.RoleName, r.[Description] from Roles r inner join NavigationRole nr on r.ID = nr.RoleID inner join Navigations n on nr.NavigationID = n.ID and n.[Application] = @AppId and n.Url like @Url";
-                var Roles = new List<string> { "Administrators" };
-                var db = DbAccessManager.DBAccess;
-                var cmd = db.CreateCommand(CommandType.Text, sql);
-                cmd.Parameters.Add(db.CreateParameter("@Url", string.Format("{0}%", url)));
-                cmd.Parameters.Add(db.CreateParameter("@AppId", LgbConvert.ReadValue(ConfigurationManager.AppSettings["AppId"], "0")));
-                using (DbDataReader reader = db.ExecuteReader(cmd))
-                {
-                    while (reader.Read())
-                    {
-                        Roles.Add((string)reader[0]);
-                    }
-                }
-                return Roles;
-            }, RetrieveRolesByUrlDataKey);
-        }
+        public virtual IEnumerable<string> RetrieveRolesByUrl(string url) => BASQLHelper.RetrieveRolesByUrl(url);
     }
 }

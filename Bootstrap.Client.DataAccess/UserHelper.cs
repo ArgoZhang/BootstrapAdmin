@@ -1,4 +1,5 @@
 ﻿using Bootstrap.Security;
+using Bootstrap.Security.SQLServer;
 
 namespace Bootstrap.Client.DataAccess
 {
@@ -12,6 +13,6 @@ namespace Bootstrap.Client.DataAccess
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public static BootstrapUser RetrieveUserByUserName(string userName)=> BAHelper.RetrieveUserByUserName(userName);
+        public static BootstrapUser RetrieveUserByUserName(string userName) => BASQLHelper.RetrieveUserByUserName(userName);
     }
 }

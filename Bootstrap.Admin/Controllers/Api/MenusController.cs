@@ -46,7 +46,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// 
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="value"></param>
+        /// <param name="type"></param>
         /// <returns></returns>
         [HttpPost("{id}")]
         public IEnumerable<BootstrapMenu> Post(int id, [FromQuery]string type)

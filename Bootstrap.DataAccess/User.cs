@@ -1,4 +1,5 @@
 ﻿using Bootstrap.Security;
+using Bootstrap.Security.SQLServer;
 using Longbow;
 using Longbow.Cache;
 using Longbow.Data;
@@ -490,32 +491,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public virtual BootstrapUser RetrieveUserByUserName(string userName)
-        {
-            var key = string.Format("{0}-{1}", RetrieveUsersByNameDataKey, userName);
-            return CacheManager.GetOrAdd(key, k =>
-            {
-                BootstrapUser user = null;
-                var sql = "select UserName, DisplayName, case isnull(d.Code, '') when '' then '~/images/uploader/' else d.Code end + Icon Icon, u.Css from Users u left join Dicts d on d.Define = '0' and d.Category = N'头像地址' and Name = N'头像路径' where ApprovedTime is not null and UserName = @UserName";
-                var db = DbAccessManager.DBAccess;
-                var cmd = db.CreateCommand(CommandType.Text, sql);
-                cmd.Parameters.Add(db.CreateParameter("@UserName", userName));
-                using (DbDataReader reader = db.ExecuteReader(cmd))
-                {
-                    if (reader.Read())
-                    {
-                        user = new BootstrapUser
-                        {
-                            UserName = (string)reader[0],
-                            DisplayName = (string)reader[1],
-                            Icon = (string)reader[2],
-                            Css = reader.IsDBNull(3) ? string.Empty : (string)reader[3]
-                        };
-                    }
-                }
-                return user;
-            }, RetrieveUsersByNameDataKey);
-        }
+        public virtual BootstrapUser RetrieveUserByUserName(string userName) => BASQLHelper.RetrieveUserByUserName(userName);
         /// <summary>
         /// 
         /// </summary>

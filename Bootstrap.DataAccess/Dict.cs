@@ -1,5 +1,5 @@
 ﻿using Bootstrap.Security;
-using Longbow;
+using Bootstrap.Security.SQLServer;
 using Longbow.Cache;
 using System;
 using System.Collections.Generic;
@@ -176,27 +176,6 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="db">数据库连接实例</param>
         /// <returns></returns>
-        public virtual IEnumerable<BootstrapDict> RetrieveDicts() => CacheManager.GetOrAdd(RetrieveDictsDataKey, key =>
-        {
-            string sql = "select ID, Category, Name, Code, Define from Dicts";
-            var Dicts = new List<BootstrapDict>();
-            var db = DbAccessManager.DBAccess;
-            var cmd = db.CreateCommand(CommandType.Text, sql);
-            using (var reader = db.ExecuteReader(cmd))
-            {
-                while (reader.Read())
-                {
-                    Dicts.Add(new BootstrapDict
-                    {
-                        Id = LgbConvert.ReadValue(reader[0], 0),
-                        Category = (string)reader[1],
-                        Name = (string)reader[2],
-                        Code = (string)reader[3],
-                        Define = LgbConvert.ReadValue(reader[4], 0)
-                    });
-                }
-            }
-            return Dicts;
-        });
+        public virtual IEnumerable<BootstrapDict> RetrieveDicts() => BASQLHelper.RetrieveDicts();
     }
 }

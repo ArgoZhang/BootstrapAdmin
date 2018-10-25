@@ -1,4 +1,5 @@
 ﻿using Bootstrap.Security;
+using Bootstrap.Security.SQLServer;
 using System.Collections.Generic;
 
 namespace Bootstrap.Client.DataAccess
@@ -13,12 +14,12 @@ namespace Bootstrap.Client.DataAccess
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public static IEnumerable<string> RetrieveRolesByUserName(string userName) => BAHelper.RetrieveRolesByUserName(userName);
+        public static IEnumerable<string> RetrieveRolesByUserName(string userName) => BASQLHelper.RetrieveRolesByUserName(userName);
         /// <summary>
         /// 
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        public static IEnumerable<string> RetrieveRolesByUrl(string url) => BAHelper.RetrieveRolesByUrl(url);
+        public static IEnumerable<string> RetrieveRolesByUrl(string url) => BASQLHelper.RetrieveRolesByUrl(url);
     }
 }

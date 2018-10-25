@@ -1,4 +1,5 @@
 ﻿using Bootstrap.Security;
+using Bootstrap.Security.SQLServer;
 using Longbow.Configuration;
 using System;
 using System.Collections.Generic;
@@ -47,7 +48,7 @@ namespace Bootstrap.Client.DataAccess
         /// 
         /// </summary>
         /// <returns></returns>
-        private static IEnumerable<BootstrapDict> RetrieveDicts() => BAHelper.RetrieveDicts();
+        private static IEnumerable<BootstrapDict> RetrieveDicts() => BASQLHelper.RetrieveDicts();
 
         private static string RetrieveAppName(string name, string defaultValue = "未设置")
         {
