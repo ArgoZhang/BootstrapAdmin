@@ -25,6 +25,14 @@ namespace Bootstrap.Client.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
+        public IActionResult About()
+        {
+            return View("Index", new NavigatorBarModel(this));
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [AllowAnonymous]
         public IActionResult Error(int id)
         {
