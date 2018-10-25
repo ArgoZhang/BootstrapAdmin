@@ -46,7 +46,7 @@ namespace Bootstrap.Client
             services.AddLogging(builder => builder.AddFileLogger());
             services.AddConfigurationManager(Configuration);
             services.AddCacheManager(Configuration);
-            services.AddDbAdapter();
+            services.AddDbAdapter(Configuration);
             var dataProtectionBuilder = services.AddDataProtection(op => op.ApplicationDiscriminator = Configuration["ApplicationDiscriminator"])
                 .SetApplicationName(Configuration["ApplicationName"])
                 .PersistKeysToFileSystem(new DirectoryInfo(Configuration["KeyPath"]));

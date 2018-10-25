@@ -61,7 +61,7 @@ namespace Bootstrap.Admin
             services.AddLogging(builder => builder.AddFileLogger().AddDBLogger(ExceptionsHelper.Log));
             services.AddConfigurationManager(Configuration);
             services.AddCacheManager(Configuration);
-            services.AddDbAdapter(() => { CacheManager.Clear(); CacheManager.CorsClear(new List<string>() { "*" }); });
+            services.AddDbAdapter(Configuration, () => { CacheManager.Clear(); CacheManager.CorsClear(new List<string>() { "*" }); });
             var dataProtectionBuilder = services.AddDataProtection(op => op.ApplicationDiscriminator = Configuration["ApplicationDiscriminator"])
                 .SetApplicationName(Configuration["ApplicationName"])
                 .PersistKeysToFileSystem(new DirectoryInfo(Configuration["KeyPath"]));
