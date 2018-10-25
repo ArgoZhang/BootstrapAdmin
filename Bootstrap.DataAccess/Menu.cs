@@ -1,7 +1,6 @@
 ﻿using Bootstrap.Security;
 using Longbow;
 using Longbow.Cache;
-using Longbow.Configuration;
 using Longbow.Data;
 using System;
 using System.Collections.Generic;
@@ -161,13 +160,13 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 通过当前用户名获得前台菜单，层次化后集合
         /// </summary>
+        /// <param name="appId"></param>
         /// <param name="userName">当前登陆的用户名</param>
         /// <param name="activeUrl">当前访问菜单</param>
-        /// <param name="connName">连接字符串名称，默认为ba</param>
         /// <returns></returns>
-        public virtual IEnumerable<BootstrapMenu> RetrieveAppMenus(string userName, string activeUrl = null)
+        public virtual IEnumerable<BootstrapMenu> RetrieveAppMenus(string appId, string userName, string activeUrl = null)
         {
-            var menus = RetrieveMenusByUserName(userName, activeUrl).Where(m => m.Category == "1" && m.IsResource == 0);
+            var menus = RetrieveMenusByUserName(userName, activeUrl, appId).Where(m => m.Category == "1" && m.IsResource == 0);
             var root = menus.Where(m => m.ParentId == 0).OrderBy(m => m.ApplicationCode).ThenBy(m => m.Order);
             CascadeMenus(menus, root);
             return root;
@@ -177,11 +176,10 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="userName">当前登陆的用户名</param>
         /// <param name="activeUrl">当前访问菜单</param>
+        /// <param name="appId"></param>
         /// <returns></returns>
-        public virtual IEnumerable<BootstrapMenu> RetrieveMenusByUserName(string userName, string activeUrl = null)
+        public virtual IEnumerable<BootstrapMenu> RetrieveMenusByUserName(string userName, string activeUrl = null, string appId = "0")
         {
-            // TODO: 考虑第三方应用获取
-            var appId = LgbConvert.ReadValue(ConfigurationManager.AppSettings["AppId"], "0");
             var key = string.Format("{0}-{1}-{2}", RetrieveMenusDataKey, userName, appId);
             var navs = CacheManager.GetOrAdd(key, k =>
             {

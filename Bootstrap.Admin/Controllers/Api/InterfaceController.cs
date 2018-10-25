@@ -54,18 +54,9 @@ namespace Bootstrap.Admin.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public IEnumerable<BootstrapMenu> RetrieveAppMenus([FromBody]AppMenuArgs args)
+        public IEnumerable<BootstrapMenu> RetrieveAppMenus([FromBody]AppMenuOption args)
         {
-            return MenuHelper.RetrieveAppMenus(args.Name, args.Url);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        public class AppMenuArgs
-        {
-            public string Name { get; set; }
-
-            public string Url { get; set; }
+            return MenuHelper.RetrieveAppMenus(args.AppId, args.UserName, args.Url);
         }
     }
 }

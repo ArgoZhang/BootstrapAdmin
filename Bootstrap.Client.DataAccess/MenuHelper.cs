@@ -1,4 +1,5 @@
 ﻿using Bootstrap.Security;
+using Longbow.Configuration;
 using System.Collections.Generic;
 
 namespace Bootstrap.Client.DataAccess
@@ -11,9 +12,9 @@ namespace Bootstrap.Client.DataAccess
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="userName"></param>
         /// <param name="url"></param>
         /// <returns></returns>
-        public static IEnumerable<BootstrapMenu> RetrieveAppMenus(string name, string url) => BAHelper.RetrieveAppMenus(new { Name = name, Url = url });
+        public static IEnumerable<BootstrapMenu> RetrieveAppMenus(string userName, string url) => BAHelper.RetrieveAppMenus(ConfigurationManager.AppSettings["AppId"], userName, url);
     }
 }

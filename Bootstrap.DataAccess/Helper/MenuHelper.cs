@@ -46,7 +46,7 @@ namespace Bootstrap.DataAccess
         /// <param name="name"></param>
         /// <param name="url"></param>
         /// <returns></returns>
-        public static IEnumerable<BootstrapMenu> RetrieveAppMenus(string name, string url) => DbAdapterManager.Create<Menu>().RetrieveAppMenus(name, url);
+        public static IEnumerable<BootstrapMenu> RetrieveAppMenus(string appId, string userName, string url) => DbAdapterManager.Create<Menu>().RetrieveAppMenus(appId, userName, url);
         /// <summary>
         /// 
         /// </summary>
