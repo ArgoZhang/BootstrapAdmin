@@ -132,7 +132,7 @@ namespace Bootstrap.Admin
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-            app.UseWhen(context => context.Request.Path == "/swagger/index.html", builder =>
+            app.UseWhen(context => context.Request.Path.StartsWithSegments("/swagger"), builder =>
             {
                 builder.Use(async (context, next) =>
                 {
