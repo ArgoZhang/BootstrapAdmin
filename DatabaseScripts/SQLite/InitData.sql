@@ -72,3 +72,23 @@ INSERT INTO [NavigationRole] ([NavigationID], [RoleID]) VALUES (16, 2);
 INSERT INTO [NavigationRole] ([NavigationID], [RoleID]) VALUES (17, 2);
 INSERT INTO [NavigationRole] ([NavigationID], [RoleID]) VALUES (18, 2);
 INSERT INTO [NavigationRole] ([NavigationID], [RoleID]) VALUES (19, 2);
+
+-- Client Data
+Delete From [Dicts] Where Category = '应用程序' and Code = 2;
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('应用程序', '测试平台', 2, 0);
+
+Delete From [Dicts] Where Category = '测试平台';
+Insert into Dicts (Category, [Name], Code, Define) values ('测试平台', '网站标题', 'BA Client', 1);
+Insert into Dicts (Category, [Name], Code, Define) values ('测试平台', '网站页脚', '通用后台管理测试平台', 1);
+Insert into Dicts (Category, [Name], Code, Define) values ('测试平台', '个人中心地址', 'http://localhost:50852/Admin/Profiles', 1);
+Insert into Dicts (Category, [Name], Code, Define) values ('测试平台', '系统设置地址', 'http://localhost:50852/Admin/Settings', 1);
+
+Delete from [Navigations] where Application = 2;
+INSERT into [Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category], [Application]) VALUES (NULL, 0, '首页', 10, 'fa fa-fa', '~/Home/Index', '1', 2);
+
+INSERT into [Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category], [Application]) VALUES (NULL, 0, '测试页面', 20, 'fa fa-fa', '#', '1', 2);
+INSERT into [Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category], [Application]) VALUES (NULL, last_insert_rowid(), '关于', 10, 'fa fa-fa', '~/Home/About', '1', 2);
+
+-- 菜单授权
+DELETE FROM NavigationRole Where NavigationID in (Select ID From Navigations Where [Application] = 2);
+INSERT INTO NavigationRole SELECT NULL, ID, 2 FROM Navigations Where [Application] = 2;
