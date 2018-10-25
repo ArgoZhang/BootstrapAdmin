@@ -1,8 +1,4 @@
-﻿.header, .card, .modal-footer {
-    border-color: #5198cb;
-}
-
-.navbar-light .navbar-nav .show > .nav-link, .navbar-light .navbar-nav .active > .nav-link, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .nav-link.active {
+﻿.navbar-light .navbar-nav .show > .nav-link, .navbar-light .navbar-nav .active > .nav-link, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .nav-link.active {
     color: rgb(51, 122, 183);
 }
 
@@ -32,11 +28,6 @@
     color: #337ab7;
 }
 
-.card {
-    border-width: 1px;
-    border-style: solid;
-}
-
 .card-header, .modal-header, .popover-header {
     background-color: #5899c8;
     border-color: #3581b8;
@@ -55,7 +46,7 @@
     border-bottom: solid 1px #307eb6;
 }
 
-.header, .card, .modal-footer, .form-control, .popover, .date .input-group-text,
+.card, .modal-footer, .form-control, .popover, .date .input-group-text,
 .input-group .btn:not(.btn-secondary):not(.btn-primary):not(.btn-warning):not(.btn-info):not(.btn-danger) {
     border-color: #5198cb;
 }
