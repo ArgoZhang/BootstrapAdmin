@@ -143,7 +143,7 @@ namespace Bootstrap.Admin
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "BootstrapAdmin API V1");
+                c.SwaggerEndpoint($"{Configuration["SwaggerPathBase"]}/swagger/v1/swagger.json", "BootstrapAdmin API V1");
             });
         }
     }
