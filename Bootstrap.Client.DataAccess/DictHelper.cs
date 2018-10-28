@@ -1,5 +1,6 @@
 ﻿using Bootstrap.Security;
 using Bootstrap.Security.SQLServer;
+using Longbow.Cache;
 using Longbow.Configuration;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,13 @@ namespace Bootstrap.Client.DataAccess
     /// </summary>
     public static class DictHelper
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <summary>
+        /// 缓存索引，BootstrapAdmin后台清理缓存时使用
+        /// </summary>
+        public const string RetrieveDictsDataKey = "BootstrapDict-RetrieveDicts";
         /// <summary>
         /// 
         /// </summary>
@@ -48,7 +56,7 @@ namespace Bootstrap.Client.DataAccess
         /// 
         /// </summary>
         /// <returns></returns>
-        private static IEnumerable<BootstrapDict> RetrieveDicts() => BASQLHelper.RetrieveDicts();
+        private static IEnumerable<BootstrapDict> RetrieveDicts() => CacheManager.GetOrAdd(RetrieveDictsDataKey, key => BASQLHelper.RetrieveDicts());
 
         private static string RetrieveAppName(string name, string defaultValue = "未设置")
         {
