@@ -56,7 +56,7 @@ namespace Bootstrap.DataAccess.SQLite
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Message", ex.Message));
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@StackTrace", DbAdapterManager.ToDBValue(ex.StackTrace)));
                 DbAccessManager.DBAccess.ExecuteNonQuery(cmd);
-                CacheManager.Clear(RetrieveExceptionsDataKey);
+                CacheManager.Clear(ExceptionsHelper.RetrieveExceptionsDataKey);
                 ClearExceptions();
             }
         }
@@ -66,31 +66,28 @@ namespace Bootstrap.DataAccess.SQLite
         /// <returns></returns>
         public override IEnumerable<DataAccess.Exceptions> RetrieveExceptions()
         {
-            return CacheManager.GetOrAdd(RetrieveExceptionsDataKey, key =>
+            string sql = "select * from Exceptions where LogTime > datetime('now', 'localtime', '-7 day') order by LogTime desc";
+            List<Exceptions> exceptions = new List<Exceptions>();
+            DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
+            using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
             {
-                string sql = "select * from Exceptions where LogTime > datetime('now', 'localtime', '-7 day') order by LogTime desc";
-                List<Exceptions> exceptions = new List<Exceptions>();
-                DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-                using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
+                while (reader.Read())
                 {
-                    while (reader.Read())
+                    exceptions.Add(new Exceptions()
                     {
-                        exceptions.Add(new Exceptions()
-                        {
-                            Id = LgbConvert.ReadValue(reader[0], 0),
-                            AppDomainName = (string)reader[1],
-                            ErrorPage = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
-                            UserId = reader.IsDBNull(3) ? string.Empty : (string)reader[3],
-                            UserIp = reader.IsDBNull(4) ? string.Empty : (string)reader[4],
-                            ExceptionType = (string)reader[5],
-                            Message = (string)reader[6],
-                            StackTrace = (string)reader[7],
-                            LogTime = LgbConvert.ReadValue(reader[8], DateTime.MinValue)
-                        });
-                    }
+                        Id = LgbConvert.ReadValue(reader[0], 0),
+                        AppDomainName = (string)reader[1],
+                        ErrorPage = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
+                        UserId = reader.IsDBNull(3) ? string.Empty : (string)reader[3],
+                        UserIp = reader.IsDBNull(4) ? string.Empty : (string)reader[4],
+                        ExceptionType = (string)reader[5],
+                        Message = (string)reader[6],
+                        StackTrace = (string)reader[7],
+                        LogTime = LgbConvert.ReadValue(reader[8], DateTime.MinValue)
+                    });
                 }
-                return exceptions;
-            });
+            }
+            return exceptions;
         }
     }
 }

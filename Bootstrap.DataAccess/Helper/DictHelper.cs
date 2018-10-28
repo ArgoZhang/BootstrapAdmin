@@ -1,4 +1,5 @@
 ﻿using Bootstrap.Security;
+using Longbow.Cache;
 using Longbow.Data;
 using System.Collections.Generic;
 
@@ -9,6 +10,7 @@ namespace Bootstrap.DataAccess
     /// </summary>
     public static class DictHelper
     {
+        public const string RetrieveCategoryDataKey = "DictHelper-RetrieveDictsCategory";
         /// <summary>
         /// 
         /// </summary>
@@ -38,7 +40,7 @@ namespace Bootstrap.DataAccess
         /// 获取字典分类名称
         /// </summary>
         /// <returns></returns>
-        public static IEnumerable<string> RetrieveCategories() => DbAdapterManager.Create<Dict>().RetrieveCategories();
+        public static IEnumerable<string> RetrieveCategories() => CacheManager.GetOrAdd(RetrieveCategoryDataKey, key => DbAdapterManager.Create<Dict>().RetrieveCategories());
         /// <summary>
         /// 
         /// </summary>

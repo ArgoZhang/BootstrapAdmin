@@ -17,10 +17,6 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 
         /// </summary>
-        protected const string RetrieveExceptionsDataKey = "ExceptionHelper-RetrieveExceptions";
-        /// <summary>
-        /// 
-        /// </summary>
         public int Id { get; set; }
         /// <summary>
         /// 
@@ -97,7 +93,7 @@ namespace Bootstrap.DataAccess
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Message", ex.Message));
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@StackTrace", DbAdapterManager.ToDBValue(ex.StackTrace)));
                 DbAccessManager.DBAccess.ExecuteNonQuery(cmd);
-                CacheManager.Clear(RetrieveExceptionsDataKey);
+                CacheManager.Clear(ExceptionsHelper.RetrieveExceptionsDataKey);
                 ClearExceptions();
             }
         }
@@ -107,31 +103,28 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual IEnumerable<Exceptions> RetrieveExceptions()
         {
-            return CacheManager.GetOrAdd(RetrieveExceptionsDataKey, key =>
+            string sql = "select * from Exceptions where DATEDIFF(Week, LogTime, GETDATE()) = 0 order by LogTime desc";
+            List<Exceptions> exceptions = new List<Exceptions>();
+            DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
+            using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
             {
-                string sql = "select * from Exceptions where DATEDIFF(Week, LogTime, GETDATE()) = 0 order by LogTime desc";
-                List<Exceptions> exceptions = new List<Exceptions>();
-                DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-                using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
+                while (reader.Read())
                 {
-                    while (reader.Read())
+                    exceptions.Add(new Exceptions()
                     {
-                        exceptions.Add(new Exceptions()
-                        {
-                            Id = (int)reader[0],
-                            AppDomainName = (string)reader[1],
-                            ErrorPage = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
-                            UserId = reader.IsDBNull(3) ? string.Empty : (string)reader[3],
-                            UserIp = reader.IsDBNull(4) ? string.Empty : (string)reader[4],
-                            ExceptionType = (string)reader[5],
-                            Message = (string)reader[6],
-                            StackTrace = (string)reader[7],
-                            LogTime = (DateTime)reader[8],
-                        });
-                    }
+                        Id = (int)reader[0],
+                        AppDomainName = (string)reader[1],
+                        ErrorPage = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
+                        UserId = reader.IsDBNull(3) ? string.Empty : (string)reader[3],
+                        UserIp = reader.IsDBNull(4) ? string.Empty : (string)reader[4],
+                        ExceptionType = (string)reader[5],
+                        Message = (string)reader[6],
+                        StackTrace = (string)reader[7],
+                        LogTime = (DateTime)reader[8],
+                    });
                 }
-                return exceptions;
-            });
+            }
+            return exceptions;
         }
     }
 }

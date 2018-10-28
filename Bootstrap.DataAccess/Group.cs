@@ -1,5 +1,4 @@
 ﻿using Longbow;
-using Longbow.Cache;
 using Longbow.Data;
 using System;
 using System.Collections.Generic;
@@ -15,10 +14,6 @@ namespace Bootstrap.DataAccess
     /// </summary>
     public class Group
     {
-        public const string RetrieveGroupsDataKey = "GroupHelper-RetrieveGroups";
-        public const string RetrieveGroupsByUserIdDataKey = "GroupHelper-RetrieveGroupsByUserId";
-        public const string RetrieveGroupsByRoleIdDataKey = "GroupHelper-RetrieveGroupsByRoleId";
-        public const string RetrieveGroupsByUserNameDataKey = "BootstrapAdminGroupMiddleware-RetrieveGroupsByUserName";
         /// <summary>
         /// 获得/设置 群组主键ID
         /// </summary>
@@ -45,26 +40,22 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual IEnumerable<Group> RetrieveGroups(int id = 0)
         {
-            var ret = CacheManager.GetOrAdd(RetrieveGroupsDataKey, key =>
+            string sql = "select * from Groups";
+            List<Group> groups = new List<Group>();
+            DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
+            using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
             {
-                string sql = "select * from Groups";
-                List<Group> groups = new List<Group>();
-                DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-                using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
+                while (reader.Read())
                 {
-                    while (reader.Read())
+                    groups.Add(new Group()
                     {
-                        groups.Add(new Group()
-                        {
-                            Id = LgbConvert.ReadValue(reader[0], 0),
-                            GroupName = (string)reader[1],
-                            Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2]
-                        });
-                    }
+                        Id = LgbConvert.ReadValue(reader[0], 0),
+                        GroupName = (string)reader[1],
+                        Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2]
+                    });
                 }
-                return groups;
-            });
-            return id == 0 ? ret : ret.Where(t => id == t.Id);
+            }
+            return groups;
         }
         /// <summary>
         /// 删除群组信息
@@ -112,29 +103,24 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual IEnumerable<Group> RetrieveGroupsByUserId(int userId)
         {
-            string key = string.Format("{0}-{1}", RetrieveGroupsByUserIdDataKey, userId);
-            var ret = CacheManager.GetOrAdd(key, k =>
+            string sql = "select g.ID,g.GroupName,g.[Description],case ug.GroupID when g.ID then 'checked' else '' end [status] from Groups g left join UserGroup ug on g.ID=ug.GroupID and UserID=@UserID";
+            List<Group> groups = new List<Group>();
+            DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
+            cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@UserID", userId));
+            using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
             {
-                string sql = "select g.ID,g.GroupName,g.[Description],case ug.GroupID when g.ID then 'checked' else '' end [status] from Groups g left join UserGroup ug on g.ID=ug.GroupID and UserID=@UserID";
-                List<Group> groups = new List<Group>();
-                DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@UserID", userId));
-                using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
+                while (reader.Read())
                 {
-                    while (reader.Read())
+                    groups.Add(new Group()
                     {
-                        groups.Add(new Group()
-                        {
-                            Id = LgbConvert.ReadValue(reader[0], 0),
-                            GroupName = (string)reader[1],
-                            Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
-                            Checked = (string)reader[3]
-                        });
-                    }
+                        Id = LgbConvert.ReadValue(reader[0], 0),
+                        GroupName = (string)reader[1],
+                        Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
+                        Checked = (string)reader[3]
+                    });
                 }
-                return groups;
-            }, RetrieveGroupsByUserIdDataKey);
-            return ret;
+            }
+            return groups;
         }
         /// <summary>
         /// 保存用户部门关系
@@ -189,28 +175,24 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual IEnumerable<Group> RetrieveGroupsByRoleId(int roleId)
         {
-            string k = string.Format("{0}-{1}", RetrieveGroupsByRoleIdDataKey, roleId);
-            return CacheManager.GetOrAdd(k, key =>
+            List<Group> groups = new List<Group>();
+            string sql = "select g.ID,g.GroupName,g.[Description],case rg.GroupID when g.ID then 'checked' else '' end [status] from Groups g left join RoleGroup rg on g.ID=rg.GroupID and RoleID=@RoleID";
+            DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
+            cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@RoleID", roleId));
+            using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
             {
-                List<Group> groups = new List<Group>();
-                string sql = "select g.ID,g.GroupName,g.[Description],case rg.GroupID when g.ID then 'checked' else '' end [status] from Groups g left join RoleGroup rg on g.ID=rg.GroupID and RoleID=@RoleID";
-                DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@RoleID", roleId));
-                using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
+                while (reader.Read())
                 {
-                    while (reader.Read())
+                    groups.Add(new Group()
                     {
-                        groups.Add(new Group()
-                        {
-                            Id = LgbConvert.ReadValue(reader[0], 0),
-                            GroupName = (string)reader[1],
-                            Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
-                            Checked = (string)reader[3]
-                        });
-                    }
+                        Id = LgbConvert.ReadValue(reader[0], 0),
+                        GroupName = (string)reader[1],
+                        Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
+                        Checked = (string)reader[3]
+                    });
                 }
-                return groups;
-            }, RetrieveGroupsByRoleIdDataKey);
+            }
+            return groups;
         }
         /// <summary>
         /// 根据角色ID以及选定的部门ID，保到角色部门表
@@ -260,27 +242,23 @@ namespace Bootstrap.DataAccess
         /// 
         /// </summary>
         /// <param name="userName"></param>
-        /// <param name="connName"></param>
         /// <returns></returns>
         public virtual IEnumerable<string> RetrieveGroupsByUserName(string userName)
         {
-            return CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveGroupsByUserNameDataKey, userName), r =>
+            var entities = new List<string>();
+            var db = DbAccessManager.DBAccess;
+            using (DbCommand cmd = db.CreateCommand(CommandType.Text, "select g.GroupName, g.[Description] from Groups g inner join UserGroup ug on g.ID = ug.GroupID inner join Users u on ug.UserID = u.ID where UserName = @UserName"))
             {
-                var entities = new List<string>();
-                var db = DbAccessManager.DBAccess;
-                using (DbCommand cmd = db.CreateCommand(CommandType.Text, "select g.GroupName, g.[Description] from Groups g inner join UserGroup ug on g.ID = ug.GroupID inner join Users u on ug.UserID = u.ID where UserName = @UserName"))
+                cmd.Parameters.Add(db.CreateParameter("@UserName", userName));
+                using (DbDataReader reader = db.ExecuteReader(cmd))
                 {
-                    cmd.Parameters.Add(db.CreateParameter("@UserName", userName));
-                    using (DbDataReader reader = db.ExecuteReader(cmd))
+                    while (reader.Read())
                     {
-                        while (reader.Read())
-                        {
-                            entities.Add((string)reader[0]);
-                        }
+                        entities.Add((string)reader[0]);
                     }
                 }
-                return entities;
-            }, RetrieveGroupsByUserNameDataKey);
+            }
+            return entities;
         }
     }
 }

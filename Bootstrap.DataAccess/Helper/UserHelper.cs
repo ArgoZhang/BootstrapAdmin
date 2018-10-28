@@ -1,4 +1,5 @@
 ﻿using Bootstrap.Security;
+using Longbow.Cache;
 using Longbow.Data;
 using System.Collections.Generic;
 
@@ -9,12 +10,17 @@ namespace Bootstrap.DataAccess
     /// </summary>
     public static class UserHelper
     {
+        public const string RetrieveUsersDataKey = "BootstrapUser-RetrieveUsers";
+        public const string RetrieveUsersByRoleIdDataKey = "BootstrapUser-RetrieveUsersByRoleId";
+        public const string RetrieveUsersByGroupIdDataKey = "BootstrapUser-RetrieveUsersByGroupId";
+        public const string RetrieveNewUsersDataKey = "UserHelper-RetrieveNewUsers";
+        public const string RetrieveUsersByNameDataKey = "BootstrapUser-RetrieveUsersByName";
         /// <summary>
         /// 查询所有用户
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static IEnumerable<User> RetrieveUsers() => DbAdapterManager.Create<User>().RetrieveUsers();
+        public static IEnumerable<User> RetrieveUsers() => CacheManager.GetOrAdd(RetrieveUsersDataKey, key => DbAdapterManager.Create<User>().RetrieveUsers());
         /// <summary>
         /// 
         /// </summary>
@@ -26,7 +32,7 @@ namespace Bootstrap.DataAccess
         /// 查询所有的新注册用户
         /// </summary>
         /// <returns></returns>
-        public static IEnumerable<User> RetrieveNewUsers() => DbAdapterManager.Create<User>().RetrieveNewUsers();
+        public static IEnumerable<User> RetrieveNewUsers() => CacheManager.GetOrAdd(RetrieveNewUsersDataKey, key => DbAdapterManager.Create<User>().RetrieveNewUsers());
         /// <summary>
         /// 删除用户
         /// </summary>
@@ -74,7 +80,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="roleId"></param>
         /// <returns></returns>
-        public static IEnumerable<User> RetrieveUsersByRoleId(int roleId) => DbAdapterManager.Create<User>().RetrieveUsersByRoleId(roleId);
+        public static IEnumerable<User> RetrieveUsersByRoleId(int roleId) => CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveUsersByRoleIdDataKey, roleId), k => DbAdapterManager.Create<User>().RetrieveUsersByRoleId(roleId), RetrieveUsersByRoleIdDataKey);
         /// <summary>
         /// 通过角色ID保存当前授权用户（插入）
         /// </summary>
@@ -87,7 +93,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="groupId"></param>
         /// <returns></returns>
-        public static IEnumerable<User> RetrieveUsersByGroupId(int groupId) => DbAdapterManager.Create<User>().RetrieveUsersByGroupId(groupId);
+        public static IEnumerable<User> RetrieveUsersByGroupId(int groupId) => CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveUsersByGroupIdDataKey, groupId), k => DbAdapterManager.Create<User>().RetrieveUsersByGroupId(groupId), RetrieveUsersByRoleIdDataKey);
         /// <summary>
         /// 通过部门ID保存当前授权用户（插入）
         /// </summary>
@@ -118,8 +124,8 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="userName"></param>
         /// <returns></returns>
-        public static BootstrapUser RetrieveUserByUserName(string name) => DbAdapterManager.Create<User>().RetrieveUserByUserName(name);
+        public static BootstrapUser RetrieveUserByUserName(string userName) => CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveUsersByNameDataKey, userName), k => DbAdapterManager.Create<User>().RetrieveUserByUserName(userName), RetrieveUsersByNameDataKey);
     }
 }

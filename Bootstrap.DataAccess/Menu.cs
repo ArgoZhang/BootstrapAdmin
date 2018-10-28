@@ -1,7 +1,6 @@
 ﻿using Bootstrap.Security;
 using Bootstrap.Security.SQLServer;
 using Longbow;
-using Longbow.Cache;
 using Longbow.Data;
 using System;
 using System.Collections.Generic;
@@ -17,18 +16,6 @@ namespace Bootstrap.DataAccess
     /// </summary>
     public class Menu : BootstrapMenu
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        public const string RetrieveMenusByRoleIdDataKey = "MenuHelper-RetrieveMenusByRoleId";
-        /// <summary>
-        /// 
-        /// </summary>
-        public const string RetrieveMenusDataKey = "BootstrapMenu-RetrieveMenusByUserName";
-        /// <summary>
-        /// 
-        /// </summary>
-        public const string RetrieveMenusAll = "BootstrapMenu-RetrieveMenus";
         /// <summary>
         /// 删除菜单信息
         /// </summary>
@@ -84,27 +71,23 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual IEnumerable<BootstrapMenu> RetrieveMenusByRoleId(int roleId)
         {
-            string key = string.Format("{0}-{1}", RetrieveMenusByRoleIdDataKey, roleId);
-            return CacheManager.GetOrAdd(key, k =>
+            var menus = new List<BootstrapMenu>();
+            string sql = "select NavigationID from NavigationRole where RoleID = @RoleID";
+            using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
             {
-                var menus = new List<BootstrapMenu>();
-                string sql = "select NavigationID from NavigationRole where RoleID = @RoleID";
-                using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@RoleID", roleId));
+                using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
                 {
-                    cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@RoleID", roleId));
-                    using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
+                    while (reader.Read())
                     {
-                        while (reader.Read())
+                        menus.Add(new BootstrapMenu()
                         {
-                            menus.Add(new BootstrapMenu()
-                            {
-                                Id = LgbConvert.ReadValue(reader[0], 0)
-                            });
-                        }
+                            Id = LgbConvert.ReadValue(reader[0], 0)
+                        });
                     }
                 }
-                return menus;
-            }, RetrieveMenusByRoleIdDataKey);
+            }
+            return menus;
         }
         /// <summary>
         /// 通过角色ID保存当前授权菜单

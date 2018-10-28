@@ -1,7 +1,6 @@
 ﻿using Bootstrap.Security;
 using Bootstrap.Security.SQLServer;
 using Longbow;
-using Longbow.Cache;
 using Longbow.Data;
 using Longbow.Security.Cryptography;
 using System;
@@ -18,11 +17,6 @@ namespace Bootstrap.DataAccess
     /// </summary>
     public class User : BootstrapUser
     {
-        public const string RetrieveUsersDataKey = "BootstrapUser-RetrieveUsers";
-        public const string RetrieveUsersByRoleIdDataKey = "BootstrapUser-RetrieveUsersByRoleId";
-        public const string RetrieveUsersByGroupIdDataKey = "BootstrapUser-RetrieveUsersByGroupId";
-        public const string RetrieveNewUsersDataKey = "UserHelper-RetrieveNewUsers";
-        protected const string RetrieveUsersByNameDataKey = "BootstrapUser-RetrieveUsersByName";
         /// <summary>
         /// 获得/设置 用户主键ID
         /// </summary>
@@ -126,29 +120,26 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual IEnumerable<User> RetrieveUsers()
         {
-            return CacheManager.GetOrAdd(RetrieveUsersDataKey, key =>
-            {
-                List<User> users = new List<User>();
-                DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, "select ID, UserName, DisplayName, RegisterTime, ApprovedTime, ApprovedBy, Description from Users Where ApprovedTime is not null");
+            List<User> users = new List<User>();
+            DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, "select ID, UserName, DisplayName, RegisterTime, ApprovedTime, ApprovedBy, Description from Users Where ApprovedTime is not null");
 
-                using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
+            using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
+            {
+                while (reader.Read())
                 {
-                    while (reader.Read())
+                    users.Add(new User()
                     {
-                        users.Add(new User()
-                        {
-                            Id = LgbConvert.ReadValue(reader[0], 0),
-                            UserName = (string)reader[1],
-                            DisplayName = (string)reader[2],
-                            RegisterTime = LgbConvert.ReadValue(reader[3], DateTime.MinValue),
-                            ApprovedTime = LgbConvert.ReadValue(reader[4], DateTime.MinValue),
-                            ApprovedBy = reader.IsDBNull(5) ? string.Empty : (string)reader[5],
-                            Description = (string)reader[6]
-                        });
-                    }
+                        Id = LgbConvert.ReadValue(reader[0], 0),
+                        UserName = (string)reader[1],
+                        DisplayName = (string)reader[2],
+                        RegisterTime = LgbConvert.ReadValue(reader[3], DateTime.MinValue),
+                        ApprovedTime = LgbConvert.ReadValue(reader[4], DateTime.MinValue),
+                        ApprovedBy = reader.IsDBNull(5) ? string.Empty : (string)reader[5],
+                        Description = (string)reader[6]
+                    });
                 }
-                return users;
-            });
+            }
+            return users;
         }
         /// <summary>
         /// 查询所有的新注册用户
@@ -156,27 +147,24 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual IEnumerable<User> RetrieveNewUsers()
         {
-            return CacheManager.GetOrAdd(RetrieveNewUsersDataKey, key =>
+            string sql = "select ID, UserName, DisplayName, RegisterTime, [Description] from Users Where ApprovedTime is null order by RegisterTime desc";
+            List<User> users = new List<User>();
+            DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
+            using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
             {
-                string sql = "select ID, UserName, DisplayName, RegisterTime, [Description] from Users Where ApprovedTime is null order by RegisterTime desc";
-                List<User> users = new List<User>();
-                DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-                using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
+                while (reader.Read())
                 {
-                    while (reader.Read())
+                    users.Add(new User()
                     {
-                        users.Add(new User()
-                        {
-                            Id = LgbConvert.ReadValue(reader[0], 0),
-                            UserName = (string)reader[1],
-                            DisplayName = (string)reader[2],
-                            RegisterTime = LgbConvert.ReadValue(reader[3], DateTime.MinValue),
-                            Description = (string)reader[4]
-                        });
-                    }
+                        Id = LgbConvert.ReadValue(reader[0], 0),
+                        UserName = (string)reader[1],
+                        DisplayName = (string)reader[2],
+                        RegisterTime = LgbConvert.ReadValue(reader[3], DateTime.MinValue),
+                        Description = (string)reader[4]
+                    });
                 }
-                return users;
-            });
+            }
+            return users;
         }
         /// <summary>
         /// 删除用户
@@ -289,28 +277,24 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual IEnumerable<User> RetrieveUsersByRoleId(int roleId)
         {
-            string key = string.Format("{0}-{1}", RetrieveUsersByRoleIdDataKey, roleId);
-            return CacheManager.GetOrAdd(key, k =>
+            List<User> users = new List<User>();
+            string sql = "select u.ID, u.UserName, u.DisplayName, case ur.UserID when u.ID then 'checked' else '' end [status] from Users u left join UserRole ur on u.ID = ur.UserID and RoleID = @RoleID where u.ApprovedTime is not null";
+            DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
+            cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@RoleID", roleId));
+            using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
             {
-                List<User> users = new List<User>();
-                string sql = "select u.ID, u.UserName, u.DisplayName, case ur.UserID when u.ID then 'checked' else '' end [status] from Users u left join UserRole ur on u.ID = ur.UserID and RoleID = @RoleID where u.ApprovedTime is not null";
-                DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@RoleID", roleId));
-                using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
+                while (reader.Read())
                 {
-                    while (reader.Read())
+                    users.Add(new User()
                     {
-                        users.Add(new User()
-                        {
-                            Id = LgbConvert.ReadValue(reader[0], 0),
-                            UserName = (string)reader[1],
-                            DisplayName = (string)reader[2],
-                            Checked = (string)reader[3]
-                        });
-                    }
+                        Id = LgbConvert.ReadValue(reader[0], 0),
+                        UserName = (string)reader[1],
+                        DisplayName = (string)reader[2],
+                        Checked = (string)reader[3]
+                    });
                 }
-                return users;
-            }, RetrieveUsersByRoleIdDataKey);
+            }
+            return users;
         }
         /// <summary>
         /// 通过角色ID保存当前授权用户（插入）
@@ -362,28 +346,24 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual IEnumerable<User> RetrieveUsersByGroupId(int groupId)
         {
-            string key = string.Format("{0}-{1}", RetrieveUsersByGroupIdDataKey, groupId);
-            return CacheManager.GetOrAdd(key, k =>
+            List<User> users = new List<User>();
+            string sql = "select u.ID, u.UserName, u.DisplayName, case ur.UserID when u.ID then 'checked' else '' end [status] from Users u left join UserGroup ur on u.ID = ur.UserID and GroupID =@groupId where u.ApprovedTime is not null";
+            DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
+            cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@GroupID", groupId));
+            using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
             {
-                List<User> users = new List<User>();
-                string sql = "select u.ID, u.UserName, u.DisplayName, case ur.UserID when u.ID then 'checked' else '' end [status] from Users u left join UserGroup ur on u.ID = ur.UserID and GroupID =@groupId where u.ApprovedTime is not null";
-                DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@GroupID", groupId));
-                using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
+                while (reader.Read())
                 {
-                    while (reader.Read())
+                    users.Add(new User()
                     {
-                        users.Add(new User()
-                        {
-                            Id = LgbConvert.ReadValue(reader[0], 0),
-                            UserName = (string)reader[1],
-                            DisplayName = (string)reader[2],
-                            Checked = (string)reader[3]
-                        });
-                    }
+                        Id = LgbConvert.ReadValue(reader[0], 0),
+                        UserName = (string)reader[1],
+                        DisplayName = (string)reader[2],
+                        Checked = (string)reader[3]
+                    });
                 }
-                return users;
-            }, RetrieveUsersByRoleIdDataKey);
+            }
+            return users;
         }
         /// <summary>
         /// 通过部门ID保存当前授权用户（插入）
@@ -444,7 +424,7 @@ namespace Bootstrap.DataAccess
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@iconName", iconName));
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@userName", userName));
                 ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
-                if (ret) CacheCleanUtility.ClearCache(cacheKey: $"{RetrieveUsersDataKey}*");
+                if (ret) CacheCleanUtility.ClearCache(cacheKey: $"{UserHelper.RetrieveUsersDataKey}*");
             }
             return ret;
         }
@@ -463,7 +443,7 @@ namespace Bootstrap.DataAccess
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@DisplayName", displayName));
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@userName", userName));
                 ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
-                if (ret) CacheCleanUtility.ClearCache(cacheKey: $"{RetrieveUsersDataKey}*");
+                if (ret) CacheCleanUtility.ClearCache(cacheKey: $"{UserHelper.RetrieveUsersDataKey}*");
             }
             return ret;
         }
@@ -482,7 +462,7 @@ namespace Bootstrap.DataAccess
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@cssName", DbAdapterManager.ToDBValue(cssName)));
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@userName", userName));
                 ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
-                if (ret) CacheCleanUtility.ClearCache(cacheKey: $"{RetrieveUsersDataKey}*");
+                if (ret) CacheCleanUtility.ClearCache(cacheKey: $"{UserHelper.RetrieveUsersDataKey}*");
             }
             return ret;
         }

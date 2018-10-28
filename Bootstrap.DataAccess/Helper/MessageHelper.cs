@@ -1,5 +1,7 @@
-﻿using Longbow.Data;
+﻿using Longbow.Cache;
+using Longbow.Data;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Bootstrap.DataAccess
 {
@@ -8,6 +10,10 @@ namespace Bootstrap.DataAccess
     /// </summary>
     public static class MessageHelper
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string RetrieveMessageDataKey = "MessageHelper-RetrieveMessages";
         /// <summary>
         /// 收件箱
         /// </summary>
@@ -36,6 +42,6 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public static IEnumerable<Message> RetrieveMessagesHeader(string userName) => DbAdapterManager.Create<Message>().RetrieveMessagesHeader(userName);
+        public static IEnumerable<Message> RetrieveMessagesHeader(string userName) => CacheManager.GetOrAdd(RetrieveMessageDataKey, key => DbAdapterManager.Create<Message>().RetrieveMessagesHeader(userName).OrderByDescending(n => n.SendTime));
     }
 }

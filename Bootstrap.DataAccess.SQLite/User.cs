@@ -1,5 +1,4 @@
 ﻿using Bootstrap.Security;
-using Longbow.Cache;
 using Longbow.Data;
 using Longbow.Security.Cryptography;
 using System;
@@ -7,7 +6,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
-
 
 namespace Bootstrap.DataAccess.SQLite
 {
@@ -245,29 +243,25 @@ namespace Bootstrap.DataAccess.SQLite
         /// <returns></returns>
         public override BootstrapUser RetrieveUserByUserName(string userName)
         {
-            var key = string.Format("{0}-{1}", RetrieveUsersByNameDataKey, userName);
-            return CacheManager.GetOrAdd(key, k =>
+            BootstrapUser user = null;
+            var sql = "select UserName, DisplayName, case ifnull(d.Code, '') when '' then '~/images/uploader/' else d.Code end || ifnull(Icon, 'default.jpg') Icon, u.Css from Users u left join Dicts d on d.Define = '0' and d.Category = '头像地址' and Name = '头像路径' where ApprovedTime is not null and UserName = @UserName";
+            var db = DbAccessManager.DBAccess;
+            var cmd = db.CreateCommand(CommandType.Text, sql);
+            cmd.Parameters.Add(db.CreateParameter("@UserName", userName));
+            using (DbDataReader reader = db.ExecuteReader(cmd))
             {
-                BootstrapUser user = null;
-                var sql = "select UserName, DisplayName, case ifnull(d.Code, '') when '' then '~/images/uploader/' else d.Code end || ifnull(Icon, 'default.jpg') Icon, u.Css from Users u left join Dicts d on d.Define = '0' and d.Category = '头像地址' and Name = '头像路径' where ApprovedTime is not null and UserName = @UserName";
-                var db = DbAccessManager.DBAccess;
-                var cmd = db.CreateCommand(CommandType.Text, sql);
-                cmd.Parameters.Add(db.CreateParameter("@UserName", userName));
-                using (DbDataReader reader = db.ExecuteReader(cmd))
+                if (reader.Read())
                 {
-                    if (reader.Read())
+                    user = new BootstrapUser
                     {
-                        user = new BootstrapUser
-                        {
-                            UserName = (string)reader[0],
-                            DisplayName = (string)reader[1],
-                            Icon = (string)reader[2],
-                            Css = reader.IsDBNull(3) ? string.Empty : (string)reader[3]
-                        };
-                    }
+                        UserName = (string)reader[0],
+                        DisplayName = (string)reader[1],
+                        Icon = (string)reader[2],
+                        Css = reader.IsDBNull(3) ? string.Empty : (string)reader[3]
+                    };
                 }
-                return user;
-            }, RetrieveUsersByNameDataKey);
+            }
+            return user;
         }
     }
 }

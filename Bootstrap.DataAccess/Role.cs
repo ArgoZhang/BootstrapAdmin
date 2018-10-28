@@ -1,6 +1,5 @@
 ﻿using Bootstrap.Security.SQLServer;
 using Longbow;
-using Longbow.Cache;
 using Longbow.Data;
 using System;
 using System.Collections.Generic;
@@ -16,12 +15,6 @@ namespace Bootstrap.DataAccess
     /// </summary>
     public class Role
     {
-        public const string RetrieveRolesDataKey = "RoleHelper-RetrieveRoles";
-        public const string RetrieveRolesByUserIdDataKey = "RoleHelper-RetrieveRolesByUserId";
-        public const string RetrieveRolesByMenuIdDataKey = "RoleHelper-RetrieveRolesByMenuId";
-        public const string RetrieveRolesByGroupIdDataKey = "RoleHelper-RetrieveRolesByGroupId";
-        public const string RetrieveRolesByUserNameDataKey = "BootstrapAdminRoleMiddleware-RetrieveRolesByUserName";
-        public const string RetrieveRolesByUrlDataKey = "BootstrapAdminAuthorizeFilter-RetrieveRolesByUrl";
         /// <summary>
         /// 获得/设置 角色主键ID
         /// </summary>
@@ -45,26 +38,22 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual IEnumerable<Role> RetrieveRoles(int id = 0)
         {
-            var ret = CacheManager.GetOrAdd(RetrieveRolesDataKey, key =>
+            string sql = "select * from Roles";
+            var roles = new List<Role>();
+            DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
+            using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
             {
-                string sql = "select * from Roles";
-                var roles = new List<Role>();
-                DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-                using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
+                while (reader.Read())
                 {
-                    while (reader.Read())
+                    roles.Add(new Role()
                     {
-                        roles.Add(new Role()
-                        {
-                            Id = LgbConvert.ReadValue(reader[0], 0),
-                            RoleName = (string)reader[1],
-                            Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2]
-                        });
-                    }
+                        Id = LgbConvert.ReadValue(reader[0], 0),
+                        RoleName = (string)reader[1],
+                        Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2]
+                    });
                 }
-                return roles;
-            });
-            return id == 0 ? ret : ret.Where(t => id == t.Id);
+            }
+            return roles;
         }
         /// <summary>
         /// 保存用户角色关系
@@ -119,28 +108,24 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual IEnumerable<Role> RetrieveRolesByUserId(int userId)
         {
-            string key = string.Format("{0}-{1}", RetrieveRolesByUserIdDataKey, userId);
-            return CacheManager.GetOrAdd(key, k =>
+            List<Role> roles = new List<Role>();
+            string sql = "select r.ID, r.RoleName, r.[Description], case ur.RoleID when r.ID then 'checked' else '' end [status] from Roles r left join UserRole ur on r.ID = ur.RoleID and UserID = @UserID";
+            DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
+            cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@UserID", userId));
+            using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
             {
-                List<Role> roles = new List<Role>();
-                string sql = "select r.ID, r.RoleName, r.[Description], case ur.RoleID when r.ID then 'checked' else '' end [status] from Roles r left join UserRole ur on r.ID = ur.RoleID and UserID = @UserID";
-                DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@UserID", userId));
-                using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
+                while (reader.Read())
                 {
-                    while (reader.Read())
+                    roles.Add(new Role()
                     {
-                        roles.Add(new Role()
-                        {
-                            Id = LgbConvert.ReadValue(reader[0], 0),
-                            RoleName = (string)reader[1],
-                            Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
-                            Checked = (string)reader[3]
-                        });
-                    }
+                        Id = LgbConvert.ReadValue(reader[0], 0),
+                        RoleName = (string)reader[1],
+                        Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
+                        Checked = (string)reader[3]
+                    });
                 }
-                return roles;
-            }, RetrieveRolesByUserIdDataKey);
+            }
+            return roles;
         }
         /// <summary>
         /// 删除角色表
@@ -188,29 +173,24 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual IEnumerable<Role> RetrieveRolesByMenuId(int menuId)
         {
-            string key = string.Format("{0}-{1}", RetrieveRolesByMenuIdDataKey, menuId);
-            var ret = CacheManager.GetOrAdd(key, k =>
+            string sql = "select r.ID, r.RoleName, r.[Description], case ur.RoleID when r.ID then 'checked' else '' end [status] from Roles r left join NavigationRole ur on r.ID = ur.RoleID and NavigationID = @NavigationID";
+            List<Role> roles = new List<Role>();
+            DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
+            cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@NavigationID", menuId));
+            using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
             {
-                string sql = "select r.ID, r.RoleName, r.[Description], case ur.RoleID when r.ID then 'checked' else '' end [status] from Roles r left join NavigationRole ur on r.ID = ur.RoleID and NavigationID = @NavigationID";
-                List<Role> roles = new List<Role>();
-                DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@NavigationID", menuId));
-                using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
+                while (reader.Read())
                 {
-                    while (reader.Read())
+                    roles.Add(new Role()
                     {
-                        roles.Add(new Role()
-                        {
-                            Id = LgbConvert.ReadValue(reader[0], 0),
-                            RoleName = (string)reader[1],
-                            Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
-                            Checked = (string)reader[3]
-                        });
-                    }
+                        Id = LgbConvert.ReadValue(reader[0], 0),
+                        RoleName = (string)reader[1],
+                        Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
+                        Checked = (string)reader[3]
+                    });
                 }
-                return roles;
-            }, RetrieveRolesByMenuIdDataKey);
-            return ret;
+            }
+            return roles;
         }
         /// <summary>
         /// 
@@ -265,28 +245,24 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual IEnumerable<Role> RetrieveRolesByGroupId(int groupId)
         {
-            string key = string.Format("{0}-{1}", RetrieveRolesByGroupIdDataKey, groupId);
-            return CacheManager.GetOrAdd(key, k =>
+            List<Role> roles = new List<Role>();
+            string sql = "select r.ID, r.RoleName, r.[Description], case ur.RoleID when r.ID then 'checked' else '' end [status] from Roles r left join RoleGroup ur on r.ID = ur.RoleID and GroupID = @GroupID";
+            DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
+            cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@GroupID", groupId));
+            using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
             {
-                List<Role> roles = new List<Role>();
-                string sql = "select r.ID, r.RoleName, r.[Description], case ur.RoleID when r.ID then 'checked' else '' end [status] from Roles r left join RoleGroup ur on r.ID = ur.RoleID and GroupID = @GroupID";
-                DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@GroupID", groupId));
-                using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
+                while (reader.Read())
                 {
-                    while (reader.Read())
+                    roles.Add(new Role()
                     {
-                        roles.Add(new Role()
-                        {
-                            Id = LgbConvert.ReadValue(reader[0], 0),
-                            RoleName = (string)reader[1],
-                            Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
-                            Checked = (string)reader[3]
-                        });
-                    }
+                        Id = LgbConvert.ReadValue(reader[0], 0),
+                        RoleName = (string)reader[1],
+                        Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
+                        Checked = (string)reader[3]
+                    });
                 }
-                return roles;
-            }, RetrieveRolesByGroupIdDataKey);
+            }
+            return roles;
         }
         /// <summary>
         /// 根据GroupId更新Roles信息，删除旧的Roles信息，插入新的Roles信息

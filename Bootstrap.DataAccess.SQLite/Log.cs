@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-using System.Linq;
 
 namespace Bootstrap.DataAccess.SQLite
 {
@@ -21,30 +20,26 @@ namespace Bootstrap.DataAccess.SQLite
         /// <returns></returns>
         public override IEnumerable<DataAccess.Log> RetrieveLogs(string tId = null)
         {
-            var ret = CacheManager.GetOrAdd(RetrieveLogsDataKey, key =>
+            string sql = "select * from Logs where LogTime > datetime('now', 'localtime', '-7 day')";
+            List<Log> logs = new List<Log>();
+            DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
+            using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
             {
-                string sql = "select * from Logs where LogTime > datetime('now', 'localtime', '-7 day')";
-                List<Log> logs = new List<Log>();
-                DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-                using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
+                while (reader.Read())
                 {
-                    while (reader.Read())
+                    logs.Add(new Log()
                     {
-                        logs.Add(new Log()
-                        {
-                            Id = LgbConvert.ReadValue(reader[0], 0),
-                            CRUD = (string)reader[1],
-                            UserName = (string)reader[2],
-                            LogTime = LgbConvert.ReadValue(reader[3], DateTime.MinValue),
-                            ClientIp = (string)reader[4],
-                            ClientAgent = (string)reader[5],
-                            RequestUrl = (string)reader[6]
-                        });
-                    }
+                        Id = LgbConvert.ReadValue(reader[0], 0),
+                        CRUD = (string)reader[1],
+                        UserName = (string)reader[2],
+                        LogTime = LgbConvert.ReadValue(reader[3], DateTime.MinValue),
+                        ClientIp = (string)reader[4],
+                        ClientAgent = (string)reader[5],
+                        RequestUrl = (string)reader[6]
+                    });
                 }
-                return logs;
-            });
-            return string.IsNullOrEmpty(tId) ? ret : ret.Where(t => tId.Equals(t.Id.ToString(), StringComparison.OrdinalIgnoreCase));
+            }
+            return logs;
         }
         /// <summary>
         /// 删除日志信息
@@ -79,7 +74,7 @@ namespace Bootstrap.DataAccess.SQLite
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@RequestUrl", p.RequestUrl));
                 ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
             }
-            CacheManager.Clear(RetrieveLogsDataKey);
+            CacheManager.Clear(LogHelper.RetrieveLogsDataKey);
             DeleteLogAsync();
             return ret;
         }

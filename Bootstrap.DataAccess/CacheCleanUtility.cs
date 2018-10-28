@@ -27,54 +27,54 @@ namespace Bootstrap.DataAccess
             {
                 roleIds.ToList().ForEach(id =>
                 {
-                    cacheKeys.Add(string.Format("{0}-{1}", User.RetrieveUsersByRoleIdDataKey, id));
-                    cacheKeys.Add(string.Format("{0}-{1}", Group.RetrieveGroupsByRoleIdDataKey, id));
-                    cacheKeys.Add(string.Format("{0}-{1}", Menu.RetrieveMenusByRoleIdDataKey, id));
+                    cacheKeys.Add(string.Format("{0}-{1}", UserHelper.RetrieveUsersByRoleIdDataKey, id));
+                    cacheKeys.Add(string.Format("{0}-{1}", GroupHelper.RetrieveGroupsByRoleIdDataKey, id));
+                    cacheKeys.Add(string.Format("{0}-{1}", MenuHelper.RetrieveMenusByRoleIdDataKey, id));
                 });
-                cacheKeys.Add(Role.RetrieveRolesDataKey + "*");
-                cacheKeys.Add(Menu.RetrieveMenusDataKey + "*");
+                cacheKeys.Add(RoleHelper.RetrieveRolesDataKey + "*");
+                cacheKeys.Add(MenuHelper.RetrieveMenusDataKey + "*");
                 cacheKeys.Add(RetrieveAllRolesDataKey + "*");
-                corsKeys.Add(Menu.RetrieveMenusDataKey + "*");
+                corsKeys.Add(MenuHelper.RetrieveMenusDataKey + "*");
             }
             if (userIds != null)
             {
                 userIds.ToList().ForEach(id =>
                 {
-                    cacheKeys.Add(string.Format("{0}-{1}", Role.RetrieveRolesByUserIdDataKey, id));
-                    cacheKeys.Add(string.Format("{0}-{1}", Group.RetrieveGroupsByUserIdDataKey, id));
-                    cacheKeys.Add(Menu.RetrieveMenusDataKey + "*");
-                    corsKeys.Add(Menu.RetrieveMenusDataKey + "*");
+                    cacheKeys.Add(string.Format("{0}-{1}", RoleHelper.RetrieveRolesByUserIdDataKey, id));
+                    cacheKeys.Add(string.Format("{0}-{1}", GroupHelper.RetrieveGroupsByUserIdDataKey, id));
+                    cacheKeys.Add(MenuHelper.RetrieveMenusDataKey + "*");
+                    corsKeys.Add(MenuHelper.RetrieveMenusDataKey + "*");
                 });
-                cacheKeys.Add(User.RetrieveNewUsersDataKey + "*");
-                cacheKeys.Add(User.RetrieveUsersDataKey + "*");
-                corsKeys.Add(User.RetrieveUsersDataKey + "*");
+                cacheKeys.Add(UserHelper.RetrieveNewUsersDataKey + "*");
+                cacheKeys.Add(UserHelper.RetrieveUsersDataKey + "*");
+                corsKeys.Add(UserHelper.RetrieveUsersDataKey + "*");
             }
             if (groupIds != null)
             {
                 groupIds.ToList().ForEach(id =>
                 {
-                    cacheKeys.Add(string.Format("{0}-{1}", Role.RetrieveRolesByGroupIdDataKey, id));
-                    cacheKeys.Add(string.Format("{0}-{1}", User.RetrieveUsersByGroupIdDataKey, id));
+                    cacheKeys.Add(string.Format("{0}-{1}", RoleHelper.RetrieveRolesByGroupIdDataKey, id));
+                    cacheKeys.Add(string.Format("{0}-{1}", UserHelper.RetrieveUsersByGroupIdDataKey, id));
                 });
-                cacheKeys.Add(Group.RetrieveGroupsDataKey + "*");
-                cacheKeys.Add(Menu.RetrieveMenusDataKey + "*");
-                corsKeys.Add(Menu.RetrieveMenusDataKey + "*");
+                cacheKeys.Add(GroupHelper.RetrieveGroupsDataKey + "*");
+                cacheKeys.Add(MenuHelper.RetrieveMenusDataKey + "*");
+                corsKeys.Add(MenuHelper.RetrieveMenusDataKey + "*");
                 cacheKeys.Add(RetrieveAllRolesDataKey + "*");
             }
             if (menuIds != null)
             {
                 menuIds.ToList().ForEach(id =>
                 {
-                    cacheKeys.Add(string.Format("{0}-{1}", Role.RetrieveRolesByMenuIdDataKey, id));
+                    cacheKeys.Add(string.Format("{0}-{1}", RoleHelper.RetrieveRolesByMenuIdDataKey, id));
                 });
-                cacheKeys.Add(Menu.RetrieveMenusByRoleIdDataKey + "*");
-                cacheKeys.Add(Menu.RetrieveMenusDataKey + "*");
-                corsKeys.Add(Menu.RetrieveMenusDataKey + "*");
+                cacheKeys.Add(MenuHelper.RetrieveMenusByRoleIdDataKey + "*");
+                cacheKeys.Add(MenuHelper.RetrieveMenusDataKey + "*");
+                corsKeys.Add(MenuHelper.RetrieveMenusDataKey + "*");
             }
             if (dictIds != null)
             {
                 cacheKeys.Add(Dict.RetrieveDictsDataKey + "*");
-                cacheKeys.Add(Dict.RetrieveCategoryDataKey);
+                cacheKeys.Add(DictHelper.RetrieveCategoryDataKey);
                 corsKeys.Add(Dict.RetrieveDictsDataKey + "*");
             }
             if (cacheKey != null)

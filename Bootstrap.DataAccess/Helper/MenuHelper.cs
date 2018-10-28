@@ -1,4 +1,5 @@
 ﻿using Bootstrap.Security;
+using Longbow.Cache;
 using Longbow.Data;
 using System.Collections.Generic;
 
@@ -9,6 +10,18 @@ namespace Bootstrap.DataAccess
     /// </summary>
     public static class MenuHelper
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string RetrieveMenusByRoleIdDataKey = "MenuHelper-RetrieveMenusByRoleId";
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string RetrieveMenusDataKey = "BootstrapMenu-RetrieveMenusByUserName";
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string RetrieveMenusAll = "BootstrapMenu-RetrieveMenus";
         /// <summary>
         /// 
         /// </summary>
@@ -30,9 +43,12 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="roleId"></param>
         /// <returns></returns>
-        public static IEnumerable<BootstrapMenu> RetrieveMenusByRoleId(int id) => DbAdapterManager.Create<Menu>().RetrieveMenusByRoleId(id);
+        public static IEnumerable<BootstrapMenu> RetrieveMenusByRoleId(int roleId)
+        {
+            return CacheManager.GetOrAdd($"{RetrieveMenusByRoleIdDataKey}-{roleId}", k => DbAdapterManager.Create<Menu>().RetrieveMenusByRoleId(roleId), RetrieveMenusByRoleIdDataKey);
+        }
         /// <summary>
         /// 
         /// </summary>

@@ -1,6 +1,5 @@
 ﻿using Bootstrap.Security;
 using Bootstrap.Security.SQLServer;
-using Longbow.Cache;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -17,7 +16,6 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 
         /// </summary>
-        public const string RetrieveCategoryDataKey = "DictHelper-RetrieveDictsCategory";
         /// <summary>
         /// 缓存索引，BootstrapAdmin后台清理缓存时使用
         /// </summary>
@@ -92,20 +90,17 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual IEnumerable<string> RetrieveCategories()
         {
-            return CacheManager.GetOrAdd(RetrieveCategoryDataKey, key =>
+            var ret = new List<string>();
+            string sql = "select distinct Category from Dicts";
+            DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
+            using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
             {
-                var ret = new List<string>();
-                string sql = "select distinct Category from Dicts";
-                DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-                using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
+                while (reader.Read())
                 {
-                    while (reader.Read())
-                    {
-                        ret.Add((string)reader[0]);
-                    }
+                    ret.Add((string)reader[0]);
                 }
-                return ret;
-            });
+            }
+            return ret;
         }
         /// <summary>
         /// 

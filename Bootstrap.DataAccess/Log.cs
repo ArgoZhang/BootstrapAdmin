@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-using System.Linq;
 
 namespace Bootstrap.DataAccess
 {
@@ -13,10 +12,6 @@ namespace Bootstrap.DataAccess
     /// </summary>
     public class Log
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        protected const string RetrieveLogsDataKey = "LogHelper-RetrieveLogs";
         /// <summary>
         /// 获得/设置 操作日志主键ID
         /// </summary>
@@ -58,30 +53,26 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual IEnumerable<Log> RetrieveLogs(string tId = null)
         {
-            var ret = CacheManager.GetOrAdd(RetrieveLogsDataKey, key =>
+            string sql = "select * from Logs where DATEDIFF(Week, LogTime, GETDATE()) = 0";
+            List<Log> logs = new List<Log>();
+            DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
+            using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
             {
-                string sql = "select * from Logs where DATEDIFF(Week, LogTime, GETDATE()) = 0";
-                List<Log> logs = new List<Log>();
-                DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-                using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
+                while (reader.Read())
                 {
-                    while (reader.Read())
+                    logs.Add(new Log()
                     {
-                        logs.Add(new Log()
-                        {
-                            Id = (int)reader[0],
-                            CRUD = (string)reader[1],
-                            UserName = (string)reader[2],
-                            LogTime = (DateTime)reader[3],
-                            ClientIp = (string)reader[4],
-                            ClientAgent = (string)reader[5],
-                            RequestUrl = (string)reader[6]
-                        });
-                    }
+                        Id = (int)reader[0],
+                        CRUD = (string)reader[1],
+                        UserName = (string)reader[2],
+                        LogTime = (DateTime)reader[3],
+                        ClientIp = (string)reader[4],
+                        ClientAgent = (string)reader[5],
+                        RequestUrl = (string)reader[6]
+                    });
                 }
-                return logs;
-            });
-            return string.IsNullOrEmpty(tId) ? ret : ret.Where(t => tId.Equals(t.Id.ToString(), StringComparison.OrdinalIgnoreCase));
+            }
+            return logs;
         }
         /// <summary>
         /// 删除日志信息
@@ -116,7 +107,7 @@ namespace Bootstrap.DataAccess
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@RequestUrl", p.RequestUrl));
                 ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
             }
-            CacheManager.Clear(RetrieveLogsDataKey);
+            CacheManager.Clear(LogHelper.RetrieveLogsDataKey);
             DeleteLogAsync();
             return ret;
         }
