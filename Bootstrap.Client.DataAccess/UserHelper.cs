@@ -1,5 +1,5 @@
 ﻿using Bootstrap.Security;
-using Bootstrap.Security.SQLServer;
+using Bootstrap.Security.DataAccess;
 using Longbow.Cache;
 
 namespace Bootstrap.Client.DataAccess
@@ -15,6 +15,6 @@ namespace Bootstrap.Client.DataAccess
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public static BootstrapUser RetrieveUserByUserName(string userName) => CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveUsersByNameDataKey, userName), k => BASQLHelper.RetrieveUserByUserName(userName), RetrieveUsersByNameDataKey);
+        public static BootstrapUser RetrieveUserByUserName(string userName) => CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveUsersByNameDataKey, userName), k => DbHelper.RetrieveUserByUserName(userName), RetrieveUsersByNameDataKey);
     }
 }

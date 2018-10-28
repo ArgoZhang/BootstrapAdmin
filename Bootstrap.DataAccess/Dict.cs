@@ -1,5 +1,5 @@
 ﻿using Bootstrap.Security;
-using Bootstrap.Security.SQLServer;
+using Bootstrap.Security.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -164,6 +164,6 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="db">数据库连接实例</param>
         /// <returns></returns>
-        public virtual IEnumerable<BootstrapDict> RetrieveDicts() => BASQLHelper.RetrieveDicts();
+        public virtual IEnumerable<BootstrapDict> RetrieveDicts() => DbHelper.RetrieveDicts();
     }
 }

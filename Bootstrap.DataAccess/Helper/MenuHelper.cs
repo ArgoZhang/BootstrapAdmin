@@ -1,5 +1,5 @@
 ﻿using Bootstrap.Security;
-using Bootstrap.Security.SQLServer;
+using Bootstrap.Security.DataAccess;
 using Longbow.Cache;
 using Longbow.Data;
 using System.Collections.Generic;
@@ -61,9 +61,9 @@ namespace Bootstrap.DataAccess
         {
             var menus = RetrieveAllMenus(userName).Where(m => m.Category == "1" && m.IsResource == 0);
             if (appId != "0") menus = menus.Where(m => m.ApplicationCode == appId);
-            BASQLHelper.ActiveMenu(null, menus, activeUrl);
+            DbHelper.ActiveMenu(null, menus, activeUrl);
             var root = menus.Where(m => m.ParentId == 0).OrderBy(m => m.ApplicationCode).ThenBy(m => m.Order);
-            BASQLHelper.CascadeMenus(menus, root);
+            DbHelper.CascadeMenus(menus, root);
             return root;
         }
         /// <summary>
@@ -77,9 +77,9 @@ namespace Bootstrap.DataAccess
         public static IEnumerable<BootstrapMenu> RetrieveSystemMenus(string userName, string activeUrl = null)
         {
             var menus = RetrieveAllMenus(userName).Where(m => m.Category == "0" && m.IsResource == 0);
-            BASQLHelper.ActiveMenu(null, menus, activeUrl);
+            DbHelper.ActiveMenu(null, menus, activeUrl);
             var root = menus.Where(m => m.ParentId == 0).OrderBy(m => m.ApplicationCode).ThenBy(m => m.Order);
-            BASQLHelper.CascadeMenus(menus, root);
+            DbHelper.CascadeMenus(menus, root);
             return root;
         }
         /// <summary>
@@ -91,7 +91,7 @@ namespace Bootstrap.DataAccess
         {
             var menus = RetrieveAllMenus(userName);
             var root = menus.Where(m => m.ParentId == 0).OrderBy(m => m.ApplicationCode).ThenBy(m => m.Order);
-            BASQLHelper.CascadeMenus(menus, root);
+            DbHelper.CascadeMenus(menus, root);
             return root;
         }
         /// <summary>

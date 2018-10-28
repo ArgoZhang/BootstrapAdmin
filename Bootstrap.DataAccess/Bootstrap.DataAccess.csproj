@@ -11,9 +11,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Bootstrap.Security.SQLServer" Version="1.0.0" />
+    <PackageReference Include="Bootstrap.Security.DataAccess" Version="1.0.0" />
     <PackageReference Include="Longbow.Security.Cryptography" Version="1.0.0" />
     <PackageReference Include="Longbow.Web" Version="1.0.1" />
+    <PackageReference Include="Longbow.Cache" Version="1.0.2" />
   </ItemGroup>
 
 </Project>

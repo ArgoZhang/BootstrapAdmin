@@ -1,5 +1,5 @@
 ﻿using Bootstrap.Security;
-using Bootstrap.Security.SQLServer;
+using Bootstrap.Security.DataAccess;
 using Longbow;
 using Longbow.Data;
 using System;
@@ -137,6 +137,6 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="userName">当前登陆的用户名</param>
         /// <returns></returns>
-        public virtual IEnumerable<BootstrapMenu> RetrieveAllMenus(string userName) => BASQLHelper.RetrieveAllMenus(userName);
+        public virtual IEnumerable<BootstrapMenu> RetrieveAllMenus(string userName) => DbHelper.RetrieveAllMenus(userName);
     }
 }

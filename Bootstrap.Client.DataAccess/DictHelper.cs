@@ -1,5 +1,5 @@
 ﻿using Bootstrap.Security;
-using Bootstrap.Security.SQLServer;
+using Bootstrap.Security.DataAccess;
 using Longbow.Cache;
 using Longbow.Configuration;
 using System;
@@ -56,7 +56,7 @@ namespace Bootstrap.Client.DataAccess
         /// 
         /// </summary>
         /// <returns></returns>
-        private static IEnumerable<BootstrapDict> RetrieveDicts() => CacheManager.GetOrAdd(RetrieveDictsDataKey, key => BASQLHelper.RetrieveDicts());
+        private static IEnumerable<BootstrapDict> RetrieveDicts() => CacheManager.GetOrAdd(RetrieveDictsDataKey, key => DbHelper.RetrieveDicts());
 
         private static string RetrieveAppName(string name, string defaultValue = "未设置")
         {

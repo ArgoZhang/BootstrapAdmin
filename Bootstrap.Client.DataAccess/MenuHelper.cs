@@ -1,5 +1,5 @@
 ﻿using Bootstrap.Security;
-using Bootstrap.Security.SQLServer;
+using Bootstrap.Security.DataAccess;
 using Longbow.Cache;
 using Longbow.Configuration;
 using System.Collections.Generic;
@@ -25,9 +25,9 @@ namespace Bootstrap.Client.DataAccess
         public static IEnumerable<BootstrapMenu> RetrieveAppMenus(string userName, string activeUrl)
         {
             var menus = RetrieveAllMenus(userName).Where(m => m.Category == "1" && m.IsResource == 0 && m.ApplicationCode == ConfigurationManager.AppSettings["AppId"]);
-            BASQLHelper.ActiveMenu(null, menus, activeUrl);
+            DbHelper.ActiveMenu(null, menus, activeUrl);
             var root = menus.Where(m => m.ParentId == 0).OrderBy(m => m.ApplicationCode).ThenBy(m => m.Order);
-            BASQLHelper.CascadeMenus(menus, root);
+            DbHelper.CascadeMenus(menus, root);
             return root;
         }
         /// <summary>
@@ -35,6 +35,6 @@ namespace Bootstrap.Client.DataAccess
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        private static IEnumerable<BootstrapMenu> RetrieveAllMenus(string userName) => CacheManager.GetOrAdd($"{RetrieveMenusAll}-{userName}", key => BASQLHelper.RetrieveAllMenus(userName), RetrieveMenusAll);
+        private static IEnumerable<BootstrapMenu> RetrieveAllMenus(string userName) => CacheManager.GetOrAdd($"{RetrieveMenusAll}-{userName}", key => DbHelper.RetrieveAllMenus(userName), RetrieveMenusAll);
     }
 }

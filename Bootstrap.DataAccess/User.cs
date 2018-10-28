@@ -1,5 +1,5 @@
 ﻿using Bootstrap.Security;
-using Bootstrap.Security.SQLServer;
+using Bootstrap.Security.DataAccess;
 using Longbow;
 using Longbow.Data;
 using Longbow.Security.Cryptography;
@@ -471,7 +471,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public virtual BootstrapUser RetrieveUserByUserName(string userName) => BASQLHelper.RetrieveUserByUserName(userName);
+        public virtual BootstrapUser RetrieveUserByUserName(string userName) => DbHelper.RetrieveUserByUserName(userName);
         /// <summary>
         /// 
         /// </summary>
