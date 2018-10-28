@@ -3,7 +3,7 @@ using Bootstrap.Security.SQLServer;
 using Longbow;
 using Longbow.Cache;
 using Longbow.Data;
-using Longbow.Security;
+using Longbow.Security.Cryptography;
 using System;
 using System.Collections.Generic;
 using System.Data;
