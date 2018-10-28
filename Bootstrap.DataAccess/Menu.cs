@@ -136,45 +136,7 @@ namespace Bootstrap.DataAccess
         /// 通过当前用户名获得所有菜单，层次化后集合
         /// </summary>
         /// <param name="userName">当前登陆的用户名</param>
-        /// <param name="activeUrl">当前访问菜单</param>
         /// <returns></returns>
-        public virtual IEnumerable<BootstrapMenu> RetrieveAllMenus(string userName, string activeUrl = null)
-        {
-            var menus = RetrieveMenusByUserName(userName, activeUrl);
-            var root = menus.Where(m => m.ParentId == 0).OrderBy(m => m.Category).ThenBy(m => m.ApplicationCode).ThenBy(m => m.Order);
-            BASQLHelper.CascadeMenus(menus, root);
-            return root;
-        }
-        /// <summary>
-        /// 通过当前用户名获得前台菜单，层次化后集合
-        /// </summary>
-        /// <param name="appId"></param>
-        /// <param name="userName">当前登陆的用户名</param>
-        /// <param name="activeUrl">当前访问菜单</param>
-        /// <returns></returns>
-        public virtual IEnumerable<BootstrapMenu> RetrieveAppMenus(string appId, string userName, string activeUrl = null) => BASQLHelper.RetrieveAppMenus(appId, userName, activeUrl);
-        /// <summary>
-        /// 通过当前用户名获得后台菜单，层次化后集合
-        /// </summary>
-        /// <param name="db"></param>
-        /// <param name="userName">当前登陆的用户名</param>
-        /// <param name="activeUrl">当前访问菜单</param>
-        /// <param name="connName">连接字符串名称，默认为ba</param>
-        /// <returns></returns>
-        public virtual IEnumerable<BootstrapMenu> RetrieveSystemMenus(string userName, string activeUrl = null)
-        {
-            var menus = RetrieveMenusByUserName(userName, activeUrl).Where(m => m.Category == "0" && m.IsResource == 0);
-            var root = menus.Where(m => m.ParentId == 0).OrderBy(m => m.ApplicationCode).ThenBy(m => m.Order);
-            BASQLHelper.CascadeMenus(menus, root);
-            return root;
-        }
-        /// <summary>
-        /// 通过当前用户名获得所有菜单
-        /// </summary>
-        /// <param name="userName">当前登陆的用户名</param>
-        /// <param name="activeUrl">当前访问菜单</param>
-        /// <param name="appId"></param>
-        /// <returns></returns>
-        public virtual IEnumerable<BootstrapMenu> RetrieveMenusByUserName(string userName, string activeUrl = null, string appId = "0") => BASQLHelper.RetrieveMenusByUserName(userName, activeUrl, appId);
+        public virtual IEnumerable<BootstrapMenu> RetrieveAllMenus(string userName) => BASQLHelper.RetrieveAllMenus(userName);
     }
 }

@@ -58,7 +58,7 @@ namespace Bootstrap.Admin.Controllers.Api
                     ret = MenuHelper.RetrieveMenusByRoleId(id).ToList();
                     break;
                 case "user":
-                    ret = MenuHelper.RetrieveAllMenus(User.Identity.Name).ToList();
+                    ret = MenuHelper.RetrieveMenus(User.Identity.Name).ToList();
                     break;
                 default:
                     break;

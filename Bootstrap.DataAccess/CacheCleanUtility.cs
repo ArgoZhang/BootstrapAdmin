@@ -32,9 +32,9 @@ namespace Bootstrap.DataAccess
                     cacheKeys.Add(string.Format("{0}-{1}", MenuHelper.RetrieveMenusByRoleIdDataKey, id));
                 });
                 cacheKeys.Add(RoleHelper.RetrieveRolesDataKey + "*");
-                cacheKeys.Add(MenuHelper.RetrieveMenusDataKey + "*");
+                cacheKeys.Add(MenuHelper.RetrieveMenusAll + "*");
                 cacheKeys.Add(RetrieveAllRolesDataKey + "*");
-                corsKeys.Add(MenuHelper.RetrieveMenusDataKey + "*");
+                corsKeys.Add(MenuHelper.RetrieveMenusAll + "*");
             }
             if (userIds != null)
             {
@@ -42,8 +42,8 @@ namespace Bootstrap.DataAccess
                 {
                     cacheKeys.Add(string.Format("{0}-{1}", RoleHelper.RetrieveRolesByUserIdDataKey, id));
                     cacheKeys.Add(string.Format("{0}-{1}", GroupHelper.RetrieveGroupsByUserIdDataKey, id));
-                    cacheKeys.Add(MenuHelper.RetrieveMenusDataKey + "*");
-                    corsKeys.Add(MenuHelper.RetrieveMenusDataKey + "*");
+                    cacheKeys.Add(MenuHelper.RetrieveMenusAll + "*");
+                    corsKeys.Add(MenuHelper.RetrieveMenusAll + "*");
                 });
                 cacheKeys.Add(UserHelper.RetrieveNewUsersDataKey + "*");
                 cacheKeys.Add(UserHelper.RetrieveUsersDataKey + "*");
@@ -57,8 +57,8 @@ namespace Bootstrap.DataAccess
                     cacheKeys.Add(string.Format("{0}-{1}", UserHelper.RetrieveUsersByGroupIdDataKey, id));
                 });
                 cacheKeys.Add(GroupHelper.RetrieveGroupsDataKey + "*");
-                cacheKeys.Add(MenuHelper.RetrieveMenusDataKey + "*");
-                corsKeys.Add(MenuHelper.RetrieveMenusDataKey + "*");
+                cacheKeys.Add(MenuHelper.RetrieveMenusAll + "*");
+                corsKeys.Add(MenuHelper.RetrieveMenusAll + "*");
                 cacheKeys.Add(RetrieveAllRolesDataKey + "*");
             }
             if (menuIds != null)
@@ -68,8 +68,8 @@ namespace Bootstrap.DataAccess
                     cacheKeys.Add(string.Format("{0}-{1}", RoleHelper.RetrieveRolesByMenuIdDataKey, id));
                 });
                 cacheKeys.Add(MenuHelper.RetrieveMenusByRoleIdDataKey + "*");
-                cacheKeys.Add(MenuHelper.RetrieveMenusDataKey + "*");
-                corsKeys.Add(MenuHelper.RetrieveMenusDataKey + "*");
+                cacheKeys.Add(MenuHelper.RetrieveMenusAll + "*");
+                corsKeys.Add(MenuHelper.RetrieveMenusAll + "*");
             }
             if (dictIds != null)
             {

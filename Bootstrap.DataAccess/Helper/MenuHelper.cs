@@ -1,7 +1,9 @@
 ﻿using Bootstrap.Security;
+using Bootstrap.Security.SQLServer;
 using Longbow.Cache;
 using Longbow.Data;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Bootstrap.DataAccess
 {
@@ -14,10 +16,6 @@ namespace Bootstrap.DataAccess
         /// 
         /// </summary>
         public const string RetrieveMenusByRoleIdDataKey = "MenuHelper-RetrieveMenusByRoleId";
-        /// <summary>
-        /// 
-        /// </summary>
-        public const string RetrieveMenusDataKey = "BootstrapMenu-RetrieveMenusByUserName";
         /// <summary>
         /// 
         /// </summary>
@@ -35,20 +33,17 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static bool DeleteMenu(IEnumerable<int> value) => DbAdapterManager.Create<Menu>().DeleteMenu(value);
         /// <summary>
-        /// 
+        /// 通过用户名获得所有菜单
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public static IEnumerable<BootstrapMenu> RetrieveMenusByUserName(string userName) => DbAdapterManager.Create<Menu>().RetrieveMenusByUserName(userName);
+        public static IEnumerable<BootstrapMenu> RetrieveMenusByUserName(string userName) => RetrieveAllMenus(userName);
         /// <summary>
         /// 
         /// </summary>
         /// <param name="roleId"></param>
         /// <returns></returns>
-        public static IEnumerable<BootstrapMenu> RetrieveMenusByRoleId(int roleId)
-        {
-            return CacheManager.GetOrAdd($"{RetrieveMenusByRoleIdDataKey}-{roleId}", k => DbAdapterManager.Create<Menu>().RetrieveMenusByRoleId(roleId), RetrieveMenusByRoleIdDataKey);
-        }
+        public static IEnumerable<BootstrapMenu> RetrieveMenusByRoleId(int roleId) => CacheManager.GetOrAdd($"{RetrieveMenusByRoleIdDataKey}-{roleId}", k => DbAdapterManager.Create<Menu>().RetrieveMenusByRoleId(roleId), RetrieveMenusByRoleIdDataKey);
         /// <summary>
         /// 
         /// </summary>
@@ -60,21 +55,50 @@ namespace Bootstrap.DataAccess
         /// 
         /// </summary>
         /// <param name="name"></param>
-        /// <param name="url"></param>
-        /// <returns></returns>
-        public static IEnumerable<BootstrapMenu> RetrieveAppMenus(string appId, string userName, string url) => DbAdapterManager.Create<Menu>().RetrieveAppMenus(appId, userName, url);
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="userName"></param>
         /// <param name="activeUrl"></param>
         /// <returns></returns>
-        public static IEnumerable<BootstrapMenu> RetrieveSystemMenus(string userName, string activeUrl = null) => DbAdapterManager.Create<Menu>().RetrieveSystemMenus(userName, activeUrl);
+        public static IEnumerable<BootstrapMenu> RetrieveAppMenus(string appId, string userName, string activeUrl)
+        {
+            var menus = RetrieveAllMenus(userName).Where(m => m.Category == "1" && m.IsResource == 0);
+            if (appId != "0") menus = menus.Where(m => m.ApplicationCode == appId);
+            BASQLHelper.ActiveMenu(null, menus, activeUrl);
+            var root = menus.Where(m => m.ParentId == 0).OrderBy(m => m.ApplicationCode).ThenBy(m => m.Order);
+            BASQLHelper.CascadeMenus(menus, root);
+            return root;
+        }
         /// <summary>
-        /// 
+        /// 通过当前用户名获得后台菜单，层次化后集合
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="db"></param>
+        /// <param name="userName">当前登陆的用户名</param>
+        /// <param name="activeUrl">当前访问菜单</param>
+        /// <param name="connName">连接字符串名称，默认为ba</param>
         /// <returns></returns>
-        public static IEnumerable<BootstrapMenu> RetrieveAllMenus(string name) => DbAdapterManager.Create<Menu>().RetrieveAllMenus(name);
+        public static IEnumerable<BootstrapMenu> RetrieveSystemMenus(string userName, string activeUrl = null)
+        {
+            var menus = RetrieveAllMenus(userName).Where(m => m.Category == "0" && m.IsResource == 0);
+            BASQLHelper.ActiveMenu(null, menus, activeUrl);
+            var root = menus.Where(m => m.ParentId == 0).OrderBy(m => m.ApplicationCode).ThenBy(m => m.Order);
+            BASQLHelper.CascadeMenus(menus, root);
+            return root;
+        }
+        /// <summary>
+        /// 通过当前用户名获得所有菜单，层次化后集合
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public static IEnumerable<BootstrapMenu> RetrieveMenus(string userName)
+        {
+            var menus = RetrieveAllMenus(userName);
+            var root = menus.Where(m => m.ParentId == 0).OrderBy(m => m.ApplicationCode).ThenBy(m => m.Order);
+            BASQLHelper.CascadeMenus(menus, root);
+            return root;
+        }
+        /// <summary>
+        /// 通过用户获得所有菜单
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        private static IEnumerable<BootstrapMenu> RetrieveAllMenus(string userName) => CacheManager.GetOrAdd($"{RetrieveMenusAll}-{userName}", key => DbAdapterManager.Create<Menu>().RetrieveAllMenus(userName), RetrieveMenusAll);
     }
 }
