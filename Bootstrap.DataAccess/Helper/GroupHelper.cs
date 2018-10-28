@@ -13,7 +13,7 @@ namespace Bootstrap.DataAccess
         public const string RetrieveGroupsDataKey = "GroupHelper-RetrieveGroups";
         public const string RetrieveGroupsByUserIdDataKey = "GroupHelper-RetrieveGroupsByUserId";
         public const string RetrieveGroupsByRoleIdDataKey = "GroupHelper-RetrieveGroupsByRoleId";
-        public const string RetrieveGroupsByUserNameDataKey = "BootstrapAdminGroupMiddleware-RetrieveGroupsByUserName";
+        public const string RetrieveGroupsByUserNameDataKey = "GroupHelper-RetrieveGroupsByUserName";
         /// <summary>
         /// 查询所有群组信息
         /// </summary>

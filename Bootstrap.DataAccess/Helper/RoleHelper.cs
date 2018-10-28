@@ -14,8 +14,8 @@ namespace Bootstrap.DataAccess
         public const string RetrieveRolesByUserIdDataKey = "RoleHelper-RetrieveRolesByUserId";
         public const string RetrieveRolesByMenuIdDataKey = "RoleHelper-RetrieveRolesByMenuId";
         public const string RetrieveRolesByGroupIdDataKey = "RoleHelper-RetrieveRolesByGroupId";
-        public const string RetrieveRolesByUserNameDataKey = "BootstrapAdminRoleMiddleware-RetrieveRolesByUserName";
-        public const string RetrieveRolesByUrlDataKey = "BootstrapAdminAuthorizeFilter-RetrieveRolesByUrl";
+        public const string RetrieveRolesByUserNameDataKey = "RoleHelper-RetrieveRolesByUserName";
+        public const string RetrieveRolesByUrlDataKey = "RoleHelper-RetrieveRolesByUrl";
         /// <summary>
         /// 查询所有角色
         /// </summary>
