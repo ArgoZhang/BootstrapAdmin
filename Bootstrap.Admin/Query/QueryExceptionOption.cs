@@ -5,6 +5,9 @@ using System.Linq;
 
 namespace Bootstrap.Admin.Query
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class QueryExceptionOption : PaginationOption
     {
         /// <summary>

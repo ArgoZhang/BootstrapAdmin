@@ -14,6 +14,12 @@ namespace Bootstrap.Admin.Controllers.Api
     [Route("api/[controller]")]
     public class ProfilesController : Controller
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="env"></param>
+        /// <param name="files"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<JsonResult> Post([FromServices]IHostingEnvironment env, IFormCollection files)
         {

@@ -8,6 +8,10 @@ namespace Bootstrap.Admin.Models
     /// </summary>
     public class HeaderBarModel : ModelBase
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="identity"></param>
         public HeaderBarModel(IIdentity identity)
         {
             var user = UserHelper.RetrieveUserByUserName(identity.Name);
@@ -16,6 +20,9 @@ namespace Bootstrap.Admin.Models
             UserName = user.UserName;
             if (!string.IsNullOrEmpty(user.Css)) Theme = user.Css;
         }
+        /// <summary>
+        /// 
+        /// </summary>
         public string UserName { get; }
         /// <summary>
         /// 

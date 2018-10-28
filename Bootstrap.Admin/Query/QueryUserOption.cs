@@ -17,7 +17,10 @@ namespace Bootstrap.Admin.Query
         /// 
         /// </summary>
         public string DisplayName { get; set; }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public QueryData<User> RetrieveData()
         {
             // int limit, int offset, string name, string price, string sort, string order

@@ -5,6 +5,9 @@ using System.Linq;
 
 namespace Bootstrap.Admin.Query
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class QueryMenuOption : PaginationOption
     {
         /// <summary>
@@ -23,7 +26,11 @@ namespace Bootstrap.Admin.Query
         /// 
         /// </summary>
         public string IsResource { get; set; }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
         public QueryData<BootstrapMenu> RetrieveData(string userName)
         {
             var data = MenuHelper.RetrieveMenusByUserName(userName);

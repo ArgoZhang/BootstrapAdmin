@@ -32,7 +32,11 @@ namespace Bootstrap.Admin.Controllers.Api
         {
             return LogHelper.RetrieveLogs().FirstOrDefault(t => t.Id == id);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         [HttpPost]
         public bool Post([FromBody]Log value)
         {

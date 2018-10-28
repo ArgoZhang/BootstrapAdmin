@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Bootstrap.Admin.Controllers.Api
 {
+    /// <summary>
+    /// 注册用户操作类
+    /// </summary>
     [AllowAnonymous]
     [Route("api/[controller]")]
     public class RegisterController : Controller
@@ -15,7 +18,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <summary>
         /// 登录页面注册新用户remote validate调用
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="userName"></param>
         /// <returns></returns>
         [HttpGet]
         public bool Get(string userName)
@@ -25,6 +28,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <summary>
         /// 登录页面注册新用户提交按钮调用
         /// </summary>
+        /// <param name="hub"></param>
         /// <param name="user"></param>
         /// <returns></returns>
         [HttpPost]

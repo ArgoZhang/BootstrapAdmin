@@ -26,7 +26,6 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="value"></param>
         [HttpGet]
         public IEnumerable<ICacheCorsItem> Get()
         {

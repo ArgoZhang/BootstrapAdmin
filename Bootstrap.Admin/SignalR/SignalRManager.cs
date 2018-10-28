@@ -14,13 +14,13 @@ namespace Bootstrap.Admin
         /// 
         /// </summary>
         /// <param name="client"></param>
-        /// <param name="message"></param>
+        /// <param name="args"></param>
         /// <returns></returns>
         public static async System.Threading.Tasks.Task Send(IClientProxy client, MessageBody args) => await client.SendAsync("rev", args);
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="client"></param>
+        /// <param name="context"></param>
         /// <param name="ex"></param>
         /// <returns></returns>
         public static async System.Threading.Tasks.Task Send<T>(IHubContext<T> context, Exception ex) where T : Hub

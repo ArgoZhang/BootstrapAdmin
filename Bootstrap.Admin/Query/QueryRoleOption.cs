@@ -4,6 +4,9 @@ using System.Linq;
 
 namespace Bootstrap.Admin.Query
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class QueryRoleOption : PaginationOption
     {
         /// <summary>

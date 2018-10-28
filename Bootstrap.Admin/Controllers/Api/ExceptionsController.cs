@@ -67,9 +67,14 @@ namespace Bootstrap.Admin.Controllers.Api
             }
             return new JsonResult(sb.ToString());
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public class ExceptionFileQuery
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public string FileName { get; set; }
         }
     }

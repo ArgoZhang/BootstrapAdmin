@@ -5,11 +5,14 @@ using System.Collections.Generic;
 
 namespace Bootstrap.Admin.Controllers.Api
 {
+    /// <summary>
+    /// 数据字典分类
+    /// </summary>
     [Route("api/[controller]")]
     public class CategoryController : Controller
     {
         /// <summary>
-        /// 
+        /// 获取字典表中所有Category数据
         /// </summary>
         /// <returns></returns>
         [HttpGet]
