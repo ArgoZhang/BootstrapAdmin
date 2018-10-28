@@ -14,13 +14,6 @@ namespace Bootstrap.DataAccess
     public class Dict : BootstrapDict
     {
         /// <summary>
-        /// 
-        /// </summary>
-        /// <summary>
-        /// 缓存索引，BootstrapAdmin后台清理缓存时使用
-        /// </summary>
-        public const string RetrieveDictsDataKey = "BootstrapDict-RetrieveDicts";
-        /// <summary>
         /// 删除字典中的数据
         /// </summary>
         /// <param name="value">需要删除的IDs</param>

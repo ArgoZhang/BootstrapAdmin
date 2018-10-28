@@ -10,12 +10,22 @@ namespace Bootstrap.DataAccess
     /// </summary>
     public static class DictHelper
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <summary>
+        /// 缓存索引，BootstrapAdmin后台清理缓存时使用
+        /// </summary>
+        public const string RetrieveDictsDataKey = "BootstrapDict-RetrieveDicts";
+        /// <summary>
+        /// 
+        /// </summary>
         public const string RetrieveCategoryDataKey = "DictHelper-RetrieveDictsCategory";
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public static IEnumerable<BootstrapDict> RetrieveDicts() => DbAdapterManager.Create<Dict>().RetrieveDicts();
+        public static IEnumerable<BootstrapDict> RetrieveDicts() => CacheManager.GetOrAdd(RetrieveDictsDataKey, key => DbAdapterManager.Create<Dict>().RetrieveDicts());
         /// <summary>
         /// 删除字典中的数据
         /// </summary>

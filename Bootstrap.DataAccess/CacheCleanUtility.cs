@@ -73,9 +73,9 @@ namespace Bootstrap.DataAccess
             }
             if (dictIds != null)
             {
-                cacheKeys.Add(Dict.RetrieveDictsDataKey + "*");
+                cacheKeys.Add(DictHelper.RetrieveDictsDataKey + "*");
                 cacheKeys.Add(DictHelper.RetrieveCategoryDataKey);
-                corsKeys.Add(Dict.RetrieveDictsDataKey + "*");
+                corsKeys.Add(DictHelper.RetrieveDictsDataKey + "*");
             }
             if (cacheKey != null)
             {
