@@ -23,7 +23,8 @@ namespace Bootstrap.Client.Models
             UserName = user.UserName;
             SettingsUrl = DictHelper.RetrieveSettingsUrl();
             ProfilesUrl = DictHelper.RetrieveProfilesUrl();
-            var uriBuilder = new UriBuilder(ConfigurationManager.AppSettings["AuthHost"]) { Path = CookieAuthenticationDefaults.LogoutPath };
+            var uriBuilder = new UriBuilder(ConfigurationManager.AppSettings["AuthHost"]);
+            uriBuilder.Path = uriBuilder.Path == "/" ? CookieAuthenticationDefaults.LogoutPath.Value : uriBuilder.Path + CookieAuthenticationDefaults.LogoutPath;
             LogoutUrl = uriBuilder.ToString();
             if (!string.IsNullOrEmpty(user.Css)) Theme = user.Css;
         }
@@ -50,6 +51,6 @@ namespace Bootstrap.Client.Models
         /// <summary>
         /// 获得 退出登录地址
         /// </summary>
-        public string LogoutUrl { get; set; }
+        public string LogoutUrl { get; }
     }
 }
