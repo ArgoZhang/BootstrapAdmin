@@ -59,7 +59,7 @@ namespace Bootstrap.DataAccess.SQLite
                 try
                 {
                     //删除菜单角色表该角色所有的菜单
-                    string sql = "delete from NavigationRole where RoleID=@RoleID";
+                    string sql = $"delete from NavigationRole where RoleID = {roleId}";
                     using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
                     {
                         DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);

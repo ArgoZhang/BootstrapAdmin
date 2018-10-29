@@ -19,14 +19,14 @@ namespace Bootstrap.DataAccess.SQLite
         protected override IEnumerable<DataAccess.Message> RetrieveMessages(string userName)
         {
             string sql = "select m.*, d.Name, ifnull(i.Code + u.Icon, '~/images/uploader/default.jpg'), u.DisplayName from [Messages] m left join Dicts d on m.Label = d.Code and d.Category = '消息标签' and d.Define = 0 left join Dicts i on i.Category = '头像地址' and i.Name = '头像路径' and i.Define = 0 inner join Users u on m.[From] = u.UserName where [To] = @UserName or [From] = @UserName order by m.SendTime desc";
-            List<Message> messages = new List<Message>();
+            List<DataAccess.Message> messages = new List<DataAccess.Message>();
             DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
             cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@UserName", userName));
             using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
             {
                 while (reader.Read())
                 {
-                    messages.Add(new Message()
+                    messages.Add(new DataAccess.Message()
                     {
                         Id = LgbConvert.ReadValue(reader[0], 0),
                         Title = (string)reader[1],

@@ -67,13 +67,13 @@ namespace Bootstrap.DataAccess.SQLite
         public override IEnumerable<DataAccess.Exceptions> RetrieveExceptions()
         {
             string sql = "select * from Exceptions where LogTime > datetime('now', 'localtime', '-7 day') order by LogTime desc";
-            List<Exceptions> exceptions = new List<Exceptions>();
+            List<DataAccess.Exceptions> exceptions = new List<DataAccess.Exceptions>();
             DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
             using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
             {
                 while (reader.Read())
                 {
-                    exceptions.Add(new Exceptions()
+                    exceptions.Add(new DataAccess.Exceptions()
                     {
                         Id = LgbConvert.ReadValue(reader[0], 0),
                         AppDomainName = (string)reader[1],

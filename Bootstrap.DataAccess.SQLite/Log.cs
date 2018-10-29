@@ -21,13 +21,13 @@ namespace Bootstrap.DataAccess.SQLite
         public override IEnumerable<DataAccess.Log> RetrieveLogs(string tId = null)
         {
             string sql = "select * from Logs where LogTime > datetime('now', 'localtime', '-7 day')";
-            List<Log> logs = new List<Log>();
+            List<DataAccess.Log> logs = new List<DataAccess.Log>();
             DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
             using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
             {
                 while (reader.Read())
                 {
-                    logs.Add(new Log()
+                    logs.Add(new DataAccess.Log()
                     {
                         Id = LgbConvert.ReadValue(reader[0], 0),
                         CRUD = (string)reader[1],

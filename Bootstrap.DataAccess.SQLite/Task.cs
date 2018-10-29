@@ -15,13 +15,13 @@ namespace Bootstrap.DataAccess.SQLite
         public override IEnumerable<DataAccess.Task> RetrieveTasks()
         {
             string sql = "select t.*, u.DisplayName from Tasks t inner join Users u on t.UserName = u.UserName order by AssignTime desc limit 1000";
-            List<Task> tasks = new List<Task>();
+            List<DataAccess.Task> tasks = new List<DataAccess.Task>();
             DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
             using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
             {
                 while (reader.Read())
                 {
-                    tasks.Add(new Task()
+                    tasks.Add(new DataAccess.Task()
                     {
                         Id = LgbConvert.ReadValue(reader[0], 0),
                         TaskName = (string)reader[1],
