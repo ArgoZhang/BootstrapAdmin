@@ -5,6 +5,7 @@
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\Keys\Longbow.Utility.snk</AssemblyOriginatorKeyFile>
     <MvcRazorCompileOnPublish>true</MvcRazorCompileOnPublish>
+    <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
