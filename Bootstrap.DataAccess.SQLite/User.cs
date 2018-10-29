@@ -29,7 +29,7 @@ namespace Bootstrap.DataAccess.SQLite
                 {
                     using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, $"Delete from UserRole where UserID in ({ids})"))
                     {
-                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd);
+                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
 
                         cmd.CommandText = $"delete from UserGroup where UserID in ({ids})";
                         DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
