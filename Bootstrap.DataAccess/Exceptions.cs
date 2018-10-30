@@ -1,5 +1,4 @@
-﻿using Longbow.Cache;
-using Longbow.Configuration;
+﻿using Longbow.Configuration;
 using Longbow.Data;
 using System;
 using System.Collections.Generic;
@@ -70,7 +69,7 @@ namespace Bootstrap.DataAccess
         /// <param name="ex"></param>
         /// <param name="additionalInfo"></param>
         /// <returns></returns>
-        public virtual void Log(Exception ex, NameValueCollection additionalInfo)
+        public virtual bool Log(Exception ex, NameValueCollection additionalInfo)
         {
             if (additionalInfo == null)
             {
@@ -93,9 +92,9 @@ namespace Bootstrap.DataAccess
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Message", ex.Message));
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@StackTrace", DbAdapterManager.ToDBValue(ex.StackTrace)));
                 DbAccessManager.DBAccess.ExecuteNonQuery(cmd);
-                CacheManager.Clear(ExceptionsHelper.RetrieveExceptionsDataKey);
                 ClearExceptions();
             }
+            return true;
         }
         /// <summary>
         /// 查询一周内所有异常

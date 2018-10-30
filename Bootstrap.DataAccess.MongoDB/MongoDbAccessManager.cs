@@ -49,6 +49,16 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <summary>
         /// 
         /// </summary>
+        public static IMongoCollection<DataAccess.Exceptions> Exceptions
+        {
+            get
+            {
+                return DBAccess.GetCollection<DataAccess.Exceptions>("Exceptions");
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
         public static IMongoCollection<User> Users
         {
             get

@@ -21,7 +21,12 @@ namespace Bootstrap.DataAccess
         /// <param name="ex"></param>
         /// <param name="additionalInfo"></param>
         /// <returns></returns>
-        public static void Log(Exception ex, NameValueCollection additionalInfo) => DbAdapterManager.Create<Exceptions>().Log(ex, additionalInfo);
+        public static void Log(Exception ex, NameValueCollection additionalInfo)
+        {
+            var ret = DbAdapterManager.Create<Exceptions>().Log(ex, additionalInfo);
+            if (ret) CacheManager.Clear(RetrieveExceptionsDataKey);
+        }
+
         /// <summary>
         /// 查询一周内所有异常
         /// </summary>
