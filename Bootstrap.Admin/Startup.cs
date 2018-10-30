@@ -64,6 +64,7 @@ namespace Bootstrap.Admin
             if (Configuration["DisableAutomaticKeyGeneration"] == "True") dataProtectionBuilder.DisableAutomaticKeyGeneration();
             services.AddSignalR().AddJsonProtocalDefault();
             services.AddSignalRExceptionFilterHandler<SignalRHub>(async (client, ex) => await SignalRManager.Send(client, ex));
+            services.AddResponseCompression();
             services.AddMvc(options =>
             {
                 options.Filters.Add<BootstrapAdminAuthorizeFilter>();
@@ -117,6 +118,7 @@ namespace Bootstrap.Admin
             app.UseStatusCodePagesWithReExecute("/Home/Error/{0}");
             app.UseCors(builder => builder.WithOrigins(Configuration["AllowOrigins"].Split(',', StringSplitOptions.RemoveEmptyEntries)).AllowAnyHeader().AllowAnyMethod().AllowCredentials());
             app.UseHttpsRedirection();
+            app.UseResponseCompression();
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseBootstrapAdminAuthorization(userName => RoleHelper.RetrieveRolesByUserName(userName), url => RoleHelper.RetrieveRolesByUrl(url));
