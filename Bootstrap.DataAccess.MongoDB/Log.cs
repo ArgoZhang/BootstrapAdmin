@@ -18,5 +18,17 @@ namespace Bootstrap.DataAccess.MongoDB
             var log = MongoDbAccessManager.DBAccess.GetCollection<DataAccess.Log>("Logs");
             return log.Find(l => l.LogTime >= DateTime.Now.AddDays(-7)).ToList();
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="log"></param>
+        /// <returns></returns>
+        public override bool SaveLog(DataAccess.Log log)
+        {
+            var logs = MongoDbAccessManager.DBAccess.GetCollection<DataAccess.Log>("Logs");
+            log.LogTime = DateTime.Now;
+            logs.InsertOne(log);
+            return true;
+        }
     }
 }
