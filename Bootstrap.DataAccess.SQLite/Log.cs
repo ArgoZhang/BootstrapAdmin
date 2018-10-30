@@ -1,5 +1,4 @@
 ﻿using Longbow;
-using Longbow.Cache;
 using Longbow.Configuration;
 using System;
 using System.Collections.Generic;
@@ -46,7 +45,7 @@ namespace Bootstrap.DataAccess.SQLite
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        private void DeleteLogAsync()
+        private static void DeleteLogAsync()
         {
             System.Threading.Tasks.Task.Run(() =>
             {
@@ -74,7 +73,6 @@ namespace Bootstrap.DataAccess.SQLite
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@RequestUrl", p.RequestUrl));
                 ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
             }
-            CacheManager.Clear(LogHelper.RetrieveLogsDataKey);
             DeleteLogAsync();
             return ret;
         }

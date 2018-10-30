@@ -1,5 +1,4 @@
-﻿using Longbow.Cache;
-using Longbow.Configuration;
+﻿using Longbow.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -79,7 +78,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        private void DeleteLogAsync()
+        private static void DeleteLogAsync()
         {
             System.Threading.Tasks.Task.Run(() =>
             {
@@ -107,7 +106,6 @@ namespace Bootstrap.DataAccess
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@RequestUrl", p.RequestUrl));
                 ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
             }
-            CacheManager.Clear(LogHelper.RetrieveLogsDataKey);
             DeleteLogAsync();
             return ret;
         }

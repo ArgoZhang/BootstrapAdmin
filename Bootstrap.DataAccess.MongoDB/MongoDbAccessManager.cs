@@ -39,11 +39,11 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <summary>
         /// 
         /// </summary>
-        public static IMongoCollection<DataAccess.User> Users
+        public static IMongoCollection<DataAccess.Log> Logs
         {
             get
             {
-                return DBAccess.GetCollection<DataAccess.User>("Users");
+                return DBAccess.GetCollection<DataAccess.Log>("Logs");
             }
         }
         /// <summary>
@@ -72,6 +72,7 @@ namespace Bootstrap.DataAccess.MongoDB
         private static void InitClassMap()
         {
             BsonSerializer.RegisterSerializer(DateTimeSerializer.LocalInstance);
+
             if (!BsonClassMap.IsClassMapRegistered(typeof(BootstrapDict)))
             {
                 BsonClassMap.RegisterClassMap<BootstrapDict>(md =>

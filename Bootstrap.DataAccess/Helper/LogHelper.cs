@@ -1,8 +1,6 @@
 ﻿using Longbow.Cache;
 using Longbow.Data;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Bootstrap.DataAccess
 {
@@ -26,6 +24,11 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="p"></param>
         /// <returns></returns>
-        public static bool SaveLog(Log p) => DbAdapterManager.Create<Log>().SaveLog(p);
+        public static bool SaveLog(Log p)
+        {
+            var ret = DbAdapterManager.Create<Log>().SaveLog(p);
+            if (ret) CacheManager.Clear(RetrieveLogsDataKey);
+            return ret;
+        }
     }
 }
