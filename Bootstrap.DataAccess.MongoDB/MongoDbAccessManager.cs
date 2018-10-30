@@ -36,6 +36,26 @@ namespace Bootstrap.DataAccess.MongoDB
                 return _db;
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        public static IMongoCollection<DataAccess.User> Users
+        {
+            get
+            {
+                return DBAccess.GetCollection<DataAccess.User>("Users");
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public static IMongoCollection<User> Users
+        {
+            get
+            {
+                return DBAccess.GetCollection<User>("Users");
+            }
+        }
 
         private static void InitDb()
         {
@@ -59,14 +79,6 @@ namespace Bootstrap.DataAccess.MongoDB
                     md.AutoMap();
                     md.IdMemberMap.SetSerializer(new StringSerializer(BsonType.ObjectId));
                     md.IdMemberMap.SetIgnoreIfDefault(true);
-                });
-            }
-            if (!BsonClassMap.IsClassMapRegistered(typeof(BootstrapUser)))
-            {
-                BsonClassMap.RegisterClassMap<BootstrapUser>(md =>
-                {
-                    md.AutoMap();
-                    md.SetIgnoreExtraElements(true);
                 });
             }
             if (!BsonClassMap.IsClassMapRegistered(typeof(DataAccess.User)))

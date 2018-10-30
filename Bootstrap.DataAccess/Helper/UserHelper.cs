@@ -37,13 +37,23 @@ namespace Bootstrap.DataAccess
         /// 删除用户
         /// </summary>
         /// <param name="value"></param>
-        public static bool DeleteUser(IEnumerable<string> value) => DbAdapterManager.Create<User>().DeleteUser(value);
+        public static bool DeleteUser(IEnumerable<string> value)
+        {
+            var ret = DbAdapterManager.Create<User>().DeleteUser(value);
+            if (ret) CacheCleanUtility.ClearCache(userIds: value);
+            return ret;
+        }
         /// <summary>
         /// 保存新建
         /// </summary>
         /// <param name="p"></param>
         /// <returns></returns>
-        public static bool SaveUser(User p) => DbAdapterManager.Create<User>().SaveUser(p);
+        public static bool SaveUser(User p)
+        {
+            var ret = DbAdapterManager.Create<User>().SaveUser(p);
+            if (ret) CacheCleanUtility.ClearCache(userIds: string.IsNullOrEmpty(p.Id) ? new List<string>() : new List<string>() { p.Id });
+            return ret;
+        }
         /// <summary>
         /// 
         /// </summary>
@@ -51,14 +61,24 @@ namespace Bootstrap.DataAccess
         /// <param name="password"></param>
         /// <param name="displayName"></param>
         /// <returns></returns>
-        public static bool UpdateUser(string id, string password, string displayName) => DbAdapterManager.Create<User>().UpdateUser(id, password, displayName);
+        public static bool UpdateUser(string id, string password, string displayName)
+        {
+            var ret = DbAdapterManager.Create<User>().UpdateUser(id, password, displayName);
+            if (ret) CacheCleanUtility.ClearCache(userIds: string.IsNullOrEmpty(id) ? new List<string>() : new List<string>() { id });
+            return ret;
+        }
         /// <summary>
         /// 
         /// </summary>
         /// <param name="id"></param>
         /// <param name="approvedBy"></param>
         /// <returns></returns>
-        public static bool ApproveUser(string id, string approvedBy) => DbAdapterManager.Create<User>().ApproveUser(id, approvedBy);
+        public static bool ApproveUser(string id, string approvedBy)
+        {
+            var ret = DbAdapterManager.Create<User>().ApproveUser(id, approvedBy);
+            if (ret) CacheCleanUtility.ClearCache(userIds: new List<string>() { id });
+            return ret;
+        }
         /// <summary>
         /// 
         /// </summary>
@@ -74,7 +94,12 @@ namespace Bootstrap.DataAccess
         /// <param name="rejectBy"></param>
         /// <param name="reason"></param>
         /// <returns></returns>
-        public static bool RejectUser(string id, string rejectBy) => DbAdapterManager.Create<User>().RejectUser(id, rejectBy);
+        public static bool RejectUser(string id, string rejectBy)
+        {
+            var ret = DbAdapterManager.Create<User>().RejectUser(id, rejectBy);
+            if (ret) CacheCleanUtility.ClearCache(userIds: new List<string>() { id });
+            return ret;
+        }
         /// <summary>
         /// 通过roleId获取所有用户
         /// </summary>
@@ -84,10 +109,15 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 通过角色ID保存当前授权用户（插入）
         /// </summary>
-        /// <param name="id">角色ID</param>
+        /// <param name="roleId">角色ID</param>
         /// <param name="userIds">用户ID数组</param>
         /// <returns></returns>
-        public static bool SaveUsersByRoleId(string id, IEnumerable<string> userIds) => DbAdapterManager.Create<User>().SaveUsersByRoleId(id, userIds);
+        public static bool SaveUsersByRoleId(string roleId, IEnumerable<string> userIds)
+        {
+            var ret = DbAdapterManager.Create<User>().SaveUsersByRoleId(roleId, userIds);
+            if (ret) CacheCleanUtility.ClearCache(userIds: userIds, roleIds: new List<string>() { roleId });
+            return ret;
+        }
         /// <summary>
         /// 通过groupId获取所有用户
         /// </summary>
@@ -97,30 +127,51 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 通过部门ID保存当前授权用户（插入）
         /// </summary>
-        /// <param name="id">GroupID</param>
+        /// <param name="groupId">GroupID</param>
         /// <param name="userIds">用户ID数组</param>
         /// <returns></returns>
-        public static bool SaveUsersByGroupId(string id, IEnumerable<string> userIds) => DbAdapterManager.Create<User>().SaveUsersByGroupId(id, userIds);
+        public static bool SaveUsersByGroupId(string groupId, IEnumerable<string> userIds)
+        {
+            var ret = DbAdapterManager.Create<User>().SaveUsersByGroupId(groupId, userIds);
+            if (ret) CacheCleanUtility.ClearCache(userIds: userIds, groupIds: new List<string>() { groupId });
+            return ret;
+        }
         /// 根据用户名修改用户头像
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="iconName"></param>
         /// <returns></returns>
-        public static bool SaveUserIconByName(string userName, string iconName) => DbAdapterManager.Create<User>().SaveUserIconByName(userName, iconName);
+        public static bool SaveUserIconByName(string userName, string iconName)
+        {
+            var ret = DbAdapterManager.Create<User>().SaveUserIconByName(userName, iconName);
+            if (ret) CacheCleanUtility.ClearCache(cacheKey: $"{RetrieveUsersDataKey}*");
+            return ret;
+        }
         /// <summary>
         /// 
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="displayName"></param>
         /// <returns></returns>
-        public static bool SaveDisplayName(string userName, string displayName) => DbAdapterManager.Create<User>().SaveDisplayName(userName, displayName);
+        public static bool SaveDisplayName(string userName, string displayName)
+        {
+            var ret = DbAdapterManager.Create<User>().SaveDisplayName(userName, displayName);
+            if (ret) CacheCleanUtility.ClearCache(cacheKey: $"{RetrieveUsersDataKey}*");
+            return ret;
+        }
+
         /// <summary>
         /// 根据用户名更改用户皮肤
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="cssName"></param>
         /// <returns></returns>
-        public static bool SaveUserCssByName(string userName, string cssName) => DbAdapterManager.Create<User>().SaveUserCssByName(userName, cssName);
+        public static bool SaveUserCssByName(string userName, string cssName)
+        {
+            var ret = DbAdapterManager.Create<User>().SaveUserCssByName(userName, cssName);
+            if (ret) CacheCleanUtility.ClearCache(cacheKey: $"{UserHelper.RetrieveUsersDataKey}*");
+            return ret;
+        }
         /// <summary>
         /// 
         /// </summary>

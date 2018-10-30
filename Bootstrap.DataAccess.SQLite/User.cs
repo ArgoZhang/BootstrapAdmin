@@ -38,7 +38,6 @@ namespace Bootstrap.DataAccess.SQLite
                         DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
 
                         transaction.CommitTransaction();
-                        CacheCleanUtility.ClearCache(userIds: value);
                         ret = true;
                     }
                 }
@@ -86,7 +85,6 @@ namespace Bootstrap.DataAccess.SQLite
                             DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
 
                             transaction.CommitTransaction();
-                            CacheCleanUtility.ClearCache(userIds: string.IsNullOrEmpty(p.Id) ? new List<string>() : new List<string>() { p.Id });
                             ret = true;
                         }
                     }
@@ -114,7 +112,6 @@ namespace Bootstrap.DataAccess.SQLite
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@id", id));
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@approvedBy", approvedBy));
                 ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
-                if (ret) CacheCleanUtility.ClearCache(userIds: new List<string>() { id });
             }
             return ret;
         }
@@ -146,7 +143,6 @@ namespace Bootstrap.DataAccess.SQLite
                         DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
 
                         transaction.CommitTransaction();
-                        CacheCleanUtility.ClearCache(userIds: new List<string>() { id });
                         ret = true;
                     }
                 }
@@ -167,10 +163,6 @@ namespace Bootstrap.DataAccess.SQLite
         public override bool SaveUsersByRoleId(string roleId, IEnumerable<string> userIds)
         {
             bool ret = false;
-            DataTable dt = new DataTable();
-            dt.Columns.Add("RoleID", typeof(int));
-            dt.Columns.Add("UserID", typeof(int));
-            userIds.ToList().ForEach(userId => dt.Rows.Add(roleId, userId));
             using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
             {
                 try
@@ -188,7 +180,6 @@ namespace Bootstrap.DataAccess.SQLite
                         });
                         transaction.CommitTransaction();
                     }
-                    CacheCleanUtility.ClearCache(userIds: userIds, roleIds: new List<string>() { roleId });
                     ret = true;
                 }
                 catch (Exception ex)
@@ -225,7 +216,6 @@ namespace Bootstrap.DataAccess.SQLite
                         });
                         transaction.CommitTransaction();
                     }
-                    CacheCleanUtility.ClearCache(userIds: userIds, groupIds: new List<string>() { groupId });
                     ret = true;
                 }
                 catch (Exception ex)

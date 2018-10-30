@@ -21,7 +21,7 @@ namespace Bootstrap.Admin.Query
         /// 
         /// </summary>
         /// <returns></returns>
-        public QueryData<User> RetrieveData()
+        public QueryData<object> RetrieveData()
         {
             // int limit, int offset, string name, string price, string sort, string order
             var data = UserHelper.RetrieveUsers();
@@ -33,7 +33,7 @@ namespace Bootstrap.Admin.Query
             {
                 data = data.Where(t => t.DisplayName.Contains(DisplayName));
             }
-            var ret = new QueryData<User>();
+            var ret = new QueryData<object>();
             ret.total = data.Count();
             switch (Sort)
             {
@@ -55,7 +55,16 @@ namespace Bootstrap.Admin.Query
                 default:
                     break;
             }
-            ret.rows = data.Skip(Offset).Take(Limit);
+            ret.rows = data.Skip(Offset).Take(Limit).Select(u => new
+            {
+                u.Id,
+                u.UserName,
+                u.DisplayName,
+                u.RegisterTime,
+                u.ApprovedTime,
+                u.ApprovedBy,
+                u.Description
+            });
             return ret;
         }
     }
