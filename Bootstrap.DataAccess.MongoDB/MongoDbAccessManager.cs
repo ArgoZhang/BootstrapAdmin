@@ -28,9 +28,10 @@ namespace Bootstrap.DataAccess.MongoDB
                     if (!_register)
                     {
                         _register = true;
-                        DbAdapterManager.RegisterConfigChangeCallback(InitDb);
+                        DbAdapterManager.RegisterConfigChangeCallback("MongoDB", InitDb);
                     }
                     InitDb();
+                    InitClassMap();
                 }
                 return _db;
             }
@@ -42,11 +43,15 @@ namespace Bootstrap.DataAccess.MongoDB
             if (string.IsNullOrEmpty(connectString)) throw new InvalidOperationException("Please set the BA default value in configuration file.");
 
             var seq = connectString.Split(";", StringSplitOptions.RemoveEmptyEntries);
-            if (seq.Length != 2) throw new InvalidOperationException("");
+            if (seq.Length != 2) return;
+
             var client = new MongoClient(seq[0]);
             _db = client.GetDatabase(seq[1].Split("=", StringSplitOptions.RemoveEmptyEntries).LastOrDefault());
+        }
 
-            BsonSerializer.RegisterSerializer(new DateTimeSerializer(DateTimeKind.Local));
+        private static void InitClassMap()
+        {
+            BsonSerializer.RegisterSerializer(DateTimeSerializer.LocalInstance);
             if (!BsonClassMap.IsClassMapRegistered(typeof(BootstrapDict)))
             {
                 BsonClassMap.RegisterClassMap<BootstrapDict>(md =>
