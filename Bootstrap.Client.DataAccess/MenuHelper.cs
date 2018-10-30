@@ -26,7 +26,7 @@ namespace Bootstrap.Client.DataAccess
         {
             var menus = RetrieveAllMenus(userName).Where(m => m.Category == "1" && m.IsResource == 0 && m.ApplicationCode == ConfigurationManager.AppSettings["AppId"]);
             DbHelper.ActiveMenu(null, menus, activeUrl);
-            var root = menus.Where(m => m.ParentId == 0).OrderBy(m => m.ApplicationCode).ThenBy(m => m.Order);
+            var root = menus.Where(m => m.ParentId == "0").OrderBy(m => m.ApplicationCode).ThenBy(m => m.Order);
             DbHelper.CascadeMenus(menus, root);
             return root;
         }

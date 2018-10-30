@@ -22,7 +22,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="value"></param>
         /// <returns></returns>
         [HttpGet]
-        public QueryData<Exceptions> Get(QueryExceptionOption value)
+        public QueryData<Object> Get(QueryExceptionOption value)
         {
             return value.RetrieveData();
         }

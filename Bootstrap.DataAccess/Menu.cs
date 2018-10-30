@@ -1,6 +1,5 @@
 ﻿using Bootstrap.Security;
 using Bootstrap.Security.DataAccess;
-using Longbow;
 using Longbow.Data;
 using System;
 using System.Collections.Generic;
@@ -20,7 +19,7 @@ namespace Bootstrap.DataAccess
         /// 删除菜单信息
         /// </summary>
         /// <param name="value"></param>
-        public virtual bool DeleteMenu(IEnumerable<int> value)
+        public virtual bool DeleteMenu(IEnumerable<string> value)
         {
             bool ret = false;
             var ids = string.Join(",", value);
@@ -44,7 +43,7 @@ namespace Bootstrap.DataAccess
             if (p.Name.Length > 50) p.Name = p.Name.Substring(0, 50);
             if (p.Icon != null && p.Icon.Length > 50) p.Icon = p.Icon.Substring(0, 50);
             if (p.Url != null && p.Url.Length > 4000) p.Url = p.Url.Substring(0, 4000);
-            string sql = p.Id == 0 ?
+            string sql = string.IsNullOrEmpty(p.Id) ?
                 "Insert Into Navigations (ParentId, Name, [Order], Icon, Url, Category, Target, IsResource, [Application]) Values (@ParentId, @Name, @Order, @Icon, @Url, @Category, @Target, @IsResource, @ApplicationCode)" :
                 "Update Navigations set ParentId = @ParentId, Name = @Name, [Order] = @Order, Icon = @Icon, Url = @Url, Category = @Category, Target = @Target, IsResource = @IsResource, Application = @ApplicationCode where ID = @ID";
             using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
@@ -61,7 +60,7 @@ namespace Bootstrap.DataAccess
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@ApplicationCode", p.ApplicationCode));
                 ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
             }
-            CacheCleanUtility.ClearCache(menuIds: p.Id == 0 ? new List<int>() : new List<int>() { p.Id });
+            CacheCleanUtility.ClearCache(menuIds: string.IsNullOrEmpty(p.Id) ? new List<string>() : new List<string>() { p.Id });
             return ret;
         }
         /// <summary>
@@ -69,7 +68,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="roleId"></param>
         /// <returns></returns>
-        public virtual IEnumerable<BootstrapMenu> RetrieveMenusByRoleId(int roleId)
+        public virtual IEnumerable<BootstrapMenu> RetrieveMenusByRoleId(string roleId)
         {
             var menus = new List<BootstrapMenu>();
             string sql = "select NavigationID from NavigationRole where RoleID = @RoleID";
@@ -82,7 +81,7 @@ namespace Bootstrap.DataAccess
                     {
                         menus.Add(new BootstrapMenu()
                         {
-                            Id = LgbConvert.ReadValue(reader[0], 0)
+                            Id = reader[0].ToString()
                         });
                     }
                 }
@@ -95,7 +94,7 @@ namespace Bootstrap.DataAccess
         /// <param name="roleId"></param>
         /// <param name="menuIds"></param>
         /// <returns></returns>
-        public virtual bool SaveMenusByRoleId(int roleId, IEnumerable<int> menuIds)
+        public virtual bool SaveMenusByRoleId(string roleId, IEnumerable<string> menuIds)
         {
             bool ret = false;
             DataTable dt = new DataTable();
@@ -121,7 +120,7 @@ namespace Bootstrap.DataAccess
                             transaction.CommitTransaction();
                         }
                     }
-                    CacheCleanUtility.ClearCache(menuIds: menuIds, roleIds: new List<int>() { roleId });
+                    CacheCleanUtility.ClearCache(menuIds: menuIds, roleIds: new List<string>() { roleId });
                     ret = true;
                 }
                 catch (Exception ex)
@@ -133,7 +132,7 @@ namespace Bootstrap.DataAccess
             return ret;
         }
         /// <summary>
-        /// 通过当前用户名获得所有菜单，层次化后集合
+        /// 通过当前用户名获得所有菜单
         /// </summary>
         /// <param name="userName">当前登陆的用户名</param>
         /// <returns></returns>

@@ -23,7 +23,7 @@ namespace Bootstrap.DataAccess.SQLite
                 {
                     tasks.Add(new DataAccess.Task()
                     {
-                        Id = LgbConvert.ReadValue(reader[0], 0),
+                        Id = reader[0].ToString(),
                         TaskName = (string)reader[1],
                         AssignName = (string)reader[2],
                         UserName = (string)reader[3],

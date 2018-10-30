@@ -31,7 +31,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static bool DeleteMenu(IEnumerable<int> value) => DbAdapterManager.Create<Menu>().DeleteMenu(value);
+        public static bool DeleteMenu(IEnumerable<string> value) => DbAdapterManager.Create<Menu>().DeleteMenu(value);
         /// <summary>
         /// 通过用户名获得所有菜单
         /// </summary>
@@ -43,14 +43,14 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="roleId"></param>
         /// <returns></returns>
-        public static IEnumerable<BootstrapMenu> RetrieveMenusByRoleId(int roleId) => CacheManager.GetOrAdd($"{RetrieveMenusByRoleIdDataKey}-{roleId}", k => DbAdapterManager.Create<Menu>().RetrieveMenusByRoleId(roleId), RetrieveMenusByRoleIdDataKey);
+        public static IEnumerable<BootstrapMenu> RetrieveMenusByRoleId(string roleId) => CacheManager.GetOrAdd($"{RetrieveMenusByRoleIdDataKey}-{roleId}", k => DbAdapterManager.Create<Menu>().RetrieveMenusByRoleId(roleId), RetrieveMenusByRoleIdDataKey);
         /// <summary>
         /// 
         /// </summary>
         /// <param name="id"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static bool SaveMenusByRoleId(int id, IEnumerable<int> value) => DbAdapterManager.Create<Menu>().SaveMenusByRoleId(id, value);
+        public static bool SaveMenusByRoleId(string id, IEnumerable<string> value) => DbAdapterManager.Create<Menu>().SaveMenusByRoleId(id, value);
         /// <summary>
         /// 
         /// </summary>
@@ -62,7 +62,7 @@ namespace Bootstrap.DataAccess
             var menus = RetrieveAllMenus(userName).Where(m => m.Category == "1" && m.IsResource == 0);
             if (appId != "0") menus = menus.Where(m => m.ApplicationCode == appId);
             DbHelper.ActiveMenu(null, menus, activeUrl);
-            var root = menus.Where(m => m.ParentId == 0).OrderBy(m => m.ApplicationCode).ThenBy(m => m.Order);
+            var root = menus.Where(m => m.ParentId == "0").OrderBy(m => m.ApplicationCode).ThenBy(m => m.Order);
             DbHelper.CascadeMenus(menus, root);
             return root;
         }
@@ -78,7 +78,7 @@ namespace Bootstrap.DataAccess
         {
             var menus = RetrieveAllMenus(userName).Where(m => m.Category == "0" && m.IsResource == 0);
             DbHelper.ActiveMenu(null, menus, activeUrl);
-            var root = menus.Where(m => m.ParentId == 0).OrderBy(m => m.ApplicationCode).ThenBy(m => m.Order);
+            var root = menus.Where(m => m.ParentId == "0").OrderBy(m => m.ApplicationCode).ThenBy(m => m.Order);
             DbHelper.CascadeMenus(menus, root);
             return root;
         }
@@ -90,7 +90,7 @@ namespace Bootstrap.DataAccess
         public static IEnumerable<BootstrapMenu> RetrieveMenus(string userName)
         {
             var menus = RetrieveAllMenus(userName);
-            var root = menus.Where(m => m.ParentId == 0).OrderBy(m => m.ApplicationCode).ThenBy(m => m.Order);
+            var root = menus.Where(m => m.ParentId == "0").OrderBy(m => m.ApplicationCode).ThenBy(m => m.Order);
             DbHelper.CascadeMenus(menus, root);
             return root;
         }

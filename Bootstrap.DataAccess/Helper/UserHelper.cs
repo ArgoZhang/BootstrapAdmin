@@ -37,7 +37,7 @@ namespace Bootstrap.DataAccess
         /// 删除用户
         /// </summary>
         /// <param name="value"></param>
-        public static bool DeleteUser(IEnumerable<int> value) => DbAdapterManager.Create<User>().DeleteUser(value);
+        public static bool DeleteUser(IEnumerable<string> value) => DbAdapterManager.Create<User>().DeleteUser(value);
         /// <summary>
         /// 保存新建
         /// </summary>
@@ -51,14 +51,14 @@ namespace Bootstrap.DataAccess
         /// <param name="password"></param>
         /// <param name="displayName"></param>
         /// <returns></returns>
-        public static bool UpdateUser(int id, string password, string displayName) => DbAdapterManager.Create<User>().UpdateUser(id, password, displayName);
+        public static bool UpdateUser(string id, string password, string displayName) => DbAdapterManager.Create<User>().UpdateUser(id, password, displayName);
         /// <summary>
         /// 
         /// </summary>
         /// <param name="id"></param>
         /// <param name="approvedBy"></param>
         /// <returns></returns>
-        public static bool ApproveUser(int id, string approvedBy) => DbAdapterManager.Create<User>().ApproveUser(id, approvedBy);
+        public static bool ApproveUser(string id, string approvedBy) => DbAdapterManager.Create<User>().ApproveUser(id, approvedBy);
         /// <summary>
         /// 
         /// </summary>
@@ -74,33 +74,33 @@ namespace Bootstrap.DataAccess
         /// <param name="rejectBy"></param>
         /// <param name="reason"></param>
         /// <returns></returns>
-        public static bool RejectUser(int id, string rejectBy) => DbAdapterManager.Create<User>().RejectUser(id, rejectBy);
+        public static bool RejectUser(string id, string rejectBy) => DbAdapterManager.Create<User>().RejectUser(id, rejectBy);
         /// <summary>
         /// 通过roleId获取所有用户
         /// </summary>
         /// <param name="roleId"></param>
         /// <returns></returns>
-        public static IEnumerable<User> RetrieveUsersByRoleId(int roleId) => CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveUsersByRoleIdDataKey, roleId), k => DbAdapterManager.Create<User>().RetrieveUsersByRoleId(roleId), RetrieveUsersByRoleIdDataKey);
+        public static IEnumerable<User> RetrieveUsersByRoleId(string roleId) => CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveUsersByRoleIdDataKey, roleId), k => DbAdapterManager.Create<User>().RetrieveUsersByRoleId(roleId), RetrieveUsersByRoleIdDataKey);
         /// <summary>
         /// 通过角色ID保存当前授权用户（插入）
         /// </summary>
         /// <param name="id">角色ID</param>
         /// <param name="userIds">用户ID数组</param>
         /// <returns></returns>
-        public static bool SaveUsersByRoleId(int id, IEnumerable<int> userIds) => DbAdapterManager.Create<User>().SaveUsersByRoleId(id, userIds);
+        public static bool SaveUsersByRoleId(string id, IEnumerable<string> userIds) => DbAdapterManager.Create<User>().SaveUsersByRoleId(id, userIds);
         /// <summary>
         /// 通过groupId获取所有用户
         /// </summary>
         /// <param name="groupId"></param>
         /// <returns></returns>
-        public static IEnumerable<User> RetrieveUsersByGroupId(int groupId) => CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveUsersByGroupIdDataKey, groupId), k => DbAdapterManager.Create<User>().RetrieveUsersByGroupId(groupId), RetrieveUsersByRoleIdDataKey);
+        public static IEnumerable<User> RetrieveUsersByGroupId(string groupId) => CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveUsersByGroupIdDataKey, groupId), k => DbAdapterManager.Create<User>().RetrieveUsersByGroupId(groupId), RetrieveUsersByRoleIdDataKey);
         /// <summary>
         /// 通过部门ID保存当前授权用户（插入）
         /// </summary>
         /// <param name="id">GroupID</param>
         /// <param name="userIds">用户ID数组</param>
         /// <returns></returns>
-        public static bool SaveUsersByGroupId(int id, IEnumerable<int> userIds) => DbAdapterManager.Create<User>().SaveUsersByGroupId(id, userIds);
+        public static bool SaveUsersByGroupId(string id, IEnumerable<string> userIds) => DbAdapterManager.Create<User>().SaveUsersByGroupId(id, userIds);
         /// 根据用户名修改用户头像
         /// </summary>
         /// <param name="userName"></param>

@@ -22,7 +22,7 @@ namespace Bootstrap.Admin.Query
         /// 
         /// </summary>
         /// <returns></returns>
-        public QueryData<Exceptions> RetrieveData()
+        public QueryData<object> RetrieveData()
         {
             var data = ExceptionsHelper.RetrieveExceptions();
             if (StartTime > DateTime.MinValue)
@@ -33,7 +33,7 @@ namespace Bootstrap.Admin.Query
             {
                 data = data.Where(t => t.LogTime < EndTime.AddDays(1));
             }
-            var ret = new QueryData<Exceptions>();
+            var ret = new QueryData<object>();
             ret.total = data.Count();
             switch (Sort)
             {
@@ -52,7 +52,7 @@ namespace Bootstrap.Admin.Query
                 default:
                     break;
             }
-            ret.rows = data.Skip(Offset).Take(Limit);
+            ret.rows = data.Skip(Offset).Take(Limit).Select(ex => new { ex.UserId, ex.UserIp, ex.LogTime, ex.Message, ex.ErrorPage, ex.ExceptionType });
             return ret;
         }
     }

@@ -75,7 +75,7 @@ namespace Bootstrap.DataAccess.SQLite
                 {
                     exceptions.Add(new DataAccess.Exceptions()
                     {
-                        Id = LgbConvert.ReadValue(reader[0], 0),
+                        Id = reader[0].ToString(),
                         AppDomainName = (string)reader[1],
                         ErrorPage = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
                         UserId = reader.IsDBNull(3) ? string.Empty : (string)reader[3],

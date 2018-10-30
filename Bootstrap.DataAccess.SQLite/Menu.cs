@@ -16,7 +16,7 @@ namespace Bootstrap.DataAccess.SQLite
         /// 删除菜单信息
         /// </summary>
         /// <param name="value"></param>
-        public override bool DeleteMenu(IEnumerable<int> value)
+        public override bool DeleteMenu(IEnumerable<string> value)
         {
             bool ret = false;
             var ids = string.Join(",", value);
@@ -51,7 +51,7 @@ namespace Bootstrap.DataAccess.SQLite
         /// <param name="roleId"></param>
         /// <param name="menuIds"></param>
         /// <returns></returns>
-        public override bool SaveMenusByRoleId(int roleId, IEnumerable<int> menuIds)
+        public override bool SaveMenusByRoleId(string roleId, IEnumerable<string> menuIds)
         {
             bool ret = false;
             using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
@@ -71,7 +71,7 @@ namespace Bootstrap.DataAccess.SQLite
                         });
                         transaction.CommitTransaction();
                     }
-                    CacheCleanUtility.ClearCache(menuIds: menuIds, roleIds: new List<int>() { roleId });
+                    CacheCleanUtility.ClearCache(menuIds: menuIds, roleIds: new List<string>() { roleId });
                     ret = true;
                 }
                 catch (Exception ex)

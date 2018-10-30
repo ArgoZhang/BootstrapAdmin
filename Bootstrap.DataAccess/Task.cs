@@ -10,7 +10,7 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获取/设置  任务ID
         /// </summary>
-        public int Id { get; set; }
+        public string Id { get; set; }
         /// <summary>
         /// 获取/设置  任务名称
         /// </summary>
@@ -54,7 +54,7 @@ namespace Bootstrap.DataAccess
                 {
                     tasks.Add(new Task()
                     {
-                        Id = (int)reader[0],
+                        Id = reader[0].ToString(),
                         TaskName = (string)reader[1],
                         AssignName = (string)reader[2],
                         UserName = (string)reader[3],

@@ -31,7 +31,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="type">类型</param>
         /// <returns></returns>
         [HttpPost("{id}")]
-        public IEnumerable<Role> Post(int id, [FromQuery]string type)
+        public IEnumerable<Role> Post(string id, [FromQuery]string type)
         {
             var ret = new List<Role>();
             switch (type)
@@ -58,7 +58,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="type"></param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public bool Put(int id, [FromBody]IEnumerable<int> roleIds, [FromQuery]string type)
+        public bool Put(string id, [FromBody]IEnumerable<string> roleIds, [FromQuery]string type)
         {
             var ret = false;
             switch (type)
@@ -91,7 +91,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// </summary>
         /// <param name="value"></param>
         [HttpDelete]
-        public bool Delete([FromBody]IEnumerable<int> value)
+        public bool Delete([FromBody]IEnumerable<string> value)
         {
             return RoleHelper.DeleteRole(value);
         }

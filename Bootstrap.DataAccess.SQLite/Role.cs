@@ -19,7 +19,7 @@ namespace Bootstrap.DataAccess.SQLite
         /// <param name="userId"></param>
         /// <param name="roleIds"></param>
         /// <returns></returns>
-        public override bool SaveRolesByUserId(int userId, IEnumerable<int> roleIds)
+        public override bool SaveRolesByUserId(string userId, IEnumerable<string> roleIds)
         {
             var ret = false;
             //判断用户是否选定角色
@@ -39,7 +39,7 @@ namespace Bootstrap.DataAccess.SQLite
                         });
                         transaction.CommitTransaction();
                     }
-                    CacheCleanUtility.ClearCache(userIds: new List<int>() { userId }, roleIds: roleIds);
+                    CacheCleanUtility.ClearCache(userIds: new List<string>() { userId }, roleIds: roleIds);
                     ret = true;
                 }
                 catch (Exception ex)
@@ -54,7 +54,7 @@ namespace Bootstrap.DataAccess.SQLite
         /// 删除角色表
         /// </summary>
         /// <param name="value"></param>
-        public override bool DeleteRole(IEnumerable<int> value)
+        public override bool DeleteRole(IEnumerable<string> value)
         {
             bool ret = false;
             var ids = string.Join(",", value);
@@ -94,7 +94,7 @@ namespace Bootstrap.DataAccess.SQLite
         /// <param name="menuId"></param>
         /// <param name="roleIds"></param>
         /// <returns></returns>
-        public override bool SavaRolesByMenuId(int menuId, IEnumerable<int> roleIds)
+        public override bool SavaRolesByMenuId(string menuId, IEnumerable<string> roleIds)
         {
             var ret = false;
             //判断用户是否选定角色
@@ -115,7 +115,7 @@ namespace Bootstrap.DataAccess.SQLite
                         });
                         transaction.CommitTransaction();
                     }
-                    CacheCleanUtility.ClearCache(roleIds: roleIds, menuIds: new List<int>() { menuId });
+                    CacheCleanUtility.ClearCache(roleIds: roleIds, menuIds: new List<string>() { menuId });
                     ret = true;
                 }
                 catch (Exception ex)
@@ -132,7 +132,7 @@ namespace Bootstrap.DataAccess.SQLite
         /// <param name="groupId"></param>
         /// <param name="roleIds"></param>
         /// <returns></returns>
-        public override bool SaveRolesByGroupId(int groupId, IEnumerable<int> roleIds)
+        public override bool SaveRolesByGroupId(string groupId, IEnumerable<string> roleIds)
         {
             var ret = false;
             //构造表格
@@ -154,7 +154,7 @@ namespace Bootstrap.DataAccess.SQLite
                         });
                         transaction.CommitTransaction();
                     }
-                    CacheCleanUtility.ClearCache(roleIds: roleIds, groupIds: new List<int>() { groupId });
+                    CacheCleanUtility.ClearCache(roleIds: roleIds, groupIds: new List<string>() { groupId });
                     ret = true;
                 }
                 catch (Exception ex)

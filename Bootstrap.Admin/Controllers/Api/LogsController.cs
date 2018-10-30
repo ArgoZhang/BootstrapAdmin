@@ -28,7 +28,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public Log Get(int id)
+        public Log Get(string id)
         {
             return LogHelper.RetrieveLogs().FirstOrDefault(t => t.Id == id);
         }

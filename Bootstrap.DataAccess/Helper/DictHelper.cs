@@ -31,7 +31,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="value">需要删除的IDs</param>
         /// <returns></returns>
-        public static bool DeleteDict(IEnumerable<int> value) => DbAdapterManager.Create<Dict>().DeleteDict(value);
+        public static bool DeleteDict(IEnumerable<string> value) => DbAdapterManager.Create<Dict>().DeleteDict(value);
         /// <summary>
         /// 保存新建/更新的字典信息
         /// </summary>

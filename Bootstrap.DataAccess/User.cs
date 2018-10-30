@@ -20,7 +20,7 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获得/设置 用户主键ID
         /// </summary>
-        public int Id { get; set; }
+        public string Id { get; set; }
         /// <summary>
         /// 获取/设置 密码
         /// </summary>
@@ -129,7 +129,7 @@ namespace Bootstrap.DataAccess
                 {
                     users.Add(new User()
                     {
-                        Id = LgbConvert.ReadValue(reader[0], 0),
+                        Id = reader[0].ToString(),
                         UserName = (string)reader[1],
                         DisplayName = (string)reader[2],
                         RegisterTime = LgbConvert.ReadValue(reader[3], DateTime.MinValue),
@@ -156,7 +156,7 @@ namespace Bootstrap.DataAccess
                 {
                     users.Add(new User()
                     {
-                        Id = LgbConvert.ReadValue(reader[0], 0),
+                        Id = reader[0].ToString(),
                         UserName = (string)reader[1],
                         DisplayName = (string)reader[2],
                         RegisterTime = LgbConvert.ReadValue(reader[3], DateTime.MinValue),
@@ -170,7 +170,7 @@ namespace Bootstrap.DataAccess
         /// 删除用户
         /// </summary>
         /// <param name="value"></param>
-        public virtual bool DeleteUser(IEnumerable<int> value)
+        public virtual bool DeleteUser(IEnumerable<string> value)
         {
             bool ret = false;
             var ids = string.Join(",", value);
@@ -190,7 +190,7 @@ namespace Bootstrap.DataAccess
         public virtual bool SaveUser(User p)
         {
             var ret = false;
-            if (p.Id == 0 && p.Description.Length > 500) p.Description = p.Description.Substring(0, 500);
+            if (string.IsNullOrEmpty(p.Id) && p.Description.Length > 500) p.Description = p.Description.Substring(0, 500);
             if (p.UserName.Length > 50) p.UserName = p.UserName.Substring(0, 50);
             p.PassSalt = LgbCryptography.GenerateSalt();
             p.Password = LgbCryptography.ComputeHash(p.Password, p.PassSalt);
@@ -203,7 +203,7 @@ namespace Bootstrap.DataAccess
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@approvedBy", DbAdapterManager.ToDBValue(p.ApprovedBy)));
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@description", p.Description));
                 ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == -1;
-                if (ret) CacheCleanUtility.ClearCache(userIds: p.Id == 0 ? new List<int>() : new List<int>() { p.Id });
+                if (ret) CacheCleanUtility.ClearCache(userIds: string.IsNullOrEmpty(p.Id) ? new List<string>() : new List<string>() { p.Id });
             }
             return ret;
         }
@@ -214,7 +214,7 @@ namespace Bootstrap.DataAccess
         /// <param name="password"></param>
         /// <param name="displayName"></param>
         /// <returns></returns>
-        public virtual bool UpdateUser(int id, string password, string displayName)
+        public virtual bool UpdateUser(string id, string password, string displayName)
         {
             bool ret = false;
             string sql = "Update Users set Password = @Password, PassSalt = @PassSalt, DisplayName = @DisplayName where ID = @id";
@@ -227,7 +227,7 @@ namespace Bootstrap.DataAccess
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Password", newPassword));
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@PassSalt", passSalt));
                 ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
-                if (ret) CacheCleanUtility.ClearCache(userIds: id == 0 ? new List<int>() : new List<int>() { id });
+                if (ret) CacheCleanUtility.ClearCache(userIds: string.IsNullOrEmpty(id) ? new List<string>() : new List<string>() { id });
             }
             return ret;
         }
@@ -237,7 +237,7 @@ namespace Bootstrap.DataAccess
         /// <param name="id"></param>
         /// <param name="approvedBy"></param>
         /// <returns></returns>
-        public virtual bool ApproveUser(int id, string approvedBy)
+        public virtual bool ApproveUser(string id, string approvedBy)
         {
             var ret = false;
             var sql = "update Users set ApprovedTime = GETDATE(), ApprovedBy = @approvedBy where ID = @id";
@@ -246,7 +246,7 @@ namespace Bootstrap.DataAccess
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@id", id));
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@approvedBy", approvedBy));
                 ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
-                if (ret) CacheCleanUtility.ClearCache(userIds: new List<int>() { id });
+                if (ret) CacheCleanUtility.ClearCache(userIds: new List<string>() { id });
             }
             return ret;
         }
@@ -255,9 +255,8 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="id"></param>
         /// <param name="rejectBy"></param>
-        /// <param name="reason"></param>
         /// <returns></returns>
-        public virtual bool RejectUser(int id, string rejectBy)
+        public virtual bool RejectUser(string id, string rejectBy)
         {
             var ret = false;
             using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_RejectUsers"))
@@ -266,7 +265,7 @@ namespace Bootstrap.DataAccess
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@rejectedBy", rejectBy));
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@rejectedReason", "未填写"));
                 ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == -1;
-                if (ret) CacheCleanUtility.ClearCache(userIds: new List<int>() { id });
+                if (ret) CacheCleanUtility.ClearCache(userIds: new List<string>() { id });
             }
             return ret;
         }
@@ -275,7 +274,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="roleId"></param>
         /// <returns></returns>
-        public virtual IEnumerable<User> RetrieveUsersByRoleId(int roleId)
+        public virtual IEnumerable<User> RetrieveUsersByRoleId(string roleId)
         {
             List<User> users = new List<User>();
             string sql = "select u.ID, u.UserName, u.DisplayName, case ur.UserID when u.ID then 'checked' else '' end [status] from Users u left join UserRole ur on u.ID = ur.UserID and RoleID = @RoleID where u.ApprovedTime is not null";
@@ -287,7 +286,7 @@ namespace Bootstrap.DataAccess
                 {
                     users.Add(new User()
                     {
-                        Id = LgbConvert.ReadValue(reader[0], 0),
+                        Id = reader[0].ToString(),
                         UserName = (string)reader[1],
                         DisplayName = (string)reader[2],
                         Checked = (string)reader[3]
@@ -302,7 +301,7 @@ namespace Bootstrap.DataAccess
         /// <param name="roleId">角色ID</param>
         /// <param name="userIds">用户ID数组</param>
         /// <returns></returns>
-        public virtual bool SaveUsersByRoleId(int roleId, IEnumerable<int> userIds)
+        public virtual bool SaveUsersByRoleId(string roleId, IEnumerable<string> userIds)
         {
             bool ret = false;
             DataTable dt = new DataTable();
@@ -328,7 +327,7 @@ namespace Bootstrap.DataAccess
                             transaction.CommitTransaction();
                         }
                     }
-                    CacheCleanUtility.ClearCache(userIds: userIds, roleIds: new List<int>() { roleId });
+                    CacheCleanUtility.ClearCache(userIds: userIds, roleIds: new List<string>() { roleId });
                     ret = true;
                 }
                 catch (Exception ex)
@@ -344,7 +343,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="groupId"></param>
         /// <returns></returns>
-        public virtual IEnumerable<User> RetrieveUsersByGroupId(int groupId)
+        public virtual IEnumerable<User> RetrieveUsersByGroupId(string groupId)
         {
             List<User> users = new List<User>();
             string sql = "select u.ID, u.UserName, u.DisplayName, case ur.UserID when u.ID then 'checked' else '' end [status] from Users u left join UserGroup ur on u.ID = ur.UserID and GroupID =@groupId where u.ApprovedTime is not null";
@@ -356,7 +355,7 @@ namespace Bootstrap.DataAccess
                 {
                     users.Add(new User()
                     {
-                        Id = LgbConvert.ReadValue(reader[0], 0),
+                        Id = reader[0].ToString(),
                         UserName = (string)reader[1],
                         DisplayName = (string)reader[2],
                         Checked = (string)reader[3]
@@ -371,7 +370,7 @@ namespace Bootstrap.DataAccess
         /// <param name="groupId">GroupID</param>
         /// <param name="userIds">用户ID数组</param>
         /// <returns></returns>
-        public virtual bool SaveUsersByGroupId(int groupId, IEnumerable<int> userIds)
+        public virtual bool SaveUsersByGroupId(string groupId, IEnumerable<string> userIds)
         {
             bool ret = false;
             DataTable dt = new DataTable();
@@ -398,7 +397,7 @@ namespace Bootstrap.DataAccess
                             transaction.CommitTransaction();
                         }
                     }
-                    CacheCleanUtility.ClearCache(userIds: userIds, groupIds: new List<int>() { groupId });
+                    CacheCleanUtility.ClearCache(userIds: userIds, groupIds: new List<string>() { groupId });
                     ret = true;
                 }
                 catch (Exception ex)

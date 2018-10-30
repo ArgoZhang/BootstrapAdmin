@@ -19,7 +19,7 @@ namespace Bootstrap.DataAccess.SQLite
         /// 删除用户
         /// </summary>
         /// <param name="value"></param>
-        public override bool DeleteUser(IEnumerable<int> value)
+        public override bool DeleteUser(IEnumerable<string> value)
         {
             bool ret = false;
             var ids = string.Join(",", value);
@@ -58,7 +58,7 @@ namespace Bootstrap.DataAccess.SQLite
         public override bool SaveUser(DataAccess.User p)
         {
             var ret = false;
-            if (p.Id == 0 && p.Description.Length > 500) p.Description = p.Description.Substring(0, 500);
+            if (string.IsNullOrEmpty(p.Id) && p.Description.Length > 500) p.Description = p.Description.Substring(0, 500);
             if (p.UserName.Length > 50) p.UserName = p.UserName.Substring(0, 50);
             p.PassSalt = LgbCryptography.GenerateSalt();
             p.Password = LgbCryptography.ComputeHash(p.Password, p.PassSalt);
@@ -86,7 +86,7 @@ namespace Bootstrap.DataAccess.SQLite
                             DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
 
                             transaction.CommitTransaction();
-                            CacheCleanUtility.ClearCache(userIds: p.Id == 0 ? new List<int>() : new List<int>() { p.Id });
+                            CacheCleanUtility.ClearCache(userIds: string.IsNullOrEmpty(p.Id) ? new List<string>() : new List<string>() { p.Id });
                             ret = true;
                         }
                     }
@@ -105,7 +105,7 @@ namespace Bootstrap.DataAccess.SQLite
         /// <param name="id"></param>
         /// <param name="approvedBy"></param>
         /// <returns></returns>
-        public override bool ApproveUser(int id, string approvedBy)
+        public override bool ApproveUser(string id, string approvedBy)
         {
             var ret = false;
             var sql = "update Users set ApprovedTime = datetime('now', 'localtime'), ApprovedBy = @approvedBy where ID = @id";
@@ -114,7 +114,7 @@ namespace Bootstrap.DataAccess.SQLite
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@id", id));
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@approvedBy", approvedBy));
                 ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
-                if (ret) CacheCleanUtility.ClearCache(userIds: new List<int>() { id });
+                if (ret) CacheCleanUtility.ClearCache(userIds: new List<string>() { id });
             }
             return ret;
         }
@@ -125,7 +125,7 @@ namespace Bootstrap.DataAccess.SQLite
         /// <param name="rejectBy"></param>
         /// <param name="reason"></param>
         /// <returns></returns>
-        public override bool RejectUser(int id, string rejectBy)
+        public override bool RejectUser(string id, string rejectBy)
         {
             var ret = false;
             using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
@@ -146,7 +146,7 @@ namespace Bootstrap.DataAccess.SQLite
                         DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
 
                         transaction.CommitTransaction();
-                        CacheCleanUtility.ClearCache(userIds: new List<int>() { id });
+                        CacheCleanUtility.ClearCache(userIds: new List<string>() { id });
                         ret = true;
                     }
                 }
@@ -164,7 +164,7 @@ namespace Bootstrap.DataAccess.SQLite
         /// <param name="roleId">角色ID</param>
         /// <param name="userIds">用户ID数组</param>
         /// <returns></returns>
-        public override bool SaveUsersByRoleId(int roleId, IEnumerable<int> userIds)
+        public override bool SaveUsersByRoleId(string roleId, IEnumerable<string> userIds)
         {
             bool ret = false;
             DataTable dt = new DataTable();
@@ -188,7 +188,7 @@ namespace Bootstrap.DataAccess.SQLite
                         });
                         transaction.CommitTransaction();
                     }
-                    CacheCleanUtility.ClearCache(userIds: userIds, roleIds: new List<int>() { roleId });
+                    CacheCleanUtility.ClearCache(userIds: userIds, roleIds: new List<string>() { roleId });
                     ret = true;
                 }
                 catch (Exception ex)
@@ -205,7 +205,7 @@ namespace Bootstrap.DataAccess.SQLite
         /// <param name="groupId">GroupID</param>
         /// <param name="userIds">用户ID数组</param>
         /// <returns></returns>
-        public override bool SaveUsersByGroupId(int groupId, IEnumerable<int> userIds)
+        public override bool SaveUsersByGroupId(string groupId, IEnumerable<string> userIds)
         {
             bool ret = false;
             using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
@@ -225,7 +225,7 @@ namespace Bootstrap.DataAccess.SQLite
                         });
                         transaction.CommitTransaction();
                     }
-                    CacheCleanUtility.ClearCache(userIds: userIds, groupIds: new List<int>() { groupId });
+                    CacheCleanUtility.ClearCache(userIds: userIds, groupIds: new List<string>() { groupId });
                     ret = true;
                 }
                 catch (Exception ex)

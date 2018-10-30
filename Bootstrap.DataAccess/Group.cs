@@ -1,5 +1,4 @@
-﻿using Longbow;
-using Longbow.Data;
+﻿using Longbow.Data;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -17,18 +16,15 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获得/设置 群组主键ID
         /// </summary>
-        public int Id { get; set; }
-
+        public string Id { get; set; }
         /// <summary>
         /// 获得/设置 群组名称
         /// </summary>
         public string GroupName { get; set; }
-
         /// <summary>
         /// 获得/设置 群组描述
         /// </summary>
         public string Description { get; set; }
-
         /// <summary>
         /// 获取/设置 用户群组关联状态 checked 标示已经关联 '' 标示未关联
         /// </summary>
@@ -38,7 +34,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public virtual IEnumerable<Group> RetrieveGroups(int id = 0)
+        public virtual IEnumerable<Group> RetrieveGroups()
         {
             string sql = "select * from Groups";
             List<Group> groups = new List<Group>();
@@ -49,7 +45,7 @@ namespace Bootstrap.DataAccess
                 {
                     groups.Add(new Group()
                     {
-                        Id = LgbConvert.ReadValue(reader[0], 0),
+                        Id = reader[0].ToString(),
                         GroupName = (string)reader[1],
                         Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2]
                     });
@@ -61,7 +57,7 @@ namespace Bootstrap.DataAccess
         /// 删除群组信息
         /// </summary>
         /// <param name="ids"></param>
-        public virtual bool DeleteGroup(IEnumerable<int> value)
+        public virtual bool DeleteGroup(IEnumerable<string> value)
         {
             bool ret = false;
             var ids = string.Join(",", value);
@@ -83,7 +79,7 @@ namespace Bootstrap.DataAccess
             bool ret = false;
             if (p.GroupName.Length > 50) p.GroupName = p.GroupName.Substring(0, 50);
             if (!string.IsNullOrEmpty(p.Description) && p.Description.Length > 500) p.Description = p.Description.Substring(0, 500);
-            string sql = p.Id == 0 ?
+            string sql = string.IsNullOrEmpty(p.Id) ?
                 "Insert Into Groups (GroupName, Description) Values (@GroupName, @Description)" :
                 "Update Groups set GroupName = @GroupName, Description = @Description where ID = @ID";
             using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
@@ -93,7 +89,7 @@ namespace Bootstrap.DataAccess
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Description", DbAdapterManager.ToDBValue(p.Description)));
                 ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
             }
-            CacheCleanUtility.ClearCache(groupIds: p.Id == 0 ? new List<int>() : new List<int>() { p.Id });
+            CacheCleanUtility.ClearCache(groupIds: string.IsNullOrEmpty(p.Id) ? new List<string>() : new List<string>() { p.Id });
             return ret;
         }
         /// <summary>
@@ -101,7 +97,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public virtual IEnumerable<Group> RetrieveGroupsByUserId(int userId)
+        public virtual IEnumerable<Group> RetrieveGroupsByUserId(string userId)
         {
             string sql = "select g.ID,g.GroupName,g.[Description],case ug.GroupID when g.ID then 'checked' else '' end [status] from Groups g left join UserGroup ug on g.ID=ug.GroupID and UserID=@UserID";
             List<Group> groups = new List<Group>();
@@ -113,7 +109,7 @@ namespace Bootstrap.DataAccess
                 {
                     groups.Add(new Group()
                     {
-                        Id = LgbConvert.ReadValue(reader[0], 0),
+                        Id = reader[0].ToString(),
                         GroupName = (string)reader[1],
                         Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
                         Checked = (string)reader[3]
@@ -128,7 +124,7 @@ namespace Bootstrap.DataAccess
         /// <param name="userId"></param>
         /// <param name="groupIds"></param>
         /// <returns></returns>
-        public virtual bool SaveGroupsByUserId(int userId, IEnumerable<int> groupIds)
+        public virtual bool SaveGroupsByUserId(string userId, IEnumerable<string> groupIds)
         {
             var ret = false;
             DataTable dt = new DataTable();
@@ -157,7 +153,7 @@ namespace Bootstrap.DataAccess
                             transaction.CommitTransaction();
                         }
                     }
-                    CacheCleanUtility.ClearCache(groupIds: groupIds, userIds: new List<int>() { userId });
+                    CacheCleanUtility.ClearCache(groupIds: groupIds, userIds: new List<string>() { userId });
                     ret = true;
                 }
                 catch (Exception ex)
@@ -173,7 +169,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="roleId"></param>
         /// <returns></returns>
-        public virtual IEnumerable<Group> RetrieveGroupsByRoleId(int roleId)
+        public virtual IEnumerable<Group> RetrieveGroupsByRoleId(string roleId)
         {
             List<Group> groups = new List<Group>();
             string sql = "select g.ID,g.GroupName,g.[Description],case rg.GroupID when g.ID then 'checked' else '' end [status] from Groups g left join RoleGroup rg on g.ID=rg.GroupID and RoleID=@RoleID";
@@ -185,7 +181,7 @@ namespace Bootstrap.DataAccess
                 {
                     groups.Add(new Group()
                     {
-                        Id = LgbConvert.ReadValue(reader[0], 0),
+                        Id = reader[0].ToString(),
                         GroupName = (string)reader[1],
                         Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
                         Checked = (string)reader[3]
@@ -200,7 +196,7 @@ namespace Bootstrap.DataAccess
         /// <param name="roleId"></param>
         /// <param name="groupIds"></param>
         /// <returns></returns>
-        public virtual bool SaveGroupsByRoleId(int roleId, IEnumerable<int> groupIds)
+        public virtual bool SaveGroupsByRoleId(string roleId, IEnumerable<string> groupIds)
         {
             bool ret = false;
             DataTable dt = new DataTable();
@@ -227,7 +223,7 @@ namespace Bootstrap.DataAccess
                             transaction.CommitTransaction();
                         }
                     }
-                    CacheCleanUtility.ClearCache(groupIds: groupIds, roleIds: new List<int>() { roleId });
+                    CacheCleanUtility.ClearCache(groupIds: groupIds, roleIds: new List<string>() { roleId });
                     ret = true;
                 }
                 catch (Exception ex)

@@ -6,7 +6,7 @@
     var $errorDetail = $('#errorDetail');
     var $errorDetailTitle = $('#myDetailModalLabel');
 
-    $('table').smartTable({
+    $('.card-body table').smartTable({
         url: Exceptions.url,
         sortName: 'LogTime',
         sortOrder: 'desc',

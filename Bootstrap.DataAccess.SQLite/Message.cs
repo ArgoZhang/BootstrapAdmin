@@ -28,7 +28,7 @@ namespace Bootstrap.DataAccess.SQLite
                 {
                     messages.Add(new DataAccess.Message()
                     {
-                        Id = LgbConvert.ReadValue(reader[0], 0),
+                        Id = reader[0].ToString(),
                         Title = (string)reader[1],
                         Content = (string)reader[2],
                         From = (string)reader[3],

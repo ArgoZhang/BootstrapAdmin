@@ -19,7 +19,7 @@ namespace Bootstrap.DataAccess
         /// <param name="menuIds"></param>
         /// <param name="dictIds"></param>
         /// <param name="cacheKey"></param>
-        public static void ClearCache(IEnumerable<int> roleIds = null, IEnumerable<int> userIds = null, IEnumerable<int> groupIds = null, IEnumerable<int> menuIds = null, string dictIds = null, string cacheKey = null)
+        public static void ClearCache(IEnumerable<string> roleIds = null, IEnumerable<string> userIds = null, IEnumerable<string> groupIds = null, IEnumerable<string> menuIds = null, string dictIds = null, string cacheKey = null)
         {
             var cacheKeys = new List<string>();
             var corsKeys = new List<string>();

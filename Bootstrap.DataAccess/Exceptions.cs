@@ -17,7 +17,7 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 
         /// </summary>
-        public int Id { get; set; }
+        public string Id { get; set; }
         /// <summary>
         /// 
         /// </summary>
@@ -112,7 +112,7 @@ namespace Bootstrap.DataAccess
                 {
                     exceptions.Add(new Exceptions()
                     {
-                        Id = (int)reader[0],
+                        Id = reader[0].ToString(),
                         AppDomainName = (string)reader[1],
                         ErrorPage = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
                         UserId = reader.IsDBNull(3) ? string.Empty : (string)reader[3],

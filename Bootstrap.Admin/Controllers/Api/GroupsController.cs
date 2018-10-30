@@ -29,7 +29,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public Group Get(int id)
+        public Group Get(string id)
         {
             return GroupHelper.RetrieveGroups().FirstOrDefault(t => t.Id == id);
         }
@@ -47,7 +47,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// </summary>
         /// <param name="value"></param>
         [HttpDelete]
-        public bool Delete([FromBody]IEnumerable<int> value)
+        public bool Delete([FromBody]IEnumerable<string> value)
         {
             return GroupHelper.DeleteGroup(value);
         }
@@ -58,7 +58,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="type"></param>
         /// <returns></returns>
         [HttpPost("{id}")]
-        public IEnumerable<Group> Post(int id, [FromQuery]string type)
+        public IEnumerable<Group> Post(string id, [FromQuery]string type)
         {
             var ret = new List<Group>();
             switch (type)
@@ -82,7 +82,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="type"></param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public bool Put(int id, [FromBody]IEnumerable<int> groupIds, [FromQuery]string type)
+        public bool Put(string id, [FromBody]IEnumerable<string> groupIds, [FromQuery]string type)
         {
             var ret = false;
             switch (type)

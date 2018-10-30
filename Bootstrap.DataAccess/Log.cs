@@ -15,7 +15,7 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获得/设置 操作日志主键ID
         /// </summary>
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         /// <summary>
         /// 获得/设置 操作类型
@@ -51,7 +51,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="tId"></param>
         /// <returns></returns>
-        public virtual IEnumerable<Log> RetrieveLogs(string tId = null)
+        public virtual IEnumerable<Log> RetrieveLogs()
         {
             string sql = "select * from Logs where DATEDIFF(Week, LogTime, GETDATE()) = 0";
             List<Log> logs = new List<Log>();
@@ -62,7 +62,7 @@ namespace Bootstrap.DataAccess
                 {
                     logs.Add(new Log()
                     {
-                        Id = (int)reader[0],
+                        Id = reader[0].ToString(),
                         CRUD = (string)reader[1],
                         UserName = (string)reader[2],
                         LogTime = (DateTime)reader[3],

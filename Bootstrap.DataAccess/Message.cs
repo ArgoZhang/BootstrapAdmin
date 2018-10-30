@@ -15,7 +15,7 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 消息主键 数据库自增
         /// </summary>
-        public int Id { get; set; }
+        public string Id { get; set; }
         /// <summary>
         /// 标题
         /// </summary>
@@ -85,7 +85,7 @@ namespace Bootstrap.DataAccess
                 {
                     messages.Add(new Message()
                     {
-                        Id = (int)reader[0],
+                        Id = reader[0].ToString(),
                         Title = (string)reader[1],
                         Content = (string)reader[2],
                         From = (string)reader[3],

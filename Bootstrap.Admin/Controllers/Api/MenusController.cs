@@ -38,7 +38,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// </summary>
         /// <param name="value"></param>
         [HttpDelete]
-        public bool Delete([FromBody]IEnumerable<int> value)
+        public bool Delete([FromBody]IEnumerable<string> value)
         {
             return MenuHelper.DeleteMenu(value);
         }
@@ -49,7 +49,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="type"></param>
         /// <returns></returns>
         [HttpPost("{id}")]
-        public IEnumerable<BootstrapMenu> Post(int id, [FromQuery]string type)
+        public IEnumerable<BootstrapMenu> Post(string id, [FromQuery]string type)
         {
             var ret = new List<BootstrapMenu>();
             switch (type)
@@ -72,7 +72,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="value">菜单ID集合</param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public bool Put(int id, [FromBody]IEnumerable<int> value)
+        public bool Put(string id, [FromBody]IEnumerable<string> value)
         {
             return MenuHelper.SaveMenusByRoleId(id, value);
         }

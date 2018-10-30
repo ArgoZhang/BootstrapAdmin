@@ -18,7 +18,7 @@ namespace Bootstrap.DataAccess.SQLite
         /// </summary>
         /// <param name="tId"></param>
         /// <returns></returns>
-        public override IEnumerable<DataAccess.Log> RetrieveLogs(string tId = null)
+        public override IEnumerable<DataAccess.Log> RetrieveLogs()
         {
             string sql = "select * from Logs where LogTime > datetime('now', 'localtime', '-7 day')";
             List<DataAccess.Log> logs = new List<DataAccess.Log>();
@@ -29,7 +29,7 @@ namespace Bootstrap.DataAccess.SQLite
                 {
                     logs.Add(new DataAccess.Log()
                     {
-                        Id = LgbConvert.ReadValue(reader[0], 0),
+                        Id = reader[0].ToString(),
                         CRUD = (string)reader[1],
                         UserName = (string)reader[2],
                         LogTime = LgbConvert.ReadValue(reader[3], DateTime.MinValue),

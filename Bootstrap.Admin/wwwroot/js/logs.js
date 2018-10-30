@@ -1,7 +1,7 @@
 ﻿$(function () {
     var url = 'api/Logs/';
 
-    $('table').smartTable({
+    $('.card-body table').smartTable({
         url: url,
         sortName: 'LogTime',
         sortOrder: 'desc',

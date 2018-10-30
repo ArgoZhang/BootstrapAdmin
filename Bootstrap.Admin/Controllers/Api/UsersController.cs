@@ -54,7 +54,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="type"></param>
         /// <returns></returns>
         [HttpPost("{id}")]
-        public IEnumerable<User> Post(int id, [FromQuery]string type)
+        public IEnumerable<User> Post(string id, [FromQuery]string type)
         {
             var ret = new List<User>();
             switch (type)
@@ -78,7 +78,7 @@ namespace Bootstrap.Admin.Controllers.Api
         public bool Post([FromBody]User value)
         {
             var ret = false;
-            if (value.Id == 0)
+            if (string.IsNullOrEmpty(value.Id))
             {
                 value.Description = string.Format("管理员{0}创建用户", User.Identity.Name);
                 value.ApprovedBy = User.Identity.Name;
@@ -98,7 +98,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="type"></param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public bool Put(int id, [FromBody]IEnumerable<int> userIds, [FromQuery]string type)
+        public bool Put(string id, [FromBody]IEnumerable<string> userIds, [FromQuery]string type)
         {
             var ret = false;
             switch (type)
@@ -119,7 +119,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// </summary>
         /// <param name="value"></param>
         [HttpDelete]
-        public bool Delete([FromBody]IEnumerable<int> value)
+        public bool Delete([FromBody]IEnumerable<string> value)
         {
             return UserHelper.DeleteUser(value);
         }

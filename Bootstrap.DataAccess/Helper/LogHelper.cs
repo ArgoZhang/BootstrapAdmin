@@ -20,11 +20,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="tId"></param>
         /// <returns></returns>
-        public static IEnumerable<Log> RetrieveLogs(string tId = null)
-        {
-            var ret = CacheManager.GetOrAdd(RetrieveLogsDataKey, key => DbAdapterManager.Create<Log>().RetrieveLogs(tId));
-            return string.IsNullOrEmpty(tId) ? ret : ret.Where(t => tId.Equals(t.Id.ToString(), StringComparison.OrdinalIgnoreCase));
-        }
+        public static IEnumerable<Log> RetrieveLogs() => CacheManager.GetOrAdd(RetrieveLogsDataKey, key => DbAdapterManager.Create<Log>().RetrieveLogs());
         /// <summary>
         /// 保存新增的日志信息
         /// </summary>

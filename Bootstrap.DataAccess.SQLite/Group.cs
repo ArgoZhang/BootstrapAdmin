@@ -17,7 +17,7 @@ namespace Bootstrap.DataAccess.SQLite
         /// 删除群组信息
         /// </summary>
         /// <param name="ids"></param>
-        public override bool DeleteGroup(IEnumerable<int> value)
+        public override bool DeleteGroup(IEnumerable<string> value)
         {
             bool ret = false;
             var ids = string.Join(",", value);
@@ -54,7 +54,7 @@ namespace Bootstrap.DataAccess.SQLite
         /// <param name="userId"></param>
         /// <param name="groupIds"></param>
         /// <returns></returns>
-        public override bool SaveGroupsByUserId(int userId, IEnumerable<int> groupIds)
+        public override bool SaveGroupsByUserId(string userId, IEnumerable<string> groupIds)
         {
             var ret = false;
 
@@ -76,7 +76,7 @@ namespace Bootstrap.DataAccess.SQLite
                         });
                         transaction.CommitTransaction();
                     }
-                    CacheCleanUtility.ClearCache(groupIds: groupIds, userIds: new List<int>() { userId });
+                    CacheCleanUtility.ClearCache(groupIds: groupIds, userIds: new List<string>() { userId });
                     ret = true;
                 }
                 catch (Exception ex)
@@ -93,7 +93,7 @@ namespace Bootstrap.DataAccess.SQLite
         /// <param name="roleId"></param>
         /// <param name="groupIds"></param>
         /// <returns></returns>
-        public override bool SaveGroupsByRoleId(int roleId, IEnumerable<int> groupIds)
+        public override bool SaveGroupsByRoleId(string roleId, IEnumerable<string> groupIds)
         {
             bool ret = false;
             using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
@@ -113,7 +113,7 @@ namespace Bootstrap.DataAccess.SQLite
                         });
                         transaction.CommitTransaction();
                     }
-                    CacheCleanUtility.ClearCache(groupIds: groupIds, roleIds: new List<int>() { roleId });
+                    CacheCleanUtility.ClearCache(groupIds: groupIds, roleIds: new List<string>() { roleId });
                     ret = true;
                 }
                 catch (Exception ex)

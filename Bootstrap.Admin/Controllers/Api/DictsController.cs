@@ -39,7 +39,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="value"></param>
         [HttpDelete]
         [Authorize(Roles = "Administrators")]
-        public bool Delete([FromBody]IEnumerable<int> value)
+        public bool Delete([FromBody]IEnumerable<string> value)
         {
             return DictHelper.DeleteDict(value);
         }

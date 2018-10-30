@@ -1,5 +1,4 @@
 ﻿using Bootstrap.Security.DataAccess;
-using Longbow;
 using Longbow.Data;
 using System;
 using System.Collections.Generic;
@@ -18,7 +17,7 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获得/设置 角色主键ID
         /// </summary>
-        public int Id { get; set; }
+        public string Id { get; set; }
         /// <summary>
         /// 获得/设置 角色名称
         /// </summary>
@@ -34,9 +33,8 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 查询所有角色
         /// </summary>
-        /// <param name="id"></param>
         /// <returns></returns>
-        public virtual IEnumerable<Role> RetrieveRoles(int id = 0)
+        public virtual IEnumerable<Role> RetrieveRoles()
         {
             string sql = "select * from Roles";
             var roles = new List<Role>();
@@ -47,7 +45,7 @@ namespace Bootstrap.DataAccess
                 {
                     roles.Add(new Role()
                     {
-                        Id = LgbConvert.ReadValue(reader[0], 0),
+                        Id = reader[0].ToString(),
                         RoleName = (string)reader[1],
                         Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2]
                     });
@@ -61,7 +59,7 @@ namespace Bootstrap.DataAccess
         /// <param name="userId"></param>
         /// <param name="roleIds"></param>
         /// <returns></returns>
-        public virtual bool SaveRolesByUserId(int userId, IEnumerable<int> roleIds)
+        public virtual bool SaveRolesByUserId(string userId, IEnumerable<string> roleIds)
         {
             var ret = false;
             DataTable dt = new DataTable();
@@ -91,7 +89,7 @@ namespace Bootstrap.DataAccess
                         }
                         transaction.CommitTransaction();
                     }
-                    CacheCleanUtility.ClearCache(userIds: new List<int>() { userId }, roleIds: roleIds);
+                    CacheCleanUtility.ClearCache(userIds: new List<string>() { userId }, roleIds: roleIds);
                     ret = true;
                 }
                 catch (Exception ex)
@@ -106,7 +104,7 @@ namespace Bootstrap.DataAccess
         /// 查询某个用户所拥有的角色
         /// </summary>
         /// <returns></returns>
-        public virtual IEnumerable<Role> RetrieveRolesByUserId(int userId)
+        public virtual IEnumerable<Role> RetrieveRolesByUserId(string userId)
         {
             List<Role> roles = new List<Role>();
             string sql = "select r.ID, r.RoleName, r.[Description], case ur.RoleID when r.ID then 'checked' else '' end [status] from Roles r left join UserRole ur on r.ID = ur.RoleID and UserID = @UserID";
@@ -118,7 +116,7 @@ namespace Bootstrap.DataAccess
                 {
                     roles.Add(new Role()
                     {
-                        Id = LgbConvert.ReadValue(reader[0], 0),
+                        Id = reader[0].ToString(),
                         RoleName = (string)reader[1],
                         Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
                         Checked = (string)reader[3]
@@ -131,7 +129,7 @@ namespace Bootstrap.DataAccess
         /// 删除角色表
         /// </summary>
         /// <param name="value"></param>
-        public virtual bool DeleteRole(IEnumerable<int> value)
+        public virtual bool DeleteRole(IEnumerable<string> value)
         {
             bool ret = false;
             var ids = string.Join(",", value);
@@ -153,7 +151,7 @@ namespace Bootstrap.DataAccess
             bool ret = false;
             if (!string.IsNullOrEmpty(p.RoleName) && p.RoleName.Length > 50) p.RoleName = p.RoleName.Substring(0, 50);
             if (!string.IsNullOrEmpty(p.Description) && p.Description.Length > 50) p.Description = p.Description.Substring(0, 500);
-            string sql = p.Id == 0 ?
+            string sql = string.IsNullOrEmpty(p.Id) ?
                 "Insert Into Roles (RoleName, Description) Values (@RoleName, @Description)" :
                 "Update Roles set RoleName = @RoleName, Description = @Description where ID = @ID";
             using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
@@ -163,7 +161,7 @@ namespace Bootstrap.DataAccess
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Description", DbAdapterManager.ToDBValue(p.Description)));
                 ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
             }
-            CacheCleanUtility.ClearCache(roleIds: p.Id == 0 ? new List<int>() : new List<int> { p.Id });
+            CacheCleanUtility.ClearCache(roleIds: string.IsNullOrEmpty(p.Id) ? new List<string>() : new List<string> { p.Id });
             return ret;
         }
         /// <summary>
@@ -171,7 +169,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="menuId"></param>
         /// <returns></returns>
-        public virtual IEnumerable<Role> RetrieveRolesByMenuId(int menuId)
+        public virtual IEnumerable<Role> RetrieveRolesByMenuId(string menuId)
         {
             string sql = "select r.ID, r.RoleName, r.[Description], case ur.RoleID when r.ID then 'checked' else '' end [status] from Roles r left join NavigationRole ur on r.ID = ur.RoleID and NavigationID = @NavigationID";
             List<Role> roles = new List<Role>();
@@ -183,7 +181,7 @@ namespace Bootstrap.DataAccess
                 {
                     roles.Add(new Role()
                     {
-                        Id = LgbConvert.ReadValue(reader[0], 0),
+                        Id = reader[0].ToString(),
                         RoleName = (string)reader[1],
                         Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
                         Checked = (string)reader[3]
@@ -198,7 +196,7 @@ namespace Bootstrap.DataAccess
         /// <param name="menuId"></param>
         /// <param name="roleIds"></param>
         /// <returns></returns>
-        public virtual bool SavaRolesByMenuId(int menuId, IEnumerable<int> roleIds)
+        public virtual bool SavaRolesByMenuId(string menuId, IEnumerable<string> roleIds)
         {
             var ret = false;
             DataTable dt = new DataTable();
@@ -227,7 +225,7 @@ namespace Bootstrap.DataAccess
                             transaction.CommitTransaction();
                         }
                     }
-                    CacheCleanUtility.ClearCache(roleIds: roleIds, menuIds: new List<int>() { menuId });
+                    CacheCleanUtility.ClearCache(roleIds: roleIds, menuIds: new List<string>() { menuId });
                     ret = true;
                 }
                 catch (Exception ex)
@@ -243,7 +241,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="groupId"></param>
         /// <returns></returns>
-        public virtual IEnumerable<Role> RetrieveRolesByGroupId(int groupId)
+        public virtual IEnumerable<Role> RetrieveRolesByGroupId(string groupId)
         {
             List<Role> roles = new List<Role>();
             string sql = "select r.ID, r.RoleName, r.[Description], case ur.RoleID when r.ID then 'checked' else '' end [status] from Roles r left join RoleGroup ur on r.ID = ur.RoleID and GroupID = @GroupID";
@@ -255,7 +253,7 @@ namespace Bootstrap.DataAccess
                 {
                     roles.Add(new Role()
                     {
-                        Id = LgbConvert.ReadValue(reader[0], 0),
+                        Id = reader[0].ToString(),
                         RoleName = (string)reader[1],
                         Description = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
                         Checked = (string)reader[3]
@@ -270,7 +268,7 @@ namespace Bootstrap.DataAccess
         /// <param name="groupId"></param>
         /// <param name="roleIds"></param>
         /// <returns></returns>
-        public virtual bool SaveRolesByGroupId(int groupId, IEnumerable<int> roleIds)
+        public virtual bool SaveRolesByGroupId(string groupId, IEnumerable<string> roleIds)
         {
             var ret = false;
             //构造表格
@@ -299,7 +297,7 @@ namespace Bootstrap.DataAccess
                             transaction.CommitTransaction();
                         }
                     }
-                    CacheCleanUtility.ClearCache(roleIds: roleIds, groupIds: new List<int>() { groupId });
+                    CacheCleanUtility.ClearCache(roleIds: roleIds, groupIds: new List<string>() { groupId });
                     ret = true;
                 }
                 catch (Exception ex)

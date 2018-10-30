@@ -18,7 +18,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="value">需要删除的IDs</param>
         /// <returns></returns>
-        public virtual bool DeleteDict(IEnumerable<int> value)
+        public virtual bool DeleteDict(IEnumerable<string> value)
         {
             var ret = false;
             var ids = string.Join(",", value);
@@ -41,7 +41,7 @@ namespace Bootstrap.DataAccess
             if (dict.Category.Length > 50) dict.Category = dict.Category.Substring(0, 50);
             if (dict.Name.Length > 50) dict.Name = dict.Name.Substring(0, 50);
             if (dict.Code.Length > 50) dict.Code = dict.Code.Substring(0, 50);
-            string sql = dict.Id == 0 ?
+            string sql = string.IsNullOrEmpty(dict.Id) ?
                 "Insert Into Dicts (Category, Name, Code ,Define) Values (@Category, @Name, @Code, @Define)" :
                 "Update Dicts set Category = @Category, Name = @Name, Code = @Code, Define = @Define where ID = @ID";
             using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
@@ -53,7 +53,7 @@ namespace Bootstrap.DataAccess
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Define", dict.Define));
                 ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
             }
-            CacheCleanUtility.ClearCache(dictIds: dict.Id == 0 ? string.Empty : dict.Id.ToString());
+            CacheCleanUtility.ClearCache(dictIds: string.IsNullOrEmpty(dict.Id) ? string.Empty : dict.Id.ToString());
             return ret;
         }
         /// <summary>
@@ -81,84 +81,46 @@ namespace Bootstrap.DataAccess
         /// 获取字典分类名称
         /// </summary>
         /// <returns></returns>
-        public virtual IEnumerable<string> RetrieveCategories()
-        {
-            var ret = new List<string>();
-            string sql = "select distinct Category from Dicts";
-            DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-            using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
-            {
-                while (reader.Read())
-                {
-                    ret.Add((string)reader[0]);
-                }
-            }
-            return ret;
-        }
+        public virtual IEnumerable<string> RetrieveCategories() => DictHelper.RetrieveDicts().Select(d => d.Category);
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public virtual string RetrieveWebTitle()
-        {
-            var settings = RetrieveDicts();
-            return (settings.FirstOrDefault(d => d.Name == "网站标题" && d.Category == "网站设置" && d.Define == 0) ?? new BootstrapDict() { Code = "后台管理系统" }).Code;
-        }
+        public virtual string RetrieveWebTitle() => (DictHelper.RetrieveDicts().FirstOrDefault(d => d.Name == "网站标题" && d.Category == "网站设置" && d.Define == 0) ?? new BootstrapDict() { Code = "后台管理系统" }).Code;
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public virtual string RetrieveWebFooter()
-        {
-            var settings = RetrieveDicts();
-            return (settings.FirstOrDefault(d => d.Name == "网站页脚" && d.Category == "网站设置" && d.Define == 0) ?? new BootstrapDict() { Code = "2016 © 通用后台管理系统" }).Code;
-        }
+        public virtual string RetrieveWebFooter() => (DictHelper.RetrieveDicts().FirstOrDefault(d => d.Name == "网站页脚" && d.Category == "网站设置" && d.Define == 0) ?? new BootstrapDict() { Code = "2016 © 通用后台管理系统" }).Code;
         /// <summary>
         /// 获得系统中配置的可以使用的网站样式
         /// </summary>
         /// <returns></returns>
-        public virtual IEnumerable<BootstrapDict> RetrieveThemes()
-        {
-            var data = RetrieveDicts();
-            return data.Where(d => d.Category == "网站样式");
-        }
+        public virtual IEnumerable<BootstrapDict> RetrieveThemes() => DictHelper.RetrieveDicts().Where(d => d.Category == "网站样式");
         /// <summary>
         /// 获得网站设置中的当前样式
         /// </summary>
         /// <returns></returns>
         public virtual string RetrieveActiveTheme()
         {
-            var data = RetrieveDicts();
-            var theme = data.Where(d => d.Name == "使用样式" && d.Category == "当前样式" && d.Define == 0).FirstOrDefault();
+            var theme = DictHelper.RetrieveDicts().Where(d => d.Name == "使用样式" && d.Category == "当前样式" && d.Define == 0).FirstOrDefault();
             return theme == null ? string.Empty : (theme.Code.Equals("site.css", StringComparison.OrdinalIgnoreCase) ? string.Empty : theme.Code);
         }
         /// <summary>
         /// 获取头像路径
         /// </summary>
         /// <returns></returns>
-        public virtual BootstrapDict RetrieveIconFolderPath()
-        {
-            var data = RetrieveDicts();
-            return data.FirstOrDefault(d => d.Name == "头像路径" && d.Category == "头像地址" && d.Define == 0) ?? new BootstrapDict() { Code = "~/images/uploader/" };
-        }
+        public virtual BootstrapDict RetrieveIconFolderPath() => DictHelper.RetrieveDicts().FirstOrDefault(d => d.Name == "头像路径" && d.Category == "头像地址" && d.Define == 0) ?? new BootstrapDict() { Code = "~/images/uploader/" };
         /// <summary>
         /// 获得默认的前台首页地址，默认为~/Home/Index
         /// </summary>
         /// <returns></returns>
-        public virtual string RetrieveHomeUrl()
-        {
-            var settings = RetrieveDicts();
-            return (settings.FirstOrDefault(d => d.Name == "前台首页" && d.Category == "网站设置" && d.Define == 0) ?? new BootstrapDict() { Code = "~/Home/Index" }).Code;
-        }
+        public virtual string RetrieveHomeUrl() => (DictHelper.RetrieveDicts().FirstOrDefault(d => d.Name == "前台首页" && d.Category == "网站设置" && d.Define == 0) ?? new BootstrapDict() { Code = "~/Home/Index" }).Code;
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public virtual IEnumerable<KeyValuePair<string, string>> RetrieveApps()
-        {
-            var settings = RetrieveDicts();
-            return settings.Where(d => d.Category == "应用程序" && d.Define == 0).Select(d => new KeyValuePair<string, string>(d.Code, d.Name)).OrderBy(d => d.Key);
-        }
+        public virtual IEnumerable<KeyValuePair<string, string>> RetrieveApps() => DictHelper.RetrieveDicts().Where(d => d.Category == "应用程序" && d.Define == 0).Select(d => new KeyValuePair<string, string>(d.Code, d.Name)).OrderBy(d => d.Key);
         /// <summary>
         /// 通过数据库获得所有字典表配置信息，缓存Key=DictHelper-RetrieveDicts
         /// </summary>

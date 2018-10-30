@@ -21,28 +21,24 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static IEnumerable<Role> RetrieveRoles(int id = 0)
-        {
-            var ret = CacheManager.GetOrAdd(RetrieveRolesDataKey, key => DbAdapterManager.Create<Role>().RetrieveRoles(id));
-            return id == 0 ? ret : ret.Where(t => id == t.Id);
-        }
+        public static IEnumerable<Role> RetrieveRoles() => CacheManager.GetOrAdd(RetrieveRolesDataKey, key => DbAdapterManager.Create<Role>().RetrieveRoles());
         /// <summary>
         /// 保存用户角色关系
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="roleIds"></param>
         /// <returns></returns>
-        public static bool SaveRolesByUserId(int userId, IEnumerable<int> roleIds) => DbAdapterManager.Create<Role>().SaveRolesByUserId(userId, roleIds);
+        public static bool SaveRolesByUserId(string userId, IEnumerable<string> roleIds) => DbAdapterManager.Create<Role>().SaveRolesByUserId(userId, roleIds);
         /// <summary>
         /// 查询某个用户所拥有的角色
         /// </summary>
         /// <returns></returns>
-        public static IEnumerable<Role> RetrieveRolesByUserId(int userId) => CacheManager.GetOrAdd($"{RetrieveRolesByUserIdDataKey}-{userId}", key => DbAdapterManager.Create<Role>().RetrieveRolesByUserId(userId), RetrieveRolesByUserIdDataKey);
+        public static IEnumerable<Role> RetrieveRolesByUserId(string userId) => CacheManager.GetOrAdd($"{RetrieveRolesByUserIdDataKey}-{userId}", key => DbAdapterManager.Create<Role>().RetrieveRolesByUserId(userId), RetrieveRolesByUserIdDataKey);
         /// <summary>
         /// 删除角色表
         /// </summary>
         /// <param name="value"></param>
-        public static bool DeleteRole(IEnumerable<int> value) => DbAdapterManager.Create<Role>().DeleteRole(value);
+        public static bool DeleteRole(IEnumerable<string> value) => DbAdapterManager.Create<Role>().DeleteRole(value);
         /// <summary>
         /// 保存新建/更新的角色信息
         /// </summary>
@@ -54,27 +50,27 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="menuId"></param>
         /// <returns></returns>
-        public static IEnumerable<Role> RetrieveRolesByMenuId(int menuId) => CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveRolesByMenuIdDataKey, menuId), key => DbAdapterManager.Create<Role>().RetrieveRolesByMenuId(menuId), RetrieveRolesByMenuIdDataKey);
+        public static IEnumerable<Role> RetrieveRolesByMenuId(string menuId) => CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveRolesByMenuIdDataKey, menuId), key => DbAdapterManager.Create<Role>().RetrieveRolesByMenuId(menuId), RetrieveRolesByMenuIdDataKey);
         /// <summary>
         /// 
         /// </summary>
         /// <param name="id"></param>
         /// <param name="roleIds"></param>
         /// <returns></returns>
-        public static bool SavaRolesByMenuId(int id, IEnumerable<int> roleIds) => DbAdapterManager.Create<Role>().SavaRolesByMenuId(id, roleIds);
+        public static bool SavaRolesByMenuId(string id, IEnumerable<string> roleIds) => DbAdapterManager.Create<Role>().SavaRolesByMenuId(id, roleIds);
         /// <summary>
         /// 根据GroupId查询和该Group有关的所有Roles
         /// </summary>
         /// <param name="groupId"></param>
         /// <returns></returns>
-        public static IEnumerable<Role> RetrieveRolesByGroupId(int groupId) => CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveRolesByGroupIdDataKey, groupId), key => DbAdapterManager.Create<Role>().RetrieveRolesByGroupId(groupId), RetrieveRolesByGroupIdDataKey);
+        public static IEnumerable<Role> RetrieveRolesByGroupId(string groupId) => CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveRolesByGroupIdDataKey, groupId), key => DbAdapterManager.Create<Role>().RetrieveRolesByGroupId(groupId), RetrieveRolesByGroupIdDataKey);
         /// <summary>
         /// 根据GroupId更新Roles信息，删除旧的Roles信息，插入新的Roles信息
         /// </summary>
         /// <param name="id"></param>
         /// <param name="roleIds"></param>
         /// <returns></returns>
-        public static bool SaveRolesByGroupId(int id, IEnumerable<int> roleIds) => DbAdapterManager.Create<Role>().SaveRolesByGroupId(id, roleIds);
+        public static bool SaveRolesByGroupId(string id, IEnumerable<string> roleIds) => DbAdapterManager.Create<Role>().SaveRolesByGroupId(id, roleIds);
         /// <summary>
         /// 
         /// </summary>
