@@ -71,7 +71,7 @@ namespace Bootstrap.Admin.Controllers.Api
             return ret;
         }
         /// <summary>
-        /// 
+        /// 前台User View调用，新建/更新用户
         /// </summary>
         /// <param name="value"></param>
         [HttpPost]

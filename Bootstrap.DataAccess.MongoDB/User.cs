@@ -44,5 +44,49 @@ namespace Bootstrap.DataAccess.MongoDB
             var users = MongoDbAccessManager.DBAccess.GetCollection<DataAccess.User>("Users");
             return users.Find(user => user.ApprovedTime == DateTime.MinValue).SortByDescending(user => user.RegisterTime).ToList();
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override IEnumerable<DataAccess.User> RetrieveUsers()
+        {
+            var users = MongoDbAccessManager.DBAccess.GetCollection<DataAccess.User>("Users");
+            return users.Find(user => user.ApprovedTime != DateTime.MinValue).ToList();
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="p"></param>
+        /// <returns></returns>
+        public override bool SaveUser(DataAccess.User user)
+        {
+            if (user.Description.Length > 500) user.Description = user.Description.Substring(0, 500);
+            if (user.UserName.Length > 50) user.UserName = user.UserName.Substring(0, 50);
+            user.Id = null;
+            user.PassSalt = LgbCryptography.GenerateSalt();
+            user.Password = LgbCryptography.ComputeHash(user.Password, user.PassSalt);
+            user.RegisterTime = DateTime.Now;
+            user.ApprovedTime = DateTime.Now;
+            user.Icon = $"{DictHelper.RetrieveIconFolderPath().Code}default.jpg";
+            var users = MongoDbAccessManager.DBAccess.GetCollection<DataAccess.User>("Users");
+            users.InsertOne(user);
+            return true;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="password"></param>
+        /// <param name="displayName"></param>
+        /// <returns></returns>
+        public override bool UpdateUser(string id, string password, string displayName)
+        {
+            var passSalt = LgbCryptography.GenerateSalt();
+            var newPassword = LgbCryptography.ComputeHash(password, passSalt);
+            var update = Builders<DataAccess.User>.Update.Set(u => u.Password, newPassword).Set(u => u.PassSalt, passSalt).Set(u => u.DisplayName, displayName);
+            var users = MongoDbAccessManager.DBAccess.GetCollection<DataAccess.User>("Users");
+            users.FindOneAndUpdate(u => u.Id == id, update);
+            return true;
+        }
     }
 }

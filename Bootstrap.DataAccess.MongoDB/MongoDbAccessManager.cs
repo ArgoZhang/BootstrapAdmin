@@ -76,6 +76,10 @@ namespace Bootstrap.DataAccess.MongoDB
                     md.AutoMap();
                     md.IdMemberMap.SetSerializer(new StringSerializer(BsonType.ObjectId));
                     md.IdMemberMap.SetIgnoreIfDefault(true);
+                    md.UnmapMember(user => user.Checked);
+                    md.UnmapMember(user => user.Period);
+                    md.UnmapMember(user => user.NewPassword);
+                    md.UnmapMember(user => user.UserStatus);
                 });
             }
             if (!BsonClassMap.IsClassMapRegistered(typeof(BootstrapMenu)))

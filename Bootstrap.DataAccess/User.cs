@@ -183,14 +183,14 @@ namespace Bootstrap.DataAccess
             return ret;
         }
         /// <summary>
-        /// 保存新建
+        /// 新建前台User View调用/注册用户调用
         /// </summary>
         /// <param name="p"></param>
         /// <returns></returns>
         public virtual bool SaveUser(User p)
         {
             var ret = false;
-            if (string.IsNullOrEmpty(p.Id) && p.Description.Length > 500) p.Description = p.Description.Substring(0, 500);
+            if (p.Description.Length > 500) p.Description = p.Description.Substring(0, 500);
             if (p.UserName.Length > 50) p.UserName = p.UserName.Substring(0, 50);
             p.PassSalt = LgbCryptography.GenerateSalt();
             p.Password = LgbCryptography.ComputeHash(p.Password, p.PassSalt);
@@ -208,7 +208,7 @@ namespace Bootstrap.DataAccess
             return ret;
         }
         /// <summary>
-        /// 
+        /// User List 视图保存按钮调用
         /// </summary>
         /// <param name="id"></param>
         /// <param name="password"></param>
