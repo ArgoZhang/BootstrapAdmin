@@ -14,10 +14,21 @@ namespace Bootstrap.DataAccess.MongoDB
         /// 
         /// </summary>
         /// <returns></returns>
-        public override IEnumerable<BootstrapDict> RetrieveDicts()
+        public override IEnumerable<BootstrapDict> RetrieveDicts() => MongoDbAccessManager.Dicts.Find(FilterDefinition<BootstrapDict>.Empty).ToList();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public override bool DeleteDict(IEnumerable<string> value)
         {
-            var dicts = MongoDbAccessManager.DBAccess.GetCollection<Dict>("Dicts");
-            return dicts.Find(FilterDefinition<Dict>.Empty).ToList();
+            var list = new List<WriteModel<BootstrapDict>>();
+            foreach (var id in value)
+            {
+                list.Add(new DeleteOneModel<BootstrapDict>(Builders<BootstrapDict>.Filter.Eq(md => md.Id, id)));
+            }
+            MongoDbAccessManager.Dicts.BulkWrite(list);
+            return true;
         }
     }
 }

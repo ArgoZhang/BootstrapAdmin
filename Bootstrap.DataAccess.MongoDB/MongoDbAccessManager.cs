@@ -59,6 +59,16 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <summary>
         /// 
         /// </summary>
+        public static IMongoCollection<BootstrapDict> Dicts
+        {
+            get
+            {
+                return DBAccess.GetCollection<BootstrapDict>("Dicts");
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
         public static IMongoCollection<User> Users
         {
             get
@@ -66,7 +76,7 @@ namespace Bootstrap.DataAccess.MongoDB
                 return DBAccess.GetCollection<User>("Users");
             }
         }
-
+		
         private static void InitDb()
         {
             var connectString = DbAdapterManager.GetConnectionString("ba");

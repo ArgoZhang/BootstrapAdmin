@@ -31,13 +31,23 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="value">需要删除的IDs</param>
         /// <returns></returns>
-        public static bool DeleteDict(IEnumerable<string> value) => DbAdapterManager.Create<Dict>().DeleteDict(value);
+        public static bool DeleteDict(IEnumerable<string> value)
+        {
+            var ret = DbAdapterManager.Create<Dict>().DeleteDict(value);
+            CacheCleanUtility.ClearCache(dictIds: value);
+            return ret;
+        }
         /// <summary>
         /// 保存新建/更新的字典信息
         /// </summary>
         /// <param name="p"></param>
         /// <returns></returns>
-        public static bool SaveDict(BootstrapDict p) => DbAdapterManager.Create<Dict>().SaveDict(p);
+        public static bool SaveDict(BootstrapDict p)
+        {
+            var ret = DbAdapterManager.Create<Dict>().SaveDict(p);
+            if (ret) CacheCleanUtility.ClearCache( new List<string>() { p.Id });
+            return ret;
+        }
         /// <summary>
         /// 保存网站个性化设置
         /// </summary>
@@ -45,7 +55,12 @@ namespace Bootstrap.DataAccess
         /// <param name="code"></param>
         /// <param name="category"></param>
         /// <returns></returns>
-        public static bool SaveSettings(BootstrapDict dict) => DbAdapterManager.Create<Dict>().SaveSettings(dict);
+        public static bool SaveSettings(BootstrapDict dict)
+        {
+            var ret = DbAdapterManager.Create<Dict>().SaveSettings(dict);
+            if (ret) CacheCleanUtility.ClearCache(dictIds: new List<string>());
+            return ret;
+        }
         /// <summary>
         /// 获取字典分类名称
         /// </summary>

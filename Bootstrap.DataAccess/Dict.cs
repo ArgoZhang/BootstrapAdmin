@@ -26,7 +26,6 @@ namespace Bootstrap.DataAccess
             using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
             {
                 ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == value.Count();
-                CacheCleanUtility.ClearCache(dictIds: ids);
             }
             return ret;
         }
@@ -53,7 +52,6 @@ namespace Bootstrap.DataAccess
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Define", dict.Define));
                 ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
             }
-            CacheCleanUtility.ClearCache(dictIds: string.IsNullOrEmpty(dict.Id) ? string.Empty : dict.Id.ToString());
             return ret;
         }
         /// <summary>
@@ -74,7 +72,6 @@ namespace Bootstrap.DataAccess
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Category", dict.Category));
                 ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
             }
-            CacheCleanUtility.ClearCache(dictIds: string.Empty);
             return ret;
         }
         /// <summary>
