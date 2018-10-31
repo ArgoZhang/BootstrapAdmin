@@ -206,6 +206,7 @@ namespace Bootstrap.DataAccess.MongoDB
                     md.AutoMap();
                     md.IdMemberMap.SetSerializer(new StringSerializer(BsonType.ObjectId));
                     md.IdMemberMap.SetIgnoreIfDefault(true);
+                    md.UnmapMember(ex => ex.Period);
                 });
             }
             if (!BsonClassMap.IsClassMapRegistered(typeof(DataAccess.Log)))

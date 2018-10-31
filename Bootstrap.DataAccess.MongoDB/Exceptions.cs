@@ -35,16 +35,18 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <returns></returns>
         public override bool Log(Exception ex, NameValueCollection additionalInfo)
         {
-            var excep = new Exceptions();
-            excep.Id = null;
-            excep.AppDomainName = AppDomain.CurrentDomain.FriendlyName;
-            excep.ErrorPage = additionalInfo?["ErrorPage"];
-            excep.ExceptionType = ex.GetType().FullName;
-            excep.LogTime = DateTime.Now;
-            excep.Message = ex.Message;
-            excep.StackTrace = ex.StackTrace;
-            excep.UserId = additionalInfo?["UserId"];
-            excep.UserIp = additionalInfo?["UserIp"];
+            var excep = new DataAccess.Exceptions
+            {
+                Id = null,
+                AppDomainName = AppDomain.CurrentDomain.FriendlyName,
+                ErrorPage = additionalInfo?["ErrorPage"],
+                ExceptionType = ex.GetType().FullName,
+                LogTime = DateTime.Now,
+                Message = ex.Message,
+                StackTrace = ex.StackTrace,
+                UserId = additionalInfo?["UserId"],
+                UserIp = additionalInfo?["UserIp"]
+            };
             MongoDbAccessManager.Exceptions.InsertOne(excep);
             ClearExceptions();
             return true;
