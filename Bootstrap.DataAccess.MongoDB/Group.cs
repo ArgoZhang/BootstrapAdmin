@@ -124,5 +124,21 @@ namespace Bootstrap.DataAccess.MongoDB
             });
             return true;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public override IEnumerable<string> RetrieveGroupsByUserName(string userName)
+        {
+            var groups = new List<string>();
+            var user = UserHelper.RetrieveUsers().Cast<User>().FirstOrDefault(u => u.UserName == userName);
+            var group = GroupHelper.RetrieveGroups();
+
+            groups.AddRange(user.Groups.Select(r => group.FirstOrDefault(rl => rl.Id == r).GroupName));
+            if (groups.Count == 0) groups.Add("Default");
+            return groups;
+        }
     }
 }
