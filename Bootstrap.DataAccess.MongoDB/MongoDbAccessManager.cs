@@ -95,11 +95,11 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <summary>
         /// 
         /// </summary>
-        public static IMongoCollection<DataAccess.Role> Roles
+        public static IMongoCollection<Role> Roles
         {
             get
             {
-                return DBAccess.GetCollection<DataAccess.Role>("Roles");
+                return DBAccess.GetCollection<Role>("Roles");
             }
         }
 

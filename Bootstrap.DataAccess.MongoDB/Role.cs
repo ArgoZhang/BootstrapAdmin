@@ -10,13 +10,18 @@ namespace Bootstrap.DataAccess.MongoDB
     public class Role : DataAccess.Role
     {
         /// <summary>
+        /// 此角色关联的所有菜单
+        /// </summary>
+        public IEnumerable<string> Menus { get; set; }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         public override IEnumerable<DataAccess.Role> RetrieveRoles()
         {
-            return MongoDbAccessManager.Roles.Find(FilterDefinition<DataAccess.Role>.Empty).ToList();
+            return MongoDbAccessManager.Roles.Find(FilterDefinition<Role>.Empty).ToList();
         }
 
         /// <summary>
@@ -29,12 +34,12 @@ namespace Bootstrap.DataAccess.MongoDB
             if (p.Id == "0")
             {
                 p.Id = null;
-                MongoDbAccessManager.Roles.InsertOne(p);
+                MongoDbAccessManager.Roles.InsertOne(p as Role);
                 return true;
             }
             else
             {
-                MongoDbAccessManager.Roles.UpdateOne(md => md.Id == p.Id, Builders<DataAccess.Role>.Update.Set(md => md.RoleName, p.RoleName).Set(md => md.Description, p.Description));
+                MongoDbAccessManager.Roles.UpdateOne(md => md.Id == p.Id, Builders<Role>.Update.Set(md => md.RoleName, p.RoleName).Set(md => md.Description, p.Description));
                 return true;
             }
         }
@@ -46,10 +51,10 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <returns></returns>
         public override bool DeleteRole(IEnumerable<string> value)
         {
-            var list = new List<WriteModel<DataAccess.Role>>();
+            var list = new List<WriteModel<Role>>();
             foreach (var id in value)
             {
-                list.Add(new DeleteOneModel<DataAccess.Role>(Builders<DataAccess.Role>.Filter.Eq(g => g.Id, id)));
+                list.Add(new DeleteOneModel<Role>(Builders<Role>.Filter.Eq(g => g.Id, id)));
             }
             MongoDbAccessManager.Roles.BulkWrite(list);
             return true;
@@ -69,17 +74,6 @@ namespace Bootstrap.DataAccess.MongoDB
             roles.AddRange(user.Roles.Select(r => role.FirstOrDefault(rl => rl.Id == r).RoleName));
             if (roles.Count == 0) roles.Add("Default");
             return roles;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="url"></param>
-        /// <returns></returns>
-        public override IEnumerable<string> RetrieveRolesByUrl(string url)
-        {
-            // TODO: 需要菜单完成后处理此函数
-            return new List<string>() { "Administrators" };
         }
 
         /// <summary>
@@ -105,6 +99,51 @@ namespace Bootstrap.DataAccess.MongoDB
         {
             MongoDbAccessManager.Users.FindOneAndUpdate(u => u.Id == userId, Builders<User>.Update.Set(u => u.Roles, roleIds));
             return true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="menuId"></param>
+        /// <returns></returns>
+        public override IEnumerable<DataAccess.Role> RetrieveRolesByMenuId(string menuId)
+        {
+            var roles = RoleHelper.RetrieveRoles().Cast<Role>().ToList();
+            roles.ForEach(r => r.Checked = (r.Menus != null && r.Menus.Contains(menuId)) ? "checked" : "");
+            roles.ForEach(r => r.Menus = null);
+            return roles;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="menuId"></param>
+        /// <param name="roleIds"></param>
+        /// <returns></returns>
+        public override bool SavaRolesByMenuId(string menuId, IEnumerable<string> roleIds)
+        {
+            roleIds.ToList().ForEach(rId =>
+            {
+                var role = MongoDbAccessManager.Roles.Find(md => md.Id == rId).FirstOrDefault();
+                var menus = role.Menus == null ? new List<string>() : role.Menus.ToList();
+                if (!menus.Contains(menuId))
+                {
+                    menus.Add(menuId);
+                    MongoDbAccessManager.Roles.UpdateOne(md => md.Id == rId, Builders<Role>.Update.Set(md => md.Menus, menus));
+                }
+            });
+            return true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        public override IEnumerable<string> RetrieveRolesByUrl(string url)
+        {
+            // TODO: 需要菜单完成后处理此函数
+            return new List<string>() { "Administrators" };
         }
     }
 }
