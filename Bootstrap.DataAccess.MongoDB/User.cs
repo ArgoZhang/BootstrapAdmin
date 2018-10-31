@@ -21,6 +21,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// 
         /// </summary>
         public IEnumerable<string> Groups { get; set; }
+
         /// <summary>
         /// 
         /// </summary>
@@ -35,6 +36,7 @@ namespace Bootstrap.DataAccess.MongoDB
                .Include(u => u.Css);
             return MongoDbAccessManager.Users.Find(user => user.UserName == userName).Project<DataAccess.User>(project).FirstOrDefault();
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -48,11 +50,13 @@ namespace Bootstrap.DataAccess.MongoDB
             var u = MongoDbAccessManager.Users.Find(user => user.UserName == userName).FirstOrDefault();
             return !string.IsNullOrEmpty(u.PassSalt) && u.Password == LgbCryptography.ComputeHash(password, u.PassSalt);
         }
+
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
         public override IEnumerable<DataAccess.User> RetrieveNewUsers() => MongoDbAccessManager.Users.Find(user => user.ApprovedTime == DateTime.MinValue).SortByDescending(user => user.RegisterTime).ToList();
+
         /// <summary>
         /// 
         /// </summary>
@@ -70,6 +74,7 @@ namespace Bootstrap.DataAccess.MongoDB
                 .Include(u => u.Roles);
             return MongoDbAccessManager.Users.Find(user => user.ApprovedTime != DateTime.MinValue).Project<User>(project).ToList();
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -91,6 +96,7 @@ namespace Bootstrap.DataAccess.MongoDB
             MongoDbAccessManager.Users.InsertOne(user as User);
             return true;
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -106,6 +112,7 @@ namespace Bootstrap.DataAccess.MongoDB
             MongoDbAccessManager.Users.FindOneAndUpdate(u => u.Id == id, update);
             return true;
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -125,6 +132,7 @@ namespace Bootstrap.DataAccess.MongoDB
             }
             return ret;
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -138,6 +146,47 @@ namespace Bootstrap.DataAccess.MongoDB
                 list.Add(new DeleteOneModel<User>(Builders<User>.Filter.Eq(u => u.Id, id)));
             }
             MongoDbAccessManager.Users.BulkWrite(list);
+            return true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="roleId"></param>
+        /// <returns></returns>
+        public override IEnumerable<DataAccess.User> RetrieveUsersByRoleId(string roleId)
+        {
+            var users = UserHelper.RetrieveUsers().Cast<User>().ToList();
+            users.ForEach(p => p.Checked = (p.Roles != null && p.Roles.Contains(roleId)) ? "checked" : "");
+            return users;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="roleId"></param>
+        /// <param name="userIds"></param>
+        /// <returns></returns>
+        public override bool SaveUsersByRoleId(string roleId, IEnumerable<string> userIds)
+        {
+            var users = MongoDbAccessManager.Users.Find(md => md.Roles != null && md.Roles.Contains(roleId)).ToList();
+
+            // Remove roles
+            users.ForEach(p =>
+            {
+                var roles = p.Roles == null ? new List<string>() : p.Roles.ToList();
+                roles.Remove(roleId);
+                MongoDbAccessManager.Users.UpdateOne(md => md.Id == p.Id, Builders<User>.Update.Set(md => md.Roles, roles));
+            });
+
+            users = MongoDbAccessManager.Users.Find(md => userIds.Contains(md.Id)).ToList();
+            // Add roles
+            users.ForEach(p =>
+            {
+                var roles = p.Roles == null ? new List<string>() : p.Roles.ToList();
+                roles.Add(roleId);
+                MongoDbAccessManager.Users.UpdateOne(md => md.Id == p.Id, Builders<User>.Update.Set(md => md.Roles, roles));
+            });
             return true;
         }
     }

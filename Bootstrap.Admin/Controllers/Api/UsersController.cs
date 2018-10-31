@@ -54,21 +54,23 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="type"></param>
         /// <returns></returns>
         [HttpPost("{id}")]
-        public IEnumerable<User> Post(string id, [FromQuery]string type)
+        public IEnumerable<object> Post(string id, [FromQuery]string type)
         {
-            var ret = new List<User>();
             switch (type)
             {
                 case "role":
-                    ret = UserHelper.RetrieveUsersByRoleId(id).ToList();
-                    break;
+                    return UserHelper.RetrieveUsersByRoleId(id).Select(p => new
+                    {
+                        p.Id,
+                        p.DisplayName,
+                        p.UserName,
+                        p.Checked
+                    });
                 case "group":
-                    ret = UserHelper.RetrieveUsersByGroupId(id).ToList();
-                    break;
+                    return UserHelper.RetrieveUsersByGroupId(id).ToList();
                 default:
-                    break;
+                    return null;
             }
-            return ret;
         }
         /// <summary>
         /// 前台User View调用，新建/更新用户
