@@ -23,6 +23,7 @@ namespace Bootstrap.Admin.Controllers.Api
         {
             return value.RetrieveData();
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -33,6 +34,7 @@ namespace Bootstrap.Admin.Controllers.Api
         {
             return GroupHelper.RetrieveGroups().FirstOrDefault(t => t.Id == id);
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -42,6 +44,7 @@ namespace Bootstrap.Admin.Controllers.Api
         {
             return GroupHelper.SaveGroup(value);
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -51,8 +54,9 @@ namespace Bootstrap.Admin.Controllers.Api
         {
             return GroupHelper.DeleteGroup(value);
         }
+
         /// <summary>
-        /// 
+        /// 获取部门授权
         /// </summary>
         /// <param name="id"></param>
         /// <param name="type"></param>
@@ -74,8 +78,9 @@ namespace Bootstrap.Admin.Controllers.Api
             }
             return ret;
         }
+
         /// <summary>
-        /// 
+        /// 保存部门授权
         /// </summary>
         /// <param name="id"></param>
         /// <param name="groupIds"></param>

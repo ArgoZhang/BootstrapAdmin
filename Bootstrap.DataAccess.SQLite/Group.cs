@@ -36,7 +36,6 @@ namespace Bootstrap.DataAccess.SQLite
                         DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
 
                         transaction.CommitTransaction();
-                        CacheCleanUtility.ClearCache(groupIds: value);
                         ret = true;
                     }
                     catch (Exception ex)
@@ -76,7 +75,6 @@ namespace Bootstrap.DataAccess.SQLite
                         });
                         transaction.CommitTransaction();
                     }
-                    CacheCleanUtility.ClearCache(groupIds: groupIds, userIds: new List<string>() { userId });
                     ret = true;
                 }
                 catch (Exception ex)
@@ -113,7 +111,6 @@ namespace Bootstrap.DataAccess.SQLite
                         });
                         transaction.CommitTransaction();
                     }
-                    CacheCleanUtility.ClearCache(groupIds: groupIds, roleIds: new List<string>() { roleId });
                     ret = true;
                 }
                 catch (Exception ex)

@@ -13,23 +13,36 @@ namespace Bootstrap.DataAccess
         public const string RetrieveGroupsByUserIdDataKey = "GroupHelper-RetrieveGroupsByUserId";
         public const string RetrieveGroupsByRoleIdDataKey = "GroupHelper-RetrieveGroupsByRoleId";
         public const string RetrieveGroupsByUserNameDataKey = "GroupHelper-RetrieveGroupsByUserName";
+
         /// <summary>
         /// 查询所有群组信息
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         public static IEnumerable<Group> RetrieveGroups() => CacheManager.GetOrAdd(RetrieveGroupsDataKey, key => DbAdapterManager.Create<Group>().RetrieveGroups());
+
         /// <summary>
         /// 删除群组信息
         /// </summary>
         /// <param name="ids"></param>
-        public static bool DeleteGroup(IEnumerable<string> value) => DbAdapterManager.Create<Group>().DeleteGroup(value);
+        public static bool DeleteGroup(IEnumerable<string> value)
+        {
+            var ret = DbAdapterManager.Create<Group>().DeleteGroup(value);
+            if (ret) CacheCleanUtility.ClearCache(groupIds: value);
+            return ret;
+        }
+
         /// <summary>
         /// 保存新建/更新的群组信息
         /// </summary>
         /// <param name="p"></param>
         /// <returns></returns>
-        public static bool SaveGroup(Group p) => DbAdapterManager.Create<Group>().SaveGroup(p);
+        public static bool SaveGroup(Group p)
+        {
+            var ret = DbAdapterManager.Create<Group>().SaveGroup(p);
+            if (ret) CacheCleanUtility.ClearCache(groupIds: string.IsNullOrEmpty(p.Id) ? new List<string>() : new List<string>() { p.Id });
+            return ret;
+        }
         /// <summary>
         /// 根据用户查询部门信息
         /// </summary>
@@ -43,20 +56,33 @@ namespace Bootstrap.DataAccess
         /// <param name="userId"></param>
         /// <param name="groupIds"></param>
         /// <returns></returns>
-        public static bool SaveGroupsByUserId(string userId, IEnumerable<string> groupIds) => DbAdapterManager.Create<Group>().SaveGroupsByUserId(userId, groupIds);
+        public static bool SaveGroupsByUserId(string userId, IEnumerable<string> groupIds)
+        {
+            var ret = DbAdapterManager.Create<Group>().SaveGroupsByUserId(userId, groupIds);
+            if (ret) CacheCleanUtility.ClearCache(groupIds: groupIds, userIds: new List<string>() { userId });
+            return ret;
+        }
+
         /// <summary>
         /// 根据角色ID指派部门
         /// </summary>
         /// <param name="roleId"></param>
         /// <returns></returns>
         public static IEnumerable<Group> RetrieveGroupsByRoleId(string roleId) => CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveGroupsByRoleIdDataKey, roleId), key => DbAdapterManager.Create<Group>().RetrieveGroupsByRoleId(roleId), RetrieveGroupsByRoleIdDataKey);
+
         /// <summary>
         /// 根据角色ID以及选定的部门ID，保到角色部门表
         /// </summary>
         /// <param name="roleId"></param>
         /// <param name="groupIds"></param>
         /// <returns></returns>
-        public static bool SaveGroupsByRoleId(string roleId, IEnumerable<string> groupIds) => DbAdapterManager.Create<Group>().SaveGroupsByRoleId(roleId, groupIds);
+        public static bool SaveGroupsByRoleId(string roleId, IEnumerable<string> groupIds)
+        {
+            var ret = DbAdapterManager.Create<Group>().SaveGroupsByRoleId(roleId, groupIds);
+            if (ret) CacheCleanUtility.ClearCache(groupIds: groupIds, roleIds: new List<string>() { roleId });
+            return ret;
+        }
+
         /// <summary>
         /// 
         /// </summary>

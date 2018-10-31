@@ -66,7 +66,6 @@ namespace Bootstrap.DataAccess
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@ids", ids));
                 ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == -1;
             }
-            CacheCleanUtility.ClearCache(groupIds: value);
             return ret;
         }
         /// <summary>
@@ -89,7 +88,6 @@ namespace Bootstrap.DataAccess
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Description", DbAdapterManager.ToDBValue(p.Description)));
                 ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
             }
-            CacheCleanUtility.ClearCache(groupIds: string.IsNullOrEmpty(p.Id) ? new List<string>() : new List<string>() { p.Id });
             return ret;
         }
         /// <summary>
@@ -153,7 +151,6 @@ namespace Bootstrap.DataAccess
                             transaction.CommitTransaction();
                         }
                     }
-                    CacheCleanUtility.ClearCache(groupIds: groupIds, userIds: new List<string>() { userId });
                     ret = true;
                 }
                 catch (Exception ex)
@@ -223,7 +220,6 @@ namespace Bootstrap.DataAccess
                             transaction.CommitTransaction();
                         }
                     }
-                    CacheCleanUtility.ClearCache(groupIds: groupIds, roleIds: new List<string>() { roleId });
                     ret = true;
                 }
                 catch (Exception ex)

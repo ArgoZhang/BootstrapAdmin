@@ -16,6 +16,7 @@ namespace Bootstrap.DataAccess.MongoDB
     {
         private static IMongoDatabase _db = null;
         private static bool _register = false;
+
         /// <summary>
         /// 
         /// </summary>
@@ -36,6 +37,7 @@ namespace Bootstrap.DataAccess.MongoDB
                 return _db;
             }
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -46,6 +48,7 @@ namespace Bootstrap.DataAccess.MongoDB
                 return DBAccess.GetCollection<DataAccess.Log>("Logs");
             }
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -66,6 +69,7 @@ namespace Bootstrap.DataAccess.MongoDB
                 return DBAccess.GetCollection<BootstrapDict>("Dicts");
             }
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -76,7 +80,18 @@ namespace Bootstrap.DataAccess.MongoDB
                 return DBAccess.GetCollection<User>("Users");
             }
         }
-		
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static IMongoCollection<DataAccess.Group> Groups
+        {
+            get
+            {
+                return DBAccess.GetCollection<DataAccess.Group>("Groups");
+            }
+        }
+
         private static void InitDb()
         {
             var connectString = DbAdapterManager.GetConnectionString("ba");
