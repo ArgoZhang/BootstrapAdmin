@@ -72,5 +72,24 @@ namespace Bootstrap.DataAccess.MongoDB
             MongoDbAccessManager.Menus.BulkWrite(list);
             return true;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="roleId"></param>
+        /// <returns></returns>
+        public override IEnumerable<object> RetrieveMenusByRoleId(string roleId) => MongoDbAccessManager.Roles.Find(md => md.Id == roleId).FirstOrDefault().Menus.Select(m => new { Id = m });
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="roleId"></param>
+        /// <param name="menuIds"></param>
+        /// <returns></returns>
+        public override bool SaveMenusByRoleId(string roleId, IEnumerable<string> menuIds)
+        {
+            MongoDbAccessManager.Roles.FindOneAndUpdate(md => md.Id == roleId, Builders<Role>.Update.Set(md => md.Menus, menuIds));
+            return true;
+        }
     }
 }

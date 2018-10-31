@@ -66,7 +66,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="roleId"></param>
         /// <returns></returns>
-        public virtual IEnumerable<BootstrapMenu> RetrieveMenusByRoleId(string roleId)
+        public virtual IEnumerable<object> RetrieveMenusByRoleId(string roleId)
         {
             var menus = new List<BootstrapMenu>();
             string sql = "select NavigationID from NavigationRole where RoleID = @RoleID";
@@ -84,7 +84,7 @@ namespace Bootstrap.DataAccess
                     }
                 }
             }
-            return menus;
+            return menus.Select(m => m.Id);
         }
         /// <summary>
         /// 通过角色ID保存当前授权菜单
