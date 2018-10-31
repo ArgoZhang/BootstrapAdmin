@@ -20,7 +20,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="value"></param>
         /// <returns></returns>
         [HttpGet]
-        public QueryData<BootstrapMenu> Get(QueryMenuOption value)
+        public QueryData<object> Get(QueryMenuOption value)
         {
             return value.RetrieveData(User.Identity.Name);
         }

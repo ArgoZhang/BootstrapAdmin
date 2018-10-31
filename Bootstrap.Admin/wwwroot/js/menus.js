@@ -75,7 +75,11 @@
             sortName: 'Order',
             queryParams: function (params) { return $.extend(params, { parentName: $('#txt_parent_menus_name').val(), name: $("#txt_menus_name").val(), category: $('#sel_menus_category').val(), isresource: $('#sel_menus_res').val() }); },           //传递参数（*）
             columns: [
-                { title: "父级菜单", field: "ParentName", sortable: true },
+                {
+                    title: "父级菜单", field: "ParentName", sortable: true, formatter: function (value, row, index) {
+                        return (value === "0" || value === null) ? "" : value;
+                    }
+                },
                 { title: "菜单名称", field: "Name", sortable: true },
                 { title: "菜单序号", field: "Order", sortable: true },
                 {

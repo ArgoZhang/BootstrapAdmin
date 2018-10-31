@@ -1,5 +1,4 @@
 ﻿using Bootstrap.DataAccess;
-using Bootstrap.Security;
 using Longbow.Web.Mvc;
 using System.Linq;
 
@@ -31,7 +30,7 @@ namespace Bootstrap.Admin.Query
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public QueryData<BootstrapMenu> RetrieveData(string userName)
+        public QueryData<object> RetrieveData(string userName)
         {
             var data = MenuHelper.RetrieveMenusByUserName(userName);
             if (!string.IsNullOrEmpty(ParentName))
@@ -50,7 +49,7 @@ namespace Bootstrap.Admin.Query
             {
                 data = data.Where(t => t.IsResource.ToString() == IsResource);
             }
-            var ret = new QueryData<BootstrapMenu>();
+            var ret = new QueryData<object>();
             ret.total = data.Count();
             switch (Sort)
             {
@@ -78,7 +77,21 @@ namespace Bootstrap.Admin.Query
                 default:
                     break;
             }
-            ret.rows = data.Skip(Offset).Take(Limit);
+            ret.rows = data.Skip(Offset).Take(Limit).Select(p => new
+            {
+                p.Id,
+                p.ParentId,
+                p.ParentName,
+                p.Name,
+                p.Order,
+                p.Icon,
+                p.Url,
+                p.Category,
+                p.CategoryName,
+                p.Target,
+                p.IsResource,
+                p.ApplicationCode
+            });
             return ret;
         }
     }

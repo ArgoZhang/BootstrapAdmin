@@ -16,41 +16,63 @@ namespace Bootstrap.DataAccess
         /// 
         /// </summary>
         public const string RetrieveMenusByRoleIdDataKey = "MenuHelper-RetrieveMenusByRoleId";
+
         /// <summary>
         /// 
         /// </summary>
         public const string RetrieveMenusAll = "BootstrapMenu-RetrieveMenus";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="p"></param>
+        /// <returns></returns>
+        public static bool SaveMenu(BootstrapMenu p)
+        {
+            var ret = DbAdapterManager.Create<Menu>().SaveMenu(p);
+            if (ret) CacheCleanUtility.ClearCache(menuIds: string.IsNullOrEmpty(p.Id) ? new List<string>() : new List<string>() { p.Id });
+            return ret;
+        }
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static bool SaveMenu(BootstrapMenu value) => DbAdapterManager.Create<Menu>().SaveMenu(value);
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public static bool DeleteMenu(IEnumerable<string> value) => DbAdapterManager.Create<Menu>().DeleteMenu(value);
+        public static bool DeleteMenu(IEnumerable<string> value)
+        {
+            var ret = DbAdapterManager.Create<Menu>().DeleteMenu(value);
+            if (ret) CacheCleanUtility.ClearCache(menuIds: value);
+            return ret;
+        }
+
         /// <summary>
         /// 通过用户名获得所有菜单
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
         public static IEnumerable<BootstrapMenu> RetrieveMenusByUserName(string userName) => RetrieveAllMenus(userName);
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="roleId"></param>
         /// <returns></returns>
         public static IEnumerable<BootstrapMenu> RetrieveMenusByRoleId(string roleId) => CacheManager.GetOrAdd($"{RetrieveMenusByRoleIdDataKey}-{roleId}", k => DbAdapterManager.Create<Menu>().RetrieveMenusByRoleId(roleId), RetrieveMenusByRoleIdDataKey);
+
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="value"></param>
+        /// <param name="roleId"></param>
+        /// <param name="menuIds"></param>
         /// <returns></returns>
-        public static bool SaveMenusByRoleId(string id, IEnumerable<string> value) => DbAdapterManager.Create<Menu>().SaveMenusByRoleId(id, value);
+        public static bool SaveMenusByRoleId(string roleId, IEnumerable<string> menuIds)
+        {
+            var ret = DbAdapterManager.Create<Menu>().SaveMenusByRoleId(roleId, menuIds);
+            if (ret) CacheCleanUtility.ClearCache(menuIds: menuIds, roleIds: new List<string>() { roleId });
+            return ret;
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -66,6 +88,7 @@ namespace Bootstrap.DataAccess
             DbHelper.CascadeMenus(menus, root);
             return root;
         }
+
         /// <summary>
         /// 通过当前用户名获得后台菜单，层次化后集合
         /// </summary>
@@ -82,6 +105,7 @@ namespace Bootstrap.DataAccess
             DbHelper.CascadeMenus(menus, root);
             return root;
         }
+
         /// <summary>
         /// 通过当前用户名获得所有菜单，层次化后集合
         /// </summary>
@@ -94,6 +118,7 @@ namespace Bootstrap.DataAccess
             DbHelper.CascadeMenus(menus, root);
             return root;
         }
+
         /// <summary>
         /// 通过用户获得所有菜单
         /// </summary>

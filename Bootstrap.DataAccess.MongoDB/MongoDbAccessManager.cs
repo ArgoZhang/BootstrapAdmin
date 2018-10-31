@@ -103,6 +103,17 @@ namespace Bootstrap.DataAccess.MongoDB
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public static IMongoCollection<BootstrapMenu> Menus
+        {
+            get
+            {
+                return DBAccess.GetCollection<BootstrapMenu>("Navigations");
+            }
+        }
+
         private static void InitDb()
         {
             var connectString = DbAdapterManager.GetConnectionString("ba");

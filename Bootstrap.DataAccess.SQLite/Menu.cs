@@ -32,7 +32,6 @@ namespace Bootstrap.DataAccess.SQLite
                         DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
 
                         transaction.CommitTransaction();
-                        CacheCleanUtility.ClearCache(menuIds: value);
                         ret = true;
                     }
                     catch (Exception ex)
@@ -44,6 +43,7 @@ namespace Bootstrap.DataAccess.SQLite
             }
             return ret;
         }
+
         /// <summary>
         /// <summary>
         /// 通过角色ID保存当前授权菜单
@@ -71,7 +71,6 @@ namespace Bootstrap.DataAccess.SQLite
                         });
                         transaction.CommitTransaction();
                     }
-                    CacheCleanUtility.ClearCache(menuIds: menuIds, roleIds: new List<string>() { roleId });
                     ret = true;
                 }
                 catch (Exception ex)
