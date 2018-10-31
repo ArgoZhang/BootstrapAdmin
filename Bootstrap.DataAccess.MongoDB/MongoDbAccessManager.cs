@@ -92,6 +92,17 @@ namespace Bootstrap.DataAccess.MongoDB
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public static IMongoCollection<DataAccess.Role> Roles
+        {
+            get
+            {
+                return DBAccess.GetCollection<DataAccess.Role>("Roles");
+            }
+        }
+
         private static void InitDb()
         {
             var connectString = DbAdapterManager.GetConnectionString("ba");

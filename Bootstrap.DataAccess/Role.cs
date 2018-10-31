@@ -18,18 +18,22 @@ namespace Bootstrap.DataAccess
         /// 获得/设置 角色主键ID
         /// </summary>
         public string Id { get; set; }
+
         /// <summary>
         /// 获得/设置 角色名称
         /// </summary>
         public string RoleName { get; set; }
+
         /// <summary>
         /// 获得/设置 角色描述
         /// </summary>
         public string Description { get; set; }
+
         /// <summary>
         /// 获取/设置 用户角色关联状态 checked 标示已经关联 '' 标示未关联
         /// </summary>
         public string Checked { get; set; }
+
         /// <summary>
         /// 查询所有角色
         /// </summary>
@@ -53,6 +57,7 @@ namespace Bootstrap.DataAccess
             }
             return roles;
         }
+
         /// <summary>
         /// 保存用户角色关系
         /// </summary>
@@ -89,7 +94,6 @@ namespace Bootstrap.DataAccess
                         }
                         transaction.CommitTransaction();
                     }
-                    CacheCleanUtility.ClearCache(userIds: new List<string>() { userId }, roleIds: roleIds);
                     ret = true;
                 }
                 catch (Exception ex)
@@ -100,6 +104,7 @@ namespace Bootstrap.DataAccess
             }
             return ret;
         }
+
         /// <summary>
         /// 查询某个用户所拥有的角色
         /// </summary>
@@ -125,6 +130,7 @@ namespace Bootstrap.DataAccess
             }
             return roles;
         }
+
         /// <summary>
         /// 删除角色表
         /// </summary>
@@ -138,9 +144,9 @@ namespace Bootstrap.DataAccess
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@ids", ids));
                 ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == -1;
             }
-            CacheCleanUtility.ClearCache(roleIds: value);
             return ret;
         }
+
         /// <summary>
         /// 保存新建/更新的角色信息
         /// </summary>
@@ -161,9 +167,9 @@ namespace Bootstrap.DataAccess
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Description", DbAdapterManager.ToDBValue(p.Description)));
                 ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
             }
-            CacheCleanUtility.ClearCache(roleIds: string.IsNullOrEmpty(p.Id) ? new List<string>() : new List<string> { p.Id });
             return ret;
         }
+
         /// <summary>
         /// 查询某个菜单所拥有的角色
         /// </summary>
@@ -190,6 +196,7 @@ namespace Bootstrap.DataAccess
             }
             return roles;
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -225,7 +232,6 @@ namespace Bootstrap.DataAccess
                             transaction.CommitTransaction();
                         }
                     }
-                    CacheCleanUtility.ClearCache(roleIds: roleIds, menuIds: new List<string>() { menuId });
                     ret = true;
                 }
                 catch (Exception ex)
@@ -236,6 +242,7 @@ namespace Bootstrap.DataAccess
             }
             return ret;
         }
+
         /// <summary>
         /// 根据GroupId查询和该Group有关的所有Roles
         /// </summary>
@@ -262,6 +269,7 @@ namespace Bootstrap.DataAccess
             }
             return roles;
         }
+
         /// <summary>
         /// 根据GroupId更新Roles信息，删除旧的Roles信息，插入新的Roles信息
         /// </summary>
@@ -297,7 +305,6 @@ namespace Bootstrap.DataAccess
                             transaction.CommitTransaction();
                         }
                     }
-                    CacheCleanUtility.ClearCache(roleIds: roleIds, groupIds: new List<string>() { groupId });
                     ret = true;
                 }
                 catch (Exception ex)
@@ -308,12 +315,14 @@ namespace Bootstrap.DataAccess
             }
             return ret;
         }
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
         public virtual IEnumerable<string> RetrieveRolesByUserName(string userName) => DbHelper.RetrieveRolesByUserName(userName);
+
         /// <summary>
         /// 根据菜单url查询某个所拥有的角色
         /// 从NavigatorRole表查

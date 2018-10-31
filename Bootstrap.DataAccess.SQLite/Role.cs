@@ -39,7 +39,6 @@ namespace Bootstrap.DataAccess.SQLite
                         });
                         transaction.CommitTransaction();
                     }
-                    CacheCleanUtility.ClearCache(userIds: new List<string>() { userId }, roleIds: roleIds);
                     ret = true;
                 }
                 catch (Exception ex)
@@ -50,6 +49,7 @@ namespace Bootstrap.DataAccess.SQLite
             }
             return ret;
         }
+
         /// <summary>
         /// 删除角色表
         /// </summary>
@@ -76,7 +76,6 @@ namespace Bootstrap.DataAccess.SQLite
                         DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
 
                         transaction.CommitTransaction();
-                        CacheCleanUtility.ClearCache(roleIds: value);
                         ret = true;
                     }
                     catch (Exception ex)
@@ -88,6 +87,7 @@ namespace Bootstrap.DataAccess.SQLite
             }
             return ret;
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -115,7 +115,6 @@ namespace Bootstrap.DataAccess.SQLite
                         });
                         transaction.CommitTransaction();
                     }
-                    CacheCleanUtility.ClearCache(roleIds: roleIds, menuIds: new List<string>() { menuId });
                     ret = true;
                 }
                 catch (Exception ex)
@@ -126,6 +125,7 @@ namespace Bootstrap.DataAccess.SQLite
             }
             return ret;
         }
+
         /// <summary>
         /// 根据GroupId更新Roles信息，删除旧的Roles信息，插入新的Roles信息
         /// </summary>
@@ -154,7 +154,6 @@ namespace Bootstrap.DataAccess.SQLite
                         });
                         transaction.CommitTransaction();
                     }
-                    CacheCleanUtility.ClearCache(roleIds: roleIds, groupIds: new List<string>() { groupId });
                     ret = true;
                 }
                 catch (Exception ex)
