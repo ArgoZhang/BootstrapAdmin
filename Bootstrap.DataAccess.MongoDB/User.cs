@@ -189,5 +189,46 @@ namespace Bootstrap.DataAccess.MongoDB
             });
             return true;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="groupId"></param>
+        /// <returns></returns>
+        public override IEnumerable<DataAccess.User> RetrieveUsersByGroupId(string groupId)
+        {
+            var users = UserHelper.RetrieveUsers().Cast<User>().ToList();
+            users.ForEach(p => p.Checked = (p.Groups != null && p.Groups.Contains(groupId)) ? "checked" : "");
+            return users;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="groupId"></param>
+        /// <param name="userIds"></param>
+        /// <returns></returns>
+        public override bool SaveUsersByGroupId(string groupId, IEnumerable<string> userIds)
+        {
+            var users = MongoDbAccessManager.Users.Find(md => md.Groups != null && md.Groups.Contains(groupId)).ToList();
+
+            // Remove roles
+            users.ForEach(p =>
+            {
+                var groups = p.Groups == null ? new List<string>() : p.Groups.ToList();
+                groups.Remove(groupId);
+                MongoDbAccessManager.Users.UpdateOne(md => md.Id == p.Id, Builders<User>.Update.Set(md => md.Groups, groups));
+            });
+
+            users = MongoDbAccessManager.Users.Find(md => userIds.Contains(md.Id)).ToList();
+            // Add roles
+            users.ForEach(p =>
+            {
+                var groups = p.Groups == null ? new List<string>() : p.Groups.ToList();
+                groups.Add(groupId);
+                MongoDbAccessManager.Users.UpdateOne(md => md.Id == p.Id, Builders<User>.Update.Set(md => md.Groups, groups));
+            });
+            return true;
+        }
     }
 }

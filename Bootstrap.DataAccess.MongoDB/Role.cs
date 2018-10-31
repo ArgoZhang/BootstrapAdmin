@@ -148,6 +148,31 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="groupId"></param>
+        /// <returns></returns>
+        public override IEnumerable<DataAccess.Role> RetrieveRolesByGroupId(string groupId)
+        {
+            var roles = RoleHelper.RetrieveRoles();
+            var group = GroupHelper.RetrieveGroups().Cast<Group>().FirstOrDefault(u => u.Id == groupId);
+            roles.ToList().ForEach(r => r.Checked = group.Roles.Any(id => id == r.Id) ? "checked" : "");
+            return roles;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="groupId"></param>
+        /// <param name="roleIds"></param>
+        /// <returns></returns>
+        public override bool SaveRolesByGroupId(string groupId, IEnumerable<string> roleIds)
+        {
+            MongoDbAccessManager.Groups.FindOneAndUpdate(u => u.Id == groupId, Builders<Group>.Update.Set(u => u.Roles, roleIds));
+            return true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
         public override IEnumerable<string> RetrieveRolesByUrl(string url)
