@@ -62,21 +62,21 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="type"></param>
         /// <returns></returns>
         [HttpPost("{id}")]
-        public IEnumerable<Group> Post(string id, [FromQuery]string type)
+        public IEnumerable<object> Post(string id, [FromQuery]string type)
         {
-            var ret = new List<Group>();
+            IEnumerable<Group> ret = new List<Group>();
             switch (type)
             {
                 case "user":
-                    ret = GroupHelper.RetrieveGroupsByUserId(id).ToList();
+                    ret = GroupHelper.RetrieveGroupsByUserId(id);
                     break;
                 case "role":
-                    ret = GroupHelper.RetrieveGroupsByRoleId(id).ToList();
+                    ret = GroupHelper.RetrieveGroupsByRoleId(id);
                     break;
                 default:
                     break;
             }
-            return ret;
+            return ret.Select(p => new { p.Id, p.Checked, p.GroupName, p.Description });
         }
 
         /// <summary>

@@ -84,11 +84,11 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <summary>
         /// 
         /// </summary>
-        public static IMongoCollection<DataAccess.Group> Groups
+        public static IMongoCollection<Group> Groups
         {
             get
             {
-                return DBAccess.GetCollection<DataAccess.Group>("Groups");
+                return DBAccess.GetCollection<Group>("Groups");
             }
         }
 

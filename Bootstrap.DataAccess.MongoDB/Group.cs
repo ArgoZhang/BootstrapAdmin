@@ -12,10 +12,15 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <summary>
         /// 
         /// </summary>
+        public IEnumerable<string> Roles { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <returns></returns>
         public override IEnumerable<DataAccess.Group> RetrieveGroups()
         {
-            return MongoDbAccessManager.Groups.Find(FilterDefinition<DataAccess.Group>.Empty).ToList();
+            return MongoDbAccessManager.Groups.Find(FilterDefinition<Group>.Empty).ToList();
         }
 
         /// <summary>
@@ -28,12 +33,12 @@ namespace Bootstrap.DataAccess.MongoDB
             if (p.Id == "0")
             {
                 p.Id = null;
-                MongoDbAccessManager.Groups.InsertOne(p);
+                MongoDbAccessManager.Groups.InsertOne(p as Group);
                 return true;
             }
             else
             {
-                MongoDbAccessManager.Groups.UpdateOne(md => md.Id == p.Id, Builders<DataAccess.Group>.Update.Set(md => md.GroupName, p.GroupName).Set(md => md.Description, p.Description));
+                MongoDbAccessManager.Groups.UpdateOne(md => md.Id == p.Id, Builders<Group>.Update.Set(md => md.GroupName, p.GroupName).Set(md => md.Description, p.Description));
                 return true;
             }
         }
@@ -45,10 +50,10 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <returns></returns>
         public override bool DeleteGroup(IEnumerable<string> value)
         {
-            var list = new List<WriteModel<DataAccess.Group>>();
+            var list = new List<WriteModel<Group>>();
             foreach (var id in value)
             {
-                list.Add(new DeleteOneModel<DataAccess.Group>(Builders<DataAccess.Group>.Filter.Eq(g => g.Id, id)));
+                list.Add(new DeleteOneModel<Group>(Builders<Group>.Filter.Eq(g => g.Id, id)));
             }
             MongoDbAccessManager.Groups.BulkWrite(list);
             return true;
@@ -83,11 +88,41 @@ namespace Bootstrap.DataAccess.MongoDB
         /// 
         /// </summary>
         /// <param name="roleId"></param>
+        /// <returns></returns>
+        public override IEnumerable<DataAccess.Group> RetrieveGroupsByRoleId(string roleId)
+        {
+            var groups = GroupHelper.RetrieveGroups().Cast<Group>().ToList();
+            groups.ForEach(p => p.Checked = (p.Roles != null && p.Roles.Contains(roleId)) ? "checked" : "");
+            return groups;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="roleId"></param>
         /// <param name="groupIds"></param>
         /// <returns></returns>
         public override bool SaveGroupsByRoleId(string roleId, IEnumerable<string> groupIds)
         {
-            return base.SaveGroupsByRoleId(roleId, groupIds);
+            var groups = MongoDbAccessManager.Groups.Find(md => md.Roles != null && md.Roles.Contains(roleId)).ToList();
+
+            // Remove roles
+            groups.ForEach(p =>
+            {
+                var roles = p.Roles == null ? new List<string>() : p.Roles.ToList();
+                roles.Remove(roleId);
+                MongoDbAccessManager.Groups.UpdateOne(md => md.Id == p.Id, Builders<Group>.Update.Set(md => md.Roles, roles));
+            });
+
+            groups = MongoDbAccessManager.Groups.Find(md => groupIds.Contains(md.Id)).ToList();
+            // Add roles
+            groups.ForEach(p =>
+            {
+                var roles = p.Roles == null ? new List<string>() : p.Roles.ToList();
+                roles.Add(roleId);
+                MongoDbAccessManager.Groups.UpdateOne(md => md.Id == p.Id, Builders<Group>.Update.Set(md => md.Roles, roles));
+            });
+            return true;
         }
     }
 }
