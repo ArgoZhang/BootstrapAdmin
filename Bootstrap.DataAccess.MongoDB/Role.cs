@@ -177,8 +177,10 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <returns></returns>
         public override IEnumerable<string> RetrieveRolesByUrl(string url)
         {
-            // TODO: 需要菜单完成后处理此函数
-            return new List<string>() { "Administrators" };
+            var menu = MongoDbAccessManager.Menus.Find(md => md.Url.StartsWith(url)).FirstOrDefault();
+            var ret = RoleHelper.RetrieveRoles().Cast<Role>().Where(md => md.Menus != null && md.Menus.Contains(menu.Id)).Select(m => m.RoleName).ToList();
+            if (!ret.Contains("Administrators")) ret.Add("Administrators");
+            return ret;
         }
     }
 }
