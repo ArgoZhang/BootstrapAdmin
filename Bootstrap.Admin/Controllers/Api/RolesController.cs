@@ -25,37 +25,37 @@ namespace Bootstrap.Admin.Controllers.Api
             return value.RetrieveData();
         }
         /// <summary>
-        /// 通过指定ID获得所有角色集合
+        /// 通过指定用户ID/部门ID/菜单ID获得所有角色集合，已经授权的有checked标记
         /// </summary>
         /// <param name="id">用户ID/部门ID/菜单ID</param>
         /// <param name="type">类型</param>
         /// <returns></returns>
         [HttpPost("{id}")]
-        public IEnumerable<Role> Post(string id, [FromQuery]string type)
+        public IEnumerable<object> Post(string id, [FromQuery]string type)
         {
-            var ret = new List<Role>();
+            IEnumerable<Role> ret = new List<Role>();
             switch (type)
             {
                 case "user":
-                    ret = RoleHelper.RetrieveRolesByUserId(id).ToList();
+                    ret = RoleHelper.RetrieveRolesByUserId(id);
                     break;
                 case "group":
-                    ret = RoleHelper.RetrieveRolesByGroupId(id).ToList();
+                    ret = RoleHelper.RetrieveRolesByGroupId(id);
                     break;
                 case "menu":
-                    ret = RoleHelper.RetrieveRolesByMenuId(id).ToList();
+                    ret = RoleHelper.RetrieveRolesByMenuId(id);
                     break;
                 default:
                     break;
             }
-            return ret;
+            return ret.Select(m => new { m.Id, m.Checked, m.RoleName, m.Description });
         }
         /// <summary>
-        /// 根据GroupID获取
+        /// 保存角色
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="roleIds"></param>
-        /// <param name="type"></param>
+        /// <param name="id">用户ID/部门ID/菜单ID</param>
+        /// <param name="roleIds">选中的角色ID集合</param>
+        /// <param name="type">type=menu时，菜单维护页面对角色授权弹框保存按钮调用</param>
         /// <returns></returns>
         [HttpPut("{id}")]
         public bool Put(string id, [FromBody]IEnumerable<string> roleIds, [FromQuery]string type)

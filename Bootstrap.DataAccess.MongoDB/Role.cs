@@ -122,14 +122,24 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <returns></returns>
         public override bool SavaRolesByMenuId(string menuId, IEnumerable<string> roleIds)
         {
-            roleIds.ToList().ForEach(rId =>
+            var roles = MongoDbAccessManager.Roles.Find(md => md.Menus != null && md.Menus.Contains(menuId)).ToList();
+
+            // Remove roles
+            roles.ForEach(p =>
             {
-                var role = MongoDbAccessManager.Roles.Find(md => md.Id == rId).FirstOrDefault();
+                var menus = p.Menus == null ? new List<string>() : p.Menus.ToList();
+                menus.Remove(menuId);
+                MongoDbAccessManager.Roles.UpdateOne(md => md.Id == p.Id, Builders<Role>.Update.Set(md => md.Menus, menus));
+            });
+
+            roles = MongoDbAccessManager.Roles.Find(md => roleIds.Contains(md.Id)).ToList();
+            roles.ForEach(role =>
+            {
                 var menus = role.Menus == null ? new List<string>() : role.Menus.ToList();
                 if (!menus.Contains(menuId))
                 {
                     menus.Add(menuId);
-                    MongoDbAccessManager.Roles.UpdateOne(md => md.Id == rId, Builders<Role>.Update.Set(md => md.Menus, menus));
+                    MongoDbAccessManager.Roles.UpdateOne(md => md.Id == role.Id, Builders<Role>.Update.Set(md => md.Menus, menus));
                 }
             });
             return true;
