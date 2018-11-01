@@ -1,6 +1,5 @@
 ﻿using Bootstrap.DataAccess;
 using Bootstrap.Security.Filter;
-using Longbow.Cache;
 using Longbow.Logging;
 using Longbow.Web;
 using Longbow.Web.SignalR;
@@ -18,7 +17,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
-using System.Collections.Generic;
 using System.IO;
 
 namespace Bootstrap.Admin
@@ -36,10 +34,12 @@ namespace Bootstrap.Admin
         {
             Configuration = configuration;
         }
+
         /// <summary>
         /// 
         /// </summary>
         public IConfiguration Configuration { get; }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         /// <summary>
         /// 
@@ -57,7 +57,7 @@ namespace Bootstrap.Admin
             services.AddLogging(builder => builder.AddFileLogger().AddDBLogger(ExceptionsHelper.Log));
             services.AddConfigurationManager(Configuration);
             services.AddCacheManager(Configuration);
-            services.AddDbAdapter(Configuration, () => { CacheManager.Clear(); CacheManager.CorsClear(new List<string>() { "*" }); });
+            services.AddDbAdapter(Configuration);
             var dataProtectionBuilder = services.AddDataProtection(op => op.ApplicationDiscriminator = Configuration["ApplicationDiscriminator"])
                 .SetApplicationName(Configuration["ApplicationName"])
                 .PersistKeysToFileSystem(new DirectoryInfo(Configuration["KeyPath"]));
@@ -98,6 +98,7 @@ namespace Bootstrap.Admin
                 options.OperationFilter<HttpHeaderOperation>(); // 添加httpHeader参数
             });
         }
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         /// <summary>
         /// 
