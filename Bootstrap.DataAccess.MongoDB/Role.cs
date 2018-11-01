@@ -34,7 +34,12 @@ namespace Bootstrap.DataAccess.MongoDB
             if (p.Id == "0")
             {
                 p.Id = null;
-                MongoDbAccessManager.Roles.InsertOne(p as Role);
+                MongoDbAccessManager.Roles.InsertOne(new Role()
+                {
+                    RoleName = p.RoleName,
+                    Description = p.Description,
+                    Menus = new List<string>()
+                });
                 return true;
             }
             else
