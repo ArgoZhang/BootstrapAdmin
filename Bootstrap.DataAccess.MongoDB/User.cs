@@ -87,13 +87,20 @@ namespace Bootstrap.DataAccess.MongoDB
 
             if (user.Description.Length > 500) user.Description = user.Description.Substring(0, 500);
             if (user.UserName.Length > 50) user.UserName = user.UserName.Substring(0, 50);
-            user.Id = null;
-            user.PassSalt = LgbCryptography.GenerateSalt();
-            user.Password = LgbCryptography.ComputeHash(user.Password, user.PassSalt);
-            user.RegisterTime = DateTime.Now;
-            user.ApprovedTime = DateTime.Now;
-            user.Icon = $"{DictHelper.RetrieveIconFolderPath().Code}default.jpg";
-            MongoDbAccessManager.Users.InsertOne(user as User);
+            MongoDbAccessManager.Users.InsertOne(new User()
+            {
+                UserName = user.UserName,
+                DisplayName = user.DisplayName,
+                PassSalt = LgbCryptography.GenerateSalt(),
+                Password = LgbCryptography.ComputeHash(user.Password, user.PassSalt),
+                RegisterTime = DateTime.Now,
+                ApprovedTime = DateTime.Now,
+                ApprovedBy = user.ApprovedBy,
+                Roles = new List<string>(),
+                Groups = new List<string>(),
+                Icon = $"{DictHelper.RetrieveIconFolderPath().Code}default.jpg",
+                Description = user.Description
+            });
             return true;
         }
 
