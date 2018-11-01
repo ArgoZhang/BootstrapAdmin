@@ -33,7 +33,11 @@ namespace Bootstrap.DataAccess.MongoDB
             if (p.Id == "0")
             {
                 p.Id = null;
-                MongoDbAccessManager.Groups.InsertOne(p as Group);
+                MongoDbAccessManager.Groups.InsertOne(new Group() {
+                    GroupName = p.GroupName,
+                    Description = p.Description,
+                    Roles = new List<string>()
+                });
                 return true;
             }
             else
