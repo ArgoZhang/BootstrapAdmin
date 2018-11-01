@@ -159,6 +159,10 @@ namespace Bootstrap.DataAccess.MongoDB
                     md.AutoMap();
                     md.IdMemberMap.SetSerializer(new StringSerializer(BsonType.ObjectId));
                     md.IdMemberMap.SetIgnoreIfDefault(true);
+                    md.UnmapMember(m => m.CategoryName);
+                    md.UnmapMember(m => m.Active);
+                    md.UnmapMember(m => m.ParentName);
+                    md.UnmapMember(m => m.Menus);
                 });
             }
             if (!BsonClassMap.IsClassMapRegistered(typeof(DataAccess.Group)))
