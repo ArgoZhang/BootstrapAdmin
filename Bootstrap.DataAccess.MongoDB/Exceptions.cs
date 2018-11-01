@@ -39,7 +39,7 @@ namespace Bootstrap.DataAccess.MongoDB
             {
                 Id = null,
                 AppDomainName = AppDomain.CurrentDomain.FriendlyName,
-                ErrorPage = additionalInfo?["ErrorPage"],
+                ErrorPage = additionalInfo?["ErrorPage"] ?? (ex.GetType().Name.Length > 50 ? ex.GetType().Name.Substring(0, 50) : ex.GetType().Name),
                 ExceptionType = ex.GetType().FullName,
                 LogTime = DateTime.Now,
                 Message = ex.Message,
