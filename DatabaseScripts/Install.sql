@@ -175,7 +175,7 @@ CREATE TABLE [dbo].[Navigations](
 	[Url] [varchar](4000) NULL,
 	[Category] [nvarchar](50) NOT NULL,
 	[Target] [varchar](10) NOT NULL,
-	[IsResource] [bit] NOT NULL,
+	[IsResource] [int] NOT NULL,
 	[Application] [nvarchar](200) NOT NULL,
  CONSTRAINT [PK_Navigations] PRIMARY KEY CLUSTERED 
 (

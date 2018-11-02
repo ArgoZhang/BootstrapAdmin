@@ -7,7 +7,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQLServer", "SQLServer", "{
 	ProjectSection(SolutionItems) = preProject
 		DatabaseScripts\InitData.sql = DatabaseScripts\InitData.sql
 		DatabaseScripts\Install.sql = DatabaseScripts\Install.sql
-		DatabaseScripts\Procedures.sql = DatabaseScripts\Procedures.sql
 		DatabaseScripts\Readme.txt = DatabaseScripts\Readme.txt
 	EndProjectSection
 EndProject
@@ -58,9 +57,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MySQL", "MySQL", "{084E2E94
 		DatabaseScripts\MySQL\install.sql = DatabaseScripts\MySQL\install.sql
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bootstrap.DataAccess.MySQL", "Bootstrap.DataAccess.MySQL\Bootstrap.DataAccess.MySQL.csproj", "{B6877AEA-EC65-47DA-BA6E-FD657729C285}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.DataAccess.MySQL", "Bootstrap.DataAccess.MySQL\Bootstrap.DataAccess.MySQL.csproj", "{B6877AEA-EC65-47DA-BA6E-FD657729C285}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{F301A509-31AE-45EA-9453-CA8C0A73DE99}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTest", "UnitTest\UnitTest.csproj", "{F301A509-31AE-45EA-9453-CA8C0A73DE99}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
