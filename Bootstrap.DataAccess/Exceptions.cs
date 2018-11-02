@@ -71,6 +71,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual bool Log(Exception ex, NameValueCollection additionalInfo)
         {
+            if (ex == null) return true;
             if (additionalInfo == null)
             {
                 additionalInfo = new NameValueCollection
@@ -118,7 +119,7 @@ namespace Bootstrap.DataAccess
                         UserIp = reader.IsDBNull(4) ? string.Empty : (string)reader[4],
                         ExceptionType = (string)reader[5],
                         Message = (string)reader[6],
-                        StackTrace = (string)reader[7],
+                        StackTrace = reader.IsDBNull(7) ? string.Empty : (string)reader[7],
                         LogTime = (DateTime)reader[8],
                     });
                 }
