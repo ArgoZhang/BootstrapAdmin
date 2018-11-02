@@ -52,38 +52,6 @@ namespace Bootstrap.DataAccess.MySQL
         }
 
         /// <summary>
-        /// 删除菜单信息
-        /// </summary>
-        /// <param name="value"></param>
-        public override bool DeleteMenu(IEnumerable<string> value)
-        {
-            bool ret = false;
-            var ids = string.Join(",", value);
-            using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
-            {
-                using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, $"delete from NavigationRole where NavigationID in ({ids})"))
-                {
-                    try
-                    {
-                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
-
-                        cmd.CommandText = $"delete from Navigations where ID in ({ids})";
-                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
-
-                        transaction.CommitTransaction();
-                        ret = true;
-                    }
-                    catch (Exception ex)
-                    {
-                        transaction.RollbackTransaction();
-                        throw ex;
-                    }
-                }
-            }
-            return ret;
-        }
-
-        /// <summary>
         /// <summary>
         /// 通过角色ID保存当前授权菜单
         /// </summary>

@@ -23,10 +23,26 @@ namespace Bootstrap.DataAccess
         {
             bool ret = false;
             var ids = string.Join(",", value);
-            using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_DeleteMenus"))
+            using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
             {
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@ids", ids));
-                ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == -1;
+                using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, $"delete from NavigationRole where NavigationID in ({ids})"))
+                {
+                    try
+                    {
+                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+
+                        cmd.CommandText = $"delete from Navigations where ID in ({ids})";
+                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+
+                        transaction.CommitTransaction();
+                        ret = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.RollbackTransaction();
+                        throw ex;
+                    }
+                }
             }
             return ret;
         }

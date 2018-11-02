@@ -13,38 +13,6 @@ namespace Bootstrap.DataAccess.SQLite
     public class Menu : DataAccess.Menu
     {
         /// <summary>
-        /// 删除菜单信息
-        /// </summary>
-        /// <param name="value"></param>
-        public override bool DeleteMenu(IEnumerable<string> value)
-        {
-            bool ret = false;
-            var ids = string.Join(",", value);
-            using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
-            {
-                using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, $"delete from NavigationRole where NavigationID in ({ids})"))
-                {
-                    try
-                    {
-                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
-
-                        cmd.CommandText = $"delete from Navigations where ID in ({ids})";
-                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
-
-                        transaction.CommitTransaction();
-                        ret = true;
-                    }
-                    catch (Exception ex)
-                    {
-                        transaction.RollbackTransaction();
-                        throw ex;
-                    }
-                }
-            }
-            return ret;
-        }
-
-        /// <summary>
         /// <summary>
         /// 通过角色ID保存当前授权菜单
         /// </summary>
@@ -66,7 +34,7 @@ namespace Bootstrap.DataAccess.SQLite
                         //批插入菜单角色表
                         menuIds.ToList().ForEach(mId =>
                         {
-                            cmd.CommandText = $"Insert Into NavigationRole (NavigationID, RoleID) Values ( {mId}, {roleId})";
+                            cmd.CommandText = $"Insert Into NavigationRole (NavigationID, RoleID) Values ({mId}, {roleId})";
                             DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
                         });
                         transaction.CommitTransaction();
