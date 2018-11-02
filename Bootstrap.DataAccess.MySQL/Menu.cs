@@ -52,6 +52,38 @@ namespace Bootstrap.DataAccess.MySQL
         }
 
         /// <summary>
+        /// Saves the menu.
+        /// </summary>
+        /// <returns><c>true</c>, if menu was saved, <c>false</c> otherwise.</returns>
+        /// <param name="p">P.</param>
+        public override bool SaveMenu(BootstrapMenu p)
+        {
+            if (string.IsNullOrEmpty(p.Name)) return false;
+            bool ret = false;
+            if (p.Name.Length > 50) p.Name = p.Name.Substring(0, 50);
+            if (p.Icon != null && p.Icon.Length > 50) p.Icon = p.Icon.Substring(0, 50);
+            if (p.Url != null && p.Url.Length > 4000) p.Url = p.Url.Substring(0, 4000);
+            string sql = string.IsNullOrEmpty(p.Id) ?
+                "Insert Into Navigations (ParentId, Name, `Order`, Icon, Url, Category, Target, IsResource, Application) Values (@ParentId, @Name, @Order, @Icon, @Url, @Category, @Target, @IsResource, @ApplicationCode)" :
+                "Update Navigations set ParentId = @ParentId, Name = @Name, `Order` = @Order, Icon = @Icon, Url = @Url, Category = @Category, Target = @Target, IsResource = @IsResource, Application = @ApplicationCode where ID = @ID";
+            using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
+            {
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@ID", p.Id));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@ParentId", p.ParentId));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Name", p.Name));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Order", p.Order));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Icon", DbAdapterManager.ToDBValue(p.Icon)));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Url", DbAdapterManager.ToDBValue(p.Url)));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Category", p.Category));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Target", p.Target));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@IsResource", p.IsResource));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@ApplicationCode", p.ApplicationCode));
+                ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
+            }
+            return ret;
+        }
+
+        /// <summary>
         /// <summary>
         /// 通过角色ID保存当前授权菜单
         /// </summary>
