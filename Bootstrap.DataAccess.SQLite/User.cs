@@ -1,6 +1,5 @@
 ﻿using Bootstrap.Security;
 using Longbow.Data;
-using Longbow.Security.Cryptography;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -14,45 +13,6 @@ namespace Bootstrap.DataAccess.SQLite
     /// </summary>
     public class User : DataAccess.User
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="rejectBy"></param>
-        /// <param name="reason"></param>
-        /// <returns></returns>
-        public override bool RejectUser(string id, string rejectBy)
-        {
-            var ret = false;
-            using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
-            {
-                try
-                {
-                    using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, $"insert into RejectUsers (UserName, DisplayName, RegisterTime, RejectedBy, RejectedTime, RejectedReason) select UserName, DisplayName, Registertime, '{rejectBy}', datetime('now', 'localtime'), '未填写' from Users where ID = {id}"))
-                    {
-                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
-
-                        cmd.CommandText = $"delete from UserRole where UserId = {id}";
-                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
-
-                        cmd.CommandText = $"delete from UserGroup where UserId = {id}";
-                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
-
-                        cmd.CommandText = $"delete from users where ID = {id}";
-                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
-
-                        transaction.CommitTransaction();
-                        ret = true;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    transaction.RollbackTransaction();
-                    throw ex;
-                }
-            }
-            return ret;
-        }
         /// <summary>
         /// 通过角色ID保存当前授权用户（插入）
         /// </summary>

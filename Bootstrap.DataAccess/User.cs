@@ -299,12 +299,34 @@ namespace Bootstrap.DataAccess
         public virtual bool RejectUser(string id, string rejectBy)
         {
             var ret = false;
-            using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_RejectUsers"))
+            using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
             {
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@id", id));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@rejectedBy", rejectBy));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@rejectedReason", "未填写"));
-                ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == -1;
+                try
+                {
+                    using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, $"insert into RejectUsers (UserName, DisplayName, RegisterTime, RejectedBy, RejectedTime, RejectedReason) select UserName, DisplayName, Registertime, '{rejectBy}', @RejectTime, '未填写' from Users where ID = {id}"))
+                    {
+                        cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@RejectTime", DateTime.Now, DbType.DateTime));
+                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+
+                        cmd.Parameters.Clear();
+                        cmd.CommandText = $"delete from UserRole where UserId = {id}";
+                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+
+                        cmd.CommandText = $"delete from UserGroup where UserId = {id}";
+                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+
+                        cmd.CommandText = $"delete from users where ID = {id}";
+                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+
+                        transaction.CommitTransaction();
+                        ret = true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    transaction.RollbackTransaction();
+                    throw ex;
+                }
             }
             return ret;
         }
