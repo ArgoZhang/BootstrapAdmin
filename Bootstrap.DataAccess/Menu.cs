@@ -59,7 +59,7 @@ namespace Bootstrap.DataAccess
             if (p.Icon != null && p.Icon.Length > 50) p.Icon = p.Icon.Substring(0, 50);
             if (p.Url != null && p.Url.Length > 4000) p.Url = p.Url.Substring(0, 4000);
             string sql = string.IsNullOrEmpty(p.Id) ?
-                "Insert Into Navigations (ParentId, Name, [Order], Icon, Url, Category, Target, IsResource, [Application]) Values (@ParentId, @Name, @Order, @Icon, @Url, @Category, @Target, @IsResource, @ApplicationCode)" :
+                "Insert Into Navigations (ParentId, Name, [Order], Icon, Url, Category, Target, IsResource, Application) Values (@ParentId, @Name, @Order, @Icon, @Url, @Category, @Target, @IsResource, @ApplicationCode)" :
                 "Update Navigations set ParentId = @ParentId, Name = @Name, [Order] = @Order, Icon = @Icon, Url = @Url, Category = @Category, Target = @Target, IsResource = @IsResource, Application = @ApplicationCode where ID = @ID";
             using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
             {
