@@ -60,6 +60,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MySQL", "MySQL", "{084E2E94
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bootstrap.DataAccess.MySQL", "Bootstrap.DataAccess.MySQL\Bootstrap.DataAccess.MySQL.csproj", "{B6877AEA-EC65-47DA-BA6E-FD657729C285}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{F301A509-31AE-45EA-9453-CA8C0A73DE99}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -94,6 +96,10 @@ Global
 		{B6877AEA-EC65-47DA-BA6E-FD657729C285}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6877AEA-EC65-47DA-BA6E-FD657729C285}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6877AEA-EC65-47DA-BA6E-FD657729C285}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F301A509-31AE-45EA-9453-CA8C0A73DE99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F301A509-31AE-45EA-9453-CA8C0A73DE99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F301A509-31AE-45EA-9453-CA8C0A73DE99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F301A509-31AE-45EA-9453-CA8C0A73DE99}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
