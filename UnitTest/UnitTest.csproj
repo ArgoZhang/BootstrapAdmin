@@ -2,12 +2,21 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-
+    <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Include="..\Bootstrap.Admin\Startup.cs" Link="Startup.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\Bootstrap.Admin\appsettings.Development.json" Link="appsettings.Development.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Bootstrap.Admin\appsettings.json" Link="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -19,6 +28,13 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Bootstrap.Admin\Bootstrap.Admin.csproj" />
+    <ProjectReference Include="..\Bootstrap.DataAccess.MySQL\Bootstrap.DataAccess.MySQL.csproj" />
+    <ProjectReference Include="..\Bootstrap.DataAccess.SQLite\Bootstrap.DataAccess.SQLite.csproj" />
+    <ProjectReference Include="..\Bootstrap.DataAccess\Bootstrap.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>

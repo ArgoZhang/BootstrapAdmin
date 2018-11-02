@@ -13,7 +13,6 @@ namespace UnitTest
         {
             var server = new TestServer(WebHost.CreateDefaultBuilder()
             .UseStartup<Startup>());
-
         }
     }
 }

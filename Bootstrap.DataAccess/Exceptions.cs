@@ -1,4 +1,5 @@
-﻿using Longbow.Configuration;
+﻿using Longbow;
+using Longbow.Configuration;
 using Longbow.Data;
 using System;
 using System.Collections.Generic;
@@ -58,8 +59,9 @@ namespace Bootstrap.DataAccess
         {
             System.Threading.Tasks.Task.Run(() =>
             {
-                string sql = $"delete from Exceptions where LogTime < DATEADD(MONTH, -{ConfigurationManager.AppSettings["KeepExceptionsPeriod"]}, GETDATE())";
+                string sql = $"delete from Exceptions where LogTime < @LogTime";
                 DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@LogTime", DateTime.Now.AddMonths(0 - LgbConvert.ReadValue(ConfigurationManager.AppSettings["KeepExceptionsPeriod"], 1)), DbType.DateTime));
                 DbAccessManager.DBAccess.ExecuteNonQuery(cmd);
             });
         }
@@ -82,7 +84,7 @@ namespace Bootstrap.DataAccess
                 };
             }
             var errorPage = additionalInfo["ErrorPage"] ?? (ex.GetType().Name.Length > 50 ? ex.GetType().Name.Substring(0, 50) : ex.GetType().Name);
-            var sql = "insert into Exceptions (AppDomainName, ErrorPage, UserID, UserIp, ExceptionType, Message, StackTrace, LogTime) values (@AppDomainName, @ErrorPage, @UserID, @UserIp, @ExceptionType, @Message, @StackTrace, GetDate())";
+            var sql = "insert into Exceptions (AppDomainName, ErrorPage, UserID, UserIp, ExceptionType, Message, StackTrace, LogTime) values (@AppDomainName, @ErrorPage, @UserID, @UserIp, @ExceptionType, @Message, @StackTrace, @LogTime)";
             using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
             {
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@AppDomainName", AppDomain.CurrentDomain.FriendlyName));
@@ -92,6 +94,7 @@ namespace Bootstrap.DataAccess
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@ExceptionType", ex.GetType().FullName));
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Message", ex.Message));
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@StackTrace", DbAdapterManager.ToDBValue(ex.StackTrace)));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@LogTime", DateTime.Now, DbType.DateTime));
                 DbAccessManager.DBAccess.ExecuteNonQuery(cmd);
                 ClearExceptions();
             }
@@ -103,9 +106,10 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual IEnumerable<Exceptions> RetrieveExceptions()
         {
-            string sql = "select * from Exceptions where DATEDIFF(Week, LogTime, GETDATE()) = 0 order by LogTime desc";
+            string sql = "select * from Exceptions where LogTime > @LogTime order by LogTime desc";
             List<Exceptions> exceptions = new List<Exceptions>();
             DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
+            cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@LogTime", DateTime.Now.AddDays(-7), DbType.DateTime));
             using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
             {
                 while (reader.Read())
