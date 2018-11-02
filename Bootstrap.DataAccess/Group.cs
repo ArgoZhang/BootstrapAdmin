@@ -61,10 +61,29 @@ namespace Bootstrap.DataAccess
         {
             bool ret = false;
             var ids = string.Join(",", value);
-            using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_DeleteGroups"))
+            using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
             {
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@ids", ids));
-                ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == -1;
+                using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, $"delete from UserGroup where GroupID in ({ids})"))
+                {
+                    try
+                    {
+                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+
+                        cmd.CommandText = $"delete from RoleGroup where GroupID in ({ids})";
+                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+
+                        cmd.CommandText = $"delete from Groups where ID in ({ids})";
+                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+
+                        transaction.CommitTransaction();
+                        ret = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.RollbackTransaction();
+                        throw ex;
+                    }
+                }
             }
             return ret;
         }

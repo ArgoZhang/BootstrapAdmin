@@ -13,41 +13,6 @@ namespace Bootstrap.DataAccess.SQLite
     public class Group : DataAccess.Group
     {
         /// <summary>
-        /// <summary>
-        /// 删除群组信息
-        /// </summary>
-        /// <param name="ids"></param>
-        public override bool DeleteGroup(IEnumerable<string> value)
-        {
-            bool ret = false;
-            var ids = string.Join(",", value);
-            using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
-            {
-                using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, $"delete from UserGroup where GroupID in ({ids})"))
-                {
-                    try
-                    {
-                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
-
-                        cmd.CommandText = $"delete from RoleGroup where GroupID in ({ids})";
-                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
-
-                        cmd.CommandText = $"delete from Groups where ID in ({ids})";
-                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
-
-                        transaction.CommitTransaction();
-                        ret = true;
-                    }
-                    catch (Exception ex)
-                    {
-                        transaction.RollbackTransaction();
-                        throw ex;
-                    }
-                }
-            }
-            return ret;
-        }
-        /// <summary>
         /// 保存用户部门关系
         /// </summary>
         /// <param name="userId"></param>
