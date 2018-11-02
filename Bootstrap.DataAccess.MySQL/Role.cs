@@ -95,44 +95,6 @@ namespace Bootstrap.DataAccess.MySQL
         }
 
         /// <summary>
-        /// 删除角色表
-        /// </summary>
-        /// <param name="value"></param>
-        public override bool DeleteRole(IEnumerable<string> value)
-        {
-            bool ret = false;
-            var ids = string.Join(",", value);
-            using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
-            {
-                using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, $"delete from UserRole where RoleID in ({ids})"))
-                {
-                    try
-                    {
-                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
-
-                        cmd.CommandText = $"delete from RoleGroup where RoleID in ({ids})";
-                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
-
-                        cmd.CommandText = $"delete from NavigationRole where RoleID in ({ids})";
-                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
-
-                        cmd.CommandText = $"delete from Roles where ID in ({ids})";
-                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
-
-                        transaction.CommitTransaction();
-                        ret = true;
-                    }
-                    catch (Exception ex)
-                    {
-                        transaction.RollbackTransaction();
-                        throw ex;
-                    }
-                }
-            }
-            return ret;
-        }
-
-        /// <summary>
         /// 
         /// </summary>
         /// <param name="menuId"></param>

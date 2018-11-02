@@ -139,10 +139,32 @@ namespace Bootstrap.DataAccess
         {
             bool ret = false;
             var ids = string.Join(",", value);
-            using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_DeleteRoles"))
+            using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
             {
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@ids", ids));
-                ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == -1;
+                using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, $"delete from UserRole where RoleID in ({ids})"))
+                {
+                    try
+                    {
+                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+
+                        cmd.CommandText = $"delete from RoleGroup where RoleID in ({ids})";
+                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+
+                        cmd.CommandText = $"delete from NavigationRole where RoleID in ({ids})";
+                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+
+                        cmd.CommandText = $"delete from Roles where ID in ({ids})";
+                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+
+                        transaction.CommitTransaction();
+                        ret = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.RollbackTransaction();
+                        throw ex;
+                    }
+                }
             }
             return ret;
         }
