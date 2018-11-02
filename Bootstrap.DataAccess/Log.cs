@@ -104,7 +104,7 @@ namespace Bootstrap.DataAccess
             {
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@CRUD", p.CRUD));
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@UserName", p.UserName));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@LogTime", DateTime.Now));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@LogTime", DateTime.Now, DbType.DateTime));
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@ClientIp", p.ClientIp));
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@ClientAgent", p.ClientAgent));
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@RequestUrl", p.RequestUrl));
