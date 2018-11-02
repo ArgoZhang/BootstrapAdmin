@@ -1,4 +1,5 @@
-﻿using Longbow.Configuration;
+﻿using Longbow;
+using Longbow.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -52,9 +53,10 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual IEnumerable<Log> RetrieveLogs()
         {
-            string sql = "select * from Logs where DATEDIFF(Week, LogTime, GETDATE()) = 0";
+            string sql = "select * from Logs where LogTime > @LogTime";
             List<Log> logs = new List<Log>();
             DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
+            cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@LogTime", DateTime.Now.AddDays(-7), DbType.DateTime));
             using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
             {
                 while (reader.Read())
@@ -82,8 +84,9 @@ namespace Bootstrap.DataAccess
         {
             System.Threading.Tasks.Task.Run(() =>
             {
-                string sql = $"delete from Logs where LogTime < DATEADD(MONTH, -{ConfigurationManager.AppSettings["KeepLogsPeriod"]}, GETDATE())";
+                string sql = $"delete from Logs where LogTime < @LogTime";
                 DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@LogTime", DateTime.Now.AddMonths(0 - LgbConvert.ReadValue(ConfigurationManager.AppSettings["KeepLogsPeriod"], 1)), DbType.DateTime));
                 DbAccessManager.DBAccess.ExecuteNonQuery(cmd);
             });
         }
@@ -94,13 +97,14 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual bool SaveLog(Log p)
         {
-            if (p == null) throw new ArgumentNullException("p");
+            if (p == null) throw new ArgumentNullException(nameof(p));
             bool ret = false;
-            string sql = "Insert Into Logs (CRUD, UserName, LogTime, ClientIp, ClientAgent, RequestUrl) Values (@CRUD, @UserName, GetDate(), @ClientIp, @ClientAgent, @RequestUrl)";
+            string sql = "Insert Into Logs (CRUD, UserName, LogTime, ClientIp, ClientAgent, RequestUrl) Values (@CRUD, @UserName, @LogTime, @ClientIp, @ClientAgent, @RequestUrl)";
             using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
             {
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@CRUD", p.CRUD));
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@UserName", p.UserName));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@LogTime", DateTime.Now));
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@ClientIp", p.ClientIp));
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@ClientAgent", p.ClientAgent));
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@RequestUrl", p.RequestUrl));
