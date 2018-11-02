@@ -66,7 +66,7 @@ namespace Bootstrap.DataAccess
                         Id = reader[0].ToString(),
                         CRUD = (string)reader[1],
                         UserName = (string)reader[2],
-                        LogTime = (DateTime)reader[3],
+                        LogTime = LgbConvert.ReadValue(reader[3], DateTime.MinValue),
                         ClientIp = (string)reader[4],
                         ClientAgent = (string)reader[5],
                         RequestUrl = (string)reader[6]

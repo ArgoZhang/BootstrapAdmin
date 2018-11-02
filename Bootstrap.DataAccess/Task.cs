@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Longbow;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
@@ -45,7 +46,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual IEnumerable<Task> RetrieveTasks()
         {
-            string sql = "select top 1000 t.*, u.DisplayName from Tasks t inner join Users u on t.UserName = u.UserName order by AssignTime desc";
+            string sql = "select top 100 t.*, u.DisplayName from Tasks t inner join Users u on t.UserName = u.UserName order by AssignTime desc";
             List<Task> tasks = new List<Task>();
             DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
             using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
@@ -60,7 +61,7 @@ namespace Bootstrap.DataAccess
                         UserName = (string)reader[3],
                         TaskTime = (int)reader[4],
                         TaskProgress = (double)reader[5],
-                        AssignTime = (DateTime)reader[6],
+                        AssignTime = LgbConvert.ReadValue(reader[6], DateTime.MinValue),
                         AssignDisplayName = (string)reader[7]
                     });
                 }

@@ -124,7 +124,7 @@ namespace Bootstrap.DataAccess
                         ExceptionType = (string)reader[5],
                         Message = (string)reader[6],
                         StackTrace = reader.IsDBNull(7) ? string.Empty : (string)reader[7],
-                        LogTime = (DateTime)reader[8],
+                        LogTime = LgbConvert.ReadValue(reader[8], DateTime.MinValue)
                     });
                 }
             }
