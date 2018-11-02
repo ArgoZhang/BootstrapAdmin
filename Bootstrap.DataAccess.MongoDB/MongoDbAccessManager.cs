@@ -1,5 +1,7 @@
 ﻿using Bootstrap.Security;
+using Longbow.Configuration;
 using Longbow.Data;
+using Microsoft.Extensions.Primitives;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
@@ -16,7 +18,7 @@ namespace Bootstrap.DataAccess.MongoDB
     {
         private static IMongoDatabase _db = null;
         private static bool _register = false;
-
+        private static readonly object _locker = new object();
         /// <summary>
         /// 
         /// </summary>
@@ -26,18 +28,22 @@ namespace Bootstrap.DataAccess.MongoDB
             {
                 if (_db == null)
                 {
-                    if (!_register)
+                    lock (_locker)
                     {
-                        _register = true;
-                        DbAdapterManager.RegisterConfigChangeCallback("MongoDB", InitDb);
+                        if (!_register)
+                        {
+                            _register = true;
+                            ChangeToken.OnChange(() => ConfigurationManager.AppSettings.GetReloadToken(), () => _db = null);
+                            InitClassMap();
+                        }
+                        InitDb();
                     }
-                    InitDb();
-                    InitClassMap();
                 }
                 return _db;
             }
         }
 
+        #region Collections
         /// <summary>
         /// 
         /// </summary>
@@ -113,6 +119,7 @@ namespace Bootstrap.DataAccess.MongoDB
                 return DBAccess.GetCollection<BootstrapMenu>("Navigations");
             }
         }
+        #endregion
 
         private static void InitDb()
         {
@@ -120,7 +127,7 @@ namespace Bootstrap.DataAccess.MongoDB
             if (string.IsNullOrEmpty(connectString)) throw new InvalidOperationException("Please set the BA default value in configuration file.");
 
             var seq = connectString.Split(";", StringSplitOptions.RemoveEmptyEntries);
-            if (seq.Length != 2) return;
+            if (seq.Length != 2) throw new InvalidOperationException("ConnectionString invalid in configuration file. It should be mongodb://127.0.0.1:27017;Data Source=BootstrapAdmin");
 
             var client = new MongoClient(seq[0]);
             _db = client.GetDatabase(seq[1].Split("=", StringSplitOptions.RemoveEmptyEntries).LastOrDefault());
