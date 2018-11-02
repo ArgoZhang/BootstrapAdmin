@@ -84,7 +84,7 @@ namespace Bootstrap.DataAccess
                     }
                 }
             }
-            return menus.Select(m => m.Id);
+            return menus.Select(m => new { m.Id });
         }
         /// <summary>
         /// 通过角色ID保存当前授权菜单
