@@ -112,7 +112,7 @@ namespace Bootstrap.DataAccess
         public virtual IEnumerable<Role> RetrieveRolesByUserId(string userId)
         {
             List<Role> roles = new List<Role>();
-            string sql = "select r.ID, r.RoleName, r.[Description], case ur.RoleID when r.ID then 'checked' else '' end [status] from Roles r left join UserRole ur on r.ID = ur.RoleID and UserID = @UserID";
+            string sql = "select r.ID, r.RoleName, r.Description, case ur.RoleID when r.ID then 'checked' else '' end status from Roles r left join UserRole ur on r.ID = ur.RoleID and UserID = @UserID";
             DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
             cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@UserID", userId));
             using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
@@ -177,7 +177,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual IEnumerable<Role> RetrieveRolesByMenuId(string menuId)
         {
-            string sql = "select r.ID, r.RoleName, r.[Description], case ur.RoleID when r.ID then 'checked' else '' end [status] from Roles r left join NavigationRole ur on r.ID = ur.RoleID and NavigationID = @NavigationID";
+            string sql = "select r.ID, r.RoleName, r.Description, case ur.RoleID when r.ID then 'checked' else '' end status from Roles r left join NavigationRole ur on r.ID = ur.RoleID and NavigationID = @NavigationID";
             List<Role> roles = new List<Role>();
             DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
             cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@NavigationID", menuId));
@@ -251,7 +251,7 @@ namespace Bootstrap.DataAccess
         public virtual IEnumerable<Role> RetrieveRolesByGroupId(string groupId)
         {
             List<Role> roles = new List<Role>();
-            string sql = "select r.ID, r.RoleName, r.[Description], case ur.RoleID when r.ID then 'checked' else '' end [status] from Roles r left join RoleGroup ur on r.ID = ur.RoleID and GroupID = @GroupID";
+            string sql = "select r.ID, r.RoleName, r.Description, case ur.RoleID when r.ID then 'checked' else '' end status from Roles r left join RoleGroup ur on r.ID = ur.RoleID and GroupID = @GroupID";
             DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
             cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@GroupID", groupId));
             using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))

@@ -72,7 +72,7 @@ namespace Bootstrap.DataAccess
             if (string.IsNullOrEmpty(userName) && string.IsNullOrEmpty(password)) return false;
             string oldPassword = null;
             string passwordSalt = null;
-            string sql = "select [Password], PassSalt from Users where ApprovedTime is not null and UserName = @UserName";
+            string sql = "select Password, PassSalt from Users where ApprovedTime is not null and UserName = @UserName";
             var db = DbAccessManager.DBAccess;
             using (DbCommand cmd = db.CreateCommand(CommandType.Text, sql))
             {
@@ -147,7 +147,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual IEnumerable<User> RetrieveNewUsers()
         {
-            string sql = "select ID, UserName, DisplayName, RegisterTime, [Description] from Users Where ApprovedTime is null order by RegisterTime desc";
+            string sql = "select ID, UserName, DisplayName, RegisterTime, Description from Users Where ApprovedTime is null order by RegisterTime desc";
             List<User> users = new List<User>();
             DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
             using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
@@ -272,7 +272,7 @@ namespace Bootstrap.DataAccess
         public virtual IEnumerable<User> RetrieveUsersByRoleId(string roleId)
         {
             List<User> users = new List<User>();
-            string sql = "select u.ID, u.UserName, u.DisplayName, case ur.UserID when u.ID then 'checked' else '' end [status] from Users u left join UserRole ur on u.ID = ur.UserID and RoleID = @RoleID where u.ApprovedTime is not null";
+            string sql = "select u.ID, u.UserName, u.DisplayName, case ur.UserID when u.ID then 'checked' else '' end status from Users u left join UserRole ur on u.ID = ur.UserID and RoleID = @RoleID where u.ApprovedTime is not null";
             DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
             cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@RoleID", roleId));
             using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
@@ -340,7 +340,7 @@ namespace Bootstrap.DataAccess
         public virtual IEnumerable<User> RetrieveUsersByGroupId(string groupId)
         {
             List<User> users = new List<User>();
-            string sql = "select u.ID, u.UserName, u.DisplayName, case ur.UserID when u.ID then 'checked' else '' end [status] from Users u left join UserGroup ur on u.ID = ur.UserID and GroupID =@groupId where u.ApprovedTime is not null";
+            string sql = "select u.ID, u.UserName, u.DisplayName, case ur.UserID when u.ID then 'checked' else '' end status from Users u left join UserGroup ur on u.ID = ur.UserID and GroupID =@groupId where u.ApprovedTime is not null";
             DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
             cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@GroupID", groupId));
             using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))

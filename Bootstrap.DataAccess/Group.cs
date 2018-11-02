@@ -97,7 +97,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual IEnumerable<Group> RetrieveGroupsByUserId(string userId)
         {
-            string sql = "select g.ID,g.GroupName,g.[Description],case ug.GroupID when g.ID then 'checked' else '' end [status] from Groups g left join UserGroup ug on g.ID=ug.GroupID and UserID=@UserID";
+            string sql = "select g.ID,g.GroupName,g.Description,case ug.GroupID when g.ID then 'checked' else '' end status from Groups g left join UserGroup ug on g.ID=ug.GroupID and UserID=@UserID";
             List<Group> groups = new List<Group>();
             DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
             cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@UserID", userId));
@@ -169,7 +169,7 @@ namespace Bootstrap.DataAccess
         public virtual IEnumerable<Group> RetrieveGroupsByRoleId(string roleId)
         {
             List<Group> groups = new List<Group>();
-            string sql = "select g.ID,g.GroupName,g.[Description],case rg.GroupID when g.ID then 'checked' else '' end [status] from Groups g left join RoleGroup rg on g.ID=rg.GroupID and RoleID=@RoleID";
+            string sql = "select g.ID,g.GroupName,g.Description,case rg.GroupID when g.ID then 'checked' else '' end status from Groups g left join RoleGroup rg on g.ID=rg.GroupID and RoleID=@RoleID";
             DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
             cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@RoleID", roleId));
             using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
@@ -239,7 +239,7 @@ namespace Bootstrap.DataAccess
         {
             var entities = new List<string>();
             var db = DbAccessManager.DBAccess;
-            using (DbCommand cmd = db.CreateCommand(CommandType.Text, "select g.GroupName, g.[Description] from Groups g inner join UserGroup ug on g.ID = ug.GroupID inner join Users u on ug.UserID = u.ID where UserName = @UserName"))
+            using (DbCommand cmd = db.CreateCommand(CommandType.Text, "select g.GroupName, g.Description from Groups g inner join UserGroup ug on g.ID = ug.GroupID inner join Users u on ug.UserID = u.ID where UserName = @UserName"))
             {
                 cmd.Parameters.Add(db.CreateParameter("@UserName", userName));
                 using (DbDataReader reader = db.ExecuteReader(cmd))
