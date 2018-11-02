@@ -174,10 +174,29 @@ namespace Bootstrap.DataAccess
         {
             bool ret = false;
             var ids = string.Join(",", value);
-            using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_DeleteUsers"))
+            using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
             {
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@ids", ids));
-                ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == -1;
+                try
+                {
+                    using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, $"Delete from UserRole where UserID in ({ids})"))
+                    {
+                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+
+                        cmd.CommandText = $"delete from UserGroup where UserID in ({ids})";
+                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+
+                        cmd.CommandText = $"delete from Users where ID in ({ids})";
+                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+
+                        transaction.CommitTransaction();
+                        ret = true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    transaction.RollbackTransaction();
+                    throw ex;
+                }
             }
             return ret;
         }
@@ -189,19 +208,43 @@ namespace Bootstrap.DataAccess
         public virtual bool SaveUser(User p)
         {
             var ret = false;
-            if (p.Description.Length > 500) p.Description = p.Description.Substring(0, 500);
+            if (string.IsNullOrEmpty(p.Id) && p.Description.Length > 500) p.Description = p.Description.Substring(0, 500);
             if (p.UserName.Length > 50) p.UserName = p.UserName.Substring(0, 50);
             p.PassSalt = LgbCryptography.GenerateSalt();
             p.Password = LgbCryptography.ComputeHash(p.Password, p.PassSalt);
-            using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.StoredProcedure, "Proc_SaveUsers"))
+
+            using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
             {
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@userName", p.UserName));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@password", p.Password));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@passSalt", p.PassSalt));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@displayName", p.DisplayName));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@approvedBy", DbAdapterManager.ToDBValue(p.ApprovedBy)));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@description", p.Description));
-                ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == -1;
+                try
+                {
+                    using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, "select UserName from Users Where UserName = @userName"))
+                    {
+                        cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@userName", p.UserName));
+                        var un = DbAccessManager.DBAccess.ExecuteScalar(cmd, transaction);
+                        if (DbAdapterManager.ToObjectValue(un) == null)
+                        {
+                            cmd.CommandText = "Insert Into Users (UserName, Password, PassSalt, DisplayName, RegisterTime, ApprovedBy, ApprovedTime, Description) values (@userName, @password, @passSalt, @displayName, datetime('now', 'localtime'), @approvedBy, now(), @description)";
+                            cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@password", p.Password));
+                            cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@passSalt", p.PassSalt));
+                            cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@displayName", p.DisplayName));
+                            cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@approvedBy", DbAdapterManager.ToDBValue(p.ApprovedBy)));
+                            cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@description", p.Description));
+                            DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+
+                            cmd.CommandText = $"insert into UserRole (UserID, RoleID) select ID, (select ID from Roles where RoleName = 'Default') RoleId from Users where UserName = '{p.UserName}'";
+                            cmd.Parameters.Clear();
+                            DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+
+                            transaction.CommitTransaction();
+                            ret = true;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    transaction.RollbackTransaction();
+                    throw ex;
+                }
             }
             return ret;
         }
@@ -237,10 +280,11 @@ namespace Bootstrap.DataAccess
         public virtual bool ApproveUser(string id, string approvedBy)
         {
             var ret = false;
-            var sql = "update Users set ApprovedTime = GETDATE(), ApprovedBy = @approvedBy where ID = @id";
+            var sql = "update Users set ApprovedTime = @ApproveTime, ApprovedBy = @approvedBy where ID = @id";
             using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
             {
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@id", id));
+                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@ApproveTime", DateTime.Now, DbType.DateTime));
                 cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@approvedBy", approvedBy));
                 ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
             }
