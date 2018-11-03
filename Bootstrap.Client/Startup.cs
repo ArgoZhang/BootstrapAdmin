@@ -47,6 +47,7 @@ namespace Bootstrap.Client
                 .PersistKeysToFileSystem(new DirectoryInfo(Configuration["KeyPath"]));
             if (Configuration["DisableAutomaticKeyGeneration"] == "True") dataProtectionBuilder.DisableAutomaticKeyGeneration();
             services.AddSignalR().AddJsonProtocalDefault();
+            services.AddResponseCompression();
             services.AddMvc(options =>
             {
                 options.Filters.Add<BootstrapAdminAuthorizeFilter>();
@@ -80,6 +81,7 @@ namespace Bootstrap.Client
             app.UseStatusCodePagesWithReExecute("/Home/Error/{0}");
             app.UseCors(builder => builder.WithOrigins(Configuration["AllowOrigins"].Split(',', StringSplitOptions.RemoveEmptyEntries)).AllowAnyHeader().AllowAnyMethod().AllowCredentials());
             app.UseHttpsRedirection();
+            app.UseResponseCompression();
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();
