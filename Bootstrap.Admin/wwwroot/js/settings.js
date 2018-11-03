@@ -73,13 +73,11 @@
                                     $sortable.append(cache);
                                     $sortable.find('[data-toggle="tooltip"]').tooltip();
                                 }
-                                if (index === urls.length - 1) $refresh.removeClass('fa-spin');
-                                $('.site-footer').footer();
                             }
                         });
                     });
                 }
-                else $refresh.removeClass('fa-spin');
+                $refresh.removeClass('fa-spin');
                 $('.site-footer').footer();
             }
         });
