@@ -86,7 +86,6 @@ namespace Bootstrap.Client
             app.UseCookiePolicy();
             app.UseAuthentication();
             app.UseBootstrapAdminAuthorization(userName => RoleHelper.RetrieveRolesByUserName(userName), url => RoleHelper.RetrieveRolesByUrl(url));
-            app.UseWebSocketHandler(options => options.UseAuthentication = true);
             app.UseCacheManagerCorsHandler();
             app.UseSignalR(routes => { routes.MapHub<SignalRHub>("/NotiHub"); });
             app.UseMvc(routes =>
