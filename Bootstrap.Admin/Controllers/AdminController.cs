@@ -1,6 +1,7 @@
 ﻿using Bootstrap.Admin.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace Bootstrap.Admin.Controllers
 {
@@ -13,133 +14,104 @@ namespace Bootstrap.Admin.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        public ActionResult Index()
-        {
-            return View(new NavigatorBarModel(this));
-        }
+        public ActionResult Index() => View(new NavigatorBarModel(this));
+
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public ActionResult Users()
-        {
-            return View(new NavigatorBarModel(this));
-        }
+        public ActionResult Users() => View(new NavigatorBarModel(this));
+
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public ActionResult Groups()
-        {
-            return View(new NavigatorBarModel(this));
-        }
+        public ActionResult Groups() => View(new NavigatorBarModel(this));
+
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public ActionResult Dicts()
-        {
-            return View(new NavigatorBarModel(this));
-        }
+        public ActionResult Dicts() => View(new NavigatorBarModel(this));
+
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public ActionResult Roles()
-        {
-            return View(new NavigatorBarModel(this));
-        }
+        public ActionResult Roles() => View(new NavigatorBarModel(this));
+
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public ActionResult Menus()
-        {
-            return View(new NavigatorBarModel(this));
-        }
+        public ActionResult Menus() => View(new NavigatorBarModel(this));
+
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public ActionResult Logs()
-        {
-            return View(new NavigatorBarModel(this));
-        }
+        public ActionResult Logs() => View(new NavigatorBarModel(this));
+
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public ActionResult FAIcon()
-        {
-            return View(new NavigatorBarModel(this));
-        }
+        public ActionResult FAIcon() => View(new NavigatorBarModel(this));
+
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
         [AllowAnonymous]
         [ResponseCache(Duration = 600)]
-        public PartialViewResult IconView()
-        {
-            return PartialView("IconView");
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult Settings()
-        {
-            return View(new ThemeModel(this));
-        }
+        public PartialViewResult IconView() => PartialView("IconView");
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public ActionResult Notifications()
-        {
-            return View(new NavigatorBarModel(this));
-        }
+        public ActionResult Settings() => View(new ThemeModel(this));
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public ActionResult Profiles()
-        {
-            return View(new ProfilesModel(this));
-        }
+        public ActionResult Notifications() => View(new NavigatorBarModel(this));
+
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public ActionResult Exceptions()
-        {
-            return View(new NavigatorBarModel(this));
-        }
+        public ActionResult Profiles() => View(new ProfilesModel(this));
+
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public ActionResult Messages()
-        {
-            return View(new NavigatorBarModel(this));
-        }
+        public ActionResult Exceptions() => View(new NavigatorBarModel(this));
+
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public ActionResult Tasks()
-        {
-            return View(new NavigatorBarModel(this));
-        }
+        public ActionResult Messages() => View(new NavigatorBarModel(this));
+
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public ActionResult Mobile()
-        {
-            return View(new NavigatorBarModel(this));
-        }
+        public ActionResult Tasks() => View(new NavigatorBarModel(this));
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Mobile() => View(new NavigatorBarModel(this));
+
+        /// <summary>
+        /// 用于测试ExceptionFilter
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Error() => throw new Exception("Customer Excetion UnitTest");
     }
 }
