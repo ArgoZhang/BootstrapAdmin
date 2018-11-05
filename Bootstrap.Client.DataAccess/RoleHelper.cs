@@ -9,8 +9,8 @@ namespace Bootstrap.Client.DataAccess
     /// </summary>
     public static class RoleHelper
     {
-        public const string RetrieveRolesByUserNameDataKey = "BootstrapRole-RetrieveRolesByUserName";
-        public const string RetrieveRolesByUrlDataKey = "BootstrapRole-RetrieveRolesByUrl";
+        public const string RetrieveRolesByUserNameDataKey = "RoleHelper-RetrieveRolesByUserName";
+        public const string RetrieveRolesByUrlDataKey = "RoleHelper-RetrieveRolesByUrl";
         /// <summary>
         /// 
         /// </summary>
