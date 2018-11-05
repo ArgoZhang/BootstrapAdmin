@@ -1,5 +1,5 @@
 ﻿$(function () {
-    var url = 'api/Logs/';
+    var url = 'api/Logs';
 
     $('.card-body table').smartTable({
         url: url,
