@@ -29,6 +29,7 @@ namespace Bootstrap.Admin.Controllers
         {
             return User.Identity.IsAuthenticated ? (ActionResult)Redirect("~/Home/Index") : View("Login", new ModelBase());
         }
+
         /// <summary>
         /// Login the specified userName, password and remember.
         /// </summary>
@@ -49,6 +50,7 @@ namespace Bootstrap.Admin.Controllers
             var originUrl = Request.Query[CookieAuthenticationDefaults.ReturnUrlParameter].FirstOrDefault() ?? "~/Home/Index";
             return Redirect(originUrl);
         }
+
         /// <summary>
         /// Logout this instance.
         /// </summary>
@@ -58,6 +60,7 @@ namespace Bootstrap.Admin.Controllers
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return Redirect("~" + CookieAuthenticationDefaults.LoginPath);
         }
+
         /// <summary>
         /// Accesses the denied.
         /// </summary>
@@ -67,14 +70,6 @@ namespace Bootstrap.Admin.Controllers
         {
             var returnUrl = Request.Query[CookieAuthenticationDefaults.ReturnUrlParameter].ToString();
             ViewBag.ReturnUrl = string.IsNullOrEmpty(returnUrl) ? Url.Content("~/Home/Index") : returnUrl;
-            return View();
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult Mobile()
-        {
             return View();
         }
     }
