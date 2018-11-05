@@ -19,7 +19,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="value"></param>
         /// <returns></returns>
         [HttpGet]
-        public QueryData<Group> Get(QueryGroupOption value)
+        public QueryData<object> Get(QueryGroupOption value)
         {
             return value.RetrieveData();
         }

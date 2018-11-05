@@ -21,7 +21,7 @@ namespace Bootstrap.Admin.Query
         /// 
         /// </summary>
         /// <returns></returns>
-        public QueryData<Group> RetrieveData()
+        public QueryData<object> RetrieveData()
         {
             // int limit, int offset, string name, string price, string sort, string order
             var data = GroupHelper.RetrieveGroups();
@@ -33,10 +33,10 @@ namespace Bootstrap.Admin.Query
             {
                 data = data.Where(t => t.Description.Contains(Description));
             }
-            var ret = new QueryData<Group>();
+            var ret = new QueryData<object>();
             ret.total = data.Count();
             data = Order == "asc" ? data.OrderBy(t => t.GroupName) : data.OrderByDescending(t => t.GroupName);
-            ret.rows = data.Skip(Offset).Take(Limit);
+            ret.rows = data.Skip(Offset).Take(Limit).Select(g => new { g.Id, g.GroupName, g.Description });
             return ret;
         }
     }
