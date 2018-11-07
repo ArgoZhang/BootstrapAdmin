@@ -4,7 +4,7 @@
   "libraries": [
     {
       "library": "@aspnet/signalr@1.0.4",
-      "destination": "wwwroot/lib/@aspnet/signalr/",
+      "destination": "wwwroot/lib/signalr/",
       "files": [
         "dist/browser/signalr.js",
         "dist/browser/signalr.js.map",
@@ -14,10 +14,94 @@
     },
     {
       "library": "jquery@3.3.1",
-      "destination": "wwwroot/lib/@aspnet/jquery/",
+      "destination": "wwwroot/lib/jquery/",
       "files": [
         "dist/jquery.js",
-        "dist/jquery.min.js"
+        "dist/jquery.min.js",
+        "dist/jquery.min.map"
+      ]
+    },
+    {
+      "provider": "cdnjs",
+      "library": "jquery-validate@1.18.0",
+      "destination": "wwwroot/lib/validate",
+      "files": [
+        "jquery.validate.js",
+        "jquery.validate.min.js",
+        "localization/messages_zh.js",
+        "localization/messages_zh.min.js"
+      ]
+    },
+    {
+      "library": "toastr@2.1.4",
+      "destination": "wwwroot/lib/toastr/",
+      "files": [
+        "nuget/content/scripts/toastr.js",
+        "nuget/content/scripts/toastr.min.js",
+        "nuget/content/scripts/toastr.min.js.map",
+        "nuget/content/content/toastr.css",
+        "nuget/content/content/toastr.min.css"
+      ]
+    },
+    {
+      "library": "bootstrap-table@1.12.1",
+      "destination": "wwwroot/lib/bootstrap-table/",
+      "files": [
+        "dist/bootstrap-table.js",
+        "dist/bootstrap-table.min.js",
+        "dist/bootstrap-table.css",
+        "dist/bootstrap-table.min.css",
+        "dist/locale/bootstrap-table-zh-CN.js",
+        "dist/locale/bootstrap-table-zh-CN.min.js"
+      ]
+    },
+    {
+      "library": "bootstrap@4.1.3",
+      "destination": "wwwroot/lib/bootstrap/",
+      "files": [
+        "dist/css/bootstrap.css",
+        "dist/css/bootstrap.css.map",
+        "dist/css/bootstrap.min.css",
+        "dist/css/bootstrap.min.css.map",
+        "dist/js/bootstrap.bundle.js",
+        "dist/js/bootstrap.bundle.js.map",
+        "dist/js/bootstrap.bundle.min.js",
+        "dist/js/bootstrap.bundle.min.js.map"
+      ]
+    },
+    {
+      "library": "font-awesome@4.7.0",
+      "destination": "wwwroot/lib/font-awesome/",
+      "files": [
+        "css/font-awesome.css",
+        "css/font-awesome.css.map",
+        "css/font-awesome.min.css",
+        "fonts/FontAwesome.otf",
+        "fonts/fontawesome-webfont.eot",
+        "fonts/fontawesome-webfont.svg",
+        "fonts/fontawesome-webfont.ttf",
+        "fonts/fontawesome-webfont.woff",
+        "fonts/fontawesome-webfont.woff2"
+      ]
+    },
+    {
+      "library": "dcjqaccordion@2.7.1",
+      "destination": "wwwroot/lib/dcjqaccordion/",
+      "files": [
+        "js/jquery.dcjqaccordion.2.7.js",
+        "js/jquery.dcjqaccordion.2.7.min.js",
+        "js/jquery.cookie.js"
+      ]
+    },
+    {
+      "library": "bootstrap-fileinput@4.5.1",
+      "destination": "wwwroot/lib/fileinput/",
+      "files": [
+        "css/fileinput.css",
+        "css/fileinput.min.css",
+        "js/fileinput.js",
+        "js/fileinput.min.js",
+        "js/locales/zh.js"
       ]
     }
   ]

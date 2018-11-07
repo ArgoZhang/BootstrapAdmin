@@ -1,0 +1,8 @@
+.blue .accordion{ border-top: 1px solid #013d6c; border-right: 1px solid #013d6c; border-left: 1px solid #013d6c;}
+.blue .accordion, .blue .accordion li {margin: 0; padding: 0; border: none;}
+.blue .accordion a {padding: 10px 10px 10px 15px; background: #0D5995; text-decoration:none; display: block; color: #fff; border-bottom: 1px solid #013d6c; border-top: 1px solid #4695d3;}
+.blue .accordion ul a {padding: 10px 10px 10px 25px;}
+.blue .accordion a.dcjq-parent, .blue .accordion a.dcjq-parent:hover {padding: 10px 10px 10px 15px;}
+.blue .accordion a.dcjq-parent.active {background: #0D5995 url(images/checkers.png) repeat 0 0;}
+.blue .accordion a:hover {background: #05477c;}
+.blue .accordion a:active{}

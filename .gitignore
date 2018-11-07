@@ -344,7 +344,6 @@ ASALocalRun/
 
 # Net Core Keys
 [Kk]eys/
-lib/
 *.db
 Bootstrap.Admin.xml
 
