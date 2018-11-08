@@ -422,5 +422,8 @@
         $('[data-toggle="popover"]').popover();
         $('[data-toggle="lgbinfo"]').lgbInfo();
         $('.date').lgbDatePicker();
+
+        // fix bug bootstrap-table 1.12.1 showToggle
+        $.fn.bootstrapTable.Constructor.DEFAULTS.icons.toggle = $.fn.bootstrapTable.Constructor.DEFAULTS.icons.toggleOff;
     });
 })(jQuery);
