@@ -1,4 +1,5 @@
-﻿using Longbow.Data;
+﻿using Bootstrap.Security.DataAccess;
+using Longbow.Data;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -17,18 +18,22 @@ namespace Bootstrap.DataAccess
         /// 获得/设置 群组主键ID
         /// </summary>
         public string Id { get; set; }
+
         /// <summary>
         /// 获得/设置 群组名称
         /// </summary>
         public string GroupName { get; set; }
+
         /// <summary>
         /// 获得/设置 群组描述
         /// </summary>
         public string Description { get; set; }
+
         /// <summary>
         /// 获取/设置 用户群组关联状态 checked 标示已经关联 '' 标示未关联
         /// </summary>
         public string Checked { get; set; }
+
         /// <summary>
         /// 查询所有群组信息
         /// </summary>
@@ -53,6 +58,7 @@ namespace Bootstrap.DataAccess
             }
             return groups;
         }
+
         /// <summary>
         /// 删除群组信息
         /// </summary>
@@ -87,6 +93,7 @@ namespace Bootstrap.DataAccess
             }
             return ret;
         }
+
         /// <summary>
         /// 保存新建/更新的群组信息
         /// </summary>
@@ -109,6 +116,7 @@ namespace Bootstrap.DataAccess
             }
             return ret;
         }
+
         /// <summary>
         /// 根据用户查询部门信息
         /// </summary>
@@ -135,6 +143,7 @@ namespace Bootstrap.DataAccess
             }
             return groups;
         }
+
         /// <summary>
         /// 保存用户部门关系
         /// </summary>
@@ -180,6 +189,7 @@ namespace Bootstrap.DataAccess
             }
             return ret;
         }
+
         /// <summary>
         /// 根据角色ID指派部门
         /// </summary>
@@ -206,6 +216,7 @@ namespace Bootstrap.DataAccess
             }
             return groups;
         }
+
         /// <summary>
         /// 根据角色ID以及选定的部门ID，保到角色部门表
         /// </summary>
@@ -249,27 +260,12 @@ namespace Bootstrap.DataAccess
             }
             return ret;
         }
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public virtual IEnumerable<string> RetrieveGroupsByUserName(string userName)
-        {
-            var entities = new List<string>();
-            var db = DbAccessManager.DBAccess;
-            using (DbCommand cmd = db.CreateCommand(CommandType.Text, "select g.GroupName, g.Description from Groups g inner join UserGroup ug on g.ID = ug.GroupID inner join Users u on ug.UserID = u.ID where UserName = @UserName"))
-            {
-                cmd.Parameters.Add(db.CreateParameter("@UserName", userName));
-                using (DbDataReader reader = db.ExecuteReader(cmd))
-                {
-                    while (reader.Read())
-                    {
-                        entities.Add((string)reader[0]);
-                    }
-                }
-            }
-            return entities;
-        }
+        public virtual IEnumerable<string> RetrieveGroupsByUserName(string userName) => DbHelper.RetrieveGroupsByUserName(userName);
     }
 }
