@@ -78,7 +78,7 @@
                     });
                 }
                 $refresh.removeClass('fa-spin');
-                $('.site-footer').footer();
+                $('footer').footer();
             }
         });
     };

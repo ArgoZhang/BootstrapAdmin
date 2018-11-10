@@ -44,7 +44,7 @@
         transform: translate(-100%);
     }
 
-    .sidebar-open .site-footer {
+    .sidebar-open footer {
         display: flex;
     }
 

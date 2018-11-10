@@ -58,7 +58,7 @@
         this._initZoom();
     };
 
-    $('.site-footer').footer();
+    $('footer').footer();
 
     var dataBinder = new DataEntity({
         Password: "#currentPassword",

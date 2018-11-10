@@ -15,7 +15,7 @@ body {
     transform: translate(0);
 }
 
-.sidebar-open .site-footer, .sidebar-open .container-fluid {
+.sidebar-open footer, .sidebar-open .container-fluid {
     display: none;
 }
 
@@ -304,7 +304,7 @@ a, a:hover, a:focus {
 }
 /*end title*/
 
-.site-footer {
+footer {
     background: #5b6e84;
     color: #fff;
     padding: 10px 4px;
@@ -316,7 +316,7 @@ a, a:hover, a:focus {
     display: flex;
 }
 
-    .site-footer > span {
+    footer > span {
         flex: 1 1 auto;
         text-align: center;
         margin-left: 4px;

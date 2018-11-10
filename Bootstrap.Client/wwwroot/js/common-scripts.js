@@ -24,7 +24,7 @@
     $breadNav.removeClass('d-none').text(arch.text() || $('title').text());
 
     $(window).on('resize', function () {
-        $('.site-footer').footer();
+        $('footer').footer();
     });
 
     $("#gotoTop").on('click', function (e) {

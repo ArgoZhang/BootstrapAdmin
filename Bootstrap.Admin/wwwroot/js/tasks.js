@@ -12,7 +12,7 @@
                         return $.format(htmlTask, task.TaskName, task.UserName, task.AssignTime, task.Id);
                     }).join('');
                     $('#list-task').html(content);
-                    $('.site-footer').footer();
+                    $('footer').footer();
                 }
                 that.toggleClass('fa-spin');
             }
