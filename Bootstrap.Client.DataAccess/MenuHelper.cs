@@ -12,10 +12,8 @@ namespace Bootstrap.Client.DataAccess
     /// </summary>
     public static class MenuHelper
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        public const string RetrieveMenusAll = "BootstrapMenu-RetrieveMenus";
+        private const string RetrieveMenusAll = "BootstrapMenu-RetrieveMenus";
+
         /// <summary>
         /// 
         /// </summary>
@@ -25,11 +23,12 @@ namespace Bootstrap.Client.DataAccess
         public static IEnumerable<BootstrapMenu> RetrieveAppMenus(string userName, string activeUrl)
         {
             var menus = RetrieveAllMenus(userName).Where(m => m.Category == "1" && m.IsResource == 0 && m.ApplicationCode == ConfigurationManager.AppSettings["AppId"]);
-            DbHelper.ActiveMenu(null, menus, activeUrl);
             var root = menus.Where(m => m.ParentId == "0").OrderBy(m => m.ApplicationCode).ThenBy(m => m.Order);
             DbHelper.CascadeMenus(menus, root);
+            DbHelper.ActiveMenu(null, menus, activeUrl);
             return root;
         }
+
         /// <summary>
         /// 通过用户获得所有菜单
         /// </summary>
