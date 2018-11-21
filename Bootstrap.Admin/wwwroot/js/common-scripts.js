@@ -186,6 +186,67 @@ $(function () {
         $('body').toggleClass('sidebar-open');
     });
 
+    // Roles
+    Role = {
+        url: 'api/Roles',
+        title: "分配角色"
+    };
+
+    // Users
+    User = {
+        url: 'api/Users',
+        title: "分配用户"
+    };
+
+    // Groups
+    Group = {
+        url: 'api/Groups',
+        title: "分配部门"
+    };
+
+    // Menus
+    Menu = {
+        url: 'api/Menus',
+        iconView: 'Admin/IconView',
+        title: "分配菜单"
+    };
+
+    // Exceptions
+    Exceptions = {
+        url: 'api/Exceptions',
+        title: "程序异常日志"
+    };
+
+    // Dicts
+    Dicts = {
+        url: 'api/Dicts'
+    };
+
+    // Profiles
+    Profiles = {
+        url: 'api/Profiles'
+    };
+
+    // Settings
+    Settings = {
+        url: 'api/Settings'
+    };
+
+    // Messages
+    Messages = {
+        url: 'api/Messages'
+    };
+
+    // Tasks
+    Tasks = {
+        url: 'api/Tasks'
+    };
+
+    // Notifications
+    Notifications = {
+        url: 'api/Notifications'
+    };
+
     // load widget data
     $('.header .nav').reloadWidget().notifi({
         url: 'NotiHub',
