@@ -213,27 +213,32 @@ namespace Bootstrap.DataAccess
             p.PassSalt = LgbCryptography.GenerateSalt();
             p.Password = LgbCryptography.ComputeHash(p.Password, p.PassSalt);
 
-            using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
+            var db = DbAccessManager.DBAccess;
+            using (TransactionPackage transaction = db.BeginTransaction())
             {
                 try
                 {
-                    using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, "select UserName from Users Where UserName = @userName"))
+                    using (DbCommand cmd = db.CreateCommand(CommandType.Text, "select UserName from Users Where UserName = @userName"))
                     {
-                        cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@userName", p.UserName));
-                        var un = DbAccessManager.DBAccess.ExecuteScalar(cmd, transaction);
+                        cmd.Parameters.Add(db.CreateParameter("@userName", p.UserName));
+                        var un = db.ExecuteScalar(cmd, transaction);
                         if (DbAdapterManager.ToObjectValue(un) == null)
                         {
-                            cmd.CommandText = "Insert Into Users (UserName, Password, PassSalt, DisplayName, RegisterTime, ApprovedBy, ApprovedTime, Description) values (@userName, @password, @passSalt, @displayName, datetime('now', 'localtime'), @approvedBy, now(), @description)";
-                            cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@password", p.Password));
-                            cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@passSalt", p.PassSalt));
-                            cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@displayName", p.DisplayName));
-                            cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@approvedBy", DbAdapterManager.ToDBValue(p.ApprovedBy)));
-                            cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@description", p.Description));
-                            DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+                            object approveTime = DBNull.Value;
+                            if (p.ApprovedTime != DateTime.MinValue) approveTime = p.ApprovedTime;
+                            cmd.CommandText = "Insert Into Users (UserName, Password, PassSalt, DisplayName, RegisterTime, ApprovedBy, ApprovedTime, Description) values (@userName, @password, @passSalt, @displayName, @registerTime, @approvedBy, @approveTime, @description)";
+                            cmd.Parameters.Add(db.CreateParameter("@password", p.Password));
+                            cmd.Parameters.Add(db.CreateParameter("@passSalt", p.PassSalt));
+                            cmd.Parameters.Add(db.CreateParameter("@registerTime", DateTime.Now));
+                            cmd.Parameters.Add(db.CreateParameter("@displayName", p.DisplayName));
+                            cmd.Parameters.Add(db.CreateParameter("@approvedBy", DbAdapterManager.ToDBValue(p.ApprovedBy)));
+                            cmd.Parameters.Add(db.CreateParameter("@approveTime", approveTime));
+                            cmd.Parameters.Add(db.CreateParameter("@description", p.Description));
+                            db.ExecuteNonQuery(cmd, transaction);
 
                             cmd.CommandText = $"insert into UserRole (UserID, RoleID) select ID, (select ID from Roles where RoleName = 'Default') RoleId from Users where UserName = '{p.UserName}'";
                             cmd.Parameters.Clear();
-                            DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
+                            db.ExecuteNonQuery(cmd, transaction);
 
                             transaction.CommitTransaction();
                             ret = true;

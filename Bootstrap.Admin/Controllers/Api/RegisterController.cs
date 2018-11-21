@@ -3,6 +3,7 @@ using Longbow.Web.SignalR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,7 +14,8 @@ namespace Bootstrap.Admin.Controllers.Api
     /// </summary>
     [AllowAnonymous]
     [Route("api/[controller]")]
-    public class RegisterController : Controller
+    [ApiController]
+    public class RegisterController : ControllerBase
     {
         /// <summary>
         /// 登录页面注册新用户remote validate调用
