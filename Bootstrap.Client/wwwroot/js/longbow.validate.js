@@ -16,7 +16,7 @@
                         return $("option:selected", element).length;
                     case "input":
                         if (this.checkable(element)) {
-                            return this.findByName(element.name).filter(":checked").length;
+                            return $(element).filter(":checked").length;
                         }
                 }
                 return value.length;
@@ -37,12 +37,6 @@
                 "function": function (param, element) {
                     return param(element);
                 }
-            },
-            findByName: function (name) {
-                return $('body').find("[name='" + this.escapeCssMeta(name) + "']");
-            },
-            escapeCssMeta: function (string) {
-                return string.replace(/([\\!"#$%&'()*+,./:;<=>?@\[\]^`{|}~])/g, "\\$1");
             },
             previousValue: function (element, method) {
                 method = typeof method === "string" && method || "remote";
@@ -86,6 +80,14 @@
             },
             settings: $.validator.defaults
         }, this.defaults(), options);
+
+        // fix bug Edge
+        this.$element.find('select' + this.options.childClass).on('input', function (e) {
+            e.stopPropagation();
+        }).on('change', function () {
+            $(this).trigger('input.lgb.validate');
+        });
+
         this.$element.on('input.lgb.validate', this.options.childClass, function () {
             if (!that.validElement(this)) $(this).tooltip('show');
         }).on('inserted.bs.tooltip', this.options.childClass, function () {
@@ -258,6 +260,10 @@
             $.validator.addMethod("ip", function (value, element) {
                 return this.optional(element) || /^(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])$/.test(value);
             }, "请填写正确的IP地址");
+
+            $.validator.addMethod("radioGroup", function (value, element) {
+                return $(element).find(':checked').length === 1;
+            }, "请选择一个选项");
         }
         $('[data-toggle="LgbValidate"]').lgbValidate();
     });
