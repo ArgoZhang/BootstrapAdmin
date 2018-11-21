@@ -440,12 +440,6 @@
             "hideMethod": "fadeOut"
         };
 
-        $('[data-toggle="dropdown"].dropdown-select').dropdown('select');
-        $('[data-toggle="tooltip"]').tooltip();
-        $('[data-toggle="popover"]').popover();
-        $('[data-toggle="lgbinfo"]').lgbInfo();
-        $('.date').lgbDatePicker();
-
         $('.collapse').on('shown.bs.collapse', function () {
             $.footer().removeClass('d-none');
         }).on('hidden.bs.collapse', function () {
@@ -455,10 +449,6 @@
         }).on('show.bs.collapse', function () {
             $('footer').addClass('d-none');
         });
-        
-        // fix bug bootstrap-table 1.12.1 showToggle
-        if ($.fn.bootstrapTable) $.fn.bootstrapTable.Constructor.DEFAULTS.icons.toggle = $.fn.bootstrapTable.Constructor.DEFAULTS.icons.toggleOff;
-
 
         $(window).on('resize', function () {
             $.footer();

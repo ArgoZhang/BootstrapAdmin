@@ -4,16 +4,14 @@
 }
 @section css {
     <environment include="Development">
-        <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+        <link href="~/lib/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
         <link href="~/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
-        <link href="~/lib/toastr/nuget/content/content/toastr.css" rel="stylesheet" />
-        <link href="~/css/jquery.mCustomScrollbar.css" rel="stylesheet" />
+        <link href="~/lib/toastr.js/toastr.css" rel="stylesheet" />
     </environment>
     <environment exclude="Development">
-        <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/lib/twitter-bootstrap/css/bootstrap.min.css" rel="stylesheet" />
         <link href="~/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-        <link href="~/lib/toastr/nuget/content/content/toastr.min.css" rel="stylesheet" />
-        <link href="~/css/jquery.mCustomScrollbar.min.css" rel="stylesheet" />
+        <link href="~/lib/toastr.js/toastr.min.css" rel="stylesheet" />
     </environment>
     @RenderSection("css", false)
     <link href="~/css/theme.css" rel="stylesheet" asp-append-version="true" />
@@ -27,21 +25,18 @@
 }
 @section javascript {
     <environment include="Development">
-        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
-        <script src="~/js/jquery.mCustomScrollbar.js"></script>
-        <script src="~/lib/toastr/nuget/content/scripts/toastr.js"></script>
+        <script src="~/lib/twitter-bootstrap/js/bootstrap.bundle.js"></script>
         <script src="~/lib/signalr/dist/browser/signalr.js"></script>
         <script src="~/lib/dcjqaccordion/js/jquery.dcjqaccordion.2.7.js"></script>
     </environment>
     <environment exclude="Development">
-        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="~/js/jquery.mCustomScrollbar.concat.min.js"></script>
-        <script src="~/lib/toastr/nuget/content/scripts/toastr.min.js"></script>
+        <script src="~/lib/twitter-bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
         <script src="~/lib/dcjqaccordion/js/jquery.dcjqaccordion.2.7.min.js"></script>
     </environment>
+    <script src="~/lib/toastr.js/toastr.min.js"></script>
     <script src="~/lib/dcjqaccordion/js/jquery.cookie.js"></script>
-    <script src="~/js/longbow.common.js" asp-append-version="true"></script>
+    <script src="~/lib/longbow/longbow.common.js" asp-append-version="true"></script>
     <script src="~/js/common-scripts.js" asp-append-version="true"></script>
     @RenderSection("javascript", false)
 }
