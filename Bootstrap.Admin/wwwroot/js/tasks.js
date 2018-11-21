@@ -6,13 +6,13 @@
         that.toggleClass('fa-spin');
         $.bc({
             url: Tasks.url,
+            autoFooter: true,
             callback: function (result) {
                 if (result) {
                     var content = result.map(function (task) {
                         return $.format(htmlTask, task.TaskName, task.UserName, task.AssignTime, task.Id);
                     }).join('');
                     $('#list-task').html(content);
-                    $('footer').footer();
                 }
                 that.toggleClass('fa-spin');
             }

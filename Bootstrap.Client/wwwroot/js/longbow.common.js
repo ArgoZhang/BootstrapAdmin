@@ -111,6 +111,13 @@
     };
 
     $.extend({
+        fullScreenStatus: function fullScreenStatus(value) {
+            if (value !== undefined) window.fullscreen = value;
+            return document.fullscreen ||
+                document.mozFullScreen ||
+                document.webkitIsFullScreen || window.fullscreen ||
+                false;
+        },
         bc: function (options) {
             options = $.extend({
                 id: "",
@@ -124,25 +131,31 @@
                 cors: false,
                 contentType: 'application/json',
                 dataType: 'json',
-                method: 'get'
+                method: 'get',
+                autoFooter: false
             }, options);
 
             if (!options.url || options.url === "") {
-                toastr.error('参数错误: 未设置请求地址Url');
+                toastr.error('未设置请求地址Url', '参数错误');
                 return;
             }
 
             var loadFlag = "loading";
+            var loadingHandler = null;
             if (options.loading && options.modal) {
                 var $modal = $(options.modal);
                 if (!$modal.hasClass('event')) {
                     $modal.on('shown.bs.modal', function () {
                         var $this = $(this);
+                        if (loadingHandler !== null) {
+                            window.clearTimeout(loadingHandler);
+                            loadingHandler = null;
+                        }
                         if ($this.hasClass(loadFlag)) return;
                         $this.modal('hide');
                     });
                 }
-                $(options.modal).addClass(loadFlag).modal('show');
+                loadingHandler = window.setTimeout(function () { $(options.modal).addClass(loadFlag).modal('show'); }, 300);
                 setTimeout(function () {
                     $(options.modal).find('.close').removeClass('d-none');
                 }, options.loadingTimeout);
@@ -160,13 +173,21 @@
             }
 
             function success(result) {
+                if (options.modal && (result || options.loading)) {
+                    if (loadingHandler !== null) {
+                        // cancel show modal event
+                        window.clearTimeout(loadingHandler);
+                        loadingHandler = null;
+                    }
+                    else $(options.modal).removeClass(loadFlag).modal('hide');
+                }
+                if (options.title) toastr[result ? 'success' : 'error'](options.title + (result ? "成功" : "失败"));
                 if ($.isFunction(options.callback)) {
                     options.callback.call(options, result);
                 }
-                if (options.modal && (result || options.loading)) {
-                    $(options.modal).removeClass(loadFlag).modal('hide');
+                if (options.autoFooter === true) {
+                    $.footer();
                 }
-                if (options.title) toastr[result ? 'success' : 'error'](options.title + (result ? "成功" : "失败"));
             }
 
             var ajaxSettings = {
@@ -180,6 +201,7 @@
                     success(result);
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    if (window.toastr) toastr.error(XMLHttpRequest.status === 500 ? '后台应用程序错误' : errorThrown, '程序错误');
                     success(false);
                 }
             };
@@ -199,6 +221,11 @@
             do prefix += ~~(Math.random() * 1000000);
             while (document.getElementById(prefix));
             return prefix;
+        },
+        footer: function (options) {
+            var op = $.extend({ header: "header", content: ".container-fluid", ele: 'footer' }, options);
+            var $ele = $(op.ele);
+            return $(op.header).outerHeight() + $(op.content).outerHeight() + $ele.outerHeight() > $(window).height() ? $ele.removeClass('position-fixed') : $ele.addClass('position-fixed');
         },
         formatUrl: function (url) {
             if (!url) return url;
@@ -223,10 +250,6 @@
             });
             that.css({ marginTop: getHeight(), transition: "all .5s linear" });
             return this;
-        },
-        footer: function (options) {
-            var op = $.extend({ header: "header", content: ".container-fluid" }, options);
-            return $(op.header).outerHeight() + $(op.content).outerHeight() + this.outerHeight() > $(window).height() ? this.removeClass('position-fixed') : this.addClass('position-fixed');
         },
         lgbTable: function (options) {
             var bsa = new DataTable($.extend(options.dataBinder, { url: options.url }));
@@ -266,8 +289,11 @@
                 showToggle: true,                   //是否显示详细视图和列表视图的切换按钮
                 cardView: $(window).width() < 768,                    //是否显示详细视图
                 queryButton: '#btn_query',
-                onLoadSuccess: function () {
-                    $('footer').footer();
+                onLoadSuccess: function (data) {
+                    $.footer();
+                    if (data.IsSuccess === false) {
+                        toastr.error(data.HttpResult.Message, data.HttpResult.Name);
+                    }
                 }
             }, options);
             settings.url = $.formatUrl(settings.url);
@@ -281,6 +307,32 @@
                     e.data.bootstrapTable('refresh');
                 });
             }
+            return this;
+        },
+        lgbPopover: function (options) {
+            this.each(function (index, ele) {
+                var $ele = $(ele);
+                var data = $ele.data($.fn.popover.Constructor.DATA_KEY);
+                if (data) {
+                    $.extend(data.config, options);
+                }
+                else {
+                    $ele.popover(options);
+                }
+            });
+            return this;
+        },
+        lgbTooltip: function (options) {
+            this.each(function (index, ele) {
+                var $ele = $(ele);
+                var data = $ele.data($.fn.tooltip.Constructor.DATA_KEY);
+                if (data) {
+                    $.extend(data.config, options);
+                }
+                else {
+                    $ele.tooltip(options);
+                }
+            });
             return this;
         },
         lgbDatePicker: function (options) {
@@ -301,68 +353,10 @@
             this.datetimepicker(option);
             return this;
         },
-        lgbIndicator: function (options) {
-            if (/update/.test(options)) {
-                var $indicator = this.data('radialIndicator');
-                if ($indicator.indOption.percentage) $indicator.animate(this.attr('data-val') * 100 / this.attr('data-max'));
-                else $indicator.value(this.attr('data-val'));
-                return this;
-            }
-            this.each(function () {
-                var op = $.extend({
-                    barColor: {
-                        0: '#33CC33',
-                        70: '#c5c521',
-                        80: '#e46121',
-                        90: '#c92b2b',
-                        100: '#FF0000'
-                    },
-                    radius: 34,
-                    interaction: false,
-                    barWidth: 5,
-                    roundCorner: true,
-                    percentage: true
-                }, options);
-                var $this = $(this);
-                $this.radialIndicator(op);
-                if ($this.attr('data-val')) {
-                    var $indicator = $this.data('radialIndicator');
-                    if ($indicator.indOption.percentage) $indicator.animate($this.attr('data-val') * 100 / $this.attr('data-max'));
-                    else $indicator.value($this.attr('data-val'));
-                }
-            });
-            return this;
-        },
-        lgbCountUp: function (options) {
-            options = $.extend({}, options);
-            this.each(function () {
-                var option = {
-                    useEasing: true,
-                    useGrouping: false,
-                    separator: ',',
-                    decimal: '.'
-                };
-                var $element = $(this);
-                var startVal = options.startVal || 0;
-                var endVal = $element.text() || 100;
-                var decimals = options.decimals || 0;
-                var count = new CountUp(this, startVal, endVal, decimals, 1, $.extend(option, options));
-                count.start();
-            });
-            return this;
-        },
-        getTextByValue: function (key, value) {
-            // 通过Key指定一个下拉框，通过value获得下拉框value值的text属性
-            if (this.length !== 1) throw 'element must be one';
-            var ele = this.get(0);
-            if (!ele[key]) {
-                ele[key] = {};
-                var that = ele;
-                $.each($('#' + key).children(), function (index, element) {
-                    that[key][$(element).attr('value')] = $(element).text();
-                });
-            }
-            return ele[key][value];
+        getTextByValue: function (value) {
+            var text = this.children().filter(function () { return $(this).val() === value; }).text();
+            if (text === "") text = value;
+            return text;
         },
         lgbInfo: function (option) {
             this.each(function () {
@@ -392,7 +386,7 @@
                 if ($.isFunction(op.callback)) op.callback.apply(that, arguments);
                 return console.error(err.toString());
             }).then(function () {
-                if (op.invoke) op.invoke(connection).catch(err => console.error(err.toString()));
+                if (op.invoke) op.invoke(connection).then(result => console.log(result)).catch(err => console.error(err.toString()));
             });
             return this;
         }
@@ -416,13 +410,70 @@
     });
 
     $(function () {
+        // fix bug bootstrap-table 1.12.1 showToggle
+        if ($.fn.bootstrapTable) $.fn.bootstrapTable.Constructor.DEFAULTS.icons.toggle = $.fn.bootstrapTable.Constructor.DEFAULTS.icons.toggleOff;
+
+        if (window.NProgress) {
+            $(document).ajaxStart(function () {
+                return NProgress.start();
+            });
+
+            $(document).ajaxComplete(function (e) {
+                return NProgress.done();
+            });
+        }
+
+        if (window.toastr) toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "progressBar": true,
+            "positionClass": "toast-bottom-right",
+            "onclick": null,
+            "showDuration": "600",
+            "hideDuration": "2000",
+            "timeOut": "4000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+
         $('[data-toggle="dropdown"].dropdown-select').dropdown('select');
         $('[data-toggle="tooltip"]').tooltip();
         $('[data-toggle="popover"]').popover();
         $('[data-toggle="lgbinfo"]').lgbInfo();
         $('.date').lgbDatePicker();
 
+        $('.collapse').on('shown.bs.collapse', function () {
+            $.footer().removeClass('d-none');
+        }).on('hidden.bs.collapse', function () {
+            $.footer().removeClass('d-none');
+        }).on('hide.bs.collapse', function () {
+            $('footer').addClass('d-none');
+        }).on('show.bs.collapse', function () {
+            $('footer').addClass('d-none');
+        });
+        
         // fix bug bootstrap-table 1.12.1 showToggle
-        $.fn.bootstrapTable.Constructor.DEFAULTS.icons.toggle = $.fn.bootstrapTable.Constructor.DEFAULTS.icons.toggleOff;
+        if ($.fn.bootstrapTable) $.fn.bootstrapTable.Constructor.DEFAULTS.icons.toggle = $.fn.bootstrapTable.Constructor.DEFAULTS.icons.toggleOff;
+
+
+        $(window).on('resize', function () {
+            $.footer();
+        });
+
+        $("#gotoTop").on('click', function (e) {
+            e.preventDefault();
+            $('html, body').animate({
+                scrollTop: 0
+            }, 200);
+        });
+
+        $('[data-toggle="dropdown"].dropdown-select').dropdown('select');
+        $('[data-toggle="tooltip"]').tooltip();
+        $('[data-toggle="popover"]').popover();
+        $('[data-toggle="lgbinfo"]').lgbInfo();
+        $('.date').lgbDatePicker();
     });
 })(jQuery);

@@ -58,6 +58,7 @@
                         $.bc({
                             url: options.url,
                             cors: !item.Self,
+                            autoFooter: true,
                             callback: function (result) {
                                 if ($.isArray(result)) {
                                     var html = '<div class="cache-item"><i class="fa fa-ellipsis-v"></i><span data-toggle="tooltip" title="{2}">{2}</span><span class="badge badge-pill badge-success">{0}</span><span title="{3}">{3}</span><div><span>{6}</span><button class="btn btn-danger" title="{1}" data-url="{4}?cacheKey={1}" data-toggle="tooltip" data-self="{5}" data-placement="left"><i class="fa fa-trash-o"></i></button></div></div>';
@@ -78,7 +79,6 @@
                     });
                 }
                 $refresh.removeClass('fa-spin');
-                $('footer').footer();
             }
         });
     };
