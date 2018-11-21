@@ -117,33 +117,9 @@
 })(jQuery);
 
 $(function () {
-    toastr.options = {
-        "closeButton": true,
-        "debug": false,
-        "progressBar": true,
-        "positionClass": "toast-bottom-right",
-        "onclick": null,
-        "showDuration": "600",
-        "hideDuration": "2000",
-        "timeOut": "4000",
-        "extendedTimeOut": "1000",
-        "showEasing": "swing",
-        "hideEasing": "linear",
-        "showMethod": "fadeIn",
-        "hideMethod": "fadeOut"
-    };
-
     var $sideMenu = $(".sidebar");
-
     $sideMenu.dcAccordion({
         autoExpand: true
-    });
-
-    $("#gotoTop").on('click', function (e) {
-        e.preventDefault();
-        $('.main-content, html, body').animate({
-            scrollTop: 0
-        }, 200);
     });
 
     // breadcrumb

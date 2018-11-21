@@ -80,7 +80,7 @@ input.is-valid {
 
 input.pending {
     background-repeat: no-repeat;
-    background-image: url(../img/loading-sm.gif);
+    background-image: url(../images/loading-sm.gif);
     background-position: right 8px center;
 }
 
@@ -140,9 +140,9 @@ input.pending {
                 transform: rotate(-90deg);
             }
 
-        .card .card-header i + span {
-            margin-left: 6px;
-        }
+    .card .card-header i + span {
+        margin-left: 6px;
+    }
 
 .btn span:last-child {
     margin-left: 4px;
@@ -335,3 +335,13 @@ input.pending {
     .form-inline .form-group-dropdown .dropdown, .form-inline .form-group-dropdown .dropup {
         display: inline-block;
     }
+
+#nprogress .bar {
+    background: #673AB7;
+    height: 3px;
+}
+
+#nprogress .spinner {
+    top: 22px;
+    right: 16px;
+}

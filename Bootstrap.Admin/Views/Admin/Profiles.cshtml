@@ -4,26 +4,28 @@
 }
 @section css {
     <environment include="Development">
-        <link href="~/css/fileinput.css" rel="stylesheet" />
+        <link href="~/lib/bootstrap-fileinput/css/fileinput.css" rel="stylesheet" />
     </environment>
     <environment exclude="Development">
-        <link href="~/css/fileinput.min.css" rel="stylesheet" />
+        <link href="~/lib/bootstrap-fileinput/css/fileinput.min.css" rel="stylesheet" />
     </environment>
     <link href="~/css/tasks.css" rel="stylesheet" asp-append-version="true" />
 }
 @section javascript {
     <environment include="Development">
-        <script src="~/lib/fileinput/js/fileinput.js"></script>
+        <script src="~/lib/bootstrap-fileinput/js/fileinput.js"></script>
+        <script src="~/lib/bootstrap-fileinput/js/locales/zh.js"></script>
+        <script src="~/lib/bootstrap-fileinput/themes/fa/theme.js"></script>
         <script src="~/lib/validate/jquery.validate.js"></script>
         <script src="~/lib/validate/localization/messages_zh.js"></script>
     </environment>
     <environment exclude="Development">
-        <script src="~/lib/fileinput/js/fileinput.min.js"></script>
+        <script src="~/lib/bootstrap-fileinput/js/fileinput.min.js"></script>
+        <script src="~/lib/bootstrap-fileinput/js/locales/zh.min.js"></script>
+        <script src="~/lib/bootstrap-fileinput/themes/fa/theme.min.js"></script>
         <script src="~/lib/validate/jquery.validate.min.js"></script>
         <script src="~/lib/validate/localization/messages_zh.min.js"></script>
     </environment>
-    <script src="~/lib/fileinput/js/locales/zh.js"></script>
-    <script src="~/js/theme.js"></script>
     <script src="~/js/longbow.dataentity.js" asp-append-version="true"></script>
     <script src="~/js/longbow.validate.js" asp-append-version="true"></script>
     <script src="~/js/profiles.js" asp-append-version="true"></script>

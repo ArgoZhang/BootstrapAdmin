@@ -90,6 +90,8 @@
             if (!that.validElement(this)) $(this).tooltip('show');
         }).on('inserted.bs.tooltip', this.options.childClass, function () {
             $('#' + $(this).attr('aria-describedby')).addClass(that.options.errorClass);
+        }).on('change.lgb.validate', this.options.childClass, function () {
+            if (!that.validElement(this)) $(this).tooltip('show');
         });
         if (!this.options.validButtons) return;
         this.$element.find(this.options.validButtons).on('click.lgb.validate', function (e) {

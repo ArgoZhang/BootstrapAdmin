@@ -355,14 +355,49 @@
     });
 
     $(function () {
+        // fix bug bootstrap-table 1.12.1 showToggle
+        if ($.fn.bootstrapTable) $.fn.bootstrapTable.Constructor.DEFAULTS.icons.toggle = $.fn.bootstrapTable.Constructor.DEFAULTS.icons.toggleOff;
+
+        $(document).ajaxStart(function () {
+            return NProgress.start();
+        });
+
+        $(document).ajaxComplete(function (e) {
+            return NProgress.done();
+        });
+
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "progressBar": true,
+            "positionClass": "toast-bottom-right",
+            "onclick": null,
+            "showDuration": "600",
+            "hideDuration": "2000",
+            "timeOut": "4000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+
+        $(window).on('resize', function () {
+            $.footer();
+        });
+
+        $("#gotoTop").on('click', function (e) {
+            e.preventDefault();
+            $('html, body, .main-content').animate({
+                scrollTop: 0
+            }, 200);
+        });
+
         $('[data-toggle="dropdown"].dropdown-select').dropdown('select');
         $('[data-toggle="tooltip"]').tooltip();
         $('[data-toggle="popover"]').popover();
         $('[data-toggle="lgbinfo"]').lgbInfo();
         $('.date').lgbDatePicker();
-
-        // fix bug bootstrap-table 1.12.1 showToggle
-        $.fn.bootstrapTable.Constructor.DEFAULTS.icons.toggle = $.fn.bootstrapTable.Constructor.DEFAULTS.icons.toggleOff;
     });
 
     // Roles
