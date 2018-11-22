@@ -19,7 +19,9 @@
         ],
         initialPreviewAsData: true,
         overwriteInitial: true,
-        dropZoneTitle: "请选择头像"
+        dropZoneTitle: "请选择头像",
+        msgPlaceholder: "请选择头像",
+        fileActionSettings: { showUpload: false }
     }).on('fileuploaded', function (event, data, previewId, index) {
         var url = data.response.initialPreview[0];
         if (!!url === true) $headerIcon.attr('src', url);

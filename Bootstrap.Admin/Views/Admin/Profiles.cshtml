@@ -101,7 +101,7 @@
     <div class="card-body">
         <form enctype="multipart/form-data" class="d-none" data-admin="@User.IsInRole("Administrators")">
             <div class="form-group">
-                <input id="fileIcon" class="file" type="file" data-init="@Model.Size" data-file="@Model.FileName">
+                <input id="fileIcon" type="file" data-init="@Model.Size" data-file="@Model.FileName">
             </div>
         </form>
         <img class="card-img d-none" src="@Url.Content(Model.Icon)" />

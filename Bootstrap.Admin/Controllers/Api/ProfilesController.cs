@@ -55,7 +55,7 @@ namespace Bootstrap.Admin.Controllers.Api
                     fileName = Path.Combine(env.WebRootPath, $"images\\uploader\\{fileName}");
                     try
                     {
-                        System.IO.File.Delete(fileName);
+                        if (System.IO.File.Exists(fileName)) System.IO.File.Delete(fileName);
                         fileName = "default.jpg";
                         UserHelper.SaveUserIconByName(userName, fileName);
                     }
