@@ -27,7 +27,10 @@
         url: "api/Category",
         callback: function (result) {
             $('#txt_dict_cate').typeahead({
-                source: result
+                source: result,
+                showHintOnFocus: 'all',
+                fitToElement: true,
+                items: 'all'
             });
         }
     });
