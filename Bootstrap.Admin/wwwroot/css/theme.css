@@ -345,3 +345,14 @@ input.pending {
     top: 22px;
     right: 17px;
 }
+
+.sweet-alert h2 {
+    margin-top: 32px;
+    margin-bottom: 16px;
+    font-size: 1.5rem;
+}
+
+.sweet-alert .sa-button-container .btn-lg {
+    padding: 0.375rem 1.5rem;
+    font-size: 1rem;
+}
