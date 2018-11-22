@@ -145,23 +145,21 @@
             var loadingHandler = null;
             if (options.loading && options.modal) {
                 var $modal = $(options.modal);
-                if (!$modal.hasClass('event')) {
-                    $modal.on('shown.bs.modal', function () {
-                        var $this = $(this);
-                        if (loadingHandler !== null) {
-                            window.clearTimeout(loadingHandler);
-                            loadingHandler = null;
-                        }
-                        if ($this.hasClass(loadFlag)) return;
-                        $this.modal('hide');
-                    });
-                }
+                $modal.on('shown.bs.modal', function () {
+                    var $this = $(this);
+                    if (loadingHandler !== null) {
+                        window.clearTimeout(loadingHandler);
+                        loadingHandler = null;
+                    }
+                    if ($this.hasClass(loadFlag)) return;
+                    $this.modal('hide');
+                });
                 loadingHandler = window.setTimeout(function () { $(options.modal).addClass(loadFlag).modal('show'); }, 300);
-                setTimeout(function () {
+                var loadTimeoutHandler = setTimeout(function () {
                     $(options.modal).find('.close').removeClass('d-none');
+                    clearTimeout(loadTimeoutHandler);
                 }, options.loadingTimeout);
             }
-
 
             var data = options.method === 'get' ? options.data : JSON.stringify(options.data);
             var url = options.id !== '' ? options.url + '/' + options.id : options.url;
