@@ -108,7 +108,7 @@
         $nestMenuInput = $nestMenu.find('div.dd3-content');
         $nestMenuInput.on('click', ':checkbox', function () {
             var val = $(this).prop('checked');
-            var child = $(this).parent().parent().next();
+            var child = $(this).parents('.dd3-content').next();
             if (child.hasClass('dd-list')) {
                 child.find(':checkbox').prop('checked', val);
             }
