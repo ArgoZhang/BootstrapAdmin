@@ -387,7 +387,7 @@
                 if ($.isFunction(op.callback)) op.callback.apply(that, arguments);
                 return console.error(err.toString());
             }).then(function () {
-                if (op.invoke) op.invoke(connection).then(result => console.log(result)).catch(err => console.error(err.toString()));
+                if (op.invoke) op.invoke(connection).then(function (result) { console.log(result); }).catch(function (err) { console.error(err.toString()); });
             });
             return this;
         }
