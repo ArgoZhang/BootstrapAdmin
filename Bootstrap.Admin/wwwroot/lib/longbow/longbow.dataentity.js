@@ -135,9 +135,9 @@
                             title: "您确定要删除吗？",
                             type: "warning",
                             showCancelButton: true,
-                            closeOnConfirm: true,
-                            confirmButtonText: "是的，我要删除",
-                            confirmButtonColor: "#d9534f",
+                            cancelButtonClass: 'btn-secondary',
+                            confirmButtonText: "我要删除",
+                            confirmButtonClass: "btn-danger ml-2",
                             cancelButtonText: "取消"
                         }, function () {
                             setTimeout(function () {
