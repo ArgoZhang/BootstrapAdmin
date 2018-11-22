@@ -8,6 +8,7 @@
                 $("#dialogNew").modal('show');
                 break;
             case "forgot":
+                $("#dialogForgot").modal('show');
                 break;
         }
     });

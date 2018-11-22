@@ -146,3 +146,51 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="dialogForgot" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content" data-toggle="LgbValidate" data-valid-button="#btnForgot" data-valid-modal="#dialogForgot">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabelForgot">忘记密码</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="f_userName">登陆账号：</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <span class="fa fa-user-plus"></span>
+                            </div>
+                        </div>
+                        <input type="text" id="f_userName" autocomplete="off" class="form-control" placeholder="登陆账号不可为空" minlength="4" maxlength="50" remote="api/Register" data-remote-msg="此用户已存在" data-valid="true" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="f_displayName">显示名称：</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <span class="fa fa-user-circle-o"></span>
+                            </div>
+                        </div>
+                        <input type="text" id="f_displayName" class="form-control" value="" placeholder="显示名称不可为空" maxlength="50" data-valid="true" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="f_desc">申请理由：</label>
+                    <textarea id="f_desc" class="form-control" placeholder="申请理由，500字以内" rows="3" maxlength="500" data-valid="true"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    <i class="fa fa-times"></i>
+                    <span>关闭</span>
+                </button>
+                <button type="button" class="btn btn-danger" id="btnForgot">
+                    <i class="fa fa-send-o"></i>
+                    <span>提交</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
