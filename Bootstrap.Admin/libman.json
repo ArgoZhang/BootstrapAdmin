@@ -172,6 +172,16 @@
         "nprogress.js",
         "nprogress.min.css"
       ]
+    },
+    {
+      "library": "nestable2@1.6.0",
+      "destination": "wwwroot/lib/nestable2/",
+      "files": [
+        "jquery.nestable.min.js",
+        "jquery.nestable.css",
+        "jquery.nestable.js",
+        "jquery.nestable.min.css"
+      ]
     }
   ]
 }
