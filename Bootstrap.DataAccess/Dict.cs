@@ -78,7 +78,7 @@ namespace Bootstrap.DataAccess
         /// 获取字典分类名称
         /// </summary>
         /// <returns></returns>
-        public virtual IEnumerable<string> RetrieveCategories() => DictHelper.RetrieveDicts().Select(d => d.Category);
+        public virtual IEnumerable<string> RetrieveCategories() => DictHelper.RetrieveDicts().Select(d => d.Category).Distinct();
         /// <summary>
         /// 
         /// </summary>
