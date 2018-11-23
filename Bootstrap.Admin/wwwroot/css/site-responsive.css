@@ -1,26 +1,4 @@
-@media (min-width: 375px) {
-    .toolbar .dropdown-menu a {
-        padding: 0 20px;
-    }
-
-        .toolbar .dropdown-menu a:first-child {
-            border-left: none;
-        }
-}
-
 @media (min-width: 568px) {
-    .toolbar {
-        display: none;
-    }
-
-    .bs-bars {
-        display: inline-block;
-    }
-
-    .sidebar-toggle-box span {
-        display: inline;
-    }
-
     .cache-item > :nth-child(2) {
         flex: 0 0 144px;
     }
@@ -32,12 +10,6 @@
         overflow: hidden;
         white-space: nowrap;
         margin-left: 10px;
-    }
-}
-
-@media (min-width: 576px) {
-    .btn-fill {
-        width: auto;
     }
 }
 
@@ -57,18 +29,14 @@
         -ms-overflow-style: none;
     }
 
-    .sidebar-open aside {
-        transform: translate(0);
-    }
-
-    .header, footer {
-        position: fixed;
-    }
-
     .main-content {
         position: fixed;
         overflow: auto;
         -ms-overflow-style: auto;
+    }
+
+    .header, footer {
+        position: fixed;
     }
 }
 

@@ -1,6 +1,28 @@
 ﻿@media (min-width: 375px) {
+    .toolbar .dropdown-menu a {
+        padding: 0 20px;
+    }
+
+        .toolbar .dropdown-menu a:first-child {
+            border-left: none;
+        }
+
     .form-check-input + span, .form-check-input + label {
         max-width: 146px;
+    }
+}
+
+@media (min-width: 568px) {
+    .sidebar-toggle-box span {
+        display: inline;
+    }
+
+    .toolbar {
+        display: none;
+    }
+
+    .bs-bars {
+        display: inline-block;
     }
 }
 
@@ -20,6 +42,16 @@
 
     .input-group.date {
         width: 186px;
+    }
+
+    .btn-fill {
+        width: auto;
+    }
+}
+
+@media (min-width: 768px) {
+    .sidebar-open aside {
+        transform: translate(0);
     }
 }
 
