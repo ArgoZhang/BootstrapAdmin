@@ -116,17 +116,15 @@
 
     .userinfo .dropdown-toggle:hover, .userinfo.show .dropdown-toggle, .nav [data-toggle="dropdown"]:hover {
         color: #333;
+        border: solid 1px #337ab7;
     }
-
-.userinfo [data-toggle="dropdown"]:hover {
-    border-color: #337ab7;
-}
 
 .userinfo .dropdown-item {
     display: flex;
     width: 270px;
     padding: 0;
     justify-content: space-around;
+    background-color: #fff;
 }
 
     .userinfo .dropdown-item a {
