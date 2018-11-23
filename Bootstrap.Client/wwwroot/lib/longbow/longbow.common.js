@@ -144,23 +144,21 @@
             var loadingHandler = null;
             if (options.loading && options.modal) {
                 var $modal = $(options.modal);
-                if (!$modal.hasClass('event')) {
-                    $modal.on('shown.bs.modal', function () {
-                        var $this = $(this);
-                        if (loadingHandler !== null) {
-                            window.clearTimeout(loadingHandler);
-                            loadingHandler = null;
-                        }
-                        if ($this.hasClass(loadFlag)) return;
-                        $this.modal('hide');
-                    });
-                }
+                $modal.on('shown.bs.modal', function () {
+                    var $this = $(this);
+                    if (loadingHandler !== null) {
+                        window.clearTimeout(loadingHandler);
+                        loadingHandler = null;
+                    }
+                    if ($this.hasClass(loadFlag)) return;
+                    $this.modal('hide');
+                });
                 loadingHandler = window.setTimeout(function () { $(options.modal).addClass(loadFlag).modal('show'); }, 300);
-                setTimeout(function () {
+                var loadTimeoutHandler = setTimeout(function () {
                     $(options.modal).find('.close').removeClass('d-none');
+                    clearTimeout(loadTimeoutHandler);
                 }, options.loadingTimeout);
             }
-
 
             var data = options.method === 'get' ? options.data : JSON.stringify(options.data);
             var url = options.id !== '' ? options.url + '/' + options.id : options.url;
@@ -386,7 +384,7 @@
                 if ($.isFunction(op.callback)) op.callback.apply(that, arguments);
                 return console.error(err.toString());
             }).then(function () {
-                if (op.invoke) op.invoke(connection).then(result => console.log(result)).catch(err => console.error(err.toString()));
+                if (op.invoke) op.invoke(connection).then(function (result) { console.log(result); }).catch(function (err) { console.error(err.toString()); });
             });
             return this;
         }
@@ -439,12 +437,6 @@
             "hideMethod": "fadeOut"
         };
 
-        $('[data-toggle="dropdown"].dropdown-select').dropdown('select');
-        $('[data-toggle="tooltip"]').tooltip();
-        $('[data-toggle="popover"]').popover();
-        $('[data-toggle="lgbinfo"]').lgbInfo();
-        $('.date').lgbDatePicker();
-
         $('.collapse').on('shown.bs.collapse', function () {
             $.footer().removeClass('d-none');
         }).on('hidden.bs.collapse', function () {
@@ -454,10 +446,6 @@
         }).on('show.bs.collapse', function () {
             $('footer').addClass('d-none');
         });
-        
-        // fix bug bootstrap-table 1.12.1 showToggle
-        if ($.fn.bootstrapTable) $.fn.bootstrapTable.Constructor.DEFAULTS.icons.toggle = $.fn.bootstrapTable.Constructor.DEFAULTS.icons.toggleOff;
-
 
         $(window).on('resize', function () {
             $.footer();

@@ -93,6 +93,7 @@
         }).on('inserted.bs.tooltip', this.options.childClass, function () {
             $('#' + $(this).attr('aria-describedby')).addClass(that.options.errorClass);
         });
+
         if (!this.options.validButtons) return;
         this.$element.find(this.options.validButtons).on('click.lgb.validate', function (e) {
             var valid = that.valid();
