@@ -27,9 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Bootstrap.DataAccess.MongoDB\Bootstrap.DataAccess.MongoDB.csproj" />
-    <ProjectReference Include="..\Bootstrap.DataAccess.MySQL\Bootstrap.DataAccess.MySQL.csproj" />
-    <ProjectReference Include="..\Bootstrap.DataAccess.SQLite\Bootstrap.DataAccess.SQLite.csproj" />
     <ProjectReference Include="..\Bootstrap.DataAccess\Bootstrap.DataAccess.csproj" />
   </ItemGroup>
 
