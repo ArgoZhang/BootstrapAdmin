@@ -1,7 +1,6 @@
 ﻿using Bootstrap.Client.DataAccess;
 using Bootstrap.Security.Filter;
 using Longbow.Configuration;
-using Longbow.Logging;
 using Longbow.Web;
 using Longbow.Web.SignalR;
 using Microsoft.AspNetCore.Authentication.Cookies;
