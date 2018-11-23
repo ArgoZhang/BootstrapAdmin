@@ -227,7 +227,6 @@
     .cache-item .badge {
         position: relative;
         top: -8px;
-        height: 17px;
     }
 
     .cache-item .btn, td .btn:not(.btn-lg) {
