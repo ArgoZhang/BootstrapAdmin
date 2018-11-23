@@ -50,6 +50,7 @@
         $sortable.html('');
         $.bc({
             url: Settings.url,
+            autoFooter: true,
             callback: function (urls) {
                 if (urls && $.isArray(urls)) {
                     $.each(urls, function (index, item) {
