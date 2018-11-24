@@ -12,7 +12,8 @@ namespace Bootstrap.Admin.Controllers.Api
     /// 
     /// </summary>
     [Route("api/[controller]")]
-    public class RolesController : Controller
+    [ApiController]
+    public class RolesController : ControllerBase
     {
         /// <summary>
         /// 
@@ -20,7 +21,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="value"></param>
         /// <returns></returns>
         [HttpGet]
-        public QueryData<object> Get(QueryRoleOption value)
+        public QueryData<object> Get([FromQuery]QueryRoleOption value)
         {
             return value.RetrieveData();
         }

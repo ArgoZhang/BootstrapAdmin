@@ -11,7 +11,8 @@ namespace Bootstrap.Admin.Controllers
     /// </summary>
     [Route("api/[controller]/[action]")]
     [AllowAnonymous]
-    public class InterfaceController : Controller
+    [ApiController]
+    public class InterfaceController : ControllerBase
     {
         /// <summary>
         /// 

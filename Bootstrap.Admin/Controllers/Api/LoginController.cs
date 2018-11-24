@@ -13,7 +13,8 @@ namespace Bootstrap.Admin.Controllers.Api
     /// 
     /// </summary>
     [Route("api/[controller]")]
-    public class LoginController : Controller
+    [ApiController]
+    public class LoginController : ControllerBase
     {
         /// <summary>
         /// 

@@ -13,7 +13,8 @@ namespace Bootstrap.Admin.Controllers.Api
     /// 
     /// </summary>
     [Route("api/[controller]")]
-    public class UsersController : Controller
+    [ApiController]
+    public class UsersController : ControllerBase
     {
         /// <summary>
         /// 
@@ -21,7 +22,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="value"></param>
         /// <returns></returns>
         [HttpGet]
-        public QueryData<object> Get(QueryUserOption value)
+        public QueryData<object> Get([FromQuery]QueryUserOption value)
         {
             return value.RetrieveData();
         }

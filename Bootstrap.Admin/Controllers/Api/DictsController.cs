@@ -12,7 +12,8 @@ namespace Bootstrap.Admin.Controllers.Api
     /// 
     /// </summary>
     [Route("api/[controller]")]
-    public class DictsController : Controller
+    [ApiController]
+    public class DictsController : ControllerBase
     {
         /// <summary>
         /// 
@@ -20,7 +21,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="value"></param>
         /// <returns></returns>
         [HttpGet]
-        public QueryData<BootstrapDict> Get(QueryDictOption value)
+        public QueryData<BootstrapDict> Get([FromQuery]QueryDictOption value)
         {
             return value.RetrieveData();
         }

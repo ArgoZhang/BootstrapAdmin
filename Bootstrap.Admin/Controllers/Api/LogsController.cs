@@ -10,7 +10,8 @@ namespace Bootstrap.Admin.Controllers.Api
     /// 
     /// </summary>
     [Route("api/[controller]")]
-    public class LogsController : Controller
+    [ApiController]
+    public class LogsController : ControllerBase
     {
         /// <summary>
         /// 
@@ -18,7 +19,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="value"></param>
         /// <returns></returns>
         [HttpGet]
-        public QueryData<Log> Get(QueryLogOption value)
+        public QueryData<Log> Get([FromQuery]QueryLogOption value)
         {
             return value.RetrieveData();
         }

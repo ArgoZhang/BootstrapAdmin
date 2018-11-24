@@ -9,7 +9,8 @@ namespace Bootstrap.Admin.Controllers.Api
     /// 
     /// </summary>
     [Route("api/[controller]")]
-    public class NotificationsController : Controller
+    [ApiController]
+    public class NotificationsController : ControllerBase
     {
         /// <summary>
         /// 

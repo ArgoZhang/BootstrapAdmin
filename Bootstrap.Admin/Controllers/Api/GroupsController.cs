@@ -11,7 +11,8 @@ namespace Bootstrap.Admin.Controllers.Api
     /// 
     /// </summary>
     [Route("api/[controller]")]
-    public class GroupsController : Controller
+    [ApiController]
+    public class GroupsController : ControllerBase
     {
         /// <summary>
         /// 
@@ -19,7 +20,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="value"></param>
         /// <returns></returns>
         [HttpGet]
-        public QueryData<object> Get(QueryGroupOption value)
+        public QueryData<object> Get([FromQuery]QueryGroupOption value)
         {
             return value.RetrieveData();
         }

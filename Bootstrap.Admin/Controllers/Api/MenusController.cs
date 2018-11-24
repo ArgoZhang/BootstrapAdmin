@@ -11,7 +11,8 @@ namespace Bootstrap.Admin.Controllers.Api
     /// 
     /// </summary>
     [Route("api/[controller]")]
-    public class MenusController : Controller
+    [ApiController]
+    public class MenusController : ControllerBase
     {
         /// <summary>
         /// 获得所有菜单列表调用
@@ -19,7 +20,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="value"></param>
         /// <returns></returns>
         [HttpGet]
-        public QueryData<object> Get(QueryMenuOption value)
+        public QueryData<object> Get([FromQuery]QueryMenuOption value)
         {
             return value.RetrieveData(User.Identity.Name);
         }

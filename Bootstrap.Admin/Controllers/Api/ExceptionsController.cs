@@ -13,7 +13,8 @@ namespace Bootstrap.Admin.Controllers.Api
     /// 
     /// </summary>
     [Route("api/[controller]")]
-    public class ExceptionsController : Controller
+    [ApiController]
+    public class ExceptionsController : ControllerBase
     {
         /// <summary>
         /// 显示所有异常
@@ -21,7 +22,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="value"></param>
         /// <returns></returns>
         [HttpGet]
-        public QueryData<Object> Get(QueryExceptionOption value)
+        public QueryData<object> Get([FromQuery]QueryExceptionOption value)
         {
             return value.RetrieveData();
         }

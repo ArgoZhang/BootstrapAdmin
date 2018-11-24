@@ -9,7 +9,8 @@ namespace Bootstrap.Admin.Controllers
     /// 
     /// </summary>
     [Route("api/[controller]")]
-    public class NewController : Controller
+    [ApiController]
+    public class NewController : ControllerBase
     {
         /// <summary>
         /// 通知管理页面获得所有新用户方法调用
