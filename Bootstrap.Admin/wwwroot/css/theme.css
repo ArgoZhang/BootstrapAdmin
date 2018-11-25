@@ -191,6 +191,7 @@ footer {
     margin-top: 10px;
     margin-bottom: 10px;
     line-height: 34px;
+    float: left;
 }
 
     .toolbar .dropdown-menu a {
