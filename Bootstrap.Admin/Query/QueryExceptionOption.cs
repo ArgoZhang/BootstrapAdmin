@@ -13,11 +13,11 @@ namespace Bootstrap.Admin.Query
         /// <summary>
         /// 
         /// </summary>
-        public DateTime StartTime { get; set; }
+        public DateTime? StartTime { get; set; }
         /// <summary>
         /// 
         /// </summary>
-        public DateTime EndTime { get; set; }
+        public DateTime? EndTime { get; set; }
         /// <summary>
         /// 
         /// </summary>
@@ -27,11 +27,11 @@ namespace Bootstrap.Admin.Query
             var data = ExceptionsHelper.RetrieveExceptions();
             if (StartTime > DateTime.MinValue)
             {
-                data = data.Where(t => t.LogTime > StartTime);
+                data = data.Where(t => t.LogTime > StartTime.Value);
             }
             if (EndTime > DateTime.MinValue)
             {
-                data = data.Where(t => t.LogTime < EndTime.AddDays(1));
+                data = data.Where(t => t.LogTime < EndTime.Value.AddDays(1));
             }
             var ret = new QueryData<object>();
             ret.total = data.Count();

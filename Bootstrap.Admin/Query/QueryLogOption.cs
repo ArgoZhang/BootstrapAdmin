@@ -17,11 +17,11 @@ namespace Bootstrap.Admin.Query
         /// <summary>
         /// 
         /// </summary>
-        public DateTime OperateTimeStart { get; set; }
+        public DateTime? OperateTimeStart { get; set; }
         /// <summary>
         /// 
         /// </summary>
-        public DateTime OperateTimeEnd { get; set; }
+        public DateTime? OperateTimeEnd { get; set; }
         /// <summary>
         /// 
         /// </summary>
@@ -40,7 +40,7 @@ namespace Bootstrap.Admin.Query
             }
             if (OperateTimeEnd > DateTime.MinValue)
             {
-                data = data.Where(t => t.LogTime < OperateTimeEnd.AddDays(1));
+                data = data.Where(t => t.LogTime < OperateTimeEnd.Value.AddDays(1));
             }
 
             var ret = new QueryData<Log>();
