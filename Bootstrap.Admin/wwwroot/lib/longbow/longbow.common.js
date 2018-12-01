@@ -293,6 +293,9 @@
                     if (data.IsSuccess === false) {
                         toastr.error(data.HttpResult.Message, data.HttpResult.Name);
                     }
+                },
+                onToggle: function () {
+                    $.footer();
                 }
             }, options);
             settings.url = $.formatUrl(settings.url);
