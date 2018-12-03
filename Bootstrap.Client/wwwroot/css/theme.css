@@ -16,7 +16,7 @@ a, a:hover, a:focus {
     outline: none;
 }
 
-body, .form-control, .dropdown-menu, .btn:not(.btn-lg), .input-group-text, .popover-header {
+body, .form-control, .dropdown-menu, .btn:not(.btn-lg):not(.btn-xs), .input-group-text, .popover-header {
     font-size: 0.875rem;
 }
 
@@ -270,6 +270,34 @@ footer {
     border-bottom-color: #dc3545;
 }
 
+.radioGroup, .checkGroup, [radioGroup="true"], [checkGroup="true"] {
+    border: solid 1px transparent;
+    border-radius: 4px;
+    padding: 1px 4px;
+}
+
+    .radioGroup.is-invalid, .checkGroup.is-invalid, [radioGroup="true"].is-invalid, [checkGroup="true"].is-invalid {
+        border: solid 1px #dc3545;
+    }
+
+        .radioGroup.is-invalid .form-check-input ~ .form-check-label,
+        .checkGroup.is-invalid .form-check-input ~ .form-check-label,
+        [radioGroup="true"].is-invalid .form-check-input ~ .form-check-label,
+        [checkGroup="true"].is-invalid .form-check-input ~ .form-check-label {
+            color: #dc3545;
+        }
+
+    .radioGroup.is-valid .form-check-input ~ .form-check-label,
+    [radioGroup="true"].is-valid .form-check-input ~ .form-check-label {
+        color: #28a745;
+    }
+
+    .checkGroup.is-valid .form-check-input ~ .form-check-label,
+    [checkGroup="true"].is-valid .form-check-input ~ .form-check-label {
+        color: unset;
+    }
+
+
 input.is-invalid {
     background-repeat: no-repeat;
     background-image: url('../images/error.png');
@@ -310,6 +338,10 @@ input.pending {
     padding: 10px 15px;
 }
 
+.modal-body, .modal-footer, .popover-body {
+    background-color: #fff;
+}
+
 .modal-title {
     overflow-x: hidden;
     text-overflow: ellipsis;
@@ -348,7 +380,7 @@ input.pending {
         margin-left: 6px;
     }
 
-.btn span:last-child {
+.btn i.fa + span {
     margin-left: 4px;
     display: none;
 }
@@ -401,7 +433,7 @@ input.pending {
         word-break: break-all;
     }
 
-        .bootstrap-table .fixed-table-container .card-view .value > a, .bootstrap-table .fixed-table-container .card-view .value > div {
+        .bootstrap-table .fixed-table-container .card-view .value > a, .bootstrap-table .fixed-table-container .card-view .value > div:not(.form-check) {
             min-width: 60px;
             display: inline-block;
         }
@@ -410,7 +442,7 @@ input.pending {
         margin-bottom: 6px;
     }
 
-.card-body .bootstrap-table {
+.card-body:not(.nobar) .bootstrap-table {
     margin-top: -10px;
 }
 
@@ -539,6 +571,35 @@ input.pending {
     .form-inline .form-group-dropdown .dropdown, .form-inline .form-group-dropdown .dropup {
         display: inline-block;
     }
+
+.toggle .btn-default, .toggle.btn-default {
+    text-shadow: 0 1px 0 #fff;
+    background-image: -webkit-linear-gradient(top, #fff 0%, #e0e0e0 100%);
+    background-image: -o-linear-gradient(top, #fff 0%, #e0e0e0 100%);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#e0e0e0));
+    background-image: linear-gradient(to bottom, #fff 0%, #e0e0e0 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe0e0e0', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+    border-color: #ccc;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .15), 0 1px 1px rgba(0, 0, 0, .075);
+}
+
+    .toggle .btn-default.active {
+        background-image: none;
+        background-color: #e0e0e0;
+        border-color: #dbdbdb;
+    }
+
+        .toggle .btn-default.active:hover {
+            color: #333;
+            background-color: #d4d4d4;
+            border-color: #8c8c8c;
+        }
+
+.toggle.btn .toggle-handle {
+    display: inline-block;
+    margin-left: 0;
+}
 
 .sweet-alert h2 {
     margin-top: 32px;

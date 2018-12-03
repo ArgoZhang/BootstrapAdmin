@@ -181,7 +181,16 @@
                 result = $.validator.methods[rule].call(this.options, $this.val(), element, methods[rule]);
                 if (!result) {
                     $this.attr('data-original-title', this.defaultMessage(element, { method: rule, parameters: methods[rule] }));
-                    break;
+                }
+
+                // checkGroup rule
+                if (rule === 'checkGroup') {
+                    var $checkers = this.$element.find(this.options.childClass).filter(function () {
+                        var $this = $(this);
+                        return $this.hasClass(rule) || $this.attr(rule);
+                    });
+                    if (result) $checkers.removeClass(this.options.errorClass).tooltip('dispose');
+                    else $checkers.addClass(this.options.errorClass).tooltip();
                 }
             }
             else {
@@ -202,26 +211,21 @@
         return message;
     };
 
-    Validate.prototype.attributeRules = function (element) {
-        var rules = {}, $element = $(element), value;
+    Validate.prototype.attributeRules = function (element, rules) {
+        var $element = $(element), value;
 
-        $.each(["radioGroup"], function () {
-            value = element.getAttribute(this);
-            if (value === "") value = true;
-            value = !!value;
-            rules[this] = value;
-            if (value) {
-                rules["required"] = false;
-                $(element).on('change', ':radio', function () {
-                    $(this).trigger('input.lgb.validate');
-                });
+        $.each(["remote"], function () {
+            var para = $element.attr(this);
+            if (para) {
+                if (element.name === "") element.name = element.id;
+                rules[this] = $.formatUrl(para);
             }
         });
-        $.each(["remote"], function () {
-            if (element.getAttribute(this)) {
-                if (element.name === "") element.name = element.id;
-                var para = $(element).attr(this);
-                rules[this] = $.formatUrl(para);
+
+        $.each(["radioGroup", "checkGroup"], function () {
+            if (rules[this]) {
+                delete rules.required;
+                return false;
             }
         });
         return rules;
@@ -230,7 +234,11 @@
     Validate.prototype.rules = function (element) {
         var $this = $(element);
         var rules = $this.data('lgb.Validate.Rules');
-        if (!rules) $this.data('lgb.Validate.Rules', rules = $.validator.normalizeRules($.extend({ required: true }, $.validator.classRules(element), $.validator.attributeRules(element), this.attributeRules(element))));
+        if (!rules) $this.data('lgb.Validate.Rules', rules = this.attributeRules(element, $.validator.normalizeRules($.extend(
+            { required: true },
+            $.validator.classRules(element),
+            $.validator.attributeRules(element)
+        ))));
         return rules;
     };
 
@@ -264,6 +272,10 @@
 
             $.validator.addMethod("radioGroup", function (value, element) {
                 return $(element).find(':checked').length === 1;
+            }, "请选择一个选项");
+
+            $.validator.addMethod("checkGroup", function (value, element) {
+                return $(element).parents('[data-toggle="LgbValidate"]').find(':checked').length >= 1;
             }, "请选择一个选项");
         }
         $('[data-toggle="LgbValidate"]').lgbValidate();
