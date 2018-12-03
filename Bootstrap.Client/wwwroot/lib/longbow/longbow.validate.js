@@ -189,7 +189,8 @@
                         var $this = $(this);
                         return $this.hasClass(rule) || $this.attr(rule);
                     });
-                    if (result) $checkers.removeClass(this.options.errorClass).tooltip('dispose');
+                    $checkers.removeClass(this.options.errorClass).removeClass(this.options.validClass);
+                    if (result) $checkers.tooltip('dispose');
                     else $checkers.addClass(this.options.errorClass).tooltip();
                 }
             }
