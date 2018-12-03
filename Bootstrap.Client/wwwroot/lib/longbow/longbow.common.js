@@ -140,7 +140,7 @@
                 return;
             }
 
-            var loadFlag = "loading";
+            var doneFlag = "done";
             var loadingHandler = null;
             if (options.loading && options.modal) {
                 var $modal = $(options.modal);
@@ -150,13 +150,13 @@
                         window.clearTimeout(loadingHandler);
                         loadingHandler = null;
                     }
-                    if ($this.hasClass(loadFlag)) return;
-                    $this.modal('hide');
+                    if ($this.hasClass(doneFlag)) {
+                        $this.removeClass(doneFlag).modal('hide');
+                    }
                 });
-                loadingHandler = window.setTimeout(function () { $(options.modal).addClass(loadFlag).modal('show'); }, 300);
-                var loadTimeoutHandler = setTimeout(function () {
+                loadingHandler = window.setTimeout(function () { $modal.modal('show'); }, 500);
+                setTimeout(function () {
                     $(options.modal).find('.close').removeClass('d-none');
-                    clearTimeout(loadTimeoutHandler);
                 }, options.loadingTimeout);
             }
 
@@ -172,12 +172,13 @@
 
             function success(result) {
                 if (options.modal && (result || options.loading)) {
+                    $(options.modal).addClass(doneFlag);
                     if (loadingHandler !== null) {
                         // cancel show modal event
                         window.clearTimeout(loadingHandler);
                         loadingHandler = null;
                     }
-                    else $(options.modal).removeClass(loadFlag).modal('hide');
+                    else $(options.modal).removeClass(doneFlag).modal('hide');
                 }
                 if (options.title) toastr[result ? 'success' : 'error'](options.title + (result ? "成功" : "失败"));
                 if ($.isFunction(options.callback)) {
@@ -321,7 +322,7 @@
                     $ele.popover(options);
                 }
             });
-            return this;
+            return this.on('click', function (e) { e.preventDefault(); });
         },
         lgbTooltip: function (options) {
             this.each(function (index, ele) {
@@ -351,6 +352,7 @@
                 pickerPosition: 'bottom-left',
                 fontAwesome: true
             }, options);
+            this.on('show hide', function (e) { e.stopPropagation(); });
             this.datetimepicker(option);
             return this;
         },
@@ -440,13 +442,15 @@
             "hideMethod": "fadeOut"
         };
 
-        $('.collapse').on('shown.bs.collapse', function () {
+        $('[data-toggle="dropdown"].dropdown-select').dropdown('select');
+        $('[data-toggle="tooltip"]').tooltip();
+        $('[data-toggle="popover"]').popover();
+        $('[data-toggle="lgbinfo"]').lgbInfo();
+        $('.date').lgbDatePicker();
+
+        $('.collapse').on('shown.bs.collapse hidden.bs.collapse', function () {
             $.footer().removeClass('d-none');
-        }).on('hidden.bs.collapse', function () {
-            $.footer().removeClass('d-none');
-        }).on('hide.bs.collapse', function () {
-            $('footer').addClass('d-none');
-        }).on('show.bs.collapse', function () {
+        }).on('hide.bs.collapse show.bs.collapse', function () {
             $('footer').addClass('d-none');
         });
 
@@ -460,11 +464,5 @@
                 scrollTop: 0
             }, 200);
         });
-
-        $('[data-toggle="dropdown"].dropdown-select').dropdown('select');
-        $('[data-toggle="tooltip"]').tooltip();
-        $('[data-toggle="popover"]').popover();
-        $('[data-toggle="lgbinfo"]').lgbInfo();
-        $('.date').lgbDatePicker();
     });
 })(jQuery);
