@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\Keys\Longbow.Utility.snk</AssemblyOriginatorKeyFile>
     <MvcRazorCompileOnPublish>true</MvcRazorCompileOnPublish>
@@ -11,7 +11,7 @@
   <ItemGroup>
     <PackageReference Include="Bootstrap.Security.Mvc" Version="1.1.0" />
     <PackageReference Include="Longbow.Cache" Version="1.1.0" />
-    <PackageReference Include="Longbow.Logging" Version="1.1.0" />
+    <PackageReference Include="Longbow.Logging" Version="1.1.1" />
     <PackageReference Include="Longbow.Web" Version="1.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>

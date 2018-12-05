@@ -15,7 +15,7 @@
     <PackageReference Include="Longbow.Security.Cryptography" Version="1.1.0" />
     <PackageReference Include="Longbow.Web" Version="1.1.0" />
     <PackageReference Include="Longbow.Cache" Version="1.1.0" />
-    <PackageReference Include="Longbow" Version="1.1.0" />
+    <PackageReference Include="Longbow" Version="1.1.1" />
   </ItemGroup>
 
 </Project>

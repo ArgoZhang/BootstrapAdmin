@@ -126,11 +126,11 @@ namespace Bootstrap.DataAccess.MongoDB
             var connectString = DbAdapterManager.GetConnectionString("ba");
             if (string.IsNullOrEmpty(connectString)) throw new InvalidOperationException("Please set the BA default value in configuration file.");
 
-            var seq = connectString.Split(";", StringSplitOptions.RemoveEmptyEntries);
-            if (seq.Length != 2) throw new InvalidOperationException("ConnectionString invalid in configuration file. It should be mongodb://127.0.0.1:27017;Data Source=BootstrapAdmin");
+            var seq = connectString.SpanSplit(";", StringSplitOptions.RemoveEmptyEntries);
+            if (seq.Count != 2) throw new InvalidOperationException("ConnectionString invalid in configuration file. It should be mongodb://127.0.0.1:27017;Data Source=BootstrapAdmin");
 
             var client = new MongoClient(seq[0]);
-            _db = client.GetDatabase(seq[1].Split("=", StringSplitOptions.RemoveEmptyEntries).LastOrDefault());
+            _db = client.GetDatabase(seq[1].SpanSplit("=", StringSplitOptions.RemoveEmptyEntries).LastOrDefault());
         }
 
         private static void InitClassMap()

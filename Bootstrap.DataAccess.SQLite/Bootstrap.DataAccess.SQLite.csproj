@@ -15,7 +15,7 @@
     <PackageReference Include="Longbow.Configuration" Version="1.1.0" />
     <PackageReference Include="Longbow.Data" Version="1.1.0" />
     <PackageReference Include="Longbow.Security.Cryptography" Version="1.1.0" />
-    <PackageReference Include="Microsoft.Data.Sqlite" Version="2.1.0" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>
