@@ -13,9 +13,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Bootstrap.Security.Mvc" Version="1.1.0" />
-    <PackageReference Include="Longbow.Logging" Version="1.1.1" />
-    <PackageReference Include="Longbow.Web" Version="1.1.0" />
+    <PackageReference Include="Bootstrap.Security.Mvc" Version="2.2.0" />
+    <PackageReference Include="Longbow.Logging" Version="2.2.1" />
+    <PackageReference Include="Longbow.Web" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="2.3.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" PrivateAssets="All" />

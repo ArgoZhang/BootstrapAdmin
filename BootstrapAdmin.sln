@@ -20,6 +20,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{586410F2-C1F0-47CD-AB28-2CF506DED2C8}"
 	ProjectSection(SolutionItems) = preProject
+		C:\Users\argo\Downloads\Longbow.lic = C:\Users\argo\Downloads\Longbow.lic
 		Scripts\Publish-Console.bat = Scripts\Publish-Console.bat
 		Scripts\Publish.vbs = Scripts\Publish.vbs
 	EndProjectSection
