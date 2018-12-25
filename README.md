@@ -10,9 +10,16 @@
 
 #### 安装教程
 
-1. 安装 .net core 2.1 sdk [官方网址](http://www.microsoft.com/net/download)
-2. 安装 Visual Studio 2017 最新版 [官方网址](https://visualstudio.microsoft.com/vs/getting-started/)
+1. 安装 .net core 2.2 sdk [官方网址](http://www.microsoft.com/net/download)
+2. 安装 Visual Studio 2019 最新版 [官方网址](https://visualstudio.microsoft.com/vs/getting-started/)
 3. 获取本项目代码 [BootstrapAdmin](https://gitee.com/LgbAdmin/BootstrapAdmin)
+4. 安装数据库
+目前支持MSSQL/MongoDB/MySQL/SQLite，以微软MSSQL为例，执行解决方案中SQLServer目录（物理硬盘中DatabaseScripts目录下）Install.sql脚本创建数据库
+5. 初始化数据
+执行对应目录下InitData.sql脚本
+6. 拷贝Longbow.lic文件
+拷贝Scripts目录下Longbow.lic文件到bin目录下
+
 
 #### 功能列表
 
