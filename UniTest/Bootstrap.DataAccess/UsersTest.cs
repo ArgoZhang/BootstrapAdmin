@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Xunit;
 
 namespace Bootstrap.DataAccess
@@ -50,7 +51,13 @@ namespace Bootstrap.DataAccess
         public void ApproveUser_Ok()
         {
             var u = new User();
-            Assert.True(u.Approve("3", "Administrators"));
+            u.Delete(u.Retrieves().Where(usr => usr.UserName == "UnitTest").Select(usr => usr.Id));
+
+            var up = new User() { UserName = "UnitTest", Password = "123", Description = "新建用户用于测试批准", DisplayName = "UnitTest", Icon = "default.jpg" };
+            u.Save(up);
+            Assert.True(u.Approve(up.Id, "Administrators"));
+
+            u.Delete(new string[] { up.Id });
         }
 
         [Fact]
