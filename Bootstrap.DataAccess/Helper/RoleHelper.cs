@@ -21,7 +21,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static IEnumerable<Role> RetrieveRoles() => CacheManager.GetOrAdd(RetrieveRolesDataKey, key => DbAdapterManager.Create<Role>().RetrieveRoles());
+        public static IEnumerable<Role> Retrieves() => CacheManager.GetOrAdd(RetrieveRolesDataKey, key => DbContextManager.Create<Role>().Retrieves());
 
         /// <summary>
         /// 保存用户角色关系
@@ -29,9 +29,9 @@ namespace Bootstrap.DataAccess
         /// <param name="userId"></param>
         /// <param name="roleIds"></param>
         /// <returns></returns>
-        public static bool SaveRolesByUserId(string userId, IEnumerable<string> roleIds)
+        public static bool SaveByUserId(string userId, IEnumerable<string> roleIds)
         {
-            var ret = DbAdapterManager.Create<Role>().SaveRolesByUserId(userId, roleIds);
+            var ret = DbContextManager.Create<Role>().SaveByUserId(userId, roleIds);
             if (ret) CacheCleanUtility.ClearCache(userIds: new List<string>() { userId }, roleIds: roleIds);
             return ret;
         }
@@ -40,15 +40,15 @@ namespace Bootstrap.DataAccess
         /// 查询某个用户所拥有的角色
         /// </summary>
         /// <returns></returns>
-        public static IEnumerable<Role> RetrieveRolesByUserId(string userId) => CacheManager.GetOrAdd($"{RetrieveRolesByUserIdDataKey}-{userId}", key => DbAdapterManager.Create<Role>().RetrieveRolesByUserId(userId), RetrieveRolesByUserIdDataKey);
+        public static IEnumerable<Role> RetrievesByUserId(string userId) => CacheManager.GetOrAdd($"{RetrieveRolesByUserIdDataKey}-{userId}", key => DbContextManager.Create<Role>().RetrievesByUserId(userId), RetrieveRolesByUserIdDataKey);
 
         /// <summary>
         /// 删除角色表
         /// </summary>
         /// <param name="value"></param>
-        public static bool DeleteRole(IEnumerable<string> value)
+        public static bool Delete(IEnumerable<string> value)
         {
-            var ret = DbAdapterManager.Create<Role>().DeleteRole(value);
+            var ret = DbContextManager.Create<Role>().Delete(value);
             if (ret) CacheCleanUtility.ClearCache(roleIds: value);
             return ret;
         }
@@ -58,9 +58,9 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="p"></param>
         /// <returns></returns>
-        public static bool SaveRole(Role p)
+        public static bool Save(Role p)
         {
-            var ret = DbAdapterManager.Create<Role>().SaveRole(p);
+            var ret = DbContextManager.Create<Role>().Save(p);
             if (ret) CacheCleanUtility.ClearCache(roleIds: string.IsNullOrEmpty(p.Id) ? new List<string>() : new List<string> { p.Id });
             return ret;
         }
@@ -70,7 +70,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="menuId"></param>
         /// <returns></returns>
-        public static IEnumerable<Role> RetrieveRolesByMenuId(string menuId) => CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveRolesByMenuIdDataKey, menuId), key => DbAdapterManager.Create<Role>().RetrieveRolesByMenuId(menuId), RetrieveRolesByMenuIdDataKey);
+        public static IEnumerable<Role> RetrievesByMenuId(string menuId) => CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveRolesByMenuIdDataKey, menuId), key => DbContextManager.Create<Role>().RetrievesByMenuId(menuId), RetrieveRolesByMenuIdDataKey);
 
         /// <summary>
         /// 
@@ -78,9 +78,9 @@ namespace Bootstrap.DataAccess
         /// <param name="menuId"></param>
         /// <param name="roleIds"></param>
         /// <returns></returns>
-        public static bool SavaRolesByMenuId(string menuId, IEnumerable<string> roleIds)
+        public static bool SavaByMenuId(string menuId, IEnumerable<string> roleIds)
         {
-            var ret = DbAdapterManager.Create<Role>().SavaRolesByMenuId(menuId, roleIds);
+            var ret = DbContextManager.Create<Role>().SavaByMenuId(menuId, roleIds);
             if (ret) CacheCleanUtility.ClearCache(roleIds: roleIds, menuIds: new List<string>() { menuId });
             return ret;
         }
@@ -90,7 +90,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="groupId"></param>
         /// <returns></returns>
-        public static IEnumerable<Role> RetrieveRolesByGroupId(string groupId) => CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveRolesByGroupIdDataKey, groupId), key => DbAdapterManager.Create<Role>().RetrieveRolesByGroupId(groupId), RetrieveRolesByGroupIdDataKey);
+        public static IEnumerable<Role> RetrievesByGroupId(string groupId) => CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveRolesByGroupIdDataKey, groupId), key => DbContextManager.Create<Role>().RetrievesByGroupId(groupId), RetrieveRolesByGroupIdDataKey);
 
         /// <summary>
         /// 根据GroupId更新Roles信息，删除旧的Roles信息，插入新的Roles信息
@@ -98,9 +98,9 @@ namespace Bootstrap.DataAccess
         /// <param name="groupId"></param>
         /// <param name="roleIds"></param>
         /// <returns></returns>
-        public static bool SaveRolesByGroupId(string groupId, IEnumerable<string> roleIds)
+        public static bool SaveByGroupId(string groupId, IEnumerable<string> roleIds)
         {
-            var ret = DbAdapterManager.Create<Role>().SaveRolesByGroupId(groupId, roleIds);
+            var ret = DbContextManager.Create<Role>().SaveByGroupId(groupId, roleIds);
             if (ret) CacheCleanUtility.ClearCache(roleIds: roleIds, groupIds: new List<string>() { groupId });
             return ret;
         }
@@ -110,13 +110,13 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public static IEnumerable<string> RetrieveRolesByUserName(string userName) => CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveRolesByUserNameDataKey, userName), key => DbAdapterManager.Create<Role>().RetrieveRolesByUserName(userName), RetrieveRolesByUserNameDataKey);
+        public static IEnumerable<string> RetrieveRolesByUserName(string userName) => CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveRolesByUserNameDataKey, userName), key => DbContextManager.Create<Role>().RetrieveRolesByUserName(userName), RetrieveRolesByUserNameDataKey);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        public static IEnumerable<string> RetrieveRolesByUrl(string url) => CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveRolesByUrlDataKey, url), key => DbAdapterManager.Create<Role>().RetrieveRolesByUrl(url), RetrieveRolesByUrlDataKey);
+        public static IEnumerable<string> RetrieveRolesByUrl(string url) => CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveRolesByUrlDataKey, url), key => DbContextManager.Create<Role>().RetrieveRolesByUrl(url), RetrieveRolesByUrlDataKey);
     }
 }

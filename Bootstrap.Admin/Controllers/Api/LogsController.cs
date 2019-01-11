@@ -31,7 +31,7 @@ namespace Bootstrap.Admin.Controllers.Api
         [HttpGet("{id}")]
         public Log Get(string id)
         {
-            return LogHelper.RetrieveLogs().FirstOrDefault(t => t.Id == id);
+            return LogHelper.Retrieves().FirstOrDefault(t => t.Id == id);
         }
         /// <summary>
         /// 
@@ -44,7 +44,7 @@ namespace Bootstrap.Admin.Controllers.Api
             value.ClientAgent = Request.Headers["User-Agent"];
             value.ClientIp = HttpContext.Connection.RemoteIpAddress.ToString();
             value.UserName = User.Identity.Name;
-            return LogHelper.SaveLog(value);
+            return LogHelper.Save(value);
         }
     }
 }

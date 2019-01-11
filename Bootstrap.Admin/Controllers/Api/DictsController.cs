@@ -32,7 +32,7 @@ namespace Bootstrap.Admin.Controllers.Api
         [HttpPost]
         public bool Post([FromBody]BootstrapDict value)
         {
-            return DictHelper.SaveDict(value);
+            return DictHelper.Save(value);
         }
         /// <summary>
         /// 
@@ -42,7 +42,7 @@ namespace Bootstrap.Admin.Controllers.Api
         [Authorize(Roles = "Administrators")]
         public bool Delete([FromBody]IEnumerable<string> value)
         {
-            return DictHelper.DeleteDict(value);
+            return DictHelper.Delete(value);
         }
     }
 }

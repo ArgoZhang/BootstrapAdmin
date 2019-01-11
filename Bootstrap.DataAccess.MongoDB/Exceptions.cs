@@ -22,7 +22,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// 
         /// </summary>
         /// <returns></returns>
-        public override IEnumerable<DataAccess.Exceptions> RetrieveExceptions()
+        public override IEnumerable<DataAccess.Exceptions> Retrieves()
         {
             return MongoDbAccessManager.Exceptions.Find(ex => ex.LogTime >= DateTime.Now.AddDays(-7)).ToList();
         }

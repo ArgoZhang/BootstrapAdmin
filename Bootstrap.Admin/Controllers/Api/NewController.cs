@@ -38,11 +38,11 @@ namespace Bootstrap.Admin.Controllers
             var ret = false;
             if (value.UserStatus == UserStates.ApproveUser)
             {
-                ret = UserHelper.ApproveUser(value.Id, User.Identity.Name);
+                ret = UserHelper.Approve(value.Id, User.Identity.Name);
             }
             else if (value.UserStatus == UserStates.RejectUser)
             {
-                ret = UserHelper.RejectUser(value.Id, User.Identity.Name);
+                ret = UserHelper.Reject(value.Id, User.Identity.Name);
             }
             return ret;
         }

@@ -18,7 +18,7 @@ namespace Bootstrap.Admin.Controllers.Api
         [HttpGet]
         public IEnumerable<Task> Get()
         {
-            return TaskHelper.RetrieveTasks();
+            return TaskHelper.Retrieves();
         }
     }
 }

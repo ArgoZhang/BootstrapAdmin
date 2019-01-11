@@ -1,11 +1,7 @@
 ﻿using Bootstrap.Security;
 using Bootstrap.Security.DataAccess;
-using Longbow.Data;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Common;
-using System.Data.SqlClient;
 using System.Linq;
 
 namespace Bootstrap.DataAccess
@@ -19,30 +15,23 @@ namespace Bootstrap.DataAccess
         /// 删除菜单信息
         /// </summary>
         /// <param name="value"></param>
-        public virtual bool DeleteMenu(IEnumerable<string> value)
+        public virtual bool Delete(IEnumerable<string> value)
         {
-            bool ret = false;
-            var ids = string.Join(",", value);
-            using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
+            var ret = false;
+            var db = DbManager.Db;
+            try
             {
-                using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, $"delete from NavigationRole where NavigationID in ({ids})"))
-                {
-                    try
-                    {
-                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
-
-                        cmd.CommandText = $"delete from Navigations where ID in ({ids})";
-                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
-
-                        transaction.CommitTransaction();
-                        ret = true;
-                    }
-                    catch (Exception ex)
-                    {
-                        transaction.RollbackTransaction();
-                        throw ex;
-                    }
-                }
+                var ids = string.Join(",", value);
+                db.BeginTransaction();
+                db.Execute($"delete from NavigationRole where NavigationID in ({ids})");
+                db.Execute($"delete from Navigations where ID in ({ids})");
+                db.CompleteTransaction();
+                ret = true;
+            }
+            catch (Exception ex)
+            {
+                db.AbortTransaction();
+                throw ex;
             }
             return ret;
         }
@@ -51,31 +40,15 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="p"></param>
         /// <returns></returns>
-        public virtual bool SaveMenu(BootstrapMenu p)
+        public virtual bool Save(BootstrapMenu p)
         {
-            if (string.IsNullOrEmpty(p.Name)) return false;
-            bool ret = false;
+            if (string.IsNullOrEmpty(p.Name)) throw new ArgumentNullException(nameof(p.Name));
+
             if (p.Name.Length > 50) p.Name = p.Name.Substring(0, 50);
             if (p.Icon != null && p.Icon.Length > 50) p.Icon = p.Icon.Substring(0, 50);
             if (p.Url != null && p.Url.Length > 4000) p.Url = p.Url.Substring(0, 4000);
-            string sql = string.IsNullOrEmpty(p.Id) ?
-                "Insert Into Navigations (ParentId, Name, [Order], Icon, Url, Category, Target, IsResource, Application) Values (@ParentId, @Name, @Order, @Icon, @Url, @Category, @Target, @IsResource, @ApplicationCode)" :
-                "Update Navigations set ParentId = @ParentId, Name = @Name, [Order] = @Order, Icon = @Icon, Url = @Url, Category = @Category, Target = @Target, IsResource = @IsResource, Application = @ApplicationCode where ID = @ID";
-            using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
-            {
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@ID", p.Id));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@ParentId", p.ParentId));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Name", p.Name));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Order", p.Order));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Icon", DbAdapterManager.ToDBValue(p.Icon)));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Url", DbAdapterManager.ToDBValue(p.Url)));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Category", p.Category));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Target", p.Target));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@IsResource", p.IsResource));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@ApplicationCode", p.ApplicationCode));
-                ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
-            }
-            return ret;
+            DbManager.Db.Save(p);
+            return true;
         }
         /// <summary>
         /// 查询某个角色所配置的菜单
@@ -84,22 +57,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual IEnumerable<object> RetrieveMenusByRoleId(string roleId)
         {
-            var menus = new List<BootstrapMenu>();
-            string sql = "select NavigationID from NavigationRole where RoleID = @RoleID";
-            using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
-            {
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@RoleID", roleId));
-                using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
-                {
-                    while (reader.Read())
-                    {
-                        menus.Add(new BootstrapMenu()
-                        {
-                            Id = reader[0].ToString()
-                        });
-                    }
-                }
-            }
+            var menus = DbManager.Db.Fetch<BootstrapMenu>("select NavigationID as Id from NavigationRole where RoleID = @0", roleId);
             return menus.Select(m => new { m.Id });
         }
         /// <summary>
@@ -111,36 +69,19 @@ namespace Bootstrap.DataAccess
         public virtual bool SaveMenusByRoleId(string roleId, IEnumerable<string> menuIds)
         {
             bool ret = false;
-            DataTable dt = new DataTable();
-            dt.Columns.Add("RoleID", typeof(int));
-            dt.Columns.Add("NavigationID", typeof(int));
-            menuIds.ToList().ForEach(menuId => dt.Rows.Add(roleId, menuId));
-            using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
+            var db = DbManager.Db;
+            try
             {
-                try
-                {
-                    //删除菜单角色表该角色所有的菜单
-                    string sql = $"delete from NavigationRole where RoleID = {roleId}";
-                    using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
-                    {
-                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
-                        //批插入菜单角色表
-                        using (SqlBulkCopy bulk = new SqlBulkCopy((SqlConnection)transaction.Transaction.Connection, SqlBulkCopyOptions.Default, (SqlTransaction)transaction.Transaction))
-                        {
-                            bulk.DestinationTableName = "NavigationRole";
-                            bulk.ColumnMappings.Add("RoleID", "RoleID");
-                            bulk.ColumnMappings.Add("NavigationID", "NavigationID");
-                            bulk.WriteToServer(dt);
-                            transaction.CommitTransaction();
-                        }
-                    }
-                    ret = true;
-                }
-                catch (Exception ex)
-                {
-                    transaction.RollbackTransaction();
-                    throw ex;
-                }
+                db.BeginTransaction();
+                db.Execute("delete from NavigationRole where RoleID = @0", roleId);
+                db.InsertBulk("NavigationRole", menuIds.Select(g => new { NavigationID = g, RoleID = roleId }));
+                db.CompleteTransaction();
+                ret = true;
+            }
+            catch (Exception ex)
+            {
+                db.AbortTransaction();
+                throw ex;
             }
             return ret;
         }

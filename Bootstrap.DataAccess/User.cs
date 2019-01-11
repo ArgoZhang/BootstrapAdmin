@@ -1,13 +1,8 @@
 ﻿using Bootstrap.Security;
 using Bootstrap.Security.DataAccess;
-using Longbow;
-using Longbow.Data;
 using Longbow.Security.Cryptography;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Common;
-using System.Data.SqlClient;
 using System.Linq;
 
 namespace Bootstrap.DataAccess
@@ -21,46 +16,57 @@ namespace Bootstrap.DataAccess
         /// 获得/设置 用户主键ID
         /// </summary>
         public string Id { get; set; }
+
         /// <summary>
         /// 获取/设置 密码
         /// </summary>
         public string Password { get; set; }
+
         /// <summary>
         /// 获取/设置 密码盐
         /// </summary>
         public string PassSalt { get; set; }
+
         /// <summary>
         /// 获取/设置 角色用户关联状态 checked 标示已经关联 '' 标示未关联
         /// </summary>
         public string Checked { get; set; }
+
         /// <summary>
         /// 获得/设置 用户注册时间
         /// </summary>
         public DateTime RegisterTime { get; set; }
+
         /// <summary>
         /// 获得/设置 用户被批复时间
         /// </summary>
-        public DateTime ApprovedTime { get; set; }
+        public DateTime? ApprovedTime { get; set; }
+
         /// <summary>
         /// 获得/设置 用户批复人
         /// </summary>
         public string ApprovedBy { get; set; }
+
         /// <summary>
         /// 获得/设置 用户的申请理由
         /// </summary>
         public string Description { get; set; }
+
         /// <summary>
         /// 获得/设置 用户当前状态 0 表示管理员注册用户 1 表示用户注册 2 表示更改密码 3 表示更改个人皮肤 4 表示更改显示名称 5 批复新用户注册操作
         /// </summary>
         public UserStates UserStatus { get; set; }
+
         /// <summary>
         /// 获得/设置 通知描述 2分钟内为刚刚
         /// </summary>
         public string Period { get; set; }
+
         /// <summary>
         /// 获得/设置 新密码
         /// </summary>
         public string NewPassword { get; set; }
+
         /// <summary>
         /// 验证用户登陆账号与密码正确
         /// </summary>
@@ -69,25 +75,11 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual bool Authenticate(string userName, string password)
         {
-            if (string.IsNullOrEmpty(userName) && string.IsNullOrEmpty(password)) return false;
-            string oldPassword = null;
-            string passwordSalt = null;
-            string sql = "select Password, PassSalt from Users where ApprovedTime is not null and UserName = @UserName";
-            var db = DbAccessManager.DBAccess;
-            using (DbCommand cmd = db.CreateCommand(CommandType.Text, sql))
-            {
-                cmd.Parameters.Add(db.CreateParameter("@UserName", userName));
-                using (DbDataReader reader = db.ExecuteReader(cmd))
-                {
-                    if (reader.Read())
-                    {
-                        oldPassword = (string)reader[0];
-                        passwordSalt = (string)reader[1];
-                    }
-                }
-            }
-            return !string.IsNullOrEmpty(passwordSalt) && oldPassword == LgbCryptography.ComputeHash(password, passwordSalt);
+            var user = DbManager.Db.SingleOrDefault<User>("select Password, PassSalt from Users where ApprovedTime is not null and UserName = @0", userName);
+
+            return !string.IsNullOrEmpty(user.PassSalt) && user.Password == LgbCryptography.ComputeHash(password, user.PassSalt);
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -100,159 +92,87 @@ namespace Bootstrap.DataAccess
             bool ret = false;
             if (Authenticate(userName, password))
             {
-                string sql = "Update Users set Password = @Password, PassSalt = @PassSalt where UserName = @userName";
+                string sql = "set Password = @0, PassSalt = @1 where UserName = @2";
                 var passSalt = LgbCryptography.GenerateSalt();
                 var newPassword = LgbCryptography.ComputeHash(newPass, passSalt);
-                using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
-                {
-                    cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Password", newPassword));
-                    cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@PassSalt", passSalt));
-                    cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@userName", userName));
-                    ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
-                }
+                ret = DbManager.Db.Update<User>(sql, newPassword, passSalt, userName) == 1;
             }
             return ret;
         }
+
         /// <summary>
         /// 查询所有用户
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public virtual IEnumerable<User> RetrieveUsers()
-        {
-            List<User> users = new List<User>();
-            DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, "select ID, UserName, DisplayName, RegisterTime, ApprovedTime, ApprovedBy, Description from Users Where ApprovedTime is not null");
+        public virtual IEnumerable<User> Retrieves() => DbManager.Db.Fetch<User>("select ID, UserName, DisplayName, RegisterTime, ApprovedTime, ApprovedBy, Description from Users Where ApprovedTime is not null");
 
-            using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
-            {
-                while (reader.Read())
-                {
-                    users.Add(new User()
-                    {
-                        Id = reader[0].ToString(),
-                        UserName = (string)reader[1],
-                        DisplayName = (string)reader[2],
-                        RegisterTime = LgbConvert.ReadValue(reader[3], DateTime.MinValue),
-                        ApprovedTime = LgbConvert.ReadValue(reader[4], DateTime.MinValue),
-                        ApprovedBy = reader.IsDBNull(5) ? string.Empty : (string)reader[5],
-                        Description = (string)reader[6]
-                    });
-                }
-            }
-            return users;
-        }
         /// <summary>
         /// 查询所有的新注册用户
         /// </summary>
         /// <returns></returns>
-        public virtual IEnumerable<User> RetrieveNewUsers()
-        {
-            string sql = "select ID, UserName, DisplayName, RegisterTime, Description from Users Where ApprovedTime is null order by RegisterTime desc";
-            List<User> users = new List<User>();
-            DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-            using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
-            {
-                while (reader.Read())
-                {
-                    users.Add(new User()
-                    {
-                        Id = reader[0].ToString(),
-                        UserName = (string)reader[1],
-                        DisplayName = (string)reader[2],
-                        RegisterTime = LgbConvert.ReadValue(reader[3], DateTime.MinValue),
-                        Description = (string)reader[4]
-                    });
-                }
-            }
-            return users;
-        }
+        public virtual IEnumerable<User> RetrieveNewUsers() => DbManager.Db.Fetch<User>("select ID, UserName, DisplayName, RegisterTime, Description from Users Where ApprovedTime is null order by RegisterTime desc");
+
         /// <summary>
         /// 删除用户
         /// </summary>
         /// <param name="value"></param>
-        public virtual bool DeleteUser(IEnumerable<string> value)
+        public virtual bool Delete(IEnumerable<string> value)
         {
             bool ret = false;
-            var ids = string.Join(",", value);
-            using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
+            var db = DbManager.Db;
+            try
             {
-                try
-                {
-                    using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, $"Delete from UserRole where UserID in ({ids})"))
-                    {
-                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
-
-                        cmd.CommandText = $"delete from UserGroup where UserID in ({ids})";
-                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
-
-                        cmd.CommandText = $"delete from Users where ID in ({ids})";
-                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
-
-                        transaction.CommitTransaction();
-                        ret = true;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    transaction.RollbackTransaction();
-                    throw ex;
-                }
+                var ids = string.Join(",", value);
+                db.BeginTransaction();
+                db.Execute($"Delete from UserRole where UserID in ({ids})");
+                db.Execute($"delete from UserGroup where UserID in ({ids})");
+                db.Execute($"delete from Users where ID in ({ids})");
+                db.CompleteTransaction();
+                ret = true;
+            }
+            catch (Exception ex)
+            {
+                db.AbortTransaction();
+                throw ex;
             }
             return ret;
         }
+
         /// <summary>
         /// 新建前台User View调用/注册用户调用
         /// </summary>
         /// <param name="p"></param>
         /// <returns></returns>
-        public virtual bool SaveUser(User p)
+        public virtual bool Save(User p)
         {
             var ret = false;
             if (string.IsNullOrEmpty(p.Id) && p.Description.Length > 500) p.Description = p.Description.Substring(0, 500);
             if (p.UserName.Length > 50) p.UserName = p.UserName.Substring(0, 50);
             p.PassSalt = LgbCryptography.GenerateSalt();
             p.Password = LgbCryptography.ComputeHash(p.Password, p.PassSalt);
+            p.RegisterTime = DateTime.Now;
 
-            var db = DbAccessManager.DBAccess;
-            using (TransactionPackage transaction = db.BeginTransaction())
+            var db = DbManager.Db;
+            try
             {
-                try
+                db.BeginTransaction();
+                if (!db.Exists<User>("where UserName = @0", p.UserName))
                 {
-                    using (DbCommand cmd = db.CreateCommand(CommandType.Text, "select UserName from Users Where UserName = @userName"))
-                    {
-                        cmd.Parameters.Add(db.CreateParameter("@userName", p.UserName));
-                        var un = db.ExecuteScalar(cmd, transaction);
-                        if (DbAdapterManager.ToObjectValue(un) == null)
-                        {
-                            object approveTime = DBNull.Value;
-                            if (p.ApprovedTime != DateTime.MinValue) approveTime = p.ApprovedTime;
-                            cmd.CommandText = "Insert Into Users (UserName, Password, PassSalt, DisplayName, RegisterTime, ApprovedBy, ApprovedTime, Description) values (@userName, @password, @passSalt, @displayName, @registerTime, @approvedBy, @approveTime, @description)";
-                            cmd.Parameters.Add(db.CreateParameter("@password", p.Password));
-                            cmd.Parameters.Add(db.CreateParameter("@passSalt", p.PassSalt));
-                            cmd.Parameters.Add(db.CreateParameter("@registerTime", DateTime.Now));
-                            cmd.Parameters.Add(db.CreateParameter("@displayName", p.DisplayName));
-                            cmd.Parameters.Add(db.CreateParameter("@approvedBy", DbAdapterManager.ToDBValue(p.ApprovedBy)));
-                            cmd.Parameters.Add(db.CreateParameter("@approveTime", approveTime));
-                            cmd.Parameters.Add(db.CreateParameter("@description", p.Description));
-                            db.ExecuteNonQuery(cmd, transaction);
-
-                            cmd.CommandText = $"insert into UserRole (UserID, RoleID) select ID, (select ID from Roles where RoleName = 'Default') RoleId from Users where UserName = '{p.UserName}'";
-                            cmd.Parameters.Clear();
-                            db.ExecuteNonQuery(cmd, transaction);
-
-                            transaction.CommitTransaction();
-                            ret = true;
-                        }
-                    }
+                    db.Insert(p);
+                    db.Execute("insert into UserRole (UserID, RoleID) select ID, (select ID from Roles where RoleName = 'Default') RoleId from Users where UserName = @0", p.UserName);
                 }
-                catch (Exception ex)
-                {
-                    transaction.RollbackTransaction();
-                    throw ex;
-                }
+                db.CompleteTransaction();
+                ret = true;
+            }
+            catch (Exception ex)
+            {
+                db.AbortTransaction();
+                throw ex;
             }
             return ret;
         }
+
         /// <summary>
         /// User List 视图保存按钮调用
         /// </summary>
@@ -260,278 +180,148 @@ namespace Bootstrap.DataAccess
         /// <param name="password"></param>
         /// <param name="displayName"></param>
         /// <returns></returns>
-        public virtual bool UpdateUser(string id, string password, string displayName)
+        public virtual bool Update(string id, string password, string displayName)
         {
-            bool ret = false;
-            string sql = "Update Users set Password = @Password, PassSalt = @PassSalt, DisplayName = @DisplayName where ID = @id";
             var passSalt = LgbCryptography.GenerateSalt();
             var newPassword = LgbCryptography.ComputeHash(password, passSalt);
-            using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
-            {
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@id", id));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@DisplayName", displayName));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Password", newPassword));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@PassSalt", passSalt));
-                ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
-            }
-            return ret;
+            return DbManager.Db.Update<User>("set Password = @1, PassSalt = @2, DisplayName = @3 where ID = @0", id, newPassword, passSalt, displayName) == 1;
         }
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="id"></param>
         /// <param name="approvedBy"></param>
         /// <returns></returns>
-        public virtual bool ApproveUser(string id, string approvedBy)
-        {
-            var ret = false;
-            var sql = "update Users set ApprovedTime = @ApproveTime, ApprovedBy = @approvedBy where ID = @id";
-            using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
-            {
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@id", id));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@ApproveTime", DateTime.Now, DbType.DateTime));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@approvedBy", approvedBy));
-                ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
-            }
-            return ret;
-        }
+        public virtual bool Approve(string id, string approvedBy) => DbManager.Db.Update<User>("set ApprovedTime = @1, ApprovedBy = @2 where ID = @0", id, DateTime.Now, approvedBy) == 1;
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="id"></param>
         /// <param name="rejectBy"></param>
         /// <returns></returns>
-        public virtual bool RejectUser(string id, string rejectBy)
+        public virtual bool Reject(string id, string rejectBy)
         {
             var ret = false;
-            using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
+            var db = DbManager.Db;
+            try
             {
-                try
-                {
-                    using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, $"insert into RejectUsers (UserName, DisplayName, RegisterTime, RejectedBy, RejectedTime, RejectedReason) select UserName, DisplayName, Registertime, '{rejectBy}', @RejectTime, '未填写' from Users where ID = {id}"))
-                    {
-                        cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@RejectTime", DateTime.Now, DbType.DateTime));
-                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
-
-                        cmd.Parameters.Clear();
-                        cmd.CommandText = $"delete from UserRole where UserId = {id}";
-                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
-
-                        cmd.CommandText = $"delete from UserGroup where UserId = {id}";
-                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
-
-                        cmd.CommandText = $"delete from users where ID = {id}";
-                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
-
-                        transaction.CommitTransaction();
-                        ret = true;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    transaction.RollbackTransaction();
-                    throw ex;
-                }
+                db.BeginTransaction();
+                db.Execute("insert into RejectUsers (UserName, DisplayName, RegisterTime, RejectedBy, RejectedTime, RejectedReason) select UserName, DisplayName, Registertime, @1, @2, @3 from Users where ID = @0", id, rejectBy, DateTime.Now, "未填写");
+                db.Execute("delete from UserRole where UserId = @0", id);
+                db.Execute("delete from UserGroup where UserId = @0", id);
+                db.Execute("delete from users where ID = @0", id);
+                db.CompleteTransaction();
+                ret = true;
+            }
+            catch (Exception ex)
+            {
+                db.AbortTransaction();
+                throw ex;
             }
             return ret;
         }
+
         /// <summary>
         /// 通过roleId获取所有用户
         /// </summary>
         /// <param name="roleId"></param>
         /// <returns></returns>
-        public virtual IEnumerable<User> RetrieveUsersByRoleId(string roleId)
-        {
-            List<User> users = new List<User>();
-            string sql = "select u.ID, u.UserName, u.DisplayName, case ur.UserID when u.ID then 'checked' else '' end status from Users u left join UserRole ur on u.ID = ur.UserID and RoleID = @RoleID where u.ApprovedTime is not null";
-            DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-            cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@RoleID", roleId));
-            using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
-            {
-                while (reader.Read())
-                {
-                    users.Add(new User()
-                    {
-                        Id = reader[0].ToString(),
-                        UserName = (string)reader[1],
-                        DisplayName = (string)reader[2],
-                        Checked = (string)reader[3]
-                    });
-                }
-            }
-            return users;
-        }
+        public virtual IEnumerable<User> RetrievesByRoleId(string roleId) => DbManager.Db.Fetch<User>("select u.ID, u.UserName, u.DisplayName, case ur.UserID when u.ID then 'checked' else '' end Checked from Users u left join UserRole ur on u.ID = ur.UserID and RoleID = @0 where u.ApprovedTime is not null", roleId);
+
         /// <summary>
         /// 通过角色ID保存当前授权用户（插入）
         /// </summary>
         /// <param name="roleId">角色ID</param>
         /// <param name="userIds">用户ID数组</param>
         /// <returns></returns>
-        public virtual bool SaveUsersByRoleId(string roleId, IEnumerable<string> userIds)
+        public virtual bool SaveByRoleId(string roleId, IEnumerable<string> userIds)
         {
             bool ret = false;
-            DataTable dt = new DataTable();
-            dt.Columns.Add("RoleID", typeof(int));
-            dt.Columns.Add("UserID", typeof(int));
-            userIds.ToList().ForEach(userId => dt.Rows.Add(roleId, userId));
-            using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
+            var db = DbManager.Db;
+            try
             {
-                try
-                {
-                    //删除用户角色表该角色所有的用户
-                    string sql = $"delete from UserRole where RoleID = {roleId}";
-                    using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
-                    {
-                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
-                        //批插入用户角色表
-                        using (SqlBulkCopy bulk = new SqlBulkCopy((SqlConnection)transaction.Transaction.Connection, SqlBulkCopyOptions.Default, (SqlTransaction)transaction.Transaction))
-                        {
-                            bulk.DestinationTableName = "UserRole";
-                            bulk.ColumnMappings.Add("RoleID", "RoleID");
-                            bulk.ColumnMappings.Add("UserID", "UserID");
-                            bulk.WriteToServer(dt);
-                            transaction.CommitTransaction();
-                        }
-                    }
-                    ret = true;
-                }
-                catch (Exception ex)
-                {
-                    transaction.RollbackTransaction();
-                    throw ex;
-                }
+                db.BeginTransaction();
+                //删除用户角色表该角色所有的用户
+                db.Execute("delete from UserRole where RoleID = @0", roleId);
+                db.InsertBulk("UserRole", userIds.Select(g => new { UserID = g, RoleID = roleId }));
+                db.CompleteTransaction();
+                ret = true;
+            }
+            catch (Exception ex)
+            {
+                db.AbortTransaction();
+                throw ex;
             }
             return ret;
         }
+
         /// <summary>
         /// 通过groupId获取所有用户
         /// </summary>
         /// <param name="groupId"></param>
         /// <returns></returns>
-        public virtual IEnumerable<User> RetrieveUsersByGroupId(string groupId)
-        {
-            List<User> users = new List<User>();
-            string sql = "select u.ID, u.UserName, u.DisplayName, case ur.UserID when u.ID then 'checked' else '' end status from Users u left join UserGroup ur on u.ID = ur.UserID and GroupID =@groupId where u.ApprovedTime is not null";
-            DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-            cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@GroupID", groupId));
-            using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
-            {
-                while (reader.Read())
-                {
-                    users.Add(new User()
-                    {
-                        Id = reader[0].ToString(),
-                        UserName = (string)reader[1],
-                        DisplayName = (string)reader[2],
-                        Checked = (string)reader[3]
-                    });
-                }
-            }
-            return users;
-        }
+        public virtual IEnumerable<User> RetrievesByGroupId(string groupId) => DbManager.Db.Fetch<User>("select u.ID, u.UserName, u.DisplayName, case ur.UserID when u.ID then 'checked' else '' end Checked from Users u left join UserGroup ur on u.ID = ur.UserID and GroupID = @0 where u.ApprovedTime is not null", groupId);
+
         /// <summary>
         /// 通过部门ID保存当前授权用户（插入）
         /// </summary>
         /// <param name="groupId">GroupID</param>
         /// <param name="userIds">用户ID数组</param>
         /// <returns></returns>
-        public virtual bool SaveUsersByGroupId(string groupId, IEnumerable<string> userIds)
+        public virtual bool SaveByGroupId(string groupId, IEnumerable<string> userIds)
         {
             bool ret = false;
-            DataTable dt = new DataTable();
-            dt.Columns.Add("UserID", typeof(int));
-            dt.Columns.Add("GroupID", typeof(int));
-            userIds.ToList().ForEach(userId => dt.Rows.Add(userId, groupId));
-            using (TransactionPackage transaction = DbAccessManager.DBAccess.BeginTransaction())
+            var db = DbManager.Db;
+            try
             {
-                try
-                {
-                    //删除用户角色表该角色所有的用户
-                    string sql = "delete from UserGroup where GroupID = @GroupID";
-                    using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
-                    {
-                        cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@GroupID", groupId));
-                        DbAccessManager.DBAccess.ExecuteNonQuery(cmd, transaction);
-                        //批插入用户角色表
-                        using (SqlBulkCopy bulk = new SqlBulkCopy((SqlConnection)transaction.Transaction.Connection, SqlBulkCopyOptions.Default, (SqlTransaction)transaction.Transaction))
-                        {
-                            bulk.DestinationTableName = "UserGroup";
-                            bulk.ColumnMappings.Add("UserID", "UserID");
-                            bulk.ColumnMappings.Add("GroupID", "GroupID");
-                            bulk.WriteToServer(dt);
-                            transaction.CommitTransaction();
-                        }
-                    }
-                    ret = true;
-                }
-                catch (Exception ex)
-                {
-                    transaction.RollbackTransaction();
-                    throw ex;
-                }
+                db.BeginTransaction();
+                //删除用户角色表该角色所有的用户
+                db.Execute("delete from UserGroup where GroupID = @0", groupId);
+                db.InsertBulk("UserGroup", userIds.Select(g => new { UserID = g, GroupID = groupId }));
+                db.CompleteTransaction();
+                ret = true;
+            }
+            catch (Exception ex)
+            {
+                db.AbortTransaction();
+                throw ex;
             }
             return ret;
         }
+
         /// <summary>
         /// 根据用户名修改用户头像
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="iconName"></param>
         /// <returns></returns>
-        public virtual bool SaveUserIconByName(string userName, string iconName)
-        {
-            bool ret = false;
-            string sql = "Update Users set Icon = @iconName where UserName = @userName";
-            using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
-            {
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@iconName", iconName));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@userName", userName));
-                ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
-            }
-            return ret;
-        }
+        public virtual bool SaveUserIconByName(string userName, string iconName) => DbManager.Db.Update<User>("set Icon = @1 where UserName = @0", userName, iconName) == 1;
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="displayName"></param>
         /// <returns></returns>
-        public virtual bool SaveDisplayName(string userName, string displayName)
-        {
-            bool ret = false;
-            string sql = "Update Users set DisplayName = @DisplayName where UserName = @userName";
-            using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
-            {
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@DisplayName", displayName));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@userName", userName));
-                ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
-            }
-            return ret;
-        }
+        public virtual bool SaveDisplayName(string userName, string displayName) => DbManager.Db.Update<User>("set DisplayName = @1 where UserName = @0", userName, displayName) == 1;
+
         /// <summary>
         /// 根据用户名更改用户皮肤
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="cssName"></param>
         /// <returns></returns>
-        public virtual bool SaveUserCssByName(string userName, string cssName)
-        {
-            bool ret = false;
-            string sql = "Update Users set Css = @cssName where UserName = @userName";
-            using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
-            {
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@cssName", DbAdapterManager.ToDBValue(cssName)));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@userName", userName));
-                ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
-            }
-            return ret;
-        }
+        public virtual bool SaveUserCssByName(string userName, string cssName) => DbManager.Db.Update<User>("set Css = @1 where UserName = @0", userName, cssName) == 1;
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
         public virtual BootstrapUser RetrieveUserByUserName(string userName) => DbHelper.RetrieveUserByUserName(userName);
+
         /// <summary>
         /// 
         /// </summary>
@@ -541,6 +331,7 @@ namespace Bootstrap.DataAccess
             return string.Format("{0} ({1})", UserName, DisplayName);
         }
     }
+
     /// <summary>
     /// 
     /// </summary>

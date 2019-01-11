@@ -24,8 +24,9 @@ namespace Bootstrap.Admin.Controllers.Api
         [HttpGet]
         public QueryData<object> Get([FromQuery]QueryExceptionOption value)
         {
-            return value.RetrieveData();
+            return value.Retrieves();
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -39,6 +40,7 @@ namespace Bootstrap.Admin.Controllers.Api
                 .Where(f => Path.GetExtension(f).Equals(".log", StringComparison.OrdinalIgnoreCase))
                 .Select(f => Path.GetFileNameWithoutExtension(f)).OrderByDescending(s => s);
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -67,6 +69,7 @@ namespace Bootstrap.Admin.Controllers.Api
             }
             return new JsonResult(sb.ToString());
         }
+
         /// <summary>
         /// 
         /// </summary>

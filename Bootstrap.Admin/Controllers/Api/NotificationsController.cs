@@ -36,18 +36,18 @@ namespace Bootstrap.Admin.Controllers.Api
             });
 
             // Tasks
-            var task = TaskHelper.RetrieveTasks();
+            var task = TaskHelper.Retrieves();
             var tasksCount = task.Count();
 
             //Message
-            var message = MessageHelper.RetrieveMessagesHeader(User.Identity.Name);
+            var message = MessageHelper.Retrieves(User.Identity.Name);
             var messagesCount = message.Count();
 
             message = message.Take(6);
             message.AsParallel().ForAll(m => m.FromIcon = Url.Content(m.FromIcon));
 
             //Apps
-            var apps = ExceptionsHelper.RetrieveExceptions().Where(n => n.ExceptionType != "Longbow.Data.DBAccessException");
+            var apps = ExceptionsHelper.Retrieves().Where(n => n.ExceptionType != "Longbow.Data.DBAccessException");
             var appExceptionsCount = apps.Count();
 
             apps = apps.Take(6);
@@ -62,7 +62,7 @@ namespace Bootstrap.Admin.Controllers.Api
             });
 
             //Dbs
-            var dbs = ExceptionsHelper.RetrieveExceptions().Where(n => n.ExceptionType == "Longbow.Data.DBAccessException");
+            var dbs = ExceptionsHelper.Retrieves().Where(n => n.ExceptionType == "Longbow.Data.DBAccessException");
             var dbExceptionsCount = dbs.Count();
 
             dbs = dbs.Take(6);

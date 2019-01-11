@@ -1,4 +1,5 @@
 ﻿using Bootstrap.DataAccess;
+using System.IO;
 using System.Security.Principal;
 
 namespace Bootstrap.Admin.Models
@@ -15,7 +16,7 @@ namespace Bootstrap.Admin.Models
         public HeaderBarModel(IIdentity identity)
         {
             var user = UserHelper.RetrieveUserByUserName(identity.Name);
-            Icon = user.Icon;
+            Icon = Path.Combine(DictHelper.RetrieveIconFolderPath(), string.IsNullOrEmpty(user.Icon) ? DictHelper.RetrieveDefaultIcon() : user.Icon);
             DisplayName = user.DisplayName;
             UserName = user.UserName;
             if (!string.IsNullOrEmpty(user.Css)) Theme = user.Css;

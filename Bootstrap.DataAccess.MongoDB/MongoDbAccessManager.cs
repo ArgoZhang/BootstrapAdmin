@@ -1,6 +1,5 @@
 ﻿using Bootstrap.Security;
 using Longbow.Configuration;
-using Longbow.Data;
 using Microsoft.Extensions.Primitives;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;

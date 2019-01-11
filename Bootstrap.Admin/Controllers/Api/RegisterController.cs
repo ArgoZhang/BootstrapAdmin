@@ -3,7 +3,6 @@ using Longbow.Web.SignalR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -36,7 +35,7 @@ namespace Bootstrap.Admin.Controllers.Api
         [HttpPost]
         public async Task<bool> Post([FromServices]IHubContext<SignalRHub> hub, [FromBody]User user)
         {
-            var ret = UserHelper.SaveUser(user);
+            var ret = UserHelper.Save(user);
             if (ret) await SignalRManager.Send(hub.Clients.All, new MessageBody() { Category = "Users", Message = string.Format("{0}-{1}", user.UserName, user.Description) });
             return ret;
         }

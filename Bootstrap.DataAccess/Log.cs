@@ -2,8 +2,6 @@
 using Longbow.Configuration;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Common;
 
 namespace Bootstrap.DataAccess
 {
@@ -46,35 +44,14 @@ namespace Bootstrap.DataAccess
         /// 获取/设置 请求网址
         /// </summary>
         public string RequestUrl { get; set; }
+
         /// <summary>
         /// 查询所有日志信息
         /// </summary>
         /// <param name="tId"></param>
         /// <returns></returns>
-        public virtual IEnumerable<Log> RetrieveLogs()
-        {
-            string sql = "select * from Logs where LogTime > @LogTime";
-            List<Log> logs = new List<Log>();
-            DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-            cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@LogTime", DateTime.Now.AddDays(-7), DbType.DateTime));
-            using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
-            {
-                while (reader.Read())
-                {
-                    logs.Add(new Log()
-                    {
-                        Id = reader[0].ToString(),
-                        CRUD = (string)reader[1],
-                        UserName = (string)reader[2],
-                        LogTime = LgbConvert.ReadValue(reader[3], DateTime.MinValue),
-                        ClientIp = (string)reader[4],
-                        ClientAgent = (string)reader[5],
-                        RequestUrl = (string)reader[6]
-                    });
-                }
-            }
-            return logs;
-        }
+        public virtual IEnumerable<Log> Retrieves() => DbManager.Db.Fetch<Log>();
+
         /// <summary>
         /// 删除日志信息
         /// </summary>
@@ -84,34 +61,23 @@ namespace Bootstrap.DataAccess
         {
             System.Threading.Tasks.Task.Run(() =>
             {
-                string sql = $"delete from Logs where LogTime < @LogTime";
-                DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@LogTime", DateTime.Now.AddMonths(0 - LgbConvert.ReadValue(ConfigurationManager.AppSettings["KeepLogsPeriod"], 1)), DbType.DateTime));
-                DbAccessManager.DBAccess.ExecuteNonQuery(cmd);
+                var dtm = DateTime.Now.AddMonths(0 - LgbConvert.ReadValue(ConfigurationManager.AppSettings["KeepLogsPeriod"], 1));
+                DbManager.Db.Execute("delete from Logs where LogTime < @0", dtm);
             });
         }
+
         /// <summary>
         /// 保存新增的日志信息
         /// </summary>
         /// <param name="p"></param>
         /// <returns></returns>
-        public virtual bool SaveLog(Log p)
+        public virtual bool Save(Log p)
         {
             if (p == null) throw new ArgumentNullException(nameof(p));
-            bool ret = false;
-            string sql = "Insert Into Logs (CRUD, UserName, LogTime, ClientIp, ClientAgent, RequestUrl) Values (@CRUD, @UserName, @LogTime, @ClientIp, @ClientAgent, @RequestUrl)";
-            using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
-            {
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@CRUD", p.CRUD));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@UserName", p.UserName));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@LogTime", DateTime.Now, DbType.DateTime));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@ClientIp", p.ClientIp));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@ClientAgent", p.ClientAgent));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@RequestUrl", p.RequestUrl));
-                ret = DbAccessManager.DBAccess.ExecuteNonQuery(cmd) == 1;
-            }
             DeleteLogAsync();
-            return ret;
+            p.LogTime = DateTime.Now;
+            DbManager.Db.Save(p);
+            return true;
         }
     }
 }

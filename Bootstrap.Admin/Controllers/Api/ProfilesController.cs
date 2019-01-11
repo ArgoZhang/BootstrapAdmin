@@ -33,7 +33,7 @@ namespace Bootstrap.Admin.Controllers.Api
             if (files.Files.Count > 0)
             {
                 var uploadFile = files.Files[0];
-                var webSiteUrl = DictHelper.RetrieveIconFolderPath().Code;
+                var webSiteUrl = DictHelper.RetrieveIconFolderPath();
                 fileName = string.Format("{0}{1}", userName, Path.GetExtension(uploadFile.FileName));
                 var fileUrl = string.Format("{0}{1}", webSiteUrl, fileName);
                 var filePath = Path.Combine(env.WebRootPath, webSiteUrl.Replace("~", string.Empty).Replace("/", "\\").TrimStart('\\') + fileName);

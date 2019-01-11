@@ -24,7 +24,7 @@ namespace Bootstrap.Admin.Query
         public QueryData<object> RetrieveData()
         {
             // int limit, int offset, string name, string price, string sort, string order
-            var data = UserHelper.RetrieveUsers();
+            var data = UserHelper.Retrieves();
             if (!string.IsNullOrEmpty(Name))
             {
                 data = data.Where(t => t.UserName.Contains(Name));

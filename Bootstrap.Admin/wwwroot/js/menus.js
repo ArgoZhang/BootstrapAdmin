@@ -37,7 +37,7 @@
                 Category: "#category",
                 Target: "#target",
                 IsResource: "#isRes",
-                ApplicationCode: "#app"
+                Application: "#app"
             },
             events: {
                 '#btn_assignRole': function (row) {
@@ -120,7 +120,7 @@
                     }
                 },
                 {
-                    title: "所属应用", field: "ApplicationCode", sortable: true, formatter: function (value, row, index) {
+                    title: "所属应用", field: "Application", sortable: true, formatter: function (value, row, index) {
                         return $('#app').next().find('[data-val="' + value + '"]:first').text();
                     }
                 }

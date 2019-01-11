@@ -1,11 +1,10 @@
 ﻿using Longbow;
 using Longbow.Configuration;
-using Longbow.Data;
+using Longbow.Web.Mvc;
+using PetaPoco;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Data;
-using System.Data.Common;
 
 namespace Bootstrap.DataAccess
 {
@@ -18,53 +17,57 @@ namespace Bootstrap.DataAccess
         /// 
         /// </summary>
         public string Id { get; set; }
+
         /// <summary>
         /// 
         /// </summary>
         public string AppDomainName { get; set; }
+
         /// <summary>
         /// 
         /// </summary>
         public string ErrorPage { get; set; }
+
         /// <summary>
         /// 
         /// </summary>
         public string UserId { get; set; }
+
         /// <summary>
         /// 
         /// </summary>
         public string UserIp { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public string Message { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public string StackTrace { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public DateTime LogTime { get; set; }
+
         /// <summary>
         /// 
         /// </summary>
         public string ExceptionType { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Message { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string StackTrace { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public DateTime LogTime { get; set; }
+
         /// <summary>
         /// 获得/设置 时间描述 2分钟内为刚刚
         /// </summary>
         public string Period { get; set; }
 
-        private static void ClearExceptions()
+        private static void ClearExceptions() => System.Threading.Tasks.Task.Run(() =>
         {
-            System.Threading.Tasks.Task.Run(() =>
-            {
-                string sql = $"delete from Exceptions where LogTime < @LogTime";
-                DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@LogTime", DateTime.Now.AddMonths(0 - LgbConvert.ReadValue(ConfigurationManager.AppSettings["KeepExceptionsPeriod"], 1)), DbType.DateTime));
-                DbAccessManager.DBAccess.ExecuteNonQuery(cmd);
-            });
-        }
+            DbManager.Db.Execute("delete from Exceptions where LogTime < @0", DateTime.Now.AddMonths(0 - LgbConvert.ReadValue(ConfigurationManager.AppSettings["KeepExceptionsPeriod"], 1)));
+        });
+
         /// <summary>
         /// 
         /// </summary>
@@ -73,62 +76,47 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual bool Log(Exception ex, NameValueCollection additionalInfo)
         {
-            if (ex == null) return true;
-            if (additionalInfo == null)
+            if (ex == null) throw new ArgumentNullException(nameof(ex));
+
+            var errorPage = additionalInfo?["ErrorPage"] ?? (ex.GetType().Name.Length > 50 ? ex.GetType().Name.Substring(0, 50) : ex.GetType().Name);
+            DbManager.Db.Insert(new Exceptions()
             {
-                additionalInfo = new NameValueCollection
-                {
-                    ["UserId"] = null,
-                    ["UserIp"] = null,
-                    ["ErrorPage"] = null
-                };
-            }
-            var errorPage = additionalInfo["ErrorPage"] ?? (ex.GetType().Name.Length > 50 ? ex.GetType().Name.Substring(0, 50) : ex.GetType().Name);
-            var sql = "insert into Exceptions (AppDomainName, ErrorPage, UserID, UserIp, ExceptionType, Message, StackTrace, LogTime) values (@AppDomainName, @ErrorPage, @UserID, @UserIp, @ExceptionType, @Message, @StackTrace, @LogTime)";
-            using (DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql))
-            {
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@AppDomainName", AppDomain.CurrentDomain.FriendlyName));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@ErrorPage", errorPage));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@UserID", DbAdapterManager.ToDBValue(additionalInfo["UserId"])));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@UserIp", DbAdapterManager.ToDBValue(additionalInfo["UserIp"])));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@ExceptionType", ex.GetType().FullName));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@Message", ex.Message));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@StackTrace", DbAdapterManager.ToDBValue(ex.StackTrace)));
-                cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@LogTime", DateTime.Now, DbType.DateTime));
-                DbAccessManager.DBAccess.ExecuteNonQuery(cmd);
-                ClearExceptions();
-            }
+                AppDomainName = AppDomain.CurrentDomain.FriendlyName,
+                ErrorPage = errorPage,
+                UserId = additionalInfo?["UserId"],
+                UserIp = additionalInfo?["UserIp"],
+                ExceptionType = ex.GetType().FullName,
+                Message = ex.Message,
+                StackTrace = ex.StackTrace,
+                LogTime = DateTime.Now
+            });
+            ClearExceptions();
             return true;
         }
+
         /// <summary>
         /// 查询一周内所有异常
         /// </summary>
         /// <returns></returns>
-        public virtual IEnumerable<Exceptions> RetrieveExceptions()
+        public virtual IEnumerable<Exceptions> Retrieves() => DbManager.Db.Fetch<Exceptions>("select * from Exceptions where LogTime > @0 order by LogTime desc", DateTime.Now.AddDays(-7));
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="po"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <param name="sort"></param>
+        /// <returns></returns>
+        public virtual Page<Exceptions> RetrievePages(PaginationOption po, DateTime? startTime, DateTime? endTime)
         {
-            string sql = "select * from Exceptions where LogTime > @LogTime order by LogTime desc";
-            List<Exceptions> exceptions = new List<Exceptions>();
-            DbCommand cmd = DbAccessManager.DBAccess.CreateCommand(CommandType.Text, sql);
-            cmd.Parameters.Add(DbAccessManager.DBAccess.CreateParameter("@LogTime", DateTime.Now.AddDays(-7), DbType.DateTime));
-            using (DbDataReader reader = DbAccessManager.DBAccess.ExecuteReader(cmd))
-            {
-                while (reader.Read())
-                {
-                    exceptions.Add(new Exceptions()
-                    {
-                        Id = reader[0].ToString(),
-                        AppDomainName = (string)reader[1],
-                        ErrorPage = reader.IsDBNull(2) ? string.Empty : (string)reader[2],
-                        UserId = reader.IsDBNull(3) ? string.Empty : (string)reader[3],
-                        UserIp = reader.IsDBNull(4) ? string.Empty : (string)reader[4],
-                        ExceptionType = (string)reader[5],
-                        Message = (string)reader[6],
-                        StackTrace = reader.IsDBNull(7) ? string.Empty : (string)reader[7],
-                        LogTime = LgbConvert.ReadValue(reader[8], DateTime.MinValue)
-                    });
-                }
-            }
-            return exceptions;
+            var sql = new Sql("select * from Exceptions");
+            if (startTime.HasValue) sql.Append("where LogTime > @0", startTime.Value);
+            if (endTime.HasValue) sql.Append("where LogTime < @0", endTime.Value);
+            if (startTime == null && endTime == null) sql.Append("where LogTime > @0", DateTime.Today.AddDays(-7));
+            sql.Append("order by @0", $"{po.Sort} {po.Order}");
+
+            return DbManager.Db.Page<Exceptions>(po.PageIndex, po.Limit, sql);
         }
     }
 }

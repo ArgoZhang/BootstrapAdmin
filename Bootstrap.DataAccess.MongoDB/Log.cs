@@ -13,7 +13,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// 
         /// </summary>
         /// <returns></returns>
-        public override IEnumerable<DataAccess.Log> RetrieveLogs() => MongoDbAccessManager.Logs.Find(l => l.LogTime >= DateTime.Now.AddDays(-7)).ToList();
+        public override IEnumerable<DataAccess.Log> Retrieves() => MongoDbAccessManager.Logs.Find(l => l.LogTime >= DateTime.Now.AddDays(-7)).ToList();
         /// <summary>
         /// 删除日志信息
         /// </summary>
@@ -25,7 +25,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// </summary>
         /// <param name="log"></param>
         /// <returns></returns>
-        public override bool SaveLog(DataAccess.Log log)
+        public override bool Save(DataAccess.Log log)
         {
             log.LogTime = DateTime.Now;
             MongoDbAccessManager.Logs.InsertOne(log);

@@ -61,7 +61,7 @@ namespace Bootstrap.Admin.Controllers.Api
             switch (type)
             {
                 case "role":
-                    return UserHelper.RetrieveUsersByRoleId(id).Select(p => new
+                    return UserHelper.RetrievesByRoleId(id).Select(p => new
                     {
                         p.Id,
                         p.DisplayName,
@@ -69,7 +69,7 @@ namespace Bootstrap.Admin.Controllers.Api
                         p.Checked
                     });
                 case "group":
-                    return UserHelper.RetrieveUsersByGroupId(id).ToList();
+                    return UserHelper.RetrievesByGroupId(id).ToList();
                 default:
                     return null;
             }
@@ -87,11 +87,11 @@ namespace Bootstrap.Admin.Controllers.Api
                 value.Description = string.Format("管理员{0}创建用户", User.Identity.Name);
                 value.ApprovedBy = User.Identity.Name;
                 value.ApprovedTime = DateTime.Now;
-                ret = UserHelper.SaveUser(value);
+                ret = UserHelper.Save(value);
             }
             else
             {
-                ret = UserHelper.UpdateUser(value.Id, value.Password, value.DisplayName);
+                ret = UserHelper.Update(value.Id, value.Password, value.DisplayName);
             }
             return ret;
         }
@@ -109,10 +109,10 @@ namespace Bootstrap.Admin.Controllers.Api
             switch (type)
             {
                 case "role":
-                    ret = UserHelper.SaveUsersByRoleId(id, userIds);
+                    ret = UserHelper.SaveByRoleId(id, userIds);
                     break;
                 case "group":
-                    ret = UserHelper.SaveUsersByGroupId(id, userIds);
+                    ret = UserHelper.SaveByGroupId(id, userIds);
                     break;
                 default:
                     break;
@@ -126,7 +126,7 @@ namespace Bootstrap.Admin.Controllers.Api
         [HttpDelete]
         public bool Delete([FromBody]IEnumerable<string> value)
         {
-            return UserHelper.DeleteUser(value);
+            return UserHelper.Delete(value);
         }
         /// <summary>
         /// 

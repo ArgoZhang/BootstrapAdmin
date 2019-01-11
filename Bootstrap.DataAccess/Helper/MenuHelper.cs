@@ -27,9 +27,9 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="p"></param>
         /// <returns></returns>
-        public static bool SaveMenu(BootstrapMenu p)
+        public static bool Save(BootstrapMenu p)
         {
-            var ret = DbAdapterManager.Create<Menu>().SaveMenu(p);
+            var ret = DbContextManager.Create<Menu>().Save(p);
             if (ret) CacheCleanUtility.ClearCache(menuIds: string.IsNullOrEmpty(p.Id) ? new List<string>() : new List<string>() { p.Id });
             return ret;
         }
@@ -39,9 +39,9 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static bool DeleteMenu(IEnumerable<string> value)
+        public static bool Delete(IEnumerable<string> value)
         {
-            var ret = DbAdapterManager.Create<Menu>().DeleteMenu(value);
+            var ret = DbContextManager.Create<Menu>().Delete(value);
             if (ret) CacheCleanUtility.ClearCache(menuIds: value);
             return ret;
         }
@@ -58,7 +58,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="roleId"></param>
         /// <returns></returns>
-        public static IEnumerable<object> RetrieveMenusByRoleId(string roleId) => CacheManager.GetOrAdd($"{RetrieveMenusByRoleIdDataKey}-{roleId}", k => DbAdapterManager.Create<Menu>().RetrieveMenusByRoleId(roleId), RetrieveMenusByRoleIdDataKey);
+        public static IEnumerable<object> RetrieveMenusByRoleId(string roleId) => CacheManager.GetOrAdd($"{RetrieveMenusByRoleIdDataKey}-{roleId}", k => DbContextManager.Create<Menu>().RetrieveMenusByRoleId(roleId), RetrieveMenusByRoleIdDataKey);
 
         /// <summary>
         /// 
@@ -68,7 +68,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static bool SaveMenusByRoleId(string roleId, IEnumerable<string> menuIds)
         {
-            var ret = DbAdapterManager.Create<Menu>().SaveMenusByRoleId(roleId, menuIds);
+            var ret = DbContextManager.Create<Menu>().SaveMenusByRoleId(roleId, menuIds);
             if (ret) CacheCleanUtility.ClearCache(menuIds: menuIds, roleIds: new List<string>() { roleId });
             return ret;
         }
@@ -82,10 +82,9 @@ namespace Bootstrap.DataAccess
         public static IEnumerable<BootstrapMenu> RetrieveAppMenus(string appId, string userName, string activeUrl)
         {
             var menus = RetrieveAllMenus(userName).Where(m => m.Category == "1" && m.IsResource == 0);
-            if (appId != "0") menus = menus.Where(m => m.ApplicationCode == appId);
-            var root = menus.Where(m => m.ParentId == "0").OrderBy(m => m.ApplicationCode).ThenBy(m => m.Order);
-            DbHelper.CascadeMenus(menus, root);
-            DbHelper.ActiveMenu(null, menus, activeUrl);
+            if (appId != "0") menus = menus.Where(m => m.Application == appId);
+            var root = DbHelper.CascadeMenus(menus);
+            DbHelper.ActiveMenu(root, activeUrl);
             return root;
         }
 
@@ -100,9 +99,8 @@ namespace Bootstrap.DataAccess
         public static IEnumerable<BootstrapMenu> RetrieveSystemMenus(string userName, string activeUrl = null)
         {
             var menus = RetrieveAllMenus(userName).Where(m => m.Category == "0" && m.IsResource == 0);
-            var root = menus.Where(m => m.ParentId == "0").OrderBy(m => m.ApplicationCode).ThenBy(m => m.Order);
-            DbHelper.CascadeMenus(menus, root);
-            DbHelper.ActiveMenu(null, menus, activeUrl);
+            var root = DbHelper.CascadeMenus(menus);
+            DbHelper.ActiveMenu(root, activeUrl);
             return root;
         }
 
@@ -114,9 +112,7 @@ namespace Bootstrap.DataAccess
         public static IEnumerable<object> RetrieveMenus(string userName)
         {
             var menus = RetrieveAllMenus(userName);
-            var root = menus.Where(m => m.ParentId == "0").OrderBy(m => m.ApplicationCode).ThenBy(m => m.Order);
-            DbHelper.CascadeMenus(menus, root);
-            return root;
+            return DbHelper.CascadeMenus(menus);
         }
 
         /// <summary>
@@ -124,6 +120,6 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        private static IEnumerable<BootstrapMenu> RetrieveAllMenus(string userName) => CacheManager.GetOrAdd($"{RetrieveMenusAll}-{userName}", key => DbAdapterManager.Create<Menu>().RetrieveAllMenus(userName), RetrieveMenusAll);
+        private static IEnumerable<BootstrapMenu> RetrieveAllMenus(string userName) => CacheManager.GetOrAdd($"{RetrieveMenusAll}-{userName}", key => DbContextManager.Create<Menu>().RetrieveAllMenus(userName), RetrieveMenusAll);
     }
 }

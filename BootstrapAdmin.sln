@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2047
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28407.52
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQLServer", "SQLServer", "{87319AF5-7C40-4362-B67C-35F9DD737DB4}"
 	ProjectSection(SolutionItems) = preProject
@@ -31,8 +31,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.Client.DataAccess
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.DataAccess", "Bootstrap.DataAccess\Bootstrap.DataAccess.csproj", "{8D62BE79-BE13-43C8-969B-C9B00B3C84B7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.DataAccess.SQLite", "Bootstrap.DataAccess.SQLite\Bootstrap.DataAccess.SQLite.csproj", "{BC18A24F-5C99-4DF5-803D-72A912BCBD57}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQLite", "SQLite", "{523515EC-2AD7-4282-9AF4-9D20371183B0}"
 	ProjectSection(SolutionItems) = preProject
 		DatabaseScripts\SQLite\InitData.sql = DatabaseScripts\SQLite\InitData.sql
@@ -56,7 +54,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MySQL", "MySQL", "{084E2E94
 		DatabaseScripts\MySQL\install.sql = DatabaseScripts\MySQL\install.sql
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.DataAccess.MySQL", "Bootstrap.DataAccess.MySQL\Bootstrap.DataAccess.MySQL.csproj", "{B6877AEA-EC65-47DA-BA6E-FD657729C285}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniTest", "UniTest\UniTest.csproj", "{1019D84F-2D0E-4976-947E-10AB16A4E53F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -80,18 +78,14 @@ Global
 		{8D62BE79-BE13-43C8-969B-C9B00B3C84B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D62BE79-BE13-43C8-969B-C9B00B3C84B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D62BE79-BE13-43C8-969B-C9B00B3C84B7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BC18A24F-5C99-4DF5-803D-72A912BCBD57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BC18A24F-5C99-4DF5-803D-72A912BCBD57}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BC18A24F-5C99-4DF5-803D-72A912BCBD57}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BC18A24F-5C99-4DF5-803D-72A912BCBD57}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8336F096-4B4A-4710-A1FA-0F5E44CD8D26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8336F096-4B4A-4710-A1FA-0F5E44CD8D26}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8336F096-4B4A-4710-A1FA-0F5E44CD8D26}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8336F096-4B4A-4710-A1FA-0F5E44CD8D26}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B6877AEA-EC65-47DA-BA6E-FD657729C285}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B6877AEA-EC65-47DA-BA6E-FD657729C285}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B6877AEA-EC65-47DA-BA6E-FD657729C285}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B6877AEA-EC65-47DA-BA6E-FD657729C285}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1019D84F-2D0E-4976-947E-10AB16A4E53F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1019D84F-2D0E-4976-947E-10AB16A4E53F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1019D84F-2D0E-4976-947E-10AB16A4E53F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1019D84F-2D0E-4976-947E-10AB16A4E53F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

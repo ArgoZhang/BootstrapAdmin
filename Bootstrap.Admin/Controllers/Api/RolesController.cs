@@ -38,13 +38,13 @@ namespace Bootstrap.Admin.Controllers.Api
             switch (type)
             {
                 case "user":
-                    ret = RoleHelper.RetrieveRolesByUserId(id);
+                    ret = RoleHelper.RetrievesByUserId(id);
                     break;
                 case "group":
-                    ret = RoleHelper.RetrieveRolesByGroupId(id);
+                    ret = RoleHelper.RetrievesByGroupId(id);
                     break;
                 case "menu":
-                    ret = RoleHelper.RetrieveRolesByMenuId(id);
+                    ret = RoleHelper.RetrievesByMenuId(id);
                     break;
                 default:
                     break;
@@ -65,13 +65,13 @@ namespace Bootstrap.Admin.Controllers.Api
             switch (type)
             {
                 case "user":
-                    ret = RoleHelper.SaveRolesByUserId(id, roleIds);
+                    ret = RoleHelper.SaveByUserId(id, roleIds);
                     break;
                 case "group":
-                    ret = RoleHelper.SaveRolesByGroupId(id, roleIds);
+                    ret = RoleHelper.SaveByGroupId(id, roleIds);
                     break;
                 case "menu":
-                    ret = RoleHelper.SavaRolesByMenuId(id, roleIds);
+                    ret = RoleHelper.SavaByMenuId(id, roleIds);
                     break;
                 default:
                     break;
@@ -85,7 +85,7 @@ namespace Bootstrap.Admin.Controllers.Api
         [HttpPost]
         public bool Post([FromBody]Role value)
         {
-            return RoleHelper.SaveRole(value);
+            return RoleHelper.Save(value);
         }
         /// <summary>
         /// 
@@ -94,7 +94,7 @@ namespace Bootstrap.Admin.Controllers.Api
         [HttpDelete]
         public bool Delete([FromBody]IEnumerable<string> value)
         {
-            return RoleHelper.DeleteRole(value);
+            return RoleHelper.Delete(value);
         }
     }
 }

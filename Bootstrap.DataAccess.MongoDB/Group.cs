@@ -18,7 +18,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// 
         /// </summary>
         /// <returns></returns>
-        public override IEnumerable<DataAccess.Group> RetrieveGroups()
+        public override IEnumerable<DataAccess.Group> Retrieves()
         {
             return MongoDbAccessManager.Groups.Find(FilterDefinition<Group>.Empty).ToList();
         }
@@ -28,7 +28,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// </summary>
         /// <param name="p"></param>
         /// <returns></returns>
-        public override bool SaveGroup(DataAccess.Group p)
+        public override bool Save(DataAccess.Group p)
         {
             if (p.Id == "0")
             {
@@ -52,7 +52,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public override bool DeleteGroup(IEnumerable<string> value)
+        public override bool Delete(IEnumerable<string> value)
         {
             var list = new List<WriteModel<Group>>();
             foreach (var id in value)
@@ -68,10 +68,10 @@ namespace Bootstrap.DataAccess.MongoDB
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public override IEnumerable<DataAccess.Group> RetrieveGroupsByUserId(string userId)
+        public override IEnumerable<DataAccess.Group> RetrievesByUserId(string userId)
         {
-            var groups = GroupHelper.RetrieveGroups();
-            var user = UserHelper.RetrieveUsers().Cast<User>().FirstOrDefault(u => u.Id == userId);
+            var groups = GroupHelper.Retrieves();
+            var user = UserHelper.Retrieves().Cast<User>().FirstOrDefault(u => u.Id == userId);
             groups.ToList().ForEach(g => g.Checked = user.Groups.Any(id => id == g.Id) ? "checked" : "");
             return groups;
         }
@@ -82,7 +82,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <param name="userId"></param>
         /// <param name="groupIds"></param>
         /// <returns></returns>
-        public override bool SaveGroupsByUserId(string userId, IEnumerable<string> groupIds)
+        public override bool SaveByUserId(string userId, IEnumerable<string> groupIds)
         {
             MongoDbAccessManager.Users.FindOneAndUpdate(u => u.Id == userId, Builders<User>.Update.Set(u => u.Groups, groupIds));
             return true;
@@ -93,9 +93,9 @@ namespace Bootstrap.DataAccess.MongoDB
         /// </summary>
         /// <param name="roleId"></param>
         /// <returns></returns>
-        public override IEnumerable<DataAccess.Group> RetrieveGroupsByRoleId(string roleId)
+        public override IEnumerable<DataAccess.Group> RetrievesByRoleId(string roleId)
         {
-            var groups = GroupHelper.RetrieveGroups().Cast<Group>().ToList();
+            var groups = GroupHelper.Retrieves().Cast<Group>().ToList();
             groups.ForEach(p => p.Checked = (p.Roles != null && p.Roles.Contains(roleId)) ? "checked" : "");
             return groups;
         }
@@ -106,7 +106,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <param name="roleId"></param>
         /// <param name="groupIds"></param>
         /// <returns></returns>
-        public override bool SaveGroupsByRoleId(string roleId, IEnumerable<string> groupIds)
+        public override bool SaveByRoleId(string roleId, IEnumerable<string> groupIds)
         {
             var groups = MongoDbAccessManager.Groups.Find(md => md.Roles != null && md.Roles.Contains(roleId)).ToList();
 
@@ -134,11 +134,11 @@ namespace Bootstrap.DataAccess.MongoDB
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public override IEnumerable<string> RetrieveGroupsByUserName(string userName)
+        public override IEnumerable<string> RetrievesByUserName(string userName)
         {
             var groups = new List<string>();
-            var user = UserHelper.RetrieveUsers().Cast<User>().FirstOrDefault(u => u.UserName == userName);
-            var group = GroupHelper.RetrieveGroups();
+            var user = UserHelper.Retrieves().Cast<User>().FirstOrDefault(u => u.UserName == userName);
+            var group = GroupHelper.Retrieves();
 
             groups.AddRange(user.Groups.Select(r => group.FirstOrDefault(rl => rl.Id == r).GroupName));
             if (groups.Count == 0) groups.Add("Default");

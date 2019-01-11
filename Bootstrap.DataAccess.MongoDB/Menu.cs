@@ -33,7 +33,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// </summary>
         /// <param name="p"></param>
         /// <returns></returns>
-        public override bool SaveMenu(BootstrapMenu p)
+        public override bool Save(BootstrapMenu p)
         {
             if (p.Id == "0")
             {
@@ -51,7 +51,7 @@ namespace Bootstrap.DataAccess.MongoDB
                     .Set(md => md.Category, p.Category)
                     .Set(md => md.Target, p.Target)
                     .Set(md => md.IsResource, p.IsResource)
-                    .Set(md => md.ApplicationCode, p.ApplicationCode);
+                    .Set(md => md.Application, p.Application);
                 MongoDbAccessManager.Menus.UpdateOne(md => md.Id == p.Id, update);
                 return true;
             }
@@ -62,7 +62,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public override bool DeleteMenu(IEnumerable<string> value)
+        public override bool Delete(IEnumerable<string> value)
         {
             var list = new List<WriteModel<BootstrapMenu>>();
             foreach (var id in value)

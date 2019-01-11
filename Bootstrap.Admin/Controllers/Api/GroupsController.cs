@@ -33,7 +33,7 @@ namespace Bootstrap.Admin.Controllers.Api
         [HttpGet("{id}")]
         public Group Get(string id)
         {
-            return GroupHelper.RetrieveGroups().FirstOrDefault(t => t.Id == id);
+            return GroupHelper.Retrieves().FirstOrDefault(t => t.Id == id);
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Bootstrap.Admin.Controllers.Api
         [HttpPost]
         public bool Post([FromBody]Group value)
         {
-            return GroupHelper.SaveGroup(value);
+            return GroupHelper.Save(value);
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Bootstrap.Admin.Controllers.Api
         [HttpDelete]
         public bool Delete([FromBody]IEnumerable<string> value)
         {
-            return GroupHelper.DeleteGroup(value);
+            return GroupHelper.Delete(value);
         }
 
         /// <summary>
@@ -69,10 +69,10 @@ namespace Bootstrap.Admin.Controllers.Api
             switch (type)
             {
                 case "user":
-                    ret = GroupHelper.RetrieveGroupsByUserId(id);
+                    ret = GroupHelper.RetrievesByUserId(id);
                     break;
                 case "role":
-                    ret = GroupHelper.RetrieveGroupsByRoleId(id);
+                    ret = GroupHelper.RetrievesByRoleId(id);
                     break;
                 default:
                     break;
@@ -94,10 +94,10 @@ namespace Bootstrap.Admin.Controllers.Api
             switch (type)
             {
                 case "user":
-                    ret = GroupHelper.SaveGroupsByUserId(id, groupIds);
+                    ret = GroupHelper.SaveByUserId(id, groupIds);
                     break;
                 case "role":
-                    ret = GroupHelper.SaveGroupsByRoleId(id, groupIds);
+                    ret = GroupHelper.SaveByRoleId(id, groupIds);
                     break;
                 default:
                     break;

@@ -71,8 +71,8 @@ namespace Bootstrap.Admin.Query
                 case "IsResource":
                     data = Order == "asc" ? data.OrderBy(t => t.IsResource) : data.OrderByDescending(t => t.IsResource);
                     break;
-                case "ApplicationCode":
-                    data = Order == "asc" ? data.OrderBy(t => t.ApplicationCode) : data.OrderByDescending(t => t.ApplicationCode);
+                case "Application":
+                    data = Order == "asc" ? data.OrderBy(t => t.Application) : data.OrderByDescending(t => t.Application);
                     break;
                 default:
                     break;
@@ -90,7 +90,7 @@ namespace Bootstrap.Admin.Query
                 p.CategoryName,
                 p.Target,
                 p.IsResource,
-                p.ApplicationCode
+                p.Application
             });
             return ret;
         }

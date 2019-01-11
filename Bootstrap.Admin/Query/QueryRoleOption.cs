@@ -24,7 +24,7 @@ namespace Bootstrap.Admin.Query
         public QueryData<object> RetrieveData()
         {
             // int limit, int offset, string name, string price, string sort, string order
-            var data = RoleHelper.RetrieveRoles();
+            var data = RoleHelper.Retrieves();
             if (!string.IsNullOrEmpty(RoleName))
             {
                 data = data.Where(t => t.RoleName.Contains(RoleName));

@@ -32,7 +32,7 @@ namespace Bootstrap.Admin.Controllers.Api
         [HttpPost]
         public bool Post([FromBody]BootstrapMenu value)
         {
-            return MenuHelper.SaveMenu(value);
+            return MenuHelper.Save(value);
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace Bootstrap.Admin.Controllers.Api
         [HttpDelete]
         public bool Delete([FromBody]IEnumerable<string> value)
         {
-            return MenuHelper.DeleteMenu(value);
+            return MenuHelper.Delete(value);
         }
 
         /// <summary>

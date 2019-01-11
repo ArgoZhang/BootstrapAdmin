@@ -21,7 +21,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public override bool DeleteDict(IEnumerable<string> value)
+        public override bool Delete(IEnumerable<string> value)
         {
             var list = new List<WriteModel<BootstrapDict>>();
             foreach (var id in value)
@@ -37,7 +37,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// </summary>
         /// <param name="p"></param>
         /// <returns></returns>
-        public override bool SaveDict(BootstrapDict p)
+        public override bool Save(BootstrapDict p)
         {
             if (p.Id == "0")
             {

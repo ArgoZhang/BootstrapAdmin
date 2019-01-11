@@ -19,7 +19,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public override IEnumerable<DataAccess.Role> RetrieveRoles()
+        public override IEnumerable<DataAccess.Role> Retrieves()
         {
             return MongoDbAccessManager.Roles.Find(FilterDefinition<Role>.Empty).ToList();
         }
@@ -29,7 +29,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// </summary>
         /// <param name="p"></param>
         /// <returns></returns>
-        public override bool SaveRole(DataAccess.Role p)
+        public override bool Save(DataAccess.Role p)
         {
             if (p.Id == "0")
             {
@@ -54,7 +54,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public override bool DeleteRole(IEnumerable<string> value)
+        public override bool Delete(IEnumerable<string> value)
         {
             var list = new List<WriteModel<Role>>();
             foreach (var id in value)
@@ -73,8 +73,8 @@ namespace Bootstrap.DataAccess.MongoDB
         public override IEnumerable<string> RetrieveRolesByUserName(string userName)
         {
             var roles = new List<string>();
-            var user = UserHelper.RetrieveUsers().Cast<User>().FirstOrDefault(u => u.UserName == userName);
-            var role = RoleHelper.RetrieveRoles();
+            var user = UserHelper.Retrieves().Cast<User>().FirstOrDefault(u => u.UserName == userName);
+            var role = RoleHelper.Retrieves();
 
             roles.AddRange(user.Roles.Select(r => role.FirstOrDefault(rl => rl.Id == r).RoleName));
             if (roles.Count == 0) roles.Add("Default");
@@ -86,10 +86,10 @@ namespace Bootstrap.DataAccess.MongoDB
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public override IEnumerable<DataAccess.Role> RetrieveRolesByUserId(string userId)
+        public override IEnumerable<DataAccess.Role> RetrievesByUserId(string userId)
         {
-            var roles = RoleHelper.RetrieveRoles();
-            var user = UserHelper.RetrieveUsers().Cast<User>().FirstOrDefault(u => u.Id == userId);
+            var roles = RoleHelper.Retrieves();
+            var user = UserHelper.Retrieves().Cast<User>().FirstOrDefault(u => u.Id == userId);
             roles.ToList().ForEach(r => r.Checked = user.Roles.Any(id => id == r.Id) ? "checked" : "");
             return roles;
         }
@@ -100,7 +100,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <param name="userId"></param>
         /// <param name="roleIds"></param>
         /// <returns></returns>
-        public override bool SaveRolesByUserId(string userId, IEnumerable<string> roleIds)
+        public override bool SaveByUserId(string userId, IEnumerable<string> roleIds)
         {
             MongoDbAccessManager.Users.FindOneAndUpdate(u => u.Id == userId, Builders<User>.Update.Set(u => u.Roles, roleIds));
             return true;
@@ -111,9 +111,9 @@ namespace Bootstrap.DataAccess.MongoDB
         /// </summary>
         /// <param name="menuId"></param>
         /// <returns></returns>
-        public override IEnumerable<DataAccess.Role> RetrieveRolesByMenuId(string menuId)
+        public override IEnumerable<DataAccess.Role> RetrievesByMenuId(string menuId)
         {
-            var roles = RoleHelper.RetrieveRoles().Cast<Role>().ToList();
+            var roles = RoleHelper.Retrieves().Cast<Role>().ToList();
             roles.ForEach(r => r.Checked = (r.Menus != null && r.Menus.Contains(menuId)) ? "checked" : "");
             roles.ForEach(r => r.Menus = null);
             return roles;
@@ -125,7 +125,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <param name="menuId"></param>
         /// <param name="roleIds"></param>
         /// <returns></returns>
-        public override bool SavaRolesByMenuId(string menuId, IEnumerable<string> roleIds)
+        public override bool SavaByMenuId(string menuId, IEnumerable<string> roleIds)
         {
             var roles = MongoDbAccessManager.Roles.Find(md => md.Menus != null && md.Menus.Contains(menuId)).ToList();
 
@@ -155,10 +155,10 @@ namespace Bootstrap.DataAccess.MongoDB
         /// </summary>
         /// <param name="groupId"></param>
         /// <returns></returns>
-        public override IEnumerable<DataAccess.Role> RetrieveRolesByGroupId(string groupId)
+        public override IEnumerable<DataAccess.Role> RetrievesByGroupId(string groupId)
         {
-            var roles = RoleHelper.RetrieveRoles();
-            var group = GroupHelper.RetrieveGroups().Cast<Group>().FirstOrDefault(u => u.Id == groupId);
+            var roles = RoleHelper.Retrieves();
+            var group = GroupHelper.Retrieves().Cast<Group>().FirstOrDefault(u => u.Id == groupId);
             roles.ToList().ForEach(r => r.Checked = group.Roles.Any(id => id == r.Id) ? "checked" : "");
             return roles;
         }
@@ -169,7 +169,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <param name="groupId"></param>
         /// <param name="roleIds"></param>
         /// <returns></returns>
-        public override bool SaveRolesByGroupId(string groupId, IEnumerable<string> roleIds)
+        public override bool SaveByGroupId(string groupId, IEnumerable<string> roleIds)
         {
             MongoDbAccessManager.Groups.FindOneAndUpdate(u => u.Id == groupId, Builders<Group>.Update.Set(u => u.Roles, roleIds));
             return true;
@@ -183,7 +183,7 @@ namespace Bootstrap.DataAccess.MongoDB
         public override IEnumerable<string> RetrieveRolesByUrl(string url)
         {
             var menu = MongoDbAccessManager.Menus.Find(md => md.Url.StartsWith(url)).FirstOrDefault();
-            var ret = RoleHelper.RetrieveRoles().Cast<Role>().Where(md => md.Menus != null && md.Menus.Contains(menu.Id)).Select(m => m.RoleName).ToList();
+            var ret = RoleHelper.Retrieves().Cast<Role>().Where(md => md.Menus != null && md.Menus.Contains(menu.Id)).Select(m => m.RoleName).ToList();
             if (!ret.Contains("Administrators")) ret.Add("Administrators");
             return ret;
         }

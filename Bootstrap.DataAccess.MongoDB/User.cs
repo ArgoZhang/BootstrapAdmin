@@ -61,7 +61,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// 
         /// </summary>
         /// <returns></returns>
-        public override IEnumerable<DataAccess.User> RetrieveUsers()
+        public override IEnumerable<DataAccess.User> Retrieves()
         {
             var project = Builders<User>.Projection.Include(u => u.Id)
                 .Include(u => u.UserName)
@@ -80,7 +80,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// </summary>
         /// <param name="p"></param>
         /// <returns></returns>
-        public override bool SaveUser(DataAccess.User user)
+        public override bool Save(DataAccess.User user)
         {
             // 已经存在或者已经在新用户中了
             if (UserHelper.RetrieveUserByUserName(user.UserName) != null || UserHelper.RetrieveNewUsers().Any(u => u.UserName == user.UserName)) return false;
@@ -98,7 +98,7 @@ namespace Bootstrap.DataAccess.MongoDB
                 ApprovedBy = user.ApprovedBy,
                 Roles = new List<string>(),
                 Groups = new List<string>(),
-                Icon = $"{DictHelper.RetrieveIconFolderPath().Code}default.jpg",
+                Icon = $"{DictHelper.RetrieveIconFolderPath()}default.jpg",
                 Description = user.Description
             });
             return true;
@@ -111,7 +111,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <param name="password"></param>
         /// <param name="displayName"></param>
         /// <returns></returns>
-        public override bool UpdateUser(string id, string password, string displayName)
+        public override bool Update(string id, string password, string displayName)
         {
             var passSalt = LgbCryptography.GenerateSalt();
             var newPassword = LgbCryptography.ComputeHash(password, passSalt);
@@ -145,7 +145,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public override bool DeleteUser(IEnumerable<string> value)
+        public override bool Delete(IEnumerable<string> value)
         {
             var list = new List<WriteModel<User>>();
             foreach (var id in value)
@@ -161,9 +161,9 @@ namespace Bootstrap.DataAccess.MongoDB
         /// </summary>
         /// <param name="roleId"></param>
         /// <returns></returns>
-        public override IEnumerable<DataAccess.User> RetrieveUsersByRoleId(string roleId)
+        public override IEnumerable<DataAccess.User> RetrievesByRoleId(string roleId)
         {
-            var users = UserHelper.RetrieveUsers().Cast<User>().ToList();
+            var users = UserHelper.Retrieves().Cast<User>().ToList();
             users.ForEach(p => p.Checked = (p.Roles != null && p.Roles.Contains(roleId)) ? "checked" : "");
             return users;
         }
@@ -174,7 +174,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <param name="roleId"></param>
         /// <param name="userIds"></param>
         /// <returns></returns>
-        public override bool SaveUsersByRoleId(string roleId, IEnumerable<string> userIds)
+        public override bool SaveByRoleId(string roleId, IEnumerable<string> userIds)
         {
             var users = MongoDbAccessManager.Users.Find(md => md.Roles != null && md.Roles.Contains(roleId)).ToList();
 
@@ -202,9 +202,9 @@ namespace Bootstrap.DataAccess.MongoDB
         /// </summary>
         /// <param name="groupId"></param>
         /// <returns></returns>
-        public override IEnumerable<DataAccess.User> RetrieveUsersByGroupId(string groupId)
+        public override IEnumerable<DataAccess.User> RetrievesByGroupId(string groupId)
         {
-            var users = UserHelper.RetrieveUsers().Cast<User>().ToList();
+            var users = UserHelper.Retrieves().Cast<User>().ToList();
             users.ForEach(p => p.Checked = (p.Groups != null && p.Groups.Contains(groupId)) ? "checked" : "");
             return users;
         }
@@ -215,7 +215,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <param name="groupId"></param>
         /// <param name="userIds"></param>
         /// <returns></returns>
-        public override bool SaveUsersByGroupId(string groupId, IEnumerable<string> userIds)
+        public override bool SaveByGroupId(string groupId, IEnumerable<string> userIds)
         {
             var users = MongoDbAccessManager.Users.Find(md => md.Groups != null && md.Groups.Contains(groupId)).ToList();
 

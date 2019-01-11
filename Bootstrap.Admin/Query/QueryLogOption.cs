@@ -28,7 +28,7 @@ namespace Bootstrap.Admin.Query
         /// <returns></returns>
         public QueryData<Log> RetrieveData()
         {
-            var data = LogHelper.RetrieveLogs();
+            var data = LogHelper.Retrieves();
             if (!string.IsNullOrEmpty(OperateType))
             {
                 data = data.Where(t => t.CRUD.ToString().Contains(OperateType));
