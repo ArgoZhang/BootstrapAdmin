@@ -328,6 +328,7 @@ EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'字典代码' 
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'0表示系统使用，1表示自定义' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Dicts', @level2type=N'COLUMN',@level2name=N'Define'
 GO
+
 /****** Object:  Default [DF_Dicts_Define]    Script Date: 11/12/2016 15:49:11 ******/
 ALTER TABLE [dbo].[Dicts] ADD  CONSTRAINT [DF_Dicts_Define]  DEFAULT ((1)) FOR [Define]
 GO

@@ -103,7 +103,7 @@ CREATE TABLE Dicts(
 	Category 		VARCHAR (50) NOT NULL,
 	Name 			VARCHAR (50) NOT NULL,
 	Code 			VARCHAR (500) NOT NULL,
-	Define 			INT  DEFAULT 1
+	Define 			INT NOT NULL DEFAULT 1
 );
 
 CREATE TABLE Messages(
