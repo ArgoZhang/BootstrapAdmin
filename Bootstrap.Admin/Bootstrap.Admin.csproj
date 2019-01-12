@@ -8,7 +8,7 @@
     <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+  <PropertyGroup>
     <DocumentationFile>..\Bootstrap.Admin\Bootstrap.Admin.xml</DocumentationFile>
   </PropertyGroup>
 
