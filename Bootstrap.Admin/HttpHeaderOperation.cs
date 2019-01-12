@@ -21,7 +21,7 @@ namespace Bootstrap.Admin
         {
             if (operation.Parameters == null) operation.Parameters = new List<IParameter>();
 
-            if (context.MethodInfo.GetCustomAttributes(typeof(AllowAnonymousAttribute), true).Count() == 0)
+            if (context.MethodInfo.GetCustomAttributes(typeof(AllowAnonymousAttribute), true).Length == 0)
             {
                 operation.Parameters.Add(new NonBodyParameter()
                 {

@@ -45,7 +45,7 @@
         <div class="navbar-nav">
             @foreach (var menu in Model.Navigations)
             {
-                @if (menu.Menus.Count() > 0)
+                @if (menu.Menus.Any())
                 {
                     <div class="nav-item dropdown @menu.Active">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" href="#">@menu.Name</a>
