@@ -18,7 +18,6 @@ namespace Bootstrap.DataAccess
                 Order = 10,
                 Url = "#",
                 ParentId = "0"
-
             };
             Assert.True(m.Save(m));
         }
@@ -33,8 +32,20 @@ namespace Bootstrap.DataAccess
         [Fact]
         public void Delete_Ok()
         {
-            var m = new Menu();
-            Assert.True(m.Delete(new string[] { "452" }));
+            var m = new Menu()
+            {
+                Name = "UnitTest",
+                Application = "0",
+                Category = "0",
+                Icon = "fa fa-fa",
+                IsResource = 0,
+                Target = "_blank",
+                Order = 10,
+                Url = "#",
+                ParentId = "0"
+            };
+            m.Save(m);
+            Assert.True(m.Delete(new string[] { m.Id }));
         }
 
         [Fact]
