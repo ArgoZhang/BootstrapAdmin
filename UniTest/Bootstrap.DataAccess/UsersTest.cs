@@ -44,7 +44,7 @@ namespace Bootstrap.DataAccess
         public void Update_Ok()
         {
             var u = new User();
-            Assert.True(u.Update("1", "123789", "Administrators"));
+            Assert.True(u.Update("1", "123789", "Administrator"));
         }
 
         [Fact]
@@ -55,7 +55,7 @@ namespace Bootstrap.DataAccess
 
             var up = new User() { UserName = "UnitTest", Password = "123", Description = "新建用户用于测试批准", DisplayName = "UnitTest", Icon = "default.jpg" };
             u.Save(up);
-            Assert.True(u.Approve(up.Id, "Administrators"));
+            Assert.True(u.Approve(up.Id, "UnitTest"));
 
             u.Delete(new string[] { up.Id });
         }
@@ -103,7 +103,7 @@ namespace Bootstrap.DataAccess
         public void SaveDisplayName_Ok()
         {
             var u = new User();
-            Assert.True(u.SaveDisplayName("Admin", "Administrators"));
+            Assert.True(u.SaveDisplayName("Admin", "Administrator"));
         }
 
         [Fact]
