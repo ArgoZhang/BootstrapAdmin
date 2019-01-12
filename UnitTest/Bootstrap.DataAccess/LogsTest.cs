@@ -21,7 +21,15 @@ namespace Bootstrap.DataAccess
         [Fact]
         public void Retrieves_Ok()
         {
-            var log = new Log();
+            var log = new Log()
+            {
+                UserName = "UnitTest",
+                ClientAgent = "UnitTest-Agent",
+                ClientIp = "::",
+                CRUD = "UnitTest",
+                RequestUrl = "~/Home/Index"
+            };
+            log.Save(log);
             Assert.NotEmpty(log.Retrieves());
         }
     }

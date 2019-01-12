@@ -138,5 +138,13 @@ namespace Bootstrap.DataAccess
             var u = new User();
             Assert.True(u.SaveByRoleId("1", new string[] { "1", "2" }));
         }
+
+        [Fact]
+        public void RetrieveUserByUserName_Ok()
+        {
+            var u = new User();
+            var usr = u.RetrieveUserByUserName("Admin");
+            Assert.Equal("Administrator", usr.DisplayName);
+        }
     }
 }

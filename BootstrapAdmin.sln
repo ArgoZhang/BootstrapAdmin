@@ -54,7 +54,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MySQL", "MySQL", "{084E2E94
 		DatabaseScripts\MySQL\install.sql = DatabaseScripts\MySQL\install.sql
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniTest", "UniTest\UniTest.csproj", "{1019D84F-2D0E-4976-947E-10AB16A4E53F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniTest", "UnitTest\UniTest.csproj", "{CFE75C48-F9D5-403A-8419-D07939BBD769}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -82,10 +82,10 @@ Global
 		{8336F096-4B4A-4710-A1FA-0F5E44CD8D26}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8336F096-4B4A-4710-A1FA-0F5E44CD8D26}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8336F096-4B4A-4710-A1FA-0F5E44CD8D26}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1019D84F-2D0E-4976-947E-10AB16A4E53F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1019D84F-2D0E-4976-947E-10AB16A4E53F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1019D84F-2D0E-4976-947E-10AB16A4E53F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1019D84F-2D0E-4976-947E-10AB16A4E53F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFE75C48-F9D5-403A-8419-D07939BBD769}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFE75C48-F9D5-403A-8419-D07939BBD769}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFE75C48-F9D5-403A-8419-D07939BBD769}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFE75C48-F9D5-403A-8419-D07939BBD769}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

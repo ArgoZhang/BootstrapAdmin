@@ -17,6 +17,7 @@ namespace Bootstrap.DataAccess
         public void Retrieves_Ok()
         {
             Exceptions excep = new Exceptions();
+            excep.Log(new Exception("UnitTest"), null);
             Assert.NotEmpty(excep.Retrieves());
         }
 
