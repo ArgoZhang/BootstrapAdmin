@@ -55,7 +55,7 @@ CREATE TABLE Navigations(
 	[ID] INTEGER PRIMARY KEY,
 	[ParentId] INT DEFAULT (0),
 	[Name] VARCHAR (50) NOT NULL,
-	[Order] INT DEFAULT (0),
+	[Order] INT NOT NULL DEFAULT (0),
 	[Icon] VARCHAR (50) DEFAULT none,
 	[Url] VARCHAR (4000) NULL,
 	[Category] VARCHAR (50) DEFAULT 0,
@@ -103,7 +103,7 @@ CREATE TABLE Dicts(
 	[Category] VARCHAR (50) NOT NULL,
 	[Name] VARCHAR (50) NOT NULL,
 	[Code] VARCHAR (500) NOT NULL,
-	[Define] INT  DEFAULT (1)
+	[Define] INT DEFAULT (1)
 );
 
 CREATE TABLE Messages(

@@ -55,7 +55,7 @@ CREATE TABLE Navigations(
 	ID 				INTEGER PRIMARY KEY	Auto_increment,
 	ParentId 		INT DEFAULT 0,
 	Name 			VARCHAR (50) NOT NULL,
-	`Order` 		INT DEFAULT 0,
+	`Order` 		INT NOT NULL DEFAULT 0,
 	Icon 			VARCHAR (50) DEFAULT 'fa fa-fa',
 	Url 			VARCHAR (4000) NULL,
 	Category 		VARCHAR (50) DEFAULT 0,

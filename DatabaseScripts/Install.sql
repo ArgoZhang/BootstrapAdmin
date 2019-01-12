@@ -159,6 +159,11 @@ CREATE TABLE [dbo].[Notifications](
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'0 标示未处理 1 标示已处理' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Notifications', @level2type=N'COLUMN',@level2name=N'Status'
 GO
+
+/****** Object:  Default [DF_Notifications_Status]    Script Date: 11/12/2016 15:49:11 ******/
+ALTER TABLE [dbo].[Notifications] ADD  CONSTRAINT [DF_Notifications_Status]  DEFAULT ((0)) FOR [Status]
+GO
+
 /****** Object:  Table [dbo].[Navigations]    Script Date: 11/12/2016 15:49:11 ******/
 SET ANSI_NULLS ON
 GO
@@ -183,6 +188,29 @@ CREATE TABLE [dbo].[Navigations](
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
+
+/****** Object:  Default [DF_Navigations_ParentId]    Script Date: 11/12/2016 15:49:11 ******/
+ALTER TABLE [dbo].[Navigations] ADD  CONSTRAINT [DF_Navigations_ParentId]  DEFAULT ((0)) FOR [ParentId]
+GO
+/****** Object:  Default [DF_Navigations_Order]    Script Date: 11/12/2016 15:49:11 ******/
+ALTER TABLE [dbo].[Navigations] ADD  CONSTRAINT [DF_Navigations_Order]  DEFAULT ((0)) FOR [Order]
+GO
+/****** Object:  Default [DF_Navigations_Icon]    Script Date: 11/12/2016 15:49:11 ******/
+ALTER TABLE [dbo].[Navigations] ADD  CONSTRAINT [DF_Navigations_Icon]  DEFAULT ('none') FOR [Icon]
+GO
+/****** Object:  Default [DF_Navigations_Category]    Script Date: 11/12/2016 15:49:11 ******/
+ALTER TABLE [dbo].[Navigations] ADD  CONSTRAINT [DF_Navigations_Category]  DEFAULT ((0)) FOR [Category]
+GO
+
+ALTER TABLE [dbo].[Navigations] ADD  CONSTRAINT [DF_Navigations_IsResource]  DEFAULT ((0)) FOR [IsResource]
+GO
+
+ALTER TABLE [dbo].[Navigations] ADD  CONSTRAINT [DF_Navigations_Application]  DEFAULT ((0)) FOR [Application]
+GO
+
+ALTER TABLE [dbo].[Navigations] ADD  CONSTRAINT [DF_Navigations_Target]  DEFAULT ('_self') FOR [Target]
+GO
+
 SET ANSI_PADDING OFF
 GO
 /****** Object:  Table [dbo].[NavigationRole]    Script Date: 11/12/2016 15:49:11 ******/
@@ -303,27 +331,6 @@ GO
 /****** Object:  Default [DF_Dicts_Define]    Script Date: 11/12/2016 15:49:11 ******/
 ALTER TABLE [dbo].[Dicts] ADD  CONSTRAINT [DF_Dicts_Define]  DEFAULT ((1)) FOR [Define]
 GO
-/****** Object:  Default [DF_Navigations_ParentId]    Script Date: 11/12/2016 15:49:11 ******/
-ALTER TABLE [dbo].[Navigations] ADD  CONSTRAINT [DF_Navigations_ParentId]  DEFAULT ((0)) FOR [ParentId]
-GO
-/****** Object:  Default [DF_Navigations_Order]    Script Date: 11/12/2016 15:49:11 ******/
-ALTER TABLE [dbo].[Navigations] ADD  CONSTRAINT [DF_Navigations_Order]  DEFAULT ((0)) FOR [Order]
-GO
-/****** Object:  Default [DF_Navigations_Icon]    Script Date: 11/12/2016 15:49:11 ******/
-ALTER TABLE [dbo].[Navigations] ADD  CONSTRAINT [DF_Navigations_Icon]  DEFAULT ('none') FOR [Icon]
-GO
-/****** Object:  Default [DF_Navigations_Category]    Script Date: 11/12/2016 15:49:11 ******/
-ALTER TABLE [dbo].[Navigations] ADD  CONSTRAINT [DF_Navigations_Category]  DEFAULT ((0)) FOR [Category]
-GO
-/****** Object:  Default [DF_Notifications_Status]    Script Date: 11/12/2016 15:49:11 ******/
-ALTER TABLE [dbo].[Notifications] ADD  CONSTRAINT [DF_Notifications_Status]  DEFAULT ((0)) FOR [Status]
-GO
-
-ALTER TABLE [dbo].[Navigations] ADD  CONSTRAINT [DF_Navigations_IsResource]  DEFAULT ((0)) FOR [IsResource]
-GO
-
-ALTER TABLE [dbo].[Navigations] ADD  CONSTRAINT [DF_Navigations_Application]  DEFAULT ((0)) FOR [Application]
-GO
 
 /****** Object:  Table [dbo].[Messages]    Script Date: 11/14/2016 13:59:21 ******/
 SET ANSI_NULLS ON
@@ -364,9 +371,6 @@ ALTER TABLE [dbo].[Messages] ADD  CONSTRAINT [DF_Messages_IsDelete]  DEFAULT ((0
 GO
 
 ALTER TABLE [dbo].[Messages] ADD  CONSTRAINT [DF_Messages_Label]  DEFAULT ((0)) FOR [Label]
-GO
-
-ALTER TABLE [dbo].[Navigations] ADD  CONSTRAINT [DF_Navigations_Target]  DEFAULT ('_self') FOR [Target]
 GO
 
 /****** Object:  Table [dbo].[Tasks]    Script Date: 11/16/2016 15:40:02 ******/
