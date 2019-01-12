@@ -9,7 +9,7 @@
     "ApprovedTime": ISODate("2018-09-09T06:06:20.130+0000"),
     "ApprovedBy": "system",
     "Description": "系统默认创建",
-    "Icon": "~/images/uploader/default.jpg",
+    "Icon": "default.jpg",
     "Css": null,
     "Roles": [
       "5bd7cc105fa31256f77e4eb7"
