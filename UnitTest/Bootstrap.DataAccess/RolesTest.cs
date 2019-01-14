@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using System.Linq;
+using Xunit;
 
 namespace Bootstrap.DataAccess
 {
@@ -45,9 +46,9 @@ namespace Bootstrap.DataAccess
         public void RetrieveRolesByMenuId_Ok()
         {
             var menu = new Menu();
-            menu.SaveMenusByRoleId("1", new string[] { "1" });
-
             var role = new Role();
+            var id = role.Retrieves().FirstOrDefault(r => r.RoleName == "Administrators").Id;
+            menu.SaveMenusByRoleId(id, new string[] { "1" });
             var rs = role.RetrievesByMenuId("1");
             Assert.Contains(rs, r => r.Checked == "checked");
         }
@@ -63,6 +64,8 @@ namespace Bootstrap.DataAccess
         public void RetrieveRolesByGroupId_Ok()
         {
             var role = new Role();
+            var id = role.Retrieves().FirstOrDefault(r => r.RoleName == "Administrators").Id;
+            new Group().SaveByRoleId(id, new string[] { "1" });
             Assert.Contains(role.RetrievesByGroupId("1"), r => r.Checked == "checked");
         }
 
@@ -70,6 +73,8 @@ namespace Bootstrap.DataAccess
         public void RetrieveRolesByUserName_Ok()
         {
             var role = new Role();
+            var id = role.Retrieves().FirstOrDefault(r => r.RoleName == "Administrators").Id;
+            new User().SaveByRoleId(id, new string[] { "1" });
             Assert.NotEmpty(role.RetrieveRolesByUserName("Admin"));
         }
 

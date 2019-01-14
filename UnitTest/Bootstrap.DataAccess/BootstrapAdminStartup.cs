@@ -1,4 +1,4 @@
-﻿#define SQLite
+﻿//#define SQLite
 //#define MySQL
 
 using Microsoft.Extensions.Configuration;
