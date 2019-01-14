@@ -1,28 +1,38 @@
-﻿@model Bootstrap.Admin.Models.NavigatorBarModel
+﻿@model NavigatorBarModel
 @{
     ViewBag.Title = "菜单管理";
-    Layout = "~/Views/Shared/_Default.cshtml";
+    Layout = "_Default";
 }
 @section css {
-    <link href="~/css/fa.css" rel="stylesheet" />
-    <link href="~/css/jquery.nestable.css" rel="stylesheet" />
+    <environment include="Development">
+        <link href="~/lib/nestable2/jquery.nestable.css" rel="stylesheet" />
+    </environment>
+    <environment exclude="Development">
+        <link href="~/lib/nestable2/jquery.nestable.min.css" rel="stylesheet" />
+    </environment>
+    <link href="~/css/fa.css" rel="stylesheet" asp-append-version="true" />
 }
-@section Javascript {
-    <script src="~/js/jquery.nestable.js"></script>
-    <script src="~/js/menus.js"></script>
+@section javascript {
+    <environment include="Development">
+        <script src="~/lib/nestable2/jquery.nestable.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/lib/nestable2/jquery.nestable.min.js"></script>
+    </environment>
+    <script src="~/js/menus.js" asp-append-version="true"></script>
 }
 @section query {
     <form class="form-inline">
-        <div class="form-row">
-            <div class="form-group col-sm-12 col-md-5">
+        <div class="row">
+            <div class="form-group col-sm-6 col-lg-auto">
                 <label class="control-label" for="txt_menus_name">菜单名称</label>
                 <input type="text" class="form-control" id="txt_menus_name" />
             </div>
-            <div class="form-group col-sm-12 col-md-5">
+            <div class="form-group col-sm-6 col-lg-auto">
                 <label class="control-label" for="txt_parent_menus_name">父级菜单</label>
                 <input type="text" class="form-control" id="txt_parent_menus_name" />
             </div>
-            <div class="form-group col-6 col-md-5">
+            <div class="form-group form-group-dropdown col-sm-6 col-lg-auto">
                 <label class="control-label" for="sel_menus_category">菜单类别</label>
                 <div class="dropdown">
                     <button id="sel_menus_category" class="btn btn-success dropdown-select dropdown-toggle" data-toggle="dropdown">全部</button>
@@ -34,8 +44,8 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group col-6 col-md-5">
-                <label class="control-label" for="sel_menus_category">菜单类型</label>
+            <div class="form-group form-group-dropdown col-sm-6 col-lg-auto">
+                <label class="control-label" for="sel_menus_res">菜单类型</label>
                 <div class="dropdown">
                     <button id="sel_menus_res" class="btn btn-success dropdown-select dropdown-toggle" data-toggle="dropdown">全部</button>
                     <div class="dropdown-menu">
@@ -46,7 +56,7 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group col-md-2">
+            <div class="form-group col-lg-auto flex-lg-fill justify-content-lg-end">
                 <button type="button" id="btn_query" class="btn btn-primary btn-fill"><i class="fa fa-search" aria-hidden="true"></i><span>查询</span></button>
             </div>
         </div>
@@ -75,7 +85,7 @@
         <form class="form-inline" id="dataForm">
             <div class="form-row">
                 <div class="form-group col-sm-6">
-                    <input type="text" class="form-control d-none" id="menuID" name="menuID" data-default-val="0" />
+                    <input type="hidden" id="menuID" />
                     <label class="control-label" for="name">菜单名称</label>
                     <div class="input-group">
                         <input type="text" class="form-control" id="name" name="name" placeholder="不可为空，50字以内" maxlength="50" data-valid="true" />
@@ -118,9 +128,9 @@
                 </div>
                 <div class="form-group col-12">
                     <label class="control-label" for="url">路径</label>
-                    <input type="text" class="form-control form-control-url" id="url" placeholder="不可为空，4000字以内" maxlength="4000" data-valid="true" />
+                    <input type="text" class="form-control flex-sm-fill" id="url" placeholder="不可为空，4000字以内" maxlength="4000" data-valid="true" />
                 </div>
-                <div class="form-group col-6">
+                <div class="form-group form-group-dropdown col-sm-6">
                     <label class="control-label" for="category">菜单类别</label>
                     <div class="dropup">
                         <button id="category" class="btn btn-success dropdown-select dropdown-toggle" data-toggle="dropdown" data-default-val="1">外部菜单</button>
@@ -130,7 +140,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group col-6">
+                <div class="form-group form-group-dropdown col-sm-6">
                     <label class="control-label" for="target">目标</label>
                     <div class="dropup">
                         <button id="target" class="btn btn-info dropdown-select dropdown-toggle" data-toggle="dropdown" data-default-val="_self">本窗口</button>
@@ -142,7 +152,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group col-6">
+                <div class="form-group form-group-dropdown col-sm-6">
                     <label class="control-label" for="isRes">菜单类型</label>
                     <div class="dropup">
                         <button id="isRes" class="btn btn-success dropdown-select dropdown-toggle" data-toggle="dropdown" data-default-val="0">菜单</button>
@@ -152,7 +162,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group col-6">
+                <div class="form-group form-group-dropdown col-sm-6">
                     <label class="control-label" for="app">所属应用</label>
                     <div class="dropup">
                         <button id="app" class="btn btn-info dropdown-select dropdown-toggle" data-toggle="dropdown" data-default-val="0">未设置</button>

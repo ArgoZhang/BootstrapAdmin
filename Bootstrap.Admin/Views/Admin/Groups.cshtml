@@ -1,24 +1,24 @@
-﻿@model Bootstrap.Admin.Models.NavigatorBarModel
+﻿@model NavigatorBarModel
 @{
     ViewBag.Title = "部门管理";
-    Layout = "~/Views/Shared/_Default.cshtml";
+    Layout = "_Default";
 }
-@section Javascript {
-    <script src="~/js/groups.js"></script>
+@section javascript {
+    <script src="~/js/groups.js" asp-append-version="true"></script>
 }
 @section query {
     <form class="form-inline">
-        <div class="form-row">
-            <div class="form-group col-sm-6 col-md-5">
+        <div class="row">
+            <div class="form-group col-sm-5 col-md-auto">
                 <label class="control-label" for="txt_search_name">部门名称</label>
                 <input type="text" class="form-control" id="txt_search_name" />
             </div>
-            <div class="form-group col-sm-6 col-md-5">
+            <div class="form-group col-sm-5 col-md-auto">
                 <label class="control-label" for="txt_group_desc">部门描述</label>
                 <input type="text" class="form-control" id="txt_group_desc" />
             </div>
-            <div class="form-group col-sm-12 col-md-2">
-                <button type="button" id="btn_query" class="btn btn-primary btn-fill"><i class="fa fa-search" aria-hidden="true"></i><span>查询</span></button>
+            <div class="form-group col-sm-2 col-md-auto flex-md-fill justify-content-md-end">
+                <button type="button" id="btn_query" class="btn btn-primary btn-fill align-self-sm-end align-self-md-auto"><i class="fa fa-search" aria-hidden="true"></i><span>查询</span></button>
             </div>
         </div>
     </form>
@@ -46,13 +46,13 @@
     </div>
     <div class="modal-body">
         <form class="form-inline">
-            <div class="form-row">
+            <div class="row">
                 <div class="form-group col-sm-6">
                     <label class="control-label" for="groupName">部门名称</label>
                     <input type="text" class="form-control" id="groupName" placeholder="不可为空，50字以内" maxlength="50" data-valid="true" />
                 </div>
                 <div class="form-group col-sm-6">
-                    <input type="text" class="form-control d-none" id="groupID" data-default-val="0" />
+                    <input type="hidden" id="groupID" />
                     <label class="control-label" for="groupDesc">部门描述</label>
                     <input type="text" class="form-control" id="groupDesc" placeholder="描述信息(可为空)，50字以内" maxlength="50" />
                 </div>

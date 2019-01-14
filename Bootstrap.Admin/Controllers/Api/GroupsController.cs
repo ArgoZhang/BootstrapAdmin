@@ -2,7 +2,6 @@
 using Bootstrap.DataAccess;
 using Longbow.Web.Mvc;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,94 +11,98 @@ namespace Bootstrap.Admin.Controllers.Api
     /// 
     /// </summary>
     [Route("api/[controller]")]
-    public class GroupsController : Controller
-	{
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="value"></param>
-		/// <returns></returns>
-		[HttpGet]
-		public QueryData<Group> Get(QueryGroupOption value)
-		{
-			return value.RetrieveData();
-		}
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="id"></param>
-		/// <returns></returns>
-		[HttpGet("{id}")]
-		public Group Get(int id)
-		{
-			return GroupHelper.RetrieveGroups().FirstOrDefault(t => t.Id == id);
-		}
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="value"></param>
-		[HttpPost]
-		public bool Post([FromBody]Group value)
-		{
-			return GroupHelper.SaveGroup(value);
-		}
+    [ApiController]
+    public class GroupsController : ControllerBase
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public QueryData<object> Get([FromQuery]QueryGroupOption value)
+        {
+            return value.RetrieveData();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("{id}")]
+        public Group Get(string id)
+        {
+            return GroupHelper.Retrieves().FirstOrDefault(t => t.Id == id);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        [HttpPost]
+        public bool Post([FromBody]Group value)
+        {
+            return GroupHelper.Save(value);
+        }
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="value"></param>
         [HttpDelete]
-		public bool Delete([FromBody]IEnumerable<int> value)
-		{
-			return GroupHelper.DeleteGroup(value);
-		}
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="id"></param>
-		/// <param name="value"></param>
-		/// <returns></returns>
-		[HttpPost("{id}")]
-		public IEnumerable<Group> Post(int id, [FromBody]JObject value)
-		{
-			var ret = new List<Group>();
-			dynamic json = value;
-			switch ((string)json.type)
-			{
-				case "user":
-					ret = GroupHelper.RetrieveGroupsByUserId(id).ToList();
-					break;
-				case "role":
-					ret = GroupHelper.RetrieveGroupsByRoleId(id).ToList();
-					break;
-				default:
-					break;
-			}
-			return ret;
-		}
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="id"></param>
-		/// <param name="value"></param>
-		/// <returns></returns>
-		[HttpPut("{id}")]
-		public bool Put(int id, [FromBody]JObject value)
-		{
-			var ret = false;
-			dynamic json = value;
-			string groupIds = json.groupIds;
-			switch ((string)json.type)
-			{
-				case "user":
-					ret = GroupHelper.SaveGroupsByUserId(id, groupIds);
-					break;
-				case "role":
-					ret = GroupHelper.SaveGroupsByRoleId(id, groupIds);
-					break;
-				default:
-					break;
-			}
-			return ret;
-		}
-	}
+        public bool Delete([FromBody]IEnumerable<string> value)
+        {
+            return GroupHelper.Delete(value);
+        }
+
+        /// <summary>
+        /// 获取部门授权
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        [HttpPost("{id}")]
+        public IEnumerable<object> Post(string id, [FromQuery]string type)
+        {
+            IEnumerable<Group> ret = new List<Group>();
+            switch (type)
+            {
+                case "user":
+                    ret = GroupHelper.RetrievesByUserId(id);
+                    break;
+                case "role":
+                    ret = GroupHelper.RetrievesByRoleId(id);
+                    break;
+                default:
+                    break;
+            }
+            return ret.Select(p => new { p.Id, p.Checked, p.GroupName, p.Description });
+        }
+
+        /// <summary>
+        /// 保存部门授权
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="groupIds"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        [HttpPut("{id}")]
+        public bool Put(string id, [FromBody]IEnumerable<string> groupIds, [FromQuery]string type)
+        {
+            var ret = false;
+            switch (type)
+            {
+                case "user":
+                    ret = GroupHelper.SaveByUserId(id, groupIds);
+                    break;
+                case "role":
+                    ret = GroupHelper.SaveByRoleId(id, groupIds);
+                    break;
+                default:
+                    break;
+            }
+            return ret;
+        }
+    }
 }

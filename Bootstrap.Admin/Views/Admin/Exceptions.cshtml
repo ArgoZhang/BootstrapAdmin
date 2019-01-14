@@ -1,29 +1,40 @@
-﻿@model Bootstrap.Admin.Models.NavigatorBarModel
+﻿@model NavigatorBarModel
 @{
     ViewBag.Title = "程序异常";
-    Layout = "~/Views/Shared/_Admin.cshtml";
 }
 @section css {
-    <link href="~/css/bootstrap-table.css" rel="stylesheet" />
-    <link href="~/css/bootstrap-datetimepicker.css" rel="stylesheet" />
-    <link href="~/css/fa.css" rel="stylesheet" />
+    <environment include="Development">
+        <link href="~/lib/bootstrap-table/bootstrap-table.css" rel="stylesheet" />
+        <link href="~/lib/datetimepicker/css/bootstrap-datetimepicker.css" rel="stylesheet" />
+    </environment>
+    <environment exclude="Development">
+        <link href="~/lib/bootstrap-table/bootstrap-table.min.css" rel="stylesheet" />
+        <link href="~/lib/datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    </environment>
+    <link href="~/css/fa.css" rel="stylesheet" asp-append-version="true" />
 }
-@section Javascript {
-    <script src="~/js/bootstrap-table.js"></script>
-    <script src="~/js/bootstrap-table-zh-CN.js"></script>
-    <script src="~/js/longbow.dataentity.js"></script>
-    <script src="~/js/bootstrap-datetimepicker.js"></script>
-    <script src="~/js/bootstrap-datetimepicker.zh-CN.js"></script>
-    <script src="~/js/exceptions.js"></script>
+@section javascript {
+    <environment include="Development">
+        <script src="~/lib/bootstrap-table/bootstrap-table.js"></script>
+        <script src="~/lib/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+        <script src="~/lib/datetimepicker/js/bootstrap-datetimepicker.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/lib/bootstrap-table/bootstrap-table.min.js"></script>
+        <script src="~/lib/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+        <script src="~/lib/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+    </environment>
+    <script src="~/lib/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script src="~/js/exceptions.js" asp-append-version="true"></script>
 }
 <div class="card">
     <div class="card-header">查询条件</div>
     <div class="card-body">
         <form class="form-inline">
-            <div class="form-row">
-                <div class="form-group col-sm-6 col-lg-5">
+            <div class="row">
+                <div class="form-group col-sm-auto">
                     <label class="control-label" for="txt_operate_start">起始时间</label>
-                    <div class="input-group date form_date">
+                    <div class="input-group date">
                         <input id="txt_operate_start" class="form-control" size="16" type="text" value="" readonly>
                         <div class="input-group-append input-group-addon">
                             <div class="input-group-text"><span class="fa fa-times"></span></div>
@@ -33,9 +44,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group col-sm-6 col-lg-5">
+                <div class="form-group col-sm-auto">
                     <label class="control-label" for="txt_operate_end">终止时间</label>
-                    <div class="input-group date form_date">
+                    <div class="input-group date">
                         <input id="txt_operate_end" class="form-control" size="16" type="text" value="" readonly>
                         <div class="input-group-append input-group-addon">
                             <div class="input-group-text"><span class="fa fa-times"></span></div>
@@ -45,7 +56,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group col-lg-2">
+                <div class="form-group col-sm-auto flex-sm-fill justify-content-sm-end">
                     <label class="sr-only"></label>
                     <button type="button" id="btn_query" class="btn btn-primary btn-fill"><i class="fa fa-search" aria-hidden="true"></i><span>查询</span></button>
                 </div>

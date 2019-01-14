@@ -1,3 +1,0 @@
-﻿$(function () {
-    $('#breadNav').hide();
-});

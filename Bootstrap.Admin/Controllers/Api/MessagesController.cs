@@ -11,7 +11,8 @@ namespace Bootstrap.Admin.Controllers.Api
     /// 
     /// </summary>
     [Route("api/[controller]")]
-    public class MessagesController : Controller
+    [ApiController]
+    public class MessagesController : ControllerBase
     {
         /// <summary>
         /// 根据Id返回不同的消息列表

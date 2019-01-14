@@ -10,7 +10,8 @@ namespace Bootstrap.Admin.Controllers.Api
     /// 
     /// </summary>
     [Route("api/[controller]")]
-    public class SettingsController : Controller
+    [ApiController]
+    public class SettingsController : ControllerBase
     {
         /// <summary>
         /// 
@@ -26,7 +27,6 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="value"></param>
         [HttpGet]
         public IEnumerable<ICacheCorsItem> Get()
         {

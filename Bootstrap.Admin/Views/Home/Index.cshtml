@@ -1,17 +1,18 @@
-﻿@model Bootstrap.Admin.Models.HeaderBarModel
-@{
+﻿@{
     ViewBag.Title = "首页";
-    Layout = "~/Views/Shared/_Normal.cshtml";
+    Layout = "_Bootstrap";
 }
 @section css {
-    <style>
-        .site-footer {
+    <style type="text/css">
+        .content-body {
             position: fixed;
+            left: 0;
+            bottom: 40px;
+            right: 0;
+            top: 96px;
+            overflow: hidden;
         }
     </style>
 }
-@section javascript {
-    <script src="~/js/content.js"></script>
-}
-<div id="content" class="content-body welcome-bg">
+<div class="content-body welcome-bg">
 </div>

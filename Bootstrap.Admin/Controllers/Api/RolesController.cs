@@ -2,7 +2,6 @@
 using Bootstrap.DataAccess;
 using Longbow.Web.Mvc;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,7 +12,8 @@ namespace Bootstrap.Admin.Controllers.Api
     /// 
     /// </summary>
     [Route("api/[controller]")]
-    public class RolesController : Controller
+    [ApiController]
+    public class RolesController : ControllerBase
     {
         /// <summary>
         /// 
@@ -21,59 +21,57 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="value"></param>
         /// <returns></returns>
         [HttpGet]
-        public QueryData<Role> Get(QueryRoleOption value)
+        public QueryData<object> Get([FromQuery]QueryRoleOption value)
         {
             return value.RetrieveData();
         }
-
         /// <summary>
-        /// 
+        /// 通过指定用户ID/部门ID/菜单ID获得所有角色集合，已经授权的有checked标记
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="value"></param>
+        /// <param name="id">用户ID/部门ID/菜单ID</param>
+        /// <param name="type">类型</param>
         /// <returns></returns>
         [HttpPost("{id}")]
-        public IEnumerable<Role> Post(int id, [FromBody]JObject value)
+        public IEnumerable<object> Post(string id, [FromQuery]string type)
         {
-            var ret = new List<Role>();
-            dynamic json = value;
-            switch ((string)json.type)
+            IEnumerable<Role> ret = new List<Role>();
+            switch (type)
             {
                 case "user":
-                    ret = RoleHelper.RetrieveRolesByUserId(id).ToList();
+                    ret = RoleHelper.RetrievesByUserId(id);
                     break;
                 case "group":
-                    ret = RoleHelper.RetrieveRolesByGroupId(id).ToList();
+                    ret = RoleHelper.RetrievesByGroupId(id);
                     break;
                 case "menu":
-                    ret = RoleHelper.RetrieveRolesByMenuId(id).ToList();
+                    ret = RoleHelper.RetrievesByMenuId(id);
                     break;
                 default:
                     break;
             }
-            return ret;
+            return ret.Select(m => new { m.Id, m.Checked, m.RoleName, m.Description });
         }
-
-        /// <summary>根据GroupID获取
+        /// <summary>
+        /// 保存角色
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="id">用户ID/部门ID/菜单ID</param>
+        /// <param name="roleIds">选中的角色ID集合</param>
+        /// <param name="type">type=menu时，菜单维护页面对角色授权弹框保存按钮调用</param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public bool Put(int id, [FromBody]JObject value)
+        public bool Put(string id, [FromBody]IEnumerable<string> roleIds, [FromQuery]string type)
         {
             var ret = false;
-            dynamic json = value;
-            string roleIds = json.roleIds;
-            switch ((string)json.type)
+            switch (type)
             {
                 case "user":
-                    ret = RoleHelper.SaveRolesByUserId(id, roleIds);
+                    ret = RoleHelper.SaveByUserId(id, roleIds);
                     break;
                 case "group":
-                    ret = RoleHelper.SaveRolesByGroupId(id, roleIds);
+                    ret = RoleHelper.SaveByGroupId(id, roleIds);
                     break;
                 case "menu":
-                    ret = RoleHelper.SavaRolesByMenuId(id, roleIds);
+                    ret = RoleHelper.SavaByMenuId(id, roleIds);
                     break;
                 default:
                     break;
@@ -87,16 +85,16 @@ namespace Bootstrap.Admin.Controllers.Api
         [HttpPost]
         public bool Post([FromBody]Role value)
         {
-            return RoleHelper.SaveRole(value);
+            return RoleHelper.Save(value);
         }
         /// <summary>
         /// 
         /// </summary>
         /// <param name="value"></param>
         [HttpDelete]
-        public bool Delete([FromBody]IEnumerable<int> value)
+        public bool Delete([FromBody]IEnumerable<string> value)
         {
-            return RoleHelper.DeleteRole(value);
+            return RoleHelper.Delete(value);
         }
     }
 }

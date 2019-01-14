@@ -1,12 +1,11 @@
-﻿@model Bootstrap.Admin.Models.NavigatorBarModel
+﻿@model NavigatorBarModel
 @{
     ViewBag.Title = "图标集";
-    Layout = "~/Views/Shared/_Admin.cshtml";
 }
 @section css {
-    <link href="~/css/fa.css" rel="stylesheet" />
+    <link href="~/css/fa.css" rel="stylesheet" asp-append-version="true" />
 }
 @section javascript {
-    <script src="~/js/icon.js"></script>
+    <script src="~/js/icon.js" asp-append-version="true"></script>
 }
-@await Html.PartialAsync("IconView")
+<div class="text-center"><i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i></div>

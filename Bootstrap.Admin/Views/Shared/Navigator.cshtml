@@ -1,13 +1,11 @@
-﻿@model Bootstrap.Admin.Models.NavigatorBarModel
+﻿@model NavigatorBarModel
 <aside>
-    <div id="sidebar" class="nav-collapse sidebar">
-        <!-- sidebar menu start-->
-        <ul class="sidebar-menu" id="nav-accordion">
-            @foreach (var menu in Model.Navigations)
-            {
-                @await Html.PartialAsync("SubMenu", menu)
-            }
-        </ul>
-        <!-- sidebar menu end-->
-    </div>
+    <!-- sidebar menu start-->
+    <ul class="sidebar nav nav-pills flex-column flex-nowrap">
+        @foreach (var menu in Model.Navigations)
+        {
+            @await Html.PartialAsync("SubNavItem", menu)
+        }
+    </ul>
+    <!-- sidebar menu end-->
 </aside>

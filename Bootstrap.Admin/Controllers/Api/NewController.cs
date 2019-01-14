@@ -1,7 +1,6 @@
 ﻿using Bootstrap.DataAccess;
-using Bootstrap.Security;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Bootstrap.Admin.Controllers
@@ -10,26 +9,42 @@ namespace Bootstrap.Admin.Controllers
     /// 
     /// </summary>
     [Route("api/[controller]")]
-    public class NewController : Controller
+    [ApiController]
+    public class NewController : ControllerBase
     {
         /// <summary>
-        /// 
+        /// 通知管理页面获得所有新用户方法调用
         /// </summary>
-        /// <param name="value"></param>
         /// <returns></returns>
         [HttpGet]
-        [AllowAnonymous]
-        public bool Get(string userName)
+        public IEnumerable<object> Get()
         {
-            return BootstrapUser.RetrieveUserByUserName(userName) == null && !UserHelper.RetrieveNewUsers().Any(u => u.UserName == userName);
+            return UserHelper.RetrieveNewUsers().Select(user => new
+            {
+                user.Id,
+                user.UserName,
+                user.DisplayName,
+                user.Description,
+                user.RegisterTime
+            });
         }
-        [HttpPost]
-        [AllowAnonymous]
-        public bool Post([FromBody] User user)
+        /// <summary>
+        /// 新用户授权/拒绝接口
+        /// </summary>
+        /// <returns></returns>
+        [HttpPut("{id}")]
+        public bool Put([FromBody]User value)
         {
             var ret = false;
-            if (string.IsNullOrEmpty(user.UserName) || string.IsNullOrEmpty(user.Password) || string.IsNullOrEmpty(user.DisplayName) || string.IsNullOrEmpty(user.Description)) return ret;
-            return UserHelper.SaveUser(user);
+            if (value.UserStatus == UserStates.ApproveUser)
+            {
+                ret = UserHelper.Approve(value.Id, User.Identity.Name);
+            }
+            else if (value.UserStatus == UserStates.RejectUser)
+            {
+                ret = UserHelper.Reject(value.Id, User.Identity.Name);
+            }
+            return ret;
         }
     }
 }

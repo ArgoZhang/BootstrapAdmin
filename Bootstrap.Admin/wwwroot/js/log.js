@@ -1,59 +1,55 @@
 ﻿(function ($) {
-    logPlugin = function (options) {
+    var logPlugin = function (options) {
         this.options = $.extend({}, logPlugin.settings, options);
-    }
+
+        var that = this;
+        for (var name in this.options.click) {
+            $(name).on('click', { handler: this.options.click[name] }, function (e) {
+                e.data.handler.call(that);
+            });
+        }
+    };
 
     logPlugin.settings = {
-        url: '../api/Logs',
+        url: 'api/Logs',
         click: {
-            query: 'btn_query',
-            del: 'btn_delete',
-            save: 'btnSubmit'
+            '#btn_delete': function () {
+                this.log({ crud: '删除' });
+            },
+            '#btnSubmit': function () {
+                this.log({ crud: '保存' });
+            },
+            '#btnSubmitRole': function () {
+                this.log({ crud: '分配角色' });
+            },
+            '#btnSubmitGroup': function () {
+                this.log({ crud: '分配部门' });
+            },
+            '#btnSubmitUser': function () {
+                this.log({ crud: '分配用户' });
+            },
+            '#btnSubmitMenu': function () {
+                this.log({ crud: '分配菜单' });
+            }
         }
-    }
+    };
 
     logPlugin.prototype = {
         constructor: logPlugin,
-        init: function () {
-            var that = this;
-            // handler click event
-            for (name in this.options.click) {
-                var cId = this.options.click[name];
-                var source = $("#" + cId);
-                source.data('click', name);
-                source.click(function () {
-                    var method = $(this).data('click');
-                    logPlugin.prototype[method].call(that, this);
-                });
-            }
-        },
-        query: function (element) {
-            //log(this.options.url, { crud: '查询' });
-        },
-        save: function () {
-            log(this.options.url, { crud: '保存' });
-        },
-        del: function () {
-            log(this.options.url, { crud: '删除' });
+        log: function (data) {
+            $.extend(data, { requestUrl: window.location.pathname });
+            $.post({
+                url: $.formatUrl(this.options.url),
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                dataType: 'json'
+            });
         }
-    }
+    };
 
-    logPlugin.init = function (options) {
-        var log = new logPlugin(options);
-        log.init();
-    }
-
-    var log = function (url, data) {
-        $.extend(data, { requestUrl: window.location.pathname });
-        $.post({
-            url: url,
-            data: JSON.stringify(data),
-            contentType: 'application/json',
-            dataType: 'json'
-        });
-    }
+    $.extend({ logPlugin: function (options) { return new logPlugin(options); } });
 })(jQuery);
 
 $(function () {
-    logPlugin.init();
+    $.logPlugin();
 });

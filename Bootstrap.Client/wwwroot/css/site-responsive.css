@@ -1,0 +1,10 @@
+@media (min-width: 667px) {
+    .header .nav {
+        display: flex;
+        flex: 1 1 auto;
+    }
+
+    .sidebar-toggle-box {
+        flex: 0 1 auto;
+    }
+}

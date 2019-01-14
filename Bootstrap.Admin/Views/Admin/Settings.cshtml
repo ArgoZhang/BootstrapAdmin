@@ -1,20 +1,19 @@
-﻿@model Bootstrap.Admin.Models.ThemeModel
+﻿@model ThemeModel
 @{
     ViewBag.Title = "网站设置";
-    Layout = "~/Views/Shared/_Admin.cshtml";
 }
-@section Javascript {
+@section javascript {
     <environment include="Development">
-        <script src="~/js/jquery.validate.js"></script>
-        <script src="~/js/messages_zh.js"></script>
+        <script src="~/lib/validate/jquery.validate.js"></script>
+        <script src="~/lib/validate/localization/messages_zh.js"></script>
     </environment>
     <environment exclude="Development">
-        <script src="~/js/jquery.validate.min.js"></script>
-        <script src="~/js/messages_zh.min.js"></script>
+        <script src="~/lib/validate/jquery.validate.min.js"></script>
+        <script src="~/lib/validate/localization/messages_zh.min.js"></script>
     </environment>
-    <script src="~/js/longbow.dataentity.js"></script>
-    <script src="~/js/longbow.validate.js"></script>
-    <script src="~/js/settings.js"></script>
+    <script src="~/lib/longbow/longbow.dataentity.js"></script>
+    <script src="~/lib/longbow/longbow.validate.js"></script>
+    <script src="~/js/settings.js" asp-append-version="true"></script>
 }
 <div class="card">
     <div class="card-header">系统名称设置</div>
@@ -53,14 +52,7 @@
                         <a href="#" data-val="">默认样式</a>
                         @foreach (var css in Model.Themes)
                         {
-                            if (css.Code == Model.Css)
-                            {
-                                <a href="#" data-val="@css.Code">@css.Name</a>
-                            }
-                            else
-                            {
-                                <a href="#" data-val="@css.Code">@css.Name</a>
-                            }
+                            <a href="#" data-val="@css.Code">@css.Name</a>
                         }
                     </div>
                 </div>

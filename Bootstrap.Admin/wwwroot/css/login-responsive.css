@@ -1,12 +1,18 @@
-﻿@media (min-width: 375px) {
+﻿@media (max-width: 767px) {
     .form-signin {
-        width: 320px;
+        margin: 0 auto;
+        background: #fff;
+        border-radius: 5px;
+        max-width: 320px;
+        border: solid 1px #ddd;
     }
 }
 
 @media (min-width: 768px) {
     body {
-        background: url('../images/bg2.jpg') fixed repeat;
+        background-color: #5bc0de;
+        background: url('../images/bg2.jpg') fixed no-repeat;
+        background-size: 100% 100%;
     }
 
     .container {
@@ -17,22 +23,15 @@
         margin: 0 auto;
     }
 
-    .form-signin {
-        border: none;
-        background: none;
-        width: auto;
+    .form-signin-heading {
+        padding: 28px 0;
+        background-color: transparent;
     }
 
-        .form-signin .form-signin-heading {
-            background: none;
-            margin-top: 10px;
-        }
-
-        .form-signin .input-group {
-            border: solid 1px #286090;
-        }
-
     .login-wrap {
-        margin: 30px 0 0 370px;
+        padding: 0;
+        margin: 36px 0 0 370px;
+        width: 280px;
+        height: 200px;
     }
 }

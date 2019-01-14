@@ -1,44 +1,45 @@
-﻿@model Bootstrap.Admin.Models.ProfilesModel
+﻿@model ProfilesModel
 @{
     ViewBag.Title = "个人中心";
-    Layout = "~/Views/Shared/_Admin.cshtml";
-}
-@section Javascript {
-    <environment include="Development">
-        <script src="~/js/fileinput.js"></script>
-        <script src="~/js/jquery.validate.js"></script>
-        <script src="~/js/messages_zh.js"></script>
-    </environment>
-    <environment exclude="Development">
-        <script src="~/js/fileinput.min.js"></script>
-        <script src="~/js/jquery.validate.min.js"></script>
-        <script src="~/js/messages_zh.min.js"></script>
-    </environment>
-    <script src="~/js/fileinput.zh.js"></script>
-    <script src="~/js/longbow.dataentity.js"></script>
-    <script src="~/js/longbow.validate.js"></script>
-    <script src="~/js/profiles.js"></script>
-    <script src="~/js/theme.js"></script>
 }
 @section css {
     <environment include="Development">
-        <link href="~/css/fileinput.css" rel="stylesheet" />
+        <link href="~/lib/bootstrap-fileinput/css/fileinput.css" rel="stylesheet" />
     </environment>
     <environment exclude="Development">
-        <link href="~/css/fileinput.min.css" rel="stylesheet" />
+        <link href="~/lib/bootstrap-fileinput/css/fileinput.min.css" rel="stylesheet" />
     </environment>
-    <link href="~/css/tasks.css" rel="stylesheet" />
+    <link href="~/css/tasks.css" rel="stylesheet" asp-append-version="true" />
+}
+@section javascript {
+    <environment include="Development">
+        <script src="~/lib/bootstrap-fileinput/js/fileinput.js"></script>
+        <script src="~/lib/bootstrap-fileinput/js/locales/zh.js"></script>
+        <script src="~/lib/bootstrap-fileinput/themes/fa/theme.js"></script>
+        <script src="~/lib/validate/jquery.validate.js"></script>
+        <script src="~/lib/validate/localization/messages_zh.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/lib/bootstrap-fileinput/js/fileinput.min.js"></script>
+        <script src="~/lib/bootstrap-fileinput/js/locales/zh.min.js"></script>
+        <script src="~/lib/bootstrap-fileinput/themes/fa/theme.min.js"></script>
+        <script src="~/lib/validate/jquery.validate.min.js"></script>
+        <script src="~/lib/validate/localization/messages_zh.min.js"></script>
+    </environment>
+    <script src="~/lib/longbow/longbow.dataentity.js" asp-append-version="true"></script>
+    <script src="~/lib/longbow/longbow.validate.js" asp-append-version="true"></script>
+    <script src="~/js/profiles.js" asp-append-version="true"></script>
 }
 <div class="card">
     <div class="card-header">基本资料</div>
     <div class="card-body" data-toggle="LgbValidate" data-valid-button="#btnSaveDisplayName">
         <form class="form-inline">
-            <div class="form-row">
-                <div class="form-group col-sm-6">
+            <div class="row">
+                <div class="form-group col-sm-6 col-md-auto">
                     <label class="control-label" for="userName">登陆名称</label>
                     <input type="text" class="form-control ignore" id="userName" name="userName" value="@Model.UserName" readonly />
                 </div>
-                <div class="form-group col-sm-6">
+                <div class="form-group col-sm-6 col-md-auto">
                     <label class="control-label" for="DisplayName">显示名称</label>
                     <input type="text" class="form-control" id="displayName" name="displayName" value="@Model.DisplayName" placeholder="不可为空，50字以内" maxlength="50" data-valid="true" />
                 </div>
@@ -53,18 +54,18 @@
     <div class="card-header">修改密码</div>
     <div class="card-body" data-toggle="LgbValidate" data-valid-button="#btnSavePassword">
         <form class="form-inline">
-            <div class="form-row">
-                <div class="form-group col">
+            <div class="row">
+                <div class="form-group col-sm-6 col-md-auto">
                     <label class="control-label" for="currentPassword">原密码: </label>
                     <input type="password" class="form-control" id="currentPassword" placeholder="原密码，50字以内" maxlength="50" data-valid="true" />
                 </div>
             </div>
-            <div class="form-row">
-                <div class="form-group col-sm-6">
+            <div class="row">
+                <div class="form-group col-sm-6 col-md-auto">
                     <label class="control-label" for="newPassword">新密码: </label>
                     <input type="password" class="form-control" id="newPassword" placeholder="新密码，50字以内" maxlength="50" data-valid="true" />
                 </div>
-                <div class="form-group col-sm-6">
+                <div class="form-group col-sm-6 col-md-auto">
                     <label class="control-label" for="confirmPassword">确认密码: </label>
                     <input type="password" class="form-control" id="confirmPassword" placeholder="与新密码一致，50字以内" maxlength="50" equalTo="#newPassword" data-valid="true" />
                 </div>
@@ -85,14 +86,7 @@
                     <a href="#" data-val="">默认样式</a>
                     @foreach (var css in Model.Themes)
                     {
-                        if (css.Code == Model.Css)
-                        {
-                            <a href="#" data-val="@css.Code">@css.Name</a>
-                        }
-                        else
-                        {
-                            <a href="#" data-val="@css.Code">@css.Name</a>
-                        }
+                        <a href="#" data-val="@css.Code">@css.Name</a>
                     }
                 </div>
             </div>
@@ -107,7 +101,7 @@
     <div class="card-body">
         <form enctype="multipart/form-data" class="d-none" data-admin="@User.IsInRole("Administrators")">
             <div class="form-group">
-                <input id="fileIcon" class="file" type="file" data-init="@Model.Size">
+                <input id="fileIcon" type="file" data-init="@Model.Size" data-file="@Model.FileName">
             </div>
         </form>
         <img class="card-img d-none" src="@Url.Content(Model.Icon)" />

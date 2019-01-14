@@ -10,7 +10,8 @@ namespace Bootstrap.Admin.Controllers.Api
     /// 
     /// </summary>
     [Route("api/[controller]")]
-    public class LogsController : Controller
+    [ApiController]
+    public class LogsController : ControllerBase
     {
         /// <summary>
         /// 
@@ -18,7 +19,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="value"></param>
         /// <returns></returns>
         [HttpGet]
-        public QueryData<Log> Get(QueryLogOption value)
+        public QueryData<Log> Get([FromQuery]QueryLogOption value)
         {
             return value.RetrieveData();
         }
@@ -28,18 +29,22 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public Log Get(int id)
+        public Log Get(string id)
         {
-            return LogHelper.RetrieveLogs().FirstOrDefault(t => t.Id == id);
+            return LogHelper.Retrieves().FirstOrDefault(t => t.Id == id);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         [HttpPost]
         public bool Post([FromBody]Log value)
         {
             value.ClientAgent = Request.Headers["User-Agent"];
             value.ClientIp = HttpContext.Connection.RemoteIpAddress.ToString();
             value.UserName = User.Identity.Name;
-            return LogHelper.SaveLog(value);
+            return LogHelper.Save(value);
         }
     }
 }

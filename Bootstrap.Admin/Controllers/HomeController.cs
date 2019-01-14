@@ -1,10 +1,8 @@
 ﻿using Bootstrap.Admin.Models;
 using Bootstrap.DataAccess;
-using Longbow.Web.WebSockets;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 
 namespace Bootstrap.Admin.Controllers
 {
@@ -17,11 +15,12 @@ namespace Bootstrap.Admin.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        public ActionResult Index()
+        public IActionResult Index()
         {
-            var v = new HeaderBarModel(User.Identity) { HomeUrl = DictHelper.RetrieveHomeUrl() };
-            return v.HomeUrl.StartsWith("~/") ? (ActionResult)View(v) : Redirect(v.HomeUrl);
+            var url = DictHelper.RetrieveHomeUrl();
+            return url.Equals("~/Home/Index", System.StringComparison.OrdinalIgnoreCase) ? (IActionResult)View(new HeaderBarModel(User.Identity)) : Redirect(url);
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -30,7 +29,22 @@ namespace Bootstrap.Admin.Controllers
         [AllowAnonymous]
         public IActionResult Error(int id)
         {
-            return id == 404 ? View("NotFound") : View();
+            var returnUrl = Request.Query[CookieAuthenticationDefaults.ReturnUrlParameter].ToString();
+            var model = new ErrorModel() { ReturnUrl = string.IsNullOrEmpty(returnUrl) ? Url.Content("~/Home/Index") : returnUrl };
+            model.Title = "服务器内部错误";
+            model.Content = "服务器内部错误";
+            model.Image = "error_icon.png";
+            if (id == 0)
+            {
+                model.Content = "未处理服务器内部错误";
+            }
+            else if (id == 404)
+            {
+                model.Title = "资源未找到";
+                model.Content = "请求资源未找到";
+                model.Image = "404_icon.png";
+            }
+            return View(model);
         }
     }
 }

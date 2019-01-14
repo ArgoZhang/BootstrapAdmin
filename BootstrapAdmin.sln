@@ -1,31 +1,60 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2047
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28407.52
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.DataAccess", "Bootstrap.DataAccess\Bootstrap.DataAccess.csproj", "{AF16CA71-B8C6-4F51-B38C-0C0300FDEBD7}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sql", "sql", "{87319AF5-7C40-4362-B67C-35F9DD737DB4}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQLServer", "SQLServer", "{87319AF5-7C40-4362-B67C-35F9DD737DB4}"
 	ProjectSection(SolutionItems) = preProject
 		DatabaseScripts\InitData.sql = DatabaseScripts\InitData.sql
 		DatabaseScripts\Install.sql = DatabaseScripts\Install.sql
-		DatabaseScripts\Procedures.sql = DatabaseScripts\Procedures.sql
-		DatabaseScripts\Readme.txt = DatabaseScripts\Readme.txt
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.Admin", "Bootstrap.Admin\Bootstrap.Admin.csproj", "{7B2B7043-3CB2-4C5A-BDF2-8C47F1A5471A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{792A0B12-3F41-4BC4-A768-7D8D91C213B2}"
 	ProjectSection(SolutionItems) = preProject
-		Init.bat = Init.bat
-		环境搭建指南.txt = 环境搭建指南.txt
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{586410F2-C1F0-47CD-AB28-2CF506DED2C8}"
 	ProjectSection(SolutionItems) = preProject
+		Scripts\Longbow.lic = Scripts\Longbow.lic
 		Scripts\Publish-Console.bat = Scripts\Publish-Console.bat
 		Scripts\Publish.vbs = Scripts\Publish.vbs
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.Client", "Bootstrap.Client\Bootstrap.Client.csproj", "{C82A6E45-AB90-43D1-8429-5CBE953D8151}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{C7F51A14-2D89-4D1F-AD78-C42B79AB0BF0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.Client.DataAccess", "Bootstrap.Client.DataAccess\Bootstrap.Client.DataAccess.csproj", "{B6B29DE5-D7B0-4A4D-9E7A-AADC68E9C43F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.DataAccess", "Bootstrap.DataAccess\Bootstrap.DataAccess.csproj", "{8D62BE79-BE13-43C8-969B-C9B00B3C84B7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQLite", "SQLite", "{523515EC-2AD7-4282-9AF4-9D20371183B0}"
+	ProjectSection(SolutionItems) = preProject
+		DatabaseScripts\SQLite\InitData.sql = DatabaseScripts\SQLite\InitData.sql
+		DatabaseScripts\SQLite\Install.sql = DatabaseScripts\SQLite\Install.sql
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.DataAccess.MongoDB", "Bootstrap.DataAccess.MongoDB\Bootstrap.DataAccess.MongoDB.csproj", "{8336F096-4B4A-4710-A1FA-0F5E44CD8D26}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MongoDB", "MongoDB", "{A06A0AD8-A246-4329-B024-7174AE4A3EDE}"
+	ProjectSection(SolutionItems) = preProject
+		DatabaseScripts\MongoDB\BootstrapAdmin.Dicts.json = DatabaseScripts\MongoDB\BootstrapAdmin.Dicts.json
+		DatabaseScripts\MongoDB\BootstrapAdmin.Groups.json = DatabaseScripts\MongoDB\BootstrapAdmin.Groups.json
+		DatabaseScripts\MongoDB\BootstrapAdmin.Navigations.json = DatabaseScripts\MongoDB\BootstrapAdmin.Navigations.json
+		DatabaseScripts\MongoDB\BootstrapAdmin.Roles.json = DatabaseScripts\MongoDB\BootstrapAdmin.Roles.json
+		DatabaseScripts\MongoDB\BootstrapAdmin.Users.json = DatabaseScripts\MongoDB\BootstrapAdmin.Users.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MySQL", "MySQL", "{084E2E94-6B7D-4D3E-9BF1-6972427FBF80}"
+	ProjectSection(SolutionItems) = preProject
+		DatabaseScripts\MySQL\initData.sql = DatabaseScripts\MySQL\initData.sql
+		DatabaseScripts\MySQL\install.sql = DatabaseScripts\MySQL\install.sql
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniTest", "UnitTest\UniTest.csproj", "{CFE75C48-F9D5-403A-8419-D07939BBD769}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,17 +62,37 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AF16CA71-B8C6-4F51-B38C-0C0300FDEBD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AF16CA71-B8C6-4F51-B38C-0C0300FDEBD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AF16CA71-B8C6-4F51-B38C-0C0300FDEBD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AF16CA71-B8C6-4F51-B38C-0C0300FDEBD7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7B2B7043-3CB2-4C5A-BDF2-8C47F1A5471A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7B2B7043-3CB2-4C5A-BDF2-8C47F1A5471A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B2B7043-3CB2-4C5A-BDF2-8C47F1A5471A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B2B7043-3CB2-4C5A-BDF2-8C47F1A5471A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C82A6E45-AB90-43D1-8429-5CBE953D8151}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C82A6E45-AB90-43D1-8429-5CBE953D8151}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C82A6E45-AB90-43D1-8429-5CBE953D8151}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C82A6E45-AB90-43D1-8429-5CBE953D8151}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6B29DE5-D7B0-4A4D-9E7A-AADC68E9C43F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6B29DE5-D7B0-4A4D-9E7A-AADC68E9C43F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6B29DE5-D7B0-4A4D-9E7A-AADC68E9C43F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6B29DE5-D7B0-4A4D-9E7A-AADC68E9C43F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D62BE79-BE13-43C8-969B-C9B00B3C84B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D62BE79-BE13-43C8-969B-C9B00B3C84B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D62BE79-BE13-43C8-969B-C9B00B3C84B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D62BE79-BE13-43C8-969B-C9B00B3C84B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8336F096-4B4A-4710-A1FA-0F5E44CD8D26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8336F096-4B4A-4710-A1FA-0F5E44CD8D26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8336F096-4B4A-4710-A1FA-0F5E44CD8D26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8336F096-4B4A-4710-A1FA-0F5E44CD8D26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFE75C48-F9D5-403A-8419-D07939BBD769}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFE75C48-F9D5-403A-8419-D07939BBD769}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFE75C48-F9D5-403A-8419-D07939BBD769}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFE75C48-F9D5-403A-8419-D07939BBD769}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C82A6E45-AB90-43D1-8429-5CBE953D8151} = {C7F51A14-2D89-4D1F-AD78-C42B79AB0BF0}
+		{B6B29DE5-D7B0-4A4D-9E7A-AADC68E9C43F} = {C7F51A14-2D89-4D1F-AD78-C42B79AB0BF0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {221EAE38-5F75-4391-9A48-E462A9F3B8FC}

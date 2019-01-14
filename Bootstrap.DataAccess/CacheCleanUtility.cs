@@ -1,14 +1,15 @@
-﻿using Bootstrap.Security;
-using Longbow.Cache;
-using System;
+﻿using Longbow.Cache;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Bootstrap.DataAccess
 {
-    internal static class CacheCleanUtility
+    /// <summary>
+    /// 
+    /// </summary>
+    public static class CacheCleanUtility
     {
-        const string RetrieveAllRolesDataKey = "BootstrapAdminRoleMiddleware-RetrieveRoles";
+        private const string RetrieveAllRolesDataKey = "BootstrapAdminRoleMiddleware-RetrieveRoles";
         /// <summary>
         /// 
         /// </summary>
@@ -17,81 +18,69 @@ namespace Bootstrap.DataAccess
         /// <param name="groupIds"></param>
         /// <param name="menuIds"></param>
         /// <param name="dictIds"></param>
-        /// <param name="logIds"></param>
-        /// <param name="notifyIds"></param>
-        /// <param name="exceptionIds"></param>
-        internal static void ClearCache(string roleIds = null, string userIds = null, string groupIds = null, string menuIds = null, string dictIds = null, string logIds = null, string notifyIds = null, string exceptionIds = null, string cacheKey = null)
+        /// <param name="cacheKey"></param>
+        public static void ClearCache(IEnumerable<string> roleIds = null, IEnumerable<string> userIds = null, IEnumerable<string> groupIds = null, IEnumerable<string> menuIds = null, IEnumerable<string> dictIds = null, string cacheKey = null)
         {
             var cacheKeys = new List<string>();
             var corsKeys = new List<string>();
             if (roleIds != null)
             {
-                roleIds.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList().ForEach(id =>
+                roleIds.ToList().ForEach(id =>
                 {
                     cacheKeys.Add(string.Format("{0}-{1}", UserHelper.RetrieveUsersByRoleIdDataKey, id));
                     cacheKeys.Add(string.Format("{0}-{1}", GroupHelper.RetrieveGroupsByRoleIdDataKey, id));
                     cacheKeys.Add(string.Format("{0}-{1}", MenuHelper.RetrieveMenusByRoleIdDataKey, id));
                 });
                 cacheKeys.Add(RoleHelper.RetrieveRolesDataKey + "*");
-                cacheKeys.Add(BootstrapMenu.RetrieveMenusDataKey + "*");
+                cacheKeys.Add(MenuHelper.RetrieveMenusAll + "*");
                 cacheKeys.Add(RetrieveAllRolesDataKey + "*");
-                corsKeys.Add(BootstrapMenu.RetrieveMenusDataKey + "*");
+                corsKeys.Add(MenuHelper.RetrieveMenusAll + "*");
             }
             if (userIds != null)
             {
-                userIds.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList().ForEach(id =>
+                userIds.ToList().ForEach(id =>
                 {
                     cacheKeys.Add(string.Format("{0}-{1}", RoleHelper.RetrieveRolesByUserIdDataKey, id));
                     cacheKeys.Add(string.Format("{0}-{1}", GroupHelper.RetrieveGroupsByUserIdDataKey, id));
-                    cacheKeys.Add(BootstrapMenu.RetrieveMenusDataKey + "*");
-                    corsKeys.Add(BootstrapMenu.RetrieveMenusDataKey + "*");
+                    cacheKeys.Add(MenuHelper.RetrieveMenusAll + "*");
+                    corsKeys.Add(MenuHelper.RetrieveMenusAll + "*");
                 });
                 cacheKeys.Add(UserHelper.RetrieveNewUsersDataKey + "*");
-                cacheKeys.Add(BootstrapUser.RetrieveUsersDataKey + "*");
-                corsKeys.Add(BootstrapUser.RetrieveUsersDataKey + "*");
+                cacheKeys.Add(UserHelper.RetrieveUsersDataKey + "*");
+                corsKeys.Add(UserHelper.RetrieveUsersDataKey + "*");
             }
             if (groupIds != null)
             {
-                groupIds.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList().ForEach(id =>
+                groupIds.ToList().ForEach(id =>
                 {
                     cacheKeys.Add(string.Format("{0}-{1}", RoleHelper.RetrieveRolesByGroupIdDataKey, id));
                     cacheKeys.Add(string.Format("{0}-{1}", UserHelper.RetrieveUsersByGroupIdDataKey, id));
                 });
                 cacheKeys.Add(GroupHelper.RetrieveGroupsDataKey + "*");
-                cacheKeys.Add(BootstrapMenu.RetrieveMenusDataKey + "*");
-                corsKeys.Add(BootstrapMenu.RetrieveMenusDataKey + "*");
+                cacheKeys.Add(MenuHelper.RetrieveMenusAll + "*");
+                corsKeys.Add(MenuHelper.RetrieveMenusAll + "*");
                 cacheKeys.Add(RetrieveAllRolesDataKey + "*");
             }
             if (menuIds != null)
             {
-                menuIds.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList().ForEach(id =>
+                menuIds.ToList().ForEach(id =>
                 {
                     cacheKeys.Add(string.Format("{0}-{1}", RoleHelper.RetrieveRolesByMenuIdDataKey, id));
                 });
                 cacheKeys.Add(MenuHelper.RetrieveMenusByRoleIdDataKey + "*");
-                cacheKeys.Add(BootstrapMenu.RetrieveMenusDataKey + "*");
-                corsKeys.Add(BootstrapMenu.RetrieveMenusDataKey + "*");
+                cacheKeys.Add(MenuHelper.RetrieveMenusAll + "*");
+                corsKeys.Add(MenuHelper.RetrieveMenusAll + "*");
             }
             if (dictIds != null)
             {
-                cacheKeys.Add(BootstrapDict.RetrieveDictsDataKey + "*");
-                corsKeys.Add(BootstrapDict.RetrieveDictsDataKey + "*");
-            }
-            if (logIds != null)
-            {
-                cacheKeys.Add(LogHelper.RetrieveLogsDataKey + "*");
-            }
-            if (notifyIds != null)
-            {
-                cacheKeys.Add(NotificationHelper.RetrieveNotificationsDataKey + "*");
-            }
-            if (exceptionIds != null) 
-            {
-                cacheKeys.Add(ExceptionHelper.RetrieveExceptionsDataKey + "*");
+                cacheKeys.Add(DictHelper.RetrieveDictsDataKey + "*");
+                cacheKeys.Add(DictHelper.RetrieveCategoryDataKey);
+                corsKeys.Add(DictHelper.RetrieveDictsDataKey + "*");
             }
             if (cacheKey != null)
             {
                 cacheKeys.Add(cacheKey);
+                corsKeys.Add(cacheKey);
             }
             CacheManager.Clear(cacheKeys);
             CacheManager.CorsClear(corsKeys);

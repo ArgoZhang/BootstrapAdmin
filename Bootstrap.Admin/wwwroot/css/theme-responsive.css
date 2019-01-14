@@ -1,4 +1,22 @@
-﻿@media (min-width: 568px) {
+﻿@media (min-width: 375px) {
+    .toolbar .dropdown-menu a {
+        padding: 0 20px;
+    }
+
+        .toolbar .dropdown-menu a:first-child {
+            border-left: none;
+        }
+
+    .form-check-input + span, .form-check-input + label {
+        max-width: 146px;
+    }
+}
+
+@media (min-width: 568px) {
+    .sidebar-toggle-box span {
+        display: inline;
+    }
+
     .toolbar {
         display: none;
     }
@@ -9,23 +27,31 @@
 }
 
 @media (min-width: 576px) {
-    .form-group .form-control-url {
-        width: calc(100% - 90px);
-    }
-
     .form-inline .control-label {
         padding-top: 6px;
         padding-bottom: 6px;
+    }
+
+    .form-inline select.form-control {
+        min-width: 194px;
     }
 
     .modal-lg {
         max-width: calc(90%);
     }
 
+    .input-group.date {
+        width: 186px;
+    }
+
     .btn-fill {
         width: auto;
-        align-self: flex-end;
-        margin-bottom: 2px;
+    }
+}
+
+@media (min-width: 768px) {
+    .sidebar-open aside {
+        transform: translate(0);
     }
 }
 
@@ -33,10 +59,24 @@
     .btn span:last-child {
         display: inline;
     }
+
+    .form-check-input + span, .form-check-input + label {
+        max-width: 192px;
+    }
 }
 
 @media (min-width: 992px) {
     .modal-lg {
-        max-width: 900px;
+        max-width: 940px;
+    }
+
+    .modal-xl {
+        max-width: calc(100% - 100px);
+    }
+}
+
+@media (min-width: 1200px) {
+    .modal-xl {
+        max-width: 1100px;
     }
 }

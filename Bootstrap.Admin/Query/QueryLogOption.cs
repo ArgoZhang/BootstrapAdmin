@@ -1,11 +1,13 @@
 ﻿using Bootstrap.DataAccess;
 using Longbow.Web.Mvc;
 using System;
-using System.Globalization;
 using System.Linq;
 
 namespace Bootstrap.Admin.Query
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class QueryLogOption : PaginationOption
     {
         /// <summary>
@@ -15,18 +17,18 @@ namespace Bootstrap.Admin.Query
         /// <summary>
         /// 
         /// </summary>
-        public DateTime OperateTimeStart { get; set; }
+        public DateTime? OperateTimeStart { get; set; }
         /// <summary>
         /// 
         /// </summary>
-        public DateTime OperateTimeEnd { get; set; }
+        public DateTime? OperateTimeEnd { get; set; }
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
         public QueryData<Log> RetrieveData()
         {
-            var data = LogHelper.RetrieveLogs();
+            var data = LogHelper.Retrieves();
             if (!string.IsNullOrEmpty(OperateType))
             {
                 data = data.Where(t => t.CRUD.ToString().Contains(OperateType));
@@ -38,7 +40,7 @@ namespace Bootstrap.Admin.Query
             }
             if (OperateTimeEnd > DateTime.MinValue)
             {
-                data = data.Where(t => t.LogTime < OperateTimeEnd.AddDays(1));
+                data = data.Where(t => t.LogTime < OperateTimeEnd.Value.AddDays(1));
             }
 
             var ret = new QueryData<Log>();

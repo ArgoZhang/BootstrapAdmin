@@ -1,10 +1,8 @@
-﻿using Bootstrap.Security;
-using Longbow.Cache;
+﻿using Bootstrap.DataAccess;
+using Bootstrap.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
-using System;
-using System.Linq;
 
 namespace Bootstrap.Admin.Controllers.Api
 {
@@ -15,14 +13,9 @@ namespace Bootstrap.Admin.Controllers.Api
     /// 
     /// </summary>
     [Route("api/[controller]")]
-    public class LoginController : Controller
+    [ApiController]
+    public class LoginController : ControllerBase
     {
-        [HttpGet]
-        public object Get()
-        {
-            var token = Request.Headers["Token"];
-            return new { UserName = User.Identity.Name, Token = token };
-        }
         /// <summary>
         /// 
         /// </summary>
@@ -30,18 +23,16 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPost]
-        public object Post([FromBody]JObject value)
+        public string Post([FromBody]JObject value)
         {
             dynamic user = value;
             string userName = user.userName;
             string password = user.password;
-            if (BootstrapUser.Authenticate(userName, password))
+            if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(password) && UserHelper.Authenticate(userName, password))
             {
-                var token = CacheManager.AddOrUpdate(string.Format("WebApi-{0}", userName), k => new { UserName = userName, Token = Guid.NewGuid().ToString() }, (k, info) => info, "WebApi");
-                CacheManager.AddOrUpdate(token.Token, k => token, (k, info) => info, "Token");
-                return token;
+                return BootstrapAdminJwtTokenHandler.CreateToken(userName);
             }
-            return new { UserName = userName };
+            return null;
         }
         /// <summary>
         /// 

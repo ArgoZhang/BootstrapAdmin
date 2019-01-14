@@ -2,9 +2,9 @@
 
     function loadData() {
         $.bc({
-            url: Messages.url, method: 'GET', swal: false,
+            url: Messages.url,
             callback: function (result) {
-                if (result) {                
+                if (result) {
                     $('#s_inbox').text(result.inboxCount);
                     $('#s_sendmail').text(result.sendmailCount);
                     $('#s_mark').text(result.markCount);
@@ -18,19 +18,19 @@
 
     function listData(options) {
         $.bc({
-            id: options.id, url: Messages.url, method: 'GET', swal: false,
+            id: options.id, url: Messages.url,
             callback: function (result) {
                 if (result) {
                     var content = result.map(function (mail) {
-                        if (mail.Status == '0')
+                        if (mail.Status === '0')
                             mailStatus = 'class="unread"';
                         else
-                            mailStatus = " "
-                        if (mail.Mark == '1')
+                            mailStatus = " ";
+                        if (mail.Mark === '1')
                             mailMark = "inbox-started";
                         else
                             mailMark = " ";
-                        if (mail.Label == '0')
+                        if (mail.Label === '0')
                             mailLabel = 'label-success';
                         else
                             mailLabel = 'label-warning';
@@ -47,5 +47,5 @@
 
     $('#mailBox').on('click', 'a', function () {
         listData({ Id: $(this).attr('data-id') });
-    })
+    });
 });

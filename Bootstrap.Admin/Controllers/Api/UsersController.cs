@@ -1,10 +1,9 @@
 ﻿using Bootstrap.Admin.Query;
 using Bootstrap.DataAccess;
-using Bootstrap.Security;
 using Longbow.Web.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,7 +13,8 @@ namespace Bootstrap.Admin.Controllers.Api
     /// 
     /// </summary>
     [Route("api/[controller]")]
-    public class UsersController : Controller
+    [ApiController]
+    public class UsersController : ControllerBase
     {
         /// <summary>
         /// 
@@ -22,7 +22,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="value"></param>
         /// <returns></returns>
         [HttpGet]
-        public QueryData<User> Get(QueryUserOption value)
+        public QueryData<object> Get([FromQuery]QueryUserOption value)
         {
             return value.RetrieveData();
         }
@@ -36,16 +36,16 @@ namespace Bootstrap.Admin.Controllers.Api
             if (User.IsInRole("Administrators")) return false;
 
             var ret = false;
-            if (value.UserStatus == 3)
+            if (value.UserStatus == UserStates.ChangeTheme)
             {
                 return UserHelper.SaveUserCssByName(value.UserName, value.Css);
             }
             if (value.UserName.Equals(User.Identity.Name, System.StringComparison.OrdinalIgnoreCase))
             {
-                if (value.UserStatus == 1)
-                    ret = BootstrapUser.SaveUserInfoByName(value.UserName, value.DisplayName);
-                else if (value.UserStatus == 2)
-                    ret = BootstrapUser.ChangePassword(value.UserName, value.Password, value.NewPassword);
+                if (value.UserStatus == UserStates.ChangeDisplayName)
+                    ret = UserHelper.SaveDisplayName(value.UserName, value.DisplayName);
+                else if (value.UserStatus == UserStates.ChangePassword)
+                    ret = UserHelper.ChangePassword(value.UserName, value.Password, value.NewPassword);
             }
             return ret;
         }
@@ -53,70 +53,66 @@ namespace Bootstrap.Admin.Controllers.Api
         /// 
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="value"></param>
+        /// <param name="type"></param>
         /// <returns></returns>
         [HttpPost("{id}")]
-        public IEnumerable<User> Post(int id, [FromBody]JObject value)
+        public IEnumerable<object> Post(string id, [FromQuery]string type)
         {
-            var ret = new List<User>();
-            dynamic json = value;
-            switch ((string)json.type)
+            switch (type)
             {
                 case "role":
-                    ret = UserHelper.RetrieveUsersByRoleId(id).ToList();
-                    break;
+                    return UserHelper.RetrievesByRoleId(id).Select(p => new
+                    {
+                        p.Id,
+                        p.DisplayName,
+                        p.UserName,
+                        p.Checked
+                    });
                 case "group":
-                    ret = UserHelper.RetrieveUsersByGroupId(id).ToList();
-                    break;
+                    return UserHelper.RetrievesByGroupId(id).ToList();
                 default:
-                    break;
+                    return null;
             }
-            return ret;
         }
         /// <summary>
-        /// 
+        /// 前台User View调用，新建/更新用户
         /// </summary>
         /// <param name="value"></param>
         [HttpPost]
         public bool Post([FromBody]User value)
         {
-            value.Description = string.Format("管理员{0}创建用户", User.Identity.Name);
-            value.ApprovedBy = User.Identity.Name;
-            return UserHelper.SaveUser(value);
+            var ret = false;
+            if (string.IsNullOrEmpty(value.Id))
+            {
+                value.Description = string.Format("管理员{0}创建用户", User.Identity.Name);
+                value.ApprovedBy = User.Identity.Name;
+                value.ApprovedTime = DateTime.Now;
+                ret = UserHelper.Save(value);
+            }
+            else
+            {
+                ret = UserHelper.Update(value.Id, value.Password, value.DisplayName);
+            }
+            return ret;
         }
         /// <summary>
         /// 
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="value"></param>
+        /// <param name="userIds"></param>
+        /// <param name="type"></param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public bool Put(int id, [FromBody]JObject value)
+        public bool Put(string id, [FromBody]IEnumerable<string> userIds, [FromQuery]string type)
         {
             var ret = false;
-            dynamic json = value;
-            string userIds = json.userIds;
-            switch ((string)json.type)
+            switch (type)
             {
                 case "role":
-                    ret = UserHelper.SaveUsersByRoleId(id, userIds);
+                    ret = UserHelper.SaveByRoleId(id, userIds);
                     break;
                 case "group":
-                    ret = UserHelper.SaveUsersByGroupId(id, userIds);
-                    break;
-                case "user":
-                    // 此时 userIds 存储的信息是操作结果 1 标示同意 0 标示拒绝
-                    var user = new User() { Id = id, UserStatus = 2 };
-                    if (userIds == "1")
-                    {
-                        user.ApprovedBy = User.Identity.Name;
-                    }
-                    else
-                    {
-                        user.RejectedReason = "无原因";
-                        user.RejectedBy = User.Identity.Name;
-                    }
-                    ret = UserHelper.SaveUser(user);
+                    ret = UserHelper.SaveByGroupId(id, userIds);
                     break;
                 default:
                     break;
@@ -128,9 +124,9 @@ namespace Bootstrap.Admin.Controllers.Api
         /// </summary>
         /// <param name="value"></param>
         [HttpDelete]
-        public bool Delete([FromBody]IEnumerable<int> value)
+        public bool Delete([FromBody]IEnumerable<string> value)
         {
-            return UserHelper.DeleteUser(value);
+            return UserHelper.Delete(value);
         }
         /// <summary>
         /// 

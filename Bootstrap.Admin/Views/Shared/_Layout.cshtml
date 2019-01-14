@@ -1,39 +1,31 @@
-﻿@model ModelBase
-@{
-    Layout = "~/Views/Shared/_Root.cshtml";
-}
-@section css {
-    <environment include="Development">
-        <link href="~/css/bootstrap.css" rel="stylesheet">
-        <link href="~/css/font-awesome.css" rel="stylesheet" />
-    </environment>
-    <environment exclude="Development">
-        <link href="~/css/bootstrap.min.css" rel="stylesheet">
-        <link href="~/css/font-awesome.min.css" rel="stylesheet" />
-    </environment>
-    <link href="~/css/nprogress.css" rel="stylesheet" />
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>@ViewBag.Title</title>
     @RenderSection("css", false)
-    <link href="~/css/theme.css" rel="stylesheet" />
-    <link href="~/css/theme-responsive.css" rel="stylesheet" />
-    <link href="~/css/site.css" rel="stylesheet" />
-    <link href="~/css/site-responsive.css" rel="stylesheet" />
-    @if (!string.IsNullOrEmpty(Model.Theme))
-    {
-        <link href="~/css/@Model.Theme" rel="stylesheet" />
-    }
-}
-@section javascript {
+    <!--[if lt IE 10 ]>
+        <link href="../css/IE8.css" rel="stylesheet" />
+    <![endif]-->
+</head>
+<body>
+    <!--[if lt IE 10 ]>
+    <div id="ieAlert" class="alert alert-danger alert-dismissible">
+        <div>当前浏览器版本太低，不支持本系统，请升级到至少IE10 <a href="../browser/IE10.exe" target="_blank">本地下载</a> <a href="https://support.microsoft.com/zh-cn/help/17621/internet-explorer-downloads" target="_blank">微软下载</a>，或者使用Chrome浏览器 <a href="../browser/ChromeSetup.exe" target="_blank">本地下载</a></div>
+        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
+    </div>
+    <![endif]-->
+    @RenderBody()
+    <a id="pathBase" href="~/" hidden></a>
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
     <environment include="Development">
-        <script src="~/js/bootstrap.bundle.js"></script>
+        <script src="~/lib/jquery/jquery.js"></script>
     </environment>
     <environment exclude="Development">
-        <script src="~/js/bootstrap.bundle.min.js"></script>
+        <script src="~/lib/jquery/jquery.min.js"></script>
     </environment>
-    <script src="~/js/nprogress.js"></script>
-    <script src="~/js/longbow.common.js"></script>
-    @RenderSection("Javascript", false)
-}
-@await Html.PartialAsync("Header")
-@RenderBody()
-@await Html.PartialAsync("Footer")
-@RenderSection("modal", false)
+    @RenderSection("javascript", false)
+</body>
+</html>

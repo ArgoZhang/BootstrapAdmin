@@ -12,7 +12,8 @@ namespace Bootstrap.Admin.Controllers.Api
     /// 
     /// </summary>
     [Route("api/[controller]")]
-    public class DictsController : Controller
+    [ApiController]
+    public class DictsController : ControllerBase
     {
         /// <summary>
         /// 
@@ -20,7 +21,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="value"></param>
         /// <returns></returns>
         [HttpGet]
-        public QueryData<BootstrapDict> Get(QueryDictOption value)
+        public QueryData<BootstrapDict> Get([FromQuery]QueryDictOption value)
         {
             return value.RetrieveData();
         }
@@ -31,7 +32,7 @@ namespace Bootstrap.Admin.Controllers.Api
         [HttpPost]
         public bool Post([FromBody]BootstrapDict value)
         {
-            return DictHelper.SaveDict(value);
+            return DictHelper.Save(value);
         }
         /// <summary>
         /// 
@@ -39,10 +40,9 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="value"></param>
         [HttpDelete]
         [Authorize(Roles = "Administrators")]
-        public object Delete([FromBody]IEnumerable<int> value)
+        public bool Delete([FromBody]IEnumerable<string> value)
         {
-            var result = DictHelper.DeleteDict(value);
-            return new { result, msg = result ? "成功！" : "失败" };
+            return DictHelper.Delete(value);
         }
     }
 }

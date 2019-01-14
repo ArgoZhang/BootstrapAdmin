@@ -1,21 +1,24 @@
 ﻿using Bootstrap.DataAccess;
-using Bootstrap.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
 namespace Bootstrap.Admin.Controllers.Api
 {
+    /// <summary>
+    /// 数据字典分类
+    /// </summary>
     [Route("api/[controller]")]
-    public class CategoryController : Controller
+    [ApiController]
+    public class CategoryController : ControllerBase
     {
         /// <summary>
-        /// 
+        /// 获取字典表中所有Category数据
         /// </summary>
         /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
-        public IEnumerable<BootstrapDict> Get()
+        public IEnumerable<string> Get()
         {
             return DictHelper.RetrieveCategories();
         }

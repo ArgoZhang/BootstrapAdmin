@@ -1,9 +1,12 @@
-﻿using Bootstrap.Security;
+﻿using Bootstrap.DataAccess;
 using Longbow.Web.Mvc;
 using System.Linq;
 
 namespace Bootstrap.Admin.Query
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class QueryMenuOption : PaginationOption
     {
         /// <summary>
@@ -22,10 +25,14 @@ namespace Bootstrap.Admin.Query
         /// 
         /// </summary>
         public string IsResource { get; set; }
-
-        public QueryData<BootstrapMenu> RetrieveData(string userName)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public QueryData<object> RetrieveData(string userName)
         {
-            var data = BootstrapMenu.RetrieveMenusByUserName(userName);
+            var data = MenuHelper.RetrieveMenusByUserName(userName);
             if (!string.IsNullOrEmpty(ParentName))
             {
                 data = data.Where(t => t.ParentName.Contains(ParentName));
@@ -42,7 +49,7 @@ namespace Bootstrap.Admin.Query
             {
                 data = data.Where(t => t.IsResource.ToString() == IsResource);
             }
-            var ret = new QueryData<BootstrapMenu>();
+            var ret = new QueryData<object>();
             ret.total = data.Count();
             switch (Sort)
             {
@@ -64,13 +71,27 @@ namespace Bootstrap.Admin.Query
                 case "IsResource":
                     data = Order == "asc" ? data.OrderBy(t => t.IsResource) : data.OrderByDescending(t => t.IsResource);
                     break;
-                case "ApplicationCode":
-                    data = Order == "asc" ? data.OrderBy(t => t.ApplicationCode) : data.OrderByDescending(t => t.ApplicationCode);
+                case "Application":
+                    data = Order == "asc" ? data.OrderBy(t => t.Application) : data.OrderByDescending(t => t.Application);
                     break;
                 default:
                     break;
             }
-            ret.rows = data.Skip(Offset).Take(Limit);
+            ret.rows = data.Skip(Offset).Take(Limit).Select(p => new
+            {
+                p.Id,
+                p.ParentId,
+                p.ParentName,
+                p.Name,
+                p.Order,
+                p.Icon,
+                p.Url,
+                p.Category,
+                p.CategoryName,
+                p.Target,
+                p.IsResource,
+                p.Application
+            });
             return ret;
         }
     }

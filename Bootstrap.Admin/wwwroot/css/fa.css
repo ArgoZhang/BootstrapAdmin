@@ -41,6 +41,7 @@
         bottom: 0;
         position: absolute;
         overflow-y: auto;
+        width: 100%;
     }
 
         .fa-nav nav a {
@@ -70,6 +71,10 @@
                 padding-left: 10px;
             }
 
+    .fa-nav .mCS-minimal-dark.mCSB_scrollTools_vertical {
+        margin: 0;
+    }
+
 .form-group .input-group .input-group-append .btn i {
     color: #187c9a;
     width: 22px;
@@ -92,9 +97,9 @@
 }
 
     .icon-content .fa-nav {
-        right: 33px;
-        top: 68px;
-        bottom: 84px;
+        right: 34px;
+        top: 83px;
+        bottom: 99px;
     }
 
     .icon-content .modal-body {
@@ -254,17 +259,17 @@
     .fa-nav {
         display: block;
         position: fixed;
-        top: 98px;
+        top: 113px;
         right: 17px;
         width: 140px;
-        bottom: 40px;
+        bottom: 55px;
     }
 
     .fa-icons {
-        margin-right: 120px;
+        margin-right: 140px;
     }
 
     .modal-body .fa-icons {
-        margin-right: 148px;
+        margin-right: 155px;
     }
 }

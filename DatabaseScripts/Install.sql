@@ -28,7 +28,7 @@ CREATE TABLE [dbo].[Users](
 	[RejectedBy] [varchar](50) NULL,
 	[RejectedTime] [datetime] NULL,
 	[RejectedReason] [nvarchar](50) NULL,
-	[Icon] [varchar](50) NOT NULL,
+	[Icon] [varchar](50) NULL,
 	[Css] [varchar](50) NULL,
  CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED 
 (
@@ -159,6 +159,11 @@ CREATE TABLE [dbo].[Notifications](
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'0 标示未处理 1 标示已处理' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Notifications', @level2type=N'COLUMN',@level2name=N'Status'
 GO
+
+/****** Object:  Default [DF_Notifications_Status]    Script Date: 11/12/2016 15:49:11 ******/
+ALTER TABLE [dbo].[Notifications] ADD  CONSTRAINT [DF_Notifications_Status]  DEFAULT ((0)) FOR [Status]
+GO
+
 /****** Object:  Table [dbo].[Navigations]    Script Date: 11/12/2016 15:49:11 ******/
 SET ANSI_NULLS ON
 GO
@@ -175,7 +180,7 @@ CREATE TABLE [dbo].[Navigations](
 	[Url] [varchar](4000) NULL,
 	[Category] [nvarchar](50) NOT NULL,
 	[Target] [varchar](10) NOT NULL,
-	[IsResource] [bit] NOT NULL,
+	[IsResource] [int] NOT NULL,
 	[Application] [nvarchar](200) NOT NULL,
  CONSTRAINT [PK_Navigations] PRIMARY KEY CLUSTERED 
 (
@@ -183,6 +188,29 @@ CREATE TABLE [dbo].[Navigations](
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
+
+/****** Object:  Default [DF_Navigations_ParentId]    Script Date: 11/12/2016 15:49:11 ******/
+ALTER TABLE [dbo].[Navigations] ADD  CONSTRAINT [DF_Navigations_ParentId]  DEFAULT ((0)) FOR [ParentId]
+GO
+/****** Object:  Default [DF_Navigations_Order]    Script Date: 11/12/2016 15:49:11 ******/
+ALTER TABLE [dbo].[Navigations] ADD  CONSTRAINT [DF_Navigations_Order]  DEFAULT ((0)) FOR [Order]
+GO
+/****** Object:  Default [DF_Navigations_Icon]    Script Date: 11/12/2016 15:49:11 ******/
+ALTER TABLE [dbo].[Navigations] ADD  CONSTRAINT [DF_Navigations_Icon]  DEFAULT ('none') FOR [Icon]
+GO
+/****** Object:  Default [DF_Navigations_Category]    Script Date: 11/12/2016 15:49:11 ******/
+ALTER TABLE [dbo].[Navigations] ADD  CONSTRAINT [DF_Navigations_Category]  DEFAULT ((0)) FOR [Category]
+GO
+
+ALTER TABLE [dbo].[Navigations] ADD  CONSTRAINT [DF_Navigations_IsResource]  DEFAULT ((0)) FOR [IsResource]
+GO
+
+ALTER TABLE [dbo].[Navigations] ADD  CONSTRAINT [DF_Navigations_Application]  DEFAULT ((0)) FOR [Application]
+GO
+
+ALTER TABLE [dbo].[Navigations] ADD  CONSTRAINT [DF_Navigations_Target]  DEFAULT ('_self') FOR [Target]
+GO
+
 SET ANSI_PADDING OFF
 GO
 /****** Object:  Table [dbo].[NavigationRole]    Script Date: 11/12/2016 15:49:11 ******/
@@ -300,29 +328,9 @@ EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'字典代码' 
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'0表示系统使用，1表示自定义' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Dicts', @level2type=N'COLUMN',@level2name=N'Define'
 GO
+
 /****** Object:  Default [DF_Dicts_Define]    Script Date: 11/12/2016 15:49:11 ******/
 ALTER TABLE [dbo].[Dicts] ADD  CONSTRAINT [DF_Dicts_Define]  DEFAULT ((1)) FOR [Define]
-GO
-/****** Object:  Default [DF_Navigations_ParentId]    Script Date: 11/12/2016 15:49:11 ******/
-ALTER TABLE [dbo].[Navigations] ADD  CONSTRAINT [DF_Navigations_ParentId]  DEFAULT ((0)) FOR [ParentId]
-GO
-/****** Object:  Default [DF_Navigations_Order]    Script Date: 11/12/2016 15:49:11 ******/
-ALTER TABLE [dbo].[Navigations] ADD  CONSTRAINT [DF_Navigations_Order]  DEFAULT ((0)) FOR [Order]
-GO
-/****** Object:  Default [DF_Navigations_Icon]    Script Date: 11/12/2016 15:49:11 ******/
-ALTER TABLE [dbo].[Navigations] ADD  CONSTRAINT [DF_Navigations_Icon]  DEFAULT ('none') FOR [Icon]
-GO
-/****** Object:  Default [DF_Navigations_Category]    Script Date: 11/12/2016 15:49:11 ******/
-ALTER TABLE [dbo].[Navigations] ADD  CONSTRAINT [DF_Navigations_Category]  DEFAULT ((0)) FOR [Category]
-GO
-/****** Object:  Default [DF_Notifications_Status]    Script Date: 11/12/2016 15:49:11 ******/
-ALTER TABLE [dbo].[Notifications] ADD  CONSTRAINT [DF_Notifications_Status]  DEFAULT ((0)) FOR [Status]
-GO
-
-ALTER TABLE [dbo].[Navigations] ADD  CONSTRAINT [DF_Navigations_IsResource]  DEFAULT ((0)) FOR [IsResource]
-GO
-
-ALTER TABLE [dbo].[Navigations] ADD  CONSTRAINT [DF_Navigations_Application]  DEFAULT ((0)) FOR [Application]
 GO
 
 /****** Object:  Table [dbo].[Messages]    Script Date: 11/14/2016 13:59:21 ******/
@@ -366,12 +374,6 @@ GO
 ALTER TABLE [dbo].[Messages] ADD  CONSTRAINT [DF_Messages_Label]  DEFAULT ((0)) FOR [Label]
 GO
 
-ALTER TABLE [dbo].[Users] ADD  CONSTRAINT [DF_Users_Icon]  DEFAULT ('default.jpg') FOR [Icon]
-GO
-
-ALTER TABLE [dbo].[Navigations] ADD  CONSTRAINT [DF_Navigations_Target]  DEFAULT ('_self') FOR [Target]
-GO
-
 /****** Object:  Table [dbo].[Tasks]    Script Date: 11/16/2016 15:40:02 ******/
 SET ANSI_NULLS ON
 GO
@@ -406,4 +408,42 @@ GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'完成进度' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Tasks', @level2type=N'COLUMN',@level2name=N'TaskProgress'
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'分配时间' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Tasks', @level2type=N'COLUMN',@level2name=N'AssignTime'
+GO
+
+/****** Object:  Table [dbo].[RejectUsers]    Script Date: 09/08/2018 15:34:25 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[RejectUsers](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[UserName] [varchar](50) NOT NULL,
+	[DisplayName] [nvarchar](50) NOT NULL,
+	[RegisterTime] [datetime] NOT NULL,
+	[RejectedBy] [varchar](50) NULL,
+	[RejectedTime] [datetime] NULL,
+	[RejectedReason] [nvarchar](50) NULL,
+ CONSTRAINT [PK_RejectUsers] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'用户名' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'RejectUsers', @level2type=N'COLUMN',@level2name=N'UserName'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'显示名称' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'RejectUsers', @level2type=N'COLUMN',@level2name=N'DisplayName'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'注册时间' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'RejectUsers', @level2type=N'COLUMN',@level2name=N'RegisterTime'
 GO

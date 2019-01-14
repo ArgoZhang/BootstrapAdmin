@@ -1,30 +1,39 @@
-﻿@model Bootstrap.Admin.Models.NavigatorBarModel
+﻿@model NavigatorBarModel
 @{
     ViewBag.Title = "角色管理";
-    Layout = "~/Views/Shared/_Default.cshtml";
+    Layout = "_Default";
 }
 @section css {
-    <link href="~/css/fa.css" rel="stylesheet" />
-    <link href="~/css/jquery.nestable.css" rel="stylesheet" />
+    <environment include="Development">
+        <link href="~/lib/nestable2/jquery.nestable.css" rel="stylesheet" />
+    </environment>
+    <environment exclude="Development">
+        <link href="~/lib/nestable2/jquery.nestable.min.css" rel="stylesheet" />
+    </environment>
+    <link href="~/css/fa.css" rel="stylesheet" asp-append-version="true" />
 }
-@section Javascript {
-    <script src="~/js/jquery.nestable.js"></script>
-    <script src="~/js/roles.js"></script>
-
+@section javascript {
+    <environment include="Development">
+        <script src="~/lib/nestable2/jquery.nestable.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/lib/nestable2/jquery.nestable.min.js"></script>
+    </environment>
+    <script src="~/js/roles.js" asp-append-version="true"></script>
 }
 @section query {
     <form class="form-inline">
-        <div class="form-row">
-            <div class="form-group col-sm-6 col-md-5">
+        <div class="row">
+            <div class="form-group col-sm-5 col-md-auto">
                 <label class="control-label" for="txt_search_name">角色名称</label>
                 <input type="text" class="form-control" id="txt_search_name" />
             </div>
-            <div class="form-group col-sm-6 col-md-5">
+            <div class="form-group col-sm-5 col-md-auto">
                 <label class="control-label" for="txt_role_desc">角色描述</label>
                 <input type="text" class="form-control" id="txt_role_desc" />
             </div>
-            <div class="form-group col-sm-12 col-md-2">
-                <button type="button" id="btn_query" class="btn btn-primary btn-fill"><i class="fa fa-search" aria-hidden="true"></i><span>查询</span></button>
+            <div class="form-group col-sm-2 col-md-auto flex-md-fill justify-content-md-end">
+                <button type="button" id="btn_query" class="btn btn-primary btn-fill align-self-sm-end align-self-md-auto"><i class="fa fa-search" aria-hidden="true"></i><span>查询</span></button>
             </div>
         </div>
     </form>
@@ -56,13 +65,13 @@
     </div>
     <div class="modal-body">
         <form class="form-inline">
-            <div class="form-row">
+            <div class="row">
                 <div class="form-group col-sm-6">
                     <label class="control-label" for="roleName">角色名称</label>
                     <input type="text" class="form-control" id="roleName" placeholder="不可为空，50字以内" maxlength="50" data-valid="true" />
                 </div>
                 <div class="form-group col-sm-6">
-                    <input type="text" class="form-control d-none" id="roleID" data-default-val="0" />
+                    <input type="hidden" id="roleID" />
                     <label class="control-label" for="roleDesc">角色描述</label>
                     <input type="text" class="form-control" id="roleDesc" placeholder="描述信息(可为空)，50字以内" maxlength="50" />
                 </div>

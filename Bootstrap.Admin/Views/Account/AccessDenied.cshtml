@@ -1,17 +1,17 @@
 ﻿@{
     ViewBag.Title = "未授权请求";
-    Layout = "~/Views/Shared/_Root.cshtml";
+    Layout = "_Layout";
 }
 @section css {
-    <link href="~/css/error.css" rel="stylesheet" />
+    <link href="~/css/error.css" rel="stylesheet" asp-append-version="true" />
 }
-@section Javascript {
-    <script src="~/js/error.js"></script>
+@section javascript {
+    <script src="~/js/error.js" asp-append-version="true"></script>
 }
 <section class="error-wrapper">
     <img src="~/images/error_icon.png" />
     <h1>网页拒绝访问</h1>
     <h3>您无权访问本页面请联系网站管理员授权后再查看</h3>
     <br />
-    <a href="~/Home/Index" target="_top">返回首页</a>
+    <a href="@ViewBag.ReturnUrl" target="_top">返回首页</a>
 </section>

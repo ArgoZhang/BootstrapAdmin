@@ -1,9 +1,6 @@
 ﻿using Bootstrap.Admin.Query;
-using Bootstrap.DataAccess;
 using Longbow.Web.Mvc;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,7 +13,8 @@ namespace Bootstrap.Admin.Controllers.Api
     /// 
     /// </summary>
     [Route("api/[controller]")]
-    public class ExceptionsController : Controller
+    [ApiController]
+    public class ExceptionsController : ControllerBase
     {
         /// <summary>
         /// 显示所有异常
@@ -24,10 +22,11 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="value"></param>
         /// <returns></returns>
         [HttpGet]
-        public QueryData<Exceptions> Get(QueryExceptionOption value)
+        public QueryData<object> Get([FromQuery]QueryExceptionOption value)
         {
-            return value.RetrieveData();
+            return value.Retrieves();
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -36,10 +35,12 @@ namespace Bootstrap.Admin.Controllers.Api
         public IEnumerable<string> Post()
         {
             var filePath = Path.Combine(AppContext.BaseDirectory, "Error");
+            if (!Directory.Exists(filePath)) return new List<string>();
             return Directory.GetFiles(filePath)
-                .Where(f => Path.GetExtension(f).Equals(".log", System.StringComparison.OrdinalIgnoreCase))
+                .Where(f => Path.GetExtension(f).Equals(".log", StringComparison.OrdinalIgnoreCase))
                 .Select(f => Path.GetFileNameWithoutExtension(f)).OrderByDescending(s => s);
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -69,8 +70,14 @@ namespace Bootstrap.Admin.Controllers.Api
             return new JsonResult(sb.ToString());
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public class ExceptionFileQuery
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public string FileName { get; set; }
         }
     }

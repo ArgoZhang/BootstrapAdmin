@@ -8,7 +8,8 @@ namespace Bootstrap.Admin.Controllers.Api
     /// 
     /// </summary>
     [Route("api/[controller]")]
-    public class TasksController : Controller
+    [ApiController]
+    public class TasksController : ControllerBase
     {
         /// <summary>
         /// 
@@ -17,7 +18,7 @@ namespace Bootstrap.Admin.Controllers.Api
         [HttpGet]
         public IEnumerable<Task> Get()
         {
-            return TaskHelper.RetrieveTasks();
+            return TaskHelper.Retrieves();
         }
     }
 }

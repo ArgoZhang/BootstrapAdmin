@@ -1,5 +1,10 @@
 ﻿using Bootstrap.Security;
+using Bootstrap.Security.DataAccess;
+using Longbow.Data;
+using Longbow.Security.Cryptography;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Bootstrap.DataAccess
 {
@@ -11,59 +16,314 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获得/设置 用户主键ID
         /// </summary>
-        public int Id { get; set; }
+        public string Id { get; set; }
+
         /// <summary>
         /// 获取/设置 密码
         /// </summary>
         public string Password { get; set; }
+
         /// <summary>
         /// 获取/设置 密码盐
         /// </summary>
         public string PassSalt { get; set; }
+
         /// <summary>
         /// 获取/设置 角色用户关联状态 checked 标示已经关联 '' 标示未关联
         /// </summary>
         public string Checked { get; set; }
+
         /// <summary>
         /// 获得/设置 用户注册时间
         /// </summary>
         public DateTime RegisterTime { get; set; }
+
         /// <summary>
         /// 获得/设置 用户被批复时间
         /// </summary>
-        public DateTime ApprovedTime { get; set; }
+        public DateTime? ApprovedTime { get; set; }
+
         /// <summary>
         /// 获得/设置 用户批复人
         /// </summary>
         public string ApprovedBy { get; set; }
+
         /// <summary>
         /// 获得/设置 用户的申请理由
         /// </summary>
         public string Description { get; set; }
+
         /// <summary>
-        /// 获得/设置 用户当前状态 0 表示管理员注册用户 1 表示用户自己注册 2 表示管理员批复 3 表示更改个人皮肤 9 表示前台remote validate
+        /// 获得/设置 用户当前状态 0 表示管理员注册用户 1 表示用户注册 2 表示更改密码 3 表示更改个人皮肤 4 表示更改显示名称 5 批复新用户注册操作
         /// </summary>
-        public int UserStatus { get; set; }
+        public UserStates UserStatus { get; set; }
+
         /// <summary>
         /// 获得/设置 通知描述 2分钟内为刚刚
         /// </summary>
         public string Period { get; set; }
-        /// <summary>
-        /// 获得/设置 拒绝人
-        /// </summary>
-        public string RejectedBy { get; set; }
-        /// <summary>
-        /// 获得/设置 拒绝原因
-        /// </summary>
-        public string RejectedReason { get; set; }
-        /// <summary>
-        /// 获得/设置 拒绝时刻
-        /// </summary>
-        public string RejectedTime { get; set; }
+
         /// <summary>
         /// 获得/设置 新密码
         /// </summary>
         public string NewPassword { get; set; }
+
+        /// <summary>
+        /// 验证用户登陆账号与密码正确
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public virtual bool Authenticate(string userName, string password)
+        {
+            var user = DbManager.Create().SingleOrDefault<User>("select Password, PassSalt from Users where ApprovedTime is not null and UserName = @0", userName);
+
+            return !string.IsNullOrEmpty(user.PassSalt) && user.Password == LgbCryptography.ComputeHash(password, user.PassSalt);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
+        /// <param name="newPass"></param>
+        /// <returns></returns>
+        public virtual bool ChangePassword(string userName, string password, string newPass)
+        {
+            bool ret = false;
+            if (Authenticate(userName, password))
+            {
+                string sql = "set Password = @0, PassSalt = @1 where UserName = @2";
+                var passSalt = LgbCryptography.GenerateSalt();
+                var newPassword = LgbCryptography.ComputeHash(newPass, passSalt);
+                ret = DbManager.Create().Update<User>(sql, newPassword, passSalt, userName) == 1;
+            }
+            return ret;
+        }
+
+        /// <summary>
+        /// 查询所有用户
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public virtual IEnumerable<User> Retrieves() => DbManager.Create().Fetch<User>("select ID, UserName, DisplayName, RegisterTime, ApprovedTime, ApprovedBy, Description from Users Where ApprovedTime is not null");
+
+        /// <summary>
+        /// 查询所有的新注册用户
+        /// </summary>
+        /// <returns></returns>
+        public virtual IEnumerable<User> RetrieveNewUsers() => DbManager.Create().Fetch<User>("select ID, UserName, DisplayName, RegisterTime, Description from Users Where ApprovedTime is null order by RegisterTime desc");
+
+        /// <summary>
+        /// 删除用户
+        /// </summary>
+        /// <param name="value"></param>
+        public virtual bool Delete(IEnumerable<string> value)
+        {
+            if (!value.Any()) return true;
+            bool ret = false;
+            var db = DbManager.Create();
+            try
+            {
+                var ids = string.Join(",", value);
+                db.BeginTransaction();
+                db.Execute($"Delete from UserRole where UserID in ({ids})");
+                db.Execute($"delete from UserGroup where UserID in ({ids})");
+                db.Execute($"delete from Users where ID in ({ids})");
+                db.CompleteTransaction();
+                ret = true;
+            }
+            catch (Exception ex)
+            {
+                db.AbortTransaction();
+                throw ex;
+            }
+            return ret;
+        }
+
+        /// <summary>
+        /// 新建前台User View调用/注册用户调用
+        /// </summary>
+        /// <param name="p"></param>
+        /// <returns></returns>
+        public virtual bool Save(User p)
+        {
+            var ret = false;
+            if (string.IsNullOrEmpty(p.Id) && p.Description.Length > 500) p.Description = p.Description.Substring(0, 500);
+            if (p.UserName.Length > 50) p.UserName = p.UserName.Substring(0, 50);
+            p.PassSalt = LgbCryptography.GenerateSalt();
+            p.Password = LgbCryptography.ComputeHash(p.Password, p.PassSalt);
+            p.RegisterTime = DateTime.Now;
+
+            var db = DbManager.Create();
+            try
+            {
+                db.BeginTransaction();
+                if (!db.Exists<User>("where UserName = @0", p.UserName))
+                {
+                    db.Insert(p);
+                    db.Execute("insert into UserRole (UserID, RoleID) select ID, (select ID from Roles where RoleName = 'Default') RoleId from Users where UserName = @0", p.UserName);
+                }
+                db.CompleteTransaction();
+                ret = true;
+            }
+            catch (Exception ex)
+            {
+                db.AbortTransaction();
+                throw ex;
+            }
+            return ret;
+        }
+
+        /// <summary>
+        /// User List 视图保存按钮调用
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="password"></param>
+        /// <param name="displayName"></param>
+        /// <returns></returns>
+        public virtual bool Update(string id, string password, string displayName)
+        {
+            var passSalt = LgbCryptography.GenerateSalt();
+            var newPassword = LgbCryptography.ComputeHash(password, passSalt);
+            return DbManager.Create().Update<User>("set Password = @1, PassSalt = @2, DisplayName = @3 where ID = @0", id, newPassword, passSalt, displayName) == 1;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="approvedBy"></param>
+        /// <returns></returns>
+        public virtual bool Approve(string id, string approvedBy) => DbManager.Create().Update<User>("set ApprovedTime = @1, ApprovedBy = @2 where ID = @0", id, DateTime.Now, approvedBy) == 1;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="rejectBy"></param>
+        /// <returns></returns>
+        public virtual bool Reject(string id, string rejectBy)
+        {
+            var ret = false;
+            var db = DbManager.Create();
+            try
+            {
+                db.BeginTransaction();
+                db.Execute("insert into RejectUsers (UserName, DisplayName, RegisterTime, RejectedBy, RejectedTime, RejectedReason) select UserName, DisplayName, Registertime, @1, @2, @3 from Users where ID = @0", id, rejectBy, DateTime.Now, "未填写");
+                db.Execute("delete from UserRole where UserId = @0", id);
+                db.Execute("delete from UserGroup where UserId = @0", id);
+                db.Execute("delete from users where ID = @0", id);
+                db.CompleteTransaction();
+                ret = true;
+            }
+            catch (Exception ex)
+            {
+                db.AbortTransaction();
+                throw ex;
+            }
+            return ret;
+        }
+
+        /// <summary>
+        /// 通过roleId获取所有用户
+        /// </summary>
+        /// <param name="roleId"></param>
+        /// <returns></returns>
+        public virtual IEnumerable<User> RetrievesByRoleId(string roleId) => DbManager.Create().Fetch<User>("select u.ID, u.UserName, u.DisplayName, case ur.UserID when u.ID then 'checked' else '' end Checked from Users u left join UserRole ur on u.ID = ur.UserID and RoleID = @0 where u.ApprovedTime is not null", roleId);
+
+        /// <summary>
+        /// 通过角色ID保存当前授权用户（插入）
+        /// </summary>
+        /// <param name="roleId">角色ID</param>
+        /// <param name="userIds">用户ID数组</param>
+        /// <returns></returns>
+        public virtual bool SaveByRoleId(string roleId, IEnumerable<string> userIds)
+        {
+            bool ret = false;
+            var db = DbManager.Create();
+            try
+            {
+                db.BeginTransaction();
+                //删除用户角色表该角色所有的用户
+                db.Execute("delete from UserRole where RoleID = @0", roleId);
+                db.InsertBatch("UserRole", userIds.Select(g => new { UserID = g, RoleID = roleId }));
+                db.CompleteTransaction();
+                ret = true;
+            }
+            catch (Exception ex)
+            {
+                db.AbortTransaction();
+                throw ex;
+            }
+            return ret;
+        }
+
+        /// <summary>
+        /// 通过groupId获取所有用户
+        /// </summary>
+        /// <param name="groupId"></param>
+        /// <returns></returns>
+        public virtual IEnumerable<User> RetrievesByGroupId(string groupId) => DbManager.Create().Fetch<User>("select u.ID, u.UserName, u.DisplayName, case ur.UserID when u.ID then 'checked' else '' end Checked from Users u left join UserGroup ur on u.ID = ur.UserID and GroupID = @0 where u.ApprovedTime is not null", groupId);
+
+        /// <summary>
+        /// 通过部门ID保存当前授权用户（插入）
+        /// </summary>
+        /// <param name="groupId">GroupID</param>
+        /// <param name="userIds">用户ID数组</param>
+        /// <returns></returns>
+        public virtual bool SaveByGroupId(string groupId, IEnumerable<string> userIds)
+        {
+            bool ret = false;
+            var db = DbManager.Create();
+            try
+            {
+                db.BeginTransaction();
+                //删除用户角色表该角色所有的用户
+                db.Execute("delete from UserGroup where GroupID = @0", groupId);
+                db.InsertBatch("UserGroup", userIds.Select(g => new { UserID = g, GroupID = groupId }));
+                db.CompleteTransaction();
+                ret = true;
+            }
+            catch (Exception ex)
+            {
+                db.AbortTransaction();
+                throw ex;
+            }
+            return ret;
+        }
+
+        /// <summary>
+        /// 根据用户名修改用户头像
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="iconName"></param>
+        /// <returns></returns>
+        public virtual bool SaveUserIconByName(string userName, string iconName) => DbManager.Create().Update<User>("set Icon = @1 where UserName = @0", userName, iconName) == 1;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="displayName"></param>
+        /// <returns></returns>
+        public virtual bool SaveDisplayName(string userName, string displayName) => DbManager.Create().Update<User>("set DisplayName = @1 where UserName = @0", userName, displayName) == 1;
+
+        /// <summary>
+        /// 根据用户名更改用户皮肤
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="cssName"></param>
+        /// <returns></returns>
+        public virtual bool SaveUserCssByName(string userName, string cssName) => DbManager.Create().Update<User>("set Css = @1 where UserName = @0", userName, cssName) == 1;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public virtual BootstrapUser RetrieveUserByUserName(string userName) => DbHelper.RetrieveUserByUserName(userName);
+
         /// <summary>
         /// 
         /// </summary>
@@ -72,5 +332,32 @@ namespace Bootstrap.DataAccess
         {
             return string.Format("{0} ({1})", UserName, DisplayName);
         }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public enum UserStates
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        ChangePassword,
+        /// <summary>
+        /// 
+        /// </summary>
+        ChangeTheme,
+        /// <summary>
+        /// 
+        /// </summary>
+        ChangeDisplayName,
+        /// <summary>
+        /// 
+        /// </summary>
+        ApproveUser,
+        /// <summary>
+        /// 
+        /// </summary>
+        RejectUser
     }
 }

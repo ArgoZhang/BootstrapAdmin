@@ -1,6 +1,7 @@
 ﻿$(function () {
+    var apiUrl = "api/New";
     var $table = $('table').smartTable({
-        url: Notifications.url + "newusers",
+        url: apiUrl,
         sidePagination: "client",
         showToggle: false,
         showRefresh: false,
@@ -12,7 +13,7 @@
             { title: "注册时间", field: "RegisterTime" },
             {
                 title: "操作", field: "Id", formatter: function (value, row, index, field) {
-                    return $.format('<button class="btn btn-success" data-toggle="tooltip" data-id="{0}" data-result="1" title="同意授权"><i class="fa fa-check"></i></button> <button class="btn btn-danger" data-toggle="tooltip" data-id="{0}" data-result="0" title="拒绝授权"><i class="fa fa-remove"></i></button>', value);
+                    return $.format('<button class="btn btn-success" data-toggle="tooltip" data-id="{0}" data-result="ApproveUser" title="同意授权"><i class="fa fa-check"></i></button> <button class="btn btn-danger" data-toggle="tooltip" data-id="{0}" data-result="RejectUser" title="拒绝授权"><i class="fa fa-remove"></i></button>', value);
                 }
             }
         ]
@@ -21,10 +22,11 @@
         var id = $this.attr('data-id');
         var result = $this.attr('data-result');
         $.bc({
-            id: id, url: User.url, method: "PUT", data: { type: "user", userIds: result }, title: result == "1" ? "授权用户" : "拒绝用户",
+            id: id, url: apiUrl, method: "put", data: { Id: id, UserStatus: result }, title: result === "ApproveUser" ? "授权用户" : "拒绝用户",
             callback: function (result) {
+                if (!result) return;
                 $table.bootstrapTable('refresh');
-                $.pullNotification($('.header .nav').reloadWidget());
+                $('.header .nav').reloadWidget();
             }
         });
     });

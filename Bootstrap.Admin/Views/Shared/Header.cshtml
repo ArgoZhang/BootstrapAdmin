@@ -88,8 +88,8 @@
         </div>
         <div class="dropdown userinfo">
             <a data-toggle="dropdown" class="dropdown-toggle shadow-default" href="#">
-                <img id="headerIcon" alt="" src="@Url.Content(Model.Icon)">
-                <span id="userDisplayName" data-userName="@Model.UserName" class="username">@Model.DisplayName</span>
+                <img id="headerIcon" alt="" src="@Url.Content(Model.Icon)" asp-append-version="true">
+                <span id="userDisplayName" data-userName="@Model.UserName" class="username text-truncate d-inline-block">@Model.DisplayName</span>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
                 <div class="dropdown-item">
@@ -105,7 +105,7 @@
     </div>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="@Url.Content(Model.HomeUrl)"><i class="fa fa-home"></i>首页</a></li>
+            <li class="breadcrumb-item"><a href="@Url.Content("~/Admin/Index")"><i class="fa fa-home"></i>首页</a></li>
             <li class="breadcrumb-item d-none" id="breadNav"></li>
         </ol>
     </nav>

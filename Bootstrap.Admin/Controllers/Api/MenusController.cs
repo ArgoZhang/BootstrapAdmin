@@ -3,9 +3,7 @@ using Bootstrap.DataAccess;
 using Bootstrap.Security;
 using Longbow.Web.Mvc;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Bootstrap.Admin.Controllers.Api
 {
@@ -13,81 +11,74 @@ namespace Bootstrap.Admin.Controllers.Api
     /// 
     /// </summary>
     [Route("api/[controller]")]
-    public class MenusController : Controller
+    [ApiController]
+    public class MenusController : ControllerBase
     {
         /// <summary>
-        /// 
+        /// 获得所有菜单列表调用
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
         [HttpGet]
-        public QueryData<BootstrapMenu> Get(QueryMenuOption value)
+        public QueryData<object> Get([FromQuery]QueryMenuOption value)
         {
             return value.RetrieveData(User.Identity.Name);
         }
+
         /// <summary>
-        /// 
+        /// 保存菜单调用
         /// </summary>
         /// <param name="value"></param>
         [HttpPost]
         public bool Post([FromBody]BootstrapMenu value)
         {
-            return MenuHelper.SaveMenu(value);
+            return MenuHelper.Save(value);
         }
+
         /// <summary>
-        /// 
+        /// 删除菜单调用
         /// </summary>
         /// <param name="value"></param>
         [HttpDelete]
-        public bool Delete([FromBody]IEnumerable<int> value)
+        public bool Delete([FromBody]IEnumerable<string> value)
         {
-            return MenuHelper.DeleteMenu(value);
+            return MenuHelper.Delete(value);
         }
+
         /// <summary>
-        /// 
+        /// 角色管理菜单授权按钮调用
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="value"></param>
+        /// <param name="id">角色ID</param>
+        /// <param name="type">type=role时，角色管理菜单授权调用；type=user时，菜单管理编辑页面父类菜单按钮调用</param>
         /// <returns></returns>
         [HttpPost("{id}")]
-        public IEnumerable<BootstrapMenu> Post(int id, [FromBody]JObject value)
+        public IEnumerable<object> Post(string id, [FromQuery]string type)
         {
-            var ret = new List<BootstrapMenu>();
-            dynamic json = value;
-            switch ((string)json.type)
+            IEnumerable<object> ret = new List<object>();
+            switch (type)
             {
                 case "role":
-                    ret = MenuHelper.RetrieveMenusByRoleId(id).ToList();
+                    ret = MenuHelper.RetrieveMenusByRoleId(id);
                     break;
                 case "user":
-                    ret = BootstrapMenu.RetrieveAllMenus(User.Identity.Name).ToList();
+                    ret = MenuHelper.RetrieveMenus(User.Identity.Name);
                     break;
                 default:
                     break;
             }
             return ret;
         }
+
         /// <summary>
-        /// 
+        /// 角色管理菜单授权保存按钮调用
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="value"></param>
+        /// <param name="id">角色ID</param>
+        /// <param name="value">菜单ID集合</param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public bool Put(int id, [FromBody]JObject value)
+        public bool Put(string id, [FromBody]IEnumerable<string> value)
         {
-            var ret = false;
-            dynamic json = value;
-            string menuIds = json.menuIds.ToString();
-            switch ((string)json.type)
-            {
-                case "role":
-                    ret = MenuHelper.SaveMenusByRoleId(id, menuIds);
-                    break;
-                default:
-                    break;
-            }
-            return ret;
+            return MenuHelper.SaveMenusByRoleId(id, value);
         }
     }
 }

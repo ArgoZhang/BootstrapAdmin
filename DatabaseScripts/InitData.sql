@@ -25,7 +25,9 @@ INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'消息状�
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'消息标签', N'一般', N'0', 0)
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'消息标签', N'紧要', N'1', 0)
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'头像地址', N'头像路径', N'~/images/uploader/', 0)
+INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'头像地址', N'头像文件', N'default.jpg', 0)
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'网站样式', N'蓝色样式', N'blue.css', 0)
+INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'网站样式', N'黑色样式', N'black.css', 0)
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'当前样式', N'使用样式', N'blue.css', 0)
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'网站设置', N'前台首页', N'~/Home/Index', 0)
 
@@ -47,7 +49,7 @@ INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [C
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (14, 0, N'程序异常', 140, N'fa fa-cubes', N'~/Admin/Exceptions', N'0')
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (16, 0, N'工具集合', 160, N'fa fa-gavel', N'#', N'0')
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (17, 16, N'客户端测试', 10, N'fa fa-wrench', N'~/Admin/Mobile', N'0')
-INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (18, 16, N'API文档', 10, N'fa fa-wrench', N'~/Admin/Api', N'0')
+INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (18, 16, N'API文档', 10, N'fa fa-wrench', N'~/swagger', N'0')
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (19, 16, N'图标集', 10, N'fa fa-dashboard', N'~/Admin/FAIcon', N'0')
 SET IDENTITY_INSERT [dbo].[Navigations] OFF
 
@@ -82,3 +84,31 @@ INSERT [dbo].[NavigationRole] ([NavigationID], [RoleID]) VALUES (16, 2)
 INSERT [dbo].[NavigationRole] ([NavigationID], [RoleID]) VALUES (17, 2)
 INSERT [dbo].[NavigationRole] ([NavigationID], [RoleID]) VALUES (18, 2)
 INSERT [dbo].[NavigationRole] ([NavigationID], [RoleID]) VALUES (19, 2)
+
+-- Client Data
+Declare @AppId nvarchar(1)
+set @AppId = N'2'
+declare @AppName nvarchar(8)
+set @AppName = N'测试平台'
+
+Delete From [dbo].[Dicts] Where Category = N'应用程序' and Code = @AppId
+INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'应用程序', @AppName, @AppId, 0)
+
+Delete From [dbo].[Dicts] Where Category = @AppName
+Insert Dicts (Category, Name, Code, Define) values (@AppName, N'网站标题', N'托盘组垛程序', 1);
+Insert Dicts (Category, Name, Code, Define) values (@AppName, N'网站页脚', N'通用后台管理测试平台', 1);
+Insert Dicts (Category, Name, Code, Define) values (@AppName, N'个人中心地址', N'http://localhost:50852/Admin/Profiles', 1);
+Insert Dicts (Category, Name, Code, Define) values (@AppName, N'系统设置地址', N'http://localhost:50852/Admin/Settings', 1);
+
+-- 菜单
+DELETE FROM Navigations Where [Application] = @AppId
+SET IDENTITY_INSERT [dbo].[Navigations] ON 
+INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category], [Application]) VALUES (210, 0, N'首页', 10, N'fa fa-fa', N'~/Home/Index', N'1', @AppId)
+
+INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category], [Application]) VALUES (220, 0, N'测试页面', 10, N'fa fa-fa', N'~/Home/Index', N'1', @AppId)
+INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category], [Application]) VALUES (230, 220, N'关于', 10, N'fa fa-fa', N'~/Home/Index', N'1', @AppId)
+SET IDENTITY_INSERT [dbo].[Navigations] OFF
+
+-- 菜单授权
+DELETE FROM NavigationRole Where NavigationID in (Select ID From Navigations Where [Application] = @AppId)
+INSERT INTO NavigationRole SELECT ID, 2 FROM Navigations Where [Application] = @AppId

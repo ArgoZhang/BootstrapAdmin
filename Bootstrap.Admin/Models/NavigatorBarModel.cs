@@ -5,13 +5,19 @@ using System.Collections.Generic;
 
 namespace Bootstrap.Admin.Models
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class NavigatorBarModel : HeaderBarModel
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="controller"></param>
         public NavigatorBarModel(ControllerBase controller) : base(controller.User.Identity)
         {
-            Navigations = BootstrapMenu.RetrieveSystemMenus(UserName, $"~{controller.HttpContext.Request.Path}");
+            Navigations = MenuHelper.RetrieveSystemMenus(UserName, $"~{controller.HttpContext.Request.Path}");
             Applications = DictHelper.RetrieveApps();
-            HomeUrl = "~/Admin/Index";
         }
         /// <summary>
         /// 

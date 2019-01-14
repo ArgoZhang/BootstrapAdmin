@@ -1,34 +1,41 @@
 ﻿@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "_Bootstrap";
 }
 @section css {
-    <link href="~/css/sweetalert.css" rel="stylesheet" />
     <environment include="Development">
-        <link href="~/css/toastr.css" rel="stylesheet" />
+        <link href="~/lib/toastr.js/toastr.css" rel="stylesheet" />
+        <link href="~/lib/nprogress/nprogress.css" rel="stylesheet" />
+        <link href="~/lib/bootstrap-sweetalert/sweetalert.css" rel="stylesheet" />
+        <link href="~/lib/scrollbar/jquery.mCustomScrollbar.css" rel="stylesheet" />
     </environment>
     <environment exclude="Development">
-        <link href="~/css/toastr.min.css" rel="stylesheet" />
+        <link href="~/lib/toastr.js/toastr.min.css" rel="stylesheet" />
+        <link href="~/lib/nprogress/nprogress.min.css" rel="stylesheet" />
+        <link href="~/lib/bootstrap-sweetalert/sweetalert.min.css" rel="stylesheet" />
+        <link href="~/lib/scrollbar/jquery.mCustomScrollbar.min.css" rel="stylesheet" />
     </environment>
     @RenderSection("css", false)
-    <link href="~/css/admin.css" rel="stylesheet" />
-    <link href="~/css/admin-responsive.css" rel="stylesheet" />
 }
 @section javascript {
     <environment include="Development">
-        <script src="~/js/sweetalert.js"></script>
-        <script src="~/js/jquery.scrollTo.js"></script>
+        <script src="~/lib/scrollbar/jquery.mCustomScrollbar.js"></script>
+        <script src="~/lib/signalr/dist/browser/signalr.js"></script>
+        <script src="~/lib/dcjqaccordion/js/jquery.dcjqaccordion.2.7.js"></script>
+        <script src="~/lib/bootstrap-sweetalert/sweetalert.js"></script>
+        <script src="~/lib/nprogress/nprogress.js"></script>
     </environment>
     <environment exclude="Development">
-        <script src="~/js/sweetalert.min.js"></script>
-        <script src="~/js/jquery.scrollTo.min.js"></script>
+        <script src="~/lib/scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+        <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
+        <script src="~/lib/dcjqaccordion/js/jquery.dcjqaccordion.2.7.min.js"></script>
+        <script src="~/lib/bootstrap-sweetalert/sweetalert.min.js"></script>
+        <script src="~/lib/nprogress/nprogress.min.js"></script>
     </environment>
-    <script src="~/js/jquery.dcjqaccordion.2.7.js"></script>
-    <script src="~/js/jquery.nicescroll.min.js"></script>
-    <script src="~/js/common-scripts.js"></script>
-    <script src="~/js/log.js"></script>
-    <script src="~/js/toastr.min.js"></script>
-    <script src="~/js/framework.js"></script>
-    @RenderSection("Javascript", false)
+    <script src="~/lib/toastr.js/toastr.min.js"></script>
+    <script src="~/lib/dcjqaccordion/js/jquery.cookie.js"></script>
+    <script src="~/js/common-scripts.js" asp-append-version="true"></script>
+    <script src="~/js/log.js" asp-append-version="true"></script>
+    @RenderSection("javascript", false)
 }
 @await Html.PartialAsync("navigator")
 <section id="main-content" class="main-content">

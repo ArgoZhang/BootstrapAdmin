@@ -1,7 +1,6 @@
 ﻿using Bootstrap.DataAccess;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Bootstrap.Admin.Controllers.Api
@@ -10,44 +9,49 @@ namespace Bootstrap.Admin.Controllers.Api
     /// 
     /// </summary>
     [Route("api/[controller]")]
-    public class NotificationsController : Controller
+    [ApiController]
+    public class NotificationsController : ControllerBase
     {
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public Notifications Get()
+        public object Get()
         {
-            var ret = new Notifications();
+            if (!User.IsInRole("Administrators")) return false;
+
             // New Users
             var user = UserHelper.RetrieveNewUsers();
-            ret.Users = user.Take(6).ToList();
-            ret.Users.AsParallel().ForAll(n =>
-              {
-                  var ts = DateTime.Now - n.RegisterTime;
-                  if (ts.TotalMinutes < 5) n.Period = "刚刚";
-                  else if (ts.Days > 0) n.Period = string.Format("{0}天", ts.Days);
-                  else if (ts.Hours > 0) n.Period = string.Format("{0}小时", ts.Hours);
-                  else if (ts.Minutes > 0) n.Period = string.Format("{0}分钟", ts.Minutes);
-              });
-            ret.NewUsersCount = user.Count();
+            var usersCount = user.Count();
+
+            user = user.Take(6);
+            user.AsParallel().ForAll(n =>
+            {
+                var ts = DateTime.Now - n.RegisterTime;
+                if (ts.TotalMinutes < 5) n.Period = "刚刚";
+                else if (ts.Days > 0) n.Period = string.Format("{0}天", ts.Days);
+                else if (ts.Hours > 0) n.Period = string.Format("{0}小时", ts.Hours);
+                else if (ts.Minutes > 0) n.Period = string.Format("{0}分钟", ts.Minutes);
+            });
 
             // Tasks
-            var task = TaskHelper.RetrieveTasks();
-            ret.Tasks = task.Take(6).ToList();
-            ret.TasksCount = task.Count();
+            var task = TaskHelper.Retrieves();
+            var tasksCount = task.Count();
 
             //Message
-            var message = MessageHelper.RetrieveMessagesHeader(User.Identity.Name);
-            ret.Messages = message.Take(6).ToList();
-            ret.Messages.AsParallel().ForAll(m => m.FromIcon = Url.Content(m.FromIcon));
-            ret.MessagesCount = message.Count();
+            var message = MessageHelper.Retrieves(User.Identity.Name);
+            var messagesCount = message.Count();
+
+            message = message.Take(6);
+            message.AsParallel().ForAll(m => m.FromIcon = Url.Content(m.FromIcon));
 
             //Apps
-            var apps = ExceptionHelper.RetrieveExceptions().Where(n => n.ExceptionType != "Longbow.Data.DBAccessException");
-            ret.Apps = apps.Take(6).ToList();
-            ret.Apps.AsParallel().ForAll(n =>
+            var apps = ExceptionsHelper.Retrieves().Where(n => n.ExceptionType != "Longbow.Data.DBAccessException");
+            var appExceptionsCount = apps.Count();
+
+            apps = apps.Take(6);
+            apps.AsParallel().ForAll(n =>
             {
                 n.ExceptionType = n.ExceptionType.Split('.').Last();
                 var ts = DateTime.Now - n.LogTime;
@@ -56,12 +60,13 @@ namespace Bootstrap.Admin.Controllers.Api
                 else if (ts.Hours > 0) n.Period = string.Format("{0}小时", ts.Hours);
                 else if (ts.Minutes > 0) n.Period = string.Format("{0}分钟", ts.Minutes);
             });
-            ret.AppExceptionsCount = apps.Count();
 
             //Dbs
-            var dbs = ExceptionHelper.RetrieveExceptions().Where(n => n.ExceptionType == "Longbow.Data.DBAccessException");
-            ret.Dbs = dbs.Take(6).ToList();
-            ret.Dbs.AsParallel().ForAll(n =>
+            var dbs = ExceptionsHelper.Retrieves().Where(n => n.ExceptionType == "Longbow.Data.DBAccessException");
+            var dbExceptionsCount = dbs.Count();
+
+            dbs = dbs.Take(6);
+            dbs.AsParallel().ForAll(n =>
             {
                 var ts = DateTime.Now - n.LogTime;
                 if (ts.TotalMinutes < 5) n.Period = "刚刚";
@@ -69,72 +74,20 @@ namespace Bootstrap.Admin.Controllers.Api
                 else if (ts.Hours > 0) n.Period = string.Format("{0}小时", ts.Hours);
                 else if (ts.Minutes > 0) n.Period = string.Format("{0}分钟", ts.Minutes);
             });
-            ret.DbExceptionsCount = dbs.Count();
-            return ret;
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        [HttpGet("{id}")]
-        public object Get(string id)
-        {
-            var ret = new object();
-            if (id == "newusers") ret = UserHelper.RetrieveNewUsers().ToList();
-            return ret;
-        }
 
-        public class Notifications
-        {
-            public Notifications()
+            return new
             {
-                Users = new List<User>();
-                Apps = new List<Exceptions>();
-                Dbs = new List<Exceptions>();
-                Tasks = new List<Task>();
-                Messages = new List<Message>();
-            }
-            /// <summary>
-            /// 
-            /// </summary>
-            public List<User> Users { get; set; }
-            /// <summary>
-            /// 
-            /// </summary>
-            public List<Exceptions> Apps { get; set; }
-            /// <summary>
-            /// 
-            /// </summary>
-            public List<Exceptions> Dbs { get; set; }
-            /// <summary>
-            /// 
-            /// </summary>
-            public List<Task> Tasks { get; set; }
-            /// <summary>
-            /// 
-            /// </summary>
-            public List<Message> Messages { get; set; }
-            /// <summary>
-            /// 获得/设置 消息数量
-            /// </summary>
-            public int MessagesCount { get; set; }
-            /// <summary>
-            /// 获得/设置 新用户数量
-            /// </summary>
-            public int NewUsersCount { get; set; }
-            /// <summary>
-            /// 获取/设置 任务数量
-            /// </summary>
-            public int TasksCount { get; set; }
-            /// <summary>
-            /// 获取/设置 应用程序错误数量
-            /// </summary>
-            public int AppExceptionsCount { get; set; }
-            /// <summary>
-            /// 获取/设置 数据库错误数量
-            /// </summary>
-            public int DbExceptionsCount { get; set; }
+                NewUsersCount = usersCount,
+                TasksCount = tasksCount,
+                MessagesCount = messagesCount,
+                AppExceptionsCount = appExceptionsCount,
+                DbExceptionsCount = dbExceptionsCount,
+                Users = user.Select(i => new { i.Period, i.UserName, i.DisplayName, i.Description }),
+                Tasks = task.Take(6),
+                Messages = message,
+                Apps = apps.Select(n => new { n.ExceptionType, n.Message, n.Period }),
+                Dbs = dbs.Select(n => new { n.ErrorPage, n.Message, n.Period })
+            };
         }
     }
 }
