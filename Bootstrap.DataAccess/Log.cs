@@ -50,7 +50,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="tId"></param>
         /// <returns></returns>
-        public virtual IEnumerable<Log> Retrieves() => DbManager.Db.Fetch<Log>();
+        public virtual IEnumerable<Log> Retrieves() => DbManager.Create().Fetch<Log>("select * from Logs where LogTime > @0 order by LogTime desc", DateTime.Now.AddDays(-7));
 
         /// <summary>
         /// 删除日志信息
@@ -62,7 +62,7 @@ namespace Bootstrap.DataAccess
             System.Threading.Tasks.Task.Run(() =>
             {
                 var dtm = DateTime.Now.AddMonths(0 - LgbConvert.ReadValue(ConfigurationManager.AppSettings["KeepLogsPeriod"], 1));
-                DbManager.Db.Execute("delete from Logs where LogTime < @0", dtm);
+                DbManager.Create().Execute("delete from Logs where LogTime < @0", dtm);
             });
         }
 
@@ -76,7 +76,7 @@ namespace Bootstrap.DataAccess
             if (p == null) throw new ArgumentNullException(nameof(p));
             DeleteLogAsync();
             p.LogTime = DateTime.Now;
-            DbManager.Db.Save(p);
+            DbManager.Create().Save(p);
             return true;
         }
     }

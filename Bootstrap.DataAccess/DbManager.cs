@@ -10,11 +10,6 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 
         /// </summary>
-        public static IDatabase Db { get { return Create(); } }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="connectionName"></param>
         /// <returns></returns>
         public static IDatabase Create(string connectionName = null, bool keepAlive = false)

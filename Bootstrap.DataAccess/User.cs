@@ -1,5 +1,6 @@
 ﻿using Bootstrap.Security;
 using Bootstrap.Security.DataAccess;
+using Longbow.Data;
 using Longbow.Security.Cryptography;
 using System;
 using System.Collections.Generic;
@@ -75,7 +76,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual bool Authenticate(string userName, string password)
         {
-            var user = DbManager.Db.SingleOrDefault<User>("select Password, PassSalt from Users where ApprovedTime is not null and UserName = @0", userName);
+            var user = DbManager.Create().SingleOrDefault<User>("select Password, PassSalt from Users where ApprovedTime is not null and UserName = @0", userName);
 
             return !string.IsNullOrEmpty(user.PassSalt) && user.Password == LgbCryptography.ComputeHash(password, user.PassSalt);
         }
@@ -95,7 +96,7 @@ namespace Bootstrap.DataAccess
                 string sql = "set Password = @0, PassSalt = @1 where UserName = @2";
                 var passSalt = LgbCryptography.GenerateSalt();
                 var newPassword = LgbCryptography.ComputeHash(newPass, passSalt);
-                ret = DbManager.Db.Update<User>(sql, newPassword, passSalt, userName) == 1;
+                ret = DbManager.Create().Update<User>(sql, newPassword, passSalt, userName) == 1;
             }
             return ret;
         }
@@ -105,13 +106,13 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public virtual IEnumerable<User> Retrieves() => DbManager.Db.Fetch<User>("select ID, UserName, DisplayName, RegisterTime, ApprovedTime, ApprovedBy, Description from Users Where ApprovedTime is not null");
+        public virtual IEnumerable<User> Retrieves() => DbManager.Create().Fetch<User>("select ID, UserName, DisplayName, RegisterTime, ApprovedTime, ApprovedBy, Description from Users Where ApprovedTime is not null");
 
         /// <summary>
         /// 查询所有的新注册用户
         /// </summary>
         /// <returns></returns>
-        public virtual IEnumerable<User> RetrieveNewUsers() => DbManager.Db.Fetch<User>("select ID, UserName, DisplayName, RegisterTime, Description from Users Where ApprovedTime is null order by RegisterTime desc");
+        public virtual IEnumerable<User> RetrieveNewUsers() => DbManager.Create().Fetch<User>("select ID, UserName, DisplayName, RegisterTime, Description from Users Where ApprovedTime is null order by RegisterTime desc");
 
         /// <summary>
         /// 删除用户
@@ -121,7 +122,7 @@ namespace Bootstrap.DataAccess
         {
             if (!value.Any()) return true;
             bool ret = false;
-            var db = DbManager.Db;
+            var db = DbManager.Create();
             try
             {
                 var ids = string.Join(",", value);
@@ -154,7 +155,7 @@ namespace Bootstrap.DataAccess
             p.Password = LgbCryptography.ComputeHash(p.Password, p.PassSalt);
             p.RegisterTime = DateTime.Now;
 
-            var db = DbManager.Db;
+            var db = DbManager.Create();
             try
             {
                 db.BeginTransaction();
@@ -185,7 +186,7 @@ namespace Bootstrap.DataAccess
         {
             var passSalt = LgbCryptography.GenerateSalt();
             var newPassword = LgbCryptography.ComputeHash(password, passSalt);
-            return DbManager.Db.Update<User>("set Password = @1, PassSalt = @2, DisplayName = @3 where ID = @0", id, newPassword, passSalt, displayName) == 1;
+            return DbManager.Create().Update<User>("set Password = @1, PassSalt = @2, DisplayName = @3 where ID = @0", id, newPassword, passSalt, displayName) == 1;
         }
 
         /// <summary>
@@ -194,7 +195,7 @@ namespace Bootstrap.DataAccess
         /// <param name="id"></param>
         /// <param name="approvedBy"></param>
         /// <returns></returns>
-        public virtual bool Approve(string id, string approvedBy) => DbManager.Db.Update<User>("set ApprovedTime = @1, ApprovedBy = @2 where ID = @0", id, DateTime.Now, approvedBy) == 1;
+        public virtual bool Approve(string id, string approvedBy) => DbManager.Create().Update<User>("set ApprovedTime = @1, ApprovedBy = @2 where ID = @0", id, DateTime.Now, approvedBy) == 1;
 
         /// <summary>
         /// 
@@ -205,7 +206,7 @@ namespace Bootstrap.DataAccess
         public virtual bool Reject(string id, string rejectBy)
         {
             var ret = false;
-            var db = DbManager.Db;
+            var db = DbManager.Create();
             try
             {
                 db.BeginTransaction();
@@ -229,7 +230,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="roleId"></param>
         /// <returns></returns>
-        public virtual IEnumerable<User> RetrievesByRoleId(string roleId) => DbManager.Db.Fetch<User>("select u.ID, u.UserName, u.DisplayName, case ur.UserID when u.ID then 'checked' else '' end Checked from Users u left join UserRole ur on u.ID = ur.UserID and RoleID = @0 where u.ApprovedTime is not null", roleId);
+        public virtual IEnumerable<User> RetrievesByRoleId(string roleId) => DbManager.Create().Fetch<User>("select u.ID, u.UserName, u.DisplayName, case ur.UserID when u.ID then 'checked' else '' end Checked from Users u left join UserRole ur on u.ID = ur.UserID and RoleID = @0 where u.ApprovedTime is not null", roleId);
 
         /// <summary>
         /// 通过角色ID保存当前授权用户（插入）
@@ -240,13 +241,13 @@ namespace Bootstrap.DataAccess
         public virtual bool SaveByRoleId(string roleId, IEnumerable<string> userIds)
         {
             bool ret = false;
-            var db = DbManager.Db;
+            var db = DbManager.Create();
             try
             {
                 db.BeginTransaction();
                 //删除用户角色表该角色所有的用户
                 db.Execute("delete from UserRole where RoleID = @0", roleId);
-                db.InsertBulk("UserRole", userIds.Select(g => new { UserID = g, RoleID = roleId }));
+                db.InsertBatch("UserRole", userIds.Select(g => new { UserID = g, RoleID = roleId }));
                 db.CompleteTransaction();
                 ret = true;
             }
@@ -263,7 +264,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="groupId"></param>
         /// <returns></returns>
-        public virtual IEnumerable<User> RetrievesByGroupId(string groupId) => DbManager.Db.Fetch<User>("select u.ID, u.UserName, u.DisplayName, case ur.UserID when u.ID then 'checked' else '' end Checked from Users u left join UserGroup ur on u.ID = ur.UserID and GroupID = @0 where u.ApprovedTime is not null", groupId);
+        public virtual IEnumerable<User> RetrievesByGroupId(string groupId) => DbManager.Create().Fetch<User>("select u.ID, u.UserName, u.DisplayName, case ur.UserID when u.ID then 'checked' else '' end Checked from Users u left join UserGroup ur on u.ID = ur.UserID and GroupID = @0 where u.ApprovedTime is not null", groupId);
 
         /// <summary>
         /// 通过部门ID保存当前授权用户（插入）
@@ -274,13 +275,13 @@ namespace Bootstrap.DataAccess
         public virtual bool SaveByGroupId(string groupId, IEnumerable<string> userIds)
         {
             bool ret = false;
-            var db = DbManager.Db;
+            var db = DbManager.Create();
             try
             {
                 db.BeginTransaction();
                 //删除用户角色表该角色所有的用户
                 db.Execute("delete from UserGroup where GroupID = @0", groupId);
-                db.InsertBulk("UserGroup", userIds.Select(g => new { UserID = g, GroupID = groupId }));
+                db.InsertBatch("UserGroup", userIds.Select(g => new { UserID = g, GroupID = groupId }));
                 db.CompleteTransaction();
                 ret = true;
             }
@@ -298,7 +299,7 @@ namespace Bootstrap.DataAccess
         /// <param name="userName"></param>
         /// <param name="iconName"></param>
         /// <returns></returns>
-        public virtual bool SaveUserIconByName(string userName, string iconName) => DbManager.Db.Update<User>("set Icon = @1 where UserName = @0", userName, iconName) == 1;
+        public virtual bool SaveUserIconByName(string userName, string iconName) => DbManager.Create().Update<User>("set Icon = @1 where UserName = @0", userName, iconName) == 1;
 
         /// <summary>
         /// 
@@ -306,7 +307,7 @@ namespace Bootstrap.DataAccess
         /// <param name="userName"></param>
         /// <param name="displayName"></param>
         /// <returns></returns>
-        public virtual bool SaveDisplayName(string userName, string displayName) => DbManager.Db.Update<User>("set DisplayName = @1 where UserName = @0", userName, displayName) == 1;
+        public virtual bool SaveDisplayName(string userName, string displayName) => DbManager.Create().Update<User>("set DisplayName = @1 where UserName = @0", userName, displayName) == 1;
 
         /// <summary>
         /// 根据用户名更改用户皮肤
@@ -314,7 +315,7 @@ namespace Bootstrap.DataAccess
         /// <param name="userName"></param>
         /// <param name="cssName"></param>
         /// <returns></returns>
-        public virtual bool SaveUserCssByName(string userName, string cssName) => DbManager.Db.Update<User>("set Css = @1 where UserName = @0", userName, cssName) == 1;
+        public virtual bool SaveUserCssByName(string userName, string cssName) => DbManager.Create().Update<User>("set Css = @1 where UserName = @0", userName, cssName) == 1;
 
         /// <summary>
         /// 

@@ -65,7 +65,7 @@ namespace Bootstrap.DataAccess
 
         private static void ClearExceptions() => System.Threading.Tasks.Task.Run(() =>
         {
-            DbManager.Db.Execute("delete from Exceptions where LogTime < @0", DateTime.Now.AddMonths(0 - LgbConvert.ReadValue(ConfigurationManager.AppSettings["KeepExceptionsPeriod"], 1)));
+            DbManager.Create().Execute("delete from Exceptions where LogTime < @0", DateTime.Now.AddMonths(0 - LgbConvert.ReadValue(ConfigurationManager.AppSettings["KeepExceptionsPeriod"], 1)));
         });
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Bootstrap.DataAccess
             if (ex == null) throw new ArgumentNullException(nameof(ex));
 
             var errorPage = additionalInfo?["ErrorPage"] ?? (ex.GetType().Name.Length > 50 ? ex.GetType().Name.Substring(0, 50) : ex.GetType().Name);
-            DbManager.Db.Insert(new Exceptions()
+            DbManager.Create().Insert(new Exceptions()
             {
                 AppDomainName = AppDomain.CurrentDomain.FriendlyName,
                 ErrorPage = errorPage,
@@ -98,7 +98,7 @@ namespace Bootstrap.DataAccess
         /// 查询一周内所有异常
         /// </summary>
         /// <returns></returns>
-        public virtual IEnumerable<Exceptions> Retrieves() => DbManager.Db.Fetch<Exceptions>("select * from Exceptions where LogTime > @0 order by LogTime desc", DateTime.Now.AddDays(-7));
+        public virtual IEnumerable<Exceptions> Retrieves() => DbManager.Create().Fetch<Exceptions>("select * from Exceptions where LogTime > @0 order by LogTime desc", DateTime.Now.AddDays(-7));
 
         /// <summary>
         /// 
@@ -116,7 +116,7 @@ namespace Bootstrap.DataAccess
             if (startTime == null && endTime == null) sql.Append("where LogTime > @0", DateTime.Today.AddDays(-7));
             sql.Append("order by @0", $"{po.Sort} {po.Order}");
 
-            return DbManager.Db.Page<Exceptions>(po.PageIndex, po.Limit, sql);
+            return DbManager.Create().Page<Exceptions>(po.PageIndex, po.Limit, sql);
         }
     }
 }

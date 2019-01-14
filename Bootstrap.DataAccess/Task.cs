@@ -52,6 +52,6 @@ namespace Bootstrap.DataAccess
         /// 查询所有任务
         /// </summary>
         /// <returns></returns>
-        public virtual IEnumerable<Task> Retrieves() => DbManager.Db.SkipTake<Task>(0, 1000, "select t.*, u.DisplayName AssignDisplayName from Tasks t inner join Users u on t.UserName = u.UserName order by AssignTime desc");
+        public virtual IEnumerable<Task> Retrieves() => DbManager.Create().SkipTake<Task>(0, 1000, "select t.*, u.DisplayName AssignDisplayName from Tasks t inner join Users u on t.UserName = u.UserName order by AssignTime desc");
     }
 }

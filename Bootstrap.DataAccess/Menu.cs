@@ -1,5 +1,6 @@
 ﻿using Bootstrap.Security;
 using Bootstrap.Security.DataAccess;
+using Longbow.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace Bootstrap.DataAccess
         public virtual bool Delete(IEnumerable<string> value)
         {
             var ret = false;
-            var db = DbManager.Db;
+            var db = DbManager.Create();
             try
             {
                 var ids = string.Join(",", value);
@@ -47,7 +48,7 @@ namespace Bootstrap.DataAccess
             if (p.Name.Length > 50) p.Name = p.Name.Substring(0, 50);
             if (p.Icon != null && p.Icon.Length > 50) p.Icon = p.Icon.Substring(0, 50);
             if (p.Url != null && p.Url.Length > 4000) p.Url = p.Url.Substring(0, 4000);
-            DbManager.Db.Save(p);
+            DbManager.Create().Save(p);
             return true;
         }
         /// <summary>
@@ -57,7 +58,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual IEnumerable<object> RetrieveMenusByRoleId(string roleId)
         {
-            var menus = DbManager.Db.Fetch<BootstrapMenu>("select NavigationID as Id from NavigationRole where RoleID = @0", roleId);
+            var menus = DbManager.Create().Fetch<BootstrapMenu>("select NavigationID as Id from NavigationRole where RoleID = @0", roleId);
             return menus.Select(m => new { m.Id });
         }
         /// <summary>
@@ -69,12 +70,12 @@ namespace Bootstrap.DataAccess
         public virtual bool SaveMenusByRoleId(string roleId, IEnumerable<string> menuIds)
         {
             bool ret = false;
-            var db = DbManager.Db;
+            var db = DbManager.Create();
             try
             {
                 db.BeginTransaction();
                 db.Execute("delete from NavigationRole where RoleID = @0", roleId);
-                db.InsertBulk("NavigationRole", menuIds.Select(g => new { NavigationID = g, RoleID = roleId }));
+                db.InsertBatch("NavigationRole", menuIds.Select(g => new { NavigationID = g, RoleID = roleId }));
                 db.CompleteTransaction();
                 ret = true;
             }
