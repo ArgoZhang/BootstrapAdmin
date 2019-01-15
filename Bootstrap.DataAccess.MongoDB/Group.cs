@@ -20,7 +20,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <returns></returns>
         public override IEnumerable<DataAccess.Group> Retrieves()
         {
-            return MongoDbAccessManager.Groups.Find(FilterDefinition<Group>.Empty).ToList();
+            return DbManager.Groups.Find(FilterDefinition<Group>.Empty).ToList();
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace Bootstrap.DataAccess.MongoDB
             if (p.Id == "0")
             {
                 p.Id = null;
-                MongoDbAccessManager.Groups.InsertOne(new Group() {
+                DbManager.Groups.InsertOne(new Group() {
                     GroupName = p.GroupName,
                     Description = p.Description,
                     Roles = new List<string>()
@@ -42,7 +42,7 @@ namespace Bootstrap.DataAccess.MongoDB
             }
             else
             {
-                MongoDbAccessManager.Groups.UpdateOne(md => md.Id == p.Id, Builders<Group>.Update.Set(md => md.GroupName, p.GroupName).Set(md => md.Description, p.Description));
+                DbManager.Groups.UpdateOne(md => md.Id == p.Id, Builders<Group>.Update.Set(md => md.GroupName, p.GroupName).Set(md => md.Description, p.Description));
                 return true;
             }
         }
@@ -59,7 +59,7 @@ namespace Bootstrap.DataAccess.MongoDB
             {
                 list.Add(new DeleteOneModel<Group>(Builders<Group>.Filter.Eq(g => g.Id, id)));
             }
-            MongoDbAccessManager.Groups.BulkWrite(list);
+            DbManager.Groups.BulkWrite(list);
             return true;
         }
 
@@ -84,7 +84,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <returns></returns>
         public override bool SaveByUserId(string userId, IEnumerable<string> groupIds)
         {
-            MongoDbAccessManager.Users.FindOneAndUpdate(u => u.Id == userId, Builders<User>.Update.Set(u => u.Groups, groupIds));
+            DbManager.Users.FindOneAndUpdate(u => u.Id == userId, Builders<User>.Update.Set(u => u.Groups, groupIds));
             return true;
         }
 
@@ -108,23 +108,23 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <returns></returns>
         public override bool SaveByRoleId(string roleId, IEnumerable<string> groupIds)
         {
-            var groups = MongoDbAccessManager.Groups.Find(md => md.Roles != null && md.Roles.Contains(roleId)).ToList();
+            var groups = DbManager.Groups.Find(md => md.Roles != null && md.Roles.Contains(roleId)).ToList();
 
             // Remove roles
             groups.ForEach(p =>
             {
                 var roles = p.Roles == null ? new List<string>() : p.Roles.ToList();
                 roles.Remove(roleId);
-                MongoDbAccessManager.Groups.UpdateOne(md => md.Id == p.Id, Builders<Group>.Update.Set(md => md.Roles, roles));
+                DbManager.Groups.UpdateOne(md => md.Id == p.Id, Builders<Group>.Update.Set(md => md.Roles, roles));
             });
 
-            groups = MongoDbAccessManager.Groups.Find(md => groupIds.Contains(md.Id)).ToList();
+            groups = DbManager.Groups.Find(md => groupIds.Contains(md.Id)).ToList();
             // Add roles
             groups.ForEach(p =>
             {
                 var roles = p.Roles == null ? new List<string>() : p.Roles.ToList();
                 roles.Add(roleId);
-                MongoDbAccessManager.Groups.UpdateOne(md => md.Id == p.Id, Builders<Group>.Update.Set(md => md.Roles, roles));
+                DbManager.Groups.UpdateOne(md => md.Id == p.Id, Builders<Group>.Update.Set(md => md.Roles, roles));
             });
             return true;
         }

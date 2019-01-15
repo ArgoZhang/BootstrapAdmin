@@ -21,7 +21,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <returns></returns>
         public override IEnumerable<DataAccess.Role> Retrieves()
         {
-            return MongoDbAccessManager.Roles.Find(FilterDefinition<Role>.Empty).ToList();
+            return DbManager.Roles.Find(FilterDefinition<Role>.Empty).ToList();
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace Bootstrap.DataAccess.MongoDB
             if (p.Id == "0")
             {
                 p.Id = null;
-                MongoDbAccessManager.Roles.InsertOne(new Role()
+                DbManager.Roles.InsertOne(new Role()
                 {
                     RoleName = p.RoleName,
                     Description = p.Description,
@@ -44,7 +44,7 @@ namespace Bootstrap.DataAccess.MongoDB
             }
             else
             {
-                MongoDbAccessManager.Roles.UpdateOne(md => md.Id == p.Id, Builders<Role>.Update.Set(md => md.RoleName, p.RoleName).Set(md => md.Description, p.Description));
+                DbManager.Roles.UpdateOne(md => md.Id == p.Id, Builders<Role>.Update.Set(md => md.RoleName, p.RoleName).Set(md => md.Description, p.Description));
                 return true;
             }
         }
@@ -61,7 +61,7 @@ namespace Bootstrap.DataAccess.MongoDB
             {
                 list.Add(new DeleteOneModel<Role>(Builders<Role>.Filter.Eq(g => g.Id, id)));
             }
-            MongoDbAccessManager.Roles.BulkWrite(list);
+            DbManager.Roles.BulkWrite(list);
             return true;
         }
 
@@ -102,7 +102,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <returns></returns>
         public override bool SaveByUserId(string userId, IEnumerable<string> roleIds)
         {
-            MongoDbAccessManager.Users.FindOneAndUpdate(u => u.Id == userId, Builders<User>.Update.Set(u => u.Roles, roleIds));
+            DbManager.Users.FindOneAndUpdate(u => u.Id == userId, Builders<User>.Update.Set(u => u.Roles, roleIds));
             return true;
         }
 
@@ -127,24 +127,24 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <returns></returns>
         public override bool SavaByMenuId(string menuId, IEnumerable<string> roleIds)
         {
-            var roles = MongoDbAccessManager.Roles.Find(md => md.Menus != null && md.Menus.Contains(menuId)).ToList();
+            var roles = DbManager.Roles.Find(md => md.Menus != null && md.Menus.Contains(menuId)).ToList();
 
             // Remove roles
             roles.ForEach(p =>
             {
                 var menus = p.Menus == null ? new List<string>() : p.Menus.ToList();
                 menus.Remove(menuId);
-                MongoDbAccessManager.Roles.UpdateOne(md => md.Id == p.Id, Builders<Role>.Update.Set(md => md.Menus, menus));
+                DbManager.Roles.UpdateOne(md => md.Id == p.Id, Builders<Role>.Update.Set(md => md.Menus, menus));
             });
 
-            roles = MongoDbAccessManager.Roles.Find(md => roleIds.Contains(md.Id)).ToList();
+            roles = DbManager.Roles.Find(md => roleIds.Contains(md.Id)).ToList();
             roles.ForEach(role =>
             {
                 var menus = role.Menus == null ? new List<string>() : role.Menus.ToList();
                 if (!menus.Contains(menuId))
                 {
                     menus.Add(menuId);
-                    MongoDbAccessManager.Roles.UpdateOne(md => md.Id == role.Id, Builders<Role>.Update.Set(md => md.Menus, menus));
+                    DbManager.Roles.UpdateOne(md => md.Id == role.Id, Builders<Role>.Update.Set(md => md.Menus, menus));
                 }
             });
             return true;
@@ -171,7 +171,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <returns></returns>
         public override bool SaveByGroupId(string groupId, IEnumerable<string> roleIds)
         {
-            MongoDbAccessManager.Groups.FindOneAndUpdate(u => u.Id == groupId, Builders<Group>.Update.Set(u => u.Roles, roleIds));
+            DbManager.Groups.FindOneAndUpdate(u => u.Id == groupId, Builders<Group>.Update.Set(u => u.Roles, roleIds));
             return true;
         }
 
@@ -182,7 +182,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <returns></returns>
         public override IEnumerable<string> RetrieveRolesByUrl(string url)
         {
-            var menu = MongoDbAccessManager.Menus.Find(md => md.Url.StartsWith(url)).FirstOrDefault();
+            var menu = DbManager.Menus.Find(md => md.Url.StartsWith(url)).FirstOrDefault();
             var ret = RoleHelper.Retrieves().Cast<Role>().Where(md => md.Menus != null && md.Menus.Contains(menu.Id)).Select(m => m.RoleName).ToList();
             if (!ret.Contains("Administrators")) ret.Add("Administrators");
             return ret;

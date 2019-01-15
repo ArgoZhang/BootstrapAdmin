@@ -14,7 +14,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// 
         /// </summary>
         /// <returns></returns>
-        public override IEnumerable<BootstrapDict> RetrieveDicts() => MongoDbAccessManager.Dicts.Find(FilterDefinition<BootstrapDict>.Empty).ToList();
+        public override IEnumerable<BootstrapDict> RetrieveDicts() => DbManager.Dicts.Find(FilterDefinition<BootstrapDict>.Empty).ToList();
 
         /// <summary>
         /// 
@@ -28,7 +28,7 @@ namespace Bootstrap.DataAccess.MongoDB
             {
                 list.Add(new DeleteOneModel<BootstrapDict>(Builders<BootstrapDict>.Filter.Eq(md => md.Id, id)));
             }
-            MongoDbAccessManager.Dicts.BulkWrite(list);
+            DbManager.Dicts.BulkWrite(list);
             return true;
         }
 
@@ -42,12 +42,12 @@ namespace Bootstrap.DataAccess.MongoDB
             if (p.Id == "0")
             {
                 p.Id = null;
-                MongoDbAccessManager.Dicts.InsertOne(p);
+                DbManager.Dicts.InsertOne(p);
                 return true;
             }
             else
             {
-                MongoDbAccessManager.Dicts.UpdateOne(md => md.Id == p.Id, Builders<BootstrapDict>.Update.Set(md => md.Category, p.Category)
+                DbManager.Dicts.UpdateOne(md => md.Id == p.Id, Builders<BootstrapDict>.Update.Set(md => md.Category, p.Category)
                     .Set(md => md.Define, p.Define)
                     .Set(md => md.Name, p.Name)
                     .Set(md => md.Code, p.Code));
@@ -62,7 +62,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <returns></returns>
         public override bool SaveSettings(BootstrapDict dict)
         {
-            MongoDbAccessManager.Dicts.FindOneAndUpdate(md => md.Category == dict.Category && md.Name == dict.Name, Builders<BootstrapDict>.Update.Set(md => md.Code, dict.Code));
+            DbManager.Dicts.FindOneAndUpdate(md => md.Category == dict.Category && md.Name == dict.Name, Builders<BootstrapDict>.Update.Set(md => md.Code, dict.Code));
             return true;
         }
     }

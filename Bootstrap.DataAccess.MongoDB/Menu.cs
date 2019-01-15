@@ -19,7 +19,7 @@ namespace Bootstrap.DataAccess.MongoDB
         {
             var dicts = DictHelper.RetrieveDicts().Where(m => m.Category == "菜单");
 
-            var menus = MongoDbAccessManager.Menus.Find(FilterDefinition<BootstrapMenu>.Empty).ToList();
+            var menus = DbManager.Menus.Find(FilterDefinition<BootstrapMenu>.Empty).ToList();
             menus.ForEach(m =>
             {
                 m.CategoryName = dicts.FirstOrDefault(d => d.Code == m.Category)?.Name;
@@ -38,7 +38,7 @@ namespace Bootstrap.DataAccess.MongoDB
             if (p.Id == "0")
             {
                 p.Id = null;
-                MongoDbAccessManager.Menus.InsertOne(p);
+                DbManager.Menus.InsertOne(p);
                 return true;
             }
             else
@@ -52,7 +52,7 @@ namespace Bootstrap.DataAccess.MongoDB
                     .Set(md => md.Target, p.Target)
                     .Set(md => md.IsResource, p.IsResource)
                     .Set(md => md.Application, p.Application);
-                MongoDbAccessManager.Menus.UpdateOne(md => md.Id == p.Id, update);
+                DbManager.Menus.UpdateOne(md => md.Id == p.Id, update);
                 return true;
             }
         }
@@ -69,7 +69,7 @@ namespace Bootstrap.DataAccess.MongoDB
             {
                 list.Add(new DeleteOneModel<BootstrapMenu>(Builders<BootstrapMenu>.Filter.Eq(g => g.Id, id)));
             }
-            MongoDbAccessManager.Menus.BulkWrite(list);
+            DbManager.Menus.BulkWrite(list);
             return true;
         }
 
@@ -78,7 +78,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// </summary>
         /// <param name="roleId"></param>
         /// <returns></returns>
-        public override IEnumerable<object> RetrieveMenusByRoleId(string roleId) => MongoDbAccessManager.Roles.Find(md => md.Id == roleId).FirstOrDefault().Menus.Select(m => new { Id = m });
+        public override IEnumerable<object> RetrieveMenusByRoleId(string roleId) => DbManager.Roles.Find(md => md.Id == roleId).FirstOrDefault().Menus.Select(m => new { Id = m });
 
         /// <summary>
         /// 
@@ -88,7 +88,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <returns></returns>
         public override bool SaveMenusByRoleId(string roleId, IEnumerable<string> menuIds)
         {
-            MongoDbAccessManager.Roles.FindOneAndUpdate(md => md.Id == roleId, Builders<Role>.Update.Set(md => md.Menus, menuIds));
+            DbManager.Roles.FindOneAndUpdate(md => md.Id == roleId, Builders<Role>.Update.Set(md => md.Menus, menuIds));
             return true;
         }
     }

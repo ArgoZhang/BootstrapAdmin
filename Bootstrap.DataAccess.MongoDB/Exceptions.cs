@@ -14,7 +14,7 @@ namespace Bootstrap.DataAccess.MongoDB
         {
             System.Threading.Tasks.Task.Run(() =>
             {
-                MongoDbAccessManager.Exceptions.DeleteMany(ex => ex.LogTime < DateTime.Now.AddDays(-7));
+                DbManager.Exceptions.DeleteMany(ex => ex.LogTime < DateTime.Now.AddDays(-7));
             });
         }
 
@@ -24,7 +24,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <returns></returns>
         public override IEnumerable<DataAccess.Exceptions> Retrieves()
         {
-            return MongoDbAccessManager.Exceptions.Find(ex => ex.LogTime >= DateTime.Now.AddDays(-7)).ToList();
+            return DbManager.Exceptions.Find(ex => ex.LogTime >= DateTime.Now.AddDays(-7)).ToList();
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Bootstrap.DataAccess.MongoDB
                 UserId = additionalInfo?["UserId"],
                 UserIp = additionalInfo?["UserIp"]
             };
-            MongoDbAccessManager.Exceptions.InsertOne(excep);
+            DbManager.Exceptions.InsertOne(excep);
             ClearExceptions();
             return true;
         }

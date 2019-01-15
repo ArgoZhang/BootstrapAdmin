@@ -14,7 +14,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <returns></returns>
         public override IEnumerable<DataAccess.Task> Retrieves()
         {
-            var users = MongoDbAccessManager.DBAccess.GetCollection<DataAccess.Task>("Tasks");
+            var users = DbManager.DBAccess.GetCollection<DataAccess.Task>("Tasks");
             return users.Find(FilterDefinition<DataAccess.Task>.Empty).SortByDescending(task => task.AssignTime).ToList();
         }
     }

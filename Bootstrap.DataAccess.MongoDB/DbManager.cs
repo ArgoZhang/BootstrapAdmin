@@ -5,15 +5,13 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
-using System;
-using System.Linq;
 
 namespace Bootstrap.DataAccess.MongoDB
 {
     /// <summary>
     /// 
     /// </summary>
-    public static class MongoDbAccessManager
+    internal static class DbManager
     {
         private static IMongoDatabase _db = null;
         private static bool _register = false;
@@ -122,14 +120,8 @@ namespace Bootstrap.DataAccess.MongoDB
 
         private static void InitDb()
         {
-            var connectString = DbAdapterManager.GetConnectionString("ba");
-            if (string.IsNullOrEmpty(connectString)) throw new InvalidOperationException("Please set the BA default value in configuration file.");
-
-            var seq = connectString.SpanSplit(";", StringSplitOptions.RemoveEmptyEntries);
-            if (seq.Count != 2) throw new InvalidOperationException("ConnectionString invalid in configuration file. It should be mongodb://127.0.0.1:27017;Data Source=BootstrapAdmin");
-
-            var client = new MongoClient(seq[0]);
-            _db = client.GetDatabase(seq[1].SpanSplit("=", StringSplitOptions.RemoveEmptyEntries).LastOrDefault());
+            var client = new MongoClient(Longbow.Data.DbManager.GetConnectionString());
+            _db = client.GetDatabase(ConfigurationManager.AppSettings["MongoDB"]);
         }
 
         private static void InitClassMap()

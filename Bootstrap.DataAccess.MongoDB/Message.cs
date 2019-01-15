@@ -15,7 +15,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <returns></returns>
         protected override IEnumerable<DataAccess.Message> Retrieves(string userName)
         {
-            var msg = MongoDbAccessManager.DBAccess.GetCollection<DataAccess.Message>("Messages");
+            var msg = DbManager.DBAccess.GetCollection<DataAccess.Message>("Messages");
             return msg.Find(message => message.To == userName || message.From == userName).ToList();
         }
     }
