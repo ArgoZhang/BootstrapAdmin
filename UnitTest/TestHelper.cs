@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace UniTest
+namespace UnitTest
 {
     public static class TestHelper
     {
@@ -25,6 +25,17 @@ namespace UniTest
         {
             var soluFolder = RetrieveSolutionPath();
             return Path.Combine(soluFolder, folder);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static void CopyLicense()
+        {
+            var licFile = RetrievePath($"UnitTest{Path.DirectorySeparatorChar}License{Path.DirectorySeparatorChar}Longbow.lic");
+
+            var targetFile = Path.Combine(AppContext.BaseDirectory, "Longbow.lic");
+            if (!File.Exists(targetFile)) File.Copy(licFile, targetFile, true);
         }
     }
 }
