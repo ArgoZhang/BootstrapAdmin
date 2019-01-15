@@ -17,6 +17,8 @@ using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.IO;
+using System.Text.Encodings.Web;
+using System.Text.Unicode;
 
 namespace Bootstrap.Admin
 {
@@ -46,6 +48,7 @@ namespace Bootstrap.Admin
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
