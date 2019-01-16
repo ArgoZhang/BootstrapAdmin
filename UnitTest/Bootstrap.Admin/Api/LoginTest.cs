@@ -3,21 +3,26 @@ using Xunit;
 
 namespace Bootstrap.Admin.Api
 {
-    public class LoginTest : IClassFixture<BAWebHost>
+    public class LoginTest : ApiTest
     {
-        private HttpClient _client;
-
-        public LoginTest(BAWebHost factory)
+        public LoginTest(BAWebHost factory) : base(factory, "Login", false)
         {
-            _client = factory.CreateClient();
+
         }
 
         [Fact]
         public async void Login_Ok()
         {
-            var resq = await _client.PostAsJsonAsync("/api/Login", new { userName = "Admin", password = "123789" });
+            var resq = await Client.PostAsJsonAsync("", new { userName = "Admin", password = "123789" });
             var _token = await resq.Content.ReadAsStringAsync();
             Assert.NotNull(_token);
+        }
+
+        [Fact]
+        public async void Option_Ok()
+        {
+            var req = new HttpRequestMessage(HttpMethod.Options, "");
+            var resp = await Client.SendAsync(req);
         }
     }
 }
