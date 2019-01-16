@@ -26,10 +26,12 @@ namespace Bootstrap.Admin.Api
         [Fact]
         public async void PostAndDelete_Ok()
         {
+            var dict = new Dict();
+            dict.Delete(new Dict().RetrieveDicts().Where(d => d.Category == "UnitTest-Category").Select(d => d.Id));
+
             var ret = await Client.PostAsJsonAsync<BootstrapDict, bool>("", new BootstrapDict() { Name = "UnitTest-Dict", Category = "UnitTest-Category", Code = "0", Define = 0 });
             Assert.True(ret);
 
-            var dict = new Dict();
             var ids = dict.RetrieveDicts().Where(d => d.Name == "UnitTest-Dict").Select(d => d.Id);
             Assert.True(await Client.DeleteAsJsonAsync<IEnumerable<string>, bool>("", ids));
         }
