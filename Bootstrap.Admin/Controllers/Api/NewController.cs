@@ -32,7 +32,7 @@ namespace Bootstrap.Admin.Controllers
         /// 新用户授权/拒绝接口
         /// </summary>
         /// <returns></returns>
-        [HttpPut("{id}")]
+        [HttpPut]
         public bool Put([FromBody]User value)
         {
             var ret = false;

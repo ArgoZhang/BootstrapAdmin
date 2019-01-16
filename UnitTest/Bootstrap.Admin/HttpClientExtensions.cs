@@ -7,7 +7,7 @@ namespace Bootstrap.Admin
 {
     public static class HttpClientExtensions
     {
-        public static async Task<T> GetAsJsonAsync<T>(this HttpClient client, string requestUri)
+        public static async Task<T> GetAsJsonAsync<T>(this HttpClient client, string requestUri = null)
         {
             var resp = await client.GetAsync(requestUri);
             var json = await resp.Content.ReadAsStringAsync();
