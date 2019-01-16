@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Bootstrap.Admin.Controllers
 {
-    public class AdminTest : ControllerTest
+    public class AdminTest : ControllerWebHost
     {
         public AdminTest(BAWebHost factory) : base(factory, "Admin", true)
         {

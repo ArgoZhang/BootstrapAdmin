@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Bootstrap.Admin.Api
 {
-    public class GroupsTest : ApiTest
+    public class GroupsTest : ApiWebHost
     {
         public GroupsTest(BAWebHost factory) : base(factory, "Groups", true)
         {

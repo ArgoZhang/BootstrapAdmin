@@ -8,7 +8,7 @@ using static Bootstrap.Admin.Controllers.Api.ExceptionsController;
 
 namespace Bootstrap.Admin.Api
 {
-    public class ExceptionsTest : ApiTest
+    public class ExceptionsTest : ApiWebHost
     {
         public ExceptionsTest(BAWebHost factory) : base(factory, "Exceptions", true)
         {

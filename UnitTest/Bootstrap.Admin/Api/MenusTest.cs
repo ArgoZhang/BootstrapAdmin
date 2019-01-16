@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Bootstrap.Admin.Api
 {
-    public class MenusTest : ApiTest
+    public class MenusTest : ApiWebHost
     {
         public MenusTest(BAWebHost factory) : base(factory, "Menus", true)
         {

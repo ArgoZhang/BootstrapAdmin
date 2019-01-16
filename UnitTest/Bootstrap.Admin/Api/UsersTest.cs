@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Bootstrap.Admin.Api
 {
-    public class UsersTest : ApiTest
+    public class UsersTest : ApiWebHost
     {
         private BAWebHost _factory;
 

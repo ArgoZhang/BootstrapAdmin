@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Bootstrap.Admin.Api
 {
-    public class TasksTest : ApiTest
+    public class TasksTest : ApiWebHost
     {
         public TasksTest(BAWebHost factory) : base(factory, "Tasks", true)
         {

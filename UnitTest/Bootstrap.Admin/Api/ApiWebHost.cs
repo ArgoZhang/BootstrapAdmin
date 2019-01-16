@@ -3,11 +3,11 @@ using Xunit;
 
 namespace Bootstrap.Admin.Api
 {
-    public class ApiTest : IClassFixture<BAWebHost>
+    public class ApiWebHost : IClassFixture<BAWebHost>
     {
         protected HttpClient Client { get; }
 
-        public ApiTest(BAWebHost factory, string controller, bool login)
+        public ApiWebHost(BAWebHost factory, string controller, bool login)
         {
             factory.ClientOptions.BaseAddress = new System.Uri($"http://localhost/api/{controller}/");
             Client = factory.CreateClient();

@@ -3,11 +3,11 @@ using Xunit;
 
 namespace Bootstrap.Admin.Controllers
 {
-    public class ControllerTest : IClassFixture<BAWebHost>
+    public class ControllerWebHost : IClassFixture<BAWebHost>
     {
         protected HttpClient Client { get; }
 
-        public ControllerTest(BAWebHost factory, string controller, bool login)
+        public ControllerWebHost(BAWebHost factory, string controller, bool login)
         {
             factory.ClientOptions.BaseAddress = new System.Uri($"http://localhost/{controller}/");
             Client = factory.CreateClient();

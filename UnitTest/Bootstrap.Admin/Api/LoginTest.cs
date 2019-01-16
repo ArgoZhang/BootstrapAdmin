@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Bootstrap.Admin.Api
 {
-    public class LoginTest : ApiTest
+    public class LoginTest : ApiWebHost
     {
         public LoginTest(BAWebHost factory) : base(factory, "Login", false)
         {

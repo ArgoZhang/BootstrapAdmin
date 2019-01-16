@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Bootstrap.Admin.Controllers
 {
-    public class AccountTest : ControllerTest
+    public class AccountTest : ControllerWebHost
     {
         private BAWebHost _factory;
 

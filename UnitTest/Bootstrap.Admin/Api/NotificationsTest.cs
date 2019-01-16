@@ -2,7 +2,7 @@
 
 namespace Bootstrap.Admin.Api
 {
-    public class NotificationsTest : ApiTest
+    public class NotificationsTest : ApiWebHost
     {
         public NotificationsTest(BAWebHost factory) : base(factory, "Notifications", true)
         {
