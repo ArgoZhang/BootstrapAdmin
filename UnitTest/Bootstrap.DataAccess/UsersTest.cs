@@ -89,7 +89,9 @@ namespace Bootstrap.DataAccess
         public void SaveUser_Ok()
         {
             var u = new User();
+            u.Delete(u.Retrieves().Where(usr => usr.UserName == "UnitTest").Select(usr => usr.Id));
             Assert.True(u.Save(new User { UserName = "UnitTest", DisplayName = "DisplayName", ApprovedBy = "System", ApprovedTime = DateTime.Now, Description = "Desc", Icon = "default.jpg" }));
+            u.Delete(u.Retrieves().Where(usr => usr.UserName == "UnitTest").Select(usr => usr.Id));
         }
 
         [Fact]

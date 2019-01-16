@@ -12,7 +12,7 @@ namespace Bootstrap.Admin.Controllers
             factory.ClientOptions.BaseAddress = new System.Uri($"http://localhost/{controller}/");
             Client = factory.CreateClient();
 
-            if (login) factory.LoginAsync(Client).GetAwaiter();
+            if (login) factory.LoginAsync(Client).GetAwaiter().GetResult();
         }
     }
 }
