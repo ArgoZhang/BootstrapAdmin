@@ -3,6 +3,7 @@ using Bootstrap.DataAccess;
 using Longbow.Web.Mvc;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using System.Net;
 
 namespace Bootstrap.Admin.Controllers.Api
 {
@@ -23,16 +24,7 @@ namespace Bootstrap.Admin.Controllers.Api
         {
             return value.RetrieveData();
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpGet("{id}")]
-        public Log Get(string id)
-        {
-            return LogHelper.Retrieves().FirstOrDefault(t => t.Id == id);
-        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -42,7 +34,7 @@ namespace Bootstrap.Admin.Controllers.Api
         public bool Post([FromBody]Log value)
         {
             value.ClientAgent = Request.Headers["User-Agent"];
-            value.ClientIp = HttpContext.Connection.RemoteIpAddress.ToString();
+            value.ClientIp = (HttpContext.Connection.RemoteIpAddress ?? IPAddress.IPv6Loopback).ToString();
             value.UserName = User.Identity.Name;
             return LogHelper.Save(value);
         }
