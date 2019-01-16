@@ -7,9 +7,9 @@ namespace Bootstrap.Admin.Api
     {
         protected HttpClient Client { get; }
 
-        public ApiTest(BAWebHost factory, string view, bool login)
+        public ApiTest(BAWebHost factory, string controller, bool login)
         {
-            factory.ClientOptions.BaseAddress = new System.Uri($"http://localhost/api/{view}");
+            factory.ClientOptions.BaseAddress = new System.Uri($"http://localhost/api/{controller}/");
             Client = factory.CreateClient();
 
             if (login) factory.LoginAsync(Client).GetAwaiter();

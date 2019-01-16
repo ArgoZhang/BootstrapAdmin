@@ -63,7 +63,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="type"></param>
         /// <returns></returns>
         [HttpPost("{id}")]
-        public IEnumerable<object> Post(string id, [FromQuery]string type)
+        public IEnumerable<Group> Post(string id, [FromQuery]string type)
         {
             IEnumerable<Group> ret = new List<Group>();
             switch (type)
@@ -77,7 +77,7 @@ namespace Bootstrap.Admin.Controllers.Api
                 default:
                     break;
             }
-            return ret.Select(p => new { p.Id, p.Checked, p.GroupName, p.Description });
+            return ret;
         }
 
         /// <summary>
