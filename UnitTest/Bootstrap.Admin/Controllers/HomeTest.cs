@@ -1,15 +1,14 @@
 ﻿using System.Net.Http;
 using Xunit;
 
-namespace Bootstrap.Admin
+namespace Bootstrap.Admin.Controllers
 {
-    public class HomeTest : IClassFixture<BAWebHost>
+    public class HomeTest : ControllerTest
     {
-        private HttpClient _client;
 
-        public HomeTest(BAWebHost factory)
+        public HomeTest(BAWebHost factory) : base(factory, "Home", true)
         {
-            _client = factory.CreateClient();
+
         }
 
         [Theory]
@@ -18,7 +17,7 @@ namespace Bootstrap.Admin
         [InlineData(500)]
         public async void Error_Ok(int errorCode)
         {
-            var r = await _client.GetAsync($"/Home/Error/{errorCode}");
+            var r = await Client.GetAsync($"Error/{errorCode}");
             Assert.True(r.IsSuccessStatusCode);
             var content = await r.Content.ReadAsStringAsync();
             if (errorCode == 0)

@@ -1,7 +1,7 @@
 ﻿using System.Net.Http;
 using Xunit;
 
-namespace Bootstrap.Admin
+namespace Bootstrap.Admin.Api
 {
     public class LoginTest : IClassFixture<BAWebHost>
     {
