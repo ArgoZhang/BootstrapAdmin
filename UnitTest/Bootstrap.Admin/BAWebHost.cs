@@ -1,6 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc.Testing;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.AspNetCore.Mvc.Testing.Handlers;
+using Microsoft.Extensions.Configuration;
+using System;
+using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
-using System.Threading.Tasks;
 using UnitTest;
 
 namespace Bootstrap.Admin
@@ -13,17 +18,50 @@ namespace Bootstrap.Admin
         /// <summary>
         /// 
         /// </summary>
-        public BAWebHost()
+        static BAWebHost()
         {
             // Copy license
             TestHelper.CopyLicense();
         }
 
-        public async Task<string> LoginAsync(HttpClient client, string userName = "Admin", string password = "123789")
+        public BAWebHost()
         {
-            var r = await client.GetAsync("/Account/Logout");
-            var view = await r.Content.ReadAsStringAsync();
+            Login();
+        }
+
+        public new HttpClient CreateClient() => CreateClient("http://localhost/api/");
+
+        public HttpClient CreateClient(string baseAddress)
+        {
+            var client = CreateDefaultClient(new RedirectHandler(7), new CookieContainerHandler(cookie));
+            client.BaseAddress = new Uri(baseAddress);
+            return client;
+        }
+
+        private CookieContainer cookie = new CookieContainer();
+
+        protected override void ConfigureWebHost(IWebHostBuilder builder)
+        {
+            base.ConfigureWebHost(builder);
+
+            var sqlConnectionStrings = "Data Source=.;Initial Catalog=UnitTest;User ID=sa;Password=sa";
+            builder.ConfigureAppConfiguration(app => app.AddInMemoryCollection(new KeyValuePair<string, string>[] {
+                new KeyValuePair<string, string>("ConnectionStrings:ba", sqlConnectionStrings)
+            }));
+        }
+
+        public string Login(string userName = "Admin", string password = "123789")
+        {
+            if (cookie.Count == 2) return "";
+
+            var client = CreateClient("http://localhost/Account/Login");
+            var r = client.GetAsync("");
+            r.Wait();
+
+            var tv = r.Result.Content.ReadAsStringAsync();
+            tv.Wait();
             var tokenTag = "<input name=\"__RequestVerificationToken\" type=\"hidden\" value=\"";
+            var view = tv.Result;
             var index = view.IndexOf(tokenTag);
             view = view.Substring(index + tokenTag.Length);
             index = view.IndexOf("\" /></form>");
@@ -34,8 +72,17 @@ namespace Bootstrap.Admin
             content.Add(new StringContent(password), "password");
             content.Add(new StringContent("true"), "remember");
             content.Add(new StringContent(antiToken), "__RequestVerificationToken");
-            var resp = await client.PostAsync("/Account/Login", content);
-            return await resp.Content.ReadAsStringAsync();
+            var resp = client.PostAsync("", content);
+            resp.Wait();
+
+            tv = resp.Result.Content.ReadAsStringAsync();
+            tv.Wait();
+            return tv.Result;
+        }
+
+        public void Logout()
+        {
+            cookie = new CookieContainer();
         }
     }
 }

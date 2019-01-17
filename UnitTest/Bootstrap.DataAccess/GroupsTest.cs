@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using System.Linq;
+using Xunit;
 
 namespace Bootstrap.DataAccess
 {
@@ -12,24 +13,21 @@ namespace Bootstrap.DataAccess
         }
 
         [Fact]
-        public void Save_Ok()
+        public void SaveAndDelete_Ok()
         {
             Group g = new Group() { GroupName = "UnitTest", Description = "UnitTestSave" };
             Assert.True(g.Save(g));
-        }
 
-        [Fact]
-        public void Delete_Ok()
-        {
-            Group g = new Group();
-            Assert.True(g.Delete(new string[] { "12", "13" }));
+            var ids = g.Retrieves().Where(t => t.GroupName == "UnitTest").Select(t => t.Id);
+            Assert.True(g.Delete(ids));
         }
 
         [Fact]
         public void RetrievesByRoleId_Ok()
         {
             Group p = new Group();
-            var groups = p.RetrievesByRoleId("1");
+            var groups = p.RetrievesByRoleId(new Role().Retrieves().Where(r => r.RoleName == "Administrators").First().Id);
+            Assert.NotEmpty(groups);
         }
 
         [Fact]

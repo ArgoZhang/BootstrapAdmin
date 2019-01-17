@@ -1,18 +1,12 @@
-﻿using Xunit;
+﻿using System.Linq;
+using Xunit;
 
 namespace Bootstrap.DataAccess
 {
     public class DictsTest : IClassFixture<BootstrapAdminStartup>
     {
         [Fact]
-        public void Delete_Ok()
-        {
-            var dict = new Dict();
-            Assert.True(dict.Delete(new string[] { "64", "65" }));
-        }
-
-        [Fact]
-        public void Save_Ok()
+        public void SaveAndDelete_Ok()
         {
             var dict = new Dict()
             {
@@ -22,6 +16,7 @@ namespace Bootstrap.DataAccess
                 Define = 1
             };
             Assert.True(dict.Save(dict));
+            Assert.True(dict.Delete(dict.RetrieveDicts().Where(d => d.Category == dict.Category).Select(d => d.Id)));
         }
 
         [Fact]
@@ -35,6 +30,7 @@ namespace Bootstrap.DataAccess
                 Define = 1
             };
             Assert.True(dict.SaveSettings(dict));
+            dict.Delete(dict.RetrieveDicts().Where(d => d.Category == dict.Category).Select(d => d.Id));
         }
 
         [Fact]
