@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using System.Linq;
+using Xunit;
 
 namespace Bootstrap.DataAccess
 {
@@ -19,7 +20,9 @@ namespace Bootstrap.DataAccess
                 Url = "#",
                 ParentId = "0"
             };
+            m.Delete(m.RetrieveAllMenus("Admin").Where(n => n.Name == m.Name).Select(n => n.Id));
             Assert.True(m.Save(m));
+            m.Delete(new string[] { m.Id });
         }
 
         [Fact]

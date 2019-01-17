@@ -37,6 +37,7 @@ namespace Bootstrap.DataAccess
         public void RetrieveNewUsers_Ok()
         {
             var u = new User();
+            u.Delete(u.RetrieveNewUsers().Select(usr => usr.Id));
             Assert.Empty(u.RetrieveNewUsers());
         }
 
@@ -63,8 +64,13 @@ namespace Bootstrap.DataAccess
         [Fact]
         public void RetrieveUsersByRoleId_Ok()
         {
-            var u = new User();
-            var users = u.RetrievesByRoleId("1");
+            var rid = new Role().Retrieves().Where(r => r.RoleName == "Administrators").First().Id;
+            var uid = new User().Retrieves().Where(u => u.UserName == "Admin").First().Id;
+            var db = DbManager.Create();
+            db.Execute("delete from userrole where USERID = @0 and ROLEID = @1", uid, rid);
+            db.Execute("insert into userrole (USERID, ROLEID) values (@0, @1)", uid, rid);
+
+            var users = new User().RetrievesByRoleId(rid);
             Assert.NotEmpty(users);
             Assert.Contains(users, usr => usr.Checked == "checked");
         }
@@ -72,8 +78,9 @@ namespace Bootstrap.DataAccess
         [Fact]
         public void RetrievesByGroupId_Ok()
         {
+            var gid = new Group().Retrieves().Where(r => r.GroupName == "Admin").First().Id;
             var u = new User();
-            var users = u.RetrievesByGroupId("1");
+            var users = u.RetrievesByGroupId(gid);
             Assert.NotEmpty(users);
             Assert.Contains(users, usr => !usr.Checked.IsNullOrEmpty());
         }

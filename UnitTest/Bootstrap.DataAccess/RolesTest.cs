@@ -25,10 +25,13 @@ namespace Bootstrap.DataAccess
             var role = new Role()
             {
                 Description = "Role_Desc",
-                RoleName = "UnitTest"
+                RoleName = "UnitTest-Delete"
             };
             role.Save(role);
             Assert.True(role.Delete(new string[] { role.Id.ToString() }));
+
+            // clean
+            role.Delete(role.Retrieves().Where(r => r.RoleName == role.RoleName).Select(r => r.Id));
         }
 
         [Fact]
@@ -37,9 +40,12 @@ namespace Bootstrap.DataAccess
             var role = new Role()
             {
                 Description = "Role_Desc",
-                RoleName = "UnitTest"
+                RoleName = "UnitTest-Save"
             };
             Assert.True(role.Save(role));
+
+            // clean
+            role.Delete(role.Retrieves().Where(r => r.RoleName == role.RoleName).Select(r => r.Id));
         }
 
         [Fact]
