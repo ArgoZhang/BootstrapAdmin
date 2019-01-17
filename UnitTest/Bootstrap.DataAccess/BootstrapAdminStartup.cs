@@ -8,16 +8,14 @@ using System.Collections.Generic;
 #if SQLite
 using System;
 using System.IO;
-using UniTest;
+using UnitTest;
 #endif
 
 namespace Bootstrap.DataAccess
 {
     public class BootstrapAdminStartup
     {
-        private readonly string DBFile;
-
-        public BootstrapAdminStartup()
+        static BootstrapAdminStartup()
         {
             var sqlConnectionStrings = "Data Source=.;Initial Catalog=UnitTest;User ID=sa;Password=sa";
             var mysqlConnectionStrings = "Server=.;Database=UnitTest;Uid=argozhang;Pwd=argo@163.com;SslMode=none;";
@@ -46,8 +44,8 @@ namespace Bootstrap.DataAccess
 
             // Copy File
             var dbPath = TestHelper.RetrievePath($"UnitTest{Path.DirectorySeparatorChar}DB{Path.DirectorySeparatorChar}UnitTest.db");
-            DBFile = Path.Combine(AppContext.BaseDirectory, "UnitTest.db");
-            if (!File.Exists(DBFile)) File.Copy(dbPath, DBFile);
+            var dbFile = Path.Combine(AppContext.BaseDirectory, "UnitTest.db");
+            if (!File.Exists(dbFile)) File.Copy(dbPath, dbFile);
 
 #elif MySQL
             config["DB:2:Enabled"]= "true";

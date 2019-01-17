@@ -23,7 +23,7 @@ namespace Bootstrap.Admin
 
         public static async Task<TRet> DeleteAsJsonAsync<TValue, TRet>(this HttpClient client, string requestUri, TValue t)
         {
-            var req = new HttpRequestMessage(HttpMethod.Delete, "");
+            var req = new HttpRequestMessage(HttpMethod.Delete, requestUri);
             req.Content = new StringContent(JsonConvert.SerializeObject(t));
             req.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
