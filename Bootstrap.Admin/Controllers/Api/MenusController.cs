@@ -63,8 +63,6 @@ namespace Bootstrap.Admin.Controllers.Api
                 case "user":
                     ret = MenuHelper.RetrieveMenus(User.Identity.Name);
                     break;
-                default:
-                    break;
             }
             return ret;
         }

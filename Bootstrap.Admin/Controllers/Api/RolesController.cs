@@ -46,8 +46,6 @@ namespace Bootstrap.Admin.Controllers.Api
                 case "menu":
                     ret = RoleHelper.RetrievesByMenuId(id);
                     break;
-                default:
-                    break;
             }
             return ret.Select(m => new { m.Id, m.Checked, m.RoleName, m.Description });
         }
@@ -72,8 +70,6 @@ namespace Bootstrap.Admin.Controllers.Api
                     break;
                 case "menu":
                     ret = RoleHelper.SavaByMenuId(id, roleIds);
-                    break;
-                default:
                     break;
             }
             return ret;

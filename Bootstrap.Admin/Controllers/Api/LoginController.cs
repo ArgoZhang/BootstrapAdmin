@@ -25,14 +25,15 @@ namespace Bootstrap.Admin.Controllers.Api
         [HttpPost]
         public string Post([FromBody]JObject value)
         {
+            string token = null;
             dynamic user = value;
             string userName = user.userName;
             string password = user.password;
             if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(password) && UserHelper.Authenticate(userName, password))
             {
-                return BootstrapAdminJwtTokenHandler.CreateToken(userName);
+                token = BootstrapAdminJwtTokenHandler.CreateToken(userName);
             }
-            return null;
+            return token;
         }
         /// <summary>
         /// 

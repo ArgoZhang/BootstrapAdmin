@@ -58,21 +58,23 @@ namespace Bootstrap.Admin.Controllers.Api
         [HttpPost("{id}")]
         public IEnumerable<object> Post(string id, [FromQuery]string type)
         {
+            IEnumerable<object> ret = null;
             switch (type)
             {
                 case "role":
-                    return UserHelper.RetrievesByRoleId(id).Select(p => new
+                    ret = UserHelper.RetrievesByRoleId(id).Select(p => new
                     {
                         p.Id,
                         p.DisplayName,
                         p.UserName,
                         p.Checked
                     });
+                    break;
                 case "group":
-                    return UserHelper.RetrievesByGroupId(id).ToList();
-                default:
-                    return null;
+                    ret = UserHelper.RetrievesByGroupId(id);
+                    break;
             }
+            return ret;
         }
         /// <summary>
         /// 前台User View调用，新建/更新用户
@@ -113,8 +115,6 @@ namespace Bootstrap.Admin.Controllers.Api
                     break;
                 case "group":
                     ret = UserHelper.SaveByGroupId(id, userIds);
-                    break;
-                default:
                     break;
             }
             return ret;

@@ -74,8 +74,6 @@ namespace Bootstrap.Admin.Controllers.Api
                 case "role":
                     ret = GroupHelper.RetrievesByRoleId(id);
                     break;
-                default:
-                    break;
             }
             return ret;
         }
@@ -98,8 +96,6 @@ namespace Bootstrap.Admin.Controllers.Api
                     break;
                 case "role":
                     ret = GroupHelper.SaveByRoleId(id, groupIds);
-                    break;
-                default:
                     break;
             }
             return ret;

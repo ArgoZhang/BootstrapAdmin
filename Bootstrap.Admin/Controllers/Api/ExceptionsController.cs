@@ -35,10 +35,11 @@ namespace Bootstrap.Admin.Controllers.Api
         public IEnumerable<string> Post()
         {
             var filePath = Path.Combine(AppContext.BaseDirectory, "Error");
-            if (!Directory.Exists(filePath)) return new List<string>();
-            return Directory.GetFiles(filePath)
+            return Directory.Exists(filePath)
+                ? Directory.GetFiles(filePath)
                 .Where(f => Path.GetExtension(f).Equals(".log", StringComparison.OrdinalIgnoreCase))
-                .Select(f => Path.GetFileNameWithoutExtension(f)).OrderByDescending(s => s);
+                .Select(f => Path.GetFileNameWithoutExtension(f)).OrderByDescending(s => s)
+                : Enumerable.Empty<string>();
         }
 
         /// <summary>

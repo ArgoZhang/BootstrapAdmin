@@ -24,12 +24,14 @@ namespace Bootstrap.Admin.Models
         public ProfilesModel(ControllerBase controller) : base(controller)
         {
             var host = controller.HttpContext.RequestServices.GetService(typeof(IHostingEnvironment)) as IHostingEnvironment;
-            if (host == null) return;
-            var fileName = Path.Combine(host.WebRootPath, Icon.TrimStart('~', '/').Replace('/', '\\'));
-            if (File.Exists(fileName))
+            if (host != null)
             {
-                Size = new FileInfo(fileName).Length;
-                FileName = Path.GetFileName(fileName);
+                var fileName = Path.Combine(host.WebRootPath, Icon.TrimStart('~', '/').Replace('/', '\\'));
+                if (File.Exists(fileName))
+                {
+                    Size = new FileInfo(fileName).Length;
+                    FileName = Path.GetFileName(fileName);
+                }
             }
         }
     }
