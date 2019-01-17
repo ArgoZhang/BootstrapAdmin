@@ -76,6 +76,7 @@ namespace Bootstrap.DataAccess
         /// <param name="value"></param>
         public virtual bool Delete(IEnumerable<string> value)
         {
+            if (!value.Any()) return true;
             bool ret = false;
             var ids = string.Join(",", value);
             var db = DbManager.Create();
