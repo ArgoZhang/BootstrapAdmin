@@ -15,7 +15,7 @@
     <PackageReference Include="Longbow.Data" Version="2.2.2" />
     <PackageReference Include="Longbow.Security.Cryptography" Version="1.3.0" />
     <PackageReference Include="Longbow.Web" Version="2.2.2" />
-    <PackageReference Include="Longbow.Cache" Version="2.2.2" />
+    <PackageReference Include="Longbow.Cache" Version="2.2.3" />
     <PackageReference Include="Longbow" Version="2.2.3" />
     <PackageReference Include="PetaPoco.Compiled" Version="1.0.1" />
   </ItemGroup>
