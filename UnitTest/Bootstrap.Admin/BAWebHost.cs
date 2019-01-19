@@ -44,10 +44,7 @@ namespace Bootstrap.Admin
         {
             base.ConfigureWebHost(builder);
 
-            var sqlConnectionStrings = "Data Source=.;Initial Catalog=UnitTest;User ID=sa;Password=sa";
-            builder.ConfigureAppConfiguration(app => app.AddInMemoryCollection(new KeyValuePair<string, string>[] {
-                new KeyValuePair<string, string>("ConnectionStrings:ba", sqlConnectionStrings)
-            }));
+            TestHelper.ConfigureWebHost(builder);
         }
 
         public string Login(string userName = "Admin", string password = "123789")
