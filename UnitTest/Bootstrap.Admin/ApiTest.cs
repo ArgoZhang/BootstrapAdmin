@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net.Http;
 using Xunit;
 using static Bootstrap.Admin.Controllers.Api.ExceptionsController;
+using static Longbow.Data.IPetaPocoExtensions;
 
 namespace Bootstrap.Admin.Api
 {
@@ -92,7 +93,9 @@ namespace Bootstrap.Admin.Api
             Assert.True(usr.Save(usr));
 
             // Add author
-            DbManager.Create().Execute("delete from NavigationRole where RoleID in (select ID from Roles where RoleName = 'Default');insert into NavigationRole select ID, (select ID from Roles where RoleName = 'Default') from Navigations");
+            DbManager.Create().Execute("delete from NavigationRole where RoleID in (select ID from Roles where RoleName = 'Default')");
+            var rid = DbManager.Create().ExecuteScalar<string>("select ID from Roles where RoleName = 'Default'");
+            DbManager.Create().InsertBatch("NavigationRole", new Menu().RetrieveAllMenus("Admin").Select(m => new { RoleID = rid, NavigationID = m.Id }));
 
             // change theme
             usr.UserStatus = UserStates.ChangeTheme;
