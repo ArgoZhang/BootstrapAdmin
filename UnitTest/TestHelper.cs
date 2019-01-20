@@ -59,7 +59,7 @@ namespace UnitTest
 
         private const string SqlConnectionStrings = "Data Source=.;Initial Catalog=UnitTest;User ID=sa;Password=sa";
         private const string SQLiteConnectionStrings = "Data Source=UnitTest.db;";
-        private const string MySqlConnectionStrings = "Server=.;Database=UnitTest;Uid=argozhang;Pwd=argo@163.com;SslMode=none;";
+        private const string MySqlConnectionStrings = "Server=localhost;Database=UnitTest;Uid=argozhang;Pwd=argo@163.com;SslMode=none;";
 
         public static void ConfigureWebHost(IWebHostBuilder builder)
         {
