@@ -64,7 +64,8 @@ namespace UnitTest
         public static void ConfigureWebHost(IWebHostBuilder builder)
         {
             builder.ConfigureAppConfiguration(app => app.AddInMemoryCollection(new KeyValuePair<string, string>[] {
-                new KeyValuePair<string, string>("ConnectionStrings:ba", SqlConnectionStrings)
+                new KeyValuePair<string, string>("ConnectionStrings:ba", SqlConnectionStrings),
+                new KeyValuePair<string, string>("DB:0:Enabled", "true")
             }));
 #if SQLite
             builder.ConfigureAppConfiguration(app => app.AddInMemoryCollection(new KeyValuePair<string, string>[] {
