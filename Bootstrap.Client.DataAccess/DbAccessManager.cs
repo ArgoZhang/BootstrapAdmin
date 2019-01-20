@@ -1,4 +1,5 @@
 ﻿using Longbow.Data;
+using PetaPoco;
 
 namespace Bootstrap.Client.DataAccess
 {
@@ -10,6 +11,6 @@ namespace Bootstrap.Client.DataAccess
         /// <summary>
         /// 
         /// </summary>
-        public static IDbAccess DbAccess { get { return DbAdapterManager.CreateDB(); } }
+        public static IDatabase DbAccess { get { return DbManager.Create(); } }
     }
 }

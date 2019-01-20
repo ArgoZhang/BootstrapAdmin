@@ -22,10 +22,9 @@ namespace Bootstrap.Client.DataAccess
         /// <returns></returns>
         public static IEnumerable<BootstrapMenu> RetrieveAppMenus(string userName, string activeUrl)
         {
-            var menus = RetrieveAllMenus(userName).Where(m => m.Category == "1" && m.IsResource == 0 && m.ApplicationCode == ConfigurationManager.AppSettings["AppId"]);
-            var root = menus.Where(m => m.ParentId == "0").OrderBy(m => m.ApplicationCode).ThenBy(m => m.Order);
-            DbHelper.CascadeMenus(menus, root);
-            DbHelper.ActiveMenu(null, menus, activeUrl);
+            var menus = RetrieveAllMenus(userName).Where(m => m.Category == "1" && m.IsResource == 0 && m.Application == ConfigurationManager.AppSettings["AppId"]).Where(m => m.ParentId == "0").OrderBy(m => m.Application).ThenBy(m => m.Order);
+            var root = DbHelper.CascadeMenus(menus);
+            DbHelper.ActiveMenu(root, activeUrl);
             return root;
         }
 

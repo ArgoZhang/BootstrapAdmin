@@ -40,7 +40,7 @@ namespace Bootstrap.Client
             services.AddLogging(builder => builder.AddFileLogger());
             services.AddConfigurationManager(Configuration);
             services.AddCacheManager(Configuration);
-            services.AddDbAdapter(Configuration);
+            services.AddDbAdapter();
             var dataProtectionBuilder = services.AddDataProtection(op => op.ApplicationDiscriminator = Configuration["ApplicationDiscriminator"])
                 .SetApplicationName(Configuration["ApplicationName"])
                 .PersistKeysToFileSystem(new DirectoryInfo(Configuration["KeyPath"]));
@@ -60,7 +60,7 @@ namespace Bootstrap.Client
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
             {
                 options.Cookie.Path = "/";
-                options.RebuildRedirectUri(ConfigurationManager.AppSettings["AuthHost"]);
+                options.RebuildRedirectUri();
             });
         }
 
