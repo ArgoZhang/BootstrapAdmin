@@ -56,6 +56,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MySQL", "MySQL", "{084E2E94
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTest", "UnitTest\UnitTest.csproj", "{CFE75C48-F9D5-403A-8419-D07939BBD769}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Postgresql", "Postgresql", "{6F61C2AC-84D4-48A9-8A48-680657CC8175}"
+	ProjectSection(SolutionItems) = preProject
+		DatabaseScripts\Postgresql\initData.sql = DatabaseScripts\Postgresql\initData.sql
+		DatabaseScripts\Postgresql\install.sql = DatabaseScripts\Postgresql\install.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
