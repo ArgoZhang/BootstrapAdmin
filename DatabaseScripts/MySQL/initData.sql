@@ -47,7 +47,7 @@ INSERT INTO Navigations (ID, ParentId, Name, `Order`, Icon, Url, Category) VALUE
 INSERT INTO Navigations (ID, ParentId, Name, `Order`, Icon, Url, Category) VALUES (16, 0, '工具集合', 160, 'fa fa-gavel', '#', '0');
 INSERT INTO Navigations (ID, ParentId, Name, `Order`, Icon, Url, Category) VALUES (17, 16, '客户端测试', 10, 'fa fa-wrench', '~/Admin/Mobile', '0');
 INSERT INTO Navigations (ID, ParentId, Name, `Order`, Icon, Url, Category) VALUES (18, 16, 'API文档', 10, 'fa fa-wrench', '~/swagger', '0');
-INSERT INTO Navigations (ID, ParentId, Name, `Order`, Icon, Url, Category) VALUES (19, 16, '图标集', 10, 'fa fa-dashboard', '~/Admin/FAIco', '0');
+INSERT INTO Navigations (ID, ParentId, Name, `Order`, Icon, Url, Category) VALUES (19, 16, '图标集', 10, 'fa fa-dashboard', '~/Admin/FAIcon', '0');
 ALTER TABLE Navigations MODIFY COLUMN ID INT NOT NULL AUTO_INCREMENT;
 
 DELETE FROM `Groups` WHERE ID = 1;
