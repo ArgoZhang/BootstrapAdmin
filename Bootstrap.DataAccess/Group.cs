@@ -36,7 +36,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public virtual IEnumerable<Group> Retrieves() => DbManager.Create().Fetch<Group>("select * from Groups");
+        public virtual IEnumerable<Group> Retrieves() => DbManager.Create().Fetch<Group>();
 
         /// <summary>
         /// 删除群组信息
@@ -52,7 +52,7 @@ namespace Bootstrap.DataAccess
                 db.BeginTransaction();
                 db.Execute($"delete from UserGroup where GroupID in ({ids})");
                 db.Execute($"delete from RoleGroup where GroupID in ({ids})");
-                db.Execute($"delete from Groups where ID in ({ids})");
+                db.Execute($"delete from {db.Provider.EscapeSqlIdentifier("Groups")} where ID in ({ids})");
                 db.CompleteTransaction();
                 ret = true;
             }
@@ -80,14 +80,22 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public virtual IEnumerable<Group> RetrievesByUserId(string userId) => DbManager.Create().Fetch<Group>("select g.ID, g.GroupName, g.Description, case ug.GroupID when g.ID then 'checked' else '' end Checked from Groups g left join UserGroup ug on g.ID = ug.GroupID and UserID = @0", userId);
+        public virtual IEnumerable<Group> RetrievesByUserId(string userId)
+        {
+            var db = DbManager.Create();
+            return db.Fetch<Group>($"select g.ID, g.GroupName, g.Description, case ug.GroupID when g.ID then 'checked' else '' end Checked from {db.Provider.EscapeSqlIdentifier("Groups")} g left join UserGroup ug on g.ID = ug.GroupID and UserID = @0", userId);
+        }
 
         /// <summary>
         /// 根据角色ID指派部门
         /// </summary>
         /// <param name="roleId"></param>
         /// <returns></returns>
-        public virtual IEnumerable<Group> RetrievesByRoleId(string roleId) => DbManager.Create().Fetch<Group>("select g.ID, g.GroupName, g.Description, case rg.GroupID when g.ID then 'checked' else '' end Checked from Groups g left join RoleGroup rg on g.ID = rg.GroupID and RoleID = @0", roleId);
+        public virtual IEnumerable<Group> RetrievesByRoleId(string roleId)
+        {
+            var db = DbManager.Create();
+            return DbManager.Create().Fetch<Group>($"select g.ID, g.GroupName, g.Description, case rg.GroupID when g.ID then 'checked' else '' end Checked from {db.Provider.EscapeSqlIdentifier("Groups")} g left join RoleGroup rg on g.ID = rg.GroupID and RoleID = @0", roleId);
+        }
 
         /// <summary>
         /// 保存用户部门关系
