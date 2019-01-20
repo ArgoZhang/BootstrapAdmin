@@ -90,7 +90,7 @@ namespace Bootstrap.DataAccess
             var db = DbManager.Create();
             var t = db.Provider.EscapeSqlIdentifier("To");
             var f = db.Provider.EscapeSqlIdentifier("From");
-            return db.Fetch<Message>($"select m.*, d.Name, u.DisplayName from [Messages] m left join Dicts d on m.Label = d.Code and d.Category = @Category and d.Define = 0 inner join Users u on m.{f} = u.UserName where {t} = @UserName or {f} = @UserName order by SendTime desc", new { UserName = userName, Category = "消息标签" });
+            return db.Fetch<Message>($"select m.*, d.Name, u.DisplayName from Messages m left join Dicts d on m.Label = d.Code and d.Category = @Category and d.Define = 0 inner join Users u on m.{f} = u.UserName where {t} = @UserName or {f} = @UserName order by SendTime desc", new { UserName = userName, Category = "消息标签" });
         }
 
         /// <summary>
