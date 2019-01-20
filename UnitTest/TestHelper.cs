@@ -80,6 +80,7 @@ namespace UnitTest
 #if MySQL
             builder.ConfigureAppConfiguration(app => app.AddInMemoryCollection(new KeyValuePair<string, string>[] {
                 new KeyValuePair<string, string>("DB:0:Enabled", "false"),
+                new KeyValuePair<string, string>("DB:1:Enabled", "false"),
                 new KeyValuePair<string, string>("DB:2:Enabled", "true"),
                 new KeyValuePair<string, string>("DB:2:ConnectionStrings:ba", MySqlConnectionString)
             }));
@@ -88,6 +89,8 @@ namespace UnitTest
 #if Npgsql
             builder.ConfigureAppConfiguration(app => app.AddInMemoryCollection(new KeyValuePair<string, string>[] {
                 new KeyValuePair<string, string>("DB:0:Enabled", "false"),
+                new KeyValuePair<string, string>("DB:1:Enabled", "false"),
+                new KeyValuePair<string, string>("DB:2:Enabled", "false"),
                 new KeyValuePair<string, string>("DB:3:Enabled", "true"),
                 new KeyValuePair<string, string>("DB:3:ConnectionStrings:ba", NpgSqlConnectionString)
             }));
