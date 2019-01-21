@@ -30,24 +30,24 @@ INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('网站设置', '前台
 
 DELETE FROM Navigations;
 ALTER SEQUENCE navigations_id_seq RESTART WITH 1;
-INSERT INTO Navigations (ParentId, Name, "Order", Icon, Url, Category) VALUES (0, '后台管理', 10, 'fa fa-gear', '~/Admin/Index', '0');
-INSERT INTO Navigations (ParentId, Name, "Order", Icon, Url, Category) VALUES (0, '个人中心', 20, 'fa fa-suitcase', '~/Admin/Profiles', '0');
-INSERT INTO Navigations (ParentId, Name, "Order", Icon, Url, Category) VALUES (0, '返回前台', 30, 'fa fa-hand-o-left', '~/Home/Index', '0');
-INSERT INTO Navigations (ParentId, Name, "Order", Icon, Url, Category) VALUES (0, '网站设置', 40, 'fa fa-fa', '~/Admin/Settings', '0');
-INSERT INTO Navigations (ParentId, Name, "Order", Icon, Url, Category) VALUES (0, '菜单管理', 50, 'fa fa-dashboard', '~/Admin/Menus', '0');
-INSERT INTO Navigations (ParentId, Name, "Order", Icon, Url, Category) VALUES (0, '用户管理', 60, 'fa fa-user', '~/Admin/Users', '0');
-INSERT INTO Navigations (ParentId, Name, "Order", Icon, Url, Category) VALUES (0, '角色管理', 70, 'fa fa-sitemap', '~/Admin/Roles', '0');
-INSERT INTO Navigations (ParentId, Name, "Order", Icon, Url, Category) VALUES (0, '部门管理', 80, 'fa fa-bank', '~/Admin/Groups', '0');
-INSERT INTO Navigations (ParentId, Name, "Order", Icon, Url, Category) VALUES (0, '字典表维护', 90, 'fa fa-book', '~/Admin/Dicts', '0');
-INSERT INTO Navigations (ParentId, Name, "Order", Icon, Url, Category) VALUES (0, '站内消息', 100, 'fa fa-envelope', '~/Admin/Messages', '0');
-INSERT INTO Navigations (ParentId, Name, "Order", Icon, Url, Category) VALUES (0, '任务管理', 110, 'fa fa fa-tasks', '~/Admin/Tasks', '0');
-INSERT INTO Navigations (ParentId, Name, "Order", Icon, Url, Category) VALUES (0, '通知管理', 120, 'fa fa-bell', '~/Admin/Notifications', '0');
-INSERT INTO Navigations (ParentId, Name, "Order", Icon, Url, Category) VALUES (0, '系统日志', 130, 'fa fa-gears', '~/Admin/Logs', '0');
-INSERT INTO Navigations (ParentId, Name, "Order", Icon, Url, Category) VALUES (0, '程序异常', 140, 'fa fa-cubes', '~/Admin/Exceptions', '0');
-INSERT INTO Navigations (ParentId, Name, "Order", Icon, Url, Category) VALUES (0, '工具集合', 160, 'fa fa-gavel', '#', '0');
-INSERT INTO Navigations (ParentId, Name, "Order", Icon, Url, Category) VALUES (currval('navigations_id_seq') - 1, '客户端测试', 10, 'fa fa-wrench', '~/Admin/Mobile', '0');
-INSERT INTO Navigations (ParentId, Name, "Order", Icon, Url, Category) VALUES (currval('navigations_id_seq') - 2, 'API文档', 10, 'fa fa-wrench', '~/swagger', '0');
-INSERT INTO Navigations (ParentId, Name, "Order", Icon, Url, Category) VALUES (currval('navigations_id_seq') - 3, '图标集', 10, 'fa fa-dashboard', '~/Admin/FAIcon', '0');
+INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (0, '后台管理', 10, 'fa fa-gear', '~/Admin/Index', '0');
+INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (0, '个人中心', 20, 'fa fa-suitcase', '~/Admin/Profiles', '0');
+INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (0, '返回前台', 30, 'fa fa-hand-o-left', '~/Home/Index', '0');
+INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (0, '网站设置', 40, 'fa fa-fa', '~/Admin/Settings', '0');
+INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (0, '菜单管理', 50, 'fa fa-dashboard', '~/Admin/Menus', '0');
+INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (0, '用户管理', 60, 'fa fa-user', '~/Admin/Users', '0');
+INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (0, '角色管理', 70, 'fa fa-sitemap', '~/Admin/Roles', '0');
+INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (0, '部门管理', 80, 'fa fa-bank', '~/Admin/Groups', '0');
+INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (0, '字典表维护', 90, 'fa fa-book', '~/Admin/Dicts', '0');
+INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (0, '站内消息', 100, 'fa fa-envelope', '~/Admin/Messages', '0');
+INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (0, '任务管理', 110, 'fa fa fa-tasks', '~/Admin/Tasks', '0');
+INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (0, '通知管理', 120, 'fa fa-bell', '~/Admin/Notifications', '0');
+INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (0, '系统日志', 130, 'fa fa-gears', '~/Admin/Logs', '0');
+INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (0, '程序异常', 140, 'fa fa-cubes', '~/Admin/Exceptions', '0');
+INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (0, '工具集合', 160, 'fa fa-gavel', '#', '0');
+INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (currval('navigations_id_seq') - 1, '客户端测试', 10, 'fa fa-wrench', '~/Admin/Mobile', '0');
+INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (currval('navigations_id_seq') - 2, 'API文档', 10, 'fa fa-wrench', '~/swagger', '0');
+INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (currval('navigations_id_seq') - 3, '图标集', 10, 'fa fa-dashboard', '~/Admin/FAIcon', '0');
 
 DELETE FROM Groups;
 ALTER SEQUENCE groups_id_seq RESTART WITH 1;
@@ -90,9 +90,9 @@ Insert into Dicts (Category, Name, Code, Define) values ('测试平台', '个人
 Insert into Dicts (Category, Name, Code, Define) values ('测试平台', '系统设置地址', 'http://localhost:50852/Admin/Settings', 1);
 
 Delete from Navigations where Application = '2';
-INSERT into Navigations (ParentId, Name, "Order", Icon, Url, Category, Application) VALUES (0, '首页', 10, 'fa fa-fa', '~/Home/Index', '1', 2);
-INSERT into Navigations (ParentId, Name, "Order", Icon, Url, Category, Application) VALUES (0, '测试页面', 20, 'fa fa-fa', '#', '1', 2);
-INSERT into Navigations (ParentId, Name, "Order", Icon, Url, Category, Application) VALUES (currval('navigations_id_seq') - 1, '关于', 10, 'fa fa-fa', '~/Home/About', '1', 2);
+INSERT into Navigations (ParentId, Name, "order", Icon, Url, Category, Application) VALUES (0, '首页', 10, 'fa fa-fa', '~/Home/Index', '1', 2);
+INSERT into Navigations (ParentId, Name, "order", Icon, Url, Category, Application) VALUES (0, '测试页面', 20, 'fa fa-fa', '#', '1', 2);
+INSERT into Navigations (ParentId, Name, "order", Icon, Url, Category, Application) VALUES (currval('navigations_id_seq') - 1, '关于', 10, 'fa fa-fa', '~/Home/About', '1', 2);
 
 -- 菜单授权
 DELETE FROM NavigationRole Where NavigationID in (Select ID From Navigations Where Application = '2');
