@@ -3,7 +3,8 @@ using Xunit;
 
 namespace Bootstrap.DataAccess
 {
-    public class MenusTest : IClassFixture<BootstrapAdminStartup>
+    [Collection("BootstrapAdminTestContext")]
+    public class MenusTest
     {
         [Fact]
         public void Save_Ok()

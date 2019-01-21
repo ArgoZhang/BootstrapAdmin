@@ -4,7 +4,8 @@ using Xunit;
 
 namespace Bootstrap.DataAccess
 {
-    public class ExceptionsTest : IClassFixture<BootstrapAdminStartup>
+    [Collection("BootstrapAdminTestContext")]
+    public class ExceptionsTest
     {
         [Fact]
         public void Log_Ok()

@@ -2,7 +2,8 @@
 
 namespace Bootstrap.DataAccess
 {
-    public class LogsTest : IClassFixture<BootstrapAdminStartup>
+    [Collection("BootstrapAdminTestContext")]
+    public class LogsTest 
     {
         [Fact]
         public void Save_Ok()

@@ -3,7 +3,8 @@ using Xunit;
 
 namespace Bootstrap.DataAccess
 {
-    public class DictsTest : IClassFixture<BootstrapAdminStartup>
+    [Collection("BootstrapAdminTestContext")]
+    public class DictsTest
     {
         [Fact]
         public void SaveAndDelete_Ok()

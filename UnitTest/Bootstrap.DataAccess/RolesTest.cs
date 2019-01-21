@@ -3,7 +3,8 @@ using Xunit;
 
 namespace Bootstrap.DataAccess
 {
-    public class RolesTest : IClassFixture<BootstrapAdminStartup>
+    [Collection("BootstrapAdminTestContext")]
+    public class RolesTest
     {
         [Fact]
         public void SaveRolesByUserId_Ok()

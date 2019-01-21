@@ -3,7 +3,8 @@ using Xunit;
 
 namespace Bootstrap.DataAccess
 {
-    public class TasksTest : IClassFixture<BootstrapAdminStartup>
+    [Collection("BootstrapAdminTestContext")]
+    public class TasksTest
     {
         [Fact]
         public void Retrieves_Ok()

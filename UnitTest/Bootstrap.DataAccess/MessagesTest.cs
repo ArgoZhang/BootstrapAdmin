@@ -2,7 +2,8 @@
 
 namespace Bootstrap.DataAccess
 {
-    public class MessagesTest : IClassFixture<BootstrapAdminStartup>
+    [Collection("BootstrapAdminTestContext")]
+    public class MessagesTest
     {
         [Fact]
         public void RetrieveHeaders_Ok()

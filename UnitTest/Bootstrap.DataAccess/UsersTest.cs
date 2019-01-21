@@ -7,7 +7,8 @@ namespace Bootstrap.DataAccess
     /// <summary>
     /// 
     /// </summary>
-    public class UsersTest : IClassFixture<BootstrapAdminStartup>
+    [Collection("BootstrapAdminTestContext")]
+    public class UsersTest
     {
         /// <summary>
         /// 
