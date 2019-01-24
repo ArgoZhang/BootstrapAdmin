@@ -7,7 +7,7 @@ namespace Bootstrap.DataAccess
     /// <summary>
     /// 
     /// </summary>
-    [Collection("BootstrapAdminTestContext")]
+    [Collection("SQLServerContext")]
     public class UsersTest
     {
         /// <summary>
@@ -28,7 +28,7 @@ namespace Bootstrap.DataAccess
         }
 
         [Fact]
-        public void Retrieves_Ok()
+        public virtual void Retrieves_Ok()
         {
             var u = new User();
             Assert.NotEmpty(u.Retrieves());

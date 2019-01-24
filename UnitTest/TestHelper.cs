@@ -1,7 +1,4 @@
-﻿//#define SQLite
-//#define MySQL
-//#define Npgsql
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -41,13 +38,10 @@ namespace UnitTest
             var licFile = RetrievePath($"UnitTest{Path.DirectorySeparatorChar}License{Path.DirectorySeparatorChar}Longbow.lic");
 
             var targetFile = Path.Combine(AppContext.BaseDirectory, "Longbow.lic");
-            if (!File.Exists(targetFile)) File.Copy(licFile, targetFile, true);
-
-#if SQLite
-            var dbPath = RetrievePath($"UnitTest{Path.DirectorySeparatorChar}DB{Path.DirectorySeparatorChar}UnitTest.db");
-            var dbFile = Path.Combine(AppContext.BaseDirectory, "UnitTest.db");
-            if (!File.Exists(dbFile)) File.Copy(dbPath, dbFile);
-#endif
+            if (!File.Exists(targetFile))
+            {
+                File.Copy(licFile, targetFile, true);
+            }
         }
 
         private const string SqlConnectionString = "Data Source=.;Initial Catalog=UnitTest;User ID=sa;Password=sa";
@@ -55,38 +49,46 @@ namespace UnitTest
         private const string MySqlConnectionString = "Server=localhost;Database=UnitTest;Uid=argozhang;Pwd=argo@163.com;SslMode=none;";
         private const string NpgSqlConnectionString = "Server=localhost;Database=UnitTest;User ID=argozhang;Password=sa;";
 
-        public static void ConfigureWebHost(IWebHostBuilder builder)
+        public static void ConfigureWebHost(IWebHostBuilder builder, string providerName = Longbow.Data.DatabaseProviderType.SqlServer)
         {
             builder.ConfigureAppConfiguration(app => app.AddInMemoryCollection(new KeyValuePair<string, string>[] {
                 new KeyValuePair<string, string>("ConnectionStrings:ba", SqlConnectionString),
                 new KeyValuePair<string, string>("DB:0:Enabled", "true")
             }));
-#if SQLite
-            builder.ConfigureAppConfiguration(app => app.AddInMemoryCollection(new KeyValuePair<string, string>[] {
-                new KeyValuePair<string, string>("DB:0:Enabled", "false"),
-                new KeyValuePair<string, string>("DB:1:Enabled", "true"),
-                new KeyValuePair<string, string>("DB:1:ConnectionStrings:ba", SQLiteConnectionString)
-            }));
-#endif
 
-#if MySQL
-            builder.ConfigureAppConfiguration(app => app.AddInMemoryCollection(new KeyValuePair<string, string>[] {
-                new KeyValuePair<string, string>("DB:0:Enabled", "false"),
-                new KeyValuePair<string, string>("DB:1:Enabled", "false"),
-                new KeyValuePair<string, string>("DB:2:Enabled", "true"),
-                new KeyValuePair<string, string>("DB:2:ConnectionStrings:ba", MySqlConnectionString)
-            }));
-#endif
+            if (providerName == Longbow.Data.DatabaseProviderType.SQLite)
+            {
+                var dbPath = RetrievePath($"UnitTest{Path.DirectorySeparatorChar}DB{Path.DirectorySeparatorChar}UnitTest.db");
+                var dbFile = Path.Combine(AppContext.BaseDirectory, "UnitTest.db");
+                if (!File.Exists(dbFile)) File.Copy(dbPath, dbFile);
 
-#if Npgsql
-            builder.ConfigureAppConfiguration(app => app.AddInMemoryCollection(new KeyValuePair<string, string>[] {
-                new KeyValuePair<string, string>("DB:0:Enabled", "false"),
-                new KeyValuePair<string, string>("DB:1:Enabled", "false"),
-                new KeyValuePair<string, string>("DB:2:Enabled", "false"),
-                new KeyValuePair<string, string>("DB:3:Enabled", "true"),
-                new KeyValuePair<string, string>("DB:3:ConnectionStrings:ba", NpgSqlConnectionString)
-            }));
-#endif
+                builder.ConfigureAppConfiguration(app => app.AddInMemoryCollection(new KeyValuePair<string, string>[] {
+                    new KeyValuePair<string, string>("DB:0:Enabled", "false"),
+                    new KeyValuePair<string, string>("DB:1:Enabled", "true"),
+                    new KeyValuePair<string, string>("DB:1:ConnectionStrings:ba", SQLiteConnectionString)
+                }));
+            }
+
+            if (providerName == Longbow.Data.DatabaseProviderType.MySql)
+            {
+                builder.ConfigureAppConfiguration(app => app.AddInMemoryCollection(new KeyValuePair<string, string>[] {
+                    new KeyValuePair<string, string>("DB:0:Enabled", "false"),
+                    new KeyValuePair<string, string>("DB:1:Enabled", "false"),
+                    new KeyValuePair<string, string>("DB:2:Enabled", "true"),
+                    new KeyValuePair<string, string>("DB:2:ConnectionStrings:ba", MySqlConnectionString)
+                }));
+            }
+
+            if (providerName == Longbow.Data.DatabaseProviderType.Npgsql)
+            {
+                builder.ConfigureAppConfiguration(app => app.AddInMemoryCollection(new KeyValuePair<string, string>[] {
+                    new KeyValuePair<string, string>("DB:0:Enabled", "false"),
+                    new KeyValuePair<string, string>("DB:1:Enabled", "false"),
+                    new KeyValuePair<string, string>("DB:2:Enabled", "false"),
+                    new KeyValuePair<string, string>("DB:3:Enabled", "true"),
+                    new KeyValuePair<string, string>("DB:3:ConnectionStrings:ba", NpgSqlConnectionString)
+                }));
+            }
         }
     }
 }

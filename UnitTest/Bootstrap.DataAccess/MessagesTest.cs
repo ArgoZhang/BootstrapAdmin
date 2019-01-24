@@ -2,7 +2,7 @@
 
 namespace Bootstrap.DataAccess
 {
-    [Collection("BootstrapAdminTestContext")]
+    [Collection("SQLServerContext")]
     public class MessagesTest
     {
         [Fact]

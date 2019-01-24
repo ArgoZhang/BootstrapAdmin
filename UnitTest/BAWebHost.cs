@@ -9,10 +9,42 @@ using Xunit;
 
 namespace Bootstrap.Admin
 {
-    [CollectionDefinition("BootstrapAdminTestContext")]
+    [CollectionDefinition("SQLServerContext")]
     public class BootstrapAdminTestContext : ICollectionFixture<BAWebHost>
     {
 
+    }
+
+    [CollectionDefinition("SQLiteContext")]
+    public class SQLiteContext : ICollectionFixture<SQLiteBAWebHost>
+    {
+
+    }
+
+    [CollectionDefinition("MySqlContext")]
+    public class MySqlContext : ICollectionFixture<MySqlBAWebHost>
+    {
+
+    }
+
+    public class MySqlBAWebHost : BAWebHost
+    {
+        protected override void ConfigureWebHost(IWebHostBuilder builder)
+        {
+            base.ConfigureWebHost(builder);
+
+            TestHelper.ConfigureWebHost(builder, Longbow.Data.DatabaseProviderType.MySql);
+        }
+    }
+
+    public class SQLiteBAWebHost : BAWebHost
+    {
+        protected override void ConfigureWebHost(IWebHostBuilder builder)
+        {
+            base.ConfigureWebHost(builder);
+
+            TestHelper.ConfigureWebHost(builder, Longbow.Data.DatabaseProviderType.SQLite);
+        }
     }
 
     /// <summary>

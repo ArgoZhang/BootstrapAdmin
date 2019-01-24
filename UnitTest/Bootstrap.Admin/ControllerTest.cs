@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Bootstrap.Admin
 {
-    [Collection("BootstrapAdminTestContext")]
+    [Collection("SQLServerContext")]
     public class ControllerTest
     {
         protected HttpClient Client { get; set; }

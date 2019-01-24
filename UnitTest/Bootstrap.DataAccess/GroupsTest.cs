@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Bootstrap.DataAccess
 {
-    [Collection("BootstrapAdminTestContext")]
+    [Collection("SQLServerContext")]
     public class GroupsTest 
     {
         [Fact]
