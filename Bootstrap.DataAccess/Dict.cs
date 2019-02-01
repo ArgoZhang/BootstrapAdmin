@@ -99,8 +99,6 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual string RetrieveHomeUrl() => (DictHelper.RetrieveDicts().FirstOrDefault(d => d.Name == "前台首页" && d.Category == "网站设置" && d.Define == 0) ?? new BootstrapDict() { Code = "~/Home/Index" }).Code;
 
-        public virtual string RetrieveDefaultIcon() => (DictHelper.RetrieveDicts().FirstOrDefault(d => d.Name == "头像文件" && d.Category == "头像地址" && d.Define == 0) ?? new BootstrapDict() { Code = "default.jpg" }).Code;
-
         /// <summary>
         /// 
         /// </summary>

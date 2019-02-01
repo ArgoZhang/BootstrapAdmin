@@ -110,12 +110,6 @@ namespace Bootstrap.DataAccess
         public static string RetrieveHomeUrl() => DbContextManager.Create<Dict>().RetrieveHomeUrl();
 
         /// <summary>
-        /// 获得默认的前台首页地址，默认为~/Home/Index
-        /// </summary>
-        /// <returns></returns>
-        public static string RetrieveDefaultIcon() => DbContextManager.Create<Dict>().RetrieveDefaultIcon();
-
-        /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
