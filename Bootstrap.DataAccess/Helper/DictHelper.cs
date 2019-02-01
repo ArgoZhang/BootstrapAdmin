@@ -49,7 +49,7 @@ namespace Bootstrap.DataAccess
         public static bool Save(BootstrapDict p)
         {
             var ret = DbContextManager.Create<Dict>().Save(p);
-            if (ret) CacheCleanUtility.ClearCache(new List<string>() { p.Id });
+            if (ret) CacheCleanUtility.ClearCache(dictIds: new List<string>());
             return ret;
         }
 
