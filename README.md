@@ -6,7 +6,7 @@
 
 #### 软件架构
 软件架构说明
-本平台开发框架采用微软.net core 2.1，数据库使用Microsoft SQL Server 2008R2以上版本。
+本平台开发框架采用微软.net core 2.2，数据库支持Microsoft SQL Server 2008R2/SQLite/MySql/MariaDB/MongoDB。
 
 #### 安装教程
 
@@ -14,12 +14,13 @@
 2. 安装 Visual Studio 2019 最新版 [官方网址](https://visualstudio.microsoft.com/vs/getting-started/)
 3. 获取本项目代码 [BootstrapAdmin](https://gitee.com/LgbAdmin/BootstrapAdmin)
 4. 安装数据库
-目前支持MSSQL/MongoDB/MySQL/SQLite，以微软MSSQL为例，执行解决方案中SQLServer目录（物理硬盘中DatabaseScripts目录下）Install.sql脚本创建数据库
+目前支持MSSQL/MongoDB/MySQL/SQLite/MySql/MariaDB/MongoDB，以微软MSSQL为例，执行解决方案中SQLServer目录（物理硬盘中DatabaseScripts目录下）Install.sql脚本创建数据库
 5. 初始化数据
 执行对应目录下InitData.sql脚本
 6. 拷贝Longbow.lic文件
 拷贝Scripts目录下Longbow.lic文件到bin目录下
-
+7. 系统登录用户名与口令
+Admin/123789
 
 #### 功能列表
 
