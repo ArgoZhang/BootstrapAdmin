@@ -19,8 +19,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{586410F2-C1F0-47CD-AB28-2CF506DED2C8}"
 	ProjectSection(SolutionItems) = preProject
 		Scripts\Longbow.lic = Scripts\Longbow.lic
-		Scripts\Publish-Console.bat = Scripts\Publish-Console.bat
-		Scripts\Publish.vbs = Scripts\Publish.vbs
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.Client", "Bootstrap.Client\Bootstrap.Client.csproj", "{C82A6E45-AB90-43D1-8429-5CBE953D8151}"
