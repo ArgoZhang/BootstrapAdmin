@@ -311,6 +311,7 @@ global.json 文件内容：
   }
 }
 ```
+[NETCore SDK版本查询](https://dotnet.microsoft.com/download/dotnet-core/2.2)  
 
 ## 项目截图
 
