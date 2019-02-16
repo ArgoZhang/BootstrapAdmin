@@ -9,7 +9,7 @@
     "Category": "0",
     "Target": "_self",
     "IsResource": NumberInt(0),
-    "ApplicationCode": "0"
+    "Application": "0"
   },
   {
     "_id": ObjectId("5bd7b8445fa31256f77e4b91"),
@@ -21,7 +21,7 @@
     "Category": "0",
     "Target": "_self",
     "IsResource": NumberInt(0),
-    "ApplicationCode": "0"
+    "Application": "0"
   },
   {
     "_id": ObjectId("5bd7b8445fa31256f77e4b92"),
@@ -33,7 +33,7 @@
     "Category": "0",
     "Target": "_self",
     "IsResource": NumberInt(0),
-    "ApplicationCode": "0"
+    "Application": "0"
   },
   {
     "_id": ObjectId("5bd7b8445fa31256f77e4b93"),
@@ -45,7 +45,7 @@
     "Category": "0",
     "Target": "_self",
     "IsResource": NumberInt(0),
-    "ApplicationCode": "0"
+    "Application": "0"
   },
   {
     "_id": ObjectId("5bd7b8445fa31256f77e4b94"),
@@ -57,7 +57,7 @@
     "Category": "0",
     "Target": "_self",
     "IsResource": NumberInt(0),
-    "ApplicationCode": "0"
+    "Application": "0"
   },
   {
     "_id": ObjectId("5bd7b8445fa31256f77e4b95"),
@@ -69,7 +69,7 @@
     "Category": "0",
     "Target": "_self",
     "IsResource": NumberInt(0),
-    "ApplicationCode": "0"
+    "Application": "0"
   },
   {
     "_id": ObjectId("5bd7b8445fa31256f77e4b96"),
@@ -81,7 +81,7 @@
     "Category": "0",
     "Target": "_self",
     "IsResource": NumberInt(0),
-    "ApplicationCode": "0"
+    "Application": "0"
   },
   {
     "_id": ObjectId("5bd7b8445fa31256f77e4b97"),
@@ -93,7 +93,7 @@
     "Category": "0",
     "Target": "_self",
     "IsResource": NumberInt(0),
-    "ApplicationCode": "0"
+    "Application": "0"
   },
   {
     "_id": ObjectId("5bd7b8445fa31256f77e4b98"),
@@ -105,7 +105,7 @@
     "Category": "0",
     "Target": "_self",
     "IsResource": NumberInt(0),
-    "ApplicationCode": "0"
+    "Application": "0"
   },
   {
     "_id": ObjectId("5bd7b8445fa31256f77e4b99"),
@@ -117,7 +117,7 @@
     "Category": "0",
     "Target": "_self",
     "IsResource": NumberInt(0),
-    "ApplicationCode": "0"
+    "Application": "0"
   },
   {
     "_id": ObjectId("5bd7b8445fa31256f77e4b9a"),
@@ -129,7 +129,7 @@
     "Category": "0",
     "Target": "_self",
     "IsResource": NumberInt(0),
-    "ApplicationCode": "0"
+    "Application": "0"
   },
   {
     "_id": ObjectId("5bd7b8445fa31256f77e4b9b"),
@@ -141,7 +141,7 @@
     "Category": "0",
     "Target": "_self",
     "IsResource": NumberInt(0),
-    "ApplicationCode": "0"
+    "Application": "0"
   },
   {
     "_id": ObjectId("5bd7b8445fa31256f77e4b9c"),
@@ -153,7 +153,7 @@
     "Category": "0",
     "Target": "_self",
     "IsResource": NumberInt(0),
-    "ApplicationCode": "0"
+    "Application": "0"
   },
   {
     "_id": ObjectId("5bd7b8445fa31256f77e4b9d"),
@@ -165,7 +165,7 @@
     "Category": "0",
     "Target": "_self",
     "IsResource": NumberInt(0),
-    "ApplicationCode": "0"
+    "Application": "0"
   },
   {
     "_id": ObjectId("5bd7b8445fa31256f77e4b9e"),
@@ -177,7 +177,7 @@
     "Category": "0",
     "Target": "_self",
     "IsResource": NumberInt(0),
-    "ApplicationCode": "0"
+    "Application": "0"
   },
   {
     "_id": ObjectId("5bd7b8445fa31256f77e4b9f"),
@@ -189,7 +189,7 @@
     "Category": "0",
     "Target": "_self",
     "IsResource": NumberInt(0),
-    "ApplicationCode": "0"
+    "Application": "0"
   },
   {
     "_id": ObjectId("5bd7b8445fa31256f77e4ba0"),
@@ -201,7 +201,7 @@
     "Category": "0",
     "Target": "_self",
     "IsResource": NumberInt(0),
-    "ApplicationCode": "0"
+    "Application": "0"
   },
   {
     "_id": ObjectId("5bd7b8445fa31256f77e4ba1"),
@@ -213,7 +213,7 @@
     "Category": "0",
     "Target": "_self",
     "IsResource": NumberInt(0),
-    "ApplicationCode": "0"
+    "Application": "0"
   },
   {
     "_id": ObjectId("5bd7b8445fa31256f77e4ba2"),
@@ -225,7 +225,7 @@
     "Category": "1",
     "Target": "_self",
     "IsResource": NumberInt(0),
-    "ApplicationCode": "2"
+    "Application": "2"
   },
   {
     "_id": ObjectId("5bd7b8445fa31256f77e4ba4"),
@@ -237,21 +237,18 @@
     "Category": "1",
     "Target": "_self",
     "IsResource": NumberInt(0),
-    "ApplicationCode": "2"
+    "Application": "2"
   },
   {
     "_id": ObjectId("5bd9b3d868aa001661776f56"),
     "ParentId": "0",
-    "ParentName": "",
     "Name": "帮助",
     "Order": NumberInt(10),
     "Icon": "fa fa-fa",
     "Url": "#",
     "Category": "1",
-    "CategoryName": null,
-    "Active": null,
     "Target": "_self",
     "IsResource": NumberInt(0),
-    "ApplicationCode": "2"
+    "Application": "2"
   }
 ]
