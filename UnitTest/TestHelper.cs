@@ -35,7 +35,7 @@ namespace UnitTest
         /// </summary>
         public static void CopyLicense()
         {
-            var licFile = RetrievePath($"UnitTest{Path.DirectorySeparatorChar}License{Path.DirectorySeparatorChar}Longbow.lic");
+            var licFile = RetrievePath($"Scripts{Path.DirectorySeparatorChar}Longbow.lic");
 
             var targetFile = Path.Combine(AppContext.BaseDirectory, "Longbow.lic");
             if (!File.Exists(targetFile))
