@@ -165,6 +165,7 @@ MacOS系统设置为
     }
   ]
 ```
+本项目使用的是PetaPoco Mini ORM框架为基础，所以数据库驱动未显示引用到项目中，切换数据库时需要自行根据自己设置的数据库加载自己的数据库驱动组件  
 
 ### ConnectionStrings:  
 默认数据库连接字符串
@@ -176,7 +177,7 @@ ProviderName: &#160; &#160;数据库类型，未配置默认使用Microsoft SQLS
 Widget: &#160; &#160;数据库实体类程序集，此程序集负责具体数据库CRUD操作，未指定时默认使用Bootstrap.DataAccess程序集  
 ConnectionStrings: &#160; &#160;数据库连接字符串，未配置使用上面的默认数据库连接字符串  
   
-以上面代码为例，由于前面的配置项中的Enabled均为false，最后一个MongoDB配置项为true，则系统采用此配置，使用MongoDB作为系统数据库，根据其配置项内的ConnectionStrings下的数据库连接字符串
+以上面代码为例，由于前面的配置项中的Enabled均为false，最后一个MongoDB配置项为true，则系统采用此配置，使用MongoDB作为系统数据库，根据其配置项内的ConnectionStrings下的数据库连接字符串，开发环境中需要自己额外显示增加MongoDB数据库驱动组件([Nuget]MongoDB.Driver)的引用，发布生产环境中需要自己拷贝相关依赖文件到bin目录下
 
 ### MongoDB:  
 MongoDB DatabaseName
