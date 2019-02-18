@@ -3,9 +3,15 @@
 ## 项目介绍
 使用HTML5+jQuery + NET Core 2.2 + Bootstrap4.1 + PetaPoco构建的后台管理平台，主要功能如下：  
 详细资料请点击 [查看文档](https://gitee.com/LgbAdmin/BootstrapAdmin/wikis)  
+
 ## 数据库
 数据库支持列表如下：  
 **MSSQL/Oracle/SQLite/MySql/MariaDB/Postgresql/Firebird/MsAccess/MongoDB**  
+
+## QQ交流群
+群号
+795206915  
+[快速加群](https://shang.qq.com/wpa/qunwpa?idkey=d381355e50ff91db410c3da3eadb081ba859f64c2877e86343f4709b171f28b8)
 
 ## 功能列表
 1. 系统登录   
