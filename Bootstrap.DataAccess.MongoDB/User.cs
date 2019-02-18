@@ -47,7 +47,7 @@ namespace Bootstrap.DataAccess.MongoDB
         {
             if (string.IsNullOrEmpty(userName) && string.IsNullOrEmpty(password)) return false;
 
-            var u = DbManager.Users.Find(user => user.UserName == userName).FirstOrDefault();
+            var u = DbManager.Users.Find(user => user.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
             return !string.IsNullOrEmpty(u.PassSalt) && u.Password == LgbCryptography.ComputeHash(password, u.PassSalt);
         }
 
