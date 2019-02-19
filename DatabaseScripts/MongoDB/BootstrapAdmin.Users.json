@@ -28,7 +28,7 @@
     "ApprovedTime": ISODate("2018-09-13T13:27:12.957+0000"),
     "ApprovedBy": "Admin",
     "Description": "管理员Admin创建用户",
-    "Icon": "~/images/uploader/default.jpg",
+    "Icon": "default.jpg",
     "Css": null,
     "Groups": [
 
