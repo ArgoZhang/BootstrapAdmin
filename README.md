@@ -2,7 +2,7 @@
 
 ## 项目介绍
 使用HTML5+jQuery + NET Core 2.2 + Bootstrap4.1 + PetaPoco构建的后台管理平台，主要功能如下：  
-详细资料请点击 [查看文档](https://gitee.com/LgbAdmin/BootstrapAdmin/wikis)  
+详细资料请点击 [查看文档](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis)  
 
 ## 数据库
 数据库支持列表如下：  
@@ -30,12 +30,12 @@
 14. 系统日志  
 15. 程序异常  
 16. 工具集合  
-详细资料请点击 [查看文档](https://gitee.com/LgbAdmin/BootstrapAdmin/wikis)  
+详细资料请点击 [查看文档](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis)  
 
 ## 安装教程
 1. 安装 .net core sdk [官方网址](http://www.microsoft.com/net/download)
 2. 安装 Visual Studio IDE 2017以上 [官方网址](https://visualstudio.microsoft.com/vs/getting-started/)
-3. 获取本项目代码 [BootstrapAdmin](https://gitee.com/LgbAdmin/BootstrapAdmin)
+3. 获取本项目代码 [BootstrapAdmin](https://gitee.com/LongbowEnterprise/BootstrapAdmin)
 4. 安装数据库  
 以微软MSSQL为例，执行解决方案中SQLServer目录（物理硬盘中DatabaseScripts目录下）Install.sql脚本创建数据库
 5. 初始化数据  
@@ -47,10 +47,10 @@
 密码：**123789**  
 
 ## 配置说明
-详细配置说明请点击 [查看文档](https://gitee.com/LgbAdmin/BootstrapAdmin/wikis) 查看配置说明小节  
+详细配置说明请点击 [查看文档](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis) 查看配置说明小节  
 
 ## 常见问题Q&A
-请点击 [查看文档](https://gitee.com/LgbAdmin/BootstrapAdmin/wikis) 查看常见问题小节  
+请点击 [查看文档](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis) 查看常见问题小节  
 
 ## 项目截图
 
@@ -58,7 +58,7 @@
 
 ![输入图片说明](https://images.gitee.com/uploads/images/2018/0925/171712_d00fae48_554725.png "BAHome.png")
 
-更多截图请点击 [查看文档](https://gitee.com/LgbAdmin/BootstrapAdmin/wikis) 查看项目截图小节  
+更多截图请点击 [查看文档](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis) 查看项目截图小节  
 
 ## 参与贡献
 
