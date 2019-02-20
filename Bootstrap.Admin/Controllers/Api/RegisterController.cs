@@ -26,6 +26,7 @@ namespace Bootstrap.Admin.Controllers.Api
         {
             return UserHelper.RetrieveUserByUserName(userName) == null && !UserHelper.RetrieveNewUsers().Any(u => u.UserName == userName);
         }
+
         /// <summary>
         /// 登录页面注册新用户提交按钮调用
         /// </summary>
@@ -38,6 +39,17 @@ namespace Bootstrap.Admin.Controllers.Api
             var ret = UserHelper.Save(user);
             if (ret) await SignalRManager.Send(hub.Clients.All, new MessageBody() { Category = "Users", Message = string.Format("{0}-{1}", user.UserName, user.Description) });
             return ret;
+        }
+
+        /// <summary>
+        /// 忘记密码调用
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        [HttpPut]
+        public bool Put([FromBody]User user)
+        {
+            return UserHelper.ForgotPassword(user.UserName, user.DisplayName, user.Description);
         }
     }
 }

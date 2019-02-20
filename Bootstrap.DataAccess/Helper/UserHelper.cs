@@ -99,6 +99,19 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="displayName"></param>
+        /// <param name="desc"></param>
+        /// <returns></returns>
+        public static bool ForgotPassword(string userName, string displayName, string desc)
+        {
+            // UNDONE 忘记密码涉及到安全问题，防止用户恶意重置其他用户，待定
+            return true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="id"></param>
         /// <param name="rejectBy"></param>
         /// <param name="reason"></param>

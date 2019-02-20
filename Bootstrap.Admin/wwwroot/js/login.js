@@ -26,6 +26,19 @@
         });
     });
 
+    $('#btnForgot').on('click', function () {
+        $.bc({
+            url: "api/Register",
+            data: { UserName: $('#f_userName').val(), DisplayName: $('#f_displayName').val(), Description: $('#f_desc').val() },
+            modal: '#dialogForgot',
+            method: "put",
+            callback: function (result) {
+                var title = result ? "提交成功<br/>等待管理员重置密码" : "提交失败";
+                lgbSwal({ timer: 1500, title: title, type: result ? "success" : "error" });
+            }
+        });
+    });
+
     $('.rememberPwd').on('click', function () {
         var $this = $(this);
         var $check = $this.find('i');
