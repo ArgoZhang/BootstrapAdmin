@@ -2,7 +2,6 @@
 using Bootstrap.DataAccess;
 using Longbow.Web.Mvc;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 using System.Net;
 
 namespace Bootstrap.Admin.Controllers.Api

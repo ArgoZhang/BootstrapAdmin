@@ -2,7 +2,6 @@
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Collections.Generic;
-using System.Linq;
 using Operation = Swashbuckle.AspNetCore.Swagger.Operation;
 
 namespace Bootstrap.Admin
