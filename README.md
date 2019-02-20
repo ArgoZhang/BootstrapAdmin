@@ -56,7 +56,7 @@
 
 后台首页
 
-![输入图片说明](https://images.gitee.com/uploads/images/2018/0925/171712_d00fae48_554725.png "BAHome.png")
+![输入图片说明](https://gitee.com/LongbowEnterprise/Pictures/raw/master/BootstrapAdmin/BA02.png "BAHome.png")
 
 更多截图请点击 [查看文档](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis) 查看项目截图小节  
 
