@@ -23,9 +23,7 @@ namespace Bootstrap.Client.DataAccess
         public static IEnumerable<BootstrapMenu> RetrieveAppMenus(string userName, string activeUrl)
         {
             var menus = RetrieveAllMenus(userName).Where(m => m.Category == "1" && m.IsResource == 0 && m.Application == ConfigurationManager.AppSettings["AppId"]).Where(m => m.ParentId == "0").OrderBy(m => m.Application).ThenBy(m => m.Order);
-            var root = DbHelper.CascadeMenus(menus);
-            DbHelper.ActiveMenu(root, activeUrl);
-            return root;
+            return DbHelper.CascadeMenus(menus, activeUrl);
         }
 
         /// <summary>

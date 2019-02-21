@@ -83,9 +83,7 @@ namespace Bootstrap.DataAccess
         {
             var menus = RetrieveAllMenus(userName).Where(m => m.Category == "1" && m.IsResource == 0);
             if (appId != "0") menus = menus.Where(m => m.Application == appId);
-            var root = DbHelper.CascadeMenus(menus);
-            DbHelper.ActiveMenu(root, activeUrl);
-            return root;
+            return DbHelper.CascadeMenus(menus, activeUrl);
         }
 
         /// <summary>
@@ -99,9 +97,7 @@ namespace Bootstrap.DataAccess
         public static IEnumerable<BootstrapMenu> RetrieveSystemMenus(string userName, string activeUrl = null)
         {
             var menus = RetrieveAllMenus(userName).Where(m => m.Category == "0" && m.IsResource == 0);
-            var root = DbHelper.CascadeMenus(menus);
-            DbHelper.ActiveMenu(root, activeUrl);
-            return root;
+            return DbHelper.CascadeMenus(menus, activeUrl);
         }
 
         /// <summary>
