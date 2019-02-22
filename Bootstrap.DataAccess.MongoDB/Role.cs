@@ -73,7 +73,7 @@ namespace Bootstrap.DataAccess.MongoDB
         public override IEnumerable<string> RetrieveRolesByUserName(string userName)
         {
             var roles = new List<string>();
-            var user = UserHelper.Retrieves().Cast<User>().FirstOrDefault(u => u.UserName == userName);
+            var user = UserHelper.Retrieves().Cast<User>().FirstOrDefault(u => u.UserName.ToLowerInvariant() == userName.ToLowerInvariant());
             var role = RoleHelper.Retrieves();
 
             roles.AddRange(user.Roles.Select(r => role.FirstOrDefault(rl => rl.Id == r).RoleName));

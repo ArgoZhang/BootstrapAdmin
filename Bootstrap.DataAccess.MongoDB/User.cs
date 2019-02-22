@@ -34,7 +34,7 @@ namespace Bootstrap.DataAccess.MongoDB
                .Include(u => u.DisplayName)
                .Include(u => u.Icon)
                .Include(u => u.Css);
-            return DbManager.Users.Find(user => user.UserName == userName).Project<DataAccess.User>(project).FirstOrDefault();
+            return DbManager.Users.Find(user => user.UserName.ToLowerInvariant() == userName.ToLowerInvariant()).Project<DataAccess.User>(project).FirstOrDefault();
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Bootstrap.DataAccess.MongoDB
         {
             if (string.IsNullOrEmpty(userName) && string.IsNullOrEmpty(password)) return false;
 
-            var u = DbManager.Users.Find(user => user.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+            var u = DbManager.Users.Find(user => user.UserName.ToLowerInvariant() == userName.ToLowerInvariant()).FirstOrDefault();
             return !string.IsNullOrEmpty(u.PassSalt) && u.Password == LgbCryptography.ComputeHash(password, u.PassSalt);
         }
 
