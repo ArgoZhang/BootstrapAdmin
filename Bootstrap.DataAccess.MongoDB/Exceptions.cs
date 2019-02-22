@@ -65,6 +65,30 @@ namespace Bootstrap.DataAccess.MongoDB
         public override Page<DataAccess.Exceptions> RetrievePages(PaginationOption po, DateTime? startTime, DateTime? endTime)
         {
             var exceps = DbManager.Exceptions.Find(FilterDefinition<DataAccess.Exceptions>.Empty).ToList();
+            // sort
+            var orderProxy = po.Order == "asc" ?
+                new Func<Func<DataAccess.Exceptions, string>, List<DataAccess.Exceptions>>(p => exceps.OrderBy(p).ToList()) :
+                new Func<Func<DataAccess.Exceptions, string>, List<DataAccess.Exceptions>>(p => exceps.OrderByDescending(p).ToList());
+
+            var logTimeProxy = po.Order == "asc" ?
+                new Func<Func<DataAccess.Exceptions, DateTime>, List<DataAccess.Exceptions>>(p => exceps.OrderBy(p).ToList()) :
+                new Func<Func<DataAccess.Exceptions, DateTime>, List<DataAccess.Exceptions>>(p => exceps.OrderByDescending(p).ToList());
+
+            switch (po.Sort)
+            {
+                case "ErrorPage":
+                    exceps = orderProxy(ex => ex.ErrorPage);
+                    break;
+                case "UserId":
+                    exceps = orderProxy(ex => ex.UserId);
+                    break;
+                case "UserIp":
+                    exceps = orderProxy(ex => ex.UserIp);
+                    break;
+                case "LogTime":
+                    exceps = logTimeProxy(ex => ex.LogTime);
+                    break;
+            }
             return new Page<DataAccess.Exceptions>()
             {
                 Context = exceps,
