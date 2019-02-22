@@ -1,7 +1,10 @@
-﻿using MongoDB.Driver;
+﻿using Longbow.Web.Mvc;
+using MongoDB.Driver;
+using PetaPoco;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Linq;
 
 namespace Bootstrap.DataAccess.MongoDB
 {
@@ -50,6 +53,27 @@ namespace Bootstrap.DataAccess.MongoDB
             DbManager.Exceptions.InsertOne(excep);
             ClearExceptions();
             return true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="po"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <returns></returns>
+        public override Page<DataAccess.Exceptions> RetrievePages(PaginationOption po, DateTime? startTime, DateTime? endTime)
+        {
+            var exceps = DbManager.Exceptions.Find(FilterDefinition<DataAccess.Exceptions>.Empty).ToList();
+            return new Page<DataAccess.Exceptions>()
+            {
+                Context = exceps,
+                CurrentPage = po.PageIndex,
+                ItemsPerPage = po.Limit,
+                TotalItems = exceps.Count,
+                TotalPages = (long)Math.Ceiling(exceps.Count * 1.0 / po.Limit),
+                Items = exceps.Skip(po.Offset).Take(po.Limit).ToList()
+            };
         }
     }
 }
