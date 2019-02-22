@@ -30,6 +30,7 @@
 14. 系统日志  
 15. 程序异常  
 16. 工具集合  
+
 详细资料请点击 [查看文档](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis)  
 
 ## 安装教程
@@ -46,6 +47,11 @@
 用户名：**Admin**  
 密码：**123789**  
 
+**在线演示** <a href="http://argo.zylweb.cn" target="_blank">[传送门]</a>  
+网站服务器配置：  
+CPU: 1核  
+MEM: 2G
+
 ## 配置说明
 详细配置说明请点击 [查看文档](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis) 查看配置说明小节  
 
@@ -59,6 +65,10 @@
 ![输入图片说明](https://gitee.com/LongbowEnterprise/Pictures/raw/master/BootstrapAdmin/BA02.png "BAHome.png")
 
 更多截图请点击 [查看文档](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis) 查看项目截图小节  
+
+## 特别鸣谢
+1. <a href="https://gitee.com/571183806" target="_blank">**云龙**</a> 提供云服务器搭建在线演示系统
+2. <a href="https://gitee.com/Ysmc" target="_blank">**一事冇诚**</a> 对MongoDB数据库提供了详细测试
 
 ## 参与贡献
 
