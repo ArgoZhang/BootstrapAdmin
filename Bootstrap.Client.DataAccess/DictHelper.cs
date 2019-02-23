@@ -64,6 +64,7 @@ namespace Bootstrap.Client.DataAccess
             var platName = dicts.FirstOrDefault(d => d.Category == "应用程序" && d.Code == ConfigurationManager.AppSettings["AppId"])?.Name;
             return dicts.FirstOrDefault(d => d.Category == platName && d.Name == name)?.Code ?? $"{name}{defaultValue}";
         }
+
         /// <summary>
         /// 获得网站设置中的当前样式
         /// </summary>
@@ -73,5 +74,11 @@ namespace Bootstrap.Client.DataAccess
             var theme = RetrieveDicts().Where(d => d.Name == "使用样式" && d.Category == "当前样式" && d.Define == 0).FirstOrDefault()?.Code;
             return theme == null ? string.Empty : theme.Equals("site.css", StringComparison.OrdinalIgnoreCase) ? string.Empty : theme;
         }
+
+        /// <summary>
+        /// 获取头像路径
+        /// </summary>
+        /// <returns></returns>
+        public static string RetrieveIconFolderPath() => (RetrieveDicts().FirstOrDefault(d => d.Name == "头像路径" && d.Category == "头像地址" && d.Define == 0) ?? new BootstrapDict() { Code = "~/images/uploader/" }).Code;
     }
 }

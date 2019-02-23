@@ -18,7 +18,7 @@ namespace Bootstrap.Client.Models
         public HeaderBarModel(IIdentity identity)
         {
             var user = UserHelper.RetrieveUserByUserName(identity.Name);
-            Icon = $"{ConfigurationManager.AppSettings["AuthHost"]}/{user.Icon.TrimStart('~', '/')}";
+            Icon = $"{ConfigurationManager.AppSettings["AuthHost"]}/{DictHelper.RetrieveIconFolderPath().Trim('~', '/')}/{user.Icon}";
             DisplayName = user.DisplayName;
             UserName = user.UserName;
             SettingsUrl = DictHelper.RetrieveSettingsUrl();
