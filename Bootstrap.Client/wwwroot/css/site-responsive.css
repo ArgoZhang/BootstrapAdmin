@@ -8,3 +8,13 @@
         flex: 0 1 auto;
     }
 }
+
+@media (min-width: 769px) {
+    footer {
+        display: flex;
+    }
+
+    aside {
+        display: none;
+    }
+}
