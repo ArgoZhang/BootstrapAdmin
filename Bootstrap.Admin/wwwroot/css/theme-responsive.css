@@ -1,6 +1,6 @@
 ﻿@media (min-width: 375px) {
     .toolbar .dropdown-menu a {
-        padding: 0 20px;
+        padding: 0 14px;
     }
 
         .toolbar .dropdown-menu a:first-child {
@@ -56,12 +56,14 @@
 }
 
 @media (min-width: 940px) {
-    .btn span:last-child {
-        display: inline;
-    }
-
     .form-check-input + span, .form-check-input + label {
         max-width: 192px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .bs-bars .btn span:last-child {
+        display: inline;
     }
 }
 

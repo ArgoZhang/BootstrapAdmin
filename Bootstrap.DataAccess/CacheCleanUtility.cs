@@ -17,9 +17,10 @@ namespace Bootstrap.DataAccess
         /// <param name="userIds"></param>
         /// <param name="groupIds"></param>
         /// <param name="menuIds"></param>
+        /// <param name="appIds"></param>
         /// <param name="dictIds"></param>
         /// <param name="cacheKey"></param>
-        public static void ClearCache(IEnumerable<string> roleIds = null, IEnumerable<string> userIds = null, IEnumerable<string> groupIds = null, IEnumerable<string> menuIds = null, IEnumerable<string> dictIds = null, string cacheKey = null)
+        public static void ClearCache(IEnumerable<string> roleIds = null, IEnumerable<string> userIds = null, IEnumerable<string> groupIds = null, IEnumerable<string> menuIds = null, IEnumerable<string> appIds = null, IEnumerable<string> dictIds = null, string cacheKey = null)
         {
             var cacheKeys = new List<string>();
             var corsKeys = new List<string>();
@@ -70,6 +71,13 @@ namespace Bootstrap.DataAccess
                 cacheKeys.Add(MenuHelper.RetrieveMenusByRoleIdDataKey + "*");
                 cacheKeys.Add(MenuHelper.RetrieveMenusAll + "*");
                 corsKeys.Add(MenuHelper.RetrieveMenusAll + "*");
+            }
+            if (appIds != null)
+            {
+                appIds.ToList().ForEach(id =>
+                {
+                    cacheKeys.Add(string.Format("{0}-{1}", AppHelper.RetrieveAppsByRoleIdDataKey, id));
+                });
             }
             if (dictIds != null)
             {

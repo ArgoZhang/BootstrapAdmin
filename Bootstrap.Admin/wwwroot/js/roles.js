@@ -11,6 +11,9 @@
     var $btnSubmitMenu = $('#btnSubmitMenu');
     var $nestMenu = $('#nestable_menu');
     var $nestMenuInput = $nestMenu.find('div.dd3-content');
+    var $dialogApp = $("#dialogApp");
+    var $dialogAppHeader = $('#myAppModalLabel');
+    var $dialogAppForm = $('#appForm');
 
     $('table').lgbTable({
         url: Role.url,
@@ -71,6 +74,22 @@
                         }
                     });
                 },
+                '#btn_assignApp': function (row) {
+                    $.bc({
+                        id: row.Id, url: App.url, method: "post",
+                        callback: function (result) {
+                            var htmlTemplate = this.htmlTemplate;
+                            var html = $.map(result, function (element, index) {
+                                return $.format(htmlTemplate, element.Id, element.AppName, element.Checked, "应用程序名称");
+                            }).join('');
+                            $dialogAppHeader.text($.format('{0}-应用授权窗口', row.RoleName));
+                            $dialogAppForm.html(html).find('[data-toggle="tooltip"]').each(function (index, label) {
+                                if (label.title === "") label.title = "未设置";
+                            }).tooltip();
+                            $dialogApp.modal('show');
+                        }
+                    });
+                },
                 '#btnSubmitUser': function (row) {
                     var roleId = row.Id;
                     var userIds = $dialogUser.find(':checked').map(function (index, element) {
@@ -91,6 +110,13 @@
                         return $(element).val();
                     }).toArray();
                     $.bc({ id: roleId, url: Menu.url, method: "put", data: menuIds, modal: '#dialogMenu', title: Menu.title });
+                },
+                '#btnSubmitApp': function (row) {
+                    var roleId = row.Id;
+                    var appIds = $dialogApp.find(':checked').map(function (index, element) {
+                        return $(element).val();
+                    }).toArray();
+                    $.bc({ id: roleId, url: App.url, method: "put", data: appIds, modal: '#dialogApp', title: App.title });
                 }
             }
         },

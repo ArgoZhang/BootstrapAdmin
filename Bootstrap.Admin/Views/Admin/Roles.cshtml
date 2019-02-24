@@ -48,6 +48,9 @@
     <button id="btn_assignMenu" type="button" class="btn btn-secondary">
         <span class="fa fa-dashboard" aria-hidden="true"></span><span>分配菜单</span>
     </button>
+    <button id="btn_assignApp" type="button" class="btn btn-success">
+        <span class="fa fa-cubes" aria-hidden="true"></span><span>分配应用</span>
+    </button>
     <div class="toolbar btn-group">
         <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" type="button"><i class="fa fa-gear"></i></button>
         <div class="dropdown-menu">
@@ -55,6 +58,7 @@
             <a id="tb_assignUser" href="#" title="分配用户"><i class="fa fa-user"></i></a>
             <a id="tb_assignGroup" href="#" title="分配部门"><i class="fa fa-bank"></i></a>
             <a id="tb_assignMenu" href="#" title="分配菜单"><i class="fa fa-dashboard"></i></a>
+            <a id="tb_assignApp" href="#" title="分配应用"><i class="fa fa-cubes"></i></a>
         </div>
     </div>
 }
@@ -83,4 +87,5 @@
     @await Html.PartialAsync("UserConfig")
     @await Html.PartialAsync("GroupConfig")
     @await Html.PartialAsync("NavigatorConfig")
+    @await Html.PartialAsync("AppConfig")
 }

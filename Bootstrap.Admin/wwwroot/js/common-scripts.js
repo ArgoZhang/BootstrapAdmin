@@ -186,6 +186,12 @@ $(function () {
         $('body').toggleClass('sidebar-open');
     });
 
+    // Apps
+    App = {
+        url: 'api/Apps',
+        title: "分配应用"
+    };
+
     // Roles
     Role = {
         url: 'api/Roles',
