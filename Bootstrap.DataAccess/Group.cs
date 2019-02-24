@@ -94,7 +94,7 @@ namespace Bootstrap.DataAccess
         public virtual IEnumerable<Group> RetrievesByRoleId(string roleId)
         {
             var db = DbManager.Create();
-            return DbManager.Create().Fetch<Group>($"select g.ID, g.GroupName, g.Description, case rg.GroupID when g.ID then 'checked' else '' end Checked from {db.Provider.EscapeSqlIdentifier("Groups")} g left join RoleGroup rg on g.ID = rg.GroupID and RoleID = @0", roleId);
+            return db.Fetch<Group>($"select g.ID, g.GroupName, g.Description, case rg.GroupID when g.ID then 'checked' else '' end Checked from {db.Provider.EscapeSqlIdentifier("Groups")} g left join RoleGroup rg on g.ID = rg.GroupID and RoleID = @0", roleId);
         }
 
         /// <summary>
