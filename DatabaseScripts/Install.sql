@@ -136,6 +136,32 @@ EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'角色ID' , @l
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'部门ID' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'RoleGroup', @level2type=N'COLUMN',@level2name=N'GroupID'
 GO
+
+/****** Object:  Table [dbo].[RoleApp]    Script Date: 02/24/2019 14:56:59 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[RoleApp](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[AppID] [varchar](50) NOT NULL,
+	[RoleID] [int] NOT NULL,
+ CONSTRAINT [PK_RoleApp] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
 /****** Object:  Table [dbo].[Notifications]    Script Date: 11/12/2016 15:49:11 ******/
 SET ANSI_NULLS ON
 GO

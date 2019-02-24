@@ -39,6 +39,12 @@ CREATE TABLE RoleGroup(
 	GroupID 		INT NOT NULL
 );
 
+CREATE TABLE RoleApp(
+	ID 				INTEGER PRIMARY KEY	Auto_increment,
+	AppID 			VARCHAR (500) NOT NULL,
+	RoleID 			INT NOT NULL
+);
+
 CREATE TABLE Notifications(
 	ID 				INTEGER PRIMARY KEY	Auto_increment,
 	Category 		VARCHAR (50) NOT NULL,
