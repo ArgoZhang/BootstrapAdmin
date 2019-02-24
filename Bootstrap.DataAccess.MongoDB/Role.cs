@@ -15,6 +15,11 @@ namespace Bootstrap.DataAccess.MongoDB
         public IEnumerable<string> Menus { get; set; }
 
         /// <summary>
+        /// 此角色关联的所有应用程序
+        /// </summary>
+        public IEnumerable<string> Apps { get; set; }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="id"></param>
@@ -38,7 +43,8 @@ namespace Bootstrap.DataAccess.MongoDB
                 {
                     RoleName = p.RoleName,
                     Description = p.Description,
-                    Menus = new List<string>()
+                    Menus = new List<string>(),
+                    Apps = new List<string>()
                 });
                 return true;
             }
