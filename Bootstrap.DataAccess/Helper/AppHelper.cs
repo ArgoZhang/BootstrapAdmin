@@ -1,4 +1,5 @@
-﻿using Longbow.Cache;
+﻿using Bootstrap.Security.DataAccess;
+using Longbow.Cache;
 using Longbow.Data;
 using System.Collections.Generic;
 
@@ -27,5 +28,12 @@ namespace Bootstrap.DataAccess
             if (ret) CacheCleanUtility.ClearCache(appIds: appIds, roleIds: new List<string>() { roleId });
             return ret;
         }
+
+        /// <summary>
+        /// 根据指定用户名获得授权应用程序集合
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public static IEnumerable<string> RetrieveAppsByUserName(string userName) => DbContextManager.Create<App>().RetrieveAppsByUserName(userName);
     }
 }

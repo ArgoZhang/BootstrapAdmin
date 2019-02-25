@@ -1,4 +1,5 @@
-﻿using Longbow.Data;
+﻿using Bootstrap.Security.DataAccess;
+using Longbow.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +40,13 @@ namespace Bootstrap.DataAccess
             }
             return ret;
         }
+
+        /// <summary>
+        /// 根据指定用户名获得授权应用程序集合
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public virtual IEnumerable<string> RetrieveAppsByUserName(string userName) => DbHelper.RetrieveAppsByUserName(userName);
 
         /// <summary>
         /// 根据角色ID以及选定的App ID，保到角色应用表

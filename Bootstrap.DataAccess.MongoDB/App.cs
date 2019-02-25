@@ -35,5 +35,25 @@ namespace Bootstrap.DataAccess.MongoDB
             var ret = DbManager.Roles.UpdateOne(md => md.Id == roleId, Builders<Role>.Update.Set(md => md.Apps, appIds));
             return true;
         }
+
+        /// <summary>
+        /// 根据指定用户名获得授权应用程序集合
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public override IEnumerable<string> RetrieveAppsByUserName(string userName)
+        {
+            var ret = new List<string>();
+            var roles = RoleHelper.RetrieveRolesByUserName(userName);
+            if (roles.Contains("Administrators", StringComparer.OrdinalIgnoreCase))
+            {
+                ret.AddRange(DictHelper.RetrieveApps().Select(kv => kv.Key));
+            }
+            else
+            {
+                RoleHelper.Retrieves().Cast<Role>().Where(r => roles.Any(rn => rn == r.RoleName)).ToList().ForEach(r => ret.AddRange(r.Apps));
+            }
+            return ret;
+        }
     }
 }

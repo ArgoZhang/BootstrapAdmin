@@ -125,7 +125,7 @@ namespace Bootstrap.Admin
             app.UseResponseCompression();
             app.UseStaticFiles();
             app.UseAuthentication();
-            app.UseBootstrapAdminAuthorization(RoleHelper.RetrieveRolesByUserName, RoleHelper.RetrieveRolesByUrl, DbHelper.RetrieveAppsByUserName);
+            app.UseBootstrapAdminAuthorization(RoleHelper.RetrieveRolesByUserName, RoleHelper.RetrieveRolesByUrl, AppHelper.RetrieveAppsByUserName);
             app.UseCacheManagerCorsHandler();
             app.UseSignalR(routes => { routes.MapHub<SignalRHub>("/NotiHub"); });
             app.UseMvc(routes =>
