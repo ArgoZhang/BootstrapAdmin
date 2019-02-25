@@ -44,10 +44,11 @@ namespace Bootstrap.Admin.Controllers
                 model.Content = "请求资源未找到";
                 model.Image = "404_icon.png";
             }
-            else if(id == 403)
+            else if (id == 403)
             {
                 model.Title = "拒绝响应";
                 model.Content = "请求资源的访问被服务器拒绝";
+                model.ReturnUrl = Url.Content("~/Admin/Index");
             }
             return View(model);
         }
