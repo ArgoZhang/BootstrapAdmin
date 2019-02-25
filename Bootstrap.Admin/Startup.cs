@@ -1,4 +1,5 @@
 ﻿using Bootstrap.DataAccess;
+using Bootstrap.Security.DataAccess;
 using Bootstrap.Security.Filter;
 using Longbow.Web;
 using Longbow.Web.SignalR;
@@ -124,7 +125,7 @@ namespace Bootstrap.Admin
             app.UseResponseCompression();
             app.UseStaticFiles();
             app.UseAuthentication();
-            app.UseBootstrapAdminAuthorization(userName => RoleHelper.RetrieveRolesByUserName(userName), url => RoleHelper.RetrieveRolesByUrl(url));
+            app.UseBootstrapAdminAuthorization(RoleHelper.RetrieveRolesByUserName, RoleHelper.RetrieveRolesByUrl, DbHelper.RetrieveAppsByUserName);
             app.UseCacheManagerCorsHandler();
             app.UseSignalR(routes => { routes.MapHub<SignalRHub>("/NotiHub"); });
             app.UseMvc(routes =>
