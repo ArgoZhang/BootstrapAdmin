@@ -46,7 +46,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public virtual IEnumerable<string> RetrieveAppsByUserName(string userName) => DbHelper.RetrieveAppsByUserName(userName);
+        public virtual IEnumerable<string> RetrievesByUserName(string userName) => DbHelper.RetrieveAppsByUserName(userName);
 
         /// <summary>
         /// 根据角色ID以及选定的App ID，保到角色应用表

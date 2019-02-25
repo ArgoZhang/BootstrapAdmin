@@ -1,5 +1,4 @@
-﻿using Bootstrap.Security.DataAccess;
-using Longbow.Cache;
+﻿using Longbow.Cache;
 using Longbow.Data;
 using System.Collections.Generic;
 
@@ -34,6 +33,6 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public static IEnumerable<string> RetrieveAppsByUserName(string userName) => DbContextManager.Create<App>().RetrieveAppsByUserName(userName);
+        public static IEnumerable<string> RetrievesByUserName(string userName) => DbContextManager.Create<App>().RetrievesByUserName(userName);
     }
 }

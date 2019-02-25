@@ -41,7 +41,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public override IEnumerable<string> RetrieveAppsByUserName(string userName)
+        public override IEnumerable<string> RetrievesByUserName(string userName)
         {
             var ret = new List<string>();
             var roles = RoleHelper.RetrieveRolesByUserName(userName);
