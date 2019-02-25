@@ -76,7 +76,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual bool Log(Exception ex, NameValueCollection additionalInfo)
         {
-            if (ex == null) throw new ArgumentNullException(nameof(ex));
+            if (ex == null) return true;
 
             var errorPage = additionalInfo?["ErrorPage"] ?? (ex.GetType().Name.Length > 50 ? ex.GetType().Name.Substring(0, 50) : ex.GetType().Name);
             DbManager.Create().Insert(new Exceptions()
