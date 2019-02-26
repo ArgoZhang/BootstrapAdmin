@@ -16,6 +16,14 @@ namespace Bootstrap.Admin.Api
         }
 
         [Fact]
+        public async void Login_Fail()
+        {
+            var resq = await Client.PostAsJsonAsync("", new { userName = "Admin-NotExists", password = "123789" });
+            var _token = await resq.Content.ReadAsStringAsync();
+            Assert.Equal("", _token);
+        }
+
+        [Fact]
         public async void Option_Ok()
         {
             var req = new HttpRequestMessage(HttpMethod.Options, "");

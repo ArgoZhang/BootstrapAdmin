@@ -78,7 +78,7 @@ namespace Bootstrap.DataAccess
         {
             var user = DbManager.Create().SingleOrDefault<User>("select Password, PassSalt from Users where ApprovedTime is not null and UserName = @0", userName);
 
-            return !string.IsNullOrEmpty(user.PassSalt) && user.Password == LgbCryptography.ComputeHash(password, user.PassSalt);
+            return user != null && !string.IsNullOrEmpty(user.PassSalt) && user.Password == LgbCryptography.ComputeHash(password, user.PassSalt);
         }
 
         /// <summary>

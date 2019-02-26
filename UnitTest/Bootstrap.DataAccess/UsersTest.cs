@@ -20,6 +20,16 @@ namespace Bootstrap.DataAccess
             Assert.True(u.Authenticate("Admin", "123789"));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void Authenticate_Fail()
+        {
+            var u = new User();
+            Assert.False(u.Authenticate("Admin-NotExists", "123789"));
+        }
+
         [Fact]
         public void ChangePassword_Ok()
         {
