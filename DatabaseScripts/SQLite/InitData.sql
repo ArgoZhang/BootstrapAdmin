@@ -79,7 +79,7 @@ Delete From [Dicts] Where Category = '应用程序' and Code = 2;
 INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('应用程序', '测试平台', 2, 0);
 
 Delete From [Dicts] Where Category = '测试平台';
-Insert into Dicts (Category, [Name], Code, Define) values ('测试平台', '网站标题', 'BA Client', 1);
+Insert into Dicts (Category, [Name], Code, Define) values ('测试平台', '网站标题', '前台演示系统', 1);
 Insert into Dicts (Category, [Name], Code, Define) values ('测试平台', '网站页脚', '通用后台管理测试平台', 1);
 Insert into Dicts (Category, [Name], Code, Define) values ('测试平台', '个人中心地址', 'http://localhost:50852/Admin/Profiles', 1);
 Insert into Dicts (Category, [Name], Code, Define) values ('测试平台', '系统设置地址', 'http://localhost:50852/Admin/Settings', 1);

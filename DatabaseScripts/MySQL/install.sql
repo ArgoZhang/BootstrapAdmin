@@ -29,7 +29,7 @@ CREATE TABLE UserGroup(
 
 CREATE TABLE Roles(
 	ID 				INTEGER PRIMARY KEY	Auto_increment,
-	RoleName 		VARCHAR (50) NULL,
+	RoleName 		VARCHAR (50) NOT NULL,
 	Description 	VARCHAR (500) NULL
 );
 
@@ -88,7 +88,7 @@ CREATE TABLE Logs(
 
 CREATE TABLE `Groups`(
 	ID 				INTEGER PRIMARY KEY	Auto_increment,
-	GroupName 		VARCHAR (50) NULL,
+	GroupName 		VARCHAR (50) NOT NULL,
 	Description 	VARCHAR (500) NULL
 );
 
@@ -140,7 +140,7 @@ CREATE TABLE RejectUsers(
 	UserName 		VARCHAR (50) NOT NULL,
 	DisplayName 	VARCHAR (50) NOT NULL,
 	RegisterTime 	DATETIME NOT NULL,
-	RejectedBy 		VARCHAR (50) NULL,
-	RejectedTime 	DATETIME NULL,
+	RejectedBy		VARCHAR (50) NOT NULL,
+	RejectedTime	DATETIME NOT NULL,
 	RejectedReason 	VARCHAR (50) NULL
 );

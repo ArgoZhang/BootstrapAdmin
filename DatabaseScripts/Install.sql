@@ -101,7 +101,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Roles](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
-	[RoleName] [nvarchar](50) NULL,
+	[RoleName] [nvarchar](50) NOT NULL,
 	[Description] [nvarchar](500) NULL,
  CONSTRAINT [PK_Roles] PRIMARY KEY CLUSTERED 
 (
@@ -288,7 +288,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Groups](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
-	[GroupName] [nvarchar](50) NULL,
+	[GroupName] [nvarchar](50) NOT NULL,
 	[Description] [nvarchar](500) NULL,
  CONSTRAINT [PK_Groups] PRIMARY KEY CLUSTERED 
 (
@@ -451,8 +451,8 @@ CREATE TABLE [dbo].[RejectUsers](
 	[UserName] [varchar](50) NOT NULL,
 	[DisplayName] [nvarchar](50) NOT NULL,
 	[RegisterTime] [datetime] NOT NULL,
-	[RejectedBy] [varchar](50) NULL,
-	[RejectedTime] [datetime] NULL,
+	[RejectedBy] [varchar](50) NOT NULL,
+	[RejectedTime] [datetime] NOT NULL,
 	[RejectedReason] [nvarchar](50) NULL,
  CONSTRAINT [PK_RejectUsers] PRIMARY KEY CLUSTERED 
 (

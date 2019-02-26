@@ -8,7 +8,7 @@
     [ApprovedTime]   DATETIME,
     [ApprovedBy]     VARCHAR (50),
     [Description]    VARCHAR (500) NOT NULL,
-    [RejectedBy]     VARCHAR (50),
+    [RejectedBy]     VARCHAR (50)  COLLATE NOCASE,
     [RejectedTime]   DATETIME,
     [RejectedReason] VARCHAR (50),
     [Icon]           VARCHAR (50),
@@ -29,7 +29,7 @@ CREATE TABLE UserGroup(
 
 CREATE TABLE Roles(
 	[ID] INTEGER PRIMARY KEY,
-	[RoleName] VARCHAR (50) NULL,
+	[RoleName] VARCHAR (50) NOT NULL COLLATE NOCASE,
 	[Description] VARCHAR (500) NULL
 );
 
@@ -41,7 +41,7 @@ CREATE TABLE RoleGroup(
 
 CREATE TABLE RoleApp(
 	[ID] INTEGER PRIMARY KEY,
-	[AppID] VARCHAR (50) NOT NULL,
+	[AppID] VARCHAR (50) NOT NULL COLLATE NOCASE,
 	[RoleID] INT NOT NULL
 );
 
@@ -88,7 +88,7 @@ CREATE TABLE Logs(
 
 CREATE TABLE Groups(
 	[ID] INTEGER PRIMARY KEY,
-	[GroupName] VARCHAR (50) NULL,
+	[GroupName] VARCHAR (50) NOT NULL COLLATE NOCASE,
 	[Description] VARCHAR (500) NULL
 );
 
@@ -127,9 +127,9 @@ CREATE TABLE Messages(
 
 CREATE TABLE Tasks(
 	[ID] INTEGER PRIMARY KEY,
-	[TaskName] VARCHAR (500) NOT NULL,
-	[AssignName] VARCHAR (50) NOT NULL,
-	[UserName] VARCHAR (50) NOT NULL,
+	[TaskName] VARCHAR (500) NOT NULL COLLATE NOCASE,
+	[AssignName] VARCHAR (50) NOT NULL COLLATE NOCASE,
+	[UserName] VARCHAR (50) NOT NULL COLLATE NOCASE,
 	[TaskTime] INT NOT NULL,
 	[TaskProgress] INT NOT NULL,
 	[AssignTime] DATETIME NOT NULL
@@ -137,10 +137,10 @@ CREATE TABLE Tasks(
 
 CREATE TABLE RejectUsers(
 	[ID] INTEGER PRIMARY KEY,
-	[UserName] VARCHAR (50) NOT NULL,
+	[UserName] VARCHAR (50) NOT NULL COLLATE NOCASE,
 	[DisplayName] VARCHAR (50) NOT NULL,
 	[RegisterTime] DATETIME NOT NULL,
-	[RejectedBy] VARCHAR (50) NULL,
-	[RejectedTime] DATETIME NULL,
+	[RejectedBy] VARCHAR (50) NOT NULL COLLATE NOCASE,
+	[RejectedTime] DATETIME NOT NULL,
 	[RejectedReason] VARCHAR (50) NULL
 );
