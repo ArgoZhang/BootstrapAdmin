@@ -46,7 +46,7 @@ namespace UnitTest
 
         private const string SqlConnectionString = "Data Source=.;Initial Catalog=UnitTest;User ID=sa;Password=sa";
         private const string SQLiteConnectionString = "Data Source=UnitTest.db;";
-        private const string MySqlConnectionString = "Server=localhost;Database=UnitTest;Uid=argozhang;Pwd=argo@163.com;SslMode=none;";
+        private const string MySqlConnectionString = "Server=localhost;Database=UnitTest;Uid=argozhang;Pwd=argo@163.com;SslMode=none;allowPublicKeyRetrieval=true";
         private const string NpgSqlConnectionString = "Server=localhost;Database=UnitTest;User ID=argozhang;Password=sa;";
 
         public static void ConfigureWebHost(IWebHostBuilder builder, string providerName = Longbow.Data.DatabaseProviderType.SqlServer)
