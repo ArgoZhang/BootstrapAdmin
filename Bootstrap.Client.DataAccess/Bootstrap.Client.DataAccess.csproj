@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Bootstrap.Security.DataAccess" Version="1.9.0" />
+    <PackageReference Include="Bootstrap.Security.DataAccess" Version="2.0.0" />
     <PackageReference Include="Longbow.Cache" Version="2.2.3" />
     <PackageReference Include="Longbow.Data" Version="2.2.6" />
     <PackageReference Include="Longbow.Web" Version="2.2.4" />
