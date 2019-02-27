@@ -62,7 +62,7 @@ MEM: 2G
 
 后台首页
 
-![输入图片说明](https://gitee.com/LongbowEnterprise/Pictures/raw/master/BootstrapAdmin/BA02.png "BAHome.png")
+![后台首页](https://gitee.com/LongbowEnterprise/Pictures/raw/master/BootstrapAdmin/BA02-01.png "BAHome-01.png")
 
 更多截图请点击 [查看文档](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis) 查看项目截图小节  
 
