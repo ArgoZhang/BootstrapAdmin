@@ -77,6 +77,7 @@ INSERT INTO [NavigationRole] ([NavigationID], [RoleID]) VALUES (19, 2);
 -- Client Data
 Delete From [Dicts] Where Category = '应用程序' and Code = 2;
 INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('应用程序', '测试平台', 2, 0);
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('应用首页', 2, 'http://localhost:49185/', 0);
 
 Delete From [Dicts] Where Category = '测试平台';
 Insert into Dicts (Category, [Name], Code, Define) values ('测试平台', '网站标题', '前台演示系统', 1);

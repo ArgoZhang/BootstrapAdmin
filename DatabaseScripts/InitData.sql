@@ -93,6 +93,7 @@ set @AppName = N'测试平台'
 
 Delete From [dbo].[Dicts] Where Category = N'应用程序' and Code = @AppId
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'应用程序', @AppName, @AppId, 0)
+INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'应用首页', @AppId, 'http://localhost:49185/', 0)
 
 Delete From [dbo].[Dicts] Where Category = @AppName
 Insert Dicts (Category, Name, Code, Define) values (@AppName, N'网站标题', N'托盘组垛程序', 1);
