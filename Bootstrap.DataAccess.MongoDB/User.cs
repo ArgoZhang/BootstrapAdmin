@@ -33,8 +33,15 @@ namespace Bootstrap.DataAccess.MongoDB
                .Include(u => u.UserName)
                .Include(u => u.DisplayName)
                .Include(u => u.Icon)
-               .Include(u => u.Css);
-            return DbManager.Users.Find(user => user.UserName.ToLowerInvariant() == userName.ToLowerInvariant()).Project<DataAccess.User>(project).FirstOrDefault();
+               .Include(u => u.Css)
+               .Include(u => u.App);
+            var ret = DbManager.Users.Find(user => user.UserName.ToLowerInvariant() == userName.ToLowerInvariant()).Project<DataAccess.User>(project).FirstOrDefault();
+            if (ret != null)
+            {
+                if (string.IsNullOrEmpty(ret.Icon)) ret.Icon = "default.jpg";
+                if (string.IsNullOrEmpty(ret.App)) ret.App = "0";
+            }
+            return ret;
         }
 
         /// <summary>
