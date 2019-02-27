@@ -30,6 +30,7 @@ CREATE TABLE [dbo].[Users](
 	[RejectedReason] [nvarchar](50) NULL,
 	[Icon] [varchar](50) NULL,
 	[Css] [varchar](50) NULL,
+	[App] [varchar](50) NULL,
  CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC

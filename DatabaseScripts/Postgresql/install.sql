@@ -12,7 +12,8 @@ CREATE TABLE Users (
     RejectedTime   DATE,
     RejectedReason VARCHAR (50),
     Icon           VARCHAR (50),
-    Css            VARCHAR (50) 
+    Css            VARCHAR (50),
+	App			   VARCHAR (50)
 );
 
 CREATE TABLE UserRole (
