@@ -85,6 +85,14 @@ namespace Bootstrap.DataAccess
         /// 
         /// </summary>
         /// <param name="userName"></param>
+        /// <param name="app"></param>
+        /// <returns></returns>
+        public virtual bool SaveApp(string userName, string app) => DbManager.Create().Update<User>("set App = @1 where UserName = @0", userName, app) == 1;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userName"></param>
         /// <param name="password"></param>
         /// <param name="newPass"></param>
         /// <returns></returns>
@@ -358,6 +366,10 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 
         /// </summary>
-        RejectUser
+        RejectUser,
+        /// <summary>
+        /// 
+        /// </summary>
+        SaveApp
     }
 }

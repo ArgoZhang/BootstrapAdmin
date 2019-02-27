@@ -17,8 +17,9 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public IActionResult Index()
         {
-            var url = DictHelper.RetrieveHomeUrl();
-            return url.Equals("~/Home/Index", System.StringComparison.OrdinalIgnoreCase) ? (IActionResult)View(new HeaderBarModel(User.Identity)) : Redirect(url);
+            var model = new HeaderBarModel(User.Identity);
+            var url = DictHelper.RetrieveHomeUrl(model.AppCode);
+            return url.Equals("~/Home/Index", System.StringComparison.OrdinalIgnoreCase) ? (IActionResult)View(model) : Redirect(url);
         }
 
         /// <summary>

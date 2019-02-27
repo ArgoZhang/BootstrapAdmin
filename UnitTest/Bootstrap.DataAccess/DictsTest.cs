@@ -80,7 +80,7 @@ namespace Bootstrap.DataAccess
         public void RetrieveHomeUrl_Ok()
         {
             var dict = new Dict();
-            Assert.Equal("~/Home/Index", dict.RetrieveHomeUrl());
+            Assert.Equal("~/Home/Index", dict.RetrieveHomeUrl("0"));
         }
 
         [Fact]

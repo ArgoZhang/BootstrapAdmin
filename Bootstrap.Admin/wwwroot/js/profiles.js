@@ -67,7 +67,8 @@
         NewPassword: "#newPassword",
         DisplayName: "#displayName",
         UserName: "#userName",
-        Css: "#css"
+        Css: "#css",
+        App: '#app'
     });
 
     $('button[data-method]').on('click', function (e) {
@@ -100,6 +101,16 @@
                     }
                 });
                 break;
+            case 'app':
+                data.UserStatus = 'SaveApp';
+                $.bc({
+                    url: User.url, method: "put", data: data, title: "保存应用", callback: function (result) {
+                        if (result) {
+                            window.setTimeout(function () { window.location.reload(true); }, 1000);
+                        }
+                    }
+                });
+                break;
         }
     });
     $('[data-admin="False"]').removeClass('d-none');
@@ -107,4 +118,5 @@
         $('.card-img').removeClass('d-none');
     }
     $('#css').dropdown('val');
+    $('#app').dropdown('val');
 });

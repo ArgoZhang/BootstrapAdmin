@@ -110,6 +110,12 @@ namespace Bootstrap.Admin.Api
             resp = await client.PutAsJsonAsync<User, bool>(usr);
             Assert.True(resp);
 
+            // change app
+            usr.App = "UnitTest";
+            usr.UserStatus = UserStates.SaveApp;
+            resp = await client.PutAsJsonAsync<User, bool>(usr);
+            Assert.True(resp);
+
             // delete 
             usr.Delete(usr.Retrieves().Where(u => u.UserName == usr.UserName).Select(u => u.Id));
         }

@@ -51,6 +51,13 @@ namespace Bootstrap.DataAccess.MongoDB
             return u != null && !string.IsNullOrEmpty(u.PassSalt) && u.Password == LgbCryptography.ComputeHash(password, u.PassSalt);
         }
 
+        public override bool SaveApp(string userName, string app)
+        {
+            var update = Builders<User>.Update.Set(u => u.App, app);
+            DbManager.Users.FindOneAndUpdate(u => u.UserName.ToLowerInvariant() == UserName.ToLowerInvariant(), update);
+            return true;
+        }
+
         /// <summary>
         /// 
         /// </summary>

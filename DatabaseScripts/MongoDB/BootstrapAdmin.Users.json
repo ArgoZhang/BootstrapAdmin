@@ -11,6 +11,7 @@
     "Description": "系统默认创建",
     "Icon": "default.jpg",
     "Css": null,
+    "App": null,
     "Roles": [
       "5bd7cc105fa31256f77e4eb7"
     ],
@@ -30,6 +31,7 @@
     "Description": "管理员Admin创建用户",
     "Icon": "default.jpg",
     "Css": null,
+    "App": null,
     "Groups": [
 
     ],

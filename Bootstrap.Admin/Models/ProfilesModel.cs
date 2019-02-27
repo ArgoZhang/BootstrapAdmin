@@ -10,13 +10,15 @@ namespace Bootstrap.Admin.Models
     public class ProfilesModel : ThemeModel
     {
         /// <summary>
-        /// 获得/设置 头像文件大小
+        /// 获得 头像文件大小
         /// </summary>
         public long Size { get; }
+
         /// <summary>
-        /// 
+        /// 获得 头像文件名称
         /// </summary>
         public string FileName { get; }
+
         /// <summary>
         /// 
         /// </summary>

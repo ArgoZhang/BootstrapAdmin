@@ -1,6 +1,7 @@
 ﻿using Bootstrap.Security;
 using Longbow.Cache;
 using Longbow.Data;
+using System;
 using System.Collections.Generic;
 
 namespace Bootstrap.DataAccess
@@ -45,6 +46,19 @@ namespace Bootstrap.DataAccess
         {
             var ret = DbContextManager.Create<User>().Delete(value);
             if (ret) CacheCleanUtility.ClearCache(userIds: value);
+            return ret;
+        }
+
+        /// <summary>
+        /// 保存用户默认App
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="app"></param>
+        /// <returns></returns>
+        public static bool SaveApp(string userName, string app)
+        {
+            var ret = DbContextManager.Create<User>().SaveApp(userName, app);
+            if (ret) CacheCleanUtility.ClearCache(cacheKey: $"{RetrieveUsersDataKey}*");
             return ret;
         }
 
@@ -163,6 +177,7 @@ namespace Bootstrap.DataAccess
             return ret;
         }
 
+        /// <summary>
         /// 根据用户名修改用户头像
         /// </summary>
         /// <param name="userName"></param>

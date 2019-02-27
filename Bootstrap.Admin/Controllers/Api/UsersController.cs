@@ -40,12 +40,14 @@ namespace Bootstrap.Admin.Controllers.Api
             {
                 return UserHelper.SaveUserCssByName(value.UserName, value.Css);
             }
-            if (value.UserName.Equals(User.Identity.Name, System.StringComparison.OrdinalIgnoreCase))
+            if (value.UserName.Equals(User.Identity.Name, StringComparison.OrdinalIgnoreCase))
             {
                 if (value.UserStatus == UserStates.ChangeDisplayName)
                     ret = UserHelper.SaveDisplayName(value.UserName, value.DisplayName);
                 else if (value.UserStatus == UserStates.ChangePassword)
                     ret = UserHelper.ChangePassword(value.UserName, value.Password, value.NewPassword);
+                else if (value.UserStatus == UserStates.SaveApp)
+                    ret = UserHelper.SaveApp(value.UserName, value.App);
             }
             return ret;
         }

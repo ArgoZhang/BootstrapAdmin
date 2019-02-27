@@ -96,8 +96,26 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获得默认的前台首页地址，默认为~/Home/Index
         /// </summary>
+        /// <param name="appCode"></param>
         /// <returns></returns>
-        public virtual string RetrieveHomeUrl() => (DictHelper.RetrieveDicts().FirstOrDefault(d => d.Name == "前台首页" && d.Category == "网站设置" && d.Define == 0) ?? new BootstrapDict() { Code = "~/Home/Index" }).Code;
+        public virtual string RetrieveHomeUrl(string appCode)
+        {
+            // https://gitee.com/LongbowEnterprise/dashboard/issues?id=IS0WK
+            var url = "~/Home/Index";
+            var dicts = DictHelper.RetrieveDicts();
+            if (appCode != "0")
+            {
+                var appUrl = dicts.FirstOrDefault(d => d.Name.Equals(appCode, StringComparison.OrdinalIgnoreCase) && d.Category == "应用首页" && d.Define == 0)?.Code;
+                if (!string.IsNullOrEmpty(appUrl))
+                {
+                    url = appUrl;
+                    return url;
+                }
+            }
+            var defaultUrl = dicts.FirstOrDefault(d => d.Name == "前台首页" && d.Category == "网站设置" && d.Define == 0)?.Code;
+            if (!string.IsNullOrEmpty(defaultUrl)) url = defaultUrl;
+            return url;
+        }
 
         /// <summary>
         /// 

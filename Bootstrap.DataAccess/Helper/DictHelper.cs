@@ -106,8 +106,9 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获得默认的前台首页地址，默认为~/Home/Index
         /// </summary>
+        /// <param name="appCode">应用程序编码</param>
         /// <returns></returns>
-        public static string RetrieveHomeUrl() => DbContextManager.Create<Dict>().RetrieveHomeUrl();
+        public static string RetrieveHomeUrl(string appCode) => DbContextManager.Create<Dict>().RetrieveHomeUrl(appCode);
 
         /// <summary>
         /// 
