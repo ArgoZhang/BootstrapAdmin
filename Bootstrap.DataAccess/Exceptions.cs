@@ -114,7 +114,7 @@ namespace Bootstrap.DataAccess
             if (startTime.HasValue) sql.Append("where LogTime > @0", startTime.Value);
             if (endTime.HasValue) sql.Append("where LogTime < @0", endTime.Value);
             if (startTime == null && endTime == null) sql.Append("where LogTime > @0", DateTime.Today.AddDays(-7));
-            sql.Append("order by @0", $"{po.Sort} {po.Order}");
+            sql.Append($"order by {po.Sort} {po.Order}");
 
             return DbManager.Create().Page<Exceptions>(po.PageIndex, po.Limit, sql);
         }
