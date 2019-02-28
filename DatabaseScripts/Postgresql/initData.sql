@@ -43,7 +43,8 @@ INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (0
 INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (0, '任务管理', 110, 'fa fa fa-tasks', '~/Admin/Tasks', '0');
 INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (0, '通知管理', 120, 'fa fa-bell', '~/Admin/Notifications', '0');
 INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (0, '系统日志', 130, 'fa fa-gears', '~/Admin/Logs', '0');
-INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (0, '程序异常', 140, 'fa fa-cubes', '~/Admin/Exceptions', '0');
+INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (0, '在线用户', 140, 'fa fa-users', '~/Admin/Online', '0');
+INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (0, '程序异常', 150, 'fa fa-cubes', '~/Admin/Exceptions', '0');
 INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (0, '工具集合', 160, 'fa fa-gavel', '#', '0');
 INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (currval('navigations_id_seq') - 1, '客户端测试', 10, 'fa fa-wrench', '~/Admin/Mobile', '0');
 INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (currval('navigations_id_seq') - 2, 'API文档', 10, 'fa fa-wrench', '~/swagger', '0');
