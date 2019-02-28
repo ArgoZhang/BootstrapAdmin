@@ -1,0 +1,29 @@
+﻿@model NavigatorBarModel
+@{
+    ViewBag.Title = "在线用户";
+}
+@section css {
+    <environment include="Development">
+        <link href="~/lib/bootstrap-table/bootstrap-table.css" rel="stylesheet" />
+    </environment>
+    <environment exclude="Development">
+        <link href="~/lib/bootstrap-table/bootstrap-table.min.css" rel="stylesheet" />
+    </environment>
+}
+@section javascript {
+    <environment include="Development">
+        <script src="~/lib/bootstrap-table/bootstrap-table.js"></script>
+        <script src="~/lib/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/lib/bootstrap-table/bootstrap-table.min.js"></script>
+        <script src="~/lib/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+    </environment>
+    <script src="~/js/online.js" asp-append-version="true"></script>
+}
+<div class="card">
+    <div class="card-header">在线用户<span class="pull-right"><a id="refreshUsers" href="javascript:;" class="fa fa-refresh" title="点击刷新" data-toggle="tooltip" data-placement="left"></a></span></div>
+    <div class="card-body" style="padding-top: 25px;">
+        <table></table>
+    </div>
+</div>

@@ -109,6 +109,12 @@ namespace Bootstrap.Admin.Controllers
         public ActionResult Mobile() => View(new NavigatorBarModel(this));
 
         /// <summary>
+        /// 在线用户
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Online() => View(new NavigatorBarModel(this));
+
+        /// <summary>
         /// 用于测试ExceptionFilter
         /// </summary>
         /// <returns></returns>

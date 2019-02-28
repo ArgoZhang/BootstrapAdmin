@@ -156,10 +156,22 @@
     "Application": "0"
   },
   {
+    "_id": ObjectId("5bd7b8445fa31256f77e4b89"),
+    "ParentId": "0",
+    "Name": "在线用户",
+    "Order": NumberInt(140),
+    "Icon": "fa fa-users",
+    "Url": "~/Admin/Online",
+    "Category": "0",
+    "Target": "_self",
+    "IsResource": NumberInt(0),
+    "Application": "0"
+  },
+  {
     "_id": ObjectId("5bd7b8445fa31256f77e4b9d"),
     "ParentId": "0",
     "Name": "程序异常",
-    "Order": NumberInt(140),
+    "Order": NumberInt(150),
     "Icon": "fa fa-cubes",
     "Url": "~/Admin/Exceptions",
     "Category": "0",
