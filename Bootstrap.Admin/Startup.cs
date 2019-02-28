@@ -60,6 +60,7 @@ namespace Bootstrap.Admin
             services.AddConfigurationManager(Configuration);
             services.AddCacheManager(Configuration);
             services.AddDbAdapter();
+            services.AddOnlineUsers();
             var dataProtectionBuilder = services.AddDataProtection(op => op.ApplicationDiscriminator = Configuration["ApplicationDiscriminator"])
                 .SetApplicationName(Configuration["ApplicationName"])
                 .PersistKeysToFileSystem(new DirectoryInfo(Configuration["KeyPath"]));
@@ -125,6 +126,7 @@ namespace Bootstrap.Admin
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseBootstrapAdminAuthorization(RoleHelper.RetrieveRolesByUserName, RoleHelper.RetrieveRolesByUrl, AppHelper.RetrievesByUserName);
+            app.UseOnlineUsers();
             app.UseCacheManagerCorsHandler();
             app.UseSignalR(routes => { routes.MapHub<SignalRHub>("/NotiHub"); });
             app.UseMvc(routes =>
