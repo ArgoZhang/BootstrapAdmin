@@ -1,8 +1,28 @@
 ﻿# BootstrapAdmin
 
 ## 项目介绍
-使用HTML5+jQuery + NET Core 2.2 + Bootstrap4.1 + PetaPoco构建的后台管理平台，主要功能如下：  
-详细资料请点击 [查看文档](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis)  
+一直需要一款后台管理系统，但是网上很多开源项目都是 **Java** 开发的，本人是 **NET** 平台的对 **Java** 一窍不通，C#版本的本来就少而且还没有合适的。于是决定自己开发一套后台管理系统。由于前台采用 **Bootstrap** 布局样式，所以就叫做 **BootstrapAdmin** 。本系统可以用于所有的 Web 应用程序，目前版本已经升级到 **NET CORE** 具备跨平台能力。数据库方面同时支持多种数据库，详细列表见后面**数据库**的详细列表，切换数据源仅需更改配置文件无需重启应用程序，配置简单灵活。UI 前端使用流行的Bootstrap框架布局对移动设备的兼容性非常好，自适应目前市场几乎所有终端设备。本系统还具备单一后台支持多前台的特色，提供 **单点登录（SSO）** 的能力。  
+
+使用 HTML5 + jQuery + NET Core 2.2 + Bootstrap4.1 + PetaPoco 构建的后台管理平台  
+### 主要功能  
+1. 通过配置与前台网站集成
+2. 构建前台系统分层级菜单
+3. 提供单一后台支持多前台应用配置
+4. 提供单点登录
+5. 集成系统认证授权模块
+6. 提供角色，部门，用户，菜单，前台应用程序授权  
+角色对用户授权  
+角色对菜单授权  
+角色对部门授权  
+角色对应用程序授权（多个前台应用公用一个后台权限管理系统）  
+部门对用户授权  
+7. 提供字典表用于前台网站个性化配置  
+8. 完全响应式布局（支持电脑、平板、手机等所有主流设备）
+9. 内置多数据源支持，配置简单立即生效无需重启
+10. 内置数据内存缓存机制，页面快速响应
+11. 内置数据操作系统日志  
+
+详细资料请点击 [查看文档](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/项目介绍)  
 
 ## 数据库
 数据库支持列表如下：  
@@ -11,27 +31,7 @@
 ## QQ交流群
 群号
 795206915  
-[快速加群](https://shang.qq.com/wpa/qunwpa?idkey=d381355e50ff91db410c3da3eadb081ba859f64c2877e86343f4709b171f28b8)
-
-## 功能列表
-1. 系统登录   
-2. 后台管理  
-3. 个人中心  
-4. 返回前台  
-5. 网站设置  
-6. 菜单管理  
-7. 用户管理  
-8. 角色管理  
-9. 部门管理  
-10. 字典表维护  
-11. 站内消息  
-12. 任务管理  
-13. 通知管理  
-14. 系统日志  
-15. 程序异常  
-16. 工具集合  
-
-详细资料请点击 [查看文档](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis)  
+[快速加群](https://shang.qq.com/wpa/qunwpa?idkey=d381355e50ff91db410c3da3eadb081ba859f64c2877e86343f4709b171f28b8) 
 
 ## 安装教程
 1. 安装 .net core sdk [官方网址](http://www.microsoft.com/net/download)
@@ -56,7 +56,7 @@ MEM: 2G
 详细配置说明请点击 [查看文档](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis) 查看配置说明小节  
 
 ## 常见问题Q&A
-请点击 [查看文档](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis) 查看常见问题小节  
+请点击 [查看文档](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/常见问题Q&A) 查看常见问题小节  
 
 ## 项目截图
 
