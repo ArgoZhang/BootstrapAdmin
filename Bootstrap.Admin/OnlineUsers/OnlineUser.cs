@@ -17,12 +17,10 @@ namespace Bootstrap.Admin
         /// </summary>
         /// <param name="ip"></param>
         /// <param name="userName"></param>
-        /// <param name="method"></param>
-        public OnlineUser(string ip, string userName, string method)
+        public OnlineUser(string ip, string userName)
         {
             Ip = ip;
             UserName = userName;
-            Method = method;
             FirstAccessTime = DateTime.Now;
             LastAccessTime = DateTime.Now;
             _requestUrls = new ConcurrentQueue<KeyValuePair<DateTime, string>>();
@@ -56,6 +54,11 @@ namespace Bootstrap.Admin
         /// <summary>
         /// 
         /// </summary>
+        public string RequestUrl { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public IEnumerable<KeyValuePair<DateTime, string>> RequestUrls
         {
             get
@@ -71,7 +74,7 @@ namespace Bootstrap.Admin
         public void AddRequestUrl(string url)
         {
             _requestUrls.Enqueue(new KeyValuePair<DateTime, string>(DateTime.Now, url));
-            if (_requestUrls.Count > 10)
+            if (_requestUrls.Count > 5)
             {
                 _requestUrls.TryDequeue(out _);
             }

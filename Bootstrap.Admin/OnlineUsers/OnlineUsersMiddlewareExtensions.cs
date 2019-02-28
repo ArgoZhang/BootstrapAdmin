@@ -25,13 +25,16 @@ namespace Microsoft.AspNetCore.Builder
                  var clientIp = context.Connection.RemoteIpAddress.ToString();
                  onlineUsers.AddOrUpdate(clientIp, key =>
                  {
-                     var ou = new OnlineUser(key, context.User.Identity.Name, context.Request.Method);
+                     var ou = new OnlineUser(key, context.User.Identity.Name);
+                     ou.Method = context.Request.Method;
+                     ou.RequestUrl = context.Request.Path;
                      ou.AddRequestUrl(context.Request.Path);
                      return ou;
                  }, (key, v) =>
                  {
                      v.LastAccessTime = DateTime.Now;
                      v.Method = context.Request.Method;
+                     v.RequestUrl = context.Request.Path;
                      v.AddRequestUrl(context.Request.Path);
                      return v;
                  });
