@@ -1,7 +1,9 @@
 ﻿using Bootstrap.DataAccess;
 using Bootstrap.Security;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Bootstrap.Admin.Models
 {
@@ -17,7 +19,8 @@ namespace Bootstrap.Admin.Models
         public NavigatorBarModel(ControllerBase controller) : base(controller.User.Identity)
         {
             Navigations = MenuHelper.RetrieveSystemMenus(UserName, $"~{controller.HttpContext.Request.Path}");
-            Applications = DictHelper.RetrieveApps();
+            var authApps = AppHelper.RetrievesByUserName(controller.User.Identity.Name);
+            Applications = DictHelper.RetrieveApps().Where(app => app.Key == "0" || authApps.Any(key => key.Equals(app.Key, StringComparison.OrdinalIgnoreCase)));
         }
         /// <summary>
         /// 
