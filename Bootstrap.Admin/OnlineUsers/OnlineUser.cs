@@ -10,31 +10,17 @@ namespace Bootstrap.Admin
     /// </summary>
     public class OnlineUser
     {
-        private ConcurrentQueue<KeyValuePair<DateTime, string>> _requestUrls;
+        private ConcurrentQueue<KeyValuePair<DateTime, string>> _requestUrls = new ConcurrentQueue<KeyValuePair<DateTime, string>>();
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="ip"></param>
-        /// <param name="userName"></param>
-        public OnlineUser(string ip, string userName)
-        {
-            Ip = ip;
-            UserName = userName;
-            FirstAccessTime = DateTime.Now;
-            LastAccessTime = DateTime.Now;
-            _requestUrls = new ConcurrentQueue<KeyValuePair<DateTime, string>>();
-        }
+        public string UserName { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public string UserName { get; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public DateTime FirstAccessTime { get; }
+        public DateTime FirstAccessTime { get; set; }
 
         /// <summary>
         /// 

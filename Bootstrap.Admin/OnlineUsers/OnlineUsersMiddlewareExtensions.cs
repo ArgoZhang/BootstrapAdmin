@@ -22,16 +22,21 @@ namespace Microsoft.AspNetCore.Builder
              await Task.Run(() =>
              {
                  var onlineUsers = context.RequestServices.GetService<IOnlineUsers>();
-                 var clientIp = context.Connection.RemoteIpAddress.ToString();
+                 var clientIp = context.Connection.RemoteIpAddress?.ToString() ?? "::1";
                  onlineUsers.AddOrUpdate(clientIp, key =>
                  {
-                     var ou = new OnlineUser(key, context.User.Identity.Name);
+                     var ou = new OnlineUser();
+                     ou.Ip = clientIp;
+                     ou.UserName = context.User.Identity.Name;
+                     ou.FirstAccessTime = DateTime.Now;
+                     ou.LastAccessTime = DateTime.Now;
                      ou.Method = context.Request.Method;
                      ou.RequestUrl = context.Request.Path;
                      ou.AddRequestUrl(context.Request.Path);
                      return ou;
                  }, (key, v) =>
                  {
+                     v.UserName = context.User.Identity.Name;
                      v.LastAccessTime = DateTime.Now;
                      v.Method = context.Request.Method;
                      v.RequestUrl = context.Request.Path;
