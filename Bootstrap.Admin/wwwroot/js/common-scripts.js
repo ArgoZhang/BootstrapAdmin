@@ -1,4 +1,4 @@
-﻿(function ($) {
+(function ($) {
     var cascadeMenu = function (menus) {
         var html = "";
         $.each(menus, function (index, menu) {
@@ -156,7 +156,7 @@ $(function () {
                 this.css('overflow', 'auto');
             }
             else if (!$.browser.versions.ios && $(window).width() > 768) {
-                this.mCustomScrollbar({ theme: 'minimal' });
+                this.mCustomScrollbar({ theme: 'minimal', mouseWheel: { scrollAmount: 60 } });
             }
             else {
                 this.mCustomScrollbar('destroy');
