@@ -19,11 +19,11 @@ namespace Bootstrap.Admin.Controllers.Api
         [HttpPost()]
         public IEnumerable<OnlineUser> Post([FromServices]IOnlineUsers onlineUSers)
         {
-            return onlineUSers.OnlineUsers;
+            return onlineUSers.OnlineUsers.OrderByDescending(u => u.LastAccessTime);
         }
 
         /// <summary>
-        /// 获取指定IP地址的在线用户请求地址明细数据
+        /// 获取指定会话的在线用户请求地址明细数据
         /// </summary>
         /// <param name="id"></param>
         /// <param name="onlineUSers"></param>
@@ -31,7 +31,7 @@ namespace Bootstrap.Admin.Controllers.Api
         [HttpGet("{id}")]
         public IEnumerable<KeyValuePair<DateTime, string>> Get(string id, [FromServices]IOnlineUsers onlineUSers)
         {
-            var user = onlineUSers.OnlineUsers.FirstOrDefault(u => u.Ip == id);
+            var user = onlineUSers.OnlineUsers.FirstOrDefault(u => u.ConnectionId == id);
             return user?.RequestUrls ?? new KeyValuePair<DateTime, string>[0];
         }
     }

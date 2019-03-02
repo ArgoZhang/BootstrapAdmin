@@ -15,7 +15,17 @@ namespace Bootstrap.Admin
         /// <summary>
         /// 
         /// </summary>
+        public string ConnectionId { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string UserName { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string DisplayName { get; set; }
 
         /// <summary>
         /// 
@@ -30,12 +40,27 @@ namespace Bootstrap.Admin
         /// <summary>
         /// 
         /// </summary>
+        public string Location { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string Method { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
         public string Ip { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Browser { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string OS { get; set; }
 
         /// <summary>
         /// 

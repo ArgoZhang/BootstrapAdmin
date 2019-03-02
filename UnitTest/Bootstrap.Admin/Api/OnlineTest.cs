@@ -11,15 +11,15 @@ namespace Bootstrap.Admin.Api
         [Fact]
         public async void Post_Ok()
         {
-            var usres = await Client.PostAsJsonAsync<string, IEnumerable<OnlineUser>>(string.Empty);
-            Assert.Single(usres);
+            var users = await Client.PostAsJsonAsync<string, IEnumerable<OnlineUser>>(string.Empty);
+            Assert.Single(users);
         }
 
         [Fact]
         public async void Get_Ok()
         {
-            var urls = await Client.GetAsJsonAsync<IEnumerable<KeyValuePair<DateTime, string>>>("::1");
-            Assert.NotEmpty(urls);
+            var urls = await Client.GetAsJsonAsync<IEnumerable<KeyValuePair<DateTime, string>>>("UnitTest");
+            Assert.Empty(urls);
         }
     }
 }

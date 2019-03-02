@@ -1,9 +1,10 @@
 ﻿using Bootstrap.Admin;
+using Bootstrap.DataAccess;
+using Longbow.Web;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Microsoft.AspNetCore.Builder
 {
@@ -19,30 +20,33 @@ namespace Microsoft.AspNetCore.Builder
         /// <returns></returns>
         public static IApplicationBuilder UseOnlineUsers(this IApplicationBuilder builder) => builder.UseWhen(context => context.Filter(), app => app.Use(async (context, next) =>
          {
-             await Task.Run(() =>
+             await System.Threading.Tasks.Task.Run(() =>
              {
-                 var onlineUsers = context.RequestServices.GetService<IOnlineUsers>();
-                 var clientIp = context.Connection.RemoteIpAddress?.ToString() ?? "::1";
-                 onlineUsers.AddOrUpdate(clientIp, key =>
+                 var onlineUserSvr = context.RequestServices.GetRequiredService<IOnlineUsers>();
+                 var proxy = new Func<OnlineUserCache, Action, OnlineUserCache>((c, action) =>
                  {
-                     var ou = new OnlineUser();
-                     ou.Ip = clientIp;
-                     ou.UserName = context.User.Identity.Name;
-                     ou.FirstAccessTime = DateTime.Now;
-                     ou.LastAccessTime = DateTime.Now;
-                     ou.Method = context.Request.Method;
-                     ou.RequestUrl = context.Request.Path;
-                     ou.AddRequestUrl(context.Request.Path);
-                     return ou;
-                 }, (key, v) =>
-                 {
+                     var v = c.User;
                      v.UserName = context.User.Identity.Name;
+                     if (!v.UserName.IsNullOrEmpty()) v.DisplayName = UserHelper.RetrieveUserByUserName(v.UserName).DisplayName;
                      v.LastAccessTime = DateTime.Now;
                      v.Method = context.Request.Method;
                      v.RequestUrl = context.Request.Path;
                      v.AddRequestUrl(context.Request.Path);
-                     return v;
+                     action?.Invoke();
+                     return c;
                  });
+                 onlineUserSvr.AddOrUpdate(context.Connection.Id ?? "", key =>
+                 {
+                     var agent = new UserAgent(context.Request.Headers["User-Agent"]);
+                     var v = new OnlineUser();
+                     v.ConnectionId = key;
+                     v.Ip = context.Connection.RemoteIpAddress?.ToString();
+                     v.Location = onlineUserSvr.RetrieveLocaleByIp(v.Ip);
+                     v.Browser = $"{agent.Browser.Name} {agent.Browser.Version}";
+                     v.OS = $"{agent.OS.Name} {agent.OS.Version}";
+                     v.FirstAccessTime = DateTime.Now;
+                     return proxy(new OnlineUserCache(v, () => onlineUserSvr.TryRemove(key, out _)), null);
+                 }, (key, v) => proxy(v, () => v.Reset()));
              });
              await next();
          }));
