@@ -73,7 +73,12 @@ namespace Bootstrap.Admin
         /// </summary>
         /// <param name="baseAddress"></param>
         /// <returns></returns>
-        public HttpClient CreateClient(string baseAddress) => CreateDefaultClient(new Uri($"http://localhost/{baseAddress}/"), new RedirectHandler(7), new CookieContainerHandler(_cookie));
+        public HttpClient CreateClient(string baseAddress)
+        {
+            var client = CreateDefaultClient(new Uri($"http://localhost/{baseAddress}/"), new RedirectHandler(7), new CookieContainerHandler(_cookie));
+            client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_1) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.1 Safari/605.1.15");
+            return client;
+        }
 
         private readonly CookieContainer _cookie = new CookieContainer();
 
