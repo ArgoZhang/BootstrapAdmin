@@ -1,4 +1,4 @@
-﻿$(function () {
+$(function () {
     var apiUrl = "api/OnlineUsers";
     var $table = $('table').smartTable({
         url: apiUrl,
@@ -20,7 +20,7 @@
             { title: "登陆名称", field: "UserName" },
             { title: "显示名称", field: "DisplayName" },
             { title: "登录时间", field: "FirstAccessTime" },
-            { title: "最近操作时间", field: "LastAccessTime" },
+            { title: "访问时间", field: "LastAccessTime" },
             { title: "请求方式", field: "Method" },
             { title: "主机", field: "Ip" },
             { title: "登录地点", field: "Location" },
@@ -48,10 +48,12 @@
                         '已断开' :
                         $.format('<div class="fixed-table-container"><table class="table table-hover table-sm mb-0"><thead><tr><th class="p-1"><b>访问时间</b></th><th class="p-1">访问地址</th></tr></thead><tbody>{0}</tbody></table></div>', content);
                     $this.popover({ content: content, placement: $(window).width() < 768 ? 'top' : 'left' });
-                    $this.trigger('focus');
+                    $this.popover('show');
                 }
             });
         }
+    }).on('mouseup', 'button[data-id]', function(){
+        $(this).focus();
     });
 
     $('#refreshUsers').tooltip().on('click', function () {
