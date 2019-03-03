@@ -145,3 +145,14 @@ CREATE TABLE RejectUsers(
 	RejectedTime 	DATE NOT NULL,
 	RejectedReason 	VARCHAR (50) NULL
 );
+
+CREATE TABLE RejectUsers(
+	ID 				SERIAL PRIMARY KEY,
+	UserName 		VARCHAR (50) NOT NULL,
+	LoginTime 	    DATE NOT NULL,
+	Ip 	            VARCHAR NOT NULL,
+	OS		        VARCHAR (50) NULL,
+	Browser	        VARCHAR (50) NULL,
+	City 	        VARCHAR (50) NULL,
+	Result 	        VARCHAR (50) NOT NULL
+);
