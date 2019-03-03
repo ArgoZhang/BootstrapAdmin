@@ -116,6 +116,17 @@ namespace Bootstrap.DataAccess.MongoDB
                 return DBAccess.GetCollection<BootstrapMenu>("Navigations");
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static IMongoCollection<DataAccess.LoginUser> LoginUsers
+        {
+            get
+            {
+                return DBAccess.GetCollection<DataAccess.LoginUser>("LoginLogs");
+            }
+        }
         #endregion
 
         private static void InitDb()
@@ -214,6 +225,15 @@ namespace Bootstrap.DataAccess.MongoDB
             if (!BsonClassMap.IsClassMapRegistered(typeof(DataAccess.Log)))
             {
                 BsonClassMap.RegisterClassMap<DataAccess.Log>(md =>
+                {
+                    md.AutoMap();
+                    md.IdMemberMap.SetSerializer(new StringSerializer(BsonType.ObjectId));
+                    md.IdMemberMap.SetIgnoreIfDefault(true);
+                });
+            }
+            if (!BsonClassMap.IsClassMapRegistered(typeof(DataAccess.LoginUser)))
+            {
+                BsonClassMap.RegisterClassMap<DataAccess.LoginUser>(md =>
                 {
                     md.AutoMap();
                     md.IdMemberMap.SetSerializer(new StringSerializer(BsonType.ObjectId));
