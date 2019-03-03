@@ -1,6 +1,7 @@
 ﻿using Bootstrap.Security;
 using Longbow.Cache;
 using Longbow.Data;
+using System;
 using System.Collections.Generic;
 
 namespace Bootstrap.DataAccess
@@ -29,7 +30,21 @@ namespace Bootstrap.DataAccess
         /// <param name="userName"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public static bool Authenticate(string userName, string password) => DbContextManager.Create<User>().Authenticate(userName, password);
+        public static bool Authenticate(string userName, string password, Action<LoginUser> config)
+        {
+            var loginUser = new LoginUser()
+            {
+                UserName = userName,
+                LoginTime = DateTime.Now,
+                Result = "登录失败"
+            };
+            config(loginUser);
+            if (string.IsNullOrEmpty(loginUser.Ip)) loginUser.Ip = System.Net.IPAddress.IPv6Loopback.ToString();
+            var ret = DbContextManager.Create<User>().Authenticate(userName, password);
+            if (ret) loginUser.Result = "登录成功";
+            LoginHelper.Log(loginUser);
+            return ret;
+        }
 
         /// <summary>
         /// 查询所有的新注册用户

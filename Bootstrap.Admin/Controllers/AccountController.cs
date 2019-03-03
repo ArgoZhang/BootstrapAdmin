@@ -2,9 +2,11 @@
 using Bootstrap.DataAccess;
 using Longbow;
 using Longbow.Configuration;
+using Longbow.Web;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
@@ -34,13 +36,14 @@ namespace Bootstrap.Admin.Controllers
         /// Login the specified userName, password and remember.
         /// </summary>
         /// <returns>The login.</returns>
+        /// <param name="onlineUserSvr"></param>
         /// <param name="userName">User name.</param>
         /// <param name="password">Password.</param>
         /// <param name="remember">Remember.</param>
         [HttpPost]
-        public async Task<IActionResult> Login(string userName, string password, string remember)
+        public async Task<IActionResult> Login([FromServices]IOnlineUsers onlineUserSvr, string userName, string password, string remember)
         {
-            if (UserHelper.Authenticate(userName, password))
+            if (UserHelper.Authenticate(userName, password, loginUser => CreateLoginUser(onlineUserSvr, HttpContext, loginUser)))
             {
                 var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
                 identity.AddClaim(new Claim(ClaimTypes.Name, userName));
@@ -49,6 +52,21 @@ namespace Bootstrap.Admin.Controllers
             // redirect origin url
             var originUrl = Request.Query[CookieAuthenticationDefaults.ReturnUrlParameter].FirstOrDefault() ?? "~/Home/Index";
             return Redirect(originUrl);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="onlineUserSvr"></param>
+        /// <param name="context"></param>
+        /// <param name="loginUser"></param>
+        internal static void CreateLoginUser(IOnlineUsers onlineUserSvr, HttpContext context, LoginUser loginUser)
+        {
+            var agent = new UserAgent(context.Request.Headers["User-Agent"]);
+            loginUser.Ip = context.Connection.RemoteIpAddress?.ToString();
+            loginUser.City = onlineUserSvr.RetrieveLocaleByIp(loginUser.Ip);
+            loginUser.Browser = $"{agent.Browser.Name} {agent.Browser.Version}";
+            loginUser.OS = $"{agent.OS.Name} {agent.OS.Version}";
         }
 
         /// <summary>
