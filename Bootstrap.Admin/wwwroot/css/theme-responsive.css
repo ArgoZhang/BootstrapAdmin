@@ -53,6 +53,14 @@
     .sidebar-open aside {
         transform: translate(0);
     }
+
+    .btn span:last-child {
+        display: inline;
+    }
+
+    .bs-bars .btn span:last-child {
+        display: none;
+    }
 }
 
 @media (min-width: 940px) {
