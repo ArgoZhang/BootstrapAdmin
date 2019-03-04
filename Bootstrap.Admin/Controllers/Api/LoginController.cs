@@ -3,6 +3,8 @@ using Bootstrap.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Bootstrap.Admin.Controllers.Api
 {
@@ -16,6 +18,13 @@ namespace Bootstrap.Admin.Controllers.Api
     [ApiController]
     public class LoginController : ControllerBase
     {
+        /// <summary>
+        /// 获得登录历史记录
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public IEnumerable<LoginUser> Get() => LoginHelper.Retrieves();
+
         /// <summary>
         /// 
         /// </summary>

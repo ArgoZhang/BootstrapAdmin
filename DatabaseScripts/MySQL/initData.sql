@@ -42,7 +42,9 @@ INSERT INTO Navigations (ID, ParentId, Name, `Order`, Icon, Url, Category) VALUE
 INSERT INTO Navigations (ID, ParentId, Name, `Order`, Icon, Url, Category) VALUES (10, 0, '站内消息', 100, 'fa fa-envelope', '~/Admin/Messages', '0');
 INSERT INTO Navigations (ID, ParentId, Name, `Order`, Icon, Url, Category) VALUES (11, 0, '任务管理', 110, 'fa fa fa-tasks', '~/Admin/Tasks', '0');
 INSERT INTO Navigations (ID, ParentId, Name, `Order`, Icon, Url, Category) VALUES (12, 0, '通知管理', 120, 'fa fa-bell', '~/Admin/Notifications', '0');
-INSERT INTO Navigations (ID, ParentId, Name, `Order`, Icon, Url, Category) VALUES (13, 0, '系统日志', 130, 'fa fa-gears', '~/Admin/Logs', '0');
+INSERT INTO Navigations (ID, ParentId, Name, `Order`, Icon, Url, Category) VALUES (13, 0, '系统日志', 130, 'fa fa-gears', '#', '0');
+INSERT INTO Navigations (ID, ParentId, Name, `Order`, Icon, Url, Category) VALUES (20, 13, '操作日志', 10, 'fa fa-edit', '~/Admin/Logs', '0');
+INSERT INTO Navigations (ID, ParentId, Name, `Order`, Icon, Url, Category) VALUES (21, 13, '登录日志', 20, 'fa fa-user-circle-o', '~/Admin/Logins', '0');
 INSERT INTO Navigations (ID, ParentId, Name, `Order`, Icon, Url, Category) VALUES (14, 0, '在线用户', 140, 'fa fa-users', '~/Admin/Online', '0');
 INSERT INTO Navigations (ID, ParentId, Name, `Order`, Icon, Url, Category) VALUES (15, 0, '程序异常', 150, 'fa fa-cubes', '~/Admin/Exceptions', '0');
 INSERT INTO Navigations (ID, ParentId, Name, `Order`, Icon, Url, Category) VALUES (16, 0, '工具集合', 160, 'fa fa-gavel', '#', '0');

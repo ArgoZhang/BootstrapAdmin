@@ -1,4 +1,7 @@
-﻿namespace Bootstrap.DataAccess.MongoDB
+﻿using MongoDB.Driver;
+using System.Collections.Generic;
+
+namespace Bootstrap.DataAccess.MongoDB
 {
     /// <summary>
     /// 
@@ -15,5 +18,11 @@
             DbManager.LoginUsers.InsertOne(user);
             return true;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override IEnumerable<DataAccess.LoginUser> Retrieves() => DbManager.LoginUsers.Find(FilterDefinition<DataAccess.LoginUser>.Empty).SortByDescending(user => user.LoginTime).ToList();
     }
 }

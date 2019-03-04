@@ -1,4 +1,6 @@
-﻿using System.Net.Http;
+﻿using Bootstrap.DataAccess;
+using System.Collections.Generic;
+using System.Net.Http;
 using Xunit;
 
 namespace Bootstrap.Admin.Api
@@ -6,6 +8,13 @@ namespace Bootstrap.Admin.Api
     public class LoginTest : ControllerTest
     {
         public LoginTest(BAWebHost factory) : base(factory, "api/Login") { }
+
+        [Fact]
+        public async void Login_Get()
+        {
+            var users = await Client.GetAsJsonAsync<IEnumerable<LoginUser>>();
+            Assert.NotEmpty(users);
+        }
 
         [Fact]
         public async void Login_Ok()
