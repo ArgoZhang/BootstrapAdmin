@@ -477,3 +477,33 @@ GO
 
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'注册时间' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'RejectUsers', @level2type=N'COLUMN',@level2name=N'RegisterTime'
 GO
+
+/****** Object:  Table [dbo].[LoginLogs]    Script Date: 03/03/2019 20:05:42 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[LoginLogs](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[UserName] [varchar](50) NOT NULL,
+	[LoginTime] [datetime] NOT NULL,
+	[Ip] [varchar](15) NOT NULL,
+	[OS] [varchar](50) NULL,
+	[Browser] [varchar](50) NULL,
+	[City] [nvarchar](50) NULL,
+	[Result] [nvarchar](50) NOT NULL,
+ CONSTRAINT [PK_LoginLogs] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
