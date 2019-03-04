@@ -33,12 +33,22 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获得/设置 客户端IP
         /// </summary>
-        public string ClientIp { get; set; }
+        public string Ip { get; set; }
 
         /// <summary>
-        /// 获取/设置 客户端信息
+        /// 
         /// </summary>
-        public string ClientAgent { get; set; }
+        public string City { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Browser { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string OS { get; set; }
 
         /// <summary>
         /// 获取/设置 请求网址

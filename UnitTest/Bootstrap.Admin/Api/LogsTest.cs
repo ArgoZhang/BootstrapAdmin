@@ -1,5 +1,6 @@
 ﻿using Bootstrap.DataAccess;
 using Longbow.Web.Mvc;
+using System;
 using Xunit;
 
 namespace Bootstrap.Admin.Api
@@ -11,7 +12,7 @@ namespace Bootstrap.Admin.Api
         [Fact]
         public async void Get_Ok()
         {
-            var log = new Log() { CRUD = "UnitTest", ClientAgent = "UnitTest", ClientIp = "::1", RequestUrl = "~/UnitTest", UserName = "UnitTest" };
+            var log = new Log() { CRUD = "UnitTest", Browser = "UnitTest", OS = "UnitTest", City = "本地连接", Ip = "::1", RequestUrl = "~/UnitTest", UserName = "UnitTest", LogTime = DateTime.Now };
             log.Save(log);
 
             // 菜单 系统菜单 系统使用条件

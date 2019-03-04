@@ -3,7 +3,7 @@
 namespace Bootstrap.DataAccess
 {
     [Collection("SQLServerContext")]
-    public class LogsTest 
+    public class LogsTest
     {
         [Fact]
         public void Save_Ok()
@@ -11,8 +11,10 @@ namespace Bootstrap.DataAccess
             var log = new Log()
             {
                 UserName = "UnitTest",
-                ClientAgent = "UnitTest-Agent",
-                ClientIp = "::",
+                Browser = "UnitTest",
+                City = "本地连接",
+                OS = "UnitTest",
+                Ip = "::",
                 CRUD = "UnitTest",
                 RequestUrl = "~/Home/Index"
             };
@@ -25,8 +27,10 @@ namespace Bootstrap.DataAccess
             var log = new Log()
             {
                 UserName = "UnitTest",
-                ClientAgent = "UnitTest-Agent",
-                ClientIp = "::",
+                Browser = "UnitTest",
+                City = "本地连接",
+                OS = "UnitTest",
+                Ip = "::",
                 CRUD = "UnitTest",
                 RequestUrl = "~/Home/Index"
             };

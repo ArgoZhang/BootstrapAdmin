@@ -57,7 +57,7 @@ namespace Bootstrap.Admin.Query
                     data = Order == "asc" ? data.OrderBy(t => t.LogTime) : data.OrderByDescending(t => t.LogTime);
                     break;
                 case "ClientIp":
-                    data = Order == "asc" ? data.OrderBy(t => t.ClientIp) : data.OrderByDescending(t => t.ClientIp);
+                    data = Order == "asc" ? data.OrderBy(t => t.Ip) : data.OrderByDescending(t => t.Ip);
                     break;
                 case "RequestUrl":
                     data = Order == "asc" ? data.OrderBy(t => t.RequestUrl) : data.OrderByDescending(t => t.RequestUrl);
