@@ -565,3 +565,7 @@ li[data-category="1"] .dd3-content .menuType {
         background: #5cb85c;
         border: 1px solid #404040;
     }
+
+.bootstrap-table .badge {
+    padding: 4px 6px;
+}

@@ -21,7 +21,12 @@ $(function () {
             { title: "登录地点", field: "City" },
             { title: "浏览器", field: "Browser" },
             { title: "操作系统", field: "OS" },
-            { title: "登录结果", field: "Result" }
+            {
+                title: "登录结果", field: "Result", formatter: function (value, row, index) {
+                    var css = value === "登录成功" ? "success" : "danger";
+                    return $.format('<span class="badge badge-{0}">{1}</span>', css, value);
+                }
+            }
         ]
     });
 
