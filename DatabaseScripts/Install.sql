@@ -267,14 +267,17 @@ CREATE TABLE [dbo].[Logs](
 	[CRUD] [nvarchar](50) NOT NULL,
 	[UserName] [varchar](50) NOT NULL,
 	[LogTime] [datetime] NOT NULL,
-	[ClientIp] [varchar](15) NOT NULL,
-	[ClientAgent] [nvarchar](500) NOT NULL,
+	[Ip] [varchar](15) NOT NULL,
+	[Browser] [varchar](50) NULL,
+	[OS] [varchar](50) NULL,
+	[City] [nvarchar](50) NULL,
 	[RequestUrl] [nvarchar](500) NOT NULL,
  CONSTRAINT [PK_Logs] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
+
 GO
 SET ANSI_PADDING OFF
 GO
