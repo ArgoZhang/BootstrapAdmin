@@ -158,3 +158,11 @@ CREATE TABLE LoginLogs(
 	City 	        VARCHAR (50) NULL,
 	Result 	        VARCHAR (50) NOT NULL
 );
+
+CREATE TABLE ResetUsers(
+	ID 				INTEGER PRIMARY KEY	Auto_increment,
+	UserName 		VARCHAR (50) NOT NULL,
+	DisplayName 	VARCHAR (50) NOT NULL,
+	Reason			VARCHAR (500) NOT NULL,
+	ResetTime		DATETIME NOT NULL
+);
