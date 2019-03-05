@@ -190,19 +190,11 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="displayName"></param>
-        /// <param name="desc"></param>
+        /// <param name="user"></param>
         /// <returns></returns>
-        public virtual bool ForgotPassword(string userName, string displayName, string desc)
+        public virtual bool ForgotPassword(ResetUser user)
         {
-            ResetUser user = new ResetUser()
-            {
-                UserName = userName,
-                DisplayName = displayName,
-                Reason = desc,
-                ResetTime = DateTime.Now
-            };
+            user.ResetTime = DateTime.Now;
             return user.Save();
         }
 

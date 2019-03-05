@@ -58,6 +58,6 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="user"></param>
         /// <returns></returns>
         [HttpPut]
-        public bool Put([FromBody]ResetUser user) => UserHelper.ForgotPassword(user.UserName, user.DisplayName, user.Reason);
+        public bool Put([FromBody]ResetUser user) => UserHelper.ForgotPassword(user);
     }
 }

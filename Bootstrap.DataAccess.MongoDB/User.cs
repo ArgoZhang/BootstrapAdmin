@@ -85,7 +85,8 @@ namespace Bootstrap.DataAccess.MongoDB
                 .Include(u => u.ApprovedBy)
                 .Include(u => u.Description)
                 .Include(u => u.Groups)
-                .Include(u => u.Roles);
+                .Include(u => u.Roles)
+                .Include(u => u.IsReset);
             return DbManager.Users.Find(user => user.ApprovedTime != DateTime.MinValue).Project<User>(project).ToList();
         }
 
@@ -112,8 +113,9 @@ namespace Bootstrap.DataAccess.MongoDB
                 ApprovedBy = user.ApprovedBy,
                 Roles = new List<string>(),
                 Groups = new List<string>(),
-                Icon = $"{DictHelper.RetrieveIconFolderPath()}default.jpg",
-                Description = user.Description
+                Icon = "default.jpg",
+                Description = user.Description,
+                IsReset = 0
             });
             return true;
         }
@@ -249,6 +251,38 @@ namespace Bootstrap.DataAccess.MongoDB
                 groups.Add(groupId);
                 DbManager.Users.UpdateOne(md => md.Id == p.Id, Builders<User>.Update.Set(md => md.Groups, groups));
             });
+            return true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public override bool ForgotPassword(DataAccess.ResetUser user)
+        {
+            DbManager.Users.UpdateOne(md => md.UserName.ToLowerInvariant() == user.UserName.ToLowerInvariant(), Builders<User>.Update.Set(md => md.IsReset, 1));
+            user.ResetTime = DateTime.Now;
+            DbManager.ResetUsers.InsertOne(user);
+            return true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public override bool ResetPassword(string userName, string password)
+        {
+            var ret = false;
+            var resetUser = UserHelper.RetrieveResetUserByUserName(userName);
+            if (resetUser == null) return ret;
+
+            var passSalt = LgbCryptography.GenerateSalt();
+            var newPassword = LgbCryptography.ComputeHash(password, passSalt);
+            DbManager.Users.UpdateOne(User => User.UserName.ToLowerInvariant() == userName.ToLowerInvariant(), Builders<User>.Update.Set(md => md.Password, newPassword).Set(md => md.PassSalt, passSalt).Set(md => md.IsReset, 0));
+            DbManager.ResetUsers.DeleteMany(user => user.UserName.ToLowerInvariant() == userName.ToLowerInvariant());
             return true;
         }
     }

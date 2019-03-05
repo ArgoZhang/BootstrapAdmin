@@ -42,8 +42,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual bool Save()
         {
-            var db = DbManager.Create();
-            db.Save(this);
+            DbManager.Create().Save(this);
             return true;
         }
 

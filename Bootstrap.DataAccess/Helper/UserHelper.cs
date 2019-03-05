@@ -135,11 +135,8 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="displayName"></param>
-        /// <param name="desc"></param>
-        /// <returns></returns>
-        public static bool ForgotPassword(string userName, string displayName, string desc) => DbContextManager.Create<User>().ForgotPassword(userName, displayName, desc);
+        /// <param name="user"></param>
+        public static bool ForgotPassword(ResetUser user) => DbContextManager.Create<User>().ForgotPassword(user);
 
         /// <summary>
         /// 
