@@ -1,5 +1,7 @@
 ﻿using PetaPoco;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Bootstrap.DataAccess
 {
@@ -58,5 +60,12 @@ namespace Bootstrap.DataAccess
         /// <param name="userName"></param>
         /// <returns></returns>
         public virtual void DeleteByUserName(string userName) => DbManager.Create().Delete<ResetUser>("where UserName = @0", userName);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public virtual IEnumerable<KeyValuePair<DateTime, string>> RetrieveResetReasonsByUserName(string userName) => DbManager.Create().Fetch<ResetUser>("where UserName = @0 order by ResetTime desc", userName).Select(user => new KeyValuePair<DateTime, string>(user.ResetTime, user.Reason));
     }
 }

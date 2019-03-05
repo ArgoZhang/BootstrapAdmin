@@ -59,6 +59,9 @@ namespace Bootstrap.Admin.Api
             var gid = new Group().Retrieves().Where(r => r.GroupName == "Admin").First().Id;
             ret = await Client.PostAsJsonAsync<string, IEnumerable<object>>($"{gid}?type=group", string.Empty);
             Assert.NotNull(ret);
+
+            ret = await Client.PostAsJsonAsync<string, IEnumerable<object>>("UnitTest?type=reset", string.Empty);
+            Assert.NotNull(ret);
         }
 
         [Fact]

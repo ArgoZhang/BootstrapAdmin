@@ -80,7 +80,7 @@
                 </div>
                 <div class="modal-body">
                     <form class="form-inline">
-                        <div class="row" id="resetForm">
+                        <div class="form-row" id="resetForm">
                             <div class="form-group col-sm-6">
                                 <label class="control-label" for="password">登录密码</label>
                                 <input type="password" class="form-control" id="resetPassword" placeholder="不可为空，50字以内" maxlength="50" data-valid="true" />
@@ -88,6 +88,10 @@
                             <div class="form-group col-sm-6">
                                 <label class="control-label" for="confirm">确认密码</label>
                                 <input type="password" class="form-control" id="resetConfirm" placeholder="与登陆密码一致，50字以内" maxlength="50" equalTo="#resetPassword" data-valid="true" />
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <label class="control-label" for="resetReason">重置原因</label>
+                                <textarea class="form-control flex-sm-fill" id="resetReason" rows="3" readonly="readonly"></textarea>
                             </div>
                         </div>
                     </form>

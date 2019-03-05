@@ -45,7 +45,7 @@ namespace Bootstrap.Admin.Controllers.Api
         }
 
         /// <summary>
-        /// 
+        /// 重置密码调用
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="user"></param>

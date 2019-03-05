@@ -247,5 +247,12 @@ namespace Bootstrap.DataAccess
         /// <param name="userName"></param>
         /// <returns></returns>
         public static ResetUser RetrieveResetUserByUserName(string userName) => DbContextManager.Create<ResetUser>().RetrieveUserByUserName(userName);
+
+        /// <summary>
+        /// 通过登录账户获得重置密码原因
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public static IEnumerable<KeyValuePair<DateTime, string>> RetrieveResetReasonsByUserName(string userName) => DbContextManager.Create<ResetUser>().RetrieveResetReasonsByUserName(userName);
     }
 }

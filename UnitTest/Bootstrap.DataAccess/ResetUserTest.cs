@@ -57,5 +57,22 @@ namespace Bootstrap.DataAccess
             var count = db.ExecuteScalar<int>("select count(Id) from ResetUsers");
             Assert.Equal(0, count);
         }
+
+        [Fact]
+        public void RetrieveResetReasonsByUserName_Ok()
+        {
+            var resetUser = new ResetUser()
+            {
+                UserName = "UnitTest",
+                Reason = "UnitTest",
+                DisplayName = "UnitTest",
+                ResetTime = DateTime.Now
+            };
+            var db = DbManager.Create();
+            db.Save(resetUser);
+
+            var reasons = resetUser.RetrieveResetReasonsByUserName(resetUser.UserName);
+            Assert.NotEmpty(reasons);
+        }
     }
 }

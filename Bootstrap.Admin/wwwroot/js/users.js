@@ -7,6 +7,7 @@
     var $dialogGroupForm = $('#groupForm');
     var $dialogReset = $('#dialogReset');
     var $dialogResetHeader = $('#myResetModalLabel');
+    var $resetReason = $('#resetReason');
     var $table = $('table');
 
     $table.lgbTable({
@@ -102,7 +103,17 @@
                             $table.bootstrapTable('uncheckAll');
                             $table.bootstrapTable('check', index);
                             $dialogResetHeader.text($.format("{0} - 重置密码窗口", row.UserName));
-                            $dialogReset.modal('show');
+                            $.bc({
+                                id: row.UserName, url: User.url, method: 'post', query: { type: "reset" }, callback: function (result) {
+                                    if ($.isArray(result)) {
+                                        var reason = result.map(function (v, index) {
+                                            return $.format("{0}: {1}", v.Key, v.Value);
+                                        }).join('\n');
+                                        $resetReason.text(reason);
+                                        $dialogReset.modal('show');
+                                    }
+                                }
+                            });
                         }
                     }
                 }
