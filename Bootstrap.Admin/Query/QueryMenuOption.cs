@@ -1,4 +1,4 @@
-﻿using Bootstrap.DataAccess;
+using Bootstrap.DataAccess;
 using Longbow.Web.Mvc;
 using System.Linq;
 
@@ -35,7 +35,7 @@ namespace Bootstrap.Admin.Query
             var data = MenuHelper.RetrieveMenusByUserName(userName);
             if (!string.IsNullOrEmpty(ParentName))
             {
-                data = data.Where(t => t.ParentName.Contains(ParentName));
+                data = data.Where(t => t.ParentName != null && t.ParentName.Contains(ParentName));
             }
             if (!string.IsNullOrEmpty(Name))
             {
