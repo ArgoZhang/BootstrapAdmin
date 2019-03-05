@@ -63,7 +63,8 @@ namespace Bootstrap.Admin.Query
                 u.RegisterTime,
                 u.ApprovedTime,
                 u.ApprovedBy,
-                u.Description
+                u.Description,
+                u.IsReset
             });
             return ret;
         }

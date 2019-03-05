@@ -1,9 +1,12 @@
 ﻿using Bootstrap.DataAccess;
+using Longbow.Web;
 using Longbow.Web.SignalR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using System;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Bootstrap.Admin.Controllers.Api
@@ -42,14 +45,19 @@ namespace Bootstrap.Admin.Controllers.Api
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="user"></param>
+        [HttpPut("{userName}")]
+        public bool Put(string userName, [FromBody]User user) => UserHelper.ResetPassword(userName, user.Password);
+
+        /// <summary>
         /// 忘记密码调用
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
         [HttpPut]
-        public bool Put([FromBody]User user)
-        {
-            return UserHelper.ForgotPassword(user.UserName, user.DisplayName, user.Description);
-        }
+        public bool Put([FromBody]ResetUser user) => UserHelper.ForgotPassword(user.UserName, user.DisplayName, user.Reason);
     }
 }

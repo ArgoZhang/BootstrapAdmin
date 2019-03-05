@@ -128,14 +128,18 @@ namespace Bootstrap.DataAccess
         /// 
         /// </summary>
         /// <param name="userName"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public static bool ResetPassword(string userName, string password) => DbContextManager.Create<User>().ResetPassword(userName, password);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userName"></param>
         /// <param name="displayName"></param>
         /// <param name="desc"></param>
         /// <returns></returns>
-        public static bool ForgotPassword(string userName, string displayName, string desc)
-        {
-            // UNDONE 忘记密码涉及到安全问题，防止用户恶意重置其他用户，待定
-            return true;
-        }
+        public static bool ForgotPassword(string userName, string displayName, string desc) => DbContextManager.Create<User>().ForgotPassword(userName, displayName, desc);
 
         /// <summary>
         /// 
@@ -236,5 +240,12 @@ namespace Bootstrap.DataAccess
         /// <param name="userName"></param>
         /// <returns></returns>
         public static BootstrapUser RetrieveUserByUserName(string userName) => CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveUsersByNameDataKey, userName), k => DbContextManager.Create<User>().RetrieveUserByUserName(userName), RetrieveUsersByNameDataKey);
+
+        /// <summary>
+        /// 通过登录账号获得用户信息
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public static ResetUser RetrieveResetUserByUserName(string userName) => DbContextManager.Create<ResetUser>().RetrieveUserByUserName(userName);
     }
 }

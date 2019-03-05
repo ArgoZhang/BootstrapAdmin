@@ -25,5 +25,26 @@ namespace Bootstrap.Admin.Api
 
             nusr.Delete(nusr.RetrieveNewUsers().Where(u => u.UserName == nusr.UserName).Select(u => u.Id));
         }
+
+        [Fact]
+        public async void Put_Ok()
+        {
+            var user = new ResetUser() { DisplayName = "UnitTest", UserName = "UnitTest", Reason = "UnitTest" };
+            var resp = await Client.PutAsJsonAsync<ResetUser, bool>(user);
+            Assert.True(resp);
+        }
+
+        [Fact]
+        public async void Put_UserName()
+        {
+            var user = new User() { Password = "1" };
+            var resp = await Client.PutAsJsonAsync<User, bool>("UnitTest", user);
+            Assert.False(resp);
+
+            // 重置Admin密码
+            await Client.PutAsJsonAsync<ResetUser, bool>(new ResetUser { UserName = "Admin", DisplayName = "Administrator", Reason = "UnitTest" });
+            resp = await Client.PutAsJsonAsync<User, bool>("Admin", new User() { Password = "123789" });
+            Assert.True(resp);
+        }
     }
 }
