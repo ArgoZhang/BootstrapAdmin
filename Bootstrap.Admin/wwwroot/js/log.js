@@ -30,6 +30,9 @@
             },
             '#btnSubmitMenu': function () {
                 this.log({ crud: '分配菜单' });
+            },
+            '#btnReset': function () {
+                this.log({ crud: '重置密码' });
             }
         }
     };

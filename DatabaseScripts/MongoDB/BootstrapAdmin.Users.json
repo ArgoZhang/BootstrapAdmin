@@ -12,6 +12,7 @@
     "Icon": "default.jpg",
     "Css": null,
     "App": null,
+    "IsReset":  0,
     "Roles": [
       "5bd7cc105fa31256f77e4eb7"
     ],
@@ -32,6 +33,7 @@
     "Icon": "default.jpg",
     "Css": null,
     "App": null,
+    "IsReset":  0,
     "Groups": [
 
     ],

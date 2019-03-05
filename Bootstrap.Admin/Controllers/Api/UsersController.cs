@@ -75,6 +75,9 @@ namespace Bootstrap.Admin.Controllers.Api
                 case "group":
                     ret = UserHelper.RetrievesByGroupId(id);
                     break;
+                case "reset":
+                    ret = UserHelper.RetrieveResetReasonsByUserName(id).Select(u => new { u.Key, u.Value });
+                    break;
             }
             return ret;
         }

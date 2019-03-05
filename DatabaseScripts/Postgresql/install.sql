@@ -158,3 +158,11 @@ CREATE TABLE RejectUsers(
 	City 	        VARCHAR (50) NULL,
 	Result 	        VARCHAR (50) NOT NULL
 );
+
+CREATE TABLE ResetUsers(
+	ID 				SERIAL PRIMARY KEY,
+	UserName 		VARCHAR (50) NOT NULL,
+	DisplayName 	VARCHAR (50) NOT NULL,
+	Reason			VARCHAR (500) NOT NULL,
+	ResetTime		DATE NOT NULL
+);

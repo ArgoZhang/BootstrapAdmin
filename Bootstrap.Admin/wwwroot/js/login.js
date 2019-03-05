@@ -29,7 +29,7 @@
     $('#btnForgot').on('click', function () {
         $.bc({
             url: "api/Register",
-            data: { UserName: $('#f_userName').val(), DisplayName: $('#f_displayName').val(), Description: $('#f_desc').val() },
+            data: { UserName: $('#f_userName').val(), DisplayName: $('#f_displayName').val(), Reason: $('#f_desc').val() },
             modal: '#dialogForgot',
             method: "put",
             callback: function (result) {

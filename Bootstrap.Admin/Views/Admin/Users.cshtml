@@ -71,4 +71,42 @@
 @section customModal {
     @await Html.PartialAsync("RoleConfig")
     @await Html.PartialAsync("GroupConfig")
+    <div class="modal fade" id="dialogReset" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myResetModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content" data-toggle="LgbValidate" data-valid-button="#btnReset" data-valid-modal="#dialogReset">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myResetModalLabel">重置密码窗口</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form class="form-inline">
+                        <div class="form-row" id="resetForm">
+                            <div class="form-group col-sm-6">
+                                <label class="control-label" for="password">登录密码</label>
+                                <input type="password" class="form-control" id="resetPassword" placeholder="不可为空，50字以内" maxlength="50" data-valid="true" />
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label class="control-label" for="confirm">确认密码</label>
+                                <input type="password" class="form-control" id="resetConfirm" placeholder="与登陆密码一致，50字以内" maxlength="50" equalTo="#resetPassword" data-valid="true" />
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <label class="control-label" for="resetReason">重置原因</label>
+                                <textarea class="form-control flex-sm-fill" id="resetReason" rows="3" readonly="readonly"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        <i class="fa fa-times"></i>
+                        <span>关闭</span>
+                    </button>
+                    <button type="button" class="btn btn-primary" id="btnReset">
+                        <i class="fa fa-save"></i>
+                        <span>保存</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 }

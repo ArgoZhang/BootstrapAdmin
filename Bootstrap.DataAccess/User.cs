@@ -2,6 +2,7 @@
 using Bootstrap.Security.DataAccess;
 using Longbow.Data;
 using Longbow.Security.Cryptography;
+using PetaPoco;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -69,6 +70,12 @@ namespace Bootstrap.DataAccess
         public string NewPassword { get; set; }
 
         /// <summary>
+        /// 获得/设置 是否重置密码
+        /// </summary>
+        [Ignore]
+        public int IsReset { get; set; }
+
+        /// <summary>
         /// 验证用户登陆账号与密码正确
         /// </summary>
         /// <param name="userName"></param>
@@ -114,7 +121,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public virtual IEnumerable<User> Retrieves() => DbManager.Create().Fetch<User>("select ID, UserName, DisplayName, RegisterTime, ApprovedTime, ApprovedBy, Description from Users Where ApprovedTime is not null");
+        public virtual IEnumerable<User> Retrieves() => DbManager.Create().Fetch<User>("select u.ID, u.UserName, u.DisplayName, RegisterTime, ApprovedTime, ApprovedBy, Description, ru.IsReset from Users u left join (select 1 as IsReset, UserName from ResetUsers group by UserName) ru on u.UserName = ru.UserName Where ApprovedTime is not null");
 
         /// <summary>
         /// 查询所有的新注册用户
@@ -147,6 +154,48 @@ namespace Bootstrap.DataAccess
                 throw ex;
             }
             return ret;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public virtual bool ResetPassword(string userName, string password)
+        {
+            var ret = false;
+            var resetUser = UserHelper.RetrieveResetUserByUserName(userName);
+            if (resetUser == null) return ret;
+
+            string sql = "set Password = @0, PassSalt = @1 where UserName = @2";
+            var passSalt = LgbCryptography.GenerateSalt();
+            var newPassword = LgbCryptography.ComputeHash(password, passSalt);
+            var db = DbManager.Create();
+            try
+            {
+                db.BeginTransaction();
+                ret = db.Update<User>(sql, newPassword, passSalt, userName) == 1;
+                if (ret) db.Execute("delete from ResetUsers where UserName = @0", userName);
+                db.CompleteTransaction();
+            }
+            catch (Exception ex)
+            {
+                db.AbortTransaction();
+                throw ex;
+            }
+            return ret;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public virtual bool ForgotPassword(ResetUser user)
+        {
+            user.ResetTime = DateTime.Now;
+            return user.Save();
         }
 
         /// <summary>

@@ -5,8 +5,12 @@
     var $dialogGroup = $("#dialogGroup");
     var $dialogGroupHeader = $('#myGroupModalLabel');
     var $dialogGroupForm = $('#groupForm');
+    var $dialogReset = $('#dialogReset');
+    var $dialogResetHeader = $('#myResetModalLabel');
+    var $resetReason = $('#resetReason');
+    var $table = $('table');
 
-    $('table').lgbTable({
+    $table.lgbTable({
         url: User.url,
         dataBinder: {
             map: {
@@ -62,6 +66,9 @@
                         return $(element).val();
                     }).toArray();
                     $.bc({ id: userId, url: Group.url, method: 'put', data: groupIds, query: { type: "user" }, title: Group.title, modal: '#dialogGroup' });
+                },
+                '#btnReset': function (row) {
+                    $.bc({ id: row.UserName, url: 'api/Register', method: 'put', data: { password: $('#resetPassword').val() }, modal: "#dialogReset", title: "重置密码", callback: function (result) { if (result) $table.bootstrapTable('refresh'); } });
                 }
             },
             callback: function (data) {
@@ -86,7 +93,30 @@
                 { title: "注册时间", field: "RegisterTime", sortable: true },
                 { title: "授权时间", field: "ApprovedTime", sortable: true },
                 { title: "授权人", field: "ApprovedBy", sortable: true },
-                { title: "说明", field: "Description", sortable: false }
+                { title: "说明", field: "Description", sortable: false },
+                {
+                    title: "操作", field: "IsReset", formatter: function (value, row, index) {
+                        return value === 1 ? '<button class="reset btn btn-danger"><i class="fa fa-remove"></i><span>重置</span></button>' : '';
+                    },
+                    events: {
+                        'click .reset': function (e, value, row, index) {
+                            $table.bootstrapTable('uncheckAll');
+                            $table.bootstrapTable('check', index);
+                            $dialogResetHeader.text($.format("{0} - 重置密码窗口", row.UserName));
+                            $.bc({
+                                id: row.UserName, url: User.url, method: 'post', query: { type: "reset" }, callback: function (result) {
+                                    if ($.isArray(result)) {
+                                        var reason = result.map(function (v, index) {
+                                            return $.format("{0}: {1}", v.Key, v.Value);
+                                        }).join('\n');
+                                        $resetReason.text(reason);
+                                        $dialogReset.modal('show');
+                                    }
+                                }
+                            });
+                        }
+                    }
+                }
             ]
         }
     });
