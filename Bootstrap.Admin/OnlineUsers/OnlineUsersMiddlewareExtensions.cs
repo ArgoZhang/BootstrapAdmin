@@ -22,12 +22,15 @@ namespace Microsoft.AspNetCore.Builder
          {
              await System.Threading.Tasks.Task.Run(() =>
              {
+                 var user = UserHelper.RetrieveUserByUserName(context.User.Identity.Name);
+                 if (user == null) return;
+
                  var onlineUserSvr = context.RequestServices.GetRequiredService<IOnlineUsers>();
                  var proxy = new Func<OnlineUserCache, Action, OnlineUserCache>((c, action) =>
                  {
                      var v = c.User;
-                     v.UserName = context.User.Identity.Name;
-                     if (!v.UserName.IsNullOrEmpty()) v.DisplayName = UserHelper.RetrieveUserByUserName(v.UserName).DisplayName;
+                     v.UserName = user.UserName;
+                     v.DisplayName = user.DisplayName;
                      v.LastAccessTime = DateTime.Now;
                      v.Method = context.Request.Method;
                      v.RequestUrl = context.Request.Path;
