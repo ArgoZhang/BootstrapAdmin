@@ -1,4 +1,4 @@
-﻿@{
+@{
     ViewBag.Title = "未授权请求";
     Layout = "_Layout";
 }
@@ -10,8 +10,12 @@
 }
 <section class="error-wrapper">
     <img src="~/images/error_icon.png" />
-    <h1>网页拒绝访问</h1>
-    <h3>您无权访问本页面请联系网站管理员授权后再查看</h3>
-    <br />
-    <a href="@ViewBag.ReturnUrl" target="_top">返回首页</a>
+    <h1>您的访问受限！</h1>
+    <h3>服务器拒绝处理您的请求！您可能没有访问此操作的权限</h3>
+    <p><a href="~/Account/Logout">登录</a> <span>或者</span> <a href="~/Home/Index" target="_top">返回首页</a></p>
+    <div>
+        <p>也可能是以下原因导致您没有权限</p>
+        <p>1. 没有登录，请登录后查看</p>
+        <p>2. 当前用户未获得此资源的相应权限，请联系管理员</p>
+    </div>
 </section>

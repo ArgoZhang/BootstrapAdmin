@@ -1,4 +1,9 @@
-﻿body {
+html {
+    font-size: 16px;
+    -ms-overflow-style: auto;
+}
+
+body {
     background: #8075c6;
     color: #fff;
 }
@@ -10,16 +15,21 @@ img {
 
 .error-wrapper {
     text-align: center;
+    margin: 0 auto;
+    max-width: 30rem;
+    padding: 1rem;
 }
 
     .error-wrapper p {
-        padding-top: 15px;
+        padding-top: 10px;
+    }
+
+    .error-wrapper div {
+        text-align: left;
     }
 
 a, a:hover, a:focus {
     text-decoration: none;
     outline: none;
-    font-size: 14px;
-    font-weight: 300;
-    color: #fff;
+    color: #371ed4;
 }
