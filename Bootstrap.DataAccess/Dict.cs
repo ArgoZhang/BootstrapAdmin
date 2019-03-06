@@ -1,4 +1,4 @@
-﻿using Bootstrap.Security;
+using Bootstrap.Security;
 using Bootstrap.Security.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -43,9 +43,7 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 保存网站个性化设置
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="code"></param>
-        /// <param name="category"></param>
+        /// <param name="dict"></param>
         /// <returns></returns>
         public virtual bool SaveSettings(BootstrapDict dict)
         {
@@ -83,7 +81,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual string RetrieveActiveTheme()
         {
-            var theme = DictHelper.RetrieveDicts().Where(d => d.Name == "使用样式" && d.Category == "当前样式" && d.Define == 0).FirstOrDefault();
+            var theme = DictHelper.RetrieveDicts().FirstOrDefault(d => d.Name == "使用样式" && d.Category == "当前样式" && d.Define == 0);
             return theme == null ? string.Empty : (theme.Code.Equals("site.css", StringComparison.OrdinalIgnoreCase) ? string.Empty : theme.Code);
         }
 
@@ -126,7 +124,6 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 通过数据库获得所有字典表配置信息，缓存Key=DictHelper-RetrieveDicts
         /// </summary>
-        /// <param name="db">数据库连接实例</param>
         /// <returns></returns>
         public virtual IEnumerable<BootstrapDict> RetrieveDicts() => DbHelper.RetrieveDicts();
     }
