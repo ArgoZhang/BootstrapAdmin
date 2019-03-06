@@ -102,7 +102,7 @@ Delete From [dbo].[Dicts] Where Category = @AppName
 Insert Dicts (Category, Name, Code, Define) values (@AppName, N'网站标题', N'托盘组垛程序', 1);
 Insert Dicts (Category, Name, Code, Define) values (@AppName, N'网站页脚', N'通用后台管理测试平台', 1);
 Insert Dicts (Category, Name, Code, Define) values (@AppName, N'个人中心地址', N'http://localhost:50852/Admin/Profiles', 1);
-Insert Dicts (Category, Name, Code, Define) values (@AppName, N'系统设置地址', N'http://localhost:50852/Admin/Settings', 1);
+Insert Dicts (Category, Name, Code, Define) values (@AppName, N'系统设置地址', N'http://localhost:50852/Admin/Index', 1);
 
 -- 菜单
 DELETE FROM Navigations Where [Application] = @AppId

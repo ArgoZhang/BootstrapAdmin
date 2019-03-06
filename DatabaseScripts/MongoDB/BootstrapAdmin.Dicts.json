@@ -255,7 +255,7 @@
     "_id": ObjectId("5bd6c73d5fa31256f77e4a36"),
     "Category": "测试平台",
     "Name": "系统设置地址",
-    "Code": "http://localhost:50852/Admin/Settings",
+    "Code": "http://localhost:50852/Admin/Index",
     "Define": NumberInt(1)
   },
   {

@@ -94,7 +94,7 @@ Delete From Dicts Where Category = '测试平台';
 Insert into Dicts (Category, Name, Code, Define) values ('测试平台', '网站标题', 'BA Client', 1);
 Insert into Dicts (Category, Name, Code, Define) values ('测试平台', '网站页脚', '通用后台管理测试平台', 1);
 Insert into Dicts (Category, Name, Code, Define) values ('测试平台', '个人中心地址', 'http://localhost:50852/Admin/Profiles', 1);
-Insert into Dicts (Category, Name, Code, Define) values ('测试平台', '系统设置地址', 'http://localhost:50852/Admin/Settings', 1);
+Insert into Dicts (Category, Name, Code, Define) values ('测试平台', '系统设置地址', 'http://localhost:50852/Admin/Index', 1);
 
 Delete from Navigations where Application = 2;
 INSERT into Navigations (ID, ParentId, Name, `Order`, Icon, Url, Category, Application) VALUES (NULL, 0, '首页', 10, 'fa fa-fa', '~/Home/Index', '1', 2);
