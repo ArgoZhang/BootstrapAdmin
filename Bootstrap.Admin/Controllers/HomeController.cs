@@ -30,26 +30,11 @@ namespace Bootstrap.Admin.Controllers
         [AllowAnonymous]
         public IActionResult Error(int id)
         {
-            var returnUrl = Request.Query[CookieAuthenticationDefaults.ReturnUrlParameter].ToString();
-            var model = new ErrorModel() { ReturnUrl = string.IsNullOrEmpty(returnUrl) ? Url.Content("~/Home/Index") : returnUrl };
-            model.Title = "服务器内部错误";
-            model.Content = "服务器内部错误";
-            model.Image = "error_icon.png";
-            if (id == 0)
+            var model = ErrorModel.CreateById(id);
+            if (id != 403)
             {
-                model.Content = "未处理服务器内部错误";
-            }
-            else if (id == 404)
-            {
-                model.Title = "资源未找到";
-                model.Content = "请求资源未找到";
-                model.Image = "404_icon.png";
-            }
-            else if (id == 403)
-            {
-                model.Title = "拒绝响应";
-                model.Content = "请求资源的访问被服务器拒绝";
-                model.ReturnUrl = Url.Content("~/Admin/Index");
+                var returnUrl = Request.Query[CookieAuthenticationDefaults.ReturnUrlParameter].ToString();
+                if (!string.IsNullOrEmpty(returnUrl)) model.ReturnUrl = returnUrl;
             }
             return View(model);
         }

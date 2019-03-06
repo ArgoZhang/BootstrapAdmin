@@ -84,11 +84,6 @@ namespace Bootstrap.Admin.Controllers
         /// </summary>
         /// <returns>The denied.</returns>
         [ResponseCache(Duration = 600)]
-        public ActionResult AccessDenied()
-        {
-            var returnUrl = Request.Query[CookieAuthenticationDefaults.ReturnUrlParameter].ToString();
-            ViewBag.ReturnUrl = string.IsNullOrEmpty(returnUrl) ? Url.Content("~/Home/Index") : returnUrl;
-            return View();
-        }
+        public ActionResult AccessDenied() => View("Error", ErrorModel.CreateById(403));
     }
 }
