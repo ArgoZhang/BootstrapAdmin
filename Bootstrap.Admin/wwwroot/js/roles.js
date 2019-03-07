@@ -126,7 +126,11 @@
             columns: [
                 { title: "角色名称", field: "RoleName", sortable: true },
                 { title: "角色描述", field: "Description", sortable: false }
-            ]
+            ],
+            exportOptions: {
+                fileName: "角色数据",
+                ignoreColumn: [0, 1]
+            }
         }
     });
 

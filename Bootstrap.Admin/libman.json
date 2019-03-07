@@ -55,7 +55,9 @@
         "locale/bootstrap-table-zh-CN.min.js",
         "bootstrap-table.css",
         "bootstrap-table.js",
-        "bootstrap-table.min.css"
+        "bootstrap-table.min.css",
+        "extensions/export/bootstrap-table-export.js",
+        "extensions/export/bootstrap-table-export.min.js"
       ]
     },
     {
@@ -181,6 +183,15 @@
         "jquery.nestable.css",
         "jquery.nestable.js",
         "jquery.nestable.min.css"
+      ]
+    },
+    {
+      "provider": "unpkg",
+      "library": "tableexport.jquery.plugin@1.10.1",
+      "destination": "wwwroot/lib/tablexport/",
+      "files": [
+        "tableExport.js",
+        "tableExport.min.js"
       ]
     }
   ]

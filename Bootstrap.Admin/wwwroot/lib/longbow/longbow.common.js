@@ -283,6 +283,7 @@
                 pageNumber: 1,                      //初始化加载第一页，默认第一页
                 pageSize: 20,                       //每页的记录行数（*）
                 pageList: [20, 40, 80, 120],        //可供选择的每页的行数（*）
+                showExport: true,
                 showColumns: true,                  //是否显示所有的列
                 showRefresh: true,                  //是否显示刷新按钮
                 showToggle: true,                   //是否显示详细视图和列表视图的切换按钮
@@ -413,7 +414,12 @@
 
     $(function () {
         // fix bug bootstrap-table 1.12.1 showToggle
-        if ($.fn.bootstrapTable) $.fn.bootstrapTable.Constructor.DEFAULTS.icons.toggle = $.fn.bootstrapTable.Constructor.DEFAULTS.icons.toggleOff;
+        if ($.fn.bootstrapTable) {
+            $.extend($.fn.bootstrapTable.defaults.icons, {
+                toggle: 'fa-toggle-off',
+                export: 'fa-download'
+            });
+        }
 
         if (window.NProgress) {
             $(document).ajaxStart(function () {

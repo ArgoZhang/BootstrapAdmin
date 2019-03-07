@@ -117,7 +117,11 @@
                         }
                     }
                 }
-            ]
+            ],
+            exportOptions: {
+                fileName: "用户数据",
+                ignoreColumn: [0, 1]
+            }
         }
     });
 });

@@ -15,6 +15,9 @@
             { title: "浏览器", field: "Browser", sortable: true },
             { title: "操作系统", field: "OS", sortable: true },
             { title: "Url", field: "RequestUrl", sortable: true }
-        ]
+        ],
+        exportOptions: {
+            fileName: "操作日志数据"
+        }
     });
 });

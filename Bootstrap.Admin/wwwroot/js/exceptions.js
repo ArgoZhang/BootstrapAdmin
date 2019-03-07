@@ -18,7 +18,10 @@
             { title: "异常类型", field: "ExceptionType", sortable: false },
             { title: "异常描述", field: "Message", sortable: false },
             { title: "记录时间", field: "LogTime", sortable: true }
-        ]
+        ],
+        exportOptions: {
+            fileName: "程序异常数据"
+        }
     });
 
     $('#btn_view').on('click', function (row) {

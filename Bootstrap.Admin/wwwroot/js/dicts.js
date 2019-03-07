@@ -18,7 +18,11 @@
                 { title: "字典名称", field: "Name", sortable: true },
                 { title: "字典代码", field: "Code", sortable: true },
                 { title: "字典分类", field: "Define", sortable: true, formatter: function (value) { return value === 0 ? "系统使用" : "自定义"; } }
-            ]
+            ],
+            exportOptions: {
+                fileName: "数据字典",
+                ignoreColumn: [0, 1]
+            }
         }
     });
 

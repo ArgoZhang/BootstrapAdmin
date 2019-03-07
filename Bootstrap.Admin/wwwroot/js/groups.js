@@ -69,7 +69,11 @@
             columns: [
                 { title: "部门名称", field: "GroupName", sortable: true },
                 { title: "部门描述", field: "Description", sortable: false }
-            ]
+            ],
+            exportOptions: {
+                fileName: "部门数据",
+                ignoreColumn: [0, 1]
+            }
         }
     });
 });
