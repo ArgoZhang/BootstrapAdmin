@@ -284,6 +284,7 @@
                 pageSize: 20,                       //每页的记录行数（*）
                 pageList: [20, 40, 80, 120],        //可供选择的每页的行数（*）
                 showExport: true,
+                exportTypes: ['csv', 'txt', 'excel'],
                 showColumns: true,                  //是否显示所有的列
                 showRefresh: true,                  //是否显示刷新按钮
                 showToggle: true,                   //是否显示详细视图和列表视图的切换按钮
@@ -301,6 +302,7 @@
             }, options);
             settings.url = $.formatUrl(settings.url);
             this.bootstrapTable(settings);
+            $('.bootstrap-table .fixed-table-toolbar .columns .export .dropdown-menu').addClass("dropdown-menu-right");
             $(settings.toolbar).removeClass('d-none').find('.toolbar').on('click', 'a', function (e) {
                 e.preventDefault();
                 $('#' + $(this).attr('id').replace('tb_', 'btn_')).trigger("click");
