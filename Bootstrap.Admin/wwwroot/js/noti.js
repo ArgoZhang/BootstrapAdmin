@@ -22,7 +22,7 @@
         var id = $this.attr('data-id');
         var result = $this.attr('data-result');
         $.bc({
-            id: id, url: apiUrl, method: "put", data: { Id: id, UserStatus: result }, title: result === "ApproveUser" ? "授权用户" : "拒绝用户",
+            url: apiUrl, method: "put", data: { Id: id, UserStatus: result }, title: result === "ApproveUser" ? "授权用户" : "拒绝用户",
             callback: function (result) {
                 if (!result) return;
                 $table.bootstrapTable('refresh');
