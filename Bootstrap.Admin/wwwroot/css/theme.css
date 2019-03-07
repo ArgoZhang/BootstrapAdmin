@@ -411,6 +411,18 @@ input.pending {
         margin-bottom: 6px;
     }
 
+    .bootstrap-table .export .dropdown-menu a {
+        min-width: 110px;
+    }
+
+    .bootstrap-table .export .dropdown-menu {
+        padding-bottom: 8px;
+    }
+
+        .bootstrap-table .export .dropdown-menu li:hover {
+            background-color: #f8f9fa;
+        }
+
 .card-body .bootstrap-table {
     margin-top: -10px;
 }
