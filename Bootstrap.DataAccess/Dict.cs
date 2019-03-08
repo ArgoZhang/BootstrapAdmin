@@ -1,5 +1,6 @@
 using Bootstrap.Security;
 using Bootstrap.Security.DataAccess;
+using Longbow;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -89,7 +90,7 @@ namespace Bootstrap.DataAccess
         /// 获取头像路径
         /// </summary>
         /// <returns></returns>
-        public virtual string RetrieveIconFolderPath() => (DictHelper.RetrieveDicts().FirstOrDefault(d => d.Name == "头像路径" && d.Category == "头像地址" && d.Define == 0) ?? new BootstrapDict() { Code = "~/images/uploader/" }).Code;
+        public virtual string RetrieveIconFolderPath() => (DictHelper.RetrieveDicts().FirstOrDefault(d => d.Name == "头像路径" && d.Category == "头像地址" && d.Define == 0) ?? new BootstrapDict { Code = "~/images/uploader/" }).Code;
 
         /// <summary>
         /// 获得默认的前台首页地址，默认为~/Home/Index
@@ -126,5 +127,29 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <returns></returns>
         public virtual IEnumerable<BootstrapDict> RetrieveDicts() => DbHelper.RetrieveDicts();
+
+        /// <summary>
+        /// 程序异常时长 默认1月
+        /// </summary>
+        /// <returns></returns>
+        public int RetrieveExceptionsLogPeriod() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().Where(d => d.Category == "系统设置" && d.Name == "程序异常保留时长" && d.Define == 0).FirstOrDefault()?.Code, 1);
+
+        /// <summary>
+        /// 操作日志时长 默认12月
+        /// </summary>
+        /// <returns></returns>
+        public int RetrieveLogsPeriod() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().Where(d => d.Category == "系统设置" && d.Name == "操作日志保留时长" && d.Define == 0).FirstOrDefault()?.Code, 12);
+
+        /// <summary>
+        /// 登录日志时长 默认12月
+        /// </summary>
+        /// <returns></returns>
+        public int RetrieveLoginLogsPeriod() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().Where(d => d.Category == "系统设置" && d.Name == "登录日志保留时长" && d.Define == 0).FirstOrDefault()?.Code, 12);
+
+        /// <summary>
+        /// Cookie保存时长 默认7天
+        /// </summary>
+        /// <returns></returns>
+        public int RetrieveCookieExpiresPeriod() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().Where(d => d.Category == "系统设置" && d.Name == "Cookie保留时长" && d.Define == 0).FirstOrDefault()?.Code, 7);
     }
 }

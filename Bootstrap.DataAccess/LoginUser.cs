@@ -1,6 +1,4 @@
-﻿using Longbow;
-using Longbow.Configuration;
-using PetaPoco;
+﻿using PetaPoco;
 using System;
 using System.Collections.Generic;
 
@@ -67,12 +65,7 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 
         /// </summary>
-        protected const string KeepLoginLogsPeriodKey = "KeepLoginLogsPeriod";
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <returns></returns>
-        public virtual IEnumerable<LoginUser> Retrieves() => DbManager.Create().Fetch<LoginUser>("Where LoginTime > @0 Order by LoginTime desc", DateTime.Today.AddDays(0 - LgbConvert.ReadValue(ConfigurationManager.AppSettings[KeepLoginLogsPeriodKey], 7)));
+        public virtual IEnumerable<LoginUser> Retrieves() => DbManager.Create().Fetch<LoginUser>("Where LoginTime > @0 Order by LoginTime desc", DateTime.Today.AddMonths(0 - DictHelper.RetrieveLoginLogsPeriod()));
     }
 }

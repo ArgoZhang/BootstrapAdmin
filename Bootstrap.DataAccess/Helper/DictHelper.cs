@@ -115,5 +115,29 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <returns></returns>
         public static IEnumerable<KeyValuePair<string, string>> RetrieveApps() => DbContextManager.Create<Dict>().RetrieveApps();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static int RetrieveExceptionsLogPeriod() => DbContextManager.Create<Dict>().RetrieveExceptionsLogPeriod();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static int RetrieveLogsPeriod() => DbContextManager.Create<Dict>().RetrieveLogsPeriod();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static int RetrieveLoginLogsPeriod() => DbContextManager.Create<Dict>().RetrieveLoginLogsPeriod();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static int RetrieveCookieExpiresPeriod() => DbContextManager.Create<Dict>().RetrieveCookieExpiresPeriod();
     }
 }

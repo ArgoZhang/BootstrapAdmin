@@ -278,5 +278,33 @@
     "Name": "2",
     "Code": "http://localhost:49185/",
     "Define": NumberInt(0)
+  },
+  {
+    "_id": ObjectId("5bd6c73d5fa31256f77e4a40"),
+    "Category": "系统设置",
+    "Name": "程序异常保留时长",
+    "Code": "1",
+    "Define": NumberInt(0)
+  },
+  {
+    "_id": ObjectId("5bd6c73d5fa31256f77e4a41"),
+    "Category": "系统设置",
+    "Name": "操作日志保留时长",
+    "Code": "12",
+    "Define": NumberInt(0)
+  },
+  {
+    "_id": ObjectId("5bd6c73d5fa31256f77e4a42"),
+    "Category": "系统设置",
+    "Name": "登录日志保留时长",
+    "Code": "12",
+    "Define": NumberInt(0)
+  },
+  {
+    "_id": ObjectId("5bd6c73d5fa31256f77e4a43"),
+    "Category": "系统设置",
+    "Name": "Cookie保留时长",
+    "Code": "7",
+    "Define": NumberInt(0)
   }
 ]

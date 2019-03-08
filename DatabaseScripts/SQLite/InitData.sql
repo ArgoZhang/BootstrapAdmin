@@ -26,6 +26,14 @@ INSERT INTO [Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (NULL, '
 INSERT INTO [Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (NULL, '当前样式', '使用样式', 'blue.css', 0);
 INSERT INTO [Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (NULL, '网站设置', '前台首页', '~/Home/Index', 0);
 
+-- 时长单位 月
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('系统设置', '程序异常保留时长', '1', 0);
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('系统设置', '操作日志保留时长', '12', 0);
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('系统设置', '登录日志保留时长', '12', 0);
+
+-- 时长单位 天
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('系统设置', 'Cookie保留时长', '7', 0);
+
 DELETE FROM Navigations;
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, '后台管理', 10, 'fa fa-gear', '~/Admin/Index', '0');
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, '个人中心', 20, 'fa fa-suitcase', '~/Admin/Profiles', '0');

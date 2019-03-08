@@ -96,5 +96,33 @@ namespace Bootstrap.DataAccess
             var dict = new Dict();
             Assert.NotEmpty(dict.RetrieveDicts());
         }
+
+        [Fact]
+        public void RetrieveCookieExpiresPeriod_Ok()
+        {
+            var dict = new Dict();
+            Assert.Equal(7, dict.RetrieveCookieExpiresPeriod());
+        }
+
+        [Fact]
+        public void RetrieveExceptionsLogPeriod_Ok()
+        {
+            var dict = new Dict();
+            Assert.Equal(1, dict.RetrieveExceptionsLogPeriod());
+        }
+
+        [Fact]
+        public void RetrieveLoginLogsPeriod_Ok()
+        {
+            var dict = new Dict();
+            Assert.Equal(12, dict.RetrieveLoginLogsPeriod());
+        }
+
+        [Fact]
+        public void RetrieveLogsPeriod_Ok()
+        {
+            var dict = new Dict();
+            Assert.Equal(12, dict.RetrieveLogsPeriod());
+        }
     }
 }

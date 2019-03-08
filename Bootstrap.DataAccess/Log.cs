@@ -1,6 +1,4 @@
-﻿using Longbow;
-using Longbow.Configuration;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace Bootstrap.DataAccess
@@ -58,20 +56,18 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 查询所有日志信息
         /// </summary>
-        /// <param name="tId"></param>
         /// <returns></returns>
         public virtual IEnumerable<Log> Retrieves() => DbManager.Create().Fetch<Log>("select * from Logs where LogTime > @0 order by LogTime desc", DateTime.Now.AddDays(-7));
 
         /// <summary>
         /// 删除日志信息
         /// </summary>
-        /// <param name="value"></param>
         /// <returns></returns>
         private static void DeleteLogAsync()
         {
             System.Threading.Tasks.Task.Run(() =>
             {
-                var dtm = DateTime.Now.AddMonths(0 - LgbConvert.ReadValue(ConfigurationManager.AppSettings["KeepLogsPeriod"], 1));
+                var dtm = DateTime.Now.AddMonths(0 - DictHelper.RetrieveLogsPeriod());
                 DbManager.Create().Execute("delete from Logs where LogTime < @0", dtm);
             });
         }

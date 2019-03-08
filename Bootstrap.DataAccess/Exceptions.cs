@@ -65,7 +65,7 @@ namespace Bootstrap.DataAccess
 
         private static void ClearExceptions() => System.Threading.Tasks.Task.Run(() =>
         {
-            DbManager.Create().Execute("delete from Exceptions where LogTime < @0", DateTime.Now.AddMonths(0 - LgbConvert.ReadValue(ConfigurationManager.AppSettings["KeepExceptionsPeriod"], 1)));
+            DbManager.Create().Execute("delete from Exceptions where LogTime < @0", DateTime.Now.AddMonths(0 - DictHelper.RetrieveExceptionsLogPeriod()));
         });
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Bootstrap.DataAccess
             if (ex == null) return true;
 
             var errorPage = additionalInfo?["ErrorPage"] ?? (ex.GetType().Name.Length > 50 ? ex.GetType().Name.Substring(0, 50) : ex.GetType().Name);
-            DbManager.Create().Insert(new Exceptions()
+            DbManager.Create().Insert(new Exceptions
             {
                 AppDomainName = AppDomain.CurrentDomain.FriendlyName,
                 ErrorPage = errorPage,
@@ -106,7 +106,6 @@ namespace Bootstrap.DataAccess
         /// <param name="po"></param>
         /// <param name="startTime"></param>
         /// <param name="endTime"></param>
-        /// <param name="sort"></param>
         /// <returns></returns>
         public virtual Page<Exceptions> RetrievePages(PaginationOption po, DateTime? startTime, DateTime? endTime)
         {
