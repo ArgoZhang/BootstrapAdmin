@@ -15,6 +15,7 @@
     <PackageReference Include="Longbow.Cache" Version="2.2.3" />
     <PackageReference Include="Longbow.Data" Version="2.2.6" />
     <PackageReference Include="Longbow.Web" Version="2.2.5" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="2.2.2" />
   </ItemGroup>
 
 </Project>
