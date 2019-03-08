@@ -1,4 +1,5 @@
-﻿using Longbow.Configuration;
+﻿using Bootstrap.DataAccess;
+using Longbow.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Concurrent;
@@ -58,7 +59,7 @@ namespace Bootstrap.Admin
         /// <returns></returns>
         public string RetrieveLocaleByIp(string ip = null)
         {
-            if (ip.IsNullOrEmpty() || _local.Any(p => p == ip)) return "本地连接";
+            if (DictHelper.RetrieveLocaleIP() == 0 || ip.IsNullOrEmpty() || _local.Any(p => p == ip)) return "本地连接";
 
             var url = ConfigurationManager.AppSettings["IPSvrUrl"];
             var task = _client.GetAsJsonAsync<IPLocator>($"{url}{ip}");

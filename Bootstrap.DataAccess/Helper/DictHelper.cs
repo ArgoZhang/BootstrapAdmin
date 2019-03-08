@@ -139,5 +139,11 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <returns></returns>
         public static int RetrieveCookieExpiresPeriod() => DbContextManager.Create<Dict>().RetrieveCookieExpiresPeriod();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static int RetrieveLocaleIP() => DbContextManager.Create<Dict>().RetrieveLocaleIP();
     }
 }

@@ -39,6 +39,8 @@ INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'系统设�
 -- 时长单位 天
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'系统设置', N'Cookie保留时长', '7', 0)
 
+INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'系统设置', N'获取IP地点', '0', 0)
+
 DELETE FROM Navigations
 SET IDENTITY_INSERT [dbo].[Navigations] ON 
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (1, 0, N'后台管理', 10, N'fa fa-gear', N'~/Admin/Index', N'0')

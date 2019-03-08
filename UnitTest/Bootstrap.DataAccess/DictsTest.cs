@@ -124,5 +124,12 @@ namespace Bootstrap.DataAccess
             var dict = new Dict();
             Assert.Equal(12, dict.RetrieveLogsPeriod());
         }
+
+        [Fact]
+        public void RetrieveLocaleIP_Ok()
+        {
+            var dict = new Dict();
+            Assert.Equal(0, dict.RetrieveLocaleIP());
+        }
     }
 }

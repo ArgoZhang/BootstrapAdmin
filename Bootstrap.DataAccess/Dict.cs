@@ -151,5 +151,11 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <returns></returns>
         public int RetrieveCookieExpiresPeriod() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().Where(d => d.Category == "系统设置" && d.Name == "Cookie保留时长" && d.Define == 0).FirstOrDefault()?.Code, 7);
+
+        /// <summary>
+        /// 获得 项目是否获取登录地点 默认为false
+        /// </summary>
+        /// <returns></returns>
+        public int RetrieveLocaleIP() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().Where(d => d.Category == "系统设置" && d.Name == "获取IP地点" && d.Define == 0).FirstOrDefault()?.Code, 0);
     }
 }

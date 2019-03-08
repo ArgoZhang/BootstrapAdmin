@@ -36,6 +36,8 @@ INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统设置', '登录
 -- 时长单位 天
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统设置', 'Cookie保留时长', '7', 0);
 
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统设置', '获取IP地点', '0', 0);
+
 DELETE FROM Navigations;
 ALTER TABLE Navigations MODIFY COLUMN ID INT NOT NULL;
 INSERT INTO Navigations (ID, ParentId, Name, `Order`, Icon, Url, Category) VALUES (1, 0, '后台管理', 10, 'fa fa-gear', '~/Admin/Index', '0');

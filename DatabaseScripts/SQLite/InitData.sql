@@ -34,6 +34,8 @@ INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('系统设置
 -- 时长单位 天
 INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('系统设置', 'Cookie保留时长', '7', 0);
 
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('系统设置', '获取IP地点', '0', 0);
+
 DELETE FROM Navigations;
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, '后台管理', 10, 'fa fa-gear', '~/Admin/Index', '0');
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, '个人中心', 20, 'fa fa-suitcase', '~/Admin/Profiles', '0');
