@@ -60,7 +60,7 @@ namespace Bootstrap.Admin.Query
                     data = Order == "asc" ? data.OrderBy(t => t.ParentName) : data.OrderByDescending(t => t.ParentName);
                     break;
                 case "Order":
-                    data = Order == "asc" ? data.OrderBy(t => t.Order) : data.OrderByDescending(t => t.Order);
+                    data = Order == "asc" ? data.OrderBy(t => t.Application).ThenBy(t => t.ParentId).ThenBy(t => t.Order) : data.OrderBy(t => t.Application).ThenBy(t => t.ParentId).ThenByDescending(t => t.Order);
                     break;
                 case "CategoryName":
                     data = Order == "asc" ? data.OrderBy(t => t.CategoryName) : data.OrderByDescending(t => t.CategoryName);
@@ -73,8 +73,6 @@ namespace Bootstrap.Admin.Query
                     break;
                 case "Application":
                     data = Order == "asc" ? data.OrderBy(t => t.Application) : data.OrderByDescending(t => t.Application);
-                    break;
-                default:
                     break;
             }
             ret.rows = data.Skip(Offset).Take(Limit).Select(p => new
