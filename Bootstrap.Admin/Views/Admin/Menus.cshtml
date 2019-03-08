@@ -56,6 +56,18 @@
                     </div>
                 </div>
             </div>
+            <div class="form-group form-group-dropdown col-sm-6 col-lg-auto">
+                <label class="control-label" for="app">所属应用</label>
+                <div class="dropdown">
+                    <button id="sel_app" class="btn btn-info dropdown-select dropdown-toggle" data-toggle="dropdown" data-default-val="0">未设置</button>
+                    <div class="dropdown-menu">
+                        @foreach (var kv in Model.Applications)
+                        {
+                            <a href="#" data-val="@kv.Key">@kv.Value</a>
+                        }
+                    </div>
+                </div>
+            </div>
             <div class="form-group col-lg-auto flex-lg-fill justify-content-lg-end">
                 <button type="button" id="btn_query" class="btn btn-primary btn-fill"><i class="fa fa-search" aria-hidden="true"></i><span>查询</span></button>
             </div>
