@@ -1,5 +1,6 @@
 using Bootstrap.DataAccess;
 using Longbow.Web.Mvc;
+using System;
 using System.Linq;
 
 namespace Bootstrap.Admin.Query
@@ -13,18 +14,27 @@ namespace Bootstrap.Admin.Query
         /// 
         /// </summary>
         public string Name { get; set; }
+
         /// <summary>
         /// 
         /// </summary>
         public string ParentName { get; set; }
+
         /// <summary>
         /// 
         /// </summary>
         public string Category { get; set; }
+
         /// <summary>
         /// 
         /// </summary>
         public string IsResource { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string AppCode { get; set; }
+
         /// <summary>
         /// 
         /// </summary>
@@ -48,6 +58,10 @@ namespace Bootstrap.Admin.Query
             if (!string.IsNullOrEmpty(IsResource))
             {
                 data = data.Where(t => t.IsResource.ToString() == IsResource);
+            }
+            if (!string.IsNullOrEmpty(AppCode))
+            {
+                data = data.Where(t => t.Application.Equals(AppCode, StringComparison.OrdinalIgnoreCase));
             }
             var ret = new QueryData<object>();
             ret.total = data.Count();

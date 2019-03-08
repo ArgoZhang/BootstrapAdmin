@@ -73,7 +73,7 @@
         },
         smartTable: {
             sortName: 'Order',
-            queryParams: function (params) { return $.extend(params, { parentName: $('#txt_parent_menus_name').val(), name: $("#txt_menus_name").val(), category: $('#sel_menus_category').val(), isresource: $('#sel_menus_res').val() }); },           //传递参数（*）
+            queryParams: function (params) { return $.extend(params, { parentName: $('#txt_parent_menus_name').val(), name: $("#txt_menus_name").val(), category: $('#sel_menus_category').val(), isresource: $('#sel_menus_res').val(), appCode: $('#sel_app').val() }); },           //传递参数（*）
             exportOptions: {
                 fileName: "菜单数据",
                 ignoreColumn: [0, 1]
