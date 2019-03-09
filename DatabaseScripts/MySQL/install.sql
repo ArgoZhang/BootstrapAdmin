@@ -86,7 +86,8 @@ CREATE TABLE Logs(
 	Browser			VARCHAR (50) NULL,
 	OS				VARCHAR (50) NULL,
 	City			VARCHAR (50) NULL,
-	RequestUrl		VARCHAR (500) NOT NULL
+	RequestUrl		VARCHAR (500) NOT NULL,
+	RequestData		VARCHAR (500) NULL
 );
 
 CREATE TABLE `Groups`(
