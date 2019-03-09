@@ -1,5 +1,6 @@
 ﻿using Bootstrap.Admin.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
@@ -87,8 +88,9 @@ namespace Bootstrap.Admin.Controllers
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="host"></param>
         /// <returns></returns>
-        public ActionResult Profiles() => View(new ProfilesModel(this));
+        public ActionResult Profiles([FromServices]IHostingEnvironment host) => View(new ProfilesModel(this, host));
 
         /// <summary>
         /// 

@@ -36,7 +36,7 @@ namespace Bootstrap.Admin.Controllers.Api
                 var webSiteUrl = DictHelper.RetrieveIconFolderPath();
                 fileName = string.Format("{0}{1}", userName, Path.GetExtension(uploadFile.FileName));
                 var fileUrl = string.Format("{0}{1}", webSiteUrl, fileName);
-                var filePath = Path.Combine(env.WebRootPath, webSiteUrl.Replace("~", string.Empty).Replace("/", "\\").TrimStart('\\') + fileName);
+                var filePath = Path.Combine(env.WebRootPath, webSiteUrl.Replace("~", string.Empty).Replace('/', Path.DirectorySeparatorChar).TrimStart(Path.DirectorySeparatorChar) + fileName);
                 var fileFolder = Path.GetDirectoryName(filePath);
                 fileSize = uploadFile.Length;
                 if (!Directory.Exists(fileFolder)) Directory.CreateDirectory(fileFolder);
@@ -53,7 +53,7 @@ namespace Bootstrap.Admin.Controllers.Api
                 fileName = files["key"];
                 if (!fileName.Equals("default.jpg"))
                 {
-                    fileName = Path.Combine(env.WebRootPath, $"images\\uploader\\{fileName}");
+                    fileName = Path.Combine(env.WebRootPath, $"images{Path.DirectorySeparatorChar}uploader{Path.DirectorySeparatorChar}{fileName}");
                     try
                     {
                         if (System.IO.File.Exists(fileName)) System.IO.File.Delete(fileName);
