@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
+using System.Net;
 
 namespace Microsoft.AspNetCore.Builder
 {
@@ -43,7 +44,7 @@ namespace Microsoft.AspNetCore.Builder
                      var agent = new UserAgent(context.Request.Headers["User-Agent"]);
                      var v = new OnlineUser();
                      v.ConnectionId = key;
-                     v.Ip = context.Connection.RemoteIpAddress?.ToString();
+                     v.Ip = (context.Connection.RemoteIpAddress ?? IPAddress.IPv6Loopback).ToString();
                      v.Location = onlineUserSvr.RetrieveLocaleByIp(v.Ip);
                      v.Browser = $"{agent.Browser.Name} {agent.Browser.Version}";
                      v.OS = $"{agent.OS.Name} {agent.OS.Version}";

@@ -41,7 +41,7 @@ namespace Bootstrap.Admin.Controllers
             var r = await Client.GetAsync("AccessDenied");
             Assert.True(r.IsSuccessStatusCode);
             var content = await r.Content.ReadAsStringAsync();
-            Assert.Contains("您无权访问本页面请联系网站管理员授权后再查看", content);
+            Assert.Contains("服务器拒绝处理您的请求", content);
         }
     }
 }

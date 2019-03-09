@@ -39,7 +39,6 @@ namespace Bootstrap.DataAccess
                 Result = "登录失败"
             };
             config(loginUser);
-            if (string.IsNullOrEmpty(loginUser.Ip)) loginUser.Ip = System.Net.IPAddress.IPv6Loopback.ToString();
             var ret = DbContextManager.Create<User>().Authenticate(userName, password);
             if (ret) loginUser.Result = "登录成功";
             LoginHelper.Log(loginUser);
