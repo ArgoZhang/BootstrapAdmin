@@ -33,6 +33,33 @@
             },
             '#btnReset': function () {
                 this.log({ crud: '重置密码' });
+            },
+            '#btnSaveDisplayName': function () {
+                this.log({ crud: '设置显示名称' });
+            },
+            '#btnSavePassword': function () {
+                this.log({ crud: '修改密码' });
+            },
+            '#btnSaveApp': function () {
+                this.log({ crud: '设置默认应用' });
+            },
+            '#btnSaveCss': function () {
+                this.log({ crud: '设置个人样式' });
+            },
+            'a.btn.fileinput-upload-button': function () {
+                this.log({ crud: '设置头像' });
+            },
+            'button.kv-file-remove': function () {
+                this.log({ crud: '删除头像' });
+            },
+            'button[data-method="title"]': function () {
+                this.log({ crud: '保存网站标题'});
+            },
+            'button[data-method="footer"]': function () {
+                this.log({ crud: '保存网站页脚' });
+            },
+            'button[data-method="css"]': function () {
+                this.log({ crud: '设置网站样式' });
             }
         }
     };
@@ -40,6 +67,8 @@
     logPlugin.prototype = {
         constructor: logPlugin,
         log: function (data) {
+            var bcData = $.logData.shift();
+            if (bcData !== undefined) $.extend(data, { requestData: JSON.stringify(bcData) });
             $.extend(data, { requestUrl: window.location.pathname });
             $.post({
                 url: $.formatUrl(this.options.url),
@@ -51,6 +80,7 @@
     };
 
     $.extend({ logPlugin: function (options) { return new logPlugin(options); } });
+    $.logData = [];
 })(jQuery);
 
 $(function () {
