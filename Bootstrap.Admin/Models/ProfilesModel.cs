@@ -22,13 +22,13 @@ namespace Bootstrap.Admin.Models
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="host"></param>
         /// <param name="controller"></param>
-        public ProfilesModel(ControllerBase controller) : base(controller)
+        public ProfilesModel(ControllerBase controller, IHostingEnvironment host) : base(controller)
         {
-            var host = controller.HttpContext.RequestServices.GetService(typeof(IHostingEnvironment)) as IHostingEnvironment;
             if (host != null)
             {
-                var fileName = Path.Combine(host.WebRootPath, Icon.TrimStart('~', '/').Replace('/', '\\'));
+                var fileName = Path.Combine(host.WebRootPath, Icon.TrimStart('~', '/').Replace('/', Path.DirectorySeparatorChar));
                 if (File.Exists(fileName))
                 {
                     Size = new FileInfo(fileName).Length;
