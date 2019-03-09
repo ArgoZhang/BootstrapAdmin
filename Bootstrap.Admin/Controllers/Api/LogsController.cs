@@ -35,12 +35,11 @@ namespace Bootstrap.Admin.Controllers.Api
         public bool Post([FromServices]IOnlineUsers onlineUserSvr, [FromBody]Log value)
         {
             var agent = new UserAgent(Request.Headers["User-Agent"]);
-            value.Ip = HttpContext.Connection.RemoteIpAddress?.ToString();
+            value.Ip = (HttpContext.Connection.RemoteIpAddress ?? IPAddress.IPv6Loopback).ToString();
             value.Browser = $"{agent.Browser.Name} {agent.Browser.Version}";
             value.OS = $"{agent.OS.Name} {agent.OS.Version}";
             value.City = onlineUserSvr.RetrieveLocaleByIp(value.Ip);
             value.UserName = User.Identity.Name;
-            if (string.IsNullOrEmpty(value.Ip)) value.Ip = IPAddress.IPv6Loopback.ToString();
             return LogHelper.Save(value);
         }
     }

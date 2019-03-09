@@ -14,7 +14,7 @@ namespace Bootstrap.DataAccess
                 Browser = "UnitTest",
                 City = "本地连接",
                 OS = "UnitTest",
-                Ip = "::",
+                Ip = "::1",
                 CRUD = "UnitTest",
                 RequestUrl = "~/Home/Index"
             };
@@ -30,7 +30,7 @@ namespace Bootstrap.DataAccess
                 Browser = "UnitTest",
                 City = "本地连接",
                 OS = "UnitTest",
-                Ip = "::",
+                Ip = "::1",
                 CRUD = "UnitTest",
                 RequestUrl = "~/Home/Index"
             };

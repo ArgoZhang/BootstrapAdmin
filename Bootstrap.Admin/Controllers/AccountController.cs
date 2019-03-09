@@ -1,7 +1,5 @@
 ﻿using Bootstrap.Admin.Models;
 using Bootstrap.DataAccess;
-using Longbow;
-using Longbow.Configuration;
 using Longbow.Web;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -10,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -63,7 +62,7 @@ namespace Bootstrap.Admin.Controllers
         internal static void CreateLoginUser(IOnlineUsers onlineUserSvr, HttpContext context, LoginUser loginUser)
         {
             var agent = new UserAgent(context.Request.Headers["User-Agent"]);
-            loginUser.Ip = context.Connection.RemoteIpAddress?.ToString();
+            loginUser.Ip = (context.Connection.RemoteIpAddress ?? IPAddress.IPv6Loopback).ToString();
             loginUser.City = onlineUserSvr.RetrieveLocaleByIp(loginUser.Ip);
             loginUser.Browser = $"{agent.Browser.Name} {agent.Browser.Version}";
             loginUser.OS = $"{agent.OS.Name} {agent.OS.Version}";
