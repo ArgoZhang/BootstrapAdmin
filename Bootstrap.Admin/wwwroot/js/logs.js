@@ -1,5 +1,7 @@
 ﻿$(function () {
     var url = 'api/Logs';
+    var $data = $('#requestData');
+    var $dialog = $('#dialogRequestData');
 
     $('.card-body table').smartTable({
         url: url,
@@ -14,10 +16,22 @@
             { title: "操作地点", field: "City", sortable: true },
             { title: "浏览器", field: "Browser", sortable: true },
             { title: "操作系统", field: "OS", sortable: true },
-            { title: "Url", field: "RequestUrl", sortable: true }
+            { title: "操作页面", field: "RequestUrl", sortable: true },
+            {
+                title: "请求数据", field: "RequestData", sortable: true, formatter: function (value, row, index) {
+                    return '<button class="detail btn btn-info"><i class="fa fa-info"></i><span>明细</span></button>';
+                },
+                events: {
+                    'click .detail': function (e, value, row, index) {
+                        $data.html($.syntaxHighlight(row.RequestData));
+                        $dialog.modal('show');
+                    }
+                }
+            }
         ],
         exportOptions: {
-            fileName: "操作日志数据"
+            fileName: "操作日志数据",
+            ignoreColumn: [8]
         }
     });
 });

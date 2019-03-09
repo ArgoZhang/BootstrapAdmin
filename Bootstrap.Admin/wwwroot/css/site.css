@@ -569,3 +569,31 @@ li[data-category="1"] .dd3-content .menuType {
 .bootstrap-table .badge {
     padding: 4px 6px;
 }
+
+pre {
+    padding: 5px;
+    margin: 5px;
+    width: 100%;
+    border-radius: 4px;
+    border: solid 1px #ccc;
+}
+
+.string {
+    color: green;
+}
+
+.number {
+    color: darkorange;
+}
+
+.boolean {
+    color: blue;
+}
+
+.null {
+    color: magenta;
+}
+
+.key {
+    color: red;
+}

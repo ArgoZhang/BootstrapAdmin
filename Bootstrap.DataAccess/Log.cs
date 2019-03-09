@@ -54,6 +54,11 @@ namespace Bootstrap.DataAccess
         public string RequestUrl { get; set; }
 
         /// <summary>
+        /// 获得/设置 请求数据
+        /// </summary>
+        public string RequestData { get; set; }
+
+        /// <summary>
         /// 查询所有日志信息
         /// </summary>
         /// <returns></returns>
