@@ -8,14 +8,15 @@
                 e.data.handler.call(that);
             });
         }
+        $('body').on('click', '.sweet-alert button.confirm', function(e) {
+            if($.logData.length > 0)
+                that.log({ crud: '删除' });
+        });
     };
 
     logPlugin.settings = {
         url: 'api/Logs',
         click: {
-            '#btn_delete': function () {
-                this.log({ crud: '删除' });
-            },
             '#btnSubmit': function () {
                 this.log({ crud: '保存' });
             },
