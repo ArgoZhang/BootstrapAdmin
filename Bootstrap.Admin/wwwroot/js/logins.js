@@ -24,7 +24,8 @@ $(function () {
             {
                 title: "登录结果", field: "Result", formatter: function (value, row, index) {
                     var css = value === "登录成功" ? "success" : "danger";
-                    return $.format('<span class="badge badge-{0}">{1}</span>', css, value);
+                    var icon = css === "success" ? "check" : "remove";
+                    return $.format('<span class="badge badge-{0}"><i class="fa fa-{2}"></i>{1}</span>', css, value, icon);
                 }
             }
         ]
