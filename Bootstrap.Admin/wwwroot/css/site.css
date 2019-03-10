@@ -219,7 +219,7 @@
     }
 
         .cache-item > :nth-child(5) span {
-            margin-left: 6px;
+            margin: 0 6px;
             width: 28px;
             text-align: right;
         }
@@ -229,10 +229,13 @@
         top: -8px;
     }
 
-    .cache-item .btn, td .btn:not(.btn-lg) {
-        margin-left: 5px;
+    .cache-item .btn:not(:first-child), td .btn:not(.btn-lg) {
         font-size: 0.75rem;
         padding: 1px 5px;
+    }
+
+    td .btn:not(:first-child) {
+        margin-left: 5px;
     }
 
 .card-img {
