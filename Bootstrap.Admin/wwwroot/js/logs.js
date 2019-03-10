@@ -13,12 +13,12 @@
             { title: "用户名称", field: "UserName", sortable: true },
             { title: "操作时间", field: "LogTime", sortable: true },
             { title: "登录主机", field: "Ip", sortable: true },
-            { title: "操作地点", field: "City", sortable: true },
-            { title: "浏览器", field: "Browser", sortable: true },
-            { title: "操作系统", field: "OS", sortable: true },
+            { title: "操作地点", field: "City" },
+            { title: "浏览器", field: "Browser" },
+            { title: "操作系统", field: "OS" },
             { title: "操作页面", field: "RequestUrl", sortable: true },
             {
-                title: "请求数据", field: "RequestData", sortable: true, formatter: function (value, row, index) {
+                title: "请求数据", field: "RequestData", formatter: function (value, row, index) {
                     return '<button class="detail btn btn-info"><i class="fa fa-info"></i><span>明细</span></button>';
                 },
                 events: {

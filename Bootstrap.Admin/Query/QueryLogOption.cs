@@ -31,7 +31,7 @@ namespace Bootstrap.Admin.Query
             var data = LogHelper.Retrieves();
             if (!string.IsNullOrEmpty(OperateType))
             {
-                data = data.Where(t => t.CRUD.ToString().Contains(OperateType));
+                data = data.Where(t => t.CRUD.Contains(OperateType));
             }
 
             if (OperateTimeStart > DateTime.MinValue)
@@ -56,13 +56,11 @@ namespace Bootstrap.Admin.Query
                 case "LogTime":
                     data = Order == "asc" ? data.OrderBy(t => t.LogTime) : data.OrderByDescending(t => t.LogTime);
                     break;
-                case "ClientIp":
+                case "Ip":
                     data = Order == "asc" ? data.OrderBy(t => t.Ip) : data.OrderByDescending(t => t.Ip);
                     break;
                 case "RequestUrl":
                     data = Order == "asc" ? data.OrderBy(t => t.RequestUrl) : data.OrderByDescending(t => t.RequestUrl);
-                    break;
-                default:
                     break;
             }
             ret.rows = data.Skip(Offset).Take(Limit);
