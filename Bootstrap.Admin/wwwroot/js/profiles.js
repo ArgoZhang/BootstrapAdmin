@@ -5,7 +5,7 @@
     var defFileName = $file.attr('data-file');
     $file.fileinput({
         uploadUrl: $.formatUrl(Profiles.url),
-        deleteUrl: $.formatUrl(Profiles.url),
+        deleteUrl: $.formatUrl(Profiles.del),
         browseOnZoneClick: true,
         theme: 'fa',
         language: 'zh',

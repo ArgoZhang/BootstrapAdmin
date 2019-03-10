@@ -230,7 +230,8 @@ $(function () {
 
     // Profiles
     Profiles = {
-        url: 'api/Profiles'
+        url: 'api/Profiles',
+        del: 'api/Profiles/Delete'
     };
 
     // Settings
