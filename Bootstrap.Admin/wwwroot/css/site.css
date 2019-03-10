@@ -570,6 +570,14 @@ li[data-category="1"] .dd3-content .menuType {
     padding: 4px 6px;
 }
 
+.bootstrap-table .btn span:last-child {
+    display: inline;
+}
+
+.bootstrap-table .fa-info {
+    width: 9px;
+}
+
 pre {
     padding: 5px;
     margin: 5px;

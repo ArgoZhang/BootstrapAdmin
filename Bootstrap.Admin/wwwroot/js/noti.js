@@ -13,7 +13,7 @@
             { title: "注册时间", field: "RegisterTime" },
             {
                 title: "操作", field: "Id", formatter: function (value, row, index, field) {
-                    return $.format('<button class="btn btn-success" data-toggle="tooltip" data-id="{0}" data-result="ApproveUser" title="同意授权"><i class="fa fa-check"></i></button> <button class="btn btn-danger" data-toggle="tooltip" data-id="{0}" data-result="RejectUser" title="拒绝授权"><i class="fa fa-remove"></i></button>', value);
+                    return $.format('<button class="btn btn-success" data-toggle="tooltip" data-id="{0}" data-result="ApproveUser" title="同意授权"><i class="fa fa-check"></i><span>同意</span></button><button class="btn btn-danger" data-toggle="tooltip" data-id="{0}" data-result="RejectUser" title="拒绝授权"><i class="fa fa-remove"></i><span>拒绝</span></button>', value);
                 }
             }
         ]
