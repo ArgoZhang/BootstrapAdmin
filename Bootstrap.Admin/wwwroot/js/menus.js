@@ -264,4 +264,29 @@
             }
         }
     });
+
+    // autocomplete
+    $.bc({
+        url: "api/Category/RetrieveMenus",
+        callback: function (result) {
+            $('#txt_menus_name').typeahead({
+                source: result,
+                showHintOnFocus: 'all',
+                fitToElement: true,
+                items: 'all'
+            });
+        }
+    });
+
+    $.bc({
+        url: "api/Category/RetrieveParentMenus",
+        callback: function (result) {
+            $('#txt_parent_menus_name').typeahead({
+                source: result,
+                showHintOnFocus: 'all',
+                fitToElement: true,
+                items: 'all'
+            });
+        }
+    });
 });

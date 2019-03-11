@@ -8,9 +8,23 @@ namespace Bootstrap.Admin.Api
         public CategoryTest(BAWebHost factory) : base(factory, "api/Category") { }
 
         [Fact]
-        public async void Get_Ok()
+        public async void DictCategorys_Ok()
         {
-            var cates = await Client.GetAsJsonAsync<IEnumerable<string>>();
+            var cates = await Client.GetAsJsonAsync<IEnumerable<string>>("RetrieveDictCategorys");
+            Assert.NotEmpty(cates);
+        }
+
+        [Fact]
+        public async void Menus_Ok()
+        {
+            var cates = await Client.GetAsJsonAsync<IEnumerable<string>>("RetrieveMenus");
+            Assert.NotEmpty(cates);
+        }
+
+        [Fact]
+        public async void ParentMenus_Ok()
+        {
+            var cates = await Client.GetAsJsonAsync<IEnumerable<string>>("RetrieveParentMenus");
             Assert.NotEmpty(cates);
         }
     }

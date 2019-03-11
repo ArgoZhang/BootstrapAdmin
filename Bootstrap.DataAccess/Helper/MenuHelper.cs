@@ -76,7 +76,8 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="appId"></param>
+        /// <param name="userName"></param>
         /// <param name="activeUrl"></param>
         /// <returns></returns>
         public static IEnumerable<BootstrapMenu> RetrieveAppMenus(string appId, string userName, string activeUrl)
@@ -89,10 +90,8 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 通过当前用户名获得后台菜单，层次化后集合
         /// </summary>
-        /// <param name="db"></param>
         /// <param name="userName">当前登陆的用户名</param>
         /// <param name="activeUrl">当前访问菜单</param>
-        /// <param name="connName">连接字符串名称，默认为ba</param>
         /// <returns></returns>
         public static IEnumerable<BootstrapMenu> RetrieveSystemMenus(string userName, string activeUrl = null)
         {
@@ -105,7 +104,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public static IEnumerable<object> RetrieveMenus(string userName)
+        public static IEnumerable<BootstrapMenu> RetrieveMenus(string userName)
         {
             var menus = RetrieveAllMenus(userName);
             return DbHelper.CascadeMenus(menus);
@@ -116,6 +115,6 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        private static IEnumerable<BootstrapMenu> RetrieveAllMenus(string userName) => CacheManager.GetOrAdd($"{RetrieveMenusAll}-{userName}", key => DbContextManager.Create<Menu>().RetrieveAllMenus(userName), RetrieveMenusAll);
+        public static IEnumerable<BootstrapMenu> RetrieveAllMenus(string userName) => CacheManager.GetOrAdd($"{RetrieveMenusAll}-{userName}", key => DbContextManager.Create<Menu>().RetrieveAllMenus(userName), RetrieveMenusAll);
     }
 }

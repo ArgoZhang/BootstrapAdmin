@@ -234,9 +234,9 @@
         padding: 1px 5px;
     }
 
-    td .btn:not(:first-child) {
-        margin-left: 5px;
-    }
+td .btn:not(:first-child) {
+    margin-left: 5px;
+}
 
 .card-img {
     max-width: 258px;
@@ -612,4 +612,10 @@ pre {
 
 .key {
     color: red;
+}
+
+.typeahead {
+    max-height: 300px;
+    overflow: auto;
+    padding: 6px 0;
 }

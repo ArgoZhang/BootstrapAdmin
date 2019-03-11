@@ -28,7 +28,7 @@
 
     // autocomplete
     $.bc({
-        url: "api/Category",
+        url: "api/Category/RetrieveDictCategorys",
         callback: function (result) {
             $('#txt_dict_cate').typeahead({
                 source: result,
