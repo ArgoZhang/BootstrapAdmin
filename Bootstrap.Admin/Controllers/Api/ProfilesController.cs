@@ -66,6 +66,9 @@ namespace Bootstrap.Admin.Controllers.Api
         /// </summary>
         public class DeleteFileCollection
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public string Key { get; set; }
         }
 
