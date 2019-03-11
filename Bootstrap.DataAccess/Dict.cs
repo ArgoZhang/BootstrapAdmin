@@ -56,7 +56,7 @@ namespace Bootstrap.DataAccess
         /// 获取字典分类名称
         /// </summary>
         /// <returns></returns>
-        public virtual IEnumerable<string> RetrieveCategories() => DictHelper.RetrieveDicts().Select(d => d.Category).Distinct();
+        public virtual IEnumerable<string> RetrieveCategories() => DictHelper.RetrieveDicts().OrderBy(d => d.Category).Select(d => d.Category).Distinct();
 
         /// <summary>
         /// 
