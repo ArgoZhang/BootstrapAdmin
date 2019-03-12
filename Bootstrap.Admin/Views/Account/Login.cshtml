@@ -14,6 +14,7 @@
         <link href="~/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
         <link href="~/lib/bootstrap-sweetalert/sweetalert.min.css" rel="stylesheet" />
     </environment>
+    <link href="~/lib/captcha/slidercaptcha.css" rel="stylesheet" />
     <link href="~/css/theme.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/css/login.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/css/login-responsive.css" rel="stylesheet" asp-append-version="true" />
@@ -35,6 +36,7 @@
         <script src="~/lib/validate/localization/messages_zh.min.js"></script>
         <script src="~/lib/bootstrap-sweetalert/sweetalert.min.js"></script>
     </environment>
+    <script src="~/lib/captcha/longbow.slidercaptcha.js"></script>
     <script src="~/lib/longbow/longbow.common.js"></script>
     <script src="~/lib/longbow/longbow.validate.js"></script>
     <script src="~/js/login.js" asp-append-version="true"></script>
@@ -72,6 +74,13 @@
             <div class="login-footer">
                 <a href="#" data-method="register">申请账号</a>
                 <a href="#" data-method="forgot">忘记密码</a>
+            </div>
+            <div class="slidercaptcha card">
+                <div class="card-header">
+                    <span>请完成安全验证</span>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="card-body"><div id="captcha"></div></div>
             </div>
         </div>
     </form>

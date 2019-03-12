@@ -51,4 +51,21 @@
             $rem.val('false');
         }
     });
+
+    var $captcha = $('.slidercaptcha');
+    $('.slidercaptcha .close').on('click', function() {
+        $captcha.removeClass('d-block');
+    });
+
+    $('button[type="submit"]').on('click', function(e){
+        if ($.browser.versions.mobile) return true;
+        $captcha.addClass('d-block');
+        return false;
+    });
+
+    $('#captcha').sliderCaptcha({
+        onSuccess: function () {
+            $('form').submit();
+        }
+    });
 });

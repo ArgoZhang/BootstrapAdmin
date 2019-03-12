@@ -19,6 +19,7 @@
     .login-wrap .rememberPwd {
         cursor: pointer;
         color: #333;
+        margin-left: 2px;
     }
 
         .login-wrap .rememberPwd i {
@@ -53,3 +54,30 @@
 .form-control {
     border-color: #1ca0e9;
 }
+
+.slidercaptcha {
+    display: none;
+    position: relative;
+    bottom: 254px;
+    background-color: #00adec;
+    width: 310px;
+    height: 280px;
+    border-radius: 4px;
+    left: -10px;
+    box-shadow: 0 0 10px #fff;
+}
+
+    .slidercaptcha canvas:first-child {
+        border-radius: 4px;
+        border: solid 1px #0076c9;
+    }
+
+    .slidercaptcha .close {
+        color: #fff;
+        margin-top: -2px;
+    }
+
+    .slidercaptcha.card .card-header {
+        background-image: none;
+        background-color: rgba(0, 0, 0, 0.03);
+    }
