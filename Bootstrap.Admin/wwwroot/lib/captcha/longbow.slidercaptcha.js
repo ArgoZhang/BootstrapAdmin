@@ -93,6 +93,7 @@
         this.$element.css({ 'position': 'relative', 'width': this.options.width + 'px', 'margin': '0 auto' });
 
         var L = this.options.sliderL + this.options.sliderR * 2 + 3; // 滑块实际边长
+        this.init();
     };
 
     SliderCaptcha.VERSION = '1.0';
@@ -115,10 +116,7 @@
             var options = typeof option === 'object' && option;
 
             if (!data && /init|reset/.test(option)) return;
-            if (!data) {
-                $this.data('lgb.SliderCaptcha', data = new SliderCaptcha(this, options));
-                data.init();
-            }
+            if (!data) $this.data('lgb.SliderCaptcha', data = new SliderCaptcha(this, options));
             if (typeof option === 'string') data[option]();
         });
     }
@@ -230,7 +228,7 @@
             var moveX = eventX - originX;
             var moveY = eventY - originY;
             if (moveX < 0 || moveX + 40 > that.options.width) return false;
-            that.slider.style.left = moveX + 'px';
+            that.slider.style.left = (moveX - 1) + 'px';
             var blockLeft = (that.options.width - 40 - 20) / (that.options.width - 40) * moveX;
             that.block.style.left = blockLeft + 'px';
 
