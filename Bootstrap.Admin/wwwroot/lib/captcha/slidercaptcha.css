@@ -1,5 +1,5 @@
 body {
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 .block {
@@ -126,6 +126,6 @@ body {
   transition: color .3s linear;
 }
 
-.refreshIcon:hover {
-  color: #6c757d;
-}
+  .refreshIcon:hover {
+    color: #6c757d;
+  }
