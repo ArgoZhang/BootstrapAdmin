@@ -335,6 +335,12 @@
                         return $.safeHtml(value);
                     }
                 }
+                else {
+                    var formatter = value.formatter;
+                    value.formatter = function(value, row, index, field) {
+                        return formatter.call(this, $.safeHtml(value), row, index, field);
+                    }
+                }
             });
             this.bootstrapTable(settings);
             $('.bootstrap-table .fixed-table-toolbar .columns .export .dropdown-menu').addClass("dropdown-menu-right");
