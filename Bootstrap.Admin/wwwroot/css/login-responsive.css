@@ -5,6 +5,7 @@
         border-radius: 5px;
         max-width: 320px;
         border: solid 1px #ddd;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.125);
     }
 }
 
