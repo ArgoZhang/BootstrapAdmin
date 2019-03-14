@@ -14,6 +14,7 @@
 
 .login-wrap {
     padding: 20px;
+    height: 270px;
 }
 
     .login-wrap .rememberPwd {
@@ -57,14 +58,13 @@
 
 .slidercaptcha {
     display: none;
-    position: relative;
-    bottom: 254px;
     background-color: #00adec;
-    width: 310px;
-    height: 280px;
     border-radius: 4px;
-    left: -10px;
     box-shadow: 0 0 10px #fff;
+    left: 0;
+    right: 0;
+    top: -232px;
+    height: 234px;
 }
 
     .slidercaptcha canvas:first-child {

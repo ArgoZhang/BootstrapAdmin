@@ -58,15 +58,17 @@
     });
 
     $('button[type="submit"]').on('click', function(e){
-        if ($.browser.versions.mobile) return true;
+        //if ($.browser.versions.mobile) return true;
         $captcha.addClass('d-block');
         return false;
     });
 
     $('#captcha').sliderCaptcha({
-        //setSrc: function() {
-        //    return '../images/pic/280/150/Pic' + Math.round(Math.random() * 136) + '.jpg'
-        //},
+        width: $(window).width() < 768 ? 216 : 280,
+        height: $(window).width() < 768 ? 110 : 150,
+        setSrc: function() {
+            return '../images/pic/280/150/Pic' + Math.round(Math.random() * 136) + '.jpg'
+        },
         onSuccess: function () {
             $('form').submit();
         }
