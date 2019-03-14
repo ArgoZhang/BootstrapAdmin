@@ -233,6 +233,9 @@
             var base = $('#pathBase').attr('href');
             return base + url;
         },
+        safeHtml: function(text) {
+            return $('<div>').text(text).html();
+        },
         syntaxHighlight: function (json) {
             if (typeof (json) === 'string') {
                 json = JSON.parse(json);
@@ -326,6 +329,13 @@
                 }
             }, options);
             settings.url = $.formatUrl(settings.url);
+            $.each(settings.columns, function (index, value) {
+                if (!$.isFunction(value.formatter)) {
+                    value.formatter = function (value, row, index, field) {
+                        return $.safeHtml(value);
+                    }
+                }
+            });
             this.bootstrapTable(settings);
             $('.bootstrap-table .fixed-table-toolbar .columns .export .dropdown-menu').addClass("dropdown-menu-right");
             $(settings.toolbar).removeClass('d-none').find('.toolbar').on('click', 'a', function (e) {

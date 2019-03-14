@@ -82,7 +82,7 @@
                     $('#msgHeaderUser').text(result.NewUsersCount);
                     htmlUserTemplate = '<a class="dropdown-item" href="{4}"><span class="label label-success"><i class="fa fa-plus"></i></span><div title="{2}" class="content">{1}({0})</div><span class="small italic">{3}</span></a>';
                     html = result.Users.map(function (u) {
-                        return $.format(htmlUserTemplate, u.UserName, u.DisplayName, u.Description, u.Period, $.formatUrl('Admin/Notifications'));
+                        return $.format(htmlUserTemplate, $.safeHtml(u.UserName), $.safeHtml(u.DisplayName), $.safeHtml(u.Description), u.Period, $.formatUrl('Admin/Notifications'));
                     }).join('');
                     $(html).insertAfter($('#msgHeaderUserContent'));
 
@@ -106,7 +106,7 @@
                     $('#msgHeaderMsg').text(result.MessagesCount);
                     htmlUserTemplate = '<a class="dropdown-item" href="{6}?id={0}"><span class="photo"><img alt="avatar" src="{1}"></span><span class="subject"><span class="from">{2}</span><span class="time">{4}</span></span><span class="message" title="{5}">{3}</span></a>';
                     html = result.Messages.map(function (u) {
-                        return $.format(htmlUserTemplate, u.Id, u.FromIcon, u.FromDisplayName, u.Title, u.Period, u.Content, $.formatUrl('Admin/Messages'));
+                        return $.format(htmlUserTemplate, u.Id, u.FromIcon, $.safeHtml(u.FromDisplayName), $.safeHtml(u.Title), u.Period, $.safeHtml(u.Content), $.formatUrl('Admin/Messages'));
                     }).join('');
                     $(html).insertAfter($('#msgHeaderMsgContent'));
                 }
