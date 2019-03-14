@@ -1,98 +1,10 @@
 (function ($) {
     'use strict';
 
-    var isIE = window.navigator.userAgent.indexOf('Trident') > -1;
-    var L = 63;
-
-    function getRandomNumberByRange(start, end) {
-        return Math.round(Math.random() * (end - start) + start);
-    }
-
-    function createCanvas(width, height) {
-        var canvas = document.createElement('canvas');
-        canvas.width = width;
-        canvas.height = height;
-        return canvas;
-    }
-
-    function createImg(w, h, onload) {
-        var img = new Image();
-        img.crossOrigin = "Anonymous";
-        img.onload = onload;
-        img.onerror = function () {
-            img.setSrc(getRandomImgSrc(w, h));
-        }
-
-        img.setSrc = function (src) {
-            if (isIE) { // IE浏览器无法通过img.crossOrigin跨域，使用ajax获取图片blob然后转为dataURL显示
-                var xhr = new XMLHttpRequest()
-                xhr.onloadend = function (e) {
-                    var file = new FileReader(); // FileReader仅支持IE10+
-                    file.readAsDataURL(e.target.response);
-                    file.onloadend = function (e) {
-                        img.src = e.target.result;
-                    }
-                }
-                xhr.open('GET', src);
-                xhr.responseType = 'blob';
-                xhr.send();
-            } else img.src = src;
-        }
-
-        img.setSrc(getRandomImgSrc(w, h));
-        return img;
-    }
-
-    function createElement(tagName, className) {
-        var elment = document.createElement(tagName);
-        elment.className = className;
-        return elment;
-    }
-
-    function addClass(tag, className) {
-        tag.classList.add(className);
-    }
-
-    function removeClass(tag, className) {
-        tag.classList.remove(className);
-    }
-
-    function getRandomImgSrc(w, h) {
-        return '//picsum.photos/' + w + '/' + h + '/?image=' + getRandomNumberByRange(0, 1084);
-    }
-
-    function draw(ctx, x, y, l, r, PI, operation) {
-        ctx.beginPath()
-        ctx.moveTo(x, y)
-        ctx.arc(x + l / 2, y - r + 2, r, 0.72 * PI, 2.26 * PI)
-        ctx.lineTo(x + l, y)
-        ctx.arc(x + l + r - 2, y + l / 2, r, 1.21 * PI, 2.78 * PI)
-        ctx.lineTo(x + l, y + l)
-        ctx.lineTo(x, y + l)
-        ctx.arc(x + r - 2, y + l / 2, r + 0.4, 2.76 * PI, 1.24 * PI, true)
-        ctx.lineTo(x, y)
-        ctx.lineWidth = 2
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.7)'
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.7)'
-        ctx.stroke()
-        ctx[operation]()
-        ctx.globalCompositeOperation = isIE ? 'xor' : 'overlay'
-    }
-
-    function sum(x, y) {
-        return x + y
-    }
-
-    function square(x) {
-        return x * x
-    }
-
     var SliderCaptcha = function (element, options) {
         this.$element = $(element);
         this.options = $.extend({}, SliderCaptcha.DEFAULTS, options);
         this.$element.css({ 'position': 'relative', 'width': this.options.width + 'px', 'margin': '0 auto' });
-
-        var L = this.options.sliderL + this.options.sliderR * 2 + 3; // 滑块实际边长
         this.init();
     };
 
@@ -106,7 +18,8 @@
         sliderR: 9,     // 滑块半径
         loadingText: '正在加载中...',
         failedText: '再试一次',
-        barText: '向右滑动填充拼图'
+        barText: '向右滑动填充拼图',
+        repeatIcon: 'fa fa-repeat'
     };
 
     function Plugin(option) {
@@ -132,10 +45,23 @@
     };
 
     _proto.initDOM = function () {
+        var createElement = function (tagName, className) {
+            var elment = document.createElement(tagName);
+            elment.className = className;
+            return elment;
+        };
+
+        var createCanvas = function (width, height) {
+            var canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            return canvas;
+        };
+
         var canvas = createCanvas(this.options.width - 2, this.options.height) // 画布
         var block = canvas.cloneNode(true) // 滑块
         var sliderContainer = createElement('div', 'sliderContainer');
-        var refreshIcon = createElement('i', 'refreshIcon fa fa-repeat');
+        var refreshIcon = createElement('i', 'refreshIcon ' + this.options.repeatIcon);
         var sliderMask = createElement('div', 'sliderMask');
         var sliderbg = createElement('div', 'sliderbg');
         var slider = createElement('div', 'slider');
@@ -159,7 +85,7 @@
         Object.assign(this, {
             canvas,
             block,
-            sliderContainer,
+            sliderContainer : $(sliderContainer),
             refreshIcon,
             slider,
             sliderMask,
@@ -172,8 +98,43 @@
 
     _proto.initImg = function () {
         var that = this;
-        var img = createImg(this.options.width, this.options.height, function () {
-            that.draw();
+        var isIE = window.navigator.userAgent.indexOf('Trident') > -1;
+        var L = this.options.sliderL + this.options.sliderR * 2 + 3; // 滑块实际边长
+        var drawImg = function (ctx, operation) {
+            var l = that.options.sliderL;
+            var r = that.options.sliderR;
+            var PI = that.options.PI;
+            var x = that.x;
+            var y = that.y;
+            ctx.beginPath()
+            ctx.moveTo(x, y)
+            ctx.arc(x + l / 2, y - r + 2, r, 0.72 * PI, 2.26 * PI)
+            ctx.lineTo(x + l, y)
+            ctx.arc(x + l + r - 2, y + l / 2, r, 1.21 * PI, 2.78 * PI)
+            ctx.lineTo(x + l, y + l)
+            ctx.lineTo(x, y + l)
+            ctx.arc(x + r - 2, y + l / 2, r + 0.4, 2.76 * PI, 1.24 * PI, true)
+            ctx.lineTo(x, y)
+            ctx.lineWidth = 2
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.7)'
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.7)'
+            ctx.stroke()
+            ctx[operation]()
+            ctx.globalCompositeOperation = isIE ? 'xor' : 'overlay'
+        }
+
+        var getRandomNumberByRange = function (start, end) {
+            return Math.round(Math.random() * (end - start) + start);
+        };
+        var img = new Image();
+        img.crossOrigin = "Anonymous";
+        img.onload = function () {
+            // 随机创建滑块的位置
+            that.x = getRandomNumberByRange(L + 10, that.options.width - (L + 10));
+            that.y = getRandomNumberByRange(10 + that.options.sliderR * 2, that.options.height - (L + 10));
+            drawImg(that.canvasCtx, 'fill');
+            drawImg(that.blockCtx, 'clip');
+
             that.canvasCtx.drawImage(img, 0, 0, that.options.width - 2, that.options.height);
             that.blockCtx.drawImage(img, 0, 0, that.options.width - 2, that.options.height);
             var y = that.y - that.options.sliderR * 2 - 1;
@@ -181,18 +142,31 @@
             that.block.width = L;
             that.blockCtx.putImageData(ImageData, 0, y);
             that.text.text(that.text.attr('data-text'));
-        })
+        };
+        img.onerror = function () {
+            img.setSrc();
+        }
+        img.setSrc = function () {
+            var src = 'https://picsum.photos/' + that.options.width + '/' + that.options.height + '/?image=' + Math.round(Math.random() * 20);
+            if ($.isFunction(that.options.setSrc)) src = that.options.setSrc();
+            if (isIE) { // IE浏览器无法通过img.crossOrigin跨域，使用ajax获取图片blob然后转为dataURL显示
+                var xhr = new XMLHttpRequest()
+                xhr.onloadend = function (e) {
+                    var file = new FileReader(); // FileReader仅支持IE10+
+                    file.readAsDataURL(e.target.response);
+                    file.onloadend = function (e) {
+                        img.src = e.target.result;
+                    }
+                }
+                xhr.open('GET', src);
+                xhr.responseType = 'blob';
+                xhr.send();
+            } else img.src = src;
+        };
+        img.setSrc();
         this.text.attr('data-text', this.options.barText);
         this.text.text(this.options.loadingText);
         this.img = img
-    };
-
-    _proto.draw = function () {
-        // 随机创建滑块的位置
-        this.x = getRandomNumberByRange(L + 10, this.options.width - (L + 10))
-        this.y = getRandomNumberByRange(10 + this.options.sliderR * 2, this.options.height - (L + 10))
-        draw(this.canvasCtx, this.x, this.y, this.options.sliderL, this.options.sliderR, this.options.PI, 'fill')
-        draw(this.blockCtx, this.x, this.y, this.options.sliderL, this.options.sliderR, this.options.PI, 'clip')
     };
 
     _proto.clean = function () {
@@ -208,8 +182,9 @@
         });
 
         $(this.refreshIcon).on('click', function () {
+            that.text.text(that.options.barText);
             that.reset();
-            typeof that.onRefresh === 'function' && that.onRefresh()
+            if ($.isFunction(that.options.onRefresh)) that.options.onRefresh.call(that.$element);
         });
 
         var originX, originY, trail = [],
@@ -232,7 +207,7 @@
             var blockLeft = (that.options.width - 40 - 20) / (that.options.width - 40) * moveX;
             that.block.style.left = blockLeft + 'px';
 
-            addClass(that.sliderContainer, 'sliderContainer_active');
+            that.sliderContainer.addClass('sliderContainer_active');
             that.sliderMask.style.width = (moveX + 4) + 'px';
             trail.push(moveY);
         };
@@ -242,52 +217,58 @@
             isMouseDown = false
             var eventX = e.clientX || e.changedTouches[0].clientX
             if (eventX == originX) return false
-            removeClass(that.sliderContainer, 'sliderContainer_active')
+            that.sliderContainer.removeClass('sliderContainer_active');
             that.trail = trail
             var {
                 spliced,
                 verified
             } = that.verify()
             if (spliced && verified) {
-                addClass(that.sliderContainer, 'sliderContainer_success')
+                that.sliderContainer.addClass('sliderContainer_success');
                 if ($.isFunction(that.options.onSuccess)) that.options.onSuccess.call(that.$element);
             } else {
-                addClass(that.sliderContainer, 'sliderContainer_fail')
+                that.sliderContainer.addClass('sliderContainer_fail');
                 if ($.isFunction(that.options.onFail)) that.options.onFail.call(that.$element);
                 setTimeout(() => {
                     that.text.text(that.options.failedText);
                     that.reset();
                 }, 1000)
             }
-        }
+        };
+
         this.slider.addEventListener('mousedown', handleDragStart);
         this.slider.addEventListener('touchstart', handleDragStart);
         document.addEventListener('mousemove', handleDragMove);
         document.addEventListener('touchmove', handleDragMove);
         document.addEventListener('mouseup', handleDragEnd);
         document.addEventListener('touchend', handleDragEnd);
+
+        document.addEventListener('mousedown', function() { return false; });
+        document.addEventListener('touchstart', function() { return false; });
     };
 
     _proto.verify = function () {
+        var sum = function (x, y) { return x + y; };
+        var square = function (x) { return x * x; };
         var arr = this.trail // 拖动时y轴的移动距离
         var average = arr.reduce(sum) / arr.length;
-        var deviations = arr.map(x => x - average);
+        var deviations = arr.map(function (x) { return x - average; });
         var stddev = Math.sqrt(deviations.map(square).reduce(sum) / arr.length);
         var left = parseInt(this.block.style.left);
         return {
-            spliced: Math.abs(left - this.x) < 10,
+            spliced: Math.abs(left - this.x) < 4,
             verified: stddev !== 0, // 简单验证下拖动轨迹，为零时表示Y轴上下没有波动，可能非人为操作
         }
     };
 
     _proto.reset = function () {
-        this.sliderContainer.className = 'sliderContainer'
+        this.sliderContainer.removeClass('sliderContainer_fail sliderContainer_success');
         this.slider.style.left = 0
         this.block.style.left = 0
         this.sliderMask.style.width = 0
         this.clean()
         this.text.attr('data-text', this.text.text());
         this.text.text(this.options.loadingText);
-        this.img.setSrc(getRandomImgSrc(this.options.width, this.options.height));
+        this.img.setSrc();
     };
 })(jQuery);

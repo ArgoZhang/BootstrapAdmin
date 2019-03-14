@@ -80,4 +80,9 @@
     .slidercaptcha.card .card-header {
         background-image: none;
         background-color: rgba(0, 0, 0, 0.03);
+        color: #fff;
     }
+
+        .slidercaptcha.card .card-header .close:hover {
+            color: #fff;
+        }

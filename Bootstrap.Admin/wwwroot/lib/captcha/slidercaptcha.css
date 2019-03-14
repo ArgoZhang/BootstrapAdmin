@@ -25,6 +25,7 @@ body {
   background-color: #f7f9fa;
   height: 40px;
   border-radius: 2px;
+  border: 1px solid #e6e8eb;
 }
 
 .sliderContainer_active .slider {
@@ -119,12 +120,12 @@ body {
   top: 0;
   cursor: pointer;
   margin: 6px;
-  color: #007ec7;
+  color: rgba(0,0,0,.25);
   font-size: 1rem;
   z-index: 5;
   transition: color .3s linear;
 }
 
 .refreshIcon:hover {
-  color: #05639a;
+  color: #6c757d;
 }

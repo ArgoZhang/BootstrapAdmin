@@ -64,6 +64,9 @@
     });
 
     $('#captcha').sliderCaptcha({
+        //setSrc: function() {
+        //    return '../images/pic/280/150/Pic' + Math.round(Math.random() * 136) + '.jpg'
+        //},
         onSuccess: function () {
             $('form').submit();
         }
