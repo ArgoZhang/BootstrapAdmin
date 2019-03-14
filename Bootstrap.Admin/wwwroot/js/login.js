@@ -67,7 +67,7 @@
         width: $(window).width() < 768 ? 216 : 280,
         height: $(window).width() < 768 ? 110 : 150,
         setSrc: function() {
-            return '../images/pic/280/150/Pic' + Math.round(Math.random() * 136) + '.jpg'
+            return 'http://pocoafrro.bkt.clouddn.com/Pic' + Math.round(Math.random() * 136) + '.jpg'
         },
         onSuccess: function () {
             $('form').submit();
