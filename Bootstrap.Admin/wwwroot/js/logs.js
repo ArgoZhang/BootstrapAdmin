@@ -23,7 +23,7 @@
                 },
                 events: {
                     'click .detail': function (e, value, row, index) {
-                        $data.html($.syntaxHighlight(row.RequestData));
+                        $data.html($.syntaxHighlight($.safeHtml(row.RequestData)));
                         $dialog.modal('show');
                     }
                 }
