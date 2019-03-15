@@ -176,18 +176,28 @@
         var $this = $(element);
         if ($this.is(':hidden')) return result;
         var methods = this.rules(element);
-        for (var rule in methods) {
+        var proxy = function(rule) {
             if ($.isFunction($.validator.methods[rule])) {
                 result = $.validator.methods[rule].call(this.options, $this.val(), element, methods[rule]);
                 if (!result) {
                     $this.attr('data-original-title', this.defaultMessage(element, { method: rule, parameters: methods[rule] }));
-                    break;
+                    return result;
                 }
             }
             else {
                 console.log('没有匹配的方法 ' + rule);
             }
+            return true;
         }
+        var remote = null;
+        for (var rule in methods) {
+            if(rule !== 'remote') {
+                result = proxy.call(this, rule);
+                if(!result) return false;
+            }
+            else remote = rule;
+        }
+        if(remote !== null) result = proxy.call(this, remote);
         return result;
     };
 
