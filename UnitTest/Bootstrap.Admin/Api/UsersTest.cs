@@ -36,7 +36,7 @@ namespace Bootstrap.Admin.Api
             var user = new User();
             user.Delete(user.Retrieves().Where(usr => usr.UserName == "UnitTest-Delete").Select(usr => usr.Id));
 
-            var nusr = new User { UserName = "UnitTest-Delete", Password = "1", DisplayName = "DisplayName", ApprovedBy = "System", ApprovedTime = DateTime.Now, Description = "Desc", Icon = "default.jpg" };
+            var nusr = new User { UserName = "UnitTest_Delete", Password = "1", DisplayName = "DisplayName", ApprovedBy = "System", ApprovedTime = DateTime.Now, Description = "Desc", Icon = "default.jpg" };
             var resp = await Client.PostAsJsonAsync<User, bool>("", nusr);
             Assert.True(resp);
 
@@ -80,7 +80,7 @@ namespace Bootstrap.Admin.Api
         [Fact]
         public async void Put_Ok()
         {
-            var usr = new User { UserName = "UnitTest-Change", Password = "1", DisplayName = "DisplayName", ApprovedBy = "System", ApprovedTime = DateTime.Now, Description = "Desc", Icon = "default.jpg" };
+            var usr = new User { UserName = "UnitTest_Change", Password = "1", DisplayName = "DisplayName", ApprovedBy = "System", ApprovedTime = DateTime.Now, Description = "Desc", Icon = "default.jpg" };
             usr.Delete(usr.Retrieves().Where(u => u.UserName == usr.UserName).Select(u => u.Id));
             Assert.True(usr.Save(usr));
 
@@ -97,7 +97,7 @@ namespace Bootstrap.Admin.Api
             // Login as new user
             var client = Host.CreateClient();
             client.BaseAddress = new Uri("http://localhost/api/Users");
-            await client.LoginAsync("UnitTest-Change", "1");
+            await client.LoginAsync("UnitTest_Change", "1");
             resp = await client.PutAsJsonAsync<User, bool>(usr);
             Assert.True(resp);
 
