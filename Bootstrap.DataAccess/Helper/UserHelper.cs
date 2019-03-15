@@ -3,6 +3,7 @@ using Longbow.Cache;
 using Longbow.Data;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace Bootstrap.DataAccess
 {
@@ -17,10 +18,19 @@ namespace Bootstrap.DataAccess
         public const string RetrieveNewUsersDataKey = "UserHelper-RetrieveNewUsers";
         public const string RetrieveUsersByNameDataKey = "BootstrapUser-RetrieveUsersByName";
 
+        private static bool UserChecker(User user)
+        {
+            if (user.Description?.Length > 500) user.Description = user.Description.Substring(0, 500);
+            if (user.UserName?.Length > 16) user.UserName = user.UserName.Substring(0, 16);
+            if (user.Password?.Length > 16) user.Password = user.Password.Substring(0, 16);
+            if (user.DisplayName?.Length > 20) user.DisplayName = user.DisplayName.Substring(0, 20);
+            var pattern = @"^[a-zA-Z0-9_@.]*$";
+            return user.UserName.IsNullOrEmpty() || Regex.IsMatch(user.UserName, pattern);
+        }
+
         /// <summary>
         /// 查询所有用户
         /// </summary>
-        /// <param name="id"></param>
         /// <returns></returns>
         public static IEnumerable<User> Retrieves() => CacheManager.GetOrAdd(RetrieveUsersDataKey, key => DbContextManager.Create<User>().Retrieves());
 
@@ -29,10 +39,12 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="password"></param>
+        /// <param name="config"></param>
         /// <returns></returns>
         public static bool Authenticate(string userName, string password, Action<LoginUser> config)
         {
-            var loginUser = new LoginUser()
+            if (!UserChecker(new User { UserName = userName, Password = password })) return false;
+            var loginUser = new LoginUser
             {
                 UserName = userName,
                 LoginTime = DateTime.Now,
@@ -78,12 +90,13 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 保存新建
         /// </summary>
-        /// <param name="p"></param>
+        /// <param name="user"></param>
         /// <returns></returns>
-        public static bool Save(User p)
+        public static bool Save(User user)
         {
-            var ret = DbContextManager.Create<User>().Save(p);
-            if (ret) CacheCleanUtility.ClearCache(userIds: string.IsNullOrEmpty(p.Id) ? new List<string>() : new List<string>() { p.Id });
+            if (!UserChecker(user)) return false;
+            var ret = DbContextManager.Create<User>().Save(user);
+            if (ret) CacheCleanUtility.ClearCache(userIds: string.IsNullOrEmpty(user.Id) ? new List<string>() : new List<string>() { user.Id });
             return ret;
         }
 
@@ -96,6 +109,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static bool Update(string id, string password, string displayName)
         {
+            if (!UserChecker(new User { Password = password, DisplayName = displayName })) return false;
             var ret = DbContextManager.Create<User>().Update(id, password, displayName);
             if (ret) CacheCleanUtility.ClearCache(userIds: string.IsNullOrEmpty(id) ? new List<string>() : new List<string>() { id });
             return ret;
@@ -121,7 +135,11 @@ namespace Bootstrap.DataAccess
         /// <param name="password"></param>
         /// <param name="newPass"></param>
         /// <returns></returns>
-        public static bool ChangePassword(string userName, string password, string newPass) => DbContextManager.Create<User>().ChangePassword(userName, password, newPass);
+        public static bool ChangePassword(string userName, string password, string newPass)
+        {
+            if (!UserChecker(new User { UserName = userName, Password = password })) return false;
+            return DbContextManager.Create<User>().ChangePassword(userName, password, newPass);
+        }
 
         /// <summary>
         /// 
@@ -129,10 +147,14 @@ namespace Bootstrap.DataAccess
         /// <param name="userName"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public static bool ResetPassword(string userName, string password) => DbContextManager.Create<User>().ResetPassword(userName, password);
+        public static bool ResetPassword(string userName, string password)
+        {
+            if (!UserChecker(new User { UserName = userName, Password = password })) return false;
+            return DbContextManager.Create<User>().ResetPassword(userName, password);
+        }
 
         /// <summary>
-        /// 
+        /// 忘记密码调用
         /// </summary>
         /// <param name="user"></param>
         public static bool ForgotPassword(ResetUser user) => DbContextManager.Create<User>().ForgotPassword(user);
@@ -142,7 +164,6 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="id"></param>
         /// <param name="rejectBy"></param>
-        /// <param name="reason"></param>
         /// <returns></returns>
         public static bool Reject(string id, string rejectBy)
         {
@@ -212,6 +233,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static bool SaveDisplayName(string userName, string displayName)
         {
+            if (!UserChecker(new User { UserName = userName, DisplayName = displayName })) return false;
             var ret = DbContextManager.Create<User>().SaveDisplayName(userName, displayName);
             if (ret) CacheCleanUtility.ClearCache(cacheKey: $"{RetrieveUsersDataKey}*");
             return ret;

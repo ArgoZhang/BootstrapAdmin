@@ -93,15 +93,13 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="p"></param>
+        /// <param name="user"></param>
         /// <returns></returns>
         public override bool Save(DataAccess.User user)
         {
             // 已经存在或者已经在新用户中了
             if (UserHelper.RetrieveUserByUserName(user.UserName) != null || UserHelper.RetrieveNewUsers().Any(u => u.UserName == user.UserName)) return false;
 
-            if (user.Description.Length > 500) user.Description = user.Description.Substring(0, 500);
-            if (user.UserName.Length > 50) user.UserName = user.UserName.Substring(0, 50);
             DbManager.Users.InsertOne(new User()
             {
                 UserName = user.UserName,

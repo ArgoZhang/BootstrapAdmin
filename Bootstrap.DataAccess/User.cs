@@ -119,7 +119,6 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 查询所有用户
         /// </summary>
-        /// <param name="id"></param>
         /// <returns></returns>
         public virtual IEnumerable<User> Retrieves() => DbManager.Create().Fetch<User>("select u.ID, u.UserName, u.DisplayName, RegisterTime, ApprovedTime, ApprovedBy, Description, ru.IsReset from Users u left join (select 1 as IsReset, UserName from ResetUsers group by UserName) ru on u.UserName = ru.UserName Where ApprovedTime is not null");
 
@@ -201,25 +200,23 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 新建前台User View调用/注册用户调用
         /// </summary>
-        /// <param name="p"></param>
+        /// <param name="user"></param>
         /// <returns></returns>
-        public virtual bool Save(User p)
+        public virtual bool Save(User user)
         {
             var ret = false;
-            if (string.IsNullOrEmpty(p.Id) && p.Description.Length > 500) p.Description = p.Description.Substring(0, 500);
-            if (p.UserName.Length > 50) p.UserName = p.UserName.Substring(0, 50);
-            p.PassSalt = LgbCryptography.GenerateSalt();
-            p.Password = LgbCryptography.ComputeHash(p.Password, p.PassSalt);
-            p.RegisterTime = DateTime.Now;
+            user.PassSalt = LgbCryptography.GenerateSalt();
+            user.Password = LgbCryptography.ComputeHash(user.Password, user.PassSalt);
+            user.RegisterTime = DateTime.Now;
 
             var db = DbManager.Create();
             try
             {
                 db.BeginTransaction();
-                if (!db.Exists<User>("where UserName = @0", p.UserName))
+                if (!db.Exists<User>("where UserName = @0", user.UserName))
                 {
-                    db.Insert(p);
-                    db.Execute("insert into UserRole (UserID, RoleID) select ID, (select ID from Roles where RoleName = 'Default') RoleId from Users where UserName = @0", p.UserName);
+                    db.Insert(user);
+                    db.Execute("insert into UserRole (UserID, RoleID) select ID, (select ID from Roles where RoleName = 'Default') RoleId from Users where UserName = @0", user.UserName);
                 }
                 db.CompleteTransaction();
                 ret = true;
