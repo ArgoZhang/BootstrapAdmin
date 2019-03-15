@@ -275,6 +275,9 @@
             $.validator.addMethod("radioGroup", function (value, element) {
                 return $(element).find(':checked').length === 1;
             }, "请选择一个选项");
+            $.validator.addMethod("userName", function (value, element) {
+                return this.optional(element) || /^[a-zA-Z0-9_@.]*$/.test(value);
+            }, "登录名称不可以包含非法字符");
         }
         $('[data-toggle="LgbValidate"]').lgbValidate();
     });
