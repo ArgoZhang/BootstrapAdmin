@@ -57,6 +57,12 @@ namespace Bootstrap.Admin.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
+        public ActionResult Traces() => View(new NavigatorBarModel(this));
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Logins() => View(new NavigatorBarModel(this));
 
         /// <summary>

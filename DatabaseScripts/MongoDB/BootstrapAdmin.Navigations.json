@@ -180,6 +180,18 @@
     "Application": "0"
   },
   {
+    "_id": ObjectId("5bd9b3d868aa001661776f59"),
+    "ParentId": "5bd7b8445fa31256f77e4b9c",
+    "Name": "访问日志",
+    "Order": NumberInt(30),
+    "Icon": "fa fa-bars",
+    "Url": "~/Admin/Traces",
+    "Category": "0",
+    "Target": "_self",
+    "IsResource": NumberInt(0),
+    "Application": "0"
+  },
+  {
     "_id": ObjectId("5bd7b8445fa31256f77e4b89"),
     "ParentId": "0",
     "Name": "在线用户",

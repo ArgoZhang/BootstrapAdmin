@@ -167,3 +167,14 @@ CREATE TABLE ResetUsers(
 	Reason			VARCHAR (500) NOT NULL,
 	ResetTime		DATETIME NOT NULL
 );
+
+CREATE TABLE Traces(
+	ID 				INTEGER PRIMARY KEY	Auto_increment,
+    UserName   		VARCHAR (50)  NOT NULL,
+    LogTime    		DATETIME      NOT NULL,
+    IP         		VARCHAR (15)  NOT NULL,
+    Browser    		VARCHAR (50),
+    OS         		VARCHAR (50),
+    City       		VARCHAR (50),
+    RequestUrl 		VARCHAR (500) NOT NULL
+);

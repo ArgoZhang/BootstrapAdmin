@@ -28,6 +28,7 @@ namespace Bootstrap.DataAccess
             database.AddMap<Menu>("Navigations", new string[] { "ParentName", "CategoryName", "Active", "Menus" });
             database.AddMap<Role>("Roles", new string[] { "Checked" });
             database.AddMap<Task>("Tasks");
+            database.AddMap<Trace>("Traces");
             return database;
         }
     }

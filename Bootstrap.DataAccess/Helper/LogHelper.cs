@@ -17,7 +17,6 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 查询所有日志信息
         /// </summary>
-        /// <param name="tId"></param>
         /// <returns></returns>
         public static IEnumerable<Log> Retrieves() => CacheManager.GetOrAdd(RetrieveLogsDataKey, key => DbContextManager.Create<Log>().Retrieves());
 

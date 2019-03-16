@@ -58,6 +58,7 @@ INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [C
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (13, 0, N'日志管理', 130, N'fa fa-gears', N'#', N'0')
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (20, 13, N'操作日志', 10, N'fa fa-edit', N'~/Admin/Logs', N'0')
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (21, 13, N'登录日志', 20, N'fa fa-user-circle-o', N'~/Admin/Logins', N'0')
+INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (22, 13, N'访问日志', 30, N'fa fa-bars', N'~/Admin/Traces', N'0')
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (14, 0, N'在线用户', 140, N'fa fa-users', N'~/Admin/Online', N'0')
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (15, 0, N'程序异常', 150, N'fa fa-cubes', N'~/Admin/Exceptions', N'0')
 INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (16, 0, N'工具集合', 160, N'fa fa-gavel', N'#', N'0')

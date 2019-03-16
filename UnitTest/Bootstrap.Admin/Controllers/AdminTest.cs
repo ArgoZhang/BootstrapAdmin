@@ -15,6 +15,7 @@ namespace Bootstrap.Admin.Controllers
         [InlineData("Roles", "角色管理")]
         [InlineData("Menus", "菜单管理")]
         [InlineData("Logs", "操作日志")]
+        [InlineData("Traces", "访问日志")]
         [InlineData("Logins", "登录日志")]
         [InlineData("FAIcon", "图标集")]
         [InlineData("IconView", "图标分类")]
