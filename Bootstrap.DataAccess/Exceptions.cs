@@ -111,7 +111,7 @@ namespace Bootstrap.DataAccess
         {
             var sql = new Sql("select * from Exceptions");
             if (startTime.HasValue) sql.Append("where LogTime > @0", startTime.Value);
-            if (endTime.HasValue) sql.Append("where LogTime < @0", endTime.Value);
+            if (endTime.HasValue) sql.Append("where LogTime < @0", endTime.Value.AddDays(1).AddSeconds(-1));
             if (startTime == null && endTime == null) sql.Append("where LogTime > @0", DateTime.Today.AddDays(-7));
             sql.Append($"order by {po.Sort} {po.Order}");
 
