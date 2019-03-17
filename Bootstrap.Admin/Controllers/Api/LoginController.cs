@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Bootstrap.Admin.Controllers.Api
 {
@@ -45,6 +44,7 @@ namespace Bootstrap.Admin.Controllers.Api
             }
             return token;
         }
+
         /// <summary>
         /// 
         /// </summary>
