@@ -29,7 +29,7 @@ $(function () {
             { title: "访问地址", field: "RequestUrl" },
             {
                 title: "历史地址", field: "ConnectionId", formatter: function (value, row, index, field) {
-                    return $.format('<button type="button" class="btn btn-info" data-id="{0}" data-toggle="popover" data-trigger="focus" data-html="true" data-title="访问记录">明细</button>', value);
+                    return $.format('<button type="button" class="btn btn-info" data-id="{0}" data-toggle="popover" data-trigger="focus" data-html="true" data-title="访问记录"><i class="fa fa-info"></i><span>明细</span></button>', value);
                 }
             }
         ]
