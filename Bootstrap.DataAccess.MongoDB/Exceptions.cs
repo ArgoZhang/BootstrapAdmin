@@ -66,31 +66,33 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <returns></returns>
         public override Page<DataAccess.Exceptions> RetrievePages(PaginationOption po, DateTime? startTime, DateTime? endTime)
         {
-            var exceps = DbManager.Exceptions.Find(FilterDefinition<DataAccess.Exceptions>.Empty).ToList();
+            // filter
+            var filterBuilder = Builders<DataAccess.Exceptions>.Filter;
+            var filter = filterBuilder.Empty;
+            if (startTime.HasValue) filter = filterBuilder.Gt("LogTime", startTime.Value);
+            if (endTime.HasValue) filter = filterBuilder.Lt("LogTime", endTime.Value.AddDays(1).AddSeconds(-1));
+            if (startTime == null && endTime == null) filter = filterBuilder.Gt("LogTime", DateTime.Today.AddDays(-7));
+
             // sort
-            var orderProxy = po.Order == "asc" ?
-                new Func<Func<DataAccess.Exceptions, string>, List<DataAccess.Exceptions>>(p => exceps.OrderBy(p).ToList()) :
-                new Func<Func<DataAccess.Exceptions, string>, List<DataAccess.Exceptions>>(p => exceps.OrderByDescending(p).ToList());
-
-            var logTimeProxy = po.Order == "asc" ?
-                new Func<Func<DataAccess.Exceptions, DateTime>, List<DataAccess.Exceptions>>(p => exceps.OrderBy(p).ToList()) :
-                new Func<Func<DataAccess.Exceptions, DateTime>, List<DataAccess.Exceptions>>(p => exceps.OrderByDescending(p).ToList());
-
+            var sortBuilder = Builders<DataAccess.Exceptions>.Sort;
+            SortDefinition<DataAccess.Exceptions> sort = null;
             switch (po.Sort)
             {
+                case "LogTime":
+                    sort = po.Order == "asc" ? sortBuilder.Ascending(t => t.LogTime) : sortBuilder.Descending(t => t.LogTime);
+                    break;
                 case "ErrorPage":
-                    exceps = orderProxy(ex => ex.ErrorPage);
+                    sort = po.Order == "asc" ? sortBuilder.Ascending(t => t.ErrorPage) : sortBuilder.Descending(t => t.ErrorPage);
                     break;
                 case "UserId":
-                    exceps = orderProxy(ex => ex.UserId);
+                    sort = po.Order == "asc" ? sortBuilder.Ascending(t => t.UserId) : sortBuilder.Descending(t => t.UserId);
                     break;
                 case "UserIp":
-                    exceps = orderProxy(ex => ex.UserIp);
-                    break;
-                case "LogTime":
-                    exceps = logTimeProxy(ex => ex.LogTime);
+                    sort = po.Order == "asc" ? sortBuilder.Ascending(t => t.UserIp) : sortBuilder.Descending(t => t.UserIp);
                     break;
             }
+
+            var exceps = DbManager.Exceptions.Find(filter).Sort(sort).ToList();
             return new Page<DataAccess.Exceptions>()
             {
                 Context = exceps,
