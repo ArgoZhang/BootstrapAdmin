@@ -53,25 +53,11 @@
     .sidebar-open aside {
         transform: translate(0);
     }
-
-    .btn span:last-child {
-        display: inline;
-    }
-
-    .bs-bars .btn span:last-child {
-        display: none;
-    }
 }
 
 @media (min-width: 940px) {
     .form-check-input + span, .form-check-input + label {
         max-width: 192px;
-    }
-}
-
-@media (min-width: 1024px) {
-    .bs-bars .btn span:last-child {
-        display: inline;
     }
 }
 

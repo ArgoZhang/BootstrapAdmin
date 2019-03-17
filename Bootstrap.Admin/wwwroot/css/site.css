@@ -578,8 +578,8 @@ li[data-category="1"] .dd3-content .menuType {
         margin-right: 4px;
     }
 
-.bootstrap-table .btn span:last-child {
-    display: inline;
+.bootstrap-table .bs-bars .btn span:last-child {
+    display: none;
 }
 
 .bootstrap-table .fa-info {

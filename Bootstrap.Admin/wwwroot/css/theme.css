@@ -321,10 +321,6 @@ input.pending {
     padding: 15px 15px 0 15px;
 }
 
-.modal-footer .btn span:last-child {
-    display: inline;
-}
-
 .card {
     margin-bottom: 15px;
 }
@@ -351,7 +347,6 @@ input.pending {
 
 .btn span:last-child {
     margin-left: 4px;
-    display: none;
 }
 
 .form-check-label {

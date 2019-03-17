@@ -67,3 +67,9 @@
         transition: none;
     }
 }
+
+@media (min-width: 1077px) {
+    .bootstrap-table .bs-bars .btn span:last-child {
+        display: inline;
+    }
+}
