@@ -13,6 +13,19 @@
         }
     });
 
+    $.extend({
+        captchaCheck: function (success) {
+            $.bc({
+                url: "api/OnlineUsers",
+                method: "put",
+                callback: function (result) {
+                    if (result) $captcha.addClass('d-block');
+                    else success();
+                }
+            });
+        }
+    });
+
     $('#btnSubmit').on('click', function () {
         $.bc({
             url: "api/Register",
@@ -53,21 +66,22 @@
     });
 
     var $captcha = $('.slidercaptcha');
-    $('.slidercaptcha .close').on('click', function() {
+    $('.slidercaptcha .close').on('click', function () {
         $captcha.removeClass('d-block');
     });
 
-    $('button[type="submit"]').on('click', function(e){
-        //if ($.browser.versions.mobile) return true;
-        $captcha.addClass('d-block');
+    $('button[type="submit"]').on('click', function (e) {
+        $.captchaCheck(function () {
+            $('form').submit();
+        });
         return false;
     });
 
     $('#captcha').sliderCaptcha({
         width: $(window).width() < 768 ? 216 : 280,
         height: $(window).width() < 768 ? 110 : 150,
-        setSrc: function() {
-            return 'http://pocoafrro.bkt.clouddn.com/Pic' + Math.round(Math.random() * 136) + '.jpg'
+        setSrc: function () {
+            return 'http://pocoafrro.bkt.clouddn.com/Pic' + Math.round(Math.random() * 136) + '.jpg';
         },
         onSuccess: function () {
             $('form').submit();
