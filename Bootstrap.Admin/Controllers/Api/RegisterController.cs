@@ -1,4 +1,4 @@
-﻿using Bootstrap.DataAccess;
+using Bootstrap.DataAccess;
 using Longbow.Web.SignalR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -55,6 +55,10 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="user"></param>
         /// <returns></returns>
         [HttpPut]
-        public bool Put([FromBody]ResetUser user) => UserHelper.ForgotPassword(user);
+        public bool Put([FromBody]ResetUser user)
+        {
+            if (UserHelper.RetrieveUserByUserName(user.UserName) == null) return true;
+            return UserHelper.ForgotPassword(user);
+        }
     }
 }
