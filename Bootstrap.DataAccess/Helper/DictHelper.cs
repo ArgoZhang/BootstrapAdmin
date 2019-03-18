@@ -1,4 +1,4 @@
-﻿using Bootstrap.Security;
+using Bootstrap.Security;
 using Longbow.Cache;
 using Longbow.Data;
 using System.Collections.Generic;
@@ -145,5 +145,11 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <returns></returns>
         public static int RetrieveLocaleIP() => DbContextManager.Create<Dict>().RetrieveLocaleIP();
+
+        /// <summary>
+        /// 访问日志保留时长 默认一个月
+        /// </summary>
+        /// <returns></returns>
+        public static int RetrieveAccessLogPeriod() => DbContextManager.Create<Dict>().RetrieveAccessLogPeriod();
     }
 }

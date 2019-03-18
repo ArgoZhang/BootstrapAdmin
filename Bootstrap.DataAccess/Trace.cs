@@ -1,4 +1,4 @@
-﻿using Longbow.Web.Mvc;
+using Longbow.Web.Mvc;
 using PetaPoco;
 using System;
 
@@ -57,6 +57,7 @@ namespace Bootstrap.DataAccess
         {
             if (p == null) throw new ArgumentNullException(nameof(p));
             DbManager.Create().Save(p);
+            ClearTraces();
             return true;
         }
 
@@ -70,10 +71,15 @@ namespace Bootstrap.DataAccess
             var sql = new Sql("select * from Traces");
             if (startTime.HasValue) sql.Append("where LogTime > @0", startTime.Value);
             if (endTime.HasValue) sql.Append("where LogTime < @0", endTime.Value.AddDays(1).AddSeconds(-1));
-            if (startTime == null && endTime == null) sql.Append("where LogTime > @0", DateTime.Today.AddDays(-7));
+            if (startTime == null && endTime == null) sql.Append("where LogTime > @0", DateTime.Today.AddMonths(0 - DictHelper.RetrieveAccessLogPeriod()));
             sql.Append($"order by {po.Sort} {po.Order}");
 
             return DbManager.Create().Page<Trace>(po.PageIndex, po.Limit, sql);
         }
+
+        private static void ClearTraces() => System.Threading.Tasks.Task.Run(() =>
+        {
+            DbManager.Create().Execute("delete from Traces where LogTime < @0", DateTime.Now.AddMonths(0 - DictHelper.RetrieveAccessLogPeriod()));
+        });
     }
 }

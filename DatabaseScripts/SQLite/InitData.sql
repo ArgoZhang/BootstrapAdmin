@@ -1,4 +1,4 @@
-﻿DELETE From Users where ID = 1;
+DELETE From Users where ID = 1;
 -- ADMIN/123789
 INSERT INTO Users (ID, UserName, [Password], PassSalt, DisplayName, RegisterTime, ApprovedTime,ApprovedBy, [Description]) values (1, 'Admin', 'Es7WVgNsJuELwWK8daCqufUBknCsSC0IYDphQZAiGOo=', 'W5vpBEOYRGHkQXatN0t+ECM/U8cHDuEgrq56+zZBk4J481xH', 'Administrator', datetime(CURRENT_TIMESTAMP, 'localtime'), datetime(CURRENT_TIMESTAMP, 'localtime'), 'system', '系统默认创建');
 
@@ -30,6 +30,7 @@ INSERT INTO [Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (NULL, '
 INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('系统设置', '程序异常保留时长', '1', 0);
 INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('系统设置', '操作日志保留时长', '12', 0);
 INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('系统设置', '登录日志保留时长', '12', 0);
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('系统设置', '访问日志保留时长', '1', 0);
 
 -- 时长单位 天
 INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('系统设置', 'Cookie保留时长', '7', 0);

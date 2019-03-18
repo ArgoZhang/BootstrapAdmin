@@ -14,12 +14,10 @@ namespace Bootstrap.Client.DataAccess
     public static class DictHelper
     {
         /// <summary>
-        /// 
-        /// </summary>
-        /// <summary>
         /// 缓存索引，BootstrapAdmin后台清理缓存时使用
         /// </summary>
         public const string RetrieveDictsDataKey = "BootstrapDict-RetrieveDicts";
+
         /// <summary>
         /// 
         /// </summary>
@@ -28,6 +26,7 @@ namespace Bootstrap.Client.DataAccess
         {
             return RetrieveAppName("个人中心地址");
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -36,6 +35,7 @@ namespace Bootstrap.Client.DataAccess
         {
             return RetrieveAppName("系统设置地址");
         }
+        
         /// <summary>
         /// 
         /// </summary>
@@ -44,6 +44,7 @@ namespace Bootstrap.Client.DataAccess
         {
             return RetrieveAppName("网站标题");
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -52,6 +53,7 @@ namespace Bootstrap.Client.DataAccess
         {
             return RetrieveAppName("网站页脚");
         }
+
         /// <summary>
         /// 
         /// </summary>

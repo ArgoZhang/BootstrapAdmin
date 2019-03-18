@@ -32,6 +32,7 @@ INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('网站设置', '前台
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统设置', '程序异常保留时长', '1', 0);
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统设置', '操作日志保留时长', '12', 0);
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统设置', '登录日志保留时长', '12', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统设置', '访问日志保留时长', '1', 0);
 
 -- 时长单位 天
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统设置', 'Cookie保留时长', '7', 0);

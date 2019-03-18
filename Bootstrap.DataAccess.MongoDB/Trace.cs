@@ -22,7 +22,7 @@ namespace Bootstrap.DataAccess.MongoDB
             var filter = filterBuilder.Empty;
             if (startTime.HasValue) filter = filterBuilder.Gt("LogTime", startTime.Value);
             if (endTime.HasValue) filter = filterBuilder.Lt("LogTime", endTime.Value.AddDays(1).AddSeconds(-1));
-            if (startTime == null && endTime == null) filter = filterBuilder.Gt("LogTime", DateTime.Today.AddDays(-7));
+            if (startTime == null && endTime == null) filter = filterBuilder.Gt("LogTime", DateTime.Today.AddMonths(0 - DictHelper.RetrieveAccessLogPeriod()));
 
             // sort
             var sortBuilder = Builders<DataAccess.Trace>.Sort;
@@ -73,7 +73,16 @@ namespace Bootstrap.DataAccess.MongoDB
         {
             p.Id = null;
             DbManager.Traces.InsertOne(p);
+            ClearTraces();
             return true;
+        }
+
+        private static void ClearTraces()
+        {
+            System.Threading.Tasks.Task.Run(() =>
+            {
+                DbManager.Traces.DeleteMany(t => t.LogTime < DateTime.Now.AddMonths(0 - DictHelper.RetrieveAccessLogPeriod()));
+            });
         }
     }
 }

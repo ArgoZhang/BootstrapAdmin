@@ -132,30 +132,36 @@ namespace Bootstrap.DataAccess
         /// 程序异常时长 默认1月
         /// </summary>
         /// <returns></returns>
-        public int RetrieveExceptionsLogPeriod() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().Where(d => d.Category == "系统设置" && d.Name == "程序异常保留时长" && d.Define == 0).FirstOrDefault()?.Code, 1);
+        public int RetrieveExceptionsLogPeriod() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "程序异常保留时长" && d.Define == 0)?.Code, 1);
 
         /// <summary>
         /// 操作日志时长 默认12月
         /// </summary>
         /// <returns></returns>
-        public int RetrieveLogsPeriod() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().Where(d => d.Category == "系统设置" && d.Name == "操作日志保留时长" && d.Define == 0).FirstOrDefault()?.Code, 12);
+        public int RetrieveLogsPeriod() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "操作日志保留时长" && d.Define == 0)?.Code, 12);
 
         /// <summary>
         /// 登录日志时长 默认12月
         /// </summary>
         /// <returns></returns>
-        public int RetrieveLoginLogsPeriod() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().Where(d => d.Category == "系统设置" && d.Name == "登录日志保留时长" && d.Define == 0).FirstOrDefault()?.Code, 12);
+        public int RetrieveLoginLogsPeriod() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "登录日志保留时长" && d.Define == 0)?.Code, 12);
 
         /// <summary>
         /// Cookie保存时长 默认7天
         /// </summary>
         /// <returns></returns>
-        public int RetrieveCookieExpiresPeriod() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().Where(d => d.Category == "系统设置" && d.Name == "Cookie保留时长" && d.Define == 0).FirstOrDefault()?.Code, 7);
+        public int RetrieveCookieExpiresPeriod() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "Cookie保留时长" && d.Define == 0)?.Code, 7);
 
         /// <summary>
         /// 获得 项目是否获取登录地点 默认为false
         /// </summary>
         /// <returns></returns>
-        public int RetrieveLocaleIP() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().Where(d => d.Category == "系统设置" && d.Name == "获取IP地点" && d.Define == 0).FirstOrDefault()?.Code, 0);
+        public int RetrieveLocaleIP() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "获取IP地点" && d.Define == 0)?.Code, 0);
+
+        /// <summary>
+        /// 获得 访问日志保留时长 默认为1个月
+        /// </summary>
+        /// <returns></returns>
+        public int RetrieveAccessLogPeriod() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "访问日志保留时长" && d.Define == 0)?.Code, 1);
     }
 }

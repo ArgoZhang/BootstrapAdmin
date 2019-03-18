@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Xunit;
 
 namespace Bootstrap.DataAccess
@@ -130,6 +130,13 @@ namespace Bootstrap.DataAccess
         {
             var dict = new Dict();
             Assert.Equal(0, dict.RetrieveLocaleIP());
+        }
+
+        [Fact]
+        public void RetrieveAccessLogPeriod_Ok()
+        {
+            var dict = new Dict();
+            Assert.Equal(1, dict.RetrieveAccessLogPeriod());
         }
     }
 }

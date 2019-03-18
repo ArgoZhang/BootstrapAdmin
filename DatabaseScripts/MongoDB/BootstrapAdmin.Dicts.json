@@ -313,5 +313,12 @@
     "Name": "获取IP地点",
     "Code": "0",
     "Define": NumberInt(0)
+  },
+  {
+    "_id": ObjectId("5bd6c73d5fa31256f77e4a45"),
+    "Category": "系统设置",
+    "Name": "访问日志保留时长",
+    "Code": "1",
+    "Define": NumberInt(0)
   }
 ]

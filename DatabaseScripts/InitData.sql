@@ -1,4 +1,4 @@
-﻿USE [BootstrapAdmin]
+USE [BootstrapAdmin]
 GO
 
 DELETE From Users where ID = 1
@@ -35,6 +35,7 @@ INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'网站设�
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'系统设置', N'程序异常保留时长', '1', 0)
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'系统设置', N'操作日志保留时长', '12', 0)
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'系统设置', N'登录日志保留时长', '12', 0)
+INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'系统设置', N'访问日志保留时长', '1', 0)
 
 -- 时长单位 天
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'系统设置', N'Cookie保留时长', '7', 0)
