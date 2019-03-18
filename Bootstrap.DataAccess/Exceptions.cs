@@ -1,4 +1,4 @@
-﻿using Longbow.Web.Mvc;
+using Longbow.Web.Mvc;
 using PetaPoco;
 using System;
 using System.Collections.Generic;
@@ -96,7 +96,7 @@ namespace Bootstrap.DataAccess
         /// 查询一周内所有异常
         /// </summary>
         /// <returns></returns>
-        public virtual IEnumerable<Exceptions> Retrieves() => DbManager.Create().Fetch<Exceptions>("select * from Exceptions where LogTime > @0 order by LogTime desc", DateTime.Now.AddDays(-7));
+        public virtual IEnumerable<Exceptions> Retrieves() => DbManager.Create().Fetch<Exceptions>("select * from Exceptions where LogTime > @0 order by LogTime desc", DateTime.Now.AddMonths(0 - DictHelper.RetrieveExceptionsLogPeriod()));
 
         /// <summary>
         /// 
@@ -110,7 +110,7 @@ namespace Bootstrap.DataAccess
             var sql = new Sql("select * from Exceptions");
             if (startTime.HasValue) sql.Append("where LogTime > @0", startTime.Value);
             if (endTime.HasValue) sql.Append("where LogTime < @0", endTime.Value.AddDays(1).AddSeconds(-1));
-            if (startTime == null && endTime == null) sql.Append("where LogTime > @0", DateTime.Today.AddDays(-7));
+            if (startTime == null && endTime == null) sql.Append("where LogTime > @0", DateTime.Today.AddMonths(0 - DictHelper.RetrieveExceptionsLogPeriod()));
             sql.Append($"order by {po.Sort} {po.Order}");
 
             return DbManager.Create().Page<Exceptions>(po.PageIndex, po.Limit, sql);

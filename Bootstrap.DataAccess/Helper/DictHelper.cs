@@ -117,7 +117,7 @@ namespace Bootstrap.DataAccess
         public static IEnumerable<KeyValuePair<string, string>> RetrieveApps() => DbContextManager.Create<Dict>().RetrieveApps();
 
         /// <summary>
-        /// 
+        /// 程序异常时长 默认1月
         /// </summary>
         /// <returns></returns>
         public static int RetrieveExceptionsLogPeriod() => DbContextManager.Create<Dict>().RetrieveExceptionsLogPeriod();

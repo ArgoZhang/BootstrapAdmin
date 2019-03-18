@@ -1,4 +1,4 @@
-﻿using Longbow.Web.Mvc;
+using Longbow.Web.Mvc;
 using MongoDB.Driver;
 using PetaPoco;
 using System;
@@ -17,7 +17,7 @@ namespace Bootstrap.DataAccess.MongoDB
         {
             System.Threading.Tasks.Task.Run(() =>
             {
-                DbManager.Exceptions.DeleteMany(ex => ex.LogTime < DateTime.Now.AddDays(-7));
+                DbManager.Exceptions.DeleteMany(ex => ex.LogTime < DateTime.Now.AddMonths(0 - DictHelper.RetrieveExceptionsLogPeriod()));
             });
         }
 
@@ -27,7 +27,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <returns></returns>
         public override IEnumerable<DataAccess.Exceptions> Retrieves()
         {
-            return DbManager.Exceptions.Find(ex => ex.LogTime >= DateTime.Now.AddDays(-7)).ToList();
+            return DbManager.Exceptions.Find(ex => ex.LogTime >= DateTime.Today.AddMonths(0 - DictHelper.RetrieveExceptionsLogPeriod())).ToList();
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Bootstrap.DataAccess.MongoDB
             var filter = filterBuilder.Empty;
             if (startTime.HasValue) filter = filterBuilder.Gt("LogTime", startTime.Value);
             if (endTime.HasValue) filter = filterBuilder.Lt("LogTime", endTime.Value.AddDays(1).AddSeconds(-1));
-            if (startTime == null && endTime == null) filter = filterBuilder.Gt("LogTime", DateTime.Today.AddDays(-7));
+            if (startTime == null && endTime == null) filter = filterBuilder.Gt("LogTime", DateTime.Today.AddMonths(0 - DictHelper.RetrieveExceptionsLogPeriod()));
 
             // sort
             var sortBuilder = Builders<DataAccess.Exceptions>.Sort;
