@@ -21,5 +21,12 @@ namespace Bootstrap.Admin.Api
             var urls = await Client.GetAsJsonAsync<IEnumerable<KeyValuePair<DateTime, string>>>("UnitTest");
             Assert.Empty(urls);
         }
+
+        [Fact]
+        public async void Put_Ok()
+        {
+            var ret = await Client.PutAsJsonAsync<string, bool>("");
+            Assert.False(ret);
+        }
     }
 }
