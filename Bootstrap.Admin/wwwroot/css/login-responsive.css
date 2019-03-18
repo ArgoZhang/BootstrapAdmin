@@ -38,6 +38,9 @@
     .slidercaptcha {
         top: -254px;
         left: -15px;
+    }
+
+    .slidercaptcha, .slidercaptcha.forgot {
         width: 310px;
         height: 280px;
     }

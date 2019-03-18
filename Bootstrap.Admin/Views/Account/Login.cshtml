@@ -112,7 +112,7 @@
                                 <span class="fa fa-user-circle-o"></span>
                             </div>
                         </div>
-                        <input type="text" id="displayName" class="form-control" value="" placeholder="显示名称不可为空" maxlength="20"  data-valid="true" />
+                        <input type="text" id="displayName" class="form-control" value="" placeholder="显示名称不可为空" maxlength="20" data-valid="true" />
                     </div>
                 </div>
                 <div class="form-group">
@@ -151,6 +151,13 @@
                     <i class="fa fa-save"></i>
                     <span>提交</span>
                 </button>
+                <div class="slidercaptcha forgot reg card">
+                    <div class="card-header">
+                        <span>请完成安全验证</span>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="card-body"><div id="regcap"></div></div>
+                </div>
             </div>
         </div>
     </div>
@@ -199,6 +206,13 @@
                     <i class="fa fa-send-o"></i>
                     <span>提交</span>
                 </button>
+                <div class="slidercaptcha forgot card">
+                    <div class="card-header">
+                        <span>请完成安全验证</span>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="card-body"><div id="forgotcap"></div></div>
+                </div>
             </div>
         </div>
     </div>

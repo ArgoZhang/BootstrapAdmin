@@ -185,7 +185,7 @@
         $(this.refreshIcon).on('click', function () {
             that.text.text(that.options.barText);
             that.reset();
-            if ($.isFunction(that.options.onRefresh)) that.options.onRefresh.call(that.$element);
+            if ($.isFunction(that.options.onRefresh)) that.options.onRefresh.call(that);
         });
 
         var originX, originY, trail = [],
@@ -226,10 +226,10 @@
             } = that.verify()
             if (spliced && verified) {
                 that.sliderContainer.addClass('sliderContainer_success');
-                if ($.isFunction(that.options.onSuccess)) that.options.onSuccess.call(that.$element);
+                if ($.isFunction(that.options.onSuccess)) that.options.onSuccess.call(that);
             } else {
                 that.sliderContainer.addClass('sliderContainer_fail');
-                if ($.isFunction(that.options.onFail)) that.options.onFail.call(that.$element);
+                if ($.isFunction(that.options.onFail)) that.options.onFail.call(that);
                 setTimeout(() => {
                     that.text.text(that.options.failedText);
                     that.reset();

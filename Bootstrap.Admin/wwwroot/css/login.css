@@ -86,3 +86,17 @@
         .slidercaptcha.card .card-header .close:hover {
             color: #fff;
         }
+
+.slidercaptcha.forgot {
+    position: absolute;
+    left: auto;
+    right: 14px;
+    bottom: 14px;
+    top: auto;
+    margin: 0;
+    width: 274px;
+}
+
+.slidercaptcha.reg {
+    bottom: 60px;
+}
