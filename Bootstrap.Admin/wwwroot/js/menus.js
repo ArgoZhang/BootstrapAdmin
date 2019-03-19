@@ -1,4 +1,4 @@
-﻿$(function () {
+$(function () {
     var $dialog = $('#dialogNew');
     var $pickIcon = $('#pickIcon');
     var $dialogNew = $dialog;
@@ -22,8 +22,8 @@
     };
 
     var state = [];
-
-    $('table').lgbTable({
+    var $table = $('table');
+    $table.lgbTable({
         url: Menu.url,
         dataBinder: {
             map: {
@@ -80,11 +80,19 @@
             },
             columns: [
                 {
-                    title: "父级菜单", field: "ParentName", sortable: true, formatter: function (value, row, index) {
-                        return (value === "0" || value === null) ? "" : value;
+                    title: "菜单名称", field: "Name", sortable: true, formatter: function (value, row, index) {
+                        return $.format('<span class="menu">{0}</span>', value);
+                    },
+                    events: {
+                        'click .menu': function (e, value, row, index) {
+                            var $plus = $(this).prev();
+                            if ($plus.hasClass('fa')) {
+                                $plus.trigger('click');
+                            }
+                            return false;
+                        }
                     }
                 },
-                { title: "菜单名称", field: "Name", sortable: true },
                 { title: "菜单序号", field: "Order", sortable: true },
                 {
                     title: "菜单图标", field: "Icon", sortable: false, align: 'center', formatter: function (value, row, index) {
@@ -128,7 +136,29 @@
                         return $('#app').next().find('[data-val="' + value + '"]:first').text();
                     }
                 }
-            ]
+            ],
+            idField: "Id",
+            //在哪一列展开树形
+            treeShowField: 'Name',
+            //指定父id列
+            parentIdField: 'ParentId',
+
+            onResetView: function (data) {
+                //console.log('load');
+                $table.treegrid({
+                    treeColumn: 2,
+                    expanderExpandedClass: 'fa fa-chevron-circle-down',
+                    expanderCollapsedClass: 'fa fa-chevron-circle-down',
+                    onChange: function () {
+                        $table.bootstrapTable('resetWidth');
+                    }
+                });
+                //只展开树形的第一级节点
+                $table.treegrid('getRootNodes').treegrid('expand');
+            },
+            onCheckRoot: function (row, data) {
+                return row[this.options.parentIdField] === '' || row[this.options.parentIdField] === '0';
+            }
         }
     });
 

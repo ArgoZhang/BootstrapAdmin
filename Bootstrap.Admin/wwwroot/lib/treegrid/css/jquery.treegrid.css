@@ -1,0 +1,31 @@
+.treegrid-indent {
+	width:16px;
+	height: 16px;
+	display: inline-block;
+	position: relative;
+}
+
+.treegrid-expander {
+	width:16px;
+	height: 16px;
+	display: inline-block;
+	transition: all .3s ease;
+	transform: rotate(0);
+	margin-right: 2px;
+}
+
+	.treegrid-expander.fa {
+		cursor: pointer;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		color: #17a2b8;
+	}
+
+		.treegrid-expander.fa + .menu {
+			cursor: pointer;
+		}
+
+	.treegrid-collapsed .treegrid-expander {
+		transform: rotate(-90deg);
+	}

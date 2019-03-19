@@ -57,7 +57,19 @@
         "bootstrap-table.js",
         "bootstrap-table.min.css",
         "extensions/export/bootstrap-table-export.js",
-        "extensions/export/bootstrap-table-export.min.js"
+        "extensions/export/bootstrap-table-export.min.js",
+        "extensions/treegrid/bootstrap-table-treegrid.js",
+        "extensions/treegrid/bootstrap-table-treegrid.min.js"
+      ]
+    },
+    {
+      "provider": "cdnjs",
+      "library": "jquery-treegrid@0.2.0",
+      "destination": "wwwroot/lib/treegrid/",
+      "files": [
+        "css/jquery.treegrid.css",
+        "js/jquery.treegrid.js",
+        "js/jquery.treegrid.min.js"
       ]
     },
     {
