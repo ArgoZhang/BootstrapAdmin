@@ -128,7 +128,7 @@ $(function () {
                 },
                 {
                     title: "菜单类型", field: "IsResource", sortable: true, formatter: function (value, row, index) {
-                        return value === 0 ? "菜单" : "资源";
+                        return value === "0" ? "菜单" : "资源";
                     }
                 },
                 {
