@@ -96,10 +96,7 @@ $(function () {
                 { title: "菜单序号", field: "Order", sortable: true },
                 {
                     title: "菜单图标", field: "Icon", sortable: false, align: 'center', formatter: function (value, row, index) {
-                        if (value) {
-                            return $.format('<i class="text-info {0}"></i>', value);
-                        }
-                        return "";
+                        return value ? $.format('<i class="text-info {0}"></i>', value) : "";
                     }
                 },
                 { title: "菜单路径", field: "Url", sortable: false },
