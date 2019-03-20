@@ -182,6 +182,12 @@
                 src: this,
                 url: this.options.url
             };
+            var formatData = function (data) {
+                delete data._nodes;
+                delete data._parent;
+                delete data._level;
+                delete data._last;
+            };
             return {
                 'click .edit': function (e, value, row, index) {
                     op.dataEntity.load(row);
@@ -191,10 +197,22 @@
                     $(op.modal).modal("show");
                 },
                 'click .del': function (e, value, row, index) {
+                    var text = "您确定要删除 <span class='text-danger font-weight-bold'>" + row.Name + "</span> 吗？";
+                    var data = $.extend({}, row);
+                    formatData(data);
+                    data = [data];
+                    if ($.isArray(row._nodes) && row._nodes.length > 0) {
+                        $.each(row._nodes, function (index, element) {
+                            var ele = $.extend({}, element);
+                            formatData(ele);
+                            data.push(ele);
+                        });
+                        text = "本删除项含有级联子项目</br>您确定要删除 <span class='text-danger font-weight-bold'>" + row.Name + "</span> 以及子项目吗？";
+                    }
                     swal({
                         html: true,
                         title: "删除数据",
-                        text: "您确定要删除 <span class='text-danger font-weight-bold'>" + row.Name + "</span> 吗？",
+                        text: text,
                         type: "warning",
                         showCancelButton: true,
                         cancelButtonClass: 'btn-secondary',
@@ -202,11 +220,11 @@
                         confirmButtonClass: "btn-danger ml-2",
                         cancelButtonText: "取消"
                     }, function () {
-                        var data = $.extend({}, row);
-                        delete data._nodes;
-                        $.logData.push({ url: op.url, data: data });                       
+                        $.logData.push({ url: op.url, data: data });
                         setTimeout(function () {
-                            var iDs = [value];
+                            var iDs = data.map(function (element, index) {
+                                return element.Id;
+                            });
                             $.bc({
                                 url: op.url, data: iDs, method: 'delete', title: '删除数据',
                                 callback: function (result) {
