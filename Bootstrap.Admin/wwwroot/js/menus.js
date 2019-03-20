@@ -138,13 +138,21 @@ $(function () {
                 }
             ],
             idField: "Id",
-            //在哪一列展开树形
             treeShowField: 'Name',
-            //指定父id列
             parentIdField: 'ParentId',
-
-            onResetView: function (data) {
-                //console.log('load');
+            onPreBody: function(data) {
+                if($('#txt_parent_menus_name').val() !== '') {
+                    this.treeShowField = false;
+                }
+                else {
+                    this.treeShowField = 'Name';
+                }
+                var bt = $table.data('bootstrap.table');
+                if(bt) {
+                    bt.treeEnable = !!this.treeShowField;
+                }
+            },
+            onResetView: function () {
                 $table.treegrid({
                     treeColumn: 2,
                     expanderExpandedClass: 'fa fa-chevron-circle-down',
@@ -153,7 +161,6 @@ $(function () {
                         $table.bootstrapTable('resetWidth');
                     }
                 });
-                //只展开树形的第一级节点
                 $table.treegrid('getRootNodes').treegrid('expand');
             },
             onCheckRoot: function (row, data) {
