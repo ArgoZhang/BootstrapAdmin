@@ -201,6 +201,7 @@
                         confirmButtonClass: "btn-danger ml-2",
                         cancelButtonText: "取消"
                     }, function () {
+                        $.logData.push({ url: op.url, data: $.extend({}, row, { _nodes: null }) });
                         setTimeout(function () {
                             var iDs = [value];
                             $.bc({
