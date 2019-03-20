@@ -197,7 +197,9 @@
                     $(op.modal).modal("show");
                 },
                 'click .del': function (e, value, row, index) {
-                    var text = "您确定要删除 <span class='text-danger font-weight-bold'>" + row.Name + "</span> 吗？";
+                    var displayName = "本项目";
+                    if (row.Name) displayName = " <span class='text-danger font-weight-bold'>" + row.Name + "</span> ";
+                    var text = "您确定要删除" + displayName + "吗？";
                     var data = $.extend({}, row);
                     formatData(data);
                     data = [data];
