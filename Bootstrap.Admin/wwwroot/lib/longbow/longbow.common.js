@@ -1,4 +1,4 @@
-﻿(function ($) {
+(function ($) {
     // 增加Array扩展
     if (!$.isFunction(Array.prototype.filter)) {
         Array.prototype.filter = function (callback, thisObject) {
@@ -285,7 +285,7 @@
                 url: options.url,
                 checkbox: true,
                 edit: true,
-                editTitle: "编辑",
+                editTitle: "操作",
                 editField: "Id",
                 queryButton: false
             }, options.smartTable);
@@ -294,7 +294,7 @@
                 field: settings.editField,
                 events: bsa.idEvents(),
                 formatter: function (value, row, index) {
-                    return "<a class='edit' title='" + value + "' href='javascript:void(0)'>" + this.title + "</a>";
+                    return "<div class='btn-group'><button class='edit btn btn-sm btn-success'><i class='fa fa-edit'></i><span>编辑</span></button><button class='del btn btn-sm btn-danger'><i class='fa fa-remove'></i><span>删除</span></button></div>";
                 }
             });
             if (settings.checkbox) settings.columns.unshift({ checkbox: true });
