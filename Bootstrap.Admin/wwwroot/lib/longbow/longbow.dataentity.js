@@ -1,4 +1,4 @@
-﻿(function ($) {
+(function ($) {
     DataEntity = function (options) {
         this.options = options;
     };
@@ -178,7 +178,8 @@
                 dataEntity: this.dataEntity,
                 table: this.options.bootstrapTable,
                 modal: this.options.modal,
-                src: this
+                src: this,
+                url: this.options.url
             };
             return {
                 'click .edit': function (e, value, row, index) {
@@ -187,6 +188,30 @@
                     $(op.table).bootstrapTable('check', index);
                     handlerCallback.call(op.src, null, e, { oper: 'edit', data: row });
                     $(op.modal).modal("show");
+                },
+                'click .del': function (e, value, row, index) {
+                    swal({
+                        html: true,
+                        title: "删除数据",
+                        text: "您确定要删除 <span class='text-danger font-weight-bold'>" + row.Name + "</span> 吗？",
+                        type: "warning",
+                        showCancelButton: true,
+                        cancelButtonClass: 'btn-secondary',
+                        confirmButtonText: "我要删除",
+                        confirmButtonClass: "btn-danger ml-2",
+                        cancelButtonText: "取消"
+                    }, function () {
+                        setTimeout(function () {
+                            var iDs = [value];
+                            $.bc({
+                                url: op.url, data: iDs, method: 'delete', title: '删除数据',
+                                callback: function (result) {
+                                    if (result) $(op.table).bootstrapTable('refresh');
+                                    handlerCallback.call(op.src, null, e, { oper: 'del', success: result });
+                                }
+                            });
+                        }, 100);
+                    });
                 }
             };
         }
