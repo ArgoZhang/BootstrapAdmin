@@ -1,4 +1,4 @@
-﻿@media (min-width: 375px) {
+@media (min-width: 375px) {
     .toolbar .dropdown-menu a {
         padding: 0 14px;
     }
@@ -15,14 +15,6 @@
 @media (min-width: 568px) {
     .sidebar-toggle-box span {
         display: inline;
-    }
-
-    .toolbar {
-        display: none;
-    }
-
-    .bs-bars {
-        display: inline-block;
     }
 }
 

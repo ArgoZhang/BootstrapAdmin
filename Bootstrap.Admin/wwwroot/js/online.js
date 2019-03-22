@@ -2,7 +2,7 @@ $(function () {
     var apiUrl = "api/OnlineUsers";
     var $table = $('table').smartTable({
         url: apiUrl,
-        method: "post",
+        method: "get",
         sidePagination: "client",
         showToggle: false,
         showRefresh: false,

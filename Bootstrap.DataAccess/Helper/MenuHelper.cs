@@ -1,7 +1,9 @@
-﻿using Bootstrap.Security;
+using Bootstrap.Security;
 using Bootstrap.Security.DataAccess;
 using Longbow.Cache;
 using Longbow.Data;
+using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -97,6 +99,26 @@ namespace Bootstrap.DataAccess
         {
             var menus = RetrieveAllMenus(userName).Where(m => m.Category == "0" && m.IsResource == 0);
             return DbHelper.CascadeMenus(menus, activeUrl);
+        }
+
+        /// <summary>
+        /// 通过当前用户名与指定菜单路径获取此菜单下所有授权按钮集合
+        /// </summary>
+        /// <param name="context">请求上下文</param>
+        /// <param name="url">资源按钮所属菜单</param>
+        /// <param name="key">资源授权码</param>
+        /// <returns></returns>
+        public static bool AuthorizateButtons(HttpContext context, string url, string key)
+        {
+            if (context.User.IsInRole("Administrators")) return true;
+
+            var menus = RetrieveAllMenus(context.User.Identity.Name);
+            var activeMenu = menus.FirstOrDefault(m => m.Url.Equals(url, StringComparison.OrdinalIgnoreCase));
+            if (activeMenu == null) return false;
+
+            var authorKeys = menus.Where(m => m.ParentId == activeMenu.Id && m.IsResource == 2).Select(m => m.Url);
+            var keys = key.SpanSplitAny(",. ;", StringSplitOptions.RemoveEmptyEntries);
+            return keys.Any(m => authorKeys.Any(k => k == m));
         }
 
         /// <summary>

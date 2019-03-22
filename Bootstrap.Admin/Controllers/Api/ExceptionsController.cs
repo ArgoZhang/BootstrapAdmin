@@ -1,4 +1,4 @@
-﻿using Bootstrap.Admin.Query;
+using Bootstrap.Admin.Query;
 using Longbow.Web.Mvc;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -28,10 +28,11 @@ namespace Bootstrap.Admin.Controllers.Api
         }
 
         /// <summary>
-        /// 
+        /// 异常程序页面点击服务器日志按钮获取所有物理日志文件列表方法
         /// </summary>
         /// <returns></returns>
         [HttpPost]
+        [ButtonAuthorize(Url = "~/Admin/Exceptions", Auth = "log")]
         public IEnumerable<string> Post()
         {
             var filePath = Path.Combine(AppContext.BaseDirectory, "Error");
@@ -43,10 +44,11 @@ namespace Bootstrap.Admin.Controllers.Api
         }
 
         /// <summary>
-        /// 
+        /// 选中指定文件查看其内容方法
         /// </summary>
         /// <returns></returns>
         [HttpPut]
+        [ButtonAuthorize(Url = "~/Admin/Exceptions", Auth = "log")]
         public JsonResult Put([FromBody]ExceptionFileQuery exceptionFile)
         {
             var filePath = Path.Combine(AppContext.BaseDirectory, "Error");
@@ -66,7 +68,7 @@ namespace Bootstrap.Admin.Controllers.Api
                     else if (line.StartsWith("Exception Type: Longbow.Data.DBAccessException")) sb.AppendFormat("<div class='logDbExcep'>{0}</div>", line);
                     else if (line.StartsWith("StackTrace Information")) sb.AppendFormat("<b>{0}</b><br>", line);
                     else sb.AppendFormat("{0}<br>", line);
-                };
+                }
             }
             return new JsonResult(sb.ToString());
         }

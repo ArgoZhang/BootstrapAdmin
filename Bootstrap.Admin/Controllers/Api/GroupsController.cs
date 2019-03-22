@@ -1,4 +1,4 @@
-﻿using Bootstrap.Admin.Query;
+using Bootstrap.Admin.Query;
 using Bootstrap.DataAccess;
 using Longbow.Web.Mvc;
 using Microsoft.AspNetCore.Mvc;
@@ -41,6 +41,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// </summary>
         /// <param name="value"></param>
         [HttpPost]
+        [ButtonAuthorize(Url = "~/Admin/Groups", Auth = "add,edit")]
         public bool Post([FromBody]Group value)
         {
             return GroupHelper.Save(value);
@@ -51,6 +52,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// </summary>
         /// <param name="value"></param>
         [HttpDelete]
+        [ButtonAuthorize(Url = "~/Admin/Groups", Auth = "del")]
         public bool Delete([FromBody]IEnumerable<string> value)
         {
             return GroupHelper.Delete(value);
@@ -82,20 +84,21 @@ namespace Bootstrap.Admin.Controllers.Api
         /// 保存部门授权
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="groupIds"></param>
+        /// <param name="values"></param>
         /// <param name="type"></param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public bool Put(string id, [FromBody]IEnumerable<string> groupIds, [FromQuery]string type)
+        [ButtonAuthorize(Url = "~/Admin/Groups", Auth = "assignUser,assignRole")]
+        public bool Put(string id, [FromBody]IEnumerable<string> values, [FromQuery]string type)
         {
             var ret = false;
             switch (type)
             {
                 case "user":
-                    ret = GroupHelper.SaveByUserId(id, groupIds);
+                    ret = UserHelper.SaveByGroupId(id, values);
                     break;
                 case "role":
-                    ret = GroupHelper.SaveByRoleId(id, groupIds);
+                    ret = RoleHelper.SaveByGroupId(id, values);
                     break;
             }
             return ret;

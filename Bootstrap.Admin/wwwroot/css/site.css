@@ -1,4 +1,4 @@
-﻿/*Title*/
+/*Title*/
 .header {
     padding: 0 15px;
     background: #fff;
@@ -578,13 +578,35 @@ li[data-category="1"] .dd3-content .menuType {
         margin-right: 4px;
     }
 
+.bootstrap-table .fa-info {
+    width: 9px;
+}
+
+.bootstrap-table .fixed-table-toolbar .bs-bars, .fixed-table-toolbar .search, .fixed-table-toolbar .columns {
+    line-height: normal;
+}
+
 .bootstrap-table .bs-bars .btn span:last-child {
     display: none;
 }
 
-.bootstrap-table .fa-info {
-    width: 9px;
+.bootstrap-table .bs-bars .toolbar {
+    display: none;
 }
+
+.bootstrap-table .bs-bars .gear .dropdown-menu a {
+    padding: 8px 12px;
+    display: table-cell;
+    color: #504d4d;
+}
+
+    .bootstrap-table .bs-bars .gear .dropdown-menu a:not(:first-child) {
+        border-left: solid 1px #aeb2b7;
+    }
+
+    .bootstrap-table .bs-bars .gear .dropdown-menu a:hover {
+        color: #235e90;
+    }
 
 pre {
     padding: 5px;

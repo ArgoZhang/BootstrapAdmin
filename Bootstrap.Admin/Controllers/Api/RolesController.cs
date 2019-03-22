@@ -1,4 +1,4 @@
-﻿using Bootstrap.Admin.Query;
+using Bootstrap.Admin.Query;
 using Bootstrap.DataAccess;
 using Longbow.Web.Mvc;
 using Microsoft.AspNetCore.Mvc;
@@ -52,24 +52,28 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <summary>
         /// 保存角色
         /// </summary>
-        /// <param name="id">用户ID/部门ID/菜单ID</param>
-        /// <param name="roleIds">选中的角色ID集合</param>
+        /// <param name="id">角色ID</param>
+        /// <param name="values">选中的ID集合</param>
         /// <param name="type">type=menu时，菜单维护页面对角色授权弹框保存按钮调用</param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public bool Put(string id, [FromBody]IEnumerable<string> roleIds, [FromQuery]string type)
+        [ButtonAuthorize(Url = "~/Admin/Roles", Auth = "assignUser,assignGroup,assignMenu,assignApp")]
+        public bool Put(string id, [FromBody]IEnumerable<string> values, [FromQuery]string type)
         {
             var ret = false;
             switch (type)
             {
                 case "user":
-                    ret = RoleHelper.SaveByUserId(id, roleIds);
+                    ret = UserHelper.SaveByRoleId(id, values);
                     break;
                 case "group":
-                    ret = RoleHelper.SaveByGroupId(id, roleIds);
+                    ret = GroupHelper.SaveByRoleId(id, values);
                     break;
                 case "menu":
-                    ret = RoleHelper.SavaByMenuId(id, roleIds);
+                    ret = MenuHelper.SaveMenusByRoleId(id, values);
+                    break;
+                case "app":
+                    ret = AppHelper.SaveByRoleId(id, values);
                     break;
             }
             return ret;
@@ -79,6 +83,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// </summary>
         /// <param name="value"></param>
         [HttpPost]
+        [ButtonAuthorize(Url = "~/Admin/Roles", Auth = "add,edit")]
         public bool Post([FromBody]Role value)
         {
             return RoleHelper.Save(value);
@@ -88,6 +93,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// </summary>
         /// <param name="value"></param>
         [HttpDelete]
+        [ButtonAuthorize(Url = "~/Admin/Roles", Auth = "del")]
         public bool Delete([FromBody]IEnumerable<string> value)
         {
             return RoleHelper.Delete(value);

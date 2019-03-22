@@ -1,4 +1,4 @@
-﻿using Bootstrap.DataAccess;
+using Bootstrap.DataAccess;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -23,6 +23,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="files">表单数据集合</param>
         /// <returns></returns>
         [HttpPost("{id}")]
+        [ButtonAuthorize(Url = "~/Admin/Profiles", Auth = "saveIcon")]
         public JsonResult Post(string id, [FromServices]IHostingEnvironment env, [FromForm]DeleteFileCollection files)
         {
             if (!id.Equals("Delete", StringComparison.OrdinalIgnoreCase) || files.Key.Equals("default.jpg", StringComparison.OrdinalIgnoreCase)) return new JsonResult(new object());
@@ -79,6 +80,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="files"></param>
         /// <returns></returns>
         [HttpPost]
+        [ButtonAuthorize(Url = "~/Admin/Profiles", Auth = "saveIcon")]
         public async Task<JsonResult> Post([FromServices]IHostingEnvironment env, IFormCollection files)
         {
             var previewUrl = string.Empty;
@@ -113,6 +115,31 @@ namespace Bootstrap.Admin.Controllers.Api
                 },
                 append = false
             });
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpPut]
+        [ButtonAuthorize(Url = "~/Admin/Profiles", Auth = "saveDisplayName,savePassword,saveApp,saveTheme")]
+        public bool Put([FromBody]User value)
+        {
+            var ret = false;
+            if (value.UserStatus == UserStates.ChangeTheme)
+            {
+                return UserHelper.SaveUserCssByName(value.UserName, value.Css);
+            }
+            if (value.UserName.Equals(User.Identity.Name, StringComparison.OrdinalIgnoreCase))
+            {
+                if (value.UserStatus == UserStates.ChangeDisplayName)
+                    ret = UserHelper.SaveDisplayName(value.UserName, value.DisplayName);
+                else if (value.UserStatus == UserStates.ChangePassword)
+                    ret = UserHelper.ChangePassword(value.UserName, value.Password, value.NewPassword);
+                else if (value.UserStatus == UserStates.SaveApp)
+                    ret = UserHelper.SaveApp(value.UserName, value.App);
+            }
+            return ret;
         }
     }
 }

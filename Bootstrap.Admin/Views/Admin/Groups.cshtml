@@ -1,4 +1,4 @@
-﻿@model NavigatorBarModel
+@model NavigatorBarModel
 @{
     ViewBag.Title = "部门管理";
     Layout = "_Default";
@@ -24,20 +24,16 @@
     </form>
 }
 @section toolbar {
-    <button id="btn_assignUser" type="button" class="btn btn-info">
-        <span class="fa fa-user" aria-hidden="true"></span><span>分配用户</span>
+    <button id="btn_assignUser" type="button" class="btn btn-info" asp-auth="assignUser">
+        <i class="fa fa-user" aria-hidden="true"></i><span>分配用户</span>
     </button>
-    <button id="btn_assignRole" type="button" class="btn btn-warning">
-        <span class="fa fa-sitemap" aria-hidden="true"></span><span>分配角色</span>
+    <button id="btn_assignRole" type="button" class="btn btn-warning" asp-auth="assignRole">
+        <i class="fa fa-sitemap" aria-hidden="true"></i><span>分配角色</span>
     </button>
-    <div class="toolbar btn-group">
-        <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" type="button"><i class="fa fa-gear"></i></button>
-        <div class="dropdown-menu">
-            @await Html.PartialAsync("_ButtonBarGroup")
-            <a id="tb_assignRole" href="#" title="分配角色"><i class="fa fa-sitemap"></i></a>
-            <a id="tb_assignUser" href="#" title="分配用户"><i class="fa fa-user"></i></a>
-        </div>
-    </div>
+}
+@section gear {
+    <a id="tb_assignUser" href="#" title="分配用户" asp-auth="assignUser"><i class="fa fa-user"></i></a>
+    <a id="tb_assignRole" href="#" title="分配角色" asp-auth="assignRole"><i class="fa fa-sitemap"></i></a>
 }
 @section modal {
     <div class="modal-header">

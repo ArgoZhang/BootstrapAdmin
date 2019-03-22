@@ -1,4 +1,4 @@
-﻿using Bootstrap.Admin.Query;
+using Bootstrap.Admin.Query;
 using Bootstrap.DataAccess;
 using Longbow.Web.Mvc;
 using Microsoft.AspNetCore.Authorization;
@@ -26,31 +26,7 @@ namespace Bootstrap.Admin.Controllers.Api
         {
             return value.RetrieveData();
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        [HttpPut]
-        public bool Put([FromBody]User value)
-        {
-            if (User.IsInRole("Administrators")) return false;
 
-            var ret = false;
-            if (value.UserStatus == UserStates.ChangeTheme)
-            {
-                return UserHelper.SaveUserCssByName(value.UserName, value.Css);
-            }
-            if (value.UserName.Equals(User.Identity.Name, StringComparison.OrdinalIgnoreCase))
-            {
-                if (value.UserStatus == UserStates.ChangeDisplayName)
-                    ret = UserHelper.SaveDisplayName(value.UserName, value.DisplayName);
-                else if (value.UserStatus == UserStates.ChangePassword)
-                    ret = UserHelper.ChangePassword(value.UserName, value.Password, value.NewPassword);
-                else if (value.UserStatus == UserStates.SaveApp)
-                    ret = UserHelper.SaveApp(value.UserName, value.App);
-            }
-            return ret;
-        }
         /// <summary>
         /// 
         /// </summary>
@@ -81,11 +57,13 @@ namespace Bootstrap.Admin.Controllers.Api
             }
             return ret;
         }
+
         /// <summary>
         /// 前台User View调用，新建/更新用户
         /// </summary>
         /// <param name="value"></param>
         [HttpPost]
+        [ButtonAuthorize(Url = "~/Admin/Users", Auth = "add,edit")]
         public bool Post([FromBody]User value)
         {
             var ret = false;
@@ -102,37 +80,42 @@ namespace Bootstrap.Admin.Controllers.Api
             }
             return ret;
         }
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="userIds"></param>
+        /// <param name="values"></param>
         /// <param name="type"></param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public bool Put(string id, [FromBody]IEnumerable<string> userIds, [FromQuery]string type)
+        [ButtonAuthorize(Url = "~/Admin/Users", Auth = "assignRole,assignGroup")]
+        public bool Put(string id, [FromBody]IEnumerable<string> values, [FromQuery]string type)
         {
             var ret = false;
             switch (type)
             {
                 case "role":
-                    ret = UserHelper.SaveByRoleId(id, userIds);
+                    ret = RoleHelper.SaveByUserId(id, values);
                     break;
                 case "group":
-                    ret = UserHelper.SaveByGroupId(id, userIds);
+                    ret = GroupHelper.SaveByUserId(id, values);
                     break;
             }
             return ret;
         }
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="value"></param>
         [HttpDelete]
+        [ButtonAuthorize(Url = "~/Admin/Users", Auth = "del")]
         public bool Delete([FromBody]IEnumerable<string> value)
         {
             return UserHelper.Delete(value);
         }
+
         /// <summary>
         /// 
         /// </summary>

@@ -1,4 +1,4 @@
-﻿@model NavigatorBarModel
+@model NavigatorBarModel
 @{
     ViewBag.Title = "字典表维护";
     Layout = "_Default";
@@ -40,14 +40,6 @@
             </div>
         </div>
     </form>
-}
-@section toolbar {
-    <div class="toolbar btn-group dropdown">
-        <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" type="button"><i class="fa fa-gear"></i></button>
-        <div class="dropdown-menu">
-            @await Html.PartialAsync("_ButtonBarGroup")
-        </div>
-    </div>
 }
 @section modal {
     <div class="modal-header">

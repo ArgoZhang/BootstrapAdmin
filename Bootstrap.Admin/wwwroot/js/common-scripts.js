@@ -1,12 +1,20 @@
 (function ($) {
+    var formatCategoryName = function(menu) {
+        var ret = "";
+        if (menu.IsResource === 2) ret = "按钮";
+        else if (menu.IsResource === 1) ret = "资源";
+        else ret = menu.CategoryName;
+        return ret;
+    };
+
     var cascadeMenu = function (menus) {
         var html = "";
         $.each(menus, function (index, menu) {
             if (menu.Menus.length === 0) {
-                html += $.format('<li class="dd-item dd3-item" data-id="{0}" data-order="{4}" data-category="{3}"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><div class="checkbox"><label><input type="checkbox" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><div class="radio"><label><input type="radio" name="menu" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><span class="menuType">{5}</span><span class="menuOrder">{4}</span></div></li>', menu.Id, menu.Icon, menu.Name, menu.Category, menu.Order, menu.CategoryName);
+                html += $.format('<li class="dd-item dd3-item" data-id="{0}" data-order="{4}" data-category="{3}"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><div class="checkbox"><label><input type="checkbox" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><div class="radio"><label><input type="radio" name="menu" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><span class="menuType">{5}</span><span class="menuOrder">{4}</span></div></li>', menu.Id, menu.Icon, menu.Name, menu.Category, menu.Order, formatCategoryName(menu));
             }
             else {
-                html += $.format('<li class="dd-item dd3-item" data-id="{0}" data-order="{5}" data-category="{3}"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><div class="checkbox"><label><input type="checkbox" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><div class="radio"><label><input type="radio" name="menu" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><span class="menuType">{6}</span><span class="menuOrder">{5}</span></div><ol class="dd-list">{4}</ol></li>', menu.Id, menu.Icon, menu.Name, menu.Category, cascadeSubMenu(menu.Menus), menu.Order, menu.CategoryName);
+                html += $.format('<li class="dd-item dd3-item" data-id="{0}" data-order="{5}" data-category="{3}"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><div class="checkbox"><label><input type="checkbox" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><div class="radio"><label><input type="radio" name="menu" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><span class="menuType">{6}</span><span class="menuOrder">{5}</span></div><ol class="dd-list">{4}</ol></li>', menu.Id, menu.Icon, menu.Name, menu.Category, cascadeSubMenu(menu.Menus), menu.Order, formatCategoryName(menu));
             }
         });
         return html;
@@ -15,7 +23,7 @@
     var cascadeSubMenu = function (menus) {
         var html = "";
         $.each(menus, function (index, menu) {
-            html += $.format('<li class="dd-item dd3-item" data-id="{0}" data-order="{4}" data-category="{3}"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><div class="checkbox"><label><input type="checkbox" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><div class="radio"><label><input type="radio" name="menu" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><span class="menuType">{5}</span><span class="menuOrder">{4}</span></div></li>', menu.Id, menu.Icon, menu.Name, menu.Category, menu.Order, menu.CategoryName);
+            html += $.format('<li class="dd-item dd3-item" data-id="{0}" data-order="{4}" data-category="{3}"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><div class="checkbox"><label><input type="checkbox" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><div class="radio"><label><input type="radio" name="menu" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><span class="menuType">{5}</span><span class="menuOrder">{4}</span></div></li>', menu.Id, menu.Icon, menu.Name, menu.Category, menu.Order, formatCategoryName(menu));
         });
         return html;
     };
@@ -187,70 +195,70 @@ $(function () {
     });
 
     // Apps
-    App = {
+    window.App = {
         url: 'api/Apps',
         title: "分配应用"
     };
 
     // Roles
-    Role = {
+    window.Role = {
         url: 'api/Roles',
         title: "分配角色"
     };
 
     // Users
-    User = {
+    window.User = {
         url: 'api/Users',
         title: "分配用户"
     };
 
     // Groups
-    Group = {
+    window.Group = {
         url: 'api/Groups',
         title: "分配部门"
     };
 
     // Menus
-    Menu = {
+    window.Menu = {
         url: 'api/Menus',
         iconView: 'Admin/IconView',
         title: "分配菜单"
     };
 
     // Exceptions
-    Exceptions = {
+    window.Exceptions = {
         url: 'api/Exceptions',
         title: "程序异常日志"
     };
 
     // Dicts
-    Dicts = {
+    window.Dicts = {
         url: 'api/Dicts'
     };
 
     // Profiles
-    Profiles = {
+    window.Profiles = {
         url: 'api/Profiles',
         del: 'api/Profiles/Delete'
     };
 
     // Settings
-    Settings = {
+    window.Settings = {
         url: 'api/Settings'
     };
 
     // Messages
-    Messages = {
+    window.Messages = {
         url: 'api/Messages'
     };
 
     // Tasks
-    Tasks = {
+    window.Tasks = {
         url: 'api/Tasks'
     };
 
     // Notifications
-    Notifications = {
+    window.Notifications = {
         url: 'api/Notifications'
     };
 

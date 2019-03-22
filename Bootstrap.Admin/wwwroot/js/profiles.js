@@ -1,4 +1,4 @@
-﻿$(function () {
+$(function () {
     var $headerIcon = $('#headerIcon');
     var preIcon = $headerIcon.attr('src');
     var $file = $('#fileIcon');
@@ -78,12 +78,12 @@
         switch ($this.attr('data-method')) {
             case 'password':
                 data.UserStatus = 'ChangePassword';
-                $.bc({ url: User.url, method: "put", data: data, title: "更改密码" });
+                $.bc({ url: Profiles.url, method: "put", data: data, title: "更改密码" });
                 break;
             case 'user':
                 data.UserStatus = 'ChangeDisplayName';
                 $.bc({
-                    url: User.url, method: "put", data: data, title: "修改用户显示名称",
+                    url: Profiles.url, method: "put", data: data, title: "修改用户显示名称",
                     callback: function (result) {
                         if (result) {
                             $('#userDisplayName').text(data.DisplayName);
@@ -94,7 +94,7 @@
             case 'css':
                 data.UserStatus = 'ChangeTheme';
                 $.bc({
-                    url: User.url, method: "put", data: data, title: "保存样式", callback: function (result) {
+                    url: Profiles.url, method: "put", data: data, title: "保存样式", callback: function (result) {
                         if (result) {
                             window.setTimeout(function () { window.location.reload(true); }, 1000);
                         }
@@ -104,7 +104,7 @@
             case 'app':
                 data.UserStatus = 'SaveApp';
                 $.bc({
-                    url: User.url, method: "put", data: data, title: "保存应用", callback: function (result) {
+                    url: Profiles.url, method: "put", data: data, title: "保存应用", callback: function (result) {
                         if (result) {
                             window.setTimeout(function () { window.location.reload(true); }, 1000);
                         }
@@ -113,8 +113,7 @@
                 break;
         }
     });
-    $('[data-admin="False"]').removeClass('d-none');
-    if ($('[enctype="multipart/form-data"]').is(":hidden")) {
+    if ($('[enctype="multipart/form-data"]').length === 0) {
         $('.card-img').removeClass('d-none');
     }
     $('#css').dropdown('val');

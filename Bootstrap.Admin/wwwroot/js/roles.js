@@ -1,4 +1,4 @@
-﻿$(function () {
+$(function () {
     var $dialogUser = $("#dialogUser");
     var $dialogUserHeader = $('#myUserModalLabel');
     var $dialogUserForm = $('#userForm');
@@ -76,7 +76,7 @@
                 },
                 '#btn_assignApp': function (row) {
                     $.bc({
-                        id: row.Id, url: App.url, method: "post",
+                        id: row.Id, url: App.url, method: "get",
                         callback: function (result) {
                             var htmlTemplate = this.htmlTemplate;
                             var html = $.map(result, function (element, index) {
@@ -95,28 +95,28 @@
                     var userIds = $dialogUser.find(':checked').map(function (index, element) {
                         return $(element).val();
                     }).toArray();
-                    $.bc({ id: roleId, url: User.url, method: "put", data: userIds, query: { type: "role" }, modal: '#dialogUser', title: User.title });
+                    $.bc({ id: roleId, url: Role.url, method: "put", data: userIds, query: { type: "user" }, modal: '#dialogUser', title: User.title });
                 },
                 '#btnSubmitGroup': function (row) {
                     var roleId = row.Id;
                     var groupIds = $dialogGroup.find(':checked').map(function (index, element) {
                         return $(element).val();
                     }).toArray();
-                    $.bc({ id: roleId, url: Group.url, method: "put", data: groupIds, query: { type: "role" }, modal: '#dialogGroup', title: Group.title });
+                    $.bc({ id: roleId, url: Role.url, method: "put", data: groupIds, query: { type: "group" }, modal: '#dialogGroup', title: Group.title });
                 },
                 '#btnSubmitMenu': function (row) {
                     var roleId = row.Id;
                     var menuIds = $nestMenuInput.find('input:checkbox:checked').map(function (index, element) {
                         return $(element).val();
                     }).toArray();
-                    $.bc({ id: roleId, url: Menu.url, method: "put", data: menuIds, modal: '#dialogMenu', title: Menu.title });
+                    $.bc({ id: roleId, url: Role.url, method: "put", data: menuIds, query: { type: "menu" }, modal: '#dialogMenu', title: Menu.title });
                 },
                 '#btnSubmitApp': function (row) {
                     var roleId = row.Id;
                     var appIds = $dialogApp.find(':checked').map(function (index, element) {
                         return $(element).val();
                     }).toArray();
-                    $.bc({ id: roleId, url: App.url, method: "put", data: appIds, modal: '#dialogApp', title: App.title });
+                    $.bc({ id: roleId, url: Role.url, method: "put", data: appIds, query: { type: "app" }, modal: '#dialogApp', title: App.title });
                 }
             }
         },
@@ -129,7 +129,7 @@
             ],
             exportOptions: {
                 fileName: "角色数据",
-                ignoreColumn: [0, 1]
+                ignoreColumn: [0, 3]
             }
         }
     });

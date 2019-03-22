@@ -1,4 +1,4 @@
-﻿$(function () {
+$(function () {
     var $dialogUser = $("#dialogUser");
     var $dialogUserHeader = $('#myUserModalLabel');
     var $dialogUserForm = $('#userForm');
@@ -52,14 +52,14 @@
                     var roleIds = $dialogRole.find('input:checked').map(function (index, element) {
                         return $(element).val();
                     }).toArray();
-                    $.bc({ id: groupId, url: Role.url, method: "put", data: roleIds, query: { type: "group" }, title: Role.title, modal: '#dialogRole' });
+                    $.bc({ id: groupId, url: Group.url, method: "put", data: roleIds, query: { type: "role" }, title: Role.title, modal: '#dialogRole' });
                 },
                 '#btnSubmitUser': function (row) {
                     var groupId = row.Id;
                     var userIds = $dialogUser.find(':checked').map(function (index, element) {
                         return $(element).val();
                     }).toArray();
-                    $.bc({ id: groupId, url: User.url, method: "put", data: userIds, query: { type: "group" }, title: User.title, modal: '#dialogUser' });
+                    $.bc({ id: groupId, url: Group.url, method: "put", data: userIds, query: { type: "user" }, title: User.title, modal: '#dialogUser' });
                 }
             }
         },
@@ -72,7 +72,7 @@
             ],
             exportOptions: {
                 fileName: "部门数据",
-                ignoreColumn: [0, 1]
+                ignoreColumn: [0, 3]
             }
         }
     });

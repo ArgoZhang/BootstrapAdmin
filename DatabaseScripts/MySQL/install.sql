@@ -153,7 +153,7 @@ CREATE TABLE LoginLogs(
 	ID 				INTEGER PRIMARY KEY	Auto_increment,
 	UserName 		VARCHAR (50) NOT NULL,
 	LoginTime 	    DATETIME NOT NULL,
-	Ip 	            VARCHAR NOT NULL,
+	Ip 	            VARCHAR (15) NOT NULL,
 	OS		        VARCHAR (50) NULL,
 	Browser	        VARCHAR (50) NULL,
 	City 	        VARCHAR (50) NULL,

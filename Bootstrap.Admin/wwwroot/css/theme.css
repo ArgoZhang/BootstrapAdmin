@@ -1,4 +1,4 @@
-﻿html {
+html {
     font-size: 16px;
     -ms-overflow-style: auto;
 }
@@ -178,35 +178,9 @@ footer {
         color: #2A3542;
     }
 
-.bs-bars {
-    display: none;
-}
-
 .btn-fill {
     width: 100%;
 }
-
-.toolbar {
-    position: relative;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    line-height: 34px;
-    float: left;
-}
-
-    .toolbar .dropdown-menu a {
-        padding: 0 12px;
-        display: table-cell;
-        color: #504d4d;
-    }
-
-        .toolbar .dropdown-menu a:not(:first-child) {
-            border-left: solid 1px #aeb2b7;
-        }
-
-        .toolbar .dropdown-menu a:hover {
-            color: #235e90;
-        }
 
 .input-group .btn:focus, .btn-group .btn:focus, .page-link:focus {
     box-shadow: none;
@@ -363,10 +337,6 @@ input.pending {
 
 .bootstrap-table .table thead > tr > th {
     border-top: none;
-}
-
-.fixed-table-toolbar .bs-bars, .fixed-table-toolbar .search, .fixed-table-toolbar .columns {
-    line-height: normal;
 }
 
 .table-condensed > thead > tr > th, .table-condensed > tfoot > tr > th, .table-condensed > tbody > tr > td {
