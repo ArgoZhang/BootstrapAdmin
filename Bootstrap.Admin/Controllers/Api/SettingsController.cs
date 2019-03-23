@@ -1,4 +1,4 @@
-﻿using Bootstrap.DataAccess;
+using Bootstrap.DataAccess;
 using Bootstrap.Security;
 using Longbow.Cache;
 using Microsoft.AspNetCore.Mvc;
@@ -19,18 +19,13 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="value"></param>
         /// <returns></returns>
         [HttpPost]
-        public bool Post([FromBody]BootstrapDict value)
-        {
-            //保存个性化设置
-            return DictHelper.SaveSettings(value);
-        }
+        [ButtonAuthorize(Url = "~/Admin/Settings", Auth = "saveTitle,saveFooter,saveTheme")]
+        public bool Post([FromBody]BootstrapDict value) => DictHelper.SaveSettings(value);
+
         /// <summary>
         /// 
         /// </summary>
         [HttpGet]
-        public IEnumerable<ICacheCorsItem> Get()
-        {
-            return CacheManager.CorsSites;
-        }
+        public IEnumerable<ICacheCorsItem> Get() => CacheManager.CorsSites;
     }
 }

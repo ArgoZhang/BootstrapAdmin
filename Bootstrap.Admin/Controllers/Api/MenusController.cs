@@ -1,4 +1,4 @@
-﻿using Bootstrap.Admin.Query;
+using Bootstrap.Admin.Query;
 using Bootstrap.DataAccess;
 using Bootstrap.Security;
 using Longbow.Web.Mvc;
@@ -30,6 +30,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// </summary>
         /// <param name="value"></param>
         [HttpPost]
+        [ButtonAuthorize(Url = "~/Admin/Menus", Auth = "add,edit")]
         public bool Post([FromBody]BootstrapMenu value)
         {
             return MenuHelper.Save(value);
@@ -40,6 +41,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// </summary>
         /// <param name="value"></param>
         [HttpDelete]
+        [ButtonAuthorize(Url = "~/Admin/Menus", Auth = "del")]
         public bool Delete([FromBody]IEnumerable<string> value)
         {
             return MenuHelper.Delete(value);
@@ -70,13 +72,14 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <summary>
         /// 角色管理菜单授权保存按钮调用
         /// </summary>
-        /// <param name="id">角色ID</param>
-        /// <param name="value">菜单ID集合</param>
+        /// <param name="id">菜单ID</param>
+        /// <param name="roleIds">角色ID集合</param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public bool Put(string id, [FromBody]IEnumerable<string> value)
+        [ButtonAuthorize(Url = "~/Admin/Menus", Auth = "assignRole")]
+        public bool Put(string id, [FromBody]IEnumerable<string> roleIds)
         {
-            return MenuHelper.SaveMenusByRoleId(id, value);
+            return RoleHelper.SavaByMenuId(id, roleIds);
         }
     }
 }

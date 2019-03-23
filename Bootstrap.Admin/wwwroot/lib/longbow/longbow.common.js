@@ -233,7 +233,7 @@
             var base = $('#pathBase').attr('href');
             return base + url;
         },
-        safeHtml: function(text) {
+        safeHtml: function (text) {
             return $('<div>').text(text).html();
         },
         syntaxHighlight: function (json) {
@@ -281,20 +281,29 @@
         lgbTable: function (options) {
             var bsa = new DataTable($.extend(options.dataBinder, { url: options.url }));
 
-            var settings = $.extend({
+            var settings = $.extend(true, {
                 url: options.url,
                 checkbox: true,
-                edit: true,
+                editButtons: {
+                    id: "#tableButtons",
+                    events: {},
+                    formatter: false
+                },
                 editTitle: "操作",
                 editField: "Id",
                 queryButton: false
             }, options.smartTable);
-            if (settings.edit) settings.columns.unshift({
+
+            var $editButtons = $(settings.editButtons.id);
+            if ($editButtons.find('button').length > 0) settings.columns.push({
                 title: settings.editTitle,
                 field: settings.editField,
-                events: bsa.idEvents(),
+                events: $.extend({}, bsa.idEvents(), settings.editButtons.events),
                 formatter: function (value, row, index) {
-                    return "<div class='btn-group'><button class='edit btn btn-sm btn-success'><i class='fa fa-edit'></i><span>编辑</span></button><button class='del btn btn-sm btn-danger'><i class='fa fa-remove'></i><span>删除</span></button></div>";
+                    if ($.isFunction(settings.editButtons.formatter)) {
+                        return settings.editButtons.formatter.call($editButtons, value, row, index);
+                    }
+                    return $editButtons.html();
                 }
             });
             if (settings.checkbox) settings.columns.unshift({ checkbox: true });
@@ -337,17 +346,19 @@
                 }
                 else {
                     var formatter = value.formatter;
-                    value.formatter = function(value, row, index, field) {
+                    value.formatter = function (value, row, index, field) {
                         return formatter.call(this, $.safeHtml(value), row, index, field);
                     }
                 }
             });
             this.bootstrapTable(settings);
             $('.bootstrap-table .fixed-table-toolbar .columns .export .dropdown-menu').addClass("dropdown-menu-right");
-            $(settings.toolbar).removeClass('d-none').find('.toolbar').on('click', 'a', function (e) {
+            var $gear = $(settings.toolbar).removeClass('d-none').find('.gear');
+            if ($gear.find('.dropdown-menu > a').length === 0) $gear.addClass('d-none');
+            $gear.on('click', 'a', function (e) {
                 e.preventDefault();
                 $('#' + $(this).attr('id').replace('tb_', 'btn_')).trigger("click");
-            }).insertBefore(this.parents('.bootstrap-table').find('.fixed-table-toolbar > .bs-bars'));
+            });
             if (settings.queryButton) {
                 $(settings.queryButton).on('click', this, function (e) {
                     e.data.bootstrapTable('refresh');

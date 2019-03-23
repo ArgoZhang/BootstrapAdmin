@@ -76,51 +76,5 @@ namespace Bootstrap.Admin.Api
             ret = await Client.PutAsJsonAsync<IEnumerable<string>, bool>($"{rid}?type=role", ids);
             Assert.True(ret);
         }
-
-        [Fact]
-        public async void Put_Ok()
-        {
-            var usr = new User { UserName = "UnitTest_Change", Password = "1", DisplayName = "DisplayName", ApprovedBy = "System", ApprovedTime = DateTime.Now, Description = "Desc", Icon = "default.jpg" };
-            usr.Delete(usr.Retrieves().Where(u => u.UserName == usr.UserName).Select(u => u.Id));
-            Assert.True(usr.Save(usr));
-
-            // Add author
-            DbManager.Create().Execute("delete from NavigationRole where RoleID in (select ID from Roles where RoleName = 'Default')");
-            var rid = DbManager.Create().ExecuteScalar<string>("select ID from Roles where RoleName = 'Default'");
-            DbManager.Create().InsertBatch("NavigationRole", new Menu().RetrieveAllMenus("Admin").Select(m => new { RoleID = rid, NavigationID = m.Id }));
-
-            // change theme
-            usr.UserStatus = UserStates.ChangeTheme;
-            var resp = await Client.PutAsJsonAsync<User, bool>(usr);
-            Assert.False(resp);
-
-            // Login as new user
-            var client = Host.CreateClient();
-            client.BaseAddress = new Uri("http://localhost/api/Users");
-            await client.LoginAsync("UnitTest_Change", "1");
-            resp = await client.PutAsJsonAsync<User, bool>(usr);
-            Assert.True(resp);
-
-            // change password
-            usr.UserStatus = UserStates.ChangePassword;
-            usr.NewPassword = "1";
-            usr.Password = "1";
-            resp = await client.PutAsJsonAsync<User, bool>(usr);
-            Assert.True(resp);
-
-            // change displayname
-            usr.UserStatus = UserStates.ChangeDisplayName;
-            resp = await client.PutAsJsonAsync<User, bool>(usr);
-            Assert.True(resp);
-
-            // change app
-            usr.App = "UnitTest";
-            usr.UserStatus = UserStates.SaveApp;
-            resp = await client.PutAsJsonAsync<User, bool>(usr);
-            Assert.True(resp);
-
-            // delete 
-            usr.Delete(usr.Retrieves().Where(u => u.UserName == usr.UserName).Select(u => u.Id));
-        }
     }
 }

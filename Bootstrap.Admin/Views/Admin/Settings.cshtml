@@ -1,4 +1,4 @@
-﻿@model ThemeModel
+@model ThemeModel
 @{
     ViewBag.Title = "网站设置";
 }
@@ -22,7 +22,7 @@
             <div class="input-group">
                 <input type="text" class="form-control" id="sysName" placeholder="请输入网站标题，50字以内" value="@Model.Title" maxlength="50" data-valid="true" />
                 <div class="input-group-append">
-                    <button class="btn btn-secondary" type="button" data-method="title">保存</button>
+                    <button class="btn btn-secondary" type="button" data-method="title" asp-auth="saveTitle">保存</button>
                 </div>
             </div>
         </div>
@@ -35,7 +35,7 @@
             <div class="input-group">
                 <input type="text" class="form-control" id="sysFoot" placeholder="请输入网站页脚，50字以内" value="@Model.Footer" maxlength="50" data-valid="true" />
                 <div class="input-group-append">
-                    <button class="btn btn-secondary" type="button" data-method="footer">保存</button>
+                    <button class="btn btn-secondary" type="button" data-method="footer" asp-auth="saveFooter">保存</button>
                 </div>
             </div>
         </div>
@@ -56,7 +56,7 @@
                         }
                     </div>
                 </div>
-                <button class="btn btn-secondary" type="button" data-method="css">保存</button>
+                <button class="btn btn-secondary" type="button" data-method="css" asp-auth="saveTheme">保存</button>
             </div>
         </div>
     </div>
@@ -65,7 +65,7 @@
     <div class="card-header">
         <div class="d-flex align-items-center">
             <span class="flex-fill">网站缓存</span>
-            <a data-method="clear" href="#" class="fa fa-times-circle-o" data-admin="@User.IsInRole("Administrators")" title="全部清除" data-toggle="tooltip" data-placement="left"></a>
+            <a data-method="clear" href="#" class="fa fa-times-circle-o" title="全部清除" data-toggle="tooltip" data-placement="left" asp-auth="clearAllCache"></a>
             <a data-method="refresh" href="#" class="fa fa-refresh ml-3" title="点击刷新" data-toggle="tooltip"></a>
         </div>
     </div>

@@ -3,50 +3,14 @@
     "_id": ObjectId("5bd7cc105fa31256f77e4eb7"),
     "RoleName": "Administrators",
     "Description": "系统管理员",
-    "Menus": [
-      "5bd7b8445fa31256f77e4b90",
-      "5bd7b8445fa31256f77e4b91",
-      "5bd7b8445fa31256f77e4b92",
-      "5bd7b8445fa31256f77e4b93",
-      "5bd7b8445fa31256f77e4b94",
-      "5bd7b8445fa31256f77e4b95",
-      "5bd7b8445fa31256f77e4b96",
-      "5bd7b8445fa31256f77e4b97",
-      "5bd7b8445fa31256f77e4b98",
-      "5bd7b8445fa31256f77e4b99",
-      "5bd7b8445fa31256f77e4b9a",
-      "5bd7b8445fa31256f77e4b9b",
-      "5bd7b8445fa31256f77e4b9c",
-      "5bd7b8445fa31256f77e4b9d",
-      "5bd7b8445fa31256f77e4b9e",
-      "5bd7b8445fa31256f77e4b9f",
-      "5bd7b8445fa31256f77e4ba0",
-      "5bd7b8445fa31256f77e4ba1",
-      "5bd7b8445fa31256f77e4ba2",
-      "5bd9b3d868aa001661776f56",
-      "5bd7b8445fa31256f77e4ba4"
-    ],
+    "Menus": [],
     "Apps": []
   },
   {
     "_id": ObjectId("5bd7cc105fa31256f77e4eb8"),
     "RoleName": "Default",
     "Description": "默认用户，可访问前台页面",
-    "Menus": [
-      "5bd7b8445fa31256f77e4b90",
-      "5bd7b8445fa31256f77e4b91",
-      "5bd7b8445fa31256f77e4b92",
-      "5bd7b8445fa31256f77e4b99",
-      "5bd7b8445fa31256f77e4b9a",
-      "5bd7b8445fa31256f77e4b9b",
-      "5bd7b8445fa31256f77e4b9e",
-      "5bd7b8445fa31256f77e4b9f",
-      "5bd7b8445fa31256f77e4ba0",
-      "5bd7b8445fa31256f77e4ba1",
-      "5bd7b8445fa31256f77e4ba2",
-      "5bd9b3d868aa001661776f56",
-      "5bd7b8445fa31256f77e4ba4"
-    ],
+    "Menus": [],
     "Apps": []
   }
 ]

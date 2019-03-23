@@ -11,6 +11,14 @@
         white-space: nowrap;
         margin-left: 10px;
     }
+
+    .bootstrap-table .bs-bars .gear {
+        display: none;
+    }
+
+    .bootstrap-table .bs-bars .toolbar {
+        display: inline-flex;
+    }
 }
 
 @media (min-width: 667px) {

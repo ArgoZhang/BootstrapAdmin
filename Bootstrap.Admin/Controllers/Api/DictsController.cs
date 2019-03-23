@@ -1,4 +1,4 @@
-﻿using Bootstrap.Admin.Query;
+using Bootstrap.Admin.Query;
 using Bootstrap.DataAccess;
 using Bootstrap.Security;
 using Longbow.Web.Mvc;
@@ -30,6 +30,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// </summary>
         /// <param name="value"></param>
         [HttpPost]
+        [ButtonAuthorize(Url = "~/Admin/Dicts", Auth = "add,edit")]
         public bool Post([FromBody]BootstrapDict value)
         {
             return DictHelper.Save(value);
@@ -40,6 +41,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="value"></param>
         [HttpDelete]
         [Authorize(Roles = "Administrators")]
+        [ButtonAuthorize(Url = "~/Admin/Dicts", Auth = "del")]
         public bool Delete([FromBody]IEnumerable<string> value)
         {
             return DictHelper.Delete(value);

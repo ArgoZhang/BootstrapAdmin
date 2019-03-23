@@ -1,4 +1,4 @@
-﻿@model NavigatorBarModel
+@model NavigatorBarModel
 @{
     ViewBag.Title = "角色管理";
     Layout = "_Default";
@@ -39,28 +39,24 @@
     </form>
 }
 @section toolbar{
-    <button id="btn_assignUser" type="button" class="btn btn-info">
-        <span class="fa fa-user" aria-hidden="true"></span><span>分配用户</span>
+    <button id="btn_assignUser" type="button" class="btn btn-info" asp-auth="assignUser">
+        <i class="fa fa-user" aria-hidden="true"></i><span>分配用户</span>
     </button>
-    <button id="btn_assignGroup" type="button" class="btn btn-warning">
-        <span class="fa fa-bank" aria-hidden="true"></span><span>分配部门</span>
+    <button id="btn_assignGroup" type="button" class="btn btn-warning" asp-auth="assignGroup">
+        <i class="fa fa-bank" aria-hidden="true"></i><span>分配部门</span>
     </button>
-    <button id="btn_assignMenu" type="button" class="btn btn-secondary">
-        <span class="fa fa-dashboard" aria-hidden="true"></span><span>分配菜单</span>
+    <button id="btn_assignMenu" type="button" class="btn btn-secondary" asp-auth="assignMenu">
+        <i class="fa fa-dashboard" aria-hidden="true"></i><span>分配菜单</span>
     </button>
-    <button id="btn_assignApp" type="button" class="btn btn-success">
-        <span class="fa fa-cubes" aria-hidden="true"></span><span>分配应用</span>
+    <button id="btn_assignApp" type="button" class="btn btn-success" asp-auth="assignApp">
+        <i class="fa fa-cubes" aria-hidden="true"></i><span>分配应用</span>
     </button>
-    <div class="toolbar btn-group">
-        <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" type="button"><i class="fa fa-gear"></i></button>
-        <div class="dropdown-menu">
-            @await Html.PartialAsync("_ButtonBarGroup")
-            <a id="tb_assignUser" href="#" title="分配用户"><i class="fa fa-user"></i></a>
-            <a id="tb_assignGroup" href="#" title="分配部门"><i class="fa fa-bank"></i></a>
-            <a id="tb_assignMenu" href="#" title="分配菜单"><i class="fa fa-dashboard"></i></a>
-            <a id="tb_assignApp" href="#" title="分配应用"><i class="fa fa-cubes"></i></a>
-        </div>
-    </div>
+}
+@section gear {
+    <a id="tb_assignUser" href="#" title="分配用户" asp-auth="assignUser"><i class="fa fa-user"></i></a>
+    <a id="tb_assignGroup" href="#" title="分配部门" asp-auth="assignGroup"><i class="fa fa-bank"></i></a>
+    <a id="tb_assignMenu" href="#" title="分配菜单" asp-auth="assignMenu"><i class="fa fa-dashboard"></i></a>
+    <a id="tb_assignApp" href="#" title="分配应用" asp-auth="assignApp"><i class="fa fa-cubes"></i></a>
 }
 @section modal {
     <div class="modal-header">

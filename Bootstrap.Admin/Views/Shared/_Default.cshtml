@@ -1,4 +1,5 @@
-﻿@{
+@model NavigatorBarModel
+@{
     Layout = "_Admin";
 }
 @section css {
@@ -57,11 +58,22 @@
         @RenderSection("query", false)
     </div>
 </div>
-<div id="toolbar" class="btn-group d-none">
-    <button id="btn_add" type="button" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i><span>新增</span></button>
-    <button id="btn_delete" type="button" class="btn btn-danger"><i class="fa fa-remove" aria-hidden="true"></i><span>删除</span></button>
-    <button id="btn_edit" type="button" class="btn btn-primary"><i class="fa fa-pencil" aria-hidden="true"></i><span>编辑</span></button>
-    @RenderSection("toolbar", false)
+<div id="toolbar" class="d-none">
+    <div class="gear btn-group">
+        <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" type="button"><i class="fa fa-gear"></i></button>
+        <div class="dropdown-menu">
+            <a id="tb_add" href="#" title="新增" asp-auth="add"><i class="fa fa-plus"></i></a>
+            <a id="tb_delete" href="#" title="删除" asp-auth="del"><i class="fa fa-remove"></i></a>
+            <a id="tb_edit" href="#" title="编辑" asp-auth="edit"><i class="fa fa-pencil"></i></a>
+            @await RenderSectionAsync("gear", false)
+        </div>
+    </div>
+    <div class="toolbar btn-group">
+        <button id="btn_add" type="button" class="btn btn-success" asp-auth="add"><i class="fa fa-plus" aria-hidden="true"></i><span>新增</span></button>
+        <button id="btn_delete" type="button" class="btn btn-danger" asp-auth="del"><i class="fa fa-remove" aria-hidden="true"></i><span>删除</span></button>
+        <button id="btn_edit" type="button" class="btn btn-primary" asp-auth="edit"><i class="fa fa-pencil" aria-hidden="true"></i><span>编辑</span></button>
+        @RenderSection("toolbar", false)
+    </div>
 </div>
 <div class="card">
     <div class="card-header">
@@ -69,5 +81,12 @@
     </div>
     <div class="card-body">
         <table></table>
+    </div>
+</div>
+<div id="tableButtons" class="d-none">
+    <div class='btn-group'>
+        <button class='edit btn btn-sm btn-success' asp-auth="edit"><i class='fa fa-edit'></i><span>编辑</span></button>
+        <button class='del btn btn-sm btn-danger' asp-auth="del"><i class='fa fa-remove'></i><span>删除</span></button>
+        @RenderSection("tableButtons", false)
     </div>
 </div>

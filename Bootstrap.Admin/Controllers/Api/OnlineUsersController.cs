@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Concurrent;
@@ -20,8 +20,8 @@ namespace Bootstrap.Admin.Controllers.Api
         /// 获取所有在线用户数据
         /// </summary>
         /// <returns></returns>
-        [HttpPost()]
-        public IEnumerable<OnlineUser> Post([FromServices]IOnlineUsers onlineUSers)
+        [HttpGet()]
+        public IEnumerable<OnlineUser> Get([FromServices]IOnlineUsers onlineUSers)
         {
             return onlineUSers.OnlineUsers.OrderByDescending(u => u.LastAccessTime);
         }

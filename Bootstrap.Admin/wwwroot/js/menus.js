@@ -61,7 +61,7 @@ $(function () {
                     var roleIds = $dialogRole.find('input:checked').map(function (index, element) {
                         return $(element).val();
                     }).toArray();
-                    $.bc({ id: menuId, url: Role.url, method: "put", data: roleIds, query: { type: "menu" }, title: Role.title, modal: '#dialogRole' });
+                    $.bc({ id: menuId, url: Menu.url, method: "put", data: roleIds, title: Role.title, modal: '#dialogRole' });
                 }
             },
             callback: function (result) {
@@ -72,11 +72,13 @@ $(function () {
             }
         },
         smartTable: {
+            pageSize: 100,
+            pageList: [100, 200, 400],
             sortName: 'Order',
             queryParams: function (params) { return $.extend(params, { parentName: $('#txt_parent_menus_name').val(), name: $("#txt_menus_name").val(), category: $('#sel_menus_category').val(), isresource: $('#sel_menus_res').val(), appCode: $('#sel_app').val() }); },           //传递参数（*）
             exportOptions: {
                 fileName: "菜单数据",
-                ignoreColumn: [0, 1]
+                ignoreColumn: [0, 9]
             },
             columns: [
                 {
@@ -125,7 +127,10 @@ $(function () {
                 },
                 {
                     title: "菜单类型", field: "IsResource", sortable: true, formatter: function (value, row, index) {
-                        return value === "0" ? "菜单" : "资源";
+                        var ret = "菜单";
+                        if (value === "1") ret = "资源";
+                        else if (value === "2") ret = "按钮";
+                        return ret;
                     }
                 },
                 {
@@ -151,7 +156,7 @@ $(function () {
             },
             onResetView: function () {
                 $table.treegrid({
-                    treeColumn: 2,
+                    treeColumn: 1,
                     expanderExpandedClass: 'fa fa-chevron-circle-down',
                     expanderCollapsedClass: 'fa fa-chevron-circle-down',
                     onChange: function () {
@@ -253,7 +258,7 @@ $(function () {
             case "order":
                 var data = $nestMenu.find('li:visible');
                 var mid = $('#menuID').val();
-                for (index in data) {
+                for (var index in data) {
                     var $data = $(data[index]);
                     if ($data.attr('data-id') === mid || $data.attr('data-id') === 0) {
                         if (index > 0) index--;

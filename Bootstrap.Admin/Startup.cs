@@ -1,4 +1,4 @@
-﻿using Bootstrap.DataAccess;
+using Bootstrap.DataAccess;
 using Bootstrap.Security.Filter;
 using Longbow.Web;
 using Longbow.Web.SignalR;
@@ -100,6 +100,7 @@ namespace Bootstrap.Admin
                 options.IncludeXmlComments(xmlPath);
                 options.OperationFilter<HttpHeaderOperation>(); // 添加httpHeader参数
             });
+            services.AddButtonAuthorization(MenuHelper.AuthorizateButtons);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

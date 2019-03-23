@@ -1,6 +1,4 @@
-﻿$(function () {
-    $('a[data-admin="False"]').hide();
-
+$(function () {
     var dataBinder = new DataEntity({
         Title: "#sysName",
         Footer: "#sysFoot"

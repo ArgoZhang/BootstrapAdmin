@@ -1,4 +1,4 @@
-﻿@model ProfilesModel
+@model ProfilesModel
 @{
     ViewBag.Title = "个人中心";
 }
@@ -45,7 +45,7 @@
                 </div>
             </div>
         </form>
-        <div class="modal-footer d-none" data-admin="@User.IsInRole("Administrators")">
+        <div class="modal-footer" asp-auth="saveDisplayName">
             <button id="btnSaveDisplayName" data-method="user" class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
         </div>
     </div>
@@ -71,7 +71,7 @@
                 </div>
             </div>
         </form>
-        <div class="modal-footer d-none" data-admin="@User.IsInRole("Administrators")">
+        <div class="modal-footer" asp-auth="savePassword">
             <button id="btnSavePassword" data-method="password" class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
         </div>
     </div>
@@ -90,7 +90,7 @@
                 </div>
             </div>
         </div>
-        <div class="modal-footer d-none" data-admin="@User.IsInRole("Administrators")">
+        <div class="modal-footer" asp-auth="saveApp">
             <button id="btnSaveApp" data-method="app" class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
         </div>
     </div>
@@ -110,7 +110,7 @@
                 </div>
             </div>
         </div>
-        <div class="modal-footer d-none" data-admin="@User.IsInRole("Administrators")">
+        <div class="modal-footer" asp-auth="saveTheme">
             <button id="btnSaveCss" data-method="css" class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
         </div>
     </div>
@@ -118,7 +118,7 @@
 <div class="card">
     <div class="card-header">修改头像</div>
     <div class="card-body">
-        <form enctype="multipart/form-data" class="d-none" data-admin="@User.IsInRole("Administrators")">
+        <form enctype="multipart/form-data" asp-auth="saveIcon">
             <div class="form-group">
                 <input id="fileIcon" type="file" data-init="@Model.Size" data-file="@Model.FileName">
             </div>

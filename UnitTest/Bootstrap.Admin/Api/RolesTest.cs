@@ -62,6 +62,9 @@ namespace Bootstrap.Admin.Api
 
             ret = await Client.PutAsJsonAsync<IEnumerable<string>, bool>($"{mid}?type=menu", ids);
             Assert.True(ret);
+
+            ret = await Client.PutAsJsonAsync<IEnumerable<string>, bool>($"{mid}?type=app", ids);
+            Assert.True(ret);
         }
     }
 }

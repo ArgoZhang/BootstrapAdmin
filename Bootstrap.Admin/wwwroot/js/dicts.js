@@ -21,7 +21,7 @@
             ],
             exportOptions: {
                 fileName: "数据字典",
-                ignoreColumn: [0, 1]
+                ignoreColumn: [0, 5]
             }
         }
     });

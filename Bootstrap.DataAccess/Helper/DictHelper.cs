@@ -56,9 +56,7 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 保存网站个性化设置
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="code"></param>
-        /// <param name="category"></param>
+        /// <param name="dict"></param>
         /// <returns></returns>
         public static bool SaveSettings(BootstrapDict dict)
         {
