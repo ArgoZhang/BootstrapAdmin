@@ -31,6 +31,20 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static bool Save(BootstrapMenu p)
         {
+            if (DictHelper.RetrieveSystemModel())
+            {
+                if (p.Id.IsNullOrEmpty())
+                {
+                    if (p.Category == "0") p.Category = "1";
+                }
+                else
+                {
+                    if (RetrieveAllMenus("Admin").Where(m => m.Category == "0").Any(m => m.Id == p.Id))
+                    {
+                        return true;
+                    }
+                }
+            }
             var ret = DbContextManager.Create<Menu>().Save(p);
             if (ret) CacheCleanUtility.ClearCache(menuIds: string.IsNullOrEmpty(p.Id) ? new List<string>() : new List<string>() { p.Id });
             return ret;
@@ -43,6 +57,13 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static bool Delete(IEnumerable<string> value)
         {
+            if (DictHelper.RetrieveSystemModel())
+            {
+                // 允许删除自定义菜单
+                var systemMenus = RetrieveAllMenus("Admin").Where(m => m.Category == "0");
+                value = value.Where(v => !systemMenus.Any(m => m.Id == v));
+                if (!value.Any()) return true;
+            }
             var ret = DbContextManager.Create<Menu>().Delete(value);
             if (ret) CacheCleanUtility.ClearCache(menuIds: value);
             return ret;

@@ -38,6 +38,7 @@ INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统设置', '访问
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统设置', 'Cookie保留时长', '7', 0);
 
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统设置', '获取IP地点', '0', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统设置', '演示系统', '0', 0);
 
 DELETE FROM Navigations;
 ALTER SEQUENCE navigations_id_seq RESTART WITH 1;

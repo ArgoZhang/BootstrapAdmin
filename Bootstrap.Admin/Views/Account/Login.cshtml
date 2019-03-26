@@ -1,4 +1,4 @@
-﻿@model ModelBase
+@model ModelBase
 @{
     ViewBag.Title = Model.Title;
     Layout = "_Layout";
@@ -52,7 +52,7 @@
                             <span class="fa fa-user"></span>
                         </div>
                     </div>
-                    <input type="text" name="userName" class="form-control" placeholder="用户名" maxlength="16" data-required-msg="请输入用户名" value="" autofocus data-valid="true" />
+                    <input type="text" name="userName" class="form-control" placeholder="用户名" maxlength="16" data-required-msg="请输入用户名" value="@ViewBag.UserName" autofocus data-valid="true" />
                 </div>
             </div>
             <div class="form-group">
@@ -62,7 +62,7 @@
                             <span class="fa fa-lock"></span>
                         </div>
                     </div>
-                    <input type="password" name="password" class="form-control" value="" placeholder="密码" maxlength="16" data-required-msg="请输入密码" data-valid="true" />
+                    <input type="password" name="password" class="form-control" value="@ViewBag.Password" placeholder="密码" maxlength="16" data-required-msg="请输入密码" data-valid="true" />
                 </div>
             </div>
             <div class="form-group rememberPwd" onselectstart="return false">

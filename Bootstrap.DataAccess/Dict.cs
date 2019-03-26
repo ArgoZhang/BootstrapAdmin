@@ -163,5 +163,11 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <returns></returns>
         public int RetrieveAccessLogPeriod() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "访问日志保留时长" && d.Define == 0)?.Code, 1);
+
+        /// <summary>
+        /// 获得 是否为演示系统 默认为 false 不是演示系统
+        /// </summary>
+        /// <returns></returns>
+        public bool RetrieveSystemModel() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "访问日志保留时长" && d.Define == 0)?.Code, "0") == "1";
     }
 }

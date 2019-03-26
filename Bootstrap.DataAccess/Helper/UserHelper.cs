@@ -1,8 +1,9 @@
-﻿using Bootstrap.Security;
+using Bootstrap.Security;
 using Longbow.Cache;
 using Longbow.Data;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Bootstrap.DataAccess
@@ -69,6 +70,9 @@ namespace Bootstrap.DataAccess
         /// <param name="value"></param>
         public static bool Delete(IEnumerable<string> value)
         {
+            var admins = Retrieves().Where(u => u.UserName.Equals("Admin", StringComparison.OrdinalIgnoreCase));
+            value = value.Where(v => !admins.Any(u => u.Id == v));
+            if (!value.Any()) return true;
             var ret = DbContextManager.Create<User>().Delete(value);
             if (ret) CacheCleanUtility.ClearCache(userIds: value);
             return ret;
@@ -95,6 +99,12 @@ namespace Bootstrap.DataAccess
         public static bool Save(User user)
         {
             if (!UserChecker(user)) return false;
+
+            if (DictHelper.RetrieveSystemModel() && !user.Id.IsNullOrEmpty())
+            {
+                var admins = Retrieves().Where(u => u.UserName.Equals("Admin", StringComparison.OrdinalIgnoreCase));
+                if (admins.Any(v => v.Id == user.Id)) return true;
+            }
             var ret = DbContextManager.Create<User>().Save(user);
             if (ret) CacheCleanUtility.ClearCache(userIds: string.IsNullOrEmpty(user.Id) ? new List<string>() : new List<string>() { user.Id });
             return ret;
@@ -110,6 +120,11 @@ namespace Bootstrap.DataAccess
         public static bool Update(string id, string password, string displayName)
         {
             if (!UserChecker(new User { Password = password, DisplayName = displayName })) return false;
+            if (DictHelper.RetrieveSystemModel())
+            {
+                var admins = Retrieves().Where(u => u.UserName.Equals("Admin", StringComparison.OrdinalIgnoreCase));
+                if (admins.Any(v => v.Id == id)) return true;
+            }
             var ret = DbContextManager.Create<User>().Update(id, password, displayName);
             if (ret) CacheCleanUtility.ClearCache(userIds: string.IsNullOrEmpty(id) ? new List<string>() : new List<string>() { id });
             return ret;
@@ -138,6 +153,7 @@ namespace Bootstrap.DataAccess
         public static bool ChangePassword(string userName, string password, string newPass)
         {
             if (!UserChecker(new User { UserName = userName, Password = password })) return false;
+            if (DictHelper.RetrieveSystemModel() && userName.Equals("Admin", StringComparison.OrdinalIgnoreCase)) return true;
             return DbContextManager.Create<User>().ChangePassword(userName, password, newPass);
         }
 
@@ -150,6 +166,7 @@ namespace Bootstrap.DataAccess
         public static bool ResetPassword(string userName, string password)
         {
             if (!UserChecker(new User { UserName = userName, Password = password })) return false;
+            if (DictHelper.RetrieveSystemModel() && userName.Equals("Admin", StringComparison.OrdinalIgnoreCase)) return true;
             return DbContextManager.Create<User>().ResetPassword(userName, password);
         }
 

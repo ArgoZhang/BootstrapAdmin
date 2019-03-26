@@ -41,6 +41,7 @@ INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'系统设�
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'系统设置', N'Cookie保留时长', '7', 0)
 
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'系统设置', N'获取IP地点', '0', 0)
+INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'系统设置', N'演示系统', '0', 0)
 
 DELETE FROM Navigations
 DBCC CHECKIDENT(Navigations, RESEED, 0)

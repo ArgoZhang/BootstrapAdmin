@@ -28,6 +28,11 @@ namespace Bootstrap.Admin.Controllers
         [HttpGet]
         public ActionResult Login()
         {
+            if (DictHelper.RetrieveSystemModel())
+            {
+                ViewBag.UserName = "Admin";
+                ViewBag.Password = "123789";
+            }
             return User.Identity.IsAuthenticated ? (ActionResult)Redirect("~/Home/Index") : View("Login", new ModelBase());
         }
 

@@ -1,4 +1,4 @@
-﻿using Longbow.Cache;
+using Longbow.Cache;
 using Longbow.Data;
 using System.Collections.Generic;
 
@@ -17,7 +17,6 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 查询所有群组信息
         /// </summary>
-        /// <param name="id"></param>
         /// <returns></returns>
         public static IEnumerable<Group> Retrieves() => CacheManager.GetOrAdd(RetrieveGroupsDataKey, key => DbContextManager.Create<Group>().Retrieves());
 

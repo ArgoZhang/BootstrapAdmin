@@ -1,6 +1,8 @@
-﻿using Longbow.Cache;
+using Longbow.Cache;
 using Longbow.Data;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Bootstrap.DataAccess
 {
@@ -19,7 +21,6 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 查询所有角色
         /// </summary>
-        /// <param name="id"></param>
         /// <returns></returns>
         public static IEnumerable<Role> Retrieves() => CacheManager.GetOrAdd(RetrieveRolesDataKey, key => DbContextManager.Create<Role>().Retrieves());
 
@@ -48,6 +49,10 @@ namespace Bootstrap.DataAccess
         /// <param name="value"></param>
         public static bool Delete(IEnumerable<string> value)
         {
+            var roles = new string[] { "Administrators", "Default" };
+            var rs = Retrieves().Where(r => roles.Any(rl => rl.Equals(r.RoleName, StringComparison.OrdinalIgnoreCase)));
+            value = value.Where(v => !rs.Any(r => r.Id == v));
+            if (!value.Any()) return true;
             var ret = DbContextManager.Create<Role>().Delete(value);
             if (ret) CacheCleanUtility.ClearCache(roleIds: value);
             return ret;
@@ -60,6 +65,9 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static bool Save(Role p)
         {
+            var roles = new string[] { "Administrators", "Default" };
+            var rs = Retrieves().Where(r => roles.Any(rl => rl.Equals(r.RoleName, StringComparison.OrdinalIgnoreCase)));
+            if (rs.Any(r => r.Id == p.Id)) return true;
             var ret = DbContextManager.Create<Role>().Save(p);
             if (ret) CacheCleanUtility.ClearCache(roleIds: string.IsNullOrEmpty(p.Id) ? new List<string>() : new List<string> { p.Id });
             return ret;

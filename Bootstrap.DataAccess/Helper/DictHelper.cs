@@ -2,6 +2,7 @@ using Bootstrap.Security;
 using Longbow.Cache;
 using Longbow.Data;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Bootstrap.DataAccess
 {
@@ -36,6 +37,13 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static bool Delete(IEnumerable<string> value)
         {
+            if (RetrieveSystemModel())
+            {
+                // 允许删除自定义数据字典
+                var systemDicts = RetrieveDicts().Where(d => d.Category == "0");
+                value = value.Where(v => !systemDicts.Any(d => d.Id == v));
+                if (!value.Any()) return true;
+            }
             var ret = DbContextManager.Create<Dict>().Delete(value);
             CacheCleanUtility.ClearCache(dictIds: value);
             return ret;
@@ -48,6 +56,20 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static bool Save(BootstrapDict p)
         {
+            if (RetrieveSystemModel())
+            {
+                if (string.IsNullOrEmpty(p.Id))
+                {
+                    if (p.Category == "0") p.Category = "1";
+                }
+                else
+                {
+                    if (RetrieveDicts().Where(m => m.Category == "0").Any(m => m.Id == p.Id))
+                    {
+                        return true;
+                    }
+                }
+            }
             var ret = DbContextManager.Create<Dict>().Save(p);
             if (ret) CacheCleanUtility.ClearCache(dictIds: new List<string>());
             return ret;
@@ -149,5 +171,11 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <returns></returns>
         public static int RetrieveAccessLogPeriod() => DbContextManager.Create<Dict>().RetrieveAccessLogPeriod();
+
+        /// <summary>
+        /// 获得 是否为演示系统 默认为 false 不是演示系统
+        /// </summary>
+        /// <returns></returns>
+        public static bool RetrieveSystemModel() => DbContextManager.Create<Dict>().RetrieveSystemModel();
     }
 }
