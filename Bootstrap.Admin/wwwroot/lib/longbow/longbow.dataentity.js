@@ -1,4 +1,12 @@
 (function ($) {
+    var formatData = function (data) {
+        delete data._nodes;
+        delete data._parent;
+        delete data._level;
+        delete data._last;
+        return data;
+    };
+
     DataEntity = function (options) {
         this.options = options;
     };
@@ -141,7 +149,11 @@
                             confirmButtonClass: "btn-danger ml-2",
                             cancelButtonText: "取消"
                         }, function () {
-                            $.logData.push({ url: options.url, data: arrselections });
+                            $.logData.push({ url: options.url, 
+                                data: arrselections.map(function (element, index) {
+                                    return formatData($.extend({}, element));
+                                }) 
+                            });
                             setTimeout(function () {
                                 var iDs = arrselections.map(function (element, index) { return element.Id; });
                                 $.bc({
@@ -182,12 +194,6 @@
                 src: this,
                 url: this.options.url
             };
-            var formatData = function (data) {
-                delete data._nodes;
-                delete data._parent;
-                delete data._level;
-                delete data._last;
-            };
             return {
                 'click .edit': function (e, value, row, index) {
                     op.dataEntity.load(row);
@@ -205,9 +211,7 @@
                     data = [data];
                     if ($.isArray(row._nodes) && row._nodes.length > 0) {
                         $.each(row._nodes, function (index, element) {
-                            var ele = $.extend({}, element);
-                            formatData(ele);
-                            data.push(ele);
+                            data.push(formatData($.extend({}, element)));
                         });
                         text = "本删除项含有级联子项目</br>您确定要删除 <span class='text-danger font-weight-bold'>" + row.Name + "</span> 以及子项目吗？";
                     }
