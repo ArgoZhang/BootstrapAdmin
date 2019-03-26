@@ -40,7 +40,7 @@ namespace Bootstrap.DataAccess
             if (RetrieveSystemModel())
             {
                 // 允许删除自定义数据字典
-                var systemDicts = RetrieveDicts().Where(d => d.Category == "0");
+                var systemDicts = RetrieveDicts().Where(d => d.Define == 0);
                 value = value.Where(v => !systemDicts.Any(d => d.Id == v));
                 if (!value.Any()) return true;
             }
@@ -60,11 +60,11 @@ namespace Bootstrap.DataAccess
             {
                 if (string.IsNullOrEmpty(p.Id))
                 {
-                    if (p.Category == "0") p.Category = "1";
+                    if (p.Define == 0) p.Define = 1;
                 }
                 else
                 {
-                    if (RetrieveDicts().Where(m => m.Category == "0").Any(m => m.Id == p.Id))
+                    if (RetrieveDicts().Where(m => m.Define == 0).Any(m => m.Id == p.Id))
                     {
                         return true;
                     }
