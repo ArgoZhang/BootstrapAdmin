@@ -1,4 +1,4 @@
-﻿$(function () {
+$(function () {
     $('table').lgbTable({
         url: Dicts.url,
         dataBinder: {
@@ -17,7 +17,7 @@
                 { title: "字典标签", field: "Category", sortable: true },
                 { title: "字典名称", field: "Name", sortable: true },
                 { title: "字典代码", field: "Code", sortable: true },
-                { title: "字典分类", field: "Define", sortable: true, formatter: function (value) { return value === 0 ? "系统使用" : "自定义"; } }
+                { title: "字典分类", field: "Define", sortable: true, formatter: function (value) { return value === "0" ? "系统使用" : "自定义"; } }
             ],
             exportOptions: {
                 fileName: "数据字典",
