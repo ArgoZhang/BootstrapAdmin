@@ -53,6 +53,9 @@
 <div class="card">
     <div class="card-header">修改密码</div>
     <div class="card-body" data-toggle="LgbValidate" data-valid-button="#btnSavePassword">
+        <div class="alert alert-danger" role="alert" asp-condition="@Model.IsDemo">
+            <span>演示系统禁止更改管理员密码</span>
+        </div>
         <form class="form-inline">
             <div class="row">
                 <div class="form-group col-sm-6 col-md-auto">
@@ -71,7 +74,7 @@
                 </div>
             </div>
         </form>
-        <div class="modal-footer" asp-auth="savePassword">
+        <div class="modal-footer" asp-auth="savePassword" asp-condition="!@Model.IsDemo">
             <button id="btnSavePassword" data-method="password" class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
         </div>
     </div>

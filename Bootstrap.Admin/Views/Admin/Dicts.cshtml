@@ -41,6 +41,11 @@
         </div>
     </form>
 }
+@section body {
+    <div class="alert alert-danger" role="alert" asp-condition="@Model.IsDemo">
+        <span>演示系统禁止修改系统使用字典配置项</span>
+    </div>
+}
 @section modal {
     <div class="modal-header">
         <h5 class="modal-title" id="myModalLabel">字典编辑窗口</h5>

@@ -90,6 +90,11 @@
 @section gear {
     <a id="tb_assignRole" href="#" title="分配角色" asp-auth="assignRole"><i class="fa fa-sitemap"></i></a>
 }
+@section body {
+    <div class="alert alert-danger" role="alert" asp-condition="@Model.IsDemo">
+        <span>演示系统禁止修改系统菜单，可修改外部菜单</span>
+    </div>
+}
 @section modal {
     <div class="modal-header">
         <h5 class="modal-title" id="myModalLabel">菜单编辑窗口</h5>

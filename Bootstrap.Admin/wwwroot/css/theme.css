@@ -151,11 +151,9 @@ footer {
     display: flex;
 }
 
-    footer > span {
+    footer div {
         flex: 1 1 auto;
         text-align: center;
-        margin-left: 4px;
-        display: inline-block;
     }
 
 .go-top {
