@@ -1,6 +1,4 @@
-﻿using Bootstrap.DataAccess;
-using System;
-using System.Linq;
+using Bootstrap.DataAccess;
 using Xunit;
 
 namespace Bootstrap.Admin.Api
@@ -10,41 +8,48 @@ namespace Bootstrap.Admin.Api
         public ProfilesTest(BAWebHost factory) : base(factory, "api/Profiles") { }
 
         [Fact]
-        public async void Put_Ok()
+        public async void Put_SaveTheme()
         {
-            var usr = new User { UserName = "UnitTest_Change", Password = "1", DisplayName = "DisplayName", ApprovedBy = "System", ApprovedTime = DateTime.Now, Description = "Desc", Icon = "default.jpg", Css = "blue.css" };
-            usr.Delete(usr.Retrieves().Where(u => u.UserName == usr.UserName).Select(u => u.Id));
-            Assert.True(usr.Save(usr));
-
+            var usr = new User { UserName = "Admin" };
             // change theme
+            usr.Css = "blue.css";
             usr.UserStatus = UserStates.ChangeTheme;
             var resp = await Client.PutAsJsonAsync<User, bool>(usr);
             Assert.True(resp);
+        }
 
-            // Login as new user
-            var client = Host.CreateClient();
-            await client.LoginAsync("UnitTest_Change", "1");
-
+        [Fact]
+        public async void Put_ChangePassword()
+        {
+            var usr = new User() { UserName = "Admin" };
             // change password
             usr.UserStatus = UserStates.ChangePassword;
-            usr.NewPassword = "1";
-            usr.Password = "1";
-            resp = await client.PutAsJsonAsync<User, bool>("/api/Profiles", usr);
+            usr.NewPassword = "123789";
+            usr.Password = "123789";
+            var resp = await Client.PutAsJsonAsync<User, bool>(usr);
             Assert.True(resp);
+        }
 
+        [Fact]
+        public async void Put_ChangeDisplayName()
+        {
+            var usr = new User() { UserName = "Admin" };
             // change displayname
             usr.UserStatus = UserStates.ChangeDisplayName;
-            resp = await client.PutAsJsonAsync<User, bool>("/api/Profiles", usr);
+            usr.DisplayName = "Administrator";
+            var resp = await Client.PutAsJsonAsync<User, bool>(usr);
             Assert.True(resp);
+        }
 
+        [Fact]
+        public async void Put_SaveApp()
+        {
+            var usr = new User() { UserName = "Admin" };
             // change app
             usr.App = "UnitTest";
             usr.UserStatus = UserStates.SaveApp;
-            resp = await client.PutAsJsonAsync<User, bool>("/api/Profiles", usr);
+            var resp = await Client.PutAsJsonAsync<User, bool>(usr);
             Assert.True(resp);
-
-            // delete 
-            usr.Delete(usr.Retrieves().Where(u => u.UserName == usr.UserName).Select(u => u.Id));
         }
     }
 }

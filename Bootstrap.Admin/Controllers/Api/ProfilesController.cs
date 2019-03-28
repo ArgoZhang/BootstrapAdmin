@@ -126,13 +126,11 @@ namespace Bootstrap.Admin.Controllers.Api
         public bool Put([FromBody]User value)
         {
             var ret = false;
-            if (value.UserStatus == UserStates.ChangeTheme)
-            {
-                return UserHelper.SaveUserCssByName(value.UserName, value.Css);
-            }
             if (value.UserName.Equals(User.Identity.Name, StringComparison.OrdinalIgnoreCase))
             {
-                if (value.UserStatus == UserStates.ChangeDisplayName)
+                if (value.UserStatus == UserStates.ChangeTheme)
+                    ret = UserHelper.SaveUserCssByName(value.UserName, value.Css);
+                else if (value.UserStatus == UserStates.ChangeDisplayName)
                     ret = UserHelper.SaveDisplayName(value.UserName, value.DisplayName);
                 else if (value.UserStatus == UserStates.ChangePassword)
                     ret = UserHelper.ChangePassword(value.UserName, value.Password, value.NewPassword);
