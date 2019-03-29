@@ -153,10 +153,17 @@ namespace Bootstrap.DataAccess
         public int RetrieveCookieExpiresPeriod() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "Cookie保留时长" && d.Define == 0)?.Code, 7);
 
         /// <summary>
-        /// 获得 项目是否获取登录地点 默认为false
+        /// 获得 IP地理位置
         /// </summary>
         /// <returns></returns>
-        public int RetrieveLocaleIP() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "获取IP地点" && d.Define == 0)?.Code, 0);
+        public string RetrieveLocaleIPSvr() => DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "IP地理位置接口" && d.Define == 0)?.Code;
+
+        /// <summary>
+        /// 获得 项目是否获取登录地点 默认为false
+        /// </summary>
+        /// <param name="ipSvr">服务提供名称</param>
+        /// <returns></returns>
+        public string RetrieveLocaleIPSvrUrl(string ipSvr) => DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == ipSvr && d.Define == 0)?.Code;
 
         /// <summary>
         /// 获得 访问日志保留时长 默认为1个月

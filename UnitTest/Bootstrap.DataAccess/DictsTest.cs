@@ -1,4 +1,6 @@
+using System;
 using System.Linq;
+using System.Net.Http;
 using Xunit;
 
 namespace Bootstrap.DataAccess
@@ -129,7 +131,44 @@ namespace Bootstrap.DataAccess
         public void RetrieveLocaleIP_Ok()
         {
             var dict = new Dict();
-            Assert.Equal(0, dict.RetrieveLocaleIP());
+            var ipSvr = dict.RetrieveLocaleIPSvr();
+            Assert.Equal("JuheIPSvr", ipSvr);
+
+            var ipUri = dict.RetrieveLocaleIPSvrUrl(ipSvr);
+            Assert.NotNull(ipUri);
+        }
+
+        [Fact]
+        public async void BaiduIPSvr_Ok()
+        {
+            var dict = new Dict();
+            var ipUri = dict.RetrieveLocaleIPSvrUrl("BaiDuIPSvr");
+
+            var client = HttpClientFactory.Create();
+
+            // 日本东京
+            var locator = await client.GetAsJsonAsync<BaiDuIPLocator>($"{ipUri}207.148.111.94");
+            Assert.NotEqual("0", locator.Status);
+
+            // 四川成都
+            locator = await client.GetAsJsonAsync<BaiDuIPLocator>($"{ipUri}182.148.123.196");
+            Assert.Equal("0", locator.Status);
+        }
+
+        [Fact]
+        public async void JuheIPSvr_Ok()
+        {
+            var dict = new Dict();
+            var ipUri = dict.RetrieveLocaleIPSvrUrl("JuheIPSvr");
+
+            // 日本东京
+            var client = HttpClientFactory.Create();
+            var locator = await client.GetAsJsonAsync<JuheIPLocator>($"{ipUri}207.148.111.94");
+            Assert.Equal(0, locator.Error_Code);
+
+            // 四川成都
+            locator = await client.GetAsJsonAsync<JuheIPLocator>($"{ipUri}182.148.123.196");
+            Assert.Equal(0, locator.Error_Code);
         }
 
         [Fact]
@@ -138,5 +177,97 @@ namespace Bootstrap.DataAccess
             var dict = new Dict();
             Assert.Equal(1, dict.RetrieveAccessLogPeriod());
         }
+
+        #region Private Class For Test
+        /// <summary>
+        /// 
+        /// </summary>
+        private class BaiDuIPLocator
+        {
+            /// <summary>
+            /// 详细地址信息
+            /// </summary>
+            public string Address { get; set; }
+
+            /// <summary>
+            /// 结果状态返回码
+            /// </summary>
+            public string Status { get; set; }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <returns></returns>
+            public override string ToString()
+            {
+                return Status == "0" ? string.Join(" ", Address.SpanSplit("|").Skip(1).Take(2)) : "XX XX";
+            }
+        }
+
+        private class JuheIPLocator
+        {
+            /// <summary>
+            /// 
+            /// </summary>
+            public string ResultCode { get; set; }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public string Reason { get; set; }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public JuheIPLocatorResult Result { get; set; }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <value></value>
+            public int Error_Code { get; set; }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <returns></returns>
+            public override string ToString()
+            {
+                return Error_Code != 0 ? "XX XX" : Result.ToString();
+            }
+        }
+
+        private class JuheIPLocatorResult
+        {
+            /// <summary>
+            /// 
+            /// </summary>
+            public string Country { get; set; }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public string Province { get; set; }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public string City { get; set; }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public string Isp { get; set; }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <returns></returns>
+            public override string ToString()
+            {
+                return Country != "中国" ? $"{Country} {Province} {Isp}" : $"{Province} {City} {Isp}";
+            }
+        }
+        #endregion
     }
 }

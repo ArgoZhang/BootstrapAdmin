@@ -164,7 +164,13 @@ namespace Bootstrap.DataAccess
         /// 
         /// </summary>
         /// <returns></returns>
-        public static int RetrieveLocaleIP() => DbContextManager.Create<Dict>().RetrieveLocaleIP();
+        public static string RetrieveLocaleIPSvr() => DbContextManager.Create<Dict>().RetrieveLocaleIPSvr();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static string RetrieveLocaleIPSvrUrl(string ipSvr) => DbContextManager.Create<Dict>().RetrieveLocaleIPSvrUrl(ipSvr);
 
         /// <summary>
         /// 访问日志保留时长 默认一个月

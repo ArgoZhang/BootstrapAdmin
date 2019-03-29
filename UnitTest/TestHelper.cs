@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -60,7 +60,7 @@ namespace UnitTest
             {
                 var dbPath = RetrievePath($"UnitTest{Path.DirectorySeparatorChar}DB{Path.DirectorySeparatorChar}UnitTest.db");
                 var dbFile = Path.Combine(AppContext.BaseDirectory, "UnitTest.db");
-                if (!File.Exists(dbFile)) File.Copy(dbPath, dbFile);
+                File.Copy(dbPath, dbFile, true);
 
                 builder.ConfigureAppConfiguration(app => app.AddInMemoryCollection(new KeyValuePair<string, string>[] {
                     new KeyValuePair<string, string>("DB:0:Enabled", "false"),
