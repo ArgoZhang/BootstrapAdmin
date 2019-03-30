@@ -1,4 +1,4 @@
-﻿using Bootstrap.Client.DataAccess;
+using Bootstrap.Client.DataAccess;
 using Bootstrap.Security.DataAccess;
 using Bootstrap.Security.Filter;
 using Longbow.Web;
@@ -60,7 +60,7 @@ namespace Bootstrap.Client
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
             {
                 options.Cookie.Path = "/";
-                options.RebuildRedirectUri();
+                options.RebuildRedirectUri(Configuration["AuthHost"]);
             });
         }
 
