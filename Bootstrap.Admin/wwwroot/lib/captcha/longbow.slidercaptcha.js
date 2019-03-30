@@ -126,6 +126,9 @@
         var getRandomNumberByRange = function (start, end) {
             return Math.round(Math.random() * (end - start) + start);
         };
+        var localImg = function () {
+            return $.format('../images/Pic{0}.jpg', Math.round(Math.random() * 4));
+        };
         var img = new Image();
         img.crossOrigin = "Anonymous";
         img.onload = function () {
@@ -144,7 +147,7 @@
             that.text.text(that.text.attr('data-text'));
         };
         img.onerror = function () {
-            img.setSrc();
+            img.src = localImg();
         }
         img.setSrc = function () {
             var src = '';
