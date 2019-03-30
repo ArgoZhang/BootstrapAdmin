@@ -60,12 +60,15 @@ namespace Bootstrap.Admin
         /// <returns></returns>
         public string RetrieveLocaleByIp(string ip = null)
         {
-            if (string.IsNullOrEmpty(DictHelper.RetrieveLocaleIPSvr()) || ip.IsNullOrEmpty() || _local.Any(p => p == ip)) return "本地连接";
+            var ipSvr = DictHelper.RetrieveLocaleIPSvr();
+            if (ipSvr.IsNullOrEmpty() || ipSvr.Equals("None", StringComparison.OrdinalIgnoreCase) || ip.IsNullOrEmpty() || _local.Any(p => p == ip)) return "本地连接";
 
             return _ipLocator.GetOrAdd(ip, key =>
             {
-                var ipSvr = DictHelper.RetrieveLocaleIPSvr();
-                var url = $"{DictHelper.RetrieveLocaleIPSvrUrl(ipSvr)}{ip}";
+                var ipSvrUrl = DictHelper.RetrieveLocaleIPSvrUrl(ipSvr);
+                if (ipSvrUrl.IsNullOrEmpty()) return "本地连接";
+
+                var url = $"{ipSvrUrl}{ip}";
                 var task = ipSvr == "BaiDuIPSvr" ? RetrieveLocator<BaiDuIPLocator>(url) : RetrieveLocator<JuheIPLocator>(url);
                 task.Wait();
                 return task.Result;
