@@ -1,5 +1,6 @@
 ﻿using Bootstrap.Admin;
 using Bootstrap.DataAccess;
+using Longbow.Cache;
 using Longbow.Web;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,9 +28,9 @@ namespace Microsoft.AspNetCore.Builder
                 if (user == null) return;
 
                 var onlineUserSvr = context.RequestServices.GetRequiredService<IOnlineUsers>();
-                var proxy = new Func<OnlineUserCache, Action, OnlineUserCache>((c, action) =>
+                var proxy = new Func<AutoExpireCacheEntry<OnlineUser>, Action, AutoExpireCacheEntry<OnlineUser>>((c, action) =>
                 {
-                    var v = c.User;
+                    var v = c.Value;
                     v.UserName = user.UserName;
                     v.DisplayName = user.DisplayName;
                     v.LastAccessTime = DateTime.Now;
@@ -50,7 +51,7 @@ namespace Microsoft.AspNetCore.Builder
                     v.Browser = $"{agent.Browser.Name} {agent.Browser.Version}";
                     v.OS = $"{agent.OS.Name} {agent.OS.Version}";
                     v.FirstAccessTime = DateTime.Now;
-                    return proxy(new OnlineUserCache(v, () => onlineUserSvr.TryRemove(key, out _)), null);
+                    return proxy(new AutoExpireCacheEntry<OnlineUser>(v, 1000 * 60, __ => onlineUserSvr.TryRemove(key, out _)), null);
                 }, (key, v) => proxy(v, () => v.Reset()));
             });
             await next();

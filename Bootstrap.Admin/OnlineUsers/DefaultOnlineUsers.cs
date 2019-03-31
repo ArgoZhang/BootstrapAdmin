@@ -1,8 +1,11 @@
 using Bootstrap.DataAccess;
+using Longbow.Cache;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -14,10 +17,10 @@ namespace Bootstrap.Admin
     /// </summary>
     internal class DefaultOnlineUsers : IOnlineUsers
     {
-        private ConcurrentDictionary<string, OnlineUserCache> _onlineUsers = new ConcurrentDictionary<string, OnlineUserCache>();
-        private ConcurrentDictionary<string, string> _ipLocator = new ConcurrentDictionary<string, string>();
-        private HttpClient _client;
-        private IEnumerable<string> _local = new string[] { "::1", "127.0.0.1" };
+        private readonly ConcurrentDictionary<string, AutoExpireCacheEntry<OnlineUser>> _onlineUsers = new ConcurrentDictionary<string, AutoExpireCacheEntry<OnlineUser>>();
+        private readonly ConcurrentDictionary<string, AutoExpireCacheEntry<string>> _ipLocator = new ConcurrentDictionary<string, AutoExpireCacheEntry<string>>();
+        private readonly HttpClient _client;
+        private readonly IEnumerable<string> _local = new string[] { "::1", "127.0.0.1" };
         /// <summary>
         /// 
         /// </summary>
@@ -33,7 +36,7 @@ namespace Bootstrap.Admin
         /// <returns></returns>
         public IEnumerable<OnlineUser> OnlineUsers
         {
-            get { return _onlineUsers.Values.Select(v => v.User); }
+            get { return _onlineUsers.Values.Select(v => v.Value); }
         }
 
         /// <summary>
@@ -43,7 +46,7 @@ namespace Bootstrap.Admin
         /// <param name="addValueFactory"></param>
         /// <param name="updateValueFactory"></param>
         /// <returns></returns>
-        public OnlineUserCache AddOrUpdate(string key, Func<string, OnlineUserCache> addValueFactory, Func<string, OnlineUserCache, OnlineUserCache> updateValueFactory) => _onlineUsers.AddOrUpdate(key, addValueFactory, updateValueFactory);
+        public AutoExpireCacheEntry<OnlineUser> AddOrUpdate(string key, Func<string, AutoExpireCacheEntry<OnlineUser>> addValueFactory, Func<string, AutoExpireCacheEntry<OnlineUser>, AutoExpireCacheEntry<OnlineUser>> updateValueFactory) => _onlineUsers.AddOrUpdate(key, addValueFactory, updateValueFactory);
 
         /// <summary>
         /// 
@@ -51,34 +54,44 @@ namespace Bootstrap.Admin
         /// <param name="key"></param>
         /// <param name="onlineUserCache"></param>
         /// <returns></returns>
-        public bool TryRemove(string key, out OnlineUserCache onlineUserCache) => _onlineUsers.TryRemove(key, out onlineUserCache);
+        public bool TryRemove(string key, out AutoExpireCacheEntry<OnlineUser> onlineUserCache) => _onlineUsers.TryRemove(key, out onlineUserCache);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="ip"></param>
         /// <returns></returns>
-        public string RetrieveLocaleByIp(string ip = null)
+        public string RetrieveLocaleByIp(string ip = null) => _ipLocator.GetOrAdd(ip, key => new AutoExpireCacheEntry<string>(IPProxy(key), 1000 * 60, __ => _ipLocator.TryRemove(key, out _))).Value;
+
+        private string IPProxy(string ip)
         {
             var ipSvr = DictHelper.RetrieveLocaleIPSvr();
             if (ipSvr.IsNullOrEmpty() || ipSvr.Equals("None", StringComparison.OrdinalIgnoreCase) || ip.IsNullOrEmpty() || _local.Any(p => p == ip)) return "本地连接";
 
-            return _ipLocator.GetOrAdd(ip, key =>
-            {
-                var ipSvrUrl = DictHelper.RetrieveLocaleIPSvrUrl(ipSvr);
-                if (ipSvrUrl.IsNullOrEmpty()) return "本地连接";
+            var ipSvrUrl = DictHelper.RetrieveLocaleIPSvrUrl(ipSvr);
+            if (ipSvrUrl.IsNullOrEmpty()) return "本地连接";
 
-                var url = $"{ipSvrUrl}{ip}";
-                var task = ipSvr == "BaiDuIPSvr" ? RetrieveLocator<BaiDuIPLocator>(url) : RetrieveLocator<JuheIPLocator>(url);
-                task.Wait();
-                return task.Result;
-            });
+            var url = $"{ipSvrUrl}{ip}";
+            var task = ipSvr == "BaiDuIPSvr" ? RetrieveLocator<BaiDuIPLocator>(url) : RetrieveLocator<JuheIPLocator>(url);
+            task.Wait();
+            return task.Result;
         }
 
         private async Task<string> RetrieveLocator<T>(string url)
         {
-            var result = await _client.GetAsJsonAsync<T>(url);
-            return result.ToString();
+            var ret = default(T);
+            try
+            {
+                ret = await _client.GetAsJsonAsync<T>(url);
+            }
+            catch (Exception ex)
+            {
+                ex.Log(new NameValueCollection()
+                {
+                    ["Url"] = url
+                });
+            }
+            return ret?.ToString();
         }
 
         /// <summary>
