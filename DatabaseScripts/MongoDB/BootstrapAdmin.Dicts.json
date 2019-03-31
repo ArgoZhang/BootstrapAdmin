@@ -311,7 +311,7 @@
     "_id": ObjectId("5bd6c73d5fa31256f77e4a44"),
     "Category": "系统设置",
     "Name": "IP地理位置接口",
-    "Code": "JuheIPSvr",
+    "Code": "None",
     "Define": NumberInt(0)
   },
   {
