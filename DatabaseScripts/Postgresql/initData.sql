@@ -3,8 +3,7 @@ DELETE From Users;
 ALTER SEQUENCE users_id_seq RESTART WITH 1;
 INSERT INTO Users (UserName, Password, PassSalt, DisplayName, RegisterTime, ApprovedTime,ApprovedBy, Description) values ('Admin', 'Es7WVgNsJuELwWK8daCqufUBknCsSC0IYDphQZAiGOo=', 'W5vpBEOYRGHkQXatN0t+ECM/U8cHDuEgrq56+zZBk4J481xH', 'Administrator', now(), now(), 'system', '系统默认创建');
 
-DELETE From Dicts;
-ALTER SEQUENCE dicts_id_seq RESTART WITH 1;
+DELETE From Dicts Where Define = 0;
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('菜单', '系统菜单', '0', 0);
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('菜单', '外部菜单', '1', 0);
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('应用程序', '未设置', '0', 0);
@@ -42,8 +41,7 @@ INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统设置', 'BaiDuI
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统设置', 'JuheIPSvr', 'http://apis.juhe.cn/ip/ipNew?key=f57102d1b9fadd3f4a1c29072d0c0206&ip=', 0);
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统设置', '演示系统', '0', 0);
 
-DELETE FROM Navigations;
-ALTER SEQUENCE navigations_id_seq RESTART WITH 1;
+DELETE FROM Navigations Where Category = '0';
 INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (0, '后台管理', 10, 'fa fa-gear', '~/Admin/Index', '0');
 INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (0, '个人中心', 20, 'fa fa-suitcase', '~/Admin/Profiles', '0');
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (currval('navigations_id_seq') - 1, '保存显示名称', 10, 'fa fa-fa', 'saveDisplayName', '0', 2);
@@ -103,22 +101,22 @@ INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (c
 INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (currval('navigations_id_seq') - 2, 'API文档', 10, 'fa fa-wrench', '~/swagger', '0');
 INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (currval('navigations_id_seq') - 3, '图标集', 10, 'fa fa-dashboard', '~/Admin/FAIcon', '0');
 
-DELETE FROM Groups;
+DELETE FROM Groups Where ID = 1;
 ALTER SEQUENCE groups_id_seq RESTART WITH 1;
 INSERT INTO Groups (ID, GroupName, Description) VALUES (1, 'Admin', '系统默认组');
 
-DELETE FROM Roles;
+DELETE FROM Roles Where ID in (1, 2);
 ALTER SEQUENCE roles_id_seq RESTART WITH 1;
 INSERT INTO Roles (RoleName, Description) VALUES ('Administrators', '系统管理员');
 INSERT INTO Roles (RoleName, Description) VALUES ('Default', '默认用户，可访问前台页面');
 
-DELETE FROM RoleGroup;
+DELETE FROM RoleGroup Where RoleID = 1;
 INSERT INTO RoleGroup (RoleID, GroupID) VALUES (1, 1);
 
-DELETE FROM UserGroup;
+DELETE FROM UserGroup Where UserID = 1;
 INSERT INTO UserGroup (UserID, GroupID) VALUES (1, 1);
 
-DELETE FROM UserRole;
+DELETE FROM UserRole Where UserID = 1;
 INSERT INTO UserRole (UserID, RoleID) VALUES (1, 1);
 INSERT INTO UserRole (UserID, RoleID) VALUES (1, 2);
 

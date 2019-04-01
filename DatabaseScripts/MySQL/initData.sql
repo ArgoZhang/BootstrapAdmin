@@ -4,29 +4,29 @@ ALTER TABLE Users MODIFY COLUMN ID INT NOT NULL;
 INSERT INTO Users (ID, UserName, Password, PassSalt, DisplayName, RegisterTime, ApprovedTime,ApprovedBy, Description) values (1, 'Admin', 'Es7WVgNsJuELwWK8daCqufUBknCsSC0IYDphQZAiGOo=', 'W5vpBEOYRGHkQXatN0t+ECM/U8cHDuEgrq56+zZBk4J481xH', 'Administrator', now(), now(), 'system', '系统默认创建');
 ALTER TABLE Users MODIFY COLUMN ID INT NOT NULL AUTO_INCREMENT;
 
-DELETE From Dicts;
-INSERT INTO Dicts (ID, Category, Name, Code, Define) VALUES (NULL, '菜单', '系统菜单', '0', 0);
-INSERT INTO Dicts (ID, Category, Name, Code, Define) VALUES (NULL, '菜单', '外部菜单', '1', 0);
-INSERT INTO Dicts (ID, Category, Name, Code, Define) VALUES (NULL, '应用程序', '未设置', '0', 0);
-INSERT INTO Dicts (ID, Category, Name, Code, Define) VALUES (NULL, '网站设置', '网站标题', '后台管理系统', 0);
-INSERT INTO Dicts (ID, Category, Name, Code, Define) VALUES (NULL, '网站设置', '网站页脚', '2016 © 通用后台管理系统', 0);
-INSERT INTO Dicts (ID, Category, Name, Code, Define) VALUES (NULL, '系统通知', '用户注册', '0', 0);
-INSERT INTO Dicts (ID, Category, Name, Code, Define) VALUES (NULL, '系统通知', '程序异常', '1', 0);
-INSERT INTO Dicts (ID, Category, Name, Code, Define) VALUES (NULL, '系统通知', '数据库连接', '2', 0);
-INSERT INTO Dicts (ID, Category, Name, Code, Define) VALUES (NULL, '通知状态', '未处理', '0', 0);
-INSERT INTO Dicts (ID, Category, Name, Code, Define) VALUES (NULL, '通知状态', '已处理', '1', 0);
-INSERT INTO Dicts (ID, Category, Name, Code, Define) VALUES (NULL, '处理结果', '同意', '0', 0);
-INSERT INTO Dicts (ID, Category, Name, Code, Define) VALUES (NULL, '处理结果', '拒绝', '1', 0);
-INSERT INTO Dicts (ID, Category, Name, Code, Define) VALUES (NULL, '消息状态', '未读', '0', 0);
-INSERT INTO Dicts (ID, Category, Name, Code, Define) VALUES (NULL, '消息状态', '已读', '1', 0);
-INSERT INTO Dicts (ID, Category, Name, Code, Define) VALUES (NULL, '消息标签', '一般', '0', 0);
-INSERT INTO Dicts (ID, Category, Name, Code, Define) VALUES (NULL, '消息标签', '紧要', '1', 0);
-INSERT INTO Dicts (ID, Category, Name, Code, Define) VALUES (NULL, '头像地址', '头像路径', '~/images/uploader/', 0);
-INSERT INTO Dicts (ID, Category, Name, Code, Define) VALUES (NULL, '头像地址', '头像文件', 'default.jpg', 0);
-INSERT INTO Dicts (ID, Category, Name, Code, Define) VALUES (NULL, '网站样式', '蓝色样式', 'blue.css', 0);
-INSERT INTO Dicts (ID, Category, Name, Code, Define) VALUES (NULL, '网站样式', '黑色样式', 'black.css', 0);
-INSERT INTO Dicts (ID, Category, Name, Code, Define) VALUES (NULL, '当前样式', '使用样式', 'blue.css', 0);
-INSERT INTO Dicts (ID, Category, Name, Code, Define) VALUES (NULL, '网站设置', '前台首页', '~/Home/Index', 0);
+DELETE From Dicts Where Define = 0;
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('菜单', '系统菜单', '0', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('菜单', '外部菜单', '1', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('应用程序', '未设置', '0', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('网站设置', '网站标题', '后台管理系统', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('网站设置', '网站页脚', '2016 © 通用后台管理系统', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统通知', '用户注册', '0', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统通知', '程序异常', '1', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统通知', '数据库连接', '2', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('通知状态', '未处理', '0', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('通知状态', '已处理', '1', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('处理结果', '同意', '0', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('处理结果', '拒绝', '1', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('消息状态', '未读', '0', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('消息状态', '已读', '1', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('消息标签', '一般', '0', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('消息标签', '紧要', '1', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('头像地址', '头像路径', '~/images/uploader/', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('头像地址', '头像文件', 'default.jpg', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('网站样式', '蓝色样式', 'blue.css', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('网站样式', '黑色样式', 'black.css', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('当前样式', '使用样式', 'blue.css', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('网站设置', '前台首页', '~/Home/Index', 0);
 
 -- 时长单位 月
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统设置', '程序异常保留时长', '1', 0);
@@ -42,8 +42,7 @@ INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统设置', 'BaiDuI
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统设置', 'JuheIPSvr', 'http://apis.juhe.cn/ip/ipNew?key=f57102d1b9fadd3f4a1c29072d0c0206&ip=', 0);
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统设置', '演示系统', '0', 0);
 
-DELETE FROM Navigations;
-Truncate Navigations;
+DELETE FROM Navigations Where Category = '0';
 INSERT INTO Navigations (ParentId, Name, `Order`, Icon, Url, Category) VALUES (0, '后台管理', 10, 'fa fa-gear', '~/Admin/Index', '0');
 INSERT INTO Navigations (ParentId, Name, `Order`, Icon, Url, Category) VALUES (0, '个人中心', 20, 'fa fa-suitcase', '~/Admin/Profiles', '0');
 INSERT INTO Navigations (ParentId, Name, `Order`, Icon, Url, Category, IsResource) VALUES (@@identity, '保存显示名称', 10, 'fa fa-fa', 'saveDisplayName', '0', 2);
@@ -114,13 +113,13 @@ INSERT INTO Roles (ID, RoleName, Description) VALUES (1, 'Administrators', '系�
 INSERT INTO Roles (ID, RoleName, Description) VALUES (2, 'Default', '默认用户，可访问前台页面');
 ALTER TABLE Roles MODIFY COLUMN ID INT NOT NULL AUTO_INCREMENT;
 
-DELETE FROM RoleGroup;
+DELETE FROM RoleGroup Where RoleID = 1;
 INSERT INTO RoleGroup (RoleID, GroupID) VALUES (1, 1);
 
-DELETE FROM UserGroup;
+DELETE FROM UserGroup Where UserID = 1;
 INSERT INTO UserGroup (UserID, GroupID) VALUES (1, 1);
 
-DELETE FROM UserRole;
+DELETE FROM UserRole Where UserID = 1;
 INSERT INTO UserRole (UserID, RoleID) VALUES (1, 1);
 INSERT INTO UserRole (UserID, RoleID) VALUES (1, 2);
 
@@ -138,10 +137,10 @@ Insert into Dicts (Category, Name, Code, Define) values ('测试平台', '个人
 Insert into Dicts (Category, Name, Code, Define) values ('测试平台', '系统设置地址', 'http://localhost:50852/Admin/Index', 1);
 
 Delete from Navigations where Application = 2;
-INSERT into Navigations (ID, ParentId, Name, `Order`, Icon, Url, Category, Application) VALUES (NULL, 0, '首页', 10, 'fa fa-fa', '~/Home/Index', '1', 2);
+INSERT into Navigations (ParentId, Name, `Order`, Icon, Url, Category, Application) VALUES (0, '首页', 10, 'fa fa-fa', '~/Home/Index', '1', 2);
 
-INSERT into Navigations (ID, ParentId, Name, `Order`, Icon, Url, Category, Application) VALUES (NULL, 0, '测试页面', 20, 'fa fa-fa', '#', '1', 2);
-INSERT into Navigations (ID, ParentId, Name, `Order`, Icon, Url, Category, Application) VALUES (NULL, @@identity, '关于', 10, 'fa fa-fa', '~/Home/About', '1', 2);
+INSERT into Navigations (ParentId, Name, `Order`, Icon, Url, Category, Application) VALUES (0, '测试页面', 20, 'fa fa-fa', '#', '1', 2);
+INSERT into Navigations (ParentId, Name, `Order`, Icon, Url, Category, Application) VALUES (@@identity, '关于', 10, 'fa fa-fa', '~/Home/About', '1', 2);
 
 -- 菜单授权
 DELETE FROM NavigationRole Where NavigationID in (Select ID From Navigations Where Application = 2);

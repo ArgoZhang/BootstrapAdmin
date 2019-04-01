@@ -2,7 +2,7 @@ DELETE From Users where ID = 1;
 -- ADMIN/123789
 INSERT INTO Users (ID, UserName, [Password], PassSalt, DisplayName, RegisterTime, ApprovedTime,ApprovedBy, [Description]) values (1, 'Admin', 'Es7WVgNsJuELwWK8daCqufUBknCsSC0IYDphQZAiGOo=', 'W5vpBEOYRGHkQXatN0t+ECM/U8cHDuEgrq56+zZBk4J481xH', 'Administrator', datetime(CURRENT_TIMESTAMP, 'localtime'), datetime(CURRENT_TIMESTAMP, 'localtime'), 'system', '系统默认创建');
 
-DELETE From Dicts;
+DELETE From Dicts Where Define = 0;
 INSERT INTO [Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (NULL, '菜单', '系统菜单', '0', 0);
 INSERT INTO [Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (NULL, '菜单', '外部菜单', '1', 0);
 INSERT INTO [Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (NULL, '应用程序', '未设置', '0', 0);
@@ -40,7 +40,7 @@ INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('系统设置
 INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('系统设置', 'JuheIPSvr', 'http://apis.juhe.cn/ip/ipNew?key=f57102d1b9fadd3f4a1c29072d0c0206&ip=', 0);
 INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('系统设置', '演示系统', '0', 0);
 
-DELETE FROM Navigations;
+DELETE FROM Navigations Where Category = '0';
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, '后台管理', 10, 'fa fa-gear', '~/Admin/Index', '0');
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, '个人中心', 20, 'fa fa-suitcase', '~/Admin/Profiles', '0');
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (last_insert_rowid(), '保存显示名称', 10, 'fa fa-fa', 'saveDisplayName', '0', 2);
@@ -107,13 +107,13 @@ DELETE FROM Roles where ID in (1, 2);
 INSERT INTO [Roles] ([ID], [RoleName], [Description]) VALUES (1, 'Administrators', '系统管理员');
 INSERT INTO [Roles] ([ID], [RoleName], [Description]) VALUES (2, 'Default', '默认用户，可访问前台页面');
 
-DELETE FROM RoleGroup;
+DELETE FROM RoleGroup Where RoleID = 1;
 INSERT INTO [RoleGroup] ([RoleID], [GroupID]) VALUES (1, 1);
 
-DELETE FROM UserGroup;
+DELETE FROM UserGroup Where UserID = 1;
 INSERT INTO [UserGroup] ([UserID], [GroupID]) VALUES (1, 1);
 
-DELETE FROM UserRole;
+DELETE FROM UserRole Where UserID = 1;
 INSERT INTO [UserRole] ([UserID], [RoleID]) VALUES (1, 1);
 INSERT INTO [UserRole] ([UserID], [RoleID]) VALUES (1, 2);
 
@@ -131,10 +131,10 @@ Insert into Dicts (Category, [Name], Code, Define) values ('测试平台', '个�
 Insert into Dicts (Category, [Name], Code, Define) values ('测试平台', '系统设置地址', 'http://localhost:50852/Admin/Index', 1);
 
 Delete from [Navigations] where Application = 2;
-INSERT into [Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category], [Application]) VALUES (NULL, 0, '首页', 10, 'fa fa-fa', '~/Home/Index', '1', 2);
+INSERT into [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], [Application]) VALUES (0, '首页', 10, 'fa fa-fa', '~/Home/Index', '1', 2);
 
-INSERT into [Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category], [Application]) VALUES (NULL, 0, '测试页面', 20, 'fa fa-fa', '#', '1', 2);
-INSERT into [Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category], [Application]) VALUES (NULL, last_insert_rowid(), '关于', 10, 'fa fa-fa', '~/Home/About', '1', 2);
+INSERT into [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], [Application]) VALUES (0, '测试页面', 20, 'fa fa-fa', '#', '1', 2);
+INSERT into [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], [Application]) VALUES (last_insert_rowid(), '关于', 10, 'fa fa-fa', '~/Home/About', '1', 2);
 
 -- 菜单授权
 DELETE FROM NavigationRole Where NavigationID in (Select ID From Navigations Where [Application] = 2);

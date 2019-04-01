@@ -7,7 +7,7 @@ SET IDENTITY_INSERT [dbo].[Users] ON
 insert into Users (ID, UserName, Password, PassSalt, DisplayName, RegisterTime, ApprovedTime,ApprovedBy, [Description]) values (1, 'Admin', 'Es7WVgNsJuELwWK8daCqufUBknCsSC0IYDphQZAiGOo=', 'W5vpBEOYRGHkQXatN0t+ECM/U8cHDuEgrq56+zZBk4J481xH', 'Administrator', GetDate(), GetDate(), 'system', N'系统默认创建')
 SET IDENTITY_INSERT [dbo].[Users] OFF
 
-DELETE From Dicts
+DELETE From Dicts Where Define = 0
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'菜单', N'系统菜单', N'0', 0)
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'菜单', N'外部菜单', N'1', 0)
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'应用程序', N'未设置', N'0', 0)
@@ -45,8 +45,7 @@ INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'系统设�
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'系统设置', N'JuheIPSvr', 'http://apis.juhe.cn/ip/ipNew?key=f57102d1b9fadd3f4a1c29072d0c0206&ip=', 0)
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'系统设置', N'演示系统', '0', 0)
 
-DELETE FROM Navigations
-DBCC CHECKIDENT(Navigations, RESEED, 0)
+DELETE FROM Navigations Where Category = N'0'
 INSERT [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, N'后台管理', 10, N'fa fa-gear', N'~/Admin/Index', N'0')
 INSERT [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, N'个人中心', 20, N'fa fa-suitcase', N'~/Admin/Profiles', N'0')
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (@@Identity, N'保存显示名称', 10, 'fa fa-fa', 'saveDisplayName', '0', 2);
@@ -117,26 +116,17 @@ INSERT [dbo].[Roles] ([ID], [RoleName], [Description]) VALUES (1, N'Administrato
 INSERT [dbo].[Roles] ([ID], [RoleName], [Description]) VALUES (2, N'Default', N'默认用户，可访问前台页面')
 SET IDENTITY_INSERT [dbo].[Roles] OFF
 
-DELETE FROM RoleGroup
+DELETE FROM RoleGroup Where RoleID = 1
 INSERT [dbo].[RoleGroup] ([RoleID], [GroupID]) VALUES (1, 1)
 
-DELETE FROM UserGroup
+DELETE FROM UserGroup Where UserID = 1
 INSERT [dbo].[UserGroup] ([UserID], [GroupID]) VALUES (1, 1)
 
-DELETE FROM UserRole
+DELETE FROM UserRole Where UserID = 1
 INSERT [dbo].[UserRole] ([UserID], [RoleID]) VALUES (1, 1)
 INSERT [dbo].[UserRole] ([UserID], [RoleID]) VALUES (1, 2)
 
 DELETE FROM NavigationRole
-INSERT INTO NavigationRole SELECT id, 1 FROM navigations
-INSERT [dbo].[NavigationRole] ([NavigationID], [RoleID]) VALUES (1, 2)
-INSERT [dbo].[NavigationRole] ([NavigationID], [RoleID]) VALUES (2, 2)
-INSERT [dbo].[NavigationRole] ([NavigationID], [RoleID]) VALUES (3, 2)
-INSERT [dbo].[NavigationRole] ([NavigationID], [RoleID]) VALUES (10, 2)
-INSERT [dbo].[NavigationRole] ([NavigationID], [RoleID]) VALUES (16, 2)
-INSERT [dbo].[NavigationRole] ([NavigationID], [RoleID]) VALUES (17, 2)
-INSERT [dbo].[NavigationRole] ([NavigationID], [RoleID]) VALUES (18, 2)
-INSERT [dbo].[NavigationRole] ([NavigationID], [RoleID]) VALUES (19, 2)
 
 -- Client Data
 Declare @AppId nvarchar(1)
@@ -156,12 +146,10 @@ Insert Dicts (Category, Name, Code, Define) values (@AppName, N'系统设置地�
 
 -- 菜单
 DELETE FROM Navigations Where [Application] = @AppId
-SET IDENTITY_INSERT [dbo].[Navigations] ON 
-INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category], [Application]) VALUES (210, 0, N'首页', 10, N'fa fa-fa', N'~/Home/Index', N'1', @AppId)
+INSERT [dbo].[Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], [Application]) VALUES (0, N'首页', 10, N'fa fa-fa', N'~/Home/Index', N'1', @AppId)
 
-INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category], [Application]) VALUES (220, 0, N'测试页面', 10, N'fa fa-fa', N'~/Home/Index', N'1', @AppId)
-INSERT [dbo].[Navigations] ([ID], [ParentId], [Name], [Order], [Icon], [Url], [Category], [Application]) VALUES (230, 220, N'关于', 10, N'fa fa-fa', N'~/Home/Index', N'1', @AppId)
-SET IDENTITY_INSERT [dbo].[Navigations] OFF
+INSERT [dbo].[Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], [Application]) VALUES (0, N'测试页面', 10, N'fa fa-fa', N'~/Home/Index', N'1', @AppId)
+INSERT [dbo].[Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], [Application]) VALUES (@@Identity, N'关于', 10, N'fa fa-fa', N'~/Home/Index', N'1', @AppId)
 
 -- 菜单授权
 DELETE FROM NavigationRole Where NavigationID in (Select ID From Navigations Where [Application] = @AppId)
