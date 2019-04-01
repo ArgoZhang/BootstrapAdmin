@@ -526,3 +526,11 @@ input.pending {
     padding: 0.375rem 1.5rem;
     font-size: 1rem;
 }
+
+.refreshIcon {
+    color: rgba(255,255,255,.8);
+}
+
+  .refreshIcon:hover {
+    color: #fff;
+  }

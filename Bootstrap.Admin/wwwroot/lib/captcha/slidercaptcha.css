@@ -120,12 +120,12 @@ body {
   top: 0;
   cursor: pointer;
   margin: 6px;
-  color: rgba(255,255,255,.8);
+  color: rgba(0,0,0,.25);
   font-size: 1rem;
   z-index: 5;
   transition: color .3s linear;
 }
 
   .refreshIcon:hover {
-    color: #fff;
+    color: #6c757d;
   }
