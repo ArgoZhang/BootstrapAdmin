@@ -3,7 +3,8 @@
 ## 项目介绍
 一直需要一款后台管理系统，但是网上很多开源项目都是 **Java** 开发的，本人是 **NET** 平台的对 **Java** 一窍不通，C#版本的本来就少而且还没有合适的。于是决定自己开发一套后台管理系统。由于前台采用 **Bootstrap** 布局样式，所以就叫做 **BootstrapAdmin** 。本系统可以用于所有的 Web 应用程序，目前版本已经升级到 **NET CORE** 具备跨平台能力。数据库方面同时支持多种数据库，详细列表见后面**数据库**的详细列表，切换数据源仅需更改配置文件无需重启应用程序，配置简单灵活。UI 前端使用流行的Bootstrap框架布局对移动设备的兼容性非常好，自适应目前市场几乎所有终端设备。本系统还具备单一后台支持多前台的特色，提供 **单点登录（SSO）** 的能力。  
 
-使用 HTML5 + jQuery + NET Core 2.2 + Bootstrap4.1 + PetaPoco 构建的后台管理平台  
+使用 HTML 5 + jQuery + NET Core 2.2 + Bootstrap 4.1 + PetaPoco 构建的后台管理平台  
+
 ### 主要功能  
 1. 通过配置与前台网站集成
 2. 构建前台系统分层级菜单
@@ -30,9 +31,23 @@
 
 详细资料请点击 [查看文档](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/项目介绍)  
 
-## 数据库
+### 数据库
 数据库支持列表如下：  
 **MSSQL/Oracle/SQLite/MySql/MariaDB/Postgresql/Firebird/MsAccess/MongoDB**  
+
+### 浏览器支持
+```json
+"browserslist": [
+  "Chrome >= 45",
+  "Firefox >= 38",
+  "Edge >= 12",
+  "Explorer >= 10",
+  "iOS >= 9",
+  "Safari >= 9",
+  "Android >= 4.4",
+  "Opera >= 30"
+]
+```  
 
 ## QQ交流群
 群号
