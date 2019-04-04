@@ -64,7 +64,7 @@ $(function () {
                                     var content = result.sort(function (x, y) {
                                         return x.Key > y.Key ? 1 : -1;
                                     }).map(function (ele) {
-                                        return $.format(html, ele.Interval, ele.Key, ele.Desc, ele.Value, $.format(item.Url, ele.Key), item.Self, ele.ElapsedSeconds);
+                                        return $.format(html, ele.Interval / 1000, ele.Key, ele.Desc, ele.Value, $.format(item.Url, ele.Key), item.Self, ele.ElapsedSeconds);
                                     }).join('');
 
                                     var cache = $('<div class="card-cache"></div>');
