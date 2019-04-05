@@ -34,7 +34,7 @@
 .nav [data-toggle="dropdown"] {
     border-radius: 4px;
     padding: 6px 12px;
-    transition: color .25s linear, border-color .25s linear;
+    transition: all .25s linear;
 }
 
 .nav .dropdown-menu {
