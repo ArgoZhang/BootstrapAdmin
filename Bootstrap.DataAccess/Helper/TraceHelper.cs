@@ -1,5 +1,7 @@
 ﻿using Longbow.Data;
+using Longbow.Web;
 using Longbow.Web.Mvc;
+using Microsoft.AspNetCore.Http;
 using PetaPoco;
 using System;
 
@@ -11,8 +13,27 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 保存访问历史记录
         /// </summary>
-        /// <param name="p"></param>
-        public static void Save(Trace p) => DbContextManager.Create<Trace>().Save(p);
+        /// <param name="context"></param>
+        /// <param name="v"></param>
+        public static void Save(HttpContext context, OnlineUser v)
+        {
+            if (context.User.Identity.IsAuthenticated)
+            {
+                var user = UserHelper.RetrieveUserByUserName(context.User.Identity.Name);
+                v.UserName = user.UserName;
+                v.DisplayName = user.DisplayName;
+                DbContextManager.Create<Trace>().Save(new Trace
+                {
+                    Ip = v.Ip,
+                    RequestUrl = v.RequestUrl,
+                    LogTime = v.LastAccessTime,
+                    City = v.Location,
+                    Browser = v.Browser,
+                    OS = v.OS,
+                    UserName = v.UserName
+                });
+            }
+        }
 
         /// <summary>
         /// 获得指定IP历史访问记录

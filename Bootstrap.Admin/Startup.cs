@@ -1,4 +1,4 @@
-using Bootstrap.DataAccess;
+﻿using Bootstrap.DataAccess;
 using Bootstrap.Security.Filter;
 using Longbow.Web;
 using Longbow.Web.SignalR;
@@ -60,6 +60,7 @@ namespace Bootstrap.Admin
             services.AddConfigurationManager(Configuration);
             services.AddCacheManager(Configuration);
             services.AddDbAdapter();
+            services.AddIPLocator(DictHelper.ConfigIPLocator);
             services.AddOnlineUsers();
             var dataProtectionBuilder = services.AddDataProtection(op => op.ApplicationDiscriminator = Configuration["ApplicationDiscriminator"])
                 .SetApplicationName(Configuration["ApplicationName"])
@@ -127,7 +128,7 @@ namespace Bootstrap.Admin
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseBootstrapAdminAuthorization(RoleHelper.RetrieveRolesByUserName, RoleHelper.RetrieveRolesByUrl, AppHelper.RetrievesByUserName);
-            app.UseOnlineUsers();
+            app.UseOnlineUsers(callback: TraceHelper.Save);
             app.UseCacheManagerCorsHandler();
             app.UseSignalR(routes => { routes.MapHub<SignalRHub>("/NotiHub"); });
             app.UseMvc(routes =>

@@ -41,13 +41,14 @@ namespace Bootstrap.Admin.Controllers
         /// </summary>
         /// <returns>The login.</returns>
         /// <param name="onlineUserSvr"></param>
+        /// <param name="ipLocator"></param>
         /// <param name="userName">User name.</param>
         /// <param name="password">Password.</param>
         /// <param name="remember">Remember.</param>
         [HttpPost]
-        public async Task<IActionResult> Login([FromServices]IOnlineUsers onlineUserSvr, string userName, string password, string remember)
+        public async Task<IActionResult> Login([FromServices]IOnlineUsers onlineUserSvr, [FromServices]IIPLocatorProvider ipLocator, string userName, string password, string remember)
         {
-            if (UserHelper.Authenticate(userName, password, loginUser => CreateLoginUser(onlineUserSvr, HttpContext, loginUser)))
+            if (UserHelper.Authenticate(userName, password, loginUser => CreateLoginUser(onlineUserSvr, ipLocator, HttpContext, loginUser)))
             {
                 var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
                 identity.AddClaim(new Claim(ClaimTypes.Name, userName));
@@ -63,13 +64,14 @@ namespace Bootstrap.Admin.Controllers
         /// 
         /// </summary>
         /// <param name="onlineUserSvr"></param>
+        /// <param name="ipLocator"></param>
         /// <param name="context"></param>
         /// <param name="loginUser"></param>
-        internal static void CreateLoginUser(IOnlineUsers onlineUserSvr, HttpContext context, LoginUser loginUser)
+        internal static void CreateLoginUser(IOnlineUsers onlineUserSvr, IIPLocatorProvider ipLocator, HttpContext context, LoginUser loginUser)
         {
             var agent = new UserAgent(context.Request.Headers["User-Agent"]);
             loginUser.Ip = (context.Connection.RemoteIpAddress ?? IPAddress.IPv6Loopback).ToString();
-            loginUser.City = onlineUserSvr.RetrieveLocaleByIp(loginUser.Ip);
+            loginUser.City = ipLocator.Locate(loginUser.Ip);
             loginUser.Browser = $"{agent.Browser.Name} {agent.Browser.Version}";
             loginUser.OS = $"{agent.OS.Name} {agent.OS.Version}";
         }

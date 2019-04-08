@@ -1,12 +1,10 @@
 ﻿using Bootstrap.DataAccess;
-using Longbow.Data;
 using Longbow.Web.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using Xunit;
-using DbManager = Longbow.Data.DbManager;
 
 namespace Bootstrap.Admin.Api
 {
