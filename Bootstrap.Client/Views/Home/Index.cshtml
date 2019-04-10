@@ -1,6 +1,20 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model NavigatorBarModel
+@{
+    ViewData["Title"] = "前台首页";
 }
-<p>这是测试系统首页，欢迎测试使用</p>
-<p>点击右上角登录信息下拉菜单中的设置按钮进入<b>后台管理</b></p>
+@section css {
+    <link href="~/lib/captcha/slidercaptcha.css" rel="stylesheet" />
+}
+@section javascript {
+    <script src="~/lib/captcha/longbow.slidercaptcha.js"></script>
+    <script src="~/js/index.js"></script>
+}
+<p>这是开源后台管理框架前台系统首页，欢迎使用</p>
+<p>点击右上角登录信息下拉菜单中的设置按钮进入 <b>后台管理</b> 或者 <b><a href="@Model.SettingsUrl">直接进入</a></b></p>
 <p class="text-danger"><b>由于本系统为演示系统，内部对一些敏感操作进行了限制操作，如一些特殊用户不能删除。</b></p>
+<p>
+    <button id="btnCaptcha" class="btn btn-success"><i class="fa fa-send-o"></i><span>点击我出现行为验证码</span></button>
+    <div class="card d-none" style="padding: 10px; height: 222px;">
+        <div id="captcha"></div>
+    </div>
+</p>
