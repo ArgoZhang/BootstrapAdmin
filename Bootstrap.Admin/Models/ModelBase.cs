@@ -29,7 +29,7 @@ namespace Bootstrap.Admin.Models
         public string Footer { get; private set; }
 
         /// <summary>
-        /// 
+        /// 网站样式全局设置
         /// </summary>
         public string Theme { get; protected set; }
 

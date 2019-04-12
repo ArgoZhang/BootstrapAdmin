@@ -1,4 +1,4 @@
-﻿@model ModelBase
+﻿@model HeaderBarModel
 @{
     Layout = "_Layout";
 }
@@ -16,9 +16,9 @@
     <link href="~/css/theme-responsive.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/css/site-responsive.css" rel="stylesheet" asp-append-version="true" />
-    @if (!string.IsNullOrEmpty(Model.Theme))
+    @if (!string.IsNullOrEmpty(Model.ActiveCss))
     {
-        <link href="~/css/@Model.Theme" rel="stylesheet" asp-append-version="true" />
+        <link href="~/css/@Model.ActiveCss" rel="stylesheet" asp-append-version="true" />
     }
 }
 @section javascript {

@@ -102,11 +102,14 @@
     </div>
 </div>
 <div class="card">
-    <div class="card-header">网站皮肤</div>
+    <div class="card-header">网站样式</div>
     <div class="card-body">
+        <div class="alert alert-info" role="alert">
+            <span>注意：本设置将覆盖<b><a class="badge-pill" href="./Settings">网站设置</a></b>中已经设置的网站样式</span>
+        </div>
         <div class="form-group">
             <div class="btn-group" role="group">
-                <button id="css" class="btn btn-success dropdown-select dropdown-toggle" data-toggle="dropdown" data-default-val="" value="@Model.Theme">默认样式</button>
+                <button id="css" class="btn btn-success dropdown-select dropdown-toggle" data-toggle="dropdown" data-default-val="" value="@Model.Css">默认样式</button>
                 <div class="dropdown-menu">
                     <a href="#" data-val="">默认样式</a>
                     @foreach (var css in Model.Themes)

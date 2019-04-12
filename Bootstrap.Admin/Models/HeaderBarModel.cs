@@ -19,7 +19,8 @@ namespace Bootstrap.Admin.Models
             DisplayName = user.DisplayName;
             UserName = user.UserName;
             AppCode = user.App;
-            if (!string.IsNullOrEmpty(user.Css)) Theme = user.Css;
+            Css = user.Css;
+            ActiveCss = string.IsNullOrEmpty(Css) ? Theme : Css;
         }
 
         /// <summary>
@@ -38,8 +39,18 @@ namespace Bootstrap.Admin.Models
         public string Icon { get; }
 
         /// <summary>
+        /// 获取/设置 个人网站样式
+        /// </summary>
+        public string Css { get; }
+
+        /// <summary>
         /// 获得 当前设置的默认应用
         /// </summary>
         public string AppCode { get; }
+
+        /// <summary>
+        /// 获得 当前样式
+        /// </summary>
+        public string ActiveCss { get; }
     }
 }
