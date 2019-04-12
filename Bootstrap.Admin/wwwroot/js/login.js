@@ -98,8 +98,8 @@
             return 'http://pocoafrro.bkt.clouddn.com/Pic' + Math.round(Math.random() * 136) + '.jpg';
         },
         onSuccess: function () {
-            var parent = this.$element.parents('.slidercaptcha').removeClass('d-block');
-            this.reset();
+            var parent = this.parents('.slidercaptcha').removeClass('d-block');
+            this.sliderCaptcha('reset');
             if (parent.hasClass('reg')) {
                 $.capRegSuccess();
             }

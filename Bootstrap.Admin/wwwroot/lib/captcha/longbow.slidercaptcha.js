@@ -86,7 +86,7 @@
         Object.assign(this, {
             canvas,
             block,
-            sliderContainer : $(sliderContainer),
+            sliderContainer: $(sliderContainer),
             refreshIcon,
             slider,
             sliderMask,
@@ -250,7 +250,7 @@
                 setTimeout(() => {
                     that.text.text(that.options.failedText);
                     that.reset();
-                }, 1000)
+                }, 1000);
             }
         };
 
@@ -261,8 +261,8 @@
         document.addEventListener('mouseup', handleDragEnd);
         document.addEventListener('touchend', handleDragEnd);
 
-        document.addEventListener('mousedown', function() { return false; });
-        document.addEventListener('touchstart', function() { return false; });
+        document.addEventListener('mousedown', function () { return false; });
+        document.addEventListener('touchstart', function () { return false; });
     };
 
     _proto.verify = function () {
