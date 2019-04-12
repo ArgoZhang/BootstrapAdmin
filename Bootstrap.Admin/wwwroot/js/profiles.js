@@ -1,4 +1,4 @@
-$(function () {
+﻿$(function () {
     var $headerIcon = $('#headerIcon');
     var preIcon = $headerIcon.attr('src');
     var $file = $('#fileIcon');
@@ -91,7 +91,7 @@ $(function () {
                     }
                 });
                 break;
-            case 'css':
+            case 'profileCss':
                 data.UserStatus = 'ChangeTheme';
                 $.bc({
                     url: Profiles.url, method: "put", data: data, title: "保存样式", callback: function (result) {
