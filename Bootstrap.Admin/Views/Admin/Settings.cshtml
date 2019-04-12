@@ -1,4 +1,4 @@
-@model ThemeModel
+﻿@model ThemeModel
 @{
     ViewBag.Title = "网站设置";
 }
@@ -18,10 +18,13 @@
 <div class="card">
     <div class="card-header">系统名称设置</div>
     <div class="card-body" data-toggle="LgbValidate" data-valid-button="#sysSave">
+        <div class="alert alert-danger" role="alert" asp-condition="@Model.IsDemo">
+            <span>演示系统禁止更改系统名称</span>
+        </div>
         <div class="form-group">
             <div class="input-group">
                 <input type="text" class="form-control" id="sysName" placeholder="请输入网站标题，50字以内" value="@Model.Title" maxlength="50" data-valid="true" />
-                <div class="input-group-append">
+                <div class="input-group-append" asp-condition="!@Model.IsDemo">
                     <button class="btn btn-secondary" type="button" data-method="title" asp-auth="saveTitle">保存</button>
                 </div>
             </div>
@@ -31,10 +34,13 @@
 <div class="card">
     <div class="card-header">页脚设置</div>
     <div class="card-body" data-toggle="LgbValidate" data-valid-button="#footSave">
+        <div class="alert alert-danger" role="alert" asp-condition="@Model.IsDemo">
+            <span>演示系统禁止更改页脚</span>
+        </div>
         <div class="form-group">
             <div class="input-group">
                 <input type="text" class="form-control" id="sysFoot" placeholder="请输入网站页脚，50字以内" value="@Model.Footer" maxlength="50" data-valid="true" />
-                <div class="input-group-append">
+                <div class="input-group-append" asp-condition="!@Model.IsDemo">
                     <button class="btn btn-secondary" type="button" data-method="footer" asp-auth="saveFooter">保存</button>
                 </div>
             </div>
