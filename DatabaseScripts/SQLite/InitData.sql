@@ -137,6 +137,8 @@ INSERT into [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category
 INSERT into [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], [Application]) VALUES (0, '测试页面', 20, 'fa fa-fa', '#', '1', 2);
 INSERT into [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], [Application]) VALUES (last_insert_rowid(), '关于', 10, 'fa fa-fa', '~/Home/About', '1', 2);
 
+INSERT into [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], [Application]) VALUES (0, '返回码云', 20, 'fa fa-fa', 'https://gitee.com/LongbowEnterprise/BootstrapAdmin', '1', 2);
+
 -- 菜单授权
 DELETE FROM NavigationRole Where NavigationID in (Select ID From Navigations Where [Application] = 2);
 INSERT INTO NavigationRole SELECT NULL, ID, 2 FROM Navigations Where [Application] = 2;
