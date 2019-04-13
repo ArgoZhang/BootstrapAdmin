@@ -8,6 +8,7 @@
             setTimeout(() => {
                 that.parent().removeClass('d-inline-block');
                 that.sliderCaptcha('reset');
+                window.location.href = "/BA/Admin/Profiles";
             }, 1000);
         }
     });
