@@ -1,14 +1,19 @@
 ﻿$(function () {
-    $('#captcha').sliderCaptcha({
+    var $captcha = $('#captcha');
+
+    $captcha.sliderCaptcha({
+        localImages: function () {
+            return '../../lib/captcha/images/Pic' + Math.round(Math.random() * 4) + '.jpg';
+        },
         setSrc: function () {
-            return 'http://pocoafrro.bkt.clouddn.com/Pic' + Math.round(Math.random() * 136) + '.jpg';
+            return $captcha.attr('data-imageLibUrl') + 'Pic' + Math.round(Math.random() * 136) + '.jpg';
         },
         onSuccess: function () {
             var that = this;
             setTimeout(() => {
                 that.parent().removeClass('d-inline-block');
                 that.sliderCaptcha('reset');
-                window.location.href = "/BA/Admin/Profiles";
+                $('.userinfo .dropdown-menu a:first')[0].click();
             }, 1000);
         }
     });

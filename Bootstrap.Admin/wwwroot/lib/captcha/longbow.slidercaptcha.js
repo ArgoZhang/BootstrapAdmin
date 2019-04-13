@@ -1,4 +1,4 @@
-(function ($) {
+﻿(function ($) {
     'use strict';
 
     var SliderCaptcha = function (element, options) {
@@ -16,11 +16,15 @@
         PI: Math.PI,
         sliderL: 42,    // 滑块边长
         sliderR: 9,     // 滑块半径
+        offset: 5,      // 容错偏差
         loadingText: '正在加载中...',
         failedText: '再试一次',
         barText: '向右滑动填充拼图',
         repeatIcon: 'fa fa-repeat',
-        maxLoadCount: 3
+        maxLoadCount: 3,
+        localImages: function () {
+            return 'images/Pic' + Math.round(Math.random() * 4) + '.jpg';
+        }
     };
 
     function Plugin(option) {
@@ -40,9 +44,9 @@
 
     var _proto = SliderCaptcha.prototype;
     _proto.init = function () {
-        this.initDOM()
-        this.initImg()
-        this.bindEvents()
+        this.initDOM();
+        this.initImg();
+        this.bindEvents();
     };
 
     _proto.initDOM = function () {
@@ -86,7 +90,7 @@
         Object.assign(this, {
             canvas,
             block,
-            sliderContainer : $(sliderContainer),
+            sliderContainer: $(sliderContainer),
             refreshIcon,
             slider,
             sliderMask,
@@ -127,9 +131,6 @@
         var getRandomNumberByRange = function (start, end) {
             return Math.round(Math.random() * (end - start) + start);
         };
-        var localImg = function () {
-            return '../images/Pic' + Math.round(Math.random() * 4) + '.jpg';
-        };
         var img = new Image();
         img.crossOrigin = "Anonymous";
         var loadCount = 0;
@@ -158,8 +159,8 @@
                 that.text.text('加载失败').addClass('text-danger');
                 return;
             }
-            img.src = localImg();
-        }
+            img.src = that.options.localImages();
+        };
         img.setSrc = function () {
             var src = '';
             loadCount = 0;
@@ -250,7 +251,7 @@
                 setTimeout(() => {
                     that.text.text(that.options.failedText);
                     that.reset();
-                }, 1000)
+                }, 1000);
             }
         };
 
@@ -261,8 +262,8 @@
         document.addEventListener('mouseup', handleDragEnd);
         document.addEventListener('touchend', handleDragEnd);
 
-        document.addEventListener('mousedown', function() { return false; });
-        document.addEventListener('touchstart', function() { return false; });
+        document.addEventListener('mousedown', function () { return false; });
+        document.addEventListener('touchstart', function () { return false; });
     };
 
     _proto.verify = function () {
@@ -274,7 +275,7 @@
         var stddev = Math.sqrt(deviations.map(square).reduce(sum) / arr.length);
         var left = parseInt(this.block.style.left);
         return {
-            spliced: Math.abs(left - this.x) < 4,
+            spliced: Math.abs(left - this.x) < this.options.offset,
             verified: stddev !== 0, // 简单验证下拖动轨迹，为零时表示Y轴上下没有波动，可能非人为操作
         }
     };

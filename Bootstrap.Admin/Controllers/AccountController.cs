@@ -33,7 +33,7 @@ namespace Bootstrap.Admin.Controllers
                 ViewBag.UserName = "Admin";
                 ViewBag.Password = "123789";
             }
-            return User.Identity.IsAuthenticated ? (ActionResult)Redirect("~/Home/Index") : View("Login", new ModelBase());
+            return User.Identity.IsAuthenticated ? (ActionResult)Redirect("~/Home/Index") : View("Login", new LoginModel());
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Bootstrap.Admin.Controllers
                 var originUrl = Request.Query[CookieAuthenticationDefaults.ReturnUrlParameter].FirstOrDefault() ?? "~/Home/Index";
                 return Redirect(originUrl);
             }
-            return View("Login", new ModelBase());
+            return View("Login", new LoginModel());
         }
 
         /// <summary>

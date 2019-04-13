@@ -200,5 +200,11 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <returns></returns>
         public static bool RetrieveSystemModel() => DbContextManager.Create<Dict>().RetrieveSystemModel();
+
+        /// <summary>
+        /// 获得验证码图床地址
+        /// </summary>
+        /// <returns></returns>
+        public static string RetrieveImagesLibUrl() => DbContextManager.Create<Dict>().RetrieveImagesLibUrl();
     }
 }

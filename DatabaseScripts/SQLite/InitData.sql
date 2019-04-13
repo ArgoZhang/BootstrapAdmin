@@ -39,6 +39,7 @@ INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('系统设置
 INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('系统设置', 'BaiDuIPSvr', 'http://api.map.baidu.com/location/ip?ak=6lvVPMDlm2gjLpU0aiqPsHXi2OiwGQRj&ip=', 0);
 INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('系统设置', 'JuheIPSvr', 'http://apis.juhe.cn/ip/ipNew?key=f57102d1b9fadd3f4a1c29072d0c0206&ip=', 0);
 INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('系统设置', '演示系统', '0', 0);
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('系统设置', '验证码图床', 'https://longbow-1258823021.cos.ap-shanghai.myqcloud.com/pic/280/150/', 0);
 
 DELETE FROM Navigations Where Category = '0';
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, '后台管理', 10, 'fa fa-gear', '~/Admin/Index', '0');

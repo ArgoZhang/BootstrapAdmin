@@ -1,4 +1,5 @@
 ﻿$(function () {
+    var $imgUrl = $('#imgUrl');
     $(".container").autoCenter();
 
     $("a[data-method]").on('click', function () {
@@ -94,8 +95,11 @@
     $('#captcha, #regcap, #forgotcap').sliderCaptcha({
         width: $.capWidth(),
         height: $.capHeight(),
+        localImages: function () {
+            return '../../lib/captcha/images/Pic' + Math.round(Math.random() * 4) + '.jpg';
+        },
         setSrc: function () {
-            return 'http://pocoafrro.bkt.clouddn.com/Pic' + Math.round(Math.random() * 136) + '.jpg';
+            return $imgUrl.val() + 'Pic' + Math.round(Math.random() * 136) + '.jpg';
         },
         onSuccess: function () {
             var parent = this.$element.parents('.slidercaptcha').removeClass('d-block');

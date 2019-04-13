@@ -1,4 +1,4 @@
-@model ModelBase
+@model LoginModel
 @{
     ViewBag.Title = Model.Title;
     Layout = "_Layout";
@@ -42,6 +42,7 @@
     <script src="~/js/login.js" asp-append-version="true"></script>
 }
 <div class="container">
+    <input id="imgUrl" type="hidden" value="@Model.ImageLibUrl" />
     <form id="login" method="post" class="form-signin">
         <h2 class="form-signin-heading">@Model.Title</h2>
         <div class="login-wrap" data-toggle="LgbValidate" data-valid-button="button[type='submit']">
