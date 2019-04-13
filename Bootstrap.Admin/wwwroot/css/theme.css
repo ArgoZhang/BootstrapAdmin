@@ -365,7 +365,7 @@ input.pending {
         word-break: break-all;
     }
 
-        .bootstrap-table .fixed-table-container .card-view .value > a, .bootstrap-table .fixed-table-container .card-view .value > div {
+        .bootstrap-table .fixed-table-container .card-view .value > a, .bootstrap-table .fixed-table-container .card-view .value > div:not(.btn-group) {
             min-width: 60px;
             display: inline-block;
         }
