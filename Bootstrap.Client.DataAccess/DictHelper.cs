@@ -82,5 +82,11 @@ namespace Bootstrap.Client.DataAccess
         /// </summary>
         /// <returns></returns>
         public static string RetrieveIconFolderPath() => (RetrieveDicts().FirstOrDefault(d => d.Name == "头像路径" && d.Category == "头像地址" && d.Define == 0) ?? new BootstrapDict() { Code = "~/images/uploader/" }).Code;
+
+        /// <summary>
+        /// 获取验证码图床
+        /// </summary>
+        /// <returns></returns>
+        public static string RetrieveImagesLibUrl() => (RetrieveDicts().FirstOrDefault(d => d.Name == "验证码图床" && d.Category == "系统设置" && d.Define == 0) ?? new BootstrapDict() { Code = "https://longbow-1258823021.cos.ap-shanghai.myqcloud.com/pic/280/150/" }).Code;
     }
 }

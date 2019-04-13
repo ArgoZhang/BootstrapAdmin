@@ -341,5 +341,12 @@
     "Name": "演示系统",
     "Code": "0",
     "Define": NumberInt(0)
+  },
+  {
+    "_id": ObjectId("5bd6c73d5fa31256f77e4a49"),
+    "Category": "系统设置",
+    "Name": "验证码图床",
+    "Code": "https://longbow-1258823021.cos.ap-shanghai.myqcloud.com/pic/280/150/",
+    "Define": NumberInt(0)
   }
 ]

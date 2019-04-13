@@ -1,6 +1,8 @@
 using Bootstrap.Security;
 using Longbow.Cache;
 using Longbow.Data;
+using Longbow.Web;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -73,6 +75,21 @@ namespace Bootstrap.DataAccess
             var ret = DbContextManager.Create<Dict>().Save(p);
             if (ret) CacheCleanUtility.ClearCache(dictIds: new List<string>());
             return ret;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="op"></param>
+        public static void ConfigIPLocator(IPLocatorOption op)
+        {
+            var name = RetrieveLocaleIPSvr();
+            if (!string.IsNullOrEmpty(name) && !name.Equals("None", StringComparison.OrdinalIgnoreCase))
+            {
+                var url = RetrieveLocaleIPSvrUrl(name);
+                op.Locator = string.IsNullOrEmpty(url) ? null : DefaultIPLocatorProvider.CreateLocator(name);
+                op.Url = string.IsNullOrEmpty(url) ? string.Empty : $"{url}{op.IP}";
+            }
         }
 
         /// <summary>
@@ -183,5 +200,11 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <returns></returns>
         public static bool RetrieveSystemModel() => DbContextManager.Create<Dict>().RetrieveSystemModel();
+
+        /// <summary>
+        /// 获得验证码图床地址
+        /// </summary>
+        /// <returns></returns>
+        public static string RetrieveImagesLibUrl() => DbContextManager.Create<Dict>().RetrieveImagesLibUrl();
     }
 }

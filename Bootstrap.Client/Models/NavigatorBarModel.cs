@@ -17,10 +17,17 @@ namespace Bootstrap.Client.Models
         public NavigatorBarModel(ControllerBase controller) : base(controller.User.Identity)
         {
             Navigations = MenuHelper.RetrieveAppMenus(UserName, $"~/{controller.ControllerContext.ActionDescriptor.ControllerName}/{controller.ControllerContext.ActionDescriptor.ActionName}");
+            ImageLibUrl = DictHelper.RetrieveImagesLibUrl();
         }
+
         /// <summary>
         /// 
         /// </summary>
         public IEnumerable<BootstrapMenu> Navigations { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string ImageLibUrl { get; set; }
     }
 }

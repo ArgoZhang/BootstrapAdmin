@@ -1,5 +1,6 @@
 ﻿using Bootstrap.DataAccess;
 using Bootstrap.Security;
+using Longbow.Web;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
@@ -28,17 +29,18 @@ namespace Bootstrap.Admin.Controllers.Api
         /// 
         /// </summary>
         /// <param name="onlineUserSvr"></param>
+        /// <param name="ipLocator"></param>
         /// <param name="value"></param>
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPost]
-        public string Post([FromServices]IOnlineUsers onlineUserSvr, [FromBody]JObject value)
+        public string Post([FromServices]IOnlineUsers onlineUserSvr, [FromServices]IIPLocatorProvider ipLocator, [FromBody]JObject value)
         {
             string token = null;
             dynamic user = value;
             string userName = user.userName;
             string password = user.password;
-            if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(password) && UserHelper.Authenticate(userName, password, loginUser => AccountController.CreateLoginUser(onlineUserSvr, HttpContext, loginUser)))
+            if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(password) && UserHelper.Authenticate(userName, password, loginUser => AccountController.CreateLoginUser(onlineUserSvr, ipLocator, HttpContext, loginUser)))
             {
                 token = BootstrapAdminJwtTokenHandler.CreateToken(userName);
             }

@@ -176,5 +176,11 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <returns></returns>
         public bool RetrieveSystemModel() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "演示系统" && d.Define == 0)?.Code, "0") == "1";
+
+        /// <summary>
+        /// 获得 验证码图床地址
+        /// </summary>
+        /// <returns></returns>
+        public string RetrieveImagesLibUrl() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "验证码图床" && d.Define == 0)?.Code, "https://longbow-1258823021.cos.ap-shanghai.myqcloud.com/pic/280/150/");
     }
 }

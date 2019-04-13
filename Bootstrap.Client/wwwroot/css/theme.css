@@ -382,7 +382,6 @@ input.pending {
 
 .btn i.fa + span {
     margin-left: 4px;
-    display: none;
 }
 
 .form-check-label {
