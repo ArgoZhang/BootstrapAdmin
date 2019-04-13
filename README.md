@@ -93,6 +93,7 @@ MEM: 2G
 ## 特别鸣谢
 1. <a href="https://gitee.com/571183806" target="_blank">**云龙**</a> 提供云服务器搭建在线演示系统
 2. <a href="https://gitee.com/Ysmc" target="_blank">**一事冇诚**</a> 对MongoDB数据库提供了详细测试
+3. <a href="https://gitee.com/Axxbis" target="_blank">**爱吃油麦菜**</a> 提供了云服务器与二级域名搭建备份演示系统与测试环境
 
 ## 参与贡献
 
