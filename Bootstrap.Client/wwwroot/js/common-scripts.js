@@ -1,7 +1,8 @@
 ﻿$(function () {
     var $sideMenu = $(".sidebar");
     $sideMenu.dcAccordion({
-        autoExpand: true
+        autoExpand: true,
+        saveState: false
     });
     var $breadNav = $('#breadNav');
     var arch = $sideMenu.find('a.active').last();

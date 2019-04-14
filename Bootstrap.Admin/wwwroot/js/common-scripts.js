@@ -127,7 +127,8 @@
 $(function () {
     var $sideMenu = $(".sidebar");
     $sideMenu.dcAccordion({
-        autoExpand: true
+        autoExpand: true,
+        saveState: false
     });
 
     // breadcrumb
