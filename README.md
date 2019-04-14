@@ -68,11 +68,19 @@
 用户名：**Admin**  
 密码：**123789**  
 
- **dev** 开发分支目前开发环境配置是 windows + SQLite 项目 Clone 到本地后直接即可运行测试  
- **master** 发布分支
+## 分支说明  
+ **dev** 开发分支目前开发环境配置是 windows + SQLite  
+ **master** 发布分支与在线演示版本同步
 
+## 演示地址  
 **在线演示** <a href="http://argo.zylweb.cn" target="_blank">[传送门]</a>  
-网站服务器配置：  
+**备用地址** <a href="http://ba.sdgxgz.com" target="_blank">[传送门]</a>  
+
+#### 登录用户名与密码  
+管理员：**Admin/123789**  
+普通用户：**User/123789**  
+
+#### 网站服务器配置：  
 CPU: 1核  
 MEM: 2G
 
