@@ -12,12 +12,12 @@
         sortOrder: 'desc',
         queryParams: function (params) { return $.extend(params, { StartTime: $("#txt_operate_start").val(), EndTime: $("#txt_operate_end").val() }); },
         columns: [
+            { title: "记录时间", field: "LogTime", sortable: true },
             { title: "请求网址", field: "ErrorPage", sortable: true },
             { title: "用户名", field: "UserId", sortable: true },
             { title: "IP", field: "UserIp", sortable: true },
             { title: "异常类型", field: "ExceptionType", sortable: false },
-            { title: "异常描述", field: "Message", sortable: false },
-            { title: "记录时间", field: "LogTime", sortable: true }
+            { title: "异常描述", field: "Message", sortable: false }
         ],
         exportOptions: {
             fileName: "程序异常数据"
