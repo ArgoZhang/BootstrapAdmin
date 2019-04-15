@@ -265,7 +265,7 @@ namespace Bootstrap.DataAccess
         public static bool SaveUserCssByName(string userName, string cssName)
         {
             var ret = DbContextManager.Create<User>().SaveUserCssByName(userName, cssName);
-            if (ret) CacheCleanUtility.ClearCache(cacheKey: $"{RetrieveUsersDataKey}*");
+            if (ret) CacheCleanUtility.ClearCache(cacheKey: $"{RetrieveUsersByNameDataKey}*");
             return ret;
         }
 
