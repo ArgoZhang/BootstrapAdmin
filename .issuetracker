@@ -1,0 +1,19 @@
+# Integration with Issue Tracker
+#
+# (note that '\' need to be escaped).
+
+[issuetracker "Gitee-Issue"]
+  regex = " #([^\\s]{5})"
+  url = "https://gitee.com/LongbowEnterprise/BootstrapAdmin/issues/$1?from=project-issue"
+
+[issuetracker "Gitee-Url"]
+  regex = "([a-zA-z]+://[^\\s]*)"
+  url = "$1"
+
+[issuetracker "Gitee-Commit"]
+  regex = "[C|c]ommit:([^\\s]*)"
+  url = "https://gitee.com/LongbowEnterprise/BootstrapAdmin/commit/$1"
+
+[issuetracker "Gitee-PR"]
+  regex = "!([\\d]+)"
+  url = "https://gitee.com/LongbowEnterprise/BootstrapAdmin/pulls/$1"
