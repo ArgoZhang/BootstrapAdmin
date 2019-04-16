@@ -105,7 +105,8 @@ CREATE TABLE Exceptions(
 	ExceptionType 	TEXT NOT NULL,
 	Message 		TEXT NOT NULL,
 	StackTrace 		TEXT NULL,
-	LogTime 		DATE NOT NULL
+	LogTime 		DATE NOT NULL,
+	Category		VARCHAR (50) NULL
 );
 
 CREATE TABLE Dicts(

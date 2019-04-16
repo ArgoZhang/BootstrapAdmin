@@ -47,7 +47,7 @@ namespace Bootstrap.Admin.Controllers.Api
             message.AsParallel().ForAll(m => m.FromIcon = Url.Content(m.FromIcon));
 
             //Apps
-            var apps = ExceptionsHelper.Retrieves().Where(n => n.ExceptionType != "Longbow.Data.DBAccessException");
+            var apps = ExceptionsHelper.Retrieves().Where(n => n.Category != "DB");
             var appExceptionsCount = apps.Count();
 
             apps = apps.Take(6);
@@ -62,7 +62,7 @@ namespace Bootstrap.Admin.Controllers.Api
             });
 
             //Dbs
-            var dbs = ExceptionsHelper.Retrieves().Where(n => n.ExceptionType == "Longbow.Data.DBAccessException");
+            var dbs = ExceptionsHelper.Retrieves().Where(n => n.Category == "DB");
             var dbExceptionsCount = dbs.Count();
 
             dbs = dbs.Take(6);

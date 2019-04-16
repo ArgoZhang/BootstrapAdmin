@@ -324,6 +324,7 @@ CREATE TABLE [dbo].[Exceptions](
 	[Message] [nvarchar](max) NOT NULL,
 	[StackTrace] [nvarchar](max) NULL,
 	[LogTime] [datetime] NOT NULL,
+	[Category] [varchar](50) NULL,
  CONSTRAINT [PK_Exceptions] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC

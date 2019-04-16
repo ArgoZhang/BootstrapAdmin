@@ -3,6 +3,7 @@ using PetaPoco;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Data.Common;
 
 namespace Bootstrap.DataAccess
 {
@@ -61,6 +62,11 @@ namespace Bootstrap.DataAccess
         /// </summary>
         public string Period { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Category { get; set; }
+
         private static void ClearExceptions() => System.Threading.Tasks.Task.Run(() =>
         {
             DbManager.Create().Execute("delete from Exceptions where LogTime < @0", DateTime.Now.AddMonths(0 - DictHelper.RetrieveExceptionsLogPeriod()));
@@ -77,6 +83,17 @@ namespace Bootstrap.DataAccess
             if (ex == null) return true;
 
             var errorPage = additionalInfo?["ErrorPage"] ?? (ex.GetType().Name.Length > 50 ? ex.GetType().Name.Substring(0, 50) : ex.GetType().Name);
+            var loopEx = ex;
+            var category = "App";
+            while (loopEx != null)
+            {
+                if (typeof(DbException).IsAssignableFrom(loopEx.GetType()))
+                {
+                    category = "DB";
+                    break;
+                }
+                loopEx = loopEx.InnerException;
+            }
             DbManager.Create().Insert(new Exceptions
             {
                 AppDomainName = AppDomain.CurrentDomain.FriendlyName,
@@ -86,7 +103,8 @@ namespace Bootstrap.DataAccess
                 ExceptionType = ex.GetType().FullName,
                 Message = ex.Message,
                 StackTrace = ex.StackTrace,
-                LogTime = DateTime.Now
+                LogTime = DateTime.Now,
+                Category = category
             });
             ClearExceptions();
             return true;
