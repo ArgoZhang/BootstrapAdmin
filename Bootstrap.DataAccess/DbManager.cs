@@ -1,4 +1,6 @@
 ﻿using PetaPoco;
+using System;
+using System.Collections.Specialized;
 
 namespace Bootstrap.DataAccess
 {
@@ -15,6 +17,7 @@ namespace Bootstrap.DataAccess
         public static IDatabase Create(string connectionName = null, bool keepAlive = false)
         {
             var db = Longbow.Data.DbManager.Create(connectionName, keepAlive);
+            db.ExceptionThrown += (sender, args) => args.Exception.Log(new NameValueCollection() { ["LastCmd"] = db.LastCommand });
             return db.AddMaps();
         }
 
