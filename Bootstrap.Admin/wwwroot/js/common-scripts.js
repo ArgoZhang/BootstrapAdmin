@@ -199,6 +199,18 @@ $(function () {
         addFrame: function (options) {
             var op = $.extend({ element: null, nav: '.main-content .nav' }, options);
             var $element = op.element;
+
+            // find tab
+            var tab = $(op.nav).find('.nav-link').filter(function (index, el) {
+                return $(el).attr('href') === $element.attr('href');
+            });
+
+            if (tab && tab.length === 1) {
+                tab.trigger('click');
+                resizeFrame();
+                return;
+            }
+
             var li = $.format('<li class="nav-item"><a class="nav-link active" href="{1}"><span>{0}</span></a><i class="nav-close fa fa-times-circle-o"></i></li>', $element.text(), $element.attr('href'));
             var $nav = $(op.nav);
             $nav.find('.nav-link').removeClass('active');
