@@ -1,4 +1,4 @@
-@media (min-width: 568px) {
+﻿@media (min-width: 568px) {
     .cache-item > :nth-child(2) {
         flex: 0 0 144px;
     }
@@ -38,19 +38,18 @@
     }
 
     .main-content {
-        position: fixed;
         overflow: auto;
         -ms-overflow-style: auto;
-    }
-
-    .header, footer {
-        position: fixed;
     }
 }
 
 @media (min-width: 769px) {
     .sidebar-open aside {
         transform: translate(-100%);
+    }
+
+    footer {
+        display: none;
     }
 
     .sidebar-open footer {
@@ -62,17 +61,46 @@
         transform: translate(0);
         width: 210px;
         overflow: hidden;
-        bottom: 40px;
     }
 
-    .sidebar-open .main-content {
+    .sidebar-open .main-content, .sidebar-open.frame .main-content {
         margin-left: 0;
         display: block;
     }
 
     .main-content {
-        margin-left: 210px;
         transition: none;
+        top: 0;
+    }
+
+    .frame .main-content {
+        overflow: hidden;
+        margin-left: 210px;
+    }
+
+    .frame .breadcrumb {
+        display: none;
+    }
+
+    .frame .nav-ba {
+        display: flex;
+        position: absolute;
+        top: 6px;
+        width: 100%;
+    }
+
+    .frame aside, .frame .main-content {
+        top: 58px;
+        bottom: 40px;
+    }
+
+    .frame footer {
+        position: fixed;
+        display: flex;
+    }
+
+    .frame iframe {
+        padding-top: 45px;
     }
 }
 

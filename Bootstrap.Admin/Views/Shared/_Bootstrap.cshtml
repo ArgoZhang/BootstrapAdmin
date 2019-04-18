@@ -31,7 +31,5 @@
     <script src="~/lib/longbow/longbow.common.js" asp-append-version="true"></script>
     @RenderSection("javascript", false)
 }
-@await Html.PartialAsync("Header")
 @RenderBody()
-@await Html.PartialAsync("Footer")
 @RenderSection("modal", false)

@@ -1,5 +1,5 @@
-(function ($) {
-    var formatCategoryName = function(menu) {
+﻿(function ($) {
+    var formatCategoryName = function (menu) {
         var ret = "";
         if (menu.IsResource === 2) ret = "按钮";
         else if (menu.IsResource === 1) ret = "资源";
@@ -136,11 +136,35 @@ $(function () {
     var arch = $sideMenu.find('a.active').last();
     $breadNav.removeClass('d-none').text(arch.text() || $('title').text());
 
+    var resizeFrame = function () {
+        var $nav = $('.main-content .nav');
+        var parentWidth = $nav.parent().width();
+        var width = 0;
+        $nav.children().each(function (index, ele) {
+            if ($(ele).hasClass('flex-fill')) return true;
+            width = width + $(ele).width();
+            if ($(ele).find('.nav-link').hasClass('active')) {
+                if (index === 0) width = 0;
+                return false;
+            }
+        });
+        if (width > parentWidth) {
+            $nav.css({
+                "margin-left": parentWidth - width
+            });
+        }
+        else if (width === 0) {
+            $nav.css({
+                "margin-left": 0
+            });
+        }
+    };
+
     $.fn.extend({
         autoScrollSidebar: function (options) {
             var option = $.extend({ target: null, offsetTop: 0 }, options);
             var $navItem = option.target;
-            if ($navItem === null) return this;
+            if ($navItem === null || $navItem.length === 0) return this;
 
             // sidebar scroll animate
             var middle = this.outerHeight() / 2;
@@ -171,6 +195,56 @@ $(function () {
                 this.mCustomScrollbar('destroy');
             }
             return this;
+        },
+        addFrame: function (options) {
+            var op = $.extend({ element: null, nav: '.main-content .nav' }, options);
+            var $element = op.element;
+            var li = $.format('<li class="nav-item"><a class="nav-link active" href="{1}"><span>{0}</span></a><i class="nav-close fa fa-times-circle-o"></i></li>', $element.text(), $element.attr('href'));
+            var $nav = $(op.nav);
+            $nav.find('.nav-link').removeClass('active');
+            $(li).insertBefore($nav.find(':last').parent());
+            $(this).find('iframe').removeClass('active');
+            $('<iframe frameborder="0" height="100%" width="100%" src="~/Admin/Index"></iframe>').attr('src', $element.attr('href')).addClass('active').appendTo($(this));
+            resizeFrame();
+        },
+        removeFrame: function (options) {
+            var op = $.extend({ element: null, nav: '.main-content .nav' }, options);
+            var $element = op.element;
+            var frame = $(this).find('iframe').filter(function (index, el) {
+                return $(el).attr('src') === $element.attr('href');
+            });
+            frame.remove();
+
+            var $nav = $(op.nav);
+            var nav = $nav.find('.nav-link').filter(function (index, el) {
+                return $(el).attr('href') === $element.attr('href');
+            });
+
+            // active other tab
+            var tab = null;
+            if (nav.hasClass('active')) {
+                tab = nav.parent().prev();
+                if (tab.length === 0) {
+                    tab = nav.parent().next();
+                }
+            }
+            nav.parent().remove();
+            if (tab && tab.length === 1) {
+                tab.find('.nav-link').trigger('click');
+                return;
+            }
+            resizeFrame();
+        },
+        moveFrame: function (method) {
+            var $ele = $(this).find('.nav-tabs .nav-link.active');
+            if ($ele.length === 1) {
+                var target = $ele.parent()[method]();
+                if (target.length === 1) {
+                    if (target.hasClass('flex-fill')) return;
+                    target.find('.nav-link').trigger('click');
+                    resizeFrame();
+                }
+            }
         }
     });
 
@@ -193,6 +267,30 @@ $(function () {
 
     $('.sidebar-toggle-box').on('click', function () {
         $('body').toggleClass('sidebar-open');
+    });
+
+    $('.frame .sidebar').on('click', 'a', function (e) {
+        e.preventDefault();
+        $('.main-content').addFrame({ element: $(this) });
+    });
+
+    $('.nav-tabs').on('click', 'a', function (e) {
+        e.preventDefault();
+        if ($(this).hasClass('flex-fill')) return;
+
+        $('.nav-tabs').find('.nav-link').removeClass('active');
+        $(this).addClass('active');
+        var that = this;
+        $('.main-content iframe').removeClass('active').filter(function (index, ele) {
+            if ($(ele).attr('src') === $(that).attr('href')) $(ele).addClass('active');
+        });
+    }).on('click', '.nav-close', function (e) {
+        $('.main-content').removeFrame({ element: $(this).prev() });
+    });
+
+    $('.nav-prev, .nav-next').on('click', function (e) {
+        e.preventDefault();
+        $('.main-content').moveFrame($(this).attr('data-method'));
     });
 
     // Apps

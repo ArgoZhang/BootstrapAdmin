@@ -1,4 +1,4 @@
-(function ($) {
+﻿(function ($) {
     // 增加Array扩展
     if (!$.isFunction(Array.prototype.filter)) {
         Array.prototype.filter = function (callback, thisObject) {
@@ -328,13 +328,13 @@
                 cardView: $(window).width() < 768,                    //是否显示详细视图
                 queryButton: '#btn_query',
                 onLoadSuccess: function (data) {
-                    $.footer();
+                    //$.footer();
                     if (data.IsSuccess === false) {
                         toastr.error(data.HttpResult.Message, data.HttpResult.Name);
                     }
                 },
                 onToggle: function () {
-                    $.footer();
+                    //$.footer();
                 }
             }, options);
             settings.url = $.formatUrl(settings.url);

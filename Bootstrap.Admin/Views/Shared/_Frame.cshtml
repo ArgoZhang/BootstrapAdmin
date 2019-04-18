@@ -1,0 +1,85 @@
+﻿@{
+    Layout = "_Layout";
+    ViewBag.Frame = "frame";
+}
+@section css {
+    <environment include="Development">
+        <link href="~/lib/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
+        <link href="~/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
+        <link href="~/lib/toastr.js/toastr.css" rel="stylesheet" />
+        <link href="~/lib/nprogress/nprogress.css" rel="stylesheet" />
+        <link href="~/lib/bootstrap-sweetalert/sweetalert.css" rel="stylesheet" />
+        <link href="~/lib/scrollbar/jquery.mCustomScrollbar.css" rel="stylesheet" />
+    </environment>
+    <environment exclude="Development">
+        <link href="~/lib/twitter-bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="~/lib/toastr.js/toastr.min.css" rel="stylesheet" />
+        <link href="~/lib/nprogress/nprogress.min.css" rel="stylesheet" />
+        <link href="~/lib/bootstrap-sweetalert/sweetalert.min.css" rel="stylesheet" />
+        <link href="~/lib/scrollbar/jquery.mCustomScrollbar.min.css" rel="stylesheet" />
+    </environment>
+    @RenderSection("css", false)
+    <link href="~/css/theme.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/theme-responsive.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/site-responsive.css" rel="stylesheet" asp-append-version="true" />
+    @if (!string.IsNullOrEmpty(Model.ActiveCss))
+    {
+        <link href="~/css/@Model.ActiveCss" rel="stylesheet" asp-append-version="true" />
+    }
+}
+@section javascript {
+    <environment include="Development">
+        <script src="~/lib/twitter-bootstrap/js/bootstrap.bundle.js"></script>
+        <script src="~/lib/scrollbar/jquery.mousewheel.js"></script>
+        <script src="~/lib/scrollbar/jquery.mCustomScrollbar.js"></script>
+        <script src="~/lib/signalr/dist/browser/signalr.js"></script>
+        <script src="~/lib/dcjqaccordion/js/jquery.dcjqaccordion.2.7.js"></script>
+        <script src="~/lib/bootstrap-sweetalert/sweetalert.js"></script>
+        <script src="~/lib/nprogress/nprogress.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/lib/twitter-bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="~/lib/scrollbar/jquery.mousewheel.min.js"></script>
+        <script src="~/lib/scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+        <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
+        <script src="~/lib/dcjqaccordion/js/jquery.dcjqaccordion.2.7.min.js"></script>
+        <script src="~/lib/bootstrap-sweetalert/sweetalert.min.js"></script>
+        <script src="~/lib/nprogress/nprogress.min.js"></script>
+    </environment>
+    <script src="~/lib/toastr.js/toastr.min.js"></script>
+    <script src="~/lib/dcjqaccordion/js/jquery.cookie.js"></script>
+    <script src="~/lib/longbow/longbow.common.js" asp-append-version="true"></script>
+    <script src="~/js/common-scripts.js" asp-append-version="true"></script>
+    @RenderSection("javascript", false)
+    <script src="~/js/log.js" asp-append-version="true"></script>
+}
+@await Html.PartialAsync("Header")
+@await Html.PartialAsync("navigator")
+<section class="main-content">
+    <div class="nav-ba">
+        <div class="nav-prev" data-method="prev">
+            <a class="nav-link" href="#"><i class="fa fa-chevron-circle-left"></i></a>
+        </div>
+        <div class="flex-fill" style="overflow: hidden;">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" href="~/html/index.html">
+                        <span>后台管理</span>
+                    </a>
+                    <i class="nav-close fa fa-times-circle-o"></i>
+                </li>
+                <li class="nav-item flex-fill">
+                    <a class="nav-link flex-fill" href="#">&nbsp;</a>
+                </li>
+            </ul>
+        </div>
+        <div class="nav-next" data-method="next">
+            <a class="nav-link" href="#"><i class="fa fa-chevron-circle-right"></i></a>
+        </div>
+    </div>
+    <iframe frameborder="0" height="100%" width="100%" class="active" src="~/html/index.html"></iframe>
+    @RenderBody()
+</section>
+@await Html.PartialAsync("Footer")

@@ -6,29 +6,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" href="~/favicon.ico" type="image/x-icon" />
     <link rel="shortcut icon" href="~/favicon.ico" type="image/x-icon" />
-    <link rel="apple-touch-icon" href="~/favicon.png"/> 
-    <title>@ViewBag.Title</title>
-    @RenderSection("css", false)
+    <link rel="apple-touch-icon" href="~/favicon.png" />
+    <title>后台管理</title>
+    <style>
+        .main-content {
+            background-image: url('../images/bg.jpg');
+            background-size: 100% 100%;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 15px;
+        }
+
+            .main-content h4 {
+                color: #fff;
+                margin-top: 0;
+            }
+    </style>
     <!--[if lt IE 10 ]>
         <link href="../css/IE8.css" rel="stylesheet" />
     <![endif]-->
 </head>
-<body class="@ViewBag.Frame">
+<body>
     <!--[if lt IE 10 ]>
     <div id="ieAlert" class="alert alert-danger alert-dismissible">
         <div>当前浏览器版本太低，不支持本系统，请升级到至少IE10 <a href="../browser/IE10.exe" target="_blank">本地下载</a> <a href="https://support.microsoft.com/zh-cn/help/17621/internet-explorer-downloads" target="_blank">微软下载</a>，或者使用Chrome浏览器 <a href="../browser/ChromeSetup.exe" target="_blank">本地下载</a></div>
         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
     </div>
     <![endif]-->
-    @RenderBody()
-    <a id="pathBase" href="~/" hidden></a>
-    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
-    <environment include="Development">
-        <script src="~/lib/jquery/jquery.js"></script>
-    </environment>
-    <environment exclude="Development">
-        <script src="~/lib/jquery/jquery.min.js"></script>
-    </environment>
-    @RenderSection("javascript", false)
+    <div class="main-content">
+        <h4>欢迎使用后台管理</h4>
+    </div>
 </body>
 </html>
