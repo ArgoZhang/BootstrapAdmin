@@ -284,6 +284,7 @@ $(function () {
     $('.frame .sidebar').on('click', 'a', function (e) {
         e.preventDefault();
         $('.main-content').addFrame({ element: $(this) });
+        $('body').removeClass('sidebar-open');
     });
 
     $('.nav-tabs').on('click', 'a', function (e) {

@@ -102,6 +102,10 @@
     .frame iframe {
         padding-top: 45px;
     }
+
+    footer {
+        display: none;
+    }
 }
 
 @media (min-width: 1077px) {
