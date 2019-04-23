@@ -14,7 +14,7 @@
 
 .login-wrap {
     padding: 20px;
-    height: 270px;
+    height: 330px;
 }
 
     .login-wrap .rememberPwd {
@@ -87,16 +87,16 @@
             color: #fff;
         }
 
-.slidercaptcha.forgot {
-    position: absolute;
-    left: auto;
-    right: 14px;
-    bottom: 14px;
-    top: auto;
-    margin: 0;
-    width: 274px;
-}
+    .slidercaptcha.forgot {
+        position: absolute;
+        left: auto;
+        right: 14px;
+        bottom: 14px;
+        top: auto;
+        margin: 0;
+        width: 274px;
+    }
 
-.slidercaptcha.reg {
-    bottom: 60px;
-}
+    .slidercaptcha.reg {
+        bottom: 60px;
+    }

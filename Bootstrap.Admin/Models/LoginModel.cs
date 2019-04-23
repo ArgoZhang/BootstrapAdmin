@@ -19,5 +19,10 @@ namespace Bootstrap.Admin.Models
         /// 验证码图床地址
         /// </summary>
         public string ImageLibUrl { get; protected set; }
+
+        /// <summary>
+        /// 是否登录认证失败
+        /// </summary>
+        public bool AuthFailed { get; set; }
     }
 }

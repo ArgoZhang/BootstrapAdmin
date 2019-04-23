@@ -96,7 +96,8 @@
         width: $.capWidth(),
         height: $.capHeight(),
         localImages: function () {
-            return '../../lib/captcha/images/Pic' + Math.round(Math.random() * 4) + '.jpg';
+            var base = $('#pathBase').attr('href');
+            return base + 'lib/captcha/images/Pic' + Math.round(Math.random() * 4) + '.jpg';
         },
         setSrc: function () {
             return $imgUrl.val() + 'Pic' + Math.round(Math.random() * 136) + '.jpg';
