@@ -57,7 +57,7 @@ namespace Bootstrap.Admin.Controllers
                 var originUrl = Request.Query[CookieAuthenticationDefaults.ReturnUrlParameter].FirstOrDefault() ?? "~/Home/Index";
                 return Redirect(originUrl);
             }
-            return View("Login", new LoginModel());
+            return View("Login", new LoginModel() { AuthFailed = true });
         }
 
         /// <summary>
