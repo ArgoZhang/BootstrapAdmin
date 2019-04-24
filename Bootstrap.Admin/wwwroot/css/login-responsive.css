@@ -31,12 +31,12 @@
 
     .login-wrap {
         padding: 0;
-        margin: 12px 0 0 370px;
+        margin: 36px 0 0 370px;
         width: 280px;
     }
 
     .slidercaptcha {
-        top: -282px;
+        top: -254px;
         left: -15px;
     }
 
@@ -45,7 +45,20 @@
             height: 280px;
         }
 
-    .form-signin .form-group {
-        margin-bottom: 0.75rem;
+    .login-wrap[data-auth="True"] {
+        margin: 12px 0 0 370px;
     }
+
+        .login-wrap[data-auth="True"] .slidercaptcha {
+            top: -282px;
+        }
+
+        .login-wrap[data-auth="True"] .slidercaptcha, .slidercaptcha.forgot {
+            width: 310px;
+            height: 280px;
+        }
+
+        .login-wrap[data-auth="True"] .form-group {
+            margin-bottom: 0.75rem;
+        }
 }
