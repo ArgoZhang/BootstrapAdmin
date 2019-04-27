@@ -35,7 +35,7 @@ namespace Bootstrap.DataAccess
         {
             if (dict.Category.Length > 50) dict.Category = dict.Category.Substring(0, 50);
             if (dict.Name.Length > 50) dict.Name = dict.Name.Substring(0, 50);
-            if (dict.Code.Length > 50) dict.Code = dict.Code.Substring(0, 50);
+            if (dict.Code.Length > 2000) dict.Code = dict.Code.Substring(0, 2000);
 
             DbManager.Create().Save(dict);
             return true;

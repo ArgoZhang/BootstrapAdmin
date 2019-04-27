@@ -113,7 +113,7 @@ CREATE TABLE Dicts(
 	ID 				INTEGER PRIMARY KEY	Auto_increment,
 	Category 		VARCHAR (50) NOT NULL,
 	Name 			VARCHAR (50) NOT NULL,
-	Code 			VARCHAR (500) NOT NULL,
+	Code 			VARCHAR (2000) NOT NULL,
 	Define 			INT NOT NULL DEFAULT 1
 );
 
