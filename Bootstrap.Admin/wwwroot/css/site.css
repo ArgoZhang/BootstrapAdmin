@@ -608,6 +608,10 @@ li[data-category="1"] .dd3-content .menuType {
         color: #235e90;
     }
 
+.bootstrap-table td {
+    word-break: break-all;
+}
+
 pre {
     padding: 5px;
     margin: 5px;
