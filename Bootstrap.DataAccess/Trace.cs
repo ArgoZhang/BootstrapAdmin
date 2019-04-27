@@ -50,6 +50,11 @@ namespace Bootstrap.DataAccess
         public string RequestUrl { get; set; }
 
         /// <summary>
+        /// 
+        /// </summary>
+        public string UserAgent { get; set; }
+
+        /// <summary>
         /// 保存访问历史记录
         /// </summary>
         /// <param name="p"></param>

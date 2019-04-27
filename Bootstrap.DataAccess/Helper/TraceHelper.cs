@@ -30,7 +30,8 @@ namespace Bootstrap.DataAccess
                     City = v.Location,
                     Browser = v.Browser,
                     OS = v.OS,
-                    UserName = v.UserName
+                    UserName = v.UserName,
+                    UserAgent = v.UserAgent
                 });
             }
         }

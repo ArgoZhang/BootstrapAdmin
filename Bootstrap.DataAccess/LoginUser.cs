@@ -53,6 +53,11 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 
         /// </summary>
+        public string UserAgent { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
         public virtual bool Log(LoginUser user)

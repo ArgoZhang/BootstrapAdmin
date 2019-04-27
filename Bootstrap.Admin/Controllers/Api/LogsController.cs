@@ -35,10 +35,11 @@ namespace Bootstrap.Admin.Controllers.Api
         [HttpPost]
         public bool Post([FromServices]IOnlineUsers onlineUserSvr, [FromServices]IIPLocatorProvider ipLocator, [FromBody]Log value)
         {
-            var agent = new UserAgent(Request.Headers["User-Agent"]);
+            value.UserAgent = Request.Headers["User-Agent"];
+            var agent = new UserAgent(value.UserAgent);
             value.Ip = (HttpContext.Connection.RemoteIpAddress ?? IPAddress.IPv6Loopback).ToString();
-            value.Browser = $"{agent.Browser.Name} {agent.Browser.Version}";
-            value.OS = $"{agent.OS.Name} {agent.OS.Version}";
+            value.Browser = $"{agent.Browser?.Name} {agent.Browser?.Version}";
+            value.OS = $"{agent.OS?.Name} {agent.OS?.Version}";
             value.City = ipLocator.Locate(value.Ip);
             value.UserName = User.Identity.Name;
             return LogHelper.Save(value);
