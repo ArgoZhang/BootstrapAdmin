@@ -272,7 +272,7 @@ CREATE TABLE [dbo].[Logs](
 	[OS] [varchar](50) NULL,
 	[City] [nvarchar](50) NULL,
 	[RequestUrl] [nvarchar](500) NOT NULL,
-	[RequestData] [nvarchar](500) NULL,
+	[RequestData] [nvarchar](max) NULL,
 	[UserAgent] [varchar](2000) NULL,
  CONSTRAINT [PK_Logs] PRIMARY KEY CLUSTERED 
 (

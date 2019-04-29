@@ -87,7 +87,7 @@ CREATE TABLE Logs(
 	OS 			VARCHAR (50) NULL,
 	City 		VARCHAR (50) NULL,
 	RequestUrl 	VARCHAR (500) NOT NULL,
-	RequestData VARCHAR (500) NULL,
+	RequestData TEXT		 NULL,
 	UserAgent	VARCHAR (2000) NULL
 );
 
