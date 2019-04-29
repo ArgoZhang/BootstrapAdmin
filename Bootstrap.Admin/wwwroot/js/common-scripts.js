@@ -56,7 +56,6 @@
                 id: 0, url: Menu.url, query: { type: "user" }, method: "post",
                 callback: function (result) {
                     var html = "";
-                    debugger;
                     if ($.isArray(result)) html = cascadeMenu(result);
                     $this.find('ol:first').html(html);
                     $this.nestable();
