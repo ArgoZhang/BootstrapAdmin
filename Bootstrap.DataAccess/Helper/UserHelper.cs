@@ -87,7 +87,7 @@ namespace Bootstrap.DataAccess
         public static bool SaveApp(string userName, string app)
         {
             var ret = DbContextManager.Create<User>().SaveApp(userName, app);
-            if (ret) CacheCleanUtility.ClearCache(cacheKey: $"{RetrieveUsersDataKey}*");
+            if (ret) CacheCleanUtility.ClearCache(cacheKey: $"{RetrieveUsersByNameDataKey}*");
             return ret;
         }
 
@@ -252,7 +252,7 @@ namespace Bootstrap.DataAccess
         {
             if (!UserChecker(new User { UserName = userName, DisplayName = displayName })) return false;
             var ret = DbContextManager.Create<User>().SaveDisplayName(userName, displayName);
-            if (ret) CacheCleanUtility.ClearCache(cacheKey: $"{RetrieveUsersDataKey}*");
+            if (ret) CacheCleanUtility.ClearCache(cacheKey: $"{RetrieveUsersByNameDataKey}*");
             return ret;
         }
 
