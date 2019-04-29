@@ -14,7 +14,7 @@
 
 .login-wrap {
     padding: 20px;
-    height: 330px;
+    height: 270px;
 }
 
     .login-wrap .rememberPwd {
@@ -26,6 +26,10 @@
         .login-wrap .rememberPwd i {
             width: 13px;
         }
+
+    .login-wrap[data-auth="True"] {
+        height: 330px;
+    }
 
 .login-footer a:last-child {
     float: right;

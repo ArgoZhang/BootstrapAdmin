@@ -69,11 +69,12 @@ namespace Bootstrap.Admin.Controllers
         /// <param name="loginUser"></param>
         internal static void CreateLoginUser(IOnlineUsers onlineUserSvr, IIPLocatorProvider ipLocator, HttpContext context, LoginUser loginUser)
         {
-            var agent = new UserAgent(context.Request.Headers["User-Agent"]);
+            loginUser.UserAgent = context.Request.Headers["User-Agent"];
+            var agent = new UserAgent(loginUser.UserAgent);
             loginUser.Ip = (context.Connection.RemoteIpAddress ?? IPAddress.IPv6Loopback).ToString();
             loginUser.City = ipLocator.Locate(loginUser.Ip);
-            loginUser.Browser = $"{agent.Browser.Name} {agent.Browser.Version}";
-            loginUser.OS = $"{agent.OS.Name} {agent.OS.Version}";
+            loginUser.Browser = $"{agent.Browser?.Name} {agent.Browser?.Version}";
+            loginUser.OS = $"{agent.OS?.Name} {agent.OS?.Version}";
         }
 
         /// <summary>

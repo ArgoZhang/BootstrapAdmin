@@ -273,6 +273,7 @@ CREATE TABLE [dbo].[Logs](
 	[City] [nvarchar](50) NULL,
 	[RequestUrl] [nvarchar](500) NOT NULL,
 	[RequestData] [nvarchar](500) NULL,
+	[UserAgent] [varchar](2000) NULL,
  CONSTRAINT [PK_Logs] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
@@ -342,7 +343,7 @@ CREATE TABLE [dbo].[Dicts](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
 	[Category] [nvarchar](50) NOT NULL,
 	[Name] [nvarchar](50) NOT NULL,
-	[Code] [nvarchar](500) NOT NULL,
+	[Code] [nvarchar](2000) NOT NULL,
 	[Define] [int] NOT NULL,
  CONSTRAINT [PK_dbo.Dict] PRIMARY KEY CLUSTERED 
 (
@@ -499,6 +500,7 @@ CREATE TABLE [dbo].[LoginLogs](
 	[Browser] [varchar](50) NULL,
 	[City] [nvarchar](50) NULL,
 	[Result] [nvarchar](50) NOT NULL,
+	[UserAgent] [varchar](2000) NULL,
  CONSTRAINT [PK_LoginLogs] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
@@ -556,6 +558,7 @@ CREATE TABLE [dbo].[Traces](
 	[OS] [varchar](50) NULL,
 	[City] [nvarchar](50) NULL,
 	[RequestUrl] [nvarchar](500) NOT NULL,
+	[UserAgent] [varchar](2000) NULL,
  CONSTRAINT [PK_Traces] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC

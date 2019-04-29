@@ -1,5 +1,5 @@
 (function ($) {
-    var formatCategoryName = function(menu) {
+    var formatCategoryName = function (menu) {
         var ret = "";
         if (menu.IsResource === 2) ret = "按钮";
         else if (menu.IsResource === 1) ret = "资源";
@@ -23,7 +23,12 @@
     var cascadeSubMenu = function (menus) {
         var html = "";
         $.each(menus, function (index, menu) {
-            html += $.format('<li class="dd-item dd3-item" data-id="{0}" data-order="{4}" data-category="{3}"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><div class="checkbox"><label><input type="checkbox" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><div class="radio"><label><input type="radio" name="menu" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><span class="menuType">{5}</span><span class="menuOrder">{4}</span></div></li>', menu.Id, menu.Icon, menu.Name, menu.Category, menu.Order, formatCategoryName(menu));
+            if (menu.Menus.length === 0) {
+                html += $.format('<li class="dd-item dd3-item" data-id="{0}" data-order="{4}" data-category="{3}"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><div class="checkbox"><label><input type="checkbox" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><div class="radio"><label><input type="radio" name="menu" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><span class="menuType">{5}</span><span class="menuOrder">{4}</span></div></li>', menu.Id, menu.Icon, menu.Name, menu.Category, menu.Order, formatCategoryName(menu));
+            }
+            else {
+                html += $.format('<li class="dd-item dd3-item" data-id="{0}" data-order="{5}" data-category="{3}"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><div class="checkbox"><label><input type="checkbox" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><div class="radio"><label><input type="radio" name="menu" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><span class="menuType">{6}</span><span class="menuOrder">{5}</span></div><ol class="dd-list">{4}</ol></li>', menu.Id, menu.Icon, menu.Name, menu.Category, cascadeSubMenu(menu.Menus), menu.Order, formatCategoryName(menu));
+            }
         });
         return html;
     };
@@ -51,6 +56,7 @@
                 id: 0, url: Menu.url, query: { type: "user" }, method: "post",
                 callback: function (result) {
                     var html = "";
+                    debugger;
                     if ($.isArray(result)) html = cascadeMenu(result);
                     $this.find('ol:first').html(html);
                     $this.nestable();

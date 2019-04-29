@@ -87,7 +87,8 @@ CREATE TABLE Logs(
 	OS				VARCHAR (50) NULL,
 	City			VARCHAR (50) NULL,
 	RequestUrl		VARCHAR (500) NOT NULL,
-	RequestData		VARCHAR (500) NULL
+	RequestData		VARCHAR (500) NULL,
+	UserAgent		VARCHAR (2000) NULL
 );
 
 CREATE TABLE `Groups`(
@@ -113,7 +114,7 @@ CREATE TABLE Dicts(
 	ID 				INTEGER PRIMARY KEY	Auto_increment,
 	Category 		VARCHAR (50) NOT NULL,
 	Name 			VARCHAR (50) NOT NULL,
-	Code 			VARCHAR (500) NOT NULL,
+	Code 			VARCHAR (2000) NOT NULL,
 	Define 			INT NOT NULL DEFAULT 1
 );
 
@@ -158,7 +159,8 @@ CREATE TABLE LoginLogs(
 	OS		        VARCHAR (50) NULL,
 	Browser	        VARCHAR (50) NULL,
 	City 	        VARCHAR (50) NULL,
-	Result 	        VARCHAR (50) NOT NULL
+	Result 	        VARCHAR (50) NOT NULL,
+	UserAgent		VARCHAR (2000) NULL
 );
 
 CREATE TABLE ResetUsers(
@@ -177,5 +179,6 @@ CREATE TABLE Traces(
     Browser    		VARCHAR (50),
     OS         		VARCHAR (50),
     City       		VARCHAR (50),
-    RequestUrl 		VARCHAR (500) NOT NULL
+    RequestUrl 		VARCHAR (500) NOT NULL,
+	UserAgent		VARCHAR (2000) NULL
 );
