@@ -40,11 +40,11 @@ namespace Bootstrap.Admin.Controllers.Api
                 if (System.IO.File.Exists(fileName)) System.IO.File.Delete(fileName);
                 fileName = "default.jpg";
                 var webSiteUrl = DictHelper.RetrieveIconFolderPath();
-                var fileUrl = string.Format("{0}{1}", webSiteUrl, fileName);
                 var filePath = Path.Combine(env.WebRootPath, webSiteUrl.Replace("~", string.Empty).Replace('/', Path.DirectorySeparatorChar).TrimStart(Path.DirectorySeparatorChar) + fileName);
                 fileSize = new FileInfo(filePath).Length;
-                previewUrl = string.Format("{0}?q={1}", Url.Content(fileUrl), DateTime.Now.Ticks);
-                UserHelper.SaveUserIconByName(userName, fileName);
+                var iconName = $"{fileName}?v={DateTime.Now.Ticks}";
+                previewUrl = Url.Content($"{webSiteUrl}{iconName}");
+                UserHelper.SaveUserIconByName(userName, iconName);
             }
             catch (Exception ex)
             {
@@ -88,13 +88,11 @@ namespace Bootstrap.Admin.Controllers.Api
             var userName = User.Identity.Name;
             var error = string.Empty;
             var fileName = string.Empty;
-            if (User.IsInRole("Administrators")) userName = "default";
             if (files.Files.Count > 0)
             {
                 var uploadFile = files.Files[0];
                 var webSiteUrl = DictHelper.RetrieveIconFolderPath();
-                fileName = string.Format("{0}{1}", userName, Path.GetExtension(uploadFile.FileName));
-                var fileUrl = string.Format("{0}{1}", webSiteUrl, fileName);
+                fileName = $"{userName}{Path.GetExtension(uploadFile.FileName)}";
                 var filePath = Path.Combine(env.WebRootPath, webSiteUrl.Replace("~", string.Empty).Replace('/', Path.DirectorySeparatorChar).TrimStart(Path.DirectorySeparatorChar) + fileName);
                 var fileFolder = Path.GetDirectoryName(filePath);
                 fileSize = uploadFile.Length;
@@ -103,8 +101,9 @@ namespace Bootstrap.Admin.Controllers.Api
                 {
                     await uploadFile.CopyToAsync(fs);
                 }
-                previewUrl = string.Format("{0}?q={1}", Url.Content(fileUrl), DateTime.Now.Ticks);
-                UserHelper.SaveUserIconByName(userName, fileName);
+                var iconName = $"{fileName}?v={DateTime.Now.Ticks}";
+                previewUrl = Url.Content($"{webSiteUrl}{iconName}");
+                UserHelper.SaveUserIconByName(userName, iconName);
             }
             return new JsonResult(new
             {

@@ -238,7 +238,7 @@ namespace Bootstrap.DataAccess
         public static bool SaveUserIconByName(string userName, string iconName)
         {
             var ret = DbContextManager.Create<User>().SaveUserIconByName(userName, iconName);
-            if (ret) CacheCleanUtility.ClearCache(cacheKey: $"{RetrieveUsersDataKey}*");
+            if (ret) CacheCleanUtility.ClearCache(cacheKey: $"{RetrieveUsersByNameDataKey}*");
             return ret;
         }
 
