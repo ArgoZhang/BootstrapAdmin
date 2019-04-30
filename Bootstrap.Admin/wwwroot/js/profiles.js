@@ -15,7 +15,7 @@
             preIcon
         ],
         initialPreviewConfig: [
-            { caption: "现在头像", size: $file.attr('data-init'), showZoom: true, showRemove: defFileName !== 'default.jpg', key: defFileName }
+            { caption: "", size: $file.attr('data-init'), showZoom: true, showRemove: defFileName !== 'default.jpg', key: defFileName }
         ],
         initialPreviewAsData: true,
         overwriteInitial: true,
@@ -51,7 +51,7 @@
                 $.formatUrl('images/uploader/default.jpg')
             ],
             initialPreviewConfig: [
-                { caption: "现在头像", size: 7195, showZoom: true, showRemove: false, key: 'default.jpg' }
+                { caption: "", size: 7195, showZoom: true, showRemove: false, key: 'default.jpg' }
             ]
         });
         this._initPreviewCache();

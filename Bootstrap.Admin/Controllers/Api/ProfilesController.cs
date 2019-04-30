@@ -26,7 +26,7 @@ namespace Bootstrap.Admin.Controllers.Api
         [ButtonAuthorize(Url = "~/Admin/Profiles", Auth = "saveIcon")]
         public JsonResult Post(string id, [FromServices]IHostingEnvironment env, [FromForm]DeleteFileCollection files)
         {
-            if (!id.Equals("Delete", StringComparison.OrdinalIgnoreCase) || files.Key.Equals("default.jpg", StringComparison.OrdinalIgnoreCase)) return new JsonResult(new object());
+            if (!id.Equals("Delete", StringComparison.OrdinalIgnoreCase)) return new JsonResult(new object());
 
             var previewUrl = string.Empty;
             long fileSize = 0;
@@ -56,7 +56,7 @@ namespace Bootstrap.Admin.Controllers.Api
                 error = string.IsNullOrEmpty(error) ? error : $"服务器端错误-{error}",
                 initialPreview = new string[] { previewUrl },
                 initialPreviewConfig = new object[] {
-                    new { caption = "现在头像", size = fileSize, showZoom = true, key = "default.jpg" }
+                    new { caption = "", size = fileSize, showZoom = true, key = "default.jpg" }
                 },
                 append = false
             });
