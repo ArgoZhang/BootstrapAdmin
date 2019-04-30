@@ -35,7 +35,7 @@ namespace Bootstrap.Client.DataAccess
         {
             return RetrieveAppName("系统设置地址");
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -87,6 +87,6 @@ namespace Bootstrap.Client.DataAccess
         /// 获取验证码图床
         /// </summary>
         /// <returns></returns>
-        public static string RetrieveImagesLibUrl() => (RetrieveDicts().FirstOrDefault(d => d.Name == "验证码图床" && d.Category == "系统设置" && d.Define == 0) ?? new BootstrapDict() { Code = "https://longbow-1258823021.cos.ap-shanghai.myqcloud.com/pic/280/150/" }).Code;
+        public static string RetrieveImagesLibUrl() => RetrieveDicts().FirstOrDefault(d => d.Name == "验证码图床" && d.Category == "系统设置" && d.Define == 0)?.Code ?? "http://images.sdgxgz.com/";
     }
 }

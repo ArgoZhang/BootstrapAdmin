@@ -181,6 +181,6 @@ namespace Bootstrap.DataAccess
         /// 获得 验证码图床地址
         /// </summary>
         /// <returns></returns>
-        public string RetrieveImagesLibUrl() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "验证码图床" && d.Define == 0)?.Code, "https://longbow-1258823021.cos.ap-shanghai.myqcloud.com/pic/280/150/");
+        public string RetrieveImagesLibUrl() => DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "验证码图床" && d.Define == 0)?.Code ?? "http://images.sdgxgz.com/";
     }
 }

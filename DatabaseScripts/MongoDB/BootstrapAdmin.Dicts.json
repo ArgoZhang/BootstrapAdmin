@@ -346,7 +346,7 @@
     "_id": ObjectId("5bd6c73d5fa31256f77e4a49"),
     "Category": "系统设置",
     "Name": "验证码图床",
-    "Code": "https://longbow-1258823021.cos.ap-shanghai.myqcloud.com/pic/280/150/",
+    "Code": "http://images.sdgxgz.com/",
     "Define": NumberInt(0)
   }
 ]
