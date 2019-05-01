@@ -69,11 +69,13 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="ip"></param>
+        /// <param name="po"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
         /// <returns></returns>
         public virtual Page<Trace> Retrieves(PaginationOption po, DateTime? startTime, DateTime? endTime)
         {
-            var sql = new Sql("select * from Traces");
+            var sql = new Sql("select UserName, LogTime, IP, Browser, OS, City, RequestUrl from Traces");
             if (startTime.HasValue) sql.Append("where LogTime > @0", startTime.Value);
             if (endTime.HasValue) sql.Append("where LogTime < @0", endTime.Value.AddDays(1).AddSeconds(-1));
             if (startTime == null && endTime == null) sql.Append("where LogTime > @0", DateTime.Today.AddMonths(0 - DictHelper.RetrieveAccessLogPeriod()));
