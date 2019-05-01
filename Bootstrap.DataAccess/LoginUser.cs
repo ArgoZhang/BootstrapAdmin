@@ -1,6 +1,6 @@
-﻿using PetaPoco;
+﻿using Longbow.Web.Mvc;
+using PetaPoco;
 using System;
-using System.Collections.Generic;
 
 namespace Bootstrap.DataAccess
 {
@@ -70,7 +70,8 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="po"></param>
         /// <returns></returns>
-        public virtual IEnumerable<LoginUser> Retrieves() => DbManager.Create().Fetch<LoginUser>("Where LoginTime > @0 Order by LoginTime desc", DateTime.Today.AddMonths(0 - DictHelper.RetrieveLoginLogsPeriod()));
+        public virtual Page<LoginUser> Retrieves(PaginationOption po) => DbManager.Create().Page<LoginUser>(po.PageIndex, po.Limit, "select UserName, LoginTime, Ip, Browser, OS, City, Result from LoginLogs Order by LoginTime desc");
     }
 }

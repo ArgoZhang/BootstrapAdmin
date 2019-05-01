@@ -1,6 +1,6 @@
-﻿using Longbow.Cache;
-using Longbow.Data;
-using System.Collections.Generic;
+﻿using Longbow.Data;
+using Longbow.Web.Mvc;
+using PetaPoco;
 
 namespace Bootstrap.DataAccess
 {
@@ -12,23 +12,14 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 
         /// </summary>
-        public const string RetrieveLoginLogsDataKey = "LoginHelper-Retrieves";
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public static bool Log(LoginUser user)
-        {
-            var ret = DbContextManager.Create<LoginUser>().Log(user);
-            if (ret) CacheManager.Clear(RetrieveLoginLogsDataKey);
-            return ret;
-        }
+        public static bool Log(LoginUser user) => DbContextManager.Create<LoginUser>().Log(user);
 
         /// <summary>
-        /// 查询一个月内所有登录信息
+        /// 查询所有登录日志
         /// </summary>
-        public static IEnumerable<LoginUser> Retrieves() => CacheManager.GetOrAdd(RetrieveLoginLogsDataKey, key => DbContextManager.Create<LoginUser>().Retrieves());
+        /// <param name="po"></param>
+        public static Page<LoginUser> Retrieves(PaginationOption po) => DbContextManager.Create<LoginUser>().Retrieves(po);
     }
 }

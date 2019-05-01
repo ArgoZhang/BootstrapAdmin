@@ -3,8 +3,6 @@ $(function () {
     var apiUrl = "api/Login";
     var $table = $('table').smartTable({
         url: apiUrl,
-        method: "get",
-        sidePagination: "client",
         showToggle: false,
         showRefresh: false,
         showColumns: false,
