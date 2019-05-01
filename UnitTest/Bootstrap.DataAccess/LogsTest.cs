@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using Longbow.Web.Mvc;
+using Xunit;
 
 namespace Bootstrap.DataAccess
 {
@@ -35,7 +36,7 @@ namespace Bootstrap.DataAccess
                 RequestUrl = "~/Home/Index"
             };
             log.Save(log);
-            Assert.NotEmpty(log.Retrieves());
+            Assert.NotNull(log.Retrieves(new PaginationOption() { Limit = 20 }, null, null));
         }
     }
 }

@@ -1,5 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Longbow.Web.Mvc;
+using PetaPoco;
+using System;
 
 namespace Bootstrap.DataAccess
 {
@@ -19,10 +20,24 @@ namespace Bootstrap.DataAccess
         public string RequestData { get; set; }
 
         /// <summary>
-        /// 查询所有日志信息
+        /// 查询所有操作日志信息
         /// </summary>
+        /// <param name="po"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <param name="opType"></param>
         /// <returns></returns>
-        public virtual IEnumerable<Log> Retrieves() => DbManager.Create().Fetch<Log>("select * from Logs where LogTime > @0 order by LogTime desc", DateTime.Now.AddDays(-7));
+        public virtual Page<Log> Retrieves(PaginationOption po, DateTime? startTime, DateTime? endTime, string opType)
+        {
+            var sql = new Sql("select CRUD, UserName, LogTime, Ip, Browser, OS, City, RequestUrl, RequestData from Logs");
+            if (startTime.HasValue) sql.Append("where LogTime >= @0", startTime.Value);
+            if (endTime.HasValue) sql.Append("where LogTime < @0", endTime.Value.AddDays(1).AddSeconds(-1));
+            if (startTime == null && endTime == null) sql.Append("where LogTime > @0", DateTime.Today.AddMonths(0 - DictHelper.RetrieveExceptionsLogPeriod()));
+            if (!string.IsNullOrEmpty(opType)) sql.Append("where CRUD = @0", opType);
+            sql.Append($"order by {po.Sort} {po.Order}");
+
+            return DbManager.Create().Page<Log>(po.PageIndex, po.Limit, sql);
+        }
 
         /// <summary>
         /// 删除日志信息
