@@ -16,7 +16,7 @@ namespace Bootstrap.Client.DataAccess
         /// <summary>
         /// 缓存索引，BootstrapAdmin后台清理缓存时使用
         /// </summary>
-        public const string RetrieveDictsDataKey = "BootstrapDict-RetrieveDicts";
+        private const string RetrieveDictsDataKey = "BootstrapDict-RetrieveDicts";
 
         /// <summary>
         /// 

@@ -17,7 +17,7 @@ namespace Bootstrap.Client.DataAccess
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="userName"></param>
         /// <param name="activeUrl"></param>
         /// <returns></returns>
         public static IEnumerable<BootstrapMenu> RetrieveAppMenus(string userName, string activeUrl)
