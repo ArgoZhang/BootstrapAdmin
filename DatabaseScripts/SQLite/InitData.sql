@@ -1,30 +1,32 @@
-DELETE From Users where ID = 1;
 -- ADMIN/123789
-INSERT INTO Users (ID, UserName, [Password], PassSalt, DisplayName, RegisterTime, ApprovedTime,ApprovedBy, [Description]) values (1, 'Admin', 'Es7WVgNsJuELwWK8daCqufUBknCsSC0IYDphQZAiGOo=', 'W5vpBEOYRGHkQXatN0t+ECM/U8cHDuEgrq56+zZBk4J481xH', 'Administrator', datetime(CURRENT_TIMESTAMP, 'localtime'), datetime(CURRENT_TIMESTAMP, 'localtime'), 'system', '系统默认创建');
+-- User/123789
+DELETE From Users where UserName in ('Admin', 'User');
+INSERT INTO Users (UserName, Password, PassSalt, DisplayName, RegisterTime, ApprovedTime,ApprovedBy, [Description]) values ('Admin', 'Es7WVgNsJuELwWK8daCqufUBknCsSC0IYDphQZAiGOo=', 'W5vpBEOYRGHkQXatN0t+ECM/U8cHDuEgrq56+zZBk4J481xH', 'Administrator', datetime(CURRENT_TIMESTAMP, 'localtime'), datetime(CURRENT_TIMESTAMP, 'localtime'), 'system', '系统默认创建');
+INSERT INTO Users (UserName, Password, PassSalt, DisplayName, RegisterTime, ApprovedTime,ApprovedBy, [Description], [App]) values ('User', 'tXG/yNffpnm6cThrCH7wf6jN1ic3VHvLoY4OrzKtrZ4=', 'c5cIrRMn8XjB84M/D/X7Lg9uUqQFmYNEdxb/4HWH8OLa4pNZ', '测试账号', datetime(CURRENT_TIMESTAMP, 'localtime'), datetime(CURRENT_TIMESTAMP, 'localtime'), 'system', '系统默认创建', '2');
 
 DELETE From Dicts Where Define = 0;
-INSERT INTO [Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (NULL, '菜单', '系统菜单', '0', 0);
-INSERT INTO [Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (NULL, '菜单', '外部菜单', '1', 0);
-INSERT INTO [Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (NULL, '应用程序', '未设置', '0', 0);
-INSERT INTO [Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (NULL, '网站设置', '网站标题', '后台管理系统', 0);
-INSERT INTO [Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (NULL, '网站设置', '网站页脚', '2016 © 通用后台管理系统', 0);
-INSERT INTO [Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (NULL, '系统通知', '用户注册', '0', 0);
-INSERT INTO [Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (NULL, '系统通知', '程序异常', '1', 0);
-INSERT INTO [Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (NULL, '系统通知', '数据库连接', '2', 0);
-INSERT INTO [Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (NULL, '通知状态', '未处理', '0', 0);
-INSERT INTO [Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (NULL, '通知状态', '已处理', '1', 0);
-INSERT INTO [Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (NULL, '处理结果', '同意', '0', 0);
-INSERT INTO [Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (NULL, '处理结果', '拒绝', '1', 0);
-INSERT INTO [Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (NULL, '消息状态', '未读', '0', 0);
-INSERT INTO [Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (NULL, '消息状态', '已读', '1', 0);
-INSERT INTO [Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (NULL, '消息标签', '一般', '0', 0);
-INSERT INTO [Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (NULL, '消息标签', '紧要', '1', 0);
-INSERT INTO [Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (NULL, '头像地址', '头像路径', '~/images/uploader/', 0);
-INSERT INTO [Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (NULL, '头像地址', '头像文件', 'default.jpg', 0);
-INSERT INTO [Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (NULL, '网站样式', '蓝色样式', 'blue.css', 0);
-INSERT INTO [Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (NULL, '网站样式', '黑色样式', 'black.css', 0);
-INSERT INTO [Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (NULL, '当前样式', '使用样式', 'blue.css', 0);
-INSERT INTO [Dicts] ([ID], [Category], [Name], [Code], [Define]) VALUES (NULL, '网站设置', '前台首页', '~/Home/Index', 0);
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('菜单', '系统菜单', '0', 0);
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('菜单', '外部菜单', '1', 0);
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('应用程序', '未设置', '0', 0);
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('网站设置', '网站标题', '后台管理系统', 0);
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('网站设置', '网站页脚', '2016 © 通用后台管理系统', 0);
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('系统通知', '用户注册', '0', 0);
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('系统通知', '程序异常', '1', 0);
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('系统通知', '数据库连接', '2', 0);
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('通知状态', '未处理', '0', 0);
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('通知状态', '已处理', '1', 0);
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('处理结果', '同意', '0', 0);
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('处理结果', '拒绝', '1', 0);
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('消息状态', '未读', '0', 0);
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('消息状态', '已读', '1', 0);
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('消息标签', '一般', '0', 0);
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('消息标签', '紧要', '1', 0);
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('头像地址', '头像路径', '~/images/uploader/', 0);
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('头像地址', '头像文件', 'default.jpg', 0);
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('网站样式', '蓝色样式', 'blue.css', 0);
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('网站样式', '黑色样式', 'black.css', 0);
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('当前样式', '使用样式', 'blue.css', 0);
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('网站设置', '前台首页', '~/Home/Index', 0);
 
 -- 时长单位 月
 INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('系统设置', '程序异常保留时长', '1', 0);
@@ -101,28 +103,31 @@ INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (last_insert_rowid() - 1, 'API文档', 20, 'fa fa-wrench', '~/swagger', '0');
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (last_insert_rowid() - 2, '图标集', 30, 'fa fa-dashboard', '~/Admin/FAIcon', '0');
 
-DELETE FROM GROUPS WHERE ID = 1;
-INSERT INTO [Groups] ([ID], [GroupName], [Description]) VALUES (1, 'Admin', '系统默认组');
+DELETE FROM GROUPS WHERE GroupName = 'Admin';
+INSERT INTO [Groups] ([GroupName], [Description]) VALUES ('Admin', '系统默认组');
 
-DELETE FROM Roles where ID in (1, 2);
-INSERT INTO [Roles] ([ID], [RoleName], [Description]) VALUES (1, 'Administrators', '系统管理员');
-INSERT INTO [Roles] ([ID], [RoleName], [Description]) VALUES (2, 'Default', '默认用户，可访问前台页面');
+DELETE FROM Roles where RoleName in ('Administrators', 'Default');
+INSERT INTO [Roles] ([RoleName], [Description]) VALUES ('Administrators', '系统管理员');
+INSERT INTO [Roles] ([RoleName], [Description]) VALUES ('Default', '默认用户，可访问前台页面');
 
-DELETE FROM RoleGroup Where RoleID = 1;
-INSERT INTO [RoleGroup] ([RoleID], [GroupID]) VALUES (1, 1);
+DELETE FROM RoleGroup;
+INSERT INTO RoleGroup (GroupId, RoleId) SELECT g.Id, r.Id From Groups g left join Roles r where GroupName = 'Admin' and RoleName = 'Administrators';
 
-DELETE FROM UserGroup Where UserID = 1;
-INSERT INTO [UserGroup] ([UserID], [GroupID]) VALUES (1, 1);
+DELETE FROM UserGroup;
 
-DELETE FROM UserRole Where UserID = 1;
-INSERT INTO [UserRole] ([UserID], [RoleID]) VALUES (1, 1);
-INSERT INTO [UserRole] ([UserID], [RoleID]) VALUES (1, 2);
+DELETE FROM UserRole;
+INSERT INTO UserRole (UserId, RoleId) SELECT u.Id, r.Id From Users u left join Roles r where UserName = 'Admin' and RoleName = 'Administrators';
+INSERT INTO UserRole (UserId, RoleId) SELECT u.Id, r.Id From Users u left join Roles r where UserName = 'User' and RoleName = 'Default';
 
 DELETE FROM NavigationRole;
+INSERT INTO NavigationRole (NavigationID, RoleID) SELECT n.Id, r.Id FROM Navigations n left join Roles r Where RoleName = 'Administrators';
+INSERT INTO NavigationRole (NavigationID, RoleID) SELECT n.Id, r.Id FROM Navigations n left join Roles r Where RoleName = 'Default' and Name in ('后台管理', '个人中心', '返回前台', '通知管理');
+INSERT INTO NavigationRole (NavigationID, RoleID) SELECT n.Id, r.Id FROM Navigations n left join Roles r Where RoleName = 'Default' and ParentId in (select id from Navigations where Name in ('个人中心'));
 
 -- Client Data
 Delete From [Dicts] Where Category = '应用程序' and Code = 2;
 INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('应用程序', '测试平台', 2, 0);
+Delete From [Dicts] Where Category = '应用首页' and Name = 2;
 INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('应用首页', 2, 'http://localhost:49185/', 0);
 
 Delete From [Dicts] Where Category = '测试平台';
@@ -140,5 +145,9 @@ INSERT into [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category
 INSERT into [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], [Application]) VALUES (0, '返回码云', 20, 'fa fa-fa', 'https://gitee.com/LongbowEnterprise/BootstrapAdmin', '1', 2);
 
 -- 菜单授权
-DELETE FROM NavigationRole Where NavigationID in (Select ID From Navigations Where [Application] = 2);
-INSERT INTO NavigationRole SELECT NULL, ID, 2 FROM Navigations Where [Application] = 2;
+INSERT INTO NavigationRole (NavigationId, RoleId) SELECT n.ID, r.ID FROM Navigations n left join Roles r Where r.RoleName = 'Administrators' and [Application] = 2;
+INSERT INTO NavigationRole (NavigationId, RoleId) SELECT n.ID, r.ID FROM Navigations n left join Roles r Where r.RoleName = 'Default' and [Application] = 2;
+
+-- 角色对应用授权
+DELETE From RoleApp where AppId = '2';
+INSERT INTO RoleApp (AppId, RoleId) SELECT '2', ID From Roles Where RoleName = 'Default';

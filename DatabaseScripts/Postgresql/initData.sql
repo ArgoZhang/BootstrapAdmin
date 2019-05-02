@@ -1,7 +1,8 @@
-DELETE From Users;
 -- ADMIN/123789
-ALTER SEQUENCE users_id_seq RESTART WITH 1;
+-- User/123789
+DELETE From Users where UserName in ('Admin', 'User');
 INSERT INTO Users (UserName, Password, PassSalt, DisplayName, RegisterTime, ApprovedTime,ApprovedBy, Description) values ('Admin', 'Es7WVgNsJuELwWK8daCqufUBknCsSC0IYDphQZAiGOo=', 'W5vpBEOYRGHkQXatN0t+ECM/U8cHDuEgrq56+zZBk4J481xH', 'Administrator', now(), now(), 'system', '系统默认创建');
+INSERT INTO Users (UserName, Password, PassSalt, DisplayName, RegisterTime, ApprovedTime,ApprovedBy, Description, App) values ('User', 'tXG/yNffpnm6cThrCH7wf6jN1ic3VHvLoY4OrzKtrZ4=', 'c5cIrRMn8XjB84M/D/X7Lg9uUqQFmYNEdxb/4HWH8OLa4pNZ', '测试账号', now(), now(), 'system', '系统默认创建', '2');
 
 DELETE From Dicts Where Define = 0;
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('菜单', '系统菜单', '0', 0);
@@ -102,26 +103,26 @@ INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (c
 INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (currval('navigations_id_seq') - 2, 'API文档', 10, 'fa fa-wrench', '~/swagger', '0');
 INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (currval('navigations_id_seq') - 3, '图标集', 10, 'fa fa-dashboard', '~/Admin/FAIcon', '0');
 
-DELETE FROM Groups Where ID = 1;
-ALTER SEQUENCE groups_id_seq RESTART WITH 1;
-INSERT INTO Groups (ID, GroupName, Description) VALUES (1, 'Admin', '系统默认组');
+DELETE FROM GROUPS WHERE GroupName = 'Admin';
+INSERT INTO Groups (GroupName, Description) VALUES ('Admin', '系统默认组');
 
-DELETE FROM Roles Where ID in (1, 2);
-ALTER SEQUENCE roles_id_seq RESTART WITH 1;
+DELETE FROM Roles where RoleName in ('Administrators', 'Default');
 INSERT INTO Roles (RoleName, Description) VALUES ('Administrators', '系统管理员');
 INSERT INTO Roles (RoleName, Description) VALUES ('Default', '默认用户，可访问前台页面');
 
-DELETE FROM RoleGroup Where RoleID = 1;
-INSERT INTO RoleGroup (RoleID, GroupID) VALUES (1, 1);
+DELETE FROM RoleGroup;
+INSERT INTO RoleGroup (GroupId, RoleId) SELECT g.Id, r.Id From Groups g left join Roles r where GroupName = 'Admin' and RoleName = 'Administrators';
 
-DELETE FROM UserGroup Where UserID = 1;
-INSERT INTO UserGroup (UserID, GroupID) VALUES (1, 1);
+DELETE FROM UserGroup;
 
-DELETE FROM UserRole Where UserID = 1;
-INSERT INTO UserRole (UserID, RoleID) VALUES (1, 1);
-INSERT INTO UserRole (UserID, RoleID) VALUES (1, 2);
+DELETE FROM UserRole;
+INSERT INTO UserRole (UserId, RoleId) SELECT u.Id, r.Id From Users u left join Roles r where UserName = 'Admin' and RoleName = 'Administrators';
+INSERT INTO UserRole (UserId, RoleId) SELECT u.Id, r.Id From Users u left join Roles r where UserName = 'User' and RoleName = 'Default';
 
 DELETE FROM NavigationRole;
+INSERT INTO NavigationRole (NavigationID, RoleID) SELECT n.Id, r.Id FROM Navigations n left join Roles r Where RoleName = 'Administrators';
+INSERT INTO NavigationRole (NavigationID, RoleID) SELECT n.Id, r.Id FROM Navigations n left join Roles r Where RoleName = 'Default' and Name in ('后台管理', '个人中心', '返回前台', '通知管理');
+INSERT INTO NavigationRole (NavigationID, RoleID) SELECT n.Id, r.Id FROM Navigations n left join Roles r Where RoleName = 'Default' and ParentId in (select id from Navigations where Name in ('个人中心'));
 
 -- Client Data
 Delete From Dicts Where Category = '应用程序' and Code = '2';
@@ -138,6 +139,7 @@ Delete from Navigations where Application = '2';
 INSERT into Navigations (ParentId, Name, "order", Icon, Url, Category, Application) VALUES (0, '首页', 10, 'fa fa-fa', '~/Home/Index', '1', 2);
 INSERT into Navigations (ParentId, Name, "order", Icon, Url, Category, Application) VALUES (0, '测试页面', 20, 'fa fa-fa', '#', '1', 2);
 INSERT into Navigations (ParentId, Name, "order", Icon, Url, Category, Application) VALUES (currval('navigations_id_seq') - 1, '关于', 10, 'fa fa-fa', '~/Home/About', '1', 2);
+INSERT into Navigations (ParentId, Name, "order", Icon, Url, Category, Application) VALUES (0, '返回码云', 20, 'fa fa-fa', 'https://gitee.com/LongbowEnterprise/BootstrapAdmin', '1', 2);
 
 -- 菜单授权
 DELETE FROM NavigationRole Where NavigationID in (Select ID From Navigations Where Application = '2');

@@ -1,11 +1,8 @@
-USE [BootstrapAdmin]
-GO
-
-DELETE From Users where ID = 1
-SET IDENTITY_INSERT [dbo].[Users] ON 
 -- ADMIN/123789
-insert into Users (ID, UserName, Password, PassSalt, DisplayName, RegisterTime, ApprovedTime,ApprovedBy, [Description]) values (1, 'Admin', 'Es7WVgNsJuELwWK8daCqufUBknCsSC0IYDphQZAiGOo=', 'W5vpBEOYRGHkQXatN0t+ECM/U8cHDuEgrq56+zZBk4J481xH', 'Administrator', GetDate(), GetDate(), 'system', N'系统默认创建')
-SET IDENTITY_INSERT [dbo].[Users] OFF
+-- User/123789
+DELETE From Users where UserName in ('Admin', 'User')
+INSERT INTO Users (UserName, Password, PassSalt, DisplayName, RegisterTime, ApprovedTime,ApprovedBy, [Description]) values ('Admin', 'Es7WVgNsJuELwWK8daCqufUBknCsSC0IYDphQZAiGOo=', 'W5vpBEOYRGHkQXatN0t+ECM/U8cHDuEgrq56+zZBk4J481xH', 'Administrator', GetDate(), GetDate(), 'system', N'系统默认创建')
+INSERT INTO Users (UserName, Password, PassSalt, DisplayName, RegisterTime, ApprovedTime,ApprovedBy, [Description], App) values ('User', 'tXG/yNffpnm6cThrCH7wf6jN1ic3VHvLoY4OrzKtrZ4=', 'c5cIrRMn8XjB84M/D/X7Lg9uUqQFmYNEdxb/4HWH8OLa4pNZ', N'测试账号', GetDate(), GetDate(), 'system', N'系统默认创建', '2')
 
 DELETE From Dicts Where Define = 0
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'菜单', N'系统菜单', N'0', 0)
@@ -106,28 +103,30 @@ INSERT [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VA
 INSERT [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (@@Identity - 1, N'API文档', 10, N'fa fa-wrench', N'~/swagger', N'0')
 INSERT [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (@@Identity - 2, N'图标集', 10, N'fa fa-dashboard', N'~/Admin/FAIcon', N'0')
 
-DELETE FROM GROUPS WHERE ID = 1
-SET IDENTITY_INSERT [dbo].[Groups] ON 
-INSERT [dbo].[Groups] ([ID], [GroupName], [Description]) VALUES (1, 'Admin', N'系统默认组')
-SET IDENTITY_INSERT [dbo].[Groups] OFF
+DELETE FROM GROUPS WHERE GroupName = 'Admin'
+INSERT [dbo].[Groups] ([GroupName], [Description]) VALUES ('Admin', N'系统默认组')
 
-DELETE FROM Roles where ID in (1, 2)
-SET IDENTITY_INSERT [dbo].[Roles] ON 
-INSERT [dbo].[Roles] ([ID], [RoleName], [Description]) VALUES (1, N'Administrators', N'系统管理员')
-INSERT [dbo].[Roles] ([ID], [RoleName], [Description]) VALUES (2, N'Default', N'默认用户，可访问前台页面')
-SET IDENTITY_INSERT [dbo].[Roles] OFF
+DELETE FROM Roles where RoleName in ('Administrators', 'Default')
+INSERT [dbo].[Roles] ([RoleName], [Description]) VALUES (N'Administrators', N'系统管理员')
+INSERT [dbo].[Roles] ([RoleName], [Description]) VALUES (N'Default', N'默认用户，可访问前台页面')
 
-DELETE FROM RoleGroup Where RoleID = 1
-INSERT [dbo].[RoleGroup] ([RoleID], [GroupID]) VALUES (1, 1)
+-- 角色部门关联
+TRUNCATE Table RoleGroup
+INSERT INTO RoleGroup (GroupId, RoleId) SELECT g.Id, r.Id From Groups g left join Roles r on 1=1 where GroupName = 'Admin' and RoleName = 'Administrators'
 
-DELETE FROM UserGroup Where UserID = 1
-INSERT [dbo].[UserGroup] ([UserID], [GroupID]) VALUES (1, 1)
+-- 用户部门关联
+TRUNCATE Table UserGroup
 
-DELETE FROM UserRole Where UserID = 1
-INSERT [dbo].[UserRole] ([UserID], [RoleID]) VALUES (1, 1)
-INSERT [dbo].[UserRole] ([UserID], [RoleID]) VALUES (1, 2)
+-- 用户角色关联
+TRUNCATE Table UserRole
+INSERT INTO UserRole (UserId, RoleId) SELECT u.Id, r.Id From Users u left join Roles r on 1=1 where UserName = 'Admin' and RoleName = 'Administrators'
+INSERT INTO UserRole (UserId, RoleId) SELECT u.Id, r.Id From Users u left join Roles r on 1=1 where UserName = 'User' and RoleName = 'Default'
 
-DELETE FROM NavigationRole
+-- 角色菜单关联
+TRUNCATE Table NavigationRole
+INSERT INTO NavigationRole (NavigationID, RoleID) SELECT n.Id, r.Id FROM Navigations n left join Roles r on 1=1 Where RoleName = 'Administrators'
+INSERT INTO NavigationRole (NavigationID, RoleID) SELECT n.Id, r.Id FROM Navigations n left join Roles r on 1=1 where RoleName = 'Default' and Name in ('后台管理', '个人中心', '返回前台', '通知管理')
+INSERT INTO NavigationRole (NavigationID, RoleID) SELECT n.Id, r.Id FROM Navigations n left join Roles r on 1=1 where RoleName = 'Default' and ParentId in (select Id from Navigations where Name in ('个人中心'))
 
 -- Client Data
 Declare @AppId nvarchar(1)
@@ -137,6 +136,7 @@ set @AppName = N'测试平台'
 
 Delete From [dbo].[Dicts] Where Category = N'应用程序' and Code = @AppId
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'应用程序', @AppName, @AppId, 0)
+Delete From [Dicts] Where Category = '应用首页' and Name = @AppId
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'应用首页', @AppId, 'http://localhost:49185/', 0)
 
 Delete From [dbo].[Dicts] Where Category = @AppName
@@ -148,10 +148,15 @@ Insert Dicts (Category, Name, Code, Define) values (@AppName, N'系统设置地�
 -- 菜单
 DELETE FROM Navigations Where [Application] = @AppId
 INSERT [dbo].[Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], [Application]) VALUES (0, N'首页', 10, N'fa fa-fa', N'~/Home/Index', N'1', @AppId)
-
 INSERT [dbo].[Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], [Application]) VALUES (0, N'测试页面', 10, N'fa fa-fa', N'~/Home/Index', N'1', @AppId)
 INSERT [dbo].[Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], [Application]) VALUES (@@Identity, N'关于', 10, N'fa fa-fa', N'~/Home/Index', N'1', @AppId)
 
+INSERT into [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], [Application]) VALUES (0, '返回码云', 20, 'fa fa-fa', 'https://gitee.com/LongbowEnterprise/BootstrapAdmin', '1', @AppId)
+
 -- 菜单授权
-DELETE FROM NavigationRole Where NavigationID in (Select ID From Navigations Where [Application] = @AppId)
-INSERT INTO NavigationRole SELECT ID, 2 FROM Navigations Where [Application] = @AppId
+INSERT INTO NavigationRole (NavigationId, RoleId) SELECT n.ID, r.ID FROM Navigations n left join Roles r on 1=1 Where r.RoleName = 'Administrators' and [Application] = @AppId;
+INSERT INTO NavigationRole SELECT n.ID, r.ID FROM Navigations n left join Roles r on 1=1 Where r.RoleName = 'Default' and [Application] = @AppId
+
+-- 角色对应用授权
+DELETE From RoleApp where AppId = @AppId;
+INSERT INTO RoleApp (AppId, RoleId) SELECT @AppId, ID From Roles Where RoleName = 'Default'
