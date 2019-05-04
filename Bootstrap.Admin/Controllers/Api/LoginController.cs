@@ -1,4 +1,5 @@
-﻿using Bootstrap.DataAccess;
+﻿using Bootstrap.Admin.Query;
+using Bootstrap.DataAccess;
 using Bootstrap.Security;
 using Longbow.Web;
 using Longbow.Web.Mvc;
@@ -21,17 +22,10 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <summary>
         /// 获得登录历史记录
         /// </summary>
-        /// <param name="po"></param>
+        /// <param name="value"></param>
         /// <returns></returns>
         [HttpGet]
-        public QueryData<LoginUser> Get([FromQuery]PaginationOption po)
-        {
-            var data = LoginHelper.Retrieves(po);
-            var ret = new QueryData<LoginUser>();
-            ret.total = data.TotalItems;
-            ret.rows = data.Items;
-            return ret;
-        }
+        public QueryData<LoginUser> Get([FromQuery]QueryLoginOption value) => value.RetrieveData();
 
         /// <summary>
         /// 

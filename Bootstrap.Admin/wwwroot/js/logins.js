@@ -6,6 +6,7 @@ $(function () {
         showToggle: false,
         showRefresh: false,
         showColumns: false,
+        queryParams: function (params) { return $.extend(params, { loginIp: $('#txt_ip').val() }); },
         columns: [
             {
                 title: "序号", formatter: function (value, row, index) {
@@ -27,9 +28,5 @@ $(function () {
                 }
             }
         ]
-    });
-
-    $('#refreshUsers').tooltip().on('click', function () {
-        $table.bootstrapTable('refresh');
     });
 });
