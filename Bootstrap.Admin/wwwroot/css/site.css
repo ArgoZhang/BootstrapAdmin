@@ -96,6 +96,7 @@
 .userinfo img {
     height: 29px;
     width: 29px;
+    border-radius: 2px;
 }
 
 .userinfo .dropdown-toggle {
