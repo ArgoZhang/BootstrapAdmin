@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="Bootstrap.Security.DataAccess" Version="2.1.0" />
-    <PackageReference Include="Longbow.Cache" Version="2.2.8" />
+    <PackageReference Include="Longbow.Cache" Version="2.2.9" />
     <PackageReference Include="Longbow.Data" Version="2.2.8" />
     <PackageReference Include="Longbow.Web" Version="2.2.11" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="2.2.4" />
