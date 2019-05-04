@@ -20,12 +20,17 @@ namespace Bootstrap.Admin.Query
         public DateTime? OperateTimeEnd { get; set; }
 
         /// <summary>
+        /// 请求IP地址
+        /// </summary>
+        public string AccessIP { get; set; }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
         public QueryData<Trace> RetrieveData()
         {
-            var data = TraceHelper.Retrieves(this, OperateTimeStart, OperateTimeEnd);
+            var data = TraceHelper.Retrieves(this, OperateTimeStart, OperateTimeEnd, AccessIP);
 
             var ret = new QueryData<Trace>();
             ret.total = data.TotalItems;

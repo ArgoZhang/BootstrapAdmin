@@ -42,7 +42,8 @@ namespace Bootstrap.DataAccess
         /// <param name="po"></param>
         /// <param name="startTime"></param>
         /// <param name="endTime"></param>
+        /// <param name="ip"></param>
         /// <returns></returns>
-        public static Page<Trace> Retrieves(PaginationOption po, DateTime? startTime, DateTime? endTime) => DbContextManager.Create<Trace>().Retrieves(po, startTime, endTime);
+        public static Page<Trace> Retrieves(PaginationOption po, DateTime? startTime, DateTime? endTime, string ip) => DbContextManager.Create<Trace>().Retrieves(po, startTime, endTime, ip);
     }
 }

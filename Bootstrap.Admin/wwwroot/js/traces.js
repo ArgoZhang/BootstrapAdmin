@@ -1,13 +1,11 @@
 $(function () {
     var url = 'api/Traces';
-    var $data = $('#requestData');
-    var $dialog = $('#dialogRequestData');
 
     $('.card-body table').smartTable({
         url: url,
         sortName: 'LogTime',
         sortOrder: 'desc',
-        queryParams: function (params) { return $.extend(params, { OperateTimeStart: $("#txt_operate_start").val(), OperateTimeEnd: $("#txt_operate_end").val() }); },
+        queryParams: function (params) { return $.extend(params, { OperateTimeStart: $("#txt_operate_start").val(), OperateTimeEnd: $("#txt_operate_end").val(), AccessIP: $('#txt_ip').val() }); },
         columns: [
             { title: "用户名称", field: "UserName", sortable: true },
             { title: "操作时间", field: "LogTime", sortable: true },
