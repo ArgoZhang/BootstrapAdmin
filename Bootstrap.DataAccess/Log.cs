@@ -27,7 +27,7 @@ namespace Bootstrap.DataAccess
         /// <param name="endTime"></param>
         /// <param name="opType"></param>
         /// <returns></returns>
-        public virtual Page<Log> Retrieves(PaginationOption po, DateTime? startTime, DateTime? endTime, string opType)
+        public virtual new Page<Log> Retrieves(PaginationOption po, DateTime? startTime, DateTime? endTime, string opType)
         {
             var sql = new Sql("select CRUD, UserName, LogTime, Ip, Browser, OS, City, RequestUrl, RequestData from Logs");
             if (startTime.HasValue) sql.Append("where LogTime >= @0", startTime.Value);
