@@ -80,7 +80,11 @@ namespace Bootstrap.Admin
                 options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
                 JsonConvert.DefaultSettings = () => options.SerializerSettings;
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options => options.Cookie.Path = "/");
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+            {
+                options.Cookie.Path = "/";
+                options.Cookie.Domain = Configuration["Domain"];
+            });
             services.AddApiVersioning(option =>
             {
                 option.DefaultApiVersion = new ApiVersion(1, 0);
