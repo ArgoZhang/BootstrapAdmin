@@ -20,6 +20,7 @@ namespace Bootstrap.DataAccess
         /// 查询所有登录日志
         /// </summary>
         /// <param name="po"></param>
-        public static Page<LoginUser> Retrieves(PaginationOption po) => DbContextManager.Create<LoginUser>().Retrieves(po);
+        /// <param name="ip"></param>
+        public static Page<LoginUser> Retrieves(PaginationOption po, string ip) => DbContextManager.Create<LoginUser>().Retrieves(po, ip);
     }
 }

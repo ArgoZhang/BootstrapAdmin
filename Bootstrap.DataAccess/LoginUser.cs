@@ -71,7 +71,14 @@ namespace Bootstrap.DataAccess
         /// 
         /// </summary>
         /// <param name="po"></param>
+        /// <param name="ip"></param>
         /// <returns></returns>
-        public virtual Page<LoginUser> Retrieves(PaginationOption po) => DbManager.Create().Page<LoginUser>(po.PageIndex, po.Limit, "select UserName, LoginTime, Ip, Browser, OS, City, Result from LoginLogs Order by LoginTime desc");
+        public virtual Page<LoginUser> Retrieves(PaginationOption po, string ip)
+        {
+            var sql = new Sql("select UserName, LoginTime, Ip, Browser, OS, City, Result from LoginLogs");
+            if (!string.IsNullOrEmpty(ip)) sql.Where("ip = @0", ip);
+            sql.OrderBy("LoginTime desc");
+            return DbManager.Create().Page<LoginUser>(po.PageIndex, po.Limit, sql);
+        }
     }
 }

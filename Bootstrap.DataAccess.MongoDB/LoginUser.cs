@@ -2,7 +2,6 @@
 using MongoDB.Driver;
 using PetaPoco;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Bootstrap.DataAccess.MongoDB
@@ -28,10 +27,10 @@ namespace Bootstrap.DataAccess.MongoDB
         /// </summary>
         /// <param name="po"></param>
         /// <returns></returns>
-        public override Page<DataAccess.LoginUser> Retrieves(PaginationOption po)
+        public override Page<DataAccess.LoginUser> Retrieves(PaginationOption po, string ip)
         {
             var logs = DbManager.LoginUsers
-                .Find(Builders<DataAccess.LoginUser>.Filter.Empty)
+                .Find(Builders<DataAccess.LoginUser>.Filter.Eq("Ip", ip))
                 .Sort(Builders<DataAccess.LoginUser>.Sort.Descending(t => t.LoginTime))
                 .ToList();
 
