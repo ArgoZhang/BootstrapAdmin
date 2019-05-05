@@ -64,13 +64,19 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<User> RetrieveNewUsers() => CacheManager.GetOrAdd(RetrieveNewUsersDataKey, key => DbContextManager.Create<User>().RetrieveNewUsers());
 
+        private static IEnumerable<User> RetrieveConstUsers()
+        {
+            var users = new string[] { "Admin", "User" };
+            return Retrieves().Where(u => users.Any(usr => usr.Equals(u.UserName, StringComparison.OrdinalIgnoreCase)));
+        }
+
         /// <summary>
         /// 删除用户
         /// </summary>
         /// <param name="value"></param>
         public static bool Delete(IEnumerable<string> value)
         {
-            var admins = Retrieves().Where(u => u.UserName.Equals("Admin", StringComparison.OrdinalIgnoreCase));
+            var admins = RetrieveConstUsers();
             value = value.Where(v => !admins.Any(u => u.Id == v));
             if (!value.Any()) return true;
             var ret = DbContextManager.Create<User>().Delete(value);
@@ -102,7 +108,7 @@ namespace Bootstrap.DataAccess
 
             if (DictHelper.RetrieveSystemModel() && !user.Id.IsNullOrEmpty())
             {
-                var admins = Retrieves().Where(u => u.UserName.Equals("Admin", StringComparison.OrdinalIgnoreCase));
+                var admins = RetrieveConstUsers();
                 if (admins.Any(v => v.Id == user.Id)) return true;
             }
             var ret = DbContextManager.Create<User>().Save(user);
@@ -122,7 +128,7 @@ namespace Bootstrap.DataAccess
             if (!UserChecker(new User { Password = password, DisplayName = displayName })) return false;
             if (DictHelper.RetrieveSystemModel())
             {
-                var admins = Retrieves().Where(u => u.UserName.Equals("Admin", StringComparison.OrdinalIgnoreCase));
+                var admins = RetrieveConstUsers();
                 if (admins.Any(v => v.Id == id)) return true;
             }
             var ret = DbContextManager.Create<User>().Update(id, password, displayName);
@@ -153,7 +159,9 @@ namespace Bootstrap.DataAccess
         public static bool ChangePassword(string userName, string password, string newPass)
         {
             if (!UserChecker(new User { UserName = userName, Password = password })) return false;
-            if (DictHelper.RetrieveSystemModel() && userName.Equals("Admin", StringComparison.OrdinalIgnoreCase)) return true;
+            if (DictHelper.RetrieveSystemModel()
+                && RetrieveConstUsers().Any(u => userName.Equals(u.UserName, StringComparison.OrdinalIgnoreCase)))
+                return true;
             return DbContextManager.Create<User>().ChangePassword(userName, password, newPass);
         }
 
@@ -166,7 +174,7 @@ namespace Bootstrap.DataAccess
         public static bool ResetPassword(string userName, string password)
         {
             if (!UserChecker(new User { UserName = userName, Password = password })) return false;
-            if (DictHelper.RetrieveSystemModel() && userName.Equals("Admin", StringComparison.OrdinalIgnoreCase)) return true;
+            if (DictHelper.RetrieveSystemModel() && RetrieveConstUsers().Any(u => userName.Equals(u.UserName, StringComparison.OrdinalIgnoreCase))) return true;
             return DbContextManager.Create<User>().ResetPassword(userName, password);
         }
 
