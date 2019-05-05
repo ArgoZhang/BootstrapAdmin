@@ -40,6 +40,15 @@ namespace Bootstrap.Client.DataAccess
         /// 
         /// </summary>
         /// <returns></returns>
+        public static string RetrieveNotisUrl()
+        {
+            return RetrieveAppName("系统通知地址");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public static string RetrieveTitle()
         {
             return RetrieveAppName("网站标题");
