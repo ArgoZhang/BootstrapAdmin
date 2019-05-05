@@ -15,13 +15,14 @@ namespace Bootstrap.DataAccess.MongoDB
         /// 
         /// </summary>
         /// <returns></returns>
-        public override Page<DataAccess.Trace> Retrieves(PaginationOption po, DateTime? startTime, DateTime? endTime)
+        public override Page<DataAccess.Trace> Retrieves(PaginationOption po, DateTime? startTime, DateTime? endTime, string ip)
         {
             // filter
             var filterBuilder = Builders<DataAccess.Trace>.Filter;
             var filter = filterBuilder.Empty;
             if (startTime.HasValue) filter = filterBuilder.Gt("LogTime", startTime.Value);
             if (endTime.HasValue) filter = filterBuilder.Lt("LogTime", endTime.Value.AddDays(1).AddSeconds(-1));
+            if (!string.IsNullOrEmpty(ip)) filter = filterBuilder.Eq("Ip", ip);
             if (startTime == null && endTime == null) filter = filterBuilder.Gt("LogTime", DateTime.Today.AddMonths(0 - DictHelper.RetrieveAccessLogPeriod()));
 
             // sort
