@@ -37,7 +37,7 @@ namespace Bootstrap.DataAccess
                 RequestUrl = "~/Home/Index"
             };
             log.Save(log);
-            Assert.NotEmpty(log.Retrieves(new PaginationOption() { Limit = 20, Offset = 0, Order = "desc", Sort = "LogTime" }, null, null).Items);
+            Assert.NotEmpty(log.Retrieves(new PaginationOption() { Limit = 20, Offset = 0, Order = "desc", Sort = "LogTime" }, null, null, null).Items);
         }
     }
 }

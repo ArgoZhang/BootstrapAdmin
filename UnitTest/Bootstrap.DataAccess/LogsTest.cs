@@ -36,7 +36,7 @@ namespace Bootstrap.DataAccess
                 RequestUrl = "~/Home/Index"
             };
             log.Save(log);
-            Assert.NotNull(log.Retrieves(new PaginationOption() { Limit = 20 }, null, null));
+            Assert.NotNull(log.Retrieves(new PaginationOption() { Limit = 20 }, null, null, null));
         }
     }
 }
