@@ -21,7 +21,12 @@
                 else if (ctl.attr('data-toggle') === 'toggle') {
                     ctl.bootstrapToggle(value[name] ? 'on' : 'off');
                 }
-                else ctl.val(value[name]);
+                else if (ctl.attr('data-toggle') === 'lgbSelect') {
+                    ctl.lgbSelect('val', value[name]);
+                }
+                else {
+                    ctl.val(value[name]);
+                }
             }
         },
         reset: function () {
@@ -35,7 +40,12 @@
                 else if (ctl.attr('data-toggle') === 'toggle') {
                     ctl.bootstrapToggle(dv === "true" ? 'on' : 'off');
                 }
-                else ctl.val(dv);
+                else if (ctl.attr('data-toggle') === 'lgbSelect') {
+                    ctl.lgbSelect('val', dv);
+                }
+                else {
+                    ctl.val(dv);
+                }
             }
         },
         get: function () {
