@@ -58,7 +58,7 @@
 
     DataTable = function (options) {
         var that = this;
-        this.options = $.extend(true, {}, DataTable.settings, options);
+        this.options = $.extend(true, { delTitle: "删除数据", saveTitle: "保存数据" }, DataTable.settings, options);
         this.dataEntity = new DataEntity(options.map);
 
         // handler click event
@@ -157,7 +157,7 @@
                             setTimeout(function () {
                                 var iDs = arrselections.map(function (element, index) { return element.Id; });
                                 $.bc({
-                                    url: options.url, data: iDs, method: 'delete', title: '删除数据',
+                                    url: options.url, data: iDs, method: 'delete', title: options.delTitle,
                                     callback: function (result) {
                                         if (result) $(options.bootstrapTable).bootstrapTable('refresh');
                                         handlerCallback.call(that, null, element, { oper: 'del', success: result });
@@ -172,7 +172,7 @@
                 var that = this;
                 var options = $.extend(true, {}, this.options, { data: this.dataEntity.get() });
                 $.bc({
-                    url: options.url, data: options.data, title: "保存数据", modal: options.modal, method: "post",
+                    url: options.url, data: options.data, title: options.saveTitle, modal: options.modal, method: "post",
                     callback: function (result) {
                         if (result) {
                             $(options.bootstrapTable).bootstrapTable('refresh');
