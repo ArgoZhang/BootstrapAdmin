@@ -103,6 +103,11 @@ INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (last_insert_rowid() - 1, 'API文档', 20, 'fa fa-wrench', '~/swagger', '0');
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (last_insert_rowid() - 2, '图标集', 30, 'fa fa-dashboard', '~/Admin/FAIcon', '0');
 
+-- 控件集合菜单
+INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, '控件集合', 170, 'fa fa-stethoscope', '#', '0');
+INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (last_insert_rowid(), '行为式验证码', 10, 'fa fa-wrench', 'https://gitee.com/LongbowEnterprise/SliderCaptcha', '0');
+INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (last_insert_rowid() - 1, '下拉框', 20, 'fa fa-bars', 'http://longbowenterprise.gitee.io/longbow-select/', '0');
+
 DELETE FROM GROUPS WHERE GroupName = 'Admin';
 INSERT INTO [Groups] ([GroupName], [Description]) VALUES ('Admin', '系统默认组');
 
