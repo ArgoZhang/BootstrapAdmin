@@ -76,7 +76,7 @@
 5. 初始化数据  
 执行对应目录下InitData.sql脚本
 6. 拷贝Longbow.lic文件  
-拷贝Scripts目录下Longbow.lic文件到bin目录下
+拷贝Scripts目录下Longbow.lic文件到bin目录下的程序集输出目录（bin\debug\netcoreapp2.2\）
 7. 系统登录用户名与口令  
 用户名：**Admin**  
 密码：**123789**  
