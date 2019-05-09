@@ -531,6 +531,14 @@ input.pending {
     color: rgba(255,255,255,.8);
 }
 
-  .refreshIcon:hover {
-    color: #fff;
-  }
+    .refreshIcon:hover {
+        color: #fff;
+    }
+
+.alert-info {
+    border-left: solid 4px #53d0e4;
+}
+
+.alert-danger {
+    border-left: solid 4px #f78792;
+}
