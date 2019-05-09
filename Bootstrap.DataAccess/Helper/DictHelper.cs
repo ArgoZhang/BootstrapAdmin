@@ -1,4 +1,4 @@
-using Bootstrap.Security;
+﻿using Bootstrap.Security;
 using Longbow.Cache;
 using Longbow.Data;
 using Longbow.Web;
@@ -32,6 +32,8 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<BootstrapDict> RetrieveDicts() => CacheManager.GetOrAdd(RetrieveDictsDataKey, key => DbContextManager.Create<Dict>().RetrieveDicts());
 
+        private static IEnumerable<BootstrapDict> RetrieveProtectedDicts() => RetrieveDicts().Where(d => d.Define == 0 || d.Category == "测试平台");
+
         /// <summary>
         /// 删除字典中的数据
         /// </summary>
@@ -41,8 +43,8 @@ namespace Bootstrap.DataAccess
         {
             if (RetrieveSystemModel())
             {
-                // 允许删除自定义数据字典
-                var systemDicts = RetrieveDicts().Where(d => d.Define == 0);
+                // 禁止删除系统数据与测试平台数据
+                var systemDicts = RetrieveProtectedDicts();
                 value = value.Where(v => !systemDicts.Any(d => d.Id == v));
                 if (!value.Any()) return true;
             }
@@ -58,20 +60,8 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static bool Save(BootstrapDict p)
         {
-            if (RetrieveSystemModel())
-            {
-                if (string.IsNullOrEmpty(p.Id))
-                {
-                    if (p.Define == 0) p.Define = 1;
-                }
-                else
-                {
-                    if (RetrieveDicts().Where(m => m.Define == 0).Any(m => m.Id == p.Id))
-                    {
-                        return true;
-                    }
-                }
-            }
+            if (RetrieveSystemModel() && RetrieveProtectedDicts().Any(m => m.Id == p.Id)) return true;
+
             var ret = DbContextManager.Create<Dict>().Save(p);
             if (ret) CacheCleanUtility.ClearCache(dictIds: new List<string>());
             return ret;
