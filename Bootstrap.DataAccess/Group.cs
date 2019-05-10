@@ -1,5 +1,6 @@
 ﻿using Bootstrap.Security.DataAccess;
 using Longbow.Data;
+using PetaPoco;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace Bootstrap.DataAccess
     /// <summary>
     /// 
     /// </summary>
+    [TableName("Groups")]
     public class Group
     {
         /// <summary>
@@ -29,6 +31,7 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获取/设置 用户群组关联状态 checked 标示已经关联 '' 标示未关联
         /// </summary>
+        [ResultColumn]
         public string Checked { get; set; }
 
         /// <summary>

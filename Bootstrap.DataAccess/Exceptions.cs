@@ -60,6 +60,7 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获得/设置 时间描述 2分钟内为刚刚
         /// </summary>
+        [ResultColumn]
         public string Period { get; set; }
 
         /// <summary>

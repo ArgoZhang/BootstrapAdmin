@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PetaPoco;
+using System;
 using System.Collections.Generic;
 
 namespace Bootstrap.DataAccess
@@ -6,6 +7,7 @@ namespace Bootstrap.DataAccess
     /// <summary>
     /// 
     /// </summary>
+    [TableName("Tasks")]
     public class Task
     {
         /// <summary>

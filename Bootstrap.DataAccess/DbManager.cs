@@ -18,21 +18,7 @@ namespace Bootstrap.DataAccess
         {
             var db = Longbow.Data.DbManager.Create(connectionName, keepAlive);
             db.ExceptionThrown += (sender, args) => args.Exception.Log(new NameValueCollection() { ["LastCmd"] = db.LastCommand });
-            return db.AddMaps();
-        }
-
-        private static IDatabase AddMaps(this IDatabase database)
-        {
-            database.AddMap<Dict>("Dicts");
-            database.AddMap<User>("Users", new string[] { "Checked", "Period", "NewPassword", "UserStatus" });
-            database.AddMap<Exceptions>("Exceptions", new string[] { "Period" });
-            database.AddMap<Group>("Groups", new string[] { "Checked" });
-            database.AddMap<Log>("Logs");
-            database.AddMap<Menu>("Navigations", new string[] { "ParentName", "CategoryName", "Active", "Menus" });
-            database.AddMap<Role>("Roles", new string[] { "Checked" });
-            database.AddMap<Task>("Tasks");
-            database.AddMap<Trace>("Traces");
-            return database;
+            return db;
         }
     }
 }

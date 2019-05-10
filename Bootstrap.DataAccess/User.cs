@@ -12,6 +12,7 @@ namespace Bootstrap.DataAccess
     /// <summary>
     /// 用户表实体类
     /// </summary>
+    [TableName("Users")]
     public class User : BootstrapUser
     {
         /// <summary>
@@ -32,6 +33,7 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获取/设置 角色用户关联状态 checked 标示已经关联 '' 标示未关联
         /// </summary>
+        [ResultColumn]
         public string Checked { get; set; }
 
         /// <summary>
@@ -57,16 +59,19 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获得/设置 用户当前状态 0 表示管理员注册用户 1 表示用户注册 2 表示更改密码 3 表示更改个人皮肤 4 表示更改显示名称 5 批复新用户注册操作
         /// </summary>
+        [ResultColumn]
         public UserStates UserStatus { get; set; }
 
         /// <summary>
         /// 获得/设置 通知描述 2分钟内为刚刚
         /// </summary>
+        [ResultColumn]
         public string Period { get; set; }
 
         /// <summary>
         /// 获得/设置 新密码
         /// </summary>
+        [ResultColumn]
         public string NewPassword { get; set; }
 
         /// <summary>

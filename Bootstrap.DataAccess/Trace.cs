@@ -7,6 +7,7 @@ namespace Bootstrap.DataAccess
     /// <summary>
     /// 
     /// </summary>
+    [TableName("Traces")]
     public class Trace
     {
         /// <summary>

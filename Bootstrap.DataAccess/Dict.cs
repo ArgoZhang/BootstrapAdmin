@@ -1,6 +1,7 @@
 using Bootstrap.Security;
 using Bootstrap.Security.DataAccess;
 using Longbow;
+using PetaPoco;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace Bootstrap.DataAccess
     /// <summary>
     /// 
     /// </summary>
+    [TableName("Dicts")]
     public class Dict : BootstrapDict
     {
         /// <summary>
