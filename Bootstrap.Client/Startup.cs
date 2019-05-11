@@ -60,7 +60,7 @@ namespace Bootstrap.Client
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
             {
                 options.Cookie.Path = "/";
-                options.Cookie.Domain = Configuration["Domain"];
+                if (!string.IsNullOrEmpty(Configuration["Domain"])) options.Cookie.Domain = Configuration["Domain"];
                 options.RebuildRedirectUri(Configuration["AuthHost"]);
             });
         }

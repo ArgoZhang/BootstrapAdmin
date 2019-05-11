@@ -83,7 +83,7 @@ namespace Bootstrap.Admin
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
             {
                 options.Cookie.Path = "/";
-                options.Cookie.Domain = Configuration["Domain"];
+                if (!string.IsNullOrEmpty(Configuration["Domain"])) options.Cookie.Domain = Configuration["Domain"];
             });
             services.AddApiVersioning(option =>
             {
