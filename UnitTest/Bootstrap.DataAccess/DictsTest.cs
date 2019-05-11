@@ -132,9 +132,9 @@ namespace Bootstrap.DataAccess
         {
             var dict = new Dict();
             var ipSvr = dict.RetrieveLocaleIPSvr();
-            Assert.Equal("JuheIPSvr", ipSvr);
+            Assert.Equal("None", ipSvr);
 
-            var ipUri = dict.RetrieveLocaleIPSvrUrl(ipSvr);
+            var ipUri = dict.RetrieveLocaleIPSvrUrl("JuheIPSvr");
             Assert.NotNull(ipUri);
         }
 

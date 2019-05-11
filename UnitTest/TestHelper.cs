@@ -1,3 +1,4 @@
+using Longbow.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -49,14 +50,14 @@ namespace UnitTest
         private const string MySqlConnectionString = "Server=localhost;Database=UnitTest;Uid=argozhang;Pwd=argo@163.com;SslMode=none;allowPublicKeyRetrieval=true";
         private const string NpgSqlConnectionString = "Server=localhost;Database=UnitTest;User ID=argozhang;Password=sa;";
 
-        public static void ConfigureWebHost(IWebHostBuilder builder, string providerName = Longbow.Data.DatabaseProviderType.SqlServer)
+        public static void ConfigureWebHost(IWebHostBuilder builder, DatabaseProviderType providerName = DatabaseProviderType.SqlServer)
         {
             builder.ConfigureAppConfiguration(app => app.AddInMemoryCollection(new KeyValuePair<string, string>[] {
                 new KeyValuePair<string, string>("ConnectionStrings:ba", SqlConnectionString),
                 new KeyValuePair<string, string>("DB:0:Enabled", "true")
             }));
 
-            if (providerName == Longbow.Data.DatabaseProviderType.SQLite)
+            if (providerName == DatabaseProviderType.SQLite)
             {
                 var dbPath = RetrievePath($"UnitTest{Path.DirectorySeparatorChar}DB{Path.DirectorySeparatorChar}UnitTest.db");
                 var dbFile = Path.Combine(AppContext.BaseDirectory, "UnitTest.db");
@@ -69,7 +70,7 @@ namespace UnitTest
                 }));
             }
 
-            if (providerName == Longbow.Data.DatabaseProviderType.MySql)
+            if (providerName == DatabaseProviderType.MySql)
             {
                 builder.ConfigureAppConfiguration(app => app.AddInMemoryCollection(new KeyValuePair<string, string>[] {
                     new KeyValuePair<string, string>("DB:0:Enabled", "false"),
@@ -79,7 +80,7 @@ namespace UnitTest
                 }));
             }
 
-            if (providerName == Longbow.Data.DatabaseProviderType.Npgsql)
+            if (providerName == DatabaseProviderType.Npgsql)
             {
                 builder.ConfigureAppConfiguration(app => app.AddInMemoryCollection(new KeyValuePair<string, string>[] {
                     new KeyValuePair<string, string>("DB:0:Enabled", "false"),

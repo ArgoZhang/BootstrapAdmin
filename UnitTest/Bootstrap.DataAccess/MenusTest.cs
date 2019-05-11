@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using Bootstrap.Security;
+using System.Linq;
 using Xunit;
 
 namespace Bootstrap.DataAccess
@@ -9,7 +10,8 @@ namespace Bootstrap.DataAccess
         [Fact]
         public void Save_Ok()
         {
-            var m = new Menu()
+            var m = new Menu();
+            var poco = new BootstrapMenu()
             {
                 Name = "UnitTest",
                 Application = "0",
@@ -22,8 +24,8 @@ namespace Bootstrap.DataAccess
                 ParentId = "0"
             };
             m.Delete(m.RetrieveAllMenus("Admin").Where(n => n.Name == m.Name).Select(n => n.Id));
-            Assert.True(m.Save(m));
-            m.Delete(new string[] { m.Id });
+            Assert.True(m.Save(poco));
+            m.Delete(new string[] { poco.Id });
         }
 
         [Fact]
@@ -36,7 +38,8 @@ namespace Bootstrap.DataAccess
         [Fact]
         public void Delete_Ok()
         {
-            var m = new Menu()
+            var m = new Menu();
+            var poco = new BootstrapMenu()
             {
                 Name = "UnitTest",
                 Application = "0",
@@ -48,8 +51,8 @@ namespace Bootstrap.DataAccess
                 Url = "#",
                 ParentId = "0"
             };
-            m.Save(m);
-            Assert.True(m.Delete(new string[] { m.Id }));
+            m.Save(poco);
+            Assert.True(m.Delete(new string[] { poco.Id }));
         }
 
         [Fact]

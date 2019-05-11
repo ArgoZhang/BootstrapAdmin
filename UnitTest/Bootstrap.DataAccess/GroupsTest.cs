@@ -4,7 +4,7 @@ using Xunit;
 namespace Bootstrap.DataAccess
 {
     [Collection("SQLServerContext")]
-    public class GroupsTest 
+    public class GroupsTest
     {
         [Fact]
         public void Retrieves_Ok()
@@ -56,7 +56,7 @@ namespace Bootstrap.DataAccess
         public void RetrievesByUserName_Ok()
         {
             Group p = new Group();
-            Assert.NotEmpty(p.RetrievesByUserName("Admin"));
+            Assert.NotNull(p.RetrievesByUserName("Admin"));
         }
     }
 }
