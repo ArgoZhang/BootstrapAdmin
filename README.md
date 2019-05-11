@@ -1,5 +1,14 @@
 ﻿# BootstrapAdmin
 
+#### Gitee-master
+[![Build status](https://ci.appveyor.com/api/projects/status/dieuc31das5g9f09/branch/master?svg=true)](https://ci.appveyor.com/project/ArgoZhang/bootstrapadmin-m6phm/branch/master)
+[![Test Status](https://img.shields.io/appveyor/tests/argozhang/bootstrapadmin-m6phm/master.svg)](https://ci.appveyor.com/project/ArgoZhang/bootstrapadmin-m6phm/build/tests)
+[![Gitee license](https://img.shields.io/github/license/argozhang/bootstrapadmin.svg)](https://gitee.com/LongbowEnterprise/BootstrapAdmin/blob/master/LICENSE)  
+
+#### Github-master
+[![Build status](https://ci.appveyor.com/api/projects/status/rreoekt9dbou3ud8/branch/master?svg=true)](https://ci.appveyor.com/project/ArgoZhang/bootstrapadmin/branch/master)
+[![Test Status](https://img.shields.io/appveyor/tests/argozhang/bootstrapadmin/master.svg)](https://ci.appveyor.com/project/ArgoZhang/bootstrapadmin/build/tests)  
+
 ## 项目介绍
 一直需要一款后台管理系统，但是网上很多开源项目都是 **Java** 开发的，本人是 **NET** 平台的对 **Java** 一窍不通，C#版本的本来就少而且还没有合适的。于是决定自己开发一套后台管理系统。由于前台采用 **Bootstrap** 布局样式，所以就叫做 **BootstrapAdmin** 。本系统可以用于所有的 Web 应用程序，目前版本已经升级到 **NET CORE** 具备跨平台能力。数据库方面同时支持多种数据库，详细列表见后面**数据库**的详细列表，切换数据源仅需更改配置文件无需重启应用程序，配置简单灵活。UI 前端使用流行的 Bootstrap 框架布局对移动设备的兼容性非常好，自适应目前市场几乎所有终端设备。本系统还具备单一后台支持多前台的特色，提供 **单点登录（SSO）** 的能力。  
 
@@ -86,8 +95,8 @@
  **master** 发布分支与在线演示版本同步
 
 ## 演示地址  
-**在线演示** <a href="http://argo.zylweb.cn" target="_blank">[传送门]</a>  
-**备用地址** <a href="http://ba.sdgxgz.com" target="_blank">[传送门]</a>  
+**在线演示** <a href="http://argo.zylweb.cn" target="_blank">[传送门]http://argo.zylweb.cn</a>  
+**备用地址** <a href="http://ba.sdgxgz.com" target="_blank">[传送门]http://ba.sdgxgz.com</a>  
 
 #### 登录用户名与密码  
 管理员：**Admin/123789**  
@@ -102,6 +111,9 @@ MEM: 2G
 
 ## 常见问题Q&A
 请点击 [查看文档](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/常见问题Q&A) 查看常见问题小节  
+
+## 开源协议
+[Apache License Version 2.0](https://gitee.com/LongbowEnterprise/BootstrapAdmin/blob/master/LICENSE)
 
 ## 项目截图
 
