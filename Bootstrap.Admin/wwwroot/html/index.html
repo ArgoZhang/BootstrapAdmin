@@ -62,9 +62,26 @@
         <div class="bg"></div>
         <div class="tip">
             <h2>网站正在升级中，请稍后重试，请选择其他演示地址</h2>
-            <p>演示地址1：<a href="http://argo.zylweb.cn/">http://argo.zylweb.cn</a></p>
+            <h3><span>5</span> 秒后自动跳转到备用演示地址</h3>
+            <p>演示地址1：<a class="active" href="http://argo.zylweb.cn/">http://argo.zylweb.cn</a></p>
             <p>演示地址2：<a href="http://ba.sdgxgz.com/">http://ba.sdgxgz.com</a></p>
         </div>
     </div>
+    <script type="text/javascript">
+        window.onload = function () {
+            var $h3 = document.querySelector("h3");
+            var $span = document.querySelector("h3 span");
+            var target = document.querySelector("p a.active");
+            var left = parseInt($span.innerHTML);
+            var handler = window.setInterval(function () {
+                if (left <= 1) {
+                    $h3.innerHTML = "正在跳转...请稍等!";
+                    window.clearInterval(handler);
+                    window.location.href = target.href;
+                }
+                else $span.innerHTML = --left;
+            }, 1000);
+        };
+    </script>
 </body>
 </html>
