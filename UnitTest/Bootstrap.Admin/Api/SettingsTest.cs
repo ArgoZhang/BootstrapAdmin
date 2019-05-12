@@ -14,7 +14,7 @@ namespace Bootstrap.Admin.Api
         [Fact]
         public async void Get_Ok()
         {
-            var resp = await Client.GetAsJsonAsync<IEnumerable<ICacheCorsItem>>();
+            var resp = await Client.GetAsJsonAsync<IEnumerable<CacheCorsItem>>();
             Assert.NotNull(resp);
         }
 
@@ -39,6 +39,34 @@ namespace Bootstrap.Admin.Api
             // Delete 
             ids = dict.RetrieveDicts().Where(d => d.Category == "UnitTest-Settings").Select(d => d.Id);
             dict.Delete(ids);
+        }
+
+        internal class CacheCorsItem : ICacheCorsItem
+        {
+            /// <summary>
+            /// 
+            /// </summary>
+            public bool Enabled { get; set; }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public string Key { get; set; }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public string Url { get; set; }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public string Desc { get; set; }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public bool Self { get; set; }
         }
     }
 }

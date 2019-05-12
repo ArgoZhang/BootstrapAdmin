@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.Mvc.Testing.Handlers;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Net;
 using System.Net.Http;
@@ -91,6 +92,24 @@ namespace Bootstrap.Admin
         {
             base.ConfigureWebHost(builder);
 
+            var config = new ConfigurationBuilder();
+            config.AddJsonFile(TestHelper.RetrievePath("UnitTest\\appsettings.json"), false, true);
+            config.AddEnvironmentVariables();
+            var con = config.Build();
+
+            if (con.GetValue("Appveyor", false))
+            {
+                TestHelper.SQLServerConnectionString = con.GetConnectionString("sqlserver-app");
+                TestHelper.MySqlConnectionString = con.GetConnectionString("mysql-app");
+                TestHelper.NpgSqlConnectionString = con.GetConnectionString("npgsql-app");
+            }
+            else
+            {
+                TestHelper.SQLServerConnectionString = con.GetConnectionString("sqlserver");
+                TestHelper.MySqlConnectionString = con.GetConnectionString("mysql");
+                TestHelper.NpgSqlConnectionString = con.GetConnectionString("npgsql");
+            }
+            TestHelper.SQLiteConnectionString = con.GetConnectionString("sqlite");
             TestHelper.ConfigureWebHost(builder);
         }
     }

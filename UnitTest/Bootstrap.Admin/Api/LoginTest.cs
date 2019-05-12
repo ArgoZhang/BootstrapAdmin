@@ -1,5 +1,5 @@
 ﻿using Bootstrap.DataAccess;
-using System.Collections.Generic;
+using Longbow.Web.Mvc;
 using System.Net.Http;
 using Xunit;
 
@@ -12,8 +12,8 @@ namespace Bootstrap.Admin.Api
         [Fact]
         public async void Login_Get()
         {
-            var users = await Client.GetAsJsonAsync<IEnumerable<LoginUser>>();
-            Assert.NotEmpty(users);
+            var users = await Client.GetAsJsonAsync<QueryData<LoginUser>>();
+            Assert.NotEmpty(users.rows);
         }
 
         [Fact]

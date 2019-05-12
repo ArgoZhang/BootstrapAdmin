@@ -9,6 +9,14 @@ namespace UnitTest
 {
     public static class TestHelper
     {
+        public static string SQLServerConnectionString { get; set; }
+
+        public static string SQLiteConnectionString { get; set; }
+
+        public static string MySqlConnectionString { get; set; }
+
+        public static string NpgSqlConnectionString { get; set; }
+
         /// <summary>
         /// 获得当前工程解决方案目录
         /// </summary>
@@ -45,17 +53,15 @@ namespace UnitTest
             }
         }
 
-        private const string SqlConnectionString = "Data Source=.;Initial Catalog=UnitTest;User ID=sa;Password=sa";
-        private const string SQLiteConnectionString = "Data Source=UnitTest.db;";
-        private const string MySqlConnectionString = "Server=localhost;Database=UnitTest;Uid=argozhang;Pwd=argo@163.com;SslMode=none;allowPublicKeyRetrieval=true";
-        private const string NpgSqlConnectionString = "Server=localhost;Database=UnitTest;User ID=argozhang;Password=sa;";
-
         public static void ConfigureWebHost(IWebHostBuilder builder, DatabaseProviderType providerName = DatabaseProviderType.SqlServer)
         {
-            builder.ConfigureAppConfiguration(app => app.AddInMemoryCollection(new KeyValuePair<string, string>[] {
-                new KeyValuePair<string, string>("ConnectionStrings:ba", SqlConnectionString),
-                new KeyValuePair<string, string>("DB:0:Enabled", "true")
-            }));
+            if (providerName == DatabaseProviderType.SqlServer)
+            {
+                builder.ConfigureAppConfiguration(app => app.AddInMemoryCollection(new KeyValuePair<string, string>[] {
+                    new KeyValuePair<string, string>("ConnectionStrings:ba", SQLServerConnectionString),
+                    new KeyValuePair<string, string>("DB:0:Enabled", "true")
+                }));
+            }
 
             if (providerName == DatabaseProviderType.SQLite)
             {
