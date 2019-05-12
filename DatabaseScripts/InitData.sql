@@ -1,3 +1,6 @@
+﻿USE [BootstrapAdmin]
+GO
+
 -- ADMIN/123789
 -- User/123789
 DELETE From Users where UserName in ('Admin', 'User')
