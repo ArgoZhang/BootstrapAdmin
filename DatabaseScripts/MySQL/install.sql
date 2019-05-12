@@ -1,4 +1,4 @@
-CREATE TABLE Users (
+﻿CREATE TABLE Users (
     ID             INTEGER       PRIMARY KEY	Auto_increment,
     UserName       NVARCHAR (50) NOT NULL,
     Password       VARCHAR (50)  NOT NULL,

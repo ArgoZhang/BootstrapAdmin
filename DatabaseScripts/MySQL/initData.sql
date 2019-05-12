@@ -1,8 +1,8 @@
--- ADMIN/123789
+﻿-- ADMIN/123789
 -- User/123789
 DELETE From Users where UserName in ('Admin', 'User');
-INSERT INTO Users (UserName, Password, PassSalt, DisplayName, RegisterTime, ApprovedTime,ApprovedBy, Description) values (1, 'Admin', 'Es7WVgNsJuELwWK8daCqufUBknCsSC0IYDphQZAiGOo=', 'W5vpBEOYRGHkQXatN0t+ECM/U8cHDuEgrq56+zZBk4J481xH', 'Administrator', now(), now(), 'system', '系统默认创建');
-INSERT INTO Users (UserName, Password, PassSalt, DisplayName, RegisterTime, ApprovedTime,ApprovedBy, [Description], [App]) values ('User', 'tXG/yNffpnm6cThrCH7wf6jN1ic3VHvLoY4OrzKtrZ4=', 'c5cIrRMn8XjB84M/D/X7Lg9uUqQFmYNEdxb/4HWH8OLa4pNZ', '测试账号', now(), now(), 'system', '系统默认创建', '2');
+INSERT INTO Users (UserName, Password, PassSalt, DisplayName, RegisterTime, ApprovedTime,ApprovedBy, Description) values ('Admin', 'Es7WVgNsJuELwWK8daCqufUBknCsSC0IYDphQZAiGOo=', 'W5vpBEOYRGHkQXatN0t+ECM/U8cHDuEgrq56+zZBk4J481xH', 'Administrator', now(), now(), 'system', '系统默认创建');
+INSERT INTO Users (UserName, Password, PassSalt, DisplayName, RegisterTime, ApprovedTime,ApprovedBy, Description, App) values ('User', 'tXG/yNffpnm6cThrCH7wf6jN1ic3VHvLoY4OrzKtrZ4=', 'c5cIrRMn8XjB84M/D/X7Lg9uUqQFmYNEdxb/4HWH8OLa4pNZ', '测试账号', now(), now(), 'system', '系统默认创建', '2');
 
 DELETE From Dicts Where Define = 0;
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('菜单', '系统菜单', '0', 0);
@@ -111,18 +111,18 @@ INSERT INTO Roles (RoleName, Description) VALUES ('Administrators', '系统管�
 INSERT INTO Roles (RoleName, Description) VALUES ('Default', '默认用户，可访问前台页面');
 
 DELETE FROM RoleGroup;
-INSERT INTO RoleGroup (GroupId, RoleId) SELECT g.Id, r.Id From Groups g left join Roles r where GroupName = 'Admin' and RoleName = 'Administrators';
+INSERT INTO RoleGroup (GroupId, RoleId) SELECT g.Id, r.Id From `Groups` g left join Roles r on 1=1 where GroupName = 'Admin' and RoleName = 'Administrators';
 
 DELETE FROM UserGroup;
 
 DELETE FROM UserRole;
-INSERT INTO UserRole (UserId, RoleId) SELECT u.Id, r.Id From Users u left join Roles r where UserName = 'Admin' and RoleName = 'Administrators';
-INSERT INTO UserRole (UserId, RoleId) SELECT u.Id, r.Id From Users u left join Roles r where UserName = 'User' and RoleName = 'Default';
+INSERT INTO UserRole (UserId, RoleId) SELECT u.Id, r.Id From Users u left join Roles r on 1=1 where UserName = 'Admin' and RoleName = 'Administrators';
+INSERT INTO UserRole (UserId, RoleId) SELECT u.Id, r.Id From Users u left join Roles r on 1=1 where UserName = 'User' and RoleName = 'Default';
 
 DELETE FROM NavigationRole;
-INSERT INTO NavigationRole (NavigationID, RoleID) SELECT n.Id, r.Id FROM Navigations n left join Roles r Where RoleName = 'Administrators';
-INSERT INTO NavigationRole (NavigationID, RoleID) SELECT n.Id, r.Id FROM Navigations n left join Roles r Where RoleName = 'Default' and Name in ('后台管理', '个人中心', '返回前台', '通知管理');
-INSERT INTO NavigationRole (NavigationID, RoleID) SELECT n.Id, r.Id FROM Navigations n left join Roles r Where RoleName = 'Default' and ParentId in (select id from Navigations where Name in ('个人中心'));
+INSERT INTO NavigationRole (NavigationID, RoleID) SELECT n.Id, r.Id FROM Navigations n left join Roles r on 1=1 Where RoleName = 'Administrators';
+INSERT INTO NavigationRole (NavigationID, RoleID) SELECT n.Id, r.Id FROM Navigations n left join Roles r on 1=1 Where RoleName = 'Default' and Name in ('后台管理', '个人中心', '返回前台', '通知管理');
+INSERT INTO NavigationRole (NavigationID, RoleID) SELECT n.Id, r.Id FROM Navigations n left join Roles r on 1=1 Where RoleName = 'Default' and ParentId in (select id from Navigations where Name in ('个人中心'));
 
 -- Client Data
 Delete From Dicts Where Category = '应用程序' and Code = 2;
@@ -145,8 +145,8 @@ INSERT into Navigations (ParentId, Name, `Order`, Icon, Url, Category, Applicati
 INSERT into Navigations (ParentId, Name, `Order`, Icon, Url, Category, Application) VALUES (0, '返回码云', 20, 'fa fa-fa', 'https://gitee.com/LongbowEnterprise/BootstrapAdmin', '1', 2);
 
 -- 菜单授权
-INSERT INTO NavigationRole (NavigationId, RoleId) SELECT n.ID, r.ID FROM Navigations n left join Roles r Where r.RoleName = 'Administrators' and [Application] = 2;
-INSERT INTO NavigationRole (NavigationId, RoleId) SELECT n.ID, r.ID FROM Navigations n left join Roles r Where r.RoleName = 'Default' and [Application] = 2;
+INSERT INTO NavigationRole (NavigationId, RoleId) SELECT n.ID, r.ID FROM Navigations n left join Roles r on 1=1 Where r.RoleName = 'Administrators' and Application= 2;
+INSERT INTO NavigationRole (NavigationId, RoleId) SELECT n.ID, r.ID FROM Navigations n left join Roles r on 1=1 Where r.RoleName = 'Default' and Application = 2;
 
 -- 角色对应用授权
 DELETE From RoleApp where AppId = '2';
