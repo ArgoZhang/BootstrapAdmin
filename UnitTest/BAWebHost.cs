@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Longbow.Data;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.Mvc.Testing.Handlers;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using UnitTest;
@@ -28,13 +30,19 @@ namespace Bootstrap.Admin
 
     }
 
+    [CollectionDefinition("MongoContext")]
+    public class MongoContext : ICollectionFixture<MongoBAWebHost>
+    {
+
+    }
+
     public class MySqlBAWebHost : BAWebHost
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
             base.ConfigureWebHost(builder);
 
-            TestHelper.ConfigureWebHost(builder, Longbow.Data.DatabaseProviderType.MySql);
+            TestHelper.ConfigureWebHost(builder, DatabaseProviderType.MySql);
         }
     }
 
@@ -44,7 +52,22 @@ namespace Bootstrap.Admin
         {
             base.ConfigureWebHost(builder);
 
-            TestHelper.ConfigureWebHost(builder, Longbow.Data.DatabaseProviderType.SQLite);
+            TestHelper.ConfigureWebHost(builder, DatabaseProviderType.SQLite);
+        }
+    }
+
+    public class MongoBAWebHost : BAWebHost
+    {
+        protected override void ConfigureWebHost(IWebHostBuilder builder)
+        {
+            base.ConfigureWebHost(builder);
+
+            builder.ConfigureAppConfiguration(app => app.AddInMemoryCollection(new KeyValuePair<string, string>[] {
+                new KeyValuePair<string, string>("DB:0:Enabled", "false"),
+                new KeyValuePair<string, string>("DB:1:Enabled", "false"),
+                new KeyValuePair<string, string>("DB:2:Enabled", "false"),
+                new KeyValuePair<string, string>("DB:3:Enabled", "false")
+            }));
         }
     }
 
