@@ -9,15 +9,15 @@ namespace Bootstrap.DataAccess
         [Fact]
         public void SaveRolesByUserId_Ok()
         {
-            var role = new Role();
-            Assert.True(role.SaveByUserId("1", new string[] { "1", "2" }));
+            var userId = UserHelper.Retrieves().Where(u => u.UserName == "Admin").FirstOrDefault().Id;
+            Assert.True(RoleHelper.SaveByUserId(userId, RoleHelper.Retrieves().Select(r => r.Id)));
         }
 
         [Fact]
         public void RetrieveRolesByUserId_Ok()
         {
-            var role = new Role();
-            Assert.NotEmpty(role.RetrievesByUserId("1"));
+            var userId = UserHelper.Retrieves().Where(u => u.UserName == "Admin").FirstOrDefault().Id;
+            Assert.NotEmpty(RoleHelper.RetrievesByUserId(userId));
         }
 
         [Fact]
@@ -28,11 +28,8 @@ namespace Bootstrap.DataAccess
                 Description = "Role_Desc",
                 RoleName = "UnitTest-Delete"
             };
-            role.Save(role);
-            Assert.True(role.Delete(new string[] { role.Id.ToString() }));
-
-            // clean
-            role.Delete(role.Retrieves().Where(r => r.RoleName == role.RoleName).Select(r => r.Id));
+            Assert.True(RoleHelper.Save(role));
+            Assert.True(RoleHelper.Delete(RoleHelper.Retrieves().Where(r => r.RoleName == role.RoleName).Select(r => r.Id)));
         }
 
         [Fact]
@@ -43,53 +40,46 @@ namespace Bootstrap.DataAccess
                 Description = "Role_Desc",
                 RoleName = "UnitTest-Save"
             };
-            Assert.True(role.Save(role));
-
-            // clean
-            role.Delete(role.Retrieves().Where(r => r.RoleName == role.RoleName).Select(r => r.Id));
+            Assert.True(RoleHelper.Save(role));
+            Assert.True(RoleHelper.Delete(RoleHelper.Retrieves().Where(r => r.RoleName == role.RoleName).Select(r => r.Id)));
         }
 
         [Fact]
         public void RetrieveRolesByMenuId_Ok()
         {
-            var menu = new Menu();
-            var role = new Role();
-            var id = role.Retrieves().FirstOrDefault(r => r.RoleName == "Administrators").Id;
-            menu.SaveMenusByRoleId(id, new string[] { "1" });
-            var rs = role.RetrievesByMenuId("1");
-            Assert.Contains(rs, r => r.Checked == "checked");
+            var roleId = RoleHelper.Retrieves().FirstOrDefault(r => r.RoleName == "Administrators").Id;
+            MenuHelper.SaveMenusByRoleId(roleId, MenuHelper.RetrieveAllMenus("Admin").Select(m => m.Id));
+            var rs = RoleHelper.RetrievesByMenuId(MenuHelper.RetrieveAllMenus("Admin").FirstOrDefault().Id).Where(r => r.Checked == "checked");
+            Assert.NotEmpty(rs);
         }
 
         [Fact]
         public void SavaRolesByMenuId_Ok()
         {
-            var role = new Role();
-            Assert.True(role.SavaByMenuId("1", new string[] { "1" }));
+            var menuId = MenuHelper.RetrieveAllMenus("Admin").FirstOrDefault().Id;
+            Assert.True(RoleHelper.SavaByMenuId(menuId, RoleHelper.Retrieves().Select(r => r.Id)));
         }
 
         [Fact]
         public void RetrieveRolesByGroupId_Ok()
         {
-            var role = new Role();
-            var id = role.Retrieves().FirstOrDefault(r => r.RoleName == "Administrators").Id;
-            new Group().SaveByRoleId(id, new string[] { "1" });
-            Assert.Contains(role.RetrievesByGroupId("1"), r => r.Checked == "checked");
+            var id = RoleHelper.Retrieves().FirstOrDefault(r => r.RoleName == "Administrators").Id;
+            GroupHelper.SaveByRoleId(id, GroupHelper.Retrieves().Select(g => g.Id));
+            Assert.NotEmpty(RoleHelper.RetrievesByGroupId(GroupHelper.Retrieves().Where(g => g.GroupName == "Admin").FirstOrDefault().Id).Where(r => r.Checked == "checked"));
         }
 
         [Fact]
         public void RetrieveRolesByUserName_Ok()
         {
-            var role = new Role();
-            var id = role.Retrieves().FirstOrDefault(r => r.RoleName == "Administrators").Id;
-            new User().SaveByRoleId(id, new string[] { "1" });
-            Assert.NotEmpty(role.RetrieveRolesByUserName("Admin"));
+            var id = RoleHelper.Retrieves().FirstOrDefault(r => r.RoleName == "Administrators").Id;
+            UserHelper.SaveByRoleId(id, UserHelper.Retrieves().Select(u => u.Id));
+            Assert.NotEmpty(RoleHelper.RetrieveRolesByUserName("Admin"));
         }
 
         [Fact]
         public void RetrieveRolesByUrl_Ok()
         {
-            var role = new Role();
-            Assert.NotEmpty(role.RetrieveRolesByUrl("~/Home/Index"));
+            Assert.NotEmpty(RoleHelper.RetrieveRolesByUrl("~/Home/Index"));
         }
     }
 }

@@ -8,8 +8,7 @@ namespace Bootstrap.DataAccess
         [Fact]
         public void RetrieveHeaders_Ok()
         {
-            var m = new Message();
-            m.RetrieveHeaders("Admin");
+            Assert.NotNull(MessageHelper.Retrieves("Admin"));
         }
     }
 }

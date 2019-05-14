@@ -30,21 +30,21 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <returns></returns>
         public override bool Save(DataAccess.Group p)
         {
-            if (p.Id == "0")
+            if (string.IsNullOrEmpty(p.Id))
             {
                 p.Id = null;
-                DbManager.Groups.InsertOne(new Group() {
+                DbManager.Groups.InsertOne(new Group()
+                {
                     GroupName = p.GroupName,
                     Description = p.Description,
                     Roles = new List<string>()
                 });
-                return true;
             }
             else
             {
                 DbManager.Groups.UpdateOne(md => md.Id == p.Id, Builders<Group>.Update.Set(md => md.GroupName, p.GroupName).Set(md => md.Description, p.Description));
-                return true;
             }
+            return true;
         }
 
         /// <summary>

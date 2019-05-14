@@ -68,6 +68,9 @@ namespace Bootstrap.Admin
                 new KeyValuePair<string, string>("DB:2:Enabled", "false"),
                 new KeyValuePair<string, string>("DB:3:Enabled", "false")
             }));
+            if (!string.IsNullOrEmpty(TestHelper.MongoDBName)) builder.ConfigureAppConfiguration(app => app.AddInMemoryCollection(new KeyValuePair<string, string>[] {
+                new KeyValuePair<string, string>("MongoDB", TestHelper.MongoDBName)
+            }));
         }
     }
 
@@ -131,6 +134,7 @@ namespace Bootstrap.Admin
                 TestHelper.SQLServerConnectionString = con.GetConnectionString("sqlserver");
                 TestHelper.MySqlConnectionString = con.GetConnectionString("mysql");
                 TestHelper.NpgSqlConnectionString = con.GetConnectionString("npgsql");
+                TestHelper.MongoDBName = con.GetValue("MongoDB", "UnitTest");
             }
             TestHelper.SQLiteConnectionString = con.GetConnectionString("sqlite");
             TestHelper.ConfigureWebHost(builder);

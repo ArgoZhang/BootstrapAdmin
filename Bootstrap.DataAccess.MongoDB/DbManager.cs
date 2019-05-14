@@ -149,6 +149,17 @@ namespace Bootstrap.DataAccess.MongoDB
                 return DBAccess.GetCollection<DataAccess.Trace>("Traces");
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static IMongoCollection<RejectUser> RejectUsers
+        {
+            get
+            {
+                return DBAccess.GetCollection<RejectUser>("RejectUsers");
+            }
+        }
         #endregion
 
         private static void InitDb()
@@ -161,6 +172,13 @@ namespace Bootstrap.DataAccess.MongoDB
         {
             BsonSerializer.RegisterSerializer(DateTimeSerializer.LocalInstance);
 
+            if (!BsonClassMap.IsClassMapRegistered(typeof(Dict)))
+            {
+                BsonClassMap.RegisterClassMap<Dict>(md =>
+                {
+                    md.AutoMap();
+                });
+            }
             if (!BsonClassMap.IsClassMapRegistered(typeof(BootstrapDict)))
             {
                 BsonClassMap.RegisterClassMap<BootstrapDict>(md =>
@@ -168,6 +186,7 @@ namespace Bootstrap.DataAccess.MongoDB
                     md.AutoMap();
                     md.IdMemberMap.SetSerializer(new StringSerializer(BsonType.ObjectId));
                     md.IdMemberMap.SetIgnoreIfDefault(true);
+                    md.AddKnownType(typeof(Dict));
                 });
             }
             if (!BsonClassMap.IsClassMapRegistered(typeof(DataAccess.User)))
@@ -244,6 +263,13 @@ namespace Bootstrap.DataAccess.MongoDB
                     md.UnmapMember(ex => ex.Period);
                 });
             }
+            if (!BsonClassMap.IsClassMapRegistered(typeof(DataAccess.Log)))
+            {
+                BsonClassMap.RegisterClassMap<DataAccess.Log>(md =>
+                {
+                    md.AutoMap();
+                });
+            }
             if (!BsonClassMap.IsClassMapRegistered(typeof(DataAccess.Trace)))
             {
                 BsonClassMap.RegisterClassMap<DataAccess.Trace>(md =>
@@ -251,14 +277,7 @@ namespace Bootstrap.DataAccess.MongoDB
                     md.AutoMap();
                     md.IdMemberMap.SetSerializer(new StringSerializer(BsonType.ObjectId));
                     md.IdMemberMap.SetIgnoreIfDefault(true);
-                });
-            }
-            if (!BsonClassMap.IsClassMapRegistered(typeof(DataAccess.Log)))
-            {
-                BsonClassMap.RegisterClassMap<DataAccess.Log>(md =>
-                {
-                    md.AutoMap();
-                    md.AddKnownType(typeof(DataAccess.Trace));
+                    md.AddKnownType(typeof(DataAccess.Log));
                 });
             }
             if (!BsonClassMap.IsClassMapRegistered(typeof(DataAccess.LoginUser)))
@@ -273,6 +292,15 @@ namespace Bootstrap.DataAccess.MongoDB
             if (!BsonClassMap.IsClassMapRegistered(typeof(DataAccess.ResetUser)))
             {
                 BsonClassMap.RegisterClassMap<DataAccess.ResetUser>(md =>
+                {
+                    md.AutoMap();
+                    md.IdMemberMap.SetSerializer(new StringSerializer(BsonType.ObjectId));
+                    md.IdMemberMap.SetIgnoreIfDefault(true);
+                });
+            }
+            if (!BsonClassMap.IsClassMapRegistered(typeof(RejectUser)))
+            {
+                BsonClassMap.RegisterClassMap<RejectUser>(md =>
                 {
                     md.AutoMap();
                     md.IdMemberMap.SetSerializer(new StringSerializer(BsonType.ObjectId));

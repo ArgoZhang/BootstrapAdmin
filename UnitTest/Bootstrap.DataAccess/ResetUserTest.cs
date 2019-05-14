@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Xunit;
 
 namespace Bootstrap.DataAccess
@@ -7,71 +8,16 @@ namespace Bootstrap.DataAccess
     public class ResetUserTest
     {
         [Fact]
-        public void Save_Ok()
+        public void ResetReasonsByUserName_Ok()
         {
-            var resetUser = new ResetUser()
-            {
-                UserName = "UnitTest",
-                Reason = "UnitTest",
-                DisplayName = "UnitTest",
-                ResetTime = DateTime.Now
-            };
-            var db = DbManager.Create();
-            db.Save(resetUser);
-            var count = db.ExecuteScalar<int>("select count(Id) from ResetUsers");
-            Assert.True(count > 0);
-        }
+            var user = new User { UserName = "UnitTestReset", Password = "1", DisplayName = "DisplayName", ApprovedBy = "System", ApprovedTime = DateTime.Now, Description = "Desc", Icon = "default.jpg" };
+            UserHelper.Delete(UserHelper.Retrieves().Union(UserHelper.RetrieveNewUsers()).Where(u => u.UserName == user.UserName).Select(u => u.Id));
+            Assert.True(UserHelper.Save(user));
 
-        [Fact]
-        public void RetrieveUserByUserName_Ok()
-        {
-            var resetUser = new ResetUser()
-            {
-                UserName = "UnitTest",
-                Reason = "UnitTest",
-                DisplayName = "UnitTest",
-                ResetTime = DateTime.Now
-            };
-            var db = DbManager.Create();
-            db.Save(resetUser);
+            UserHelper.ForgotPassword(new ResetUser() { UserName = user.UserName, DisplayName = user.DisplayName, Reason = "UnitTest", ResetTime = DateTime.Now });
+            Assert.NotNull(UserHelper.RetrieveResetUserByUserName(user.UserName));
 
-            var user = resetUser.RetrieveUserByUserName(resetUser.UserName);
-            Assert.Equal("UnitTest", user.UserName);
-            Assert.Equal("UnitTest", user.DisplayName);
-        }
-
-        [Fact]
-        public void DeleteByUserName_Ok()
-        {
-            var resetUser = new ResetUser()
-            {
-                UserName = "UnitTest",
-                Reason = "UnitTest",
-                DisplayName = "UnitTest",
-                ResetTime = DateTime.Now
-            };
-            var db = DbManager.Create();
-            db.Save(resetUser);
-
-            resetUser.DeleteByUserName(resetUser.UserName);
-            var count = db.ExecuteScalar<int>("select count(Id) from ResetUsers");
-            Assert.Equal(0, count);
-        }
-
-        [Fact]
-        public void RetrieveResetReasonsByUserName_Ok()
-        {
-            var resetUser = new ResetUser()
-            {
-                UserName = "UnitTest",
-                Reason = "UnitTest",
-                DisplayName = "UnitTest",
-                ResetTime = DateTime.Now
-            };
-            var db = DbManager.Create();
-            db.Save(resetUser);
-
-            var reasons = resetUser.RetrieveResetReasonsByUserName(resetUser.UserName);
+            var reasons = UserHelper.RetrieveResetReasonsByUserName(user.UserName);
             Assert.NotEmpty(reasons);
         }
     }

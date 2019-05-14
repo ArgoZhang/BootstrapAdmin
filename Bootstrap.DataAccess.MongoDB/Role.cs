@@ -36,7 +36,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <returns></returns>
         public override bool Save(DataAccess.Role p)
         {
-            if (p.Id == "0")
+            if (string.IsNullOrEmpty(p.Id))
             {
                 p.Id = null;
                 DbManager.Roles.InsertOne(new Role()
@@ -82,7 +82,7 @@ namespace Bootstrap.DataAccess.MongoDB
             var user = UserHelper.Retrieves().Cast<User>().FirstOrDefault(u => u.UserName.ToLowerInvariant() == userName.ToLowerInvariant());
             var role = RoleHelper.Retrieves();
 
-            roles.AddRange(user.Roles.Select(r => role.FirstOrDefault(rl => rl.Id == r).RoleName));
+            roles.AddRange(role.Where(r => user.Roles.Any(rl => rl == r.Id)).Select(r => r.RoleName));
             if (roles.Count == 0) roles.Add("Default");
             return roles;
         }

@@ -39,7 +39,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <returns></returns>
         public override bool Save(BootstrapDict p)
         {
-            if (p.Id == "0")
+            if (string.IsNullOrEmpty(p.Id))
             {
                 p.Id = null;
                 DbManager.Dicts.InsertOne(p);

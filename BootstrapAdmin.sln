@@ -40,11 +40,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.DataAccess.MongoD
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MongoDB", "MongoDB", "{A06A0AD8-A246-4329-B024-7174AE4A3EDE}"
 	ProjectSection(SolutionItems) = preProject
-		DatabaseScripts\MongoDB\BootstrapAdmin.Dicts.json = DatabaseScripts\MongoDB\BootstrapAdmin.Dicts.json
-		DatabaseScripts\MongoDB\BootstrapAdmin.Groups.json = DatabaseScripts\MongoDB\BootstrapAdmin.Groups.json
-		DatabaseScripts\MongoDB\BootstrapAdmin.Navigations.json = DatabaseScripts\MongoDB\BootstrapAdmin.Navigations.json
-		DatabaseScripts\MongoDB\BootstrapAdmin.Roles.json = DatabaseScripts\MongoDB\BootstrapAdmin.Roles.json
-		DatabaseScripts\MongoDB\BootstrapAdmin.Users.json = DatabaseScripts\MongoDB\BootstrapAdmin.Users.json
+		DatabaseScripts\MongoDB\Dicts.js = DatabaseScripts\MongoDB\Dicts.js
+		DatabaseScripts\MongoDB\Groups.js = DatabaseScripts\MongoDB\Groups.js
+		DatabaseScripts\MongoDB\init.js = DatabaseScripts\MongoDB\init.js
+		DatabaseScripts\MongoDB\Navigations.js = DatabaseScripts\MongoDB\Navigations.js
+		DatabaseScripts\MongoDB\Roles.js = DatabaseScripts\MongoDB\Roles.js
+		DatabaseScripts\MongoDB\Users.js = DatabaseScripts\MongoDB\Users.js
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MySQL", "MySQL", "{084E2E94-6B7D-4D3E-9BF1-6972427FBF80}"

@@ -27,7 +27,11 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="userName"></param>
-        public override void DeleteByUserName(string userName) => DbManager.ResetUsers.DeleteMany(User => User.UserName.ToLowerInvariant() == userName.ToLowerInvariant());
+        /// <returns></returns>
+        public override bool Save()
+        {
+            DbManager.ResetUsers.InsertOne(this);
+            return true;
+        }
     }
 }

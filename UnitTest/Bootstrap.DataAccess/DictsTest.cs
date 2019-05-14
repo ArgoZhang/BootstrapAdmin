@@ -1,3 +1,4 @@
+using Bootstrap.Security;
 using System;
 using System.Linq;
 using System.Net.Http;
@@ -11,15 +12,15 @@ namespace Bootstrap.DataAccess
         [Fact]
         public void SaveAndDelete_Ok()
         {
-            var dict = new Dict()
+            var dict = new BootstrapDict()
             {
                 Category = "UnitTest",
                 Name = "Test1",
                 Code = "1",
                 Define = 1
             };
-            Assert.True(dict.Save(dict));
-            Assert.True(dict.Delete(dict.RetrieveDicts().Where(d => d.Category == dict.Category).Select(d => d.Id)));
+            Assert.True(DictHelper.Save(dict));
+            Assert.True(DictHelper.Delete(DictHelper.RetrieveDicts().Where(d => d.Category == dict.Category).Select(d => d.Id)));
         }
 
         [Fact]
@@ -32,117 +33,102 @@ namespace Bootstrap.DataAccess
                 Code = "1",
                 Define = 1
             };
-            Assert.True(dict.SaveSettings(dict));
-            dict.Delete(dict.RetrieveDicts().Where(d => d.Category == dict.Category).Select(d => d.Id));
+            Assert.True(DictHelper.SaveSettings(dict));
+            dict.Delete(DictHelper.RetrieveDicts().Where(d => d.Category == dict.Category).Select(d => d.Id));
         }
 
         [Fact]
         public void RetrieveCategories_Ok()
         {
-            var dict = new Dict();
-            Assert.NotEmpty(dict.RetrieveCategories());
+            Assert.NotEmpty(DictHelper.RetrieveCategories());
         }
 
         [Fact]
         public void RetrieveWebTitle_Ok()
         {
-            var dict = new Dict();
-            Assert.Equal("后台管理系统", dict.RetrieveWebTitle());
+            Assert.Equal("后台管理系统", DictHelper.RetrieveWebTitle());
         }
 
         [Fact]
         public void RetrieveWebFooter_Ok()
         {
-            var dict = new Dict();
-            Assert.Equal("2016 © 通用后台管理系统", dict.RetrieveWebFooter());
+            Assert.Equal("2016 © 通用后台管理系统", DictHelper.RetrieveWebFooter());
         }
 
         [Fact]
         public void RetrieveThemes_Ok()
         {
-            var dict = new Dict();
-            Assert.NotEmpty(dict.RetrieveThemes());
+            Assert.NotEmpty(DictHelper.RetrieveThemes());
         }
 
         [Fact]
         public void RetrieveActiveTheme_Ok()
         {
-            var dict = new Dict();
-            Assert.Equal("blue.css", dict.RetrieveActiveTheme());
+            Assert.Equal("blue.css", DictHelper.RetrieveActiveTheme());
         }
 
         [Fact]
         public void RetrieveIconFolderPath_Ok()
         {
-            var dict = new Dict();
-            Assert.Equal("~/images/uploader/", dict.RetrieveIconFolderPath());
+            Assert.Equal("~/images/uploader/", DictHelper.RetrieveIconFolderPath());
         }
 
         [Fact]
         public void RetrieveHomeUrl_Ok()
         {
-            var dict = new Dict();
-            Assert.Equal("~/Home/Index", dict.RetrieveHomeUrl("0"));
+            Assert.Equal("~/Home/Index", DictHelper.RetrieveHomeUrl("0"));
         }
 
         [Fact]
         public void RetrieveApps_Ok()
         {
-            var dict = new Dict();
-            Assert.NotEmpty(dict.RetrieveApps());
+            Assert.NotEmpty(DictHelper.RetrieveApps());
         }
 
         [Fact]
         public void RetrieveDicts_Ok()
         {
-            var dict = new Dict();
-            Assert.NotEmpty(dict.RetrieveDicts());
+            Assert.NotEmpty(DictHelper.RetrieveDicts());
         }
 
         [Fact]
         public void RetrieveCookieExpiresPeriod_Ok()
         {
-            var dict = new Dict();
-            Assert.Equal(7, dict.RetrieveCookieExpiresPeriod());
+            Assert.Equal(7, DictHelper.RetrieveCookieExpiresPeriod());
         }
 
         [Fact]
         public void RetrieveExceptionsLogPeriod_Ok()
         {
-            var dict = new Dict();
-            Assert.Equal(1, dict.RetrieveExceptionsLogPeriod());
+            Assert.Equal(1, DictHelper.RetrieveExceptionsLogPeriod());
         }
 
         [Fact]
         public void RetrieveLoginLogsPeriod_Ok()
         {
-            var dict = new Dict();
-            Assert.Equal(12, dict.RetrieveLoginLogsPeriod());
+            Assert.Equal(12, DictHelper.RetrieveLoginLogsPeriod());
         }
 
         [Fact]
         public void RetrieveLogsPeriod_Ok()
         {
-            var dict = new Dict();
-            Assert.Equal(12, dict.RetrieveLogsPeriod());
+            Assert.Equal(12, DictHelper.RetrieveLogsPeriod());
         }
 
         [Fact]
         public void RetrieveLocaleIP_Ok()
         {
-            var dict = new Dict();
-            var ipSvr = dict.RetrieveLocaleIPSvr();
+            var ipSvr = DictHelper.RetrieveLocaleIPSvr();
             Assert.Equal("None", ipSvr);
 
-            var ipUri = dict.RetrieveLocaleIPSvrUrl("JuheIPSvr");
+            var ipUri = DictHelper.RetrieveLocaleIPSvrUrl("JuheIPSvr");
             Assert.NotNull(ipUri);
         }
 
         [Fact]
         public async void BaiduIPSvr_Ok()
         {
-            var dict = new Dict();
-            var ipUri = dict.RetrieveLocaleIPSvrUrl("BaiDuIPSvr");
+            var ipUri = DictHelper.RetrieveLocaleIPSvrUrl("BaiDuIPSvr");
 
             var client = HttpClientFactory.Create();
 
@@ -158,24 +144,22 @@ namespace Bootstrap.DataAccess
         [Fact]
         public async void JuheIPSvr_Ok()
         {
-            var dict = new Dict();
-            var ipUri = dict.RetrieveLocaleIPSvrUrl("JuheIPSvr");
+            var ipUri = DictHelper.RetrieveLocaleIPSvrUrl("JuheIPSvr");
 
             // 日本东京
             var client = HttpClientFactory.Create();
             var locator = await client.GetAsJsonAsync<JuheIPLocator>($"{ipUri}207.148.111.94");
-            Assert.Equal(0, locator.Error_Code);
+            Assert.Contains(new int[] { 0, 10012 }, c => c == locator.Error_Code);
 
             // 四川成都
             locator = await client.GetAsJsonAsync<JuheIPLocator>($"{ipUri}182.148.123.196");
-            Assert.Equal(0, locator.Error_Code);
+            Assert.Contains(new int[] { 0, 10012 }, c => c == locator.Error_Code);
         }
 
         [Fact]
         public void RetrieveAccessLogPeriod_Ok()
         {
-            var dict = new Dict();
-            Assert.Equal(1, dict.RetrieveAccessLogPeriod());
+            Assert.Equal(1, DictHelper.RetrieveAccessLogPeriod());
         }
 
         #region Private Class For Test

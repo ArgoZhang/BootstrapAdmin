@@ -17,6 +17,8 @@ namespace UnitTest
 
         public static string NpgSqlConnectionString { get; set; }
 
+        public static string MongoDBName { get; set; }
+
         /// <summary>
         /// 获得当前工程解决方案目录
         /// </summary>

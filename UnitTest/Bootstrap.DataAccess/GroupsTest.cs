@@ -9,54 +9,52 @@ namespace Bootstrap.DataAccess
         [Fact]
         public void Retrieves_Ok()
         {
-            Group g = new Group();
-            Assert.NotEmpty(g.Retrieves());
+            Assert.NotEmpty(GroupHelper.Retrieves());
         }
 
         [Fact]
         public void SaveAndDelete_Ok()
         {
             Group g = new Group() { GroupName = "UnitTest", Description = "UnitTestSave" };
-            Assert.True(g.Save(g));
+            Assert.True(GroupHelper.Save(g));
 
-            var ids = g.Retrieves().Where(t => t.GroupName == "UnitTest").Select(t => t.Id);
-            Assert.True(g.Delete(ids));
+            var ids = GroupHelper.Retrieves().Where(t => t.GroupName == "UnitTest").Select(t => t.Id);
+            Assert.True(GroupHelper.Delete(ids));
         }
 
         [Fact]
         public void RetrievesByRoleId_Ok()
         {
-            Group p = new Group();
-            var groups = p.RetrievesByRoleId(new Role().Retrieves().Where(r => r.RoleName == "Administrators").First().Id);
+            var groups = GroupHelper.RetrievesByRoleId(RoleHelper.Retrieves().Where(r => r.RoleName == "Administrators").First().Id);
             Assert.NotEmpty(groups);
         }
 
         [Fact]
         public void RetrievesByUserId_Ok()
         {
-            Group p = new Group();
-            var groups = p.RetrievesByUserId("1");
+            var userId = UserHelper.Retrieves().FirstOrDefault(r => r.UserName == "Admin").Id;
+            var groups = GroupHelper.RetrievesByUserId(userId);
+            Assert.NotNull(groups);
         }
 
         [Fact]
         public void SaveByUserId_Ok()
         {
-            Group p = new Group();
-            var groups = p.SaveByUserId("1", new string[] { "1", "2", "3" });
+            var userId = UserHelper.Retrieves().FirstOrDefault(r => r.UserName == "Admin").Id;
+            Assert.True(GroupHelper.SaveByUserId(userId, GroupHelper.Retrieves().Select(g => g.Id)));
         }
 
         [Fact]
         public void SaveByRoleId_Ok()
         {
-            Group p = new Group();
-            var groups = p.SaveByRoleId("1", new string[] { "1", "2" });
+            var roleId = RoleHelper.Retrieves().FirstOrDefault(r => r.RoleName == "Administrators").Id;
+            Assert.True(GroupHelper.SaveByRoleId(roleId, GroupHelper.Retrieves().Select(g => g.Id)));
         }
 
         [Fact]
         public void RetrievesByUserName_Ok()
         {
-            Group p = new Group();
-            Assert.NotNull(p.RetrievesByUserName("Admin"));
+            Assert.NotNull(GroupHelper.RetrievesByUserName("Admin"));
         }
     }
 }

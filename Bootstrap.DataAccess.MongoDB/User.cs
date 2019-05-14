@@ -69,7 +69,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// 
         /// </summary>
         /// <returns></returns>
-        public override IEnumerable<DataAccess.User> RetrieveNewUsers() => DbManager.Users.Find(user => user.ApprovedTime == DateTime.MinValue).SortByDescending(user => user.RegisterTime).ToList();
+        public override IEnumerable<DataAccess.User> RetrieveNewUsers() => DbManager.Users.Find(user => !user.ApprovedTime.HasValue).SortByDescending(user => user.RegisterTime).ToList();
 
         /// <summary>
         /// 
@@ -107,11 +107,11 @@ namespace Bootstrap.DataAccess.MongoDB
                 PassSalt = LgbCryptography.GenerateSalt(),
                 Password = LgbCryptography.ComputeHash(user.Password, user.PassSalt),
                 RegisterTime = DateTime.Now,
-                ApprovedTime = DateTime.Now,
+                ApprovedTime = user.ApprovedTime,
                 ApprovedBy = user.ApprovedBy,
                 Roles = new List<string>(),
                 Groups = new List<string>(),
-                Icon = "default.jpg",
+                Icon = user.Icon,
                 Description = user.Description,
                 IsReset = 0
             });
@@ -150,6 +150,7 @@ namespace Bootstrap.DataAccess.MongoDB
                 var newPassword = LgbCryptography.ComputeHash(password, passSalt);
                 var update = Builders<User>.Update.Set(u => u.Password, newPassword).Set(u => u.PassSalt, passSalt);
                 DbManager.Users.FindOneAndUpdate(u => u.UserName == UserName, update);
+                ret = true;
             }
             return ret;
         }
@@ -281,6 +282,76 @@ namespace Bootstrap.DataAccess.MongoDB
             var newPassword = LgbCryptography.ComputeHash(password, passSalt);
             DbManager.Users.UpdateOne(User => User.UserName.ToLowerInvariant() == userName.ToLowerInvariant(), Builders<User>.Update.Set(md => md.Password, newPassword).Set(md => md.PassSalt, passSalt).Set(md => md.IsReset, 0));
             DbManager.ResetUsers.DeleteMany(user => user.UserName.ToLowerInvariant() == userName.ToLowerInvariant());
+            return true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="approvedBy"></param>
+        /// <returns></returns>
+        public override bool Approve(string id, string approvedBy)
+        {
+            DbManager.Users.UpdateOne(User => User.Id == id, Builders<User>.Update.Set(md => md.ApprovedTime, DateTime.Now).Set(md => md.ApprovedBy, approvedBy));
+            return true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="displayName"></param>
+        /// <returns></returns>
+        public override bool SaveDisplayName(string userName, string displayName)
+        {
+            DbManager.Users.UpdateOne(User => User.UserName == userName, Builders<User>.Update.Set(md => md.DisplayName, displayName));
+            return true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="cssName"></param>
+        /// <returns></returns>
+        public override bool SaveUserCssByName(string userName, string cssName)
+        {
+            DbManager.Users.UpdateOne(User => User.UserName == userName, Builders<User>.Update.Set(md => md.Css, cssName));
+            return true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="iconName"></param>
+        /// <returns></returns>
+        public override bool SaveUserIconByName(string userName, string iconName)
+        {
+            DbManager.Users.UpdateOne(User => User.UserName == userName, Builders<User>.Update.Set(md => md.Icon, iconName));
+            return true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="rejectBy"></param>
+        /// <returns></returns>
+        public override bool Reject(string id, string rejectBy)
+        {
+            var user = UserHelper.RetrieveNewUsers().FirstOrDefault(u => u.Id == id);
+            DbManager.RejectUsers.InsertOne(new RejectUser()
+            {
+                DisplayName = user.DisplayName,
+                RegisterTime = user.RegisterTime,
+                RejectedBy = rejectBy,
+                RejectedReason = "",
+                RejectedTime = DateTime.Now,
+                UserName = user.UserName
+            });
+            DbManager.Users.DeleteOne(User => User.Id == id);
             return true;
         }
     }

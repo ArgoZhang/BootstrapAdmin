@@ -19,7 +19,7 @@ namespace Bootstrap.DataAccess
                 CRUD = "UnitTest",
                 RequestUrl = "~/Home/Index"
             };
-            Assert.True(log.Save(log));
+            Assert.True(LogHelper.Save(log));
         }
 
         [Fact]
@@ -35,8 +35,8 @@ namespace Bootstrap.DataAccess
                 CRUD = "UnitTest",
                 RequestUrl = "~/Home/Index"
             };
-            log.Save(log);
-            Assert.NotNull(log.Retrieves(new PaginationOption() { Limit = 20, Order = "LogTime" }, null, null, null));
+            LogHelper.Save(log);
+            Assert.NotNull(LogHelper.Retrieves(new PaginationOption() { Limit = 20, Order = "LogTime" }, null, null, null));
         }
     }
 }

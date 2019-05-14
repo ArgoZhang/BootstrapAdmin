@@ -16,8 +16,7 @@ namespace Bootstrap.DataAccess
         [Fact]
         public void Authenticate_Ok()
         {
-            var u = new User();
-            Assert.True(u.Authenticate("Admin", "123789"));
+            Assert.True(UserHelper.Authenticate("Admin", "123789", u => u.Ip = "::1"));
         }
 
         /// <summary>
@@ -26,144 +25,126 @@ namespace Bootstrap.DataAccess
         [Fact]
         public void Authenticate_Fail()
         {
-            var u = new User();
-            Assert.False(u.Authenticate("Admin-NotExists", "123789"));
+            Assert.False(UserHelper.Authenticate("Admin-NotExists", "123789", u => u.Ip = "::1"));
         }
 
         [Fact]
         public void ChangePassword_Ok()
         {
-            var u = new User();
-            Assert.True(u.ChangePassword("Admin", "123789", "123789"));
+            Assert.True(UserHelper.ChangePassword("Admin", "123789", "123789"));
         }
 
         [Fact]
         public virtual void Retrieves_Ok()
         {
-            var u = new User();
-            Assert.NotEmpty(u.Retrieves());
+            Assert.NotEmpty(UserHelper.Retrieves());
         }
 
         [Fact]
         public void RetrieveNewUsers_Ok()
         {
-            var u = new User();
-            u.Delete(u.RetrieveNewUsers().Select(usr => usr.Id));
-            Assert.Empty(u.RetrieveNewUsers());
+            UserHelper.Delete(UserHelper.RetrieveNewUsers().Select(usr => usr.Id));
+            Assert.Empty(UserHelper.RetrieveNewUsers());
         }
 
         [Fact]
         public void Update_Ok()
         {
-            var u = new User();
-            Assert.True(u.Update("1", "123789", "Administrator"));
+            var userId = UserHelper.Retrieves().FirstOrDefault(u => u.UserName == "Admin").Id;
+            Assert.True(UserHelper.Update(userId, "123789", "Administrator"));
         }
 
         [Fact]
         public void ApproveUser_Ok()
         {
-            var u = new User();
-            u.Delete(u.Retrieves().Where(usr => usr.UserName == "UnitTest").Select(usr => usr.Id));
+            UserHelper.Delete(UserHelper.Retrieves().Where(usr => usr.UserName == "UnitTest").Select(usr => usr.Id));
 
             var up = new User() { UserName = "UnitTest", Password = "123", Description = "新建用户用于测试批准", DisplayName = "UnitTest", Icon = "default.jpg" };
-            u.Save(up);
-            Assert.True(u.Approve(up.Id, "UnitTest"));
+            UserHelper.Save(up);
+            Assert.True(UserHelper.Approve(up.Id, "UnitTest"));
 
-            u.Delete(new string[] { up.Id });
+            UserHelper.Delete(UserHelper.Retrieves().Where(u => u.UserName == up.UserName).Select(u => u.Id));
         }
 
         [Fact]
         public void RetrieveUsersByRoleId_Ok()
         {
-            var rid = new Role().Retrieves().Where(r => r.RoleName == "Administrators").First().Id;
-            var uid = new User().Retrieves().Where(u => u.UserName == "Admin").First().Id;
-            var db = DbManager.Create();
-            db.Execute("delete from userrole where USERID = @0 and ROLEID = @1", uid, rid);
-            db.Execute("insert into userrole (USERID, ROLEID) values (@0, @1)", uid, rid);
+            var rid = RoleHelper.Retrieves().FirstOrDefault(r => r.RoleName == "Administrators").Id;
+            var uid = UserHelper.Retrieves().FirstOrDefault(u => u.UserName == "Admin").Id;
 
-            var users = new User().RetrievesByRoleId(rid);
-            Assert.NotEmpty(users);
-            Assert.Contains(users, usr => usr.Checked == "checked");
+            UserHelper.SaveByRoleId(rid, new string[] { uid });
+
+            var users = UserHelper.RetrievesByRoleId(rid);
+            Assert.NotEmpty(users.Where(u => u.Checked == "checked"));
         }
 
         [Fact]
         public void RetrievesByGroupId_Ok()
         {
-            var gid = new Group().Retrieves().Where(r => r.GroupName == "Admin").First().Id;
-            var u = new User();
-            var users = u.RetrievesByGroupId(gid);
-            Assert.NotEmpty(users);
-            Assert.Contains(users, usr => !usr.Checked.IsNullOrEmpty());
-        }
-
-        [Fact]
-        public void DeleteUser_Ok()
-        {
-            var u = new User();
-            Assert.True(u.Delete(new string[] { "5", "6" }));
+            var gid = GroupHelper.Retrieves().FirstOrDefault(r => r.GroupName == "Admin").Id;
+            var users = UserHelper.RetrievesByGroupId(gid);
+            Assert.NotEmpty(users.Where(u => u.Checked == "checked"));
         }
 
         [Fact]
         public void SaveUser_Ok()
         {
-            var u = new User();
-            u.Delete(u.Retrieves().Where(usr => usr.UserName == "UnitTest").Select(usr => usr.Id));
-            Assert.True(u.Save(new User { UserName = "UnitTest", DisplayName = "DisplayName", ApprovedBy = "System", ApprovedTime = DateTime.Now, Description = "Desc", Icon = "default.jpg" }));
-            u.Delete(u.Retrieves().Where(usr => usr.UserName == "UnitTest").Select(usr => usr.Id));
+            var user = new User { UserName = "UnitTestDelete", Password = "123", DisplayName = "DisplayName", ApprovedBy = "System", ApprovedTime = DateTime.Now, Description = "Desc", Icon = "default.jpg" };
+            Assert.True(UserHelper.Save(user));
+            Assert.True(UserHelper.Delete(UserHelper.Retrieves().Where(usr => usr.UserName == user.UserName).Select(usr => usr.Id)));
         }
 
         [Fact]
         public void SaveUserIconByName_Ok()
         {
-            var u = new User();
-            Assert.True(u.SaveUserIconByName("Admin", "default.jpg"));
+            Assert.True(UserHelper.SaveUserIconByName("Admin", "default.jpg"));
         }
 
         [Fact]
         public void SaveDisplayName_Ok()
         {
-            var u = new User();
-            Assert.True(u.SaveDisplayName("Admin", "Administrator"));
+            Assert.True(UserHelper.SaveDisplayName("Admin", "Administrator"));
         }
 
         [Fact]
         public void SaveUserCssByName_Ok()
         {
-            var u = new User();
-            Assert.True(u.SaveUserCssByName("Admin", "default.css"));
+            Assert.True(UserHelper.SaveUserCssByName("Admin", "default.css"));
         }
 
         [Fact]
         public void Reject_Ok()
         {
             var u = new User();
-            u.UserName = "UnitTest-Reject";
+            u.UserName = "UnitTestReject";
             u.DisplayName = "DisplayName";
             u.Description = "Desc";
             u.Icon = "default.jpg";
-            u.Save(u);
-            Assert.True(u.Reject(u.Id, "Argo"));
+            UserHelper.Delete(UserHelper.RetrieveNewUsers().Union(UserHelper.Retrieves()).Where(usr => usr.UserName == u.UserName).Select(usr => usr.Id));
+            UserHelper.Save(u);
+            Assert.True(UserHelper.Reject(UserHelper.RetrieveNewUsers().FirstOrDefault(usr => usr.UserName == u.UserName).Id, "Argo"));
         }
 
         [Fact]
         public void SaveByGroupId_Ok()
         {
-            var u = new User();
-            Assert.True(u.SaveByGroupId("1", new string[] { "1" }));
+            var groupId = GroupHelper.Retrieves().FirstOrDefault(g => g.GroupName == "Admin").Id;
+            var id = UserHelper.Retrieves().FirstOrDefault(u => u.UserName == "Admin").Id;
+            Assert.True(UserHelper.SaveByGroupId(groupId, new string[] { id }));
         }
 
         [Fact]
         public void SaveByRoleId_Ok()
         {
-            var u = new User();
-            Assert.True(u.SaveByRoleId("1", new string[] { "1", "2" }));
+            var roleId = RoleHelper.Retrieves().FirstOrDefault(g => g.RoleName == "Administrators").Id;
+            var id = UserHelper.Retrieves().FirstOrDefault(u => u.UserName == "Admin").Id;
+            Assert.True(UserHelper.SaveByRoleId(roleId, new string[] { id }));
         }
 
         [Fact]
         public void RetrieveUserByUserName_Ok()
         {
-            var u = new User();
-            var usr = u.RetrieveUserByUserName("Admin");
+            var usr = UserHelper.RetrieveUserByUserName("Admin");
             Assert.Equal("Administrator", usr.DisplayName);
         }
     }

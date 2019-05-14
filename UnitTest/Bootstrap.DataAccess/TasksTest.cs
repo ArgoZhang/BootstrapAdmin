@@ -9,8 +9,7 @@ namespace Bootstrap.DataAccess
         [Fact]
         public void Retrieves_Ok()
         {
-            var t = new Task();
-            Assert.Equal(Enumerable.Empty<Task>(), t.Retrieves());
+            Assert.Equal(Enumerable.Empty<Task>(), TaskHelper.Retrieves());
         }
     }
 }

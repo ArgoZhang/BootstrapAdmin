@@ -35,7 +35,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <returns></returns>
         public override bool Save(BootstrapMenu p)
         {
-            if (p.Id == "0")
+            if (string.IsNullOrEmpty(p.Id))
             {
                 p.Id = null;
                 DbManager.Menus.InsertOne(p);

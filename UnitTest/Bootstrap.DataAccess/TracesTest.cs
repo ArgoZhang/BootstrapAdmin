@@ -1,4 +1,5 @@
-﻿using Longbow.Web.Mvc;
+﻿using Longbow.Data;
+using Longbow.Web.Mvc;
 using System;
 using Xunit;
 
@@ -20,7 +21,7 @@ namespace Bootstrap.DataAccess
                 LogTime = DateTime.Now,
                 RequestUrl = "~/Home/Index"
             };
-            Assert.True(log.Save(log));
+            Assert.True(DbContextManager.Create<Trace>().Save(log));
         }
 
         [Fact]
@@ -36,8 +37,8 @@ namespace Bootstrap.DataAccess
                 LogTime = DateTime.Now,
                 RequestUrl = "~/Home/Index"
             };
-            log.Save(log);
-            Assert.NotEmpty(log.Retrieves(new PaginationOption() { Limit = 20, Offset = 0, Order = "desc", Sort = "LogTime" }, null, null, null).Items);
+            DbContextManager.Create<Trace>().Save(log);
+            Assert.NotEmpty(TraceHelper.Retrieves(new PaginationOption() { Limit = 20, Offset = 0, Order = "desc", Sort = "LogTime" }, null, null, null).Items);
         }
     }
 }

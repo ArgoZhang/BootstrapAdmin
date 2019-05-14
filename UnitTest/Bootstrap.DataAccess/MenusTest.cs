@@ -10,7 +10,6 @@ namespace Bootstrap.DataAccess
         [Fact]
         public void Save_Ok()
         {
-            var m = new Menu();
             var poco = new BootstrapMenu()
             {
                 Name = "UnitTest",
@@ -23,22 +22,20 @@ namespace Bootstrap.DataAccess
                 Url = "#",
                 ParentId = "0"
             };
-            m.Delete(m.RetrieveAllMenus("Admin").Where(n => n.Name == m.Name).Select(n => n.Id));
-            Assert.True(m.Save(poco));
-            m.Delete(new string[] { poco.Id });
+            Assert.True(MenuHelper.Save(poco));
+            MenuHelper.Delete(MenuHelper.RetrieveAllMenus("Admin").Where(n => n.Name == poco.Name).Select(n => n.Id));
         }
 
         [Fact]
         public void RetrieveMenusByRoleId_Ok()
         {
-            var m = new Menu();
-            Assert.NotEmpty(m.RetrieveMenusByRoleId("1"));
+            var roleId = RoleHelper.Retrieves().FirstOrDefault(r => r.RoleName == "Administrators").Id;
+            Assert.NotEmpty(MenuHelper.RetrieveMenusByRoleId(roleId));
         }
 
         [Fact]
         public void Delete_Ok()
         {
-            var m = new Menu();
             var poco = new BootstrapMenu()
             {
                 Name = "UnitTest",
@@ -51,22 +48,21 @@ namespace Bootstrap.DataAccess
                 Url = "#",
                 ParentId = "0"
             };
-            m.Save(poco);
-            Assert.True(m.Delete(new string[] { poco.Id }));
+            MenuHelper.Save(poco);
+            MenuHelper.Delete(MenuHelper.RetrieveAllMenus("Admin").Where(n => n.Name == poco.Name).Select(n => n.Id));
         }
 
         [Fact]
         public void RetrieveAllMenus_Ok()
         {
-            var m = new Menu();
-            Assert.NotEmpty(m.RetrieveAllMenus("Admin"));
+            Assert.NotEmpty(MenuHelper.RetrieveAllMenus("Admin"));
         }
 
         [Fact]
         public void SaveMenusByRoleId_Ok()
         {
-            var m = new Menu();
-            Assert.True(m.SaveMenusByRoleId("1", new string[] { "450", "451" }));
+            var roleId = RoleHelper.Retrieves().FirstOrDefault(r => r.RoleName == "Administrators").Id;
+            Assert.True(MenuHelper.SaveMenusByRoleId(roleId, MenuHelper.RetrieveAllMenus("Admin").Select(m => m.Id)));
         }
     }
 }
