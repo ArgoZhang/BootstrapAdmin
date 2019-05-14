@@ -1,7 +1,7 @@
 using Bootstrap.DataAccess;
 using Xunit;
 
-namespace Bootstrap.Admin.Api
+namespace Bootstrap.Admin.Api.SqlServer
 {
     public class ProfilesTest : ControllerTest
     {

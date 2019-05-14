@@ -3,7 +3,7 @@
 namespace Bootstrap.DataAccess.SQLite
 {
     [Collection("SQLiteContext")]
-    public class RolesTest : DataAccess.RolesTest
+    public class RolesTest : SqlServer.RolesTest
     {
 
     }

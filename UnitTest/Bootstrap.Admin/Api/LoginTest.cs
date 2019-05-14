@@ -3,7 +3,7 @@ using Longbow.Web.Mvc;
 using System.Net.Http;
 using Xunit;
 
-namespace Bootstrap.Admin.Api
+namespace Bootstrap.Admin.Api.SqlServer
 {
     public class LoginTest : ControllerTest
     {

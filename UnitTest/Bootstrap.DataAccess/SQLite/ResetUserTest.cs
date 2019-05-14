@@ -3,7 +3,7 @@
 namespace Bootstrap.DataAccess.SQLite
 {
     [Collection("SQLiteContext")]
-    public class ResetUserTest : DataAccess.ResetUserTest
+    public class ResetUserTest : SqlServer.ResetUserTest
     {
 
     }

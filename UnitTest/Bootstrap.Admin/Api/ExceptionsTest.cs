@@ -7,7 +7,7 @@ using System.Linq;
 using Xunit;
 using static Bootstrap.Admin.Controllers.Api.ExceptionsController;
 
-namespace Bootstrap.Admin.Api
+namespace Bootstrap.Admin.Api.SqlServer
 {
     public class ExceptionsTest : ControllerTest
     {

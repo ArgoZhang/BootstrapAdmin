@@ -1,6 +1,6 @@
 ﻿using Xunit;
 
-namespace Bootstrap.Admin.Controllers
+namespace Bootstrap.Admin.Controllers.SqlServer
 {
     public class HomeTest : ControllerTest
     {

@@ -3,7 +3,7 @@
 namespace Bootstrap.Admin.Api.MySql
 {
     [Collection("MySqlContext")]
-    public class LoginTest : Api.LoginTest
+    public class LoginTest : SqlServer.LoginTest
     {
         public LoginTest(MySqlBAWebHost factory) : base(factory) { }
     }

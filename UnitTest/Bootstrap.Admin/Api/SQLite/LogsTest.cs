@@ -3,7 +3,7 @@
 namespace Bootstrap.Admin.Api.SQLite
 {
     [Collection("SQLiteContext")]
-    public class LogsTest : Api.LogsTest
+    public class LogsTest : SqlServer.LogsTest
     {
         public LogsTest(SQLiteBAWebHost factory) : base(factory) { }
     }

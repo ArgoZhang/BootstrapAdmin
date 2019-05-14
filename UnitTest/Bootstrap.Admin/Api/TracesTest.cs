@@ -3,7 +3,7 @@ using Longbow.Web.Mvc;
 using System;
 using Xunit;
 
-namespace Bootstrap.Admin.Api
+namespace Bootstrap.Admin.Api.SqlServer
 {
     public class TracesTest : ControllerTest
     {

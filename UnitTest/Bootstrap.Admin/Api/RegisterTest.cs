@@ -2,7 +2,7 @@
 using System.Linq;
 using Xunit;
 
-namespace Bootstrap.Admin.Api
+namespace Bootstrap.Admin.Api.SqlServer
 {
     public class RegisterTest : ControllerTest
     {

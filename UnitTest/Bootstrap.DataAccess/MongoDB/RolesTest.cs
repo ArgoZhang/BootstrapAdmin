@@ -3,7 +3,7 @@
 namespace Bootstrap.DataAccess.MongoDB
 {
     [Collection("MongoContext")]
-    public class RolesTest : DataAccess.RolesTest
+    public class RolesTest : SqlServer.RolesTest
     {
 
     }

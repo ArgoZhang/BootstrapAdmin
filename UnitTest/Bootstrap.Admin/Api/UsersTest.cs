@@ -6,7 +6,7 @@ using System.Linq;
 using System.Net.Http;
 using Xunit;
 
-namespace Bootstrap.Admin.Api
+namespace Bootstrap.Admin.Api.SqlServer
 {
     public class UsersTest : ControllerTest
     {

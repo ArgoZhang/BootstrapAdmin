@@ -3,7 +3,7 @@ using Bootstrap.DataAccess;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Bootstrap.Admin.Api
+namespace Bootstrap.Admin.Api.SqlServer
 {
     public class MessagesTest : ControllerTest
     {

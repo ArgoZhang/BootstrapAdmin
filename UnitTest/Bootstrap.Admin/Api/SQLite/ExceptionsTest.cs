@@ -3,7 +3,7 @@
 namespace Bootstrap.Admin.Api.SQLite
 {
     [Collection("SQLiteContext")]
-    public class ExceptionsTest : Api.ExceptionsTest
+    public class ExceptionsTest : SqlServer.ExceptionsTest
     {
         public ExceptionsTest(SQLiteBAWebHost factory) : base(factory) { }
     }

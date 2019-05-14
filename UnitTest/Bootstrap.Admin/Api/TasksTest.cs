@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Xunit;
 
-namespace Bootstrap.Admin.Api
+namespace Bootstrap.Admin.Api.SqlServer
 {
     public class TasksTest : ControllerTest
     {

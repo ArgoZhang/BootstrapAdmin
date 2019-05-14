@@ -3,7 +3,7 @@
 namespace Bootstrap.Admin.Api.MySql
 {
     [Collection("MySqlContext")]
-    public class TracesTest : Api.TracesTest
+    public class TracesTest : SqlServer.TracesTest
     {
         public TracesTest(MySqlBAWebHost factory) : base(factory) { }
     }

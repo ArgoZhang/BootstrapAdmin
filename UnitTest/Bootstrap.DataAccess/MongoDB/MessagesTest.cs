@@ -3,7 +3,7 @@
 namespace Bootstrap.DataAccess.MongoDB
 {
     [Collection("MongoContext")]
-    public class MessagesTest : DataAccess.MessagesTest
+    public class MessagesTest : SqlServer.MessagesTest
     {
 
     }

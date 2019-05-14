@@ -3,7 +3,7 @@
 namespace Bootstrap.DataAccess.SQLite
 {
     [Collection("SQLiteContext")]
-    public class DictsTest : DataAccess.DictsTest
+    public class DictsTest : SqlServer.DictsTest
     {
 
     }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using Xunit;
 
-namespace Bootstrap.DataAccess
+namespace Bootstrap.DataAccess.SqlServer
 {
     [Collection("SQLServerContext")]
     public class DictsTest

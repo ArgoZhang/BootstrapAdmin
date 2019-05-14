@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using Xunit;
 
-namespace Bootstrap.Admin.Controllers
+namespace Bootstrap.Admin.Controllers.SqlServer
 {
     public class AdminTest : ControllerTest
     {

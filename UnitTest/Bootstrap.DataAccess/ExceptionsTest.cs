@@ -2,7 +2,7 @@ using Longbow.Web.Mvc;
 using System;
 using Xunit;
 
-namespace Bootstrap.DataAccess
+namespace Bootstrap.DataAccess.SqlServer
 {
     [Collection("SQLServerContext")]
     public class ExceptionsTest

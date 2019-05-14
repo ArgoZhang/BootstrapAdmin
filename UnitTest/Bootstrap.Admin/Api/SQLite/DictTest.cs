@@ -3,7 +3,7 @@
 namespace Bootstrap.Admin.Api.SQLite
 {
     [Collection("SQLiteContext")]
-    public class DictTest : Api.DictTest
+    public class DictTest : SqlServer.DictTest
     {
         public DictTest(SQLiteBAWebHost factory) : base(factory) { }
     }
