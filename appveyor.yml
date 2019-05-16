@@ -2,6 +2,7 @@
 branches:
   only:
   - master
+  - dev
 image: Visual Studio 2017
 clone_depth: 1
 clone_folder: c:\Longbow\BootstrapAdmin
@@ -24,29 +25,14 @@ install:
     xcopy $iniFile "C:\Program Files\MySQL\MySQL Server 5.7" /y
 build_script:
 - ps: >-
-    echo ""
-
-    echo "*****************************************"
-
-    echo "Start Building ..."
-
     dotnet build
-
-
-    echo ""
-
-    echo "*****************************************"
-
-    echo "Start Publishing ..."
 
     dotnet publish Bootstrap.Admin --configuration Release --no-restore
 test_script:
 - ps: >-
-    echo ""
+    if ("$($env:APPVEYOR_REPO_BRANCH)" -eq "master")
 
-    echo "*****************************************"
-
-    echo "Start UnitTest For SQLite ..."
+    {
 
     dotnet test UnitTest --no-restore --filter "FullyQualifiedName~SQLite"
 
@@ -66,12 +52,6 @@ test_script:
 
     sqlcmd -S "$sqlInstance" -U sa -P Password12! -i "$sqlFile" -i "$initFile" -o "$outFile"
 
-
-    echo ""
-
-    echo "*****************************************"
-
-    echo "Start UnitTest For SQLServer ..."
 
     dotnet test UnitTest --no-restore --filter "FullyQualifiedName~SqlServer"
 
@@ -101,12 +81,6 @@ test_script:
     cmd.exe /c $cmd $initFile
 
 
-    echo ""
-
-    echo "*****************************************"
-
-    echo "Start UnitTest For MySql ..."
-
     dotnet test UnitTest --no-restore --filter "FullyQualifiedName~MySql"
 
 
@@ -126,15 +100,11 @@ test_script:
     iex "& $cmd"
 
 
-    echo ""
-
-    echo "*****************************************"
-
-    echo "Start UnitTest For MongoDB ..."
-
     cd $($env:appveyor_build_folder)
 
     dotnet test UnitTest --no-restore --filter "FullyQualifiedName~MongoDB"
+
+    }
 artifacts:
 - path: Bootstrap.Admin\bin\release\netcoreapp2.2\publish\
   name: BootstrapAdmin
@@ -150,6 +120,8 @@ deploy:
   draft: true
   prerelease: true
   force_update: true
+  on:
+    branch: master
 notifications:
 - provider: Email
   to:
