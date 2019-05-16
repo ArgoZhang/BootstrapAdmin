@@ -10,6 +10,7 @@ init:
 - ps: dotnet --version
 environment:
   Appveyor: true
+  COVERALLS_REPO_TOKEN: OSBtrE43PLtH6NFqk7XDZr9sZcdTYARZ4
 services:
 - mssql2014
 - mysql
@@ -34,7 +35,13 @@ test_script:
 
     {
 
-    dotnet test UnitTest --no-restore --filter "FullyQualifiedName~SQLite"
+    dotnet tool install coveralls.net --version 1.0.0 --tool-path "./tools"
+
+    echo "Start test for SQLite"
+
+    dotnet test UnitTest --no-restore --filter "FullyQualifiedName~SQLite" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutputDirectory=../
+
+    cmd.exe /c ".\tools\csmacnz.Coveralls.exe --opencover -i coverage.xml --useRelativePaths"
 
 
     $startPath = "$($env:appveyor_build_folder)\DatabaseScripts"
@@ -52,6 +59,7 @@ test_script:
 
     sqlcmd -S "$sqlInstance" -U sa -P Password12! -i "$sqlFile" -i "$initFile" -o "$outFile"
 
+    echo "Start test for SqlServer"
 
     dotnet test UnitTest --no-restore --filter "FullyQualifiedName~SqlServer"
 
@@ -61,8 +69,6 @@ test_script:
     $env:MYSQL_PWD="Password12!"
 
     $cmd = '"C:\Program Files\MySQL\MySQL Server 5.7\bin\mysql.exe" -e "create database BootstrapAdmin;" -uroot'
-
-    #iex "& $cmd"
 
     cmd.exe /c $cmd
 
@@ -80,6 +86,8 @@ test_script:
 
     cmd.exe /c $cmd $initFile
 
+
+    echo "Start test for MySql"
 
     dotnet test UnitTest --no-restore --filter "FullyQualifiedName~MySql"
 
@@ -101,6 +109,8 @@ test_script:
 
 
     cd $($env:appveyor_build_folder)
+
+    echo "Start test for MongoDB"
 
     dotnet test UnitTest --no-restore --filter "FullyQualifiedName~MongoDB"
 

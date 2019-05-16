@@ -4,9 +4,11 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <IsPackable>false</IsPackable>
     <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
+    <DebugType>full</DebugType>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="coverlet.msbuild" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="2.2.0" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="2.2.4" />
