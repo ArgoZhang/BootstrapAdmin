@@ -92,11 +92,11 @@
 **在线演示** <a href="http://argo.zylweb.cn" target="_blank">[传送门]http://argo.zylweb.cn</a>  
 **备用地址** <a href="http://ba.sdgxgz.com" target="_blank">[传送门]http://ba.sdgxgz.com</a>  
 
-#### 登录用户名与密码  
+### 登录用户名与密码  
 管理员：**Admin/123789**  
 普通用户：**User/123789**  
 
-#### 网站服务器配置：  
+### 网站服务器配置：  
 CPU: 1核  
 MEM: 2G
 
@@ -108,6 +108,9 @@ MEM: 2G
 
 ## 开源协议
 [Apache License Version 2.0](https://gitee.com/LongbowEnterprise/BootstrapAdmin/blob/master/LICENSE)
+
+## GVP 奖杯
+[查看照片](https://images.gitee.com/uploads/images/2019/0516/124055_96cc9f8d_554725.png "GiteeGVP.png")
 
 ## 项目截图
 
