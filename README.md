@@ -1,7 +1,7 @@
 ﻿# BootstrapAdmin
 
 ## Version & Licenses
-[![Build status](https://img.shields.io/github/tag-date/ArgoZhang/BootstrapAdmin.svg?logo=visual-studio-code&logoColor=red&label=build)](https://github.com/ArgoZhang/BootstrapAdmin/releases)
+[![Release Tag](https://img.shields.io/endpoint.svg?logo=Groupon&logoColor=red&label=release&url=https%3A%2F%2Fba.sdgxgz.com%2FBA%2Fapi%2FGitee%2FReleases)](http://ba.sdgxgz.com/BA/Tools/Index?ReturnUrl=https%3A%2F%2Fgitee.com%2FLongbowEnterprise%2FBootstrapAdmin%2Freleases)
 [![Gitee license](https://img.shields.io/github/license/argozhang/bootstrapadmin.svg?logo=git&logoColor=red)](https://gitee.com/LongbowEnterprise/BootstrapAdmin/blob/master/LICENSE)
 
 ## Gitee

@@ -29,5 +29,19 @@ namespace Bootstrap.Admin.Controllers.Api
             var result = regex.Select((m, i) => $"{labels[i]} {m.Groups[1].Value}");
             return new JsonResult(new { schemaVersion = 1, label = string.Join(" ", result), message = "sweet world", color = "orange" });
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="httpClientFactory"></param>
+        /// <returns></returns>
+        public async Task<ActionResult> Releases([FromServices]IHttpClientFactory httpClientFactory)
+        {
+            var client = httpClientFactory.CreateClient();
+            var content = await client.GetStringAsync("https://gitee.com/LongbowEnterprise/BootstrapAdmin/releases");
+            var regex = Regex.Match(content, "<a href=\"/LongbowEnterprise/BootstrapAdmin/releases/([^\\s]+)\" target=\"_blank\">", RegexOptions.IgnoreCase);
+            var result = regex.Groups[1].Value;
+            return new JsonResult(new { schemaVersion = 1, label = result, message = "sweet world", color = "orange" });
+        }
     }
 }
