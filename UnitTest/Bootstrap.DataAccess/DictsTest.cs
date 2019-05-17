@@ -162,6 +162,12 @@ namespace Bootstrap.DataAccess.SqlServer
             Assert.Equal(1, DictHelper.RetrieveAccessLogPeriod());
         }
 
+        [Fact]
+        public void IPSvrCachePeriod_Ok()
+        {
+            Assert.Equal("10", DictHelper.RetrieveLocaleIPSvrCachePeriod());
+        }
+
         #region Private Class For Test
         /// <summary>
         /// 
