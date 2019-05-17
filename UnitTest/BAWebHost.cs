@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Testing.Handlers;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Net.Http;
 using UnitTest;
@@ -116,7 +117,7 @@ namespace Bootstrap.Admin
             base.ConfigureWebHost(builder);
 
             var config = new ConfigurationBuilder();
-            config.AddJsonFile(TestHelper.RetrievePath("UnitTest\\appsettings.json"), false, true);
+            config.AddJsonFile(TestHelper.RetrievePath($"UnitTest{Path.DirectorySeparatorChar}appsettings.json"), false, true);
             config.AddEnvironmentVariables();
             var con = config.Build();
 
