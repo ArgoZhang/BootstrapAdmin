@@ -43,6 +43,8 @@ INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'系统设�
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'系统设置', N'IP地理位置接口', 'None', 0)
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'系统设置', N'BaiDuIPSvr', 'http://api.map.baidu.com/location/ip?ak=6lvVPMDlm2gjLpU0aiqPsHXi2OiwGQRj&ip=', 0)
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'系统设置', N'JuheIPSvr', 'http://apis.juhe.cn/ip/ipNew?key=f57102d1b9fadd3f4a1c29072d0c0206&ip=', 0)
+-- 时长单位 分钟
+INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'系统设置', N'IP请求缓存时长', '10', 0)
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'系统设置', N'演示系统', '0', 0)
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'系统设置', N'验证码图床', 'http://images.sdgxgz.com/', 0)
 

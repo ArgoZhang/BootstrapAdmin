@@ -40,6 +40,8 @@ INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统设置', 'Cookie
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统设置', 'IP地理位置接口', 'None', 0);
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统设置', 'BaiDuIPSvr', 'http://api.map.baidu.com/location/ip?ak=6lvVPMDlm2gjLpU0aiqPsHXi2OiwGQRj&ip=', 0);
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统设置', 'JuheIPSvr', 'http://apis.juhe.cn/ip/ipNew?key=f57102d1b9fadd3f4a1c29072d0c0206&ip=', 0);
+-- 时长单位 分钟
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统设置', 'IP请求缓存时长', '10', 0);
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统设置', '演示系统', '0', 0);
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统设置', '验证码图床', 'http://images.sdgxgz.com/', 0);
 

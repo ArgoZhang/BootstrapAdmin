@@ -79,6 +79,7 @@ namespace Bootstrap.DataAccess
                 var url = RetrieveLocaleIPSvrUrl(name);
                 op.Locator = string.IsNullOrEmpty(url) ? null : DefaultIPLocatorProvider.CreateLocator(name);
                 op.Url = string.IsNullOrEmpty(url) ? string.Empty : $"{url}{op.IP}";
+                if (int.TryParse(RetrieveLocaleIPSvrCachePeriod(), out var period) && period > 0) op.Period = period;
             }
         }
 
@@ -176,8 +177,15 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="ipSvr">ip地址请求服务名称</param>
         /// <returns></returns>
         public static string RetrieveLocaleIPSvrUrl(string ipSvr) => DbContextManager.Create<Dict>().RetrieveLocaleIPSvrUrl(ipSvr);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static string RetrieveLocaleIPSvrCachePeriod() => DbContextManager.Create<Dict>().RetrieveLocaleIPSvrCachePeriod();
 
         /// <summary>
         /// 访问日志保留时长 默认一个月

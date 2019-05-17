@@ -161,6 +161,12 @@ namespace Bootstrap.DataAccess
         public string RetrieveLocaleIPSvr() => DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "IP地理位置接口" && d.Define == 0)?.Code;
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public string RetrieveLocaleIPSvrCachePeriod() => DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "IP请求缓存时长" && d.Define == 0)?.Code;
+
+        /// <summary>
         /// 获得 项目是否获取登录地点 默认为false
         /// </summary>
         /// <param name="ipSvr">服务提供名称</param>
