@@ -1,21 +1,21 @@
 ﻿# BootstrapAdmin
 
 ## Version & Licenses
-[![Build status](https://img.shields.io/github/tag-date/ArgoZhang/BootstrapAdmin.svg?label=build)](https://github.com/ArgoZhang/BootstrapAdmin/releases)
-[![Gitee license](https://img.shields.io/github/license/argozhang/bootstrapadmin.svg)](https://gitee.com/LongbowEnterprise/BootstrapAdmin/blob/master/LICENSE)
+[![Build status](https://img.shields.io/github/tag-date/ArgoZhang/BootstrapAdmin.svg?logo=visual-studio-code&logoColor=red&label=build)](https://github.com/ArgoZhang/BootstrapAdmin/releases)
+[![Gitee license](https://img.shields.io/github/license/argozhang/bootstrapadmin.svg?logo=git&logoColor=red)](https://gitee.com/LongbowEnterprise/BootstrapAdmin/blob/master/LICENSE)
 
 ## Gitee
-[![Build Status](https://img.shields.io/appveyor/ci/ArgoZhang/bootstrapadmin-9m1jm/dev.svg?label=maser)](https://ci.appveyor.com/project/ArgoZhang/bootstrapadmin-9m1jm)
-[![Build Status](https://img.shields.io/appveyor/tests/ArgoZhang/bootstrapadmin-9m1jm/master.svg)](https://ci.appveyor.com/project/ArgoZhang/bootstrapadmin-9m1jm/build/tests)
-[![Issue Status](https://img.shields.io/endpoint.svg?label=issues&url=https%3A%2F%2Fba.sdgxgz.com%2FBA%2Fapi%2FGitee%2FIssues)](https://gitee.com/LongbowEnterprise/BootstrapAdmin/issues)
+[![Build Status](https://img.shields.io/appveyor/ci/ArgoZhang/bootstrapadmin-9m1jm/dev.svg?logo=appveyor&label=maser)](https://ci.appveyor.com/project/ArgoZhang/bootstrapadmin-9m1jm)
+[![Build Status](https://img.shields.io/appveyor/tests/ArgoZhang/bootstrapadmin-9m1jm/master.svg?logo=appveyor&)](https://ci.appveyor.com/project/ArgoZhang/bootstrapadmin-9m1jm/build/tests)
+[![Issue Status](https://img.shields.io/endpoint.svg?logo=appveyor&label=issues&url=https%3A%2F%2Fba.sdgxgz.com%2FBA%2Fapi%2FGitee%2FIssues)](https://gitee.com/LongbowEnterprise/BootstrapAdmin/issues)
 
 ## GitHub
-[![Build status](https://img.shields.io/appveyor/ci/ArgoZhang/bootstrapadmin/dev.svg?label=dev)](https://ci.appveyor.com/project/ArgoZhang/bootstrapadmin/branch/dev)
-[![Build status](https://img.shields.io/appveyor/ci/ArgoZhang/bootstrapadmin/dev.svg?label=master)](https://ci.appveyor.com/project/ArgoZhang/bootstrapadmin/branch/master)
-[![Test Status](https://img.shields.io/appveyor/tests/argozhang/bootstrapadmin/master.svg)](https://ci.appveyor.com/project/ArgoZhang/bootstrapadmin/branch/master/tests)
-[![Cover Status](https://img.shields.io/coveralls/github/ArgoZhang/BootstrapAdmin/master.svg)](https://coveralls.io/github/ArgoZhang/BootstrapAdmin)
-[![Repo Size](https://img.shields.io/github/repo-size/ArgoZhang/BootstrapAdmin.svg)](https://github.com/ArgoZhang/BootstrapAdmin)
-[![Commit Date](https://img.shields.io/github/last-commit/ArgoZhang/BootstrapAdmin/master.svg)](https://github.com/ArgoZhang/BootstrapAdmin)
+[![Build status](https://img.shields.io/appveyor/ci/ArgoZhang/bootstrapadmin/dev.svg?logo=appveyor&label=dev)](https://ci.appveyor.com/project/ArgoZhang/bootstrapadmin/branch/dev)
+[![Build status](https://img.shields.io/appveyor/ci/ArgoZhang/bootstrapadmin/dev.svg?logo=appveyor&label=master)](https://ci.appveyor.com/project/ArgoZhang/bootstrapadmin/branch/master)
+[![Test Status](https://img.shields.io/appveyor/tests/argozhang/bootstrapadmin/master.svg?logo=appveyor&)](https://ci.appveyor.com/project/ArgoZhang/bootstrapadmin/branch/master/tests)
+[![Cover Status](https://img.shields.io/coveralls/github/ArgoZhang/BootstrapAdmin/master.svg?logo=github&logoColor=green)](https://coveralls.io/github/ArgoZhang/BootstrapAdmin)
+[![Repo Size](https://img.shields.io/github/repo-size/ArgoZhang/BootstrapAdmin.svg?logo=github&logoColor=green)](https://github.com/ArgoZhang/BootstrapAdmin)
+[![Commit Date](https://img.shields.io/github/last-commit/ArgoZhang/BootstrapAdmin/master.svg?logo=github&logoColor=green)](https://github.com/ArgoZhang/BootstrapAdmin)
 
 ## 项目介绍
 一直需要一款后台管理系统，但是网上很多开源项目都是 **Java** 开发的，本人是 **NET** 平台的对 **Java** 一窍不通，C#版本的本来就少而且还没有合适的。于是决定自己开发一套后台管理系统。由于前台采用 **Bootstrap** 布局样式，所以就叫做 **BootstrapAdmin** 。本系统可以用于所有的 Web 应用程序，目前版本已经升级到 **NET CORE** 具备跨平台能力。数据库方面同时支持多种数据库，详细列表见后面**数据库**的详细列表，切换数据源仅需更改配置文件无需重启应用程序，配置简单灵活。UI 前端使用流行的 Bootstrap 框架布局对移动设备的兼容性非常好，自适应目前市场几乎所有终端设备。本系统还具备单一后台支持多前台的特色，提供 **单点登录（SSO）** 的能力。  
