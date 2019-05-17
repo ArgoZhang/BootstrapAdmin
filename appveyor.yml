@@ -35,9 +35,13 @@ test_script:
 
     {
 
+    echo "" "Install coveralls.net tools"
+
     dotnet tool install coveralls.net --version 1.0.0 --tool-path "./tools"
 
-    echo "Start test for SQLite"
+    # SQLite database
+
+    echo "" "Start test for SQLite"
 
     dotnet test UnitTest --no-restore --filter "FullyQualifiedName~SQLite" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutputDirectory=../
 
@@ -59,7 +63,7 @@ test_script:
 
     sqlcmd -S "$sqlInstance" -U sa -P Password12! -i "$sqlFile" -i "$initFile" -o "$outFile"
 
-    echo "Start test for SqlServer"
+    echo "" "Start test for SqlServer"
 
     dotnet test UnitTest --no-restore --filter "FullyQualifiedName~SqlServer"
 
@@ -87,7 +91,7 @@ test_script:
     cmd.exe /c $cmd $initFile
 
 
-    echo "Start test for MySql"
+    echo "" "Start test for MySql"
 
     dotnet test UnitTest --no-restore --filter "FullyQualifiedName~MySql"
 
@@ -110,9 +114,9 @@ test_script:
 
     cd $($env:appveyor_build_folder)
 
-    echo "Start test for MongoDB"
+    echo "" "Start test for MongoDB"
 
-    dotnet test UnitTest --no-restore --filter "FullyQualifiedName~MongoDB"
+    dotnet test UnitTest --no-restore --filter "FullyQualifiedName~MongoDB" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutputDirectory=../
 
     }
 artifacts:
