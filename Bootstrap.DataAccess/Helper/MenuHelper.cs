@@ -1,4 +1,4 @@
-using Bootstrap.Security;
+﻿using Bootstrap.Security;
 using Bootstrap.Security.DataAccess;
 using Longbow.Cache;
 using Longbow.Data;
@@ -59,8 +59,9 @@ namespace Bootstrap.DataAccess
         {
             if (DictHelper.RetrieveSystemModel())
             {
-                // 允许删除自定义菜单
-                var systemMenus = RetrieveAllMenus("Admin").Where(m => m.Category == "0");
+                // 不允许删除系统菜单与前台演示系统的默认菜单
+                var menuNames = new string[] { "首页", "测试页面", "关于", "返回码云" };
+                var systemMenus = RetrieveAllMenus("Admin").Where(m => m.Category == "0" || menuNames.Any(n => n.Equals(m.Name, StringComparison.OrdinalIgnoreCase)));
                 value = value.Where(v => !systemMenus.Any(m => m.Id == v));
                 if (!value.Any()) return true;
             }
