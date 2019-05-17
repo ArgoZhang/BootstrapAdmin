@@ -5,11 +5,14 @@
 [![Gitee license](https://img.shields.io/github/license/argozhang/bootstrapadmin.svg?logo=git&logoColor=red)](https://gitee.com/LongbowEnterprise/BootstrapAdmin/blob/master/LICENSE)
 
 ## Gitee
+[![Appveyor build](https://img.shields.io/endpoint.svg?logo=appveyor&label=build&url=https%3A%2F%2Fba.sdgxgz.com%2FBA%2Fapi%2FGitee%2FBuilds?projName=bootstrapadmin-9m1jm)](https://ci.appveyor.com/project/ArgoZhang/bootstrapadmin-9m1jm)
 [![Build Status](https://img.shields.io/appveyor/ci/ArgoZhang/bootstrapadmin-9m1jm/dev.svg?logo=appveyor&label=maser)](https://ci.appveyor.com/project/ArgoZhang/bootstrapadmin-9m1jm)
-[![Build Status](https://img.shields.io/appveyor/tests/ArgoZhang/bootstrapadmin-9m1jm/master.svg?logo=appveyor&)](https://ci.appveyor.com/project/ArgoZhang/bootstrapadmin-9m1jm/build/tests)
-[![Issue Status](https://img.shields.io/endpoint.svg?logo=appveyor&label=issues&url=https%3A%2F%2Fba.sdgxgz.com%2FBA%2Fapi%2FGitee%2FIssues)](https://gitee.com/LongbowEnterprise/BootstrapAdmin/issues)
+[![Test Status](https://img.shields.io/appveyor/tests/ArgoZhang/bootstrapadmin-9m1jm/master.svg?logo=appveyor&)](https://ci.appveyor.com/project/ArgoZhang/bootstrapadmin-9m1jm/build/tests)
+[![Issue Status](https://img.shields.io/endpoint.svg?logo=Groupon&logoColor=critical&label=issues&url=https%3A%2F%2Fba.sdgxgz.com%2FBA%2Fapi%2FGitee%2FIssues)](https://gitee.com/LongbowEnterprise/BootstrapAdmin/issues)
+[![Pull Status](https://img.shields.io/endpoint.svg?logo=Groupon&logoColor=brightgreen&label=pulls&url=https%3A%2F%2Fba.sdgxgz.com%2FBA%2Fapi%2FGitee%2FPullss)](https://gitee.com/LongbowEnterprise/BootstrapAdmin/pulls)
 
 ## GitHub
+[![Appveyor build](https://img.shields.io/endpoint.svg?logo=appveyor&label=build&url=https%3A%2F%2Fba.sdgxgz.com%2FBA%2Fapi%2FGitee%2FBuilds?projName=bootstrapadmin)](https://ci.appveyor.com/project/ArgoZhang/bootstrapadmin)
 [![Build status](https://img.shields.io/appveyor/ci/ArgoZhang/bootstrapadmin/dev.svg?logo=appveyor&label=dev)](https://ci.appveyor.com/project/ArgoZhang/bootstrapadmin/branch/dev)
 [![Build status](https://img.shields.io/appveyor/ci/ArgoZhang/bootstrapadmin/dev.svg?logo=appveyor&label=master)](https://ci.appveyor.com/project/ArgoZhang/bootstrapadmin/branch/master)
 [![Test Status](https://img.shields.io/appveyor/tests/argozhang/bootstrapadmin/master.svg?logo=appveyor&)](https://ci.appveyor.com/project/ArgoZhang/bootstrapadmin/branch/master/tests)
