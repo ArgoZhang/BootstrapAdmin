@@ -7,6 +7,7 @@
 ## Gitee
 [![Build Status](https://img.shields.io/appveyor/ci/ArgoZhang/bootstrapadmin-9m1jm/dev.svg?label=maser)](https://ci.appveyor.com/project/ArgoZhang/bootstrapadmin-9m1jm)
 [![Build Status](https://img.shields.io/appveyor/tests/ArgoZhang/bootstrapadmin-9m1jm/master.svg)](https://ci.appveyor.com/project/ArgoZhang/bootstrapadmin-9m1jm/build/tests)
+[![Issue Status](https://img.shields.io/endpoint.svg?label=issues&url=https%3A%2F%2Fba.sdgxgz.com%2FBA%2Fapi%2FGitee%2FIssues)](https://gitee.com/LongbowEnterprise/BootstrapAdmin/issues)
 
 ## GitHub
 [![Build status](https://img.shields.io/appveyor/ci/ArgoZhang/bootstrapadmin/dev.svg?label=dev)](https://ci.appveyor.com/project/ArgoZhang/bootstrapadmin/branch/dev)
