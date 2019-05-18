@@ -17,7 +17,7 @@ SET ANSI_PADDING ON
 GO
 CREATE TABLE [dbo].[Users](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
-	[UserName] [varchar](50) NOT NULL,
+	[UserName] [varchar](16) NOT NULL,
 	[Password] [varchar](50) NOT NULL,
 	[PassSalt] [varchar](50) NOT NULL,
 	[DisplayName] [nvarchar](50) NOT NULL,

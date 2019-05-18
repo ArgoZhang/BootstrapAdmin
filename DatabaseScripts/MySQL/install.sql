@@ -1,6 +1,6 @@
 ﻿CREATE TABLE Users (
     ID             INTEGER       PRIMARY KEY	Auto_increment,
-    UserName       NVARCHAR (50) NOT NULL,
+    UserName       NVARCHAR (16) NOT NULL,
     Password       VARCHAR (50)  NOT NULL,
     PassSalt       VARCHAR (50)  NOT NULL,
     DisplayName    VARCHAR (50)  NOT NULL,

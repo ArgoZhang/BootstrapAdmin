@@ -1,6 +1,6 @@
 CREATE TABLE Users (
     ID             SERIAL PRIMARY KEY,
-    UserName       VARCHAR (50) NOT NULL,
+    UserName       VARCHAR (16) NOT NULL,
     Password       VARCHAR (50)  NOT NULL,
     PassSalt       VARCHAR (50)  NOT NULL,
     DisplayName    VARCHAR (50)  NOT NULL,
