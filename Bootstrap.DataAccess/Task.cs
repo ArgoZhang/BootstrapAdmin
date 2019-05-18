@@ -28,6 +28,7 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获得/设置 分配人昵称
         /// </summary>
+        [ResultColumn]
         public string AssignDisplayName { get; set; }
 
         /// <summary>
@@ -55,5 +56,16 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <returns></returns>
         public virtual IEnumerable<Task> Retrieves() => DbManager.Create().SkipTake<Task>(0, 1000, "select t.*, u.DisplayName AssignDisplayName from Tasks t inner join Users u on t.UserName = u.UserName order by AssignTime desc");
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="task"></param>
+        /// <returns></returns>
+        public virtual bool Save(Task task)
+        {
+            DbManager.Create().Save(task);
+            return true;
+        }
     }
 }

@@ -61,7 +61,7 @@ namespace Bootstrap.DataAccess.MongoDB
         public override bool SaveApp(string userName, string app)
         {
             var update = Builders<User>.Update.Set(u => u.App, app);
-            DbManager.Users.FindOneAndUpdate(u => u.UserName.ToLowerInvariant() == UserName.ToLowerInvariant(), update);
+            DbManager.Users.FindOneAndUpdate(u => u.UserName.ToLowerInvariant() == userName.ToLowerInvariant(), update);
             return true;
         }
 
@@ -250,19 +250,6 @@ namespace Bootstrap.DataAccess.MongoDB
                 groups.Add(groupId);
                 DbManager.Users.UpdateOne(md => md.Id == p.Id, Builders<User>.Update.Set(md => md.Groups, groups));
             });
-            return true;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
-        public override bool ForgotPassword(DataAccess.ResetUser user)
-        {
-            DbManager.Users.UpdateOne(md => md.UserName.ToLowerInvariant() == user.UserName.ToLowerInvariant(), Builders<User>.Update.Set(md => md.IsReset, 1));
-            user.ResetTime = DateTime.Now;
-            DbManager.ResetUsers.InsertOne(user);
             return true;
         }
 

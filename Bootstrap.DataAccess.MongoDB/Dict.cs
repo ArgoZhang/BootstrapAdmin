@@ -43,7 +43,7 @@ namespace Bootstrap.DataAccess.MongoDB
             {
                 p.Id = null;
                 DbManager.Dicts.InsertOne(p);
-                return true;
+                p.Id = DbManager.Dicts.Find(d => d.Name == p.Name && d.Category == p.Category && d.Define == p.Define && d.Code == p.Code).FirstOrDefault().Id;
             }
             else
             {
@@ -51,8 +51,8 @@ namespace Bootstrap.DataAccess.MongoDB
                     .Set(md => md.Define, p.Define)
                     .Set(md => md.Name, p.Name)
                     .Set(md => md.Code, p.Code));
-                return true;
             }
+            return true;
         }
 
         /// <summary>

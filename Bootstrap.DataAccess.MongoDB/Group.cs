@@ -32,13 +32,13 @@ namespace Bootstrap.DataAccess.MongoDB
         {
             if (string.IsNullOrEmpty(p.Id))
             {
-                p.Id = null;
                 DbManager.Groups.InsertOne(new Group()
                 {
                     GroupName = p.GroupName,
                     Description = p.Description,
                     Roles = new List<string>()
                 });
+                p.Id = DbManager.Groups.Find(g => g.GroupName == p.GroupName && g.Description == p.Description).FirstOrDefault().Id;
             }
             else
             {

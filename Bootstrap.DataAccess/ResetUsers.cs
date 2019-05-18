@@ -40,9 +40,9 @@ namespace Bootstrap.DataAccess
         /// 
         /// </summary>
         /// <returns></returns>
-        public virtual bool Save()
+        public virtual bool Save(ResetUser user)
         {
-            DbManager.Create().Save(this);
+            DbManager.Create().Save(user);
             return true;
         }
 

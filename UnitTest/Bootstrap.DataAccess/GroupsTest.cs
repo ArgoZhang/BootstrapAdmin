@@ -16,10 +16,15 @@ namespace Bootstrap.DataAccess.SqlServer
         public void SaveAndDelete_Ok()
         {
             Group g = new Group() { GroupName = "UnitTest", Description = "UnitTestSave" };
+
+            // insert
             Assert.True(GroupHelper.Save(g));
 
-            var ids = GroupHelper.Retrieves().Where(t => t.GroupName == "UnitTest").Select(t => t.Id);
-            Assert.True(GroupHelper.Delete(ids));
+            // update
+            Assert.True(GroupHelper.Save(g));
+
+            // delete
+            Assert.True(GroupHelper.Delete(new string[] { g.Id }));
         }
 
         [Fact]

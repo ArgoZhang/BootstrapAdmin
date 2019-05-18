@@ -38,7 +38,6 @@ namespace Bootstrap.DataAccess.MongoDB
         {
             if (string.IsNullOrEmpty(p.Id))
             {
-                p.Id = null;
                 DbManager.Roles.InsertOne(new Role()
                 {
                     RoleName = p.RoleName,
@@ -46,13 +45,13 @@ namespace Bootstrap.DataAccess.MongoDB
                     Menus = new List<string>(),
                     Apps = new List<string>()
                 });
-                return true;
+                p.Id = DbManager.Roles.Find(r => r.RoleName == p.RoleName && r.Description == p.Description).FirstOrDefault().Id;
             }
             else
             {
                 DbManager.Roles.UpdateOne(md => md.Id == p.Id, Builders<Role>.Update.Set(md => md.RoleName, p.RoleName).Set(md => md.Description, p.Description));
-                return true;
             }
+            return true;
         }
 
         /// <summary>

@@ -1,4 +1,9 @@
 using Bootstrap.DataAccess;
+using System.IO;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using UnitTest;
 using Xunit;
 
 namespace Bootstrap.Admin.Api.SqlServer
@@ -50,6 +55,32 @@ namespace Bootstrap.Admin.Api.SqlServer
             usr.UserStatus = UserStates.SaveApp;
             var resp = await Client.PutAsJsonAsync<User, bool>(usr);
             Assert.True(resp);
+        }
+
+        [Fact]
+        public async void SaveAndDelIcon_Ok()
+        {
+            var iconFile = TestHelper.RetrievePath(string.Format("Bootstrap.Admin{0}wwwroot{0}images{0}logo.jpg", Path.DirectorySeparatorChar));
+            var adminFile = TestHelper.RetrievePath(string.Format("Bootstrap.Admin{0}wwwroot{0}images{0}uploader{0}Admin.jpg", Path.DirectorySeparatorChar));
+            FileInfo fi = new FileInfo(iconFile);
+            string fileName = fi.Name;
+            byte[] fileContents = File.ReadAllBytes(fi.FullName);
+
+            var loginContent = new MultipartFormDataContent();
+            var byteArrayContent = new ByteArrayContent(fileContents);
+            byteArrayContent.Headers.Add("Content-Type", "application/octet-stream");
+            loginContent.Add(byteArrayContent, "fileName", fileName);
+
+            var req = await Client.PostAsync("", loginContent);
+            Assert.Equal(HttpStatusCode.OK, req.StatusCode);
+            Assert.True(File.Exists(adminFile));
+
+            // delete file
+            var delContent = new StringContent("key=Admin.jpg");
+            delContent.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
+            req = await Client.PostAsync("del", delContent);
+            req = await Client.PostAsync("Delete", delContent);
+            Assert.False(File.Exists(adminFile));
         }
     }
 }

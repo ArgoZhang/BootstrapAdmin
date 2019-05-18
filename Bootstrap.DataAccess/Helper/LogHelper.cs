@@ -20,8 +20,12 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 保存新增的日志信息
         /// </summary>
-        /// <param name="p"></param>
+        /// <param name="log"></param>
         /// <returns></returns>
-        public static bool Save(Log p) => DbContextManager.Create<Log>().Save(p);
+        public static bool Save(Log log)
+        {
+            log.LogTime = DateTime.Now;
+            return DbContextManager.Create<Log>().Save(log);
+        }
     }
 }

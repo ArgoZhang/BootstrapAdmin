@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PetaPoco;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,6 +8,7 @@ namespace Bootstrap.DataAccess
     /// <summary>
     /// 
     /// </summary>
+    [TableName("Messages")]
     public class Message
     {
         /// <summary>
@@ -47,7 +49,7 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 标旗状态：0-未标旗，1-已标旗
         /// </summary>
-        public int Mark { get; set; }
+        public int Flag { get; set; }
 
         /// <summary>
         /// 删除状态：0-未删除，1-已删除
@@ -62,21 +64,25 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获得/设置 标签名称
         /// </summary>
+        [ResultColumn]
         public string LabelName { get; set; }
 
         /// <summary>
         /// 获得/设置 时间描述 2分钟内为刚刚
         /// </summary>
+        [ResultColumn]
         public string Period { get; set; }
 
         /// <summary>
         /// 获得/设置 发件人头像
         /// </summary>
+        [ResultColumn]
         public string FromIcon { get; set; }
 
         /// <summary>
         /// 获得/设置 发件人昵称
         /// </summary>
+        [ResultColumn]
         public string FromDisplayName { get; set; }
 
         //TODO: SQL语句不兼容
@@ -130,10 +136,10 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public virtual IEnumerable<Message> Flag(string userName)
+        public virtual IEnumerable<Message> Mark(string userName)
         {
             var messageRet = Retrieves(userName);
-            return messageRet.Where(n => n.Mark == 1);
+            return messageRet.Where(n => n.Flag == 1);
         }
 
         /// <summary>
@@ -153,6 +159,16 @@ namespace Bootstrap.DataAccess
                 else if (ts.Minutes > 0) n.Period = string.Format("{0}分钟", ts.Minutes);
             });
             return messageRet;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <returns></returns>
+        public virtual bool Save(Message msg)
+        {
+            return true;
         }
     }
 }

@@ -19,5 +19,12 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <returns></returns>
         public static IEnumerable<Task> Retrieves() => CacheManager.GetOrAdd(RetrieveTasksDataKey, key => DbContextManager.Create<Task>().Retrieves());
+
+        /// <summary>
+        /// 保存任务方法
+        /// </summary>
+        /// <param name="task"></param>
+        /// <returns></returns>
+        public static bool Save(Task task) => DbContextManager.Create<Task>().Save(task);
     }
 }

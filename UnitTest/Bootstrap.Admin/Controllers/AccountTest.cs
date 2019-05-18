@@ -1,10 +1,27 @@
-﻿using Xunit;
+﻿using Bootstrap.DataAccess;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using Xunit;
 
 namespace Bootstrap.Admin.Controllers.SqlServer
 {
     public class AccountTest : ControllerTest
     {
         public AccountTest(BAWebHost factory) : base(factory, "Account") { }
+
+        [Fact]
+        public async void SystemMode_Test()
+        {
+            var dict = DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "演示系统");
+            dict.Code = "1";
+            DictHelper.Save(dict);
+
+            var r = await Client.GetAsync("Login");
+            Assert.Equal(HttpStatusCode.OK, r.StatusCode);
+            dict.Code = "0";
+            DictHelper.Save(dict);
+        }
 
         [Fact]
         public async void Login_Fail()
@@ -14,6 +31,24 @@ namespace Bootstrap.Admin.Controllers.SqlServer
             Assert.True(r.IsSuccessStatusCode);
             var content = await r.Content.ReadAsStringAsync();
             Assert.Contains("登 陆", content);
+
+            r = await client.GetAsync("/Account/Login");
+            var view = await r.Content.ReadAsStringAsync();
+            var tokenTag = "<input name=\"__RequestVerificationToken\" type=\"hidden\" value=\"";
+            var index = view.IndexOf(tokenTag);
+            view = view.Substring(index + tokenTag.Length);
+            index = view.IndexOf("\" /></form>");
+            var antiToken = view.Substring(0, index);
+
+            var loginContent = new MultipartFormDataContent
+            {
+                { new StringContent("Admin"), "userName" },
+                { new StringContent("1"), "password" },
+                { new StringContent("true"), "remember" },
+                { new StringContent(antiToken), "__RequestVerificationToken" }
+            };
+            var req = await client.PostAsync("/Account/Login", loginContent);
+            Assert.Equal(HttpStatusCode.OK, req.StatusCode);
         }
 
         [Fact]

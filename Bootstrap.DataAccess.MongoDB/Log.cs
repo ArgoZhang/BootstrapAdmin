@@ -68,6 +68,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <param name="value"></param>
         /// <returns></returns>
         private static void DeleteLogAsync() => System.Threading.Tasks.Task.Run(() => DbManager.Logs.DeleteMany(log => log.LogTime < DateTime.Now.AddDays(-7)));
+
         /// <summary>
         /// 
         /// </summary>
@@ -75,8 +76,8 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <returns></returns>
         public override bool Save(DataAccess.Log log)
         {
-            log.LogTime = DateTime.Now;
             DbManager.Logs.InsertOne(log);
+            DeleteLogAsync();
             return true;
         }
     }

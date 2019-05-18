@@ -166,10 +166,11 @@ namespace Bootstrap.DataAccess
         }
 
         /// <summary>
-        /// 
+        /// 重置密码方法
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="password"></param>
+        /// <remarks>用户使用忘记密码功能后，管理员在用户管理页面中可以点击重置按钮</remarks>
         /// <returns></returns>
         public static bool ResetPassword(string userName, string password)
         {

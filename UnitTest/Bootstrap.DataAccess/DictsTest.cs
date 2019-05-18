@@ -21,8 +21,15 @@ namespace Bootstrap.DataAccess.SqlServer
                 Code = "1",
                 Define = 1
             };
+
+            // insert
             Assert.True(DictHelper.Save(dict));
-            Assert.True(DictHelper.Delete(DictHelper.RetrieveDicts().Where(d => d.Category == dict.Category).Select(d => d.Id)));
+
+            // update 
+            Assert.True(DictHelper.Save(dict));
+
+            // delete
+            Assert.True(DictHelper.Delete(new string[] { dict.Id }));
         }
 
         [Fact]
@@ -35,7 +42,11 @@ namespace Bootstrap.DataAccess.SqlServer
                 Code = "1",
                 Define = 1
             };
+
+            // insert 
             Assert.True(DictHelper.SaveSettings(dict));
+
+            // delete
             dict.Delete(DictHelper.RetrieveDicts().Where(d => d.Category == dict.Category).Select(d => d.Id));
         }
 
@@ -79,6 +90,8 @@ namespace Bootstrap.DataAccess.SqlServer
         public void RetrieveHomeUrl_Ok()
         {
             Assert.Equal("~/Home/Index", DictHelper.RetrieveHomeUrl("0"));
+            var url = DictHelper.RetrieveHomeUrl("2");
+            Assert.NotEqual("~/Home/Index", url);
         }
 
         [Fact]
@@ -176,6 +189,7 @@ namespace Bootstrap.DataAccess.SqlServer
             var dict = new BootstrapDict() { Category = "系统检查", Name = "系统设置", Code = DatabaseName, Define = 0 };
             Assert.True(DictHelper.Save(dict));
             Assert.Equal(DatabaseName, DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == dict.Category && d.Name == dict.Name)?.Code ?? "unknown");
+            DictHelper.Delete(new string[] { dict.Id });
         }
 
         #region Private Class For Test

@@ -52,8 +52,6 @@ namespace Bootstrap.Admin.Query
                 case "ApprovedBy":
                     data = Order == "asc" ? data.OrderBy(t => t.ApprovedBy) : data.OrderByDescending(t => t.ApprovedBy);
                     break;
-                default:
-                    break;
             }
             ret.rows = data.Skip(Offset).Take(Limit).Select(u => new
             {

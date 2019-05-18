@@ -14,9 +14,32 @@ namespace Bootstrap.Admin.Api.SqlServer
         [Fact]
         public async void Get_Ok()
         {
-            // 菜单 系统菜单 系统使用条件
-            var query = "?sort=Order&order=asc&offset=0&limit=20&parentName=&name=%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86&category=0&isresource=0&_=1547619684999";
+            var query = "?sort=Order&order=asc&offset=0&limit=100&parentName=%E6%B5%8B%E8%AF%95%E9%A1%B5%E9%9D%A2&name=%E5%85%B3%E4%BA%8E&category=1&isresource=0&appCode=2&_=1558235377255";
             var qd = await Client.GetAsJsonAsync<QueryData<object>>(query);
+            Assert.Single(qd.rows);
+
+            query = "?sort=Name&order=asc&offset=0&limit=100&parentName=%E6%B5%8B%E8%AF%95%E9%A1%B5%E9%9D%A2&name=%E5%85%B3%E4%BA%8E&category=1&isresource=0&appCode=2&_=1558235377255";
+            qd = await Client.GetAsJsonAsync<QueryData<object>>(query);
+            Assert.Single(qd.rows);
+
+            query = "?sort=ParentName&order=asc&offset=0&limit=100&parentName=%E6%B5%8B%E8%AF%95%E9%A1%B5%E9%9D%A2&name=%E5%85%B3%E4%BA%8E&category=1&isresource=0&appCode=2&_=1558235377255";
+            qd = await Client.GetAsJsonAsync<QueryData<object>>(query);
+            Assert.Single(qd.rows);
+
+            query = "?sort=CategoryName&order=asc&offset=0&limit=100&parentName=%E6%B5%8B%E8%AF%95%E9%A1%B5%E9%9D%A2&name=%E5%85%B3%E4%BA%8E&category=1&isresource=0&appCode=2&_=1558235377255";
+            qd = await Client.GetAsJsonAsync<QueryData<object>>(query);
+            Assert.Single(qd.rows);
+
+            query = "?sort=Target&order=asc&offset=0&limit=100&parentName=%E6%B5%8B%E8%AF%95%E9%A1%B5%E9%9D%A2&name=%E5%85%B3%E4%BA%8E&category=1&isresource=0&appCode=2&_=1558235377255";
+            qd = await Client.GetAsJsonAsync<QueryData<object>>(query);
+            Assert.Single(qd.rows);
+
+            query = "?sort=IsResource&order=asc&offset=0&limit=100&parentName=%E6%B5%8B%E8%AF%95%E9%A1%B5%E9%9D%A2&name=%E5%85%B3%E4%BA%8E&category=1&isresource=0&appCode=2&_=1558235377255";
+            qd = await Client.GetAsJsonAsync<QueryData<object>>(query);
+            Assert.Single(qd.rows);
+
+            query = "?sort=Application&order=asc&offset=0&limit=100&parentName=%E6%B5%8B%E8%AF%95%E9%A1%B5%E9%9D%A2&name=%E5%85%B3%E4%BA%8E&category=1&isresource=0&appCode=2&_=1558235377255";
+            qd = await Client.GetAsJsonAsync<QueryData<object>>(query);
             Assert.Single(qd.rows);
         }
 

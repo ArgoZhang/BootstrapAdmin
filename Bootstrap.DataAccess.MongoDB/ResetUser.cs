@@ -28,9 +28,10 @@ namespace Bootstrap.DataAccess.MongoDB
         /// 
         /// </summary>
         /// <returns></returns>
-        public override bool Save()
+        public override bool Save(DataAccess.ResetUser user)
         {
-            DbManager.ResetUsers.InsertOne(this);
+            DbManager.Users.UpdateOne(md => md.UserName.ToLowerInvariant() == user.UserName.ToLowerInvariant(), Builders<User>.Update.Set(md => md.IsReset, 1));
+            DbManager.ResetUsers.InsertOne(user);
             return true;
         }
     }

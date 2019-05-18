@@ -36,12 +36,14 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public static IEnumerable<Message> Mark(string userName) => DbContextManager.Create<Message>().Flag(userName);
+        public static IEnumerable<Message> Mark(string userName) => DbContextManager.Create<Message>().Mark(userName);
         /// <summary>
         /// 获取Header处显示的消息列表
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
         public static IEnumerable<Message> Retrieves(string userName) => CacheManager.GetOrAdd(RetrieveMessageDataKey, key => DbContextManager.Create<Message>().RetrieveHeaders(userName).OrderByDescending(n => n.SendTime));
+
+        public static bool Save(Message msg) => DbContextManager.Create<Message>().Save(msg);
     }
 }

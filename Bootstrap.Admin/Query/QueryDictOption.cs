@@ -58,8 +58,6 @@ namespace Bootstrap.Admin.Query
                 case "Define":
                     data = Order == "asc" ? data.OrderBy(t => t.Define) : data.OrderByDescending(t => t.Define);
                     break;
-                default:
-                    break;
             }
             ret.rows = data.Skip(Offset).Take(Limit);
             return ret;

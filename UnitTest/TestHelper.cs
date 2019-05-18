@@ -9,14 +9,6 @@ namespace UnitTest
 {
     public static class TestHelper
     {
-        public static string SQLServerConnectionString { get; set; }
-
-        public static string SQLiteConnectionString { get; set; }
-
-        public static string MySqlConnectionString { get; set; }
-
-        public static string NpgSqlConnectionString { get; set; }
-
         /// <summary>
         /// 获得当前工程解决方案目录
         /// </summary>
@@ -55,14 +47,6 @@ namespace UnitTest
 
         public static void ConfigureWebHost(IWebHostBuilder builder, DatabaseProviderType providerName = DatabaseProviderType.SqlServer)
         {
-            if (providerName == DatabaseProviderType.SqlServer)
-            {
-                builder.ConfigureAppConfiguration(app => app.AddInMemoryCollection(new KeyValuePair<string, string>[] {
-                    new KeyValuePair<string, string>("ConnectionStrings:ba", SQLServerConnectionString),
-                    new KeyValuePair<string, string>("DB:0:Enabled", "true")
-                }));
-            }
-
             if (providerName == DatabaseProviderType.SQLite)
             {
                 var dbPath = RetrievePath($"UnitTest{Path.DirectorySeparatorChar}DB{Path.DirectorySeparatorChar}UnitTest.db");
@@ -71,8 +55,7 @@ namespace UnitTest
 
                 builder.ConfigureAppConfiguration(app => app.AddInMemoryCollection(new KeyValuePair<string, string>[] {
                     new KeyValuePair<string, string>("DB:0:Enabled", "false"),
-                    new KeyValuePair<string, string>("DB:1:Enabled", "true"),
-                    new KeyValuePair<string, string>("DB:1:ConnectionStrings:ba", SQLiteConnectionString)
+                    new KeyValuePair<string, string>("DB:1:Enabled", "true")
                 }));
             }
 
@@ -81,8 +64,7 @@ namespace UnitTest
                 builder.ConfigureAppConfiguration(app => app.AddInMemoryCollection(new KeyValuePair<string, string>[] {
                     new KeyValuePair<string, string>("DB:0:Enabled", "false"),
                     new KeyValuePair<string, string>("DB:1:Enabled", "false"),
-                    new KeyValuePair<string, string>("DB:2:Enabled", "true"),
-                    new KeyValuePair<string, string>("DB:2:ConnectionStrings:ba", MySqlConnectionString)
+                    new KeyValuePair<string, string>("DB:2:Enabled", "true")
                 }));
             }
 
@@ -92,8 +74,7 @@ namespace UnitTest
                     new KeyValuePair<string, string>("DB:0:Enabled", "false"),
                     new KeyValuePair<string, string>("DB:1:Enabled", "false"),
                     new KeyValuePair<string, string>("DB:2:Enabled", "false"),
-                    new KeyValuePair<string, string>("DB:3:Enabled", "true"),
-                    new KeyValuePair<string, string>("DB:3:ConnectionStrings:ba", NpgSqlConnectionString)
+                    new KeyValuePair<string, string>("DB:3:Enabled", "true")
                 }));
             }
         }

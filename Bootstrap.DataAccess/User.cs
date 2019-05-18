@@ -1,6 +1,5 @@
 ﻿using Bootstrap.Security;
 using Bootstrap.Security.DataAccess;
-using Longbow.Data;
 using Longbow.Security.Cryptography;
 using PetaPoco;
 using System;
@@ -196,11 +195,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public virtual bool ForgotPassword(ResetUser user)
-        {
-            user.ResetTime = DateTime.Now;
-            return user.Save();
-        }
+        public virtual bool ForgotPassword(ResetUser user) => ResetUserHelper.Save(user);
 
         /// <summary>
         /// 新建前台User View调用/注册用户调用

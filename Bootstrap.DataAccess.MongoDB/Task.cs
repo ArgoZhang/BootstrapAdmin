@@ -12,10 +12,17 @@ namespace Bootstrap.DataAccess.MongoDB
         /// 
         /// </summary>
         /// <returns></returns>
-        public override IEnumerable<DataAccess.Task> Retrieves()
+        public override IEnumerable<DataAccess.Task> Retrieves() => DbManager.Tasks.Find(FilterDefinition<DataAccess.Task>.Empty).SortByDescending(task => task.AssignTime).ToList();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="task"></param>
+        /// <returns></returns>
+        public override bool Save(DataAccess.Task task)
         {
-            var users = DbManager.DBAccess.GetCollection<DataAccess.Task>("Tasks");
-            return users.Find(FilterDefinition<DataAccess.Task>.Empty).SortByDescending(task => task.AssignTime).ToList();
+            DbManager.Tasks.InsertOne(task);
+            return true;
         }
     }
 }

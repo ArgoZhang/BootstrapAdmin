@@ -15,8 +15,18 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <returns></returns>
         protected override IEnumerable<DataAccess.Message> Retrieves(string userName)
         {
-            var msg = DbManager.DBAccess.GetCollection<DataAccess.Message>("Messages");
-            return msg.Find(message => message.To == userName || message.From == userName).ToList();
+            return DbManager.Messages.Find(message => message.To.ToLowerInvariant() == userName.ToLowerInvariant() || message.From.ToLowerInvariant() == userName.ToLowerInvariant()).ToList();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <returns></returns>
+        public override bool Save(DataAccess.Message msg)
+        {
+            DbManager.Messages.InsertOne(msg);
+            return true;
         }
     }
 }

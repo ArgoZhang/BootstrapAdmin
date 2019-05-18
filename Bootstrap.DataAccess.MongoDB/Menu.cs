@@ -39,7 +39,7 @@ namespace Bootstrap.DataAccess.MongoDB
             {
                 p.Id = null;
                 DbManager.Menus.InsertOne(p);
-                return true;
+                p.Id = DbManager.Menus.Find(m => m.Name == p.Name && m.Category == p.Category && m.ParentId == p.ParentId && m.Url == p.Url).FirstOrDefault().Id;
             }
             else
             {
@@ -53,8 +53,8 @@ namespace Bootstrap.DataAccess.MongoDB
                     .Set(md => md.IsResource, p.IsResource)
                     .Set(md => md.Application, p.Application);
                 DbManager.Menus.UpdateOne(md => md.Id == p.Id, update);
-                return true;
             }
+            return true;
         }
 
         /// <summary>

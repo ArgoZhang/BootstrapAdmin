@@ -3,6 +3,7 @@ using Longbow.Web.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using Xunit;
 
@@ -15,8 +16,9 @@ namespace Bootstrap.Admin.Api.SqlServer
         [Fact]
         public async void Option_Ok()
         {
-            var req = new HttpRequestMessage(HttpMethod.Options, "Users");
+            var req = new HttpRequestMessage(HttpMethod.Options, "");
             var resp = await Client.SendAsync(req);
+            Assert.Equal(HttpStatusCode.NoContent, resp.StatusCode);
         }
 
         [Fact]
@@ -25,6 +27,22 @@ namespace Bootstrap.Admin.Api.SqlServer
             // 菜单 系统菜单 系统使用条件
             var query = "?sort=DisplayName&order=asc&offset=0&limit=20&name=Admin&displayName=Administrator&_=1547628247338";
             var qd = await Client.GetAsJsonAsync<QueryData<object>>(query);
+            Assert.Single(qd.rows);
+
+            query = "?sort=UserName&order=asc&offset=0&limit=20&name=Admin&displayName=Administrator&_=1547628247338";
+            qd = await Client.GetAsJsonAsync<QueryData<object>>(query);
+            Assert.Single(qd.rows);
+
+            query = "?sort=RegisterTime&order=asc&offset=0&limit=20&name=Admin&displayName=Administrator&_=1547628247338";
+            qd = await Client.GetAsJsonAsync<QueryData<object>>(query);
+            Assert.Single(qd.rows);
+
+            query = "?sort=ApprovedTime&order=asc&offset=0&limit=20&name=Admin&displayName=Administrator&_=1547628247338";
+            qd = await Client.GetAsJsonAsync<QueryData<object>>(query);
+            Assert.Single(qd.rows);
+
+            query = "?sort=ApprovedBy&order=asc&offset=0&limit=20&name=Admin&displayName=Administrator&_=1547628247338";
+            qd = await Client.GetAsJsonAsync<QueryData<object>>(query);
             Assert.Single(qd.rows);
         }
 

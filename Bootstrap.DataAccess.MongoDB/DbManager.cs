@@ -16,10 +16,11 @@ namespace Bootstrap.DataAccess.MongoDB
         private static IMongoDatabase _db = null;
         private static bool _register = false;
         private static readonly object _locker = new object();
+
         /// <summary>
         /// 
         /// </summary>
-        public static IMongoDatabase DBAccess
+        private static IMongoDatabase DBAccess
         {
             get
             {
@@ -160,6 +161,28 @@ namespace Bootstrap.DataAccess.MongoDB
                 return DBAccess.GetCollection<RejectUser>("RejectUsers");
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static IMongoCollection<DataAccess.Message> Messages
+        {
+            get
+            {
+                return DBAccess.GetCollection<DataAccess.Message>("Messages");
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static IMongoCollection<DataAccess.Task> Tasks
+        {
+            get
+            {
+                return DBAccess.GetCollection<DataAccess.Task>("Tasks");
+            }
+        }
         #endregion
 
         private static void InitDb()
@@ -235,24 +258,6 @@ namespace Bootstrap.DataAccess.MongoDB
                     md.UnmapMember(role => role.Checked);
                 });
             }
-            if (!BsonClassMap.IsClassMapRegistered(typeof(DataAccess.Task)))
-            {
-                BsonClassMap.RegisterClassMap<DataAccess.Task>(md =>
-                {
-                    md.AutoMap();
-                    md.IdMemberMap.SetSerializer(new StringSerializer(BsonType.ObjectId));
-                    md.IdMemberMap.SetIgnoreIfDefault(true);
-                });
-            }
-            if (!BsonClassMap.IsClassMapRegistered(typeof(DataAccess.Message)))
-            {
-                BsonClassMap.RegisterClassMap<DataAccess.Message>(md =>
-                {
-                    md.AutoMap();
-                    md.IdMemberMap.SetSerializer(new StringSerializer(BsonType.ObjectId));
-                    md.IdMemberMap.SetIgnoreIfDefault(true);
-                });
-            }
             if (!BsonClassMap.IsClassMapRegistered(typeof(DataAccess.Exceptions)))
             {
                 BsonClassMap.RegisterClassMap<DataAccess.Exceptions>(md =>
@@ -305,6 +310,29 @@ namespace Bootstrap.DataAccess.MongoDB
                     md.AutoMap();
                     md.IdMemberMap.SetSerializer(new StringSerializer(BsonType.ObjectId));
                     md.IdMemberMap.SetIgnoreIfDefault(true);
+                });
+            }
+            if (!BsonClassMap.IsClassMapRegistered(typeof(DataAccess.Message)))
+            {
+                BsonClassMap.RegisterClassMap<DataAccess.Message>(md =>
+                {
+                    md.AutoMap();
+                    md.IdMemberMap.SetSerializer(new StringSerializer(BsonType.ObjectId));
+                    md.IdMemberMap.SetIgnoreIfDefault(true);
+                    md.UnmapMember(t => t.LabelName);
+                    md.UnmapMember(t => t.Period);
+                    md.UnmapMember(t => t.FromIcon);
+                    md.UnmapMember(t => t.FromDisplayName);
+                });
+            }
+            if (!BsonClassMap.IsClassMapRegistered(typeof(DataAccess.Task)))
+            {
+                BsonClassMap.RegisterClassMap<DataAccess.Task>(md =>
+                {
+                    md.AutoMap();
+                    md.IdMemberMap.SetSerializer(new StringSerializer(BsonType.ObjectId));
+                    md.IdMemberMap.SetIgnoreIfDefault(true);
+                    md.UnmapMember(t => t.AssignDisplayName);
                 });
             }
         }

@@ -40,8 +40,15 @@ namespace Bootstrap.DataAccess.SqlServer
                 Description = "Role_Desc",
                 RoleName = "UnitTest-Save"
             };
+
+            // insert 
             Assert.True(RoleHelper.Save(role));
-            Assert.True(RoleHelper.Delete(RoleHelper.Retrieves().Where(r => r.RoleName == role.RoleName).Select(r => r.Id)));
+
+            // update
+            Assert.True(RoleHelper.Save(role));
+
+            // delete 
+            Assert.True(RoleHelper.Delete(new string[] { role.Id }));
         }
 
         [Fact]
@@ -80,6 +87,13 @@ namespace Bootstrap.DataAccess.SqlServer
         public void RetrieveRolesByUrl_Ok()
         {
             Assert.NotEmpty(RoleHelper.RetrieveRolesByUrl("~/Home/Index"));
+        }
+
+        [Fact]
+        public void SaveByGroupId_Ok()
+        {
+            var gId = GroupHelper.Retrieves().FirstOrDefault(g => g.GroupName == "Admin").Id;
+            RoleHelper.SaveByGroupId(gId, RoleHelper.Retrieves().Where(r => r.RoleName == "Administrators").Select(r => r.Id));
         }
     }
 }

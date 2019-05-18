@@ -1,4 +1,4 @@
-﻿using System.Linq;
+﻿using System;
 using Xunit;
 
 namespace Bootstrap.DataAccess.SqlServer
@@ -9,7 +9,8 @@ namespace Bootstrap.DataAccess.SqlServer
         [Fact]
         public void Retrieves_Ok()
         {
-            Assert.Equal(Enumerable.Empty<Task>(), TaskHelper.Retrieves());
+            TaskHelper.Save(new Task() { TaskName = "UnitTest", AssignName = "User", UserName = "Admin", TaskTime = 0, TaskProgress = 20, AssignTime = DateTime.Now });
+            Assert.NotEmpty(TaskHelper.Retrieves());
         }
     }
 }

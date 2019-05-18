@@ -39,6 +39,12 @@ namespace Bootstrap.DataAccess.SqlServer
             };
             DbContextManager.Create<Trace>().Save(log);
             Assert.NotEmpty(TraceHelper.Retrieves(new PaginationOption() { Limit = 20, Offset = 0, Order = "desc", Sort = "LogTime" }, null, null, null).Items);
+            Assert.NotEmpty(TraceHelper.Retrieves(new PaginationOption() { Limit = 20, Offset = 0, Order = "desc", Sort = "IP" }, null, null, null).Items);
+            Assert.NotEmpty(TraceHelper.Retrieves(new PaginationOption() { Limit = 20, Offset = 0, Order = "desc", Sort = "UserName" }, null, null, null).Items);
+            Assert.NotEmpty(TraceHelper.Retrieves(new PaginationOption() { Limit = 20, Offset = 0, Order = "desc", Sort = "City" }, null, null, null).Items);
+            Assert.NotEmpty(TraceHelper.Retrieves(new PaginationOption() { Limit = 20, Offset = 0, Order = "desc", Sort = "Browser" }, null, null, null).Items);
+            Assert.NotEmpty(TraceHelper.Retrieves(new PaginationOption() { Limit = 20, Offset = 0, Order = "desc", Sort = "OS" }, null, null, null).Items);
+            Assert.NotEmpty(TraceHelper.Retrieves(new PaginationOption() { Limit = 20, Offset = 0, Order = "desc", Sort = "RequestUrl" }, null, null, null).Items);
         }
     }
 }

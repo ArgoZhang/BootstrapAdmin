@@ -31,29 +31,20 @@ namespace Bootstrap.Admin.Controllers.Api
             var previewUrl = string.Empty;
             long fileSize = 0;
             var userName = User.Identity.Name;
-            var error = string.Empty;
             var fileName = files.Key;
 
             fileName = Path.Combine(env.WebRootPath, $"images{Path.DirectorySeparatorChar}uploader{Path.DirectorySeparatorChar}{fileName}");
-            try
-            {
-                if (System.IO.File.Exists(fileName)) System.IO.File.Delete(fileName);
-                fileName = "default.jpg";
-                var webSiteUrl = DictHelper.RetrieveIconFolderPath();
-                var filePath = Path.Combine(env.WebRootPath, webSiteUrl.Replace("~", string.Empty).Replace('/', Path.DirectorySeparatorChar).TrimStart(Path.DirectorySeparatorChar) + fileName);
-                fileSize = new FileInfo(filePath).Length;
-                var iconName = $"{fileName}?v={DateTime.Now.Ticks}";
-                previewUrl = Url.Content($"{webSiteUrl}{iconName}");
-                UserHelper.SaveUserIconByName(userName, iconName);
-            }
-            catch (Exception ex)
-            {
-                error = ex.Message;
-            }
+            if (System.IO.File.Exists(fileName)) System.IO.File.Delete(fileName);
+            fileName = "default.jpg";
+            var webSiteUrl = DictHelper.RetrieveIconFolderPath();
+            var filePath = Path.Combine(env.WebRootPath, webSiteUrl.Replace("~", string.Empty).Replace('/', Path.DirectorySeparatorChar).TrimStart(Path.DirectorySeparatorChar) + fileName);
+            fileSize = new FileInfo(filePath).Length;
+            var iconName = $"{fileName}?v={DateTime.Now.Ticks}";
+            previewUrl = Url.Content($"{webSiteUrl}{iconName}");
+            UserHelper.SaveUserIconByName(userName, iconName);
 
             return new JsonResult(new
             {
-                error = string.IsNullOrEmpty(error) ? error : $"服务器端错误-{error}",
                 initialPreview = new string[] { previewUrl },
                 initialPreviewConfig = new object[] {
                     new { caption = "", size = fileSize, showZoom = true, key = "default.jpg" }
@@ -86,7 +77,6 @@ namespace Bootstrap.Admin.Controllers.Api
             var previewUrl = string.Empty;
             long fileSize = 0;
             var userName = User.Identity.Name;
-            var error = string.Empty;
             var fileName = string.Empty;
             if (files.Files.Count > 0)
             {
@@ -107,7 +97,6 @@ namespace Bootstrap.Admin.Controllers.Api
             }
             return new JsonResult(new
             {
-                error = string.IsNullOrEmpty(error) ? error : $"服务器端错误-{error}",
                 initialPreview = new string[] { previewUrl },
                 initialPreviewConfig = new object[] {
                     new { caption = "新头像", size = fileSize, showZoom = true, key = fileName }

@@ -20,5 +20,11 @@ namespace Bootstrap.DataAccess.SqlServer
             var reasons = UserHelper.RetrieveResetReasonsByUserName(user.UserName);
             Assert.NotEmpty(reasons);
         }
+
+        [Fact]
+        public void Save_Ok()
+        {
+            Assert.True(ResetUserHelper.Save(new ResetUser() { UserName = "U_Reset", DisplayName = "UnitTest", Reason = "UnitTest" }));
+        }
     }
 }

@@ -18,6 +18,18 @@ namespace Bootstrap.Admin.Api.SqlServer
             var query = "?sort=Category&order=asc&offset=0&limit=20&category=%E8%8F%9C%E5%8D%95&name=%E7%B3%BB%E7%BB%9F%E8%8F%9C%E5%8D%95&define=0&_=1547608210979";
             var qd = await Client.GetAsJsonAsync<QueryData<BootstrapDict>>(query);
             Assert.Single(qd.rows);
+
+            query = "?sort=Name&order=asc&offset=0&limit=20&category=%E8%8F%9C%E5%8D%95&name=%E7%B3%BB%E7%BB%9F%E8%8F%9C%E5%8D%95&define=0&_=1547608210979";
+            qd = await Client.GetAsJsonAsync<QueryData<BootstrapDict>>(query);
+            Assert.Single(qd.rows);
+
+            query = "?sort=Code&order=asc&offset=0&limit=20&category=%E8%8F%9C%E5%8D%95&name=%E7%B3%BB%E7%BB%9F%E8%8F%9C%E5%8D%95&define=0&_=1547608210979";
+            qd = await Client.GetAsJsonAsync<QueryData<BootstrapDict>>(query);
+            Assert.Single(qd.rows);
+
+            query = "?sort=Define&order=asc&offset=0&limit=20&category=%E8%8F%9C%E5%8D%95&name=%E7%B3%BB%E7%BB%9F%E8%8F%9C%E5%8D%95&define=0&_=1547608210979";
+            qd = await Client.GetAsJsonAsync<QueryData<BootstrapDict>>(query);
+            Assert.Single(qd.rows);
         }
 
         [Fact]

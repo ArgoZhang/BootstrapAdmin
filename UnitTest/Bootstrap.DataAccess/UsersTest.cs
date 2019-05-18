@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Longbow.Web.Mvc;
+using System;
 using System.Linq;
 using Xunit;
 
@@ -90,6 +91,7 @@ namespace Bootstrap.DataAccess.SqlServer
         public void SaveUser_Ok()
         {
             var user = new User { UserName = "UnitTestDelete", Password = "123", DisplayName = "DisplayName", ApprovedBy = "System", ApprovedTime = DateTime.Now, Description = "Desc", Icon = "default.jpg" };
+            Assert.Equal($"{user.UserName} ({user.DisplayName})", user.ToString());
             Assert.True(UserHelper.Save(user));
             Assert.True(UserHelper.Delete(UserHelper.Retrieves().Where(usr => usr.UserName == user.UserName).Select(usr => usr.Id)));
         }
@@ -146,6 +148,35 @@ namespace Bootstrap.DataAccess.SqlServer
         {
             var usr = UserHelper.RetrieveUserByUserName("Admin");
             Assert.Equal("Administrator", usr.DisplayName);
+        }
+
+        [Fact]
+        public void SaveApp_Ok()
+        {
+            var appId = AppHelper.RetrievesByUserName("Admin").FirstOrDefault();
+            Assert.False(string.IsNullOrEmpty(appId));
+            Assert.True(UserHelper.SaveApp("Admin", appId));
+            UserHelper.SaveApp("Admin", "");
+        }
+
+        [Fact]
+        public void ResetPassword_Ok()
+        {
+            Assert.False(UserHelper.ResetPassword("User", "123789"));
+
+            var newUser = new User() { UserName = "U_Reset", DisplayName = "UnitTest", ApprovedTime = DateTime.Now, ApprovedBy = "System", Password = "1", Description = "UnitTest", RegisterTime = DateTime.Now };
+            var ids = UserHelper.Retrieves().Where(u => u.UserName == newUser.UserName).Select(u => u.Id);
+            UserHelper.Delete(ids);
+            Assert.True(UserHelper.Save(newUser));
+            Assert.True(UserHelper.ForgotPassword(new ResetUser() { DisplayName = "UnitTest", Reason = "UnitTest", ResetTime = DateTime.Now, UserName = newUser.UserName }));
+            Assert.True(UserHelper.ResetPassword(newUser.UserName, "123"));
+        }
+
+        [Fact]
+        public void RetrieveLoginUsers_Ok()
+        {
+            var data = LoginHelper.Retrieves(new PaginationOption() { Limit = 20, Offset = 0 }, "");
+            Assert.NotNull(data.Items);
         }
     }
 }

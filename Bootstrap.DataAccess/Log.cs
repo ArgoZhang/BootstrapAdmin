@@ -62,7 +62,6 @@ namespace Bootstrap.DataAccess
         {
             if (p == null) throw new ArgumentNullException(nameof(p));
             DeleteLogAsync();
-            p.LogTime = DateTime.Now;
             DbManager.Create().Save(p);
             return true;
         }

@@ -22,8 +22,16 @@ namespace Bootstrap.DataAccess.SqlServer
                 Url = "#",
                 ParentId = "0"
             };
+
+            // insert
             Assert.True(MenuHelper.Save(poco));
-            MenuHelper.Delete(MenuHelper.RetrieveAllMenus("Admin").Where(n => n.Name == poco.Name).Select(n => n.Id));
+
+            // update
+            poco = MenuHelper.RetrieveAllMenus("Admin").Where(m => m.Id == poco.Id).FirstOrDefault();
+            Assert.True(MenuHelper.Save(poco));
+
+            // clean
+            MenuHelper.Delete(new string[] { poco.Id });
         }
 
         [Fact]
