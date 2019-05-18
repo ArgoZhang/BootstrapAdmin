@@ -25,16 +25,16 @@ namespace Bootstrap.Admin.Api.SqlServer
             var ret = await Client.PostAsJsonAsync<Role, bool>(new Role() { RoleName = "UnitTest-Role", Description = "UnitTest-Desc" });
             Assert.True(ret);
 
-            var ids = new Role().Retrieves().Where(d => d.RoleName == "UnitTest-Role").Select(d => d.Id);
+            var ids = RoleHelper.Retrieves().Where(d => d.RoleName == "UnitTest-Role").Select(d => d.Id);
             Assert.True(await Client.DeleteAsJsonAsync<IEnumerable<string>, bool>(ids));
         }
 
         [Fact]
         public async void PostById_Ok()
         {
-            var uid = new User().Retrieves().Where(u => u.UserName == "Admin").First().Id;
-            var gid = new Group().Retrieves().Where(g => g.GroupName == "Admin").First().Id;
-            var mid = new Menu().RetrieveAllMenus("Admin").Where(m => m.Url == "~/Admin/Index").First().Id;
+            var uid = UserHelper.Retrieves().Where(u => u.UserName == "Admin").First().Id;
+            var gid = GroupHelper.Retrieves().Where(g => g.GroupName == "Admin").First().Id;
+            var mid = MenuHelper.RetrieveAllMenus("Admin").Where(m => m.Url == "~/Admin/Index").First().Id;
 
             var ret = await Client.PostAsJsonAsync<string, IEnumerable<object>>($"{uid}?type=user", string.Empty);
             Assert.NotEmpty(ret);
@@ -49,10 +49,10 @@ namespace Bootstrap.Admin.Api.SqlServer
         [Fact]
         public async void PutById_Ok()
         {
-            var uid = new User().Retrieves().Where(u => u.UserName == "Admin").First().Id;
-            var gid = new Group().Retrieves().Where(g => g.GroupName == "Admin").First().Id;
-            var mid = new Menu().RetrieveAllMenus("Admin").Where(m => m.Url == "~/Admin/Index").First().Id;
-            var ids = new Role().Retrieves().Select(r => r.Id);
+            var uid = UserHelper.Retrieves().Where(u => u.UserName == "Admin").First().Id;
+            var gid = GroupHelper.Retrieves().Where(g => g.GroupName == "Admin").First().Id;
+            var mid = MenuHelper.RetrieveAllMenus("Admin").Where(m => m.Url == "~/Admin/Index").First().Id;
+            var ids = RoleHelper.Retrieves().Select(r => r.Id);
 
             var ret = await Client.PutAsJsonAsync<IEnumerable<string>, bool>($"{uid}?type=user", ids);
             Assert.True(ret);

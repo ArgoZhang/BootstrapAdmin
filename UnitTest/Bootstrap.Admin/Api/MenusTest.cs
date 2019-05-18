@@ -26,8 +26,7 @@ namespace Bootstrap.Admin.Api.SqlServer
             var ret = await Client.PostAsJsonAsync<BootstrapMenu, bool>(new BootstrapMenu() { Name = "UnitTest-Menu", Application = "0", Category = "0", ParentId = "0", Url = "#", Target = "_self", IsResource = 0 });
             Assert.True(ret);
 
-            var menu = new Menu();
-            var ids = menu.RetrieveAllMenus("Admin").Where(d => d.Name == "UnitTest-Menu").Select(d => d.Id);
+            var ids = MenuHelper.RetrieveAllMenus("Admin").Where(d => d.Name == "UnitTest-Menu").Select(d => d.Id);
             Assert.True(await Client.DeleteAsJsonAsync<IEnumerable<string>, bool>("", ids));
         }
 
@@ -35,11 +34,11 @@ namespace Bootstrap.Admin.Api.SqlServer
         [Fact]
         public async void PostById_Ok()
         {
-            var uid = new User().Retrieves().Where(u => u.UserName == "Admin").First().Id;
+            var uid = UserHelper.Retrieves().Where(u => u.UserName == "Admin").First().Id;
             var ret = await Client.PostAsJsonAsync<string, IEnumerable<object>>($"{uid}?type=user", string.Empty);
             Assert.NotEmpty(ret);
 
-            var rid = new Role().Retrieves().Where(r => r.RoleName == "Administrators").First().Id;
+            var rid = RoleHelper.Retrieves().Where(r => r.RoleName == "Administrators").First().Id;
             ret = await Client.PostAsJsonAsync<string, IEnumerable<object>>($"{rid}?type=role", string.Empty);
             Assert.NotEmpty(ret);
         }
@@ -47,8 +46,8 @@ namespace Bootstrap.Admin.Api.SqlServer
         [Fact]
         public async void PutById_Ok()
         {
-            var ids = new Menu().RetrieveAllMenus("Admin").Select(g => g.Id);
-            var rid = new Role().Retrieves().Where(r => r.RoleName == "Administrators").First().Id;
+            var ids = MenuHelper.RetrieveAllMenus("Admin").Select(g => g.Id);
+            var rid = RoleHelper.Retrieves().Where(r => r.RoleName == "Administrators").First().Id;
             var ret = await Client.PutAsJsonAsync<IEnumerable<string>, bool>($"{rid}", ids);
             Assert.True(ret);
         }

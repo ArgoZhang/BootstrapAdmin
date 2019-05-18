@@ -12,7 +12,7 @@ namespace Bootstrap.Admin.Api.SqlServer
         [Fact]
         public async void Get_Ok()
         {
-            var rid = new Role().Retrieves().Where(r => r.RoleName == "Administrators").First().Id;
+            var rid = RoleHelper.Retrieves().Where(r => r.RoleName == "Administrators").First().Id;
             var cates = await Client.GetAsJsonAsync<IEnumerable<App>>(rid);
             Assert.NotEmpty(cates);
         }

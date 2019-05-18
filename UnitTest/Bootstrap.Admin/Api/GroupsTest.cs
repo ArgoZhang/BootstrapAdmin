@@ -22,7 +22,7 @@ namespace Bootstrap.Admin.Api.SqlServer
         [Fact]
         public async void GetById_Ok()
         {
-            var id = new Group().Retrieves().Where(gp => gp.GroupName == "Admin").First().Id;
+            var id = GroupHelper.Retrieves().Where(gp => gp.GroupName == "Admin").First().Id;
             var g = await Client.GetAsJsonAsync<Group>(id);
             Assert.Equal("Admin", g.GroupName);
         }
@@ -33,18 +33,18 @@ namespace Bootstrap.Admin.Api.SqlServer
             var ret = await Client.PostAsJsonAsync<Group, bool>("", new Group() { GroupName = "UnitTest-Group", Description = "UnitTest-Desc" });
             Assert.True(ret);
 
-            var ids = new Group().Retrieves().Where(d => d.GroupName == "UnitTest-Group").Select(d => d.Id);
+            var ids = GroupHelper.Retrieves().Where(d => d.GroupName == "UnitTest-Group").Select(d => d.Id);
             Assert.True(await Client.DeleteAsJsonAsync<IEnumerable<string>, bool>(ids));
         }
 
         [Fact]
         public async void PostById_Ok()
         {
-            var uid = new User().Retrieves().Where(u => u.UserName == "Admin").First().Id;
+            var uid = UserHelper.Retrieves().Where(u => u.UserName == "Admin").First().Id;
             var ret = await Client.PostAsJsonAsync<string, IEnumerable<Group>>($"{uid}?type=user", string.Empty);
             Assert.NotEmpty(ret);
 
-            var rid = new Role().Retrieves().Where(r => r.RoleName == "Administrators").First().Id;
+            var rid = RoleHelper.Retrieves().Where(r => r.RoleName == "Administrators").First().Id;
             ret = await Client.PostAsJsonAsync<string, IEnumerable<Group>>($"{rid}?type=role", string.Empty);
             Assert.NotEmpty(ret);
         }
@@ -52,12 +52,12 @@ namespace Bootstrap.Admin.Api.SqlServer
         [Fact]
         public async void PutById_Ok()
         {
-            var ids = new Group().Retrieves().Select(g => g.Id);
-            var uid = new User().Retrieves().Where(u => u.UserName == "Admin").First().Id;
+            var ids = GroupHelper.Retrieves().Select(g => g.Id);
+            var uid = UserHelper.Retrieves().Where(u => u.UserName == "Admin").First().Id;
             var ret = await Client.PutAsJsonAsync<IEnumerable<string>, bool>($"{uid}?type=user", ids);
             Assert.True(ret);
 
-            var rid = new Role().Retrieves().Where(r => r.RoleName == "Administrators").First().Id;
+            var rid = RoleHelper.Retrieves().Where(r => r.RoleName == "Administrators").First().Id;
             ret = await Client.PutAsJsonAsync<IEnumerable<string>, bool>($"{rid}?type=role", ids);
             Assert.True(ret);
         }

@@ -21,24 +21,23 @@ namespace Bootstrap.Admin.Api.SqlServer
         [Fact]
         public async void Post_Ok()
         {
-            var dict = new Dict();
-            var dicts = dict.RetrieveDicts();
+            var dicts = DictHelper.RetrieveDicts();
 
             var ids = dicts.Where(d => d.Category == "UnitTest-Settings").Select(d => d.Id);
-            dict.Delete(ids);
+            DictHelper.Delete(ids);
 
-            Assert.True(dict.Save(new Dict() { Category = "UnitTest-Settings", Name = "UnitTest", Code = "0", Define = 0 }));
+            Assert.True(DictHelper.Save(new BootstrapDict() { Category = "UnitTest-Settings", Name = "UnitTest", Code = "0", Define = 0 }));
 
             // 获得原来值
-            var resp = await Client.PostAsJsonAsync<BootstrapDict, bool>(new Dict() { Category = "UnitTest-Settings", Name = "UnitTest", Code = "UnitTest" });
+            var resp = await Client.PostAsJsonAsync<BootstrapDict, bool>(new BootstrapDict() { Category = "UnitTest-Settings", Name = "UnitTest", Code = "UnitTest" });
             Assert.True(resp);
 
-            var code = dict.RetrieveDicts().FirstOrDefault(d => d.Category == "UnitTest-Settings").Code;
+            var code = DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "UnitTest-Settings").Code;
             Assert.Equal("UnitTest", code);
 
             // Delete 
-            ids = dict.RetrieveDicts().Where(d => d.Category == "UnitTest-Settings").Select(d => d.Id);
-            dict.Delete(ids);
+            ids = DictHelper.RetrieveDicts().Where(d => d.Category == "UnitTest-Settings").Select(d => d.Id);
+            DictHelper.Delete(ids);
         }
 
         internal class CacheCorsItem : ICacheCorsItem

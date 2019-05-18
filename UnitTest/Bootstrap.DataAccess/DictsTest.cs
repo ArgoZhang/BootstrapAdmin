@@ -1,4 +1,4 @@
-using Bootstrap.Security;
+﻿using Bootstrap.Security;
 using System;
 using System.Linq;
 using System.Net.Http;
@@ -9,6 +9,8 @@ namespace Bootstrap.DataAccess.SqlServer
     [Collection("SQLServerContext")]
     public class DictsTest
     {
+        protected virtual string DatabaseName { get; set; } = "SQLServer";
+
         [Fact]
         public void SaveAndDelete_Ok()
         {
@@ -166,6 +168,14 @@ namespace Bootstrap.DataAccess.SqlServer
         public void IPSvrCachePeriod_Ok()
         {
             Assert.Equal("10", DictHelper.RetrieveLocaleIPSvrCachePeriod());
+        }
+
+        [Fact]
+        public void DatabaseCheck_Ok()
+        {
+            var dict = new BootstrapDict() { Category = "系统检查", Name = "系统设置", Code = DatabaseName, Define = 0 };
+            Assert.True(DictHelper.Save(dict));
+            Assert.Equal(DatabaseName, DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == dict.Category && d.Name == dict.Name)?.Code ?? "unknown");
         }
 
         #region Private Class For Test

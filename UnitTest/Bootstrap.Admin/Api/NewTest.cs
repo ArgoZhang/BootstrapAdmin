@@ -33,7 +33,7 @@ namespace Bootstrap.Admin.Api.SqlServer
             Assert.True(resp);
 
             // 删除新用户
-            nusr.Delete(new string[] { nusr.Id });
+            UserHelper.Delete(new string[] { nusr.Id });
 
             // Reject
             nusr = InsertNewUser();
@@ -48,15 +48,15 @@ namespace Bootstrap.Admin.Api.SqlServer
         private User InsertNewUser()
         {
             // 插入新用户
-            var nusr = new User() { UserName = "UnitTest-Register", DisplayName = "UnitTest", Password = "1", Description = "UnitTest" };
-            Assert.True(new User().Save(nusr));
+            var nusr = new User() { UserName = "UnitTest_New", DisplayName = "UnitTest", Password = "1", Description = "UnitTest" };
+            Assert.True(UserHelper.Save(nusr));
             return nusr;
         }
 
         private void DeleteUnitTestUser()
         {
-            var ids = new User().RetrieveNewUsers().Where(u => u.UserName == "UnitTest-Register").Select(u => u.Id);
-            new User().Delete(ids);
+            var ids = UserHelper.RetrieveNewUsers().Where(u => u.UserName == "UnitTest_New").Select(u => u.Id);
+            UserHelper.Delete(ids);
         }
     }
 }
