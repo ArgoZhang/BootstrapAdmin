@@ -218,7 +218,7 @@ namespace Bootstrap.DataAccess
             try
             {
                 db.BeginTransaction();
-                if (!db.Exists<User>("where UserName = @0", user.UserName))
+                if (!db.Exists<User>("UserName = @0", user.UserName))
                 {
                     db.Insert(user);
                     db.Execute("insert into UserRole (UserID, RoleID) select ID, (select ID from Roles where RoleName = 'Default') RoleId from Users where UserName = @0", user.UserName);
