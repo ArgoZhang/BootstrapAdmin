@@ -38,34 +38,21 @@ test_script:
     echo "" "Install coveralls.net tools"
 
     dotnet tool install coveralls.net --version 1.0.0 --tool-path "./tools"
+  
 
-    # SQLite database
-
-    echo "" "Start test for SQLite"
-
-    dotnet test UnitTest --no-restore --filter "FullyQualifiedName~SQLite" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutputDirectory=../
-
-    cmd.exe /c ".\tools\csmacnz.Coveralls.exe --opencover -i coverage.xml --useRelativePaths"
-
-
+    # init sqlserver database
+    
     $startPath = "$($env:appveyor_build_folder)\DatabaseScripts"
 
     $sqlInstance = "(local)\SQL2014"
 
     $outFile = "$($env:appveyor_build_folder)\DatabaseScripts\output.log"
 
-
-    # init sqlserver database
-
     $sqlFile = join-path $startPath "Install.sql"
 
     $initFile = join-path $startPath "InitData.sql"
 
     sqlcmd -S "$sqlInstance" -U sa -P Password12! -i "$sqlFile" -i "$initFile" -o "$outFile"
-
-    echo "" "Start test for SqlServer"
-
-    dotnet test UnitTest --no-restore --filter "FullyQualifiedName~SqlServer"
 
 
     # init mysql database
@@ -91,11 +78,6 @@ test_script:
     cmd.exe /c $cmd $initFile
 
 
-    echo "" "Start test for MySql"
-
-    dotnet test UnitTest --no-restore --filter "FullyQualifiedName~MySql"
-
-
     # init mongodb data
 
     $initFolder = join-path $startPath "MongoDB"
@@ -114,10 +96,11 @@ test_script:
 
     cd $($env:appveyor_build_folder)
 
-    echo "" "Start test for MongoDB"
+    #dotnet test UnitTest --no-restore --filter "FullyQualifiedName~MongoDB" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutputDirectory=../
 
-    dotnet test UnitTest --no-restore --filter "FullyQualifiedName~MongoDB" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutputDirectory=../
+    dotnet test UnitTest --no-restore /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Include="[Bootstrap*]*" /p:CoverletOutput=../
 
+    cmd.exe /c ".\tools\csmacnz.Coveralls.exe --opencover -i coverage.opencover.xml --useRelativePaths"
     }
 artifacts:
 - path: Bootstrap.Admin\bin\release\netcoreapp2.2\publish\
