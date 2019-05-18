@@ -48,6 +48,7 @@ namespace Bootstrap.DataAccess
                 value = value.Where(v => !systemDicts.Any(d => d.Id == v));
                 if (!value.Any()) return true;
             }
+            if (!value.Any()) return true;
             var ret = DbContextManager.Create<Dict>().Delete(value);
             CacheCleanUtility.ClearCache(dictIds: value);
             return ret;
