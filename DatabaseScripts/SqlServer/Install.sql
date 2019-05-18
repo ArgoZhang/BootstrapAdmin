@@ -1,13 +1,21 @@
 ﻿USE [master]
 GO
+
+if exists (select * from sys.databases where name = 'BootstrapAdmin')
+	drop database [BootstrapAdmin]
+
 Create database [BootstrapAdmin]
 GO
+
 ALTER DATABASE [BootstrapAdmin] SET RECOVERY SIMPLE
 GO
+
 ALTER DATABASE [BootstrapAdmin] SET AUTO_SHRINK ON 
 GO
+
 USE [BootstrapAdmin]
 GO
+
 /****** Object:  Table [dbo].[Users]    Script Date: 11/12/2016 15:49:11 ******/
 SET ANSI_NULLS ON
 GO

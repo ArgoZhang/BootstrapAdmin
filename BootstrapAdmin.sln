@@ -1,18 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28407.52
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQLServer", "SQLServer", "{87319AF5-7C40-4362-B67C-35F9DD737DB4}"
 	ProjectSection(SolutionItems) = preProject
-		DatabaseScripts\InitData.sql = DatabaseScripts\InitData.sql
-		DatabaseScripts\Install.sql = DatabaseScripts\Install.sql
+		DatabaseScripts\SqlServer\appveyor.ps1 = DatabaseScripts\SqlServer\appveyor.ps1
+		DatabaseScripts\SqlServer\InitData.sql = DatabaseScripts\SqlServer\InitData.sql
+		DatabaseScripts\SqlServer\install.ps1 = DatabaseScripts\SqlServer\install.ps1
+		DatabaseScripts\SqlServer\Install.sql = DatabaseScripts\SqlServer\Install.sql
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.Admin", "Bootstrap.Admin\Bootstrap.Admin.csproj", "{7B2B7043-3CB2-4C5A-BDF2-8C47F1A5471A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{792A0B12-3F41-4BC4-A768-7D8D91C213B2}"
 	ProjectSection(SolutionItems) = preProject
+		appveyor.ps1 = appveyor.ps1
 		appveyor.yml = appveyor.yml
 		README.md = README.md
 	EndProjectSection
@@ -40,9 +43,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.DataAccess.MongoD
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MongoDB", "MongoDB", "{A06A0AD8-A246-4329-B024-7174AE4A3EDE}"
 	ProjectSection(SolutionItems) = preProject
+		DatabaseScripts\MongoDB\appveyor.ps1 = DatabaseScripts\MongoDB\appveyor.ps1
 		DatabaseScripts\MongoDB\Dicts.js = DatabaseScripts\MongoDB\Dicts.js
 		DatabaseScripts\MongoDB\Groups.js = DatabaseScripts\MongoDB\Groups.js
 		DatabaseScripts\MongoDB\init.js = DatabaseScripts\MongoDB\init.js
+		DatabaseScripts\MongoDB\install.sh = DatabaseScripts\MongoDB\install.sh
 		DatabaseScripts\MongoDB\Navigations.js = DatabaseScripts\MongoDB\Navigations.js
 		DatabaseScripts\MongoDB\Roles.js = DatabaseScripts\MongoDB\Roles.js
 		DatabaseScripts\MongoDB\Users.js = DatabaseScripts\MongoDB\Users.js
@@ -50,7 +55,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MongoDB", "MongoDB", "{A06A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MySQL", "MySQL", "{084E2E94-6B7D-4D3E-9BF1-6972427FBF80}"
 	ProjectSection(SolutionItems) = preProject
+		DatabaseScripts\MySQL\appveyor.ps1 = DatabaseScripts\MySQL\appveyor.ps1
 		DatabaseScripts\MySQL\initData.sql = DatabaseScripts\MySQL\initData.sql
+		DatabaseScripts\MySQL\install.sh = DatabaseScripts\MySQL\install.sh
 		DatabaseScripts\MySQL\install.sql = DatabaseScripts\MySQL\install.sql
 		DatabaseScripts\MySQL\my.ini = DatabaseScripts\MySQL\my.ini
 	EndProjectSection
@@ -60,6 +67,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Postgresql", "Postgresql", "{6F61C2AC-84D4-48A9-8A48-680657CC8175}"
 	ProjectSection(SolutionItems) = preProject
 		DatabaseScripts\Postgresql\initData.sql = DatabaseScripts\Postgresql\initData.sql
+		DatabaseScripts\Postgresql\install.ps1 = DatabaseScripts\Postgresql\install.ps1
 		DatabaseScripts\Postgresql\install.sql = DatabaseScripts\Postgresql\install.sql
 	EndProjectSection
 EndProject
@@ -98,8 +106,13 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{87319AF5-7C40-4362-B67C-35F9DD737DB4} = {586410F2-C1F0-47CD-AB28-2CF506DED2C8}
 		{C82A6E45-AB90-43D1-8429-5CBE953D8151} = {C7F51A14-2D89-4D1F-AD78-C42B79AB0BF0}
 		{B6B29DE5-D7B0-4A4D-9E7A-AADC68E9C43F} = {C7F51A14-2D89-4D1F-AD78-C42B79AB0BF0}
+		{523515EC-2AD7-4282-9AF4-9D20371183B0} = {586410F2-C1F0-47CD-AB28-2CF506DED2C8}
+		{A06A0AD8-A246-4329-B024-7174AE4A3EDE} = {586410F2-C1F0-47CD-AB28-2CF506DED2C8}
+		{084E2E94-6B7D-4D3E-9BF1-6972427FBF80} = {586410F2-C1F0-47CD-AB28-2CF506DED2C8}
+		{6F61C2AC-84D4-48A9-8A48-680657CC8175} = {586410F2-C1F0-47CD-AB28-2CF506DED2C8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {221EAE38-5F75-4391-9A48-E462A9F3B8FC}
