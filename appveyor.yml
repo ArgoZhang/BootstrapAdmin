@@ -10,7 +10,8 @@ init:
 - ps: dotnet --version
 environment:
   Appveyor: true
-  COVERALLS_REPO_TOKEN: OSBtrE43PLtH6NFqk7XDZr9sZcdTYARZ4
+  COVERALLS_REPO_TOKEN: 
+    secure: 5L1b6XqSNTOfU1iZrARo5eUOi1HOleVO3VDCW0pr6yaspgkC5jxL+gBDK0OEY8EI
 services:
 - mssql2014
 - mysql
