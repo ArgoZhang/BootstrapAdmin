@@ -16,7 +16,7 @@
         "Groups": []
     },
     {
-        "UserName": "user",
+        "UserName": "User",
         "Password": "2v9os69yRQ2j3y3/J+CCd4bG3mlu/fn+wGpZBzFlhOg=",
         "PassSalt": "djT5LiGxwS1l8aDGP0f92v06fbA5BhOcwRGkv5ENIHFtzc1b",
         "DisplayName": "测试用户",
