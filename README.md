@@ -20,6 +20,25 @@
 [![Repo Size](https://img.shields.io/github/repo-size/ArgoZhang/BootstrapAdmin.svg?logo=github&logoColor=green&label=repo)](https://github.com/ArgoZhang/BootstrapAdmin)
 [![Commit Date](https://img.shields.io/github/last-commit/ArgoZhang/BootstrapAdmin/master.svg?logo=github&logoColor=green&label=commit)](https://github.com/ArgoZhang/BootstrapAdmin)
 
+##### Platform
+![windows](https://img.shields.io/badge/windows-suported-success.svg?logo=windows)
+![mac](https://img.shields.io/badge/centos-supported-success.svg?logo=apple&logoColor=white)
+![linux](https://img.shields.io/badge/linux-suported-success.svg?logo=linux&logoColor=white)
+
+##### Browser
+![chrome](https://img.shields.io/badge/chrome->%3D4.4-success.svg?logo=google%20chrome&logoColor=red)
+![firefox](https://img.shields.io/badge/firefox->38-success.svg?logo=mozilla%20firefox&logoColor=red)
+![edge](https://img.shields.io/badge/edge->%3D12-success.svg?logo=microsoft%20edge&logoColor=blue)
+![ie](https://img.shields.io/badge/ie->%3D11-success.svg?logo=internet%20explorer&logoColor=blue)
+![Safari](https://img.shields.io/badge/safari->%3D9-success.svg?logo=apple&logoColor=white)
+![Andriod](https://img.shields.io/badge/andriod->%3D4.4-success.svg?logo=android)
+![oper](https://img.shields.io/badge/opera->%3D4.4-success.svg?logo=opera&logoColor=red)
+
+##### Mobile
+![ios](https://img.shields.io/badge/ios-supported-success.svg?logo=apple&logoColor=white)
+![Andriod](https://img.shields.io/badge/andriod-suported-success.svg?logo=android)
+![microsoft](https://img.shields.io/badge/windows-suported-success.svg?logo=windows)
+
 ## 项目介绍
 一直需要一款后台管理系统，但是网上很多开源项目都是 **Java** 开发的，本人是 **NET** 平台的对 **Java** 一窍不通，C#版本的本来就少而且还没有合适的。于是决定自己开发一套后台管理系统。由于前台采用 **Bootstrap** 布局样式，所以就叫做 **BootstrapAdmin** 。本系统可以用于所有的 Web 应用程序，目前版本已经升级到 **NET CORE** 具备跨平台能力。数据库方面同时支持多种数据库，详细列表见后面**数据库**的详细列表，切换数据源仅需更改配置文件无需重启应用程序，配置简单灵活。UI 前端使用流行的 Bootstrap 框架布局对移动设备的兼容性非常好，自适应目前市场几乎所有终端设备。本系统还具备单一后台支持多前台的特色，提供 **单点登录（SSO）** 的能力。  
 
