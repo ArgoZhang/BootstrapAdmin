@@ -77,13 +77,14 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="httpClientFactory"></param>
         /// <param name="userName"></param>
         /// <param name="projName"></param>
+        /// <param name="branchName"></param>
         /// <param name="label"></param>
         /// <param name="color"></param>
         /// <returns></returns>
-        public async Task<ActionResult> Builds([FromServices]IHttpClientFactory httpClientFactory, [FromQuery]string userName = "ArgoZhang", [FromQuery]string projName = "bootstrapadmin", [FromQuery]string label = "custom badge", [FromQuery]string color = "orange")
+        public async Task<ActionResult> Builds([FromServices]IHttpClientFactory httpClientFactory, [FromQuery]string userName = "ArgoZhang", [FromQuery]string projName = "bootstrapadmin", [FromQuery]string branchName = "master", [FromQuery]string label = "custom badge", [FromQuery]string color = "orange")
         {
             var client = httpClientFactory.CreateClient();
-            var content = await client.GetAsJsonAsync<AppveyorBuildResult>($"https://ci.appveyor.com/api/projects/{userName}/{projName}");
+            var content = await client.GetAsJsonAsync<AppveyorBuildResult>($"https://ci.appveyor.com/api/projects/{userName}/{projName}/branch/{branchName}");
             return new JsonResult(new { schemaVersion = 1, label, message = content.Build.Version, color });
         }
 
