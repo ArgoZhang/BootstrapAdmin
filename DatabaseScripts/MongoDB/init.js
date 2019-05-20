@@ -1,8 +1,8 @@
-﻿load("Dicts.js");
-load("Navigations.js");
-load("Groups.js");
-load("Roles.js");
-load("Users.js");
+﻿load("./Dicts.js");
+load("./Navigations.js");
+load("./Groups.js");
+load("./Roles.js");
+load("./Users.js");
 
 conn = new Mongo("localhost:27017");
 db = conn.getDB("BootstrapAdmin");
