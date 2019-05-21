@@ -22,7 +22,7 @@
 
 ##### Platform
 ![windows](https://img.shields.io/badge/windows-suported-success.svg?logo=windows)
-![mac](https://img.shields.io/badge/centos-supported-success.svg?logo=apple&logoColor=white)
+![macOS](https://img.shields.io/badge/macOS-supported-success.svg?logo=apple&logoColor=white)
 ![linux](https://img.shields.io/badge/linux-suported-success.svg?logo=linux&logoColor=white)
 
 ##### Browser
