@@ -24,6 +24,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="label"></param>
         /// <param name="color"></param>
         /// <returns></returns>
+        [HttpGet]
         public async Task<ActionResult> Issues([FromServices]IHttpClientFactory httpClientFactory, [FromQuery]string userName = "LongbowEnterprise", [FromQuery]string repoName = "BootstrapAdmin", [FromQuery]string label = "custom badge", [FromQuery]string color = "orange")
         {
             var client = httpClientFactory.CreateClient();
@@ -43,6 +44,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="label"></param>
         /// <param name="color"></param>
         /// <returns></returns>
+        [HttpGet]
         public async Task<ActionResult> Pulls([FromServices]IHttpClientFactory httpClientFactory, [FromQuery]string userName = "LongbowEnterprise", [FromQuery]string repoName = "BootstrapAdmin", [FromQuery]string label = "custom badge", [FromQuery]string color = "orange")
         {
             var client = httpClientFactory.CreateClient();
@@ -62,6 +64,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="label"></param>
         /// <param name="color"></param>
         /// <returns></returns>
+        [HttpGet]
         public async Task<ActionResult> Releases([FromServices]IHttpClientFactory httpClientFactory, [FromQuery]string userName = "LongbowEnterprise", [FromQuery]string repoName = "BootstrapAdmin", [FromQuery]string label = "custom badge", [FromQuery]string color = "orange")
         {
             var client = httpClientFactory.CreateClient();
@@ -81,6 +84,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="label"></param>
         /// <param name="color"></param>
         /// <returns></returns>
+        [HttpGet]
         public async Task<ActionResult> Builds([FromServices]IHttpClientFactory httpClientFactory, [FromQuery]string userName = "ArgoZhang", [FromQuery]string projName = "bootstrapadmin", [FromQuery]string branchName = "master", [FromQuery]string label = "custom badge", [FromQuery]string color = "orange")
         {
             var client = httpClientFactory.CreateClient();
