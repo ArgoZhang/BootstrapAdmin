@@ -7,6 +7,12 @@
         return data;
     };
 
+    var findIdField = function (tableName) {
+        var idField = $(tableName).bootstrapTable("getOptions").idField;
+        if (idField === undefined) idField = "Id";
+        return idField;
+    }
+
     DataEntity = function (options) {
         this.options = options;
     };
@@ -159,13 +165,15 @@
                             confirmButtonClass: "btn-danger ml-2",
                             cancelButtonText: "取消"
                         }, function () {
-                            $.logData.push({ url: options.url, 
+                            $.logData.push({
+                                url: options.url,
                                 data: arrselections.map(function (element, index) {
                                     return formatData($.extend({}, element));
-                                }) 
+                                })
                             });
                             setTimeout(function () {
-                                var iDs = arrselections.map(function (element, index) { return element.Id; });
+                                var idField = findIdField(options.bootstrapTable);
+                                var iDs = arrselections.map(function (element, index) { return element[idField]; });
                                 $.bc({
                                     url: options.url, data: iDs, method: 'delete', title: options.delTitle,
                                     callback: function (result) {
@@ -238,8 +246,9 @@
                     }, function () {
                         $.logData.push({ url: op.url, data: data });
                         setTimeout(function () {
+                            var idField = findIdField($(op.table));
                             var iDs = data.map(function (element, index) {
-                                return element.Id;
+                                return element[idField];
                             });
                             $.bc({
                                 url: op.url, data: iDs, method: 'delete', title: '删除数据',
