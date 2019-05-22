@@ -18,8 +18,6 @@ services:
 - mongodb
 install:
 - ps: >-
-    $PSVersionTable
-
     #copy my.ini into mysql folder
 
     $iniFile = "$($env:appveyor_build_folder)\DatabaseScripts\MySQL\my.ini"
