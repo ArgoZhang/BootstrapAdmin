@@ -38,6 +38,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static bool Save(Group p)
         {
+            if (p.Id == string.Empty) p.Id = null;
             var ret = DbContextManager.Create<Group>().Save(p);
             if (ret) CacheCleanUtility.ClearCache(groupIds: string.IsNullOrEmpty(p.Id) ? new List<string>() : new List<string>() { p.Id });
             return ret;

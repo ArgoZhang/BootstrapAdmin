@@ -63,6 +63,7 @@ namespace Bootstrap.DataAccess
         {
             if (RetrieveSystemModel() && RetrieveProtectedDicts().Any(m => m.Id == p.Id)) return true;
 
+            if (p.Id == string.Empty) p.Id = null;
             var ret = DbContextManager.Create<Dict>().Save(p);
             if (ret) CacheCleanUtility.ClearCache(dictIds: new List<string>());
             return ret;

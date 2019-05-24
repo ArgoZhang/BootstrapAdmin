@@ -45,6 +45,7 @@ namespace Bootstrap.DataAccess
                     }
                 }
             }
+            if (p.Id == string.Empty) p.Id = null;
             var ret = DbContextManager.Create<Menu>().Save(p);
             if (ret) CacheCleanUtility.ClearCache(menuIds: string.IsNullOrEmpty(p.Id) ? new List<string>() : new List<string>() { p.Id });
             return ret;

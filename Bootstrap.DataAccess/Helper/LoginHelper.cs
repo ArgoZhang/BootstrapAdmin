@@ -16,7 +16,11 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public static bool Log(LoginUser user) => DbContextManager.Create<LoginUser>().Log(user);
+        public static bool Log(LoginUser user)
+        {
+            if (user.Id == string.Empty) user.Id = null;
+            return DbContextManager.Create<LoginUser>().Log(user);
+        }
 
         /// <summary>
         /// 查询指定页码登录日志
