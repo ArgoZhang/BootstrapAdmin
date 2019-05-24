@@ -1,5 +1,6 @@
 ﻿using Bootstrap.DataAccess;
 using Longbow.Web.Mvc;
+using System;
 
 namespace Bootstrap.Admin.Query
 {
@@ -8,6 +9,16 @@ namespace Bootstrap.Admin.Query
     /// </summary>
     public class QueryLoginOption : PaginationOption
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        public DateTime? StartTime { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public DateTime? EndTime { get; set; }
+
         /// <summary>
         /// 登录IP地址
         /// </summary>
@@ -19,7 +30,7 @@ namespace Bootstrap.Admin.Query
         /// <returns></returns>
         public QueryData<LoginUser> RetrieveData()
         {
-            var data = LoginHelper.Retrieves(this, LoginIP);
+            var data = LoginHelper.RetrievePages(this, StartTime, EndTime, LoginIP);
             return new QueryData<LoginUser>
             {
                 total = data.TotalItems,

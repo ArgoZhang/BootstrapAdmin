@@ -2,6 +2,7 @@
 using MongoDB.Driver;
 using PetaPoco;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Bootstrap.DataAccess.MongoDB
@@ -27,22 +28,35 @@ namespace Bootstrap.DataAccess.MongoDB
         /// </summary>
         /// <param name="po"></param>
         /// <returns></returns>
-        public override Page<DataAccess.LoginUser> Retrieves(PaginationOption po, string ip)
+        public override Page<DataAccess.LoginUser> RetrieveByPages(PaginationOption po, DateTime? startTime, DateTime? endTime, string ip)
         {
-            var logs = DbManager.LoginUsers
-                .Find(Builders<DataAccess.LoginUser>.Filter.Eq("Ip", ip))
-                .Sort(Builders<DataAccess.LoginUser>.Sort.Descending(t => t.LoginTime))
-                .ToList();
-
+            var logs = Retrieves(startTime, endTime, ip);
             return new Page<DataAccess.LoginUser>()
             {
                 Context = logs,
                 CurrentPage = po.PageIndex,
                 ItemsPerPage = po.Limit,
-                TotalItems = logs.Count,
-                TotalPages = (long)Math.Ceiling(logs.Count * 1.0 / po.Limit),
+                TotalItems = logs.Count(),
+                TotalPages = (long)Math.Ceiling(logs.Count() * 1.0 / po.Limit),
                 Items = logs.Skip(po.Offset).Take(po.Limit).ToList()
             };
+        }
+
+        /// <summary>
+        /// 获取所有登录数据
+        /// </summary>
+        /// <returns></returns>
+        public override IEnumerable<DataAccess.LoginUser> Retrieves(DateTime? startTime, DateTime? endTime, string ip)
+        {
+            var filterBuilder = Builders<DataAccess.LoginUser>.Filter;
+            var filter = filterBuilder.Empty;
+            if (startTime.HasValue) filter = filterBuilder.Gte(l => l.LoginTime, startTime.Value);
+            if (endTime.HasValue) filter = filterBuilder.Lt(l => l.LoginTime, endTime.Value.AddDays(1));
+            if (!string.IsNullOrEmpty(ip)) filter = filterBuilder.Eq(l => l.Ip, ip);
+
+            return DbManager.LoginUsers
+                 .Find(filter)
+                 .Sort(Builders<DataAccess.LoginUser>.Sort.Descending(t => t.LoginTime)).ToList();
         }
     }
 }

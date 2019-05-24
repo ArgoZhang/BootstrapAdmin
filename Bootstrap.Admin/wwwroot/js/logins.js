@@ -1,12 +1,15 @@
 ﻿// 登录日志
 $(function () {
     var apiUrl = "api/Login";
-    var $table = $('table').smartTable({
+    var $table = $('.card-body table');
+    $table.smartTable({
         url: apiUrl,
         showToggle: false,
         showRefresh: false,
         showColumns: false,
-        queryParams: function (params) { return $.extend(params, { loginIp: $('#txt_ip').val() }); },
+        sortName: 'LoginTime',
+        sortOrder: "desc",
+        queryParams: function (params) { return $.extend(params, { startTime: $("#txt_operate_start").val(), endTime: $("#txt_operate_end").val(), loginIp: $('#txt_ip').val() }); },
         columns: [
             {
                 title: "序号", formatter: function (value, row, index) {

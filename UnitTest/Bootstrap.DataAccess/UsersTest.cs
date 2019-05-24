@@ -173,10 +173,17 @@ namespace Bootstrap.DataAccess.SqlServer
         }
 
         [Fact]
+        public void RetrievePageLoginUsers_Ok()
+        {
+            var data = LoginHelper.RetrievePages(new PaginationOption() { Limit = 20, Offset = 0 }, null, null, "");
+            Assert.NotNull(data.Items);
+        }
+
+        [Fact]
         public void RetrieveLoginUsers_Ok()
         {
-            var data = LoginHelper.Retrieves(new PaginationOption() { Limit = 20, Offset = 0 }, "");
-            Assert.NotNull(data.Items);
+            var data = LoginHelper.RetrieveAll(null, null, "");
+            Assert.NotNull(data);
         }
     }
 }
