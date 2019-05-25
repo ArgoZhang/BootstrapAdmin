@@ -328,4 +328,13 @@ $(function () {
             });
         }
     });
+
+    // fix bug
+    $($('table')[1]).data('bootstrap.table').__proto__.getOptions = function () {
+        var data = this.options.data;
+        delete this.options.data;
+        var options = $.extend(true, {}, this.options);
+        this.options.data = data;
+        return options;
+    };
 });
