@@ -2,6 +2,7 @@
 using MongoDB.Driver;
 using PetaPoco;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Bootstrap.DataAccess.MongoDB
@@ -19,7 +20,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <param name="endTime"></param>
         /// <param name="opType"></param>
         /// <returns></returns>
-        public override Page<DataAccess.Log> Retrieves(PaginationOption po, DateTime? startTime, DateTime? endTime, string opType)
+        public override Page<DataAccess.Log> RetrievePages(PaginationOption po, DateTime? startTime, DateTime? endTime, string opType)
         {
             var filterBuilder = Builders<DataAccess.Log>.Filter;
             var filter = filterBuilder.Empty;
@@ -60,6 +61,26 @@ namespace Bootstrap.DataAccess.MongoDB
                 TotalPages = (long)Math.Ceiling(logs.Count * 1.0 / po.Limit),
                 Items = logs.Skip(po.Offset).Take(po.Limit).ToList()
             };
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <param name="opType"></param>
+        /// <returns></returns>
+        public override IEnumerable<DataAccess.Log> RetrieveAll(DateTime? startTime, DateTime? endTime, string opType)
+        {
+            var filterBuilder = Builders<DataAccess.Log>.Filter;
+            var filter = filterBuilder.Empty;
+            if (startTime.HasValue) filter = filterBuilder.Gte("LogTime", startTime.Value);
+            if (endTime.HasValue) filter = filterBuilder.Lt("LogTime", endTime.Value.AddDays(1).AddSeconds(-1));
+            if (!string.IsNullOrEmpty(opType)) filter = filterBuilder.Eq("CRUD", opType);
+
+            // sort
+            var sort = Builders<DataAccess.Log>.Sort.Ascending(t => t.LogTime);
+            return DbManager.Logs.Find(filter).Sort(sort).ToList();
         }
 
         /// <summary>

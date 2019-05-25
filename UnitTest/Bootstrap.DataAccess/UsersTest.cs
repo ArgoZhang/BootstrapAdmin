@@ -175,7 +175,7 @@ namespace Bootstrap.DataAccess.SqlServer
         [Fact]
         public void RetrievePageLoginUsers_Ok()
         {
-            var data = LoginHelper.RetrievePages(new PaginationOption() { Limit = 20, Offset = 0 }, null, null, "");
+            var data = LoginHelper.RetrievePages(new PaginationOption() { Limit = 20, Offset = 0, Order = "LoginTime" }, null, null, "");
             Assert.NotNull(data.Items);
         }
 

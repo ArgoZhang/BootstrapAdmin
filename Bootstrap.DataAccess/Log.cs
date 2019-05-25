@@ -1,6 +1,7 @@
 ﻿using Longbow.Web.Mvc;
 using PetaPoco;
 using System;
+using System.Collections.Generic;
 
 namespace Bootstrap.DataAccess
 {
@@ -28,16 +29,34 @@ namespace Bootstrap.DataAccess
         /// <param name="endTime"></param>
         /// <param name="opType"></param>
         /// <returns></returns>
-        public virtual new Page<Log> Retrieves(PaginationOption po, DateTime? startTime, DateTime? endTime, string opType)
+        public virtual new Page<Log> RetrievePages(PaginationOption po, DateTime? startTime, DateTime? endTime, string opType)
         {
             var sql = new Sql("select CRUD, UserName, LogTime, Ip, Browser, OS, City, RequestUrl, RequestData from Logs");
-            if (startTime.HasValue) sql.Append("where LogTime >= @0", startTime.Value);
-            if (endTime.HasValue) sql.Append("where LogTime < @0", endTime.Value.AddDays(1).AddSeconds(-1));
-            if (startTime == null && endTime == null) sql.Append("where LogTime > @0", DateTime.Today.AddMonths(0 - DictHelper.RetrieveExceptionsLogPeriod()));
-            if (!string.IsNullOrEmpty(opType)) sql.Append("where CRUD = @0", opType);
-            sql.Append($"order by {po.Sort} {po.Order}");
+            if (startTime.HasValue) sql.Where("LogTime >= @0", startTime.Value);
+            if (endTime.HasValue) sql.Where("LogTime < @0", endTime.Value.AddDays(1).AddSeconds(-1));
+            if (startTime == null && endTime == null) sql.Where("LogTime > @0", DateTime.Today.AddMonths(0 - DictHelper.RetrieveExceptionsLogPeriod()));
+            if (!string.IsNullOrEmpty(opType)) sql.Where("CRUD = @0", opType);
+            sql.OrderBy($"{po.Sort} {po.Order}");
 
             return DbManager.Create().Page<Log>(po.PageIndex, po.Limit, sql);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <param name="opType"></param>
+        /// <returns></returns>
+        public virtual new IEnumerable<Log> RetrieveAll(DateTime? startTime, DateTime? endTime, string opType)
+        {
+            var sql = new Sql("select CRUD, UserName, LogTime, Ip, Browser, OS, City, RequestUrl, RequestData from Logs");
+            if (startTime.HasValue) sql.Where("LogTime >= @0", startTime.Value);
+            if (endTime.HasValue) sql.Where("LogTime < @0", endTime.Value.AddDays(1).AddSeconds(-1));
+            if (!string.IsNullOrEmpty(opType)) sql.Where("CRUD = @0", opType);
+            sql.OrderBy("LogTime");
+
+            return DbManager.Create().Fetch<Log>(sql);
         }
 
         /// <summary>

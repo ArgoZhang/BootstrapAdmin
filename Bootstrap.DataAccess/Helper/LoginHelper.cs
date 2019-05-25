@@ -40,7 +40,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<LoginUser> RetrieveAll(DateTime? startTime, DateTime? endTime, string ip)
         {
-            return DbContextManager.Create<LoginUser>().Retrieves(startTime, endTime, ip);
+            return DbContextManager.Create<LoginUser>().RetrieveAll(startTime, endTime, ip);
         }
     }
 }

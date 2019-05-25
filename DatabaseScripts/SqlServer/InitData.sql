@@ -101,6 +101,7 @@ INSERT [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VA
 INSERT [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (@@Identity - 1, N'登录日志', 20, N'fa fa-user-circle-o', N'~/Admin/Logins', N'0')
 INSERT [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (@@Identity - 2, N'访问日志', 30, N'fa fa-bars', N'~/Admin/Traces', N'0')
 INSERT [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, N'在线用户', 140, N'fa fa-users', N'~/Admin/Online', N'0')
+INSERT [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, N'网站分析', 145, N'fa fa-line-chart', N'~/Admin/Analyse', N'0')
 INSERT [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, N'程序异常', 150, N'fa fa-cubes', N'~/Admin/Exceptions', N'0')
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (@@Identity, N'服务器日志', 10, N'fa fa-fa', N'log', N'0', 2)
 INSERT [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, N'工具集合', 160, N'fa fa-gavel', N'#', N'0')

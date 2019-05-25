@@ -98,6 +98,7 @@ INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (last_insert_rowid() - 1, '登录日志', 20, 'fa fa-user-circle-o', '~/Admin/Logins', '0');
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (last_insert_rowid() - 2, '访问日志', 30, 'fa fa-bars', '~/Admin/Traces', '0');
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, '在线用户', 140, 'fa fa-users', '~/Admin/Online', '0');
+INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, '网站分析', 145, 'fa fa-line-chart', '~/Admin/Analyse', '0');
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, '程序异常', 150, 'fa fa-cubes', '~/Admin/Exceptions', '0');
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (last_insert_rowid(), '服务器日志', 10, 'fa fa-fa', 'log', '0', 2);
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, '工具集合', 160, 'fa fa-gavel', '#', '0');

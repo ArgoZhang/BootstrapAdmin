@@ -4,6 +4,7 @@ using Longbow.Web.Mvc;
 using Microsoft.AspNetCore.Http;
 using PetaPoco;
 using System;
+using System.Collections.Generic;
 
 namespace Bootstrap.DataAccess
 {
@@ -44,6 +45,15 @@ namespace Bootstrap.DataAccess
         /// <param name="endTime"></param>
         /// <param name="ip"></param>
         /// <returns></returns>
-        public static Page<Trace> Retrieves(PaginationOption po, DateTime? startTime, DateTime? endTime, string ip) => DbContextManager.Create<Trace>().Retrieves(po, startTime, endTime, ip);
+        public static Page<Trace> Retrieves(PaginationOption po, DateTime? startTime, DateTime? endTime, string ip) => DbContextManager.Create<Trace>().RetrievePages(po, startTime, endTime, ip);
+
+        /// <summary>
+        /// 获得指定IP历史访问记录
+        /// </summary>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <param name="ip"></param>
+        /// <returns></returns>
+        public static IEnumerable<Trace> RetrieveAll(DateTime? startTime, DateTime? endTime, string ip) => DbContextManager.Create<Trace>().RetrieveAll(startTime, endTime, ip);
     }
 }

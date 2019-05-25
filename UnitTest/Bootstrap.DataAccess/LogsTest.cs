@@ -36,11 +36,12 @@ namespace Bootstrap.DataAccess.SqlServer
                 RequestUrl = "~/Home/Index"
             };
             LogHelper.Save(log);
-            Assert.NotNull(LogHelper.Retrieves(new PaginationOption() { Limit = 20, Sort = "LogTime", Order = "desc" }, null, null, null));
-            Assert.NotNull(LogHelper.Retrieves(new PaginationOption() { Limit = 20, Sort = "CRUD", Order = "desc" }, null, null, null));
-            Assert.NotNull(LogHelper.Retrieves(new PaginationOption() { Limit = 20, Sort = "UserName", Order = "desc" }, null, null, null));
-            Assert.NotNull(LogHelper.Retrieves(new PaginationOption() { Limit = 20, Sort = "Ip", Order = "desc" }, null, null, null));
-            Assert.NotNull(LogHelper.Retrieves(new PaginationOption() { Limit = 20, Sort = "RequestUrl", Order = "desc" }, null, null, null));
+            Assert.NotNull(LogHelper.RetrievePages(new PaginationOption() { Limit = 20, Sort = "LogTime", Order = "desc" }, null, null, null));
+            Assert.NotNull(LogHelper.RetrievePages(new PaginationOption() { Limit = 20, Sort = "CRUD", Order = "desc" }, null, null, null));
+            Assert.NotNull(LogHelper.RetrievePages(new PaginationOption() { Limit = 20, Sort = "UserName", Order = "desc" }, null, null, null));
+            Assert.NotNull(LogHelper.RetrievePages(new PaginationOption() { Limit = 20, Sort = "Ip", Order = "desc" }, null, null, null));
+            Assert.NotNull(LogHelper.RetrievePages(new PaginationOption() { Limit = 20, Sort = "RequestUrl", Order = "desc" }, null, null, null));
+            Assert.NotEmpty(LogHelper.RetrieveAll(null, null, null));
         }
     }
 }

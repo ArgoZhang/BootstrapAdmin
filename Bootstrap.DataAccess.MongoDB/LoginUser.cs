@@ -30,7 +30,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <returns></returns>
         public override Page<DataAccess.LoginUser> RetrieveByPages(PaginationOption po, DateTime? startTime, DateTime? endTime, string ip)
         {
-            var logs = Retrieves(startTime, endTime, ip);
+            var logs = RetrieveAll(startTime, endTime, ip);
             return new Page<DataAccess.LoginUser>()
             {
                 Context = logs,
@@ -46,7 +46,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// 获取所有登录数据
         /// </summary>
         /// <returns></returns>
-        public override IEnumerable<DataAccess.LoginUser> Retrieves(DateTime? startTime, DateTime? endTime, string ip)
+        public override IEnumerable<DataAccess.LoginUser> RetrieveAll(DateTime? startTime, DateTime? endTime, string ip)
         {
             var filterBuilder = Builders<DataAccess.LoginUser>.Filter;
             var filter = filterBuilder.Empty;
@@ -56,7 +56,7 @@ namespace Bootstrap.DataAccess.MongoDB
 
             return DbManager.LoginUsers
                  .Find(filter)
-                 .Sort(Builders<DataAccess.LoginUser>.Sort.Descending(t => t.LoginTime)).ToList();
+                 .Sort(Builders<DataAccess.LoginUser>.Sort.Ascending(t => t.LoginTime)).ToList();
         }
     }
 }

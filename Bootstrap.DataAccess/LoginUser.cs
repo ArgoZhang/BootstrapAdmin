@@ -90,6 +90,14 @@ namespace Bootstrap.DataAccess
         /// 获取所有登录数据
         /// </summary>
         /// <returns></returns>
-        public virtual IEnumerable<LoginUser> Retrieves(DateTime? startTime, DateTime? endTime, string ip) => DbManager.Create().Fetch<LoginUser>();
+        public virtual IEnumerable<LoginUser> RetrieveAll(DateTime? startTime, DateTime? endTime, string ip)
+        {
+            var sql = new Sql("select UserName, LoginTime, Ip, Browser, OS, City, Result from LoginLogs");
+            if (startTime.HasValue) sql.Where("LoginTime >= @0", startTime.Value);
+            if (endTime.HasValue) sql.Where("LoginTime < @0", endTime.Value.AddDays(1));
+            if (!string.IsNullOrEmpty(ip)) sql.Where("ip = @0", ip);
+            sql.OrderBy($"LoginTime");
+            return DbManager.Create().Fetch<LoginUser>(sql);
+        }
     }
 }

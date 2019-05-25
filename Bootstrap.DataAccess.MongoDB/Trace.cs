@@ -2,6 +2,7 @@ using Longbow.Web.Mvc;
 using MongoDB.Driver;
 using PetaPoco;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Bootstrap.DataAccess.MongoDB
@@ -15,7 +16,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// 
         /// </summary>
         /// <returns></returns>
-        public override Page<DataAccess.Trace> Retrieves(PaginationOption po, DateTime? startTime, DateTime? endTime, string ip)
+        public override Page<DataAccess.Trace> RetrievePages(PaginationOption po, DateTime? startTime, DateTime? endTime, string ip)
         {
             // filter
             var filterBuilder = Builders<DataAccess.Trace>.Filter;
@@ -63,6 +64,26 @@ namespace Bootstrap.DataAccess.MongoDB
                 TotalPages = (long)Math.Ceiling(traces.Count * 1.0 / po.Limit),
                 Items = traces.Skip(po.Offset).Take(po.Limit).ToList()
             };
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <param name="ip"></param>
+        /// <returns></returns>
+        public override IEnumerable<DataAccess.Trace> RetrieveAll(DateTime? startTime, DateTime? endTime, string ip)
+        {
+            var filterBuilder = Builders<DataAccess.Trace>.Filter;
+            var filter = filterBuilder.Empty;
+            if (startTime.HasValue) filter = filterBuilder.Gt("LogTime", startTime.Value);
+            if (endTime.HasValue) filter = filterBuilder.Lt("LogTime", endTime.Value.AddDays(1).AddSeconds(-1));
+            if (!string.IsNullOrEmpty(ip)) filter = filterBuilder.Eq("Ip", ip);
+
+            // sort
+            var sort = Builders<DataAccess.Trace>.Sort.Ascending(t => t.LogTime);
+            return DbManager.Traces.Find(filter).Sort(sort).ToList();
         }
 
         /// <summary>

@@ -45,6 +45,7 @@ namespace Bootstrap.DataAccess.SqlServer
             Assert.NotEmpty(TraceHelper.Retrieves(new PaginationOption() { Limit = 20, Offset = 0, Order = "desc", Sort = "Browser" }, null, null, null).Items);
             Assert.NotEmpty(TraceHelper.Retrieves(new PaginationOption() { Limit = 20, Offset = 0, Order = "desc", Sort = "OS" }, null, null, null).Items);
             Assert.NotEmpty(TraceHelper.Retrieves(new PaginationOption() { Limit = 20, Offset = 0, Order = "desc", Sort = "RequestUrl" }, null, null, null).Items);
+            Assert.NotEmpty(TraceHelper.RetrieveAll(null, null, null));
         }
     }
 }

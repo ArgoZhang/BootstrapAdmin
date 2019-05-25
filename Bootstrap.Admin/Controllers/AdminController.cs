@@ -129,6 +129,12 @@ namespace Bootstrap.Admin.Controllers
         public ActionResult Online() => View(new NavigatorBarModel(this));
 
         /// <summary>
+        /// 网站分析统计
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Analyse() => View(new NavigatorBarModel(this));
+
+        /// <summary>
         /// 用于测试ExceptionFilter
         /// </summary>
         /// <returns></returns>

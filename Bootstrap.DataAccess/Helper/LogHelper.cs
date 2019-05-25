@@ -2,6 +2,7 @@
 using Longbow.Web.Mvc;
 using PetaPoco;
 using System;
+using System.Collections.Generic;
 
 namespace Bootstrap.DataAccess
 {
@@ -15,7 +16,13 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="op"></param>
         /// <returns></returns>
-        public static Page<Log> Retrieves(PaginationOption op, DateTime? startTime, DateTime? endTime, string opType) => DbContextManager.Create<Log>().Retrieves(op, startTime, endTime, opType);
+        public static Page<Log> RetrievePages(PaginationOption op, DateTime? startTime, DateTime? endTime, string opType) => DbContextManager.Create<Log>().RetrievePages(op, startTime, endTime, opType);
+
+        /// <summary>
+        /// 查询所有日志信息
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<Log> RetrieveAll(DateTime? startTime, DateTime? endTime, string opType) => DbContextManager.Create<Log>().RetrieveAll(startTime, endTime, opType);
 
         /// <summary>
         /// 保存新增的日志信息

@@ -30,7 +30,7 @@ namespace Bootstrap.Admin.Query
         /// <returns></returns>
         public QueryData<Log> RetrieveData()
         {
-            var data = LogHelper.Retrieves(this, OperateTimeStart, OperateTimeEnd, OperateType);
+            var data = LogHelper.RetrievePages(this, OperateTimeStart, OperateTimeEnd, OperateType);
             var ret = new QueryData<Log>();
             ret.total = data.TotalItems;
             ret.rows = data.Items;

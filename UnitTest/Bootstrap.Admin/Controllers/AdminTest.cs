@@ -27,6 +27,7 @@ namespace Bootstrap.Admin.Controllers.SqlServer
         [InlineData("Online", "在线用户")]
         [InlineData("Tasks", "任务管理")]
         [InlineData("Mobile", "客户端测试")]
+        [InlineData("Analyse", "网站分析")]
         public async void View_Ok(string view, string text)
         {
             var r = await Client.GetAsync(view);

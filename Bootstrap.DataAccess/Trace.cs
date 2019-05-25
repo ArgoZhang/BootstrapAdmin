@@ -1,6 +1,7 @@
 using Longbow.Web.Mvc;
 using PetaPoco;
 using System;
+using System.Collections.Generic;
 
 namespace Bootstrap.DataAccess
 {
@@ -75,7 +76,7 @@ namespace Bootstrap.DataAccess
         /// <param name="endTime"></param>
         /// <param name="ip"></param>
         /// <returns></returns>
-        public virtual Page<Trace> Retrieves(PaginationOption po, DateTime? startTime, DateTime? endTime, string ip)
+        public virtual Page<Trace> RetrievePages(PaginationOption po, DateTime? startTime, DateTime? endTime, string ip)
         {
             var sql = new Sql("select UserName, LogTime, IP, Browser, OS, City, RequestUrl from Traces");
             if (startTime.HasValue) sql.Where("LogTime > @0", startTime.Value);
@@ -85,6 +86,24 @@ namespace Bootstrap.DataAccess
             sql.OrderBy($"{po.Sort} {po.Order}");
 
             return DbManager.Create().Page<Trace>(po.PageIndex, po.Limit, sql);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <param name="ip"></param>
+        /// <returns></returns>
+        public virtual IEnumerable<Trace> RetrieveAll(DateTime? startTime, DateTime? endTime, string ip)
+        {
+            var sql = new Sql("select UserName, LogTime, IP, Browser, OS, City, RequestUrl from Traces");
+            if (startTime.HasValue) sql.Where("LogTime > @0", startTime.Value);
+            if (endTime.HasValue) sql.Where("LogTime < @0", endTime.Value.AddDays(1).AddSeconds(-1));
+            if (!string.IsNullOrEmpty(ip)) sql.Where("IP = @0", ip);
+            sql.OrderBy("LogTime");
+
+            return DbManager.Create().Fetch<Trace>(sql);
         }
 
         private static void ClearTraces() => System.Threading.Tasks.Task.Run(() =>

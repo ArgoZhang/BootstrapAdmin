@@ -624,6 +624,18 @@
         "Application": "0"
     },
     {
+        "_id": ObjectId("5bd7b8445fa31256f77e4b90"),
+        "ParentId": "0",
+        "Name": "网站分析",
+        "Order": NumberInt(145),
+        "Icon": "fa fa-line-chart",
+        "Url": "~/Admin/Analyse",
+        "Category": "0",
+        "Target": "_self",
+        "IsResource": NumberInt(0),
+        "Application": "0"
+    },
+    {
         "_id": ObjectId("5bd7b8445fa31256f77e4b9d"),
         "ParentId": "0",
         "Name": "程序异常",
