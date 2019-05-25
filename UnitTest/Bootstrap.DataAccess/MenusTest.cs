@@ -20,7 +20,8 @@ namespace Bootstrap.DataAccess.SqlServer
                 Target = "_blank",
                 Order = 10,
                 Url = "#",
-                ParentId = "0"
+                ParentId = "0",
+                ParentName = "Test"
             };
 
             // insert
