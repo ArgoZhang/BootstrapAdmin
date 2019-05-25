@@ -47,7 +47,7 @@
     },
     {
       "provider": "cdnjs",
-      "library": "bootstrap-table@1.12.1",
+      "library": "bootstrap-table@1.14.2",
       "destination": "wwwroot/lib/bootstrap-table/",
       "files": [
         "bootstrap-table.min.js",

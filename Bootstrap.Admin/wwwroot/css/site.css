@@ -613,6 +613,34 @@ li[data-category="1"] .dd3-content .menuType {
     word-break: break-all;
 }
 
+.bootstrap-table .fixed-table-container .fixed-table-body .fixed-table-loading .loading-wrap .loading-text {
+    font-size: 0.875rem;
+}
+
+.bootstrap-table td, .bootstrap-table .fixed-table-container .table thead th .th-inner {
+    padding: 0.5rem;
+}
+
+    .bootstrap-table .fixed-table-container .table thead th .th-inner.sortable {
+        padding-right: 30px;
+    }
+
+.bootstrap-table .table tbody tr:nth-of-type(odd) {
+    background-color: rgba(0,0,0,.05);
+}
+
+.bootstrap-table .fixed-table-container .fixed-table-body {
+    border-radius: 4px;
+}
+
+    .bootstrap-table .fixed-table-container .fixed-table-body .table .bs-checkbox label {
+        margin-bottom: 0;
+    }
+
+        .bootstrap-table .fixed-table-container .fixed-table-body .table .bs-checkbox label input[type='checkbox'] {
+            cursor: pointer;
+        }
+
 pre {
     padding: 5px;
     margin: 5px;

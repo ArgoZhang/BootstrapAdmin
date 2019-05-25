@@ -87,7 +87,7 @@ $(function () {
                     },
                     events: {
                         'click .menu': function (e, value, row, index) {
-                            var $plus = $(this).prev();
+                            var $plus = $(e.target).prev();
                             if ($plus.hasClass('fa')) {
                                 $plus.trigger('click');
                             }
@@ -142,15 +142,15 @@ $(function () {
             idField: "Id",
             treeShowField: 'Name',
             parentIdField: 'ParentId',
-            onPreBody: function(data) {
-                if($('#txt_parent_menus_name').val() !== '') {
+            onPreBody: function (data) {
+                if ($('#txt_parent_menus_name').val() !== '' || $('#sel_menus_res').val() === '2') {
                     this.treeShowField = false;
                 }
                 else {
                     this.treeShowField = 'Name';
                 }
                 var bt = $table.data('bootstrap.table');
-                if(bt) {
+                if (bt) {
                     bt.treeEnable = !!this.treeShowField;
                 }
             },

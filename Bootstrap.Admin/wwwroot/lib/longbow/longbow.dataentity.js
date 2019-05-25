@@ -246,7 +246,7 @@
                     }, function () {
                         $.logData.push({ url: op.url, data: data });
                         setTimeout(function () {
-                            var idField = findIdField($(op.table));
+                            var idField = findIdField(op.table);
                             var iDs = data.map(function (element, index) {
                                 return element[idField];
                             });

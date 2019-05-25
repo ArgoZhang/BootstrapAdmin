@@ -349,13 +349,9 @@ input.pending {
     margin-bottom: 15px;
 }
 
-    .bootstrap-table .fixed-table-body .table {
-        border-bottom: none;
+    .bootstrap-table .fixed-table-body .table td > a {
+        display: block;
     }
-
-        .bootstrap-table .fixed-table-body .table td > a {
-            display: block;
-        }
 
     .bootstrap-table .fixed-table-toolbar .columns-right .btn-group .dropdown-menu {
         padding-top: 8px;
