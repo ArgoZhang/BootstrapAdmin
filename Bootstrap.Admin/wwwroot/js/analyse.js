@@ -73,7 +73,6 @@ $(function () {
     $.bc({
         url: "api/Analyse?logType=LoginUsers",
         callback: function (result) {
-            console.log(result);
             $('#login').lgbSparkline('val', result.Polylines.join(' '));
             var op = $.extend(true, {}, option, {
                 legend: { data: ["登录数量"] },
@@ -103,7 +102,6 @@ $(function () {
     $.bc({
         url: "api/Analyse?logType=log",
         callback: function (result) {
-            console.log(result);
             $('#log').lgbSparkline('val', result.Polylines.join(' '));
             var op = $.extend(true, {}, option, {
                 legend: { data: ["操作数量"] },
@@ -130,7 +128,6 @@ $(function () {
     $.bc({
         url: "api/Analyse?logType=trace",
         callback: function (result) {
-            console.log(result);
             $('#trace').lgbSparkline('val', result.Polylines.join(' '));
             var op = $.extend(true, {}, option, {
                 legend: { data: ["访问数量"] },
