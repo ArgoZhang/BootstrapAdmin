@@ -20,4 +20,6 @@ RUN dotnet publish "Bootstrap.Admin.csproj" -c Release -o /app
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app .
+COPY --from=build ["/src/Bootstrap.Admin/BootstrapAdmin.db", "./BootstrapAdmin.db"]
+COPY --from=build ["/src/Scripts/Longbow.lic", "./Longbow.lic"]
 ENTRYPOINT ["dotnet", "Bootstrap.Admin.dll"]
