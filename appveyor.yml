@@ -5,7 +5,6 @@ branches:
   - dev
 image: Visual Studio 2017
 clone_depth: 1
-clone_folder: c:\Longbow\BootstrapAdmin
 init:
 - ps: dotnet --version
 environment:
@@ -20,17 +19,13 @@ install:
 - ps: >-
     #copy my.ini into mysql folder
 
-    $iniFile = "$($env:appveyor_build_folder)\DatabaseScripts\MySQL\my.ini"
-
-    xcopy $iniFile "C:\Program Files\MySQL\MySQL Server 5.7" /y
+    xcopy "$($env:appveyor_build_folder)\DatabaseScripts\MySQL\my.ini" "C:\Program Files\MySQL\MySQL Server 5.7" /y
 build_script:
 - ps: >-
-    dotnet build
-
-    dotnet publish Bootstrap.Admin --configuration Release --no-restore
+    ./appveyor.build.ps1
 test_script:
 - ps: >-
-    ./appveyor.ps1
+    ./appveyor.test.ps1
 artifacts:
 - path: Bootstrap.Admin\bin\release\netcoreapp2.2\publish\
   name: BootstrapAdmin

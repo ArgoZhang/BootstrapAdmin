@@ -15,7 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.Admin", "Bootstra
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{792A0B12-3F41-4BC4-A768-7D8D91C213B2}"
 	ProjectSection(SolutionItems) = preProject
-		appveyor.ps1 = appveyor.ps1
+		appveyor.build.ps1 = appveyor.build.ps1
+		appveyor.test.ps1 = appveyor.test.ps1
 		appveyor.yml = appveyor.yml
 		README.md = README.md
 	EndProjectSection
