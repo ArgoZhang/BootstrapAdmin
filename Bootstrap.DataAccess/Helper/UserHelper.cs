@@ -52,7 +52,7 @@ namespace Bootstrap.DataAccess
                 Result = "登录失败"
             };
             config(loginUser);
-            var ret = DbContextManager.Create<User>().Authenticate(userName, password);
+            var ret = string.IsNullOrEmpty(userName) ? false : DbContextManager.Create<User>().Authenticate(userName, password);
             if (ret) loginUser.Result = "登录成功";
             LoginHelper.Log(loginUser);
             return ret;

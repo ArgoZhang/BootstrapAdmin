@@ -19,6 +19,7 @@ namespace Bootstrap.DataAccess
         public static bool Log(LoginUser user)
         {
             if (user.Id == string.Empty) user.Id = null;
+            if (string.IsNullOrEmpty(user.UserName)) user.UserName = user.Ip;
             return DbContextManager.Create<LoginUser>().Log(user);
         }
 
