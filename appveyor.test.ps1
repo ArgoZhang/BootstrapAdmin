@@ -36,9 +36,14 @@ if ("$($env:APPVEYOR_REPO_BRANCH)" -eq "master")
 
     cd $($env:appveyor_build_folder)
 
-    echo "" "Install coveralls.net tools"
-    dotnet tool install coveralls.net --version 1.0.0 --tool-path "./tools"
+    if ("$($env:APPVEYOR_REPO_PROVIDER)" -eq "gitHub") {
+        echo "" "Install coveralls.net tools"
+        dotnet tool install coveralls.net --version 1.0.0 --tool-path "./tools"
 
-    dotnet test UnitTest --no-restore /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Include="[Bootstrap*]*" /p:ExcludeByFile="../Bootstrap.Admin/Program.cs%2c../Bootstrap.Admin/Startup.cs%2c../Bootstrap.Admin/HttpHeaderOperation.cs" /p:CoverletOutput=../
-    cmd.exe /c ".\tools\csmacnz.Coveralls.exe --opencover -i coverage.opencover.xml --useRelativePaths"
+        dotnet test UnitTest --no-restore /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Include="[Bootstrap*]*" /p:ExcludeByFile="../Bootstrap.Admin/Program.cs%2c../Bootstrap.Admin/Startup.cs%2c../Bootstrap.Admin/HttpHeaderOperation.cs" /p:CoverletOutput=../
+        cmd.exe /c ".\tools\csmacnz.Coveralls.exe --opencover -i coverage.opencover.xml --useRelativePaths"
+    }
+    else {
+        dotnet test UnitTest --no-restore
+    }
 }
