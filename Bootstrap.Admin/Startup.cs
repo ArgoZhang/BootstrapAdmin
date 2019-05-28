@@ -13,8 +13,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Rollbar.NetCore.AspNet;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.IO;
@@ -70,6 +72,10 @@ namespace Bootstrap.Admin
             services.AddSignalR().AddJsonProtocalDefault();
             services.AddSignalRExceptionFilterHandler<SignalRHub>(async (client, ex) => await SignalRManager.Send(client, ex));
             services.AddResponseCompression();
+            services.AddRollbarLogger(loggerOptions =>
+            {
+                loggerOptions.Filter = (loggerName, loglevel) => loglevel >= LogLevel.Trace;
+            });
             services.AddMvc(options =>
             {
                 options.Filters.Add<BootstrapAdminAuthorizeFilter>();
@@ -137,6 +143,7 @@ namespace Bootstrap.Admin
             app.UseOnlineUsers(callback: TraceHelper.Save);
             app.UseCacheManagerCorsHandler();
             app.UseSignalR(routes => { routes.MapHub<SignalRHub>("/NotiHub"); });
+            app.UseRollbarMiddleware();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
