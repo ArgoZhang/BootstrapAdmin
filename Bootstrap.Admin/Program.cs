@@ -22,6 +22,6 @@ namespace Bootstrap.Admin
         /// <param name="args"></param>
         /// <returns></returns>
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args).UseStartup<Startup>();
+            WebHost.CreateDefaultBuilder(args).UseSentry("https://70bdfff562e84fa7b9a43d65924ab9ad@sentry.io/1469396").UseStartup<Startup>();
     }
 }
