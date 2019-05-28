@@ -44,6 +44,7 @@ deploy:
   on:
     branch: master
     APPVEYOR_REPO_TAG: true
+    APPVEYOR_REPO_PROVIDER: gitHub
 notifications:
 - provider: Email
   to:
