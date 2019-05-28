@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Bootstrap.Security.Mvc" Version="2.2.5" />
+    <PackageReference Include="Bootstrap.Security.Mvc" Version="2.2.6" />
     <PackageReference Include="Longbow.Logging" Version="2.2.6" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
