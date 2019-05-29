@@ -4,6 +4,10 @@
 [![Release Tag](https://img.shields.io/endpoint.svg?logo=Groupon&logoColor=red&color=green&label=release&url=https%3A%2F%2Fargo.zylweb.cn%2FBA%2Fapi%2FGitee%2FReleases)](http://argo.zylweb.cn/BA/Tools/Index?ReturnUrl=https%3A%2F%2Fgitee.com%2FLongbowEnterprise%2FBootstrapAdmin%2Freleases)
 [![Gitee license](https://img.shields.io/github/license/argozhang/bootstrapadmin.svg?logo=git&logoColor=red)](https://gitee.com/LongbowEnterprise/BootstrapAdmin/blob/master/LICENSE)
 
+##### Docker
+[![Docker](https://img.shields.io/docker/cloud/automated/argozhang/ba.svg?logo=docker&logoColor=success)](https://hub.docker.com/r/argozhang/ba)
+[![Docker](https://img.shields.io/docker/cloud/build/argozhang/ba.svg?logo=docker&logoColor=success)](https://hub.docker.com/r/argozhang/ba/builds)
+
 ##### Gitee
 [![Appveyor build](https://img.shields.io/endpoint.svg?logo=appveyor&label=build&color=blueviolet&url=https%3A%2F%2Fargo.zylweb.cn%2FBA%2Fapi%2FGitee%2FBuilds?projName=bootstrapadmin-9m1jm)](https://ci.appveyor.com/project/ArgoZhang/bootstrapadmin-9m1jm)
 [![Build Status](https://img.shields.io/appveyor/ci/ArgoZhang/bootstrapadmin-9m1jm/master.svg?logo=appveyor&label=maser)](https://ci.appveyor.com/project/ArgoZhang/bootstrapadmin-9m1jm)
@@ -102,9 +106,7 @@
 | Windows | Supported | Supported | Supported, IE10+  | Supported      | Supported | Not supported |
 
 ## QQ交流群
-群号
-795206915  
-[快速加群](https://shang.qq.com/wpa/qunwpa?idkey=d381355e50ff91db410c3da3eadb081ba859f64c2877e86343f4709b171f28b8) 
+群号 795206915 [快速加群](https://shang.qq.com/wpa/qunwpa?idkey=d381355e50ff91db410c3da3eadb081ba859f64c2877e86343f4709b171f28b8) 
 
 ## 安装教程
 1. 安装 .net core sdk [官方网址](http://www.microsoft.com/net/download)
@@ -125,16 +127,24 @@
  **master** 发布分支与在线演示版本同步
 
 ## 演示地址  
-**在线演示** <a href="http://argo.zylweb.cn" target="_blank">[传送门]http://argo.zylweb.cn</a>  
-**备用地址** <a href="http://ba.sdgxgz.com" target="_blank">[传送门]http://ba.sdgxgz.com</a>  
+**在线演示1** [传送门](http://argo.zylweb.cn)  
+**在线演示2** [传送门](http://ba.sdgxgz.com)  
 
 ### 登录用户名与密码  
 管理员：**Admin/123789**  
 普通用户：**User/123789**  
 
-### 网站服务器配置：  
-CPU: 1核  
-MEM: 2G
+## Docker 镜像
+### Docker Hub 
+镜像拉取 [传送门](https://hub.docker.com/r/argozhang/ba)
+```
+docker pull argozhang/ba
+```
+### 七牛云:  
+镜像拉取 [传送门](https://hub.qiniu.com/store/argozhang/ba) 
+```
+docker pull reg.qiniu.com/argozhang/ba
+```
 
 ## 配置说明
 详细配置说明请点击 [查看文档](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis) 查看配置说明小节  
