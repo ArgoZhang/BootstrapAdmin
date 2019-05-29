@@ -18,7 +18,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// </summary>
         /// <returns></returns>
         [HttpGet()]
-        public ActionResult<AnalyseData> Get([FromQuery]string logType)
+        public ActionResult<AnalyseData> Get([FromQuery]string logType = "")
         {
             var ret = new AnalyseData();
             if (logType.Equals("LoginUsers", StringComparison.OrdinalIgnoreCase))
