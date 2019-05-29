@@ -90,7 +90,7 @@ namespace Bootstrap.Admin.Controllers.Api
         {
             var client = httpClientFactory.CreateClient();
             var content = await GetJsonAsync(() => client.GetAsJsonAsync<AppveyorBuildResult>($"https://ci.appveyor.com/api/projects/{userName}/{projName}/branch/{branchName}"));
-            return new JsonResult(new { schemaVersion = 1, label, message = content.Build.Version, color });
+            return new JsonResult(new { schemaVersion = 1, label, message = content == null ? "unknown" : content.Build.Version, color });
         }
 
         private async static Task<T> GetJsonAsync<T>(Func<Task<T>> callback)
