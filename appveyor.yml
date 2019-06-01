@@ -11,6 +11,8 @@ environment:
   Appveyor: true
   COVERALLS_REPO_TOKEN: 
     secure: 5L1b6XqSNTOfU1iZrARo5eUOi1HOleVO3VDCW0pr6yaspgkC5jxL+gBDK0OEY8EI
+  COVERALLS_REPO_TOKEN_GITLAB:
+    secure: yPxFQv4kSWtZ7Vvs70bIXDx9IOEEJ9utI3UyZsJGU7rt63gZnHOry0kt9DBMWcwV  
 services:
 - mssql2014
 - mysql
