@@ -56,7 +56,10 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual bool SaveByRoleId(string roleId, IEnumerable<string> appIds)
         {
+            if (string.IsNullOrEmpty(roleId)) throw new ArgumentNullException(nameof(roleId));
+
             bool ret = false;
+            if (appIds == null) appIds = new string[0];
             var db = DbManager.Create();
             try
             {

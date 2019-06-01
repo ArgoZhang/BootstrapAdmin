@@ -25,6 +25,10 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="task"></param>
         /// <returns></returns>
-        public static bool Save(Task task) => DbContextManager.Create<Task>().Save(task);
+        public static bool Save(Task task)
+        {
+            if (string.IsNullOrEmpty(task.Id)) task.Id = null;
+            return DbContextManager.Create<Task>().Save(task);
+        }
     }
 }

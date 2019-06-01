@@ -115,6 +115,7 @@ namespace Bootstrap.DataAccess.MongoDB
                 Description = user.Description,
                 IsReset = 0
             });
+            user.Id = DbManager.Users.Find(r => r.UserName == user.UserName).FirstOrDefault().Id;
             return true;
         }
 

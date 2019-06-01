@@ -89,7 +89,7 @@ namespace Bootstrap.DataAccess
                 db.Execute($"delete from UserRole where RoleID in ({ids})");
                 db.Execute($"delete from RoleGroup where RoleID in ({ids})");
                 db.Execute($"delete from NavigationRole where RoleID in ({ids})");
-                db.Execute($"delete from Roles where ID in ({ids})");
+                db.Delete<Role>($"where ID in ({ids})");
                 db.CompleteTransaction();
                 ret = true;
             }

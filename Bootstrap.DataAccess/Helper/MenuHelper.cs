@@ -31,20 +31,8 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static bool Save(BootstrapMenu p)
         {
-            if (DictHelper.RetrieveSystemModel())
-            {
-                if (p.Id.IsNullOrEmpty())
-                {
-                    if (p.Category == "0") p.Category = "1";
-                }
-                else
-                {
-                    if (RetrieveAllMenus("Admin").Where(m => m.Category == "0").Any(m => m.Id == p.Id))
-                    {
-                        return true;
-                    }
-                }
-            }
+            if (DictHelper.RetrieveSystemModel() && !string.IsNullOrEmpty(p.Id) && RetrieveAllMenus("Admin").Where(m => m.Category == "0" || m.Application == "2").Any(m => m.Id == p.Id)) return true;
+
             if (p.Id == string.Empty) p.Id = null;
             var ret = DbContextManager.Create<Menu>().Save(p);
             if (ret) CacheCleanUtility.ClearCache(menuIds: string.IsNullOrEmpty(p.Id) ? new List<string>() : new List<string>() { p.Id });
@@ -61,8 +49,7 @@ namespace Bootstrap.DataAccess
             if (DictHelper.RetrieveSystemModel())
             {
                 // 不允许删除系统菜单与前台演示系统的默认菜单
-                var menuNames = new string[] { "首页", "测试页面", "关于", "返回码云" };
-                var systemMenus = RetrieveAllMenus("Admin").Where(m => m.Category == "0" || menuNames.Any(n => n.Equals(m.Name, StringComparison.OrdinalIgnoreCase)));
+                var systemMenus = RetrieveAllMenus("Admin").Where(m => m.Category == "0" || m.Application == "2");
                 value = value.Where(v => !systemMenus.Any(m => m.Id == v));
                 if (!value.Any()) return true;
             }

@@ -68,26 +68,6 @@ namespace Bootstrap.DataAccess.SqlServer
         }
 
         [Fact]
-        public void RetrieveUsersByRoleId_Ok()
-        {
-            var rid = RoleHelper.Retrieves().FirstOrDefault(r => r.RoleName == "Administrators").Id;
-            var uid = UserHelper.Retrieves().FirstOrDefault(u => u.UserName == "Admin").Id;
-
-            UserHelper.SaveByRoleId(rid, new string[] { uid });
-
-            var users = UserHelper.RetrievesByRoleId(rid);
-            Assert.NotEmpty(users.Where(u => u.Checked == "checked"));
-        }
-
-        [Fact]
-        public void RetrievesByGroupId_Ok()
-        {
-            var gid = GroupHelper.Retrieves().FirstOrDefault(r => r.GroupName == "Admin").Id;
-            var users = UserHelper.RetrievesByGroupId(gid);
-            Assert.NotEmpty(users.Where(u => u.Checked == "checked"));
-        }
-
-        [Fact]
         public void SaveUser_Ok()
         {
             var user = new User { UserName = "UnitTestDelete", Password = "123", DisplayName = "DisplayName", ApprovedBy = "System", ApprovedTime = DateTime.Now, Description = "Desc", Icon = "default.jpg" };
@@ -133,6 +113,11 @@ namespace Bootstrap.DataAccess.SqlServer
             var groupId = GroupHelper.Retrieves().FirstOrDefault(g => g.GroupName == "Admin").Id;
             var id = UserHelper.Retrieves().FirstOrDefault(u => u.UserName == "Admin").Id;
             Assert.True(UserHelper.SaveByGroupId(groupId, new string[] { id }));
+
+            var users = UserHelper.RetrievesByGroupId(groupId);
+            Assert.NotEmpty(users.Where(u => u.Checked == "checked"));
+
+            Assert.True(UserHelper.SaveByGroupId(groupId, new string[0]));
         }
 
         [Fact]
@@ -141,6 +126,9 @@ namespace Bootstrap.DataAccess.SqlServer
             var roleId = RoleHelper.Retrieves().FirstOrDefault(g => g.RoleName == "Administrators").Id;
             var id = UserHelper.Retrieves().FirstOrDefault(u => u.UserName == "Admin").Id;
             Assert.True(UserHelper.SaveByRoleId(roleId, new string[] { id }));
+
+            var users = UserHelper.RetrievesByRoleId(roleId);
+            Assert.NotEmpty(users.Where(u => u.Checked == "checked"));
         }
 
         [Fact]
@@ -165,11 +153,10 @@ namespace Bootstrap.DataAccess.SqlServer
             Assert.False(UserHelper.ResetPassword("User", "123789"));
 
             var newUser = new User() { UserName = "U_Reset", DisplayName = "UnitTest", ApprovedTime = DateTime.Now, ApprovedBy = "System", Password = "1", Description = "UnitTest", RegisterTime = DateTime.Now };
-            var ids = UserHelper.Retrieves().Where(u => u.UserName == newUser.UserName).Select(u => u.Id);
-            UserHelper.Delete(ids);
             Assert.True(UserHelper.Save(newUser));
             Assert.True(UserHelper.ForgotPassword(new ResetUser() { DisplayName = "UnitTest", Reason = "UnitTest", ResetTime = DateTime.Now, UserName = newUser.UserName }));
             Assert.True(UserHelper.ResetPassword(newUser.UserName, "123"));
+            Assert.True(UserHelper.Delete(new string[] { newUser.Id }));
         }
 
         [Fact]

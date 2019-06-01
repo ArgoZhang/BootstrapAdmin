@@ -1,4 +1,4 @@
-using Bootstrap.Security;
+﻿using Bootstrap.Security;
 using Bootstrap.Security.DataAccess;
 using Longbow;
 using PetaPoco;
@@ -107,11 +107,7 @@ namespace Bootstrap.DataAccess
             if (appCode != "0")
             {
                 var appUrl = dicts.FirstOrDefault(d => d.Name.Equals(appCode, StringComparison.OrdinalIgnoreCase) && d.Category == "应用首页" && d.Define == 0)?.Code;
-                if (!string.IsNullOrEmpty(appUrl))
-                {
-                    url = appUrl;
-                    return url;
-                }
+                if (!string.IsNullOrEmpty(appUrl)) return appUrl;
             }
             var defaultUrl = dicts.FirstOrDefault(d => d.Name == "前台首页" && d.Category == "网站设置" && d.Define == 0)?.Code;
             if (!string.IsNullOrEmpty(defaultUrl)) url = defaultUrl;

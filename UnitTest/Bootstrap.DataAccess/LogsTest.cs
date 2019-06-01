@@ -7,22 +7,6 @@ namespace Bootstrap.DataAccess.SqlServer
     public class LogsTest
     {
         [Fact]
-        public void Save_Ok()
-        {
-            var log = new Log()
-            {
-                UserName = "UnitTest",
-                Browser = "UnitTest",
-                City = "本地连接",
-                OS = "UnitTest",
-                Ip = "::1",
-                CRUD = "UnitTest",
-                RequestUrl = "~/Home/Index"
-            };
-            Assert.True(LogHelper.Save(log));
-        }
-
-        [Fact]
         public void Retrieves_Ok()
         {
             var log = new Log()
@@ -35,7 +19,7 @@ namespace Bootstrap.DataAccess.SqlServer
                 CRUD = "UnitTest",
                 RequestUrl = "~/Home/Index"
             };
-            LogHelper.Save(log);
+            Assert.True(LogHelper.Save(log));
             Assert.NotNull(LogHelper.RetrievePages(new PaginationOption() { Limit = 20, Sort = "LogTime", Order = "desc" }, null, null, null));
             Assert.NotNull(LogHelper.RetrievePages(new PaginationOption() { Limit = 20, Sort = "CRUD", Order = "desc" }, null, null, null));
             Assert.NotNull(LogHelper.RetrievePages(new PaginationOption() { Limit = 20, Sort = "UserName", Order = "desc" }, null, null, null));

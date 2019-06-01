@@ -55,7 +55,7 @@ namespace Bootstrap.DataAccess
                 db.BeginTransaction();
                 db.Execute($"delete from UserGroup where GroupID in ({ids})");
                 db.Execute($"delete from RoleGroup where GroupID in ({ids})");
-                db.Execute($"delete from {db.Provider.EscapeSqlIdentifier("Groups")} where ID in ({ids})");
+                db.Delete<Group>($"where ID in ({ids})");
                 db.CompleteTransaction();
                 ret = true;
             }

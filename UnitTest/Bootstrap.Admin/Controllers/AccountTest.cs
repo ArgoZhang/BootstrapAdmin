@@ -18,9 +18,13 @@ namespace Bootstrap.Admin.Controllers.SqlServer
             DictHelper.Save(dict);
 
             var r = await Client.GetAsync("Login");
+
+            // 恢复保护模式
+            var db = DbManager.Create();
+            db.Execute("Update Dicts Set Code = @0 Where Id = @1", "0", dict.Id);
             Assert.Equal(HttpStatusCode.OK, r.StatusCode);
-            dict.Code = "0";
-            DictHelper.Save(dict);
+            var source = await r.Content.ReadAsStringAsync();
+            Assert.Contains("演示系统", source);
         }
 
         [Fact]

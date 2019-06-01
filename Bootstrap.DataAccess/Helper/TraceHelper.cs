@@ -25,6 +25,7 @@ namespace Bootstrap.DataAccess
                 v.DisplayName = user.DisplayName;
                 DbContextManager.Create<Trace>().Save(new Trace
                 {
+                    Id = null,
                     Ip = v.Ip,
                     RequestUrl = v.RequestUrl,
                     LogTime = v.LastAccessTime,

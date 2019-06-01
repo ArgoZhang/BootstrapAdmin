@@ -1,7 +1,7 @@
 ﻿using Xunit;
 using static Bootstrap.Admin.Controllers.Api.AnalyseController;
 
-namespace Bootstrap.Admin.Api.SqlServer
+namespace Bootstrap.Admin.Api
 {
     public class AnalyseTest : ControllerTest
     {

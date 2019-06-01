@@ -10,6 +10,7 @@ namespace Bootstrap.DataAccess
     /// <summary>
     /// 
     /// </summary>
+    [TableName("Navigations")]
     public class Menu : BootstrapMenu
     {
         /// <summary>
@@ -26,7 +27,7 @@ namespace Bootstrap.DataAccess
                 var ids = string.Join(",", value);
                 db.BeginTransaction();
                 db.Execute($"delete from NavigationRole where NavigationID in ({ids})");
-                db.Execute($"delete from Navigations where ID in ({ids})");
+                db.Delete<Menu>($"where ID in ({ids})");
                 db.CompleteTransaction();
                 ret = true;
             }

@@ -2,7 +2,7 @@
 using System.Net.Http;
 using Xunit;
 
-namespace Bootstrap.Admin.Api.SqlServer
+namespace Bootstrap.Admin.Api
 {
     public class ToolsTest : ControllerTest
     {

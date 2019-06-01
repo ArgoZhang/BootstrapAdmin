@@ -41,14 +41,10 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static bool Delete(IEnumerable<string> value)
         {
-            if (RetrieveSystemModel())
-            {
-                // 禁止删除系统数据与测试平台数据
-                var systemDicts = RetrieveProtectedDicts();
-                value = value.Where(v => !systemDicts.Any(d => d.Id == v));
-                if (!value.Any()) return true;
-            }
             if (!value.Any()) return true;
+
+            // 禁止删除系统数据与测试平台数据
+            if (RetrieveSystemModel() && RetrieveProtectedDicts().Any(d => value.Any(v => v == d.Id))) return true;
             var ret = DbContextManager.Create<Dict>().Delete(value);
             CacheCleanUtility.ClearCache(dictIds: value);
             return ret;
@@ -61,7 +57,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static bool Save(BootstrapDict p)
         {
-            if (RetrieveSystemModel() && RetrieveProtectedDicts().Any(m => m.Id == p.Id)) return true;
+            if (RetrieveSystemModel() && !string.IsNullOrEmpty(p.Id) && RetrieveProtectedDicts().Any(m => m.Id == p.Id)) return true;
 
             if (p.Id == string.Empty) p.Id = null;
             var ret = DbContextManager.Create<Dict>().Save(p);

@@ -43,25 +43,6 @@ namespace Bootstrap.DataAccess.SqlServer
         }
 
         [Fact]
-        public void Delete_Ok()
-        {
-            var poco = new BootstrapMenu()
-            {
-                Name = "UnitTest",
-                Application = "0",
-                Category = "0",
-                Icon = "fa fa-fa",
-                IsResource = 0,
-                Target = "_blank",
-                Order = 10,
-                Url = "#",
-                ParentId = "0"
-            };
-            MenuHelper.Save(poco);
-            MenuHelper.Delete(MenuHelper.RetrieveAllMenus("Admin").Where(n => n.Name == poco.Name).Select(n => n.Id));
-        }
-
-        [Fact]
         public void RetrieveAllMenus_Ok()
         {
             Assert.NotEmpty(MenuHelper.RetrieveAllMenus("Admin"));

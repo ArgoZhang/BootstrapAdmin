@@ -1,4 +1,4 @@
-using Bootstrap.Security;
+﻿using Bootstrap.Security;
 using Longbow.Cache;
 using Longbow.Data;
 using System;
@@ -105,12 +105,8 @@ namespace Bootstrap.DataAccess
         public static bool Save(User user)
         {
             if (!UserChecker(user)) return false;
+            if (DictHelper.RetrieveSystemModel() && !string.IsNullOrEmpty(user.Id) && RetrieveConstUsers().Any(u => u.Id == user.Id)) return true;
 
-            if (DictHelper.RetrieveSystemModel() && !user.Id.IsNullOrEmpty())
-            {
-                var admins = RetrieveConstUsers();
-                if (admins.Any(v => v.Id == user.Id)) return true;
-            }
             var ret = DbContextManager.Create<User>().Save(user);
             if (ret) CacheCleanUtility.ClearCache(userIds: string.IsNullOrEmpty(user.Id) ? new List<string>() : new List<string>() { user.Id });
             return ret;
@@ -126,11 +122,8 @@ namespace Bootstrap.DataAccess
         public static bool Update(string id, string password, string displayName)
         {
             if (!UserChecker(new User { Password = password, DisplayName = displayName })) return false;
-            if (DictHelper.RetrieveSystemModel())
-            {
-                var admins = RetrieveConstUsers();
-                if (admins.Any(v => v.Id == id)) return true;
-            }
+            if (DictHelper.RetrieveSystemModel() && RetrieveConstUsers().Any(v => v.Id == id)) return true;
+
             var ret = DbContextManager.Create<User>().Update(id, password, displayName);
             if (ret) CacheCleanUtility.ClearCache(userIds: string.IsNullOrEmpty(id) ? new List<string>() : new List<string>() { id });
             return ret;

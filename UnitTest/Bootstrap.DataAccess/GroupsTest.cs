@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using UnitTest;
 using Xunit;
 
 namespace Bootstrap.DataAccess.SqlServer
@@ -15,7 +17,7 @@ namespace Bootstrap.DataAccess.SqlServer
         [Fact]
         public void SaveAndDelete_Ok()
         {
-            Group g = new Group() { GroupName = "UnitTest", Description = "UnitTestSave" };
+            var g = new Group() { GroupName = "UnitTest", Description = "UnitTestSave" };
 
             // insert
             Assert.True(GroupHelper.Save(g));

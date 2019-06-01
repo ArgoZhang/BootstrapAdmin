@@ -1,6 +1,8 @@
+﻿using Bootstrap.DataAccess;
 using Longbow.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using PetaPoco;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -77,6 +79,45 @@ namespace UnitTest
                     new KeyValuePair<string, string>("DB:3:Enabled", "true")
                 }));
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="t"></param>
+        /// <param name="callback"></param>
+        public static void RevokeMapper(Action callback)
+        {
+            var t = typeof(App);
+            var map = Mappers.GetMapper(t, null);
+            Mappers.Revoke(map);
+
+            var foo = new FooMapper();
+            Mappers.Register(t.Assembly, foo);
+            try { callback(); }
+            catch (Exception ex) { throw ex; }
+            finally
+            {
+                Mappers.Revoke(foo);
+                Mappers.Register(t.Assembly, map);
+            }
+        }
+
+        public static void RevokeUserMapper(Action callback)
+        {
+            var foo = new FooMapper();
+            Mappers.Register(typeof(User), foo);
+            try { callback(); }
+            catch (Exception ex) { throw ex; }
+            finally
+            {
+                Mappers.Revoke(foo);
+            }
+        }
+
+        private class FooMapper : ConventionMapper
+        {
+            public override TableInfo GetTableInfo(Type pocoType) => throw new Exception();
         }
     }
 }

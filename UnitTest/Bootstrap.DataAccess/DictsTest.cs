@@ -17,18 +17,13 @@ namespace Bootstrap.DataAccess.SqlServer
             var dict = new BootstrapDict()
             {
                 Category = "UnitTest",
-                Name = "Test1",
+                Name = "SaveDict",
                 Code = "1",
                 Define = 1
             };
-
-            // insert
             Assert.True(DictHelper.Save(dict));
-
-            // update 
+            dict.Code = "2";
             Assert.True(DictHelper.Save(dict));
-
-            // delete
             Assert.True(DictHelper.Delete(new string[] { dict.Id }));
         }
 
@@ -38,16 +33,17 @@ namespace Bootstrap.DataAccess.SqlServer
             var dict = new Dict()
             {
                 Category = "UnitTest",
-                Name = "Test1",
+                Name = "SaveSettings",
                 Code = "1",
                 Define = 1
             };
 
             // insert 
+            Assert.True(DictHelper.Save(dict));
+            // update
             Assert.True(DictHelper.SaveSettings(dict));
-
             // delete
-            dict.Delete(DictHelper.RetrieveDicts().Where(d => d.Category == dict.Category).Select(d => d.Id));
+            Assert.True(DictHelper.Delete(new string[] { dict.Id }));
         }
 
         [Fact]
@@ -92,6 +88,16 @@ namespace Bootstrap.DataAccess.SqlServer
             Assert.Equal("~/Home/Index", DictHelper.RetrieveHomeUrl("0"));
             var url = DictHelper.RetrieveHomeUrl("2");
             Assert.NotEqual("~/Home/Index", url);
+
+            // INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('应用首页', 2, 'http://localhost:49185/', 0);
+            var dict = DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "应用首页" && d.Name == "2");
+            url = dict.Code;
+            dict.Code = "";
+            Assert.True(DictHelper.Save(dict));
+            Assert.Equal("~/Home/Index", DictHelper.RetrieveHomeUrl("2"));
+
+            dict.Code = url;
+            Assert.True(DictHelper.Save(dict));
         }
 
         [Fact]
@@ -189,7 +195,7 @@ namespace Bootstrap.DataAccess.SqlServer
             var dict = new BootstrapDict() { Category = "系统检查", Name = "系统设置", Code = DatabaseName, Define = 0 };
             Assert.True(DictHelper.Save(dict));
             Assert.Equal(DatabaseName, DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == dict.Category && d.Name == dict.Name)?.Code ?? "unknown");
-            DictHelper.Delete(new string[] { dict.Id });
+            Assert.True(DictHelper.Delete(new string[] { dict.Id }));
         }
 
         #region Private Class For Test

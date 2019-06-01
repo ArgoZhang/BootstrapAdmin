@@ -19,7 +19,7 @@ namespace Bootstrap.Admin.Api.SqlServer
         public async void Post_Ok()
         {
             // register new user
-            var nusr = new User() { UserName = "UnitTest_RegisterController", DisplayName = "UnitTest", Password = "1", Description = "UnitTest" };
+            var nusr = new User() { UserName = "U_Register", DisplayName = "UnitTest", Password = "1", Description = "UnitTest" };
             var resp = await Client.PostAsJsonAsync<User, bool>(nusr);
             Assert.True(resp);
             UserHelper.Delete(nusr.RetrieveNewUsers().Where(u => u.UserName == nusr.UserName).Select(u => u.Id));
