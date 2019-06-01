@@ -1,4 +1,4 @@
-using Longbow.Web.Mvc;
+﻿using Longbow.Web.Mvc;
 using MongoDB.Driver;
 using PetaPoco;
 using System;
@@ -93,7 +93,6 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <returns></returns>
         public override bool Save(DataAccess.Trace p)
         {
-            p.Id = null;
             DbManager.Traces.InsertOne(p);
             ClearTraces();
             return true;

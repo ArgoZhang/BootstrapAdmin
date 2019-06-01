@@ -1,4 +1,4 @@
-using Longbow.Web.Mvc;
+﻿using Longbow.Web.Mvc;
 using Microsoft.Data.Sqlite;
 using System;
 using Xunit;
@@ -14,7 +14,7 @@ namespace Bootstrap.DataAccess.SqlServer
             ExceptionsHelper.Log(new Exception("UnitTest", new SqliteException("UnitTest", 1001)), null);
             Assert.NotEmpty(ExceptionsHelper.Retrieves());
 
-            Exceptions ex = new Exceptions() { Period = "1" };
+            var ex = new Exceptions() { Period = "1" };
             Assert.Equal("1", ex.Period);
         }
 

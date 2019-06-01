@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Xunit;
 
 namespace Bootstrap.DataAccess.SqlServer
@@ -32,8 +33,17 @@ namespace Bootstrap.DataAccess.SqlServer
         public void SaveByRoleId_Ok()
         {
             var rid = RoleHelper.Retrieves().FirstOrDefault(r => r.RoleName == "Administrators").Id;
+            Assert.True(AppHelper.SaveByRoleId(rid, null));
             Assert.True(AppHelper.SaveByRoleId(rid, new string[] { "2" }));
             Assert.NotEmpty(AppHelper.RetrievesByRoleId(rid).Where(r => r.Checked == "checked"));
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData(null)]
+        public void SaveByRoleId_Exception(string roleId)
+        {
+            Assert.ThrowsAny<ArgumentNullException>(() => AppHelper.SaveByRoleId(roleId, null));
         }
     }
 }

@@ -267,7 +267,7 @@ namespace Bootstrap.DataAccess
                 db.Execute("insert into RejectUsers (UserName, DisplayName, RegisterTime, RejectedBy, RejectedTime, RejectedReason) select UserName, DisplayName, Registertime, @1, @2, @3 from Users where ID = @0", id, rejectBy, DateTime.Now, "未填写");
                 db.Execute("delete from UserRole where UserId = @0", id);
                 db.Execute("delete from UserGroup where UserId = @0", id);
-                db.Execute("delete from users where ID = @0", id);
+                db.Execute("delete from Users where ID = @0", id);
                 db.CompleteTransaction();
                 ret = true;
             }

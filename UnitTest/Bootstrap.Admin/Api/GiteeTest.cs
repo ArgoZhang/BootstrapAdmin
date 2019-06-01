@@ -1,6 +1,10 @@
-﻿using Xunit;
+﻿using Bootstrap.Admin.Controllers.Api;
+using System;
+using System.Reflection;
+using System.Threading.Tasks;
+using Xunit;
 
-namespace Bootstrap.Admin.Api.SqlServer
+namespace Bootstrap.Admin.Api
 {
     public class GiteeTest : ControllerTest
     {
@@ -32,6 +36,26 @@ namespace Bootstrap.Admin.Api.SqlServer
         {
             var cates = await Client.GetAsJsonAsync<object>("Builds");
             Assert.NotNull(cates);
+        }
+
+        [Fact]
+        public void GetJsonAsync_Exception()
+        {
+            var t = typeof(GiteeController).GetMethod("GetJsonAsync", BindingFlags.NonPublic | BindingFlags.Static);
+            t = t.MakeGenericMethod(new Type[] { typeof(string) });
+
+            t.Invoke(null, new object[] {
+                new Func<Task<string>>(() =>
+                {
+                    throw new TaskCanceledException();
+                })
+            });
+
+            t.Invoke(null, new object[] {
+                new Func<Task<string>>(()=> {
+                    throw new Exception();
+                })
+            });
         }
     }
 }

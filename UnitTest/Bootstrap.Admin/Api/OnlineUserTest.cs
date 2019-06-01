@@ -2,7 +2,7 @@
 using System.Reflection;
 using Xunit;
 
-namespace UnitTest.Bootstrap.Admin.Api
+namespace Bootstrap.Admin.Api
 {
     public class OnlineUserTest
     {

@@ -19,8 +19,13 @@ namespace Bootstrap.Admin.Controllers.SqlServer
 
             var r = await Client.GetAsync("Login");
             Assert.Equal(HttpStatusCode.OK, r.StatusCode);
-            dict.Code = "0";
-            DictHelper.Save(dict);
+
+            // 演示系统下不能进行更改字典表
+            var db = DbManager.Create();
+            db.Execute("Update Dicts Set Code = @0 Where Id = @1", "0", dict.Id);
+
+            dict = DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "演示系统");
+            Assert.Equal("0", dict.Code);
         }
 
         [Fact]

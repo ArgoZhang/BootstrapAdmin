@@ -32,6 +32,9 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <returns></returns>
         public override bool SaveByRoleId(string roleId, IEnumerable<string> appIds)
         {
+            if (string.IsNullOrEmpty(roleId)) throw new ArgumentNullException(nameof(roleId));
+
+            if (appIds == null) appIds = new string[0];
             var ret = DbManager.Roles.UpdateOne(md => md.Id == roleId, Builders<Role>.Update.Set(md => md.Apps, appIds));
             return true;
         }

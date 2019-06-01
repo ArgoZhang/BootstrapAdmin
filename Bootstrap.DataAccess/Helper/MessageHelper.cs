@@ -44,6 +44,10 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<Message> Retrieves(string userName) => CacheManager.GetOrAdd(RetrieveMessageDataKey, key => DbContextManager.Create<Message>().RetrieveHeaders(userName).OrderByDescending(n => n.SendTime));
 
-        public static bool Save(Message msg) => DbContextManager.Create<Message>().Save(msg);
+        public static bool Save(Message msg)
+        {
+            if (string.IsNullOrEmpty(msg.Id)) msg.Id = null;
+            return DbContextManager.Create<Message>().Save(msg);
+        }
     }
 }

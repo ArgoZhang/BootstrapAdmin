@@ -7,13 +7,7 @@ namespace Bootstrap.DataAccess.SqlServer
     public class MessagesTest
     {
         [Fact]
-        public void RetrieveHeaders_Ok()
-        {
-            Assert.NotNull(MessageHelper.Retrieves("Admin"));
-        }
-
-        [Fact]
-        public virtual void Save_Ok()
+        public void Retrieves_Ok()
         {
             var msg = new Message()
             {
@@ -32,8 +26,7 @@ namespace Bootstrap.DataAccess.SqlServer
                 FromIcon = "Default.jpg"
             };
             Assert.True(MessageHelper.Save(msg));
-
-
+            Assert.NotEmpty(MessageHelper.Retrieves("User"));
         }
     }
 }

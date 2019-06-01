@@ -96,7 +96,7 @@ namespace Bootstrap.DataAccess
             var db = DbManager.Create();
             var t = db.Provider.EscapeSqlIdentifier("To");
             var f = db.Provider.EscapeSqlIdentifier("From");
-            return db.Fetch<Message>($"select m.*, d.Name, u.DisplayName from Messages m left join Dicts d on m.Label = d.Code and d.Category = @Category and d.Define = 0 inner join Users u on m.{f} = u.UserName where {t} = @UserName or {f} = @UserName order by SendTime desc", new { UserName = userName, Category = "消息标签" });
+            return db.Fetch<Message>($"select m.*, d.Name, u.DisplayName from Messages m left join Dicts d on m.Label = d.Code and d.Category = @0 and d.Define = 0 inner join Users u on m.{f} = u.UserName where {t} = @1 or {f} = @1 order by SendTime desc", "消息标签", userName);
         }
 
         /// <summary>
@@ -168,6 +168,8 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual bool Save(Message msg)
         {
+            var db = DbManager.Create();
+            db.Save(msg);
             return true;
         }
     }

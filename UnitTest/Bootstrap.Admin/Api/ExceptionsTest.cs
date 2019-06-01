@@ -26,7 +26,7 @@ namespace Bootstrap.Admin.Api.SqlServer
             Assert.NotEmpty(qd.rows);
 
             // clean
-            DbManager.Create().Execute("delete from exceptions where AppDomainName = @0", AppDomain.CurrentDomain.FriendlyName);
+            DbManager.Create().Execute("delete from Exceptions where AppDomainName = @0", AppDomain.CurrentDomain.FriendlyName);
         }
 
         [Fact]
@@ -43,7 +43,7 @@ namespace Bootstrap.Admin.Api.SqlServer
             }
 
             // clean
-            DbManager.Create().Execute("delete from exceptions where AppDomainName = @0", AppDomain.CurrentDomain.FriendlyName);
+            DbManager.Create().Execute("delete from Exceptions where AppDomainName = @0", AppDomain.CurrentDomain.FriendlyName);
         }
     }
 }

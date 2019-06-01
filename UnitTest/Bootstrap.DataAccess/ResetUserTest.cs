@@ -11,7 +11,6 @@ namespace Bootstrap.DataAccess.SqlServer
         public void ResetReasonsByUserName_Ok()
         {
             var user = new User { UserName = "UnitTestReset", Password = "1", DisplayName = "DisplayName", ApprovedBy = "System", ApprovedTime = DateTime.Now, Description = "Desc", Icon = "default.jpg" };
-            UserHelper.Delete(UserHelper.Retrieves().Union(UserHelper.RetrieveNewUsers()).Where(u => u.UserName == user.UserName).Select(u => u.Id));
             Assert.True(UserHelper.Save(user));
 
             UserHelper.ForgotPassword(new ResetUser() { UserName = user.UserName, DisplayName = user.DisplayName, Reason = "UnitTest", ResetTime = DateTime.Now });
@@ -19,6 +18,8 @@ namespace Bootstrap.DataAccess.SqlServer
 
             var reasons = UserHelper.RetrieveResetReasonsByUserName(user.UserName);
             Assert.NotEmpty(reasons);
+
+            UserHelper.Delete(new string[] { user.Id });
         }
 
         [Fact]

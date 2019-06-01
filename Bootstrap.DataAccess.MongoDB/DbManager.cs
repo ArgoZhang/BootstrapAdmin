@@ -195,13 +195,6 @@ namespace Bootstrap.DataAccess.MongoDB
         {
             BsonSerializer.RegisterSerializer(DateTimeSerializer.LocalInstance);
 
-            if (!BsonClassMap.IsClassMapRegistered(typeof(Dict)))
-            {
-                BsonClassMap.RegisterClassMap<Dict>(md =>
-                {
-                    md.AutoMap();
-                });
-            }
             if (!BsonClassMap.IsClassMapRegistered(typeof(BootstrapDict)))
             {
                 BsonClassMap.RegisterClassMap<BootstrapDict>(md =>
@@ -209,7 +202,6 @@ namespace Bootstrap.DataAccess.MongoDB
                     md.AutoMap();
                     md.IdMemberMap.SetSerializer(new StringSerializer(BsonType.ObjectId));
                     md.IdMemberMap.SetIgnoreIfDefault(true);
-                    md.AddKnownType(typeof(Dict));
                 });
             }
             if (!BsonClassMap.IsClassMapRegistered(typeof(DataAccess.User)))
