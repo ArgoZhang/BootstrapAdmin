@@ -6,11 +6,18 @@ branches:
 image: Visual Studio 2017
 clone_depth: 1
 init:
-- ps: dotnet --version
+- ps: git version
 environment:
   Appveyor: true
   COVERALLS_REPO_TOKEN: 
     secure: 5L1b6XqSNTOfU1iZrARo5eUOi1HOleVO3VDCW0pr6yaspgkC5jxL+gBDK0OEY8EI
+  COVERALLS_REPO_TOKEN_GITLAB:
+    secure: yPxFQv4kSWtZ7Vvs70bIXDx9IOEEJ9utI3UyZsJGU7rt63gZnHOry0kt9DBMWcwV
+  CODECOV_TOKEN:
+    secure: 6rKKLXCmy3HZBxW5SjoO4Ox7G09FC0NJgGnvukWkYyJ2rx1GCzu4JvmLin69SHRz
+  CODECOV_TOKEN_GITLAB:
+    secure: +22PuAn5seq4bbCVCly8zDFuyEV3m2NjW3QuM0+2gm4c8akwicNFmv2T/ZGd0Jpd
+cache: C:\ProgramData\chocolatey\lib\codecov\tools
 services:
 - mssql2014
 - mysql
@@ -18,7 +25,9 @@ services:
 install:
 - ps: >-
     #copy my.ini into mysql folder
-
+    
+    dotnet --version
+    
     xcopy "$($env:appveyor_build_folder)\DatabaseScripts\MySQL\my.ini" "C:\Program Files\MySQL\MySQL Server 5.7" /y
 build_script:
 - ps: >-
