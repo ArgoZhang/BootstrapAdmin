@@ -158,7 +158,7 @@ INSERT [dbo].[Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Categor
 INSERT [dbo].[Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], [Application]) VALUES (0, N'测试页面', 10, N'fa fa-fa', N'~/Home/Index', N'1', @AppId)
 INSERT [dbo].[Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], [Application]) VALUES (@@Identity, N'关于', 10, N'fa fa-fa', N'~/Home/Index', N'1', @AppId)
 
-INSERT into [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], [Application]) VALUES (0, '返回码云', 20, 'fa fa-fa', 'https://gitee.com/LongbowEnterprise/BootstrapAdmin', '1', @AppId)
+INSERT into [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], [Application]) VALUES (0, N'返回码云', 20, 'fa fa-fa', 'https://gitee.com/LongbowEnterprise/BootstrapAdmin', '1', @AppId)
 
 -- 菜单授权
 INSERT INTO NavigationRole (NavigationId, RoleId) SELECT n.ID, r.ID FROM Navigations n left join Roles r on 1=1 Where r.RoleName = 'Administrators' and [Application] = @AppId;
