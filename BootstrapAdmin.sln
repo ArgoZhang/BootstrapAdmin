@@ -5,7 +5,6 @@ VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQLServer", "SQLServer", "{87319AF5-7C40-4362-B67C-35F9DD737DB4}"
 	ProjectSection(SolutionItems) = preProject
-		DatabaseScripts\SqlServer\appveyor.ps1 = DatabaseScripts\SqlServer\appveyor.ps1
 		DatabaseScripts\SqlServer\InitData.sql = DatabaseScripts\SqlServer\InitData.sql
 		DatabaseScripts\SqlServer\install.ps1 = DatabaseScripts\SqlServer\install.ps1
 		DatabaseScripts\SqlServer\Install.sql = DatabaseScripts\SqlServer\Install.sql
@@ -44,7 +43,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.DataAccess.MongoD
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MongoDB", "MongoDB", "{A06A0AD8-A246-4329-B024-7174AE4A3EDE}"
 	ProjectSection(SolutionItems) = preProject
-		DatabaseScripts\MongoDB\appveyor.ps1 = DatabaseScripts\MongoDB\appveyor.ps1
 		DatabaseScripts\MongoDB\Dicts.js = DatabaseScripts\MongoDB\Dicts.js
 		DatabaseScripts\MongoDB\Groups.js = DatabaseScripts\MongoDB\Groups.js
 		DatabaseScripts\MongoDB\init.js = DatabaseScripts\MongoDB\init.js
@@ -56,7 +54,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MongoDB", "MongoDB", "{A06A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MySQL", "MySQL", "{084E2E94-6B7D-4D3E-9BF1-6972427FBF80}"
 	ProjectSection(SolutionItems) = preProject
-		DatabaseScripts\MySQL\appveyor.ps1 = DatabaseScripts\MySQL\appveyor.ps1
 		DatabaseScripts\MySQL\initData.sql = DatabaseScripts\MySQL\initData.sql
 		DatabaseScripts\MySQL\install.sh = DatabaseScripts\MySQL\install.sh
 		DatabaseScripts\MySQL\install.sql = DatabaseScripts\MySQL\install.sql
@@ -68,7 +65,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Postgresql", "Postgresql", "{6F61C2AC-84D4-48A9-8A48-680657CC8175}"
 	ProjectSection(SolutionItems) = preProject
 		DatabaseScripts\Postgresql\initData.sql = DatabaseScripts\Postgresql\initData.sql
-		DatabaseScripts\Postgresql\install.ps1 = DatabaseScripts\Postgresql\install.ps1
 		DatabaseScripts\Postgresql\install.sql = DatabaseScripts\Postgresql\install.sql
 	EndProjectSection
 EndProject
