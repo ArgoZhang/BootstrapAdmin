@@ -51,25 +51,26 @@ if ("$($env:APPVEYOR_REPO_BRANCH)" -eq "master") {
     if ("$($env:APPVEYOR_REPO_PROVIDER)" -eq "gitHub") {
         coverallUnitTest
     }
-    elseif ("$($env:APPVEYOR_REPO_PROVIDER)" -eq "gitLab") {
-        coverallUnitTest
-
-        Set-AppveyorBuildVariable COVERALLS_REPO_TOKEN $($env:COVERALLS_REPO_TOKEN_GITLAB)
-        Set-AppveyorBuildVariable CODECOV_TOKEN $($env:CODECOV_TOKEN_GITLAB)
-
-        $codecovCmd = "C:\ProgramData\chocolatey\lib\codecov\tools\codecov.exe"
-        $codecov = Test-Path $codecovCmd
-        if (!$codecov) {
-            write-host "install codecov tools" -ForegroundColor Cyan
-            choco install codecov
-        }
-        cmd.exe /c "$codecovCmd -f ""coverage.opencover.xml"""
-    }
     else {
         write-warning "Coveralls has been skipped because current provider is ""$($env:APPVEYOR_REPO_PROVIDER)"""
         write-host "dotnet test UnitTest without Coveralls" -ForegroundColor Cyan
         dotnet test UnitTest --no-restore
     }
+}
+elseif ("$($env:APPVEYOR_REPO_PROVIDER)" -eq "gitLab") {
+    installDB
+    coverallUnitTest
+
+    Set-AppveyorBuildVariable COVERALLS_REPO_TOKEN $($env:COVERALLS_REPO_TOKEN_GITLAB)
+    Set-AppveyorBuildVariable CODECOV_TOKEN $($env:CODECOV_TOKEN_GITLAB)
+
+    $codecovCmd = "C:\ProgramData\chocolatey\lib\codecov\tools\codecov.exe"
+    $codecov = Test-Path $codecovCmd
+    if (!$codecov) {
+        write-host "install codecov tools" -ForegroundColor Cyan
+        choco install codecov
+    }
+    cmd.exe /c "$codecovCmd -f ""coverage.opencover.xml"""
 }
 else {
     write-warning "UnitTest has been skipped because current branch is ""$($env:APPVEYOR_REPO_BRANCH)"""
