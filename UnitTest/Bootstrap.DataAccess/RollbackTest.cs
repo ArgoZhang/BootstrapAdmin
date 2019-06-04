@@ -79,7 +79,7 @@ namespace Bootstrap.DataAccess
             var newUser = new User() { UserName = "U_Reset", DisplayName = "UnitTest", ApprovedTime = DateTime.Now, ApprovedBy = "System", Password = "1", Description = "UnitTest", RegisterTime = DateTime.Now };
             Assert.True(UserHelper.Save(newUser));
             Assert.True(UserHelper.ForgotPassword(new ResetUser() { DisplayName = "UnitTest", Reason = "UnitTest", ResetTime = DateTime.Now, UserName = newUser.UserName }));
-            Assert.ThrowsAny<Exception>(() => TestHelper.RevokeUserMapper(() => new User().ResetPassword(newUser.UserName, "123789")));
+            Assert.ThrowsAny<Exception>(() => TestHelper.RevokePocoMapper<User>(() => new User().ResetPassword(newUser.UserName, "123789")));
             Assert.True(UserHelper.Delete(new string[] { newUser.Id }));
         }
 
@@ -105,6 +105,12 @@ namespace Bootstrap.DataAccess
         public void User_SaveByMenu()
         {
             Assert.ThrowsAny<Exception>(() => TestHelper.RevokeMapper(() => new User().SaveByGroupId("1", new string[] { "1" })));
+        }
+
+        [Fact]
+        public void Exceptions_Log()
+        {
+            TestHelper.RevokePocoMapper<Exceptions>(() => new Exceptions().Log(new Exception(), null));
         }
     }
 }

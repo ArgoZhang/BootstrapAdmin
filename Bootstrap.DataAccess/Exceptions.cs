@@ -1,4 +1,4 @@
-using Longbow.Web.Mvc;
+﻿using Longbow.Web.Mvc;
 using PetaPoco;
 using System;
 using System.Collections.Generic;
@@ -95,19 +95,24 @@ namespace Bootstrap.DataAccess
                 }
                 loopEx = loopEx.InnerException;
             }
-            DbManager.Create().Insert(new Exceptions
+            try
             {
-                AppDomainName = AppDomain.CurrentDomain.FriendlyName,
-                ErrorPage = errorPage,
-                UserId = additionalInfo?["UserId"],
-                UserIp = additionalInfo?["UserIp"],
-                ExceptionType = ex.GetType().FullName,
-                Message = ex.Message,
-                StackTrace = ex.StackTrace,
-                LogTime = DateTime.Now,
-                Category = category
-            });
-            ClearExceptions();
+                // 防止数据库写入操作失败后陷入死循环
+                DbManager.Create().Insert(new Exceptions
+                {
+                    AppDomainName = AppDomain.CurrentDomain.FriendlyName,
+                    ErrorPage = errorPage,
+                    UserId = additionalInfo?["UserId"],
+                    UserIp = additionalInfo?["UserIp"],
+                    ExceptionType = ex.GetType().FullName,
+                    Message = ex.Message,
+                    StackTrace = ex.StackTrace,
+                    LogTime = DateTime.Now,
+                    Category = category
+                });
+                ClearExceptions();
+            }
+            catch { }
             return true;
         }
 

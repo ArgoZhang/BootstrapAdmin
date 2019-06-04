@@ -103,10 +103,10 @@ namespace UnitTest
             }
         }
 
-        public static void RevokeUserMapper(Action callback)
+        public static void RevokePocoMapper<T>(Action callback)
         {
             var foo = new FooMapper();
-            Mappers.Register(typeof(User), foo);
+            Mappers.Register(typeof(T), foo);
             try { callback(); }
             catch (Exception ex) { throw ex; }
             finally
