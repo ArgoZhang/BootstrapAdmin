@@ -2,7 +2,7 @@
 
 ##### Version & Coverage
 [![Release](https://img.shields.io/endpoint.svg?logo=Groupon&logoColor=red&color=green&label=release&url=https%3A%2F%2Fargo.zylweb.cn%2FBA%2Fapi%2FGitee%2FReleases)](http://argo.zylweb.cn/BA/Tools/Index?ReturnUrl=https%3A%2F%2Fgitee.com%2FLongbowEnterprise%2FBootstrapAdmin%2Freleases)
-[![Coveralls](https://img.shields.io/coveralls/github/ArgoZhang/BootstrapAdmin/master.svg?logo=spreaker&logoColor=green)](https://coveralls.io/github/ArgoZhang/BootstrapAdmin)
+[![Coveralls](https://img.shields.io/coveralls/github/ArgoZhang/BootstrapAdmin/master.svg?logo=ReverbNation&logoColor=green)](https://coveralls.io/github/ArgoZhang/BootstrapAdmin)
 [![Codecov](https://img.shields.io/codecov/c/gh/argozhang/bootstrapadmin/master.svg?logo=codecov)](https://codecov.io/gh/argozhang/bootstrapadmin/branch/master)
 
 ##### Gitee
@@ -122,8 +122,8 @@
  **master** 发布分支与在线演示版本同步
 
 ## 演示地址  
-**在线演示1** [传送门](http://argo.zylweb.cn)  
-**在线演示2** [传送门](http://ba.sdgxgz.com)  
+[![website1](https://img.shields.io/badge/website-https://argo.zylweb.cn-success.svg?logo=buzzfeed&logoColor=green)](https://argo.zylweb.cn)
+[![website2](https://img.shields.io/badge/website-http://ba.sdgxgz.com-success.svg?logo=buzzfeed&logoColor=green)](http://ba.sdgxgz.com)  
 
 ### 登录用户名与密码  
 管理员：**Admin/123789**  
