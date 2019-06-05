@@ -32,6 +32,7 @@ namespace Bootstrap.DataAccess
 
             public override WebSocketManager WebSockets => throw new NotImplementedException();
 
+            [Obsolete]
             public override AuthenticationManager Authentication => throw new NotImplementedException();
 
             public override ClaimsPrincipal User { get; set; } = new ClaimsPrincipal(new System.Security.Principal.GenericIdentity("User"));
