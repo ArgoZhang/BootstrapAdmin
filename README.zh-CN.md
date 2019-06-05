@@ -1,5 +1,9 @@
 # BootstrapAdmin
 
+<a href="README.md">English</a> | <span>中文</span>
+
+---
+
 ##### Version & Coverage
 [![Release](https://img.shields.io/endpoint.svg?logo=Groupon&logoColor=red&color=green&label=release&url=https%3A%2F%2Fargo.zylweb.cn%2FBA%2Fapi%2FGitee%2FReleases)](http://argo.zylweb.cn/BA/Tools/Index?ReturnUrl=https%3A%2F%2Fgitee.com%2FLongbowEnterprise%2FBootstrapAdmin%2Freleases)
 [![Coveralls](https://img.shields.io/coveralls/github/ArgoZhang/BootstrapAdmin/master.svg?logo=ReverbNation&logoColor=green)](https://coveralls.io/github/ArgoZhang/BootstrapAdmin)
