@@ -1,17 +1,17 @@
-@{
+﻿@{
     Layout = "_Bootstrap";
 }
 @section css {
     <environment include="Development">
         <link href="~/lib/toastr.js/toastr.css" rel="stylesheet" />
         <link href="~/lib/nprogress/nprogress.css" rel="stylesheet" />
-        <link href="~/lib/bootstrap-sweetalert/sweetalert.css" rel="stylesheet" />
+        <link href="~/lib/sweetalert/sweetalert2.css" rel="stylesheet" />
         <link href="~/lib/scrollbar/jquery.mCustomScrollbar.css" rel="stylesheet" />
     </environment>
     <environment exclude="Development">
         <link href="~/lib/toastr.js/toastr.min.css" rel="stylesheet" />
         <link href="~/lib/nprogress/nprogress.min.css" rel="stylesheet" />
-        <link href="~/lib/bootstrap-sweetalert/sweetalert.min.css" rel="stylesheet" />
+        <link href="~/lib/sweetalert/sweetalert2.min.css" rel="stylesheet" />
         <link href="~/lib/scrollbar/jquery.mCustomScrollbar.min.css" rel="stylesheet" />
     </environment>
     @RenderSection("css", false)
@@ -22,7 +22,7 @@
         <script src="~/lib/scrollbar/jquery.mCustomScrollbar.js"></script>
         <script src="~/lib/signalr/dist/browser/signalr.js"></script>
         <script src="~/lib/dcjqaccordion/js/jquery.dcjqaccordion.2.7.js"></script>
-        <script src="~/lib/bootstrap-sweetalert/sweetalert.js"></script>
+        <script src="~/lib/sweetalert/sweetalert2.js" rel="stylesheet"></script>
         <script src="~/lib/nprogress/nprogress.js"></script>
     </environment>
     <environment exclude="Development">
@@ -30,7 +30,7 @@
         <script src="~/lib/scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
         <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
         <script src="~/lib/dcjqaccordion/js/jquery.dcjqaccordion.2.7.min.js"></script>
-        <script src="~/lib/bootstrap-sweetalert/sweetalert.min.js"></script>
+        <script src="~/lib/sweetalert/sweetalert2.min.js" rel="stylesheet"></script>
         <script src="~/lib/nprogress/nprogress.min.js"></script>
     </environment>
     <script src="~/lib/toastr.js/toastr.min.js"></script>

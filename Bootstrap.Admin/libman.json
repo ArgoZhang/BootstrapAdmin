@@ -105,14 +105,13 @@
     },
     {
       "provider": "cdnjs",
-      "library": "bootstrap-sweetalert@1.0.1",
-      "destination": "wwwroot/lib/bootstrap-sweetalert/",
+      "library": "limonte-sweetalert2@7.33.1",
+      "destination": "wwwroot/lib/sweetalert/",
       "files": [
-        "sweetalert.min.js",
-        "sweetalert.css",
-        "sweetalert.js",
-        "sweetalert.min.css",
-        "sweetalert.min.css.map"
+        "sweetalert2.js",
+        "sweetalert2.min.js",
+        "sweetalert2.css",
+        "sweetalert2.min.css"
       ]
     },
     {

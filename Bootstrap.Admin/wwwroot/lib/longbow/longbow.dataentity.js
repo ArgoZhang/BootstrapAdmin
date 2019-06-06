@@ -11,7 +11,18 @@
         var idField = $(tableName).bootstrapTable("getOptions").idField;
         if (idField === undefined) idField = "Id";
         return idField;
-    }
+    };
+
+    var swalDeleteOptions = {
+        title: "删除数据",
+        html: '您确定要删除选中的所有数据吗',
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#dc3545',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: "我要删除",
+        cancelButtonText: "取消"
+    };
 
     DataEntity = function (options) {
         this.options = options;
@@ -155,33 +166,26 @@
                         return;
                     }
                     else {
-                        swal({
-                            title: "删除数据",
-                            text: "您确定要删除选中的所有数据吗",
-                            type: "warning",
-                            showCancelButton: true,
-                            cancelButtonClass: 'btn-secondary',
-                            confirmButtonText: "我要删除",
-                            confirmButtonClass: "btn-danger ml-2",
-                            cancelButtonText: "取消"
-                        }, function () {
-                            $.logData.push({
-                                url: options.url,
-                                data: arrselections.map(function (element, index) {
-                                    return formatData($.extend({}, element));
-                                })
-                            });
-                            setTimeout(function () {
-                                var idField = findIdField(options.bootstrapTable);
-                                var iDs = arrselections.map(function (element, index) { return element[idField]; });
-                                $.bc({
-                                    url: options.url, data: iDs, method: 'delete', title: options.delTitle,
-                                    callback: function (result) {
-                                        if (result) $(options.bootstrapTable).bootstrapTable('refresh');
-                                        handlerCallback.call(that, null, element, { oper: 'del', success: result });
-                                    }
+                        swal($.extend({}, swalDeleteOptions)).then((result) => {
+                            if (result.value) {
+                                $.logData.push({
+                                    url: options.url,
+                                    data: arrselections.map(function (element, index) {
+                                        return formatData($.extend({}, element));
+                                    })
                                 });
-                            }, 100);
+                                setTimeout(function () {
+                                    var idField = findIdField(options.bootstrapTable);
+                                    var iDs = arrselections.map(function (element, index) { return element[idField]; });
+                                    $.bc({
+                                        url: options.url, data: iDs, method: 'delete', title: options.delTitle,
+                                        callback: function (result) {
+                                            if (result) $(options.bootstrapTable).bootstrapTable('refresh');
+                                            handlerCallback.call(that, null, element, { oper: 'del', success: result });
+                                        }
+                                    });
+                                }, 100);
+                            }
                         });
                     }
                 }
@@ -233,31 +237,23 @@
                         });
                         text = "本删除项含有级联子项目</br>您确定要删除 <span class='text-danger font-weight-bold'>" + row.Name + "</span> 以及子项目吗？";
                     }
-                    swal({
-                        html: true,
-                        title: "删除数据",
-                        text: text,
-                        type: "warning",
-                        showCancelButton: true,
-                        cancelButtonClass: 'btn-secondary',
-                        confirmButtonText: "我要删除",
-                        confirmButtonClass: "btn-danger ml-2",
-                        cancelButtonText: "取消"
-                    }, function () {
-                        $.logData.push({ url: op.url, data: data });
-                        setTimeout(function () {
-                            var idField = findIdField(op.table);
-                            var iDs = data.map(function (element, index) {
-                                return element[idField];
-                            });
-                            $.bc({
-                                url: op.url, data: iDs, method: 'delete', title: '删除数据',
-                                callback: function (result) {
-                                    if (result) $(op.table).bootstrapTable('refresh');
-                                    handlerCallback.call(op.src, null, e, { oper: 'del', success: result });
-                                }
-                            });
-                        }, 100);
+                    swal($.extend({}, swalDeleteOptions, { html: text })).then((result) => {
+                        if (result.value) {
+                            $.logData.push({ url: op.url, data: data });
+                            setTimeout(function () {
+                                var idField = findIdField(op.table);
+                                var iDs = data.map(function (element, index) {
+                                    return element[idField];
+                                });
+                                $.bc({
+                                    url: op.url, data: iDs, method: 'delete', title: '删除数据',
+                                    callback: function (result) {
+                                        if (result) $(op.table).bootstrapTable('refresh');
+                                        handlerCallback.call(op.src, null, e, { oper: 'del', success: result });
+                                    }
+                                });
+                            }, 100);
+                        }
                     });
                 }
             };
