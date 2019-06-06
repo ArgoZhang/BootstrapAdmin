@@ -1,9 +1,11 @@
-﻿@{
-    ViewBag.Title = "首页";
+﻿@inject IViewLocalizer Localizer
+@{
+    ViewBag.Title = @Localizer["Home"];
     Layout = "_Bootstrap";
 }
 @section css {
     <style type="text/css">
+
         .content-body {
             position: fixed;
             left: 0;

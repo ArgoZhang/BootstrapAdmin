@@ -1,4 +1,5 @@
 @model LoginModel
+@inject IViewLocalizer Localizer
 @{
     ViewBag.Title = Model.Title;
     Layout = "_Layout";
@@ -46,7 +47,7 @@
     <form id="login" method="post" class="form-signin">
         <h2 class="form-signin-heading">@Model.Title</h2>
         <div class="login-wrap" data-auth="@Model.AuthFailed" data-toggle="LgbValidate" data-valid-button="button[type='submit']">
-            <div class="alert alert-danger" asp-condition="@Model.AuthFailed">用户名或密码错误！</div>
+            <div class="alert alert-danger" asp-condition="@Model.AuthFailed">@Localizer["Invalid email or password."] </div>
             <div class="form-group">
                 <div class="input-group">
                     <div class="input-group-prepend">
@@ -54,7 +55,7 @@
                             <span class="fa fa-user"></span>
                         </div>
                     </div>
-                    <input type="text" name="userName" class="form-control" placeholder="用户名" maxlength="16" data-required-msg="请输入用户名" value="@ViewBag.UserName" autofocus data-valid="true" />
+                    <input type="text" name="userName" class="form-control" placeholder="@Localizer["UserName"]" maxlength="16" data-required-msg="@Localizer["Please input the user name"]" value="@ViewBag.UserName" autofocus data-valid="true" />
                 </div>
             </div>
             <div class="form-group">
@@ -64,18 +65,18 @@
                             <span class="fa fa-lock"></span>
                         </div>
                     </div>
-                    <input type="password" name="password" class="form-control" value="@ViewBag.Password" placeholder="密码" maxlength="16" data-required-msg="请输入密码" data-valid="true" />
+                    <input type="password" name="password" class="form-control" value="@ViewBag.Password" placeholder="@Localizer["Password"]" maxlength="16" data-required-msg="@Localizer["Please input the password"]" data-valid="true" />
                 </div>
             </div>
             <div class="form-group rememberPwd" onselectstart="return false">
                 <i class="fa fa-square-o"></i>
-                <span>记住密码自动登录</span>
+                <span>@Localizer["Remember me"]</span>
                 <input id="remember" name="remember" type="hidden" value="false" />
             </div>
-            <button class="btn btn-lg btn-login btn-block" type="submit">登 陆</button>
+            <button class="btn btn-lg btn-login btn-block" type="submit">@Localizer["Login"]</button>
             <div class="login-footer">
-                <a href="#" data-method="register">申请账号</a>
-                <a href="#" data-method="forgot">忘记密码</a>
+                <a href="#" data-method="register">@Localizer["Sign up"]</a>
+                <a href="#" data-method="forgot">@Localizer["Forgot password?"]</a>
             </div>
             <div class="slidercaptcha card">
                 <div class="card-header">

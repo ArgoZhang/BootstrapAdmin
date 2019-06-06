@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +18,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
@@ -50,6 +53,7 @@ namespace Bootstrap.Admin
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
+            services.AddLocalization(op => op.ResourcesPath = "Resources");
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -80,7 +84,7 @@ namespace Bootstrap.Admin
                 options.SerializerSettings.ContractResolver = new DefaultContractResolver();
                 options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
                 JsonConvert.DefaultSettings = () => options.SerializerSettings;
-            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            }).AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
             {
                 options.Cookie.Path = "/";
@@ -118,6 +122,7 @@ namespace Bootstrap.Admin
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseForwardedHeaders(new ForwardedHeadersOptions() { ForwardedHeaders = ForwardedHeaders.All });
+            app.UseRequestLocalization(options => options.AddSupportedCultures("en-us", "zh-CN").AddSupportedUICultures("en-us", "zh-CN"));
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
