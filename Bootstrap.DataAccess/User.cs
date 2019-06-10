@@ -76,7 +76,7 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获得/设置 是否重置密码
         /// </summary>
-        [Ignore]
+        [ResultColumn]
         public int IsReset { get; set; }
 
         /// <summary>
