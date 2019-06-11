@@ -169,14 +169,21 @@ namespace Bootstrap.DataAccess
         {
             if (!UserChecker(new User { UserName = userName, Password = password })) return false;
             if (DictHelper.RetrieveSystemModel() && RetrieveConstUsers().Any(u => userName.Equals(u.UserName, StringComparison.OrdinalIgnoreCase))) return true;
-            return DbContextManager.Create<User>().ResetPassword(userName, password);
+            var ret = DbContextManager.Create<User>().ResetPassword(userName, password);
+            if (ret) CacheCleanUtility.ClearCache(cacheKey: RetrieveUsersDataKey);
+            return ret;
         }
 
         /// <summary>
         /// 忘记密码调用
         /// </summary>
         /// <param name="user"></param>
-        public static bool ForgotPassword(ResetUser user) => DbContextManager.Create<User>().ForgotPassword(user);
+        public static bool ForgotPassword(ResetUser user)
+        {
+            var ret = DbContextManager.Create<User>().ForgotPassword(user);
+            if (ret) CacheCleanUtility.ClearCache(cacheKey: RetrieveUsersDataKey);
+            return ret;
+        }
 
         /// <summary>
         /// 
