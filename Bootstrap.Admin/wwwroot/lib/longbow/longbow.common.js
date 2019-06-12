@@ -338,6 +338,7 @@
             }, options);
             settings.url = $.formatUrl(settings.url);
             $.each(settings.columns, function (index, value) {
+                if (value.checkbox) return;
                 if (!$.isFunction(value.formatter)) {
                     value.formatter = function (value, row, index, field) {
                         return $.safeHtml(value);
