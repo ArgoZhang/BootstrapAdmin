@@ -168,23 +168,18 @@
                     else {
                         swal($.extend({}, swalDeleteOptions)).then((result) => {
                             if (result.value) {
-                                $.logData.push({
-                                    url: options.url,
-                                    data: arrselections.map(function (element, index) {
-                                        return formatData($.extend({}, element));
-                                    })
+                                var logData = arrselections.map(function (element, index) {
+                                    return formatData($.extend({}, element));
                                 });
-                                setTimeout(function () {
-                                    var idField = findIdField(options.bootstrapTable);
-                                    var iDs = arrselections.map(function (element, index) { return element[idField]; });
-                                    $.bc({
-                                        url: options.url, data: iDs, method: 'delete', title: options.delTitle,
-                                        callback: function (result) {
-                                            if (result) $(options.bootstrapTable).bootstrapTable('refresh');
-                                            handlerCallback.call(that, null, element, { oper: 'del', success: result });
-                                        }
-                                    });
-                                }, 100);
+                                var idField = findIdField(options.bootstrapTable);
+                                var iDs = arrselections.map(function (element, index) { return element[idField]; });
+                                $.bc({
+                                    url: options.url, data: iDs, method: 'delete', title: options.delTitle, logData: logData,
+                                    callback: function (result) {
+                                        if (result) $(options.bootstrapTable).bootstrapTable('refresh');
+                                        handlerCallback.call(that, null, element, { oper: 'del', success: result });
+                                    }
+                                });
                             }
                         });
                     }
@@ -239,20 +234,17 @@
                     }
                     swal($.extend({}, swalDeleteOptions, { html: text })).then((result) => {
                         if (result.value) {
-                            $.logData.push({ url: op.url, data: data });
-                            setTimeout(function () {
-                                var idField = findIdField(op.table);
-                                var iDs = data.map(function (element, index) {
-                                    return element[idField];
-                                });
-                                $.bc({
-                                    url: op.url, data: iDs, method: 'delete', title: '删除数据',
-                                    callback: function (result) {
-                                        if (result) $(op.table).bootstrapTable('refresh');
-                                        handlerCallback.call(op.src, null, e, { oper: 'del', success: result });
-                                    }
-                                });
-                            }, 100);
+                            var idField = findIdField(op.table);
+                            var iDs = data.map(function (element, index) {
+                                return element[idField];
+                            });
+                            $.bc({
+                                url: op.url, data: iDs, method: 'delete', title: '删除数据', logData: data,
+                                callback: function (result) {
+                                    if (result) $(op.table).bootstrapTable('refresh');
+                                    handlerCallback.call(op.src, null, e, { oper: 'del', success: result });
+                                }
+                            });
                         }
                     });
                 }

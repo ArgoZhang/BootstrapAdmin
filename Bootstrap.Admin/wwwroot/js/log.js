@@ -8,10 +8,6 @@
                 e.data.handler.call(that);
             });
         }
-        $('body').on('click', '.sweet-alert button.confirm', function(e) {
-            if($.logData.length > 0)
-                that.log({ crud: '删除' });
-        });
     };
 
     logPlugin.settings = {
@@ -54,7 +50,7 @@
                 this.log({ crud: '删除头像' });
             },
             'button[data-method="title"]': function () {
-                this.log({ crud: '保存网站标题'});
+                this.log({ crud: '保存网站标题' });
             },
             'button[data-method="footer"]': function () {
                 this.log({ crud: '保存网站页脚' });
@@ -80,8 +76,16 @@
         }
     };
 
-    $.extend({ logPlugin: function (options) { return new logPlugin(options); } });
+    $.extend({
+        logPlugin: function (options) {
+            if (!window.logPlugin) window.logPlugin = new logPlugin(options);
+            return window.logPlugin;
+        }
+    });
     $.logData = [];
+    $.logData.log = function () {
+        $.logPlugin().log({ crud: '删除数据' });
+    };
 })(jQuery);
 
 $(function () {

@@ -208,7 +208,8 @@
                 xhrFields: { withCredentials: true },
                 crossDomain: true
             });
-            if ($.isArray($.logData) && !$.isEmptyObject(options.data) && options.method !== 'delete') $.logData.push({ url: url, data: options.data });
+            if ($.isArray($.logData) && !$.isEmptyObject(options.data)) $.logData.push({ url: url, data: options.method === 'delete' ? options.logData : options.data });
+            if (options.method === 'delete') $.logData.log();
             $.ajax(ajaxSettings);
         },
         lgbSwal: function (options) {
