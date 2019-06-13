@@ -197,7 +197,7 @@
 .cache-item {
     display: flex;
     align-items: center;
-    padding: 10px 4px;
+    padding: 10px;
     border: 1px solid #eee;
     border-width: 0 1px 1px 1px;
 }
