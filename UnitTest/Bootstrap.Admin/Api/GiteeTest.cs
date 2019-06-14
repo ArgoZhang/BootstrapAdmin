@@ -48,12 +48,18 @@ namespace Bootstrap.Admin.Api
                 new Func<Task<string>>(() =>
                 {
                     throw new TaskCanceledException();
+                }),
+                new Func<string, string>(content => {
+                    return "";
                 })
             });
 
             t.Invoke(null, new object[] {
                 new Func<Task<string>>(()=> {
                     throw new Exception();
+                }),
+                new Func<string, string>(content => {
+                    return "";
                 })
             });
         }
