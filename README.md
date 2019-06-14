@@ -5,19 +5,19 @@
 ---
 
 ##### Version & Coverage
-[![Release](https://img.shields.io/endpoint.svg?logo=Groupon&logoColor=red&color=green&label=release&url=https%3A%2F%2Fargo.zylweb.cn%2FBA%2Fapi%2FGitee%2FReleases)](http://argo.zylweb.cn/BA/Tools/Index?ReturnUrl=https%3A%2F%2Fgitee.com%2FLongbowEnterprise%2FBootstrapAdmin%2Freleases)
+[![Release](https://img.shields.io/endpoint.svg?logo=Groupon&logoColor=red&color=green&label=release&url=https://argo.zylweb.cn/BA/api/Gitee/Releases)](https://gitee.com/LongbowEnterprise/BootstrapAdmin/releases)
 [![Coveralls](https://img.shields.io/coveralls/github/ArgoZhang/BootstrapAdmin/master.svg?logo=ReverbNation&logoColor=green)](https://coveralls.io/github/ArgoZhang/BootstrapAdmin)
 [![Codecov](https://img.shields.io/codecov/c/gh/argozhang/bootstrapadmin/master.svg?logo=codecov)](https://codecov.io/gh/argozhang/bootstrapadmin/branch/master)
 
 ##### Gitee
-[![Appveyor build](https://img.shields.io/endpoint.svg?logo=appveyor&label=build&color=blueviolet&url=https%3A%2F%2Fargo.zylweb.cn%2FBA%2Fapi%2FGitee%2FBuilds?projName=bootstrapadmin-9m1jm)](https://ci.appveyor.com/project/ArgoZhang/bootstrapadmin-9m1jm)
+[![Appveyor build](https://img.shields.io/endpoint.svg?logo=appveyor&label=build&color=blueviolet&url=https://argo.zylweb.cn/BA/api/Gitee/Builds?projName=bootstrapadmin-9m1jm)](https://ci.appveyor.com/project/ArgoZhang/bootstrapadmin-9m1jm)
 [![Build Status](https://img.shields.io/appveyor/ci/ArgoZhang/bootstrapadmin-9m1jm/master.svg?logo=appveyor&label=maser)](https://ci.appveyor.com/project/ArgoZhang/bootstrapadmin-9m1jm)
 [![Test](https://img.shields.io/appveyor/tests/ArgoZhang/bootstrapadmin-9m1jm/master.svg?logo=appveyor&)](https://ci.appveyor.com/project/ArgoZhang/bootstrapadmin-9m1jm/build/tests)
-[![Issue Status](https://img.shields.io/endpoint.svg?logo=Groupon&logoColor=critical&label=issues&url=https%3A%2F%2Fargo.zylweb.cn%2FBA%2Fapi%2FGitee%2FIssues)](https://gitee.com/LongbowEnterprise/BootstrapAdmin/issues)
-[![Pull Status](https://img.shields.io/endpoint.svg?logo=Groupon&logoColor=green&color=success&label=pulls&url=https%3A%2F%2Fargo.zylweb.cn%2FBA%2Fapi%2FGitee%2FPulls)](https://gitee.com/LongbowEnterprise/BootstrapAdmin/pulls)
+[![Issue Status](https://img.shields.io/endpoint.svg?logo=Groupon&logoColor=critical&label=issues&url=https://argo.zylweb.cn/BA/api/Gitee/Issues)](https://gitee.com/LongbowEnterprise/BootstrapAdmin/issues)
+[![Pull Status](https://img.shields.io/endpoint.svg?logo=Groupon&logoColor=green&color=success&label=pulls&url=https://argo.zylweb.cn/BA/api/Gitee/Pulls)](https://gitee.com/LongbowEnterprise/BootstrapAdmin/pulls)
 
 ##### GitHub
-[![Appveyor build](https://img.shields.io/endpoint.svg?logo=appveyor&label=build&color=blueviolet&url=https%3A%2F%2Fargo.zylweb.cn%2FBA%2Fapi%2FGitee%2FBuilds?projName=bootstrapadmin)](https://ci.appveyor.com/project/ArgoZhang/bootstrapadmin)
+[![Appveyor build](https://img.shields.io/endpoint.svg?logo=appveyor&label=build&color=blueviolet&url=https://argo.zylweb.cn/BA/api/Gitee/Builds?projName=bootstrapadmin)](https://ci.appveyor.com/project/ArgoZhang/bootstrapadmin)
 [![dev status](https://img.shields.io/appveyor/ci/ArgoZhang/bootstrapadmin/dev.svg?logo=appveyor&label=dev)](https://ci.appveyor.com/project/ArgoZhang/bootstrapadmin/branch/dev)
 [![master status](https://img.shields.io/appveyor/ci/ArgoZhang/bootstrapadmin/master.svg?logo=appveyor&label=master)](https://ci.appveyor.com/project/ArgoZhang/bootstrapadmin/branch/master)
 [![Test](https://img.shields.io/appveyor/tests/argozhang/bootstrapadmin/master.svg?logo=appveyor&)](https://ci.appveyor.com/project/ArgoZhang/bootstrapadmin/branch/master/tests)
