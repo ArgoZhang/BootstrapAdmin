@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using System.Net.Http;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Bootstrap.Admin.Controllers.Api
@@ -29,6 +30,7 @@ namespace Bootstrap.Admin.Controllers.Api
         public async Task<ActionResult> Issues([FromServices]IHttpClientFactory httpClientFactory, [FromQuery]string userName = "LongbowEnterprise", [FromQuery]string repoName = "BootstrapAdmin", [FromQuery]string label = "custom badge", [FromQuery]string color = "orange")
         {
             var client = httpClientFactory.CreateClient();
+            client.Timeout = TimeSpan.FromMilliseconds(2000);
             var ret = await GetJsonAsync(() => client.GetStringAsync($"https://gitee.com/{userName}/{repoName}/issues"), content =>
             {
                 var regex = Regex.Matches(content, "<div class='ui mini circular label'>([\\d]+)</div>", RegexOptions.IgnoreCase);
@@ -52,6 +54,7 @@ namespace Bootstrap.Admin.Controllers.Api
         public async Task<ActionResult> Pulls([FromServices]IHttpClientFactory httpClientFactory, [FromQuery]string userName = "LongbowEnterprise", [FromQuery]string repoName = "BootstrapAdmin", [FromQuery]string label = "custom badge", [FromQuery]string color = "orange")
         {
             var client = httpClientFactory.CreateClient();
+            client.Timeout = TimeSpan.FromMilliseconds(2000);
             var ret = await GetJsonAsync(() => client.GetStringAsync($"https://gitee.com/{userName}/{repoName}/pulls"), content =>
             {
                 var regex = Regex.Matches(content, "<div class='ui mini circular label'>([\\d]+)</div>", RegexOptions.IgnoreCase);
@@ -75,6 +78,7 @@ namespace Bootstrap.Admin.Controllers.Api
         public async Task<ActionResult> Releases([FromServices]IHttpClientFactory httpClientFactory, [FromQuery]string userName = "LongbowEnterprise", [FromQuery]string repoName = "BootstrapAdmin", [FromQuery]string label = "custom badge", [FromQuery]string color = "orange")
         {
             var client = httpClientFactory.CreateClient();
+            client.Timeout = TimeSpan.FromMilliseconds(2000);
             var ret = await GetJsonAsync(() => client.GetStringAsync($"https://gitee.com/{userName}/{repoName}/releases"), content =>
             {
                 var regex = Regex.Match(content, $"<a href=\"/{userName}/{repoName}/releases/([^\\s]+)\" target=\"_blank\">", RegexOptions.IgnoreCase);
@@ -97,7 +101,7 @@ namespace Bootstrap.Admin.Controllers.Api
         public async Task<ActionResult> Builds([FromServices]IHttpClientFactory httpClientFactory, [FromQuery]string userName = "ArgoZhang", [FromQuery]string projName = "bootstrapadmin", [FromQuery]string branchName = "master", [FromQuery]string label = "custom badge", [FromQuery]string color = "orange")
         {
             var client = httpClientFactory.CreateClient();
-            var ret = await GetJsonAsync(() => client.GetAsJsonAsync<AppveyorBuildResult>($"https://ci.appveyor.com/api/projects/{userName}/{projName}/branch/{branchName}"), content =>
+            var ret = await GetJsonAsync(() => client.GetAsJsonAsync<AppveyorBuildResult>($"https://ci.appveyor.com/api/projects/{userName}/{projName}/branch/{branchName}", null, new CancellationTokenSource(2000).Token), content =>
             {
                 return content == null ? "unknown" : content.Build.Version;
             });
@@ -106,7 +110,7 @@ namespace Bootstrap.Admin.Controllers.Api
 
         private async static Task<string> GetJsonAsync<T>(Func<Task<T>> requestUrl, Func<T, string> callback)
         {
-            var ret = "unreachable";
+            var ret = "unresponsive";
             try
             {
                 var resq = await requestUrl();
