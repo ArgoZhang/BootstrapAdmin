@@ -36,31 +36,20 @@ function installDB() {
     cd $($env:appveyor_build_folder)
 }
 
+function runUnitTest() {
+    write-host "dotnet test UnitTest" -ForegroundColor Cyan
+    dotnet test UnitTest --no-restore /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Include="[Bootstrap*]*" /p:ExcludeByFile="../Bootstrap.Admin/Program.cs%2c../Bootstrap.Admin/Startup.cs%2c../Bootstrap.Admin/HttpHeaderOperation.cs" /p:CoverletOutput=../
+}
+
 function coverallUnitTest() {
     write-host "install coveralls.net tools" -ForegroundColor Cyan
     dotnet tool install coveralls.net --version 1.0.0 --tool-path "./tools"    
-
-    write-host "dotnet test UnitTest with Coveralls" -ForegroundColor Cyan
-    dotnet test UnitTest --no-restore /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Include="[Bootstrap*]*" /p:ExcludeByFile="../Bootstrap.Admin/Program.cs%2c../Bootstrap.Admin/Startup.cs%2c../Bootstrap.Admin/HttpHeaderOperation.cs" /p:CoverletOutput=../
+    runUnitTest
+    write-host "report UnitTest with Coveralls" -ForegroundColor Cyan
     cmd.exe /c ".\tools\csmacnz.Coveralls.exe --opencover -i coverage.opencover.xml --useRelativePaths"
 }
 
-if ("$($env:APPVEYOR_REPO_BRANCH)" -eq "master") {
-    installDB
-
-    if ("$($env:APPVEYOR_REPO_PROVIDER)" -eq "gitHub") {
-        coverallUnitTest
-    }
-    else {
-        write-warning "Coveralls has been skipped because current provider is ""$($env:APPVEYOR_REPO_PROVIDER)"""
-        write-host "dotnet test UnitTest without Coveralls" -ForegroundColor Cyan
-        dotnet test UnitTest --no-restore
-    }
-}
-elseif ("$($env:APPVEYOR_REPO_PROVIDER)" -eq "gitLab") {
-    installDB
-    coverallUnitTest
-
+function codecovUnitTest() {
     Set-AppveyorBuildVariable COVERALLS_REPO_TOKEN $($env:COVERALLS_REPO_TOKEN_GITLAB)
     Set-AppveyorBuildVariable CODECOV_TOKEN $($env:CODECOV_TOKEN_GITLAB)
 
@@ -70,8 +59,14 @@ elseif ("$($env:APPVEYOR_REPO_PROVIDER)" -eq "gitLab") {
         write-host "install codecov tools" -ForegroundColor Cyan
         choco install codecov
     }
+    $coverageFile = Test-Path coverage.opencover.xml
+    if (!$coverageFile) {
+        runUnitTest
+    }
+    write-host "report UnitTest with Codecov" -ForegroundColor Cyan
     cmd.exe /c "$codecovCmd -f ""coverage.opencover.xml"""
 }
-else {
-    write-warning "UnitTest has been skipped because current branch is ""$($env:APPVEYOR_REPO_BRANCH)"""
-}
+
+installDB
+coverallUnitTest
+codecovUnitTest

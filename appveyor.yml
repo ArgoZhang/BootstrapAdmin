@@ -2,7 +2,6 @@
 branches:
   only:
   - master
-  - dev
 image: Visual Studio 2017
 clone_depth: 1
 init:
@@ -58,7 +57,7 @@ notifications:
 - provider: Email
   to:
   - argo@163.com
-  subject: '{{projectName}} {{branch}} Build {{status}} {{buildVersion}}'
+  subject: '{{projectName}} Build {{status}} {{buildVersion}}'
   message: >-
     <div style="font-family:'Segoe UI',Arial,Sans-Serif;font-size:10pt;">
         {{#passed}}
