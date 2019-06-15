@@ -116,7 +116,7 @@ namespace Bootstrap.Admin.Controllers.Api
                 var resq = await requestUrl();
                 ret = callback(resq);
             }
-            catch (TaskCanceledException)
+            catch (OperationCanceledException)
             {
 
             }
