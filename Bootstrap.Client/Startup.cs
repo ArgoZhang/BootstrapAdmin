@@ -1,11 +1,9 @@
-using Bootstrap.Client.DataAccess;
+﻿using Bootstrap.Client.DataAccess;
 using Bootstrap.Security.DataAccess;
 using Bootstrap.Security.Filter;
 using Longbow.Web;
 using Longbow.Web.SignalR;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,7 +12,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
-using System.IO;
 
 namespace Bootstrap.Client
 {
@@ -41,12 +38,9 @@ namespace Bootstrap.Client
             services.AddConfigurationManager(Configuration);
             services.AddCacheManager(Configuration);
             services.AddDbAdapter();
-            var dataProtectionBuilder = services.AddDataProtection(op => op.ApplicationDiscriminator = Configuration["ApplicationDiscriminator"])
-                .SetApplicationName(Configuration["ApplicationName"])
-                .PersistKeysToFileSystem(new DirectoryInfo(Configuration["KeyPath"]));
-            if (Configuration["DisableAutomaticKeyGeneration"] == "True") dataProtectionBuilder.DisableAutomaticKeyGeneration();
             services.AddSignalR().AddJsonProtocalDefault();
             services.AddResponseCompression();
+            services.AddBootstrapAdminAuthentication();
             services.AddMvc(options =>
             {
                 options.Filters.Add<BootstrapAdminAuthorizeFilter>();
@@ -57,12 +51,6 @@ namespace Bootstrap.Client
                 options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
                 JsonConvert.DefaultSettings = () => options.SerializerSettings;
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
-            {
-                options.Cookie.Path = "/";
-                if (!string.IsNullOrEmpty(Configuration["Domain"])) options.Cookie.Domain = Configuration["Domain"];
-                options.RebuildRedirectUri(Configuration["AuthHost"]);
-            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -84,8 +72,7 @@ namespace Bootstrap.Client
             app.UseResponseCompression();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-            app.UseAuthentication();
-            app.UseBootstrapAdminAuthorization(RoleHelper.RetrieveRolesByUserName, RoleHelper.RetrieveRolesByUrl, DbHelper.RetrieveAppsByUserName);
+            app.UseBootstrapAdminAuthentication(RoleHelper.RetrieveRolesByUserName, RoleHelper.RetrieveRolesByUrl, DbHelper.RetrieveAppsByUserName);
             app.UseCacheManagerCorsHandler();
             app.UseSignalR(routes => { routes.MapHub<SignalRHub>("/NotiHub"); });
             app.UseMvc(routes =>

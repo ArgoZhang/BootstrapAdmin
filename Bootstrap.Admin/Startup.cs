@@ -3,9 +3,7 @@ using Bootstrap.Security.Filter;
 using Longbow.Web;
 using Longbow.Web.SignalR;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -63,13 +61,10 @@ namespace Bootstrap.Admin
             services.AddDbAdapter();
             services.AddIPLocator(DictHelper.ConfigIPLocator);
             services.AddOnlineUsers();
-            var dataProtectionBuilder = services.AddDataProtection(op => op.ApplicationDiscriminator = Configuration["ApplicationDiscriminator"])
-                .SetApplicationName(Configuration["ApplicationName"])
-                .PersistKeysToFileSystem(new DirectoryInfo(Configuration["KeyPath"]));
-            if (Configuration["DisableAutomaticKeyGeneration"] == "True") dataProtectionBuilder.DisableAutomaticKeyGeneration();
             services.AddSignalR().AddJsonProtocalDefault();
             services.AddSignalRExceptionFilterHandler<SignalRHub>(async (client, ex) => await SignalRManager.Send(client, ex));
             services.AddResponseCompression();
+            services.AddBootstrapAdminAuthentication();
             services.AddMvc(options =>
             {
                 options.Filters.Add<BootstrapAdminAuthorizeFilter>();
@@ -81,11 +76,6 @@ namespace Bootstrap.Admin
                 options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
                 JsonConvert.DefaultSettings = () => options.SerializerSettings;
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
-            {
-                options.Cookie.Path = "/";
-                if (!string.IsNullOrEmpty(Configuration["Domain"])) options.Cookie.Domain = Configuration["Domain"];
-            });
             services.AddApiVersioning(option =>
             {
                 option.DefaultApiVersion = new ApiVersion(1, 0);
@@ -132,8 +122,7 @@ namespace Bootstrap.Admin
             app.UseHttpsRedirection();
             app.UseResponseCompression();
             app.UseStaticFiles();
-            app.UseAuthentication();
-            app.UseBootstrapAdminAuthorization(RoleHelper.RetrieveRolesByUserName, RoleHelper.RetrieveRolesByUrl, AppHelper.RetrievesByUserName);
+            app.UseBootstrapAdminAuthentication(RoleHelper.RetrieveRolesByUserName, RoleHelper.RetrieveRolesByUrl, AppHelper.RetrievesByUserName);
             app.UseOnlineUsers(callback: TraceHelper.Save);
             app.UseCacheManagerCorsHandler();
             app.UseSignalR(routes => { routes.MapHub<SignalRHub>("/NotiHub"); });

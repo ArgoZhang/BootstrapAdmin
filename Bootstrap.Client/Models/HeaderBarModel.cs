@@ -1,5 +1,6 @@
 ﻿using Bootstrap.Client.DataAccess;
 using Longbow.Configuration;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System;
 using System.Security.Principal;
@@ -18,15 +19,21 @@ namespace Bootstrap.Client.Models
         public HeaderBarModel(IIdentity identity)
         {
             var user = UserHelper.RetrieveUserByUserName(identity.Name);
-            Icon = $"{ConfigurationManager.AppSettings["AuthHost"]}/{DictHelper.RetrieveIconFolderPath().Trim('~', '/')}/{user.Icon}";
             DisplayName = user.DisplayName;
             UserName = user.UserName;
             SettingsUrl = DictHelper.RetrieveSettingsUrl();
             ProfilesUrl = DictHelper.RetrieveProfilesUrl();
             NotisUrl = DictHelper.RetrieveNotisUrl();
-            var uriBuilder = new UriBuilder(ConfigurationManager.AppSettings["AuthHost"]);
-            uriBuilder.Path = uriBuilder.Path == "/" ? CookieAuthenticationDefaults.LogoutPath.Value : uriBuilder.Path + CookieAuthenticationDefaults.LogoutPath;
+
+            // set LogoutUrl
+            var authHost = ConfigurationManager.Get<BootstrapAdminOptions>().AuthHost;
+            var uriBuilder = new UriBuilder(authHost);
+            uriBuilder.Path = uriBuilder.Path == "/" ? CookieAuthenticationDefaults.LogoutPath.Value : $"{uriBuilder.Path.TrimEnd('/')}{CookieAuthenticationDefaults.LogoutPath.Value}";
             LogoutUrl = uriBuilder.ToString();
+
+            // set Icon
+            var icon = $"/{DictHelper.RetrieveIconFolderPath().Trim('~', '/')}/{user.Icon}";
+            Icon = $"{authHost.TrimEnd('/')}{icon}";
             if (!string.IsNullOrEmpty(user.Css)) Theme = user.Css;
         }
 
