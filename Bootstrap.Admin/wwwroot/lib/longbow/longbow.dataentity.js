@@ -1,4 +1,4 @@
-(function ($) {
+﻿(function ($) {
     var formatData = function (data) {
         delete data._nodes;
         delete data._parent;
@@ -166,7 +166,7 @@
                         return;
                     }
                     else {
-                        swal($.extend({}, swalDeleteOptions)).then((result) => {
+                        swal($.extend({}, swalDeleteOptions)).then(function (result) {
                             if (result.value) {
                                 var logData = arrselections.map(function (element, index) {
                                     return formatData($.extend({}, element));
@@ -232,7 +232,7 @@
                         });
                         text = "本删除项含有级联子项目</br>您确定要删除 <span class='text-danger font-weight-bold'>" + row.Name + "</span> 以及子项目吗？";
                     }
-                    swal($.extend({}, swalDeleteOptions, { html: text })).then((result) => {
+                    swal($.extend({}, swalDeleteOptions, { html: text })).then(function (result) {
                         if (result.value) {
                             var idField = findIdField(op.table);
                             var iDs = data.map(function (element, index) {
