@@ -10,7 +10,7 @@
         },
         onSuccess: function () {
             var that = this;
-            setTimeout(() => {
+            setTimeout(function () {
                 that.parent().removeClass('d-inline-block');
                 that.sliderCaptcha('reset');
                 $('.userinfo .dropdown-menu a:first')[0].click();
