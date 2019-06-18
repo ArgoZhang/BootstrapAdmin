@@ -47,7 +47,7 @@
     },
     {
       "provider": "cdnjs",
-      "library": "bootstrap-table@1.12.1",
+      "library": "bootstrap-table@1.14.2",
       "destination": "wwwroot/lib/bootstrap-table/",
       "files": [
         "bootstrap-table.min.js",
@@ -87,18 +87,6 @@
         "fonts/fontawesome-webfont.woff",
         "fonts/fontawesome-webfont.woff2",
         "fonts/FontAwesome.otf"
-      ]
-    },
-    {
-      "provider": "cdnjs",
-      "library": "bootstrap-sweetalert@1.0.1",
-      "destination": "wwwroot/lib/bootstrap-sweetalert/",
-      "files": [
-        "sweetalert.min.js",
-        "sweetalert.css",
-        "sweetalert.js",
-        "sweetalert.min.css",
-        "sweetalert.min.css.map"
       ]
     },
     {

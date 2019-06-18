@@ -16,7 +16,8 @@
     color: rgba(0, 0, 0, 0.9);
 }
 
-.dropdown-item:hover, .nav .dropdown-item:nth-of-type(odd):hover, .dropdown-item:active, .dropdown-item.active {
+.dropdown-item:hover, .nav .dropdown-item:nth-of-type(odd):hover, .dropdown-item:active, .dropdown-item.active,
+.bootstrap-table .export .dropdown-menu li:hover {
     background-color: #77afd5;
 }
 

@@ -1,4 +1,4 @@
-﻿(function ($) {
+(function ($) {
     // 增加Array扩展
     if (!$.isFunction(Array.prototype.filter)) {
         Array.prototype.filter = function (callback, thisObject) {
@@ -123,6 +123,7 @@
                 id: "",
                 url: "",
                 data: {},
+                htmlTemplate: '<div class="form-group col-md-3 col-sm-4 col-6"><div class="form-check"><label class="form-check-label" title="{3}" data-toggle="tooltip"><input type="checkbox" class="form-check-input" value="{0}" {2}/><span>{1}</span></label></div></div>',
                 title: "",
                 modal: false,
                 loading: false,
@@ -140,7 +141,7 @@
                 return;
             }
 
-            var doneFlag = "done";
+            var loadFlag = "loading";
             var loadingHandler = null;
             if (options.loading && options.modal) {
                 var $modal = $(options.modal);
@@ -150,13 +151,13 @@
                         window.clearTimeout(loadingHandler);
                         loadingHandler = null;
                     }
-                    if ($this.hasClass(doneFlag)) {
-                        $this.removeClass(doneFlag).modal('hide');
-                    }
+                    if ($this.hasClass(loadFlag)) return;
+                    $this.modal('hide');
                 });
-                loadingHandler = window.setTimeout(function () { $modal.modal('show'); }, 500);
-                setTimeout(function () {
+                loadingHandler = window.setTimeout(function () { $(options.modal).addClass(loadFlag).modal('show'); }, 300);
+                var loadTimeoutHandler = setTimeout(function () {
                     $(options.modal).find('.close').removeClass('d-none');
+                    clearTimeout(loadTimeoutHandler);
                 }, options.loadingTimeout);
             }
 
@@ -172,13 +173,12 @@
 
             function success(result) {
                 if (options.modal && (result || options.loading)) {
-                    $(options.modal).addClass(doneFlag);
                     if (loadingHandler !== null) {
                         // cancel show modal event
                         window.clearTimeout(loadingHandler);
                         loadingHandler = null;
                     }
-                    else $(options.modal).removeClass(doneFlag).modal('hide');
+                    else $(options.modal).removeClass(loadFlag).modal('hide');
                 }
                 if (options.title) toastr[result ? 'success' : 'error'](options.title + (result ? "成功" : "失败"));
                 if ($.isFunction(options.callback)) {
@@ -208,11 +208,13 @@
                 xhrFields: { withCredentials: true },
                 crossDomain: true
             });
+            if ($.isArray($.logData) && !$.isEmptyObject(options.data)) $.logData.push({ url: url, data: options.method === 'delete' ? options.logData : options.data });
+            if (options.method === 'delete') $.logData.log();
             $.ajax(ajaxSettings);
         },
         lgbSwal: function (options) {
             if ($.isFunction(swal)) {
-                swal($.extend({ html: true, showConfirmButton: false, showCancelButton: false, timer: 1000, title: '未设置', type: "success" }, options));
+                swal($.extend({ showConfirmButton: false, showCancelButton: false, timer: 1000, title: '未设置', type: "success" }, options));
             }
         },
         getUID: function (prefix) {
@@ -222,7 +224,7 @@
             return prefix;
         },
         footer: function (options) {
-            var op = $.extend({ header: "header", content: ".container-fluid", ele: 'footer' }, options);
+            var op = $.extend({ header: "header", content: ".main-content", ele: 'footer' }, options);
             var $ele = $(op.ele);
             return $(op.header).outerHeight() + $(op.content).outerHeight() + $ele.outerHeight() > $(window).height() ? $ele.removeClass('position-fixed') : $ele.addClass('position-fixed');
         },
@@ -231,6 +233,33 @@
             if (url.substr(0, 4) === "http") return url;
             var base = $('#pathBase').attr('href');
             return base + url;
+        },
+        safeHtml: function (text) {
+            return $('<div>').text(text).html();
+        },
+        syntaxHighlight: function (json) {
+            if (typeof (json) === 'string') {
+                json = JSON.parse(json);
+            }
+            json = JSON.stringify(json, undefined, 2);
+            json = json.replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>');
+            return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
+                function (match) {
+                    var cls = 'number';
+                    if (/^"/.test(match)) {
+                        if (/:$/.test(match)) {
+                            cls = 'key';
+                        } else {
+                            cls = 'string';
+                        }
+                    } else if (/true|false/.test(match)) {
+                        cls = 'boolean';
+                    } else if (/null/.test(match)) {
+                        cls = 'null';
+                    }
+                    return '<span class="' + cls + '">' + match + '</span>';
+                }
+            );
         }
     });
 
@@ -253,20 +282,29 @@
         lgbTable: function (options) {
             var bsa = new DataTable($.extend(options.dataBinder, { url: options.url }));
 
-            var settings = $.extend({
+            var settings = $.extend(true, {
                 url: options.url,
                 checkbox: true,
-                edit: true,
-                editTitle: "编辑",
+                editButtons: {
+                    id: "#tableButtons",
+                    events: {},
+                    formatter: false
+                },
+                editTitle: "操作",
                 editField: "Id",
                 queryButton: false
             }, options.smartTable);
-            if (settings.edit) settings.columns.unshift({
+
+            var $editButtons = $(settings.editButtons.id);
+            if ($editButtons.find('button').length > 0) settings.columns.push({
                 title: settings.editTitle,
                 field: settings.editField,
-                events: bsa.idEvents(),
+                events: $.extend({}, bsa.idEvents(), settings.editButtons.events),
                 formatter: function (value, row, index) {
-                    return "<a class='edit' title='" + value + "' href='javascript:void(0)'>" + this.title + "</a>";
+                    if ($.isFunction(settings.editButtons.formatter)) {
+                        return settings.editButtons.formatter.call($editButtons, value, row, index);
+                    }
+                    return $editButtons.html();
                 }
             });
             if (settings.checkbox) settings.columns.unshift({ checkbox: true });
@@ -275,7 +313,6 @@
         smartTable: function (options) {
             var settings = $.extend({
                 toolbar: '#toolbar',                //工具按钮用哪个容器
-                striped: true,                      //是否显示行间隔色
                 cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
                 pagination: true,                   //是否显示分页（*）
                 sortOrder: "asc",                   //排序方式
@@ -283,6 +320,8 @@
                 pageNumber: 1,                      //初始化加载第一页，默认第一页
                 pageSize: 20,                       //每页的记录行数（*）
                 pageList: [20, 40, 80, 120],        //可供选择的每页的行数（*）
+                showExport: true,
+                exportTypes: ['csv', 'txt', 'excel'],
                 showColumns: true,                  //是否显示所有的列
                 showRefresh: true,                  //是否显示刷新按钮
                 showToggle: true,                   //是否显示详细视图和列表视图的切换按钮
@@ -299,11 +338,28 @@
                 }
             }, options);
             settings.url = $.formatUrl(settings.url);
+            $.each(settings.columns, function (index, value) {
+                if (value.checkbox) return;
+                if (!$.isFunction(value.formatter)) {
+                    value.formatter = function (value, row, index, field) {
+                        return $.safeHtml(value);
+                    }
+                }
+                else {
+                    var formatter = value.formatter;
+                    value.formatter = function (value, row, index, field) {
+                        return formatter.call(this, $.safeHtml(value), row, index, field);
+                    }
+                }
+            });
             this.bootstrapTable(settings);
-            $(settings.toolbar).removeClass('d-none').find('.toolbar').on('click', 'a', function (e) {
+            $('.bootstrap-table .fixed-table-toolbar .columns .export .dropdown-menu').addClass("dropdown-menu-right");
+            var $gear = $(settings.toolbar).removeClass('d-none').find('.gear');
+            if ($gear.find('.dropdown-menu > a').length === 0) $gear.addClass('d-none');
+            $gear.on('click', 'a', function (e) {
                 e.preventDefault();
                 $('#' + $(this).attr('id').replace('tb_', 'btn_')).trigger("click");
-            }).insertBefore(this.parents('.bootstrap-table').find('.fixed-table-toolbar > .bs-bars'));
+            });
             if (settings.queryButton) {
                 $(settings.queryButton).on('click', this, function (e) {
                     e.data.bootstrapTable('refresh');
@@ -322,7 +378,7 @@
                     $ele.popover(options);
                 }
             });
-            return this.on('click', function (e) { e.preventDefault(); });
+            return this;
         },
         lgbTooltip: function (options) {
             this.each(function (index, ele) {
@@ -352,7 +408,6 @@
                 pickerPosition: 'bottom-left',
                 fontAwesome: true
             }, options);
-            this.on('show hide', function (e) { e.stopPropagation(); });
             this.datetimepicker(option);
             return this;
         },
@@ -414,7 +469,11 @@
 
     $(function () {
         // fix bug bootstrap-table 1.12.1 showToggle
-        if ($.fn.bootstrapTable) $.fn.bootstrapTable.Constructor.DEFAULTS.icons.toggle = $.fn.bootstrapTable.Constructor.DEFAULTS.icons.toggleOff;
+        if ($.fn.bootstrapTable) {
+            $.extend($.fn.bootstrapTable.defaults.icons, {
+                refresh: 'fa-refresh'
+            });
+        }
 
         if (window.NProgress) {
             $(document).ajaxStart(function () {
@@ -442,15 +501,13 @@
             "hideMethod": "fadeOut"
         };
 
-        $('[data-toggle="dropdown"].dropdown-select').dropdown('select');
-        $('[data-toggle="tooltip"]').tooltip();
-        $('[data-toggle="popover"]').popover();
-        $('[data-toggle="lgbinfo"]').lgbInfo();
-        $('.date').lgbDatePicker();
-
-        $('.collapse').on('shown.bs.collapse hidden.bs.collapse', function () {
+        $('.collapse').on('shown.bs.collapse', function () {
             $.footer().removeClass('d-none');
-        }).on('hide.bs.collapse show.bs.collapse', function () {
+        }).on('hidden.bs.collapse', function () {
+            $.footer().removeClass('d-none');
+        }).on('hide.bs.collapse', function () {
+            $('footer').addClass('d-none');
+        }).on('show.bs.collapse', function () {
             $('footer').addClass('d-none');
         });
 
@@ -460,9 +517,15 @@
 
         $("#gotoTop").on('click', function (e) {
             e.preventDefault();
-            $('html, body').animate({
+            $('html, body, .main-content').animate({
                 scrollTop: 0
             }, 200);
         });
+
+        $('[data-toggle="dropdown"].dropdown-select').dropdown('select');
+        $('[data-toggle="tooltip"]').tooltip();
+        $('[data-toggle="popover"]').popover();
+        $('[data-toggle="lgbinfo"]').lgbInfo();
+        $('.date').lgbDatePicker();
     });
 })(jQuery);
