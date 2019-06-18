@@ -1,4 +1,4 @@
-# BootstrapAdmin
+﻿# BootstrapAdmin
 
 <a href="README.md">English</a> | <span>中文</span>
 
@@ -28,6 +28,10 @@
 
 使用 HTML 5 + jQuery + NET Core 2.2 + Bootstrap 4.1 + PetaPoco 构建的后台管理平台  
 
+### 特别说明
+**BootstrapAdmin** 无需二次开发，要做的仅仅是与前台系统集成，前台系统模板工程为 **Bootstrap.Client**   
+项目原始出发点是把权限系统从业务系统中剥离出来，项目开发专注于功能，详细配置说明请点击 [查看文档](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90)
+
 ### 主要功能  
 1. 通过配置与前台网站集成
 2. 构建前台系统分层级菜单
@@ -47,10 +51,10 @@
 11. 内置数据 **操作日志** 与用户 **登录日志**   
 跟踪记录用户 **登录主机地点**  **浏览器**  **操作系统** 信息  
 
-#### 优势
+### 优势
 1. 前台系统不用编写登录、授权、认证模块；只负责编写业务模块即可
 2. 后台系统无需任何二次开发，直接发布即可使用
-3. 前台与后台系统分离，无任何依赖关系
+3. 前台与后台系统分离，分别为不同的系统（域名可独立）
 
 详细资料请点击 [查看文档](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/项目介绍)  
 
@@ -110,15 +114,15 @@
 1. 安装 .net core sdk [官方网址](http://www.microsoft.com/net/download)
 2. 安装 Visual Studio IDE 2017以上 [官方网址](https://visualstudio.microsoft.com/vs/getting-started/)
 3. 获取本项目代码 [BootstrapAdmin](https://gitee.com/LongbowEnterprise/BootstrapAdmin)
-4. 安装数据库  
-以微软MSSQL为例，执行解决方案中SQLServer目录（物理硬盘中DatabaseScripts目录下）Install.sql脚本创建数据库
-5. 初始化数据  
-执行对应目录下InitData.sql脚本
-6. 拷贝Longbow.lic文件  
-拷贝Scripts目录下Longbow.lic文件到bin目录下的程序集输出目录（bin\debug\netcoreapp2.2\）
-7. 系统登录用户名与口令  
+4. 拷贝 Scripts\Longbow.lic 文件到 bin 目录下的程序集输出目录（bin\debug\netcoreapp2.2\）
+5. 系统登录用户名与口令  
 用户名：**Admin**  
 密码：**123789**  
+
+### 安装数据库
+系统默认使用 SQLite 数据库，如需更改为其他数据库，执行解决方案中 DatabaseScripts目录下相对应脚本  
+Install.sql 创建数据库脚本  
+InitData.sql 初始化数据脚本  
 
 ## 分支说明  
  **dev** 开发分支目前开发环境配置是 windows + SQLite  

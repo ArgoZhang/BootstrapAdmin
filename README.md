@@ -1,4 +1,4 @@
-# BootstrapAdmin
+﻿# BootstrapAdmin
 
 <span>English</span> | <a href="README.zh-CN.md">中文</a>
 
@@ -26,6 +26,10 @@
 ## Introduce
 Because the dependent on Bootstrap v4, so it is called **Bootstrap Admin**. This system can be integrated with asp.net and asp.net core applications. The database supports multiple databases at the same time. The detailed list is shown in the following **database** detailed list. Switching the data source only needs to change the configuration file without restarting the application. The configuration is simple and flexible. The UI front-end uses the popular Bootstrap framework layout, which is very compatible with mobile devices and adapts to almost all terminal devices in the current market. The system also has the feature of single background supporting multi-front desk, and provides the ability of **single sign-on (SSO)**.  
 
+### Notes
+Bootstrap Admin does not require secondary development, but only integration with the front-end system. The front-end system model project is **Bootstrap. Client**  
+The original starting point of the project is to separate the privilege system from the business system. The project development focuses on functions. For detailed configuration instructions, please click on [View Documents](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/%E7%B3%BB%E7%BB%9F%E9%89B%86%E6%88%90).  
+
 ### Features  
 1. Integration with Front-end Website through Configuration
 2. Constructing Hierarchical Menu of Front-end System
@@ -44,10 +48,10 @@ Departments Authorize Users
 10. Built-in data memory caching mechanism, page fast response
 11. Built-in Data **Operation Log** and User **Log on**  
 
-#### Advantage
+### Advantage
 1. The front-end system does not need to write login, authorization and authentication modules; it is only responsible for writing business modules.
 2. Background system can be used directly without any secondary development.
-3. The foreground and background systems are separated without any dependence.
+3. Front-end and back-end systems are separated, which are different systems (domain name can be independent)
 
 For more information, please click [wiki](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/项目介绍)  
 
