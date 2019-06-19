@@ -31,7 +31,8 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static bool Save(BootstrapMenu p)
         {
-            if (DictHelper.RetrieveSystemModel() && !string.IsNullOrEmpty(p.Id) && RetrieveAllMenus("Admin").Where(m => m.Category == "0" || m.Application == "2").Any(m => m.Id == p.Id)) return true;
+            // 不允许保存系统菜单与前台演示系统的默认菜单
+            if (DictHelper.RetrieveSystemModel() && (p.Category == "0" || p.Application == "2")) return true;
 
             if (p.Id == string.Empty) p.Id = null;
             var ret = DbContextManager.Create<Menu>().Save(p);
