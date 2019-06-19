@@ -61,9 +61,9 @@ notifications:
   message: >-
     <div style="font-family:'Segoe UI',Arial,Sans-Serif;font-size:10pt;">
         {{#passed}}
-        <h1 style="font-size: 150%;font-weight:normal; color:#078DC7;"><a href="{{buildUrl}}" style="color:#078DC7;">Build {{repositoryProvider}} {{projectName}} {{branch}} {{buildVersion}} completed</a></h1>{{/passed}}
+        <h1 style="font-size: 150%;font-weight:normal; color:#078DC7;"><a href="{{buildUrl}}" style="color:#078DC7;">Build {{projectName}} {{buildVersion}} completed</a></h1>{{/passed}}
         {{#failed}}
-        <h1 style="font-size: 150%;font-weight:normal; color:#ff3228;"><a href="{{buildUrl}}" style="color:#ff3228;">Build {{repositoryProvider}} {{projectName}} {{branch}} {{buildVersion}} failed</a></h1>{{/failed}}
+        <h1 style="font-size: 150%;font-weight:normal; color:#ff3228;"><a href="{{buildUrl}}" style="color:#ff3228;">Build {{projectName}} {{buildVersion}} failed</a></h1>{{/failed}}
         <p style="color: #888;">
             Commit <a href="{{commitUrl}}">{{commitId}}</a> by <a href="mailto:{{commitAuthorEmail}}">{{commitAuthor}}</a> on {{commitDate}}:
             <br />
