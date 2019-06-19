@@ -12,7 +12,7 @@ namespace Bootstrap.Admin.Api.SqlServer
         [Fact]
         public async void Login_Get()
         {
-            var users = await Client.GetAsJsonAsync<QueryData<LoginUser>>();
+            var users = await Client.GetAsJsonAsync<QueryData<LoginUser>>("?sort=LoginTime&order=&offset=0&limit=20&startTime=&endTime=&loginIp=&_=1560933256621");
             Assert.NotEmpty(users.rows);
         }
 

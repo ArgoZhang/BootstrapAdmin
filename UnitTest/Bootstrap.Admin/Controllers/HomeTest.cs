@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Xunit;
 
 namespace Bootstrap.Admin.Controllers.SqlServer
 {
@@ -27,6 +28,15 @@ namespace Bootstrap.Admin.Controllers.SqlServer
             {
                 Assert.Contains("服务器内部错误", content);
             }
+        }
+
+        [Fact]
+        public async void Error_Redirect_Ok()
+        {
+            var r = await Client.GetAsync($"/Home/Error/404?{CookieAuthenticationDefaults.ReturnUrlParameter}=/Home/UnitTest");
+            Assert.True(r.IsSuccessStatusCode);
+            var content = await r.Content.ReadAsStringAsync();
+            Assert.Contains("/Home/UnitTest", content);
         }
     }
 }

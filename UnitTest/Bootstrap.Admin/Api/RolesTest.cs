@@ -10,12 +10,13 @@ namespace Bootstrap.Admin.Api.SqlServer
     {
         public RolesTest(BAWebHost factory) : base(factory, "api/Roles") { }
 
-        [Fact]
-        public async void Get_Ok()
+        [Theory]
+        [InlineData("RoleName", "asc")]
+        [InlineData("RoleName", "desc")]
+        public async void Get_Ok(string query, string order)
         {
             // 菜单 系统菜单 系统使用条件
-            var query = "?sort=RoleName&order=asc&offset=0&limit=20&roleName=Administrators&description=%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E5%91%98&_=1547625202230";
-            var qd = await Client.GetAsJsonAsync<QueryData<Group>>(query);
+            var qd = await Client.GetAsJsonAsync<QueryData<Group>>($"?sort={query}&order={order}&offset=0&limit=20&roleName=Administrators&description=%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E5%91%98&_=1547625202230");
             Assert.Single(qd.rows);
         }
 

@@ -11,35 +11,24 @@ namespace Bootstrap.Admin.Api.SqlServer
     {
         public MenusTest(BAWebHost factory) : base(factory, "api/Menus") { }
 
-        [Fact]
-        public async void Get_Ok()
+        [Theory]
+        [InlineData("Order", "asc")]
+        [InlineData("Name", "asc")]
+        [InlineData("ParentName", "asc")]
+        [InlineData("CategoryName", "asc")]
+        [InlineData("Target", "asc")]
+        [InlineData("IsResource", "asc")]
+        [InlineData("Application", "asc")]
+        [InlineData("Order", "desc")]
+        [InlineData("Name", "desc")]
+        [InlineData("ParentName", "desc")]
+        [InlineData("CategoryName", "desc")]
+        [InlineData("Target", "desc")]
+        [InlineData("IsResource", "desc")]
+        [InlineData("Application", "desc")]
+        public async void Get_Ok(string query, string order)
         {
-            var query = "?sort=Order&order=asc&offset=0&limit=100&parentName=%E6%B5%8B%E8%AF%95%E9%A1%B5%E9%9D%A2&name=%E5%85%B3%E4%BA%8E&category=1&isresource=0&appCode=2&_=1558235377255";
-            var qd = await Client.GetAsJsonAsync<QueryData<object>>(query);
-            Assert.Single(qd.rows);
-
-            query = "?sort=Name&order=asc&offset=0&limit=100&parentName=%E6%B5%8B%E8%AF%95%E9%A1%B5%E9%9D%A2&name=%E5%85%B3%E4%BA%8E&category=1&isresource=0&appCode=2&_=1558235377255";
-            qd = await Client.GetAsJsonAsync<QueryData<object>>(query);
-            Assert.Single(qd.rows);
-
-            query = "?sort=ParentName&order=asc&offset=0&limit=100&parentName=%E6%B5%8B%E8%AF%95%E9%A1%B5%E9%9D%A2&name=%E5%85%B3%E4%BA%8E&category=1&isresource=0&appCode=2&_=1558235377255";
-            qd = await Client.GetAsJsonAsync<QueryData<object>>(query);
-            Assert.Single(qd.rows);
-
-            query = "?sort=CategoryName&order=asc&offset=0&limit=100&parentName=%E6%B5%8B%E8%AF%95%E9%A1%B5%E9%9D%A2&name=%E5%85%B3%E4%BA%8E&category=1&isresource=0&appCode=2&_=1558235377255";
-            qd = await Client.GetAsJsonAsync<QueryData<object>>(query);
-            Assert.Single(qd.rows);
-
-            query = "?sort=Target&order=asc&offset=0&limit=100&parentName=%E6%B5%8B%E8%AF%95%E9%A1%B5%E9%9D%A2&name=%E5%85%B3%E4%BA%8E&category=1&isresource=0&appCode=2&_=1558235377255";
-            qd = await Client.GetAsJsonAsync<QueryData<object>>(query);
-            Assert.Single(qd.rows);
-
-            query = "?sort=IsResource&order=asc&offset=0&limit=100&parentName=%E6%B5%8B%E8%AF%95%E9%A1%B5%E9%9D%A2&name=%E5%85%B3%E4%BA%8E&category=1&isresource=0&appCode=2&_=1558235377255";
-            qd = await Client.GetAsJsonAsync<QueryData<object>>(query);
-            Assert.Single(qd.rows);
-
-            query = "?sort=Application&order=asc&offset=0&limit=100&parentName=%E6%B5%8B%E8%AF%95%E9%A1%B5%E9%9D%A2&name=%E5%85%B3%E4%BA%8E&category=1&isresource=0&appCode=2&_=1558235377255";
-            qd = await Client.GetAsJsonAsync<QueryData<object>>(query);
+            var qd = await Client.GetAsJsonAsync<QueryData<object>>($"?sort={query}&order={order}&offset=0&limit=100&parentName=%E6%B5%8B%E8%AF%95%E9%A1%B5%E9%9D%A2&name=%E5%85%B3%E4%BA%8E&category=1&isresource=0&appCode=2&_=1558235377255");
             Assert.Single(qd.rows);
         }
 

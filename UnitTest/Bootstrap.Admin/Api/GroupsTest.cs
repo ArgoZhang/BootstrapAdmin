@@ -16,6 +16,8 @@ namespace Bootstrap.Admin.Api.SqlServer
             // 菜单 系统菜单 系统使用条件
             var query = "?sort=GroupName&order=asc&offset=0&limit=20&groupName=Admin&description=%E7%B3%BB%E7%BB%9F%E9%BB%98%E8%AE%A4%E7%BB%84&_=1547614230481";
             var qd = await Client.GetAsJsonAsync<QueryData<Group>>(query);
+            query = "?sort=GroupName&order=desc&offset=0&limit=20&groupName=Admin&description=%E7%B3%BB%E7%BB%9F%E9%BB%98%E8%AE%A4%E7%BB%84&_=1547614230481";
+            qd = await Client.GetAsJsonAsync<QueryData<Group>>(query);
             Assert.Single(qd.rows);
         }
 

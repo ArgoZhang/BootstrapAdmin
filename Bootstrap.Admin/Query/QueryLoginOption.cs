@@ -30,7 +30,7 @@ namespace Bootstrap.Admin.Query
         /// <returns></returns>
         public QueryData<LoginUser> RetrieveData()
         {
-            if (string.IsNullOrEmpty(Order)) Order = "LoginTime desc";
+            if (string.IsNullOrEmpty(Order)) Order = "desc";
             var data = LoginHelper.RetrievePages(this, StartTime, EndTime, LoginIP);
             return new QueryData<LoginUser>
             {

@@ -21,28 +21,21 @@ namespace Bootstrap.Admin.Api.SqlServer
             Assert.Equal(HttpStatusCode.NoContent, resp.StatusCode);
         }
 
-        [Fact]
-        public async void Get_Ok()
+        [Theory]
+        [InlineData("DisplayName", "asc")]
+        [InlineData("UserName", "asc")]
+        [InlineData("RegisterTime", "asc")]
+        [InlineData("ApprovedTime", "asc")]
+        [InlineData("ApprovedBy", "asc")]
+        [InlineData("DisplayName", "desc")]
+        [InlineData("UserName", "desc")]
+        [InlineData("RegisterTime", "desc")]
+        [InlineData("ApprovedTime", "desc")]
+        [InlineData("ApprovedBy", "desc")]
+        public async void Get_Ok(string query, string order)
         {
             // 菜单 系统菜单 系统使用条件
-            var query = "?sort=DisplayName&order=asc&offset=0&limit=20&name=Admin&displayName=Administrator&_=1547628247338";
-            var qd = await Client.GetAsJsonAsync<QueryData<object>>(query);
-            Assert.Single(qd.rows);
-
-            query = "?sort=UserName&order=asc&offset=0&limit=20&name=Admin&displayName=Administrator&_=1547628247338";
-            qd = await Client.GetAsJsonAsync<QueryData<object>>(query);
-            Assert.Single(qd.rows);
-
-            query = "?sort=RegisterTime&order=asc&offset=0&limit=20&name=Admin&displayName=Administrator&_=1547628247338";
-            qd = await Client.GetAsJsonAsync<QueryData<object>>(query);
-            Assert.Single(qd.rows);
-
-            query = "?sort=ApprovedTime&order=asc&offset=0&limit=20&name=Admin&displayName=Administrator&_=1547628247338";
-            qd = await Client.GetAsJsonAsync<QueryData<object>>(query);
-            Assert.Single(qd.rows);
-
-            query = "?sort=ApprovedBy&order=asc&offset=0&limit=20&name=Admin&displayName=Administrator&_=1547628247338";
-            qd = await Client.GetAsJsonAsync<QueryData<object>>(query);
+            var qd = await Client.GetAsJsonAsync<QueryData<object>>($"?sort={query}&order={order}&offset=0&limit=20&name=Admin&displayName=Administrator&_=1547628247338");
             Assert.Single(qd.rows);
         }
 

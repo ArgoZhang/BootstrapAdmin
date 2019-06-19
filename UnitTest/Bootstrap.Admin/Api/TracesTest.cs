@@ -16,7 +16,7 @@ namespace Bootstrap.Admin.Api.SqlServer
             trac.Save(trac);
 
             // 菜单 系统菜单 系统使用条件
-            var query = "?sort=LogTime&order=desc&offset=0&limit=20&operateType=&OperateTimeStart=&OperateTimeEnd=&_=1547617573596";
+            var query = "?sort=LogTime&order=desc&offset=0&limit=20&operateType=&OperateTimeStart=&OperateTimeEnd=&AccessIP=&_=1547617573596";
             var qd = await Client.GetAsJsonAsync<QueryData<Trace>>(query);
             Assert.NotEmpty(qd.rows);
 
