@@ -30,7 +30,7 @@ namespace Bootstrap.Admin.Controllers
         [HttpPost]
         public IEnumerable<string> RetrieveRolesByUrl([FromBody]string url)
         {
-            return RoleHelper.RetrieveRolesByUrl(url);
+            return RoleHelper.RetrievesByUrl(url);
         }
         /// <summary>
         /// 
@@ -39,7 +39,7 @@ namespace Bootstrap.Admin.Controllers
         [HttpPost]
         public IEnumerable<string> RetrieveRolesByUserName([FromBody]string userName)
         {
-            return RoleHelper.RetrieveRolesByUserName(userName);
+            return RoleHelper.RetrievesByUserName(userName);
         }
         /// <summary>
         /// 

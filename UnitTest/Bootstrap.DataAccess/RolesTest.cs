@@ -80,13 +80,13 @@ namespace Bootstrap.DataAccess.SqlServer
         {
             var id = RoleHelper.Retrieves().FirstOrDefault(r => r.RoleName == "Administrators").Id;
             UserHelper.SaveByRoleId(id, UserHelper.Retrieves().Select(u => u.Id));
-            Assert.NotEmpty(RoleHelper.RetrieveRolesByUserName("Admin"));
+            Assert.NotEmpty(RoleHelper.RetrievesByUserName("Admin"));
         }
 
         [Fact]
         public void RetrieveRolesByUrl_Ok()
         {
-            Assert.NotEmpty(RoleHelper.RetrieveRolesByUrl("~/Home/Index"));
+            Assert.NotEmpty(RoleHelper.RetrievesByUrl("~/Home/Index"));
         }
 
         [Fact]

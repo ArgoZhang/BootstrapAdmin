@@ -1,4 +1,4 @@
-using Longbow.Cache;
+﻿using Longbow.Cache;
 using Longbow.Data;
 using System;
 using System.Collections.Generic;
@@ -119,13 +119,13 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public static IEnumerable<string> RetrieveRolesByUserName(string userName) => CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveRolesByUserNameDataKey, userName), key => DbContextManager.Create<Role>().RetrieveRolesByUserName(userName), RetrieveRolesByUserNameDataKey);
+        public static IEnumerable<string> RetrievesByUserName(string userName) => CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveRolesByUserNameDataKey, userName), key => DbContextManager.Create<Role>().RetrievesByUserName(userName), RetrieveRolesByUserNameDataKey);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        public static IEnumerable<string> RetrieveRolesByUrl(string url) => CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveRolesByUrlDataKey, url), key => DbContextManager.Create<Role>().RetrieveRolesByUrl(url), RetrieveRolesByUrlDataKey);
+        public static IEnumerable<string> RetrievesByUrl(string url) => CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveRolesByUrlDataKey, url), key => DbContextManager.Create<Role>().RetrievesByUrl(url), RetrieveRolesByUrlDataKey);
     }
 }

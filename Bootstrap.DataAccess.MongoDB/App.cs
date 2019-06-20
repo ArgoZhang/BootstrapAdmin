@@ -47,7 +47,7 @@ namespace Bootstrap.DataAccess.MongoDB
         public override IEnumerable<string> RetrievesByUserName(string userName)
         {
             var ret = new List<string>();
-            var roles = RoleHelper.RetrieveRolesByUserName(userName);
+            var roles = RoleHelper.RetrievesByUserName(userName);
             if (roles.Contains("Administrators", StringComparer.OrdinalIgnoreCase))
             {
                 ret.AddRange(DictHelper.RetrieveApps().Select(kv => kv.Key));

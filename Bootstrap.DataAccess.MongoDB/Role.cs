@@ -75,7 +75,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public override IEnumerable<string> RetrieveRolesByUserName(string userName)
+        public override IEnumerable<string> RetrievesByUserName(string userName)
         {
             var roles = new List<string>();
             var user = UserHelper.Retrieves().Cast<User>().FirstOrDefault(u => u.UserName.ToLowerInvariant() == userName.ToLowerInvariant());
@@ -185,7 +185,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        public override IEnumerable<string> RetrieveRolesByUrl(string url)
+        public override IEnumerable<string> RetrievesByUrl(string url)
         {
             var menu = DbManager.Menus.Find(md => md.Url.StartsWith(url)).FirstOrDefault();
             var ret = RoleHelper.Retrieves().Cast<Role>().Where(md => md.Menus != null && md.Menus.Contains(menu.Id)).Select(m => m.RoleName).ToList();
