@@ -1,7 +1,6 @@
 ﻿using Bootstrap.DataAccess;
 using Longbow.Web;
 using Longbow.Web.SignalR;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -12,9 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using Swashbuckle.AspNetCore.Swagger;
 using System;
-using System.IO;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
 
@@ -64,6 +61,8 @@ namespace Bootstrap.Admin
             services.AddSignalRExceptionFilterHandler<SignalRHub>(async (client, ex) => await SignalRManager.Send(client, ex));
             services.AddResponseCompression();
             services.AddBootstrapAdminAuthentication();
+            services.AddSwagger();
+            services.AddButtonAuthorization(MenuHelper.AuthorizateButtons);
             services.AddMvc(options =>
             {
                 options.Filters.Add<BootstrapAdminAuthorizeFilter>();
@@ -82,20 +81,6 @@ namespace Bootstrap.Admin
                 option.AssumeDefaultVersionWhenUnspecified = true;
                 option.ApiVersionReader = ApiVersionReader.Combine(new HeaderApiVersionReader("api-version"), new QueryStringApiVersionReader("api-version"));
             });
-            services.AddSwaggerGen(options =>
-            {
-                options.SwaggerDoc("v1", new Info
-                {
-                    Version = "v1",
-                    Title = "BootstrapAdmin API"
-                });
-
-                //Set the comments path for the swagger json and ui.  
-                var xmlPath = Path.Combine(AppContext.BaseDirectory, "Bootstrap.Admin.xml");
-                options.IncludeXmlComments(xmlPath);
-                options.OperationFilter<HttpHeaderOperation>(); // 添加httpHeader参数
-            });
-            services.AddButtonAuthorization(MenuHelper.AuthorizateButtons);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -125,24 +110,12 @@ namespace Bootstrap.Admin
             app.UseOnlineUsers(callback: TraceHelper.Save);
             app.UseCacheManagerCorsHandler();
             app.UseSignalR(routes => { routes.MapHub<SignalRHub>("/NotiHub"); });
+            app.UseSwagger(Configuration["SwaggerPathBase"].TrimEnd('/'));
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
-            });
-            app.UseWhen(context => context.Request.Path.StartsWithSegments("/swagger"), builder =>
-            {
-                builder.Use(async (context, next) =>
-                {
-                    if (!context.User.Identity.IsAuthenticated) await context.ChallengeAsync();
-                    else await next();
-                });
-            });
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint($"{Configuration["SwaggerPathBase"]}/swagger/v1/swagger.json", "BootstrapAdmin API V1");
             });
         }
     }
