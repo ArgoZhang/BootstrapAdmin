@@ -10,13 +10,14 @@ indent_style = space
 [*.{cs,csx,vb,vbx}] 
 indent_size = 4 
 insert_final_newline = true 
+trim_trailing_whitespace = true
 charset = utf-8-bom 
+[*.{json,yml,xml}]
+indent_size = 2
 ############################### 
 # .NET Coding Conventions     # 
 ############################### 
 [*.{cs,vb}] 
-# Unix-style newlines with a newline ending every file
-end_of_line = lf
 # Organize usings 
 dotnet_sort_system_directives_first = false 
 # this. preferences 
