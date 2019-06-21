@@ -52,8 +52,8 @@ namespace Bootstrap.Admin
             });
             services.AddCors();
             services.AddLogging(builder => builder.AddFileLogger().AddDBLogger(ExceptionsHelper.Log));
-            services.AddConfigurationManager(Configuration);
-            services.AddCacheManager(Configuration);
+            services.AddConfigurationManager();
+            services.AddCacheManager();
             services.AddDbAdapter();
             services.AddIPLocator(DictHelper.ConfigIPLocator);
             services.AddOnlineUsers();

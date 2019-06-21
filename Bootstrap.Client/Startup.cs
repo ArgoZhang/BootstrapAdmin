@@ -34,8 +34,8 @@ namespace Bootstrap.Client
             });
             services.AddCors();
             services.AddLogging(builder => builder.AddFileLogger());
-            services.AddConfigurationManager(Configuration);
-            services.AddCacheManager(Configuration);
+            services.AddConfigurationManager();
+            services.AddCacheManager();
             services.AddDbAdapter();
             services.AddSignalR().AddJsonProtocalDefault();
             services.AddResponseCompression();
