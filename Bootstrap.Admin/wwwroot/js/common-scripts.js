@@ -145,7 +145,7 @@ $(function () {
         autoScrollSidebar: function (options) {
             var option = $.extend({ target: null, offsetTop: 0 }, options);
             var $navItem = option.target;
-            if ($navItem === null) return this;
+            if ($navItem === null || $navItem.length === 0) return this;
 
             // sidebar scroll animate
             var middle = this.outerHeight() / 2;
