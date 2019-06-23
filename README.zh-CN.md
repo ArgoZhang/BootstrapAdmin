@@ -114,7 +114,7 @@
 1. 安装 .net core sdk [官方网址](http://www.microsoft.com/net/download)
 2. 安装 Visual Studio IDE 2017以上 [官方网址](https://visualstudio.microsoft.com/vs/getting-started/)
 3. 获取本项目代码 [BootstrapAdmin](https://gitee.com/LongbowEnterprise/BootstrapAdmin)
-4. 拷贝 Scripts\Longbow.lic 文件到 bin 目录下的程序集输出目录（bin\debug\netcoreapp2.2\）
+4. 拷贝 Scripts\Longbow.lic 文件到 bin 目录下的程序集输出目录 (bin\debug\netcoreapp2.2\) 项目中脚本自动完成  
 5. 系统登录用户名与口令  
 用户名：**Admin**  
 密码：**123789**  
