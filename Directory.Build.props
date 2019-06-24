@@ -1,0 +1,20 @@
+﻿<Project>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\Keys\Longbow.Utility.snk</AssemblyOriginatorKeyFile>
+    <Copyright>Longbow</Copyright>
+    <Authors>Argo Zhang(argo@163.com)</Authors>
+    <Company>Longbow</Company>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\Keys\Longbow.Utility.snk" Link="Longbow.Utility.snk" />
+  </ItemGroup>
+
+  <Target Condition=" '$(TargetFramework)' == 'netcoreapp2.2' " Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Message Text="Copy file -> $(TargetDir)" Importance="high" />
+    <Copy Condition="'$(OS)' == 'Windows_NT'" DestinationFolder="$(TargetDir)" SourceFiles="$(ProjectDir)..\Scripts\Longbow.lic" SkipUnchangedFiles="true" />
+    <Copy Condition="'$(OS)' == 'UNIX'" DestinationFolder="$(TargetDir)" SourceFiles="$(ProjectDir)../Scripts/Longbow.lic" SkipUnchangedFiles="true" />
+  </Target>
+
+</Project>

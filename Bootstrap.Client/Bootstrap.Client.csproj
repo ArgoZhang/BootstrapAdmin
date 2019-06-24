@@ -2,8 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\Keys\Longbow.Utility.snk</AssemblyOriginatorKeyFile>
     <MvcRazorCompileOnPublish>true</MvcRazorCompileOnPublish>
     <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
   </PropertyGroup>
@@ -13,10 +11,6 @@
     <PackageReference Include="Longbow.Configuration" Version="2.2.3" />
     <PackageReference Include="Longbow.Logging" Version="2.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="..\Keys\Longbow.Utility.snk" Link="Longbow.Utility.snk" />
   </ItemGroup>
 
   <ItemGroup>

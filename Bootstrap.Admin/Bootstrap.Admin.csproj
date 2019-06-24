@@ -2,14 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\Keys\Longbow.Utility.snk</AssemblyOriginatorKeyFile>
     <MvcRazorCompileOnPublish>true</MvcRazorCompileOnPublish>
     <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
   </PropertyGroup>
 
   <PropertyGroup>
-    <DocumentationFile>..\Bootstrap.Admin\Bootstrap.Admin.xml</DocumentationFile>
+    <DocumentationFile>$(MSBuildProjectName).xml</DocumentationFile>
     <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
   </PropertyGroup>
 
@@ -23,10 +21,6 @@
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
     <PackageReference Include="Sentry.AspNetCore" Version="1.2.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="..\Keys\Longbow.Utility.snk" Link="Longbow.Utility.snk" />
   </ItemGroup>
 
   <ItemGroup>

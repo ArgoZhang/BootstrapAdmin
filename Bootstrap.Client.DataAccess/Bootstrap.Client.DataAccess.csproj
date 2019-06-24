@@ -2,13 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\Keys\Longbow.Utility.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Include="..\Keys\Longbow.Utility.snk" Link="Longbow.Utility.snk" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Bootstrap.Security.DataAccess" Version="2.2.5" />
