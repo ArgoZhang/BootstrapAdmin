@@ -48,7 +48,7 @@ namespace Bootstrap.Admin.Controllers.Api
         [AllowAnonymous]
         public bool Put()
         {
-            var ip = (Request.HttpContext.Connection.RemoteIpAddress ?? IPAddress.IPv6Loopback).ToString();
+            var ip = Request.HttpContext.Connection.RemoteIpAddress.ToIPv4String();
             if (_loginUsers.TryGetValue(ip, out var user))
             {
                 user.Reset();

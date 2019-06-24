@@ -71,7 +71,7 @@ namespace Bootstrap.Admin.Controllers
         {
             loginUser.UserAgent = context.Request.Headers["User-Agent"];
             var agent = new UserAgent(loginUser.UserAgent);
-            loginUser.Ip = (context.Connection.RemoteIpAddress ?? IPAddress.IPv6Loopback).ToString();
+            loginUser.Ip = context.Connection.RemoteIpAddress.ToIPv4String();
             loginUser.City = ipLocator.Locate(loginUser.Ip);
             loginUser.Browser = $"{agent.Browser?.Name} {agent.Browser?.Version}";
             loginUser.OS = $"{agent.OS?.Name} {agent.OS?.Version}";
