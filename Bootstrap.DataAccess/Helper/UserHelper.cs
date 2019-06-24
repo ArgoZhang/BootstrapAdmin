@@ -13,10 +13,25 @@ namespace Bootstrap.DataAccess
     /// </summary>
     public static class UserHelper
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public const string RetrieveUsersDataKey = "UserHelper-RetrieveUsers";
+        /// <summary>
+        /// 
+        /// </summary>
         public const string RetrieveUsersByRoleIdDataKey = "UserHelper-RetrieveUsersByRoleId";
+        /// <summary>
+        /// 
+        /// </summary>
         public const string RetrieveUsersByGroupIdDataKey = "UserHelper-RetrieveUsersByGroupId";
+        /// <summary>
+        /// 
+        /// </summary>
         public const string RetrieveNewUsersDataKey = "UserHelper-RetrieveNewUsers";
+        /// <summary>
+        /// 
+        /// </summary>
         public const string RetrieveUsersByNameDataKey = "BootstrapUser-RetrieveUsersByName";
 
         private static bool UserChecker(User user)

@@ -14,7 +14,7 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="userName"></param>
+        /// <param name="user"></param>
         /// <returns></returns>
         public static bool Log(LoginUser user)
         {

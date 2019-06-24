@@ -27,6 +27,9 @@ namespace Bootstrap.DataAccess.MongoDB
         /// 
         /// </summary>
         /// <param name="po"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <param name="ip"></param>
         /// <returns></returns>
         public override Page<DataAccess.LoginUser> RetrieveByPages(PaginationOption po, DateTime? startTime, DateTime? endTime, string ip)
         {

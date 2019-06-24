@@ -4,8 +4,14 @@ using System.Collections.Generic;
 
 namespace Bootstrap.DataAccess
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class AppHelper
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public const string RetrieveAppsByRoleIdDataKey = "AppHelper-RetrieveAppsByRoleId";
 
         /// <summary>

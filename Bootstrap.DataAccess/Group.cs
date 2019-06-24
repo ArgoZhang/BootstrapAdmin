@@ -1,5 +1,4 @@
 ﻿using Bootstrap.Security.DataAccess;
-using Longbow.Data;
 using PetaPoco;
 using System;
 using System.Collections.Generic;
@@ -37,14 +36,13 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 查询所有群组信息
         /// </summary>
-        /// <param name="id"></param>
         /// <returns></returns>
         public virtual IEnumerable<Group> Retrieves() => DbManager.Create().Fetch<Group>();
 
         /// <summary>
         /// 删除群组信息
         /// </summary>
-        /// <param name="ids"></param>
+        /// <param name="value"></param>
         public virtual bool Delete(IEnumerable<string> value)
         {
             bool ret = false;

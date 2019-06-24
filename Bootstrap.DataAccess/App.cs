@@ -6,6 +6,9 @@ using System.Linq;
 
 namespace Bootstrap.DataAccess
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class App
     {
         /// <summary>

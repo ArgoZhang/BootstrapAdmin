@@ -14,6 +14,7 @@ namespace Bootstrap.DataAccess
         /// 
         /// </summary>
         /// <param name="connectionName"></param>
+        /// <param name="keepAlive"></param>
         /// <returns></returns>
         public static IDatabase Create(string connectionName = null, bool keepAlive = false)
         {

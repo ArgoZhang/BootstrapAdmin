@@ -1,4 +1,4 @@
-using Longbow.Cache;
+﻿using Longbow.Cache;
 using Longbow.Data;
 using System.Collections.Generic;
 
@@ -9,9 +9,21 @@ namespace Bootstrap.DataAccess
     /// </summary>
     public static class GroupHelper
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public const string RetrieveGroupsDataKey = "GroupHelper-RetrieveGroups";
+        /// <summary>
+        /// 
+        /// </summary>
         public const string RetrieveGroupsByUserIdDataKey = "GroupHelper-RetrieveGroupsByUserId";
+        /// <summary>
+        /// 
+        /// </summary>
         public const string RetrieveGroupsByRoleIdDataKey = "GroupHelper-RetrieveGroupsByRoleId";
+        /// <summary>
+        /// 
+        /// </summary>
         public const string RetrieveGroupsByUserNameDataKey = "GroupHelper-RetrieveGroupsByUserName";
 
         /// <summary>

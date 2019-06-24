@@ -8,6 +8,9 @@ using System.Collections.Generic;
 
 namespace Bootstrap.DataAccess
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class TraceHelper
     {
 

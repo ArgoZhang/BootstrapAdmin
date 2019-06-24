@@ -15,6 +15,9 @@ namespace Bootstrap.DataAccess
         /// 查询所有日志信息
         /// </summary>
         /// <param name="op"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <param name="opType"></param>
         /// <returns></returns>
         public static Page<Log> RetrievePages(PaginationOption op, DateTime? startTime, DateTime? endTime, string opType) => DbContextManager.Create<Log>().RetrievePages(op, startTime, endTime, opType);
 

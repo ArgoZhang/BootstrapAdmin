@@ -11,11 +11,29 @@ namespace Bootstrap.DataAccess
     /// </summary>
     public static class RoleHelper
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public const string RetrieveRolesDataKey = "RoleHelper-RetrieveRoles";
+        /// <summary>
+        /// 
+        /// </summary>
         public const string RetrieveRolesByUserIdDataKey = "RoleHelper-RetrieveRolesByUserId";
+        /// <summary>
+        /// 
+        /// </summary>
         public const string RetrieveRolesByMenuIdDataKey = "RoleHelper-RetrieveRolesByMenuId";
+        /// <summary>
+        /// 
+        /// </summary>
         public const string RetrieveRolesByGroupIdDataKey = "RoleHelper-RetrieveRolesByGroupId";
+        /// <summary>
+        /// 
+        /// </summary>
         public const string RetrieveRolesByUserNameDataKey = "RoleHelper-RetrieveRolesByUserName";
+        /// <summary>
+        /// 
+        /// </summary>
         public const string RetrieveRolesByUrlDataKey = "RoleHelper-RetrieveRolesByUrl";
 
         /// <summary>

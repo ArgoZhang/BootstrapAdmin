@@ -5,6 +5,9 @@ using System.Linq;
 
 namespace Bootstrap.DataAccess.MongoDB
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class App : DataAccess.App
     {
         /// <summary>

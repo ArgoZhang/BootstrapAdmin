@@ -86,8 +86,6 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <summary>
         /// 删除日志信息
         /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
         private static void DeleteLogAsync() => System.Threading.Tasks.Task.Run(() => DbManager.Logs.DeleteMany(log => log.LogTime < DateTime.Now.AddDays(-7)));
 
         /// <summary>

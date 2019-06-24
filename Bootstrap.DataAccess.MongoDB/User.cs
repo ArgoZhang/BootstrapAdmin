@@ -58,6 +58,12 @@ namespace Bootstrap.DataAccess.MongoDB
             return u != null && !string.IsNullOrEmpty(u.PassSalt) && u.Password == LgbCryptography.ComputeHash(password, u.PassSalt);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="app"></param>
+        /// <returns></returns>
         public override bool SaveApp(string userName, string app)
         {
             var update = Builders<User>.Update.Set(u => u.App, app);

@@ -22,7 +22,6 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="id"></param>
         /// <returns></returns>
         public override IEnumerable<DataAccess.Role> Retrieves()
         {
