@@ -9,7 +9,7 @@
     <PackageReference Include="Longbow.Data" Version="2.3.2" />
     <PackageReference Include="Longbow.Logging" Version="2.2.7" />
     <PackageReference Include="Longbow.Security.Cryptography" Version="1.3.0" />
-    <PackageReference Include="Longbow.Web" Version="2.2.12" />
+    <PackageReference Include="Longbow.Web" Version="2.2.13" />
     <PackageReference Include="Longbow.Cache" Version="2.2.12" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="2.2.4" />
     <PackageReference Include="PetaPoco.Extensions" Version="1.0.5" />
