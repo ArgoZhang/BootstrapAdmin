@@ -444,8 +444,12 @@
                 if ($.isFunction(op.callback)) op.callback.apply(that, arguments);
                 return console.error(err.toString());
             }).then(function () {
+                // 连接成功
+                // invoke 为 调用服务端方法
+                // invoke: function (connection) { return connection.invoke('RetrieveDashboard'); }
                 if (op.invoke) op.invoke(connection).then(function (result) { console.log(result); }).catch(function (err) { console.error(err.toString()); });
             });
+            this.hub = connection;
             return this;
         }
     });

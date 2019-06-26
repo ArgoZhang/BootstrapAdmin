@@ -58,7 +58,7 @@
     <a id="tb_assignMenu" href="#" title="分配菜单" asp-auth="assignMenu"><i class="fa fa-dashboard"></i></a>
     <a id="tb_assignApp" href="#" title="分配应用" asp-auth="assignApp"><i class="fa fa-cubes"></i></a>
 }
-@section body {
+@section cardbody {
     <div class="alert alert-danger" role="alert" asp-condition="@Model.IsDemo">
         <span>演示系统禁止修改内置角色（Administrators、Default）</span>
     </div>
