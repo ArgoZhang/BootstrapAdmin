@@ -46,13 +46,13 @@ $(function () {
                     }).join('');
                     content = content === '' ?
                         '已断开' :
-                        $.format('<div class="fixed-table-container"><table class="table table-hover table-sm mb-0"><thead><tr><th class="p-1"><b>访问时间</b></th><th class="p-1">访问地址</th></tr></thead><tbody>{0}</tbody></table></div>', content);
+                        $.format('<div class="bootstrap-table" style="margin: 4px 0;"><div class="fixed-table-container"><div class="fixed-table-body"><table class="table table-bordered table-hover"><thead><tr><th class="p-1"><b>访问时间</b></th><th class="p-1">访问地址</th></tr></thead><tbody>{0}</tbody></table></div></div></div>', content);
                     $this.popover({ content: content, placement: $(window).width() < 768 ? 'top' : 'left' });
                     $this.popover('show');
                 }
             });
         }
-    }).on('mouseup', 'button[data-id]', function(){
+    }).on('mouseup', 'button[data-id]', function () {
         $(this).focus();
     });
 
