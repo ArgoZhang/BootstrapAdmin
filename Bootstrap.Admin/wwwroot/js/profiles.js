@@ -28,17 +28,21 @@
     }).on('filebeforedelete', function (e, key) {
         if (key === "default.jpg") return true;
         return new Promise(function (resolve, reject) {
-            swal({
+            var swalDeleteOptions = {
                 title: "您确定要删除吗？",
+                html: '您确定要删除选中的所有数据吗',
                 type: "warning",
                 showCancelButton: true,
-                cancelButtonClass: 'btn-secondary',
+                confirmButtonColor: '#dc3545',
+                cancelButtonColor: '#6c757d',
                 confirmButtonText: "我要删除",
-                confirmButtonClass: "btn-danger ml-2",
                 cancelButtonText: "取消"
-            }, function (del) {
-                resolve(!del);
-                if (del) $file.fileinput('default');
+            };
+            swal(swalDeleteOptions).then(function (result) {
+                if (result.value) {
+                    resolve(false);
+                    $file.fileinput('default');
+                }
             });
         });
     }).on('filedeleted', function (event, key, jqXHR, data) {
