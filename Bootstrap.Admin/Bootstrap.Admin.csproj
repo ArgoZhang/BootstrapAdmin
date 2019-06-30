@@ -12,8 +12,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Bootstrap.Security.Mvc" Version="2.2.9" />
-    <PackageReference Include="Longbow.Configuration" Version="2.2.3" />
+    <PackageReference Include="Bootstrap.Security.Mvc" Version="2.2.10" />
+    <PackageReference Include="Longbow.Configuration" Version="2.2.4" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="3.1.2" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.7.10" />

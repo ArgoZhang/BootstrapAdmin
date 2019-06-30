@@ -192,7 +192,7 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 根据菜单url查询某个所拥有的角色
         /// 从NavigatorRole表查
-        /// 从Navigators-〉GroupNavigatorRole-〉Role查查询某个用户所拥有的角色
+        /// 从Navigators -> GroupNavigatorRole -> Role查查询某个用户所拥有的角色
         /// </summary>
         /// <returns></returns>
         public virtual IEnumerable<string> RetrievesByUrl(string url) => DbHelper.RetrieveRolesByUrl(url);
