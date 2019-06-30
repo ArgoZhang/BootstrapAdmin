@@ -74,10 +74,8 @@ namespace Bootstrap.DataAccess
             }
             if (appIds != null)
             {
-                appIds.ToList().ForEach(id =>
-                {
-                    cacheKeys.Add(string.Format("{0}-{1}", AppHelper.RetrieveAppsByRoleIdDataKey, id));
-                });
+                cacheKeys.Add("AppHelper-RetrieveAppsBy*");
+                corsKeys.Add("AppHelper-RetrieveAppsBy*");
             }
             if (dictIds != null)
             {

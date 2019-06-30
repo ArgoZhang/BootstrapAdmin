@@ -24,8 +24,10 @@ namespace Bootstrap.DataAccess.SqlServer
             UserHelper.SaveByRoleId(roleId, new string[] { userId });
             Assert.NotEmpty(AppHelper.RetrievesByUserName("Admin"));
 
-            var apps = AppHelper.RetrievesByRoleId(roleId);
             roleId = RoleHelper.Retrieves().FirstOrDefault(r => r.RoleName == "Default").Id;
+            userId = UserHelper.Retrieves().FirstOrDefault(u => u.UserName == "User").Id;
+            UserHelper.SaveByRoleId(roleId, new string[] { userId });
+            var apps = AppHelper.RetrievesByRoleId(roleId);
             AppHelper.SaveByRoleId(roleId, apps.Select(a => a.Id));
             Assert.NotEmpty(AppHelper.RetrievesByUserName("User"));
         }
