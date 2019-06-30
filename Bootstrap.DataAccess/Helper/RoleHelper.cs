@@ -1,4 +1,5 @@
-﻿using Longbow.Cache;
+﻿using Bootstrap.Security.DataAccess;
+using Longbow.Cache;
 using Longbow.Data;
 using System;
 using System.Collections.Generic;
@@ -27,15 +28,6 @@ namespace Bootstrap.DataAccess
         /// 
         /// </summary>
         public const string RetrieveRolesByGroupIdDataKey = "RoleHelper-RetrieveRolesByGroupId";
-        /// <summary>
-        /// 
-        /// </summary>
-        public const string RetrieveRolesByUserNameDataKey = "RoleHelper-RetrieveRolesByUserName";
-        /// <summary>
-        /// 
-        /// </summary>
-        public const string RetrieveRolesByUrlDataKey = "RoleHelper-RetrieveRolesByUrl";
-
         /// <summary>
         /// 查询所有角色
         /// </summary>
@@ -137,13 +129,13 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public static IEnumerable<string> RetrievesByUserName(string userName) => CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveRolesByUserNameDataKey, userName), key => DbContextManager.Create<Role>().RetrievesByUserName(userName), RetrieveRolesByUserNameDataKey);
+        public static IEnumerable<string> RetrievesByUserName(string userName) => CacheManager.GetOrAdd(string.Format("{0}-{1}", DbHelper.RetrieveRolesByUserNameDataKey, userName), key => DbContextManager.Create<Role>().RetrievesByUserName(userName), DbHelper.RetrieveRolesByUserNameDataKey);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        public static IEnumerable<string> RetrievesByUrl(string url) => CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveRolesByUrlDataKey, url), key => DbContextManager.Create<Role>().RetrievesByUrl(url), RetrieveRolesByUrlDataKey);
+        public static IEnumerable<string> RetrievesByUrl(string url) => CacheManager.GetOrAdd(string.Format("{0}-{1}", DbHelper.RetrieveRolesByUrlDataKey, url), key => DbContextManager.Create<Role>().RetrievesByUrl(url), DbHelper.RetrieveRolesByUrlDataKey);
     }
 }
