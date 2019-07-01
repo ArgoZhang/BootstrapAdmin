@@ -62,7 +62,7 @@ namespace Bootstrap.Admin
             services.AddResponseCompression();
             services.AddBootstrapAdminAuthentication();
             services.AddSwagger();
-            services.AddButtonAuthorization(MenuHelper.AuthorizateButtons);
+            services.AddButtonAuthorization();
             services.AddMvc(options =>
             {
                 options.Filters.Add<BootstrapAdminAuthorizeFilter>();
