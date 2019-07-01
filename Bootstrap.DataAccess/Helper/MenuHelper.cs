@@ -2,8 +2,6 @@
 using Bootstrap.Security.DataAccess;
 using Longbow.Cache;
 using Longbow.Data;
-using Microsoft.AspNetCore.Http;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -22,7 +20,7 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 
         /// </summary>
-        public const string RetrieveMenusAll = "BootstrapMenu-RetrieveMenus";
+        public const string RetrieveMenusAll = DbHelper.RetrieveMenusAll;
 
         /// <summary>
         /// 

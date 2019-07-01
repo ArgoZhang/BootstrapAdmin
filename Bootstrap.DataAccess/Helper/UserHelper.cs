@@ -1,4 +1,5 @@
 ﻿using Bootstrap.Security;
+using Bootstrap.Security.DataAccess;
 using Longbow.Cache;
 using Longbow.Data;
 using System;
@@ -32,7 +33,7 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 
         /// </summary>
-        public const string RetrieveUsersByNameDataKey = "BootstrapUser-RetrieveUsersByName";
+        public const string RetrieveUsersByNameDataKey = DbHelper.RetrieveUsersByNameDataKey;
 
         private static bool UserChecker(User user)
         {

@@ -1,4 +1,5 @@
-﻿using Longbow.Cache;
+﻿using Bootstrap.Security.DataAccess;
+using Longbow.Cache;
 using Longbow.Data;
 using System.Collections.Generic;
 
@@ -24,7 +25,7 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 
         /// </summary>
-        public const string RetrieveGroupsByUserNameDataKey = "GroupHelper-RetrieveGroupsByUserName";
+        public const string RetrieveGroupsByUserNameDataKey = DbHelper.RetrieveGroupsByUserNameDataKey;
 
         /// <summary>
         /// 查询所有群组信息

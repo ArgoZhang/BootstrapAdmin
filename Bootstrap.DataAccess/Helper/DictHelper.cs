@@ -1,4 +1,5 @@
 ﻿using Bootstrap.Security;
+using Bootstrap.Security.DataAccess;
 using Longbow.Cache;
 using Longbow.Data;
 using Longbow.Web;
@@ -19,7 +20,7 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 缓存索引，BootstrapAdmin后台清理缓存时使用
         /// </summary>
-        public const string RetrieveDictsDataKey = "BootstrapDict-RetrieveDicts";
+        public const string RetrieveDictsDataKey = DbHelper.RetrieveDictsDataKey;
 
         /// <summary>
         /// 
