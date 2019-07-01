@@ -1,5 +1,4 @@
-﻿using Bootstrap.Client.DataAccess;
-using Bootstrap.Security;
+﻿using Bootstrap.Security;
 using Bootstrap.Security.DataAccess;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -18,7 +17,7 @@ namespace Bootstrap.Client.Models
         public NavigatorBarModel(ControllerBase controller) : base(controller.User.Identity)
         {
             Navigations = DbHelper.RetrieveAppCascadeMenus(UserName, $"~/{controller.ControllerContext.ActionDescriptor.ControllerName}/{controller.ControllerContext.ActionDescriptor.ActionName}");
-            ImageLibUrl = DictHelper.RetrieveImagesLibUrl();
+            ImageLibUrl = DbHelper.RetrieveImagesLibUrl();
         }
 
         /// <summary>

@@ -38,7 +38,7 @@ namespace Bootstrap.Client.Controllers
         [AllowAnonymous]
         public IActionResult Error(int id)
         {
-            var options = ConfigurationManager.Get<BootstrapAdminOptions>();
+            var options = ConfigurationManager.Get<BootstrapAdminAuthenticationOptions>();
             var uriBuilder = new UriBuilder(options.AuthHost) { Query = QueryString.Create(CookieAuthenticationDefaults.ReturnUrlParameter, $"{Request.Scheme}://{Request.Host}{Request.PathBase}").ToString() };
             uriBuilder.Path = uriBuilder.Path == "/" ? Request.Path.Value : uriBuilder.Path + Request.Path.Value;
             return Redirect(uriBuilder.ToString());

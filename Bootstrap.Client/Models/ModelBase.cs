@@ -1,5 +1,4 @@
-﻿using Bootstrap.Client.DataAccess;
-using Bootstrap.Security.DataAccess;
+﻿using Bootstrap.Security.DataAccess;
 
 namespace Bootstrap.Client.Models
 {

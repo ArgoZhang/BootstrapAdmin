@@ -26,7 +26,7 @@ namespace Bootstrap.Client.Models
             NotisUrl = DbHelper.RetrieveNotisUrl();
 
             // set LogoutUrl
-            var authHost = ConfigurationManager.Get<BootstrapAdminOptions>().AuthHost;
+            var authHost = ConfigurationManager.Get<BootstrapAdminAuthenticationOptions>().AuthHost;
             var uriBuilder = new UriBuilder(authHost);
             uriBuilder.Path = uriBuilder.Path == "/" ? CookieAuthenticationDefaults.LogoutPath.Value : $"{uriBuilder.Path.TrimEnd('/')}{CookieAuthenticationDefaults.LogoutPath.Value}";
             LogoutUrl = uriBuilder.ToString();
