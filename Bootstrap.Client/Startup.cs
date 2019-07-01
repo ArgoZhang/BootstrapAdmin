@@ -1,8 +1,5 @@
-﻿using Bootstrap.Security.DataAccess;
-using Longbow.Configuration;
-using Longbow.Web;
+﻿using Longbow.Web;
 using Longbow.Web.SignalR;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -12,7 +9,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
-using System.Security.Claims;
 
 namespace Bootstrap.Client
 {
@@ -92,19 +88,6 @@ namespace Bootstrap.Client
             app.UseResponseCompression();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-#if DEBUG
-            app.Use(async (context, next) =>
-            {
-                var userName = ConfigurationManager.GetValue("SimulateUserName", string.Empty);
-                if (!string.IsNullOrEmpty(userName))
-                {
-                    var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
-                    identity.AddClaim(new Claim(ClaimTypes.Name, userName));
-                    context.User = new ClaimsPrincipal(identity);
-                }
-                await next();
-            });
-#endif
             app.UseBootstrapAdminAuthentication();
             app.UseCacheManagerCorsHandler();
             app.UseSignalR(routes => { routes.MapHub<SignalRHub>("/NotiHub"); });
