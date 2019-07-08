@@ -33,6 +33,7 @@
             <p>
                 <code>
                     var trigger = TriggerBuilder.Default.WithInterval(TimeSpan.FromSeconds(5)).WithRepeatCount(2).WithStartTime(DateTimeOffset.Now.AddMinutes(1)).Build();
+                    <br/>
                     TaskServicesManager.GetOrAdd("测试任务", token => Task.Delay(1000), trigger);
                 </code>
             </p>
