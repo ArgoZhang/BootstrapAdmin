@@ -80,7 +80,7 @@
         查询结果
     </div>
     <div class="card-body">
-        @await RenderSectionAsync("body", false)
+        @await RenderSectionAsync("cardbody", false)
         <table></table>
     </div>
 </div>
@@ -91,3 +91,4 @@
         @RenderSection("tableButtons", false)
     </div>
 </div>
+@await RenderSectionAsync("body", false)

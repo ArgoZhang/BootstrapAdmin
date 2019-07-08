@@ -16,7 +16,16 @@ namespace Bootstrap.Admin
         /// <param name="client"></param>
         /// <param name="args"></param>
         /// <returns></returns>
-        public static async System.Threading.Tasks.Task Send(IClientProxy client, MessageBody args) => await client.SendAsync("rev", args);
+        public static System.Threading.Tasks.Task Send(IClientProxy client, MessageBody args) => client.SendAsync("rev", args);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        public static System.Threading.Tasks.Task SendTaskLog(IClientProxy client, string args) => client.SendAsync("taskRev", args);
+
         /// <summary>
         /// 
         /// </summary>

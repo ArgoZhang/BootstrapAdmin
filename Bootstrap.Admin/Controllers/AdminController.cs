@@ -114,7 +114,7 @@ namespace Bootstrap.Admin.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        public ActionResult Tasks() => View(new NavigatorBarModel(this));
+        public ActionResult Tasks() => View(new TaskModel(this));
 
         /// <summary>
         /// 
