@@ -48,8 +48,7 @@
                     'click .info': function (e, value, row, index) {
                         $taskLogModelTitle.html(row.Name + ' - 任务日志窗口(最新50条)');
                         $.bc({
-                            url: 'api/Tasks?name=' + row.Name,
-                            method: 'put'
+                            url: 'api/TasksLog?name=' + row.Name
                         });
                         $('#dialogLog').modal('show').on('hide.bs.modal', function () {
                             // close hub
@@ -68,6 +67,8 @@
                                 while (this.children().length > 50) {
                                     this.children().first().remove();
                                 }
+                                result = result.replace("Run(Cancelled)", "<span class='text-danger'>Run(Cancelled)</span>");
+                                result = result.replace("Run(Success)", "<span class='text-success'>Run(Success)</span>");
                                 this.append('<div>' + result + '</div>');
                             },
                             onclose: function (error) {

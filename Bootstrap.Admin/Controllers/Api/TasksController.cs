@@ -40,25 +40,6 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="hub"></param>
-        /// <returns></returns>
-        [HttpPut]
-        public bool Put([FromQuery]string name, [FromServices]IHubContext<SignalRHub> hub)
-        {
-            var sche = TaskServicesManager.GetOrAdd(name);
-            sche.Triggers[0].RegisterPulseCallback(async t =>
-            {
-                var success = t.Cancelled ? "Cancelled" : "Success";
-                var result = $"{t.Scheduler.LastRuntime.Value.DateTime}: Trigger({t.GetType().Name}) Run({success}) NextRuntime: {t.NextRuntime.Value.DateTime} Elapsed: {t.LastRunElapsedTime.Seconds}s";
-                await SignalRManager.SendTaskLog(hub.Clients.All, result);
-            });
-            return true;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <returns></returns>
         [HttpDelete]
         public bool Delete() => true;
