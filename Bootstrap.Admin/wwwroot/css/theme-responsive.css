@@ -16,6 +16,18 @@
     .sidebar-toggle-box span {
         display: inline;
     }
+
+    .bootstrap-table .bs-bars .gear {
+        display: none;
+    }
+
+    .bootstrap-table .bs-bars .toolbar {
+        display: inline-flex;
+    }
+
+        .bootstrap-table .bs-bars .toolbar .btn i + span {
+            display: inline;
+        }
 }
 
 @media (min-width: 576px) {
@@ -24,7 +36,7 @@
         padding-bottom: 6px;
     }
 
-    .form-inline select.form-control {
+    .form-inline select.form-control, .form-inline .select.form-control {
         min-width: 194px;
     }
 
@@ -33,7 +45,7 @@
     }
 
     .input-group.date {
-        width: 186px;
+        width: 194px;
     }
 
     .btn-fill {
@@ -41,9 +53,42 @@
     }
 }
 
+@media (min-width: 667px) {
+    .header .nav {
+        display: flex;
+        flex: 1 1 auto;
+    }
+
+    .sidebar-toggle-box {
+        flex: 0 1 auto;
+    }
+}
+
 @media (min-width: 768px) {
+    html {
+        -ms-overflow-style: none;
+    }
+
     .sidebar-open aside {
         transform: translate(0);
+    }
+}
+
+@media (min-width: 769px) {
+    .sidebar-open aside {
+        transform: translate(-100%);
+    }
+
+    .sidebar-open footer {
+        display: flex;
+    }
+
+    aside {
+        transition: none;
+        transform: translate(0);
+        width: 210px;
+        overflow: hidden;
+        bottom: 40px;
     }
 }
 

@@ -9,6 +9,12 @@
     }
 }
 
+@media (min-width: 768px) {
+    .sidebar-open aside {
+        transform: translate(-100%);
+    }
+}
+
 @media (min-width: 769px) {
     footer {
         display: flex;

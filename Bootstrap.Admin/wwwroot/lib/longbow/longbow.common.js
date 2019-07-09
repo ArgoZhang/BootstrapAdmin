@@ -224,7 +224,7 @@
             return prefix;
         },
         footer: function (options) {
-            var op = $.extend({ header: "header", content: ".main-content", ele: 'footer' }, options);
+            var op = $.extend({ header: "header", content: "body > section:first", ele: 'footer' }, options);
             var $ele = $(op.ele);
             return $(op.header).outerHeight() + $(op.content).outerHeight() + $ele.outerHeight() > $(window).height() ? $ele.removeClass('position-fixed') : $ele.addClass('position-fixed');
         },
