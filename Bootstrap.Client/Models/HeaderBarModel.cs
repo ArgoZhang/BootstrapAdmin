@@ -33,7 +33,7 @@ namespace Bootstrap.Client.Models
 
             // set Icon
             var icon = $"/{DbHelper.RetrieveIconFolderPath().Trim('~', '/')}/{user.Icon}";
-            Icon = $"{authHost.TrimEnd('/')}{icon}";
+            Icon = string.IsNullOrEmpty(ConfigurationManager.GetValue("SimulateUserName", string.Empty)) ? $"{authHost.TrimEnd('/')}{icon}" : "/images/admin.jpg";
             if (!string.IsNullOrEmpty(user.Css)) Theme = user.Css;
         }
 
