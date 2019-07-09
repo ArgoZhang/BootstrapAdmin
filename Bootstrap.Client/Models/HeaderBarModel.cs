@@ -18,7 +18,7 @@ namespace Bootstrap.Client.Models
         /// <param name="identity"></param>
         public HeaderBarModel(IIdentity identity)
         {
-            var user = DbHelper.RetrieveUserByUserName(identity.Name);
+            var user = DbHelper.RetrieveUserByUserNameWithCache(identity.Name);
             DisplayName = user.DisplayName;
             UserName = user.UserName;
             SettingsUrl = DbHelper.RetrieveSettingsUrl();
