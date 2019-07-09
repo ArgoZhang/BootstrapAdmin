@@ -625,6 +625,11 @@ input.pending {
                 cursor: pointer;
             }
 
+        .bootstrap-table .fixed-table-container .fixed-table-body .table td .btn:not(.btn-lg) {
+            font-size: 0.75rem;
+            padding: 1px 5px;
+        }
+
 .card-body .bootstrap-table {
     margin-top: -10px;
 }

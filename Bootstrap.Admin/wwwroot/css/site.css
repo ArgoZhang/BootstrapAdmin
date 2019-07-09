@@ -69,7 +69,7 @@
         top: -8px;
     }
 
-    .cache-item .btn:not(:first-child), td .btn:not(.btn-lg) {
+    .cache-item .btn:not(:first-child) {
         font-size: 0.75rem;
         padding: 1px 5px;
     }
