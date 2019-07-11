@@ -36,16 +36,20 @@
         padding-bottom: 6px;
     }
 
-    .form-inline select.form-control, .form-inline .select.form-control {
-        min-width: 194px;
+    .form-inline input.form-control, .form-select > input.form-control {
+        width: 194px;
     }
 
-    .modal-lg {
-        max-width: calc(90%);
+    .form-inline .date input.form-control {
+        width: 1%;
     }
 
     .input-group.date {
         width: 194px;
+    }
+
+    .modal-lg {
+        max-width: calc(90%);
     }
 
     .btn-fill {
