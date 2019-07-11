@@ -34,7 +34,6 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static bool Save(Log log)
         {
-            if (log.Id == string.Empty) log.Id = null;
             log.LogTime = DateTime.Now;
             return DbContextManager.Create<Log>().Save(log);
         }

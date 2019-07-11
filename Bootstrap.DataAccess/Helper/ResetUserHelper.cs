@@ -14,7 +14,6 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static bool Save(ResetUser user)
         {
-            if (user.Id == string.Empty) user.Id = null;
             user.ResetTime = DateTime.Now;
             return DbContextManager.Create<ResetUser>().Save(user);
         }

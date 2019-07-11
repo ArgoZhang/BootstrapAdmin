@@ -54,10 +54,6 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="msg"></param>
         /// <returns></returns>
-        public static bool Save(Message msg)
-        {
-            if (string.IsNullOrEmpty(msg.Id)) msg.Id = null;
-            return DbContextManager.Create<Message>().Save(msg);
-        }
+        public static bool Save(Message msg) => DbContextManager.Create<Message>().Save(msg);
     }
 }

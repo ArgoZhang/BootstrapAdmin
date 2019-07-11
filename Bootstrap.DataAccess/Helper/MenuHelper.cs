@@ -32,7 +32,6 @@ namespace Bootstrap.DataAccess
             // 不允许保存系统菜单与前台演示系统的默认菜单
             if (DictHelper.RetrieveSystemModel() && (p.Category == "0" || p.Application == "2")) return true;
 
-            if (p.Id == string.Empty) p.Id = null;
             var ret = DbContextManager.Create<Menu>().Save(p);
             if (ret) CacheCleanUtility.ClearCache(menuIds: string.IsNullOrEmpty(p.Id) ? new List<string>() : new List<string>() { p.Id });
             return ret;
