@@ -209,7 +209,7 @@
                 crossDomain: true
             });
             if ($.isArray($.logData) && !$.isEmptyObject(options.data)) $.logData.push({ url: url, data: options.method === 'delete' ? options.logData : options.data });
-            if (options.method === 'delete') $.logData.log();
+            if (options.method === 'delete' && $.logData && $.isFunction($.logData.log)) $.logData.log();
             $.ajax(ajaxSettings);
         },
         lgbSwal: function (options) {
@@ -235,7 +235,7 @@
             return base + url;
         },
         safeHtml: function (text) {
-            return $('<div>').text(text).html();
+            return (text && typeof text === "string") ? $('<div>').text(text).html() : text;
         },
         syntaxHighlight: function (json) {
             if (typeof (json) === 'string') {
@@ -412,8 +412,21 @@
             return this;
         },
         getTextByValue: function (value) {
-            var text = this.children().filter(function () { return $(this).val() === value; }).text();
-            if (text === "") text = value;
+            // 通过value获取select控件的text属性
+            var text = "";
+            if (this.attr('data-toggle') === 'lgbSelect') {
+                if (value === this.val()) text = this.attr('data-text');
+                else {
+                    var data = [];
+                    this.lgbSelect('get', function (source) { data = source; });
+                    var find = data.filter(function () { return this.value === value; });
+                    if (find.length === 1) text = find[0].text;
+                }
+            }
+            else {
+                text = this.children().filter(function () { return $(this).val() === value; }).text();
+                if (text === "") text = value;
+            }
             return text;
         },
         lgbInfo: function (option) {
@@ -472,7 +485,7 @@
     });
 
     $(function () {
-        // fix bug bootstrap-table 1.12.1 showToggle
+        // fix bug bootstrap-table 1.14.2 showToggle
         if ($.fn.bootstrapTable) {
             $.extend($.fn.bootstrapTable.defaults.icons, {
                 refresh: 'fa-refresh'
@@ -521,7 +534,7 @@
 
         $("#gotoTop").on('click', function (e) {
             e.preventDefault();
-            $('html, body, .main-content').animate({
+            $('html, body, body > section:first').animate({
                 scrollTop: 0
             }, 200);
         });
