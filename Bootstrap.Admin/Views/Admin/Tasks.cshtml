@@ -21,7 +21,7 @@
 }
 @section query {
     <div>
-        <div class="tip">
+        <div class="alert alert-info">
             <p class="font-weight-bold">后台任务说明：</p>
             <p>1. 默认任务 (立即执行，仅执行一次)</p>
             <p>
@@ -33,6 +33,7 @@
             <p>
                 <code>
                     var trigger = TriggerBuilder.Default.WithInterval(TimeSpan.FromSeconds(5)).WithRepeatCount(2).WithStartTime(DateTimeOffset.Now.AddMinutes(1)).Build();
+                    <br/>
                     TaskServicesManager.GetOrAdd("测试任务", token => Task.Delay(1000), trigger);
                 </code>
             </p>

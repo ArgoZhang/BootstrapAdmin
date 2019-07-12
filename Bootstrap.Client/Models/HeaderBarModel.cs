@@ -18,7 +18,7 @@ namespace Bootstrap.Client.Models
         /// <param name="identity"></param>
         public HeaderBarModel(IIdentity identity)
         {
-            var user = DbHelper.RetrieveUserByUserName(identity.Name);
+            var user = DbHelper.RetrieveUserByUserNameWithCache(identity.Name);
             DisplayName = user.DisplayName;
             UserName = user.UserName;
             SettingsUrl = DbHelper.RetrieveSettingsUrl();
@@ -33,7 +33,7 @@ namespace Bootstrap.Client.Models
 
             // set Icon
             var icon = $"/{DbHelper.RetrieveIconFolderPath().Trim('~', '/')}/{user.Icon}";
-            Icon = $"{authHost.TrimEnd('/')}{icon}";
+            Icon = string.IsNullOrEmpty(ConfigurationManager.GetValue("SimulateUserName", string.Empty)) ? $"{authHost.TrimEnd('/')}{icon}" : "/images/admin.jpg";
             if (!string.IsNullOrEmpty(user.Css)) Theme = user.Css;
         }
 
