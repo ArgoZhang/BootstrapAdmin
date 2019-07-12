@@ -78,7 +78,6 @@ namespace Bootstrap.DataAccess
             var roles = new string[] { "Administrators", "Default" };
             var rs = Retrieves().Where(r => roles.Any(rl => rl.Equals(r.RoleName, StringComparison.OrdinalIgnoreCase)));
             if (rs.Any(r => r.Id == p.Id)) return true;
-            if (p.Id == string.Empty) p.Id = null;
             var ret = DbContextManager.Create<Role>().Save(p);
             if (ret) CacheCleanUtility.ClearCache(roleIds: string.IsNullOrEmpty(p.Id) ? new List<string>() : new List<string> { p.Id });
             return ret;
