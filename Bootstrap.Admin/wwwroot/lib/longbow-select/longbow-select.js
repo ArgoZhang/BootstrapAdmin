@@ -22,7 +22,7 @@
         placeholder: "请选择 ...",
         borderClass: null
     };
-    lgbSelect.AllowMethods = /disabled|enable|val|reset/;
+    lgbSelect.AllowMethods = /disabled|enable|val|reset|get/;
 
     function Plugin(option) {
         var params = $.makeArray(arguments).slice(1);
@@ -52,8 +52,14 @@
         };
 
         var that = this;
+
+        // 原有控件
         this.$element.addClass('d-none');
+
+        // 新控件 <div class="form-select">
         this.$ctl = $(lgbSelect.Template).insertBefore(this.$element);
+
+        // 下拉组合框
         this.$input = this.$ctl.find('.form-select-input');
         this.$menus = this.$ctl.find('.dropdown-menu');
 
@@ -83,11 +89,21 @@
             }
         });
 
+        // save ori attrs
+        var attrs = [];
+        ["id", "data-default-val"].forEach(function (v, index) {
+            attrs.push({ name: v, value: that.$element.attr(v) });
+        });
+
         // replace element select -> input hidden
-        var eid = this.$element.attr('id');
         this.$element.remove();
-        this.$element = $('<input type="hidden" data-toggle="lgbSelect" />').attr('id', eid).val(that.val()).insertAfter(this.$ctl);
+        this.$element = $('<input type="hidden" data-toggle="lgbSelect" />').val(that.val()).insertAfter(this.$ctl);
         this.$element.data(lgbSelect.DataKey, this);
+
+        // bind ori atts
+        attrs.forEach(function (v) {
+            that.$element.attr(v.name, v.value);
+        });
 
         //  bind event
         this.$ctl.on('click', '.form-select-input', function (e) {
@@ -128,17 +144,29 @@
 
     _proto.reset = function (value) {
         var that = this;
+
         // keep old value
-        var oldValue = this.$element.val();
-        this.val('');
+        var oldValue = this.$input.val();
+
+        // warning: must use attr('value') method instead of val(). otherwise the others input html element will filled by first element value.
+        // see https://gitee.com/LongbowEnterprise/longbow-select/issues/IZ3BR?from=project-issue
+        this.$input.attr('value', '');
         this.$menus.html('');
-        $.each(value, function () {
+        $.each(value, function (index) {
             var $item = $('<a class="dropdown-item" href="#" data-val="' + this.value + '">' + this.text + '</a>');
             that.$menus.append($item);
-            if (this.selected === true || this.value.toString() === oldValue) {
-                that.val(this.value);
+            if (this.selected === true || this.value === oldValue || index === 0) {
+                that.$input.attr('value', this.text);
             }
         });
+
+        this.source = value;
+    };
+
+    _proto.get = function (callback) {
+        if ($.isFunction(callback)) {
+            callback.call(this.$element, this.source);
+        }
     };
 
     _proto.val = function (value, valid) {
@@ -161,6 +189,6 @@
     };
 
     $(function () {
-        $('[data-toggle="lgbSelect"]').lgbSelect();
+        $('select[data-toggle="lgbSelect"]').lgbSelect();
     });
 })(jQuery);
