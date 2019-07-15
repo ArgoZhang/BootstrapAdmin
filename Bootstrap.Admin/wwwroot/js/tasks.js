@@ -4,24 +4,35 @@
     var stateFormatter = function (value) {
         var template = "<button class='btn btn-sm btn-{0}'><i class='fa fa-{1}'></i><span>{2}<span></button>";
         var content = "";
-        if (value === "0") {
+        if (value === "Ready") {
             content = $.format(template, 'info', 'fa', '未开始');
         }
-        else if (value === "1") {
+        else if (value === "Running") {
             content = $.format(template, 'success', 'play-circle', '运行中');
         }
-        else if (value === "2") {
-            content = $.format(template, 'primary', 'stop-circle', '已停止');
-        }
-        else if (value === "3") {
+        else if (value === "Disabled") {
             content = $.format(template, 'danger', 'times-circle', '已禁用');
         }
         return content;
     };
-    var enabledFormatter = function (value) {
-        var template = "<i class='fa fa-toggle-{0}'></i>";
-        return $.format(template, value ? 'on' : 'off');
+    var resultFormatter = function (value) {
+        var template = "<button class='btn btn-sm btn-{0}'><span>{1}<span></button>";
+        var content = "";
+        if (value === "Success") {
+            content = $.format(template, 'success', '成功');
+        }
+        else if (value === "Error") {
+            content = $.format(template, 'danger', '故障');
+        }
+        else if (value === "Cancelled") {
+            content = $.format(template, 'info', '取消');
+        }
+        else if (value === "Timeout") {
+            content = $.format(template, 'warning', '超时');
+        }
+      return content;
     };
+
     $('.card-body table').lgbTable({
         url: Tasks.url,
         dataBinder: {
@@ -31,6 +42,7 @@
             }
         },
         smartTable: {
+            sidePagination: "client",
             sortName: 'CreateTime',
             sortOrder: 'desc',
             queryParams: function (params) { return $.extend(params, { operateType: $("#txt_operate_type").val(), OperateTimeStart: $("#txt_operate_start").val(), OperateTimeEnd: $("#txt_operate_end").val() }); },
@@ -40,7 +52,7 @@
                 { title: "上次执行时间", field: "LastRuntime", sortable: true },
                 { title: "下次执行时间", field: "NextRuntime", sortable: true },
                 { title: "触发条件", field: "TriggerExpression", sortable: false },
-                { title: "是否启用", field: "Enabled", sortable: true, formatter: enabledFormatter },
+                { title: "执行结果", field: "LastRunResult", sortable: false, align: 'center', formatter: resultFormatter },
                 { title: "状态", field: "Status", sortable: true, align: 'center', width: 106, formatter: stateFormatter }
             ],
             editButtons: {
@@ -53,23 +65,29 @@
                         $('#dialogLog').modal('show').on('hide.bs.modal', function () {
                             // close hub
                             if ($taskMsg.hub) $taskMsg.hub.stop();
-                            $taskMsg.html('');
+                            $taskMsg.html('<div></div>');
                         });
 
-                        var lastMsg = "";
+                        // var lastMsg = "";
                         // open hub
                         $taskMsg.notifi({
                             url: 'NotiHub',
                             method: 'taskRev',
                             callback: function (result) {
-                                if (lastMsg === result) return;
-                                lastMsg = result;
-                                while (this.children().length > 50) {
-                                    this.children().first().remove();
+                                var content = this.children();
+                                while (content.children().length > 50) {
+                                    content.children().first().remove();
                                 }
+                                var data = JSON.parse(result);
+                                if (data.name !== row.Name) return;
+
+                                result = data.msg;
                                 result = result.replace("Run(Cancelled)", "<span class='text-danger'>Run(Cancelled)</span>");
                                 result = result.replace("Run(Success)", "<span class='text-success'>Run(Success)</span>");
-                                this.append('<div>' + result + '</div>');
+                                content.append('<div>' + result + '</div>');
+
+                                // auto scroll
+                                if ($autoScroll.find('i').hasClass(check[0])) this.scrollTop(content.height());
                             },
                             onclose: function (error) {
                                 console.log(error);
@@ -79,5 +97,14 @@
                 }
             }
         }
+    });
+
+    var $autoScroll = $('#dialogLog').find('.modal-footer > a.btn');
+    var check = ["fa-check-square-o", "fa-square-o"];
+    $autoScroll.on('click', function () {
+        var $this = $(this).find('i');
+
+        if ($this.hasClass(check[0])) $this.addClass(check[1]).removeClass(check[0]);
+        else $this.addClass(check[0]).removeClass(check[1]);
     });
 });

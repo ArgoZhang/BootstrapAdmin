@@ -15,7 +15,7 @@ namespace Bootstrap.Admin.Api.SqlServer
             Assert.NotNull(resp);
 
             // receive log
-            var recv = await Client.GetAsJsonAsync<bool>("/api/TasksLog?name=测试任务");
+            var recv = await Client.GetAsJsonAsync<bool>("/api/TasksLog?name=周期任务");
             Assert.True(recv);
 
             // for test SignalRManager.SendTaskLog

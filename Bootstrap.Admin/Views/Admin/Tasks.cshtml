@@ -33,14 +33,14 @@
             <p>
                 <code>
                     var trigger = TriggerBuilder.Default.WithInterval(TimeSpan.FromSeconds(5)).WithRepeatCount(2).WithStartTime(DateTimeOffset.Now.AddMinutes(1)).Build();
-                    <br/>
+                    <br />
                     TaskServicesManager.GetOrAdd("测试任务", token => Task.Delay(1000), trigger);
                 </code>
             </p>
             <p>3. Cron表达式任务 (间隔 5 秒循环执行任务)</p>
             <p>
                 <code>
-                    TaskServicesManager.GetOrAdd("Cron表达式任务", token => Task.Delay(1000), TriggerBuilder.WithCronExpression("*/5 * * * * *"));
+                    TaskServicesManager.GetOrAdd("Cron表达式任务", token => Task.Delay(1000), TriggerBuilder.Build("*/5 * * * * *"));
                 </code>
             </p>
         </div>
@@ -86,9 +86,11 @@
                 </div>
                 <div class="modal-body" style="background-color: #174482; color: #fff;">
                     <div id="taskMsg" class="form-group" style="height: 500px; overflow: auto;">
+                        <div></div>
                     </div>
                 </div>
                 <div class="modal-footer">
+                    <a class="btn"><i class="fa fa-check-square-o" style="width: 13px;"></i><span>自动滚屏</span></a>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">
                         <i class="fa fa-times"></i>
                         <span>关闭</span>
