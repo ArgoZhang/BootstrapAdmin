@@ -13,6 +13,13 @@ namespace Bootstrap.Admin.Api.SqlServer
         {
             var resp = await Client.GetAsJsonAsync<IEnumerable<Task>>();
             Assert.NotNull(resp);
+
+            // receive log
+            var recv = await Client.GetAsJsonAsync<bool>("/api/TasksLog?name=测试任务");
+            Assert.True(recv);
+
+            // for test SignalRManager.SendTaskLog
+            await System.Threading.Tasks.Task.Delay(6000);
         }
     }
 }
