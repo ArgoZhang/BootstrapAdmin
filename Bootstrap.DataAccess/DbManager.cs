@@ -9,7 +9,6 @@ namespace Bootstrap.DataAccess
     /// </summary>
     public static class DbManager
     {
-        private static readonly object _locker = new object();
         /// <summary>
         /// 
         /// </summary>
