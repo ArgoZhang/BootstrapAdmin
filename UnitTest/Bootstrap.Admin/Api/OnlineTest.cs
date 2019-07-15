@@ -29,6 +29,12 @@ namespace Bootstrap.Admin.Api.SqlServer
         {
             var ret = await Client.PutAsJsonAsync<string, bool>("");
             Assert.False(ret);
+
+            // 三次 Put 请求后返回真
+            ret = await Client.PutAsJsonAsync<string, bool>("");
+            ret = await Client.PutAsJsonAsync<string, bool>("");
+            ret = await Client.PutAsJsonAsync<string, bool>("");
+            Assert.True(ret);
         }
     }
 }
