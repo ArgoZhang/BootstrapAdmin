@@ -1,4 +1,5 @@
-﻿using Bootstrap.Security.DataAccess;
+﻿using Bootstrap.Security;
+using Bootstrap.Security.DataAccess;
 using PetaPoco;
 using System;
 using System.Collections.Generic;
@@ -10,18 +11,8 @@ namespace Bootstrap.DataAccess
     /// 
     /// </summary>
     [TableName("Groups")]
-    public class Group
+    public class Group : BootstrapGroup
     {
-        /// <summary>
-        /// 获得/设置 群组主键ID
-        /// </summary>
-        public string Id { get; set; }
-
-        /// <summary>
-        /// 获得/设置 群组名称
-        /// </summary>
-        public string GroupName { get; set; }
-
         /// <summary>
         /// 获得/设置 群组描述
         /// </summary>
@@ -84,7 +75,7 @@ namespace Bootstrap.DataAccess
         public virtual IEnumerable<Group> RetrievesByUserId(string userId)
         {
             var db = DbManager.Create();
-            return db.Fetch<Group>($"select g.ID, g.GroupName, g.Description, case ug.GroupID when g.ID then 'checked' else '' end Checked from {db.Provider.EscapeSqlIdentifier("Groups")} g left join UserGroup ug on g.ID = ug.GroupID and UserID = @0", userId);
+            return db.Fetch<Group>($"select g.ID, g.GroupCode, g.GroupName, g.Description, case ug.GroupID when g.ID then 'checked' else '' end Checked from {db.Provider.EscapeSqlIdentifier("Groups")} g left join UserGroup ug on g.ID = ug.GroupID and UserID = @0", userId);
         }
 
         /// <summary>
@@ -95,7 +86,7 @@ namespace Bootstrap.DataAccess
         public virtual IEnumerable<Group> RetrievesByRoleId(string roleId)
         {
             var db = DbManager.Create();
-            return db.Fetch<Group>($"select g.ID, g.GroupName, g.Description, case rg.GroupID when g.ID then 'checked' else '' end Checked from {db.Provider.EscapeSqlIdentifier("Groups")} g left join RoleGroup rg on g.ID = rg.GroupID and RoleID = @0", roleId);
+            return db.Fetch<Group>($"select g.ID, g.GroupCode, g.GroupName, g.Description, case rg.GroupID when g.ID then 'checked' else '' end Checked from {db.Provider.EscapeSqlIdentifier("Groups")} g left join RoleGroup rg on g.ID = rg.GroupID and RoleID = @0", roleId);
         }
 
         /// <summary>
@@ -157,6 +148,6 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public virtual IEnumerable<string> RetrievesByUserName(string userName) => DbHelper.RetrieveGroupsByUserName(userName);
+        public virtual IEnumerable<BootstrapGroup> RetrievesByUserName(string userName) => DbHelper.RetrieveGroupsByUserName(userName);
     }
 }

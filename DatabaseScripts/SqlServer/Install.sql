@@ -302,6 +302,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Groups](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[GroupCode] [nvarchar](50) NOT NULL,
 	[GroupName] [nvarchar](50) NOT NULL,
 	[Description] [nvarchar](500) NULL,
  CONSTRAINT [PK_Groups] PRIMARY KEY CLUSTERED 

@@ -112,7 +112,7 @@ INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (last_insert_rowid() - 1, '下拉框', 20, 'fa fa-bars', 'http://longbowenterprise.gitee.io/longbow-select/', '0');
 
 DELETE FROM GROUPS WHERE GroupName = 'Admin';
-INSERT INTO [Groups] ([GroupName], [Description]) VALUES ('Admin', '系统默认组');
+INSERT INTO [Groups] ([GroupCode], [GroupName], [Description]) VALUES ('001', 'Admin', '系统默认组');
 
 DELETE FROM Roles where RoleName in ('Administrators', 'Default');
 INSERT INTO [Roles] ([RoleName], [Description]) VALUES ('Administrators', '系统管理员');

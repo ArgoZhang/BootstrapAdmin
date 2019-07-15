@@ -93,6 +93,7 @@ CREATE TABLE Logs(
 
 CREATE TABLE `Groups`(
 	ID 				INTEGER PRIMARY KEY	Auto_increment,
+    GroupCode       VARCHAR (50) NOT NULL,
 	GroupName 		VARCHAR (50) NOT NULL,
 	Description 	VARCHAR (500) NULL
 );

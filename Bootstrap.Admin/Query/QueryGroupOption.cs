@@ -36,7 +36,7 @@ namespace Bootstrap.Admin.Query
             var ret = new QueryData<object>();
             ret.total = data.Count();
             data = Order == "asc" ? data.OrderBy(t => t.GroupName) : data.OrderByDescending(t => t.GroupName);
-            ret.rows = data.Skip(Offset).Take(Limit).Select(g => new { g.Id, g.GroupName, g.Description });
+            ret.rows = data.Skip(Offset).Take(Limit).Select(g => new { g.Id, g.GroupCode, g.GroupName, g.Description });
             return ret;
         }
     }

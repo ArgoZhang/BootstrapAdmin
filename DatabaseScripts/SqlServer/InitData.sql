@@ -110,7 +110,7 @@ INSERT [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VA
 INSERT [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (@@Identity - 2, N'图标集', 10, N'fa fa-dashboard', N'~/Admin/FAIcon', N'0')
 
 DELETE FROM GROUPS WHERE GroupName = 'Admin'
-INSERT [dbo].[Groups] ([GroupName], [Description]) VALUES ('Admin', N'系统默认组')
+INSERT [dbo].[Groups] ([GroupCode], [GroupName], [Description]) VALUES ('001', 'Admin', N'系统默认组')
 
 DELETE FROM Roles where RoleName in ('Administrators', 'Default')
 INSERT [dbo].[Roles] ([RoleName], [Description]) VALUES (N'Administrators', N'系统管理员')

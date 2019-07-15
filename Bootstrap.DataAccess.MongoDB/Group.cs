@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver;
+﻿using Bootstrap.Security;
+using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -34,6 +35,7 @@ namespace Bootstrap.DataAccess.MongoDB
             {
                 DbManager.Groups.InsertOne(new Group()
                 {
+                    GroupCode = p.GroupCode,
                     GroupName = p.GroupName,
                     Description = p.Description,
                     Roles = new List<string>()
@@ -134,14 +136,13 @@ namespace Bootstrap.DataAccess.MongoDB
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public override IEnumerable<string> RetrievesByUserName(string userName)
+        public override IEnumerable<BootstrapGroup> RetrievesByUserName(string userName)
         {
-            var groups = new List<string>();
+            var groups = new List<BootstrapGroup>();
             var user = UserHelper.Retrieves().Cast<User>().FirstOrDefault(u => u.UserName == userName);
             var group = GroupHelper.Retrieves();
 
-            groups.AddRange(user.Groups.Select(r => group.FirstOrDefault(rl => rl.Id == r).GroupName));
-            if (groups.Count == 0) groups.Add("Default");
+            groups.AddRange(group.Where(g => user.Groups.Any(ug => ug == g.Id)));
             return groups;
         }
     }

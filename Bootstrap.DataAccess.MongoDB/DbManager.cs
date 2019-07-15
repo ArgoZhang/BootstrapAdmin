@@ -230,14 +230,28 @@ namespace Bootstrap.DataAccess.MongoDB
                     md.UnmapMember(m => m.Menus);
                 });
             }
+            if (!BsonClassMap.IsClassMapRegistered(typeof(BootstrapGroup)))
+            {
+                BsonClassMap.RegisterClassMap<BootstrapGroup>(md =>
+                {
+                    md.AutoMap();
+                    md.IdMemberMap.SetSerializer(new StringSerializer(BsonType.ObjectId));
+                    md.IdMemberMap.SetIgnoreIfDefault(true);
+                });
+            }
             if (!BsonClassMap.IsClassMapRegistered(typeof(DataAccess.Group)))
             {
                 BsonClassMap.RegisterClassMap<DataAccess.Group>(md =>
                 {
                     md.AutoMap();
-                    md.IdMemberMap.SetSerializer(new StringSerializer(BsonType.ObjectId));
-                    md.IdMemberMap.SetIgnoreIfDefault(true);
                     md.UnmapMember(group => group.Checked);
+                });
+            }
+            if (!BsonClassMap.IsClassMapRegistered(typeof(Group)))
+            {
+                BsonClassMap.RegisterClassMap<Group>(md =>
+                {
+                    md.AutoMap();
                 });
             }
             if (!BsonClassMap.IsClassMapRegistered(typeof(DataAccess.Role)))

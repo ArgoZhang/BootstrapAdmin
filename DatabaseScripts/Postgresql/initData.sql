@@ -107,7 +107,7 @@ INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (c
 INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (currval('navigations_id_seq') - 3, '图标集', 10, 'fa fa-dashboard', '~/Admin/FAIcon', '0');
 
 DELETE FROM GROUPS WHERE GroupName = 'Admin';
-INSERT INTO Groups (GroupName, Description) VALUES ('Admin', '系统默认组');
+INSERT INTO Groups (GroupCode, GroupName, Description) VALUES ('001', 'Admin', '系统默认组');
 
 DELETE FROM Roles where RoleName in ('Administrators', 'Default');
 INSERT INTO Roles (RoleName, Description) VALUES ('Administrators', '系统管理员');

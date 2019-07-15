@@ -32,7 +32,7 @@ namespace Bootstrap.Admin.Api.SqlServer
         [Fact]
         public async void PostAndDelete_Ok()
         {
-            var ret = await Client.PostAsJsonAsync<Group, bool>("", new Group() { GroupName = "UnitTest-Group", Description = "UnitTest-Desc" });
+            var ret = await Client.PostAsJsonAsync<Group, bool>("", new Group() { GroupCode = "002", GroupName = "UnitTest-Group", Description = "UnitTest-Desc" });
             Assert.True(ret);
 
             var ids = GroupHelper.Retrieves().Where(d => d.GroupName == "UnitTest-Group").Select(d => d.Id);

@@ -11,6 +11,7 @@ $(function () {
         dataBinder: {
             map: {
                 Id: "#groupID",
+                GroupCode: "#groupCode",
                 GroupName: "#groupName",
                 Description: "#groupDesc"
             },
@@ -67,6 +68,7 @@ $(function () {
             sortName: 'GroupName',
             queryParams: function (params) { return $.extend(params, { groupName: $("#txt_search_name").val(), description: $("#txt_group_desc").val() }); },           //传递参数（*）
             columns: [
+                { title: "部门编码", field: "GroupCode", sortable: true },
                 { title: "部门名称", field: "GroupName", sortable: true },
                 { title: "部门描述", field: "Description", sortable: false }
             ],
