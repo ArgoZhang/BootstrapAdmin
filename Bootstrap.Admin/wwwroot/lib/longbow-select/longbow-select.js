@@ -76,11 +76,10 @@
         }
         this.$input.attr('placeholder', this.options.placeholder);
 
-        // init dropdown-menu
+        // init dropdown-menu data
         var data = this.$element.find('option').map(function () {
             return { value: this.value, text: this.text, selected: this.selected }
         });
-        this.reset(data);
 
         // bind attribute
         ["data-valid", "data-required-msg"].forEach(function (v, index) {
@@ -126,6 +125,9 @@
             if (that.$input[0] !== e.target)
                 that.closeMenu();
         });
+
+        // init dropdown-menu
+        this.reset(data);
     };
 
     _proto.closeMenu = function () {
@@ -155,8 +157,10 @@
         $.each(value, function (index) {
             var $item = $('<a class="dropdown-item" href="#" data-val="' + this.value + '">' + this.text + '</a>');
             that.$menus.append($item);
-            if (this.selected === true || this.value === oldValue || index === 0) {
+            if (this.selected === true || this.value === oldValue || index === 0 || this.value === that.$element.attr('data-default-val')) {
                 that.$input.attr('value', this.text);
+                that.$element.val(this.value).attr('data-text', this.text);
+                $item.addClass('active');
             }
         });
 
