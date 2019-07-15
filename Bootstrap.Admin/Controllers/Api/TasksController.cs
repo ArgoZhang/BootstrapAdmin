@@ -33,7 +33,6 @@ namespace Bootstrap.Admin.Controllers.Api
         [HttpPost]
         public bool Post()
         {
-            // UNDONE: 待完善
             return true;
         }
 

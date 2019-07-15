@@ -85,7 +85,6 @@ namespace Bootstrap.DataAccess
         [ResultColumn]
         public string FromDisplayName { get; set; }
 
-        //TODO: SQL语句不兼容
         /// <summary>
         /// 所有有关userName所有消息列表
         /// </summary>
