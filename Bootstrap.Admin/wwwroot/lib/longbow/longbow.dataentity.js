@@ -1,12 +1,4 @@
 ﻿(function ($) {
-    var formatData = function (data) {
-        delete data._nodes;
-        delete data._parent;
-        delete data._level;
-        delete data._last;
-        return data;
-    };
-
     var findIdField = function (tableName) {
         var idField = $(tableName).bootstrapTable("getOptions").idField;
         if (idField === undefined) idField = "Id";
@@ -123,6 +115,7 @@
     DataTable.settings = {
         url: undefined,
         bootstrapTable: 'table',
+        treegridParentId: 'ParentId',
         modal: '#dialogNew',
         click: {
             '#btn_query': function (element) {
@@ -168,13 +161,10 @@
                     else {
                         swal($.extend({}, swalDeleteOptions)).then(function (result) {
                             if (result.value) {
-                                var logData = arrselections.map(function (element, index) {
-                                    return formatData($.extend({}, element));
-                                });
                                 var idField = findIdField(options.bootstrapTable);
                                 var iDs = arrselections.map(function (element, index) { return element[idField]; });
                                 $.bc({
-                                    url: options.url, data: iDs, method: 'delete', title: options.delTitle, logData: logData,
+                                    url: options.url, data: iDs, method: 'delete', title: options.delTitle, logData: arrselections,
                                     callback: function (result) {
                                         if (result) $(options.bootstrapTable).bootstrapTable('refresh');
                                         handlerCallback.call(that, null, element, { oper: 'del', success: result });
@@ -207,6 +197,7 @@
             var op = {
                 dataEntity: this.dataEntity,
                 table: this.options.bootstrapTable,
+                treegridParentId: this.options.treegridParentId,
                 modal: this.options.modal,
                 src: this,
                 url: this.options.url
@@ -224,11 +215,18 @@
                     if (row.Name) displayName = " <span class='text-danger font-weight-bold'>" + row.Name + "</span> ";
                     var text = "您确定要删除" + displayName + "吗？";
                     var data = $.extend({}, row);
-                    formatData(data);
                     data = [data];
-                    if ($.isArray(row._nodes) && row._nodes.length > 0) {
-                        $.each(row._nodes, function (index, element) {
-                            data.push(formatData($.extend({}, element)));
+
+                    // 判断是否为父项菜单
+                    var idField = findIdField(op.table);
+                    var idValue = row[idField];
+
+                    var nodes = $(op.table).bootstrapTable('getData').filter(function (row, index, data) {
+                        return idValue == row[op.treegridParentId];
+                    });
+                    if ($.isArray(nodes) && nodes.length > 0) {
+                        $.each(nodes, function (index, element) {
+                            data.push($.extend({}, element));
                         });
                         text = "本删除项含有级联子项目</br>您确定要删除 <span class='text-danger font-weight-bold'>" + row.Name + "</span> 以及子项目吗？";
                     }

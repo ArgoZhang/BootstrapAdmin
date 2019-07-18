@@ -76,7 +76,7 @@ $(function () {
             pageSize: 100,
             pageList: [100, 200, 400],
             sortName: 'Order',
-            queryParams: function (params) { return $.extend(params, { parentName: $('#txt_parent_menus_name').val(), name: $("#txt_menus_name").val(), category: $('#sel_menus_category').val(), isresource: $('#sel_menus_res').val(), appCode: $('#sel_app').val() }); },           //传递参数（*）
+            queryParams: function (params) { return $.extend(params, { parentName: $('#txt_parent_menus_name').val().trim(), name: $("#txt_menus_name").val().trim(), category: $('#sel_menus_category').val(), isresource: $('#sel_menus_res').val(), appCode: $('#sel_app').val() }); },           //传递参数（*）
             exportOptions: {
                 fileName: "菜单数据",
                 ignoreColumn: [0, 9]
@@ -138,10 +138,11 @@ $(function () {
                 }
             ],
             idField: "Id",
+            rootParentId: "0",
             treeShowField: 'Name',
             parentIdField: 'ParentId',
-            onPreBody: function (data) {
-                if ($('#txt_parent_menus_name').val() !== '' || $('#sel_menus_res').val() === '2') {
+            onPostBody: function () {
+                if ($('#txt_menus_name').val() !== '' || $('#sel_menus_res').val() === '1' || $('#sel_menus_res').val() === '2') {
                     this.treeShowField = false;
                 }
                 else {
@@ -151,8 +152,7 @@ $(function () {
                 if (bt) {
                     bt.treeEnable = !!this.treeShowField;
                 }
-            },
-            onResetView: function () {
+
                 $table.treegrid({
                     treeColumn: 1,
                     expanderExpandedClass: 'fa fa-chevron-circle-down',
@@ -162,9 +162,6 @@ $(function () {
                     }
                 });
                 $table.treegrid('getRootNodes').treegrid('expand');
-            },
-            onCheckRoot: function (row, data) {
-                return row[this.options.parentIdField] === '' || row[this.options.parentIdField] === '0';
             }
         }
     });
@@ -326,13 +323,4 @@ $(function () {
             });
         }
     });
-
-    // fix bug
-    $($('table')[1]).data('bootstrap.table').__proto__.getOptions = function () {
-        var data = this.options.data;
-        delete this.options.data;
-        var options = $.extend(true, {}, this.options);
-        this.options.data = data;
-        return options;
-    };
 });
