@@ -36,16 +36,12 @@
         padding-bottom: 6px;
     }
 
-    .form-inline input.form-control, .form-select > input.form-control {
+    .form-inline input.form-control, .form-inline .input-group, .form-select > input.form-control {
         width: 194px;
     }
 
-    .form-inline .date input.form-control {
+    .form-inline .input-group input.form-control {
         width: 1%;
-    }
-
-    .input-group.date {
-        width: 194px;
     }
 
     .modal-lg {
