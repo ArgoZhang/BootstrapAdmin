@@ -22,6 +22,7 @@ $(function () {
     };
 
     var state = [];
+    var menuResource = ['菜单', '资源', '按钮'];
     var $table = $('table');
     $table.lgbTable({
         url: Menu.url,
@@ -127,10 +128,7 @@ $(function () {
                 },
                 {
                     title: "菜单类型", field: "IsResource", sortable: true, formatter: function (value, row, index) {
-                        var ret = "菜单";
-                        if (value === "1") ret = "资源";
-                        else if (value === "2") ret = "按钮";
-                        return ret;
+                        return menuResource[value];
                     }
                 },
                 {
