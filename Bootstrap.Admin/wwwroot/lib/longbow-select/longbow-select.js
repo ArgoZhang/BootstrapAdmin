@@ -4,13 +4,13 @@
     var lgbSelect = function (element, options) {
         this.$element = $(element);
         this.options = $.extend({}, lgbSelect.DEFAULTS, options);
-        this.init();
+        this.initDom();
     };
 
     lgbSelect.VERSION = '1.0';
     lgbSelect.Author = 'argo@163.com';
     lgbSelect.DataKey = "lgb.select";
-    lgbSelect.Template = '<div class="form-select">';
+    lgbSelect.Template = '<div class="form-select" data-toggle="lgbSelect">';
     lgbSelect.Template += '<input type="text" readonly="readonly" class="form-control form-select-input" />';
     lgbSelect.Template += '<span class="form-select-append">';
     lgbSelect.Template += '    <i class="fa fa-angle-up"></i>';
@@ -43,7 +43,65 @@
     $.fn.lgbSelect.Constructor = lgbSelect;
 
     var _proto = lgbSelect.prototype;
+    _proto.initDom = function () {
+        var that = this;
+
+        // 初始化根据不同的控件进行不同的方案
+        if (this.$element.prop('nodeName') === 'SELECT') this.initBySelect();
+        else this.init();
+
+        //  bind event
+        this.$ctl.on('click', '.form-select-input', function (e) {
+            e.preventDefault();
+
+            that.$ctl.toggleClass('open');
+            // calc width
+            that.$ctl.find('.dropdown-menu').outerWidth(that.$ctl.outerWidth());
+        });
+
+        this.$ctl.on('click', 'a.dropdown-item', function (e) {
+            e.preventDefault();
+
+            var $this = $(this);
+            $this.parent().children().removeClass('active');
+            that.val($this.attr('data-val'), true);
+        });
+
+        $(document).on('click', function (e) {
+            if (that.$input[0] !== e.target)
+                that.closeMenu();
+        });
+
+        this.$element.data(lgbSelect.DataKey, this);
+    };
+
     _proto.init = function () {
+        this.$ctl = this.$element;
+        this.$element = this.$ctl.find('input:hidden[data-toggle="lgbSelect"]');
+
+        // 下拉组合框
+        this.$input = this.$ctl.find('.form-select-input');
+        this.$menus = this.$ctl.find('.dropdown-menu');
+
+        if (this.options.borderClass) {
+            this.$input.addClass(this.options.borderClass);
+        }
+
+        this.source = this.$menus.children().map(function (index, ele) {
+            return { value: $(ele).attr('data-val'), text: $(ele).text(), selected: $(ele).selected };
+        });
+
+        // 设置值
+        var value = this.$input.val();
+        var option = this.$menus.find('a[data-val="' + value + '"]');
+        if (option.length === 0) option = this.$menus.find('a[data-val="' + this.$element.attr('data-default-val') + '"]');
+        if (option.length === 1) option.addClass('active');
+
+        this.$input.val(option.text());
+        this.$element.val(option.attr('data-val')).attr('data-text', option.text());
+    };
+
+    _proto.initBySelect = function () {
         var getUID = function (prefix) {
             if (!prefix) prefix = 'lgb';
             do prefix += ~~(Math.random() * 1000000);
@@ -96,34 +154,11 @@
 
         // replace element select -> input hidden
         this.$element.remove();
-        this.$element = $('<input type="hidden" data-toggle="lgbSelect" />').val(that.val()).insertAfter(this.$ctl);
-        this.$element.data(lgbSelect.DataKey, this);
+        this.$element = $('<input type="hidden" />').val(that.val()).insertBefore(this.$input);
 
         // bind ori atts
         attrs.forEach(function (v) {
             that.$element.attr(v.name, v.value);
-        });
-
-        //  bind event
-        this.$ctl.on('click', '.form-select-input', function (e) {
-            e.preventDefault();
-
-            that.$ctl.toggleClass('open');
-            // calc width
-            that.$ctl.find('.dropdown-menu').outerWidth(that.$ctl.outerWidth());
-        });
-
-        this.$ctl.on('click', 'a.dropdown-item', function (e) {
-            e.preventDefault();
-
-            var $this = $(this);
-            $this.parent().children().removeClass('active');
-            that.val($this.attr('data-val'), true);
-        });
-
-        $(document).on('click', function (e) {
-            if (that.$input[0] !== e.target)
-                that.closeMenu();
         });
 
         // init dropdown-menu
@@ -193,6 +228,6 @@
     };
 
     $(function () {
-        $('select[data-toggle="lgbSelect"]').lgbSelect();
+        $('[data-toggle="lgbSelect"]').lgbSelect();
     });
 })(jQuery);
