@@ -461,7 +461,9 @@
                 // 连接成功
                 // invoke 为 调用服务端方法
                 // invoke: function (connection) { return connection.invoke('RetrieveDashboard'); }
-                if (op.invoke) op.invoke(connection).then(function (result) { console.log(result); }).catch(function (err) { console.error(err.toString()); });
+                if (!op.invoke) return;
+                var executor = op.invoke(connection);
+                if (typeof executor === "object" && $.isFunction(executor.then)) executor.then(function (result) { console.log(result); }).catch(function (err) { console.error(err.toString()); });
             });
             this.hub = connection;
             return this;

@@ -30,7 +30,7 @@
         else if (value === "Timeout") {
             content = $.format(template, 'warning', '超时');
         }
-      return content;
+        return content;
     };
 
     $('.card-body table').lgbTable({
@@ -59,16 +59,12 @@
                 events: {
                     'click .info': function (e, value, row, index) {
                         $taskLogModelTitle.html(row.Name + ' - 任务日志窗口(最新50条)');
-                        $.bc({
-                            url: 'api/TasksLog?name=' + row.Name
-                        });
                         $('#dialogLog').modal('show').on('hide.bs.modal', function () {
                             // close hub
                             if ($taskMsg.hub) $taskMsg.hub.stop();
                             $taskMsg.html('<div></div>');
                         });
 
-                        // var lastMsg = "";
                         // open hub
                         $taskMsg.notifi({
                             url: 'NotiHub',
@@ -82,12 +78,19 @@
                                 if (data.name !== row.Name) return;
 
                                 result = data.msg;
-                                result = result.replace("Run(Cancelled)", "<span class='text-danger'>Run(Cancelled)</span>");
+                                result = result.replace("Run(Cancelled)", "<span class='text-info'>Run(Cancelled)</span>");
                                 result = result.replace("Run(Success)", "<span class='text-success'>Run(Success)</span>");
+                                result = result.replace("Run(Error)", "<span class='text-danger'>Run(Error)</span>");
+                                result = result.replace("Run(Timeout)", "<span class='text-warning'>Run(Timeout)</span>");
                                 content.append('<div>' + result + '</div>');
 
                                 // auto scroll
                                 if ($autoScroll.find('i').hasClass(check[0])) this.scrollTop(content.height());
+                            },
+                            invoke: function () {
+                                $.bc({
+                                    url: 'api/TasksLog?name=' + row.Name
+                                });
                             },
                             onclose: function (error) {
                                 console.log(error);
