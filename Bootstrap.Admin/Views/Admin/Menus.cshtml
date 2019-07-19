@@ -11,6 +11,7 @@
         <link href="~/lib/nestable2/jquery.nestable.min.css" rel="stylesheet" />
     </environment>
     <link href="~/lib/treegrid/css/jquery.treegrid.css" rel="stylesheet" />
+    <link href="~/lib/longbow-select/longbow-select.css" rel="stylesheet" />
     <link href="~/css/fa.css" rel="stylesheet" asp-append-version="true" />
 }
 @section javascript {
@@ -26,6 +27,7 @@
         <script src="~/lib/treegrid/js/jquery.treegrid.min.js"></script>
         <script src="~/lib/bootstrap-table/extensions/treegrid/bootstrap-table-treegrid.min.js"></script>
     </environment>
+    <script src="~/lib/longbow-select/longbow-select.js"></script>
     <script src="~/js/menus.js" asp-append-version="true"></script>
 }
 @section query {
@@ -39,41 +41,48 @@
                 <label class="control-label" for="txt_parent_menus_name">父级菜单</label>
                 <input type="text" class="form-control" id="txt_parent_menus_name" />
             </div>
-            <div class="form-group form-group-dropdown col-sm-6 col-lg-auto">
+            <div class="form-group col-sm-6 col-lg-auto">
                 <label class="control-label" for="sel_menus_category">菜单类别</label>
-                <div class="dropdown">
-                    <button id="sel_menus_category" class="btn btn-success dropdown-select dropdown-toggle" data-toggle="dropdown">全部</button>
+                <div class="form-select" data-toggle="lgbSelect">
+                    <input type="hidden" data-toggle="lgbSelect" id="sel_menus_category" />
+                    <input type="text" readonly="readonly" class="form-control form-select-input" placeholder="请选择 ...">
+                    <span class="form-select-append"><i class="fa fa-angle-up"></i></span>
+                    <div class="dropdown-menu-arrow"></div>
                     <div class="dropdown-menu">
-                        <a href="#" data-val="">全部</a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" data-val="0">系统菜单</a>
-                        <a href="#" data-val="1">外部菜单</a>
+                        <a class="dropdown-item" href="#" data-val="">全部</a>
+                        <a class="dropdown-item" href="#" data-val="0">系统菜单</a>
+                        <a class="dropdown-item" href="#" data-val="1">外部菜单</a>
                     </div>
                 </div>
             </div>
-            <div class="form-group form-group-dropdown col-sm-6 col-lg-auto">
+            <div class="form-group col-sm-6 col-lg-auto">
                 <label class="control-label" for="sel_menus_res">菜单类型</label>
-                <div class="dropdown">
-                    <button id="sel_menus_res" class="btn btn-success dropdown-select dropdown-toggle" data-toggle="dropdown">全部</button>
+                <div class="form-select" data-toggle="lgbSelect">
+                    <input type="hidden" data-toggle="lgbSelect" id="sel_menus_res" />
+                    <input type="text" readonly="readonly" class="form-control form-select-input" placeholder="请选择 ...">
+                    <span class="form-select-append"><i class="fa fa-angle-up"></i></span>
+                    <div class="dropdown-menu-arrow"></div>
                     <div class="dropdown-menu">
-                        <a href="#" data-val="">全部</a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" data-val="0">菜单</a>
-                        <a href="#" data-val="1">资源</a>
-                        <a href="#" data-val="2">按钮</a>
-                    </div>
+                        <a class="dropdown-item" href="#" data-val="">全部</a>
+                        <a class="dropdown-item" href="#" data-val="0">菜单</a>
+                        <a class="dropdown-item" href="#" data-val="1">资源</a>
+                        <a class="dropdown-item" href="#" data-val="2">按钮</a>
+                   </div>
                 </div>
             </div>
-            <div class="form-group form-group-dropdown col-sm-6 col-lg-auto">
+            <div class="form-group col-sm-6 col-lg-auto">
                 <label class="control-label" for="sel_app">所属应用</label>
-                <div class="dropdown">
-                    <button id="sel_app" class="btn btn-info dropdown-select dropdown-toggle" data-toggle="dropdown" data-default-val="0">未设置</button>
+                <div class="form-select" data-toggle="lgbSelect">
+                    <input type="hidden" data-toggle="lgbSelect" id="sel_app" data-default-val="0" />
+                    <input type="text" readonly="readonly" class="form-control form-select-input" placeholder="请选择 ...">
+                    <span class="form-select-append"><i class="fa fa-angle-up"></i></span>
+                    <div class="dropdown-menu-arrow"></div>
                     <div class="dropdown-menu">
                         @foreach (var kv in Model.Applications)
                         {
-                            <a href="#" data-val="@kv.Key">@kv.Value</a>
+                            <a class="dropdown-item" href="#" data-val="@kv.Key">@kv.Value</a>
                         }
-                    </div>
+                   </div>
                 </div>
             </div>
             <div class="form-group col-lg-auto flex-lg-fill justify-content-lg-end">
@@ -151,47 +160,60 @@
                     <label class="control-label" for="url">路径</label>
                     <input type="text" class="form-control flex-sm-fill" id="url" placeholder="不可为空，4000字以内" maxlength="4000" data-valid="true" />
                 </div>
-                <div class="form-group form-group-dropdown col-sm-6">
+                <div class="form-group col-sm-6">
                     <label class="control-label" for="category">菜单类别</label>
-                    <div class="dropup">
-                        <button id="category" class="btn btn-success dropdown-select dropdown-toggle" data-toggle="dropdown" data-default-val="1">外部菜单</button>
+                    <div class="form-select" data-toggle="lgbSelect">
+                        <input type="hidden" data-toggle="lgbSelect" id="category" data-default-val="1" />
+                        <input type="text" readonly="readonly" class="form-control form-select-input" placeholder="请选择 ...">
+                        <span class="form-select-append"><i class="fa fa-angle-up"></i></span>
+                        <div class="dropdown-menu-arrow"></div>
                         <div class="dropdown-menu">
-                            <a href="#" data-val="0">系统菜单</a>
-                            <a href="#" data-val="1">外部菜单</a>
+                            <a class="dropdown-item" href="#" data-val="">全部</a>
+                            <a class="dropdown-item" href="#" data-val="0">系统菜单</a>
+                            <a class="dropdown-item" href="#" data-val="1">外部菜单</a>
                         </div>
                     </div>
                 </div>
-                <div class="form-group form-group-dropdown col-sm-6">
+                <div class="form-group col-sm-6">
                     <label class="control-label" for="target">目标</label>
-                    <div class="dropup">
-                        <button id="target" class="btn btn-info dropdown-select dropdown-toggle" data-toggle="dropdown" data-default-val="_self">本窗口</button>
+                    <div class="form-select" data-toggle="lgbSelect">
+                        <input type="hidden" data-toggle="lgbSelect" id="target" data-default-val="_self" />
+                        <input type="text" readonly="readonly" class="form-control form-select-input" placeholder="请选择 ...">
+                        <span class="form-select-append"><i class="fa fa-angle-up"></i></span>
+                        <div class="dropdown-menu-arrow"></div>
                         <div class="dropdown-menu">
-                            <a href="#" data-val="_self">本窗口</a>
-                            <a href="#" data-val="_blank">新窗口</a>
-                            <a href="#" data-val="_parent">父级窗口</a>
-                            <a href="#" data-val="_top">顶级窗口</a>
+                            <a class="dropdown-item" href="#" data-val="_self">本窗口</a>
+                            <a class="dropdown-item" href="#" data-val="_blank">新窗口</a>
+                            <a class="dropdown-item" href="#" data-val="_parent">父级窗口</a>
+                            <a class="dropdown-item" href="#" data-val="_top">顶级窗口</a>
                         </div>
                     </div>
                 </div>
-                <div class="form-group form-group-dropdown col-sm-6">
+                <div class="form-group col-sm-6">
                     <label class="control-label" for="isRes">菜单类型</label>
-                    <div class="dropup">
-                        <button id="isRes" class="btn btn-success dropdown-select dropdown-toggle" data-toggle="dropdown" data-default-val="0">菜单</button>
+                    <div class="form-select" data-toggle="lgbSelect">
+                        <input type="hidden" data-toggle="lgbSelect" id="isRes" data-default-val="0" />
+                        <input type="text" readonly="readonly" class="form-control form-select-input" placeholder="请选择 ...">
+                        <span class="form-select-append"><i class="fa fa-angle-up"></i></span>
+                        <div class="dropdown-menu-arrow"></div>
                         <div class="dropdown-menu">
-                            <a href="#" data-val="0">菜单</a>
-                            <a href="#" data-val="1">资源</a>
-                            <a href="#" data-val="2">按钮</a>
+                            <a class="dropdown-item" href="#" data-val="0">菜单</a>
+                            <a class="dropdown-item" href="#" data-val="1">资源</a>
+                            <a class="dropdown-item" href="#" data-val="2">按钮</a>
                         </div>
                     </div>
                 </div>
-                <div class="form-group form-group-dropdown col-sm-6">
+                <div class="form-group col-sm-6">
                     <label class="control-label" for="app">所属应用</label>
-                    <div class="dropup">
-                        <button id="app" class="btn btn-info dropdown-select dropdown-toggle" data-toggle="dropdown" data-default-val="0">未设置</button>
+                    <div class="form-select" data-toggle="lgbSelect">
+                        <input type="hidden" data-toggle="lgbSelect" id="app" data-default-val="0" />
+                        <input type="text" readonly="readonly" class="form-control form-select-input" placeholder="请选择 ...">
+                        <span class="form-select-append"><i class="fa fa-angle-up"></i></span>
+                        <div class="dropdown-menu-arrow"></div>
                         <div class="dropdown-menu">
                             @foreach (var kv in Model.Applications)
                             {
-                                <a href="#" data-val="@kv.Key">@kv.Value</a>
+                                <a class="dropdown-item" href="#" data-val="@kv.Key">@kv.Value</a>
                             }
                         </div>
                     </div>

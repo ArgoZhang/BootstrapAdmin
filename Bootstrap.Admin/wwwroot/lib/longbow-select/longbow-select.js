@@ -50,6 +50,13 @@
         if (this.$element.prop('nodeName') === 'SELECT') this.initBySelect();
         else this.init();
 
+        if (this.options.borderClass) {
+            this.$input.addClass(this.options.borderClass);
+        }
+        this.$input.attr('placeholder', this.options.placeholder);
+
+        this.$element.data(lgbSelect.DataKey, this);
+
         //  bind event
         this.$ctl.on('click', '.form-select-input', function (e) {
             e.preventDefault();
@@ -72,7 +79,20 @@
                 that.closeMenu();
         });
 
-        this.$element.data(lgbSelect.DataKey, this);
+        var getUID = function (prefix) {
+            if (!prefix) prefix = 'lgb';
+            do prefix += ~~(Math.random() * 1000000);
+            while (document.getElementById(prefix));
+            return prefix;
+        };
+
+        // init for
+        var $for = this.$ctl.parent().find('[for="' + this.$element.attr('id') + '"]');
+        if ($for.length > 0) {
+            var id = getUID();
+            this.$input.attr('id', id);
+            $for.attr('for', id);
+        }
     };
 
     _proto.init = function () {
@@ -82,10 +102,6 @@
         // 下拉组合框
         this.$input = this.$ctl.find('.form-select-input');
         this.$menus = this.$ctl.find('.dropdown-menu');
-
-        if (this.options.borderClass) {
-            this.$input.addClass(this.options.borderClass);
-        }
 
         this.source = this.$menus.children().map(function (index, ele) {
             return { value: $(ele).attr('data-val'), text: $(ele).text(), selected: $(ele).selected };
@@ -102,13 +118,6 @@
     };
 
     _proto.initBySelect = function () {
-        var getUID = function (prefix) {
-            if (!prefix) prefix = 'lgb';
-            do prefix += ~~(Math.random() * 1000000);
-            while (document.getElementById(prefix));
-            return prefix;
-        };
-
         var that = this;
 
         // 原有控件
@@ -120,19 +129,6 @@
         // 下拉组合框
         this.$input = this.$ctl.find('.form-select-input');
         this.$menus = this.$ctl.find('.dropdown-menu');
-
-        // init for
-        var $for = this.$element.parent().find('[for="' + this.$element.attr('id') + '"]');
-        if ($for.length > 0) {
-            var id = getUID();
-            this.$input.attr('id', id);
-            $for.attr('for', id);
-        }
-
-        if (this.options.borderClass) {
-            this.$input.addClass(this.options.borderClass);
-        }
-        this.$input.attr('placeholder', this.options.placeholder);
 
         // init dropdown-menu data
         var data = this.$element.find('option').map(function () {
@@ -154,7 +150,7 @@
 
         // replace element select -> input hidden
         this.$element.remove();
-        this.$element = $('<input type="hidden" />').val(that.val()).insertBefore(this.$input);
+        this.$element = $('<input type="hidden" data-toggle="lgbSelect" />').val(that.val()).insertBefore(this.$input);
 
         // bind ori atts
         attrs.forEach(function (v) {

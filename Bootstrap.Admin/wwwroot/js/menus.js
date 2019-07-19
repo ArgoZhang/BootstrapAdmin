@@ -22,7 +22,6 @@ $(function () {
     };
 
     var state = [];
-    var menuResource = ['菜单', '资源', '按钮'];
     var $table = $('table');
     $table.lgbTable({
         url: Menu.url,
@@ -106,34 +105,17 @@ $(function () {
                 { title: "菜单类别", field: "CategoryName", sortable: true },
                 {
                     title: "目标", field: "Target", sortable: true, formatter: function (value, row, index) {
-                        var ret = value;
-                        switch (value) {
-                            case "_self":
-                                ret = "本窗口";
-                                break;
-                            case "_blank":
-                                ret = "新窗口";
-                                break;
-                            case "_parent":
-                                ret = "父级窗口";
-                                break;
-                            case "_top":
-                                ret = "顶级窗口";
-                                break;
-                            default:
-                                break;
-                        }
-                        return ret;
+                        return $('#target').getTextByValue(value);
                     }
                 },
                 {
                     title: "菜单类型", field: "IsResource", sortable: true, formatter: function (value, row, index) {
-                        return menuResource[value];
+                        return $('#isRes').getTextByValue(value);
                     }
                 },
                 {
                     title: "所属应用", field: "Application", sortable: true, formatter: function (value, row, index) {
-                        return $('#app').next().find('[data-val="' + value + '"]:first').text();
+                        return $('#app').getTextByValue(value);
                     }
                 }
             ],
