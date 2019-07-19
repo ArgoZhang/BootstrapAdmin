@@ -481,7 +481,7 @@ input.pending {
         margin-left: 6px;
     }
 
-.btn span:last-child {
+.btn i + span {
     margin-left: 4px;
 }
 
@@ -553,7 +553,6 @@ input.pending {
     .bootstrap-table td > .btn:not(:first-child) {
         margin-left: 5px;
     }
-
 
     .bootstrap-table .badge {
         padding: 4px 6px;
@@ -629,6 +628,15 @@ input.pending {
             font-size: 0.75rem;
             padding: 1px 5px;
         }
+
+    .bootstrap-table .fixed-table-container .table.table-sm tbody td {
+        padding: 0.3rem;
+    }
+
+    /* fix bootstrap bottom margin */
+    .bootstrap-table .fixed-table-pagination > .pagination-detail, .bootstrap-table .fixed-table-pagination > .pagination {
+        margin-bottom: -5px;
+    }
 
 .card-body .bootstrap-table {
     margin-top: -10px;
@@ -775,4 +783,8 @@ input.pending {
 
 .alert-danger {
     border-left: solid 4px #f78792;
+}
+
+label[for] {
+    cursor: pointer;
 }
