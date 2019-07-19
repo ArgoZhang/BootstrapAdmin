@@ -48,7 +48,8 @@
 }
 
 .card, .modal-footer, .form-control, .popover, .date .input-group-text,
-.input-group .btn:not(.btn-secondary):not(.btn-primary):not(.btn-warning):not(.btn-info):not(.btn-danger) {
+.input-group .btn:not(.btn-secondary):not(.btn-primary):not(.btn-warning):not(.btn-info):not(.btn-danger),
+.form-select-input:hover {
     border-color: #5198cb;
 }
 
