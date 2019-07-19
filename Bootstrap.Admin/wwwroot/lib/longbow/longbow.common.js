@@ -414,6 +414,7 @@
         getTextByValue: function (value) {
             // 通过value获取select控件的text属性
             var text = "";
+            if (typeof value !== "string") value = value.toString();
             if (this.attr('data-toggle') === 'lgbSelect') {
                 if (value === this.val()) text = this.attr('data-text');
                 else {
