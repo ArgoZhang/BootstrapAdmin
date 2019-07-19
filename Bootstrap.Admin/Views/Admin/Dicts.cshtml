@@ -3,6 +3,9 @@
     ViewBag.Title = "字典表维护";
     Layout = "_Default";
 }
+@section css {
+    <link href="~/lib/longbow-select/longbow-select.css" rel="stylesheet" />
+}
 @section javascript {
     <environment include="Development">
         <script src="~/lib/bootstrap-3-typeahead/bootstrap3-typeahead.js"></script>
@@ -10,6 +13,7 @@
     <environment exclude="Development">
         <script src="~/lib/bootstrap-3-typeahead/bootstrap3-typeahead.min.js"></script>
     </environment>
+    <script src="~/lib/longbow-select/longbow-select.js"></script>
     <script src="~/js/dicts.js" asp-append-version="true"></script>
 }
 @section query {
@@ -25,13 +29,15 @@
             </div>
             <div class="form-group form-group-dropdown col-sm-6 col-md-auto">
                 <label class="control-label" for="txt_dict_define">字典类别</label>
-                <div class="dropdown">
-                    <button id="txt_dict_define" class="btn btn-success dropdown-select dropdown-toggle" data-toggle="dropdown">全部</button>
+                <div class="form-select" data-toggle="lgbSelect">
+                    <input type="hidden" data-toggle="lgbSelect" id="txt_dict_define" />
+                    <input type="text" readonly="readonly" class="form-control form-select-input" placeholder="请选择 ...">
+                    <span class="form-select-append"><i class="fa fa-angle-up"></i></span>
+                    <div class="dropdown-menu-arrow"></div>
                     <div class="dropdown-menu">
-                        <a href="#" data-val="">全部</a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" data-val="0">系统使用</a>
-                        <a href="#" data-val="1">自定义</a>
+                        <a class="dropdown-item" href="#" data-val="">全部</a>
+                        <a class="dropdown-item" href="#" data-val="0">系统使用</a>
+                        <a class="dropdown-item" href="#" data-val="1">自定义</a>
                     </div>
                 </div>
             </div>
@@ -67,13 +73,16 @@
                     <label class="control-label" for="dictCode">字典代码</label>
                     <input type="text" class="form-control flex-sm-fill" id="dictCode" placeholder="不可为空，2000字以内" maxlength="2000" data-valid="true" />
                 </div>
-                <div class="form-group form-group-dropdown col-12">
+                <div class="form-group col-12">
                     <label class="control-label" for="dictDefine">字典类型</label>
-                    <div class="dropdown">
-                        <button id="dictDefine" class="btn btn-success dropdown-select dropdown-toggle" data-toggle="dropdown" data-default-val="1">全部</button>
+                    <div class="form-select" data-toggle="lgbSelect">
+                        <input type="hidden" data-toggle="lgbSelect" id="dictDefine" data-default-val="1" />
+                        <input type="text" readonly="readonly" class="form-control form-select-input" placeholder="请选择 ...">
+                        <span class="form-select-append"><i class="fa fa-angle-up"></i></span>
+                        <div class="dropdown-menu-arrow"></div>
                         <div class="dropdown-menu">
-                            <a href="#" data-val="0">系统使用</a>
-                            <a href="#" data-val="1">自定义</a>
+                            <a class="dropdown-item" href="#" data-val="0">系统使用</a>
+                            <a class="dropdown-item" href="#" data-val="1">自定义</a>
                         </div>
                     </div>
                 </div>
