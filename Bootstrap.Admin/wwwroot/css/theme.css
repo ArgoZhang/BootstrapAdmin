@@ -779,3 +779,7 @@ input.pending {
 .alert-danger {
     border-left: solid 4px #f78792;
 }
+
+label[for] {
+    cursor: pointer;
+}
