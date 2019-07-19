@@ -13,11 +13,19 @@
         background-position: 98% -28px;
     }
 
+        .header .cloud.move {
+            background-position: 94% -28px;
+        }
+
     .header .bird {
         background-image: url('../images/bird.png');
         background-repeat: no-repeat;
         background-position: right top;
         padding: 0 15px;
+    }
+
+    .header .move .bird {
+        background-position: 104% top;
     }
 
 .sidebar-toggle-box {

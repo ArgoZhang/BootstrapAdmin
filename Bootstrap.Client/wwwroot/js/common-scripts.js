@@ -16,4 +16,12 @@
         }
         $('body').toggleClass('sidebar-open');
     });
+
+    $('.cloud, .bird').css({
+        "transition": "all linear 3s"
+    });
+
+    $('.cloud').on('mouseenter mouseleave', function () {
+        $(this).toggleClass('move');
+    });
 });
