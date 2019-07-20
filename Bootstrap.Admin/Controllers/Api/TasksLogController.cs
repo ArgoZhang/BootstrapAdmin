@@ -31,7 +31,7 @@ namespace Bootstrap.Admin.Controllers.Api
         private void SendTaskLog(IScheduler sche, string name, IHubContext<SignalRHub> hub)
         {
             var t = sche.Triggers.First();
-            var result = $"{{\"name\": \"{name}\", \"msg\": \"{sche.LastRuntime}: Trigger({t.GetType().Name}) Run({t.LastResult}) NextRuntime: {sche.NextRuntime} Elapsed: {t.LastRunElapsedTime.Seconds}s\"}}";
+            var result = $"{{\"name\": \"{name}\", \"msg\": \"Trigger({t.GetType().Name}) LastRuntime: {sche.LastRuntime} Run({t.LastResult}) NextRuntime: {sche.NextRuntime} Elapsed: {t.LastRunElapsedTime.Seconds}s\"}}";
             SignalRManager.SendTaskLog(hub.Clients.All, result).ConfigureAwait(false);
         }
     }
