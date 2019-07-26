@@ -1,3 +1,13 @@
+@media print {
+    a:link {
+        text-decoration: none !important;
+    }
+
+    a[href]:after {
+        content: none !important;
+    }
+}
+
 @media (min-width: 375px) {
     .toolbar .dropdown-menu a {
         padding: 0 14px;
@@ -40,9 +50,9 @@
         width: 194px;
     }
 
-    .form-inline .input-group input.form-control {
-        width: 1%;
-    }
+        .form-inline .input-group input.form-control {
+            width: 1%;
+        }
 
     .modal-lg {
         max-width: calc(90%);
