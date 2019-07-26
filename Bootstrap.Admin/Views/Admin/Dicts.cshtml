@@ -29,17 +29,12 @@
             </div>
             <div class="form-group col-sm-6 col-md-auto">
                 <label class="control-label" for="txt_dict_define">字典类别</label>
-                <div class="form-select" data-toggle="lgbSelect">
-                    <input type="hidden" data-toggle="lgbSelect" id="txt_dict_define" />
-                    <input type="text" readonly="readonly" class="form-control form-select-input" placeholder="请选择 ...">
-                    <span class="form-select-append"><i class="fa fa-angle-up"></i></span>
-                    <div class="dropdown-menu-arrow"></div>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#" data-val="">全部</a>
-                        <a class="dropdown-item" href="#" data-val="0">系统使用</a>
-                        <a class="dropdown-item" href="#" data-val="1">自定义</a>
-                    </div>
-                </div>
+                <input class="form-control" data-toggle="lgbSelect" />
+                <select data-toggle="lgbSelect" class="d-none" id="txt_dict_define">
+                    <option value="">全部</option>
+                    <option value="0">系统使用</option>
+                    <option value="1">自定义</option>
+                </select>
             </div>
             <div class="form-group col-sm-6 col-md-auto flex-sm-fill justify-content-sm-end align-self-sm-end">
                 <button type="button" id="btn_query" class="btn btn-primary btn-fill"><i class="fa fa-search" aria-hidden="true"></i><span>查询</span></button>
@@ -67,16 +62,11 @@
                 </div>
                 <div class="form-group col-sm-6">
                     <label class="control-label" for="dictDefine">字典类型</label>
-                    <div class="form-select" data-toggle="lgbSelect">
-                        <input type="hidden" data-toggle="lgbSelect" id="dictDefine" data-default-val="1" />
-                        <input type="text" readonly="readonly" class="form-control form-select-input" placeholder="请选择 ...">
-                        <span class="form-select-append"><i class="fa fa-angle-up"></i></span>
-                        <div class="dropdown-menu-arrow"></div>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#" data-val="0">系统使用</a>
-                            <a class="dropdown-item" href="#" data-val="1">自定义</a>
-                        </div>
-                    </div>
+                    <input class="form-control" data-toggle="lgbSelect" />
+                    <select data-toggle="lgbSelect" class="d-none" data-default-val="1" id="dictDefine">
+                        <option value="0">系统使用</option>
+                        <option value="1">自定义</option>
+                    </select>
                 </div>
                 <div class="form-group col-sm-6">
                     <label class="control-label" for="dictName">字典名称</label>

@@ -420,7 +420,7 @@
                 else {
                     var data = [];
                     this.lgbSelect('get', function (source) { data = source; });
-                    var find = data.filter(function () { return this.value === value; });
+                    var find = data.filter(function (item, index) { return item.value === value; });
                     if (find.length === 1) text = find[0].text;
                 }
             }
