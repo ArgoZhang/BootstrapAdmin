@@ -20,38 +20,27 @@
     lgbSelect.Template += '</div>';
     lgbSelect.DEFAULTS = {
         placeholder: "请选择 ...",
-        borderClass: null
+        borderClass: null,
+        textClass: {
+            'border-primary': 'text-primary',
+            'border-info': 'text-info',
+            'border-success': 'text-success',
+            'border-warning': 'text-warning',
+            'border-danger': 'text-danger',
+            'border-secondary': 'text-secondary'
+        },
+        attributes: ["data-valid", "data-required-msg", "class"]
     };
     lgbSelect.AllowMethods = /disabled|enable|val|reset|get/;
-
-    function Plugin(option) {
-        var params = $.makeArray(arguments).slice(1);
-        return this.each(function () {
-            var $this = $(this);
-            var data = $this.data(lgbSelect.DataKey);
-            var options = typeof option === 'object' && option;
-
-            if (!data) $this.data(lgbSelect.DataKey, data = new lgbSelect(this, options));
-            if (!lgbSelect.AllowMethods.test(option)) return;
-            if (typeof option === 'string') {
-                data[option].apply(data, params);
-            }
-        });
-    }
-
-    $.fn.lgbSelect = Plugin;
-    $.fn.lgbSelect.Constructor = lgbSelect;
 
     var _proto = lgbSelect.prototype;
     _proto.initDom = function () {
         var that = this;
 
-        // 初始化根据不同的控件进行不同的方案
-        if (this.$element.prop('nodeName') === 'SELECT') this.initBySelect();
-        else this.init();
-
+        this.initBySelect();
         if (this.options.borderClass) {
             this.$input.addClass(this.options.borderClass);
+            this.$menubar.addClass(this.options.textClass[this.options.borderClass]);
         }
         this.$input.attr('placeholder', this.options.placeholder);
 
@@ -95,70 +84,57 @@
         }
     };
 
-    _proto.init = function () {
-        this.$ctl = this.$element;
-        this.$element = this.$ctl.find('input:hidden[data-toggle="lgbSelect"]');
-
-        // 下拉组合框
-        this.$input = this.$ctl.find('.form-select-input');
-        this.$menus = this.$ctl.find('.dropdown-menu');
-
-        this.source = this.$menus.children().map(function (index, ele) {
-            return { value: $(ele).attr('data-val'), text: $(ele).text(), selected: $(ele).selected };
-        });
-
-        // 设置值
-        var value = this.$input.val();
-        var option = this.$menus.find('a[data-val="' + value + '"]');
-        if (option.length === 0) option = this.$menus.find('a[data-val="' + this.$element.attr('data-default-val') + '"]');
-        if (option.length === 1) option.addClass('active');
-
-        this.$input.val(option.text());
-        this.$element.val(option.attr('data-val')).attr('data-text', option.text());
-    };
-
     _proto.initBySelect = function () {
-        var that = this;
-
-        // 原有控件
-        this.$element.addClass('d-none');
-
+        var $input = this.$element.prev();
+        if ($input.attr('data-toggle') === 'lgbSelect') $input.remove();
         // 新控件 <div class="form-select">
         this.$ctl = $(lgbSelect.Template).insertBefore(this.$element);
 
         // 下拉组合框
         this.$input = this.$ctl.find('.form-select-input');
+        this.$menubar = this.$ctl.find('.form-select-append');
         this.$menus = this.$ctl.find('.dropdown-menu');
 
         // init dropdown-menu data
         var data = this.$element.find('option').map(function () {
             return { value: this.value, text: this.text, selected: this.selected }
-        });
+        }).toArray();
 
-        // bind attribute
-        ["data-valid", "data-required-msg"].forEach(function (v, index) {
-            if (that.$element.attr(v) !== undefined) {
-                that.$input.attr(v, that.$element.attr(v));
+        // create new element 
+        // <input type="hidden" data-toggle="lgbSelect" />
+        this.createElement();
+
+        // init dropdown-menu
+        this.reset(data);
+    };
+
+    _proto.createElement = function () {
+        var that = this;
+
+        // move attributes
+        this.options.attributes.forEach(function (name, index) {
+            var value = that.$element.attr(name)
+            if (value !== undefined) {
+                if (name === 'class') that.$input.addClass(value).removeClass('d-none');
+                else that.$input.attr(name, that.$element.attr(name));
             }
         });
 
-        // save ori attrs
+        // save attributes
         var attrs = [];
         ["id", "data-default-val"].forEach(function (v, index) {
-            attrs.push({ name: v, value: that.$element.attr(v) });
+            var value = that.$element.attr(v);
+            if (value !== undefined) attrs.push({ name: v, value: value });
         });
 
         // replace element select -> input hidden
         this.$element.remove();
         this.$element = $('<input type="hidden" data-toggle="lgbSelect" />').val(that.val()).insertBefore(this.$input);
 
-        // bind ori atts
+        // restore attributes
         attrs.forEach(function (v) {
             that.$element.attr(v.name, v.value);
         });
-
-        // init dropdown-menu
-        this.reset(data);
     };
 
     _proto.closeMenu = function () {
@@ -179,11 +155,11 @@
         var that = this;
 
         // keep old value
-        var oldValue = this.$input.val();
+        var oldValue = this.$input.attr('value');
 
         // warning: must use attr('value') method instead of val(). otherwise the others input html element will filled by first element value.
         // see https://gitee.com/LongbowEnterprise/longbow-select/issues/IZ3BR?from=project-issue
-        this.$input.attr('value', '');
+        this.$input.attr('value', '').removeClass('is-valid is-invalid');
         this.$menus.html('');
         $.each(value, function (index) {
             var $item = $('<a class="dropdown-item" href="#" data-val="' + this.value + '">' + this.text + '</a>');
@@ -222,6 +198,28 @@
             return this.$element.val();
         }
     };
+
+    function Plugin(option) {
+        var params = $.makeArray(arguments).slice(1);
+        return this.each(function () {
+            var $this = $(this);
+
+            // 保护重复生成
+            if ($this.hasClass('form-select')) return;
+
+            var data = $this.data(lgbSelect.DataKey);
+            var options = typeof option === 'object' && option;
+
+            if (!data) $this.data(lgbSelect.DataKey, data = new lgbSelect(this, options));
+            if (!lgbSelect.AllowMethods.test(option)) return;
+            if (typeof option === 'string') {
+                data[option].apply(data, params);
+            }
+        });
+    }
+
+    $.fn.lgbSelect = Plugin;
+    $.fn.lgbSelect.Constructor = lgbSelect;
 
     $(function () {
         $('[data-toggle="lgbSelect"]').lgbSelect();
