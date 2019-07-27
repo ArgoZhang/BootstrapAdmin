@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Bootstrap.DataAccess
 {
     /// <summary>
-    /// 
+    /// 用户访问数据实体类
     /// </summary>
     [TableName("Traces")]
     public class Trace
@@ -32,17 +32,17 @@ namespace Bootstrap.DataAccess
         public string Ip { get; set; }
 
         /// <summary>
-        /// 
+        /// 获得/设置 客户端地点
         /// </summary>
         public string City { get; set; }
 
         /// <summary>
-        /// 
+        /// 获得/设置 客户端浏览器
         /// </summary>
         public string Browser { get; set; }
 
         /// <summary>
-        /// 
+        /// 获得/设置 客户端操作系统
         /// </summary>
         public string OS { get; set; }
 
@@ -52,12 +52,12 @@ namespace Bootstrap.DataAccess
         public string RequestUrl { get; set; }
 
         /// <summary>
-        /// 
+        /// 获得/设置 客户端 UserAgent
         /// </summary>
         public string UserAgent { get; set; }
 
         /// <summary>
-        /// 保存访问历史记录
+        /// 保存用户访问数据历史记录
         /// </summary>
         /// <param name="p"></param>
         public virtual bool Save(Trace p)
@@ -69,7 +69,7 @@ namespace Bootstrap.DataAccess
         }
 
         /// <summary>
-        /// 
+        /// 查询用户访问分页数据
         /// </summary>
         /// <param name="po"></param>
         /// <param name="startTime"></param>
@@ -78,7 +78,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual Page<Trace> RetrievePages(PaginationOption po, DateTime? startTime, DateTime? endTime, string ip)
         {
-            var sql = new Sql("select UserName, LogTime, IP, Browser, OS, City, RequestUrl from Traces");
+            var sql = new Sql("select * from Traces");
             if (startTime.HasValue) sql.Where("LogTime > @0", startTime.Value);
             if (endTime.HasValue) sql.Where("LogTime < @0", endTime.Value.AddDays(1).AddSeconds(-1));
             if (startTime == null && endTime == null) sql.Where("LogTime > @0", DateTime.Today.AddMonths(0 - DictHelper.RetrieveAccessLogPeriod()));
@@ -89,7 +89,7 @@ namespace Bootstrap.DataAccess
         }
 
         /// <summary>
-        /// 
+        /// 查询所有用户数据
         /// </summary>
         /// <param name="startTime"></param>
         /// <param name="endTime"></param>

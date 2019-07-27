@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Bootstrap.DataAccess
 {
     /// <summary>
-    /// 
+    /// 操作日志实体类
     /// </summary>
     [TableName("Logs")]
     public class Log : Trace
@@ -31,7 +31,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual new Page<Log> RetrievePages(PaginationOption po, DateTime? startTime, DateTime? endTime, string opType)
         {
-            var sql = new Sql("select CRUD, UserName, LogTime, Ip, Browser, OS, City, RequestUrl, RequestData from Logs");
+            var sql = new Sql("select * from Logs");
             if (startTime.HasValue) sql.Where("LogTime >= @0", startTime.Value);
             if (endTime.HasValue) sql.Where("LogTime < @0", endTime.Value.AddDays(1).AddSeconds(-1));
             if (startTime == null && endTime == null) sql.Where("LogTime > @0", DateTime.Today.AddMonths(0 - DictHelper.RetrieveExceptionsLogPeriod()));
@@ -42,7 +42,7 @@ namespace Bootstrap.DataAccess
         }
 
         /// <summary>
-        /// 
+        /// 查询所有操作日志
         /// </summary>
         /// <param name="startTime"></param>
         /// <param name="endTime"></param>
