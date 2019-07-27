@@ -293,6 +293,14 @@
             $.validator.addMethod("userName", function (value, element) {
                 return this.optional(element) || /^[a-zA-Z0-9_@.]*$/.test(value);
             }, "登录名称不可以包含非法字符");
+
+            $.validator.addMethod("greaterThan", function (value, element, target) {
+                return this.optional(element) || $(target).val() <= value;
+            }, "");
+
+            $.validator.addMethod("lessThan", function (value, element, target) {
+                return this.optional(element) || $(target).val() >= value;
+            }, "");
         }
         $('[data-toggle="LgbValidate"]').lgbValidate();
     });

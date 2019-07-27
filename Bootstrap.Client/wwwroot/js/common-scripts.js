@@ -8,7 +8,6 @@
     var arch = $sideMenu.find('a.active').last();
     $breadNav.removeClass('d-none').text(arch.text() || $('title').text());
 
-
     $('.sidebar-toggle-box').on('click', function (e) {
         if ($(window).width() >= 768) {
             e.preventDefault();

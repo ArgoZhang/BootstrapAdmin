@@ -200,7 +200,10 @@
                     success(result);
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    if (window.toastr) toastr.error(XMLHttpRequest.status === 500 ? '后台应用程序错误' : errorThrown, '程序错误');
+                    if (window.toastr) {
+                        if (errorThrown === '') errorThrown = url;
+                        toastr.error(XMLHttpRequest.status === 500 ? '后台应用程序错误' : errorThrown, '程序错误');
+                    }
                     success(false);
                 }
             };
@@ -209,7 +212,7 @@
                 crossDomain: true
             });
             if ($.isArray($.logData) && !$.isEmptyObject(options.data)) $.logData.push({ url: url, data: options.method === 'delete' ? options.logData : options.data });
-            if (options.method === 'delete') $.logData.log();
+            if (options.method === 'delete' && $.logData && $.isFunction($.logData.log)) $.logData.log();
             $.ajax(ajaxSettings);
         },
         lgbSwal: function (options) {
@@ -224,7 +227,7 @@
             return prefix;
         },
         footer: function (options) {
-            var op = $.extend({ header: "header", content: ".main-content", ele: 'footer' }, options);
+            var op = $.extend({ header: "header", content: "body > section:first", ele: 'footer' }, options);
             var $ele = $(op.ele);
             return $(op.header).outerHeight() + $(op.content).outerHeight() + $ele.outerHeight() > $(window).height() ? $ele.removeClass('position-fixed') : $ele.addClass('position-fixed');
         },
@@ -235,7 +238,7 @@
             return base + url;
         },
         safeHtml: function (text) {
-            return $('<div>').text(text).html();
+            return (text && typeof text === "string") ? $('<div>').text(text).html() : text;
         },
         syntaxHighlight: function (json) {
             if (typeof (json) === 'string') {
@@ -412,8 +415,22 @@
             return this;
         },
         getTextByValue: function (value) {
-            var text = this.children().filter(function () { return $(this).val() === value; }).text();
-            if (text === "") text = value;
+            // 通过value获取select控件的text属性
+            var text = "";
+            if (typeof value !== "string") value = value.toString();
+            if (this.attr('data-toggle') === 'lgbSelect') {
+                if (value === this.val()) text = this.attr('data-text');
+                else {
+                    var data = [];
+                    this.lgbSelect('get', function (source) { data = source; });
+                    var find = data.filter(function (item, index) { return item.value === value; });
+                    if (find.length === 1) text = find[0].text;
+                }
+            }
+            else {
+                text = this.children().filter(function () { return $(this).val() === value; }).text();
+                if (text === "") text = value;
+            }
             return text;
         },
         lgbInfo: function (option) {
@@ -444,8 +461,14 @@
                 if ($.isFunction(op.callback)) op.callback.apply(that, arguments);
                 return console.error(err.toString());
             }).then(function () {
-                if (op.invoke) op.invoke(connection).then(function (result) { console.log(result); }).catch(function (err) { console.error(err.toString()); });
+                // 连接成功
+                // invoke 为 调用服务端方法
+                // invoke: function (connection) { return connection.invoke('RetrieveDashboard'); }
+                if (!op.invoke) return;
+                var executor = op.invoke(connection);
+                if (typeof executor === "object" && $.isFunction(executor.then)) executor.then(function (result) { console.log(result); }).catch(function (err) { console.error(err.toString()); });
             });
+            this.hub = connection;
             return this;
         }
     });
@@ -468,7 +491,7 @@
     });
 
     $(function () {
-        // fix bug bootstrap-table 1.12.1 showToggle
+        // fix bug bootstrap-table 1.14.2 showToggle
         if ($.fn.bootstrapTable) {
             $.extend($.fn.bootstrapTable.defaults.icons, {
                 refresh: 'fa-refresh'
@@ -517,7 +540,7 @@
 
         $("#gotoTop").on('click', function (e) {
             e.preventDefault();
-            $('html, body, .main-content').animate({
+            $('html, body, body > section:first').animate({
                 scrollTop: 0
             }, 200);
         });

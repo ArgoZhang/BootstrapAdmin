@@ -546,10 +546,6 @@ input.pending {
             background-color: #f8f9fa;
         }
 
-    .bootstrap-table .card-view-value > .btn:first-child {
-        margin-left: 4px;
-    }
-
     .bootstrap-table td > .btn:not(:first-child) {
         margin-left: 5px;
     }

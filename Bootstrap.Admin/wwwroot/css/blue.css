@@ -75,7 +75,7 @@
     color: #467fa7;
 }
 
-.breadcrumb > li + li:before, .breadcrumb, .pagination-detail, .form-select-append  {
+.breadcrumb > li + li:before, .breadcrumb, .pagination-detail, .form-select-append {
     color: #337ab7;
 }
 
