@@ -67,8 +67,7 @@
 
                         // open hub
                         $taskMsg.notifi({
-                            url: 'NotiHub',
-                            method: 'taskRev',
+                            url: 'TaskLogHub',
                             callback: function (result) {
                                 var content = this.children();
                                 while (content.children().length > 50) {

@@ -1,8 +1,8 @@
 ﻿using Longbow.Tasks;
-using Longbow.Web.SignalR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Bootstrap.Admin.Controllers.Api
 {
@@ -20,19 +20,19 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="hub"></param>
         /// <returns></returns>
         [HttpGet]
-        public bool Get([FromQuery]string name, [FromServices]IHubContext<SignalRHub> hub)
+        public async Task<ActionResult> Get([FromQuery]string name, [FromServices]IHubContext<TaskLogHub> hub)
         {
             var sche = TaskServicesManager.GetOrAdd(name);
-            sche.Triggers.First().PulseCallback = t => SendTaskLog(sche, name, hub);
-            SendTaskLog(sche, name, hub);
-            return true;
+            sche.Triggers.First().PulseCallback = t => SendTaskLog(sche, name, hub).ConfigureAwait(false);
+            await SendTaskLog(sche, name, hub).ConfigureAwait(false);
+            return Ok(true);
         }
 
-        private void SendTaskLog(IScheduler sche, string name, IHubContext<SignalRHub> hub)
+        private async Task SendTaskLog(IScheduler sche, string name, IHubContext<TaskLogHub> hub)
         {
             var t = sche.Triggers.First();
             var result = $"{{\"name\": \"{name}\", \"msg\": \"Trigger({t.GetType().Name}) LastRuntime: {sche.LastRuntime} Run({t.LastResult}) NextRuntime: {sche.NextRuntime} Elapsed: {t.LastRunElapsedTime.Seconds}s\"}}";
-            SignalRManager.SendTaskLog(hub.Clients.All, result).ConfigureAwait(false);
+            await hub.SendTaskLog(result);
         }
     }
 }

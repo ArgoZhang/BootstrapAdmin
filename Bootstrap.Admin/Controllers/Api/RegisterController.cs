@@ -37,7 +37,7 @@ namespace Bootstrap.Admin.Controllers.Api
         public async Task<bool> Post([FromServices]IHubContext<SignalRHub> hub, [FromBody]User user)
         {
             var ret = UserHelper.Save(user);
-            if (ret) await SignalRManager.Send(hub.Clients.All, new MessageBody() { Category = "Users", Message = string.Format("{0}-{1}", user.UserName, user.Description) });
+            if (ret) await hub.SendMessageBody(new MessageBody() { Category = "Users", Message = string.Format("{0}-{1}", user.UserName, user.Description) }, HttpContext.RequestAborted);
             return ret;
         }
 

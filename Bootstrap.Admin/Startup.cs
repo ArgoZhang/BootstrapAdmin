@@ -18,12 +18,12 @@ using System.Text.Unicode;
 namespace Bootstrap.Admin
 {
     /// <summary>
-    /// 
+    /// Startup 启动配置文件
     /// </summary>
     public class Startup
     {
         /// <summary>
-        /// 
+        /// 构造函数
         /// </summary>
         /// <param name="configuration"></param>
         public Startup(IConfiguration configuration)
@@ -32,13 +32,13 @@ namespace Bootstrap.Admin
         }
 
         /// <summary>
-        /// 
+        /// 获得 系统配置项 Iconfiguration 实例
         /// </summary>
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         /// <summary>
-        /// 
+        /// 服务容器注入方法
         /// </summary>
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
@@ -58,7 +58,7 @@ namespace Bootstrap.Admin
             services.AddIPLocator(DictHelper.ConfigIPLocator);
             services.AddOnlineUsers();
             services.AddSignalR().AddJsonProtocalDefault();
-            services.AddSignalRExceptionFilterHandler<SignalRHub>(async (client, ex) => await SignalRManager.Send(client, ex));
+            services.AddSignalRExceptionFilterHandler<SignalRHub>((client, ex) => client.SendMessageBody(ex).ConfigureAwait(false));
             services.AddResponseCompression();
             services.AddBootstrapAdminAuthentication();
             services.AddSwagger();
@@ -86,7 +86,7 @@ namespace Bootstrap.Admin
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         /// <summary>
-        /// 
+        /// 管道构建方法
         /// </summary>
         /// <param name="app"></param>
         /// <param name="env"></param>
@@ -110,7 +110,11 @@ namespace Bootstrap.Admin
             app.UseBootstrapAdminAuthentication(RoleHelper.RetrievesByUserName, RoleHelper.RetrievesByUrl, AppHelper.RetrievesByUserName);
             app.UseOnlineUsers(callback: TraceHelper.Save);
             app.UseCacheManagerCorsHandler();
-            app.UseSignalR(routes => { routes.MapHub<SignalRHub>("/NotiHub"); });
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<SignalRHub>("/NotiHub");
+                routes.MapHub<TaskLogHub>("/TaskLogHub");
+            });
             app.UseSwagger(Configuration["SwaggerPathBase"].TrimEnd('/'));
             app.UseMvc(routes =>
             {
