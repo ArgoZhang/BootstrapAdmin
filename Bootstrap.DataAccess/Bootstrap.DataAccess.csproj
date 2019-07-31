@@ -8,11 +8,12 @@
     <PackageReference Include="Bootstrap.Security.DataAccess" Version="2.2.10" />
     <PackageReference Include="Longbow.Data" Version="2.3.3" />
     <PackageReference Include="Longbow.Logging" Version="2.2.9" />
+    <PackageReference Include="Longbow.PetaPoco" Version="1.0.2" />
     <PackageReference Include="Longbow.Security.Cryptography" Version="1.3.0" />
     <PackageReference Include="Longbow.Web" Version="2.2.15" />
     <PackageReference Include="Longbow.Cache" Version="2.2.12" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="2.2.6" />
-    <PackageReference Include="PetaPoco.Extensions" Version="1.0.8" />
+    <PackageReference Include="PetaPoco.Extensions" Version="1.0.9" />
   </ItemGroup>
 
 </Project>

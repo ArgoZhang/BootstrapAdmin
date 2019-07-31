@@ -7,6 +7,10 @@
     <Company>Longbow</Company>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Include="..\Keys\Longbow.Utility.snk" Link="Longbow.Utility.snk" />
   </ItemGroup>
