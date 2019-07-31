@@ -219,6 +219,9 @@
             if ($.isFunction(swal)) {
                 swal($.extend({ showConfirmButton: false, showCancelButton: false, timer: 1000, title: '未设置', type: "success" }, options));
             }
+            else {
+                window.log('缺少 swal 脚本引用');
+            }
         },
         getUID: function (prefix) {
             if (!prefix) prefix = 'lgb';
@@ -549,6 +552,8 @@
         $('[data-toggle="tooltip"]').tooltip();
         $('[data-toggle="popover"]').popover();
         $('[data-toggle="lgbinfo"]').lgbInfo();
-        $('.date').lgbDatePicker();
+        $('.date').lgbDatePicker().on('show hide', function (e) {
+            e.stopPropagation();
+        });
     });
 })(jQuery);

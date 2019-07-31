@@ -784,3 +784,7 @@ input.pending {
 label[for] {
     cursor: pointer;
 }
+
+.form-inline .form-group .toggle {
+    display: block;
+}
