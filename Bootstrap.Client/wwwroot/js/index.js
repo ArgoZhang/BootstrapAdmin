@@ -20,6 +20,7 @@
 
     $('#btnCaptcha').on('click', function () {
         $('#captcha').parent().addClass('d-inline-block');
+        $.footer();
     });
 
     $.footer();
