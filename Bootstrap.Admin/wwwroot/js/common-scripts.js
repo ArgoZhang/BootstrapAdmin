@@ -131,6 +131,14 @@
 
 $(function () {
     var $sideMenu = $(".sidebar");
+
+    // 临时使用脚本解决多层菜单收缩问题
+    // Issue https://gitee.com/LongbowEnterprise/dashboard/issues?id=I1067G
+    var $activeLink = $sideMenu.find('a.nav-link.active');
+    while ($activeLink.length > 0) {
+        var $li = $activeLink.parent('li').addClass('active');
+        $activeLink = $li.parent().prev().addClass('active');
+    }
     $sideMenu.dcAccordion({
         autoExpand: true,
         saveState: false
