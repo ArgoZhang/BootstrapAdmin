@@ -8,8 +8,8 @@
 
   <ItemGroup>
     <PackageReference Include="Bootstrap.Security.Mvc" Version="2.2.11" />
-    <PackageReference Include="Longbow.Configuration" Version="2.2.4" />
-    <PackageReference Include="Longbow.Logging" Version="2.2.9" />
+    <PackageReference Include="Longbow.Configuration" Version="2.2.7" />
+    <PackageReference Include="Longbow.Logging" Version="2.2.11" />
     <PackageReference Include="Longbow.Web" Version="2.2.15" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="2.2.6" />

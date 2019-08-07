@@ -109,7 +109,7 @@ namespace Bootstrap.Admin
             app.UseStaticFiles();
             app.UseBootstrapAdminAuthentication(RoleHelper.RetrievesByUserName, RoleHelper.RetrievesByUrl, AppHelper.RetrievesByUserName);
             app.UseOnlineUsers(callback: TraceHelper.Save);
-            app.UseCacheManagerCorsHandler();
+            app.UseCacheManager();
             app.UseSignalR(routes =>
             {
                 routes.MapHub<SignalRHub>("/NotiHub");
