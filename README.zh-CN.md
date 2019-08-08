@@ -125,8 +125,11 @@ Install.sql 创建数据库脚本
 InitData.sql 初始化数据脚本  
 
 ## 分支说明  
+ **master** 发布分支与在线演示版本同步  
  **dev** 开发分支目前开发环境配置是 windows + SQLite  
- **master** 发布分支与在线演示版本同步
+ **dev-AdminLTE** AdminLTE 架构的后台管理 [传送门](http://ba.sdgxgz.com/BA/Admin/Index)  
+ **dev-Tabs** 利用 IFrame 多标签样式分支   
+ **dev-Localization** 支持多国语言分支  
 
 ## 演示地址  
 [![website1](https://img.shields.io/badge/website-http://ba.zylweb.cn-success.svg?logo=buzzfeed&logoColor=green)](http://ba.zylweb.cn)

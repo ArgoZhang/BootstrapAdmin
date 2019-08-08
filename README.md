@@ -113,8 +113,11 @@ For more information, please click [wiki](https://gitee.com/LongbowEnterprise/Bo
 5. Login as Admin/123789  
 
 ## Branchs  
+ **master** Synchronized with Online Demo  
  **dev** env: windows + SQLite  
- **master** Synchronized with Online Demo
+ **dev-AdminLTE** AdminLTE branch [Online Demo](http://ba.sdgxgz.com/BA/Admin/Index)  
+ **dev-Tabs** Multiple tabs branch     
+ **dev-Localization** support multiple language branch
 
 ## Online Demonstration   
 [![website1](https://img.shields.io/badge/website-http://ba.zylweb.cn-success.svg?logo=buzzfeed&logoColor=green)](http://ba.zylweb.cn)
