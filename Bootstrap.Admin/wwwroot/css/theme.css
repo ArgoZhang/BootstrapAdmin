@@ -459,6 +459,8 @@ input.pending {
 
 .card {
     margin-bottom: 15px;
+    box-shadow: 0 0 8px 0 rgba(0,0,0,.075), 0 2px 4px 0 rgba(255,255,255,0);
+    border-top: solid 3px rgba(108, 117, 125, 0.6);
 }
 
     .card .card-header a {
@@ -477,9 +479,21 @@ input.pending {
                 transform: rotate(-90deg);
             }
 
+        .card .card-header a.fa {
+            transition: color .3s linear;
+        }
+
+            .card .card-header a.fa:hover {
+                color: #333;
+            }
+
     .card .card-header i + span {
         margin-left: 6px;
     }
+
+.card-body .bootstrap-table {
+    margin-top: -10px;
+}
 
 .btn i + span {
     margin-left: 4px;
@@ -632,18 +646,6 @@ input.pending {
     /* fix bootstrap bottom margin */
     .bootstrap-table .fixed-table-pagination > .pagination-detail, .bootstrap-table .fixed-table-pagination > .pagination {
         margin-bottom: -5px;
-    }
-
-.card-body .bootstrap-table {
-    margin-top: -10px;
-}
-
-.card-header a.fa {
-    transition: color .3s linear;
-}
-
-    .card-header a.fa:hover {
-        color: #333;
     }
 
 .fixed-table-toolbar .dropdown-menu {
