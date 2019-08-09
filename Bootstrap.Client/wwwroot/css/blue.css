@@ -47,16 +47,18 @@
     border-bottom: solid 1px #307eb6;
 }
 
+.card {
+    border-top: 1px;
+}
+
 .card, .modal-footer, .form-control, .popover, .date .input-group-text,
 .input-group .btn:not(.btn-secondary):not(.btn-primary):not(.btn-warning):not(.btn-info):not(.btn-danger),
 .form-select-input:hover {
-    border-color: #5198cb;
+    border-color: #84bbe2;
 }
 
     .card .card-header, .modal-header {
         background-image: linear-gradient(to bottom, #5893be 0%, #63a6d7 100%);
-        background-color: #5899c8;
-        border-color: #3581b8;
     }
 
         .card .card-header, a[data-toggle="collapse"], .modal-header, .modal-header .close, .popover-header,
