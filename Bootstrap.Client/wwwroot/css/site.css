@@ -28,6 +28,10 @@
         background-position: 104% top;
     }
 
+    .header .navbar {
+        padding: 0 0 0 1rem;
+    }
+
 .sidebar-toggle-box {
     color: #eee;
 }
