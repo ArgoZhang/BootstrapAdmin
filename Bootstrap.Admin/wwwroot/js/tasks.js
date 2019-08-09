@@ -88,7 +88,7 @@
                             },
                             invoke: function () {
                                 $.bc({
-                                    url: 'api/TasksLog?name=' + row.Name
+                                    url: 'api/TasksLog?name=' + encodeURI(row.Name)
                                 });
                             },
                             onclose: function (error) {
