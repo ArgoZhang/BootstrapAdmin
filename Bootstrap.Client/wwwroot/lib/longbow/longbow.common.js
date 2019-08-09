@@ -60,8 +60,8 @@
     // 扩展format
     $.extend({
         "format": function (source, params) {
-            if (params === undefined) {
-                return source;
+            if (params === undefined || params === null) {
+                return null;
             }
             if (arguments.length > 2 && params.constructor !== Array) {
                 params = $.makeArray(arguments).slice(1);
