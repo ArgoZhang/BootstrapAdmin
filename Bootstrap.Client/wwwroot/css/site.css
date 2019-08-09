@@ -32,6 +32,33 @@
         padding: 0 0 0 1rem;
     }
 
+        .header .navbar .dropdown-menu .dropdown-item {
+            position: relative;
+        }
+
+        .header .navbar .dropdown-menu-arrow {
+            width: 0;
+            height: 0;
+            border-width: 0 6px 6px;
+            border-style: solid;
+            border-color: transparent transparent rgba(0,0,0,.15);
+            position: relative;
+            left: 16px;
+            margin-top: -6px;
+        }
+
+            .header .navbar .dropdown-menu-arrow:after {
+                content: " ";
+                width: 0;
+                height: 0;
+                border-width: 0 6px 6px;
+                border-style: solid;
+                border-color: transparent transparent #fff;
+                position: absolute;
+                top: 1px;
+                left: -6px;
+            }
+
 .sidebar-toggle-box {
     color: #eee;
 }
