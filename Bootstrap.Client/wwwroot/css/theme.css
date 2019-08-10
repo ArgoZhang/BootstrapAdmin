@@ -342,7 +342,7 @@ footer {
     left: 0;
     bottom: 0;
     right: 0;
-    z-index: 100;
+    z-index: 1040;
     display: flex;
 }
 
@@ -486,6 +486,11 @@ input.pending {
 
 .modal-body, .card-body {
     padding: 15px 15px 0 15px;
+}
+
+.modal-body-fixed {
+    max-height: calc(54vh);
+    overflow-y: auto;
 }
 
 .card {

@@ -122,4 +122,8 @@
     .modal-xl {
         max-width: 1100px;
     }
+
+    .modal-body-fixed {
+        max-height: calc(80vh);
+    }
 }
