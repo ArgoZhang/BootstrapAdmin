@@ -66,7 +66,7 @@ $(function () {
                             var menus = $nestMenu.find('input:checkbox');
                             menus.prop('checked', false);
                             $.each(result, function (index, item) {
-                                var selector = $.format('[value={0}]', item.Id);
+                                var selector = $.format('[value={0}]', item);
                                 menus.filter(selector).prop('checked', true);
                             });
                             $dialogSubMenu.show();

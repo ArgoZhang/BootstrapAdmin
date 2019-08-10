@@ -8,22 +8,22 @@ using System.Linq;
 namespace Bootstrap.DataAccess
 {
     /// <summary>
-    /// 
+    /// 菜单操作类
     /// </summary>
     public static class MenuHelper
     {
         /// <summary>
-        /// 
+        /// 通过指定角色ID相关菜单缓存键值
         /// </summary>
         public const string RetrieveMenusByRoleIdDataKey = "MenuHelper-RetrieveMenusByRoleId";
 
         /// <summary>
-        /// 
+        /// 通过当前用户获取所有菜单数据缓存键名称 "BootstrapMenu-RetrieveMenus"
         /// </summary>
         public const string RetrieveMenusAll = DbHelper.RetrieveMenusAll;
 
         /// <summary>
-        /// 
+        /// 保存菜单
         /// </summary>
         /// <param name="p"></param>
         /// <returns></returns>
@@ -38,7 +38,7 @@ namespace Bootstrap.DataAccess
         }
 
         /// <summary>
-        /// 
+        /// 删除菜单
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
@@ -64,14 +64,14 @@ namespace Bootstrap.DataAccess
         public static IEnumerable<BootstrapMenu> RetrieveMenusByUserName(string userName) => RetrieveAllMenus(userName);
 
         /// <summary>
-        /// 
+        /// 通过角色获取相关菜单集合
         /// </summary>
         /// <param name="roleId"></param>
         /// <returns></returns>
-        public static IEnumerable<object> RetrieveMenusByRoleId(string roleId) => CacheManager.GetOrAdd($"{RetrieveMenusByRoleIdDataKey}-{roleId}", k => DbContextManager.Create<Menu>().RetrieveMenusByRoleId(roleId), RetrieveMenusByRoleIdDataKey);
+        public static IEnumerable<string> RetrieveMenusByRoleId(string roleId) => CacheManager.GetOrAdd($"{RetrieveMenusByRoleIdDataKey}-{roleId}", k => DbContextManager.Create<Menu>().RetrieveMenusByRoleId(roleId), RetrieveMenusByRoleIdDataKey);
 
         /// <summary>
-        /// 
+        /// 保存指定角色的所有菜单
         /// </summary>
         /// <param name="roleId"></param>
         /// <param name="menuIds"></param>
@@ -84,7 +84,7 @@ namespace Bootstrap.DataAccess
         }
 
         /// <summary>
-        /// 
+        /// 获取指定用户的应用程序菜单
         /// </summary>
         /// <param name="appId"></param>
         /// <param name="userName"></param>

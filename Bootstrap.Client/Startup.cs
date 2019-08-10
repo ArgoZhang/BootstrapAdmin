@@ -89,7 +89,7 @@ namespace Bootstrap.Client
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseBootstrapAdminAuthentication();
-            app.UseCacheManagerCorsHandler();
+            app.UseCacheManager();
             app.UseSignalR(routes => { routes.MapHub<SignalRHub>("/NotiHub"); });
             app.UseMvc(routes =>
             {

@@ -8,7 +8,7 @@ using System.Linq;
 namespace Bootstrap.DataAccess
 {
     /// <summary>
-    /// 
+    /// 菜单实体类
     /// </summary>
     [TableName("Navigations")]
     public class Menu : BootstrapMenu
@@ -24,10 +24,9 @@ namespace Bootstrap.DataAccess
             var db = DbManager.Create();
             try
             {
-                var ids = string.Join(",", value);
                 db.BeginTransaction();
-                db.Execute($"delete from NavigationRole where NavigationID in ({ids})");
-                db.Delete<Menu>($"where ID in ({ids})");
+                db.Execute($"delete from NavigationRole where NavigationID in @value", new { value });
+                db.Delete<Menu>($"where ID in @value", new { value });
                 db.CompleteTransaction();
                 ret = true;
             }
@@ -38,6 +37,7 @@ namespace Bootstrap.DataAccess
             }
             return ret;
         }
+
         /// <summary>
         /// 保存新建/更新的菜单信息
         /// </summary>
@@ -53,16 +53,18 @@ namespace Bootstrap.DataAccess
             DbManager.Create().Save(p);
             return true;
         }
+
         /// <summary>
         /// 查询某个角色所配置的菜单
         /// </summary>
         /// <param name="roleId"></param>
         /// <returns></returns>
-        public virtual IEnumerable<object> RetrieveMenusByRoleId(string roleId)
+        public virtual IEnumerable<string> RetrieveMenusByRoleId(string roleId)
         {
             var menus = DbManager.Create().Fetch<BootstrapMenu>("select NavigationID as Id from NavigationRole where RoleID = @0", roleId);
-            return menus.Select(m => new { m.Id });
+            return menus.Select(m => m.Id);
         }
+
         /// <summary>
         /// 通过角色ID保存当前授权菜单
         /// </summary>
@@ -88,6 +90,7 @@ namespace Bootstrap.DataAccess
             }
             return ret;
         }
+
         /// <summary>
         /// 通过当前用户名获得所有菜单
         /// </summary>

@@ -5,13 +5,13 @@ using System.Linq;
 namespace Bootstrap.DataAccess
 {
     /// <summary>
-    /// 
+    /// 缓存清理操作类
     /// </summary>
     public static class CacheCleanUtility
     {
         private const string RetrieveAllRolesDataKey = "BootstrapAdminRoleMiddleware-RetrieveRoles";
         /// <summary>
-        /// 
+        /// 清理缓存
         /// </summary>
         /// <param name="roleIds"></param>
         /// <param name="userIds"></param>
@@ -44,11 +44,11 @@ namespace Bootstrap.DataAccess
                     cacheKeys.Add(string.Format("{0}-{1}", RoleHelper.RetrieveRolesByUserIdDataKey, id));
                     cacheKeys.Add(string.Format("{0}-{1}", GroupHelper.RetrieveGroupsByUserIdDataKey, id));
                     cacheKeys.Add(MenuHelper.RetrieveMenusAll + "*");
-                    corsKeys.Add(MenuHelper.RetrieveMenusAll + "*");
                 });
                 cacheKeys.Add(UserHelper.RetrieveNewUsersDataKey + "*");
                 cacheKeys.Add(UserHelper.RetrieveUsersDataKey + "*");
                 corsKeys.Add(UserHelper.RetrieveUsersDataKey + "*");
+                corsKeys.Add(MenuHelper.RetrieveMenusAll + "*");
             }
             if (groupIds != null)
             {
@@ -89,7 +89,7 @@ namespace Bootstrap.DataAccess
                 corsKeys.Add(cacheKey);
             }
             CacheManager.Clear(cacheKeys);
-            CacheManager.CorsClear(corsKeys);
+            CacheManager.CorsClear(corsKeys.Distinct());
         }
     }
 }

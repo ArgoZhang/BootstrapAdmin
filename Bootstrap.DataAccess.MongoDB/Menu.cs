@@ -6,12 +6,12 @@ using System.Linq;
 namespace Bootstrap.DataAccess.MongoDB
 {
     /// <summary>
-    /// 
+    /// 菜单实体类
     /// </summary>
     public class Menu : DataAccess.Menu
     {
         /// <summary>
-        /// 
+        /// 获取指定用户的所有菜单
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
@@ -29,7 +29,7 @@ namespace Bootstrap.DataAccess.MongoDB
         }
 
         /// <summary>
-        /// 
+        /// 保存菜单
         /// </summary>
         /// <param name="p"></param>
         /// <returns></returns>
@@ -58,7 +58,7 @@ namespace Bootstrap.DataAccess.MongoDB
         }
 
         /// <summary>
-        /// 
+        /// 删除菜单
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
@@ -74,14 +74,14 @@ namespace Bootstrap.DataAccess.MongoDB
         }
 
         /// <summary>
-        /// 
+        /// 获取指定角色相关菜单
         /// </summary>
         /// <param name="roleId"></param>
         /// <returns></returns>
-        public override IEnumerable<object> RetrieveMenusByRoleId(string roleId) => DbManager.Roles.Find(md => md.Id == roleId).FirstOrDefault().Menus.Select(m => new { Id = m });
+        public override IEnumerable<string> RetrieveMenusByRoleId(string roleId) => DbManager.Roles.Find(md => md.Id == roleId).FirstOrDefault().Menus;
 
         /// <summary>
-        /// 
+        /// 保存指定角色相关菜单
         /// </summary>
         /// <param name="roleId"></param>
         /// <param name="menuIds"></param>
