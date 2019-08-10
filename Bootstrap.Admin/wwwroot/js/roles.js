@@ -64,10 +64,10 @@ $(function () {
                             $btnSubmitMenu.data('type', 'menu');
                             // set checkbox status
                             var menus = $nestMenu.find('input:checkbox');
-                            menus.attr('checked', false);
+                            menus.prop('checked', false);
                             $.each(result, function (index, item) {
                                 var selector = $.format('[value={0}]', item.Id);
-                                menus.filter(selector).attr('checked', true);
+                                menus.filter(selector).prop('checked', true);
                             });
                             $dialogSubMenu.show();
                             $dialogMenu.modal('show');
