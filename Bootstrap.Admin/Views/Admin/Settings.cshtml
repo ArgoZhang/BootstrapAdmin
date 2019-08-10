@@ -15,7 +15,7 @@
     <script src="~/lib/longbow/longbow.validate.js"></script>
     <script src="~/js/settings.js" asp-append-version="true"></script>
 }
-<div class="card">
+<div class="card" asp-auth="saveTitle">
     <div class="card-header">系统名称设置</div>
     <div class="card-body" data-toggle="LgbValidate" data-valid-button="#sysSave">
         <div class="alert alert-danger" role="alert" asp-condition="@Model.IsDemo">
@@ -25,13 +25,13 @@
             <div class="input-group">
                 <input type="text" class="form-control" id="sysName" placeholder="请输入网站标题，50字以内" value="@Model.Title" maxlength="50" data-valid="true" />
                 <div class="input-group-append" asp-condition="!@Model.IsDemo">
-                    <button class="btn btn-secondary" type="button" data-method="title" asp-auth="saveTitle">保存</button>
+                    <button class="btn btn-secondary" type="button" data-method="title">保存</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div class="card">
+<div class="card" asp-auth="saveFooter">
     <div class="card-header">页脚设置</div>
     <div class="card-body" data-toggle="LgbValidate" data-valid-button="#footSave">
         <div class="alert alert-danger" role="alert" asp-condition="@Model.IsDemo">
@@ -41,13 +41,13 @@
             <div class="input-group">
                 <input type="text" class="form-control" id="sysFoot" placeholder="请输入网站页脚，50字以内" value="@Model.Footer" maxlength="50" data-valid="true" />
                 <div class="input-group-append" asp-condition="!@Model.IsDemo">
-                    <button class="btn btn-secondary" type="button" data-method="footer" asp-auth="saveFooter">保存</button>
+                    <button class="btn btn-secondary" type="button" data-method="footer">保存</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div class="card">
+<div class="card" asp-auth="saveTheme">
     <div class="card-header">网站样式</div>
     <div class="card-body">
         <div class="alert alert-info" role="alert">
@@ -65,7 +65,7 @@
                         }
                     </div>
                 </div>
-                <button class="btn btn-secondary" type="button" data-method="css" asp-auth="saveTheme">保存</button>
+                <button class="btn btn-secondary" type="button" data-method="css">保存</button>
             </div>
         </div>
     </div>
