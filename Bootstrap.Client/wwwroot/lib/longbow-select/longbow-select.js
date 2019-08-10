@@ -10,8 +10,7 @@
     lgbSelect.VERSION = '1.0';
     lgbSelect.Author = 'argo@163.com';
     lgbSelect.DataKey = "lgb.select";
-    lgbSelect.Template = '<div class="form-select" data-toggle="lgbSelect">';
-    lgbSelect.Template += '<input type="text" readonly="readonly" class="form-control form-select-input" />';
+    lgbSelect.Template = '<div class="form-select dropdown" data-toggle="lgbSelect">';
     lgbSelect.Template += '<span class="form-select-append">';
     lgbSelect.Template += '    <i class="fa fa-angle-up"></i>';
     lgbSelect.Template += '</span>';
@@ -46,26 +45,12 @@
 
         this.$element.data(lgbSelect.DataKey, this);
 
-        //  bind event
-        this.$ctl.on('click', '.form-select-input', function (e) {
-            e.preventDefault();
-
-            that.$ctl.toggleClass('open');
-            // calc width
-            that.$ctl.find('.dropdown-menu').outerWidth(that.$ctl.outerWidth());
-        });
-
         this.$ctl.on('click', 'a.dropdown-item', function (e) {
             e.preventDefault();
 
             var $this = $(this);
             $this.parent().children().removeClass('active');
             that.val($this.attr('data-val'), true);
-        });
-
-        $(document).on('click', function (e) {
-            if (that.$input[0] !== e.target)
-                that.closeMenu();
         });
 
         var getUID = function (prefix) {
@@ -86,16 +71,20 @@
 
     _proto.initBySelect = function () {
         var $input = this.$element.prev();
-        if ($input.attr('data-toggle') === 'lgbSelect') $input.remove();
+
         // 新控件 <div class="form-select">
         this.$ctl = $(lgbSelect.Template).insertBefore(this.$element);
+        if ($input.attr('data-toggle') === 'lgbSelect') {
+            this.$input = $input.addClass("form-select-input").attr("aria-haspopup", "true").attr("aria-expanded", "false").attr("data-toggle", "dropdown");
+        }
+        else {
+            this.$input = $('<input type="text" readonly="readonly" class="form-control form-select-input" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"/>');
+        }
 
         // 下拉组合框
-        this.$input = this.$ctl.find('.form-select-input');
         this.$menubar = this.$ctl.find('.form-select-append');
         this.$menus = this.$ctl.find('.dropdown-menu');
-
-        // init dropdown-menu data
+        this.$input.insertBefore(this.$menubar);
         var data = this.$element.find('option').map(function () {
             return { value: this.value, text: this.text, selected: this.selected }
         }).toArray();
@@ -106,6 +95,9 @@
 
         // init dropdown-menu
         this.reset(data);
+
+        // init dropdown-menu data
+        this.$input.dropdown();
     };
 
     _proto.createElement = function () {
@@ -113,7 +105,7 @@
 
         // move attributes
         this.options.attributes.forEach(function (name, index) {
-            var value = that.$element.attr(name)
+            var value = that.$element.attr(name);
             if (value !== undefined) {
                 if (name === 'class') that.$input.addClass(value).removeClass('d-none');
                 else that.$input.attr(name, that.$element.attr(name));
@@ -135,10 +127,6 @@
         attrs.forEach(function (v) {
             that.$element.attr(v.name, v.value);
         });
-    };
-
-    _proto.closeMenu = function () {
-        this.$ctl.removeClass('open');
     };
 
     _proto.disabled = function () {
@@ -203,10 +191,6 @@
         var params = $.makeArray(arguments).slice(1);
         return this.each(function () {
             var $this = $(this);
-
-            // 保护重复生成
-            if ($this.hasClass('form-select')) return;
-
             var data = $this.data(lgbSelect.DataKey);
             var options = typeof option === 'object' && option;
 
@@ -222,6 +206,6 @@
     $.fn.lgbSelect.Constructor = lgbSelect;
 
     $(function () {
-        $('[data-toggle="lgbSelect"]').lgbSelect();
+        $('select[data-toggle="lgbSelect"]').lgbSelect();
     });
 })(jQuery);
