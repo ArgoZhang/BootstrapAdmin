@@ -11,6 +11,10 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp2.2'">
+    <MvcRazorCompileOnPublish>true</MvcRazorCompileOnPublish>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Include="..\Keys\Longbow.Utility.snk" Link="Longbow.Utility.snk" />
   </ItemGroup>
