@@ -457,6 +457,11 @@ input.pending {
     padding: 15px 15px 0 15px;
 }
 
+.modal-body-fixed {
+    max-height: calc(54vh);
+    overflow-y: auto;
+}
+
 .card {
     margin-bottom: 15px;
     box-shadow: 0 0 8px 0 rgba(0,0,0,.075), 0 2px 4px 0 rgba(255,255,255,0);
