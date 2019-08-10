@@ -34,7 +34,7 @@ namespace Bootstrap.Admin.Controllers.Api
             var ret = await GetJsonAsync(() => client.GetStringAsync($"https://gitee.com/{userName}/{repoName}/issues"), content =>
             {
                 var regex = Regex.Matches(content, "<div class='ui mini circular label'>([\\d]+)</div>", RegexOptions.IgnoreCase);
-                var labels = new string[] { "open", "closed", "rejected" };
+                var labels = new string[] { "open", "progressing", "closed", "rejected" };
                 var result = string.IsNullOrEmpty(content) ? new string[] { "unknown" } : regex.Select((m, i) => $"{labels[i]} {m.Groups[1].Value}");
                 return string.Join(" ", result);
             });
