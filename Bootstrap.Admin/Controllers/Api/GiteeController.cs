@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Bootstrap.Admin.Controllers.Api
 {
     /// <summary>
-    /// 
+    /// Gitee 网站信息接口类
     /// </summary>
     [Route("api/[controller]/[action]")]
     [ApiController]
@@ -18,7 +18,7 @@ namespace Bootstrap.Admin.Controllers.Api
     public class GiteeController : ControllerBase
     {
         /// <summary>
-        /// 
+        /// 获取 Gitee 网站 Issues 信息
         /// </summary>
         /// <param name="httpClientFactory"></param>
         /// <param name="userName"></param>
@@ -38,11 +38,12 @@ namespace Bootstrap.Admin.Controllers.Api
                 var result = string.IsNullOrEmpty(content) ? new string[] { "unknown" } : regex.Select((m, i) => $"{labels[i]} {m.Groups[1].Value}");
                 return string.Join(" ", result);
             });
+            color = ret.StartsWith("open 0 progressing 0") ? "success" : color;
             return new JsonResult(new { schemaVersion = 1, label, message = ret, color });
         }
 
         /// <summary>
-        /// 
+        /// 获取 Gitee 网站 Pulls 信息
         /// </summary>
         /// <param name="httpClientFactory"></param>
         /// <param name="userName"></param>
@@ -66,7 +67,7 @@ namespace Bootstrap.Admin.Controllers.Api
         }
 
         /// <summary>
-        /// 
+        /// 获取 Gitee 网站 Releases 信息
         /// </summary>
         /// <param name="httpClientFactory"></param>
         /// <param name="userName"></param>
@@ -88,7 +89,7 @@ namespace Bootstrap.Admin.Controllers.Api
         }
 
         /// <summary>
-        /// 
+        /// 获取 Gitee 网站 Builds 信息
         /// </summary>
         /// <param name="httpClientFactory"></param>
         /// <param name="userName"></param>
@@ -127,24 +128,18 @@ namespace Bootstrap.Admin.Controllers.Api
             return ret;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         private class AppveyorBuildResult
         {
             /// <summary>
-            /// 
+            /// Appveyor 编译版本实例
             /// </summary>
             public Build Build { get; set; }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         private class Build
         {
             /// <summary>
-            /// 
+            /// Build 版本信息
             /// </summary>
             public string Version { get; set; }
         }
