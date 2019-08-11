@@ -25,8 +25,8 @@ namespace Bootstrap.DataAccess
             try
             {
                 db.BeginTransaction();
-                db.Execute($"delete from NavigationRole where NavigationID in @value", new { value });
-                db.Delete<Menu>($"where ID in @value", new { value });
+                db.Execute($"delete from NavigationRole where NavigationID in (@value)", new { value });
+                db.Delete<Menu>($"where ID in (@value)", new { value });
                 db.CompleteTransaction();
                 ret = true;
             }
