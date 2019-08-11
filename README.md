@@ -52,8 +52,9 @@ Departments Authorize Users
 1. The front-end system does not need to write login, authorization and authentication modules; it is only responsible for writing business modules.
 2. Background system can be used directly without any secondary development.
 3. Front-end and back-end systems are separated, which are different systems (domain name can be independent)
+4. Extensible to multi-tenant applications
 
-For more information, please click [wiki](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/项目介绍)  
+For more information, please click [wiki](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D?sort_id=1333473)  
 
 ### Database 
 **MSSQL/Oracle/SQLite/MySql/MariaDB/Postgresql/Firebird/MsAccess/MongoDB**  
@@ -109,8 +110,7 @@ For more information, please click [wiki](https://gitee.com/LongbowEnterprise/Bo
 1. Install .net core sdk [Offical website](http://www.microsoft.com/net/download)
 2. Install Visual Studio IDE 2017 lastest [Offical website](https://visualstudio.microsoft.com/vs/getting-started/)
 3. Git clone `git clone https://github.com/ArgoZhang/BootstrapAdmin.git`
-4. Copy file `copy ./Scripts/Longbow.lic ./Bootstrap.Admin/bin/debug/netcoreap2.2/longbow.lic`
-5. Login as Admin/123789  
+4. Login as Admin/123789  
 
 ## Branchs  
  **master** Synchronized with Online Demo  
@@ -120,8 +120,8 @@ For more information, please click [wiki](https://gitee.com/LongbowEnterprise/Bo
  **dev-Localization** support multiple language branch
 
 ## Online Demonstration   
-[![website1](https://img.shields.io/badge/website-http://ba.zylweb.cn-success.svg?logo=buzzfeed&logoColor=green)](http://ba.zylweb.cn)
-[![website2](https://img.shields.io/badge/website-http://ba.sdgxgz.com-success.svg?logo=buzzfeed&logoColor=green)](http://ba.sdgxgz.com)  
+[![website1](https://img.shields.io/badge/linux-http://ba.zylweb.cn-success.svg?logo=buzzfeed&logoColor=green)](http://ba.zylweb.cn)
+[![website2](https://img.shields.io/badge/windows-http://ba.sdgxgz.com-success.svg?logo=buzzfeed&logoColor=green)](http://ba.sdgxgz.com)  
 
 ### Login  
 Administrator: Admin/123789  
@@ -146,7 +146,7 @@ docker pull reg.qiniu.com/argozhang/ba
 Detailed configuration instructions please click [wikis](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis)
 
 ## Q&A
-Please click [wikis](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/常见问题Q&A)  
+Please click [wikis](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98Q&A)  
 
 ## License
 [![Gitee license](https://img.shields.io/github/license/argozhang/bootstrapadmin.svg?logo=git&logoColor=red)](https://gitee.com/LongbowEnterprise/BootstrapAdmin/blob/master/LICENSE)

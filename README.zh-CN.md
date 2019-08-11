@@ -55,8 +55,9 @@
 1. 前台系统不用编写登录、授权、认证模块；只负责编写业务模块即可
 2. 后台系统无需任何二次开发，直接发布即可使用
 3. 前台与后台系统分离，分别为不同的系统（域名可独立）
+4. 可扩展为多租户应用
 
-详细资料请点击 [查看文档](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/项目介绍)  
+详细资料请点击 [查看文档](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D?sort_id=1333473)  
 
 ### 数据库
 数据库支持列表如下：  
@@ -110,12 +111,11 @@
 ## QQ交流群
 [![QQ](https://img.shields.io/badge/QQ-795206915-green.svg?logo=tencent%20qq&logoColor=red)](https://shang.qq.com/wpa/qunwpa?idkey=d381355e50ff91db410c3da3eadb081ba859f64c2877e86343f4709b171f28b8)
 
-## 安装教程
+## 开发环境搭建
 1. 安装 .net core sdk [官方网址](http://www.microsoft.com/net/download)
 2. 安装 Visual Studio IDE 2017以上 [官方网址](https://visualstudio.microsoft.com/vs/getting-started/)
 3. 获取本项目代码 [BootstrapAdmin](https://gitee.com/LongbowEnterprise/BootstrapAdmin)
-4. 拷贝 Scripts\Longbow.lic 文件到 bin 目录下的程序集输出目录 (bin\debug\netcoreapp2.2\) 项目中脚本自动完成  
-5. 系统登录用户名与口令  
+4. 系统登录用户名与口令  
 用户名：**Admin**  
 密码：**123789**  
 
@@ -132,8 +132,8 @@ InitData.sql 初始化数据脚本
  **dev-Localization** 支持多国语言分支  
 
 ## 演示地址  
-[![website1](https://img.shields.io/badge/website-http://ba.zylweb.cn-success.svg?logo=buzzfeed&logoColor=green)](http://ba.zylweb.cn)
-[![website2](https://img.shields.io/badge/website-http://ba.sdgxgz.com-success.svg?logo=buzzfeed&logoColor=green)](http://ba.sdgxgz.com)  
+[![website1](https://img.shields.io/badge/linux-http://ba.zylweb.cn-success.svg?logo=buzzfeed&logoColor=green)](http://ba.zylweb.cn)
+[![website2](https://img.shields.io/badge/windows-http://ba.sdgxgz.com-success.svg?logo=buzzfeed&logoColor=green)](http://ba.sdgxgz.com)  
 
 ### 登录用户名与密码  
 管理员：**Admin/123789**  
@@ -158,7 +158,7 @@ docker pull reg.qiniu.com/argozhang/ba
 详细配置说明请点击 [查看文档](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis) 查看配置说明小节  
 
 ## 常见问题Q&A
-请点击 [查看文档](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/常见问题Q&A) 查看常见问题小节  
+请点击 [查看文档](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98Q&A) 查看常见问题小节  
 
 ## 开源协议
 [![Gitee license](https://img.shields.io/github/license/argozhang/bootstrapadmin.svg?logo=git&logoColor=red)](https://gitee.com/LongbowEnterprise/BootstrapAdmin/blob/master/LICENSE)
