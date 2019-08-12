@@ -637,19 +637,23 @@ input.pending {
             display: none;
         }
 
-    .bootstrap-table .bs-bars .gear .dropdown-menu a {
-        padding: 8px 12px;
-        display: table-cell;
-        color: #504d4d;
+    .bootstrap-table .bs-bars .gear .dropdown-menu {
+        padding: 0;
     }
 
-        .bootstrap-table .bs-bars .gear .dropdown-menu a:not(:first-child) {
-            border-left: solid 1px #aeb2b7;
+        .bootstrap-table .bs-bars .gear .dropdown-menu a {
+            padding: 8px 12px;
+            display: table-cell;
+            color: #504d4d;
         }
 
-        .bootstrap-table .bs-bars .gear .dropdown-menu a:hover {
-            color: #235e90;
-        }
+            .bootstrap-table .bs-bars .gear .dropdown-menu a:not(:first-child) {
+                border-left: solid 1px #aeb2b7;
+            }
+
+            .bootstrap-table .bs-bars .gear .dropdown-menu a:hover {
+                color: #235e90;
+            }
 
     .bootstrap-table td {
         word-break: break-all;
