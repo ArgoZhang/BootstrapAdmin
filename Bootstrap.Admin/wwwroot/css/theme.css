@@ -675,6 +675,10 @@ input.pending {
             padding: 1px 5px;
         }
 
+    .bootstrap-table .fixed-table-container .table tbody tr.selected td {
+        background-color: rgba(0, 0, 0, 0.03);
+    }
+
     .bootstrap-table .fixed-table-container .table.table-sm tbody td {
         padding: 0.3rem;
     }
