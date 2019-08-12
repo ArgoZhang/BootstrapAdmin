@@ -28,6 +28,7 @@ $(function () {
                             $dialogRoleForm.html(html).find('[data-toggle="tooltip"]').each(function (index, label) {
                                 if (label.title === "") label.title = "未设置";
                             }).tooltip();
+                            $dialogRoleForm.find('.form-checkbox').lgbCheckbox();
                             $dialogRole.modal('show');
                         }
                     });
@@ -44,6 +45,7 @@ $(function () {
                             $dialogUserForm.html(html).find('[data-toggle="tooltip"]').each(function (index, label) {
                                 if (label.title === "") label.title = "未设置";
                             }).tooltip();
+                            $dialogUserForm.find('.form-checkbox').lgbCheckbox();
                             $dialogUser.modal('show');
                         }
                     });

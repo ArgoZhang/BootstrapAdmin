@@ -33,6 +33,7 @@ $(function () {
                             $dialogRoleForm.html(html).find('[data-toggle="tooltip"]').each(function (index, label) {
                                 if (label.title === "") label.title = "未设置";
                             }).tooltip();
+                            $dialogRoleForm.find('.form-checkbox').lgbCheckbox();
                             $dialogRole.modal('show');
                         }
                     });
@@ -49,6 +50,7 @@ $(function () {
                             $dialogGroupForm.html(html).find('[data-toggle="tooltip"]').each(function (index, label) {
                                 if (label.title === "") label.title = "未设置";
                             }).tooltip();
+                            $dialogGroupForm.find('.form-checkbox').lgbCheckbox();
                             $dialogGroup.modal('show');
                         }
                     });

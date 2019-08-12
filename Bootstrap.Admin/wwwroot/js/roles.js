@@ -36,6 +36,7 @@ $(function () {
                             $dialogUserForm.html(html).find('[data-toggle="tooltip"]').each(function (index, label) {
                                 if (label.title === "") label.title = "未设置";
                             }).tooltip();
+                            $dialogUserForm.find('.form-checkbox').lgbCheckbox();
                             $dialogUser.modal('show');
                         }
                     });
@@ -52,6 +53,7 @@ $(function () {
                             $dialogGroupForm.html(html).find('[data-toggle="tooltip"]').each(function (index, label) {
                                 if (label.title === "") label.title = "未设置";
                             }).tooltip();
+                            $dialogGroupForm.find('.form-checkbox').lgbCheckbox();
                             $dialogGroup.modal('show');
                         }
                     });
@@ -86,6 +88,7 @@ $(function () {
                             $dialogAppForm.html(html).find('[data-toggle="tooltip"]').each(function (index, label) {
                                 if (label.title === "") label.title = "未设置";
                             }).tooltip();
+                            $dialogAppForm.find('.form-checkbox').lgbCheckbox();
                             $dialogApp.modal('show');
                         }
                     });
