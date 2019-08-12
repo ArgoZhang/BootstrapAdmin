@@ -62,6 +62,10 @@ body {
                 left: -6px;
             }
 
+    .header .dropdown-menu {
+        padding: 0;
+    }
+
 .userinfo img {
     height: 29px;
     width: 29px;
@@ -403,7 +407,6 @@ footer {
 
 .dropdown-menu {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.176);
-    padding: 0;
 }
 
     .dropdown-menu a {
@@ -674,6 +677,10 @@ input.pending {
             font-size: 0.75rem;
             padding: 1px 5px;
         }
+
+    .bootstrap-table .fixed-table-container .table tbody tr.selected td {
+        background-color: rgba(0, 0, 0, 0.03);
+    }
 
     .bootstrap-table .fixed-table-container .table.table-sm tbody td {
         padding: 0.3rem;
