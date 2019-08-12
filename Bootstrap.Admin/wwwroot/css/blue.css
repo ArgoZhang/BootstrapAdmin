@@ -51,6 +51,10 @@
     border-top-width: 1px;
 }
 
+    .card:hover {
+        border-top-color: #84bbe2;
+    }
+
 .card, .modal-footer, .form-control, .popover, .date .input-group-text,
 .input-group .btn:not(.btn-secondary):not(.btn-primary):not(.btn-warning):not(.btn-info):not(.btn-danger),
 .form-select-input:hover {
