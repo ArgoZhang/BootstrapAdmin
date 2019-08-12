@@ -48,7 +48,7 @@
 }
 
 .card {
-    border-top: 1px;
+    border-top-width: 1px;
 }
 
 .card, .modal-footer, .form-control, .popover, .date .input-group-text,
