@@ -508,6 +508,10 @@ input.pending {
         border-top-color: #6c757d;
     }
 
+    .card .card, .card .card:hover {
+        box-shadow: none;
+    }
+
     .card .card-header a {
         color: #797979;
     }
