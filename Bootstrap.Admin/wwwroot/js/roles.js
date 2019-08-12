@@ -26,7 +26,7 @@ $(function () {
             events: {
                 '#btn_assignUser': function (row) {
                     $.bc({
-                        id: row.Id, url: User.url, query: { type: "role" }, method: "post",
+                        id: row.Id, url: User.url, query: { type: "role" }, method: "post", htmlTemplate: CheckboxHtmlTemplate,
                         callback: function (result) {
                             var htmlTemplate = this.htmlTemplate;
                             var html = $.map(result, function (element, index) {
@@ -42,7 +42,7 @@ $(function () {
                 },
                 '#btn_assignGroup': function (row) {
                     $.bc({
-                        id: row.Id, url: Group.url, query: { type: "role" }, method: "post",
+                        id: row.Id, url: Group.url, query: { type: "role" }, method: "post", htmlTemplate: CheckboxHtmlTemplate,
                         callback: function (result) {
                             var htmlTemplate = this.htmlTemplate;
                             var html = $.map(result, function (element, index) {
@@ -58,7 +58,7 @@ $(function () {
                 },
                 '#btn_assignMenu': function (row) {
                     $.bc({
-                        id: row.Id, url: Menu.url, query: { type: "role" }, method: "post",
+                        id: row.Id, url: Menu.url, query: { type: "role" }, method: "post", htmlTemplate: CheckboxHtmlTemplate,
                         callback: function (result) {
                             $dialogMenuHeader.text($.format('{0}-菜单授权窗口', row.RoleName));
                             $btnSubmitMenu.data('type', 'menu');
@@ -76,7 +76,7 @@ $(function () {
                 },
                 '#btn_assignApp': function (row) {
                     $.bc({
-                        id: row.Id, url: App.url, method: "get",
+                        id: row.Id, url: App.url, method: "get", htmlTemplate: CheckboxHtmlTemplate,
                         callback: function (result) {
                             var htmlTemplate = this.htmlTemplate;
                             var html = $.map(result, function (element, index) {

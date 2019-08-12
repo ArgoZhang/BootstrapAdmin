@@ -42,7 +42,7 @@ $(function () {
             events: {
                 '#btn_assignRole': function (row) {
                     $.bc({
-                        id: row.Id, url: Role.url, query: { type: "menu" }, method: "post",
+                        id: row.Id, url: Role.url, query: { type: "menu" }, method: "post", htmlTemplate: CheckboxHtmlTemplate,
                         callback: function (result) {
                             var htmlTemplate = this.htmlTemplate;
                             var html = $.map(result, function (element, index) {

@@ -18,7 +18,7 @@ $(function () {
             events: {
                 '#btn_assignRole': function (row) {
                     $.bc({
-                        id: row.Id, url: Role.url, query: { type: "group" }, method: "post",
+                        id: row.Id, url: Role.url, query: { type: "group" }, method: "post", htmlTemplate: CheckboxHtmlTemplate,
                         callback: function (result) {
                             var htmlTemplate = this.htmlTemplate;
                             var html = $.map(result, function (element, index) {
@@ -34,7 +34,7 @@ $(function () {
                 },
                 '#btn_assignUser': function (row) {
                     $.bc({
-                        id: row.Id, url: User.url, query: { type: "group" }, method: "post",
+                        id: row.Id, url: User.url, query: { type: "group" }, method: "post", htmlTemplate: CheckboxHtmlTemplate,
                         callback: function (result) {
                             var htmlTemplate = this.htmlTemplate;
                             var html = $.map(result, function (element, index) {

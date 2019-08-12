@@ -123,7 +123,6 @@
                 id: "",
                 url: "",
                 data: {},
-                htmlTemplate: '<div class="form-group col-md-3 col-sm-4 col-6"><div class="form-check"><label class="form-check-label" title="{3}" data-toggle="tooltip"><input type="checkbox" class="form-check-input" value="{0}" {2}/><span>{1}</span></label></div></div>',
                 title: "",
                 modal: false,
                 loading: false,

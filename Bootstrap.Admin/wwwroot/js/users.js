@@ -23,7 +23,7 @@ $(function () {
             events: {
                 '#btn_assignRole': function (row) {
                     $.bc({
-                        id: row.Id, url: Role.url, query: { type: "user" }, method: "post",
+                        id: row.Id, url: Role.url, query: { type: "user" }, method: "post", htmlTemplate: CheckboxHtmlTemplate,
                         callback: function (result) {
                             var htmlTemplate = this.htmlTemplate;
                             var html = $.map(result, function (element, index) {
@@ -39,7 +39,7 @@ $(function () {
                 },
                 '#btn_assignGroup': function (row) {
                     $.bc({
-                        id: row.Id, url: Group.url, query: { type: "user" }, method: "post",
+                        id: row.Id, url: Group.url, query: { type: "user" }, method: "post", htmlTemplate: CheckboxHtmlTemplate,
                         callback: function (result) {
                             var htmlTemplate = this.htmlTemplate;
                             var html = $.map(result, function (element, index) {
@@ -96,7 +96,7 @@ $(function () {
                 { title: "说明", field: "Description", sortable: false }
             ],
             editButtons: {
-                events : {
+                events: {
                     'click .reset': function (e, value, row, index) {
                         $table.bootstrapTable('uncheckAll');
                         $table.bootstrapTable('check', index);
