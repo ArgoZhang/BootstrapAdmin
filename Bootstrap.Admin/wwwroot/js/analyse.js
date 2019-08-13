@@ -96,6 +96,7 @@ $(function () {
                 }
             });
             var loginChart = echarts.init(document.getElementById('loginChart'));
+            $('#loginLoading').addClass('d-none');
             loginChart.setOption(op);
         }
     });
@@ -122,6 +123,7 @@ $(function () {
                 ]
             });
             var logChart = echarts.init(document.getElementById('logChart'));
+            $('#logLoading').addClass('d-none');
             logChart.setOption(op);
         }
     });
@@ -148,6 +150,7 @@ $(function () {
                 ]
             });
             var traceChart = echarts.init(document.getElementById('traceChart'));
+            $('#traceLoading').addClass('d-none');
             traceChart.setOption(op);
         }
     });

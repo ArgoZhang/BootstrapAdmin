@@ -12,7 +12,6 @@
         <link href="~/lib/bootstrap-table/bootstrap-table.min.css" rel="stylesheet" />
     </environment>
     <style>
-
         .card .card-body {
             padding-bottom: 15px;
         }
@@ -20,6 +19,19 @@
         .spark {
             position: absolute;
         }
+
+        .loading {
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 178px;
+            width: 100%;
+        }
+
+            .loading span {
+                margin-left: 10px;
+            }
     </style>
 }
 @section javascript {
@@ -84,7 +96,9 @@
     </div>
     <div class="card-body">
         <div id="trace" class="spark"></div>
-        <div id="traceChart" style="height: 178px"></div>
+        <div id="traceLoading" class="loading"><i class="fa fa-spinner fa-pulse"></i><span>正在加载...请稍等</span></div>
+        <div id="traceChart" style="height: 178px">
+        </div>
     </div>
 </div>
 <div class="card">
@@ -93,7 +107,9 @@
     </div>
     <div class="card-body">
         <div id="login" class="spark"></div>
-        <div id="loginChart" style="height: 178px"></div>
+        <div id="loginLoading" class="loading"><i class="fa fa-spinner fa-pulse"></i><span>正在加载...请稍等</span></div>
+        <div id="loginChart" style="height: 178px">
+        </div>
     </div>
 </div>
 <div class="card">
@@ -102,6 +118,8 @@
     </div>
     <div class="card-body">
         <div id="log" class="spark"></div>
-        <div id="logChart" style="height: 178px"></div>
+        <div id="logLoading" class="loading"><i class="fa fa-spinner fa-pulse"></i><span>正在加载...请稍等</span></div>
+        <div id="logChart" style="height: 178px">
+        </div>
     </div>
 </div>
