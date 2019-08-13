@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Newtonsoft.Json;
 
 namespace Microsoft.AspNetCore.Builder
@@ -24,6 +25,12 @@ namespace Microsoft.AspNetCore.Builder
                 {
                     context.Response.ContentType = "application/json";
                     return context.Response.WriteAsync(JsonConvert.SerializeObject(report));
+                },
+                ResultStatusCodes =
+                {
+                    [HealthStatus.Healthy] = StatusCodes.Status200OK,
+                    [HealthStatus.Degraded] = StatusCodes.Status200OK,
+                    [HealthStatus.Unhealthy] = StatusCodes.Status200OK
                 }
             });
             return app;
