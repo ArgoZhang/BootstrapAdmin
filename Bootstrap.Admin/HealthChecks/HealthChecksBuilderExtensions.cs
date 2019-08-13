@@ -16,6 +16,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             builder.AddCheck<DBHealthCheck>("db");
             builder.AddCheck<FileHealCheck>("file");
+            builder.AddCheck<GCHealthCheck>("gc");
             return builder;
         }
     }
