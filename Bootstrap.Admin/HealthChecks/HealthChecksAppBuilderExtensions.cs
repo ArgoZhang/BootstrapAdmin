@@ -1,4 +1,8 @@
-﻿namespace Microsoft.AspNetCore.Builder
+﻿using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+
+namespace Microsoft.AspNetCore.Builder
 {
     /// <summary>
     /// BootstrapAdmin 健康检查扩展类
@@ -6,13 +10,22 @@
     public static class HealthChecksAppBuilderExtensions
     {
         /// <summary>
-        /// 
+        /// 启用健康检查
         /// </summary>
         /// <param name="app"></param>
+        /// <param name="path"></param>
         /// <returns></returns>
-        public static IApplicationBuilder UseBootstrapHealthChecks(this IApplicationBuilder app)
+        public static IApplicationBuilder UseBootstrapHealthChecks(this IApplicationBuilder app, PathString path = default)
         {
-            app.UseHealthChecks("Healths");
+            if (path == default) path = "/Healths";
+            app.UseHealthChecks(path, new HealthCheckOptions()
+            {
+                ResponseWriter = (context, report) =>
+                {
+                    context.Response.ContentType = "application/json";
+                    return context.Response.WriteAsync(JsonConvert.SerializeObject(report));
+                }
+            });
             return app;
         }
     }

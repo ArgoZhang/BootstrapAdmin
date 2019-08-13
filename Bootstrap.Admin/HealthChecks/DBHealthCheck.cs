@@ -1,7 +1,10 @@
-﻿using Microsoft.Extensions.Diagnostics.HealthChecks;
-using System.Collections.Generic;
+﻿using Bootstrap.DataAccess;
+using Bootstrap.Security;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Task = System.Threading.Tasks.Task;
 
 namespace Bootstrap.Admin.HealthChecks
 {
@@ -18,10 +21,12 @@ namespace Bootstrap.Admin.HealthChecks
         /// <returns></returns>
         public Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)
         {
-            var data = new Dictionary<string, object>();
-            data.Add("Test1", "Test1");
-            data.Add("Test2", "Test2");
-            return Task.FromResult(HealthCheckResult.Healthy("Ok", data));
+            using (var db = DbManager.Create())
+            {
+                var connStr = db.ConnectionString;
+                var dicts = db.Fetch<BootstrapDict>("Select * from Dicts");
+                return dicts.Any() ? Task.FromResult(HealthCheckResult.Healthy("Ok")) : Task.FromResult(HealthCheckResult.Degraded("No init data in DB"));
+            }
         }
     }
 }

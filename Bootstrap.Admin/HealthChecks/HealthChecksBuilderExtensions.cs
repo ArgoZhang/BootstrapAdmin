@@ -1,4 +1,6 @@
-﻿namespace Microsoft.Extensions.DependencyInjection
+﻿using Bootstrap.Admin.HealthChecks;
+
+namespace Microsoft.Extensions.DependencyInjection
 {
     /// <summary>
     /// 健康检查扩展类
@@ -12,7 +14,7 @@
         /// <returns></returns>
         public static IHealthChecksBuilder AddBootstrapAdminHealthChecks(this IHealthChecksBuilder builder)
         {
-            builder.AddCheck<Bootstrap.Admin.HealthChecks.DBHealthCheck>("db");
+            builder.AddCheck<DBHealthCheck>("db");
             return builder;
         }
     }
