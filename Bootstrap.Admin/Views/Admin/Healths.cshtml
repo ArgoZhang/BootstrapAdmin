@@ -9,6 +9,11 @@
     <environment exclude="Development">
         <link href="~/lib/bootstrap-table/bootstrap-table.min.css" rel="stylesheet" />
     </environment>
+    <style>
+        .popover-body .bootstrap-table tbody td:first-child {
+            white-space: nowrap;
+        }
+    </style>
 }
 @section javascript {
     <environment include="Development">
