@@ -18,6 +18,7 @@ namespace Microsoft.Extensions.DependencyInjection
             builder.AddCheck<FileHealCheck>("file");
             builder.AddCheck<GCHealthCheck>("gc");
             builder.AddCheck<MemoryHealthCheck>("mem");
+            builder.AddCheck<GiteeHttpHealthCheck>("Gitee");
             return builder;
         }
     }
