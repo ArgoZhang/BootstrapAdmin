@@ -53,7 +53,7 @@
                 { title: "下次执行时间", field: "NextRuntime", sortable: true },
                 { title: "触发条件", field: "TriggerExpression", sortable: false },
                 { title: "执行结果", field: "LastRunResult", sortable: false, align: 'center', formatter: resultFormatter },
-                { title: "状态", field: "Status", sortable: true, align: 'center', width: 106, formatter: stateFormatter }
+                { title: "状态", field: "Status", sortable: true, align: 'center', formatter: stateFormatter }
             ],
             editButtons: {
                 events: {
