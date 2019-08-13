@@ -64,6 +64,7 @@ namespace Bootstrap.Admin
             services.AddSwagger();
             services.AddButtonAuthorization();
             services.AddDemoTask();
+            services.AddHealthChecks().AddBootstrapAdminHealthChecks();
             services.AddMvc(options =>
             {
                 options.Filters.Add<BootstrapAdminAuthorizeFilter>();
@@ -107,6 +108,7 @@ namespace Bootstrap.Admin
             app.UseHttpsRedirection();
             app.UseResponseCompression();
             app.UseStaticFiles();
+            app.UseBootstrapHealthChecks();
             app.UseBootstrapAdminAuthentication(RoleHelper.RetrievesByUserName, RoleHelper.RetrievesByUrl, AppHelper.RetrievesByUserName);
             app.UseOnlineUsers(callback: TraceHelper.Save);
             app.UseCacheManager();
