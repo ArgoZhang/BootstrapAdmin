@@ -9,7 +9,7 @@ using Task = System.Threading.Tasks.Task;
 namespace Bootstrap.Admin.HealthChecks
 {
     /// <summary>
-    /// 数据库检查
+    /// 数据库检查类
     /// </summary>
     public class DBHealthCheck : IHealthCheck
     {

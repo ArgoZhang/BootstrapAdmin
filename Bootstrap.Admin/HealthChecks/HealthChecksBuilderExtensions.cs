@@ -15,6 +15,7 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IHealthChecksBuilder AddBootstrapAdminHealthChecks(this IHealthChecksBuilder builder)
         {
             builder.AddCheck<DBHealthCheck>("db");
+            builder.AddCheck<FileHealCheck>("file");
             return builder;
         }
     }
