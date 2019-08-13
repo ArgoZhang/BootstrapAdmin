@@ -32,12 +32,14 @@ namespace Bootstrap.Admin.HealthChecks
         public Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)
         {
             var file = _env.IsDevelopment() ? Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Longbow.lic") : Path.Combine(_env.ContentRootPath, "Longbow.lic");
-            var data = new Dictionary<string, object>();
-            data.Add("ContentRootPath", _env.ContentRootPath);
-            data.Add("WebRootPath", _env.WebRootPath);
-            data.Add("ApplicationName", _env.ApplicationName);
-            data.Add("EnvironmentName", _env.EnvironmentName);
-            data.Add("CheckFile", file);
+            var data = new Dictionary<string, object>
+            {
+                { "ApplicationName", _env.ApplicationName },
+                { "EnvironmentName", _env.EnvironmentName },
+                { "ContentRootPath", _env.ContentRootPath },
+                { "WebRootPath", _env.WebRootPath },
+                { "CheckFile", file }
+            };
             return Task.FromResult(File.Exists(file) ? HealthCheckResult.Healthy("Ok", data) : HealthCheckResult.Unhealthy($"Missing file {file}", null, data));
         }
     }

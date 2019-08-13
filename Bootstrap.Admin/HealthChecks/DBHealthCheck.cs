@@ -1,6 +1,7 @@
 ﻿using Bootstrap.DataAccess;
 using Bootstrap.Security;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -25,7 +26,13 @@ namespace Bootstrap.Admin.HealthChecks
             {
                 var connStr = db.ConnectionString;
                 var dicts = db.Fetch<BootstrapDict>("Select * from Dicts");
-                return dicts.Any() ? Task.FromResult(HealthCheckResult.Healthy("Ok")) : Task.FromResult(HealthCheckResult.Degraded("No init data in DB"));
+                var data = new Dictionary<string, object>()
+                {
+                    { "ConnectionString", connStr },
+                    { "DbType", db.Provider.GetType().Name },
+                    { "Dicts", dicts.Count }
+                };
+                return dicts.Any() ? Task.FromResult(HealthCheckResult.Healthy("Ok", data)) : Task.FromResult(HealthCheckResult.Degraded("No init data in DB"));
             }
         }
     }
