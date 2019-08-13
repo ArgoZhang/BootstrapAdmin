@@ -24,7 +24,7 @@ namespace Microsoft.AspNetCore.Builder
                 ResponseWriter = (context, report) =>
                 {
                     context.Response.ContentType = "application/json";
-                    return context.Response.WriteAsync(JsonConvert.SerializeObject(report));
+                    return context.Response.WriteAsync(JsonConvert.SerializeObject(new { report.Entries.Keys, Report = report }));
                 },
                 ResultStatusCodes =
                 {

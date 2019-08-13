@@ -28,11 +28,7 @@ namespace Bootstrap.Admin.HealthChecks
                 { "Gen1Collections", GC.CollectionCount(1) },
                 { "Gen2Collections", GC.CollectionCount(2) },
             };
-
-            var status = (allocated < 100000) ?
-                HealthStatus.Healthy : HealthStatus.Unhealthy;
-
-            return Task.FromResult(new HealthCheckResult(status, data: data));
+            return Task.FromResult(HealthCheckResult.Healthy("OK", data));
         }
     }
 }

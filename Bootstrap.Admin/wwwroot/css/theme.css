@@ -709,9 +709,17 @@ input.pending {
     min-width: unset;
 }
 
+.bs-popover-bottom .popover-header::before, .bs-popover-auto[x-placement^="bottom"] .popover-header::before {
+    border-bottom: 0;
+}
+
 .popover {
     max-width: 320px;
     padding: 0;
+}
+
+.popover-body .bootstrap-table {
+    margin: 0.25rem 0;
 }
 
 .popover-content {
