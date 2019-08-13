@@ -12,7 +12,7 @@ namespace Bootstrap.Admin.HealthChecks
     public class MemoryHealthCheck : IHealthCheck
     {
         /// <summary>
-        /// 构造函数
+        /// 异步检查方法
         /// </summary>
         /// <param name="context"></param>
         /// <param name="cancellationToken"></param>
