@@ -55,6 +55,14 @@
         健康检查结果
     </div>
     <div class="card-body">
+        <div class="alert alert-info" role="alert" asp-condition="true">
+            <p>本功能应用场景为发布后通过调用<b>健康检查</b>进行系统自我检测</p>
+            <ol>
+                <li>健康检查接口地址: <a href="~/healths">healths</a></li>
+                <li>健康检查报表地址: <a href="~/healths-ui">healths-ui</a></li>
+            </ol>
+            <div>每项检查结果为：健康 亚健康 不健康</div>
+        </div>
         <div>耗时：<span id="checkTotalEplsed">--</span></div>
         <table id="tbCheck"></table>
     </div>
