@@ -22,7 +22,7 @@
             { title: "检查结果", field: "Status", formatter: StatusFormatter },
             {
                 title: "明细数据", field: "Data", formatter: function (value, row, index) {
-                    return '<button class="detail btn btn-info" data-trigger="focus" data-container="body" data-toggle="popover" data-placement="left"><i class="fa fa-info"></i><span>明细</span></button>';
+                    return '<a tabindex="0" role="button" class="detail btn btn-info" data-trigger="focus" data-container="body" data-toggle="popover" data-placement="left"><i class="fa fa-info"></i><span>明细</span></a>';
                 },
                 events: {
                     'click .detail': function (e, value, row, index) {
