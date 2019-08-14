@@ -617,13 +617,9 @@ input.pending {
         margin-left: 5px;
     }
 
-    .bootstrap-table .badge {
-        padding: 4px 6px;
+    .bootstrap-table .badge .fa {
+        margin-right: 4px;
     }
-
-        .bootstrap-table .badge .fa {
-            margin-right: 4px;
-        }
 
     .bootstrap-table .fa-info {
         width: 9px;
@@ -858,4 +854,9 @@ label[for] {
 
 .form-inline .form-group .toggle {
     display: block;
+}
+
+.badge-md {
+    font-size: 0.75rem;
+    padding: 4px 6px;
 }
