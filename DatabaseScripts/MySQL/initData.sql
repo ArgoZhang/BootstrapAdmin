@@ -101,6 +101,7 @@ INSERT INTO Navigations (ParentId, Name, `Order`, Icon, Url, Category) VALUES (0
 INSERT INTO Navigations (ParentId, Name, `Order`, Icon, Url, Category) VALUES (0, '网站分析', 145, 'fa fa-line-chart', '~/Admin/Analyse', '0');
 INSERT INTO Navigations (ParentId, Name, `Order`, Icon, Url, Category) VALUES (0, '程序异常', 150, 'fa fa-cubes', '~/Admin/Exceptions', '0');
 INSERT INTO Navigations (ParentId, Name, `Order`, Icon, Url, Category, IsResource) VALUES (@@identity, '服务器日志', 10, 'fa fa-fa', 'log', '0', 2);
+INSERT INTO Navigations (ParentId, Name, `Order`, Icon, Url, Category) VALUES (0, '健康检查', 155, 'fa fa-heartbeat', '~/Admin/Healths', '0');
 INSERT INTO Navigations (ParentId, Name, `Order`, Icon, Url, Category) VALUES (0, '工具集合', 160, 'fa fa-gavel', '#', '0');
 INSERT INTO Navigations (ParentId, Name, `Order`, Icon, Url, Category) VALUES (@@identity, '客户端测试', 10, 'fa fa-wrench', '~/Admin/Mobile', '0');
 INSERT INTO Navigations (ParentId, Name, `Order`, Icon, Url, Category) VALUES (@@identity - 1, 'API文档', 10, 'fa fa-wrench', '~/swagger', '0');

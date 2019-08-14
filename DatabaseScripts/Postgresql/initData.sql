@@ -102,6 +102,7 @@ INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (0
 INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (0, '程序异常', 150, 'fa fa-cubes', '~/Admin/Exceptions', '0');
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (currval('navigations_id_seq') - 1, '服务器日志', 10, 'fa fa-fa', 'log', '0', 2);
 INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (0, '工具集合', 160, 'fa fa-gavel', '#', '0');
+INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (0, '健康检查', 155, 'fa fa-heartbeat', '~/Admin/Healths', '0');
 INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (currval('navigations_id_seq') - 1, '客户端测试', 10, 'fa fa-wrench', '~/Admin/Mobile', '0');
 INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (currval('navigations_id_seq') - 2, 'API文档', 10, 'fa fa-wrench', '~/swagger', '0');
 INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (currval('navigations_id_seq') - 3, '图标集', 10, 'fa fa-dashboard', '~/Admin/FAIcon', '0');

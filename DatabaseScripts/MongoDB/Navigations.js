@@ -648,6 +648,18 @@
         "Application": "0"
     },
     {
+        "_id": ObjectId("5bd7b8445fa31256f77e4b59"),
+        "ParentId": "0",
+        "Name": "健康检查",
+        "Order": NumberInt(155),
+        "Icon": "fa fa-heartbeat",
+        "Url": "~/Admin/Healths",
+        "Category": "0",
+        "Target": "_self",
+        "IsResource": NumberInt(0),
+        "Application": "0"
+    },
+    {
         "_id": ObjectId("5bd7b8445fa31256f77e4b60"),
         "ParentId": "5bd7b8445fa31256f77e4b9d",
         "Name": "服务器日志",
