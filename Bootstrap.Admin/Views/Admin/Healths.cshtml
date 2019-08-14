@@ -55,7 +55,7 @@
         健康检查结果
     </div>
     <div class="card-body">
-        <div class="alert alert-info" role="alert" asp-condition="true">
+        <div class="alert alert-info" role="alert" asp-condition="@Model.IsDemo">
             <p>本功能应用场景为发布后通过调用<b>健康检查</b>进行系统自我检测</p>
             <ol>
                 <li>健康检查接口地址: <a href="~/healths">healths</a></li>
