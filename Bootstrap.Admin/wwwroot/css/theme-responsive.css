@@ -94,7 +94,6 @@
     }
 
     aside {
-        transition: none;
         transform: translate(0);
         width: 210px;
         overflow: hidden;
