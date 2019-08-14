@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 namespace Microsoft.AspNetCore.Builder
 {
@@ -33,6 +34,11 @@ namespace Microsoft.AspNetCore.Builder
                     [HealthStatus.Unhealthy] = StatusCodes.Status200OK
                 }
             });
+            app.UseWhen(context => context.Request.Path == "/healths-ui", builder => builder.Run(request =>
+            {
+                request.Response.Redirect("/html/Healths-UI.html");
+                return Task.CompletedTask;
+            }));
             return app;
         }
     }
