@@ -38,24 +38,14 @@ namespace Bootstrap.Admin.HealthChecks
             var urls = new string[] { "Issues", "Pulls", "Releases", "Builds" };
             var data = new Dictionary<string, object>();
 
-            urls.ToList().ForEach(url =>
+            Task.WaitAll(urls.Select(url => Task.Run(async () =>
             {
                 var sw = Stopwatch.StartNew();
-                try
-                {
-                    var task = _client.GetStringAsync($"/api/Gitee/{url}");
-                    task.Wait(cancellationToken);
-                }
-                catch (Exception)
-                {
-
-                }
-                finally
-                {
-                    sw.Stop();
-                    data.Add(url, sw.Elapsed);
-                }
-            });
+                Exception error = null;
+                var result = await _client.GetAsJsonAsync<object>($"/api/Gitee/{url}", ex => error = ex, cancellationToken);
+                sw.Stop();
+                data.Add(url, error == null ? $"{result} Elapsed: {sw.Elapsed}" : $"{result} Elapsed: {sw.Elapsed} Exception: {error}");
+            })).ToArray());
             return Task.FromResult(HealthCheckResult.Healthy("Ok", data));
         }
     }
