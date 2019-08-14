@@ -3,6 +3,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +24,7 @@ namespace Bootstrap.Admin.HealthChecks
         public GiteeHttpHealthCheck(IHttpClientFactory factory, IHttpContextAccessor accessor)
         {
             _client = factory.CreateClient();
-            _client.BaseAddress = new Uri($"{accessor.HttpContext.Request.Scheme}://{accessor.HttpContext.Request.Host}/{accessor.HttpContext.Request.PathBase}");
+            _client.BaseAddress = new Uri($"{accessor.HttpContext.Request.Scheme}://{accessor.HttpContext.Request.Host}{accessor.HttpContext.Request.PathBase}");
         }
 
         /// <summary>
@@ -32,21 +33,30 @@ namespace Bootstrap.Admin.HealthChecks
         /// <param name="context"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)
+        public Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)
         {
             var urls = new string[] { "Issues", "Pulls", "Releases", "Builds" };
             var data = new Dictionary<string, object>();
 
-            var sw = Stopwatch.StartNew();
-            foreach (var url in urls)
+            urls.ToList().ForEach(url =>
             {
-                sw.Restart();
-                await _client.GetStringAsync($"api/Gitee/{url}").ConfigureAwait(false);
-                sw.Stop();
-                data.Add(url, sw.Elapsed);
-            }
+                var sw = Stopwatch.StartNew();
+                try
+                {
+                    var task = _client.GetStringAsync($"/api/Gitee/{url}");
+                    task.Wait(cancellationToken);
+                }
+                catch (Exception)
+                {
 
-            return HealthCheckResult.Healthy("Ok", data);
+                }
+                finally
+                {
+                    sw.Stop();
+                    data.Add(url, sw.Elapsed);
+                }
+            });
+            return Task.FromResult(HealthCheckResult.Healthy("Ok", data));
         }
     }
 }
