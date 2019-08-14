@@ -28,8 +28,12 @@ img {
         text-align: left;
     }
 
-a, a:hover, a:focus {
-    text-decoration: none;
-    outline: none;
-    color: #371ed4;
+a {
+    cursor: pointer;
 }
+
+    a, a:hover, a:focus {
+        text-decoration: none;
+        outline: none;
+        color: #371ed4;
+    }

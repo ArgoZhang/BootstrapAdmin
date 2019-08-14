@@ -75,6 +75,12 @@ namespace Bootstrap.Admin.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
+        public ActionResult Healths() => View(new NavigatorBarModel(this));
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [AllowAnonymous]
         [ResponseCache(Duration = 600)]
         public PartialViewResult IconView() => PartialView("IconView");
