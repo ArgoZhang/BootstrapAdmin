@@ -9,7 +9,7 @@
         return cate[value];
     };
 
-    var $table = $('table').smartTable({
+    var $table = $('#tbCheck').smartTable({
         sidePagination: "client",
         showToggle: false,
         showRefresh: false,
@@ -22,21 +22,18 @@
             { title: "检查结果", field: "Status", formatter: StatusFormatter },
             {
                 title: "明细数据", field: "Data", formatter: function (value, row, index) {
-                    return '<a tabindex="0" role="button" class="detail btn btn-info" data-trigger="focus" data-container="body" data-toggle="popover" data-placement="left"><i class="fa fa-info"></i><span>明细</span></a>';
+                    return '<button class="detail btn btn-info"><i class="fa fa-info"></i><span>明细</span></button>';
                 },
                 events: {
                     'click .detail': function (e, value, row, index) {
                         if ($.isEmptyObject(row.Data)) return;
 
-                        var $button = $(e.currentTarget);
-                        if (!$button.data($.fn.popover.Constructor.DATA_KEY)) {
-                            var content = $.map(row.Data, function (v, name) {
-                                return $.format("<tr><td>{0}</td><td>{1}</td></tr>", name, v);
-                            }).join("");
-                            content = $.format('<div class="bootstrap-table"><div class="fixed-table-container"><div class="fixed-table-body"><table class="table table-bordered table-hover table-sm"><thead><tr><th><div class="th-inner"><b>检查项</b><div></th><th><div class="th-inner"><b>检查值</b></div></th></tr></thead><tbody>{0}</tbody></table></div></div></div>', content);
-                            $button.popover({ title: cate[row.Name], html: true, content: content, placement: $(window).width() < 768 ? "bottom" : "left" });
-                        }
-                        $button.popover('show');
+                        var content = $.map(row.Data, function (v, name) {
+                            return { name: name, value: v };
+                        });
+                        // 弹出 modal 健康检查明细窗口
+                        $checkDetail.bootstrapTable('load', content);
+                        $('#dialogNew').modal('show');
                     }
                 }
             }
@@ -56,5 +53,17 @@
             $('#checkTotalEplsed').text(result.Report.TotalDuration);
             $.footer();
         }
+    });
+
+    // init detail Table
+    var $checkDetail = $('#checkDetail').smartTable({
+        sidePagination: "client",
+        showToggle: false,
+        showRefresh: false,
+        showColumns: false,
+        columns: [
+            { title: "检查项", field: "name" },
+            { title: "值", field: "value" }
+        ]
     });
 });
