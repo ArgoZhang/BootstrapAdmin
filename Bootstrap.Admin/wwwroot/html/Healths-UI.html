@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="zh-cn">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,10 +16,19 @@
     <link href="../css/theme-responsive.css" rel="stylesheet" asp-append-version="true" />
     <link href="../css/site.css" rel="stylesheet" asp-append-version="true" />
     <link href="../css/site-responsive.css" rel="stylesheet" asp-append-version="true" />
+    <style>
+        @media (min-width: 768px) {
+            .card-body .bootstrap-table tr td:last-child {
+                width: 78px;
+                text-align: center;
+            }
+        }
+    </style>
     <!--[if lt IE 10 ]>
          <link href="../css/IE8.css" rel="stylesheet" />
      <![endif]-->
 </head>
+
 <body>
     <!--[if lt IE 10 ]>
     <div id="ieAlert" class="alert alert-danger alert-dismissible">
@@ -33,11 +43,31 @@
             </div>
             <div class="card-body">
                 <div>耗时：<span id="checkTotalEplsed">--</span></div>
-                <table></table>
+                <table id="tbCheck"></table>
             </div>
         </div>
     </div>
     <a id="pathBase" href="../" hidden></a>
+    <div class="modal fade" id="dialogNew" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myModalLabel">健康检查明细窗口</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <table id="checkDetail"></table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        <i class="fa fa-times"></i>
+                        <span>关闭</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
     <script src="../lib/jquery/jquery.min.js"></script>
     <script src="../lib/twitter-bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -46,4 +76,5 @@
     <script src="../lib/longbow/longbow.common.js"></script>
     <script src="../js/healths.js"></script>
 </body>
+
 </html>
