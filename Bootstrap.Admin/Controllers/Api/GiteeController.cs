@@ -20,18 +20,16 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <summary>
         /// 获取 Gitee 网站 Issues 信息
         /// </summary>
-        /// <param name="httpClientFactory"></param>
+        /// <param name="client"></param>
         /// <param name="userName"></param>
         /// <param name="repoName"></param>
         /// <param name="label"></param>
         /// <param name="color"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> Issues([FromServices]IHttpClientFactory httpClientFactory, [FromQuery]string userName = "LongbowEnterprise", [FromQuery]string repoName = "BootstrapAdmin", [FromQuery]string label = "custom badge", [FromQuery]string color = "orange")
+        public async Task<ActionResult> Issues([FromServices]GiteeHttpClient client, [FromQuery]string userName = "LongbowEnterprise", [FromQuery]string repoName = "BootstrapAdmin", [FromQuery]string label = "custom badge", [FromQuery]string color = "orange")
         {
-            var client = httpClientFactory.CreateClient();
-            client.Timeout = TimeSpan.FromMilliseconds(2000);
-            var ret = await GetJsonAsync(() => client.GetStringAsync($"https://gitee.com/{userName}/{repoName}/issues"), content =>
+            var ret = await GetJsonAsync(() => client.HttpClient.GetStringAsync($"https://gitee.com/{userName}/{repoName}/issues"), content =>
             {
                 var regex = Regex.Matches(content, "<div class='ui mini circular label'>([\\d]+)</div>", RegexOptions.IgnoreCase);
                 var labels = new string[] { "open", "progressing", "closed", "rejected" };
@@ -45,18 +43,16 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <summary>
         /// 获取 Gitee 网站 Pulls 信息
         /// </summary>
-        /// <param name="httpClientFactory"></param>
+        /// <param name="client"></param>
         /// <param name="userName"></param>
         /// <param name="repoName"></param>
         /// <param name="label"></param>
         /// <param name="color"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> Pulls([FromServices]IHttpClientFactory httpClientFactory, [FromQuery]string userName = "LongbowEnterprise", [FromQuery]string repoName = "BootstrapAdmin", [FromQuery]string label = "custom badge", [FromQuery]string color = "orange")
+        public async Task<ActionResult> Pulls([FromServices]GiteeHttpClient client, [FromQuery]string userName = "LongbowEnterprise", [FromQuery]string repoName = "BootstrapAdmin", [FromQuery]string label = "custom badge", [FromQuery]string color = "orange")
         {
-            var client = httpClientFactory.CreateClient();
-            client.Timeout = TimeSpan.FromMilliseconds(2000);
-            var ret = await GetJsonAsync(() => client.GetStringAsync($"https://gitee.com/{userName}/{repoName}/pulls"), content =>
+            var ret = await GetJsonAsync(() => client.HttpClient.GetStringAsync($"https://gitee.com/{userName}/{repoName}/pulls"), content =>
             {
                 var regex = Regex.Matches(content, "<div class='ui mini circular label'>([\\d]+)</div>", RegexOptions.IgnoreCase);
                 var labels = new string[] { "open", "merged", "closed" };
@@ -69,18 +65,16 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <summary>
         /// 获取 Gitee 网站 Releases 信息
         /// </summary>
-        /// <param name="httpClientFactory"></param>
+        /// <param name="client"></param>
         /// <param name="userName"></param>
         /// <param name="repoName"></param>
         /// <param name="label"></param>
         /// <param name="color"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> Releases([FromServices]IHttpClientFactory httpClientFactory, [FromQuery]string userName = "LongbowEnterprise", [FromQuery]string repoName = "BootstrapAdmin", [FromQuery]string label = "custom badge", [FromQuery]string color = "orange")
+        public async Task<ActionResult> Releases([FromServices]GiteeHttpClient client, [FromQuery]string userName = "LongbowEnterprise", [FromQuery]string repoName = "BootstrapAdmin", [FromQuery]string label = "custom badge", [FromQuery]string color = "orange")
         {
-            var client = httpClientFactory.CreateClient();
-            client.Timeout = TimeSpan.FromMilliseconds(2000);
-            var ret = await GetJsonAsync(() => client.GetStringAsync($"https://gitee.com/{userName}/{repoName}/releases"), content =>
+            var ret = await GetJsonAsync(() => client.HttpClient.GetStringAsync($"https://gitee.com/{userName}/{repoName}/releases"), content =>
             {
                 var regex = Regex.Match(content, $"<a href=\"/{userName}/{repoName}/releases/([^\\s]+)\" target=\"_blank\">", RegexOptions.IgnoreCase);
                 return string.IsNullOrEmpty(content) ? "unknown" : regex.Groups[1].Value;
@@ -91,7 +85,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <summary>
         /// 获取 Gitee 网站 Builds 信息
         /// </summary>
-        /// <param name="httpClientFactory"></param>
+        /// <param name="client"></param>
         /// <param name="userName"></param>
         /// <param name="projName"></param>
         /// <param name="branchName"></param>
@@ -99,10 +93,9 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="color"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> Builds([FromServices]IHttpClientFactory httpClientFactory, [FromQuery]string userName = "ArgoZhang", [FromQuery]string projName = "bootstrapadmin", [FromQuery]string branchName = "master", [FromQuery]string label = "custom badge", [FromQuery]string color = "orange")
+        public async Task<ActionResult> Builds([FromServices]GiteeHttpClient client, [FromQuery]string userName = "ArgoZhang", [FromQuery]string projName = "bootstrapadmin", [FromQuery]string branchName = "master", [FromQuery]string label = "custom badge", [FromQuery]string color = "orange")
         {
-            var client = httpClientFactory.CreateClient();
-            var ret = await GetJsonAsync(() => client.GetAsJsonAsync<AppveyorBuildResult>($"https://ci.appveyor.com/api/projects/{userName}/{projName}/branch/{branchName}", null, new CancellationTokenSource(2000).Token), content =>
+            var ret = await GetJsonAsync(() => client.HttpClient.GetAsJsonAsync<AppveyorBuildResult>($"https://ci.appveyor.com/api/projects/{userName}/{projName}/branch/{branchName}", null, new CancellationTokenSource(2000).Token), content =>
             {
                 return content == null ? "unknown" : content.Build.Version;
             });

@@ -15,16 +15,16 @@ namespace Bootstrap.Admin.HealthChecks
     /// </summary>
     public class GiteeHttpHealthCheck : IHealthCheck
     {
-        private readonly HttpClient _client;
+        private readonly GiteeHttpClient _client;
         /// <summary>
         /// 构造函数
         /// </summary>
-        /// <param name="factory"></param>
+        /// <param name="client"></param>
         /// <param name="accessor"></param>
-        public GiteeHttpHealthCheck(IHttpClientFactory factory, IHttpContextAccessor accessor)
+        public GiteeHttpHealthCheck(GiteeHttpClient client, IHttpContextAccessor accessor)
         {
-            _client = factory.CreateClient();
-            _client.BaseAddress = new Uri($"{accessor.HttpContext.Request.Scheme}://{accessor.HttpContext.Request.Host}{accessor.HttpContext.Request.PathBase}");
+            _client = client;
+            _client.HttpClient.BaseAddress = new Uri($"{accessor.HttpContext.Request.Scheme}://{accessor.HttpContext.Request.Host}{accessor.HttpContext.Request.PathBase}");
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace Bootstrap.Admin.HealthChecks
             {
                 var sw = Stopwatch.StartNew();
                 Exception error = null;
-                var result = await _client.GetAsJsonAsync<object>($"/api/Gitee/{url}", ex => error = ex, cancellationToken);
+                var result = await _client.HttpClient.GetAsJsonAsync<object>($"/api/Gitee/{url}", ex => error = ex, cancellationToken);
                 sw.Stop();
                 data.Add(url, error == null ? $"{result} Elapsed: {sw.Elapsed}" : $"{result} Elapsed: {sw.Elapsed} Exception: {error}");
             })).ToArray());
