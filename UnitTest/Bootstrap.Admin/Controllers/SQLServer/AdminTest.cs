@@ -23,6 +23,7 @@ namespace Bootstrap.Admin.Controllers.SqlServer
         [InlineData("Notifications", "通知管理")]
         [InlineData("Profiles", "个人中心")]
         [InlineData("Exceptions", "程序异常")]
+        [InlineData("Healths", "健康检查")]
         [InlineData("Messages", "站内消息")]
         [InlineData("Online", "在线用户")]
         [InlineData("Tasks", "任务管理")]
