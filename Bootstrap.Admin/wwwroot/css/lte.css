@@ -1,27 +1,19 @@
-.header {
-    transition: margin-left .3s ease-in-out;
+.header .nav {
+    margin-right: 15px;
+    justify-content: flex-end;
 }
 
-    .header .nav {
-        margin-right: 15px;
-        justify-content: flex-end;
-    }
-
-    .header nav, userinfo, .userinfo .dropdown-toggle:after {
-        display: none;
-    }
-
-    .header .sidebar-toggle-box {
-        cursor: pointer;
-    }
-
-        .header .sidebar-toggle-box span {
-            transition: all .3s ease-in-out;
-        }
-
-.sidebar-open .header {
-    margin-left: 0;
+.header nav, userinfo, .userinfo .dropdown-toggle:after {
+    display: none;
 }
+
+.header .sidebar-toggle-box {
+    cursor: pointer;
+}
+
+    .header .sidebar-toggle-box span {
+        transition: all .3s ease-in-out;
+    }
 
 .userinfo {
     margin: 0.25rem 0;
@@ -98,10 +90,27 @@ aside {
         padding: 0 0.625rem;
     }
 
-    aside .nav-brand span, .header .sidebar-toggle-box {
-        color: #333;
-        font-size: 1.25rem;
-        font-weight: 700;
+        aside .nav-brand span, .header .sidebar-toggle-box {
+            color: #333;
+            font-size: 1.25rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        aside .nav-brand img {
+            opacity: 0;
+            visibility: hidden;
+            width: 2.75rem;
+            height: auto;
+            border-radius: 0.42rem;
+            position: absolute;
+            top: 9px;
+            left: 4px;
+        }
+
+    aside .nav-link span {
+        display: inline-block;
+        white-space: nowrap;
     }
 
 .main-content {
@@ -128,6 +137,7 @@ aside {
 @media (min-width: 769px) {
     .header {
         margin-left: 210px;
+        transition: margin-left .3s linear;
     }
 
         .header .sidebar-toggle-box span {
@@ -148,6 +158,11 @@ aside {
 
         aside .sidebar {
             top: 139px;
+            transition: top .3s linear;
+        }
+
+        aside, aside .nav-header img {
+            transition: width .3s linear;
         }
 
         aside .nav-brand, aside .nav-header {
@@ -158,15 +173,60 @@ aside {
             padding: 0.625rem 0.625rem 0.625rem 0.625rem;
             border-bottom: solid 1px rgba(221, 221, 221, 0.5);
         }
-    
-        aside .nav-header img {
-            width: 60px;
-            height: auto;
-            border-radius: 50%;
-            margin-right: 0.625rem;
-        }
+        
+            aside .nav-header img {
+                width: 3.75rem;
+                height: auto;
+                border-radius: 50%;
+            }
 
         aside .nav-header span {
             color: #eee;
+            margin-left: 0.625rem;
+        }
+
+        aside .sub .nav-link {
+            transition: padding-left .3s linear;
+        }
+
+        aside .nav-link span, aside .nav-brand span, aside .nav-header span, aside .nav-brand img {
+            transition: margin-left .3s linear, opacity .3s ease, visibility .3s ease;
+        }
+
+        .sidebar-open .header {
+            margin-left: 3.375rem;
+        }
+
+        .sidebar-open aside {
+            transform: translate(0);
+            width: 3.375rem;
+        }
+
+            .sidebar-open aside .nav-item span, .sidebar-open aside .nav-header span, .sidebar-open .nav-brand span {
+                opacity: 0;
+                visibility: hidden;
+                margin-left: -10px;
+            }
+
+        .sidebar-open aside .nav-header img {
+            width: 2.25rem
+        }
+
+        .sidebar-open aside .nav-brand img {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .sidebar-open aside .sidebar {
+            top: 115px;
+        }
+
+        .sidebar-open .main-content {
+            margin-left: 3.375rem;
+            transition: margin-left .3s linear;
+        }
+
+        .sidebar-open .sub .nav-link {
+            padding-left: 0;
         }
 }

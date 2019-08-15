@@ -176,7 +176,17 @@ $(function () {
         },
         addNiceScroll: function () {
             if (!$.browser.versions.ios && $(window).width() > 768) {
-                this.overlayScrollbars({ className: 'os-theme-light', scrollbars: { autoHide: 'leave' } });
+                this.overlayScrollbars({
+                    className: 'os-theme-light',
+                    scrollbars: {
+                        autoHide: 'leave',
+                        autoHideDelay: 100
+                    },
+                    overflowBehavior: {
+                        x: "hidden",
+                        y: "scroll"
+                    }
+                });
             }
             else {
                 this.css('overflow', 'auto');
