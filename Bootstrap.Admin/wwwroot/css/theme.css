@@ -315,7 +315,7 @@ body, .form-control, .dropdown-menu, .btn:not(.btn-lg):not(.btn-xs), .input-grou
     }
 
 aside {
-    transition: transform .4s ease-in-out;
+    transition: transform .3s ease-in-out;
     transform: translate(-100%);
     position: absolute;
     top: 96px;
