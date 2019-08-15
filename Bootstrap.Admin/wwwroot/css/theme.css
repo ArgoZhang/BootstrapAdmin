@@ -241,7 +241,6 @@ body, .form-control, .dropdown-menu, .btn:not(.btn-lg):not(.btn-xs), .input-grou
 }
 
 .sidebar {
-    padding: 0;
     background: inherit;
 }
 
@@ -258,17 +257,13 @@ body, .form-control, .dropdown-menu, .btn:not(.btn-lg):not(.btn-xs), .input-grou
             color: #FF6C60;
         }
 
-        .sidebar ul {
-            margin: 5px 0;
-        }
-
-            .sidebar ul ul {
-                margin: 0;
-            }
+    .sidebar .nav-sidebar {
+        margin: 5px 0;
+    }
 
     .sidebar .nav-link {
         color: #aeb2b7;
-        padding: 10px 10px;
+        padding: 8px 10px;
         transition: background .3s linear, color .3s linear;
         display: flex;
         align-items: center;
