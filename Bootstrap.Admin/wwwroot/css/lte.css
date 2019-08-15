@@ -107,6 +107,23 @@ aside {
 .main-content {
     top: 58px;
 }
+    
+    .main-header .breadcrumb {
+        padding-right: 0;
+    }
+
+.main-header {
+    display: block;
+    margin-bottom: 5px;
+}
+
+    .main-header .text-dark {
+        font-size: 1.5rem;
+    }
+
+.breadcrumb {
+    border: none;
+}
 
 @media (min-width: 769px) {
     .header {
@@ -116,10 +133,6 @@ aside {
         .header .sidebar-toggle-box span {
             opacity: 0;
         }
-
-    .breadcrumb {
-        border-color: rgba(81, 152, 203, 0.8)
-    }
 
     .sidebar-open .header .sidebar-toggle-box span {
         opacity: 1;

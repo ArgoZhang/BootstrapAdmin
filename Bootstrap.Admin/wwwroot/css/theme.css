@@ -344,6 +344,10 @@ aside {
         padding-right: 6px;
     }
 
+.main-header {
+    display: none;
+}
+
 footer {
     background: #5b6e84;
     color: #fff;

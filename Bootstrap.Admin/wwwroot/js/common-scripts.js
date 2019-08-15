@@ -146,7 +146,7 @@ $(function () {
     });
 
     // breadcrumb
-    var $breadNav = $('#breadNav');
+    var $breadNav = $('#breadNav, .main-header .breadcrumb-item:last, .main-header .text-dark');
     var arch = $sideMenu.find('a.active').last();
     $breadNav.removeClass('d-none').text(arch.text() || $('title').text());
 
