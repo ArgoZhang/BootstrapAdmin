@@ -101,6 +101,10 @@ body {
     background-color: #fff;
 }
 
+    .userinfo .dropdown-item:first-child {
+        display: none;
+    }
+
     .userinfo .dropdown-item a {
         text-align: center;
         color: #777;
