@@ -258,12 +258,12 @@ body, .form-control, .dropdown-menu, .btn:not(.btn-lg):not(.btn-xs), .input-grou
         }
 
     .sidebar .nav-sidebar {
-        margin: 5px 0;
+        margin: 10px 0;
     }
 
     .sidebar .nav-link {
         color: #aeb2b7;
-        padding: 8px 10px;
+        padding: 10px 10px;
         transition: background .3s linear, color .3s linear;
         display: flex;
         align-items: center;
