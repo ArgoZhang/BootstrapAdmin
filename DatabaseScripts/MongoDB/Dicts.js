@@ -180,6 +180,12 @@
         "Define": NumberInt(0)
     },
     {
+        "Category": "网站样式",
+        "Name": "AdminLTE",
+        "Code": "lte.css",
+        "Define": NumberInt(0)
+    },
+    {
         "Category": "设备天线",
         "Name": "天线1",
         "Code": "1",
