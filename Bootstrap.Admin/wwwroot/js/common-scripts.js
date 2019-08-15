@@ -309,6 +309,6 @@ $(function () {
     });
 
     $(window).on('resize', function () {
-        //$sidebar.addNiceScroll();
+        $sidebar.addNiceScroll();
     });
 });
