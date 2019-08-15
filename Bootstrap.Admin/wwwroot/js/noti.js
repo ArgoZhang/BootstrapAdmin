@@ -7,7 +7,7 @@
         showRefresh: false,
         showColumns: false,
         columns: [
-            { title: "登陆名称", field: "UserName" },
+            { title: "登录名称", field: "UserName" },
             { title: "显示名称", field: "DisplayName" },
             { title: "说明信息", field: "Description" },
             { title: "注册时间", field: "RegisterTime" },

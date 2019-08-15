@@ -17,7 +17,7 @@ $(function () {
                     return options.pageSize * (options.pageNumber - 1) + index + 1;
                 }
             },
-            { title: "登陆名称", field: "UserName" },
+            { title: "登录名称", field: "UserName" },
             { title: "登录时间", field: "LoginTime" },
             { title: "主机", field: "Ip" },
             { title: "登录地点", field: "City" },

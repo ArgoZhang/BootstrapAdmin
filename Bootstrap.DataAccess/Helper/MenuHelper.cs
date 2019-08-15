@@ -100,7 +100,7 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 通过当前用户名获得后台菜单，层次化后集合
         /// </summary>
-        /// <param name="userName">当前登陆的用户名</param>
+        /// <param name="userName">当前登录的用户名</param>
         /// <param name="activeUrl">当前访问菜单</param>
         /// <returns></returns>
         public static IEnumerable<BootstrapMenu> RetrieveSystemMenus(string userName, string activeUrl = null)
