@@ -11,12 +11,15 @@ body {
     -webkit-overflow-scrolling: touch;
 }
 
+aside .bg, aside .nav-brand, aside .nav-header, .header .nav, .userinfo .dropdown-item:first-child {
+    display: none;
+}
+
 .header {
     background: #fff;
 }
 
     .header .nav {
-        display: none;
         margin-left: 15px;
     }
 
@@ -100,10 +103,6 @@ body {
     justify-content: space-around;
     background-color: #fff;
 }
-
-    .userinfo .dropdown-item:first-child {
-        display: none;
-    }
 
     .userinfo .dropdown-item a {
         text-align: center;

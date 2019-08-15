@@ -1,5 +1,13 @@
 ﻿@model NavigatorBarModel
 <aside>
+    <div class="bg"></div>
+    <div class="nav-brand justify-content-center">
+        <span>@Model.Title</span>
+    </div>
+    <div class="nav-header flex-fill align-items-center">
+        <img src="@Url.Content(Model.Icon)" />
+        <span class="d-inline-block font-weight-bold flex-fill">@Model.DisplayName</span>
+    </div>
     <!-- sidebar menu start-->
     <ul class="sidebar nav nav-pills flex-column flex-nowrap">
         @foreach (var menu in Model.Navigations)
