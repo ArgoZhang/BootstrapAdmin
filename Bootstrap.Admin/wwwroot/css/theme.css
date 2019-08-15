@@ -322,7 +322,7 @@ aside {
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 1080;
+    z-index: 5;
     background: #2a3542;
 }
 
