@@ -122,7 +122,7 @@ aside {
     }
 
 .breadcrumb {
-    border: none;
+    border-top: none;
 }
 
 @media (min-width: 769px) {
