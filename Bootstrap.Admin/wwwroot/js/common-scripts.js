@@ -130,7 +130,7 @@
 })(jQuery);
 
 $(function () {
-    var $sideMenu = $(".sidebar");
+    var $sideMenu = $(".sidebar ul");
 
     // 临时使用脚本解决多层菜单收缩问题
     // Issue https://gitee.com/LongbowEnterprise/dashboard/issues?id=I1067G
@@ -139,6 +139,7 @@ $(function () {
         var $li = $activeLink.parent('li').addClass('active');
         $activeLink = $li.parent().prev().addClass('active');
     }
+
     $sideMenu.dcAccordion({
         autoExpand: true,
         saveState: false
@@ -174,23 +175,21 @@ $(function () {
             return this;
         },
         addNiceScroll: function () {
-            if ($.browser.versions.ios && $(window).width() > 768) {
-                this.css('overflow', 'auto');
-            }
-            else if (!$.browser.versions.ios && $(window).width() > 768) {
-                this.mCustomScrollbar({ theme: 'minimal', mouseWheel: { scrollAmount: 60 } });
+            if (!$.browser.versions.ios && $(window).width() > 768) {
+                this.overlayScrollbars({ className: 'os-theme-light', scrollbars: { autoHide: 'leave' } });
             }
             else {
-                this.mCustomScrollbar('destroy');
+                this.css('overflow', 'auto');
             }
             return this;
         }
     });
 
     // custom scrollbar
-    var $sidebar = $('aside').addNiceScroll().autoScrollSidebar({ target: arch.parent(), offsetTop: arch.parent().innerHeight() / 2 });
+    var $sidebar = $('.sidebar').addNiceScroll().autoScrollSidebar({ target: arch.parent(), offsetTop: arch.parent().innerHeight() / 2 });
 
     $sideMenu.on('click', 'a.dcjq-parent', function () {
+        return;
         var $this = $(this);
         if (!$.browser.versions.ios && $(window).width() > 768) {
             setTimeout(function () {
@@ -300,6 +299,6 @@ $(function () {
     });
 
     $(window).on('resize', function () {
-        $sidebar.addNiceScroll();
+        //$sidebar.addNiceScroll();
     });
 });

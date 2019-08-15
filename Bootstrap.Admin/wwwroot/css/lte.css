@@ -134,7 +134,7 @@ aside {
         }
 
         aside .sidebar {
-            padding-top: 0;
+            top: 139px;
         }
 
         aside .nav-brand, aside .nav-header {

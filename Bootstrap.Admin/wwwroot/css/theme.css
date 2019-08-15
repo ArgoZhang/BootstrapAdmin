@@ -241,12 +241,12 @@ body, .form-control, .dropdown-menu, .btn:not(.btn-lg):not(.btn-xs), .input-grou
 }
 
 .sidebar {
-    padding: 20px 0;
+    padding: 0;
     background: inherit;
 }
 
     .sidebar .nav-item {
-        margin: 5px 10px;
+        margin: 2px 10px;
     }
 
         .sidebar .nav-item .nav-link:hover, .sidebar .nav-item .nav-link:focus {
@@ -257,6 +257,14 @@ body, .form-control, .dropdown-menu, .btn:not(.btn-lg):not(.btn-xs), .input-grou
         .sidebar .nav-item.active > .nav-link {
             color: #FF6C60;
         }
+
+        .sidebar ul {
+            margin: 5px 0;
+        }
+
+            .sidebar ul ul {
+                margin: 0;
+            }
 
     .sidebar .nav-link {
         color: #aeb2b7;

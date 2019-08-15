@@ -9,11 +9,13 @@
         <span class="d-inline-block font-weight-bold flex-fill">@Model.DisplayName</span>
     </div>
     <!-- sidebar menu start-->
-    <ul class="sidebar nav nav-pills flex-column flex-nowrap">
-        @foreach (var menu in Model.Navigations)
-        {
-            @await Html.PartialAsync("SubNavItem", menu)
-        }
-    </ul>
+    <div class="sidebar">
+        <ul class="nav nav-pills flex-column flex-nowrap">
+            @foreach (var menu in Model.Navigations)
+            {
+                @await Html.PartialAsync("SubNavItem", menu)
+            }
+        </ul>
+    </div>
     <!-- sidebar menu end-->
 </aside>
