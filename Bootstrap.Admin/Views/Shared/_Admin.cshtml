@@ -40,17 +40,10 @@
 @await Html.PartialAsync("Navigator")
 <section id="main-content" class="main-content">
     <div class="main-header">
-        <div class="row">
-            <div class="col-sm-6">
-                <span class="text-dark"></span>
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb justify-content-sm-end">
-                    <li class="breadcrumb-item"><a href="@Url.Content("~/Admin/Index")"><i class="fa fa-home"></i>首页</a></li>
-                    <li class="breadcrumb-item d-none"></li>
-                </ol>
-            </div>
-        </div>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Content("~/Admin/Index")"><i class="fa fa-home"></i>首页</a></li>
+            <li class="breadcrumb-item d-none"></li>
+        </ol>
     </div>
     @RenderBody()
 </section>
