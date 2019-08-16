@@ -296,4 +296,8 @@ body {
         .sidebar-open .sub .nav-link {
             padding-left: 0;
         }
+
+        .sidebar-open aside:hover .sub .nav-link {
+            padding-left: 10px;
+        }
 }
