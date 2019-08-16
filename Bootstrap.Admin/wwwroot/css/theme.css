@@ -253,6 +253,16 @@ body, .form-control, .dropdown-menu, .btn:not(.btn-lg):not(.btn-xs), .input-grou
             color: #fff;
         }
 
+        .sidebar .nav-link.dcjq-parent.active {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+            .sidebar .nav-link.dcjq-parent.active + .sub {
+                border-bottom-left-radius: 0.25rem;
+                border-bottom-right-radius: 0.25rem;
+            }
+
         .sidebar .nav-item.active > .nav-link {
             color: #FF6C60;
         }
