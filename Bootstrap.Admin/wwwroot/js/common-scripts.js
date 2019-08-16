@@ -136,14 +136,9 @@ $(function () {
     // Issue https://gitee.com/LongbowEnterprise/dashboard/issues?id=I1067G
     var $activeLink = $sideMenu.find('a.nav-link.active');
     while ($activeLink.length > 0) {
-        var $li = $activeLink.parent('li').addClass('active');
+        var $li = $activeLink.parent('li').addClass('menu-open');
         $activeLink = $li.parent().prev().addClass('active');
     }
-
-    $sideMenu.dcAccordion({
-        autoExpand: true,
-        saveState: false
-    });
 
     // breadcrumb
     var $breadNav = $('#breadNav, .main-header .breadcrumb-item:last');

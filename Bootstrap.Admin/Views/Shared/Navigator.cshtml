@@ -15,7 +15,7 @@
     </div>
     <!-- sidebar menu start-->
     <div class="sidebar">
-        <ul class="nav-sidebar nav nav-pills flex-column flex-nowrap">
+        <ul class="nav-sidebar nav nav-pills flex-column flex-nowrap" data-widget="treeview">
             @foreach (var menu in Model.Navigations)
             {
                 @await Html.PartialAsync("SubNavItem", menu)
