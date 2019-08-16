@@ -286,7 +286,8 @@ body, .form-control, .dropdown-menu, .btn:not(.btn-lg):not(.btn-xs), .input-grou
     }
 
     .sidebar .sub .nav-item .nav-link.active {
-        background-color: rgba(255,255,255,.2);
+        background-color: inherit;
+        color: #FF6C60;
     }
 
     .sidebar .sub .nav-item.has-treeview > .nav-link.active {
