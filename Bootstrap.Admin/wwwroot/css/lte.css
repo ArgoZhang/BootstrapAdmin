@@ -1,7 +1,16 @@
 .header .nav {
-    margin-right: 15px;
     justify-content: flex-end;
 }
+
+    .header .nav .dropdown, .userinfo {
+        display: flex;
+        align-items: center;
+        height: 54px;
+        transition: all .3s linear;
+        cursor: pointer;
+        margin: 0;
+        padding: 0 6px;
+    }
 
 .header nav, userinfo, .userinfo .dropdown-toggle:after {
     display: none;
@@ -11,12 +20,12 @@
     cursor: pointer;
 }
 
-    .header .sidebar-toggle-box span {
+    .header .sidebar-toggle-box, aside .nav-brand a {
         transition: all .3s ease-in-out;
     }
 
-.userinfo {
-    margin: 0.25rem 0;
+.header .badge {
+    top: 4px;
 }
 
 .userinfo .badge {
@@ -27,11 +36,11 @@
     border-radius: 50%;
 }
 
-.userinfo .dropdown-toggle, .userinfo .dropdown-toggle:hover, .userinfo.show .dropdown-toggle {
-    border: none;
+.userinfo .dropdown-toggle, .userinfo .dropdown-toggle:hover, .userinfo.show .dropdown-toggle, .nav [data-toggle="dropdown"], .nav [data-toggle="dropdown"]:hover {
+    border: none !important;
 }
 
-.userinfo .shadow-default {
+.userinfo .shadow-default, .nav [data-toggle="dropdown"], .nav [data-toggle="dropdown"]:hover {
     box-shadow: none;
 }
 
@@ -69,11 +78,15 @@
 
         .userinfo .dropdown-item:last-child a {
             background: none;
-            color: #777;
         }
+
+    .userinfo.show .dropdown-menu {
+        margin-top: 8px;
+    }
 
 aside {
     top: 58px;
+    background-color: #1a2226;
 }
 
     aside .bg {
@@ -86,12 +99,10 @@ aside {
         height: 55px;
         align-items: center;
         border-bottom: solid 1px #ddd;
-        background: #fff;
         padding: 0 0.625rem;
     }
 
         aside .nav-brand span, .header .sidebar-toggle-box {
-            color: #333;
             font-size: 1.25rem;
             font-weight: 700;
             white-space: nowrap;
@@ -115,6 +126,7 @@ aside {
 
 .main-content {
     top: 58px;
+    transition: margin-left .3s linear;
 }
     
     .main-header .breadcrumb {
@@ -132,6 +144,31 @@ aside {
 
 .breadcrumb {
     border-top: none;
+}
+
+/* color */
+.header, aside .nav-brand, .userinfo .dropdown-menu, .userinfo .dropdown-item {
+    background: #3c8dbc;
+}
+
+.header .nav .dropdown:hover, .userinfo:hover {
+    background-color: rgba(0,0,0,0.1);
+}
+
+.sidebar .nav-link {
+    color: #b8c7ce;
+}
+
+.header, aside .nav-brand a, .sidebar-toggle-box, .userinfo .dropdown-toggle, .nav [data-toggle="dropdown"], .userinfo .dropdown-item, .userinfo .dropdown-item a, .userinfo .dropdown-item:last-child a {
+    color: #eee;
+}
+
+.sidebar-toggle-box:hover, aside .nav-brand a:hover, .userinfo .dropdown-toggle:hover, .userinfo.show .dropdown-toggle, .nav [data-toggle="dropdown"]:hover, .sidebar .nav-link:hover, .userinfo .dropdown-item:hover, .userinfo .dropdown-item a:hover, .userinfo .dropdown-item:last-child a:hover {
+    color: #fff;
+}
+
+.header, aside .nav-brand {
+    border-bottom: 1px solid #3c8dbc;
 }
 
 @media (min-width: 769px) {
@@ -173,6 +210,10 @@ aside {
             padding: 0.625rem 0.625rem 0.625rem 0.625rem;
             border-bottom: solid 1px rgba(221, 221, 221, 0.5);
         }
+
+            aside .nav-header a {
+                white-space: nowrap;
+            }
         
             aside .nav-header img, .sidebar-open aside:hover .nav-header img {
                 width: 3.75rem;
@@ -185,8 +226,8 @@ aside {
             margin-left: 0.625rem;
         }
 
-        aside .sub .nav-link {
-            transition: padding-left .3s linear;
+        aside .sub .nav-link, .userinfo .dropdown-item {
+            transition: all .3s linear;
         }
 
         aside .nav-link span, aside .nav-brand span, aside .nav-header span, aside .nav-brand img {
