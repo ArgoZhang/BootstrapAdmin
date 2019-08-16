@@ -189,7 +189,7 @@ body {
 
 @media (min-width: 769px) {
     .header {
-        margin-left: 210px;
+        margin-left: 13.375rem;
         transition: margin-left .3s linear;
     }
 
