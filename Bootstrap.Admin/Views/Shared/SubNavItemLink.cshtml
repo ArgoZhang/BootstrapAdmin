@@ -1,0 +1,6 @@
+@model Bootstrap.Security.BootstrapMenu
+<a href="@Url.Content(Model.Url)" class="nav-link @Model.Active" target="@Model.Target"><i class="@Model.Icon"></i><span class="flex-fill">@Model.Name</span><i class="fa fa-angle-left"></i></a>
+@if (Model.Menus.Any())
+{
+    @await Html.PartialAsync("SubNavigation", Model.Menus)
+}
