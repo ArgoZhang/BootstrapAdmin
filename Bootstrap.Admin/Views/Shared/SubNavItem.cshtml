@@ -1,8 +1,22 @@
 ﻿@model Bootstrap.Security.BootstrapMenu
-<li class="nav-item @Model.Active">
-    <a href="@Url.Content(Model.Url)" class="nav-link @Model.Active" target="@Model.Target"><i class="@Model.Icon"></i><span>@Model.Name</span></a>
-    @if (Model.Menus.Any())
+@if(Model.Menus.Any()) 
+{
+    if(@Model.Active == "active")
     {
-        @await Html.PartialAsync("SubNavigation", Model.Menus)
+        <li class="nav-item has-treeview menu-open">
+            @await Html.PartialAsync("SubNavItemLink", Model)
+        </li>
     }
-</li>
+    else 
+    {
+        <li class="nav-item has-treeview">
+            @await Html.PartialAsync("SubNavItemLink", Model)
+        </li>
+    }
+}
+else 
+{
+    <li class="nav-item">
+        <a href="@Url.Content(Model.Url)" class="nav-link @Model.Active" target="@Model.Target"><i class="@Model.Icon"></i><span class="flex-fill">@Model.Name</span></a>
+    </li>
+}

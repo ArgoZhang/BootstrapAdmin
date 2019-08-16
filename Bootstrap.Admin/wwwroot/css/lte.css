@@ -102,7 +102,6 @@ aside {
     aside .nav-brand, .sidebar-open aside:hover .nav-brand {
         height: 55px;
         align-items: center;
-        border-bottom: solid 1px #ddd;
         padding: 0 0.625rem;
     }
 
@@ -190,7 +189,7 @@ body {
 
 @media (min-width: 769px) {
     .header {
-        margin-left: 210px;
+        margin-left: 13.375rem;
         transition: margin-left .3s linear;
     }
 
@@ -219,6 +218,10 @@ body {
             transition: width .3s linear;
         }
 
+        aside .sub .nav-tem, .sidebar-open aside:hover .sidebar .sub .nav-item {
+            margin-left: 10px;
+        }
+
         aside .nav-brand, .sidebar-open aside:hover .nav-brand, aside .nav-header {
             display: flex;
         }
@@ -243,7 +246,7 @@ body {
             margin-left: 0.625rem;
         }
 
-        aside .sub .nav-link, .userinfo .dropdown-item {
+        aside .sub .nav-link, .userinfo .dropdown-item, aside .sidebar .sub .nav-item {
             transition: all .3s linear;
         }
 
@@ -252,7 +255,7 @@ body {
         }
 
         .sidebar-open aside:hover {
-            width: 210px;
+            width: 13.375rem;
             z-index: 15;
         }
 
@@ -280,7 +283,7 @@ body {
             visibility: visible;
         }
 
-        .sidebar-open aside:hover .nav-link i + span {
+        .sidebar-open aside:hover .nav-link i + span, .sidebar-open aside:hover .nav-brand span {
             margin-left: 0;
         }
 
@@ -293,11 +296,7 @@ body {
             transition: margin-left .3s linear;
         }
 
-        .sidebar-open .sub .nav-link {
-            padding-left: 0;
-        }
-
-        .sidebar-open aside:hover .sub .nav-link {
-            padding-left: 10px;
+        .sidebar-open aside .sidebar .sub .nav-item {
+            margin-left: 0;
         }
 }
