@@ -24,7 +24,7 @@
     cursor: pointer;
 }
 
-    .header .sidebar-toggle-box, aside .nav-brand a {
+    .header .sidebar-toggle-box span, aside .nav-brand a {
         transition: all .3s ease-in-out;
     }
 
@@ -134,7 +134,7 @@ aside {
 }
     
     .main-header .breadcrumb {
-        padding-right: 0;
+        margin-top: -10px;
     }
 
 .main-header {
@@ -167,7 +167,7 @@ body {
     color: #b8c7ce;
 }
 
-.header, aside .nav-brand a, .sidebar-toggle-box, .userinfo .dropdown-toggle, .nav [data-toggle="dropdown"], .userinfo .dropdown-item, .userinfo .dropdown-item a, .userinfo .dropdown-item:last-child a {
+.header, .header .breadcrumb-item a, aside .nav-brand a, .sidebar-toggle-box, .userinfo .dropdown-toggle, .nav [data-toggle="dropdown"], .userinfo .dropdown-item, .userinfo .dropdown-item a, .userinfo .dropdown-item:last-child a {
     color: #eee;
 }
 
@@ -181,6 +181,7 @@ body {
 
 .card {
     border-top-color: #3c8dbc;
+    color: #444;
 }
 
     .card:hover {
