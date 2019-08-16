@@ -1,3 +1,7 @@
+#nprogress .spinner {
+    display: none;
+}
+
 .header .nav {
     justify-content: flex-end;
 }
