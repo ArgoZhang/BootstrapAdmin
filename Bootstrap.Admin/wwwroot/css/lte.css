@@ -151,6 +151,10 @@ aside {
 }
 
 /* color */
+body {
+    background: #ecf0f5;
+}
+
 .header, aside .nav-brand, .userinfo .dropdown-menu, .userinfo .dropdown-item {
     background: #3c8dbc;
 }
@@ -174,6 +178,14 @@ aside {
 .header, aside .nav-brand {
     border-bottom: 1px solid #3c8dbc;
 }
+
+.card {
+    border-top-color: #3c8dbc;
+}
+
+    .card:hover {
+        border-top-color: #2c6ca2;
+    }
 
 @media (min-width: 769px) {
     .header {
