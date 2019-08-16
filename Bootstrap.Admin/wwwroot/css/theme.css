@@ -248,7 +248,7 @@ body, .form-control, .dropdown-menu, .btn:not(.btn-lg):not(.btn-xs), .input-grou
         display: none;
     }
 
-    .sidebar .menu-open .nav-treeview {
+    .sidebar .menu-open > .nav-treeview {
         display: block;
     }
 
@@ -277,14 +277,21 @@ body, .form-control, .dropdown-menu, .btn:not(.btn-lg):not(.btn-xs), .input-grou
         margin-right: 0;
     }
 
-    .sidebar .nav-item .nav-link:hover, .sidebar .nav-item .nav-link:focus, .sidebar .nav-sidebar .nav-item .nav-link.active {
-        background-color: #3a4756;
+    .sidebar .nav-item .nav-link:hover, .sidebar .nav-item .nav-link:focus {
+        background-color: rgba(255,255,255,.1);
     }
 
-    .sidebar .sub .nav-item .nav-link:hover, .sidebar .sub .nav-item .nav-link:focus, .sidebar .nav-sidebar .sub .nav-item .nav-link.active {
-        background-color: inherit;
-        color: #FF6C60;
+    .sidebar .nav-sidebar .nav-item .nav-link.active {
+        background-color: rgba(255,255,255,.1);
     }
+
+    .sidebar .sub .nav-item .nav-link.active {
+        background-color: rgba(255,255,255,.2);
+    }
+
+    .sidebar .sub .nav-item.has-treeview > .nav-link.active {
+        background-color: inherit;
+    } 
 
     .sidebar .nav-item .fa-angle-left {
         transition: all .3s linear;
