@@ -283,7 +283,7 @@ body {
             visibility: visible;
         }
 
-        .sidebar-open aside:hover .nav-link i + span {
+        .sidebar-open aside:hover .nav-link i + span, .sidebar-open aside:hover .nav-brand span {
             margin-left: 0;
         }
 
