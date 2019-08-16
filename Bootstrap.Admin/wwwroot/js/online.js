@@ -17,7 +17,7 @@ $(function () {
             {
                 title: "会话Id", field: "ConnectionId"
             },
-            { title: "登陆名称", field: "UserName" },
+            { title: "登录名称", field: "UserName" },
             { title: "显示名称", field: "DisplayName" },
             { title: "登录时间", field: "FirstAccessTime" },
             { title: "访问时间", field: "LastAccessTime" },

@@ -94,12 +94,20 @@
     }
 
     aside {
-        transition: none;
         transform: translate(0);
         width: 210px;
         overflow: hidden;
         bottom: 40px;
     }
+
+        aside .sidebar {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            overflow: hidden;
+        }
 }
 
 @media (min-width: 940px) {

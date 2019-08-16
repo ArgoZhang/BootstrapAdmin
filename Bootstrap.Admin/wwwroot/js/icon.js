@@ -16,7 +16,7 @@
 
                 $('#main-content').scrollspy({ offset: 150, target: '.fa-nav' });
 
-                if (!$.browser.versions.ios) $html.find('.fa-nav .nav').mCustomScrollbar({ theme: 'minimal-dark' });
+                if (!$.browser.versions.ios) $html.find('.fa-nav .nav').overlayScrollbars({ className: 'os-theme-light', scrollbars: { autoHide: 'leave' } });
             }
         }
     });

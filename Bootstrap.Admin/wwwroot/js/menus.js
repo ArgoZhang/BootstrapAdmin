@@ -277,7 +277,7 @@ $(function () {
                     $(this).scrollspy({ target: $(this).attr('data-target') });
                 });
 
-                if (!$.browser.versions.ios) $scroll = $html.find('.fa-nav .nav').mCustomScrollbar({ theme: 'minimal-dark' });
+                if (!$.browser.versions.ios) $scroll = $html.find('.fa-nav .nav').overlayScrollbars({ className: 'os-theme-light', scrollbars: { autoHide: 'leave' } });
             }
         }
     });

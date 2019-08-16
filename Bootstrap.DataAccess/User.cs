@@ -80,7 +80,7 @@ namespace Bootstrap.DataAccess
         public int IsReset { get; set; }
 
         /// <summary>
-        /// 验证用户登陆账号与密码正确
+        /// 验证用户登录账号与密码正确
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="password"></param>

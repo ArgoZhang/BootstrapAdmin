@@ -98,8 +98,18 @@
     font-weight: 600;
 }
 
+.sidebar-toggle-box .fa-bars {
+    transition: transform .3s ease-in-out;
+    width: 20px;
+    transform-origin: center;
+}
+
 .sidebar-open .main-content {
     display: none;
+}
+
+.sidebar-open .sidebar-toggle-box .fa-bars {
+    transform: rotate(-90deg);
 }
 
 .main-content {
@@ -109,6 +119,7 @@
     bottom: 40px;
     right: 0;
     top: 96px;
+    transition: margin-left .3s ease-in-out;
 }
 
     .main-content > .panel:last-child .panel-body {

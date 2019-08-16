@@ -1,5 +1,5 @@
 ﻿$(function () {
-    var $headerIcon = $('#headerIcon');
+    var $headerIcon = $('.userinfo img, .nav-header img');
     var preIcon = $headerIcon.attr('src');
     var $file = $('#fileIcon');
     var defFileName = $file.attr('data-file');

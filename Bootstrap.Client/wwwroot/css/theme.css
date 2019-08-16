@@ -322,7 +322,7 @@ aside {
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 4;
+    z-index: 1080;
     background: #2a3542;
 }
 
@@ -496,6 +496,10 @@ input.pending {
     overflow-y: auto;
 }
 
+.nobar .fixed-table-toolbar {
+    display: none;
+}
+
 .card {
     margin-bottom: 15px;
     box-shadow: 0 0 8px 0 rgba(0,0,0,.075), 0 2px 4px 0 rgba(255,255,255,0);
@@ -613,13 +617,9 @@ input.pending {
         margin-left: 5px;
     }
 
-    .bootstrap-table .badge {
-        padding: 4px 6px;
+    .bootstrap-table .badge .fa {
+        margin-right: 4px;
     }
-
-        .bootstrap-table .badge .fa {
-            margin-right: 4px;
-        }
 
     .bootstrap-table .fa-info {
         width: 9px;
@@ -709,9 +709,17 @@ input.pending {
     min-width: unset;
 }
 
+.bs-popover-bottom .popover-header::before, .bs-popover-auto[x-placement^="bottom"] .popover-header::before {
+    border-bottom: 0;
+}
+
 .popover {
     max-width: 320px;
     padding: 0;
+}
+
+.popover-body .bootstrap-table {
+    margin: 0.25rem 0;
 }
 
 .popover-content {
@@ -846,4 +854,9 @@ label[for] {
 
 .form-inline .form-group .toggle {
     display: block;
+}
+
+.badge-md {
+    font-size: 0.75rem;
+    padding: 4px 6px;
 }
