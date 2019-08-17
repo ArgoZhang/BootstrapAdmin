@@ -24,7 +24,8 @@
         LI: 'nav-item',
         LINK: 'nav-link',
         TREEVIEW_MENU: 'nav-treeview',
-        OPEN: 'menu-open'
+        OPEN: 'menu-open',
+        SHOW: 'show'
     };
     var Default = {
         trigger: Selector.DATA_WIDGET + " " + Selector.LINK,
@@ -63,6 +64,7 @@
                     this.collapse(openTreeview, openMenuLi);
                 }
 
+                parentLi.addClass(ClassName.SHOW);
                 treeviewMenu.slideDown(this._config.animationSpeed, function () {
                     parentLi.addClass(ClassName.OPEN);
                     $(_this._element).trigger(expandedEvent);
@@ -73,6 +75,7 @@
                 var _this2 = this;
 
                 var collapsedEvent = $.Event(Event.COLLAPSED);
+                parentLi.removeClass(ClassName.SHOW);
                 treeviewMenu.slideUp(this._config.animationSpeed, function () {
                     parentLi.removeClass(ClassName.OPEN);
                     $(_this2._element).trigger(collapsedEvent);
