@@ -17,6 +17,7 @@ namespace Bootstrap.Admin.Models
             Theme = DictHelper.RetrieveActiveTheme();
             IsDemo = DictHelper.RetrieveSystemModel();
             ShowCardTitle = DictHelper.RetrieveCardTitleStatus() ? "" : "no-card-header";
+            ShowSideBar = DictHelper.RetrieveSidebarStatus() ? "" : "sidebar-open";
         }
 
         /// <summary>
@@ -43,5 +44,10 @@ namespace Bootstrap.Admin.Models
         /// 是否显示卡片标题
         /// </summary>
         public string ShowCardTitle { get; protected set; }
+
+        /// <summary>
+        /// 是否收缩侧边栏
+        /// </summary>
+        public string ShowSideBar { get; protected set; }
     }
 }

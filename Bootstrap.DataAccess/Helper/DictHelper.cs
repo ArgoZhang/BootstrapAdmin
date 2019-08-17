@@ -208,5 +208,11 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <returns></returns>
         public static bool RetrieveCardTitleStatus() => DbContextManager.Create<Dict>().RetrieveCardTitleStatus();
+
+        /// <summary>
+        /// 获得侧边栏状态 未真时显示
+        /// </summary>
+        /// <returns></returns>
+        public static bool RetrieveSidebarStatus() => DbContextManager.Create<Dict>().RetrieveSidebarStatus();
     }
 }
