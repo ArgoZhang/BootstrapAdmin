@@ -2,14 +2,24 @@
 @{
     ViewBag.Title = "网站设置";
 }
+@section css {
+    <environment include="Development">
+        <link href="~/lib/bootstrap-toggle/css/bootstrap-toggle.css" rel="stylesheet" />
+    </environment>
+    <environment exclude="Development">
+        <link href="~/lib/bootstrap-toggle/css/bootstrap-toggle.min.css" rel="stylesheet" />
+    </environment>
+}
 @section javascript {
     <environment include="Development">
         <script src="~/lib/validate/jquery.validate.js"></script>
         <script src="~/lib/validate/localization/messages_zh.js"></script>
+        <script src="~/lib/bootstrap-toggle/js/bootstrap-toggle.js"></script>
     </environment>
     <environment exclude="Development">
         <script src="~/lib/validate/jquery.validate.min.js"></script>
         <script src="~/lib/validate/localization/messages_zh.min.js"></script>
+        <script src="~/lib/bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
     </environment>
     <script src="~/lib/longbow/longbow.dataentity.js"></script>
     <script src="~/lib/longbow/longbow.validate.js"></script>
@@ -67,6 +77,26 @@
                 </div>
                 <button class="btn btn-secondary" type="button" data-method="css">保存</button>
             </div>
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-header">网站调整</div>
+    <div class="card-body">
+        <div class="form-inline">
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <label class="control-label" for="sider">侧边栏设置</label>
+                    <input id="sider" hidden type="checkbox" data-toggle="toggle" data-width="120" data-onstyle="success" data-on="展开" data-off="收缩" />
+                </div>
+                <div class="form-group col-sm-6">
+                    <label class="control-label" for="cardTitle">标题设置</label>
+                    <input id="cardTitle" hidden type="checkbox" data-default-val="@Model.ShowCardTitle" data-toggle="toggle" data-width="120" data-onstyle="success" data-on="显示" data-off="关闭" />
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer" asp-auth="saveUISettings">
+            <button id="btnSaveCss" data-method="UISettings" class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
         </div>
     </div>
 </div>
