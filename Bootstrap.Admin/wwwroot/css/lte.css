@@ -38,6 +38,11 @@
 
 .userinfo img {
     border-radius: 50%;
+
+.userinfo .username {
+    font-size: 1rem;
+    max-width: 110px;
+    font-weight: 500;
 }
 
 .userinfo .dropdown-toggle, .userinfo .dropdown-toggle:hover, .userinfo.show .dropdown-toggle, .nav [data-toggle="dropdown"], .nav [data-toggle="dropdown"]:hover {
@@ -126,6 +131,10 @@ aside {
             top: 9px;
             left: 4px;
         }
+
+    aside .nav-header span {
+        font-size: 1rem;
+    }
 
     aside .nav-link span {
         display: inline-block;
