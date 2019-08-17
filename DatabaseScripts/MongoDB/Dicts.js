@@ -120,54 +120,6 @@
         "Define": NumberInt(0)
     },
     {
-        "Category": "应用程序",
-        "Name": "组垛平台",
-        "Code": "4",
-        "Define": NumberInt(0)
-    },
-    {
-        "Category": "组垛平台",
-        "Name": "网站标题",
-        "Code": "托盘组垛程序",
-        "Define": NumberInt(1)
-    },
-    {
-        "Category": "组垛平台",
-        "Name": "网站页脚",
-        "Code": "版权所有：中烟信息",
-        "Define": NumberInt(1)
-    },
-    {
-        "Category": "组垛平台",
-        "Name": "个人中心地址",
-        "Code": "http://localhost:50852/Admin/Profiles",
-        "Define": NumberInt(1)
-    },
-    {
-        "Category": "组垛平台",
-        "Name": "系统设置地址",
-        "Code": "http://localhost:50852/Admin/Index",
-        "Define": NumberInt(1)
-    },
-    {
-        "Category": "设备厂商",
-        "Name": "远望谷",
-        "Code": "Invengo",
-        "Define": NumberInt(1)
-    },
-    {
-        "Category": "设备厂商",
-        "Name": "测试",
-        "Code": "Test",
-        "Define": NumberInt(1)
-    },
-    {
-        "Category": "远程数据库",
-        "Name": "组垛数据库",
-        "Code": "Corp_Scan",
-        "Define": NumberInt(1)
-    },
-    {
         "Category": "网站样式",
         "Name": "黑色样式",
         "Code": "black.css",
@@ -184,18 +136,6 @@
         "Name": "AdminLTE",
         "Code": "lte.css",
         "Define": NumberInt(0)
-    },
-    {
-        "Category": "设备天线",
-        "Name": "天线1",
-        "Code": "1",
-        "Define": NumberInt(1)
-    },
-    {
-        "Category": "设备天线",
-        "Name": "天线2",
-        "Code": "2",
-        "Define": NumberInt(1)
     },
     {
         "Category": "应用程序",
@@ -231,18 +171,6 @@
         "Category": "测试平台",
         "Name": "系统通知地址",
         "Code": "http://localhost:50852/Admin/Notifications",
-        "Define": NumberInt(1)
-    },
-    {
-        "Category": "设备驱动",
-        "Name": "Invengo",
-        "Code": "Longbow.Invengo.Device, Longbow.Invengo",
-        "Define": NumberInt(1)
-    },
-    {
-        "Category": "设备驱动",
-        "Name": "Test",
-        "Code": "Pallet.DeviceInterface.Device, Pallet.DeviceHub",
         "Define": NumberInt(1)
     },
     {
@@ -316,6 +244,18 @@
         "Category": "系统设置",
         "Name": "验证码图床",
         "Code": "http://images.sdgxgz.com/",
+        "Define": NumberInt(0)
+    },
+    {
+        "Category": "网站设置",
+        "Name": "侧边栏状态",
+        "Code": "1",
+        "Define": NumberInt(0)
+    },
+    {
+        "Category": "网站设置",
+        "Name": "卡片标题状态",
+        "Code": "1",
         "Define": NumberInt(0)
     }
 ];

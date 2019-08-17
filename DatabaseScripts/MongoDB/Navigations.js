@@ -84,6 +84,18 @@
         "Application": "0"
     },
     {
+        "_id": ObjectId("5bd7b8445fa31256f77e4a06"),
+        "ParentId": "5bd7b8445fa31256f77e4b91",
+        "Name": "保存网站设置",
+        "Order": NumberInt(60),
+        "Icon": "fa fa-fa",
+        "Url": "saveUISettings",
+        "Category": "0",
+        "Target": "_self",
+        "IsResource": NumberInt(2),
+        "Application": "0"
+    },
+    {
         "_id": ObjectId("5bd7b8445fa31256f77e4b92"),
         "ParentId": "0",
         "Name": "返回前台",

@@ -557,6 +557,10 @@ input.pending {
     margin-top: -10px;
 }
 
+.no-card-header .card-header {
+    display: none;
+}
+
 .btn i + span {
     margin-left: 4px;
 }
@@ -868,4 +872,33 @@ label[for] {
 .badge-md {
     font-size: 0.75rem;
     padding: 4px 6px;
+}
+
+.toggle .btn-default, .toggle.btn-default {
+    text-shadow: 0 1px 0 #fff;
+    background-image: -webkit-linear-gradient(top, #fff 0%, #e0e0e0 100%);
+    background-image: -o-linear-gradient(top, #fff 0%, #e0e0e0 100%);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#e0e0e0));
+    background-image: linear-gradient(to bottom, #fff 0%, #e0e0e0 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe0e0e0', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+    border-color: #ccc;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .15), 0 1px 1px rgba(0, 0, 0, .075);
+}
+
+    .toggle .btn-default.active {
+        background-image: none;
+        background-color: #e0e0e0;
+        border-color: #dbdbdb;
+    }
+
+        .toggle .btn-default.active:hover {
+            color: #333;
+            background-color: #d4d4d4;
+            border-color: #8c8c8c;
+        }
+
+.toggle.btn .toggle-handle {
+    display: inline-block;
+    margin-left: 0;
 }

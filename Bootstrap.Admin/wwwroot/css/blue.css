@@ -51,19 +51,19 @@
     border-bottom: solid 1px #307eb6;
 }
 
-.card {
+.main-content:not(.no-card-header) .card {
     border-top-width: 1px;
 }
-
-    .card:hover {
-        border-top-color: #84bbe2;
-    }
 
 .card, .modal-footer, .form-control, .popover, .date .input-group-text,
 .input-group .btn:not(.btn-secondary):not(.btn-primary):not(.btn-warning):not(.btn-info):not(.btn-danger),
 .form-select-input:hover {
     border-color: #84bbe2;
 }
+
+    .card:hover {
+        border-top-color: #337ab7;
+    }
 
     .card .card-header, .modal-header {
         background-image: linear-gradient(to bottom, #5893be 0%, #63a6d7 100%);

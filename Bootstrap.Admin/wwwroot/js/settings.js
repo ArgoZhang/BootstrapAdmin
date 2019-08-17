@@ -37,6 +37,21 @@ $(function () {
                     }
                 });
                 break;
+            case 'UISettings':
+                var uiSettings = $('#sider').prop('checked') ? "1" : "0";
+                $.bc({
+                    url: Settings.url, data: { name: '侧边栏状态', code: uiSettings, category: '网站设置' }, method: "post"
+                });
+                var cardTitle = $('#cardTitle').prop('checked') ? "1" : "0";
+                $.bc({
+                    url: Settings.url, data: { name: '卡片标题状态', code: cardTitle, category: '网站设置' }, title: '保存网站设置', method: "post",
+                    callback: function (result) {
+                        if (result) {
+                            window.setTimeout(function () { window.location.reload(true); }, 1000);
+                        }
+                    }
+                });
+                break;
         }
     });
 

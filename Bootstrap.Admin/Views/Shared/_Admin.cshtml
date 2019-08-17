@@ -1,4 +1,5 @@
-﻿@{
+﻿@model ModelBase
+@{
     Layout = "_Bootstrap";
 }
 @section css {
@@ -35,7 +36,7 @@
     <script src="~/js/log.js" asp-append-version="true"></script>
 }
 @await Html.PartialAsync("Navigator")
-<section id="main-content" class="main-content">
+<section id="main-content" class="main-content @Model.ShowCardTitle">
     <div class="main-header">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="@Url.Content("~/Admin/Index")"><i class="fa fa-home"></i>首页</a></li>

@@ -29,6 +29,10 @@ INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('网站样式', 'AdminL
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('当前样式', '使用样式', 'blue.css', 0);
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('网站设置', '前台首页', '~/Home/Index', 0);
 
+-- 网站UI设置
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('网站设置', '侧边栏状态', '1', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('网站设置', '卡片标题状态', '1', 0);
+
 -- 时长单位 月
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统设置', '程序异常保留时长', '1', 0);
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统设置', '操作日志保留时长', '12', 0);
@@ -54,6 +58,7 @@ INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (currval('navigations_id_seq') - 3, '保存应用', 30, 'fa fa-fa', 'saveApp', '0', 2);
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (currval('navigations_id_seq') - 4, '保存样式', 40, 'fa fa-fa', 'saveTheme', '0', 2);
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (currval('navigations_id_seq') - 5, '保存头像', 50, 'fa fa-fa', 'saveIcon', '0', 2);
+INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (currval('navigations_id_seq') - 6, '保存网站设置', 60, 'fa fa-fa', 'saveUISettings', '0', 2);
 INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (0, '返回前台', 30, 'fa fa-hand-o-left', '~/Home/Index', '0');
 INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (0, '网站设置', 40, 'fa fa-fa', '~/Admin/Settings', '0');
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (currval('navigations_id_seq') - 1, '保存系统名称', 10, 'fa fa-fa', 'saveTitle', '0', 2);

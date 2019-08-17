@@ -186,5 +186,17 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <returns></returns>
         public string RetrieveImagesLibUrl() => DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "验证码图床" && d.Define == 0)?.Code ?? "http://images.sdgxgz.com/";
+
+        /// <summary>
+        /// 获得 数据库标题是否显示
+        /// </summary>
+        /// <returns></returns>
+        public bool RetrieveCardTitleStatus() => (DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "卡片标题状态" && d.Define == 0)?.Code ?? "1") == "1";
+
+        /// <summary>
+        /// 获得 是否显示侧边栏 为真时显示
+        /// </summary>
+        /// <returns></returns>
+        public bool RetrieveSidebarStatus() => (DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "侧边栏状态" && d.Define == 0)?.Code ?? "1") == "1";
     }
 }
