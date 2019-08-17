@@ -17,7 +17,7 @@ namespace Bootstrap.Admin.Models
             Theme = DictHelper.RetrieveActiveTheme();
             IsDemo = DictHelper.RetrieveSystemModel();
             ShowCardTitle = DictHelper.RetrieveCardTitleStatus() ? "" : "no-card-header";
-            ShowSideBar = DictHelper.RetrieveSidebarStatus() ? "" : "sidebar-open";
+            ShowSideBar = DictHelper.RetrieveSidebarStatus() ? "" : "collapsed";
         }
 
         /// <summary>

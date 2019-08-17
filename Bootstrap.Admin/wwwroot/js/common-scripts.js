@@ -200,6 +200,16 @@ $(function () {
         }
     });
 
+    // 大于 769 时考虑网站设置 收缩侧边栏
+    if($(window).width() > 769) {
+        var $ele = $('aside');
+        var collapsed = $ele.hasClass('collapsed');
+        if(collapsed) {
+            $('body').addClass('sidebar-open');
+            $ele.removeClass('collapsed');
+        }
+    }
+
     $('.sidebar-toggle-box').on('click', function () {
         $('body').toggleClass('sidebar-open');
     });
