@@ -92,7 +92,6 @@
                 event.preventDefault();
                 var parentLi = $relativeTarget.parents(Selector.LI).first();
                 var isOpen = parentLi.hasClass(ClassName.OPEN);
-
                 if (isOpen) {
                     this.collapse($(treeviewMenu), parentLi);
                 } else {
