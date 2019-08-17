@@ -34,7 +34,7 @@ namespace Bootstrap.Admin.Controllers.SqlServer
             var r = await client.GetAsync("/Account/Login");
             Assert.True(r.IsSuccessStatusCode);
             var content = await r.Content.ReadAsStringAsync();
-            Assert.Contains("登 陆", content);
+            Assert.Contains("登 录", content);
 
             r = await client.GetAsync("/Account/Login");
             var view = await r.Content.ReadAsStringAsync();
@@ -70,7 +70,7 @@ namespace Bootstrap.Admin.Controllers.SqlServer
             var r = await client.GetAsync("/Account/Logout");
             Assert.True(r.IsSuccessStatusCode);
             var content = await r.Content.ReadAsStringAsync();
-            Assert.Contains("登 陆", content);
+            Assert.Contains("登 录", content);
         }
 
         [Fact]
