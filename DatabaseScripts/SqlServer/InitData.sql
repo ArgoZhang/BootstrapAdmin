@@ -32,6 +32,10 @@ INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'网站样�
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'当前样式', N'使用样式', N'blue.css', 0)
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'网站设置', N'前台首页', N'~/Home/Index', 0)
 
+-- 网站UI设置
+INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'网站设置', N'侧边栏状态', N'1', 0)
+INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'网站设置', N'卡片标题状态', N'1', 0)
+
 -- 时长单位 月
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'系统设置', N'程序异常保留时长', '1', 0)
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'系统设置', N'操作日志保留时长', '12', 0)
@@ -57,6 +61,7 @@ INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (@@Identity - 2, N'保存应用', 30, 'fa fa-fa', 'saveApp', '0', 2);
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (@@Identity - 3, N'保存样式', 40, 'fa fa-fa', 'saveTheme', '0', 2);
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (@@Identity - 4, N'保存头像', 50, 'fa fa-fa', 'saveIcon', '0', 2);
+INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (@@Identity - 5, N'保存网站设置', 60, 'fa fa-fa', 'saveUISettings', '0', 2);
 INSERT [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, N'返回前台', 30, N'fa fa-hand-o-left', N'~/Home/Index', N'0')
 INSERT [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, N'网站设置', 40, N'fa fa-fa', N'~/Admin/Settings', N'0')
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (@@Identity, N'保存系统名称', 10, 'fa fa-fa', 'saveTitle', '0', 2);
