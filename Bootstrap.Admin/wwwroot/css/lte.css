@@ -49,13 +49,17 @@
 }
 
 .userinfo .dropdown-item {
-    border-bottom: solid 1px #e9ecef;
+    border-bottom: solid 1px rgba(255, 255, 255, 0.4);
     padding: 0.25rem 1.5rem;
 }
 
     .userinfo .dropdown-item:first-child {
         display: flex;
     }
+
+        .userinfo .dropdown-item:first-child .font-weight-bold {
+            font-size: 1rem;
+        }
 
     .userinfo .dropdown-item img {
         width: 60px;
@@ -86,6 +90,7 @@
 
     .userinfo.show .dropdown-menu {
         margin-top: 8px;
+        left: auto !important;
     }
 
 aside {
