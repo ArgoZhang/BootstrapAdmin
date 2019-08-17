@@ -110,7 +110,7 @@ aside {
     }
 
     aside .nav-brand, .sidebar-open aside:hover .nav-brand {
-        height: 55px;
+        height: 54px;
         align-items: center;
         padding: 0 0.625rem;
     }
