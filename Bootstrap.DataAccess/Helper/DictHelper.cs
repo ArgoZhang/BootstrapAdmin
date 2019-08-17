@@ -202,5 +202,11 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <returns></returns>
         public static string RetrieveImagesLibUrl() => DbContextManager.Create<Dict>().RetrieveImagesLibUrl();
+
+        /// <summary>
+        /// 获得数据区卡片标题是否显示
+        /// </summary>
+        /// <returns></returns>
+        public static bool RetrieveCardTitleStatus() => DbContextManager.Create<Dict>().RetrieveCardTitleStatus();
     }
 }
