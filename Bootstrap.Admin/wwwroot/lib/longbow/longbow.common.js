@@ -500,6 +500,17 @@
             });
         }
 
+        // extend bootstrap-toggle
+        if($.fn.bootstrapToggle) {
+            var toggle = $.fn.bootstrapToggle.Constructor;
+            var oldFunc = toggle.prototype.render;
+            toggle.prototype.render = function() {
+                var defaultVal = this.$element.attr('data-default-val') || '';
+                if(defaultVal === '') this.$element.prop('checked', true);
+                oldFunc.call(this);
+            }
+        }
+
         if (window.NProgress) {
             $(document).ajaxStart(function () {
                 return NProgress.start();

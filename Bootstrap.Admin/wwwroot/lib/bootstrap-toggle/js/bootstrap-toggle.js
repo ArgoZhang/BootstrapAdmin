@@ -29,8 +29,7 @@
 		size: 'normal',
 		style: '',
 		width: null,
-		height: null,
-		defaultVal: ''
+		height: null
 	}
 
 	Toggle.prototype.defaults = function() {
@@ -42,14 +41,11 @@
 			size: this.$element.attr('data-size') || Toggle.DEFAULTS.size,
 			style: this.$element.attr('data-style') || Toggle.DEFAULTS.style,
 			width: this.$element.attr('data-width') || Toggle.DEFAULTS.width,
-			height: this.$element.attr('data-height') || Toggle.DEFAULTS.height,
-			defaultVal: this.$element.attr('data-default-val') || Toggle.DEFAULTS.defaultVal,
+			height: this.$element.attr('data-height') || Toggle.DEFAULTS.height
 		}
 	}
 
 	Toggle.prototype.render = function () {
-		if(this.options.defaultVal === '') this.$element.prop('checked', true);
-
 		this._onstyle = 'btn-' + this.options.onstyle
 		this._offstyle = 'btn-' + this.options.offstyle
 		var size = this.options.size === 'large' ? 'btn-lg'
