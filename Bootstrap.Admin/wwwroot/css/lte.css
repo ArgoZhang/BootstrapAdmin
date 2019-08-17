@@ -136,8 +136,10 @@ aside {
             left: 4px;
         }
 
-    aside .nav-header span {
+    aside .nav-header .username {
         font-size: 1rem;
+        max-width: 120px;
+        vertical-align: middle;
     }
 
     aside .nav-link span {

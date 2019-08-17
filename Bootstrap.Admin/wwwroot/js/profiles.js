@@ -90,7 +90,7 @@
                     url: Profiles.url, method: "put", data: data, title: "修改用户显示名称",
                     callback: function (result) {
                         if (result) {
-                            $('#userDisplayName').text(data.DisplayName);
+                            $('#userDisplayName, .nav-header .username').text(data.DisplayName);
                         }
                     }
                 });

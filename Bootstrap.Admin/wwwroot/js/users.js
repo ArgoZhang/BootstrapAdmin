@@ -75,7 +75,7 @@ $(function () {
             },
             callback: function (data) {
                 if (data && data.success && data.oper === 'save' && data.data.UserName === $('#userDisplayName').attr('data-userName')) {
-                    $('#userDisplayName').text(data.data.DisplayName);
+                    $('#userDisplayName, .nav-header .username').text(data.data.DisplayName);
                 }
                 if (data && data.oper === 'create') {
                     $('#userName').prop('readonly', false).removeClass("ignore");
