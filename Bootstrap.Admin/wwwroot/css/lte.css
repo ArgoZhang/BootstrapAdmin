@@ -174,6 +174,24 @@ body {
     color: #fff;
 }
 
+.sidebar .nav-sidebar .has-treeview .nav-link.active {
+    background-color: rgba(60, 141, 188, 0.8);
+}
+
+.sidebar .nav-sidebar > .nav-item > .nav-link.active {
+    background-color: #3c8dbc;
+}
+
+.sidebar .nav-sidebar > .nav-item > .nav-link[aria-expanded="true"],
+.sidebar .nav-sidebar .nav-item:not(.parent) .nav-link.active:before
+{
+    background-color: rgba(59, 141, 188, 0.7);
+}
+
+.sidebar .nav-sidebar > .nav-item > .nav-link[aria-expanded="true"] {
+    color: #fff;
+}
+
 .header, aside .nav-brand {
     border-bottom: 1px solid #3c8dbc;
 }

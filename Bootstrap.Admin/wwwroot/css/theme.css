@@ -244,14 +244,6 @@ body, .form-control, .dropdown-menu, .btn:not(.btn-lg):not(.btn-xs), .input-grou
     background: inherit;
 }
 
-    .sidebar .nav-treeview {
-        display: none;
-    }
-
-    .sidebar .menu-open > .nav-treeview {
-        display: block;
-    }
-
     .sidebar .nav-item {
         margin: 2px 10px;
         flex: 1 1 auto;
@@ -277,30 +269,37 @@ body, .form-control, .dropdown-menu, .btn:not(.btn-lg):not(.btn-xs), .input-grou
         margin-right: 0;
     }
 
-    .sidebar .nav-item .nav-link:hover, .sidebar .nav-item .nav-link:focus {
-        background-color: rgba(255,255,255,.1);
-    }
-
-    .sidebar .nav-sidebar .nav-item .nav-link.active {
-        background-color: rgba(255,255,255,.1);
-    }
-
-    .sidebar .sub .nav-item .nav-link.active {
-        background-color: inherit;
-        color: #FF6C60;
-    }
-
-    .sidebar .sub .nav-item.has-treeview > .nav-link.active {
-        background-color: inherit;
-    } 
-
-    .sidebar .nav-item .fa-angle-left {
+    .sidebar .nav-link .fa-angle-left {
         transition: all .3s linear;
         transform-origin: center;
     }
 
-    .sidebar .nav-item.menu-open > a .fa-angle-left {
+    .sidebar .nav-link:not(.collapsed) .fa-angle-left {
         transform: rotate(-90deg);
+    }
+
+    .sidebar .nav-sidebar > .nav-item > .nav-link:hover, 
+    .sidebar .nav-sidebar > .nav-item > .nav-link[aria-expanded="true"],
+    .sidebar .show .nav-item .nav-link:hover:before,
+    .sidebar .nav-sidebar .nav-item:not(.parent) .nav-link.active:before,
+    .sidebar .nav-sidebar .nav-link.active {
+       background-color: rgba(255,255,255,.1);
+    }
+
+    .sidebar .nav-sidebar .show .nav-link, .sidebar .nav-sidebar .collapsing .nav-link {
+        background-color: transparent;
+    }
+
+    .sidebar .sub .nav-item .nav-link:before {
+        background-color: transparent;
+        content: '';
+        position: absolute;
+        left: 10px;
+        right: 10px;
+        border-radius: 4px;
+        z-index: -1;
+        height: 41px;
+        transition: all .3s linear;
     }
 
 .sidebar-toggle-box {
