@@ -38,6 +38,10 @@
 
 .userinfo img {
     border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin-right: 0.625rem;
+}
 
 .userinfo .username {
     font-size: 1rem;
