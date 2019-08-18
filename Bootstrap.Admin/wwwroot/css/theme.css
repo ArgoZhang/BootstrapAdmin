@@ -331,7 +331,7 @@ aside {
     transition: transform .3s ease-in-out;
     transform: translate(-100%);
     position: absolute;
-    top: 96px;
+    top: 93px;
     bottom: 0;
     left: 0;
     right: 0;
