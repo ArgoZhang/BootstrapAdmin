@@ -145,19 +145,11 @@ $(function () {
 
             // sidebar scroll animate
             var middle = this.outerHeight() / 2;
-            var top = 0;
-            if (this.hasClass('mCustomScrollbar')) {
-                top = $navItem.offset().top - $('header').outerHeight() + option.offsetTop;
-                if (top > middle) {
-                    this.mCustomScrollbar('scrollTo', top - middle);
-                }
-            }
-            else {
-                top = $navItem.offset().top + option.offsetTop;
-                if (top > middle)
-                    this.animate({
-                        scrollTop: top - middle
-                    });
+            var top = $navItem.offset().top + option.offsetTop - this.offset().top;
+            var $scrollInstance = this[0]["__overlayScrollbars__"];
+            if (top > middle) {
+                if ($scrollInstance) $scrollInstance.scroll({ x: 0, y: top - middle }, 500, "swing");
+                else this.animate({ scrollTop: top - middle });
             }
             return this;
         },
@@ -201,10 +193,10 @@ $(function () {
     });
 
     // 大于 769 时考虑网站设置 收缩侧边栏
-    if($(window).width() > 769) {
+    if ($(window).width() > 769) {
         var $ele = $('aside');
         var collapsed = $ele.hasClass('collapsed');
-        if(collapsed) {
+        if (collapsed) {
             $('body').addClass('sidebar-open');
             $ele.removeClass('collapsed');
         }
