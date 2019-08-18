@@ -1,9 +1,13 @@
 ﻿/*Title*/
+.bg {
+    display: none;
+}
+
 .header {
     border-bottom: 1px solid #ccc;
 }
 
-    .header .bg {
+    .header .bg-color {
         background-image: linear-gradient(to bottom, #196eac 0,#7fb4d9 100%);
     }
 
