@@ -113,19 +113,16 @@
         left: auto !important;
     }
 
+aside, .main-content {
+    top: 55px;
+}
+
 aside {
-    top: 58px;
     background-color: #1a2226;
 }
 
-    aside .bg {
-        background-color: #337ab7;
-        height: 3px;
-        margin: 0 -15px;
-    }
-
     aside .nav-brand, .sidebar-open aside:hover .nav-brand {
-        height: 54px;
+        height: 55px;
         align-items: center;
         padding: 0 0.625rem;
     }
@@ -153,7 +150,6 @@ aside {
     }
 
 .main-content {
-    top: 58px;
     transition: margin-left .3s linear;
 }
     
@@ -254,7 +250,7 @@ body {
         }
 
         aside .sidebar, .sidebar-open aside:hover .sidebar {
-            top: 139px;
+            top: 136px;
             transition: top .3s linear;
         }
 

@@ -8,13 +8,6 @@
     z-index: 10;
 }
 
-    .header .bg {
-        background-color: #337ab7;
-        height: 3px;
-        margin: 0 -15px;
-    }
-/*end title*/
-
 .welcome-bg {
     background-image: url('../images/bg.jpg');
     background-size: 100% 100%;

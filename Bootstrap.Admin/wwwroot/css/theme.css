@@ -11,6 +11,14 @@ body {
     -webkit-overflow-scrolling: touch;
 }
 
+.bg {
+    background-color: #337ab7;
+    height: 3px;
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+
 aside .bg, aside .nav-brand, aside .nav-header, .header .nav, .userinfo .dropdown-item:first-child {
     display: none;
 }
