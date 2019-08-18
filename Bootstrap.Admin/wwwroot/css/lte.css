@@ -36,17 +36,22 @@
     top: 64px;
 }
 
+.username {
+    margin-left: 0.625rem;
+    font-size: 1rem;
+    font-weight: 500;
+    vertical-align: middle;
+    max-width: 120px;
+}
+
 .userinfo img {
     border-radius: 4px;
     width: 40px;
     height: 40px;
-    margin-right: 0.625rem;
 }
 
 .userinfo .username {
-    font-size: 1rem;
     max-width: 110px;
-    font-weight: 500;
 }
 
 .userinfo .dropdown-toggle, .userinfo .dropdown-toggle:hover, .userinfo.show .dropdown-toggle, .nav [data-toggle="dropdown"], .nav [data-toggle="dropdown"]:hover {
@@ -72,8 +77,15 @@
 
     .userinfo .dropdown-item img {
         width: 60px;
-        margin-right: 1rem;
         height: 60px;
+    }
+
+    .userinfo .dropdown-item .username {
+        max-width: 180px;
+    }
+
+    .userinfo .dropdown-item .username + div {
+        margin-left: 0.625rem;
     }
 
     .userinfo .dropdown-item a {
@@ -135,12 +147,6 @@ aside {
             top: 9px;
             left: 4px;
         }
-
-    aside .nav-header .username {
-        font-size: 1rem;
-        max-width: 120px;
-        vertical-align: middle;
-    }
 
     aside .nav-link span {
         display: inline-block;
@@ -282,7 +288,6 @@ body {
 
         aside .nav-header span, .sidebar-open aside:hover .nav-header span {
             color: #eee;
-            margin-left: 0.625rem;
         }
 
         aside .sub .nav-link, .userinfo .dropdown-item, aside .sidebar .sub .nav-item {
