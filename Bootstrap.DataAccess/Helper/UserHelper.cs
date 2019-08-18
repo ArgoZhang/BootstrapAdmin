@@ -15,23 +15,23 @@ namespace Bootstrap.DataAccess
     public static class UserHelper
     {
         /// <summary>
-        /// 
+        /// 获取所有用户缓存数据键值
         /// </summary>
         public const string RetrieveUsersDataKey = "UserHelper-RetrieveUsers";
         /// <summary>
-        /// 
+        /// 通过角色ID获取所有用户缓存数据键值
         /// </summary>
         public const string RetrieveUsersByRoleIdDataKey = "UserHelper-RetrieveUsersByRoleId";
         /// <summary>
-        /// 
+        /// 通过部门ID获取所有用户缓存数据键值
         /// </summary>
         public const string RetrieveUsersByGroupIdDataKey = "UserHelper-RetrieveUsersByGroupId";
         /// <summary>
-        /// 
+        /// 获取所有新用户缓存数据键值
         /// </summary>
         public const string RetrieveNewUsersDataKey = "UserHelper-RetrieveNewUsers";
         /// <summary>
-        /// 
+        /// 通过登录名获取登录用户缓存数据键值
         /// </summary>
         public const string RetrieveUsersByNameDataKey = DbHelper.RetrieveUsersByNameDataKey;
 
@@ -52,12 +52,12 @@ namespace Bootstrap.DataAccess
         public static IEnumerable<User> Retrieves() => CacheManager.GetOrAdd(RetrieveUsersDataKey, key => DbContextManager.Create<User>().Retrieves());
 
         /// <summary>
-        /// 
+        /// 认证方法
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="password"></param>
         /// <param name="config"></param>
-        /// <returns></returns>
+        /// <returns>返回真表示认证通过</returns>
         public static bool Authenticate(string userName, string password, Action<LoginUser> config)
         {
             if (!UserChecker(new User { UserName = userName, Password = password })) return false;
@@ -124,12 +124,12 @@ namespace Bootstrap.DataAccess
             if (DictHelper.RetrieveSystemModel() && !string.IsNullOrEmpty(user.Id) && RetrieveConstUsers().Any(u => u.Id == user.Id)) return true;
 
             var ret = DbContextManager.Create<User>().Save(user);
-            if (ret) CacheCleanUtility.ClearCache(userIds: string.IsNullOrEmpty(user.Id) ? new List<string>() : new List<string>() { user.Id });
+            if (ret) CacheCleanUtility.ClearCache(userIds: string.IsNullOrEmpty(user.Id) ? new List<string>() : new List<string>() { user.Id }, cacheKey: $"{RetrieveUsersByNameDataKey}*");
             return ret;
         }
 
         /// <summary>
-        /// 
+        /// 更新用户方法
         /// </summary>
         /// <param name="id"></param>
         /// <param name="password"></param>
@@ -141,12 +141,12 @@ namespace Bootstrap.DataAccess
             if (DictHelper.RetrieveSystemModel() && RetrieveConstUsers().Any(v => v.Id == id)) return true;
 
             var ret = DbContextManager.Create<User>().Update(id, password, displayName);
-            if (ret) CacheCleanUtility.ClearCache(userIds: string.IsNullOrEmpty(id) ? new List<string>() : new List<string>() { id });
+            if (ret) CacheCleanUtility.ClearCache(userIds: string.IsNullOrEmpty(id) ? new List<string>() : new List<string>() { id }, cacheKey: $"{RetrieveUsersByNameDataKey}*");
             return ret;
         }
 
         /// <summary>
-        /// 
+        /// 批准新注册用户方法
         /// </summary>
         /// <param name="id"></param>
         /// <param name="approvedBy"></param>
@@ -159,7 +159,7 @@ namespace Bootstrap.DataAccess
         }
 
         /// <summary>
-        /// 
+        /// 更改密码方法
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="password"></param>
@@ -202,7 +202,7 @@ namespace Bootstrap.DataAccess
         }
 
         /// <summary>
-        /// 
+        /// 新注册用户拒绝方法
         /// </summary>
         /// <param name="id"></param>
         /// <param name="rejectBy"></param>
@@ -268,7 +268,7 @@ namespace Bootstrap.DataAccess
         }
 
         /// <summary>
-        /// 
+        /// 保存显示名称方法
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="displayName"></param>
@@ -295,7 +295,7 @@ namespace Bootstrap.DataAccess
         }
 
         /// <summary>
-        /// 
+        /// 通过登录名获取登录用户方法
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
