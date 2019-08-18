@@ -95,7 +95,7 @@ namespace Bootstrap.Admin.Controllers.Api
         [HttpGet]
         public async Task<ActionResult> Builds([FromServices]GiteeHttpClient client, [FromQuery]string userName = "ArgoZhang", [FromQuery]string projName = "bootstrapadmin", [FromQuery]string branchName = "master", [FromQuery]string label = "custom badge", [FromQuery]string color = "orange")
         {
-            var ret = await GetJsonAsync(() => client.HttpClient.GetAsJsonAsync<AppveyorBuildResult>($"https://ci.appveyor.com/api/projects/{userName}/{projName}/branch/{branchName}", null, new CancellationTokenSource(2000).Token), content =>
+            var ret = await GetJsonAsync(() => client.HttpClient.GetAsJsonAsync<AppveyorBuildResult>($"https://ci.appveyor.com/api/projects/{userName}/{projName}/branch/{branchName}", null, new CancellationTokenSource(10000).Token), content =>
             {
                 return content == null ? "unknown" : content.Build.Version;
             });
