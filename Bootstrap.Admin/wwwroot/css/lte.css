@@ -37,7 +37,7 @@
 }
 
 .userinfo img {
-    border-radius: 50%;
+    border-radius: 4px;
     width: 40px;
     height: 40px;
     margin-right: 0.625rem;
