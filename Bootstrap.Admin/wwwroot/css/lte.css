@@ -37,11 +37,14 @@
 }
 
 .username {
-    margin-left: 0.625rem;
     font-size: 1rem;
     font-weight: 500;
     vertical-align: middle;
     max-width: 120px;
+}
+
+.username, aside:hover .nav-header span, .userinfo .dropdown-item .username + div {
+    margin-left: 0.625rem;
 }
 
 .userinfo img {
@@ -82,10 +85,6 @@
 
     .userinfo .dropdown-item .username {
         max-width: 180px;
-    }
-
-    .userinfo .dropdown-item .username + div {
-        margin-left: 0.625rem;
     }
 
     .userinfo .dropdown-item a {
@@ -259,10 +258,6 @@ body {
             transition: top .3s linear;
         }
 
-        aside, aside .nav-header img {
-            transition: width .3s linear;
-        }
-
         aside .sub .nav-tem, .sidebar-open aside:hover .sidebar .sub .nav-item {
             margin-left: 10px;
         }
@@ -290,7 +285,7 @@ body {
             color: #eee;
         }
 
-        aside .sub .nav-link, .userinfo .dropdown-item, aside .sidebar .sub .nav-item {
+        aside .sub .nav-link, .userinfo .dropdown-item, aside .sidebar .sub .nav-item, aside, aside .nav-header img {
             transition: all .3s linear;
         }
 
@@ -319,7 +314,8 @@ body {
             }
 
         .sidebar-open aside .nav-header img {
-            width: 2.25rem
+            width: 2.25rem;
+            height: 2.25rem;
         }
 
         .sidebar-open aside .nav-brand img, .sidebar-open aside:hover .nav-brand span, .sidebar-open aside:hover .nav-header span, .sidebar-open aside:hover .nav-item span {
