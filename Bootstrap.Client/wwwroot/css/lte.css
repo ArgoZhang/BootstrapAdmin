@@ -227,6 +227,17 @@ body {
         border-top-color: #2c6ca2;
     }
 
+@media (min-width: 667px) {
+    .header .nav {
+        display: flex;
+        flex: 0 1 auto;
+    }
+
+    .sidebar-toggle-box {
+        flex: 1 1 auto;
+    }
+}
+
 @media (min-width: 769px) {
     .header {
         margin-left: 13.375rem;
