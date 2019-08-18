@@ -49,7 +49,7 @@
                 Title = "服务器内部错误",
                 Content = "服务器内部错误",
                 Detail = "相关错误信息已经记录到日志中，请登录服务器或后台管理中查看",
-                Image = "~/Images/error_icon.png",
+                Image = "~/images/error_icon.png",
                 ReturnUrl = "~/Admin/Index"
             };
 
@@ -61,7 +61,7 @@
                 case 404:
                     model.Title = "资源未找到";
                     model.Content = "请求资源未找到";
-                    model.Image = "~/Images/404_icon.png";
+                    model.Image = "~/images/404_icon.png";
                     break;
                 case 403:
                     model.Title = "未授权请求";
