@@ -72,8 +72,8 @@
 
     .userinfo .dropdown-item img {
         width: 60px;
-        height: auto;
         margin-right: 1rem;
+        height: 60px;
     }
 
     .userinfo .dropdown-item a {
@@ -276,7 +276,7 @@ body {
         
             aside .nav-header img, .sidebar-open aside:hover .nav-header img {
                 width: 3.75rem;
-                height: auto;
+                height: 3.75rem;
                 border-radius: 50%;
             }
 
