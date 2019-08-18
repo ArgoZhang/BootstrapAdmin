@@ -43,7 +43,7 @@
     max-width: 120px;
 }
 
-.username, aside:hover .nav-header span, .userinfo .dropdown-item .username + div {
+.username, .sidebar-open aside:hover .nav-header span, .userinfo .dropdown-item .username + div {
     margin-left: 0.625rem;
 }
 
