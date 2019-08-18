@@ -7,7 +7,14 @@
             if (result) {
                 var $html = $('#main-content').html(result);
                 var $iconList = $('div.fontawesome-icon-list').on('click', 'a', function () {
-                    window.console.log($(this).children('i').attr('class'));
+                    var text = $(this).children('i').attr('class');
+                    window.console.log(text);
+                    if ($.copyText(text)) {
+                        toastr.success('拷贝成功');
+                    }
+                    else {
+                        toastr.error('拷贝失败');
+                    }
                     return false;
                 });
 

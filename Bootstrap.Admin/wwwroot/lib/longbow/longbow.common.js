@@ -57,27 +57,6 @@
         };
     }
 
-    // 扩展format
-    $.extend({
-        "format": function (source, params) {
-            if (params === undefined || params === null) {
-                return null;
-            }
-            if (arguments.length > 2 && params.constructor !== Array) {
-                params = $.makeArray(arguments).slice(1);
-            }
-            if (params.constructor !== Array) {
-                params = [params];
-            }
-            $.each(params, function (i, n) {
-                source = source.replace(new RegExp("\\{" + i + "\\}", "g"), function () {
-                    return n;
-                });
-            });
-            return source;
-        }
-    });
-
     // enhance window.console.log
     if (!window.console) {
         window.console = {
@@ -111,6 +90,34 @@
     };
 
     $.extend({
+        "format": function (source, params) {
+            if (params === undefined || params === null) {
+                return null;
+            }
+            if (arguments.length > 2 && params.constructor !== Array) {
+                params = $.makeArray(arguments).slice(1);
+            }
+            if (params.constructor !== Array) {
+                params = [params];
+            }
+            $.each(params, function (i, n) {
+                source = source.replace(new RegExp("\\{" + i + "\\}", "g"), function () {
+                    return n;
+                });
+            });
+            return source;
+        },
+        copyText: function (ele) {
+            if (typeof ele !== "string") return false;
+            var input = document.createElement('input');
+            input.setAttribute('type', 'text');
+            input.setAttribute('value', ele);
+            document.body.appendChild(input);
+            input.select();
+            var ret = document.execCommand('copy');
+            document.body.removeChild(input);
+            return ret;
+        },
         fullScreenStatus: function fullScreenStatus(value) {
             if (value !== undefined) window.fullscreen = value;
             return document.fullscreen ||
@@ -501,12 +508,12 @@
         }
 
         // extend bootstrap-toggle
-        if($.fn.bootstrapToggle) {
+        if ($.fn.bootstrapToggle) {
             var toggle = $.fn.bootstrapToggle.Constructor;
             var oldFunc = toggle.prototype.render;
-            toggle.prototype.render = function() {
+            toggle.prototype.render = function () {
                 var defaultVal = this.$element.attr('data-default-val') || '';
-                if(defaultVal === '') this.$element.prop('checked', true);
+                if (defaultVal === '') this.$element.prop('checked', true);
                 oldFunc.call(this);
             }
         }
