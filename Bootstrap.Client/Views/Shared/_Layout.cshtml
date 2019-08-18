@@ -7,11 +7,13 @@
         <link href="~/lib/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
         <link href="~/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
         <link href="~/lib/toastr.js/toastr.css" rel="stylesheet" />
+        <link href="~/lib/overlayscrollbars/OverlayScrollbars.css" rel="stylesheet" />
     </environment>
     <environment exclude="Development">
         <link href="~/lib/twitter-bootstrap/css/bootstrap.min.css" rel="stylesheet" />
         <link href="~/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
         <link href="~/lib/toastr.js/toastr.min.css" rel="stylesheet" />
+        <link href="~/lib/overlayscrollbars/OverlayScrollbars.min.css" rel="stylesheet" />
     </environment>
     @RenderSection("css", false)
     <link href="~/css/theme.css" rel="stylesheet" asp-append-version="true" />
@@ -27,15 +29,14 @@
     <environment include="Development">
         <script src="~/lib/twitter-bootstrap/js/bootstrap.bundle.js"></script>
         <script src="~/lib/signalr/dist/browser/signalr.js"></script>
-        <script src="~/lib/dcjqaccordion/js/jquery.dcjqaccordion.2.7.js"></script>
+        <script src="~/lib/overlayscrollbars/jquery.overlayScrollbars.js"></script>
     </environment>
     <environment exclude="Development">
         <script src="~/lib/twitter-bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
-        <script src="~/lib/dcjqaccordion/js/jquery.dcjqaccordion.2.7.min.js"></script>
+        <script src="~/lib/overlayscrollbars/jquery.overlayScrollbars.min.js"></script>
     </environment>
     <script src="~/lib/toastr.js/toastr.min.js"></script>
-    <script src="~/lib/dcjqaccordion/js/jquery.cookie.js"></script>
     <script src="~/lib/longbow/longbow.common.js" asp-append-version="true"></script>
     <script src="~/js/common-scripts.js" asp-append-version="true"></script>
     @RenderSection("javascript", false)
@@ -43,6 +44,12 @@
 @await Html.PartialAsync("Header")
 @await Html.PartialAsync("navigator")
 <section class="container-fluid">
+    <div class="main-header">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Content("~/Admin/Index")"><i class="fa fa-home"></i>首页</a></li>
+            <li class="breadcrumb-item d-none"></li>
+        </ol>
+    </div>
     @RenderBody()
 </section>
 @await Html.PartialAsync("Footer")

@@ -500,6 +500,17 @@
             });
         }
 
+        // extend bootstrap-toggle
+        if($.fn.bootstrapToggle) {
+            var toggle = $.fn.bootstrapToggle.Constructor;
+            var oldFunc = toggle.prototype.render;
+            toggle.prototype.render = function() {
+                var defaultVal = this.$element.attr('data-default-val') || '';
+                if(defaultVal === '') this.$element.prop('checked', true);
+                oldFunc.call(this);
+            }
+        }
+
         if (window.NProgress) {
             $(document).ajaxStart(function () {
                 return NProgress.start();
@@ -526,13 +537,13 @@
             "hideMethod": "fadeOut"
         };
 
-        $('.collapse').on('shown.bs.collapse', function () {
+        $('body > section .collapse').on('shown.bs.collapse', function () {
             $.footer().removeClass('d-none');
-        }).on('hidden.bs.collapse', function () {
+        }).on('body > section hidden.bs.collapse', function () {
             $.footer().removeClass('d-none');
-        }).on('hide.bs.collapse', function () {
+        }).on('body > section hide.bs.collapse', function () {
             $('footer').addClass('d-none');
-        }).on('show.bs.collapse', function () {
+        }).on('body > section show.bs.collapse', function () {
             $('footer').addClass('d-none');
         });
 

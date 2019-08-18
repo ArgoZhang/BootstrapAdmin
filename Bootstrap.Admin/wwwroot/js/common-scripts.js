@@ -1,53 +1,40 @@
 (function ($) {
-    var formatCategoryName = function (menu) {
-        var ret = "";
-        if (menu.IsResource === 2) ret = "按钮";
-        else if (menu.IsResource === 1) ret = "资源";
-        else ret = menu.CategoryName;
-        return ret;
-    };
+    $.fn.extend({
+        autoScrollSidebar: function (options) {
+            var option = $.extend({ target: null, offsetTop: 0 }, options);
+            var $navItem = option.target;
+            if ($navItem === null || $navItem.length === 0) return this;
 
-    var cascadeMenu = function (menus) {
-        var html = "";
-        $.each(menus, function (index, menu) {
-            if (menu.Menus.length === 0) {
-                html += $.format('<li class="dd-item dd3-item" data-id="{0}" data-order="{4}" data-category="{3}"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><div class="checkbox"><label><input type="checkbox" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><div class="radio"><label><input type="radio" name="menu" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><span class="menuType">{5}</span><span class="menuOrder">{4}</span></div></li>', menu.Id, menu.Icon, menu.Name, menu.Category, menu.Order, formatCategoryName(menu));
+            // sidebar scroll animate
+            var middle = this.outerHeight() / 2;
+            var top = $navItem.offset().top + option.offsetTop - this.offset().top;
+            var $scrollInstance = this[0]["__overlayScrollbars__"];
+            if (top > middle) {
+                if ($scrollInstance) $scrollInstance.scroll({ x: 0, y: top - middle }, 500, "swing");
+                else this.animate({ scrollTop: top - middle });
+            }
+            return this;
+        },
+        addNiceScroll: function () {
+            if (!$.browser.versions.ios && $(window).width() > 768) {
+                this.overlayScrollbars({
+                    className: 'os-theme-light',
+                    scrollbars: {
+                        autoHide: 'leave',
+                        autoHideDelay: 100
+                    },
+                    overflowBehavior: {
+                        x: "hidden",
+                        y: "scroll"
+                    }
+                });
             }
             else {
-                html += $.format('<li class="dd-item dd3-item" data-id="{0}" data-order="{5}" data-category="{3}"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><div class="checkbox"><label><input type="checkbox" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><div class="radio"><label><input type="radio" name="menu" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><span class="menuType">{6}</span><span class="menuOrder">{5}</span></div><ol class="dd-list">{4}</ol></li>', menu.Id, menu.Icon, menu.Name, menu.Category, cascadeSubMenu(menu.Menus), menu.Order, formatCategoryName(menu));
+                this.css('overflow', 'auto');
             }
-        });
-        return html;
-    };
-
-    var cascadeSubMenu = function (menus) {
-        var html = "";
-        $.each(menus, function (index, menu) {
-            if (menu.Menus.length === 0) {
-                html += $.format('<li class="dd-item dd3-item" data-id="{0}" data-order="{4}" data-category="{3}"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><div class="checkbox"><label><input type="checkbox" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><div class="radio"><label><input type="radio" name="menu" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><span class="menuType">{5}</span><span class="menuOrder">{4}</span></div></li>', menu.Id, menu.Icon, menu.Name, menu.Category, menu.Order, formatCategoryName(menu));
-            }
-            else {
-                html += $.format('<li class="dd-item dd3-item" data-id="{0}" data-order="{5}" data-category="{3}"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><div class="checkbox"><label><input type="checkbox" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><div class="radio"><label><input type="radio" name="menu" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><span class="menuType">{6}</span><span class="menuOrder">{5}</span></div><ol class="dd-list">{4}</ol></li>', menu.Id, menu.Icon, menu.Name, menu.Category, cascadeSubMenu(menu.Menus), menu.Order, formatCategoryName(menu));
-            }
-        });
-        return html;
-    };
-
-    var setBadge = function (source) {
-        var data = $.extend({
-            TasksCount: 0,
-            AppExceptionsCount: 0,
-            DbExceptionsCount: 0,
-            MessagesCount: 0,
-            NewUsersCount: 0
-        }, source);
-        $('#msgHeaderTaskBadge').text(data.TasksCount === 0 ? "" : data.TasksCount);
-        $('#msgHeaderUserBadge').text(data.NewUsersCount === 0 ? "" : data.NewUsersCount);
-        $('#msgHeaderAppBadge').text(data.AppExceptionsCount === 0 ? "" : data.AppExceptionsCount);
-        $('#msgHeaderDbBadge').text(data.DbExceptionsCount === 0 ? "" : data.DbExceptionsCount);
-        $('#msgHeaderMsgBadge').text(data.MessagesCount === 0 ? "" : data.MessagesCount);
-        $('#logoutNoti').text(data.NewUsersCount === 0 ? "" : data.NewUsersCount);
-    };
+            return this;
+        }
+    });
 
     $.fn.extend({
         nestMenu: function (callback) {
@@ -127,6 +114,56 @@
             return this;
         }
     });
+
+    var formatCategoryName = function (menu) {
+        var ret = "";
+        if (menu.IsResource === 2) ret = "按钮";
+        else if (menu.IsResource === 1) ret = "资源";
+        else ret = menu.CategoryName;
+        return ret;
+    };
+
+    var cascadeMenu = function (menus) {
+        var html = "";
+        $.each(menus, function (index, menu) {
+            if (menu.Menus.length === 0) {
+                html += $.format('<li class="dd-item dd3-item" data-id="{0}" data-order="{4}" data-category="{3}"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><div class="checkbox"><label><input type="checkbox" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><div class="radio"><label><input type="radio" name="menu" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><span class="menuType">{5}</span><span class="menuOrder">{4}</span></div></li>', menu.Id, menu.Icon, menu.Name, menu.Category, menu.Order, formatCategoryName(menu));
+            }
+            else {
+                html += $.format('<li class="dd-item dd3-item" data-id="{0}" data-order="{5}" data-category="{3}"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><div class="checkbox"><label><input type="checkbox" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><div class="radio"><label><input type="radio" name="menu" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><span class="menuType">{6}</span><span class="menuOrder">{5}</span></div><ol class="dd-list">{4}</ol></li>', menu.Id, menu.Icon, menu.Name, menu.Category, cascadeSubMenu(menu.Menus), menu.Order, formatCategoryName(menu));
+            }
+        });
+        return html;
+    };
+
+    var cascadeSubMenu = function (menus) {
+        var html = "";
+        $.each(menus, function (index, menu) {
+            if (menu.Menus.length === 0) {
+                html += $.format('<li class="dd-item dd3-item" data-id="{0}" data-order="{4}" data-category="{3}"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><div class="checkbox"><label><input type="checkbox" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><div class="radio"><label><input type="radio" name="menu" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><span class="menuType">{5}</span><span class="menuOrder">{4}</span></div></li>', menu.Id, menu.Icon, menu.Name, menu.Category, menu.Order, formatCategoryName(menu));
+            }
+            else {
+                html += $.format('<li class="dd-item dd3-item" data-id="{0}" data-order="{5}" data-category="{3}"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><div class="checkbox"><label><input type="checkbox" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><div class="radio"><label><input type="radio" name="menu" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><span class="menuType">{6}</span><span class="menuOrder">{5}</span></div><ol class="dd-list">{4}</ol></li>', menu.Id, menu.Icon, menu.Name, menu.Category, cascadeSubMenu(menu.Menus), menu.Order, formatCategoryName(menu));
+            }
+        });
+        return html;
+    };
+
+    var setBadge = function (source) {
+        var data = $.extend({
+            TasksCount: 0,
+            AppExceptionsCount: 0,
+            DbExceptionsCount: 0,
+            MessagesCount: 0,
+            NewUsersCount: 0
+        }, source);
+        $('#msgHeaderTaskBadge').text(data.TasksCount === 0 ? "" : data.TasksCount);
+        $('#msgHeaderUserBadge').text(data.NewUsersCount === 0 ? "" : data.NewUsersCount);
+        $('#msgHeaderAppBadge').text(data.AppExceptionsCount === 0 ? "" : data.AppExceptionsCount);
+        $('#msgHeaderDbBadge').text(data.DbExceptionsCount === 0 ? "" : data.DbExceptionsCount);
+        $('#msgHeaderMsgBadge').text(data.MessagesCount === 0 ? "" : data.MessagesCount);
+        $('#logoutNoti').text(data.NewUsersCount === 0 ? "" : data.NewUsersCount);
+    };
 })(jQuery);
 
 $(function () {
@@ -136,43 +173,6 @@ $(function () {
     var $breadNav = $('#breadNav, .main-header .breadcrumb-item:last');
     var arch = $sideMenu.find('a.active').last();
     $breadNav.removeClass('d-none').text(arch.text() || $('title').text());
-
-    $.fn.extend({
-        autoScrollSidebar: function (options) {
-            var option = $.extend({ target: null, offsetTop: 0 }, options);
-            var $navItem = option.target;
-            if ($navItem === null || $navItem.length === 0) return this;
-
-            // sidebar scroll animate
-            var middle = this.outerHeight() / 2;
-            var top = $navItem.offset().top + option.offsetTop - this.offset().top;
-            var $scrollInstance = this[0]["__overlayScrollbars__"];
-            if (top > middle) {
-                if ($scrollInstance) $scrollInstance.scroll({ x: 0, y: top - middle }, 500, "swing");
-                else this.animate({ scrollTop: top - middle });
-            }
-            return this;
-        },
-        addNiceScroll: function () {
-            if (!$.browser.versions.ios && $(window).width() > 768) {
-                this.overlayScrollbars({
-                    className: 'os-theme-light',
-                    scrollbars: {
-                        autoHide: 'leave',
-                        autoHideDelay: 100
-                    },
-                    overflowBehavior: {
-                        x: "hidden",
-                        y: "scroll"
-                    }
-                });
-            }
-            else {
-                this.css('overflow', 'auto');
-            }
-            return this;
-        }
-    });
 
     // custom scrollbar
     var $sidebar = $('.sidebar').addNiceScroll().autoScrollSidebar({ target: arch.parent(), offsetTop: arch.parent().innerHeight() / 2 });

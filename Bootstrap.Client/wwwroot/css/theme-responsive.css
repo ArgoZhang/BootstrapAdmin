@@ -1,4 +1,4 @@
-﻿@media print {
+@media print {
     a:link {
         text-decoration: none !important;
     }
@@ -95,10 +95,19 @@
 
     aside {
         transform: translate(0);
-        width: 210px;
+        width: 13.375rem;
         overflow: hidden;
         bottom: 40px;
     }
+
+        aside .sidebar {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            overflow: hidden;
+        }
 }
 
 @media (min-width: 940px) {

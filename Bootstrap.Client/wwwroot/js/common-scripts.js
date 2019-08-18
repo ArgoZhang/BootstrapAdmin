@@ -1,15 +1,72 @@
-﻿$(function () {
-    var $sideMenu = $(".sidebar");
-    $sideMenu.dcAccordion({
-        autoExpand: true,
-        saveState: false
+﻿(function ($) {
+    $.fn.extend({
+        autoScrollSidebar: function (options) {
+            var option = $.extend({ target: null, offsetTop: 0 }, options);
+            var $navItem = option.target;
+            if ($navItem === null || $navItem.length === 0) return this;
+
+            // sidebar scroll animate
+            var middle = this.outerHeight() / 2;
+            var top = $navItem.offset().top + option.offsetTop - this.offset().top;
+            var $scrollInstance = this[0]["__overlayScrollbars__"];
+            if (top > middle) {
+                if ($scrollInstance) $scrollInstance.scroll({ x: 0, y: top - middle }, 500, "swing");
+                else this.animate({ scrollTop: top - middle });
+            }
+            return this;
+        },
+        addNiceScroll: function () {
+            if (!$.browser.versions.ios && $(window).width() > 768) {
+                this.overlayScrollbars({
+                    className: 'os-theme-light',
+                    scrollbars: {
+                        autoHide: 'leave',
+                        autoHideDelay: 100
+                    },
+                    overflowBehavior: {
+                        x: "hidden",
+                        y: "scroll"
+                    }
+                });
+            }
+            else {
+                this.css('overflow', 'auto');
+            }
+            return this;
+        }
     });
-    var $breadNav = $('#breadNav');
+
+})(jQuery);
+
+$(function () {
+    var $sideMenu = $(".sidebar ul");
+
+    // breadcrumb
+    var $breadNav = $('#breadNav, .main-header .breadcrumb-item:last');
     var arch = $sideMenu.find('a.active').last();
     $breadNav.removeClass('d-none').text(arch.text() || $('title').text());
 
+    // custom scrollbar
+    var $sidebar = $('.sidebar').addNiceScroll().autoScrollSidebar({ target: arch.parent(), offsetTop: arch.parent().innerHeight() / 2 });
+
+    $sideMenu.on('click', 'a.dcjq-parent', function () {
+        return;
+        var $this = $(this);
+        if (!$.browser.versions.ios && $(window).width() > 768) {
+            setTimeout(function () {
+                var offsetScroll = parseInt($this.parents('.mCSB_container').css('top').replace('px', ''));
+                $sidebar.autoScrollSidebar({ target: $this.parent(), offsetTop: 25.5 - offsetScroll });
+            }, 600);
+        }
+        else if ($.browser.versions.ios && $(window).width() > 768) {
+            var offsetScroll = parseInt($this.parents('aside').scrollTop());
+            $sidebar.autoScrollSidebar({ target: $this.parent(), offsetTop: 25.5 + offsetScroll });
+        }
+    });
+
     $('.sidebar-toggle-box').on('click', function (e) {
-        if ($(window).width() >= 768) {
+        // 判断是否为 LTE 模式
+        if ($(window).width() >= 768 && $('aside').is(':hidden')) {
             e.preventDefault();
             return false;
         }

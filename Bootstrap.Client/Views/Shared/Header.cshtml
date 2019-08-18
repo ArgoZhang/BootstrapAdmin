@@ -29,6 +29,15 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right">
                         <div class="dropdown-item">
+                            <div class="d-flex flex-fill align-items-center">
+                                <img src="@Url.Content(Model.Icon)">
+                                <div class="flex-fill">
+                                    <div class="username text-truncate">@Model.DisplayName</div>
+                                    <div>登录名：@Model.UserName</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dropdown-item">
                             <a href="@Model.ProfilesUrl"><i class=" fa fa-suitcase"></i>个人中心</a>
                             <a href="@Model.SettingsUrl"><i class="fa fa-cog"></i>设置</a>
                             <a href="@Model.NotisUrl"><i class="fa fa-bell"></i>通知<span id="logoutNoti" class="badge badge-pill badge-success"></span></a>
