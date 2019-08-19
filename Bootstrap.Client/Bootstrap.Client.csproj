@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Bootstrap.Security.DataAccess" Version="2.2.11" />
     <PackageReference Include="Bootstrap.Security.Mvc" Version="2.2.11" />
     <PackageReference Include="Longbow.Configuration" Version="2.2.7" />
     <PackageReference Include="Longbow.Logging" Version="2.2.12" />
