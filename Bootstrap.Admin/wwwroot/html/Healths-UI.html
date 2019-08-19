@@ -18,7 +18,11 @@
     <link href="../css/site-responsive.css" rel="stylesheet" asp-append-version="true" />
     <style>
         @media (min-width: 768px) {
-            .card-body .bootstrap-table tr td:last-child {
+
+            .card-body .bootstrap-table tr td:nth-child(5),
+            .card-body .bootstrap-table tr th:nth-child(5),
+            .card-body .bootstrap-table tr td:last-child,
+            .card-body .bootstrap-table tr th:last-child {
                 width: 78px;
                 text-align: center;
             }
