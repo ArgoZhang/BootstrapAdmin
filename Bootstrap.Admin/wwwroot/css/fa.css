@@ -163,6 +163,7 @@
     color: #222;
     height: 32px;
     border-radius: 4px;
+    padding: 0 6px;
 }
 
     .fontawesome-icon-list .fa-hover a:hover {
@@ -178,8 +179,8 @@
     }
 
     .fontawesome-icon-list .fa-hover a:hover .fa {
-        font-size: 28px;
-        vertical-align: -6px;
+        font-size: 1rem;
+        vertical-align: middle;
     }
 
 .fontawesome-icon-list ul {
