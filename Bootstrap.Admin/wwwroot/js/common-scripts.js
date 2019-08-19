@@ -16,7 +16,7 @@
             return this;
         },
         addNiceScroll: function () {
-            if (!$.browser.versions.ios && $(window).width() > 768) {
+            if ($(window).width() > 768) {
                 this.overlayScrollbars({
                     className: 'os-theme-light',
                     scrollbars: {
@@ -175,25 +175,10 @@ $(function () {
     $breadNav.removeClass('d-none').text(arch.text() || $('title').text());
 
     // custom scrollbar
-    var $sidebar = $('.sidebar').addNiceScroll().autoScrollSidebar({ target: arch.parent(), offsetTop: arch.parent().innerHeight() / 2 });
+    $sidebar = $('.sidebar').addNiceScroll().autoScrollSidebar({ target: arch.parent(), offsetTop: arch.parent().innerHeight() / 2 });
 
-    $sideMenu.on('click', 'a.dcjq-parent', function () {
-        return;
-        var $this = $(this);
-        if (!$.browser.versions.ios && $(window).width() > 768) {
-            setTimeout(function () {
-                var offsetScroll = parseInt($this.parents('.mCSB_container').css('top').replace('px', ''));
-                $sidebar.autoScrollSidebar({ target: $this.parent(), offsetTop: 25.5 - offsetScroll });
-            }, 600);
-        }
-        else if ($.browser.versions.ios && $(window).width() > 768) {
-            var offsetScroll = parseInt($this.parents('aside').scrollTop());
-            $sidebar.autoScrollSidebar({ target: $this.parent(), offsetTop: 25.5 + offsetScroll });
-        }
-    });
-
-    // 大于 769 时考虑网站设置 收缩侧边栏
-    if ($(window).width() > 769) {
+    // 大于 768 时考虑网站设置 收缩侧边栏
+    if ($(window).width() > 768) {
         var $ele = $('aside');
         var collapsed = $ele.hasClass('collapsed');
         if (collapsed) {
