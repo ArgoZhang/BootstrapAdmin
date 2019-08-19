@@ -1,5 +1,5 @@
 ﻿$(function () {
-    var healthStatus = ['<span class="badge badge-md badge-pill badge-danger">不健康</span>', '<span class="badge badge-md badge-pill badge-warning">亚健康</span>', '<span class="badge badge-md badge-pill badge-success">健康</span>'];
+    var healthStatus = ['<button class="btn btn-danger">不健康</button>', '<button class="btn btn-warning">亚健康</button>', '<button class="btn btn-success">健康</button>'];
     var StatusFormatter = function (value) {
         return healthStatus[value];
     };
