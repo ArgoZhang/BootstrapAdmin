@@ -16,7 +16,7 @@
             return this;
         },
         addNiceScroll: function () {
-            if (!$.browser.versions.ios && $(window).width() > 768) {
+            if ($(window).width() > 768) {
                 this.overlayScrollbars({
                     className: 'os-theme-light',
                     scrollbars: {

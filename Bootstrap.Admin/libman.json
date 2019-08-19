@@ -47,23 +47,6 @@
     },
     {
       "provider": "cdnjs",
-      "library": "bootstrap-table@1.14.2",
-      "destination": "wwwroot/lib/bootstrap-table/",
-      "files": [
-        "bootstrap-table.min.js",
-        "locale/bootstrap-table-zh-CN.js",
-        "locale/bootstrap-table-zh-CN.min.js",
-        "bootstrap-table.css",
-        "bootstrap-table.js",
-        "bootstrap-table.min.css",
-        "extensions/export/bootstrap-table-export.js",
-        "extensions/export/bootstrap-table-export.min.js",
-        "extensions/treegrid/bootstrap-table-treegrid.js",
-        "extensions/treegrid/bootstrap-table-treegrid.min.js"
-      ]
-    },
-    {
-      "provider": "cdnjs",
       "library": "jquery-treegrid@0.2.0",
       "destination": "wwwroot/lib/treegrid/",
       "files": [
