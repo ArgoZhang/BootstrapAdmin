@@ -48,20 +48,8 @@ $(function () {
 
     // custom scrollbar
     var $sidebar = $('.sidebar').addNiceScroll().autoScrollSidebar({ target: arch.parent(), offsetTop: arch.parent().innerHeight() / 2 });
-
-    $sideMenu.on('click', 'a.dcjq-parent', function () {
-        return;
-        var $this = $(this);
-        if (!$.browser.versions.ios && $(window).width() > 768) {
-            setTimeout(function () {
-                var offsetScroll = parseInt($this.parents('.mCSB_container').css('top').replace('px', ''));
-                $sidebar.autoScrollSidebar({ target: $this.parent(), offsetTop: 25.5 - offsetScroll });
-            }, 600);
-        }
-        else if ($.browser.versions.ios && $(window).width() > 768) {
-            var offsetScroll = parseInt($this.parents('aside').scrollTop());
-            $sidebar.autoScrollSidebar({ target: $this.parent(), offsetTop: 25.5 + offsetScroll });
-        }
+    $(window).on('resize', function () {
+        $sidebar.addNiceScroll();
     });
 
     $('.sidebar-toggle-box').on('click', function (e) {
