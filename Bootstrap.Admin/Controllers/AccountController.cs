@@ -21,8 +21,24 @@ namespace Bootstrap.Admin.Controllers
     [AutoValidateAntiforgeryToken]
     public class AccountController : Controller
     {
+
         /// <summary>
-        /// 
+        /// 系统锁屏界面
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Lock()
+        {
+            var user = UserHelper.RetrieveUserByUserName(User.Identity.Name);
+            //await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            var urlReferrer = Request.Headers["Referer"].FirstOrDefault();
+            return View(new LockModel(this)
+            {
+                ReturnUrl = WebUtility.UrlEncode(string.IsNullOrEmpty(urlReferrer) ? CookieAuthenticationDefaults.LoginPath.Value : urlReferrer)
+            });
+        }
+
+        /// <summary>
+        /// 系统登录方法
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -61,7 +77,7 @@ namespace Bootstrap.Admin.Controllers
         }
 
         /// <summary>
-        /// 
+        /// 创建登录用户信息
         /// </summary>
         /// <param name="onlineUserSvr"></param>
         /// <param name="ipLocator"></param>
