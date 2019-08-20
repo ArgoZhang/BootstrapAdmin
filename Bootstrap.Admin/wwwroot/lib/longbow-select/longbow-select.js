@@ -149,15 +149,17 @@
         // see https://gitee.com/LongbowEnterprise/longbow-select/issues/IZ3BR?from=project-issue
         this.$input.attr('value', '').removeClass('is-valid is-invalid');
         this.$menus.html('');
+        var $activeItem = null;
         $.each(value, function (index) {
             var $item = $('<a class="dropdown-item" href="#" data-val="' + this.value + '">' + this.text + '</a>');
             that.$menus.append($item);
             if (this.selected === true || this.value === oldValue || index === 0 || this.value === that.$element.attr('data-default-val')) {
                 that.$input.attr('value', this.text);
                 that.$element.val(this.value).attr('data-text', this.text);
-                $item.addClass('active');
+                $activeItem = $item;
             }
         });
+        if ($activeItem !== null) $activeItem.addClass('active');
 
         this.source = value;
     };
