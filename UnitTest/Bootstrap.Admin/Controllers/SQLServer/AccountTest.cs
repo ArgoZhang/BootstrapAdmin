@@ -82,5 +82,14 @@ namespace Bootstrap.Admin.Controllers.SqlServer
             var content = await r.Content.ReadAsStringAsync();
             Assert.Contains("服务器拒绝处理您的请求", content);
         }
+
+        [Fact]
+        public async void Lock_Ok()
+        {
+            var r = await Client.GetAsync("Lock");
+            Assert.True(r.IsSuccessStatusCode);
+            var content = await r.Content.ReadAsStringAsync();
+            Assert.Contains("系统锁屏", content);
+        }
     }
 }
