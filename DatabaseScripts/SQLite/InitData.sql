@@ -59,6 +59,7 @@ INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (last_insert_rowid() - 3, '保存样式', 40, 'fa fa-fa', 'saveTheme', '0', 2);
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (last_insert_rowid() - 4, '保存头像', 50, 'fa fa-fa', 'saveIcon', '0', 2);
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (last_insert_rowid() - 5, '保存网站设置', 60, 'fa fa-fa', 'saveUISettings', '0', 2);
+INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, '系统锁屏', 25, 'fa fa-television', '~/Account/Lock', '0');
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, '返回前台', 30, 'fa fa-hand-o-left', '~/Home/Index', '0');
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, '网站设置', 40, 'fa fa-fa', '~/Admin/Settings', '0');
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (last_insert_rowid(), '保存系统名称', 10, 'fa fa-fa', 'saveTitle', '0', 2);

@@ -96,6 +96,18 @@
         "Application": "0"
     },
     {
+        "_id": ObjectId("5bd7b8445fa31256f77e4a01"),
+        "ParentId": "0",
+        "Name": "系统锁屏",
+        "Order": NumberInt(25),
+        "Icon": "fa fa-television",
+        "Url": "~/Account/Lock",
+        "Category": "0",
+        "Target": "_self",
+        "IsResource": NumberInt(0),
+        "Application": "0"
+    },
+    {
         "_id": ObjectId("5bd7b8445fa31256f77e4b92"),
         "ParentId": "0",
         "Name": "返回前台",
