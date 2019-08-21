@@ -90,6 +90,9 @@ namespace Bootstrap.Admin.Controllers.SqlServer
             Assert.True(r.IsSuccessStatusCode);
             var content = await r.Content.ReadAsStringAsync();
             Assert.Contains("系统锁屏", content);
+
+            // relogin
+            await Client.LoginAsync();
         }
     }
 }
