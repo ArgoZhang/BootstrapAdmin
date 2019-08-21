@@ -30,6 +30,9 @@
     .header .sidebar-toggle-box span, aside .nav-brand a {
         transition: all .3s ease-in-out;
     }
+.sidebar-open .sidebar-toggle-box .fa-bars {
+    transform: none;
+}
 
 .header .badge {
     top: 4px;
@@ -41,7 +44,6 @@
 
 .username {
     font-size: 1rem;
-    font-weight: 500;
     vertical-align: middle;
     max-width: 120px;
 }
@@ -52,8 +54,9 @@
 
 .userinfo img {
     border-radius: 4px;
-    width: 40px;
-    height: 40px;
+    width: 2rem;
+    height: 2rem;
+    margin: 0.25rem 0;
 }
 
 .userinfo .username {
@@ -111,17 +114,18 @@
             background: none;
         }
 
-    .userinfo.show .dropdown-menu {
-        margin-top: 4px;
-        left: auto !important;
-    }
+.userinfo.show .dropdown-menu {
+    margin-top: 4px;
+    left: auto !important;
+    cursor: default;
+}
 
 aside, .main-content {
     top: 55px;
 }
 
 aside {
-    background-color: #1a2226;
+    background-color: #222d32;
 }
 
     aside .nav-brand, .sidebar-open aside:hover .nav-brand {
@@ -129,23 +133,36 @@ aside {
         align-items: center;
         padding: 0 0.625rem;
     }
+    aside .nav-brand a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
         aside .nav-brand span, .header .sidebar-toggle-box {
             font-size: 1.25rem;
-            font-weight: 700;
             white-space: nowrap;
         }
 
-        aside .nav-brand img, .sidebar-open aside:hover .nav-brand img {
-            opacity: 0;
-            visibility: hidden;
-            width: 2.75rem;
+            .header .sidebar-toggle-box .fa {
+                font-size: 1rem;
+            }
+        aside .nav-brand img, aside:hover .nav-brand img {
+            width: 2.125rem;
             height: auto;
             border-radius: 0.42rem;
-            position: absolute;
-            top: 6px;
-            left: 4px;
+            margin-right: 0.25rem;
         }
+.sidebar-open aside .nav-brand img, .sidebar-open aside:hover .nav-brand img {
+    opacity: 0;
+    visibility: hidden;
+    width: 2.125rem;
+    height: auto;
+    border-radius: 0.42rem;
+    position: absolute;
+    top: 11px;
+    left: 9px;
+}
 
     aside .nav-link span {
         display: inline-block;
@@ -174,17 +191,30 @@ aside {
     border-top: none;
 }
 
+.card-header {
+    font-size: 1rem;
+    background: none;
+    border-bottom: 1px solid #f4f4f4;
+    padding: 0.625rem 1rem;
+}
+
 /* color */
 .main-content {
     background: #ecf0f5;
 }
 
-.header, aside .nav-brand, .userinfo .dropdown-menu, .userinfo .dropdown-item {
+.bg{
+    background:none;
+}
+.header, .userinfo .dropdown-menu, .userinfo .dropdown-item {
     background: #3c8dbc;
 }
+    .header .nav .dropdown:hover, .userinfo:hover {
+        background-color: rgba(0,0,0,0.1);
+    }
 
-.header .nav .dropdown:hover, .userinfo:hover {
-    background-color: rgba(0,0,0,0.1);
+aside .nav-brand {
+    background: #367fa9;
 }
 
 .sidebar .nav-link {
@@ -218,9 +248,12 @@ aside {
 }
 
 .header, aside .nav-brand {
-    border-bottom: 1px solid #3c8dbc;
+    border-bottom: 1px solid #367fa9;
 }
 
+.breadcrumb > li > a {
+    color: #444;
+}
 .card {
     border-top-color: #3c8dbc;
     color: #444;
@@ -229,7 +262,42 @@ aside {
     .card:hover {
         border-top-color: #2c6ca2;
     }
-
+.card-header {
+    border-bottom: 1px solid #f4f4f4;
+}
+.modal-footer {
+    border-top: 1px solid #f4f4f4;
+}
+footer {
+    background: #2c3b41;
+}
+@media (max-width:767px){
+    body, .form-control, .dropdown-menu, .btn:not(.btn-lg):not(.btn-xs), .input-group-text, .popover-header {
+        font-size: 0.75rem;
+    }
+    .bg {
+        background-color: #367fa9;
+    }    
+    .card-header {
+        font-size: 0.875rem;
+        padding: 0.375rem 1rem;
+    }
+    .form-inline .form-group{
+        margin-bottom:0.75rem;
+    }
+        .form-inline .form-group .control-label {
+            margin-bottom: 0.125rem;
+        }
+        .modal-body, .card-body {
+            padding: 0.5rem 0.75rem 0 0.75rem;
+        }
+    .modal-footer {
+        padding: 0.5rem;
+    }
+    .username {
+        font-size: 0.875rem;
+    }
+}
 @media (min-width: 667px) {
     .header .nav {
         display: flex;
