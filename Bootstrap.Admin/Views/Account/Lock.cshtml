@@ -30,7 +30,7 @@
         <img alt="lock avatar" src="@Url.Content(Model.Icon)" />
         <h1>@Model.DisplayName</h1>
         <span class="locked">系统已锁定</span>
-        <form role="form" class="form-inline justify-content-center" method="post" autocomplete="off" action="~/Account/Login?ReturnUrl=@Model.ReturnUrl">
+        <form role="form" class="form-inline justify-content-center" method="post" autocomplete="off" action="~/Account/Lock?ReturnUrl=@Model.ReturnUrl">
             <input type="hidden" name="username" value="@Model.UserName" />
             <div class="form-group">
                 <div class="input-group">

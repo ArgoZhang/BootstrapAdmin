@@ -21,13 +21,15 @@ namespace Bootstrap.Admin.Controllers
     [AutoValidateAntiforgeryToken]
     public class AccountController : Controller
     {
-
         /// <summary>
         /// 系统锁屏界面
         /// </summary>
         /// <returns></returns>
+        [HttpGet]
         public async Task<ActionResult> Lock()
         {
+            if (!User.Identity.IsAuthenticated) return Login();
+
             var user = UserHelper.RetrieveUserByUserName(User.Identity.Name);
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             var urlReferrer = Request.Headers["Referer"].FirstOrDefault();
@@ -36,6 +38,14 @@ namespace Bootstrap.Admin.Controllers
                 ReturnUrl = WebUtility.UrlEncode(string.IsNullOrEmpty(urlReferrer) ? CookieAuthenticationDefaults.LoginPath.Value : urlReferrer)
             });
         }
+
+        /// <summary>
+        /// 系统锁屏界面
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [IgnoreAntiforgeryToken]
+        public Task<IActionResult> Lock([FromServices]IOnlineUsers onlineUserSvr, [FromServices]IIPLocatorProvider ipLocator, string userName, string password) => Login(onlineUserSvr, ipLocator, userName, password, string.Empty);
 
         /// <summary>
         /// 系统登录方法
