@@ -115,7 +115,6 @@ For more information, please click [wiki](https://gitee.com/LongbowEnterprise/Bo
 ## Branchs  
  **master** Synchronized with Online Demo  
  **dev** env: windows + SQLite  
- **dev-AdminLTE** AdminLTE branch [Online Demo](http://ba.sdgxgz.com/BA/Admin/Index)  
  **dev-Tabs** Multiple tabs branch     
  **dev-Localization** support multiple language branch
 
