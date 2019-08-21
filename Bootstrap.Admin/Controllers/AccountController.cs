@@ -26,10 +26,10 @@ namespace Bootstrap.Admin.Controllers
         /// 系统锁屏界面
         /// </summary>
         /// <returns></returns>
-        public ActionResult Lock()
+        public async Task<ActionResult> Lock()
         {
             var user = UserHelper.RetrieveUserByUserName(User.Identity.Name);
-            //await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             var urlReferrer = Request.Headers["Referer"].FirstOrDefault();
             return View(new LockModel(this)
             {
