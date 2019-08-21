@@ -96,7 +96,7 @@
         "Application": "0"
     },
     {
-        "_id": ObjectId("5bd7b8445fa31256f77e4a01"),
+        "_id": ObjectId("4bd7b8445fa31256f77e4a01"),
         "ParentId": "0",
         "Name": "系统锁屏",
         "Order": NumberInt(25),
