@@ -91,8 +91,19 @@ namespace Bootstrap.Admin.Controllers.SqlServer
             var content = await r.Content.ReadAsStringAsync();
             Assert.Contains("系统锁屏", content);
 
-            // relogin
-            await Client.LoginAsync();
+            // 第二次调用 跳转到登录页面
+            r = await Client.GetAsync("Lock");
+            Assert.True(r.IsSuccessStatusCode);
+            content = await r.Content.ReadAsStringAsync();
+            Assert.Contains("登 录", content);
+
+            // 调用Post
+            var data = new MultipartFormDataContent
+            {
+                { new StringContent("Admin"), "userName" },
+                { new StringContent("123789"), "password" }
+            };
+            await Client.PostAsync("Lock", data);
         }
     }
 }
