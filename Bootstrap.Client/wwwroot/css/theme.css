@@ -273,9 +273,13 @@ body, .form-control, .dropdown-menu, .btn:not(.btn-lg):not(.btn-xs), .input-grou
             width: 22px;
         }
 
-    .sidebar .sub .nav-item {
-        margin-right: 0;
+    .sidebar .sub {
+        margin-top: 4px;
     }
+
+        .sidebar .sub .nav-item {
+            margin-right: 0;
+        }
 
     .sidebar .nav-link .fa-angle-left {
         transition: all .3s linear;
@@ -286,12 +290,12 @@ body, .form-control, .dropdown-menu, .btn:not(.btn-lg):not(.btn-xs), .input-grou
         transform: rotate(-90deg);
     }
 
-    .sidebar .nav-sidebar > .nav-item > .nav-link:hover, 
+    .sidebar .nav-sidebar > .nav-item > .nav-link:hover,
     .sidebar .nav-sidebar > .nav-item > .nav-link[aria-expanded="true"],
     .sidebar .show .nav-item .nav-link:hover:before,
     .sidebar .nav-sidebar .nav-item:not(.parent) .nav-link.active:before,
     .sidebar .nav-sidebar .nav-link.active {
-       background-color: rgba(255,255,255,.1);
+        background-color: rgba(255,255,255,.1);
     }
 
     .sidebar .nav-sidebar .show .nav-link, .sidebar .nav-sidebar .collapsing .nav-link {

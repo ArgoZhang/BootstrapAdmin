@@ -273,9 +273,13 @@ body, .form-control, .dropdown-menu, .btn:not(.btn-lg):not(.btn-xs), .input-grou
             width: 22px;
         }
 
-    .sidebar .sub .nav-item {
-        margin-right: 0;
+    .sidebar .sub {
+        margin-top: 4px;
     }
+
+        .sidebar .sub .nav-item {
+            margin-right: 0;
+        }
 
     .sidebar .nav-link .fa-angle-left {
         transition: all .3s linear;
