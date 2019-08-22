@@ -82,6 +82,10 @@
     .sidebar-open aside {
         transform: translate(0);
     }
+
+    .bootstrap-table .fixed-table-body td .btn-group {
+        white-space: nowrap;
+    }
 }
 
 @media (min-width: 769px) {

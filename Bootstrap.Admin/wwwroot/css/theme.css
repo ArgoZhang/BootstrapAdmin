@@ -267,6 +267,7 @@ body, .form-control, .dropdown-menu, .btn:not(.btn-lg):not(.btn-xs), .input-grou
         transition: background .3s linear, color .3s linear;
         display: block;
         vertical-align: middle;
+        white-space: nowrap;
     }
 
         .sidebar .nav-link i:first-child {
@@ -620,10 +621,6 @@ input.pending {
 
     .bootstrap-table .fixed-table-body .table td > a {
         display: block;
-    }
-
-    .bootstrap-table .fixed-table-body td .btn-group {
-        white-space: nowrap;
     }
 
     .bootstrap-table .fixed-table-toolbar .columns-right .btn-group .dropdown-menu {

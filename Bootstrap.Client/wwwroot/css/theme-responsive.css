@@ -82,6 +82,10 @@
     .sidebar-open aside {
         transform: translate(0);
     }
+
+    .bootstrap-table .fixed-table-body td .btn-group {
+        white-space: nowrap;
+    }
 }
 
 @media (min-width: 769px) {
@@ -108,10 +112,6 @@
             right: 0;
             overflow: hidden;
         }
-
-    .bootstrap-table .fixed-table-body td .btn-group {
-        white-space: nowrap;
-    }
 }
 
 @media (min-width: 940px) {

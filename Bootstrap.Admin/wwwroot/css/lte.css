@@ -356,9 +356,12 @@ footer {
         width: 3.375rem;
     }
 
-        .sidebar-open aside .nav-item span, .sidebar-open aside .nav-header span, .sidebar-open .nav-brand span {
-            opacity: 0;
+        .sidebar-open aside .nav-item span, .sidebar-open aside .nav-header span, .sidebar-open .nav-brand span, .sidebar-open aside .nav-item.parent .fa-angle-left {
             visibility: hidden;
+            opacity: 0;
+        }
+
+        .sidebar-open aside .nav-item span, .sidebar-open aside .nav-header span, .sidebar-open .nav-brand span {
             margin-left: -10px;
         }
 
@@ -371,7 +374,7 @@ footer {
             height: 2.25rem;
         }
 
-        .sidebar-open aside:hover .nav-brand span, .sidebar-open aside:hover .nav-header span, .sidebar-open aside:hover .nav-item span {
+        .sidebar-open aside:hover .nav-brand span, .sidebar-open aside:hover .nav-header span, .sidebar-open aside:hover .nav-item span, .sidebar-open aside:hover .nav-item.parent .fa-angle-left {
             opacity: 1;
             visibility: visible;
         }
