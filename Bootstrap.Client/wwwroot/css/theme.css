@@ -265,8 +265,8 @@ body, .form-control, .dropdown-menu, .btn:not(.btn-lg):not(.btn-xs), .input-grou
         color: #aeb2b7;
         padding: 10px 10px;
         transition: background .3s linear, color .3s linear;
-        display: flex;
-        align-items: center;
+        display: block;
+        vertical-align: middle;
     }
 
         .sidebar .nav-link i:first-child {
@@ -290,6 +290,11 @@ body, .form-control, .dropdown-menu, .btn:not(.btn-lg):not(.btn-xs), .input-grou
         transform: rotate(-90deg);
     }
 
+    .sidebar .nav-item.parent .nav-link .fa-angle-left {
+        float: right;
+        margin-top: 4px;
+    }
+
     .sidebar .nav-sidebar > .nav-item > .nav-link:hover,
     .sidebar .nav-sidebar > .nav-item > .nav-link[aria-expanded="true"],
     .sidebar .show .nav-item .nav-link:hover:before,
@@ -309,14 +314,22 @@ body, .form-control, .dropdown-menu, .btn:not(.btn-lg):not(.btn-xs), .input-grou
         left: 10px;
         right: 10px;
         border-radius: 4px;
-        z-index: -1;
         height: 41px;
         transition: all .3s linear;
+        margin-top: -10px;
     }
+
+    .sidebar .sub .nav-item .nav-link i, .sidebar .sub .nav-item .nav-link span {
+        z-index: 2;
+        position: relative;
+    }
+
+.sidebar-toggle-box, .nav-brand span {
+    font-size: 1.25rem;
+}
 
 .sidebar-toggle-box {
     display: block;
-    font-size: 1.25rem;
     color: #777;
     flex: 1 1 auto;
     padding: 12px 0;
@@ -335,7 +348,7 @@ aside {
     transition: transform .3s ease-in-out;
     transform: translate(-100%);
     position: absolute;
-    top: 96px;
+    top: 93px;
     bottom: 0;
     left: 0;
     right: 0;
@@ -607,6 +620,10 @@ input.pending {
 
     .bootstrap-table .fixed-table-body .table td > a {
         display: block;
+    }
+
+    .bootstrap-table .fixed-table-body td .btn-group {
+        white-space: nowrap;
     }
 
     .bootstrap-table .fixed-table-toolbar .columns-right .btn-group .dropdown-menu {

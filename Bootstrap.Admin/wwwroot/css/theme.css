@@ -265,8 +265,8 @@ body, .form-control, .dropdown-menu, .btn:not(.btn-lg):not(.btn-xs), .input-grou
         color: #aeb2b7;
         padding: 10px 10px;
         transition: background .3s linear, color .3s linear;
-        display: flex;
-        align-items: center;
+        display: block;
+        vertical-align: middle;
     }
 
         .sidebar .nav-link i:first-child {
@@ -290,6 +290,11 @@ body, .form-control, .dropdown-menu, .btn:not(.btn-lg):not(.btn-xs), .input-grou
         transform: rotate(-90deg);
     }
 
+    .sidebar .nav-item.parent .nav-link .fa-angle-left {
+        float: right;
+        margin-top: 4px;
+    }
+
     .sidebar .nav-sidebar > .nav-item > .nav-link:hover,
     .sidebar .nav-sidebar > .nav-item > .nav-link[aria-expanded="true"],
     .sidebar .show .nav-item .nav-link:hover:before,
@@ -311,10 +316,12 @@ body, .form-control, .dropdown-menu, .btn:not(.btn-lg):not(.btn-xs), .input-grou
         border-radius: 4px;
         height: 41px;
         transition: all .3s linear;
+        margin-top: -10px;
     }
 
     .sidebar .sub .nav-item .nav-link i, .sidebar .sub .nav-item .nav-link span {
         z-index: 2;
+        position: relative;
     }
 
 .sidebar-toggle-box, .nav-brand span {
