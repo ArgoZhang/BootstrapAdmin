@@ -261,37 +261,6 @@ footer {
     background: #2c3b41;
 }
 
-@media (max-width:768px) {
-    body, .form-control, .dropdown-menu, .btn:not(.btn-lg):not(.btn-xs), .input-group-text, .popover-header {
-        font-size: 0.75rem;
-    }
-
-    .card-header {
-        font-size: 0.875rem;
-        padding: 0.375rem 1rem;
-    }
-
-    .form-inline .form-group {
-        margin-bottom: 0.75rem;
-    }
-
-        .form-inline .form-group .control-label {
-            margin-bottom: 0.125rem;
-        }
-
-    .modal-body, .card-body {
-        padding: 0.5rem 0.75rem 0 0.75rem;
-    }
-
-    .modal-footer {
-        padding: 0.5rem;
-    }
-
-    .username {
-        font-size: 0.875rem;
-    }
-}
-
 @media (min-width: 667px) {
     .header .nav {
         display: flex;
