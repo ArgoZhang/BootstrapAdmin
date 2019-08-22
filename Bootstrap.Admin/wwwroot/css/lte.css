@@ -339,10 +339,6 @@ footer {
         top: 0;
     }
 
-        aside .bg {
-            display: block;
-        }
-
         aside .sidebar, .sidebar-open aside:hover .sidebar {
             top: 136px;
             transition: top .3s linear;
