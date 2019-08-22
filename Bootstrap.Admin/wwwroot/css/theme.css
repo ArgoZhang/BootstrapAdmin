@@ -305,9 +305,12 @@ body, .form-control, .dropdown-menu, .btn:not(.btn-lg):not(.btn-xs), .input-grou
         left: 10px;
         right: 10px;
         border-radius: 4px;
-        z-index: -1;
         height: 41px;
         transition: all .3s linear;
+    }
+
+    .sidebar .sub .nav-item .nav-link i, .sidebar .sub .nav-item .nav-link span {
+        z-index: 2;
     }
 
 .sidebar-toggle-box, .nav-brand span {
