@@ -45,15 +45,26 @@ namespace Bootstrap.Admin.HealthChecks
                     Widget = config["Widget"],
                     ConnectionString = ConnectionStringResolve(config.GetSection("ConnectionStrings").Exists() ? config : _configuration, string.Empty)
                 }).FirstOrDefault(i => i.Enabled);
+
+            // 检查 Admin 账户权限
+            var user = UserHelper.RetrieveUserByUserName("Admin");
+            var roles = RoleHelper.RetrievesByUserName("Admin");
             var dicts = DictHelper.RetrieveDicts();
+            var menus = MenuHelper.RetrieveMenusByUserName("Admin");
+
             var data = new Dictionary<string, object>()
             {
                 { "ConnectionString", db.ConnectionString },
                 { "Widget", db.Widget },
                 { "DbType", db.ProviderName },
-                { "Dicts", dicts.Count() }
+                { "Dicts", dicts.Count() },
+                { "User(Admin)", user != null },
+                { "Roles(Admin)", string.Join(",", roles) },
+                { "Navigations(Admin)", menus.Count() }
             };
-            return dicts.Any() ? Task.FromResult(HealthCheckResult.Healthy("Ok", data)) : Task.FromResult(HealthCheckResult.Degraded("No init data in DB"));
+
+            var v = dicts.Any() && user != null && roles.Any() && menus.Any();
+            return v ? Task.FromResult(HealthCheckResult.Healthy("Ok", data)) : Task.FromResult(HealthCheckResult.Degraded("Failed"));
         }
     }
 }

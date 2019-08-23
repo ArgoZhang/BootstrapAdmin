@@ -9,6 +9,10 @@
         return cate[value];
     };
 
+    var ExceptionFormatter = function (value) {
+        return value ? JSON.stringify(value) : null;
+    };
+
     var $table = $('#tbCheck').smartTable({
         sidePagination: "client",
         showToggle: false,
@@ -17,7 +21,7 @@
         columns: [
             { title: "分类", field: "Name", formatter: CategoryFormatter },
             { title: "描述", field: "Description" },
-            { title: "异常信息", field: "Exception" },
+            { title: "异常信息", field: "Exception", formatter: ExceptionFormatter },
             { title: "耗时", field: "Duration" },
             { title: "检查结果", field: "Status", formatter: StatusFormatter },
             {
