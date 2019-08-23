@@ -49,8 +49,8 @@ namespace Bootstrap.Admin.HealthChecks
             // 检查 Admin 账户权限
             var user = UserHelper.RetrieveUserByUserName("Admin");
             var roles = RoleHelper.RetrievesByUserName("Admin");
-            var dicts = DictHelper.RetrieveDicts();
             var menus = MenuHelper.RetrieveMenusByUserName("Admin");
+            var dicts = DictHelper.RetrieveDicts();
 
             var data = new Dictionary<string, object>()
             {
@@ -64,7 +64,7 @@ namespace Bootstrap.Admin.HealthChecks
             };
 
             var v = dicts.Any() && user != null && roles.Any() && menus.Any();
-            return v ? Task.FromResult(HealthCheckResult.Healthy("Ok", data)) : Task.FromResult(HealthCheckResult.Degraded("Failed"));
+            return v ? Task.FromResult(HealthCheckResult.Healthy("Ok", data)) : Task.FromResult(HealthCheckResult.Degraded("Failed", null, data));
         }
     }
 }
