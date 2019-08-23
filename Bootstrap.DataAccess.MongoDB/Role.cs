@@ -78,10 +78,12 @@ namespace Bootstrap.DataAccess.MongoDB
         {
             var roles = new List<string>();
             var user = UserHelper.Retrieves().Cast<User>().FirstOrDefault(u => u.UserName.ToLowerInvariant() == userName.ToLowerInvariant());
-            var role = RoleHelper.Retrieves();
-
-            roles.AddRange(role.Where(r => user.Roles.Any(rl => rl == r.Id)).Select(r => r.RoleName));
-            if (roles.Count == 0) roles.Add("Default");
+            if (user != null)
+            {
+                var role = RoleHelper.Retrieves();
+                roles.AddRange(role.Where(r => user.Roles.Any(rl => rl == r.Id)).Select(r => r.RoleName));
+                if (roles.Count == 0) roles.Add("Default");
+            }
             return roles;
         }
 
