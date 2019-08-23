@@ -1,6 +1,7 @@
 ﻿using Bootstrap.DataAccess;
-using Bootstrap.Security;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -14,6 +15,20 @@ namespace Bootstrap.Admin.HealthChecks
     /// </summary>
     public class DBHealthCheck : IHealthCheck
     {
+        private IConfiguration _configuration;
+        private static readonly Func<IConfiguration, string, string> ConnectionStringResolve = (c, name) => string.IsNullOrEmpty(name)
+            ? c.GetSection("ConnectionStrings").GetChildren().FirstOrDefault()?.Value
+            : c.GetConnectionString(name);
+
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="configuration"></param>
+        public DBHealthCheck(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         /// <summary>
         /// 异步检查方法
         /// </summary>
@@ -22,18 +37,23 @@ namespace Bootstrap.Admin.HealthChecks
         /// <returns></returns>
         public Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)
         {
-            using (var db = DbManager.Create())
-            {
-                var connStr = db.ConnectionString;
-                var dicts = db.Fetch<BootstrapDict>("Select * from Dicts");
-                var data = new Dictionary<string, object>()
+            var db = _configuration.GetSection("DB").GetChildren()
+                .Select(config => new
                 {
-                    { "ConnectionString", connStr },
-                    { "DbType", db.Provider.GetType().Name },
-                    { "Dicts", dicts.Count }
-                };
-                return dicts.Any() ? Task.FromResult(HealthCheckResult.Healthy("Ok", data)) : Task.FromResult(HealthCheckResult.Degraded("No init data in DB"));
-            }
+                    Enabled = bool.TryParse(config["Enabled"], out var en) ? en : false,
+                    ProviderName = config["ProviderName"],
+                    Widget = config["Widget"],
+                    ConnectionString = ConnectionStringResolve(config.GetSection("ConnectionStrings").Exists() ? config : _configuration, string.Empty)
+                }).FirstOrDefault(i => i.Enabled);
+            var dicts = DictHelper.RetrieveDicts();
+            var data = new Dictionary<string, object>()
+            {
+                { "ConnectionString", db.ConnectionString },
+                { "Widget", db.Widget },
+                { "DbType", db.ProviderName },
+                { "Dicts", dicts.Count() }
+            };
+            return dicts.Any() ? Task.FromResult(HealthCheckResult.Healthy("Ok", data)) : Task.FromResult(HealthCheckResult.Degraded("No init data in DB"));
         }
     }
 }
