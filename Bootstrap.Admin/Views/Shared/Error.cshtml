@@ -13,7 +13,7 @@
     <img src="@Url.Content(Model.Image)" />
     <h1>@Model.Content</h1>
     <h3>@Model.Detail</h3>
-    <p><a href="~/Account/Logout">登录</a> <span>或者</span> <a href="@Url.Content(Model.ReturnUrl)">返回首页</a></p>
+    <p><a href="~/Account/Logout">登录</a> <span>或者</span> <a href="@Url.Content(Model.ReturnUrl)">返回首页</a> <span>或者</span> <a href="~/healths-ui">系统自检</a></p>
     @if (Model.Id == 403)
     {
         <div>
