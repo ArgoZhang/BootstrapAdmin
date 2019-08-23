@@ -266,7 +266,6 @@ body, .form-control, .dropdown-menu, .btn:not(.btn-lg):not(.btn-xs), .input-grou
         padding: 10px 10px;
         transition: background .3s linear, color .3s linear;
         display: block;
-        vertical-align: middle;
         white-space: nowrap;
     }
 
@@ -334,6 +333,7 @@ body, .form-control, .dropdown-menu, .btn:not(.btn-lg):not(.btn-xs), .input-grou
     color: #777;
     flex: 1 1 auto;
     padding: 12px 0;
+    white-space: nowrap;
     transition: color .3s linear;
 }
 
