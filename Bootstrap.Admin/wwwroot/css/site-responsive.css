@@ -51,3 +51,9 @@
         display: inline;
     }
 }
+
+@media screen and (-ms-high-contrast:active), (-ms-high-contrast:none) {
+    .main-content, aside:not(:hover), header, .nav-brand a img, .nav-brand a span {
+        transition: none !important;
+    }
+}
