@@ -12,7 +12,7 @@
         "Css": null,
         "App": null,
         "IsReset": 0,
-        "Roles": [],
+        "Roles": ["1bd7b8445fa31256f77e4b91"],
         "Groups": []
     },
     {
