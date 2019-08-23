@@ -65,7 +65,7 @@ namespace Bootstrap.Admin
             services.AddButtonAuthorization();
             services.AddDemoTask();
             services.AddHttpClient<GiteeHttpClient>();
-            services.AddHealthChecks().AddBootstrapAdminHealthChecks();
+            services.AddAdminHealthChecks();
             services.AddMvc(options =>
             {
                 options.Filters.Add<BootstrapAdminAuthorizeFilter>();

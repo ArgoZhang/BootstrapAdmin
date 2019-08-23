@@ -10,16 +10,15 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <summary>
         /// 添加 BootstrapAdmin 健康检查
         /// </summary>
-        /// <param name="builder"></param>
+        /// <param name="services"></param>
         /// <returns></returns>
-        public static IHealthChecksBuilder AddBootstrapAdminHealthChecks(this IHealthChecksBuilder builder)
+        public static IServiceCollection AddAdminHealthChecks(this IServiceCollection services)
         {
+            var builder = services.AddHealthChecks();
             builder.AddCheck<DBHealthCheck>("db");
-            builder.AddCheck<FileHealCheck>("file");
-            builder.AddCheck<GCHealthCheck>("gc");
-            builder.AddCheck<MemoryHealthCheck>("mem");
+            builder.AddBootstrapAdminHealthChecks();
             builder.AddCheck<GiteeHttpHealthCheck>("Gitee");
-            return builder;
+            return services;
         }
     }
 }
