@@ -34,7 +34,7 @@ namespace Bootstrap.DataAccess.MongoDB
             }).Distinct().ToList();
 
             var menus = DbManager.Menus.Find(FilterDefinition<BootstrapMenu>.Empty).ToList()
-                .Where(m => roles.Any(r => r.RoleName.Equals("Administrators", StringComparison.OrdinalIgnoreCase) || r.Menus.Any(rm => rm.Equals(m.Url, StringComparison.OrdinalIgnoreCase))))
+                .Where(m => roles.Any(r => r.RoleName.Equals("Administrators", StringComparison.OrdinalIgnoreCase) || r.Menus.Any(rm => rm.Equals(m.Id, StringComparison.OrdinalIgnoreCase))))
                 .ToList();
             menus.ForEach(m =>
             {
