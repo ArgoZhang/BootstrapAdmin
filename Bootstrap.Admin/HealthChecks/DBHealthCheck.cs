@@ -1,4 +1,5 @@
 ﻿using Bootstrap.DataAccess;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using System;
@@ -15,7 +16,8 @@ namespace Bootstrap.Admin.HealthChecks
     /// </summary>
     public class DBHealthCheck : IHealthCheck
     {
-        private IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private static readonly Func<IConfiguration, string, string> ConnectionStringResolve = (c, name) => string.IsNullOrEmpty(name)
             ? c.GetSection("ConnectionStrings").GetChildren().FirstOrDefault()?.Value
             : c.GetConnectionString(name);
@@ -24,9 +26,11 @@ namespace Bootstrap.Admin.HealthChecks
         /// 构造函数
         /// </summary>
         /// <param name="configuration"></param>
-        public DBHealthCheck(IConfiguration configuration)
+        /// <param name="httpContextAccessor"></param>
+        public DBHealthCheck(IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
         {
             _configuration = configuration;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         /// <summary>
@@ -46,10 +50,12 @@ namespace Bootstrap.Admin.HealthChecks
                     ConnectionString = ConnectionStringResolve(config.GetSection("ConnectionStrings").Exists() ? config : _configuration, string.Empty)
                 }).FirstOrDefault(i => i.Enabled);
 
-            // 检查 Admin 账户权限
-            var user = UserHelper.RetrieveUserByUserName("Admin");
-            var roles = RoleHelper.RetrievesByUserName("Admin");
-            var menus = MenuHelper.RetrieveMenusByUserName("Admin");
+            // 检查 当前用户 账户权限
+            var loginUser = _httpContextAccessor.HttpContext.User.Identity.Name;
+            var userName = loginUser ?? "Admin";
+            var user = UserHelper.RetrieveUserByUserName(userName);
+            var roles = RoleHelper.RetrievesByUserName(userName);
+            var menus = MenuHelper.RetrieveMenusByUserName(userName);
             var dicts = DictHelper.RetrieveDicts();
 
             var data = new Dictionary<string, object>()
@@ -58,9 +64,10 @@ namespace Bootstrap.Admin.HealthChecks
                 { "Widget", db.Widget },
                 { "DbType", db.ProviderName },
                 { "Dicts", dicts.Count() },
-                { "User(Admin)", user != null },
-                { "Roles(Admin)", string.Join(",", roles) },
-                { "Navigations(Admin)", menus.Count() }
+                { "LoginName", loginUser },
+                { "DisplayName", user == null ? null : user.DisplayName },
+                { "Roles", string.Join(",", roles) },
+                { "Navigations", menus.Count() }
             };
 
             var v = dicts.Any() && user != null && roles.Any() && menus.Any();

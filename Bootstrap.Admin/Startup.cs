@@ -109,8 +109,8 @@ namespace Bootstrap.Admin
             app.UseHttpsRedirection();
             app.UseResponseCompression();
             app.UseStaticFiles();
-            app.UseBootstrapHealthChecks();
             app.UseBootstrapAdminAuthentication(RoleHelper.RetrievesByUserName, RoleHelper.RetrievesByUrl, AppHelper.RetrievesByUserName);
+            app.UseBootstrapHealthChecks();
             app.UseOnlineUsers(callback: TraceHelper.Save);
             app.UseCacheManager();
             app.UseSignalR(routes =>
