@@ -62,7 +62,7 @@ namespace Bootstrap.Admin
             services.AddResponseCompression();
             services.AddBootstrapAdminAuthentication();
             services.AddSwagger();
-            services.AddButtonAuthorization();
+            services.AddButtonAuthorization(MenuHelper.RetrieveAllMenus);
             services.AddDemoTask();
             services.AddHttpClient<GiteeHttpClient>();
             services.AddAdminHealthChecks();
