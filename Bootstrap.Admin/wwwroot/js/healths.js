@@ -26,7 +26,7 @@
             { title: "检查结果", field: "Status", formatter: StatusFormatter },
             {
                 title: "明细数据", field: "Data", formatter: function (value, row, index) {
-                    return '<button class="detail btn btn-info"><i class="fa fa-info"></i><span>明细</span></button>';
+                    return '<button class="detail btn btn-info"><i class="fa fa-info-circle"></i><span>明细</span></button>';
                 },
                 events: {
                     'click .detail': function (e, value, row, index) {

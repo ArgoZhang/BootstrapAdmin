@@ -587,7 +587,7 @@ input.pending {
     display: none;
 }
 
-.btn i + span {
+.btn i + span, .badge i + span {
     margin-left: 4px;
 }
 
