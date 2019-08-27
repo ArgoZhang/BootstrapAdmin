@@ -15,7 +15,8 @@
                 that.sliderCaptcha('reset');
                 $('.userinfo .dropdown-menu a:first')[0].click();
             }, 1000);
-        }
+        },
+        remoteUrl: $.formatUrl('api/Captcha')
     });
 
     $('#btnCaptcha').on('click', function () {
