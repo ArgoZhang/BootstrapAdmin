@@ -68,11 +68,11 @@
     border-radius: 0;
 }
 
-    .userinfo .dropdown-toggle, .userinfo .dropdown-toggle:hover, .userinfo.show .dropdown-toggle, .nav [data-toggle="dropdown"], .nav [data-toggle="dropdown"]:hover {
+    .userinfo .dropdown-toggle, .userinfo .dropdown-toggle:hover, .userinfo.show .dropdown-toggle, .header .nav a, .header .nav a:hover {
         border: none !important;
     }
 
-        .userinfo .shadow-default, .nav [data-toggle="dropdown"], .nav [data-toggle="dropdown"]:hover {
+        .userinfo .shadow-default, .header .nav a, .header .nav a:hover {
             box-shadow: none;
         }
 
@@ -211,11 +211,11 @@ aside .nav-brand {
     color: #b8c7ce;
 }
 
-.header, .header .breadcrumb-item a, aside .nav-brand a, .sidebar-toggle-box, .userinfo .dropdown-toggle, .nav [data-toggle="dropdown"], .userinfo .dropdown-item, .userinfo .dropdown-item a, .userinfo .dropdown-item:last-child a {
+.header, .header .breadcrumb-item a, aside .nav-brand a, .sidebar-toggle-box, .userinfo .dropdown-toggle, .header .nav a, .userinfo .dropdown-item, .userinfo .dropdown-item a, .userinfo .dropdown-item:last-child a {
     color: #eee;
 }
 
-    .sidebar-toggle-box:hover, aside .nav-brand a:hover, .userinfo .dropdown-toggle:hover, .userinfo.show .dropdown-toggle, .nav [data-toggle="dropdown"]:hover, .sidebar .nav-link:hover, .userinfo .dropdown-item:hover, .userinfo .dropdown-item a:hover, .userinfo .dropdown-item:last-child a:hover {
+    .sidebar-toggle-box:hover, aside .nav-brand a:hover, .userinfo .dropdown-toggle:hover, .userinfo.show .dropdown-toggle, .header .nav a:hover, .sidebar .nav-link:hover, .userinfo .dropdown-item:hover, .userinfo .dropdown-item a:hover, .userinfo .dropdown-item:last-child a:hover {
         color: #fff;
     }
 
