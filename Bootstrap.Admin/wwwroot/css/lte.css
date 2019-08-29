@@ -211,11 +211,11 @@ aside .nav-brand {
     color: #b8c7ce;
 }
 
-.header, .header .breadcrumb-item a, aside .nav-brand a, .sidebar-toggle-box, .userinfo .dropdown-toggle, .header .nav a, .userinfo .dropdown-item, .userinfo .dropdown-item a, .userinfo .dropdown-item:last-child a {
+.header, .header .breadcrumb-item a, aside .nav-brand a, .sidebar-toggle-box, .userinfo .dropdown-toggle, .header .nav .dropdown > a, .userinfo .dropdown-item, .userinfo .dropdown-item a, .userinfo .dropdown-item:last-child a {
     color: #eee;
 }
 
-    .sidebar-toggle-box:hover, aside .nav-brand a:hover, .userinfo .dropdown-toggle:hover, .userinfo.show .dropdown-toggle, .header .nav a:hover, .sidebar .nav-link:hover, .userinfo .dropdown-item:hover, .userinfo .dropdown-item a:hover, .userinfo .dropdown-item:last-child a:hover {
+    .sidebar-toggle-box:hover, aside .nav-brand a:hover, .userinfo .dropdown-toggle:hover, .userinfo.show .dropdown-toggle, .header .nav .dropdown > a:hover, .sidebar .nav-link:hover, .userinfo .dropdown-item:hover, .userinfo .dropdown-item a:hover, .userinfo .dropdown-item:last-child a:hover {
         color: #fff;
     }
 
@@ -238,6 +238,10 @@ aside .nav-brand {
 
 .header, aside .nav-brand {
     border-bottom: 1px solid #367fa9;
+}
+
+.header .nav .dropdown-menu a {
+    color: #333;
 }
 
 .breadcrumb > li > a {
