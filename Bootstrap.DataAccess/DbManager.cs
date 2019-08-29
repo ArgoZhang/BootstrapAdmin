@@ -5,12 +5,12 @@ using System.Collections.Specialized;
 namespace Bootstrap.DataAccess
 {
     /// <summary>
-    /// 
+    /// 数据库对象管理类
     /// </summary>
     public static class DbManager
     {
         /// <summary>
-        /// 
+        /// 创建 IDatabase 实例方法
         /// </summary>
         /// <param name="connectionName"></param>
         /// <param name="keepAlive"></param>
