@@ -1,4 +1,4 @@
-﻿using Bootstrap.Security.DataAccess;
+﻿using Bootstrap.Client.DataAccess;
 
 namespace Bootstrap.Client.Models
 {
@@ -12,9 +12,9 @@ namespace Bootstrap.Client.Models
         /// </summary>
         public ModelBase()
         {
-            Title = DbHelper.RetrieveTitle();
-            Footer = DbHelper.RetrieveFooter();
-            Theme = DbHelper.RetrieveActiveTheme();
+            Title = DictHelper.RetrieveWebTitle();
+            Footer = DictHelper.RetrieveWebFooter();
+            Theme = DictHelper.RetrieveActiveTheme();
         }
 
         /// <summary>

@@ -28,6 +28,7 @@ namespace Bootstrap.DataAccess
         /// 
         /// </summary>
         public const string RetrieveRolesByGroupIdDataKey = "RoleHelper-RetrieveRolesByGroupId";
+
         /// <summary>
         /// 查询所有角色
         /// </summary>

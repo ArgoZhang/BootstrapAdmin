@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Longbow.Data" Version="2.3.3" />
+    <PackageReference Include="Longbow.Logging" Version="2.2.12" />
+    <PackageReference Include="Bootstrap.Security.Mvc" Version="2.2.13" />
+  </ItemGroup>
+
+</Project>
