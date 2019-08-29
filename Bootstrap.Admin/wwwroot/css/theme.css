@@ -40,6 +40,7 @@ aside .bg, aside .nav-brand, aside .nav-header, .header .nav, .userinfo .dropdow
         right: -6px;
         top: -14px;
         opacity: 0.8;
+        z-index: 1;
     }
 
     .header .navbar {
