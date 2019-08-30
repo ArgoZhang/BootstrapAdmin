@@ -1,4 +1,5 @@
-﻿using Bootstrap.Security.DataAccess;
+﻿using Bootstrap.Client.DataAccess;
+using Bootstrap.Security.DataAccess;
 using Longbow.Configuration;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -18,12 +19,12 @@ namespace Bootstrap.Client.Models
         /// <param name="identity"></param>
         public HeaderBarModel(IIdentity identity)
         {
-            var user = DbHelper.RetrieveUserByUserNameWithCache(identity.Name);
+            var user = UserHelper.RetrieveUserByUserName(identity.Name);
             DisplayName = user.DisplayName;
             UserName = user.UserName;
-            SettingsUrl = DbHelper.RetrieveSettingsUrl();
-            ProfilesUrl = DbHelper.RetrieveProfilesUrl();
-            NotisUrl = DbHelper.RetrieveNotisUrl();
+            SettingsUrl = DictHelper.RetrieveSettingsUrl();
+            ProfilesUrl = DictHelper.RetrieveProfilesUrl();
+            NotisUrl = DictHelper.RetrieveNotisUrl();
 
             // set LogoutUrl
             var authHost = ConfigurationManager.Get<BootstrapAdminAuthenticationOptions>().AuthHost;
@@ -32,7 +33,7 @@ namespace Bootstrap.Client.Models
             LogoutUrl = uriBuilder.ToString();
 
             // set Icon
-            var icon = $"/{DbHelper.RetrieveIconFolderPath().Trim('~', '/')}/{user.Icon}";
+            var icon = $"/{DictHelper.RetrieveIconFolderPath().Trim('~', '/')}/{user.Icon}";
             Icon = string.IsNullOrEmpty(ConfigurationManager.GetValue("SimulateUserName", string.Empty)) ? $"{authHost.TrimEnd('/')}{icon}" : "/images/admin.jpg";
             if (!string.IsNullOrEmpty(user.Css)) Theme = user.Css;
         }

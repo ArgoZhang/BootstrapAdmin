@@ -61,13 +61,13 @@ namespace Bootstrap.DataAccess
         public virtual IEnumerable<string> RetrieveCategories() => DictHelper.RetrieveDicts().OrderBy(d => d.Category).Select(d => d.Category).Distinct();
 
         /// <summary>
-        /// 
+        /// 获取系统网站标题
         /// </summary>
         /// <returns></returns>
         public virtual string RetrieveWebTitle() => (DictHelper.RetrieveDicts().FirstOrDefault(d => d.Name == "网站标题" && d.Category == "网站设置" && d.Define == 0) ?? new BootstrapDict() { Code = "后台管理系统" }).Code;
 
         /// <summary>
-        /// 
+        /// 获取系统网站页脚
         /// </summary>
         /// <returns></returns>
         public virtual string RetrieveWebFooter() => (DictHelper.RetrieveDicts().FirstOrDefault(d => d.Name == "网站页脚" && d.Category == "网站设置" && d.Define == 0) ?? new BootstrapDict() { Code = "2016 © 通用后台管理系统" }).Code;

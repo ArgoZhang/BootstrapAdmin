@@ -1,4 +1,5 @@
-﻿using Longbow.Web;
+﻿using Bootstrap.Client.DataAccess;
+using Longbow.Web;
 using Longbow.Web.SignalR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -88,7 +89,7 @@ namespace Bootstrap.Client
             app.UseResponseCompression();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-            app.UseBootstrapAdminAuthentication();
+            app.UseBootstrapAdminAuthentication(RoleHelper.RetrievesByUserName, RoleHelper.RetrievesByUrl, AppHelper.RetrievesByUserName);
             app.UseCacheManager();
             app.UseSignalR(routes => { routes.MapHub<SignalRHub>("/NotiHub"); });
             app.UseMvc(routes =>

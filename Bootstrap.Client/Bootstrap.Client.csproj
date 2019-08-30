@@ -15,4 +15,8 @@
     <PackageReference Include="Longbow.Cache" Version="2.2.14" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Bootstrap.Client.DataAccess\Bootstrap.Client.DataAccess.csproj" />
+  </ItemGroup>
+
 </Project>

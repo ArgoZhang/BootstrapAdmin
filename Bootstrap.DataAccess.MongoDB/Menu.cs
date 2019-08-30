@@ -21,21 +21,23 @@ namespace Bootstrap.DataAccess.MongoDB
             var user = UserHelper.Retrieves().Cast<User>().FirstOrDefault(u => u.UserName.ToLowerInvariant() == userName.ToLowerInvariant());
             if (user == null) return Enumerable.Empty<BootstrapMenu>();
 
-            var dicts = DictHelper.RetrieveDicts().Where(m => m.Category == "菜单");
-
-            // 通过用户获取 角色列表
-            var roles = RoleHelper.Retrieves().Cast<Role>().Where(r => user.Roles.Any(rl => rl == r.Id)).ToList();
+            var roles = RoleHelper.Retrieves().Cast<Role>();
+            var groups = GroupHelper.Retrieves().Cast<Group>();
 
             // 通过用户获取 组列表相关联的角色列表
-            roles = GroupHelper.RetrievesByUserName(userName).Aggregate(roles, (r, g) =>
+            var userRoles = user.Groups.Aggregate(user.Roles.ToList(), (r, g) =>
             {
-                r.AddRange(RoleHelper.RetrievesByGroupId(g.Id).Cast<Role>());
+                var groupRoles = groups.Where(group => group.Id == g).FirstOrDefault()?.Roles;
+                if (groupRoles != null) r.AddRange(groupRoles);
                 return r;
             }).Distinct().ToList();
 
+            var allRoles = roles.Where(r => userRoles.Any(rl => rl == r.Id)).ToList();
             var menus = DbManager.Menus.Find(FilterDefinition<BootstrapMenu>.Empty).ToList()
-                .Where(m => roles.Any(r => r.RoleName.Equals("Administrators", StringComparison.OrdinalIgnoreCase) || r.Menus.Any(rm => rm.Equals(m.Id, StringComparison.OrdinalIgnoreCase))))
+                .Where(m => allRoles.Any(r => r.RoleName.Equals("Administrators", StringComparison.OrdinalIgnoreCase) || r.Menus.Any(rm => rm.Equals(m.Id, StringComparison.OrdinalIgnoreCase))))
                 .ToList();
+
+            var dicts = DictHelper.RetrieveDicts().Where(m => m.Category == "菜单");
             menus.ForEach(m =>
             {
                 m.CategoryName = dicts.FirstOrDefault(d => d.Code == m.Category)?.Name;
