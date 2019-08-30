@@ -35,6 +35,8 @@ namespace Bootstrap.DataAccess
                 cacheKeys.Add(RoleHelper.RetrieveRolesDataKey + "*");
                 cacheKeys.Add(MenuHelper.RetrieveMenusAll + "*");
                 cacheKeys.Add(RetrieveAllRolesDataKey + "*");
+                corsKeys.Add(RoleHelper.RetrieveRolesDataKey + "*");
+                corsKeys.Add(GroupHelper.RetrieveGroupsDataKey + "*");
                 corsKeys.Add(MenuHelper.RetrieveMenusAll + "*");
             }
             if (userIds != null)
@@ -59,8 +61,10 @@ namespace Bootstrap.DataAccess
                 });
                 cacheKeys.Add(GroupHelper.RetrieveGroupsDataKey + "*");
                 cacheKeys.Add(MenuHelper.RetrieveMenusAll + "*");
-                corsKeys.Add(MenuHelper.RetrieveMenusAll + "*");
                 cacheKeys.Add(RetrieveAllRolesDataKey + "*");
+                corsKeys.Add(RoleHelper.RetrieveRolesDataKey + "*");
+                corsKeys.Add(GroupHelper.RetrieveGroupsDataKey + "*");
+                corsKeys.Add(MenuHelper.RetrieveMenusAll + "*");
             }
             if (menuIds != null)
             {
@@ -70,6 +74,8 @@ namespace Bootstrap.DataAccess
                 });
                 cacheKeys.Add(MenuHelper.RetrieveMenusByRoleIdDataKey + "*");
                 cacheKeys.Add(MenuHelper.RetrieveMenusAll + "*");
+                corsKeys.Add(RoleHelper.RetrieveRolesDataKey + "*");
+                corsKeys.Add(GroupHelper.RetrieveGroupsDataKey + "*");
                 corsKeys.Add(MenuHelper.RetrieveMenusAll + "*");
             }
             if (appIds != null)
