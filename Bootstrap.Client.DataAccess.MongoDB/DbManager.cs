@@ -9,7 +9,7 @@ using MongoDB.Driver;
 namespace Bootstrap.Client.DataAccess.MongoDB
 {
     /// <summary>
-    /// 
+    /// 数据库操作类
     /// </summary>
     internal static class DbManager
     {
@@ -18,9 +18,9 @@ namespace Bootstrap.Client.DataAccess.MongoDB
         private static readonly object _locker = new object();
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
-        private static IMongoDatabase DBAccess
+        private static IMongoDatabase BADatabase
         {
             get
             {
@@ -34,7 +34,8 @@ namespace Bootstrap.Client.DataAccess.MongoDB
                             ChangeToken.OnChange(() => ConfigurationManager.AppSettings.GetReloadToken(), () => _db = null);
                             InitClassMap();
                         }
-                        InitDb();
+                        if (_db == null)
+                            InitDb("ba");
                     }
                 }
                 return _db;
@@ -43,65 +44,66 @@ namespace Bootstrap.Client.DataAccess.MongoDB
 
         #region Collections
         /// <summary>
-        /// 
+        /// Dicts 集合
         /// </summary>
         public static IMongoCollection<BootstrapDict> Dicts
         {
             get
             {
-                return DBAccess.GetCollection<BootstrapDict>("Dicts");
+                return BADatabase.GetCollection<BootstrapDict>("Dicts");
             }
         }
 
         /// <summary>
-        /// 
+        /// Users 集合
         /// </summary>
         public static IMongoCollection<User> Users
         {
             get
             {
-                return DBAccess.GetCollection<User>("Users");
+                return BADatabase.GetCollection<User>("Users");
             }
         }
 
         /// <summary>
-        /// 
+        /// Roles 集合
         /// </summary>
         public static IMongoCollection<Role> Roles
         {
             get
             {
-                return DBAccess.GetCollection<Role>("Roles");
+                return BADatabase.GetCollection<Role>("Roles");
             }
         }
 
         /// <summary>
-        /// 
+        /// Groups 集合
         /// </summary>
         public static IMongoCollection<Group> Groups
         {
             get
             {
-                return DBAccess.GetCollection<Group>("Groups");
+                return BADatabase.GetCollection<Group>("Groups");
             }
         }
 
         /// <summary>
-        /// 
+        /// Menus 集合
         /// </summary>
         public static IMongoCollection<BootstrapMenu> Menus
         {
             get
             {
-                return DBAccess.GetCollection<BootstrapMenu>("Navigations");
+                return BADatabase.GetCollection<BootstrapMenu>("Navigations");
             }
         }
         #endregion
 
-        private static void InitDb()
+        private static void InitDb(string name = null)
         {
-            var client = new MongoClient(Longbow.Data.DbManager.GetConnectionString("ba"));
-            _db = client.GetDatabase(ConfigurationManager.AppSettings["MongoDB"]);
+            var (connectString, databaseName) = Longbow.Data.DbManager.GetMongoDB(name);
+            var client = new MongoClient(connectString);
+            _db = client.GetDatabase(databaseName);
         }
 
         private static void InitClassMap()

@@ -9,7 +9,7 @@ using MongoDB.Driver;
 namespace Bootstrap.DataAccess.MongoDB
 {
     /// <summary>
-    /// 
+    /// 数据库操作类
     /// </summary>
     internal static class DbManager
     {
@@ -18,7 +18,7 @@ namespace Bootstrap.DataAccess.MongoDB
         private static readonly object _locker = new object();
 
         /// <summary>
-        /// 
+        /// IMongoDatabase 实例
         /// </summary>
         private static IMongoDatabase DBAccess
         {
@@ -34,7 +34,8 @@ namespace Bootstrap.DataAccess.MongoDB
                             ChangeToken.OnChange(() => ConfigurationManager.AppSettings.GetReloadToken(), () => _db = null);
                             InitClassMap();
                         }
-                        InitDb();
+                        if (_db == null)
+                            InitDb();
                     }
                 }
                 return _db;
@@ -43,7 +44,7 @@ namespace Bootstrap.DataAccess.MongoDB
 
         #region Collections
         /// <summary>
-        /// 
+        /// Logs 集合
         /// </summary>
         public static IMongoCollection<DataAccess.Log> Logs
         {
@@ -54,7 +55,7 @@ namespace Bootstrap.DataAccess.MongoDB
         }
 
         /// <summary>
-        /// 
+        /// Exceptions 集合
         /// </summary>
         public static IMongoCollection<DataAccess.Exceptions> Exceptions
         {
@@ -64,7 +65,7 @@ namespace Bootstrap.DataAccess.MongoDB
             }
         }
         /// <summary>
-        /// 
+        /// Dicts 集合
         /// </summary>
         public static IMongoCollection<BootstrapDict> Dicts
         {
@@ -75,7 +76,7 @@ namespace Bootstrap.DataAccess.MongoDB
         }
 
         /// <summary>
-        /// 
+        /// Users 集合
         /// </summary>
         public static IMongoCollection<User> Users
         {
@@ -86,7 +87,7 @@ namespace Bootstrap.DataAccess.MongoDB
         }
 
         /// <summary>
-        /// 
+        /// Groups 集合
         /// </summary>
         public static IMongoCollection<Group> Groups
         {
@@ -97,7 +98,7 @@ namespace Bootstrap.DataAccess.MongoDB
         }
 
         /// <summary>
-        /// 
+        /// Roles 集合
         /// </summary>
         public static IMongoCollection<Role> Roles
         {
@@ -108,7 +109,7 @@ namespace Bootstrap.DataAccess.MongoDB
         }
 
         /// <summary>
-        /// 
+        /// Menus 集合
         /// </summary>
         public static IMongoCollection<BootstrapMenu> Menus
         {
@@ -119,7 +120,7 @@ namespace Bootstrap.DataAccess.MongoDB
         }
 
         /// <summary>
-        /// 
+        /// LoginUsers 集合
         /// </summary>
         public static IMongoCollection<DataAccess.LoginUser> LoginUsers
         {
@@ -130,7 +131,7 @@ namespace Bootstrap.DataAccess.MongoDB
         }
 
         /// <summary>
-        /// 
+        /// ResetUsers 集合
         /// </summary>
         public static IMongoCollection<DataAccess.ResetUser> ResetUsers
         {
@@ -141,7 +142,7 @@ namespace Bootstrap.DataAccess.MongoDB
         }
 
         /// <summary>
-        /// 
+        /// Traces 集合
         /// </summary>
         public static IMongoCollection<DataAccess.Trace> Traces
         {
@@ -152,7 +153,7 @@ namespace Bootstrap.DataAccess.MongoDB
         }
 
         /// <summary>
-        /// 
+        /// RejectUsers 集合
         /// </summary>
         public static IMongoCollection<RejectUser> RejectUsers
         {
@@ -163,7 +164,7 @@ namespace Bootstrap.DataAccess.MongoDB
         }
 
         /// <summary>
-        /// 
+        /// Messages 集合
         /// </summary>
         public static IMongoCollection<DataAccess.Message> Messages
         {
@@ -174,7 +175,7 @@ namespace Bootstrap.DataAccess.MongoDB
         }
 
         /// <summary>
-        /// 
+        /// Tasks 集合
         /// </summary>
         public static IMongoCollection<DataAccess.Task> Tasks
         {
@@ -187,8 +188,9 @@ namespace Bootstrap.DataAccess.MongoDB
 
         private static void InitDb()
         {
-            var client = new MongoClient(Longbow.Data.DbManager.GetConnectionString());
-            _db = client.GetDatabase(ConfigurationManager.AppSettings["MongoDB"]);
+            var (connectString, databaseName) = Longbow.Data.DbManager.GetMongoDB();
+            var client = new MongoClient(connectString);
+            _db = client.GetDatabase(databaseName);
         }
 
         private static void InitClassMap()

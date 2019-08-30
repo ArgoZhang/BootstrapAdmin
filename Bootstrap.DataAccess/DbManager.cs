@@ -7,7 +7,7 @@ namespace Bootstrap.DataAccess
     /// <summary>
     /// 
     /// </summary>
-    internal static class DbManager
+    public static class DbManager
     {
         /// <summary>
         /// 
