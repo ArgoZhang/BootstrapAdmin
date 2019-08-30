@@ -269,7 +269,6 @@ footer {
     .header .nav {
         display: flex;
         flex: 0 1 auto;
-        flex-wrap: nowrap;
     }
 
     .sidebar-toggle-box {

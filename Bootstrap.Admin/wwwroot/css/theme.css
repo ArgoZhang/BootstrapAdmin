@@ -29,6 +29,7 @@ aside .bg, aside .nav-brand, aside .nav-header, .header .nav, .userinfo .dropdow
 
     .header .nav {
         margin-left: 15px;
+        flex-wrap: nowrap;
     }
 
         .header .nav .dropdown {
