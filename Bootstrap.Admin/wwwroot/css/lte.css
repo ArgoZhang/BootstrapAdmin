@@ -7,8 +7,6 @@
 }
 
     .header .nav .dropdown, .userinfo {
-        display: flex;
-        align-items: center;
         transition: all .3s linear;
         cursor: pointer;
         margin: 0;

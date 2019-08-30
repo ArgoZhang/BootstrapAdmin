@@ -34,12 +34,15 @@ aside .bg, aside .nav-brand, aside .nav-header, .header .nav, .userinfo .dropdow
 
         .header .nav .dropdown {
             margin-right: 6px;
+            height: 53px;
+            display: flex;
+            align-items: center;
         }
 
     .header .badge {
         position: absolute;
         right: -6px;
-        top: -14px;
+        top: 4px;
         opacity: 0.8;
         z-index: 1;
     }
