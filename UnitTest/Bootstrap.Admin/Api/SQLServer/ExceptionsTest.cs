@@ -1,5 +1,4 @@
 ﻿using Bootstrap.DataAccess;
-using Bootstrap.Security;
 using Longbow.Web.Mvc;
 using System;
 using System.Collections.Generic;
@@ -22,7 +21,7 @@ namespace Bootstrap.Admin.Api.SqlServer
 
             // 菜单 系统菜单 系统使用条件
             var query = "?sort=LogTime&order=desc&offset=0&limit=20&StartTime=&EndTime=&_=1547610349796";
-            var qd = await Client.GetAsJsonAsync<QueryData<BootstrapDict>>(query);
+            var qd = await Client.GetAsJsonAsync<QueryData<Exceptions>>(query);
             Assert.NotEmpty(qd.rows);
 
             // clean
