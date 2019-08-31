@@ -189,15 +189,6 @@ namespace Bootstrap.DataAccess.SqlServer
             Assert.Equal("10", DictHelper.RetrieveLocaleIPSvrCachePeriod());
         }
 
-        [Fact]
-        public void DatabaseCheck_Ok()
-        {
-            var dict = new BootstrapDict() { Category = "系统检查", Name = "系统设置", Code = DatabaseName, Define = 0 };
-            Assert.True(DictHelper.Save(dict));
-            Assert.Equal(DatabaseName, DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == dict.Category && d.Name == dict.Name)?.Code ?? "unknown");
-            Assert.True(DictHelper.Delete(new string[] { dict.Id }));
-        }
-
         #region Private Class For Test
         /// <summary>
         /// 
