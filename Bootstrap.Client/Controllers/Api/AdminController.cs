@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Bootstrap.Client.Controllers
+namespace Bootstrap.Client.Controllers.Api
 {
     /// <summary>
     /// 运维管理接口
