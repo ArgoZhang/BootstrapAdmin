@@ -1,7 +1,6 @@
 ﻿using Bootstrap.Security;
 using Bootstrap.Security.DataAccess;
 using Longbow.Cache;
-using Longbow.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -299,7 +298,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public static BootstrapUser RetrieveUserByUserName(string userName) => CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveUsersByNameDataKey, userName), k => DbContextManager.Create<User>().RetrieveUserByUserName(userName), RetrieveUsersByNameDataKey);
+        public static BootstrapUser RetrieveUserByUserName(string userName) => CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveUsersByNameDataKey, userName), k => DbContextManager.Create<User>()?.RetrieveUserByUserName(userName), RetrieveUsersByNameDataKey);
 
         /// <summary>
         /// 通过登录账号获得用户信息

@@ -1,4 +1,5 @@
 ﻿using Bootstrap.DataAccess;
+using Bootstrap.Security;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -54,23 +55,24 @@ namespace Bootstrap.Admin.HealthChecks
             var loginUser = _httpContextAccessor.HttpContext.User.Identity.Name;
             var userName = loginUser ?? "Admin";
             var user = UserHelper.RetrieveUserByUserName(userName);
-            var roles = RoleHelper.RetrievesByUserName(userName);
-            var menus = MenuHelper.RetrieveMenusByUserName(userName);
-            var dicts = DictHelper.RetrieveDicts();
-
+            var roles = RoleHelper.RetrievesByUserName(userName) ?? new string[0];
+            var menus = MenuHelper.RetrieveMenusByUserName(userName) ?? new BootstrapMenu[0];
+            var dicts = DictHelper.RetrieveDicts() ?? new BootstrapDict[0];
+            var assemblyLoaded = DbContextManager.Exception == null ? "Loaded" : "NotLoad";
             var data = new Dictionary<string, object>()
             {
                 { "ConnectionString", db.ConnectionString },
-                { "Widget", db.Widget },
+                { "Widget", $"{db.Widget}({assemblyLoaded})" },
+                { "Reference", DbContextManager.Exception?.Message },
                 { "DbType", db.ProviderName },
                 { "Dicts", dicts.Count() },
                 { "LoginName", loginUser },
-                { "DisplayName", user == null ? null : user.DisplayName },
+                { "DisplayName", user?.DisplayName },
                 { "Roles", string.Join(",", roles) },
                 { "Navigations", menus.Count() }
             };
 
-            var v = dicts.Any() && user != null && roles.Any() && menus.Any();
+            var v = dicts.Any() && user != null && roles.Any() && menus.Any() && DbContextManager.Exception == null;
             return v ? Task.FromResult(HealthCheckResult.Healthy("Ok", data)) : Task.FromResult(HealthCheckResult.Degraded("Failed", null, data));
         }
     }

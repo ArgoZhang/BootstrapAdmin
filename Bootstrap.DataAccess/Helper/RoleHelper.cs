@@ -1,6 +1,5 @@
 ﻿using Bootstrap.Security.DataAccess;
 using Longbow.Cache;
-using Longbow.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -129,7 +128,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public static IEnumerable<string> RetrievesByUserName(string userName) => CacheManager.GetOrAdd(string.Format("{0}-{1}", DbHelper.RetrieveRolesByUserNameDataKey, userName), key => DbContextManager.Create<Role>().RetrievesByUserName(userName), DbHelper.RetrieveRolesByUserNameDataKey);
+        public static IEnumerable<string> RetrievesByUserName(string userName) => CacheManager.GetOrAdd(string.Format("{0}-{1}", DbHelper.RetrieveRolesByUserNameDataKey, userName), key => DbContextManager.Create<Role>()?.RetrievesByUserName(userName), DbHelper.RetrieveRolesByUserNameDataKey);
 
         /// <summary>
         /// 

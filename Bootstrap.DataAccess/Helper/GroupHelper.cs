@@ -1,7 +1,6 @@
 ﻿using Bootstrap.Security;
 using Bootstrap.Security.DataAccess;
 using Longbow.Cache;
-using Longbow.Data;
 using System.Collections.Generic;
 
 namespace Bootstrap.DataAccess

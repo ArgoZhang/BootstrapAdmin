@@ -1,7 +1,6 @@
 ﻿using Bootstrap.Security;
 using Bootstrap.Security.DataAccess;
 using Longbow.Cache;
-using Longbow.Data;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -125,6 +124,6 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public static IEnumerable<BootstrapMenu> RetrieveAllMenus(string userName) => CacheManager.GetOrAdd($"{RetrieveMenusAll}-{userName}", key => DbContextManager.Create<Menu>().RetrieveAllMenus(userName), RetrieveMenusAll);
+        public static IEnumerable<BootstrapMenu> RetrieveAllMenus(string userName) => CacheManager.GetOrAdd($"{RetrieveMenusAll}-{userName}", key => DbContextManager.Create<Menu>()?.RetrieveAllMenus(userName), RetrieveMenusAll);
     }
 }

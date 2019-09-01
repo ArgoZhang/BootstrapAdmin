@@ -1,7 +1,6 @@
 ﻿using Bootstrap.Security;
 using Bootstrap.Security.DataAccess;
 using Longbow.Cache;
-using Longbow.Data;
 using Longbow.Web;
 using System;
 using System.Collections.Generic;
@@ -28,7 +27,7 @@ namespace Bootstrap.DataAccess
         /// 获得所有字典项配置数据集合方法 内部使用了缓存，缓存值 BootstrapMenu-RetrieveMenus
         /// </summary>
         /// <returns></returns>
-        public static IEnumerable<BootstrapDict> RetrieveDicts() => CacheManager.GetOrAdd(RetrieveDictsDataKey, key => DbContextManager.Create<Dict>().RetrieveDicts());
+        public static IEnumerable<BootstrapDict> RetrieveDicts() => CacheManager.GetOrAdd(RetrieveDictsDataKey, key => DbContextManager.Create<Dict>()?.RetrieveDicts());
 
         private static IEnumerable<BootstrapDict> RetrieveProtectedDicts() => RetrieveDicts().Where(d => d.Define == 0 || d.Category == "测试平台");
 
@@ -100,13 +99,13 @@ namespace Bootstrap.DataAccess
         /// 获取站点 Title 配置信息
         /// </summary>
         /// <returns></returns>
-        public static string RetrieveWebTitle() => DbContextManager.Create<Dict>().RetrieveWebTitle();
+        public static string RetrieveWebTitle() => DbContextManager.Create<Dict>()?.RetrieveWebTitle();
 
         /// <summary>
         /// 获取站点 Footer 配置信息
         /// </summary>
         /// <returns></returns>
-        public static string RetrieveWebFooter() => DbContextManager.Create<Dict>().RetrieveWebFooter();
+        public static string RetrieveWebFooter() => DbContextManager.Create<Dict>()?.RetrieveWebFooter();
 
         /// <summary>
         /// 获得系统中配置的可以使用的网站样式
@@ -118,7 +117,7 @@ namespace Bootstrap.DataAccess
         /// 获得网站设置中的当前样式
         /// </summary>
         /// <returns></returns>
-        public static string RetrieveActiveTheme() => DbContextManager.Create<Dict>().RetrieveActiveTheme();
+        public static string RetrieveActiveTheme() => DbContextManager.Create<Dict>()?.RetrieveActiveTheme();
 
         /// <summary>
         /// 获取头像路径
@@ -167,7 +166,7 @@ namespace Bootstrap.DataAccess
         /// 获取 IP 地址位置查询服务名称
         /// </summary>
         /// <returns></returns>
-        public static string RetrieveLocaleIPSvr() => DbContextManager.Create<Dict>().RetrieveLocaleIPSvr();
+        public static string RetrieveLocaleIPSvr() => DbContextManager.Create<Dict>()?.RetrieveLocaleIPSvr();
 
         /// <summary>
         /// 通过 IP 地理位置查询服务名称获得请求地址方法
@@ -192,7 +191,7 @@ namespace Bootstrap.DataAccess
         /// 获得 是否为演示系统 默认为 false 不是演示系统
         /// </summary>
         /// <returns></returns>
-        public static bool RetrieveSystemModel() => DbContextManager.Create<Dict>().RetrieveSystemModel();
+        public static bool RetrieveSystemModel() => DbContextManager.Create<Dict>()?.RetrieveSystemModel() ?? true;
 
         /// <summary>
         /// 获得验证码图床地址
@@ -204,12 +203,12 @@ namespace Bootstrap.DataAccess
         /// 获得数据区卡片标题是否显示
         /// </summary>
         /// <returns></returns>
-        public static bool RetrieveCardTitleStatus() => DbContextManager.Create<Dict>().RetrieveCardTitleStatus();
+        public static bool RetrieveCardTitleStatus() => DbContextManager.Create<Dict>()?.RetrieveCardTitleStatus() ?? true;
 
         /// <summary>
         /// 获得侧边栏状态 未真时显示
         /// </summary>
         /// <returns></returns>
-        public static bool RetrieveSidebarStatus() => DbContextManager.Create<Dict>().RetrieveSidebarStatus();
+        public static bool RetrieveSidebarStatus() => DbContextManager.Create<Dict>()?.RetrieveSidebarStatus() ?? true;
     }
 }

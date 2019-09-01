@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Longbow.Cache" Version="2.2.15" />
     <PackageReference Include="Longbow.Data" Version="2.3.6" />
     <PackageReference Include="Longbow.Logging" Version="2.2.12" />
     <PackageReference Include="Longbow.Web" Version="2.2.16" />

@@ -1,5 +1,4 @@
-﻿using Longbow.Data;
-using Longbow.Web;
+﻿using Longbow.Web;
 using Longbow.Web.Mvc;
 using Microsoft.AspNetCore.Http;
 using PetaPoco;

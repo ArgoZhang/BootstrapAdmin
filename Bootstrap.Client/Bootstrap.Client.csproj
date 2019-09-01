@@ -11,7 +11,6 @@
     <PackageReference Include="Longbow.Logging" Version="2.2.12" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="2.2.6" />
-    <PackageReference Include="Longbow.Cache" Version="2.2.14" />
   </ItemGroup>
 
   <ItemGroup>

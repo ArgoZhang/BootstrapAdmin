@@ -1,5 +1,4 @@
 ﻿using Longbow.Cache;
-using Longbow.Data;
 using Longbow.Web.Mvc;
 using PetaPoco;
 using System;
@@ -25,7 +24,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static void Log(Exception ex, NameValueCollection additionalInfo)
         {
-            var ret = DbContextManager.Create<Exceptions>().Log(ex, additionalInfo);
+            var ret = DbContextManager.Create<Exceptions>()?.Log(ex, additionalInfo) ?? false;
             if (ret) CacheManager.Clear(RetrieveExceptionsDataKey);
         }
 
