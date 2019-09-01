@@ -50,6 +50,10 @@ namespace Bootstrap.Client
             services.AddConfigurationManager();
             services.AddCacheManager();
             services.AddDbAdapter();
+            services.AddHttpClient("BootstrapAdmin", client => client.DefaultRequestHeaders.Connection.Add("keep-alive"));
+            services.AddIPLocator(DictHelper.ConfigIPLocator);
+            services.AddOnlineUsers();
+            services.AddHttpClient<TraceHttpClient>();
             services.AddSignalR().AddJsonProtocalDefault();
             services.AddResponseCompression();
             services.AddBootstrapAdminAuthentication();
@@ -91,6 +95,7 @@ namespace Bootstrap.Client
             app.UseCookiePolicy();
             app.UseBootstrapAdminAuthentication(RoleHelper.RetrievesByUserName, RoleHelper.RetrievesByUrl, AppHelper.RetrievesByUserName);
             app.UseCacheManager();
+            app.UseOnlineUsers(callback: TraceHelper.Save);
             app.UseSignalR(routes => { routes.MapHub<SignalRHub>("/NotiHub"); });
             app.UseMvc(routes =>
             {

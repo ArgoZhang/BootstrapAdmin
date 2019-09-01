@@ -13,7 +13,6 @@ namespace Bootstrap.DataAccess
     /// </summary>
     public static class TraceHelper
     {
-
         /// <summary>
         /// 保存访问历史记录
         /// </summary>

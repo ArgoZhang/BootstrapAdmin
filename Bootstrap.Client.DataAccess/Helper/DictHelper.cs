@@ -2,6 +2,8 @@
 using Bootstrap.Security.DataAccess;
 using Longbow.Cache;
 using Longbow.Data;
+using Longbow.Web;
+using System;
 using System.Collections.Generic;
 
 namespace Bootstrap.Client.DataAccess
@@ -106,5 +108,21 @@ namespace Bootstrap.Client.DataAccess
         /// </summary>
         /// <returns></returns>
         public static string RetrieveNotisUrl() => DbContextManager.Create<Dict>().RetrieveNotisUrl();
+
+        /// <summary>
+        /// 配置 IP 地理位置查询配置项 注入方法调用此方法
+        /// </summary>
+        /// <param name="op"></param>
+        public static void ConfigIPLocator(IPLocatorOption op)
+        {
+            var name = RetrieveLocaleIPSvr();
+            if (!string.IsNullOrEmpty(name) && !name.Equals("None", StringComparison.OrdinalIgnoreCase))
+            {
+                var url = RetrieveLocaleIPSvrUrl(name);
+                op.Locator = string.IsNullOrEmpty(url) ? null : DefaultIPLocatorProvider.CreateLocator(name);
+                op.Url = string.IsNullOrEmpty(url) ? string.Empty : $"{url}{op.IP}";
+                if (int.TryParse(RetrieveLocaleIPSvrCachePeriod(), out var period) && period > 0) op.Period = period * 60 * 1000;
+            }
+        }
     }
 }
