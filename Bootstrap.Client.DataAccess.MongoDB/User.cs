@@ -42,6 +42,9 @@ namespace Bootstrap.Client.DataAccess.MongoDB
                .Include(u => u.DisplayName)
                .Include(u => u.Icon)
                .Include(u => u.Css)
+               .Include(u => u.Roles)
+               .Include(u => u.Groups)
+               .Include(u => u.ApprovedTime)
                .Include(u => u.App);
             var ret = DbManager.Users.Find(user => user.UserName.ToLowerInvariant() == userName.ToLowerInvariant()).Project<User>(project).FirstOrDefault();
             if (ret != null)

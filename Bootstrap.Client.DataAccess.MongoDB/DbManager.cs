@@ -155,6 +155,7 @@ namespace Bootstrap.Client.DataAccess.MongoDB
                 BsonClassMap.RegisterClassMap<Group>(md =>
                 {
                     md.AutoMap();
+                    md.SetIgnoreExtraElements(true);
                 });
             }
             if (!BsonClassMap.IsClassMapRegistered(typeof(Role)))
@@ -164,6 +165,7 @@ namespace Bootstrap.Client.DataAccess.MongoDB
                     md.AutoMap();
                     md.IdMemberMap.SetSerializer(new StringSerializer(BsonType.ObjectId));
                     md.IdMemberMap.SetIgnoreIfDefault(true);
+                    md.SetIgnoreExtraElements(true);
                 });
             }
         }

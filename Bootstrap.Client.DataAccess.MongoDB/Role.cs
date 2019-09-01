@@ -31,26 +31,14 @@ namespace Bootstrap.Client.DataAccess.MongoDB
         public string RoleName { get; set; }
 
         /// <summary>
-        /// 获得/设置 角色描述
-        /// </summary>
-        public string Description { get; set; }
-
-        /// <summary>
         /// 通过指定登录名获取授权角色名称数据集合
         /// </summary>
         /// <param name="userName">登录名</param>
         /// <returns></returns>
         public override IEnumerable<string> RetrievesByUserName(string userName)
         {
-            var roles = new List<string>();
-            var user = UserHelper.Retrieves().FirstOrDefault(u => u.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase));
-            if (user != null)
-            {
-                var role = RoleHelper.Retrieves();
-                roles.AddRange(role.Where(r => user.Roles.Any(rl => rl == r.Id)).Select(r => r.RoleName));
-                if (roles.Count == 0) roles.Add("Default");
-            }
-            return roles;
+            var user = UserHelper.RetrieveUserByUserName(userName) as User;
+            return RoleHelper.Retrieves().Where(r => user.Roles.Any(ur => ur == r.Id)).Select(r => r.RoleName);
         }
 
         /// <summary>
@@ -62,7 +50,7 @@ namespace Bootstrap.Client.DataAccess.MongoDB
         public override IEnumerable<string> RetrievesByUrl(string url)
         {
             var menu = DbManager.Menus.Find(md => md.Url.StartsWith(url)).FirstOrDefault();
-            var ret = RoleHelper.Retrieves().Where(md => md.Menus != null && md.Menus.Any(m => m.Equals(menu.Id, StringComparison.OrdinalIgnoreCase))).Select(m => m.RoleName).ToList();
+            var ret = RoleHelper.Retrieves().Where(md => md.Menus.Any(m => m == menu.Id)).Select(m => m.RoleName).ToList();
             if (!ret.Any(r => r.Equals("Administrators", StringComparison.OrdinalIgnoreCase))) ret.Add("Administrators");
             return ret;
         }

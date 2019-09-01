@@ -23,14 +23,20 @@ namespace Bootstrap.Client.DataAccess.MongoDB
         public override IEnumerable<string> RetrievesByUserName(string userName)
         {
             var ret = new List<string>();
-            var roles = RoleHelper.RetrievesByUserName(userName);
-            if (roles.Any(r => r.Equals("Administrators", StringComparison.OrdinalIgnoreCase)))
+            var user = UserHelper.RetrieveUserByUserName(userName) as User;
+            if (user != null)
             {
-                ret.AddRange(RetrieveApps().Select(kv => kv.Key));
-            }
-            else
-            {
-                RoleHelper.Retrieves().Cast<Role>().Where(r => roles.Any(rn => rn == r.RoleName)).ToList().ForEach(r => ret.AddRange(r.Apps));
+                var roles = RoleHelper.Retrieves();
+
+                // check administrators
+                if (roles.Any(r => r.RoleName.Equals("Administrators", StringComparison.OrdinalIgnoreCase)))
+                {
+                    ret.AddRange(RetrieveApps().Select(kv => kv.Key));
+                }
+                else
+                {
+                    roles.Where(r => user.Roles.Any(role => role == r.Id)).ToList().ForEach(r => ret.AddRange(r.Apps));
+                }
             }
             return ret;
         }
