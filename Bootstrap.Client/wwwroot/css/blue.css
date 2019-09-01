@@ -1,8 +1,4 @@
-﻿.sidebar-toggle-box .fa-bars {
-    color: #007bff;
-}
-
-.navbar-light .navbar-nav .show > .nav-link, .navbar-light .navbar-nav .active > .nav-link, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .nav-link.active {
+﻿.navbar-light .navbar-nav .show > .nav-link, .navbar-light .navbar-nav .active > .nav-link, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .nav-link.active {
     color: rgb(51, 122, 183);
 }
 
@@ -99,8 +95,7 @@
 }
 
 .sidebar .nav-sidebar > .nav-item > .nav-link[aria-expanded="true"],
-.sidebar .nav-sidebar .nav-item:not(.parent) .nav-link.active:before
-{
+.sidebar .nav-sidebar .nav-item:not(.parent) .nav-link.active:before {
     background-color: rgba(51, 122, 183, 0.5);
 }
 
