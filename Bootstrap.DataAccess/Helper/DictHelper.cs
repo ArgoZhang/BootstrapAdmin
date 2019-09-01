@@ -10,25 +10,22 @@ using System.Linq;
 namespace Bootstrap.DataAccess
 {
     /// <summary>
-    /// 
+    /// 字典配置数据操作帮助类
     /// </summary>
     public static class DictHelper
     {
-        /// <summary>
-        /// 
-        /// </summary>
         /// <summary>
         /// 缓存索引，BootstrapAdmin后台清理缓存时使用
         /// </summary>
         public const string RetrieveDictsDataKey = DbHelper.RetrieveDictsDataKey;
 
         /// <summary>
-        /// 
+        /// 缓存索引，字典分类数据缓存键值 值为 DictHelper-RetrieveDictsCategory
         /// </summary>
         public const string RetrieveCategoryDataKey = "DictHelper-RetrieveDictsCategory";
 
         /// <summary>
-        /// 
+        /// 获得所有字典项配置数据集合方法 内部使用了缓存，缓存值 BootstrapMenu-RetrieveMenus
         /// </summary>
         /// <returns></returns>
         public static IEnumerable<BootstrapDict> RetrieveDicts() => CacheManager.GetOrAdd(RetrieveDictsDataKey, key => DbContextManager.Create<Dict>().RetrieveDicts());
@@ -66,7 +63,7 @@ namespace Bootstrap.DataAccess
         }
 
         /// <summary>
-        /// 
+        /// 配置 IP 地理位置查询配置项 注入方法调用此方法
         /// </summary>
         /// <param name="op"></param>
         public static void ConfigIPLocator(IPLocatorOption op)
@@ -100,13 +97,13 @@ namespace Bootstrap.DataAccess
         public static IEnumerable<string> RetrieveCategories() => CacheManager.GetOrAdd(RetrieveCategoryDataKey, key => DbContextManager.Create<Dict>().RetrieveCategories());
 
         /// <summary>
-        /// 
+        /// 获取站点 Title 配置信息
         /// </summary>
         /// <returns></returns>
         public static string RetrieveWebTitle() => DbContextManager.Create<Dict>().RetrieveWebTitle();
 
         /// <summary>
-        /// 
+        /// 获取站点 Footer 配置信息
         /// </summary>
         /// <returns></returns>
         public static string RetrieveWebFooter() => DbContextManager.Create<Dict>().RetrieveWebFooter();
@@ -130,63 +127,63 @@ namespace Bootstrap.DataAccess
         public static string RetrieveIconFolderPath() => DbContextManager.Create<Dict>().RetrieveIconFolderPath();
 
         /// <summary>
-        /// 获得默认的前台首页地址，默认为~/Home/Index
+        /// 获得默认的前台首页地址，默认为 ~/Home/Index
         /// </summary>
         /// <param name="appCode">应用程序编码</param>
         /// <returns></returns>
         public static string RetrieveHomeUrl(string appCode) => DbContextManager.Create<Dict>().RetrieveHomeUrl(appCode);
 
         /// <summary>
-        /// 
+        /// 获取所有应用程序数据方法
         /// </summary>
         /// <returns></returns>
         public static IEnumerable<KeyValuePair<string, string>> RetrieveApps() => DbContextManager.Create<Dict>().RetrieveApps();
 
         /// <summary>
-        /// 程序异常时长 默认1月
+        /// 程序异常时长 默认 1 个月
         /// </summary>
         /// <returns></returns>
         public static int RetrieveExceptionsLogPeriod() => DbContextManager.Create<Dict>().RetrieveExceptionsLogPeriod();
 
         /// <summary>
-        /// 
+        /// 获得操作日志保留时长 默认 12 个月
         /// </summary>
         /// <returns></returns>
         public static int RetrieveLogsPeriod() => DbContextManager.Create<Dict>().RetrieveLogsPeriod();
 
         /// <summary>
-        /// 
+        /// 获得登录日志保留时长 默认 12 个月
         /// </summary>
         /// <returns></returns>
         public static int RetrieveLoginLogsPeriod() => DbContextManager.Create<Dict>().RetrieveLoginLogsPeriod();
 
         /// <summary>
-        /// 
+        /// 获取登录认证Cookie保留时长 默认 7 天
         /// </summary>
         /// <returns></returns>
         public static int RetrieveCookieExpiresPeriod() => DbContextManager.Create<Dict>().RetrieveCookieExpiresPeriod();
 
         /// <summary>
-        /// 
+        /// 获取 IP 地址位置查询服务名称
         /// </summary>
         /// <returns></returns>
         public static string RetrieveLocaleIPSvr() => DbContextManager.Create<Dict>().RetrieveLocaleIPSvr();
 
         /// <summary>
-        /// 
+        /// 通过 IP 地理位置查询服务名称获得请求地址方法
         /// </summary>
         /// <param name="ipSvr">ip地址请求服务名称</param>
         /// <returns></returns>
         public static string RetrieveLocaleIPSvrUrl(string ipSvr) => DbContextManager.Create<Dict>().RetrieveLocaleIPSvrUrl(ipSvr);
 
         /// <summary>
-        /// 
+        /// 获取 IP 地理位置查询服务缓存时长
         /// </summary>
         /// <returns></returns>
         public static string RetrieveLocaleIPSvrCachePeriod() => DbContextManager.Create<Dict>().RetrieveLocaleIPSvrCachePeriod();
 
         /// <summary>
-        /// 访问日志保留时长 默认一个月
+        /// 访问日志保留时长 默认 1 个月
         /// </summary>
         /// <returns></returns>
         public static int RetrieveAccessLogPeriod() => DbContextManager.Create<Dict>().RetrieveAccessLogPeriod();
