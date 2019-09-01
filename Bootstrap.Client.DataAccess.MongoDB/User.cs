@@ -8,7 +8,7 @@ namespace Bootstrap.Client.DataAccess.MongoDB
     /// <summary>
     /// 用户表实体类
     /// </summary>
-    public class User : DataAccess.User
+    internal class User : DataAccess.User
     {
         /// <summary>
         /// 获得/设置 用户主键ID
@@ -21,17 +21,17 @@ namespace Bootstrap.Client.DataAccess.MongoDB
         public DateTime? ApprovedTime { get; set; }
 
         /// <summary>
-        /// 
+        /// 获得/设置 用户授权角色ID集合
         /// </summary>
         public IEnumerable<string> Roles { get; set; }
 
         /// <summary>
-        /// 
+        /// 获得/设置 用户授权组ID集合
         /// </summary>
         public IEnumerable<string> Groups { get; set; }
 
         /// <summary>
-        /// 
+        /// 通过指定登录名获取 BootstrapUser 实例方法
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>

@@ -18,7 +18,7 @@ namespace Bootstrap.Client.DataAccess.MongoDB
         private static readonly object _locker = new object();
 
         /// <summary>
-        ///
+        /// BA数据库 IMongoDatabase 实例
         /// </summary>
         private static IMongoDatabase BADatabase
         {

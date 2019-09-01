@@ -9,7 +9,7 @@ namespace Bootstrap.Client.DataAccess.MongoDB
     /// <summary>
     /// 菜单实体类
     /// </summary>
-    public class Menu : DataAccess.Menu
+    internal class Menu : DataAccess.Menu
     {
         /// <summary>
         /// 通过当前用户名获得所有菜单
@@ -18,7 +18,7 @@ namespace Bootstrap.Client.DataAccess.MongoDB
         /// <returns></returns>
         public override IEnumerable<BootstrapMenu> RetrieveAllMenus(string userName)
         {
-            var user = UserHelper.Retrieves().Cast<User>().FirstOrDefault(u => u.UserName.ToLowerInvariant() == userName.ToLowerInvariant());
+            var user = UserHelper.Retrieves().FirstOrDefault(u => u.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase));
             if (user == null) return Enumerable.Empty<BootstrapMenu>();
 
             var roles = RoleHelper.Retrieves().Cast<Role>();

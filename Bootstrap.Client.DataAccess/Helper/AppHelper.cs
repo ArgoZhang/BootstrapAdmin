@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Bootstrap.Client.DataAccess
 {
     /// <summary>
-    /// 
+    /// 应用操作帮助类
     /// </summary>
     public static class AppHelper
     {

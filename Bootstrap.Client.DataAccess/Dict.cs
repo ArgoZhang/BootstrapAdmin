@@ -8,7 +8,7 @@ using System.Linq;
 namespace Bootstrap.Client.DataAccess
 {
     /// <summary>
-    /// 
+    /// 字典表实体类
     /// </summary>
     public class Dict : BootstrapDict
     {
@@ -47,13 +47,13 @@ namespace Bootstrap.Client.DataAccess
         public string RetrieveLocaleIPSvr() => DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "IP地理位置接口" && d.Define == 0)?.Code;
 
         /// <summary>
-        /// 
+        /// 获取 IP 地理位置查询服务缓存时长
         /// </summary>
         /// <returns></returns>
         public string RetrieveLocaleIPSvrCachePeriod() => DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "IP请求缓存时长" && d.Define == 0)?.Code;
 
         /// <summary>
-        /// 获得 项目是否获取登录地点 默认为false
+        /// 获得 项目是否获取登录地点 默认为 false
         /// </summary>
         /// <param name="ipSvr">服务提供名称</param>
         /// <returns></returns>
@@ -82,12 +82,6 @@ namespace Bootstrap.Client.DataAccess
         /// </summary>
         /// <returns></returns>
         public bool RetrieveSidebarStatus() => (DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "侧边栏状态" && d.Define == 0)?.Code ?? "1") == "1";
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public virtual IEnumerable<KeyValuePair<string, string>> RetrieveApps() => DictHelper.RetrieveDicts().Where(d => d.Category == "应用程序" && d.Define == 0).Select(d => new KeyValuePair<string, string>(d.Code, d.Name)).OrderBy(d => d.Key);
 
         /// <summary>
         /// 获取头像路径

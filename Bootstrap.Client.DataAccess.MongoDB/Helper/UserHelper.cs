@@ -5,7 +5,10 @@ using System.Collections.Generic;
 
 namespace Bootstrap.Client.DataAccess.MongoDB
 {
-    class UserHelper
+    /// <summary>
+    /// 用户表相关操作帮助类
+    /// </summary>
+    internal class UserHelper
     {
         /// <summary>
         /// 获取所有用户缓存数据键值

@@ -1,13 +1,14 @@
 ﻿using MongoDB.Driver;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Bootstrap.Client.DataAccess.MongoDB
 {
     /// <summary>
-    /// 
+    /// 角色实体类
     /// </summary>
-    public class Role : DataAccess.Role
+    internal class Role : DataAccess.Role
     {
         /// <summary>
         /// 此角色关联的所有菜单
@@ -35,14 +36,14 @@ namespace Bootstrap.Client.DataAccess.MongoDB
         public string Description { get; set; }
 
         /// <summary>
-        /// 
+        /// 通过指定登录名获取授权角色名称数据集合
         /// </summary>
-        /// <param name="userName"></param>
+        /// <param name="userName">登录名</param>
         /// <returns></returns>
         public override IEnumerable<string> RetrievesByUserName(string userName)
         {
             var roles = new List<string>();
-            var user = UserHelper.Retrieves().Cast<User>().FirstOrDefault(u => u.UserName.ToLowerInvariant() == userName.ToLowerInvariant());
+            var user = UserHelper.Retrieves().FirstOrDefault(u => u.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase));
             if (user != null)
             {
                 var role = RoleHelper.Retrieves();
@@ -61,8 +62,8 @@ namespace Bootstrap.Client.DataAccess.MongoDB
         public override IEnumerable<string> RetrievesByUrl(string url)
         {
             var menu = DbManager.Menus.Find(md => md.Url.StartsWith(url)).FirstOrDefault();
-            var ret = RoleHelper.Retrieves().Cast<Role>().Where(md => md.Menus != null && md.Menus.Contains(menu.Id)).Select(m => m.RoleName).ToList();
-            if (!ret.Contains("Administrators")) ret.Add("Administrators");
+            var ret = RoleHelper.Retrieves().Where(md => md.Menus != null && md.Menus.Any(m => m.Equals(menu.Id, StringComparison.OrdinalIgnoreCase))).Select(m => m.RoleName).ToList();
+            if (!ret.Any(r => r.Equals("Administrators", StringComparison.OrdinalIgnoreCase))) ret.Add("Administrators");
             return ret;
         }
     }

@@ -7,38 +7,29 @@ using System.Collections.Generic;
 namespace Bootstrap.Client.DataAccess
 {
     /// <summary>
-    /// 
+    /// 字典操作帮助类
     /// </summary>
     public static class DictHelper
     {
-        /// <summary>
-        /// 
-        /// </summary>
         /// <summary>
         /// 缓存索引，BootstrapAdmin后台清理缓存时使用
         /// </summary>
         public const string RetrieveDictsDataKey = DbHelper.RetrieveDictsDataKey;
 
         /// <summary>
-        /// 
+        /// 获取所有字典表数据方法
         /// </summary>
         /// <returns></returns>
         public static IEnumerable<BootstrapDict> RetrieveDicts() => CacheManager.GetOrAdd(RetrieveDictsDataKey, key => DbContextManager.Create<Dict>().RetrieveDicts());
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public static IEnumerable<KeyValuePair<string, string>> RetrieveApps() => DbContextManager.Create<Dict>().RetrieveApps();
-
-        /// <summary>
-        /// 
+        /// 获取站点 Title 配置信息
         /// </summary>
         /// <returns></returns>
         public static string RetrieveWebTitle() => DbContextManager.Create<Dict>().RetrieveWebTitle();
 
         /// <summary>
-        /// 
+        /// 获取站点 Footer 配置信息
         /// </summary>
         /// <returns></returns>
         public static string RetrieveWebFooter() => DbContextManager.Create<Dict>().RetrieveWebFooter();
@@ -50,20 +41,20 @@ namespace Bootstrap.Client.DataAccess
         public static string RetrieveActiveTheme() => DbContextManager.Create<Dict>().RetrieveActiveTheme();
 
         /// <summary>
-        /// 
+        /// 获取 IP地理位置查询服务请求地址
         /// </summary>
         /// <returns></returns>
         public static string RetrieveLocaleIPSvr() => DbContextManager.Create<Dict>().RetrieveLocaleIPSvr();
 
         /// <summary>
-        /// 
+        /// 通过 IP 地理位置查询服务名称获得请求地址方法
         /// </summary>
         /// <param name="ipSvr">ip地址请求服务名称</param>
         /// <returns></returns>
         public static string RetrieveLocaleIPSvrUrl(string ipSvr) => DbContextManager.Create<Dict>().RetrieveLocaleIPSvrUrl(ipSvr);
 
         /// <summary>
-        /// 
+        /// 获取 IP 地理位置查询服务缓存时长
         /// </summary>
         /// <returns></returns>
         public static string RetrieveLocaleIPSvrCachePeriod() => DbContextManager.Create<Dict>().RetrieveLocaleIPSvrCachePeriod();

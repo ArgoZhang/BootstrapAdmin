@@ -5,10 +5,16 @@ using System.Linq;
 namespace Bootstrap.Client.DataAccess.MongoDB
 {
     /// <summary>
-    /// 
+    /// 应用程序实体类
     /// </summary>
     public class App : DataAccess.App
     {
+        /// <summary>
+        /// 获取所有应用程序数据方法
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerable<KeyValuePair<string, string>> RetrieveApps() => DictHelper.RetrieveDicts().Where(d => d.Category == "应用程序" && d.Define == 0).Select(d => new KeyValuePair<string, string>(d.Code, d.Name)).OrderBy(d => d.Key);
+
         /// <summary>
         /// 根据指定用户名获得授权应用程序集合
         /// </summary>
@@ -18,9 +24,9 @@ namespace Bootstrap.Client.DataAccess.MongoDB
         {
             var ret = new List<string>();
             var roles = RoleHelper.RetrievesByUserName(userName);
-            if (roles.Contains("Administrators", StringComparer.OrdinalIgnoreCase))
+            if (roles.Any(r => r.Equals("Administrators", StringComparison.OrdinalIgnoreCase)))
             {
-                ret.AddRange(DictHelper.RetrieveApps().Select(kv => kv.Key));
+                ret.AddRange(RetrieveApps().Select(kv => kv.Key));
             }
             else
             {
