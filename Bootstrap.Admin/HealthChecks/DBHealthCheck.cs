@@ -99,7 +99,7 @@ namespace Bootstrap.Admin.HealthChecks
 
             if (error != null || DbContextManager.Exception != null)
             {
-                data.Add("Exception", (error ?? DbContextManager.Exception).Message);
+                data.Add("Exception", (DbContextManager.Exception ?? error).Message);
                 return Task.FromResult(HealthCheckResult.Unhealthy("Error", error ?? DbContextManager.Exception, data));
             }
 
