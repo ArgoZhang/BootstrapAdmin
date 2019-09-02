@@ -67,7 +67,12 @@
         showColumns: false,
         columns: [
             { title: "检查项", field: "name" },
-            { title: "值", field: "value" }
+            {
+                title: "值", field: "value", formatter: function (value, row) {
+                    if (row.name === "Exception") value = $.format("<span class='text-danger'>{0}</span>", value);
+                    return value;
+                }
+            }
         ]
     });
 });
