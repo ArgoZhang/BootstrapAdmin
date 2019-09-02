@@ -9,7 +9,7 @@
     <PackageReference Include="Longbow.Data" Version="2.3.6" />
     <PackageReference Include="Longbow.Logging" Version="2.2.12" />
     <PackageReference Include="Longbow.Web" Version="2.2.16" />
-    <PackageReference Include="Bootstrap.Security.Mvc" Version="2.2.14" />
+    <PackageReference Include="Bootstrap.Security.Mvc" Version="2.2.15-preview-1" />
   </ItemGroup>
 
 </Project>
