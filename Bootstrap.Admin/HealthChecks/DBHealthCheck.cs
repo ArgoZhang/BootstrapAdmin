@@ -1,5 +1,4 @@
 ﻿using Bootstrap.DataAccess;
-using Bootstrap.Security;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -49,31 +48,62 @@ namespace Bootstrap.Admin.HealthChecks
                     ProviderName = config["ProviderName"],
                     Widget = config["Widget"],
                     ConnectionString = ConnectionStringResolve(config.GetSection("ConnectionStrings").Exists() ? config : _configuration, string.Empty)
-                }).FirstOrDefault(i => i.Enabled);
+                }).FirstOrDefault(i => i.Enabled) ?? new
+                {
+                    Enabled = true,
+                    ProviderName = Longbow.Data.DatabaseProviderType.SqlServer.ToString(),
+                    Widget = typeof(User).Assembly.FullName,
+                    ConnectionString = Longbow.Data.DbManager.GetConnectionString()
+                };
 
             // 检查 当前用户 账户权限
             var loginUser = _httpContextAccessor.HttpContext.User.Identity.Name;
             var userName = loginUser ?? "Admin";
-            var user = UserHelper.RetrieveUserByUserName(userName);
-            var roles = RoleHelper.RetrievesByUserName(userName) ?? new string[0];
-            var menus = MenuHelper.RetrieveMenusByUserName(userName) ?? new BootstrapMenu[0];
-            var dicts = DictHelper.RetrieveDicts() ?? new BootstrapDict[0];
-            var assemblyLoaded = DbContextManager.Exception == null ? "Loaded" : "NotLoad";
+            var dictsCount = 0;
+            var menusCount = 0;
+            var roles = string.Empty;
+            var displayName = string.Empty;
+            var healths = false;
+            Exception error = null;
+            try
+            {
+                DbContextManager.Exception = null;
+                var user = UserHelper.RetrieveUserByUserName(userName);
+                displayName = user?.DisplayName;
+                roles = string.Join(",", RoleHelper.RetrievesByUserName(userName) ?? new string[0]);
+                menusCount = MenuHelper.RetrieveMenusByUserName(userName)?.Count() ?? 0;
+                dictsCount = DictHelper.RetrieveDicts()?.Count() ?? 0;
+                healths = user != null && !string.IsNullOrEmpty(roles) && menusCount > 0 && dictsCount > 0;
+            }
+            catch (Exception ex)
+            {
+                error = ex;
+            }
             var data = new Dictionary<string, object>()
             {
-                { "ConnectionString", db.ConnectionString },
-                { "Widget", $"{db.Widget}({assemblyLoaded})" },
-                { "Reference", DbContextManager.Exception?.Message },
-                { "DbType", db.ProviderName },
-                { "Dicts", dicts.Count() },
+                { "ConnectionString", db?.ConnectionString ?? "未配置数据库连接字符串" },
+                { "Reference", DbContextManager.Create<Dict>()?.GetType().Assembly.FullName ?? db.Widget },
+                { "DbType", db?.ProviderName },
+                { "Dicts", dictsCount },
                 { "LoginName", loginUser },
-                { "DisplayName", user?.DisplayName },
-                { "Roles", string.Join(",", roles) },
-                { "Navigations", menus.Count() }
+                { "DisplayName", displayName },
+                { "Roles", roles },
+                { "Navigations", menusCount }
             };
 
-            var v = dicts.Any() && user != null && roles.Any() && menus.Any() && DbContextManager.Exception == null;
-            return v ? Task.FromResult(HealthCheckResult.Healthy("Ok", data)) : Task.FromResult(HealthCheckResult.Degraded("Failed", null, data));
+            if (db == null)
+            {
+                // 未启用连接字符串
+                return Task.FromResult(HealthCheckResult.Unhealthy("Error", error ?? DbContextManager.Exception, data));
+            }
+
+            if (error != null || DbContextManager.Exception != null)
+            {
+                data.Add("Exception", (error ?? DbContextManager.Exception).Message);
+                return Task.FromResult(HealthCheckResult.Unhealthy("Error", error ?? DbContextManager.Exception, data));
+            }
+
+            return healths ? Task.FromResult(HealthCheckResult.Healthy("Ok", data)) : Task.FromResult(HealthCheckResult.Degraded("Failed", null, data));
         }
     }
 }
