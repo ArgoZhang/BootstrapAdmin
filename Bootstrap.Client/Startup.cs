@@ -4,6 +4,7 @@ using Longbow.Web.SignalR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,12 +15,12 @@ using System;
 namespace Bootstrap.Client
 {
     /// <summary>
-    /// 
+    /// Startup 启动配置文件
     /// </summary>
     public class Startup
     {
         /// <summary>
-        /// 
+        /// 构造函数
         /// </summary>
         /// <param name="configuration"></param>
         public Startup(IConfiguration configuration)
@@ -28,13 +29,13 @@ namespace Bootstrap.Client
         }
 
         /// <summary>
-        /// 
+        /// 获得 系统配置项 Iconfiguration 实例
         /// </summary>
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         /// <summary>
-        /// 
+        /// 服务容器注入方法
         /// </summary>
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
@@ -71,12 +72,13 @@ namespace Bootstrap.Client
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         /// <summary>
-        /// 
+        /// 管道构建方法
         /// </summary>
         /// <param name="app"></param>
         /// <param name="env"></param>
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseForwardedHeaders(new ForwardedHeadersOptions() { ForwardedHeaders = ForwardedHeaders.All });
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
