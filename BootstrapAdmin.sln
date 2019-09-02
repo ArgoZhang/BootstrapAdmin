@@ -5,68 +5,65 @@ VisualStudioVersion = 16.0.29215.179
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQLServer", "SQLServer", "{87319AF5-7C40-4362-B67C-35F9DD737DB4}"
 	ProjectSection(SolutionItems) = preProject
-		DatabaseScripts\SqlServer\InitData.sql = DatabaseScripts\SqlServer\InitData.sql
-		DatabaseScripts\SqlServer\install.ps1 = DatabaseScripts\SqlServer\install.ps1
-		DatabaseScripts\SqlServer\Install.sql = DatabaseScripts\SqlServer\Install.sql
+		scripts\SqlServer\InitData.sql = scripts\SqlServer\InitData.sql
+		scripts\SqlServer\install.ps1 = scripts\SqlServer\install.ps1
+		scripts\SqlServer\Install.sql = scripts\SqlServer\Install.sql
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.Admin", "Bootstrap.Admin\Bootstrap.Admin.csproj", "{7B2B7043-3CB2-4C5A-BDF2-8C47F1A5471A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.Admin", "src\admin\Bootstrap.Admin\Bootstrap.Admin.csproj", "{7B2B7043-3CB2-4C5A-BDF2-8C47F1A5471A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{792A0B12-3F41-4BC4-A768-7D8D91C213B2}"
-	ProjectSection(SolutionItems) = preProject
-		appveyor.build.ps1 = appveyor.build.ps1
-		appveyor.test.ps1 = appveyor.test.ps1
-		appveyor.yml = appveyor.yml
-		README.md = README.md
-		README.zh-CN.md = README.zh-CN.md
-	EndProjectSection
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{586410F2-C1F0-47CD-AB28-2CF506DED2C8}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{586410F2-C1F0-47CD-AB28-2CF506DED2C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.Client", "src\client\Bootstrap.Client\Bootstrap.Client.csproj", "{C82A6E45-AB90-43D1-8429-5CBE953D8151}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.Client", "Bootstrap.Client\Bootstrap.Client.csproj", "{C82A6E45-AB90-43D1-8429-5CBE953D8151}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "client", "client", "{C7F51A14-2D89-4D1F-AD78-C42B79AB0BF0}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{C7F51A14-2D89-4D1F-AD78-C42B79AB0BF0}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.DataAccess", "Bootstrap.DataAccess\Bootstrap.DataAccess.csproj", "{8D62BE79-BE13-43C8-969B-C9B00B3C84B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.DataAccess", "src\admin\Bootstrap.DataAccess\Bootstrap.DataAccess.csproj", "{8D62BE79-BE13-43C8-969B-C9B00B3C84B7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQLite", "SQLite", "{523515EC-2AD7-4282-9AF4-9D20371183B0}"
 	ProjectSection(SolutionItems) = preProject
-		DatabaseScripts\SQLite\InitData.sql = DatabaseScripts\SQLite\InitData.sql
-		DatabaseScripts\SQLite\Install.sql = DatabaseScripts\SQLite\Install.sql
+		scripts\SQLite\InitData.sql = scripts\SQLite\InitData.sql
+		scripts\SQLite\Install.sql = scripts\SQLite\Install.sql
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.DataAccess.MongoDB", "Bootstrap.DataAccess.MongoDB\Bootstrap.DataAccess.MongoDB.csproj", "{8336F096-4B4A-4710-A1FA-0F5E44CD8D26}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.DataAccess.MongoDB", "src\admin\Bootstrap.DataAccess.MongoDB\Bootstrap.DataAccess.MongoDB.csproj", "{8336F096-4B4A-4710-A1FA-0F5E44CD8D26}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MongoDB", "MongoDB", "{A06A0AD8-A246-4329-B024-7174AE4A3EDE}"
 	ProjectSection(SolutionItems) = preProject
-		DatabaseScripts\MongoDB\Dicts.js = DatabaseScripts\MongoDB\Dicts.js
-		DatabaseScripts\MongoDB\Groups.js = DatabaseScripts\MongoDB\Groups.js
-		DatabaseScripts\MongoDB\init.js = DatabaseScripts\MongoDB\init.js
-		DatabaseScripts\MongoDB\install.sh = DatabaseScripts\MongoDB\install.sh
-		DatabaseScripts\MongoDB\Navigations.js = DatabaseScripts\MongoDB\Navigations.js
-		DatabaseScripts\MongoDB\Roles.js = DatabaseScripts\MongoDB\Roles.js
-		DatabaseScripts\MongoDB\Users.js = DatabaseScripts\MongoDB\Users.js
+		scripts\MongoDB\Dicts.js = scripts\MongoDB\Dicts.js
+		scripts\MongoDB\Groups.js = scripts\MongoDB\Groups.js
+		scripts\MongoDB\init.js = scripts\MongoDB\init.js
+		scripts\MongoDB\install.sh = scripts\MongoDB\install.sh
+		scripts\MongoDB\Navigations.js = scripts\MongoDB\Navigations.js
+		scripts\MongoDB\Roles.js = scripts\MongoDB\Roles.js
+		scripts\MongoDB\Users.js = scripts\MongoDB\Users.js
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MySQL", "MySQL", "{084E2E94-6B7D-4D3E-9BF1-6972427FBF80}"
 	ProjectSection(SolutionItems) = preProject
-		DatabaseScripts\MySQL\initData.sql = DatabaseScripts\MySQL\initData.sql
-		DatabaseScripts\MySQL\install.sh = DatabaseScripts\MySQL\install.sh
-		DatabaseScripts\MySQL\install.sql = DatabaseScripts\MySQL\install.sql
-		DatabaseScripts\MySQL\my.ini = DatabaseScripts\MySQL\my.ini
+		scripts\MySQL\initData.sql = scripts\MySQL\initData.sql
+		scripts\MySQL\install.sh = scripts\MySQL\install.sh
+		scripts\MySQL\install.sql = scripts\MySQL\install.sql
+		scripts\MySQL\my.ini = scripts\MySQL\my.ini
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTest", "UnitTest\UnitTest.csproj", "{CFE75C48-F9D5-403A-8419-D07939BBD769}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTest", "test\UnitTest\UnitTest.csproj", "{CFE75C48-F9D5-403A-8419-D07939BBD769}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Postgresql", "Postgresql", "{6F61C2AC-84D4-48A9-8A48-680657CC8175}"
 	ProjectSection(SolutionItems) = preProject
-		DatabaseScripts\Postgresql\initData.sql = DatabaseScripts\Postgresql\initData.sql
-		DatabaseScripts\Postgresql\install.sql = DatabaseScripts\Postgresql\install.sql
+		scripts\Postgresql\initData.sql = scripts\Postgresql\initData.sql
+		scripts\Postgresql\install.sql = scripts\Postgresql\install.sql
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bootstrap.Client.DataAccess", "Bootstrap.Client.DataAccess\Bootstrap.Client.DataAccess.csproj", "{843811A2-FE49-410F-BF9F-9F1FB14A1DEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.Client.DataAccess", "src\client\Bootstrap.Client.DataAccess\Bootstrap.Client.DataAccess.csproj", "{843811A2-FE49-410F-BF9F-9F1FB14A1DEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bootstrap.Client.DataAccess.MongoDB", "Bootstrap.Client.DataAccess.MongoDB\Bootstrap.Client.DataAccess.MongoDB.csproj", "{BC1C6D63-ADA9-4C3B-89F0-CEB191A86BF5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.Client.DataAccess.MongoDB", "src\client\Bootstrap.Client.DataAccess.MongoDB\Bootstrap.Client.DataAccess.MongoDB.csproj", "{BC1C6D63-ADA9-4C3B-89F0-CEB191A86BF5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{6AD32A76-F3AA-423E-96EA-E5CC679934D1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{41B6D37A-5E5E-42B3-85E4-D81A81E3D757}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "admin", "admin", "{E03B7391-B52F-4449-B400-5CD9DE01F085}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -108,13 +105,19 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{87319AF5-7C40-4362-B67C-35F9DD737DB4} = {586410F2-C1F0-47CD-AB28-2CF506DED2C8}
+		{7B2B7043-3CB2-4C5A-BDF2-8C47F1A5471A} = {E03B7391-B52F-4449-B400-5CD9DE01F085}
 		{C82A6E45-AB90-43D1-8429-5CBE953D8151} = {C7F51A14-2D89-4D1F-AD78-C42B79AB0BF0}
+		{C7F51A14-2D89-4D1F-AD78-C42B79AB0BF0} = {41B6D37A-5E5E-42B3-85E4-D81A81E3D757}
+		{8D62BE79-BE13-43C8-969B-C9B00B3C84B7} = {E03B7391-B52F-4449-B400-5CD9DE01F085}
 		{523515EC-2AD7-4282-9AF4-9D20371183B0} = {586410F2-C1F0-47CD-AB28-2CF506DED2C8}
+		{8336F096-4B4A-4710-A1FA-0F5E44CD8D26} = {E03B7391-B52F-4449-B400-5CD9DE01F085}
 		{A06A0AD8-A246-4329-B024-7174AE4A3EDE} = {586410F2-C1F0-47CD-AB28-2CF506DED2C8}
 		{084E2E94-6B7D-4D3E-9BF1-6972427FBF80} = {586410F2-C1F0-47CD-AB28-2CF506DED2C8}
+		{CFE75C48-F9D5-403A-8419-D07939BBD769} = {6AD32A76-F3AA-423E-96EA-E5CC679934D1}
 		{6F61C2AC-84D4-48A9-8A48-680657CC8175} = {586410F2-C1F0-47CD-AB28-2CF506DED2C8}
 		{843811A2-FE49-410F-BF9F-9F1FB14A1DEE} = {C7F51A14-2D89-4D1F-AD78-C42B79AB0BF0}
 		{BC1C6D63-ADA9-4C3B-89F0-CEB191A86BF5} = {C7F51A14-2D89-4D1F-AD78-C42B79AB0BF0}
+		{E03B7391-B52F-4449-B400-5CD9DE01F085} = {41B6D37A-5E5E-42B3-85E4-D81A81E3D757}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {221EAE38-5F75-4391-9A48-E462A9F3B8FC}

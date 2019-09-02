@@ -1,6 +1,6 @@
-function installDB() {
+﻿function installDB() {
     write-host "init sqlserver database..." -ForegroundColor Cyan
-    $startPath = "$($env:appveyor_build_folder)\DatabaseScripts\SqlServer"
+    $startPath = "$($env:appveyor_build_folder)\scripts\SqlServer"
     $sqlInstance = "(local)\SQL2014"
     $outFile = join-path $startPath "output.log"
     $sqlFile = join-path $startPath "Install.sql"
@@ -14,7 +14,7 @@ function installDB() {
     $cmd = $mysql + ' -e "create database BootstrapAdmin;" -uroot'
     cmd.exe /c $cmd
 
-    $startPath = "$($env:appveyor_build_folder)\DatabaseScripts\MySQL"
+    $startPath = "$($env:appveyor_build_folder)\scripts\MySQL"
     $para = ' -hlocalhost -uroot -DBootstrapAdmin < '
     $sqlFile = join-path $startPath "Install.sql"
     $cmd = $mysql + $para + $sqlFile
@@ -25,7 +25,7 @@ function installDB() {
     cmd.exe /c $cmd   
 
     write-host "init mongodb data..." -ForegroundColor Cyan
-    $initFolder = "$($env:appveyor_build_folder)\DatabaseScripts\MongoDB"
+    $initFolder = "$($env:appveyor_build_folder)\scripts\MongoDB"
     cd $initFolder
 
     cmd.exe /c "C:\mongodb\bin\mongo init.js"
@@ -37,13 +37,13 @@ function installDB() {
 }
 
 function runUnitTest() {
-    write-host "dotnet test UnitTest" -ForegroundColor Cyan
-    dotnet test UnitTest --no-restore /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Include="[Bootstrap*]*" /p:ExcludeByFile="../Bootstrap.Admin/Program.cs%2c../Bootstrap.Admin/Startup.cs%2c../Bootstrap.Admin/HttpHeaderOperation.cs" /p:CoverletOutput=../
+    write-host "dotnet test test\UnitTest" -ForegroundColor Cyan
+    dotnet test test\UnitTest /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Include="[Bootstrap*]*" /p:ExcludeByFile="..\..\src\admin\Bootstrap.Admin\Program.cs%2c..\..\src\admin\Bootstrap.Admin\Startup.cs%2c..\..\src\admin\Bootstrap.Admin\HttpHeaderOperation.cs" /p:CoverletOutput=..\..\
 }
 
 function coverallUnitTest() {
     write-host "install coveralls.net tools" -ForegroundColor Cyan
-    dotnet tool install coveralls.net --version 1.0.0 --tool-path "./tools"    
+    dotnet tool install coveralls.net --version 1.0.0 --tool-path ".\tools"
     runUnitTest
     write-host "report UnitTest with Coveralls" -ForegroundColor Cyan
     cmd.exe /c ".\tools\csmacnz.Coveralls.exe --opencover -i coverage.opencover.xml --useRelativePaths"
