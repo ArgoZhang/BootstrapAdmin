@@ -81,7 +81,7 @@ namespace Bootstrap.Admin.HealthChecks
             }
             var data = new Dictionary<string, object>()
             {
-                { "ConnectionString", db?.ConnectionString ?? "未配置数据库连接字符串" },
+                { "ConnectionString", db.ConnectionString },
                 { "Reference", DbContextManager.Create<Dict>()?.GetType().Assembly.FullName ?? db.Widget },
                 { "DbType", db?.ProviderName },
                 { "Dicts", dictsCount },
@@ -91,10 +91,11 @@ namespace Bootstrap.Admin.HealthChecks
                 { "Navigations", menusCount }
             };
 
-            if (db == null)
+            if (string.IsNullOrEmpty(db.ConnectionString))
             {
                 // 未启用连接字符串
-                return Task.FromResult(HealthCheckResult.Unhealthy("Error", error ?? DbContextManager.Exception, data));
+                data["ConnectionString"] = "未配置数据库连接字符串";
+                return Task.FromResult(HealthCheckResult.Unhealthy("Error", null, data));
             }
 
             if (error != null || DbContextManager.Exception != null)

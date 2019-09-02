@@ -1,4 +1,5 @@
 ﻿using Bootstrap.DataAccess;
+using Longbow.Web;
 using Longbow.Web.Mvc;
 using System;
 using Xunit;
@@ -22,6 +23,23 @@ namespace Bootstrap.Admin.Api.SqlServer
 
             // clean
             DbManager.Create().Execute("Delete from Traces where LogTime = @0", trac.LogTime);
+        }
+
+        [Fact]
+        public async void Post_Ok()
+        {
+            var onlineUser = new OnlineUser()
+            {
+                Ip = "UniTest",
+                RequestUrl = "UniTest",
+                LastAccessTime = DateTime.Now,
+                Location = "UniTest",
+                Browser = "UniTest",
+                OS = "UniTest",
+                UserAgent = "UniTest"
+            };
+            var result = await Client.PostAsJsonAsync<OnlineUser, bool>(onlineUser);
+            Assert.True(result);
         }
     }
 }
