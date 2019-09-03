@@ -1,4 +1,4 @@
-using Longbow.Tasks;
+﻿using Longbow.Tasks;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Linq;
@@ -16,17 +16,18 @@ namespace Microsoft.Extensions.DependencyInjection
         /// 添加示例后台任务
         /// </summary>
         /// <param name="services"></param>
-        public static IServiceCollection AddDemoTask(this IServiceCollection services)
+        public static IServiceCollection AddBootstrapAdminBackgroundTask(this IServiceCollection services)
         {
-            services.AddHostedService<TaskBackgroundServices>();
-            return services.AddTaskServices();
+            services.AddTaskServices();
+            services.AddHostedService<BootstrapAdminBackgroundServices>();
+            return services;
         }
     }
 
     /// <summary>
     /// 后台任务服务类
     /// </summary>
-    internal class TaskBackgroundServices : BackgroundService
+    internal class BootstrapAdminBackgroundServices : BackgroundService
     {
         /// <summary>
         /// 运行任务
