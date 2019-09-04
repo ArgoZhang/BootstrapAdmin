@@ -14,8 +14,8 @@
 
   <Target Condition=" '$(TargetFramework)' == 'netcoreapp2.2' " Name="PostBuild" AfterTargets="PostBuildEvent">
     <Message Text="Copy file -> $(TargetDir)" Importance="high" />
-    <Copy Condition="'$(OS)' == 'Windows_NT'" DestinationFolder="$(TargetDir)" SourceFiles="$(MSBuildThisFileDirectory)scripts\Longbow.lic" SkipUnchangedFiles="true" />
-    <Copy Condition="'$(OS)' == 'UNIX'" DestinationFolder="$(TargetDir)" SourceFiles="$(MSBuildThisFileDirectory)scripts/Longbow.lic" SkipUnchangedFiles="true" />
+    <Copy Condition="'$(OS)' == 'Windows_NT'" DestinationFolder="$(TargetDir)" SourceFiles="$(MSBuildThisFileDirectory)src\admin\Longbow.lic" SkipUnchangedFiles="true" />
+    <Copy Condition="'$(OS)' == 'UNIX'" DestinationFolder="$(TargetDir)" SourceFiles="$(MSBuildThisFileDirectory)src/admin/Longbow.lic" SkipUnchangedFiles="true" />
   </Target>
 
 </Project>
