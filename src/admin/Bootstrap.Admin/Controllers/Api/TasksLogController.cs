@@ -22,7 +22,7 @@ namespace Bootstrap.Admin.Controllers.Api
         [HttpGet]
         public async Task<ActionResult> Get([FromQuery]string name, [FromServices]IHubContext<TaskLogHub> hub)
         {
-            var sche = TaskServicesManager.GetOrAdd(name);
+            var sche = TaskServicesManager.Get(name);
             sche.Triggers.First().PulseCallback = t => SendTaskLog(sche, name, hub).ConfigureAwait(false);
             await SendTaskLog(sche, name, hub).ConfigureAwait(false);
             return Ok(true);
