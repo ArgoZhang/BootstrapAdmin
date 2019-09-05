@@ -99,13 +99,13 @@ namespace Bootstrap.DataAccess
         /// 获取站点 Title 配置信息
         /// </summary>
         /// <returns></returns>
-        public static string RetrieveWebTitle() => DbContextManager.Create<Dict>()?.RetrieveWebTitle();
+        public static string RetrieveWebTitle() => DbContextManager.Create<Dict>().RetrieveWebTitle();
 
         /// <summary>
         /// 获取站点 Footer 配置信息
         /// </summary>
         /// <returns></returns>
-        public static string RetrieveWebFooter() => DbContextManager.Create<Dict>()?.RetrieveWebFooter();
+        public static string RetrieveWebFooter() => DbContextManager.Create<Dict>().RetrieveWebFooter();
 
         /// <summary>
         /// 获得系统中配置的可以使用的网站样式
@@ -117,7 +117,7 @@ namespace Bootstrap.DataAccess
         /// 获得网站设置中的当前样式
         /// </summary>
         /// <returns></returns>
-        public static string RetrieveActiveTheme() => DbContextManager.Create<Dict>()?.RetrieveActiveTheme();
+        public static string RetrieveActiveTheme() => DbContextManager.Create<Dict>().RetrieveActiveTheme();
 
         /// <summary>
         /// 获取头像路径
@@ -166,7 +166,7 @@ namespace Bootstrap.DataAccess
         /// 获取 IP 地址位置查询服务名称
         /// </summary>
         /// <returns></returns>
-        public static string RetrieveLocaleIPSvr() => DbContextManager.Create<Dict>()?.RetrieveLocaleIPSvr();
+        public static string RetrieveLocaleIPSvr() => DbContextManager.Create<Dict>().RetrieveLocaleIPSvr();
 
         /// <summary>
         /// 通过 IP 地理位置查询服务名称获得请求地址方法

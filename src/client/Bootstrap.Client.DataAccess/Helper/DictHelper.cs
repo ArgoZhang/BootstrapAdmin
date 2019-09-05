@@ -27,14 +27,16 @@ namespace Bootstrap.Client.DataAccess
         /// <summary>
         /// 获取站点 Title 配置信息
         /// </summary>
+        /// <param name="appId">App 应用ID 默认为 0 表示后台管理程序</param>
         /// <returns></returns>
-        public static string RetrieveWebTitle() => DbContextManager.Create<Dict>().RetrieveWebTitle();
+        public static string RetrieveWebTitle(string appId) => DbContextManager.Create<Dict>().RetrieveWebTitle(appId);
 
         /// <summary>
         /// 获取站点 Footer 配置信息
         /// </summary>
+        /// <param name="appId">App 应用ID 默认为 0 表示后台管理程序</param>
         /// <returns></returns>
-        public static string RetrieveWebFooter() => DbContextManager.Create<Dict>().RetrieveWebFooter();
+        public static string RetrieveWebFooter(string appId) => DbContextManager.Create<Dict>().RetrieveWebFooter(appId);
 
         /// <summary>
         /// 获得网站设置中的当前样式
@@ -94,20 +96,23 @@ namespace Bootstrap.Client.DataAccess
         /// <summary>
         /// 获得系统设置地址
         /// </summary>
+        /// <param name="appId">App 应用ID 默认为 0 表示后台管理程序</param>
         /// <returns></returns>
-        public static string RetrieveSettingsUrl() => DbContextManager.Create<Dict>().RetrieveSettingsUrl();
+        public static string RetrieveSettingsUrl(string appId) => DbContextManager.Create<Dict>().RetrieveSettingsUrl(appId);
 
         /// <summary>
         /// 获得系统个人中心地址
         /// </summary>
+        /// <param name="appId">App 应用ID 默认为 0 表示后台管理程序</param>
         /// <returns></returns>
-        public static string RetrieveProfilesUrl() => DbContextManager.Create<Dict>().RetrieveProfilesUrl();
+        public static string RetrieveProfilesUrl(string appId) => DbContextManager.Create<Dict>().RetrieveProfilesUrl(appId);
 
         /// <summary>
         /// 获得系统通知地址地址
         /// </summary>
+        /// <param name="appId">App 应用ID 默认为 0 表示后台管理程序</param>
         /// <returns></returns>
-        public static string RetrieveNotisUrl() => DbContextManager.Create<Dict>().RetrieveNotisUrl();
+        public static string RetrieveNotisUrl(string appId) => DbContextManager.Create<Dict>().RetrieveNotisUrl(appId);
 
         /// <summary>
         /// 配置 IP 地理位置查询配置项 注入方法调用此方法
