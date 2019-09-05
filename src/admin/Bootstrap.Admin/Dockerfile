@@ -16,6 +16,7 @@ RUN dotnet publish -c Release -o /app
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app .
-COPY --from=publish ["/src/Bootstrap.Admin/BootstrapAdmin.db", "./BootstrapAdmin.db"]
-COPY --from=publish ["/src/keys/Longbow.lic", "./Longbow.lic"]
+COPY --from=publish ["/src/Bootstrap.Admin/BootstrapAdmin.db", "."]
+COPY --from=publish ["/src/keys/Longbow.lic", "."]
+COPY --from=publish ["/src/keys/appsettings.Production.json", "."]
 ENTRYPOINT ["dotnet", "Bootstrap.Admin.dll"]
