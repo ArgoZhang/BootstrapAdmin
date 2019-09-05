@@ -16,13 +16,13 @@ namespace Bootstrap.Client.DataAccess
         /// 获取系统网站标题
         /// </summary>
         /// <returns></returns>
-        public virtual string RetrieveWebTitle() => (DictHelper.RetrieveDicts().FirstOrDefault(d => d.Name == "网站标题" && d.Category == "网站设置" && d.Define == 0) ?? new BootstrapDict() { Code = "后台管理系统" }).Code;
+        public virtual string RetrieveWebTitle(string appId) => DbHelper.RetrieveTitle(appId);
 
         /// <summary>
         /// 获取系统网站页脚
         /// </summary>
         /// <returns></returns>
-        public virtual string RetrieveWebFooter() => (DictHelper.RetrieveDicts().FirstOrDefault(d => d.Name == "网站页脚" && d.Category == "网站设置" && d.Define == 0) ?? new BootstrapDict() { Code = "2016 © 通用后台管理系统" }).Code;
+        public virtual string RetrieveWebFooter(string appId) => DbHelper.RetrieveFooter(appId);
 
         /// <summary>
         /// 获得网站设置中的当前样式
@@ -93,18 +93,18 @@ namespace Bootstrap.Client.DataAccess
         /// 获得系统设置地址
         /// </summary>
         /// <returns></returns>
-        public virtual string RetrieveSettingsUrl() => DbHelper.RetrieveSettingsUrl();
+        public virtual string RetrieveSettingsUrl(string appId) => DbHelper.RetrieveSettingsUrl(appId);
 
         /// <summary>
         /// 获得系统个人中心地址
         /// </summary>
         /// <returns></returns>
-        public virtual string RetrieveProfilesUrl() => DbHelper.RetrieveProfilesUrl();
+        public virtual string RetrieveProfilesUrl(string appId) => DbHelper.RetrieveProfilesUrl(appId);
 
         /// <summary>
         /// 获得系统通知地址地址
         /// </summary>
         /// <returns></returns>
-        public virtual string RetrieveNotisUrl() => DbHelper.RetrieveNotisUrl();
+        public virtual string RetrieveNotisUrl(string appId) => DbHelper.RetrieveNotisUrl(appId);
     }
 }

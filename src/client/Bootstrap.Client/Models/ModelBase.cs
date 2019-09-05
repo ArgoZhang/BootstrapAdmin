@@ -1,4 +1,5 @@
 ﻿using Bootstrap.Client.DataAccess;
+using Longbow.Configuration;
 
 namespace Bootstrap.Client.Models
 {
@@ -12,10 +13,13 @@ namespace Bootstrap.Client.Models
         /// </summary>
         public ModelBase()
         {
-            Title = DictHelper.RetrieveWebTitle();
-            Footer = DictHelper.RetrieveWebFooter();
+            AppId = ConfigurationManager.GetValue("AppId", "2");
+            Title = DictHelper.RetrieveWebTitle(AppId);
+            Footer = DictHelper.RetrieveWebFooter(AppId);
             Theme = DictHelper.RetrieveActiveTheme();
         }
+
+        public string AppId { get; private set; }
 
         /// <summary>
         /// 获取 网站标题

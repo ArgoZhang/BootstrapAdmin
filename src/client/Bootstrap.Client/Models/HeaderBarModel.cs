@@ -21,9 +21,9 @@ namespace Bootstrap.Client.Models
             var user = UserHelper.RetrieveUserByUserName(identity.Name);
             DisplayName = user.DisplayName;
             UserName = user.UserName;
-            SettingsUrl = DictHelper.RetrieveSettingsUrl();
-            ProfilesUrl = DictHelper.RetrieveProfilesUrl();
-            NotisUrl = DictHelper.RetrieveNotisUrl();
+            SettingsUrl = DictHelper.RetrieveSettingsUrl(AppId);
+            ProfilesUrl = DictHelper.RetrieveProfilesUrl(AppId);
+            NotisUrl = DictHelper.RetrieveNotisUrl(AppId);
 
             // set LogoutUrl
             var authHost = ConfigurationManager.Get<BootstrapAdminAuthenticationOptions>().AuthHost;
