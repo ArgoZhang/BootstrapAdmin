@@ -347,7 +347,7 @@ ASALocalRun/
 **/[tT]humbs.db
 
 # Net Core Keys
-[Kk]eys/
+**/[Kk]eys/*.xml
 Bootstrap.Admin.xml
 
 ###### -- Custom Ignore Section, Make sure all files you add to the git repo are below this line  --  ######
