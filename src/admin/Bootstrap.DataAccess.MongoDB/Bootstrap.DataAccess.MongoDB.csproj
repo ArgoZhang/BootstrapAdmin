@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Bootstrap.Security" Version="1.8.0-preview-1" />
+    <PackageReference Include="Bootstrap.Security" Version="1.8.0" />
     <PackageReference Include="Longbow.Configuration" Version="2.2.7" />
     <PackageReference Include="MongoDB.Driver" Version="2.9.1" />
   </ItemGroup>
