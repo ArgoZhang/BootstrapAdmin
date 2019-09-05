@@ -4,12 +4,9 @@ on:
   push:
     branches:
       - master
-      - dev-Actions
-
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     
     steps:
