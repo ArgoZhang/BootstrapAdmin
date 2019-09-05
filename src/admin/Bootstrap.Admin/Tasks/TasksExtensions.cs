@@ -18,7 +18,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <param name="services"></param>
         public static IServiceCollection AddBootstrapAdminBackgroundTask(this IServiceCollection services)
         {
-            services.AddTaskServices();
+            services.AddTaskServices(builder => builder.AddFileStorage());
             services.AddHostedService<BootstrapAdminBackgroundServices>();
             return services;
         }

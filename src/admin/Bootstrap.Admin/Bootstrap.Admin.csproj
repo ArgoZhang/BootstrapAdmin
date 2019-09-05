@@ -12,7 +12,7 @@
   <ItemGroup>
     <PackageReference Include="Bootstrap.Security.Mvc" Version="2.2.15-preview-1" />
     <PackageReference Include="Longbow.Configuration" Version="2.2.7" />
-    <PackageReference Include="Longbow.Tasks" Version="1.10.0-preview-2" />
+    <PackageReference Include="Longbow.Tasks" Version="1.10.0-preview-3" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="3.1.6" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" PrivateAssets="All" />
