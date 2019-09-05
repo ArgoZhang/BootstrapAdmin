@@ -125,5 +125,14 @@ namespace Bootstrap.DataAccess
         /// <param name="userName"></param>
         /// <returns></returns>
         public static IEnumerable<BootstrapMenu> RetrieveAllMenus(string userName) => CacheManager.GetOrAdd($"{RetrieveMenusAll}-{userName}", key => DbContextManager.Create<Menu>()?.RetrieveAllMenus(userName), RetrieveMenusAll);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="url"></param>
+        /// <param name="auths"></param>
+        /// <returns></returns>
+        public static bool AuthorizateButtons(string userName, string url, string auths) => DbHelper.AuthorizateButtons(userName, url, auths);
     }
 }

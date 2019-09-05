@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Bootstrap.Security.Mvc" Version="2.2.15" />
+    <PackageReference Include="Bootstrap.Security.Mvc" Version="2.2.16-preview-1" />
     <PackageReference Include="Longbow.Configuration" Version="2.2.7" />
     <PackageReference Include="Longbow.Tasks" Version="1.10.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
