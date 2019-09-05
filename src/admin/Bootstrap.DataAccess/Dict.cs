@@ -64,13 +64,13 @@ namespace Bootstrap.DataAccess
         /// 获取系统网站标题
         /// </summary>
         /// <returns></returns>
-        public virtual string RetrieveWebTitle() => (DictHelper.RetrieveDicts().FirstOrDefault(d => d.Name == "网站标题" && d.Category == "网站设置" && d.Define == 0) ?? new BootstrapDict() { Code = "后台管理系统" }).Code;
+        public virtual string RetrieveWebTitle() => DbHelper.RetrieveTitle();
 
         /// <summary>
         /// 获取系统网站页脚
         /// </summary>
         /// <returns></returns>
-        public virtual string RetrieveWebFooter() => (DictHelper.RetrieveDicts().FirstOrDefault(d => d.Name == "网站页脚" && d.Category == "网站设置" && d.Define == 0) ?? new BootstrapDict() { Code = "2016 © 通用后台管理系统" }).Code;
+        public virtual string RetrieveWebFooter() => DbHelper.RetrieveFooter();
 
         /// <summary>
         /// 获得系统中配置的可以使用的网站样式
