@@ -133,6 +133,6 @@ namespace Bootstrap.DataAccess
         /// <param name="url">资源按钮所属菜单</param>
         /// <param name="auths">资源授权码</param>
         /// <returns></returns>
-        public static bool AuthorizateButtons(string userName, string url, string auths) => DbHelper.AuthorizateButtons(userName, url, auths);
+        public static bool AuthorizateButtons(string userName, string url, string auths) => DbContextManager.Create<Menu>().AuthorizateButtons(userName, url, auths);
     }
 }
