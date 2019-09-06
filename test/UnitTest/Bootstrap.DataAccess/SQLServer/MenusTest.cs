@@ -54,5 +54,12 @@ namespace Bootstrap.DataAccess.SqlServer
             var roleId = RoleHelper.Retrieves().FirstOrDefault(r => r.RoleName == "Administrators").Id;
             Assert.True(MenuHelper.SaveMenusByRoleId(roleId, MenuHelper.RetrieveAllMenus("Admin").Select(m => m.Id)));
         }
+
+        [Fact]
+        public void AuthorizateButtons_Ok()
+        {
+            Assert.True(MenuHelper.AuthorizateButtons("admin", "~/Admin/Profiles", "saveTheme"));
+            Assert.False(MenuHelper.AuthorizateButtons("admin", "~/Admin/Profiles", "unitTest"));
+        }
     }
 }
