@@ -13,18 +13,6 @@ namespace Bootstrap.Client.DataAccess
     public class Dict : BootstrapDict
     {
         /// <summary>
-        /// 获取系统网站标题
-        /// </summary>
-        /// <returns></returns>
-        public virtual string RetrieveWebTitle(string appId) => DbHelper.RetrieveTitle(appId);
-
-        /// <summary>
-        /// 获取系统网站页脚
-        /// </summary>
-        /// <returns></returns>
-        public virtual string RetrieveWebFooter(string appId) => DbHelper.RetrieveFooter(appId);
-
-        /// <summary>
         /// 获得网站设置中的当前样式
         /// </summary>
         /// <returns></returns>
@@ -88,6 +76,20 @@ namespace Bootstrap.Client.DataAccess
         /// </summary>
         /// <returns></returns>
         public virtual string RetrieveIconFolderPath() => (DictHelper.RetrieveDicts().FirstOrDefault(d => d.Name == "头像路径" && d.Category == "头像地址" && d.Define == 0) ?? new BootstrapDict { Code = "~/images/uploader/" }).Code;
+
+        /// <summary>
+        /// 获取系统网站标题
+        /// </summary>
+        /// <param name="appId">App 应用ID 默认为 0 表示后台管理程序</param>
+        /// <returns></returns>
+        public virtual string RetrieveWebTitle(string appId) => DbHelper.RetrieveTitle(appId);
+
+        /// <summary>
+        /// 获取系统网站页脚
+        /// </summary>
+        /// <param name="appId">App 应用ID 默认为 0 表示后台管理程序</param>
+        /// <returns></returns>
+        public virtual string RetrieveWebFooter(string appId) => DbHelper.RetrieveFooter(appId);
 
         /// <summary>
         /// 获得系统设置地址
