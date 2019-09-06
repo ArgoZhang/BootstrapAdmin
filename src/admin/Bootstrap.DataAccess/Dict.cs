@@ -68,7 +68,7 @@ namespace Bootstrap.DataAccess
         {
             // 优先查找配置的应用程序网站标题
             var code = DbHelper.RetrieveTitle();
-            if (code == "未设置") code = DictHelper.RetrieveDicts().FirstOrDefault(d => d.Name == "网站标题" && d.Category == "网站设置" && d.Define == 0)?.Code ?? "后台管理系统";
+            if (code == "网站标题未设置") code = DictHelper.RetrieveDicts().FirstOrDefault(d => d.Name == "网站标题" && d.Category == "网站设置" && d.Define == 0)?.Code ?? "后台管理系统";
             return code;
         }
 
@@ -80,7 +80,7 @@ namespace Bootstrap.DataAccess
         {
             // 优先查找配置的应用程序网站标题
             var code = DbHelper.RetrieveFooter();
-            if (code == "未设置") code = DictHelper.RetrieveDicts().FirstOrDefault(d => d.Name == "网站页脚" && d.Category == "网站设置" && d.Define == 0)?.Code ?? "2016 © 通用后台管理系统";
+            if (code == "网站页脚未设置") code = DictHelper.RetrieveDicts().FirstOrDefault(d => d.Name == "网站页脚" && d.Category == "网站设置" && d.Define == 0)?.Code ?? "2016 © 通用后台管理系统";
             return code;
         }
 
