@@ -50,8 +50,8 @@ function coverallUnitTest() {
 }
 
 function codecovUnitTest() {
-    Set-AppveyorBuildVariable COVERALLS_REPO_TOKEN $($env:COVERALLS_REPO_TOKEN_GITLAB)
-    Set-AppveyorBuildVariable CODECOV_TOKEN $($env:CODECOV_TOKEN_GITLAB)
+    Set-AppveyorBuildVariable COVERALLS_REPO_TOKEN $($env:COVERALLS_REPO_TOKEN)
+    Set-AppveyorBuildVariable CODECOV_TOKEN $($env:CODECOV_TOKEN)
 
     $codecovCmd = "C:\ProgramData\chocolatey\lib\codecov\tools\codecov.exe"
     $codecov = Test-Path $codecovCmd
