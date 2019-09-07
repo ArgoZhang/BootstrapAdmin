@@ -32,6 +32,10 @@
         background-position: 104% top;
     }
 
+    .header .dropdown-menu {
+        margin-top: 6px;
+    }
+
 .sidebar-toggle-box {
     color: #eee;
 }
