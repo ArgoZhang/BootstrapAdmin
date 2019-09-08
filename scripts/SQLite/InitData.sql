@@ -48,7 +48,7 @@ INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('系统设置
 -- 时长单位 分钟
 INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('系统设置', 'IP请求缓存时长', '10', 0);
 INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('系统设置', '演示系统', '0', 0);
-INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('系统设置', '验证码图床', 'http://images.sdgxgz.com/', 0);
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('系统设置', '验证码图床', 'http://imgs.sdgxgz.com/images/', 0);
 
 DELETE FROM Navigations Where Category = '0';
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, '后台管理', 10, 'fa fa-gear', '~/Admin/Index', '0');

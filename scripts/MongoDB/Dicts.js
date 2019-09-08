@@ -243,7 +243,7 @@
     {
         "Category": "系统设置",
         "Name": "验证码图床",
-        "Code": "http://images.sdgxgz.com/",
+        "Code": "http://imgs.sdgxgz.com/images/",
         "Define": NumberInt(0)
     },
     {

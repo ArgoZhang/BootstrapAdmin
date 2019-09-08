@@ -51,7 +51,7 @@ INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'系统设�
 -- 时长单位 分钟
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'系统设置', N'IP请求缓存时长', '10', 0)
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'系统设置', N'演示系统', '0', 0)
-INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'系统设置', N'验证码图床', 'http://images.sdgxgz.com/', 0)
+INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'系统设置', N'验证码图床', 'http://imgs.sdgxgz.com/images/', 0)
 
 DELETE FROM Navigations Where Category = N'0'
 INSERT [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, N'后台管理', 10, N'fa fa-gear', N'~/Admin/Index', N'0')
