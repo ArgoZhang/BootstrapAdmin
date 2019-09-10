@@ -20,19 +20,19 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="hub"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> Get([FromQuery]string name, [FromServices]IHubContext<TaskLogHub> hub)
+        public ActionResult Get([FromQuery]string name, [FromServices]IHubContext<TaskLogHub> hub)
         {
             var sche = TaskServicesManager.Get(name);
-            sche.Triggers.First().PulseCallback = t => SendTaskLog(sche, name, hub).ConfigureAwait(false);
-            await SendTaskLog(sche, name, hub).ConfigureAwait(false);
+            sche.Triggers.First().PulseCallback = t => SendTaskLog(sche, name, hub);
+            SendTaskLog(sche, name, hub);
             return Ok(true);
         }
 
-        private async Task SendTaskLog(IScheduler sche, string name, IHubContext<TaskLogHub> hub)
+        private Task SendTaskLog(IScheduler sche, string name, IHubContext<TaskLogHub> hub)
         {
             var t = sche.Triggers.First();
             var result = $"{{\"name\": \"{name}\", \"msg\": \"Trigger({t.GetType().Name}) LastRuntime: {sche.LastRuntime?.ToString() ?? "none"} Run({t.LastResult}) NextRuntime: {sche.NextRuntime?.ToString() ?? "none"} Elapsed: {t.LastRunElapsedTime.Seconds}s\"}}";
-            await hub.SendTaskLog(result);
+            return hub.SendTaskLog(result);
         }
     }
 }
