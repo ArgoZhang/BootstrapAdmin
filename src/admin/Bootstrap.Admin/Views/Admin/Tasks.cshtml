@@ -40,9 +40,10 @@
             <p>3. Cron 表达式任务 (间隔 5 秒循环执行任务)</p>
             <p>
                 <code>
-                    TaskServicesManager.GetOrAdd("Cron表达式任务", token => Task.Delay(1000), TriggerBuilder.Build("*/5 * * * * *"));
+                    TaskServicesManager.GetOrAdd("Cron 表达式任务", token => Task.Delay(1000), TriggerBuilder.Build("*/5 * * * * *"));
                 </code>
             </p>
+            <p class="mb-0">开源地址: <a href="https://gitee.com/LongbowGroup/Longbow.Tasks" target="_blank">https://gitee.com/LongbowGroup/Longbow.Tasks</a></p>
         </div>
     </div>
 }

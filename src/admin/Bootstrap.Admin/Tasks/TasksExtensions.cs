@@ -46,6 +46,9 @@ namespace Microsoft.Extensions.DependencyInjection
             // 此处代码可注释掉
             TaskServicesManager.GetOrAdd("故障任务", token => throw new Exception("故障任务"));
             TaskServicesManager.GetOrAdd("取消任务", token => Task.Delay(1000)).Triggers.First().Enabled = false;
+
+            // 创建任务并禁用
+            TaskServicesManager.GetOrAdd("禁用任务", token => Task.Delay(1000)).Status = SchedulerStatus.Disabled;
         });
     }
 }
