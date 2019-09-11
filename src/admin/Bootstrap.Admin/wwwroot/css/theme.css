@@ -749,6 +749,11 @@ input.pending {
         margin-bottom: -5px;
     }
 
+    .bootstrap-table .fixed-table-toolbar .dropdown-menu label.dropdown-item {
+        margin: 0;
+        padding: 6px 20px;
+    }
+
 .fixed-table-toolbar .dropdown-menu {
     min-width: unset;
 }
