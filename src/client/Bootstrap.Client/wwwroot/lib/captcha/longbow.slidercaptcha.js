@@ -170,7 +170,7 @@
             var y = that.y - that.options.sliderR * 2 - 1;
             var ImageData = that.blockCtx.getImageData(that.x - 3, y, L, L);
             that.block.width = L;
-            that.blockCtx.putImageData(ImageData, 0, y);
+            that.blockCtx.putImageData(ImageData, 0, y + 1);
             that.text.text(that.text.attr('data-text'));
         };
         img.onerror = function () {

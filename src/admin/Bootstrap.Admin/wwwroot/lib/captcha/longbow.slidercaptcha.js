@@ -24,7 +24,24 @@
         maxLoadCount: 3,
         localImages: function () {
             return 'images/Pic' + Math.round(Math.random() * 4) + '.jpg';
-        }
+        },
+        verify: function (arr, url) {
+            var ret = false;
+            $.ajax({
+                url: url,
+                data: JSON.stringify(arr),
+                async: false,
+                cache: false,
+                type: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+                success: function (result) {
+                    ret = result;
+                }
+            });
+            return ret;
+        },
+        remoteUrl: null
     };
 
     function Plugin(option) {
@@ -153,7 +170,7 @@
             var y = that.y - that.options.sliderR * 2 - 1;
             var ImageData = that.blockCtx.getImageData(that.x - 3, y, L, L);
             that.block.width = L;
-            that.blockCtx.putImageData(ImageData, 0, y);
+            that.blockCtx.putImageData(ImageData, 0, y + 1);
             that.text.text(that.text.attr('data-text'));
         };
         img.onerror = function () {
@@ -273,16 +290,23 @@
     };
 
     _proto.verify = function () {
-        var sum = function (x, y) { return x + y; };
-        var square = function (x) { return x * x; };
         var arr = this.trail; // 拖动时y轴的移动距离
-        var average = arr.reduce(sum) / arr.length;
-        var deviations = arr.map(function (x) { return x - average; });
-        var stddev = Math.sqrt(deviations.map(square).reduce(sum) / arr.length);
         var left = parseInt(this.block.style.left);
+        var verified = false;
+        if (this.options.remoteUrl !== null) {
+            verified = this.options.verify(arr, this.options.remoteUrl);
+        }
+        else {
+            var sum = function (x, y) { return x + y; };
+            var square = function (x) { return x * x; };
+            var average = arr.reduce(sum) / arr.length;
+            var deviations = arr.map(function (x) { return x - average; });
+            var stddev = Math.sqrt(deviations.map(square).reduce(sum) / arr.length);
+            verified = stddev !== 0;
+        }
         return {
             spliced: Math.abs(left - this.x) < this.options.offset,
-            verified: stddev !== 0 // 简单验证下拖动轨迹，为零时表示Y轴上下没有波动，可能非人为操作
+            verified: verified
         };
     };
 
