@@ -1,4 +1,5 @@
 ﻿using Bootstrap.Security.DataAccess;
+using Longbow.Configuration;
 using System.Collections.Generic;
 
 namespace Bootstrap.Client.DataAccess
@@ -21,6 +22,6 @@ namespace Bootstrap.Client.DataAccess
         /// 从Navigators -> GroupNavigatorRole -> Role查查询某个用户所拥有的角色
         /// </summary>
         /// <returns></returns>
-        public virtual IEnumerable<string> RetrievesByUrl(string url) => DbHelper.RetrieveRolesByUrl(url);
+        public virtual IEnumerable<string> RetrievesByUrl(string url) => DbHelper.RetrieveRolesByUrl(url, ConfigurationManager.GetValue("AppId", "2"));
     }
 }
