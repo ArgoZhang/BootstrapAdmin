@@ -228,6 +228,17 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static bool SaveByRoleId(string roleId, IEnumerable<string> userIds)
         {
+            // 演示模式时禁止修改 Admin 对 Administrators 角色的移除操作
+            if (DictHelper.RetrieveSystemModel())
+            {
+                var adminRole = RoleHelper.Retrieves().FirstOrDefault(r => r.RoleName.Equals("Administrators", StringComparison.OrdinalIgnoreCase)).Id;
+                if (roleId.Equals(adminRole, StringComparison.OrdinalIgnoreCase))
+                {
+                    var adminId = Retrieves().FirstOrDefault(u => u.UserName.Equals("Admin", StringComparison.OrdinalIgnoreCase)).Id;
+                    userIds = userIds.Union(new string[] { adminId });
+                }
+            }
+
             var ret = DbContextManager.Create<User>().SaveByRoleId(roleId, userIds);
             if (ret) CacheCleanUtility.ClearCache(userIds: userIds, roleIds: new List<string>() { roleId });
             return ret;

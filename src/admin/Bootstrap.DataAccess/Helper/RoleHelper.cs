@@ -7,24 +7,24 @@ using System.Linq;
 namespace Bootstrap.DataAccess
 {
     /// <summary>
-    /// 
+    /// 角色操作帮助类
     /// </summary>
     public static class RoleHelper
     {
         /// <summary>
-        /// 
+        /// 获取所有角色数据缓存键值 RoleHelper-RetrieveRoles
         /// </summary>
         public const string RetrieveRolesDataKey = "RoleHelper-RetrieveRoles";
         /// <summary>
-        /// 
+        /// 通过用户 ID 获取相关角色集合键值 RoleHelper-RetrieveRolesByUserId
         /// </summary>
         public const string RetrieveRolesByUserIdDataKey = "RoleHelper-RetrieveRolesByUserId";
         /// <summary>
-        /// 
+        /// 通过菜单 ID 获得相关角色集合键值 RoleHelper-RetrieveRolesByMenuId
         /// </summary>
         public const string RetrieveRolesByMenuIdDataKey = "RoleHelper-RetrieveRolesByMenuId";
         /// <summary>
-        /// 
+        /// 通过部门 ID 获得相关角色集合键值 RoleHelper-RetrieveRolesByGroupId
         /// </summary>
         public const string RetrieveRolesByGroupIdDataKey = "RoleHelper-RetrieveRolesByGroupId";
 
@@ -42,7 +42,17 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static bool SaveByUserId(string userId, IEnumerable<string> roleIds)
         {
-            var ret = DbContextManager.Create<Role>().SaveByUserId(userId, roleIds);
+            // 演示模式时禁止修改 Admin 对 Administrators 角色的移除操作
+            var ret = false;
+            if (DictHelper.RetrieveSystemModel())
+            {
+                var users = new string[] { "Admin", "User" };
+                var userIds = UserHelper.Retrieves().Where(u => users.Any(usr => usr.Equals(u.UserName, StringComparison.OrdinalIgnoreCase))).Select(u => u.Id);
+                if (userIds.Any(u => u.Equals(userId, StringComparison.OrdinalIgnoreCase))) ret = true;
+            }
+            if (ret) return ret;
+
+            ret = DbContextManager.Create<Role>().SaveByUserId(userId, roleIds);
             if (ret) CacheCleanUtility.ClearCache(userIds: new List<string>() { userId }, roleIds: roleIds);
             return ret;
         }
@@ -59,10 +69,12 @@ namespace Bootstrap.DataAccess
         /// <param name="value"></param>
         public static bool Delete(IEnumerable<string> value)
         {
+            // 内置两个角色禁止修改
             var roles = new string[] { "Administrators", "Default" };
             var rs = Retrieves().Where(r => roles.Any(rl => rl.Equals(r.RoleName, StringComparison.OrdinalIgnoreCase)));
             value = value.Where(v => !rs.Any(r => r.Id == v));
             if (!value.Any()) return true;
+
             var ret = DbContextManager.Create<Role>().Delete(value);
             if (ret) CacheCleanUtility.ClearCache(roleIds: value);
             return ret;
@@ -75,9 +87,11 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static bool Save(Role p)
         {
+            // 内置两个角色禁止修改
             var roles = new string[] { "Administrators", "Default" };
             var rs = Retrieves().Where(r => roles.Any(rl => rl.Equals(r.RoleName, StringComparison.OrdinalIgnoreCase)));
             if (rs.Any(r => r.Id == p.Id)) return true;
+
             var ret = DbContextManager.Create<Role>().Save(p);
             if (ret) CacheCleanUtility.ClearCache(roleIds: string.IsNullOrEmpty(p.Id) ? new List<string>() : new List<string> { p.Id });
             return ret;
@@ -91,7 +105,7 @@ namespace Bootstrap.DataAccess
         public static IEnumerable<Role> RetrievesByMenuId(string menuId) => CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveRolesByMenuIdDataKey, menuId), key => DbContextManager.Create<Role>().RetrievesByMenuId(menuId), RetrieveRolesByMenuIdDataKey);
 
         /// <summary>
-        /// 
+        /// 通过指定菜单ID保存角色
         /// </summary>
         /// <param name="menuId"></param>
         /// <param name="roleIds"></param>
@@ -124,17 +138,17 @@ namespace Bootstrap.DataAccess
         }
 
         /// <summary>
-        /// 
+        /// 通过用户名获取授权角色集合
         /// </summary>
-        /// <param name="userName"></param>
-        /// <returns></returns>
+        /// <param name="userName">指定用户名</param>
+        /// <returns>角色名称集合</returns>
         public static IEnumerable<string> RetrievesByUserName(string userName) => CacheManager.GetOrAdd(string.Format("{0}-{1}", DbHelper.RetrieveRolesByUserNameDataKey, userName), key => DbContextManager.Create<Role>()?.RetrievesByUserName(userName), DbHelper.RetrieveRolesByUserNameDataKey);
 
         /// <summary>
-        /// 
+        /// 通过指定 Url 地址获得授权角色集合
         /// </summary>
-        /// <param name="url"></param>
-        /// <returns></returns>
+        /// <param name="url">请求 Url 地址</param>
+        /// <returns>角色名称集合</returns>
         public static IEnumerable<string> RetrievesByUrl(string url) => CacheManager.GetOrAdd(string.Format("{0}-{1}", DbHelper.RetrieveRolesByUrlDataKey, url), key => DbContextManager.Create<Role>().RetrievesByUrl(url), DbHelper.RetrieveRolesByUrlDataKey);
     }
 }
