@@ -1,9 +1,8 @@
 ﻿-- ADMIN/123789
 -- User/123789
-DELETE From Users where UserName in ('Admin', 'User', 'root');
+DELETE From Users where UserName in ('Admin', 'User');
 INSERT INTO Users (UserName, Password, PassSalt, DisplayName, RegisterTime, ApprovedTime, ApprovedBy, Description) values ('Admin', 'Es7WVgNsJuELwWK8daCqufUBknCsSC0IYDphQZAiGOo=', 'W5vpBEOYRGHkQXatN0t+ECM/U8cHDuEgrq56+zZBk4J481xH', 'Administrator', now(), now(), 'system', '系统默认创建');
 INSERT INTO Users (UserName, Password, PassSalt, DisplayName, RegisterTime, ApprovedTime, ApprovedBy, Description, App) values ('User', 'tXG/yNffpnm6cThrCH7wf6jN1ic3VHvLoY4OrzKtrZ4=', 'c5cIrRMn8XjB84M/D/X7Lg9uUqQFmYNEdxb/4HWH8OLa4pNZ', '测试账号', now(), now(), 'system', '系统默认创建', '2');
-INSERT INTO Users (UserName, Password, PassSalt, DisplayName, RegisterTime, ApprovedTime, ApprovedBy, Description, App) values ('root', 'rjpzVoIlH3hOURVkoje+D3W/27QBkZLJGbZ16g5tp7A=', 'acnwsDUjA7ytKQJdINzyFkBY0maOmGTMq05ymWdtuanXmsoE', '超级用户', now(), now(), 'system', '系统默认创建', null);
 
 DELETE From Dicts Where Define = 0;
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('菜单', '系统菜单', '0', 0);
