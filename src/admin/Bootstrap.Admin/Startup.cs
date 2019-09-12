@@ -111,7 +111,7 @@ namespace Bootstrap.Admin
             app.UseStaticFiles();
             app.UseBootstrapAdminAuthentication(RoleHelper.RetrievesByUserName, RoleHelper.RetrievesByUrl, AppHelper.RetrievesByUserName);
             app.UseBootstrapHealthChecks();
-            app.UseOnlineUsers(callback: TraceHelper.Save);
+            app.UseOnlineUsers(TraceHelper.Filter, TraceHelper.Save);
             app.UseCacheManager();
             app.UseSignalR(routes =>
             {

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using PetaPoco;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Bootstrap.DataAccess
 {
@@ -36,6 +37,17 @@ namespace Bootstrap.DataAccess
                     UserAgent = v.UserAgent
                 });
             }
+        }
+
+        /// <summary>
+        /// 进入在线跟踪的地址过滤方法
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public static bool Filter(HttpContext context)
+        {
+            var url = context.Request.Path;
+            return !new string[] { "/api", "/NotiHub", "/TaskLogHub", "/swagger" }.Any(r => url.StartsWithSegments(r, StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>
