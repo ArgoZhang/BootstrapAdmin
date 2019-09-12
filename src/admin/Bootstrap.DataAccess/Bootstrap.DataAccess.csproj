@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Bootstrap.Security.DataAccess" Version="2.2.15" />
+    <PackageReference Include="Bootstrap.Security.DataAccess" Version="2.2.21" />
     <PackageReference Include="Longbow.Data" Version="2.3.7" />
     <PackageReference Include="Longbow.Logging" Version="2.2.13" />
     <PackageReference Include="Longbow.PetaPoco" Version="1.0.2" />
