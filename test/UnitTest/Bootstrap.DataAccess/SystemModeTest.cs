@@ -115,5 +115,24 @@ namespace Bootstrap.DataAccess
             DictHelper.ConfigIPLocator(op);
             Assert.NotNull(op.Url);
         }
+
+        [Fact]
+        public void SaveByUserId_Ok()
+        {
+            SetSystemMode();
+            var roleId = RoleHelper.Retrieves().FirstOrDefault(r => r.RoleName.Equals("Administrators", System.StringComparison.OrdinalIgnoreCase)).Id;
+            Assert.True(UserHelper.SaveByRoleId(roleId, new string[0]));
+            // 仍然属于 Administrators
+            Assert.Contains(RoleHelper.RetrievesByUserName("Admin"), r => r.Equals("Administrators"));
+        }
+
+        [Fact]
+        public void SaveByRoleID_Ok()
+        {
+            SetSystemMode();
+            var uId = UserHelper.Retrieves().FirstOrDefault(u => u.UserName.Equals("Admin", System.StringComparison.OrdinalIgnoreCase))?.Id;
+            Assert.True(RoleHelper.SaveByUserId(uId, new string[0]));
+            Assert.Contains(RoleHelper.RetrievesByUserName("Admin"), r => r.Equals("Administrators"));
+        }
     }
 }

@@ -39,7 +39,7 @@ namespace Bootstrap.DataAccess.SqlServer
         public void RetrieveMenusByRoleId_Ok()
         {
             var roleId = RoleHelper.Retrieves().FirstOrDefault(r => r.RoleName == "Administrators").Id;
-            Assert.NotEmpty(MenuHelper.RetrieveMenusByRoleId(roleId));
+            Assert.NotNull(MenuHelper.RetrieveMenusByRoleId(roleId));
         }
 
         [Fact]
