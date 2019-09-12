@@ -10,9 +10,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Bootstrap.Security.DataAccess" Version="2.2.15" />
     <PackageReference Include="Bootstrap.Security.Mvc" Version="2.2.16" />
     <PackageReference Include="Longbow.Configuration" Version="2.2.7" />
-    <PackageReference Include="Longbow.Tasks" Version="2.2.22" />
+    <PackageReference Include="Longbow.Tasks" Version="2.2.23" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="3.1.6" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" PrivateAssets="All" />
