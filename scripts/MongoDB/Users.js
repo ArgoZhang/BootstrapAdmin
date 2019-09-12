@@ -30,5 +30,21 @@
         "IsReset": 0,
         "Groups": [],
         "Roles": []
+    },
+    {
+        "UserName": "root",
+        "Password": "rjpzVoIlH3hOURVkoje+D3W/27QBkZLJGbZ16g5tp7A=",
+        "PassSalt": "acnwsDUjA7ytKQJdINzyFkBY0maOmGTMq05ymWdtuanXmsoE",
+        "DisplayName": "超级用户",
+        "RegisterTime": ISODate("2018-09-13T13:27:12.957+0000"),
+        "ApprovedTime": ISODate("2018-09-13T13:27:12.957+0000"),
+        "ApprovedBy": "Admin",
+        "Description": "管理员Admin创建用户",
+        "Icon": "default.jpg",
+        "Css": null,
+        "App": null,
+        "IsReset": 0,
+        "Groups": [],
+        "Roles": ["1bd7b8445fa31256f77e4b91"]
     }
 ];
