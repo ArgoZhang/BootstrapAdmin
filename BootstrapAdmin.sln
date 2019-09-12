@@ -65,6 +65,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{41B6D37A-5E5
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "admin", "admin", "{E03B7391-B52F-4449-B400-5CD9DE01F085}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{D8F90830-15D0-4031-94EE-6E5D93CB734A}"
+	ProjectSection(SolutionItems) = preProject
+		appveyor.build.ps1 = appveyor.build.ps1
+		appveyor.test.ps1 = appveyor.test.ps1
+		appveyor.yml = appveyor.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{E057452E-00EB-4C46-9F8D-14096AAE8148}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+		README.zh-CN.md = README.zh-CN.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{85574E7C-7D58-4135-AB4B-76678552D271}"
+	ProjectSection(SolutionItems) = preProject
+		src\admin\Bootstrap.Admin\Dockerfile = src\admin\Bootstrap.Admin\Dockerfile
+		src\admin\Bootstrap.Admin\Linux.Dockerfile = src\admin\Bootstrap.Admin\Linux.Dockerfile
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
