@@ -9,7 +9,7 @@ using System.Linq;
 namespace Bootstrap.DataAccess
 {
     /// <summary>
-    /// 
+    /// 用户跟踪操作类
     /// </summary>
     public static class TraceHelper
     {
@@ -23,6 +23,11 @@ namespace Bootstrap.DataAccess
             if (context.User.Identity.IsAuthenticated)
             {
                 var user = UserHelper.RetrieveUserByUserName(context.User.Identity.Name);
+
+                // user == null 以前登录过客户端保留了 Cookie 但是用户名可能被系统删除
+                // link bug: https://gitee.com/LongbowEnterprise/BootstrapAdmin/issues/I123MH
+                if (user == null) return;
+
                 v.UserName = user.UserName;
                 v.DisplayName = user.DisplayName;
                 DbContextManager.Create<Trace>().Save(new Trace
