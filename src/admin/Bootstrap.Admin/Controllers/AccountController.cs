@@ -176,7 +176,7 @@ namespace Bootstrap.Admin.Controllers
         [HttpGet]
         public IActionResult Gitee([FromServices]IConfiguration config)
         {
-            var enabled = config.GetValue($"{nameof(GiteeOptions)}:Eanbeld", false);
+            var enabled = config.GetValue($"{nameof(GiteeOptions)}:Enabled", false);
             return Challenge(enabled ? GiteeDefaults.AuthenticationScheme : CookieAuthenticationDefaults.AuthenticationScheme);
         }
 
@@ -187,7 +187,7 @@ namespace Bootstrap.Admin.Controllers
         [HttpGet]
         public IActionResult GitHub([FromServices]IConfiguration config)
         {
-            var enabled = config.GetValue($"{nameof(GitHubOptions)}:Eanbeld", false);
+            var enabled = config.GetValue($"{nameof(GitHubOptions)}:Enabled", false);
             return Challenge(enabled ? GitHubDefaults.AuthenticationScheme : CookieAuthenticationDefaults.AuthenticationScheme);
         }
     }
