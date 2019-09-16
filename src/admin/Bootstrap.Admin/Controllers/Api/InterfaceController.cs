@@ -3,6 +3,7 @@ using Bootstrap.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Security.Principal;
 
 namespace Bootstrap.Admin.Controllers
 {
@@ -48,7 +49,7 @@ namespace Bootstrap.Admin.Controllers
         [HttpPost]
         public BootstrapUser RetrieveUserByUserName([FromBody]string userName)
         {
-            return UserHelper.RetrieveUserByUserName(userName);
+            return UserHelper.RetrieveUserByUserName(new GenericIdentity(userName));
         }
         /// <summary>
         /// 

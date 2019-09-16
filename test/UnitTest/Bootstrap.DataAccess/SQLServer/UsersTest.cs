@@ -1,6 +1,7 @@
 ﻿using Longbow.Web.Mvc;
 using System;
 using System.Linq;
+using System.Security.Principal;
 using Xunit;
 
 namespace Bootstrap.DataAccess.SqlServer
@@ -134,7 +135,7 @@ namespace Bootstrap.DataAccess.SqlServer
         [Fact]
         public void RetrieveUserByUserName_Ok()
         {
-            var usr = UserHelper.RetrieveUserByUserName("Admin");
+            var usr = UserHelper.RetrieveUserByUserName(new GenericIdentity("Admin"));
             Assert.Equal("Administrator", usr.DisplayName);
         }
 

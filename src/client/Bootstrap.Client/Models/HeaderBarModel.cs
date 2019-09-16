@@ -33,7 +33,7 @@ namespace Bootstrap.Client.Models
 
             // set Icon
             var icon = $"/{DictHelper.RetrieveIconFolderPath().Trim('~', '/')}/{user.Icon}";
-            Icon = string.IsNullOrEmpty(ConfigurationManager.GetValue("SimulateUserName", string.Empty)) ? $"{authHost.TrimEnd('/')}{icon}" : "/images/admin.jpg";
+            Icon = user.Icon.Contains("://", StringComparison.OrdinalIgnoreCase) ? user.Icon : (string.IsNullOrEmpty(ConfigurationManager.GetValue("SimulateUserName", string.Empty)) ? $"{authHost.TrimEnd('/')}{icon}" : "/images/admin.jpg");
             if (!string.IsNullOrEmpty(user.Css)) Theme = user.Css;
         }
 

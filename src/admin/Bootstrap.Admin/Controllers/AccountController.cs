@@ -1,11 +1,14 @@
 ﻿using Bootstrap.Admin.Models;
 using Bootstrap.DataAccess;
+using Longbow.GiteeAuth;
+using Longbow.GitHubAuth;
 using Longbow.Web;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Linq;
 using System.Net;
@@ -30,7 +33,6 @@ namespace Bootstrap.Admin.Controllers
         {
             if (!User.Identity.IsAuthenticated) return Login();
 
-            var user = UserHelper.RetrieveUserByUserName(User.Identity.Name);
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             var urlReferrer = Request.Headers["Referer"].FirstOrDefault();
             return View(new LockModel(this)
@@ -107,10 +109,11 @@ namespace Bootstrap.Admin.Controllers
         /// Logout this instance.
         /// </summary>
         /// <returns>The logout.</returns>
+        [HttpGet]
         public async Task<IActionResult> Logout()
         {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return Redirect("~" + CookieAuthenticationDefaults.LoginPath);
+            await HttpContext.SignOutAsync();
+            return Redirect(Request.PathBase + CookieAuthenticationDefaults.LoginPath);
         }
 
         /// <summary>
@@ -118,6 +121,29 @@ namespace Bootstrap.Admin.Controllers
         /// </summary>
         /// <returns>The denied.</returns>
         [ResponseCache(Duration = 600)]
+        [HttpGet]
         public ActionResult AccessDenied() => View("Error", ErrorModel.CreateById(403));
+
+        /// <summary>
+        /// Gitee 认证
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public IActionResult Gitee([FromServices]IConfiguration config)
+        {
+            var enabled = config.GetValue($"{nameof(GiteeOptions)}:Eanbeld", false);
+            return Challenge(enabled ? GiteeDefaults.AuthenticationScheme : CookieAuthenticationDefaults.AuthenticationScheme);
+        }
+
+        /// <summary>
+        /// GitHub 认证
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public IActionResult GitHub([FromServices]IConfiguration config)
+        {
+            var enabled = config.GetValue($"{nameof(GitHubOptions)}:Eanbeld", false);
+            return Challenge(enabled ? GitHubDefaults.AuthenticationScheme : CookieAuthenticationDefaults.AuthenticationScheme);
+        }
     }
 }

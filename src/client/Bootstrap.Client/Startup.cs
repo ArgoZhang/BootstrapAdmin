@@ -1,8 +1,6 @@
 ﻿using Bootstrap.Client.DataAccess;
-using Longbow.Configuration;
 using Longbow.Web;
 using Longbow.Web.SignalR;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -13,7 +11,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
-using System.Linq;
 
 namespace Bootstrap.Client
 {

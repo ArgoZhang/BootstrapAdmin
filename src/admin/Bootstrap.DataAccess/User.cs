@@ -204,12 +204,12 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual bool Save(User user)
         {
-            var ret = false;
             user.PassSalt = LgbCryptography.GenerateSalt();
             user.Password = LgbCryptography.ComputeHash(user.Password, user.PassSalt);
             user.RegisterTime = DateTime.Now;
 
             var db = DbManager.Create();
+            bool ret;
             try
             {
                 db.BeginTransaction();

@@ -1,4 +1,5 @@
 ﻿using Bootstrap.DataAccess;
+using System;
 using System.Security.Principal;
 
 namespace Bootstrap.Admin.Models
@@ -14,13 +15,16 @@ namespace Bootstrap.Admin.Models
         /// <param name="identity"></param>
         public HeaderBarModel(IIdentity identity)
         {
-            var user = UserHelper.RetrieveUserByUserName(identity.Name);
-            Icon = string.Format("{0}{1}", DictHelper.RetrieveIconFolderPath(), user.Icon);
-            DisplayName = user.DisplayName;
-            UserName = user.UserName;
-            AppCode = user.App;
-            Css = user.Css;
-            ActiveCss = string.IsNullOrEmpty(Css) ? Theme : Css;
+            var user = UserHelper.RetrieveUserByUserName(identity);
+            if (user != null)
+            {
+                Icon = user.Icon.Contains("://", StringComparison.OrdinalIgnoreCase) ? user.Icon : string.Format("{0}{1}", DictHelper.RetrieveIconFolderPath(), user.Icon);
+                DisplayName = user.DisplayName;
+                UserName = user.UserName;
+                AppCode = user.App;
+                Css = user.Css;
+                ActiveCss = string.IsNullOrEmpty(Css) ? Theme : Css;
+            }
         }
 
         /// <summary>

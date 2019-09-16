@@ -1,9 +1,12 @@
 ﻿using Bootstrap.Security;
 using Bootstrap.Security.DataAccess;
 using Longbow.Cache;
+using Longbow.GiteeAuth;
+using Longbow.GitHubAuth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text.RegularExpressions;
 
 namespace Bootstrap.DataAccess
@@ -95,7 +98,7 @@ namespace Bootstrap.DataAccess
             value = value.Where(v => !admins.Any(u => u.Id == v));
             if (!value.Any()) return true;
             var ret = DbContextManager.Create<User>().Delete(value);
-            if (ret) CacheCleanUtility.ClearCache(userIds: value);
+            if (ret) CacheCleanUtility.ClearCache(userIds: value, cacheKey: RetrieveUsersByNameDataKey + "*");
             return ret;
         }
 
@@ -307,9 +310,30 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 通过登录名获取登录用户方法
         /// </summary>
-        /// <param name="userName"></param>
+        /// <param name="identity"></param>
         /// <returns></returns>
-        public static BootstrapUser RetrieveUserByUserName(string userName) => CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveUsersByNameDataKey, userName), k => DbContextManager.Create<User>()?.RetrieveUserByUserName(userName), RetrieveUsersByNameDataKey);
+        public static BootstrapUser RetrieveUserByUserName(IIdentity identity) => CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveUsersByNameDataKey, identity.Name), k =>
+        {
+            var userName = identity.Name;
+            var proxyList = new List<Func<string, BootstrapUser>>();
+
+            // 本地数据库认证
+            proxyList.Add(DbContextManager.Create<User>().RetrieveUserByUserName);
+
+            // Gitee 认证
+            if (identity.AuthenticationType == GiteeDefaults.AuthenticationScheme) proxyList.Add(OAuthHelper.RetrieveUserByUserName<GiteeOptions>);
+
+            // GitHub 认证
+            if (identity.AuthenticationType == GitHubDefaults.AuthenticationScheme) proxyList.Add(OAuthHelper.RetrieveUserByUserName<GitHubOptions>);
+
+            BootstrapUser user = null;
+            foreach (var p in proxyList)
+            {
+                user = p.Invoke(userName);
+                if (user != null) break;
+            }
+            return user;
+        }, RetrieveUsersByNameDataKey);
 
         /// <summary>
         /// 通过登录账号获得用户信息

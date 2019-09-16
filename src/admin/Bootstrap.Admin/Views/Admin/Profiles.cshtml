@@ -53,7 +53,7 @@
         </div>
     </div>
 </div>
-<div class="card" asp-auth="savePassword">
+<div class="card" asp-auth="savePassword" asp-condition="!@Model.External">
     <div class="card-header">修改密码</div>
     <div class="card-body" data-toggle="LgbValidate" data-valid-button="#btnSavePassword">
         <div class="alert alert-danger" role="alert" asp-condition="@Model.IsDemo">

@@ -1,4 +1,5 @@
 ﻿using Bootstrap.DataAccess;
+using Longbow.GiteeAuth;
 using Longbow.Web;
 using Longbow.Web.SignalR;
 using Microsoft.AspNetCore.Builder;
@@ -60,7 +61,7 @@ namespace Bootstrap.Admin
             services.AddSignalR().AddJsonProtocalDefault();
             services.AddSignalRExceptionFilterHandler<SignalRHub>((client, ex) => client.SendMessageBody(ex).ConfigureAwait(false));
             services.AddResponseCompression();
-            services.AddBootstrapAdminAuthentication();
+            services.AddBootstrapAdminAuthentication().AddGitee(OAuthHelper.Configure).AddGitHub(OAuthHelper.Configure);
             services.AddSwagger();
             services.AddButtonAuthorization(MenuHelper.AuthorizateButtons);
             services.AddBootstrapAdminBackgroundTask();

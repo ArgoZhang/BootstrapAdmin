@@ -21,6 +21,11 @@ namespace Bootstrap.Admin.Models
         public string FileName { get; }
 
         /// <summary>
+        /// 获得 是否为第三方用户
+        /// </summary>
+        public bool External { get; }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="host"></param>
@@ -39,6 +44,8 @@ namespace Bootstrap.Admin.Models
                     FileName = Path.GetFileName(fileName);
                 }
             }
+
+            if (controller.User.Identity.AuthenticationType != Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.AuthenticationScheme) External = true;
         }
     }
 }

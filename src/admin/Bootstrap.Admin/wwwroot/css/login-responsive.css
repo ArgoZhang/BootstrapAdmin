@@ -31,14 +31,18 @@
 
     .login-wrap {
         padding: 0;
-        margin: 36px 0 0 370px;
+        margin: 18px 0 0 370px;
         width: 280px;
     }
 
     .slidercaptcha {
-        top: -254px;
+        top: -272px;
         left: -15px;
     }
+
+        .slidercaptcha.card .card-body {
+            padding: 15px 15px 0 15px;
+        }
 
         .slidercaptcha, .slidercaptcha.forgot {
             width: 310px;
@@ -46,11 +50,11 @@
         }
 
     .login-wrap[data-auth="True"] {
-        margin: 12px 0 0 370px;
+        margin: 20px 0 0 370px;
     }
 
         .login-wrap[data-auth="True"] .slidercaptcha {
-            top: -282px;
+            top: -264px;
         }
 
         .login-wrap[data-auth="True"] .slidercaptcha, .slidercaptcha.forgot {

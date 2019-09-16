@@ -43,10 +43,10 @@
 }
 <div class="container">
     <input id="imgUrl" type="hidden" value="@Model.ImageLibUrl" />
-    <form id="login" method="post" class="form-signin">
+    <form id="login" method="post" class="form-signin" data-demo="True">
         <h2 class="form-signin-heading">@Model.Title</h2>
         <div class="login-wrap" data-auth="@Model.AuthFailed" data-toggle="LgbValidate" data-valid-button="button[type='submit']">
-            <div class="alert alert-danger" asp-condition="@Model.AuthFailed">用户名或密码错误！</div>
+            <div class="alert alert-danger d-none" asp-condition="@Model.AuthFailed">用户名或密码错误！</div>
             <div class="form-group">
                 <div class="input-group">
                     <div class="input-group-prepend">
@@ -54,7 +54,7 @@
                             <span class="fa fa-user"></span>
                         </div>
                     </div>
-                    <input type="text" name="userName" class="form-control" placeholder="用户名" maxlength="16" data-required-msg="请输入用户名" value="@ViewBag.UserName" autofocus data-valid="true" />
+                    <input type="text" name="userName" class="form-control" placeholder="用户名" maxlength="16" data-required-msg="请输入用户名" value="" autofocus data-valid="true" />
                 </div>
             </div>
             <div class="form-group">
@@ -64,7 +64,7 @@
                             <span class="fa fa-lock"></span>
                         </div>
                     </div>
-                    <input type="password" name="password" class="form-control" value="@ViewBag.Password" placeholder="密码" maxlength="16" data-required-msg="请输入密码" data-valid="true" />
+                    <input type="password" name="password" class="form-control" value="" placeholder="密码" maxlength="16" data-required-msg="请输入密码" data-valid="true" />
                 </div>
             </div>
             <div class="form-group rememberPwd" onselectstart="return false">
@@ -72,10 +72,42 @@
                 <span>记住密码自动登录</span>
                 <input id="remember" name="remember" type="hidden" value="false" />
             </div>
-            <button class="btn btn-lg btn-login btn-block" type="submit">登 录</button>
+            <button class="btn btn-lg btn-login btn-block" data-toggle="tooltip" title="不填写密码默认使用 Gitee 认证" type="submit">登 录</button>
             <div class="login-footer">
                 <a href="#" data-method="register">申请账号</a>
                 <a href="#" data-method="forgot">忘记密码</a>
+            </div>
+            <div class="login-other">
+                <span class="text-muted">
+                    其他方式登录
+                </span>
+            </div>
+            <div class="login-list">
+                <div class="item">
+                    <a href="~/Account/Gitee" data-toggle="tooltip" title="使用 Gitee 帐号登录">
+                        <img class="item" src="~/images/gitee.svg" />
+                    </a>
+                </div>
+                <div class="item">
+                    <a href="~/Account/GitHub" data-toggle="tooltip" title="使用 GitHub 帐号登录">
+                        <img class="item" src="~/images/git.svg" />
+                    </a>
+                </div>
+                <div class="item">
+                    <a href="#" data-toggle="tooltip" title="微信-暂未实现">
+                        <img class="item" src="~/images/weixin-2.svg" />
+                    </a>
+                </div>
+                <div class="item">
+                    <a href="#" data-toggle="tooltip" title="QQ-暂未实现">
+                        <img class="item" src="~/images/qq-2.svg" />
+                    </a>
+                </div>
+                <div class="item">
+                    <a href="#" data-toggle="tooltip" title="支付宝-暂未实现">
+                        <img class="item" src="~/images/zhifubao-2.svg" />
+                    </a>
+                </div>
             </div>
             <div class="slidercaptcha card">
                 <div class="card-header">

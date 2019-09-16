@@ -26,10 +26,10 @@
             });
         },
         capWidth: function () {
-            return $(window).width() < 768 ? 216 : 280;
+            return $(window).width() < 768 ? 256 : 280;
         },
         capHeight: function () {
-            return $(window).width() < 768 ? 110 : 150;
+            return $(window).width() < 768 ? 106 : 150;
         },
         capRegSuccess: function () {
             $.bc({
@@ -116,4 +116,16 @@
             }
         }
     });
+
+    // use Gitee authentication when SystemDemoModel
+    var $login = $('#login');
+    if ($login.attr('data-demo') === 'True') {
+        $login.find('[data-valid="true"]').attr('data-valid', 'false');
+        $login.on('submit', function (e) {
+            if ($('[name="userName"]').val() === '' && $('[name="password"]').val() === '') {
+                location.href = "Gitee";
+                e.preventDefault();
+            }
+        });
+    }
 });

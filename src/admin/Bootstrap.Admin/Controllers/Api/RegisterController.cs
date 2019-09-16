@@ -1,9 +1,10 @@
-using Bootstrap.DataAccess;
+﻿using Bootstrap.DataAccess;
 using Longbow.Web.SignalR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using System.Linq;
+using System.Security.Principal;
 using System.Threading.Tasks;
 
 namespace Bootstrap.Admin.Controllers.Api
@@ -24,7 +25,7 @@ namespace Bootstrap.Admin.Controllers.Api
         [HttpGet]
         public bool Get(string userName)
         {
-            return UserHelper.RetrieveUserByUserName(userName) == null && !UserHelper.RetrieveNewUsers().Any(u => u.UserName == userName);
+            return UserHelper.RetrieveUserByUserName(new GenericIdentity(userName)) == null && !UserHelper.RetrieveNewUsers().Any(u => u.UserName == userName);
         }
 
         /// <summary>
@@ -57,7 +58,7 @@ namespace Bootstrap.Admin.Controllers.Api
         [HttpPut]
         public bool Put([FromBody]ResetUser user)
         {
-            if (UserHelper.RetrieveUserByUserName(user.UserName) == null) return true;
+            if (UserHelper.RetrieveUserByUserName(new GenericIdentity(user.UserName)) == null) return true;
             return UserHelper.ForgotPassword(user);
         }
     }

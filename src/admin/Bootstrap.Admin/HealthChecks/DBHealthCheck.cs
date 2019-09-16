@@ -5,6 +5,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
 using Task = System.Threading.Tasks.Task;
@@ -68,7 +69,7 @@ namespace Bootstrap.Admin.HealthChecks
             try
             {
                 DbContextManager.Exception = null;
-                var user = UserHelper.RetrieveUserByUserName(userName);
+                var user = UserHelper.RetrieveUserByUserName(new GenericIdentity(userName));
                 displayName = user?.DisplayName;
                 roles = string.Join(",", RoleHelper.RetrievesByUserName(userName) ?? new string[0]);
                 menusCount = MenuHelper.RetrieveMenusByUserName(userName)?.Count() ?? 0;

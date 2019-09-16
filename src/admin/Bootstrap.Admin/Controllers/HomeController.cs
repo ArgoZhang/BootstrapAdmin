@@ -18,6 +18,7 @@ namespace Bootstrap.Admin.Controllers
         public IActionResult Index()
         {
             var model = new HeaderBarModel(User.Identity);
+            if (string.IsNullOrEmpty(model.UserName)) return Redirect(Request.PathBase + CookieAuthenticationDefaults.LogoutPath);
             var url = DictHelper.RetrieveHomeUrl(model.AppCode);
             return url.Equals("~/Home/Index", System.StringComparison.OrdinalIgnoreCase) ? (IActionResult)View(model) : Redirect(url);
         }

@@ -48,9 +48,14 @@ namespace Bootstrap.DataAccess
                     cacheKeys.Add(MenuHelper.RetrieveMenusAll + "*");
                 });
                 cacheKeys.Add(UserHelper.RetrieveNewUsersDataKey + "*");
-                cacheKeys.Add(UserHelper.RetrieveUsersDataKey + "*");
-                corsKeys.Add(UserHelper.RetrieveUsersDataKey + "*");
-                corsKeys.Add(MenuHelper.RetrieveMenusAll + "*");
+                cacheKeys.Add(UserHelper.RetrieveUsersDataKey);
+                cacheKeys.Add(GroupHelper.RetrieveGroupsByUserNameDataKey + "*");
+                cacheKeys.Add(RoleHelper.RetrieveRolesDataKey + "*");
+                cacheKeys.Add(AppHelper.RetrieveAppsByUserNameDataKey + "*");
+                corsKeys.Add(UserHelper.RetrieveUsersDataKey);
+                corsKeys.Add(GroupHelper.RetrieveGroupsByUserNameDataKey + "*");
+                corsKeys.Add(RoleHelper.RetrieveRolesDataKey + "*");
+                corsKeys.Add(AppHelper.RetrieveAppsByUserNameDataKey + "*");
             }
             if (groupIds != null)
             {

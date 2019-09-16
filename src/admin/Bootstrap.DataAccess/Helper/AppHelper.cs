@@ -5,15 +5,19 @@ using System.Collections.Generic;
 namespace Bootstrap.DataAccess
 {
     /// <summary>
-    /// 
+    /// 前台应用帮助类
     /// </summary>
     public static class AppHelper
     {
         /// <summary>
-        /// 
+        /// 通过角色 ID 获得授权前台应用数据缓存键值
         /// </summary>
         public const string RetrieveAppsByRoleIdDataKey = "AppHelper-RetrieveAppsByRoleId";
 
+        /// <summary>
+        /// 通过用户名称获得授权前台应用数据缓存键值
+        /// </summary>
+        public const string RetrieveAppsByUserNameDataKey = DbHelper.RetrieveAppsByUserNameDataKey;
         /// <summary>
         /// 根据角色ID指派应用程序
         /// </summary>
@@ -39,6 +43,6 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public static IEnumerable<string> RetrievesByUserName(string userName) => CacheManager.GetOrAdd($"{DbHelper.RetrieveAppsByUserNameDataKey}-{userName}", key => DbContextManager.Create<App>().RetrievesByUserName(userName), DbHelper.RetrieveAppsByUserNameDataKey);
+        public static IEnumerable<string> RetrievesByUserName(string userName) => CacheManager.GetOrAdd($"{DbHelper.RetrieveAppsByUserNameDataKey}-{userName}", key => DbContextManager.Create<App>().RetrievesByUserName(userName), RetrieveAppsByUserNameDataKey);
     }
 }
