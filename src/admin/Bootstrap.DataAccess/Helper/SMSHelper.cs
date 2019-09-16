@@ -153,5 +153,20 @@ namespace Bootstrap.DataAccess
         /// 获得/设置 验证码有效时长
         /// </summary>
         public TimeSpan Expires { get; set; } = TimeSpan.FromMinutes(5);
+
+        /// <summary>
+        /// 获得/设置 角色集合
+        /// </summary>
+        public ICollection<string> Roles { get; } = new HashSet<string>();
+
+        /// <summary>
+        /// 获得/设置 登陆后首页
+        /// </summary>
+        public string HomePath { get; set; }
+
+        /// <summary>
+        /// 获得/设置 默认授权 App
+        /// </summary>
+        public string App { get; set; }
     }
 }

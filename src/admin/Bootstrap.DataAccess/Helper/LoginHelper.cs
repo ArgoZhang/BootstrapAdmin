@@ -6,12 +6,12 @@ using System.Collections.Generic;
 namespace Bootstrap.DataAccess
 {
     /// <summary>
-    /// 
+    /// 用户登陆操作类
     /// </summary>
     public static class LoginHelper
     {
         /// <summary>
-        /// 
+        /// 记录登陆日志方法
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>

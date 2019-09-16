@@ -11,9 +11,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Security.Claims;
+using System.Security.Principal;
 using System.Threading.Tasks;
 
 namespace Bootstrap.Admin.Controllers
@@ -45,10 +47,13 @@ namespace Bootstrap.Admin.Controllers
         /// <summary>
         /// 系统锁屏界面
         /// </summary>
+        /// <param name="ipLocator"></param>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
         /// <returns></returns>
         [HttpPost]
         [IgnoreAntiforgeryToken]
-        public Task<IActionResult> Lock([FromServices]IOnlineUsers onlineUserSvr, [FromServices]IIPLocatorProvider ipLocator, string userName, string password) => Login(onlineUserSvr, ipLocator, userName, password, string.Empty);
+        public Task<IActionResult> Lock([FromServices]IIPLocatorProvider ipLocator, string userName, string password) => Login(ipLocator, userName, password, string.Empty);
 
         /// <summary>
         /// 系统登录方法
@@ -68,79 +73,75 @@ namespace Bootstrap.Admin.Controllers
         /// <summary>
         /// 短信验证登陆方法
         /// </summary>
-        /// <param name="onlineUserSvr"></param>
         /// <param name="ipLocator"></param>
         /// <param name="configuration"></param>
         /// <param name="phone"></param>
         /// <param name="code"></param>
         /// <returns></returns>
         [HttpPost()]
-        public async Task<IActionResult> Mobile([FromServices]IOnlineUsers onlineUserSvr, [FromServices]IIPLocatorProvider ipLocator, [FromServices]IConfiguration configuration, [FromQuery]string phone, [FromQuery]string code)
+        public async Task<IActionResult> Mobile([FromServices]IIPLocatorProvider ipLocator, [FromServices]IConfiguration configuration, [FromQuery]string phone, [FromQuery]string code)
         {
             var option = configuration.GetSection(nameof(SMSOptions)).Get<SMSOptions>();
-            if (UserHelper.AuthenticateMobile(phone, code, option.MD5Key, loginUser => CreateLoginUser(onlineUserSvr, ipLocator, HttpContext, loginUser)))
+            if (SMSHelper.Validate(phone, code, option.MD5Key))
             {
-                var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
-                identity.AddClaim(new Claim(ClaimTypes.Name, phone));
-                identity.AddClaim(new Claim(ClaimTypes.Role, "Default"));
-                await HttpContext.SignInAsync(new ClaimsPrincipal(identity));
-
-                if (UserHelper.RetrieveUserByUserName(identity) == null)
+                var user = UserHelper.Retrieves().FirstOrDefault(u => u.UserName == phone);
+                if (user == null)
                 {
-                    var user = new User()
+                    user = new User()
                     {
                         ApprovedBy = "Mobile",
                         ApprovedTime = DateTime.Now,
                         DisplayName = "手机用户",
                         UserName = phone,
-                        Password = LgbCryptography.GenerateSalt(),
+                        Password = code,
                         Icon = "default.jpg",
                         Description = "手机用户",
-                        App = "2"
+                        App = option.App
                     };
                     UserHelper.Save(user);
-                    CacheCleanUtility.ClearCache(cacheKey: UserHelper.RetrieveUsersDataKey);
-                }
 
-                // redirect origin url
-                var originUrl = Request.Query[CookieAuthenticationDefaults.ReturnUrlParameter].FirstOrDefault() ?? "~/Home/Index";
-                return Redirect(originUrl);
+                    // 根据配置文件设置默认角色
+                    var roles = RoleHelper.Retrieves().Where(r => option.Roles.Any(rl => rl.Equals(r.RoleName, StringComparison.OrdinalIgnoreCase))).Select(r => r.Id);
+                    RoleHelper.SaveByUserId(user.Id, roles);
+                }
+                else
+                {
+                    // update password
+                    UserHelper.Update(user.Id, code, user.DisplayName);
+                }
             }
-            return View("Login", new LoginModel() { AuthFailed = true });
+            return await Login(ipLocator, phone, code, "true");
         }
 
         /// <summary>
         /// Login the specified userName, password and remember.
         /// </summary>
         /// <returns>The login.</returns>
-        /// <param name="onlineUserSvr"></param>
         /// <param name="ipLocator"></param>
         /// <param name="userName">User name.</param>
         /// <param name="password">Password.</param>
         /// <param name="remember">Remember.</param>
         [HttpPost]
-        public async Task<IActionResult> Login([FromServices]IOnlineUsers onlineUserSvr, [FromServices]IIPLocatorProvider ipLocator, string userName, string password, string remember)
+        public async Task<IActionResult> Login([FromServices]IIPLocatorProvider ipLocator, string userName, string password, string remember) => UserHelper.Authenticate(userName, password, loginUser => CreateLoginUser(ipLocator, HttpContext, loginUser)) ? await SignInAsync(userName, remember == "true") : View("Login", new LoginModel() { AuthFailed = true });
+
+        private async Task<IActionResult> SignInAsync(string userName, bool persistent)
         {
-            if (UserHelper.Authenticate(userName, password, loginUser => CreateLoginUser(onlineUserSvr, ipLocator, HttpContext, loginUser)))
-            {
-                var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
-                identity.AddClaim(new Claim(ClaimTypes.Name, userName));
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity), new AuthenticationProperties { ExpiresUtc = DateTimeOffset.Now.AddDays(DictHelper.RetrieveCookieExpiresPeriod()), IsPersistent = remember == "true" });
-                // redirect origin url
-                var originUrl = Request.Query[CookieAuthenticationDefaults.ReturnUrlParameter].FirstOrDefault() ?? "~/Home/Index";
-                return Redirect(originUrl);
-            }
-            return View("Login", new LoginModel() { AuthFailed = true });
+            var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
+            identity.AddClaim(new Claim(ClaimTypes.Name, userName));
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity), new AuthenticationProperties { ExpiresUtc = DateTimeOffset.Now.AddDays(DictHelper.RetrieveCookieExpiresPeriod()), IsPersistent = persistent });
+
+            // redirect origin url
+            var originUrl = Request.Query[CookieAuthenticationDefaults.ReturnUrlParameter].FirstOrDefault() ?? "~/Home/Index";
+            return Redirect(originUrl);
         }
 
         /// <summary>
         /// 创建登录用户信息
         /// </summary>
-        /// <param name="onlineUserSvr"></param>
         /// <param name="ipLocator"></param>
         /// <param name="context"></param>
         /// <param name="loginUser"></param>
-        internal static void CreateLoginUser(IOnlineUsers onlineUserSvr, IIPLocatorProvider ipLocator, HttpContext context, LoginUser loginUser)
+        internal static void CreateLoginUser(IIPLocatorProvider ipLocator, HttpContext context, LoginUser loginUser)
         {
             loginUser.UserAgent = context.Request.Headers["User-Agent"];
             var agent = new UserAgent(loginUser.UserAgent);

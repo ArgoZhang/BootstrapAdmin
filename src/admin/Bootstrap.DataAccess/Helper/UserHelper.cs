@@ -41,7 +41,7 @@ namespace Bootstrap.DataAccess
         {
             if (user.Description?.Length > 500) user.Description = user.Description.Substring(0, 500);
             if (user.UserName?.Length > 16) user.UserName = user.UserName.Substring(0, 16);
-            if (user.Password?.Length > 16) user.Password = user.Password.Substring(0, 16);
+            if (user.Password?.Length > 50) user.Password = user.Password.Substring(0, 50);
             if (user.DisplayName?.Length > 20) user.DisplayName = user.DisplayName.Substring(0, 20);
             var pattern = @"^[a-zA-Z0-9_@.]*$";
             return user.UserName.IsNullOrEmpty() || Regex.IsMatch(user.UserName, pattern);
@@ -71,29 +71,6 @@ namespace Bootstrap.DataAccess
             };
             configure(loginUser);
             var ret = string.IsNullOrEmpty(userName) ? false : DbContextManager.Create<User>().Authenticate(userName, password);
-            if (ret) loginUser.Result = "登录成功";
-            LoginHelper.Log(loginUser);
-            return ret;
-        }
-
-        /// <summary>
-        /// 短信验证码认证方法
-        /// </summary>
-        /// <param name="phone"></param>
-        /// <param name="code"></param>
-        /// <param name="secret"></param>
-        /// <param name="configure"></param>
-        /// <returns></returns>
-        public static bool AuthenticateMobile(string phone, string code, string secret, Action<LoginUser> configure)
-        {
-            var loginUser = new LoginUser
-            {
-                UserName = phone,
-                LoginTime = DateTime.Now,
-                Result = "登录失败"
-            };
-            configure(loginUser);
-            var ret = string.IsNullOrEmpty(phone) ? false : SMSHelper.Validate(phone, code, secret);
             if (ret) loginUser.Result = "登录成功";
             LoginHelper.Log(loginUser);
             return ret;
@@ -149,7 +126,7 @@ namespace Bootstrap.DataAccess
             if (DictHelper.RetrieveSystemModel() && !string.IsNullOrEmpty(user.Id) && RetrieveConstUsers().Any(u => u.Id == user.Id)) return true;
 
             var ret = DbContextManager.Create<User>().Save(user);
-            if (ret) CacheCleanUtility.ClearCache(userIds: string.IsNullOrEmpty(user.Id) ? new List<string>() : new List<string>() { user.Id }, cacheKey: $"{RetrieveUsersByNameDataKey}*");
+            if (ret) CacheCleanUtility.ClearCache(userIds: string.IsNullOrEmpty(user.Id) ? new List<string>() : new List<string>() { user.Id }, cacheKey: $"{RetrieveUsersByNameDataKey}-{user.UserName}");
             return ret;
         }
 
