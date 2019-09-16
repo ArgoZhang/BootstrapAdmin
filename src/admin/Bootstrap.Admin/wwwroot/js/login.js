@@ -119,13 +119,97 @@
 
     // use Gitee authentication when SystemDemoModel
     var $login = $('#login');
+    var $username = $('[name="userName"]');
+    var $password = $('[name="password"]');
+    var $loginUser = $('#loginUser');
+    var $loginMobile = $('#loginMobile');
+    var $loginPwd = $('#loginPwd');
+    var $loginSMS = $('#loginSMS');
     if ($login.attr('data-demo') === 'True') {
-        $login.find('[data-valid="true"]').attr('data-valid', 'false');
         $login.on('submit', function (e) {
-            if ($('[name="userName"]').val() === '' && $('[name="password"]').val() === '') {
-                location.href = "Gitee";
-                e.preventDefault();
+            var model = $loginType.attr('data-value');
+            if (model === 'username') {
+                $login.find('[data-valid="true"]').attr('data-valid', 'false');
+                if ($username.val() === '' && $password.val() === '') {
+                    e.preventDefault();
+                    location.href = "Gitee";
+                }
+            }
+            else {
+                // sms
+                var url = $.format('Account/Mobile?phone={0}&code={1}', $('#txtPhone').val(), $('#smscode').val());
+                $login.attr('action', $.formatUrl(url));
+                return true;
             }
         });
     }
+
+    // login type
+    var $loginType = $('#loginType').on('click', function (e) {
+        e.preventDefault();
+        var $this = $(this);
+        $login.find('[data-toggle="tooltip"]').tooltip('hide');
+        var model = $this.attr('data-value');
+        if (model === 'username') {
+            $loginUser.addClass('d-none');
+            $loginPwd.addClass('d-none');
+            $loginSMS.removeClass('d-none');
+            $loginMobile.removeClass('d-none');
+
+            $this.attr('data-value', 'sms').text('用户名密码登陆');
+        }
+        else {
+            // sms model
+            $loginUser.removeClass('d-none');
+            $loginPwd.removeClass('d-none');
+            $loginSMS.addClass('d-none');
+            $loginMobile.addClass('d-none');
+
+            $this.attr('data-value', 'username').text('短信验证登陆');
+        }
+    });
+
+    var timeHanlder = null;
+    $('#btnSendCode').on('click', function () {
+        // validate mobile phone
+        var $phone = $('#txtPhone');
+        var validator = $login.find('[data-toggle="LgbValidate"]').lgbValidator();
+        if (!validator.validElement($phone.get(0))) {
+            $phone.tooltip('show');
+            return;
+        }
+
+        var phone = $phone.val();
+        var apiUrl = "api/Login?phone=" + phone;
+        var $this = $(this);
+        $.bc({
+            url: apiUrl,
+            method: 'PUT',
+            callback: function (result) {
+                $this.attr('data-original-title', result ? "发送成功" : "发送失败").tooltip('show');
+                var handler = setTimeout(function () {
+                    clearTimeout(handler);
+                    $this.tooltip('hide').attr('data-original-title', "点击发送验证码");
+                }, 1500);
+
+                if (result) {
+                    // send success
+                    $this.text('已发送').attr('disabled', true);
+                    $('#smscode').removeAttr('disabled');
+                    timeHanlder = setTimeout(function () {
+                        clearTimeout(timeHanlder);
+                        var count = 299;
+                        timeHanlder = setInterval(function () {
+                            if (count === 0) {
+                                clearInterval(timeHanlder);
+                                $this.text('发送验证码').removeAttr('disabled');
+                                return;
+                            }
+                            $this.text(count-- + ' 秒后可重发');
+                        }, 1000);
+                    }, 1000);
+                }
+            }
+        });
+    });
 });

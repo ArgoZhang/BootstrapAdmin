@@ -58,9 +58,9 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="password"></param>
-        /// <param name="config"></param>
+        /// <param name="configure"></param>
         /// <returns>返回真表示认证通过</returns>
-        public static bool Authenticate(string userName, string password, Action<LoginUser> config)
+        public static bool Authenticate(string userName, string password, Action<LoginUser> configure)
         {
             if (!UserChecker(new User { UserName = userName, Password = password })) return false;
             var loginUser = new LoginUser
@@ -69,8 +69,31 @@ namespace Bootstrap.DataAccess
                 LoginTime = DateTime.Now,
                 Result = "登录失败"
             };
-            config(loginUser);
+            configure(loginUser);
             var ret = string.IsNullOrEmpty(userName) ? false : DbContextManager.Create<User>().Authenticate(userName, password);
+            if (ret) loginUser.Result = "登录成功";
+            LoginHelper.Log(loginUser);
+            return ret;
+        }
+
+        /// <summary>
+        /// 短信验证码认证方法
+        /// </summary>
+        /// <param name="phone"></param>
+        /// <param name="code"></param>
+        /// <param name="secret"></param>
+        /// <param name="configure"></param>
+        /// <returns></returns>
+        public static bool AuthenticateMobile(string phone, string code, string secret, Action<LoginUser> configure)
+        {
+            var loginUser = new LoginUser
+            {
+                UserName = phone,
+                LoginTime = DateTime.Now,
+                Result = "登录失败"
+            };
+            configure(loginUser);
+            var ret = string.IsNullOrEmpty(phone) ? false : SMSHelper.Validate(phone, code, secret);
             if (ret) loginUser.Result = "登录成功";
             LoginHelper.Log(loginUser);
             return ret;

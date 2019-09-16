@@ -2,6 +2,7 @@
 using Bootstrap.DataAccess;
 using Longbow.GiteeAuth;
 using Longbow.GitHubAuth;
+using Longbow.Security.Cryptography;
 using Longbow.Web;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -62,6 +63,50 @@ namespace Bootstrap.Admin.Controllers
                 ViewBag.Password = "123789";
             }
             return User.Identity.IsAuthenticated ? (ActionResult)Redirect("~/Home/Index") : View("Login", new LoginModel());
+        }
+
+        /// <summary>
+        /// 短信验证登陆方法
+        /// </summary>
+        /// <param name="onlineUserSvr"></param>
+        /// <param name="ipLocator"></param>
+        /// <param name="configuration"></param>
+        /// <param name="phone"></param>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        [HttpPost()]
+        public async Task<IActionResult> Mobile([FromServices]IOnlineUsers onlineUserSvr, [FromServices]IIPLocatorProvider ipLocator, [FromServices]IConfiguration configuration, [FromQuery]string phone, [FromQuery]string code)
+        {
+            var option = configuration.GetSection(nameof(SMSOptions)).Get<SMSOptions>();
+            if (UserHelper.AuthenticateMobile(phone, code, option.MD5Key, loginUser => CreateLoginUser(onlineUserSvr, ipLocator, HttpContext, loginUser)))
+            {
+                var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
+                identity.AddClaim(new Claim(ClaimTypes.Name, phone));
+                identity.AddClaim(new Claim(ClaimTypes.Role, "Default"));
+                await HttpContext.SignInAsync(new ClaimsPrincipal(identity));
+
+                if (UserHelper.RetrieveUserByUserName(identity) == null)
+                {
+                    var user = new User()
+                    {
+                        ApprovedBy = "Mobile",
+                        ApprovedTime = DateTime.Now,
+                        DisplayName = "手机用户",
+                        UserName = phone,
+                        Password = LgbCryptography.GenerateSalt(),
+                        Icon = "default.jpg",
+                        Description = "手机用户",
+                        App = "2"
+                    };
+                    UserHelper.Save(user);
+                    CacheCleanUtility.ClearCache(cacheKey: UserHelper.RetrieveUsersDataKey);
+                }
+
+                // redirect origin url
+                var originUrl = Request.Query[CookieAuthenticationDefaults.ReturnUrlParameter].FirstOrDefault() ?? "~/Home/Index";
+                return Redirect(originUrl);
+            }
+            return View("Login", new LoginModel() { AuthFailed = true });
         }
 
         /// <summary>

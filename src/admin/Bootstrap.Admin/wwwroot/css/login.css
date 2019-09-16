@@ -44,7 +44,7 @@
     box-shadow: 0 4px #e56b60;
     margin-bottom: 0.625rem;
     outline: none !important;
-    margin-top: -0.5rem;
+    margin-top: -0.25rem;
     line-height: 1;
 }
 
@@ -57,8 +57,8 @@
     border-color: #1ca0e9;
 }
 
-.form-control {
-    border-color: #1ca0e9;
+.form-control, .input-group-append .btn {
+    border-color: #1ca0e9 !important;
 }
 
 .slidercaptcha {
@@ -70,6 +70,7 @@
     right: 0;
     top: -270px;
     height: 226px;
+    z-index: 1080
 }
 
     .slidercaptcha canvas:first-child {
@@ -144,3 +145,7 @@
         width: 32px;
         height: 32px;
     }
+
+.login-wrap .btn-sms {
+    width: 140px;
+}
