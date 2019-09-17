@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
@@ -36,12 +37,22 @@ namespace Bootstrap.DataAccess
 
             var url = QueryHelpers.AddQueryString("http://open.bluegoon.com/api/sms/sendcode", requestParameters);
             var req = await client.GetAsync(url);
-            var result = JsonConvert.DeserializeObject<SMSResult>(await req.Content.ReadAsStringAsync());
+            var content = await req.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<SMSResult>(content);
             var ret = false;
             if (result.Code == "1")
             {
                 _pool.AddOrUpdate(option.Phone, key => new AutoExpireValidateCode(option.Phone, result.Data, option.Expires), (key, v) => v.Reset(result.Data));
                 ret = true;
+            }
+            else
+            {
+                new Exception("SMS Send Fail").Log(new NameValueCollection()
+                {
+                    ["UserId"] = option.Phone,
+                    ["url"] = url,
+                    ["content"] = content
+                });
             }
             return ret;
         }
