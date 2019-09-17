@@ -17,10 +17,6 @@ body {
     position: relative;
 }
 
-    .lock-box .form-group {
-        float: inherit !important;
-    }
-
 .lock-wrapper img {
     border-radius: 50%;
     -webkit-border-radius: 50%;
@@ -65,12 +61,19 @@ body {
     font-weight: 300;
 }
 
-.btn-lock, .btn-lock:hover {
+.btn-login {
+    width: 140px;
+}
+
+.btn-lock, .btn-login {
     background: #02b5c2;
     color: #fff;
     outline: none !important;
-    border-left: none;
 }
+
+    .btn-lock, .btn-lock:hover {
+        border-left: none;
+    }
 
 .has-error .btn-lock {
     color: #a94442;
@@ -88,15 +91,14 @@ body {
     z-index: auto;
 }
 
-.lock-box .form-inline .form-group {
+.form-inline .form-group {
     display: none;
 }
 
-.lock-box .form-inline.Cookies .form-group:first-child {
-    display: flex;
-}
-
-.lock-box .form-inline.Mobile .form-group:last-child {
+.form-inline.Cookies .form-group.Cookies,
+.form-inline.Mobile .form-group.Mobile,
+.form-inline.Gitee .form-group.OAuth,
+.form-inline.GitHub .form-group.OAuth {
     display: flex;
 }
 
@@ -104,7 +106,7 @@ div.input-group span {
     color: #fff;
 }
 
-div.input-group input, div.input-group input:hover, .btn-lock, div.input-group .input-group-text {
+div.input-group input, div.input-group input:hover, .btn-lock, div.input-group .input-group-text, .btn-login {
     border-color: #1d9238;
 }
 

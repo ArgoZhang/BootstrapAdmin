@@ -31,7 +31,9 @@
         <h1>@Model.DisplayName</h1>
         <span class="locked">系统已锁定</span>
         <form role="form" class="form-inline justify-content-center @Model.AuthenticationType" method="post" autocomplete="off" action="?ReturnUrl=@Model.ReturnUrl">
-            <div class="form-group">
+            <input type="hidden" name="username" value="@Model.UserName" />
+            <input type="hidden" name="authType" value="@Model.AuthenticationType" />
+            <div class="form-group Cookies">
                 <div class="input-group">
                     <input type="password" name="password" class="form-control" value="" autocomplete="off" placeholder="密码" />
                     <div class="input-group-append">
@@ -41,9 +43,7 @@
                     </div>
                 </div>
             </div>
-            <input type="hidden" name="username" value="@Model.UserName" />
-            <input type="hidden" name="authType" value="@Model.AuthenticationType" />
-            <div class="form-group">
+            <div class="form-group Mobile">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <div class="input-group-text">
@@ -55,6 +55,9 @@
                         <button type="button" id="btnSendCode" class="btn btn-lock btn-sms" data-method="send" data-toggle="tooltip" title="点击发送验证码">发送验证码</button>
                     </div>
                 </div>
+            </div>
+            <div class="form-group OAuth">
+                <a href="~/Account/Login" class="btn btn-login">重新登录</a>
             </div>
         </form>
     </div>
