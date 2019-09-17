@@ -190,7 +190,7 @@
                 var handler = setTimeout(function () {
                     clearTimeout(handler);
                     $this.tooltip('hide').attr('data-original-title', "点击发送验证码");
-                }, 1500);
+                }, 1000);
 
                 if (result) {
                     // send success

@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Bootstrap.Admin.Models
 {
@@ -20,5 +20,10 @@ namespace Bootstrap.Admin.Models
         /// 获得/设置 返回路径
         /// </summary>
         public string ReturnUrl { get; set; }
+
+        /// <summary>
+        /// 获得/设置 认证方式 Cookie Mobile Gitee GitHub
+        /// </summary>
+        public string AuthenticationType { get; set; }
     }
 }

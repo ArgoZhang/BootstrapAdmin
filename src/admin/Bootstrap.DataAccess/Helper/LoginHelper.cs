@@ -36,7 +36,7 @@ namespace Bootstrap.DataAccess
                 City = ipLocator.Locate(ip),
                 Browser = $"{agent.Browser?.Name} {agent.Browser?.Version}",
                 OS = $"{agent.OS?.Name} {agent.OS?.Version}",
-                Result = auth ? "登陆成功" : "登录失败"
+                Result = auth ? "登录成功" : "登录失败"
             };
             return DbContextManager.Create<LoginUser>().Log(loginUser);
         }

@@ -24,6 +24,7 @@ namespace Bootstrap.Admin.Controllers
     [AutoValidateAntiforgeryToken]
     public class AccountController : Controller
     {
+        private const string MobileSchema = "Mobile";
         /// <summary>
         /// 系统锁屏界面
         /// </summary>
@@ -33,10 +34,12 @@ namespace Bootstrap.Admin.Controllers
         {
             if (!User.Identity.IsAuthenticated) return Login();
 
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            var authenticationType = User.Identity.AuthenticationType;
+            await HttpContext.SignOutAsync();
             var urlReferrer = Request.Headers["Referer"].FirstOrDefault();
             return View(new LockModel(this)
             {
+                AuthenticationType = authenticationType,
                 ReturnUrl = WebUtility.UrlEncode(string.IsNullOrEmpty(urlReferrer) ? CookieAuthenticationDefaults.LoginPath.Value : urlReferrer)
             });
         }
@@ -44,15 +47,20 @@ namespace Bootstrap.Admin.Controllers
         /// <summary>
         /// 系统锁屏界面
         /// </summary>
+        /// <param name="configuration"></param>
         /// <param name="userName"></param>
         /// <param name="password"></param>
+        /// <param name="authType"></param>
         /// <returns></returns>
         [HttpPost]
         [IgnoreAntiforgeryToken]
-        public Task<IActionResult> Lock(string userName, string password)
+        public Task<IActionResult> Lock([FromServices]IConfiguration configuration, string userName, string password, string authType)
         {
             // 根据不同的登陆方式
-            return Login(userName, password, string.Empty);
+            Task<IActionResult> ret;
+            if (authType == MobileSchema) ret = Mobile(configuration, userName, password);
+            else ret = Login(userName, password, string.Empty);
+            return ret;
         }
 
         /// <summary>
@@ -73,7 +81,6 @@ namespace Bootstrap.Admin.Controllers
         /// <summary>
         /// 短信验证登陆方法
         /// </summary>
-        /// <param name="ipLocator"></param>
         /// <param name="configuration"></param>
         /// <param name="phone"></param>
         /// <param name="code"></param>
@@ -107,7 +114,7 @@ namespace Bootstrap.Admin.Controllers
                     RoleHelper.SaveByUserId(user.Id, roles);
                 }
             }
-            return auth ? await SignInAsync(phone, true) : View("Login", new LoginModel() { AuthFailed = true });
+            return auth ? await SignInAsync(phone, true, MobileSchema) : View("Login", new LoginModel() { AuthFailed = true });
         }
 
         /// <summary>
@@ -125,9 +132,9 @@ namespace Bootstrap.Admin.Controllers
             return auth ? await SignInAsync(userName, remember == "true") : View("Login", new LoginModel() { AuthFailed = true });
         }
 
-        private async Task<IActionResult> SignInAsync(string userName, bool persistent)
+        private async Task<IActionResult> SignInAsync(string userName, bool persistent, string authenticationScheme = CookieAuthenticationDefaults.AuthenticationScheme)
         {
-            var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
+            var identity = new ClaimsIdentity(authenticationScheme);
             identity.AddClaim(new Claim(ClaimTypes.Name, userName));
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity), new AuthenticationProperties { ExpiresUtc = DateTimeOffset.Now.AddDays(DictHelper.RetrieveCookieExpiresPeriod()), IsPersistent = persistent });
 

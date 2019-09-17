@@ -30,8 +30,7 @@
         <img alt="lock avatar" src="@Url.Content(Model.Icon)" />
         <h1>@Model.DisplayName</h1>
         <span class="locked">系统已锁定</span>
-        <form role="form" class="form-inline justify-content-center" method="post" autocomplete="off" action="~/Account/Lock?ReturnUrl=@Model.ReturnUrl">
-            <input type="hidden" name="username" value="@Model.UserName" />
+        <form role="form" class="form-inline justify-content-center @Model.AuthenticationType" method="post" autocomplete="off" action="?ReturnUrl=@Model.ReturnUrl">
             <div class="form-group">
                 <div class="input-group">
                     <input type="password" name="password" class="form-control" value="" autocomplete="off" placeholder="密码" />
@@ -39,6 +38,21 @@
                         <button class="btn btn-lock" type="submit">
                             <i class="fa fa-arrow-right"></i>
                         </button>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" name="username" value="@Model.UserName" />
+            <input type="hidden" name="authType" value="@Model.AuthenticationType" />
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <span class="fa fa-lock"></span>
+                        </div>
+                    </div>
+                    <input type="text" id="smscode" class="form-control" data-toggle="tooltip" disabled value="" placeholder="验证码" maxlength="4" title="请输入验证码" />
+                    <div class="input-group-append">
+                        <button type="button" id="btnSendCode" class="btn btn-lock btn-sms" data-method="send" data-toggle="tooltip" title="点击发送验证码">发送验证码</button>
                     </div>
                 </div>
             </div>

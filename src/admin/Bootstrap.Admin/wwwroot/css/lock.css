@@ -84,30 +84,51 @@ body {
     border-color: #3c763d;
 }
 
-div.input-group span {
-    top: 0;
-    background: #02b5c2;
-    border-color: #2e6da4;
-    color: #fff;
-}
-
 .form-inline .input-group input:focus {
     z-index: auto;
 }
 
-div.input-group input, div.input-group input:hover, .btn-lock {
+.lock-box .form-inline .form-group {
+    display: none;
+}
+
+.lock-box .form-inline.Cookies .form-group:first-child {
+    display: flex;
+}
+
+.lock-box .form-inline.Mobile .form-group:last-child {
+    display: flex;
+}
+
+div.input-group span {
+    color: #fff;
+}
+
+div.input-group input, div.input-group input:hover, .btn-lock, div.input-group .input-group-text {
     border-color: #1d9238;
 }
 
-div.input-group input:focus {
-    box-shadow: none;
-}
-
-div.input-group input, div.input-group input:hover, div.input-group input:focus {
-    border-right: none;
-}
-
-    div.input-group input.error {
-        background-color: #dcc4c4;
-        border-color: #e21717;
+    div.input-group input:focus {
+        box-shadow: none;
     }
+
+    div.input-group input, div.input-group input:hover, div.input-group input:focus {
+        border-right: none;
+    }
+
+        div.input-group input.error {
+            background-color: #dcc4c4;
+            border-color: #e21717;
+        }
+
+div.input-group .input-group-text {
+    background-color: #02b5c2;
+}
+
+.btn-sms {
+    width: 122px;
+}
+
+.form-group:last-child input {
+    width: 80px;
+}
