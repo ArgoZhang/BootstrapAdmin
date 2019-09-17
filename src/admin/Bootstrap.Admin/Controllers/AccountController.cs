@@ -2,7 +2,6 @@
 using Bootstrap.DataAccess;
 using Longbow.GiteeAuth;
 using Longbow.GitHubAuth;
-using Longbow.Security.Cryptography;
 using Longbow.Web;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -11,11 +10,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Security.Claims;
-using System.Security.Principal;
 using System.Threading.Tasks;
 
 namespace Bootstrap.Admin.Controllers
@@ -47,13 +44,16 @@ namespace Bootstrap.Admin.Controllers
         /// <summary>
         /// 系统锁屏界面
         /// </summary>
-        /// <param name="ipLocator"></param>
         /// <param name="userName"></param>
         /// <param name="password"></param>
         /// <returns></returns>
         [HttpPost]
         [IgnoreAntiforgeryToken]
-        public Task<IActionResult> Lock([FromServices]IIPLocatorProvider ipLocator, string userName, string password) => Login(ipLocator, userName, password, string.Empty);
+        public Task<IActionResult> Lock(string userName, string password)
+        {
+            // 根据不同的登陆方式
+            return Login(userName, password, string.Empty);
+        }
 
         /// <summary>
         /// 系统登录方法
@@ -79,10 +79,12 @@ namespace Bootstrap.Admin.Controllers
         /// <param name="code"></param>
         /// <returns></returns>
         [HttpPost()]
-        public async Task<IActionResult> Mobile([FromServices]IIPLocatorProvider ipLocator, [FromServices]IConfiguration configuration, [FromQuery]string phone, [FromQuery]string code)
+        public async Task<IActionResult> Mobile([FromServices]IConfiguration configuration, [FromQuery]string phone, [FromQuery]string code)
         {
             var option = configuration.GetSection(nameof(SMSOptions)).Get<SMSOptions>();
-            if (SMSHelper.Validate(phone, code, option.MD5Key))
+            var auth = SMSHelper.Validate(phone, code, option.MD5Key);
+            HttpContext.Log(phone, auth);
+            if (auth)
             {
                 var user = UserHelper.Retrieves().FirstOrDefault(u => u.UserName == phone);
                 if (user == null)
@@ -104,25 +106,24 @@ namespace Bootstrap.Admin.Controllers
                     var roles = RoleHelper.Retrieves().Where(r => option.Roles.Any(rl => rl.Equals(r.RoleName, StringComparison.OrdinalIgnoreCase))).Select(r => r.Id);
                     RoleHelper.SaveByUserId(user.Id, roles);
                 }
-                else
-                {
-                    // update password
-                    UserHelper.Update(user.Id, code, user.DisplayName);
-                }
             }
-            return await Login(ipLocator, phone, code, "true");
+            return auth ? await SignInAsync(phone, true) : View("Login", new LoginModel() { AuthFailed = true });
         }
 
         /// <summary>
         /// Login the specified userName, password and remember.
         /// </summary>
         /// <returns>The login.</returns>
-        /// <param name="ipLocator"></param>
         /// <param name="userName">User name.</param>
         /// <param name="password">Password.</param>
         /// <param name="remember">Remember.</param>
         [HttpPost]
-        public async Task<IActionResult> Login([FromServices]IIPLocatorProvider ipLocator, string userName, string password, string remember) => UserHelper.Authenticate(userName, password, loginUser => CreateLoginUser(ipLocator, HttpContext, loginUser)) ? await SignInAsync(userName, remember == "true") : View("Login", new LoginModel() { AuthFailed = true });
+        public async Task<IActionResult> Login(string userName, string password, string remember)
+        {
+            var auth = UserHelper.Authenticate(userName, password);
+            HttpContext.Log(userName, auth);
+            return auth ? await SignInAsync(userName, remember == "true") : View("Login", new LoginModel() { AuthFailed = true });
+        }
 
         private async Task<IActionResult> SignInAsync(string userName, bool persistent)
         {

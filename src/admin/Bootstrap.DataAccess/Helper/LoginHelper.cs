@@ -1,7 +1,11 @@
-﻿using Longbow.Web.Mvc;
+﻿using Longbow.Web;
+using Longbow.Web.Mvc;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using PetaPoco;
 using System;
 using System.Collections.Generic;
+using System.Net;
 
 namespace Bootstrap.DataAccess
 {
@@ -13,12 +17,28 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 记录登陆日志方法
         /// </summary>
-        /// <param name="user"></param>
+        /// <param name="userName"></param>
         /// <returns></returns>
-        public static bool Log(LoginUser user)
+        public static bool Log(this HttpContext context, string userName, bool auth)
         {
-            if (string.IsNullOrEmpty(user.UserName)) user.UserName = user.Ip;
-            return DbContextManager.Create<LoginUser>().Log(user);
+            var ipLocator = context.RequestServices.GetRequiredService<IIPLocatorProvider>();
+            var ip = context.Connection.RemoteIpAddress.ToIPv4String();
+            var userAgent = context.Request.Headers["User-Agent"];
+            var agent = new UserAgent(userAgent);
+
+            if (string.IsNullOrEmpty(userName)) userName = ip;
+            var loginUser = new LoginUser
+            {
+                UserName = userName,
+                LoginTime = DateTime.Now,
+                UserAgent = userAgent,
+                Ip = ip,
+                City = ipLocator.Locate(ip),
+                Browser = $"{agent.Browser?.Name} {agent.Browser?.Version}",
+                OS = $"{agent.OS?.Name} {agent.OS?.Version}",
+                Result = auth ? "登陆成功" : "登录失败"
+            };
+            return DbContextManager.Create<LoginUser>().Log(loginUser);
         }
 
         /// <summary>

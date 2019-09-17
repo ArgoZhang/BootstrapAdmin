@@ -1,5 +1,4 @@
 ﻿using Bootstrap.DataAccess;
-using Longbow.GiteeAuth;
 using Longbow.Web;
 using Longbow.Web.SignalR;
 using Microsoft.AspNetCore.Builder;

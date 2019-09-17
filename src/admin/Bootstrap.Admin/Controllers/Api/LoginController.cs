@@ -1,7 +1,6 @@
 ﻿using Bootstrap.Admin.Query;
 using Bootstrap.DataAccess;
 using Bootstrap.Security;
-using Longbow.Web;
 using Longbow.Web.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -30,21 +29,21 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <summary>
         /// JWT 登陆认证接口
         /// </summary>
-        /// <param name="ipLocator"></param>
         /// <param name="value"></param>
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPost]
-        public string Post([FromServices]IIPLocatorProvider ipLocator, [FromBody]JObject value)
+        public string Post([FromBody]JObject value)
         {
             string token = null;
             dynamic user = value;
             string userName = user.userName;
             string password = user.password;
-            if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(password) && UserHelper.Authenticate(userName, password, loginUser => AccountController.CreateLoginUser(ipLocator, HttpContext, loginUser)))
+            if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(password) && UserHelper.Authenticate(userName, password))
             {
                 token = BootstrapAdminJwtTokenHandler.CreateToken(userName);
             }
+            HttpContext.Log(userName, token != null);
             return token;
         }
 

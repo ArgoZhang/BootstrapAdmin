@@ -58,23 +58,8 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="password"></param>
-        /// <param name="configure"></param>
         /// <returns>返回真表示认证通过</returns>
-        public static bool Authenticate(string userName, string password, Action<LoginUser> configure)
-        {
-            if (!UserChecker(new User { UserName = userName, Password = password })) return false;
-            var loginUser = new LoginUser
-            {
-                UserName = userName,
-                LoginTime = DateTime.Now,
-                Result = "登录失败"
-            };
-            configure(loginUser);
-            var ret = string.IsNullOrEmpty(userName) ? false : DbContextManager.Create<User>().Authenticate(userName, password);
-            if (ret) loginUser.Result = "登录成功";
-            LoginHelper.Log(loginUser);
-            return ret;
-        }
+        public static bool Authenticate(string userName, string password) => DbContextManager.Create<User>().Authenticate(userName, password);
 
         /// <summary>
         /// 查询所有的新注册用户

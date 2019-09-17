@@ -47,6 +47,9 @@ namespace Bootstrap.DataAccess
                     requestMessage.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                     await context.Backchannel.SendAsync(requestMessage, context.HttpContext.RequestAborted);
                 }
+
+                // 记录登陆日志
+                context.HttpContext.Log(user.Name, true);
             };
         }
 
