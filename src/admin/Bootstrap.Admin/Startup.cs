@@ -60,7 +60,7 @@ namespace Bootstrap.Admin
             services.AddSignalR().AddJsonProtocalDefault();
             services.AddSignalRExceptionFilterHandler<SignalRHub>((client, ex) => client.SendMessageBody(ex).ConfigureAwait(false));
             services.AddResponseCompression();
-            services.AddBootstrapAdminAuthentication().AddGitee(OAuthHelper.Configure).AddGitHub(OAuthHelper.Configure).AddWeChat(OAuthHelper.Configure);
+            services.AddBootstrapAdminAuthentication().AddGitee(OAuthHelper.Configure).AddGitHub(OAuthHelper.Configure).AddWeChat(WeChatHelper.Configure);
             services.AddSwagger();
             services.AddButtonAuthorization(MenuHelper.AuthorizateButtons);
             services.AddBootstrapAdminBackgroundTask();
