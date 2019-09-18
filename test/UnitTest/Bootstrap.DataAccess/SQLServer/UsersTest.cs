@@ -18,7 +18,7 @@ namespace Bootstrap.DataAccess.SqlServer
         [Fact]
         public void Authenticate_Ok()
         {
-            Assert.True(UserHelper.Authenticate("Admin", "123789", u => u.Ip = "::1"));
+            Assert.True(UserHelper.Authenticate("Admin", "123789"));
         }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace Bootstrap.DataAccess.SqlServer
         [Fact]
         public void Authenticate_Fail()
         {
-            Assert.False(UserHelper.Authenticate("Admin-NotExists", "123789", u => u.Ip = "::1"));
+            Assert.False(UserHelper.Authenticate("Admin-NotExists", "123789"));
         }
 
         [Fact]
