@@ -1,8 +1,6 @@
 ﻿using Bootstrap.Security;
 using Bootstrap.Security.DataAccess;
 using Longbow.Cache;
-using Longbow.GiteeAuth;
-using Longbow.GitHubAuth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -297,28 +295,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="identity"></param>
         /// <returns></returns>
-        public static BootstrapUser RetrieveUserByUserName(IIdentity identity) => CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveUsersByNameDataKey, identity.Name), k =>
-        {
-            var userName = identity.Name;
-            var proxyList = new List<Func<string, BootstrapUser>>();
-
-            // 本地数据库认证
-            proxyList.Add(DbContextManager.Create<User>().RetrieveUserByUserName);
-
-            // Gitee 认证
-            if (identity.AuthenticationType == GiteeDefaults.AuthenticationScheme) proxyList.Add(OAuthHelper.RetrieveUserByUserName<GiteeOptions>);
-
-            // GitHub 认证
-            if (identity.AuthenticationType == GitHubDefaults.AuthenticationScheme) proxyList.Add(OAuthHelper.RetrieveUserByUserName<GitHubOptions>);
-
-            BootstrapUser user = null;
-            foreach (var p in proxyList)
-            {
-                user = p.Invoke(userName);
-                if (user != null) break;
-            }
-            return user;
-        }, RetrieveUsersByNameDataKey);
+        public static BootstrapUser RetrieveUserByUserName(IIdentity identity) => CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveUsersByNameDataKey, identity.Name), k => DbContextManager.Create<User>().RetrieveUserByUserName(identity.Name), RetrieveUsersByNameDataKey);
 
         /// <summary>
         /// 通过登录账号获得用户信息

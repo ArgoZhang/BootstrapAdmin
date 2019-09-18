@@ -1,12 +1,10 @@
-﻿using Bootstrap.Security;
-using Longbow.Configuration;
-using Longbow.OAuth;
+﻿using Longbow.OAuth;
 using Longbow.Security.Cryptography;
+using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -19,8 +17,6 @@ namespace Bootstrap.DataAccess
     /// </summary>
     public static class OAuthHelper
     {
-        private static readonly ConcurrentDictionary<string, OAuthUser> _pool = new ConcurrentDictionary<string, OAuthUser>();
-
         /// <summary>
         /// 设置 GiteeOptions.Events.OnCreatingTicket 方法
         /// </summary>
@@ -29,13 +25,9 @@ namespace Bootstrap.DataAccess
         {
             option.Events.OnCreatingTicket = async context =>
             {
-                var user = context.User.ToObject<OAuthUser>();
-                user.Schema = context.Scheme.Name;
-                _pool.AddOrUpdate(user.Login, userName => user, (userName, u) => { u = user; return user; });
-
                 // call webhook
                 var config = context.HttpContext.RequestServices.GetRequiredService<IConfiguration>();
-                var webhookUrl = config.GetValue($"{option.GetType().Name}:StarredUrl", "");
+                var webhookUrl = config.GetSection<TOptions>().GetValue("StarredUrl", "");
                 if (!string.IsNullOrEmpty(webhookUrl))
                 {
                     var webhookParameters = new Dictionary<string, string>()
@@ -48,8 +40,13 @@ namespace Bootstrap.DataAccess
                     await context.Backchannel.SendAsync(requestMessage, context.HttpContext.RequestAborted);
                 }
 
+                // 生成用户
+                var user = ParseUser(context);
+                user.App = option.App;
+                SaveUser(user, option.Roles);
+
                 // 记录登陆日志
-                context.HttpContext.Log(user.Name, true);
+                context.HttpContext.Log(user.UserName, true);
             };
         }
 
@@ -58,33 +55,36 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public static BootstrapUser RetrieveUserByUserName<TOptions>(string userName) where TOptions : LgbOAuthOptions
+        private static User ParseUser(OAuthCreatingTicketContext context)
         {
-            User ret = null;
-            var user = _pool.TryGetValue(userName, out var giteeUser) ? giteeUser : null;
-            if (user != null)
+            var user = context.User.ToObject<OAuthUser>();
+            return new User()
             {
-                var option = ConfigurationManager.Get<TOptions>();
-                ret = new User()
-                {
-                    ApprovedBy = "OAuth",
-                    ApprovedTime = DateTime.Now,
-                    DisplayName = user.Name,
-                    UserName = user.Login,
-                    Password = LgbCryptography.GenerateSalt(),
-                    Icon = user.Avatar_Url,
-                    Description = $"{user.Schema}({user.Id})",
-                    App = option.App
-                };
-                DbContextManager.Create<User>().Save(ret);
-                CacheCleanUtility.ClearCache(cacheKey: UserHelper.RetrieveUsersDataKey);
+                ApprovedBy = "OAuth",
+                ApprovedTime = DateTime.Now,
+                DisplayName = user.Name,
+                UserName = user.Login,
+                Password = LgbCryptography.GenerateSalt(),
+                Icon = user.Avatar_Url,
+                Description = $"{context.Scheme.Name}({user.Id})"
+            };
+        }
 
-                // 根据配置文件设置默认角色
-                var usr = UserHelper.Retrieves().First(u => u.UserName == userName);
-                var roles = RoleHelper.Retrieves().Where(r => option.Roles.Any(rl => rl.Equals(r.RoleName, StringComparison.OrdinalIgnoreCase))).Select(r => r.Id);
-                RoleHelper.SaveByUserId(usr.Id, roles);
-            }
-            return ret;
+        /// <summary>
+        /// 保存用户到数据库中
+        /// </summary>
+        /// <param name="newUser"></param>
+        /// <param name="roles"></param>
+        internal static void SaveUser(User newUser, IEnumerable<string> roles)
+        {
+            var uid = UserHelper.Retrieves().FirstOrDefault(u => u.UserName == newUser.UserName)?.Id;
+            if (uid != null) DbContextManager.Create<User>().Delete(new string[] { uid });
+            DbContextManager.Create<User>().Save(newUser);
+
+            // 根据配置文件设置默认角色
+            var roleIds = DbContextManager.Create<Role>().Retrieves().Where(r => roles.Any(rl => rl.Equals(r.RoleName, StringComparison.OrdinalIgnoreCase))).Select(r => r.Id);
+            DbContextManager.Create<Role>().SaveByUserId(newUser.Id, roleIds);
+            CacheCleanUtility.ClearCache(userIds: new string[0], roleIds: new string[0], cacheKey: $"{UserHelper.RetrieveUsersByNameDataKey}-{newUser.UserName}");
         }
     }
 }
