@@ -12,7 +12,7 @@
     <MvcRazorCompileOnPublish>true</MvcRazorCompileOnPublish>
   </PropertyGroup>
 
-  <Target Condition=" '$(TargetFramework)' == 'netcoreapp2.2' " Name="PostBuild" AfterTargets="PostBuildEvent">
+  <Target Condition=" '$(TargetFramework)' == 'netcoreapp2.2' or '$(TargetFramework)' == 'netcoreapp3.0' " Name="PostBuild" AfterTargets="PostBuildEvent">
     <Message Text="Copy file -> $(TargetDir)" Importance="high" />
     <Copy Condition="'$(OS)' == 'Windows_NT'" DestinationFolder="$(TargetDir)" SourceFiles="$(MSBuildThisFileDirectory)src\admin\keys\Longbow.lic" SkipUnchangedFiles="true" />
     <Copy Condition="'$(OS)' == 'UNIX'" DestinationFolder="$(TargetDir)" SourceFiles="$(MSBuildThisFileDirectory)src/admin/keys/Longbow.lic" SkipUnchangedFiles="true" />

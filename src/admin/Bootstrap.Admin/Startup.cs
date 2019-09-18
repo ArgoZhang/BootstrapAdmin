@@ -1,16 +1,15 @@
 ﻿using Bootstrap.DataAccess;
 using Longbow.Web;
 using Longbow.Web.SignalR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
@@ -43,7 +42,7 @@ namespace Bootstrap.Admin
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
+            //services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -51,39 +50,35 @@ namespace Bootstrap.Admin
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
             services.AddCors();
-            services.AddLogging(builder => builder.AddFileLogger().AddDBLogger(ExceptionsHelper.Log));
+            //services.AddLogging(builder => builder.AddFileLogger().AddDBLogger(ExceptionsHelper.Log));
             services.AddConfigurationManager();
             services.AddCacheManager();
             services.AddDbAdapter();
             services.AddIPLocator(DictHelper.ConfigIPLocator);
             services.AddOnlineUsers();
-            services.AddSignalR().AddJsonProtocalDefault();
-            services.AddSignalRExceptionFilterHandler<SignalRHub>((client, ex) => client.SendMessageBody(ex).ConfigureAwait(false));
+            //services.AddSignalR().AddJsonProtocalDefault();
+            //services.AddSignalRExceptionFilterHandler<SignalRHub>((client, ex) => client.SendMessageBody(ex).ConfigureAwait(false));
             services.AddResponseCompression();
             services.AddBootstrapAdminAuthentication().AddGitee(OAuthHelper.Configure).AddGitHub(OAuthHelper.Configure);
-            services.AddSwagger();
+            services.AddAuthorization(options => options.DefaultPolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build());
+            //services.AddSwagger();
             services.AddButtonAuthorization(MenuHelper.AuthorizateButtons);
             services.AddBootstrapAdminBackgroundTask();
             services.AddHttpClient<GiteeHttpClient>();
             services.AddAdminHealthChecks();
-            services.AddMvc(options =>
+            services.AddControllersWithViews(options =>
             {
                 options.Filters.Add<BootstrapAdminAuthorizeFilter>();
                 options.Filters.Add<ExceptionFilter>();
                 options.Filters.Add<SignalRExceptionFilter<SignalRHub>>();
-            }).AddJsonOptions(options =>
-            {
-                options.SerializerSettings.ContractResolver = new DefaultContractResolver();
-                options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
-                JsonConvert.DefaultSettings = () => options.SerializerSettings;
-            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddApiVersioning(option =>
-            {
-                option.DefaultApiVersion = new ApiVersion(1, 0);
-                option.ReportApiVersions = true;
-                option.AssumeDefaultVersionWhenUnspecified = true;
-                option.ApiVersionReader = ApiVersionReader.Combine(new HeaderApiVersionReader("api-version"), new QueryStringApiVersionReader("api-version"));
             });
+            //services.AddApiVersioning(option =>
+            //{
+            //    option.DefaultApiVersion = new ApiVersion(1, 0);
+            //    option.ReportApiVersions = true;
+            //    option.AssumeDefaultVersionWhenUnspecified = true;
+            //    option.ApiVersionReader = ApiVersionReader.Combine(new HeaderApiVersionReader("api-version"), new QueryStringApiVersionReader("api-version"));
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -92,7 +87,7 @@ namespace Bootstrap.Admin
         /// </summary>
         /// <param name="app"></param>
         /// <param name="env"></param>
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseForwardedHeaders(new ForwardedHeadersOptions() { ForwardedHeaders = ForwardedHeaders.All });
             if (env.IsDevelopment())
@@ -109,21 +104,20 @@ namespace Bootstrap.Admin
             app.UseHttpsRedirection();
             app.UseResponseCompression();
             app.UseStaticFiles();
+            app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseBootstrapAdminAuthentication(RoleHelper.RetrievesByUserName, RoleHelper.RetrievesByUrl, AppHelper.RetrievesByUserName);
             app.UseBootstrapHealthChecks();
             app.UseOnlineUsers(TraceHelper.Filter, TraceHelper.Save);
             app.UseCacheManager();
-            app.UseSignalR(routes =>
+            //app.UseSwagger(Configuration["SwaggerPathBase"].TrimEnd('/'));
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapHub<SignalRHub>("/NotiHub");
-                routes.MapHub<TaskLogHub>("/TaskLogHub");
-            });
-            app.UseSwagger(Configuration["SwaggerPathBase"].TrimEnd('/'));
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                //endpoints.MapHub<SignalRHub>("/NotiHub");
+                //endpoints.MapHub<TaskLogHub>("/TaskLogHub");
+                //endpoints.MapHealthChecks("/healths");
+                endpoints.MapDefaultControllerRoute().RequireAuthorization();
             });
         }
     }

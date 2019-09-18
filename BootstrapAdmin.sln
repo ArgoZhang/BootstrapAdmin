@@ -84,6 +84,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{85574E
 		src\admin\Bootstrap.Admin\Linux.Dockerfile = src\admin\Bootstrap.Admin\Linux.Dockerfile
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.Security.Mvc", "..\Utility\Bootstrap.Security.Mvc\src\Bootstrap.Security.Mvc\Bootstrap.Security.Mvc.csproj", "{A44BB5C0-BB27-482B-B1F1-DF79AC070C4E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -118,6 +120,10 @@ Global
 		{BC1C6D63-ADA9-4C3B-89F0-CEB191A86BF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC1C6D63-ADA9-4C3B-89F0-CEB191A86BF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC1C6D63-ADA9-4C3B-89F0-CEB191A86BF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A44BB5C0-BB27-482B-B1F1-DF79AC070C4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A44BB5C0-BB27-482B-B1F1-DF79AC070C4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A44BB5C0-BB27-482B-B1F1-DF79AC070C4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A44BB5C0-BB27-482B-B1F1-DF79AC070C4E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -137,6 +143,7 @@ Global
 		{843811A2-FE49-410F-BF9F-9F1FB14A1DEE} = {C7F51A14-2D89-4D1F-AD78-C42B79AB0BF0}
 		{BC1C6D63-ADA9-4C3B-89F0-CEB191A86BF5} = {C7F51A14-2D89-4D1F-AD78-C42B79AB0BF0}
 		{E03B7391-B52F-4449-B400-5CD9DE01F085} = {41B6D37A-5E5E-42B3-85E4-D81A81E3D757}
+		{A44BB5C0-BB27-482B-B1F1-DF79AC070C4E} = {E03B7391-B52F-4449-B400-5CD9DE01F085}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {221EAE38-5F75-4391-9A48-E462A9F3B8FC}

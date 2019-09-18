@@ -30,7 +30,7 @@ namespace Bootstrap.Admin.Models
         /// </summary>
         /// <param name="host"></param>
         /// <param name="controller"></param>
-        public ProfilesModel(ControllerBase controller, IHostingEnvironment host) : base(controller)
+        public ProfilesModel(ControllerBase controller, IWebHostEnvironment host) : base(controller)
         {
             if (host != null)
             {
