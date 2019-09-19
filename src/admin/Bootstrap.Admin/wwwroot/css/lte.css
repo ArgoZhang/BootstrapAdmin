@@ -293,7 +293,7 @@ footer {
     }
 
         aside .sidebar, .sidebar-open aside:hover .sidebar {
-            top: 136px;
+            top: 121px;
             transition: top .3s linear;
         }
 
@@ -315,8 +315,8 @@ footer {
             }
 
             aside .nav-header img, .sidebar-open aside:hover .nav-header img {
-                width: 3.75rem;
-                height: 3.75rem;
+                width: 2.8125rem;
+                height: 2.8125rem;
                 border-radius: 50%;
             }
 
