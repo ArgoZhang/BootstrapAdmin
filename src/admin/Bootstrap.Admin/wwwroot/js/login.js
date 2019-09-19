@@ -126,10 +126,10 @@
     var $loginPwd = $('#loginPwd');
     var $loginSMS = $('#loginSMS');
     if ($login.attr('data-demo') === 'True') {
+        $login.find('[data-valid="true"]').attr('data-valid', 'false');
         $login.on('submit', function (e) {
             var model = $loginType.attr('data-value');
             if (model === 'username') {
-                $login.find('[data-valid="true"]').attr('data-valid', 'false');
                 if ($username.val() === '' && $password.val() === '') {
                     e.preventDefault();
                     location.href = "Gitee";

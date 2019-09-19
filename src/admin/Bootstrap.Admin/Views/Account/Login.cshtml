@@ -43,7 +43,7 @@
 }
 <div class="container">
     <input id="imgUrl" type="hidden" value="@Model.ImageLibUrl" />
-    <form id="login" method="post" class="form-signin" data-demo="True">
+    <form id="login" method="post" class="form-signin" data-demo="@Model.IsDemo">
         <h2 class="form-signin-heading">@Model.Title</h2>
         <div class="login-wrap" data-auth="@Model.AuthFailed" data-toggle="LgbValidate" data-valid-button="button[type='submit']">
             <div class="alert alert-danger d-none" asp-condition="@Model.AuthFailed">用户名或密码错误！</div>
