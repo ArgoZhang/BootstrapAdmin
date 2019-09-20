@@ -33,6 +33,10 @@ INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('网站设置', '前台
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('网站设置', '侧边栏状态', '1', 0);
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('网站设置', '卡片标题状态', '1', 0);
 
+-- 登录配置
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('网站设置', '短信验证码登录', '1', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('网站设置', 'OAuth 认证登录', '1', 0);
+
 -- 时长单位 月
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统设置', '程序异常保留时长', '1', 0);
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统设置', '操作日志保留时长', '12', 0);

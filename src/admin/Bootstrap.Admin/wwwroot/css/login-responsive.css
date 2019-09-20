@@ -30,39 +30,22 @@
     }
 
     .login-wrap {
-        padding: 0;
-        margin: 18px 0 0 370px;
-        width: 280px;
+        width: 300px;
+        height: 274px;
+        position: relative;
+        left: 346px;
+        justify-content: center;
     }
 
     .slidercaptcha {
-        top: -278px;
-        left: -15px;
+        width: 300px;
     }
 
-        .slidercaptcha.card .card-body {
-            padding: 15px 15px 0 15px;
-        }
-
-        .slidercaptcha, .slidercaptcha.forgot {
-            width: 310px;
+        .slidercaptcha, .slidercaptcha.oauth {
             height: 280px;
         }
 
-    .login-wrap[data-auth="True"] {
-        margin: 20px 0 0 370px;
-    }
-
-        .login-wrap[data-auth="True"] .slidercaptcha {
-            top: -264px;
-        }
-
-        .login-wrap[data-auth="True"] .slidercaptcha, .slidercaptcha.forgot {
-            width: 310px;
-            height: 280px;
-        }
-
-        .login-wrap[data-auth="True"] .form-group {
-            margin-bottom: 0.75rem;
-        }
+            .slidercaptcha.card .card-body {
+                padding: 15px 15px 0 15px;
+            }
 }

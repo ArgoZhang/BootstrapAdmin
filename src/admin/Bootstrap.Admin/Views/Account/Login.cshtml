@@ -57,16 +57,6 @@
                     <input type="text" name="userName" class="form-control" data-toggle="tooltip" placeholder="用户名" maxlength="16" data-required-msg="请输入用户名" value="" autofocus data-valid="true" />
                 </div>
             </div>
-            <div id="loginMobile" class="form-group d-none">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">
-                            <span class="fa fa-user"></span>
-                        </div>
-                    </div>
-                    <input type="text" id="txtPhone" class="form-control digits" data-toggle="tooltip" placeholder="手机号码" minlength="11" maxlength="11" data-required-msg="请输入手机号码" value="" data-valid="true" />
-                </div>
-            </div>
             <div id="loginPwd" class="form-group">
                 <div class="input-group">
                     <div class="input-group-prepend">
@@ -77,16 +67,28 @@
                     <input type="password" name="password" class="form-control" value="" data-toggle="tooltip" placeholder="密码" maxlength="16" data-required-msg="请输入密码" data-valid="true" />
                 </div>
             </div>
-            <div id="loginSMS" class="form-group d-none">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">
-                            <span class="fa fa-lock"></span>
+            <div asp-condition="@Model.AllowMobile">
+                <div id="loginMobile" class="form-group d-none">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <span class="fa fa-user"></span>
+                            </div>
                         </div>
+                        <input type="text" id="txtPhone" class="form-control digits" data-toggle="tooltip" placeholder="手机号码" minlength="11" maxlength="11" data-required-msg="请输入手机号码" value="" data-valid="true" />
                     </div>
-                    <input type="text" id="smscode" class="form-control digits" data-toggle="tooltip" disabled value="" placeholder="验证码" maxlength="4" data-required-msg="请输入验证码" data-valid="true" />
-                    <div class="input-group-append">
-                        <button type="button" id="btnSendCode" class="btn btn-sms" data-toggle="tooltip" title="点击发送验证码">发送验证码</button>
+                </div>
+                <div id="loginSMS" class="form-group d-none">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <span class="fa fa-lock"></span>
+                            </div>
+                        </div>
+                        <input type="text" id="smscode" class="form-control digits" data-toggle="tooltip" disabled value="" placeholder="验证码" maxlength="4" data-required-msg="请输入验证码" data-valid="true" />
+                        <div class="input-group-append">
+                            <button type="button" id="btnSendCode" class="btn btn-sms" data-toggle="tooltip" title="点击发送验证码">发送验证码</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -96,48 +98,50 @@
                     <span>记住密码自动登录</span>
                     <input id="remember" name="remember" type="hidden" value="false" />
                 </div>
-                <div>
+                <div asp-condition="@Model.AllowMobile">
                     <a id="loginType" data-value="username" href="#" class="">短信验证登陆</a>
                 </div>
             </div>
             <button class="btn btn-lg btn-login btn-block" data-toggle="tooltip" title="不填写密码默认使用 Gitee 认证" type="submit">登 录</button>
-            <div class="login-footer">
+            <div class="d-flex justify-content-between">
                 <a href="#" data-method="register">申请账号</a>
                 <a href="#" data-method="forgot">忘记密码</a>
             </div>
-            <div class="login-other">
-                <span class="text-muted">
-                    其他方式登录
-                </span>
+            <div asp-condition="@Model.AllowOAuth">
+                <div class="login-other">
+                    <span class="text-muted">
+                        其他方式登录
+                    </span>
+                </div>
+                <div class="login-list">
+                    <div class="item">
+                        <a href="~/Account/Gitee" data-toggle="tooltip" title="使用 Gitee 帐号登录">
+                            <img class="item" src="~/images/gitee.svg" />
+                        </a>
+                    </div>
+                    <div class="item">
+                        <a href="~/Account/GitHub" data-toggle="tooltip" title="使用 GitHub 帐号登录">
+                            <img class="item" src="~/images/git.svg" />
+                        </a>
+                    </div>
+                    <div class="item">
+                        <a href="#" data-toggle="tooltip" title="微信-暂未实现">
+                            <img class="item" src="~/images/weixin-2.svg" />
+                        </a>
+                    </div>
+                    <div class="item">
+                        <a href="#" data-toggle="tooltip" title="QQ-暂未实现">
+                            <img class="item" src="~/images/qq-2.svg" />
+                        </a>
+                    </div>
+                    <div class="item">
+                        <a href="#" data-toggle="tooltip" title="支付宝-暂未实现">
+                            <img class="item" src="~/images/zhifubao-2.svg" />
+                        </a>
+                    </div>
+                </div>
             </div>
-            <div class="login-list">
-                <div class="item">
-                    <a href="~/Account/Gitee" data-toggle="tooltip" title="使用 Gitee 帐号登录">
-                        <img class="item" src="~/images/gitee.svg" />
-                    </a>
-                </div>
-                <div class="item">
-                    <a href="~/Account/GitHub" data-toggle="tooltip" title="使用 GitHub 帐号登录">
-                        <img class="item" src="~/images/git.svg" />
-                    </a>
-                </div>
-                <div class="item">
-                    <a href="#" data-toggle="tooltip" title="微信-暂未实现">
-                        <img class="item" src="~/images/weixin-2.svg" />
-                    </a>
-                </div>
-                <div class="item">
-                    <a href="#" data-toggle="tooltip" title="QQ-暂未实现">
-                        <img class="item" src="~/images/qq-2.svg" />
-                    </a>
-                </div>
-                <div class="item">
-                    <a href="#" data-toggle="tooltip" title="支付宝-暂未实现">
-                        <img class="item" src="~/images/zhifubao-2.svg" />
-                    </a>
-                </div>
-            </div>
-            <div class="slidercaptcha card">
+            <div class="slidercaptcha card @Model.ShowOAuth">
                 <div class="card-header">
                     <span>请完成安全验证</span>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>

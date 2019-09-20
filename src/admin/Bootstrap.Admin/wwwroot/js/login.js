@@ -20,16 +20,20 @@
                 url: "api/OnlineUsers",
                 method: "put",
                 callback: function (result) {
+                    // 返回真时表示三次验证需要滑块验证码
                     if (result) captcha.addClass('d-block');
                     else success();
                 }
             });
         },
         capWidth: function () {
-            return $(window).width() < 768 ? 256 : 280;
+            return $(window).width() < 768 ? 256 : 272;
         },
         capHeight: function () {
-            return $(window).width() < 768 ? 106 : 150;
+            // 如果关闭 oAuth 认证 高度要缩小
+            var height = 150;
+            if ($(window).height() < 768) height = $('.slidercaptcha:first').hasClass('oauth') ? 96 : 150;
+            return height;
         },
         capRegSuccess: function () {
             $.bc({
@@ -126,7 +130,7 @@
     var $loginPwd = $('#loginPwd');
     var $loginSMS = $('#loginSMS');
     if ($login.attr('data-demo') === 'True') {
-        $login.find('[data-valid="true"]').attr('data-valid', 'false');
+        $login.find('[name="userName"], [name="password"]').attr('data-valid', 'false');
         $login.on('submit', function (e) {
             var model = $loginType.attr('data-value');
             if (model === 'username') {

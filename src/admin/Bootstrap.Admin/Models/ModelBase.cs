@@ -18,6 +18,10 @@ namespace Bootstrap.Admin.Models
             IsDemo = DictHelper.RetrieveSystemModel();
             ShowCardTitle = DictHelper.RetrieveCardTitleStatus() ? "" : "no-card-header";
             ShowSideBar = DictHelper.RetrieveSidebarStatus() ? "" : "collapsed";
+            AllowMobile = DictHelper.RetrieveMobileLogin();
+            AllowOAuth = DictHelper.RetrieveOAuthLogin();
+            ShowMobile = AllowMobile ? "" : "mobile";
+            ShowOAuth = AllowOAuth ? "" : "oauth";
         }
 
         /// <summary>
@@ -49,5 +53,25 @@ namespace Bootstrap.Admin.Models
         /// 是否收缩侧边栏
         /// </summary>
         public string ShowSideBar { get; protected set; }
+
+        /// <summary>
+        /// 获得 是否允许短信验证码登录
+        /// </summary>
+        public bool AllowMobile { get; }
+
+        /// <summary>
+        /// 获得 是否允许第三方 OAuth 认证登录
+        /// </summary>
+        public bool AllowOAuth { get; }
+
+        /// <summary>
+        /// 获得 是否允许短信验证码登录
+        /// </summary>
+        public string ShowMobile { get; }
+
+        /// <summary>
+        /// 获得 是否允许第三方 OAuth 认证登录
+        /// </summary>
+        public string ShowOAuth { get; }
     }
 }

@@ -89,7 +89,7 @@ namespace Bootstrap.Admin.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        public ActionResult Settings() => View(new ThemeModel(this));
+        public ActionResult Settings() => View(new SettingsModel(this));
 
         /// <summary>
         /// 

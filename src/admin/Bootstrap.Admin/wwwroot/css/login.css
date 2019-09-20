@@ -13,8 +13,9 @@
 }
 
 .login-wrap {
-    padding: 20px;
-    height: 300px;
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
 }
 
     .login-wrap .rememberPwd {
@@ -27,13 +28,9 @@
             width: 13px;
         }
 
-    .login-wrap .card {
-        border-top-width: 1px;
+    .login-wrap .card, .login-wrap .card:hover, .modal .card, .modal .card:hover {
+        border: 1px solid #84bbe2;
     }
-
-.login-footer a:last-child {
-    float: right;
-}
 
 .btn-login {
     background: #f67a6e;
@@ -42,7 +39,7 @@
     font-weight: 300;
     font-family: 'Open Sans', sans-serif;
     box-shadow: 0 4px #e56b60;
-    margin-bottom: 0.625rem;
+    margin-bottom: 0.75rem;
     outline: none !important;
     margin-top: -0.25rem;
     line-height: 1;
@@ -66,11 +63,10 @@
     background-color: #00adec;
     border-radius: 4px;
     box-shadow: 0 0 10px #fff;
-    left: 0;
-    right: 0;
-    top: -270px;
-    height: 226px;
-    z-index: 1080
+    height: 274px;
+    width: 286px;
+    z-index: 1080;
+    position: absolute;
 }
 
     .slidercaptcha canvas:first-child {
@@ -83,8 +79,12 @@
         margin-top: -2px;
     }
 
+    .slidercaptcha.oauth {
+        height: 210px;
+    }
+
     .slidercaptcha.card .card-body {
-        padding: 0.625rem 0 0 0;
+        padding: 0.75rem 0 0 0;
     }
 
     .slidercaptcha.card .card-header {
@@ -97,18 +97,8 @@
             color: #fff;
         }
 
-    .slidercaptcha.forgot {
-        position: absolute;
-        left: auto;
-        right: 14px;
-        bottom: 14px;
-        top: auto;
-        margin: 0;
-        width: 274px;
-    }
-
-    .slidercaptcha.reg {
-        bottom: 60px;
+    .slidercaptcha.forgot, .slidercaptcha.reg {
+        bottom: 52px;
     }
 
 .login-other {
