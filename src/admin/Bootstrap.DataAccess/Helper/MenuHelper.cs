@@ -29,7 +29,17 @@ namespace Bootstrap.DataAccess
         public static bool Save(BootstrapMenu p)
         {
             // 不允许保存系统菜单与前台演示系统的默认菜单
-            if (DictHelper.RetrieveSystemModel() && (p.Category == "0" || p.Application == "2")) return true;
+            if (DictHelper.RetrieveSystemModel())
+            {
+                if (p.Category == "0" || p.Application == "2") return true;
+
+                // 查找原有数据比对是否为系统菜单与演示菜单
+                if (!string.IsNullOrEmpty(p.Id))
+                {
+                    var menus = RetrieveAllMenus("Admin").FirstOrDefault(m => m.Id.Equals(p.Id, System.StringComparison.OrdinalIgnoreCase));
+                    if (menus != null && menus.Category == "0" || p.Application == "2") return true;
+                }
+            }
 
             var ret = DbContextManager.Create<Menu>().Save(p);
             if (ret) CacheCleanUtility.ClearCache(menuIds: string.IsNullOrEmpty(p.Id) ? new List<string>() : new List<string>() { p.Id });
