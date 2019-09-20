@@ -1,6 +1,8 @@
 ﻿using Bootstrap.Security;
 using Bootstrap.Security.DataAccess;
 using Longbow.Cache;
+using Longbow.Configuration;
+using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -31,13 +33,20 @@ namespace Bootstrap.DataAccess
             // 不允许保存系统菜单与前台演示系统的默认菜单
             if (DictHelper.RetrieveSystemModel())
             {
-                if (p.Category == "0" || p.Application == "2") return true;
+                if (p.Category == "0") return true;
 
                 // 查找原有数据比对是否为系统菜单与演示菜单
                 if (!string.IsNullOrEmpty(p.Id))
                 {
-                    var menus = RetrieveAllMenus("Admin").FirstOrDefault(m => m.Id.Equals(p.Id, System.StringComparison.OrdinalIgnoreCase));
-                    if (menus != null && menus.Category == "0" || p.Application == "2") return true;
+
+                    // 系统菜单
+                    var menus = RetrieveAllMenus("Admin");
+                    var menu = menus.FirstOrDefault(m => m.Id.Equals(p.Id, System.StringComparison.OrdinalIgnoreCase));
+                    if (menu != null && menu.Category == "0") return true;
+
+                    // 演示系统
+                    var appMenus = ConfigurationManager.GetSection("AppMenus").Get<ICollection<string>>();
+                    if (appMenus.Any(m => m.Equals(menu.Name, System.StringComparison.OrdinalIgnoreCase))) return true;
                 }
             }
 
@@ -56,8 +65,14 @@ namespace Bootstrap.DataAccess
             if (DictHelper.RetrieveSystemModel())
             {
                 // 不允许删除系统菜单与前台演示系统的默认菜单
-                var systemMenus = RetrieveAllMenus("Admin").Where(m => m.Category == "0" || m.Application == "2");
+                var systemMenus = RetrieveAllMenus("Admin").Where(m => m.Category == "0");
                 value = value.Where(v => !systemMenus.Any(m => m.Id == v));
+                if (!value.Any()) return true;
+
+                // 演示系统
+                var appMenus = ConfigurationManager.GetSection("AppMenus").Get<ICollection<string>>();
+                var appIds = RetrieveAllMenus("Admin").Where(m => appMenus.Any(app => m.Name.Equals(app, System.StringComparison.OrdinalIgnoreCase))).Select(m => m.Id);
+                value = value.Where(m => !appIds.Any(app => app.Equals(m, System.StringComparison.OrdinalIgnoreCase)));
                 if (!value.Any()) return true;
             }
             var ret = DbContextManager.Create<Menu>().Delete(value);
