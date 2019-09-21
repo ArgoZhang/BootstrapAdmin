@@ -52,6 +52,20 @@ $(function () {
                     }
                 });
                 break;
+            case 'saveAutoLock':
+                var autoLock = $('#lockScreen').prop('checked') ? "1" : "0";
+                $.bc({
+                    url: Settings.url, data: { name: '自动锁屏', code: autoLock, category: '网站设置' }, method: "post"
+                });
+                $.bc({
+                    url: Settings.url, data: { name: '自动锁屏时长', code: $('#lockPeriod').val(), category: '网站设置' }, title: '保存自动锁屏设置', method: "post",
+                    callback: function (result) {
+                        if (result) {
+                            window.setTimeout(function () { window.location.reload(true); }, 1000);
+                        }
+                    }
+                });
+                break;
         }
     });
 

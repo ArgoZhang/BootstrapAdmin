@@ -22,6 +22,8 @@ namespace Bootstrap.Admin.Models
             AllowOAuth = DictHelper.RetrieveOAuthLogin();
             ShowMobile = AllowMobile ? "" : "mobile";
             ShowOAuth = AllowOAuth ? "" : "oauth";
+            LockScreenPeriod = DictHelper.RetrieveAutoLockScreenPeriod();
+            EnableAutoLockScreen = DictHelper.RetrieveAutoLockScreen();
         }
 
         /// <summary>
@@ -73,5 +75,15 @@ namespace Bootstrap.Admin.Models
         /// 获得 是否允许第三方 OAuth 认证登录
         /// </summary>
         public string ShowOAuth { get; }
+
+        /// <summary>
+        /// 获得 自动锁屏时长 默认 1 分钟 字典表中配置
+        /// </summary>
+        public int LockScreenPeriod { get; }
+
+        /// <summary>
+        /// 获得 自动锁屏功能是否自动开启 默认关闭
+        /// </summary>
+        public bool EnableAutoLockScreen { get; }
     }
 }

@@ -167,6 +167,32 @@
 })(jQuery);
 
 $(function () {
+    // 自动锁屏功能
+    var mousePosition = { screenX: 0, screenY: 0 };
+    var count = 1;
+    var lockScreenPeriod = Number.parseInt($('#lockScreenPeriod').val());
+    if (typeof lockScreenPeriod === 'number' && !isNaN(lockScreenPeriod)) {
+        var traceMouseOrKey = window.setInterval(function () {
+            $(document).off('mousemove').one('mousemove', function (e) {
+                if (mousePosition.screenX !== e.screenX || mousePosition.screenY !== e.screenY) {
+                    mousePosition.screenX = e.screenX;
+                    mousePosition.screenY = e.screenY;
+
+                    // 计数器归零
+                    count = 1;
+                    return;
+                }
+            });
+        }, 2000);
+        var lockHandler = window.setInterval(function () {
+            if (count++ * 5 > lockScreenPeriod) {
+                window.clearInterval(lockHandler);
+                window.clearInterval(traceMouseOrKey);
+                this.location.href = $.formatUrl("Account/Lock");
+            }
+        }, 5000);
+    }
+
     var $sideMenu = $(".sidebar ul");
 
     // breadcrumb

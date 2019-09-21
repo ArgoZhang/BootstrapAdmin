@@ -95,7 +95,7 @@
                 </div>
             </div>
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer text-right">
             <button data-method="UISettings" class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
         </div>
     </div>
@@ -115,8 +115,28 @@
                 </div>
             </div>
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer text-right">
             <button data-method="LoginSettings" class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-header">自动锁屏设置</div>
+    <div class="card-body">
+        <div class="form-inline">
+            <div class="row">
+                <div class="form-group col-6">
+                    <label class="control-label" for="lockScreen">自动锁屏</label>
+                    <input id="lockScreen" hidden type="checkbox" data-default-val="@Model.AutoLockScreen" data-toggle="toggle" data-width="120" data-onstyle="success" data-on="开启" data-off="关闭" />
+                </div>
+                <div class="form-group col-6">
+                    <label class="control-label" for="lockPeriod">时长间隔(秒)</label>
+                    <input id="lockPeriod" type="number" class="form-control" min="30" value="@Model.LockScreenPeriod" />
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer text-right">
+            <button data-method="saveAutoLock" class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
         </div>
     </div>
 </div>

@@ -222,5 +222,17 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <returns></returns>
         public static bool RetrieveOAuthLogin() => DbContextManager.Create<Dict>()?.RetrieveOAuthLogin() ?? false;
+
+        /// <summary>
+        /// 获得自动锁屏时长 默认 30 秒
+        /// </summary>
+        /// <returns></returns>
+        public static int RetrieveAutoLockScreenPeriod() => DbContextManager.Create<Dict>()?.RetrieveAutoLockScreenPeriod() ?? 30;
+
+        /// <summary>
+        /// 获得自动锁屏 默认关闭
+        /// </summary>
+        /// <returns></returns>
+        public static bool RetrieveAutoLockScreen() => DbContextManager.Create<Dict>()?.RetrieveAutoLockScreen() ?? false;
     }
 }

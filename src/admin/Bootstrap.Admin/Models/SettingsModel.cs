@@ -17,11 +17,17 @@ namespace Bootstrap.Admin.Models
         public SettingsModel(ControllerBase controller) : base(controller)
         {
             Themes = DictHelper.RetrieveThemes();
+            AutoLockScreen = EnableAutoLockScreen ? "" : "lockScreen";
         }
 
         /// <summary>
         /// 获得 系统配置的所有样式表
         /// </summary>
         public IEnumerable<BootstrapDict> Themes { get; }
+
+        /// <summary>
+        /// 获得 是否开启自动锁屏
+        /// </summary>
+        public string AutoLockScreen { get; }
     }
 }

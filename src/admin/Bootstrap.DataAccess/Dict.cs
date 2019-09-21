@@ -222,5 +222,17 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <returns></returns>
         public bool RetrieveOAuthLogin() => (DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "OAuth 认证登录" && d.Define == 0)?.Code ?? "1") == "1";
+
+        /// <summary>
+        /// 获得自动锁屏时长 默认 30 秒
+        /// </summary>
+        /// <returns></returns>
+        public int RetrieveAutoLockScreenPeriod() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "自动锁屏时长" && d.Define == 0)?.Code, 30);
+
+        /// <summary>
+        /// 获得自动锁屏是否开启 默认关闭
+        /// </summary>
+        /// <returns></returns>
+        public bool RetrieveAutoLockScreen() => (DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "自动锁屏" && d.Define == 0)?.Code ?? "0") == "1";
     }
 }
