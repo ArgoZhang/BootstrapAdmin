@@ -37,6 +37,10 @@ INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('网站设置
 INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('网站设置', '短信验证码登录', '1', 0);
 INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('网站设置', 'OAuth 认证登录', '1', 0);
 
+-- 自动锁屏（秒）默认 30 秒
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('网站设置', '自动锁屏时长', '30', 0);
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('网站设置', '自动锁屏', '0', 0);
+
 -- 时长单位 月
 INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('系统设置', '程序异常保留时长', '1', 0);
 INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('系统设置', '操作日志保留时长', '12', 0);

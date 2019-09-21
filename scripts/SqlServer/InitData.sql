@@ -40,6 +40,10 @@ INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'网站设�
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'网站设置', N'短信验证码登录', N'1', 0)
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'网站设置', N'OAuth 认证登录', N'1', 0)
 
+-- 自动锁屏（秒）默认 30 秒
+INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'网站设置', N'自动锁屏时长', N'30', 0)
+INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'网站设置', N'自动锁屏', N'0', 0)
+
 -- 时长单位 月
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'系统设置', N'程序异常保留时长', '1', 0)
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'系统设置', N'操作日志保留时长', '12', 0)

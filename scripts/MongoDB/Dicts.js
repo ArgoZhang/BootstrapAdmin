@@ -269,5 +269,17 @@
         "Name": "OAuth 认证登录",
         "Code": "1",
         "Define": NumberInt(0)
+    },
+    {
+        "Category": "网站设置",
+        "Name": "自动锁屏时长",
+        "Code": "30",
+        "Define": NumberInt(0)
+    },
+    {
+        "Category": "网站设置",
+        "Name": "自动锁屏",
+        "Code": "0",
+        "Define": NumberInt(0)
     }
 ];
