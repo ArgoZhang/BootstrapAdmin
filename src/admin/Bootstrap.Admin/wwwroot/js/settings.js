@@ -52,6 +52,16 @@ $(function () {
                     }
                 });
                 break;
+            case 'loginSettings':
+                var mobile = $('#mobile').prop('checked') ? "1" : "0";
+                $.bc({
+                    url: Settings.url, data: { name: '短信验证码登录', code: mobile, category: '网站设置' }, method: "post"
+                });
+                var oauth = $('#oauth').prop('checked') ? "1" : "0";
+                $.bc({
+                    url: Settings.url, data: { name: 'OAuth 认证登录', code: oauth, category: '网站设置' }, title: '登录设置', method: "post"
+                });
+                break;
             case 'saveAutoLock':
                 var autoLock = $('#lockScreen').prop('checked') ? "1" : "0";
                 $.bc({
