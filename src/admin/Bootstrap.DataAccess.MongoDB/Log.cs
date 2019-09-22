@@ -8,12 +8,12 @@ using System.Linq;
 namespace Bootstrap.DataAccess.MongoDB
 {
     /// <summary>
-    /// 
+    /// 操作日志实体类
     /// </summary>
     public class Log : DataAccess.Log
     {
         /// <summary>
-        /// 
+        /// 分页查询操作日志
         /// </summary>
         /// <param name="po"></param>
         /// <param name="startTime"></param>
@@ -64,7 +64,7 @@ namespace Bootstrap.DataAccess.MongoDB
         }
 
         /// <summary>
-        /// 
+        /// 查询所有操作日志
         /// </summary>
         /// <param name="startTime"></param>
         /// <param name="endTime"></param>
@@ -89,7 +89,7 @@ namespace Bootstrap.DataAccess.MongoDB
         private static void DeleteLogAsync() => System.Threading.Tasks.Task.Run(() => DbManager.Logs.DeleteMany(log => log.LogTime < DateTime.Now.AddDays(-7)));
 
         /// <summary>
-        /// 
+        /// 保存操作日志
         /// </summary>
         /// <param name="log"></param>
         /// <returns></returns>
