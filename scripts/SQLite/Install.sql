@@ -183,3 +183,10 @@ CREATE TABLE Traces(
     RequestUrl VARCHAR (500) NOT NULL,
 	UserAgent  VARCHAR (2000)
 );
+
+CREATE TABLE DBLogs (
+    ID       INTEGER      PRIMARY KEY,
+    UserName VARCHAR (50) COLLATE NOCASE,
+    SQL      VARCHAR      NOT NULL,
+    LogTime  DATETIME     NOT NULL
+);
