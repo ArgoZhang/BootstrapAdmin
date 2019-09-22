@@ -31,7 +31,7 @@ namespace Bootstrap.DataAccess
         public DateTime LogTime { get; set; }
 
         /// <summary>
-        /// 查询所有操作日志信息
+        /// 查询所有SQL日志信息
         /// </summary>
         /// <param name="po"></param>
         /// <param name="startTime"></param>

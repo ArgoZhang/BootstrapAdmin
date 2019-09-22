@@ -55,6 +55,16 @@ namespace Bootstrap.DataAccess
         });
 
         /// <summary>
+        /// 查询所有SQL日志信息
+        /// </summary>
+        /// <param name="op"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public static Page<DBLog> RetrieveDBLogs(PaginationOption op, DateTime? startTime, DateTime? endTime, string userName) => DbContextManager.Create<DBLog>().RetrievePages(op, startTime, endTime, userName);
+
+        /// <summary>
         /// 数据库脚本执行日志任务实体类
         /// </summary>
         public class DbLogTask : ITask
