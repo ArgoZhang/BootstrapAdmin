@@ -636,6 +636,18 @@
         "Application": "0"
     },
     {
+        "_id": ObjectId("5bd9b3d868aa001661776f60"),
+        "ParentId": "5bd7b8445fa31256f77e4b9c",
+        "Name": "SQL日志",
+        "Order": NumberInt(40),
+        "Icon": "fa fa-database",
+        "Url": "~/Admin/SQL",
+        "Category": "0",
+        "Target": "_self",
+        "IsResource": NumberInt(0),
+        "Application": "0"
+    },
+    {
         "_id": ObjectId("5bd7b8445fa31256f77e4b89"),
         "ParentId": "0",
         "Name": "在线用户",
