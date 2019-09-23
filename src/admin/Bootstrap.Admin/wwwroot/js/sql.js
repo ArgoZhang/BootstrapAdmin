@@ -1,7 +1,5 @@
 ﻿$(function () {
     var url = 'api/SQL';
-    var $data = $('#requestData');
-    var $dialog = $('#dialogRequestData');
 
     $('.card-body table').smartTable({
         url: url,
