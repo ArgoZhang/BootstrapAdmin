@@ -10,6 +10,7 @@
     <PackageReference Include="Longbow.Data" Version="2.3.8-beta" />
     <PackageReference Include="Longbow.GiteeAuth" Version="2.2.0" />
     <PackageReference Include="Longbow.GitHubAuth" Version="2.2.0" />
+    <PackageReference Include="Longbow.OAuth" Version="2.2.2" />
     <PackageReference Include="Longbow.Logging" Version="2.2.13" />
     <PackageReference Include="Longbow.PetaPoco" Version="1.0.2" />
     <PackageReference Include="Longbow.Security.Cryptography" Version="1.3.0" />
