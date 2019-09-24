@@ -7,7 +7,7 @@
   <ItemGroup>
     <PackageReference Include="Bootstrap.Security.DataAccess" Version="2.2.21" />
     <PackageReference Include="Longbow.Configuration" Version="2.2.7" />
-    <PackageReference Include="Longbow.Data" Version="2.3.8-beta" />
+    <PackageReference Include="Longbow.Data" Version="2.3.8" />
     <PackageReference Include="Longbow.GiteeAuth" Version="2.2.0" />
     <PackageReference Include="Longbow.GitHubAuth" Version="2.2.0" />
     <PackageReference Include="Longbow.OAuth" Version="2.2.2" />
