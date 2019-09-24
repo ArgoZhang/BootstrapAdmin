@@ -1,5 +1,6 @@
 ﻿$(function () {
     var $imgUrl = $('#imgUrl');
+    $('[data-oauth="False"]').attr("data-original-title", "点击登录系统");
     $(".container").autoCenter();
 
     $("a[data-method]").on('click', function () {
