@@ -192,6 +192,30 @@
         "Application": "0"
     },
     {
+        "_id": ObjectId("5bd7b8445fa31256f77e4b06"),
+        "ParentId": "5bd7b8445fa31256f77e4b93",
+        "Name": "登录设置",
+        "Order": NumberInt(60),
+        "Icon": "fa fa-fa",
+        "Url": "loginSettings",
+        "Category": "0",
+        "Target": "_self",
+        "IsResource": NumberInt(2),
+        "Application": "0"
+    },
+    {
+        "_id": ObjectId("5bd7b8445fa31256f77e4b07"),
+        "ParentId": "5bd7b8445fa31256f77e4b93",
+        "Name": "自动锁屏",
+        "Order": NumberInt(70),
+        "Icon": "fa fa-fa",
+        "Url": "lockScreen",
+        "Category": "0",
+        "Target": "_self",
+        "IsResource": NumberInt(2),
+        "Application": "0"
+    },
+    {
         "_id": ObjectId("5bd7b8445fa31256f77e4b94"),
         "ParentId": "0",
         "Name": "菜单管理",
