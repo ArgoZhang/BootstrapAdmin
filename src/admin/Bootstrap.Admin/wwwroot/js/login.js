@@ -33,7 +33,7 @@
         capHeight: function () {
             // 如果关闭 oAuth 认证 高度要缩小
             var height = 150;
-            if ($(window).height() < 768) height = $('.slidercaptcha:first').hasClass('oauth') ? 96 : 150;
+            if ($(window).width() < 768) height = $('.slidercaptcha:first').hasClass('oauth') ? 96 : 150;
             return height;
         },
         capRegSuccess: function () {
