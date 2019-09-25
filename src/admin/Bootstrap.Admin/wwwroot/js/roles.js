@@ -146,12 +146,13 @@ $(function () {
                 child.find(':checkbox').prop('checked', val);
             }
 
-            // 如果 val 为选中状态 级联设置父级菜单为选中状态
-            if (val === true) {
-                $(this).parents('ol.dd-list').each(function (index, p) {
-                    $(p).prev().find(':checkbox').prop('checked', true);
-                });
-            }
+            // 子节点全部取消时父级菜单也取消
+            $(this).parents('ol.dd-list').each(function (index, p) {
+                if (val === false) {
+                    val = $(p).prev().next().find(':checked').length > 0;
+                }
+                $(p).prev().find(':checkbox').prop('checked', val);
+            });
         }).children('.radio').hide();
     });
 });
