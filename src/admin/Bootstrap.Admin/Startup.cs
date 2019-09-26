@@ -6,13 +6,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
-using System.Text.Encodings.Web;
-using System.Text.Unicode;
 
 namespace Bootstrap.Admin
 {
@@ -49,18 +48,22 @@ namespace Bootstrap.Admin
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+            services.AddLogging(logging => logging.AddFileLogger().AddDBLogger(ExceptionsHelper.Log));
             services.AddCors();
-            //services.AddLogging(builder => builder.AddFileLogger().AddDBLogger(ExceptionsHelper.Log));
             services.AddConfigurationManager();
             services.AddCacheManager();
             services.AddDbAdapter();
             services.AddIPLocator(DictHelper.ConfigIPLocator);
             services.AddOnlineUsers();
-            //services.AddSignalR().AddJsonProtocalDefault();
-            //services.AddSignalRExceptionFilterHandler<SignalRHub>((client, ex) => client.SendMessageBody(ex).ConfigureAwait(false));
+            services.AddSignalR().AddNewtonsoftJsonProtocol(op =>
+            {
+                op.PayloadSerializerSettings.ContractResolver = new DefaultContractResolver();
+                op.PayloadSerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
+            });
+            services.AddSignalRExceptionFilterHandler<SignalRHub>(async (client, ex) => await client.SendMessageBody(ex).ConfigureAwait(false));
             services.AddResponseCompression();
             services.AddBootstrapAdminAuthentication().AddGitee(OAuthHelper.Configure).AddGitHub(OAuthHelper.Configure);
-            services.AddAuthorization(options => options.DefaultPolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build());
+            services.AddAuthorization(options => options.DefaultPolicy = new AuthorizationPolicyBuilder().RequireBootstrapAdminAuthorizate().Build());
             //services.AddSwagger();
             services.AddButtonAuthorization(MenuHelper.AuthorizateButtons);
             services.AddBootstrapAdminBackgroundTask();
@@ -68,9 +71,13 @@ namespace Bootstrap.Admin
             services.AddAdminHealthChecks();
             services.AddControllersWithViews(options =>
             {
-                options.Filters.Add<BootstrapAdminAuthorizeFilter>();
                 options.Filters.Add<ExceptionFilter>();
                 options.Filters.Add<SignalRExceptionFilter<SignalRHub>>();
+            }).AddNewtonsoftJson(op =>
+            {
+                op.SerializerSettings.ContractResolver = new DefaultContractResolver();
+                op.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
+                JsonConvert.DefaultSettings = () => op.SerializerSettings;
             });
             //services.AddApiVersioning(option =>
             //{
@@ -107,16 +114,16 @@ namespace Bootstrap.Admin
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseBootstrapAdminAuthentication(RoleHelper.RetrievesByUserName, RoleHelper.RetrievesByUrl, AppHelper.RetrievesByUserName);
+            app.UseBootstrapAdminAuthorization(RoleHelper.RetrievesByUserName, RoleHelper.RetrievesByUrl, AppHelper.RetrievesByUserName);
             app.UseBootstrapHealthChecks();
             app.UseOnlineUsers(TraceHelper.Filter, TraceHelper.Save);
             app.UseCacheManager();
             //app.UseSwagger(Configuration["SwaggerPathBase"].TrimEnd('/'));
             app.UseEndpoints(endpoints =>
             {
-                //endpoints.MapHub<SignalRHub>("/NotiHub");
-                //endpoints.MapHub<TaskLogHub>("/TaskLogHub");
-                //endpoints.MapHealthChecks("/healths");
+                endpoints.MapHub<SignalRHub>("/NotiHub");
+                endpoints.MapHub<TaskLogHub>("/TaskLogHub");
+                endpoints.MapHealthChecks("/healths");
                 endpoints.MapDefaultControllerRoute().RequireAuthorization();
             });
         }
