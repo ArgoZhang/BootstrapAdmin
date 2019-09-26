@@ -203,12 +203,36 @@ namespace Bootstrap.DataAccess
         /// 获得数据区卡片标题是否显示
         /// </summary>
         /// <returns></returns>
-        public static bool RetrieveCardTitleStatus() => DbContextManager.Create<Dict>()?.RetrieveCardTitleStatus() ?? true;
+        public static bool RetrieveCardTitleStatus() => DbContextManager.Create<Dict>().RetrieveCardTitleStatus();
 
         /// <summary>
         /// 获得侧边栏状态 未真时显示
         /// </summary>
         /// <returns></returns>
-        public static bool RetrieveSidebarStatus() => DbContextManager.Create<Dict>()?.RetrieveSidebarStatus() ?? true;
+        public static bool RetrieveSidebarStatus() => DbContextManager.Create<Dict>().RetrieveSidebarStatus();
+
+        /// <summary>
+        /// 获得是否允许短信验证码登录
+        /// </summary>
+        /// <returns></returns>
+        public static bool RetrieveMobileLogin() => DbContextManager.Create<Dict>()?.RetrieveMobileLogin() ?? false;
+
+        /// <summary>
+        /// 获得是否允许 OAuth 认证登录
+        /// </summary>
+        /// <returns></returns>
+        public static bool RetrieveOAuthLogin() => DbContextManager.Create<Dict>()?.RetrieveOAuthLogin() ?? false;
+
+        /// <summary>
+        /// 获得自动锁屏时长 默认 30 秒
+        /// </summary>
+        /// <returns></returns>
+        public static int RetrieveAutoLockScreenPeriod() => DbContextManager.Create<Dict>()?.RetrieveAutoLockScreenPeriod() ?? 30;
+
+        /// <summary>
+        /// 获得自动锁屏 默认关闭
+        /// </summary>
+        /// <returns></returns>
+        public static bool RetrieveAutoLockScreen() => DbContextManager.Create<Dict>()?.RetrieveAutoLockScreen() ?? false;
     }
 }

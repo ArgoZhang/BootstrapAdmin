@@ -134,3 +134,10 @@ div.input-group .input-group-text {
 .form-group:last-child input {
     width: 80px;
 }
+
+@media (min-width: 576px) {
+    .form-inline .form-group {
+        flex: 0 1 auto;
+        margin-bottom: 1rem;
+    }
+}

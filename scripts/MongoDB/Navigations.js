@@ -192,6 +192,30 @@
         "Application": "0"
     },
     {
+        "_id": ObjectId("5bd7b8445fa31256f77e4b06"),
+        "ParentId": "5bd7b8445fa31256f77e4b93",
+        "Name": "登录设置",
+        "Order": NumberInt(60),
+        "Icon": "fa fa-fa",
+        "Url": "loginSettings",
+        "Category": "0",
+        "Target": "_self",
+        "IsResource": NumberInt(2),
+        "Application": "0"
+    },
+    {
+        "_id": ObjectId("5bd7b8445fa31256f77e4b07"),
+        "ParentId": "5bd7b8445fa31256f77e4b93",
+        "Name": "自动锁屏",
+        "Order": NumberInt(70),
+        "Icon": "fa fa-fa",
+        "Url": "lockScreen",
+        "Category": "0",
+        "Target": "_self",
+        "IsResource": NumberInt(2),
+        "Application": "0"
+    },
+    {
         "_id": ObjectId("5bd7b8445fa31256f77e4b94"),
         "ParentId": "0",
         "Name": "菜单管理",
@@ -630,6 +654,18 @@
         "Order": NumberInt(30),
         "Icon": "fa fa-bars",
         "Url": "~/Admin/Traces",
+        "Category": "0",
+        "Target": "_self",
+        "IsResource": NumberInt(0),
+        "Application": "0"
+    },
+    {
+        "_id": ObjectId("5bd9b3d868aa001661776f60"),
+        "ParentId": "5bd7b8445fa31256f77e4b9c",
+        "Name": "SQL日志",
+        "Order": NumberInt(40),
+        "Icon": "fa fa-database",
+        "Url": "~/Admin/SQL",
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(0),

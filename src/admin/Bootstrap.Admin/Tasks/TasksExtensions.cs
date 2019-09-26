@@ -1,9 +1,10 @@
-﻿using Longbow.Tasks;
+﻿using Bootstrap.DataAccess;
+using Longbow.Tasks;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
+using Task = System.Threading.Tasks.Task;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -49,6 +50,9 @@ namespace Microsoft.Extensions.DependencyInjection
 
             // 创建任务并禁用
             TaskServicesManager.GetOrAdd("禁用任务", token => Task.Delay(1000)).Status = SchedulerStatus.Disabled;
+
+            // 真实任务负责批次写入数据执行脚本到日志中
+            TaskServicesManager.GetOrAdd<LogHelper.DbLogTask>("SQL日志", TriggerBuilder.Build(Cron.Minutely()));
         });
     }
 }

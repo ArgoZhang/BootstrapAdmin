@@ -2,6 +2,8 @@
     font-weight: 500;
     cursor: pointer;
     display: inline-block;
+    text-overflow: ellipsis;
+    overflow: hidden;
     user-select: none;
     white-space: nowrap;
     margin: 0;
