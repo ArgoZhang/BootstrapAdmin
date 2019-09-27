@@ -1,6 +1,6 @@
 ﻿using Bootstrap.Admin.Query;
 using Bootstrap.DataAccess;
-using Bootstrap.Security;
+using Bootstrap.Security.Authentication;
 using Longbow.Web.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
