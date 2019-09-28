@@ -33,6 +33,14 @@ INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('网站设置', '前台
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('网站设置', '侧边栏状态', '1', 0);
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('网站设置', '卡片标题状态', '1', 0);
 
+-- 登录配置
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('网站设置', '短信验证码登录', '1', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('网站设置', 'OAuth 认证登录', '1', 0);
+
+-- 自动锁屏（秒）默认 30 秒
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('网站设置', '自动锁屏时长', '30', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('网站设置', '自动锁屏', '0', 0);
+
 -- 时长单位 月
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统设置', '程序异常保留时长', '1', 0);
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统设置', '操作日志保留时长', '12', 0);
@@ -67,6 +75,9 @@ INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (currval('navigations_id_seq') - 3, '保存样式', 30, 'fa fa-fa', 'saveTheme', '0', 2);
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (currval('navigations_id_seq') - 4, '清理缓存', 40, 'fa fa-fa', 'clearCache', '0', 2);
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (currval('navigations_id_seq') - 5, '清理全部缓存', 50, 'fa fa-fa', 'clearAllCache', '0', 2);
+INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (currval('navigations_id_seq') - 6, '登录设置', 60, 'fa fa-fa', 'loginSettings', '0', 2);
+INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (currval('navigations_id_seq') - 7, '自动锁屏', 70, 'fa fa-fa', 'lockScreen', '0', 2);
+
 INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (0, '菜单管理', 50, 'fa fa-dashboard', '~/Admin/Menus', '0');
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (currval('navigations_id_seq') - 1, '新增', 10, 'fa fa-fa', 'add', '0', 2);
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (currval('navigations_id_seq') - 2, '编辑', 20, 'fa fa-fa', 'edit', '0', 2);
@@ -104,6 +115,7 @@ INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (0
 INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (currval('navigations_id_seq') - 1, 0, '操作日志', 10, 'fa fa-edit', '~/Admin/Logs', '0');
 INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (currval('navigations_id_seq') - 2, 0, '登录日志', 20, 'fa fa-user-circle-o', '~/Admin/Logins', '0');
 INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (currval('navigations_id_seq') - 3, 0, '访问日志', 30, 'fa fa-bars', '~/Admin/Traces', '0');
+INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (currval('navigations_id_seq') - 4, 0, 'SQL日志', 40, 'fa fa-database', '~/Admin/SQL', '0');
 INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (0, '在线用户', 140, 'fa fa-users', '~/Admin/Online', '0');
 INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (0, '网站分析', 145, 'fa fa-line-chart', '~/Admin/Analyse', '0');
 INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (0, '程序异常', 150, 'fa fa-cubes', '~/Admin/Exceptions', '0');

@@ -1,0 +1,80 @@
+﻿@model NavigatorBarModel
+@{
+    ViewBag.Title = "SQL日志";
+}
+@section css {
+    <environment include="Development">
+        <link href="~/lib/datetimepicker/css//bootstrap-datetimepicker.css" rel="stylesheet" />
+        <link href="~/lib/bootstrap-table/bootstrap-table.css" rel="stylesheet" />
+    </environment>
+    <environment exclude="Development">
+        <link href="~/lib/datetimepicker/css//bootstrap-datetimepicker.min.css" rel="stylesheet" />
+        <link href="~/lib/bootstrap-table/bootstrap-table.min.css" rel="stylesheet" />
+    </environment>
+}
+@section javascript {
+    <environment include="Development">
+        <script src="~/lib/bootstrap-table/bootstrap-table.js"></script>
+        <script src="~/lib/bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
+        <script src="~/lib/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+        <script src="~/lib/tablexport/tableExport.js"></script>
+        <script src="~/lib/datetimepicker/js/bootstrap-datetimepicker.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/lib/bootstrap-table/bootstrap-table.min.js"></script>
+        <script src="~/lib/bootstrap-table/extensions/export/bootstrap-table-export.min.js"></script>
+        <script src="~/lib/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+        <script src="~/lib/tablexport/tableExport.min.js"></script>
+        <script src="~/lib/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+    </environment>
+    <script src="~/lib/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script src="~/js/sql.js" asp-append-version="true"></script>
+}
+<div class="card">
+    <div class="card-header">查询条件</div>
+    <div class="card-body">
+        <form class="form-inline">
+            <div class="row">
+                <div class="form-group col-sm-6 col-lg-auto">
+                    <label class="control-label" for="txt_operate_start">起始时间</label>
+                    <div class="input-group date">
+                        <input id="txt_operate_start" class="form-control" size="16" type="text" value="@DateTime.Today.ToString("yyyy-MM-dd")" readonly>
+                        <div class="input-group-append input-group-addon">
+                            <div class="input-group-text"><span class="fa fa-times"></span></div>
+                        </div>
+                        <div class="input-group-append input-group-addon">
+                            <div class="input-group-text"><span class="fa fa-calendar"></span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-sm-6 col-lg-auto">
+                    <label class="control-label" for="txt_operate_end">终止时间</label>
+                    <div class="input-group date">
+                        <input id="txt_operate_end" class="form-control" size="16" type="text" value="" readonly>
+                        <div class="input-group-append input-group-addon">
+                            <div class="input-group-text"><span class="fa fa-times"></span></div>
+                        </div>
+                        <div class="input-group-append input-group-addon">
+                            <div class="input-group-text"><span class="fa fa-calendar"></span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-sm-6 col-lg-auto">
+                    <label class="control-label" for="txt_username">登录用户</label>
+                    <input type="text" class="form-control" id="txt_username" />
+                </div>
+                <div class="form-group col-sm-6 col-lg-auto flex-sm-fill justify-content-sm-end align-self-sm-end">
+                    <button type="button" id="btn_query" class="btn btn-primary btn-fill"><i class="fa fa-search" aria-hidden="true"></i><span>查询</span></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="card">
+    <div class="card-header">
+        查询结果
+    </div>
+    <div class="card-body">
+        <table></table>
+    </div>
+</div>

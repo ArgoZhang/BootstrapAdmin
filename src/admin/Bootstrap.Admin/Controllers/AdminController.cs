@@ -57,6 +57,12 @@ namespace Bootstrap.Admin.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
+        public ActionResult SQL() => View(new NavigatorBarModel(this));
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Traces() => View(new NavigatorBarModel(this));
 
         /// <summary>
@@ -89,7 +95,7 @@ namespace Bootstrap.Admin.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        public ActionResult Settings() => View(new ThemeModel(this));
+        public ActionResult Settings() => View(new SettingsModel(this));
 
         /// <summary>
         /// 

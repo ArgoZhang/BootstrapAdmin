@@ -1,6 +1,6 @@
 ﻿function installDB() {
     write-host "init sqlserver database..." -ForegroundColor Cyan
-    $startPath = "$($env:appveyor_build_folder)\scripts\SqlServer"
+    $startPath = "$($env:appveyor_build_folder)\db\SqlServer"
     $sqlInstance = "(local)\SQL2014"
     $outFile = join-path $startPath "output.log"
     $sqlFile = join-path $startPath "Install.sql"
@@ -14,7 +14,7 @@
     $cmd = $mysql + ' -e "create database BootstrapAdmin;" -uroot'
     cmd.exe /c $cmd
 
-    $startPath = "$($env:appveyor_build_folder)\scripts\MySQL"
+    $startPath = "$($env:appveyor_build_folder)\db\MySQL"
     $para = ' -hlocalhost -uroot -DBootstrapAdmin < '
     $sqlFile = join-path $startPath "Install.sql"
     $cmd = $mysql + $para + $sqlFile
@@ -25,7 +25,7 @@
     cmd.exe /c $cmd   
 
     write-host "init mongodb data..." -ForegroundColor Cyan
-    $initFolder = "$($env:appveyor_build_folder)\scripts\MongoDB"
+    $initFolder = "$($env:appveyor_build_folder)\db\MongoDB"
     cd $initFolder
 
     cmd.exe /c "C:\mongodb\bin\mongo init.js"

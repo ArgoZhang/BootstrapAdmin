@@ -11,12 +11,11 @@
 
   <ItemGroup>
     <PackageReference Include="Bootstrap.Security.DataAccess" Version="2.2.21" />
-    <PackageReference Include="Bootstrap.Security.Mvc" Version="2.2.17" />
+    <PackageReference Include="Bootstrap.Security.Mvc" Version="3.0.0" />
     <PackageReference Include="Longbow.Configuration" Version="2.2.7" />
     <PackageReference Include="Longbow.Tasks" Version="2.2.23" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="3.1.6" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" PrivateAssets="All" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
     <PackageReference Include="Sentry.AspNetCore" Version="1.2.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />

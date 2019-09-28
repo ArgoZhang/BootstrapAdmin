@@ -1,4 +1,4 @@
-﻿@model ThemeModel
+﻿@model SettingsModel
 @{
     ViewBag.Title = "网站设置";
 }
@@ -95,8 +95,48 @@
                 </div>
             </div>
         </div>
-        <div class="modal-footer">
-            <button id="btnSaveCss" data-method="UISettings" class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
+        <div class="modal-footer text-right">
+            <button data-method="UISettings" class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
+        </div>
+    </div>
+</div>
+<div class="card" asp-auth="loginSettings">
+    <div class="card-header">登录设置</div>
+    <div class="card-body">
+        <div class="form-inline">
+            <div class="row">
+                <div class="form-group col-6">
+                    <label class="control-label" for="mobile">手机登录</label>
+                    <input id="mobile" hidden type="checkbox" data-default-val="@Model.ShowMobile" data-toggle="toggle" data-width="120" data-onstyle="success" data-on="允许" data-off="关闭" />
+                </div>
+                <div class="form-group col-6">
+                    <label class="control-label" for="cardTitle">OAuth 认证</label>
+                    <input id="oauth" hidden type="checkbox" data-default-val="@Model.ShowOAuth" data-toggle="toggle" data-width="120" data-onstyle="success" data-on="允许" data-off="关闭" />
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer text-right">
+            <button data-method="loginSettings" class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
+        </div>
+    </div>
+</div>
+<div class="card" asp-auth="lockScreen">
+    <div class="card-header">自动锁屏设置</div>
+    <div class="card-body">
+        <div class="form-inline">
+            <div class="row">
+                <div class="form-group col-6">
+                    <label class="control-label" for="lockScreen">自动锁屏</label>
+                    <input id="lockScreen" hidden type="checkbox" data-default-val="@Model.AutoLockScreen" data-toggle="toggle" data-width="120" data-onstyle="success" data-on="开启" data-off="关闭" />
+                </div>
+                <div class="form-group col-6">
+                    <label class="control-label" for="lockPeriod">时长间隔(秒)</label>
+                    <input id="lockPeriod" type="number" class="form-control" min="30" value="@Model.LockScreenPeriod" />
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer text-right">
+            <button data-method="saveAutoLock" class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
         </div>
     </div>
 </div>

@@ -57,6 +57,12 @@
             },
             'button[data-method="css"]': function () {
                 this.log({ crud: '设置网站样式' });
+            },
+            'button[data-method="UISettings"]': function () {
+                this.log({ crud: '保存网站设置' });
+            },
+            'button[data-method="LoginSettings"]': function () {
+                this.log({ crud: '保存登录设置' });
             }
         }
     };

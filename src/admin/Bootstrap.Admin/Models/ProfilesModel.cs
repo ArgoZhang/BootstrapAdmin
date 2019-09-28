@@ -8,7 +8,7 @@ namespace Bootstrap.Admin.Models
     /// <summary>
     /// 
     /// </summary>
-    public class ProfilesModel : ThemeModel
+    public class ProfilesModel : SettingsModel
     {
         /// <summary>
         /// 获得 头像文件大小

@@ -163,6 +163,12 @@ $(function () {
         }
     });
 
+    // clear parentID value
+    // bug https://gitee.com/LongbowEnterprise/dashboard/issues?id=I12E3S
+    $parentMenuName.next().find('button[data-method="clear"]').on('click', function () {
+        $parentMenuID.val('');
+    });
+
     $btnPickIcon.on('click', function () {
         $dialogNew.find('[data-toggle="LgbValidate"] [aria-describedby]').tooltip('hide');
         $dialogNew.hide();

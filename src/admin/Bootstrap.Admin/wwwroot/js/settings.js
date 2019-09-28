@@ -52,6 +52,30 @@ $(function () {
                     }
                 });
                 break;
+            case 'loginSettings':
+                var mobile = $('#mobile').prop('checked') ? "1" : "0";
+                $.bc({
+                    url: Settings.url, data: { name: '短信验证码登录', code: mobile, category: '网站设置' }, method: "post"
+                });
+                var oauth = $('#oauth').prop('checked') ? "1" : "0";
+                $.bc({
+                    url: Settings.url, data: { name: 'OAuth 认证登录', code: oauth, category: '网站设置' }, title: '登录设置', method: "post"
+                });
+                break;
+            case 'saveAutoLock':
+                var autoLock = $('#lockScreen').prop('checked') ? "1" : "0";
+                $.bc({
+                    url: Settings.url, data: { name: '自动锁屏', code: autoLock, category: '网站设置' }, method: "post"
+                });
+                $.bc({
+                    url: Settings.url, data: { name: '自动锁屏时长', code: $('#lockPeriod').val(), category: '网站设置' }, title: '保存自动锁屏设置', method: "post",
+                    callback: function (result) {
+                        if (result) {
+                            window.setTimeout(function () { window.location.reload(true); }, 1000);
+                        }
+                    }
+                });
+                break;
         }
     });
 

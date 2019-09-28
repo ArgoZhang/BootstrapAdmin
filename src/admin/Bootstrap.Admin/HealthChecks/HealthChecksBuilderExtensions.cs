@@ -1,4 +1,5 @@
 ﻿using Bootstrap.Admin.HealthChecks;
+using Microsoft.Extensions.Configuration;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -17,7 +18,10 @@ namespace Microsoft.Extensions.DependencyInjection
             var builder = services.AddHealthChecks();
             builder.AddCheck<DBHealthCheck>("db");
             builder.AddBootstrapAdminHealthChecks();
-            builder.AddCheck<GiteeHttpHealthCheck>("Gitee");
+
+            var config = services.BuildServiceProvider().GetRequiredService<IConfiguration>();
+            var checkGitee = config.GetValue("GiteeHealthChecks", false);
+            if (checkGitee) builder.AddCheck<GiteeHttpHealthCheck>("Gitee");
             return services;
         }
     }

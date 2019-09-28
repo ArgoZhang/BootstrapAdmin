@@ -240,7 +240,6 @@
         };
 
         var handleDragMove = function (e) {
-            e.preventDefault();
             if (!isMouseDown) return false;
             var eventX = e.clientX || e.touches[0].clientX;
             var eventY = e.clientY || e.touches[0].clientY;
