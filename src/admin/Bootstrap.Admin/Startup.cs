@@ -64,7 +64,7 @@ namespace Bootstrap.Admin
             services.AddResponseCompression();
             services.AddBootstrapAdminAuthentication().AddGitee(OAuthHelper.Configure).AddGitHub(OAuthHelper.Configure);
             services.AddAuthorization(options => options.DefaultPolicy = new AuthorizationPolicyBuilder().RequireBootstrapAdminAuthorizate().Build());
-            //services.AddSwagger();
+            services.AddSwagger();
             services.AddButtonAuthorization(MenuHelper.AuthorizateButtons);
             services.AddBootstrapAdminBackgroundTask();
             services.AddHttpClient<GiteeHttpClient>();
@@ -115,10 +115,10 @@ namespace Bootstrap.Admin
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseBootstrapAdminAuthorization(RoleHelper.RetrievesByUserName, RoleHelper.RetrievesByUrl, AppHelper.RetrievesByUserName);
+            app.UseSwagger(Configuration["SwaggerPathBase"].TrimEnd('/'));
             app.UseBootstrapHealthChecks();
             app.UseOnlineUsers(TraceHelper.Filter, TraceHelper.Save);
             app.UseCacheManager();
-            //app.UseSwagger(Configuration["SwaggerPathBase"].TrimEnd('/'));
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHub<SignalRHub>("/NotiHub");
