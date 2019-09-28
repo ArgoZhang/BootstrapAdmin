@@ -27,7 +27,7 @@ install:
     
     dotnet --version
     
-    xcopy "$($env:appveyor_build_folder)\scripts\MySQL\my.ini" "C:\Program Files\MySQL\MySQL Server 5.7" /y
+    xcopy "$($env:appveyor_build_folder)\db\MySQL\my.ini" "C:\Program Files\MySQL\MySQL Server 5.7" /y
 build_script:
 - ps: >-
     .\appveyor.build.ps1
