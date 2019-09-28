@@ -61,8 +61,7 @@ namespace Bootstrap.Admin
             services.AddSignalR().AddJsonProtocalDefault();
             services.AddSignalRExceptionFilterHandler<SignalRHub>((client, ex) => client.SendMessageBody(ex).ConfigureAwait(false));
             services.AddResponseCompression();
-            // 兼容 QQ 浏览器兼容模式
-            services.AddBootstrapAdminAuthentication(configureCookies: ConfigureCookie).AddGitee(OAuthHelper.Configure).AddGitHub(OAuthHelper.Configure);
+            services.AddBootstrapAdminAuthentication().AddGitee(OAuthHelper.Configure).AddGitHub(OAuthHelper.Configure);
             services.AddSwagger();
             services.AddButtonAuthorization(MenuHelper.AuthorizateButtons);
             services.AddBootstrapAdminBackgroundTask();
@@ -123,12 +122,6 @@ namespace Bootstrap.Admin
             });
             app.UseSwagger(Configuration["SwaggerPathBase"].TrimEnd('/'));
             app.UseMvcWithDefaultRoute();
-        }
-
-        private void ConfigureCookie(CookieAuthenticationOptions options)
-        {
-            var supportQQ = Configuration.GetValue("SupportQQBrowser", false);
-            if (supportQQ) options.Cookie.SameSite = SameSiteMode.None;
         }
     }
 }
