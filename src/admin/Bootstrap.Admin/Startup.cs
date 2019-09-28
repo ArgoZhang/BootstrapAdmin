@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -79,13 +81,13 @@ namespace Bootstrap.Admin
                 op.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
                 JsonConvert.DefaultSettings = () => op.SerializerSettings;
             });
-            //services.AddApiVersioning(option =>
-            //{
-            //    option.DefaultApiVersion = new ApiVersion(1, 0);
-            //    option.ReportApiVersions = true;
-            //    option.AssumeDefaultVersionWhenUnspecified = true;
-            //    option.ApiVersionReader = ApiVersionReader.Combine(new HeaderApiVersionReader("api-version"), new QueryStringApiVersionReader("api-version"));
-            //});
+            services.AddApiVersioning(option =>
+            {
+                option.DefaultApiVersion = new ApiVersion(1, 0);
+                option.ReportApiVersions = true;
+                option.AssumeDefaultVersionWhenUnspecified = true;
+                option.ApiVersionReader = ApiVersionReader.Combine(new HeaderApiVersionReader("api-version"), new QueryStringApiVersionReader("api-version"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
