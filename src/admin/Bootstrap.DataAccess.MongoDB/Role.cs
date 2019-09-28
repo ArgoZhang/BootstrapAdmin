@@ -80,11 +80,19 @@ namespace Bootstrap.DataAccess.MongoDB
             var user = UserHelper.Retrieves().Cast<User>().FirstOrDefault(u => u.UserName.ToLowerInvariant() == userName.ToLowerInvariant());
             if (user != null)
             {
+                // 用户所属角色
                 var role = RoleHelper.Retrieves();
                 roles.AddRange(role.Where(r => user.Roles.Any(rl => rl == r.Id)).Select(r => r.RoleName));
+
+                // 用户所属部门 部门所属角色
+                GroupHelper.Retrieves().Cast<Group>().Where(group => user.Groups.Any(g => g == group.Id)).ToList().ForEach(g =>
+                {
+                    roles.AddRange(role.Where(r => g.Roles.Any(rl => rl == r.Id)).Select(r => r.RoleName));
+                });
+
                 if (roles.Count == 0) roles.Add("Default");
             }
-            return roles;
+            return roles.Distinct();
         }
 
         /// <summary>
