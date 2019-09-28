@@ -21,7 +21,6 @@ namespace Bootstrap.Admin.Controllers
     /// Account controller.
     /// </summary>
     [AllowAnonymous]
-    [AutoValidateAntiforgeryToken]
     public class AccountController : Controller
     {
         private const string MobileSchema = "Mobile";
@@ -125,6 +124,7 @@ namespace Bootstrap.Admin.Controllers
         /// <param name="password">Password.</param>
         /// <param name="remember">Remember.</param>
         [HttpPost]
+        [IgnoreAntiforgeryToken]
         public async Task<IActionResult> Login(string userName, string password, string remember)
         {
             var auth = UserHelper.Authenticate(userName, password);
