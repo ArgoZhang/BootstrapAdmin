@@ -92,7 +92,7 @@ namespace Bootstrap.Admin.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.Use(async (context, next) =>
             {
@@ -118,7 +118,7 @@ namespace Bootstrap.Admin.Api
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class HealthCheckWebHost<TStartup> : WebApplicationFactory<TStartup> where TStartup : class
     {
@@ -129,7 +129,7 @@ namespace Bootstrap.Admin.Api
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         protected override IWebHostBuilder CreateWebHostBuilder() => WebHost.CreateDefaultBuilder<TStartup>(null);
