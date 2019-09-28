@@ -108,7 +108,7 @@ namespace Bootstrap.Admin.Controllers
         /// </summary>
         /// <param name="host"></param>
         /// <returns></returns>
-        public ActionResult Profiles([FromServices]IHostingEnvironment host) => View(new ProfilesModel(this, host));
+        public ActionResult Profiles([FromServices]IWebHostEnvironment host) => View(new ProfilesModel(this, host));
 
         /// <summary>
         /// 

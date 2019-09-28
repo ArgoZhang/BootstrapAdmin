@@ -1,4 +1,4 @@
-using Bootstrap.DataAccess;
+﻿using Bootstrap.DataAccess;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -24,7 +24,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <returns></returns>
         [HttpPost("{id}")]
         [ButtonAuthorize(Url = "~/Admin/Profiles", Auth = "saveIcon")]
-        public JsonResult Post(string id, [FromServices]IHostingEnvironment env, [FromForm]DeleteFileCollection files)
+        public JsonResult Post(string id, [FromServices]IWebHostEnvironment env, [FromForm]DeleteFileCollection files)
         {
             if (!id.Equals("Delete", StringComparison.OrdinalIgnoreCase)) return new JsonResult(new object());
 
@@ -72,7 +72,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <returns></returns>
         [HttpPost]
         [ButtonAuthorize(Url = "~/Admin/Profiles", Auth = "saveIcon")]
-        public async Task<JsonResult> Post([FromServices]IHostingEnvironment env, IFormCollection files)
+        public async Task<JsonResult> Post([FromServices]IWebHostEnvironment env, IFormCollection files)
         {
             var previewUrl = string.Empty;
             long fileSize = 0;
