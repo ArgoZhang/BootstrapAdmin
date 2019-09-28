@@ -107,12 +107,15 @@ namespace Bootstrap.DataAccess.MongoDB
             // 已经存在或者已经在新用户中了
             if (UserHelper.RetrieveUserByUserName(new GenericIdentity(user.UserName)) != null || UserHelper.RetrieveNewUsers().Any(u => u.UserName == user.UserName)) return false;
 
-            DbManager.Users.InsertOne(new User()
+            user.PassSalt = LgbCryptography.GenerateSalt();
+            user.Password = LgbCryptography.ComputeHash(user.Password, user.PassSalt);
+
+            var newUser = new User()
             {
                 UserName = user.UserName,
                 DisplayName = user.DisplayName,
-                PassSalt = LgbCryptography.GenerateSalt(),
-                Password = LgbCryptography.ComputeHash(user.Password, user.PassSalt),
+                PassSalt = user.PassSalt,
+                Password = user.Password,
                 RegisterTime = DateTime.Now,
                 ApprovedTime = user.ApprovedTime,
                 ApprovedBy = user.ApprovedBy,
@@ -121,7 +124,8 @@ namespace Bootstrap.DataAccess.MongoDB
                 Icon = user.Icon,
                 Description = user.Description,
                 IsReset = 0
-            });
+            };
+            DbManager.Users.InsertOne(newUser);
             user.Id = DbManager.Users.Find(r => r.UserName == user.UserName).FirstOrDefault().Id;
             return true;
         }
