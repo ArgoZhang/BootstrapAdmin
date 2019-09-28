@@ -8,11 +8,7 @@
     <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)src\Keys\Longbow.Utility.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp2.2'">
-    <MvcRazorCompileOnPublish>true</MvcRazorCompileOnPublish>
-  </PropertyGroup>
-
-  <Target Condition=" '$(TargetFramework)' == 'netcoreapp2.2' " Name="PostPublish" AfterTargets="Publish">
+  <Target Condition=" '$(TargetFramework)' == 'netcoreapp3.0' " Name="PostPublish" AfterTargets="Publish">
     <Message Text="Publish -> $(PublishDir)" Importance="high" />
     <Copy Condition="'$(OS)' == 'Windows_NT'" DestinationFolder="$(PublishDir)" SourceFiles="$(MSBuildThisFileDirectory)src\admin\keys\Longbow.lic" SkipUnchangedFiles="true" />
     <Copy Condition="'$(OS)' == 'UNIX'" DestinationFolder="$(PublishDir)" SourceFiles="$(MSBuildThisFileDirectory)src/admin/keys/Longbow.lic" SkipUnchangedFiles="true" />
@@ -20,7 +16,7 @@
     <Copy Condition="'$(OS)' == 'Windows_NT'" DestinationFolder="$(PublishDir)" SourceFiles="$(MSBuildThisFileDirectory)src/admin/Bootstrap.Admin/BootstrapAdmin.db" SkipUnchangedFiles="true" />
   </Target>
 
-  <Target Condition=" '$(TargetFramework)' == 'netcoreapp2.2' " Name="PostBuild" AfterTargets="PostBuildEvent">
+  <Target Condition=" '$(TargetFramework)' == 'netcoreapp3.0' " Name="PostBuild" AfterTargets="PostBuildEvent">
     <Message Text="Copy file -> $(TargetDir)" Importance="high" />
     <Copy Condition="'$(OS)' == 'Windows_NT'" DestinationFolder="$(TargetDir)" SourceFiles="$(MSBuildThisFileDirectory)src\admin\keys\Longbow.lic" SkipUnchangedFiles="true" />
     <Copy Condition="'$(OS)' == 'UNIX'" DestinationFolder="$(TargetDir)" SourceFiles="$(MSBuildThisFileDirectory)src/admin/keys/Longbow.lic" SkipUnchangedFiles="true" />
