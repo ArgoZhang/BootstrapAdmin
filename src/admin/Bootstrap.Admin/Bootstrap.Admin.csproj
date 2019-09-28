@@ -15,7 +15,7 @@
     <PackageReference Include="Bootstrap.Security.Mvc" Version="3.0.0" />
     <PackageReference Include="Longbow.Configuration" Version="2.2.7" />
     <PackageReference Include="Longbow.Logging" Version="3.0.0" />
-    <PackageReference Include="Longbow.Tasks" Version="2.2.23" />
+    <PackageReference Include="Longbow.Tasks" Version="2.2.24" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.NewtonsoftJson" Version="3.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.0.0" />
