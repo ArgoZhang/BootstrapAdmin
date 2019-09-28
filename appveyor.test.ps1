@@ -1,28 +1,28 @@
 ﻿function installDB() {
     write-host "init sqlserver database..." -ForegroundColor Cyan
     $startPath = "$($env:appveyor_build_folder)\db\SqlServer"
-    $sqlInstance = "(local)\SQL2014"
+    $sqlInstance = "(local)\SQL2017"
     $outFile = join-path $startPath "output.log"
     $sqlFile = join-path $startPath "Install.sql"
     $initFile = join-path $startPath "InitData.sql"
 
     sqlcmd -S "$sqlInstance" -U sa -P Password12! -i "$sqlFile" -i "$initFile" -o "$outFile"
 
-    write-host "init mysql database..." -ForegroundColor Cyan
-    $env:MYSQL_PWD="Password12!"
-    $mysql = '"C:\Program Files\MySQL\MySQL Server 5.7\bin\mysql.exe"'
-    $cmd = $mysql + ' -e "create database BootstrapAdmin;" -uroot'
-    cmd.exe /c $cmd
+    #write-host "init mysql database..." -ForegroundColor Cyan
+    #$env:MYSQL_PWD="Password12!"
+    #$mysql = '"C:\Program Files\MySQL\MySQL Server 5.7\bin\mysql.exe"'
+    #$cmd = $mysql + ' -e "create database BootstrapAdmin;" -uroot'
+    #cmd.exe /c $cmd
 
-    $startPath = "$($env:appveyor_build_folder)\db\MySQL"
-    $para = ' -hlocalhost -uroot -DBootstrapAdmin < '
-    $sqlFile = join-path $startPath "Install.sql"
-    $cmd = $mysql + $para + $sqlFile
-    cmd.exe /c $cmd
+    #$startPath = "$($env:appveyor_build_folder)\db\MySQL"
+    #$para = ' -hlocalhost -uroot -DBootstrapAdmin < '
+    #$sqlFile = join-path $startPath "Install.sql"
+    #$cmd = $mysql + $para + $sqlFile
+    #cmd.exe /c $cmd
 
-    $initFile = join-path $startPath "InitData.sql"
-    $cmd = $mysql + $para + $initFile
-    cmd.exe /c $cmd   
+    #$initFile = join-path $startPath "InitData.sql"
+    #$cmd = $mysql + $para + $initFile
+    #cmd.exe /c $cmd   
 
     write-host "init mongodb data..." -ForegroundColor Cyan
     $initFolder = "$($env:appveyor_build_folder)\db\MongoDB"
@@ -38,7 +38,7 @@
 
 function runUnitTest() {
     write-host "dotnet test test\UnitTest" -ForegroundColor Cyan
-    dotnet test test\UnitTest /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Include="[Bootstrap*]*" /p:ExcludeByFile="..\..\src\admin\Bootstrap.Admin\Program.cs%2c..\..\src\admin\Bootstrap.Admin\Startup.cs%2c..\..\src\admin\Bootstrap.Admin\HttpHeaderOperation.cs" /p:CoverletOutput=..\..\
+    dotnet test test\UnitTest --filter FullyQualifiedName!~MySql /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Include="[Bootstrap*]*" /p:ExcludeByFile="..\..\src\admin\Bootstrap.Admin\Program.cs%2c..\..\src\admin\Bootstrap.Admin\Startup.cs%2c..\..\src\admin\Bootstrap.Admin\HttpHeaderOperation.cs" /p:CoverletOutput=..\..\
 }
 
 function coverallUnitTest() {
@@ -67,6 +67,9 @@ function codecovUnitTest() {
     cmd.exe /c "$codecovCmd -f ""coverage.opencover.xml"""
 }
 
-installDB
-coverallUnitTest
-codecovUnitTest
+$branch = $($env:APPVEYOR_REPO_BRANCH)
+if ($branch -ne "dev") {
+    installDB
+    coverallUnitTest
+    codecovUnitTest
+}
