@@ -3,6 +3,7 @@ using Bootstrap.DataAccess;
 using Longbow.GiteeAuth;
 using Longbow.GitHubAuth;
 using Longbow.Web;
+using Longbow.WeChatAuth;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -198,6 +199,17 @@ namespace Bootstrap.Admin.Controllers
         {
             var enabled = config.GetValue($"{nameof(GitHubOptions)}:Enabled", false);
             return Challenge(enabled ? GitHubDefaults.AuthenticationScheme : CookieAuthenticationDefaults.AuthenticationScheme);
+        }
+
+        /// <summary>
+        /// WeChat 认证
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public IActionResult WeChat([FromServices]IConfiguration config)
+        {
+            var enabled = config.GetValue($"{nameof(GitHubOptions)}:Enabled", false);
+            return Challenge(enabled ? WeChatDefaults.AuthenticationScheme : CookieAuthenticationDefaults.AuthenticationScheme);
         }
     }
 }
