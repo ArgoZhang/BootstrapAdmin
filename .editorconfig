@@ -6,6 +6,10 @@ root=true
 # All files 
 [*] 
 indent_style = space 
+# shell files
+[*.{cmd,sh,bat}]
+insert_final_newline = true 
+trim_trailing_whitespace = true
 # Code files 
 [*.{cs,csx,vb,vbx}] 
 indent_size = 4 

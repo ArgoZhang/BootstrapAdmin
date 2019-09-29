@@ -1,5 +1,4 @@
 ﻿using Bootstrap.Admin.HealthChecks;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
@@ -8,8 +7,8 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
-using System.IO;
 using System.Net.Http;
 using UnitTest;
 using Xunit;
@@ -88,18 +87,19 @@ namespace Bootstrap.Admin.Api
             services.AddDbAdapter();
             var builder = services.AddHealthChecks();
             builder.AddCheck<DBHealthCheck>("db");
-            services.AddMvcCore();
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
+            app.UseRouting();
             app.Use(async (context, next) =>
             {
                 context.User = new System.Security.Claims.ClaimsPrincipal(new System.Security.Principal.GenericIdentity("Argo"));
                 await next();
             });
-            app.UseHealthChecks("/Healths", new HealthCheckOptions()
+            app.UseEndpoints(builder => builder.MapHealthChecks("/Healths", new HealthCheckOptions()
             {
                 ResponseWriter = (context, report) =>
                 {
@@ -112,8 +112,7 @@ namespace Bootstrap.Admin.Api
                     [HealthStatus.Degraded] = StatusCodes.Status200OK,
                     [HealthStatus.Unhealthy] = StatusCodes.Status200OK
                 }
-            });
-            app.UseMvcWithDefaultRoute();
+            }));
         }
     }
 
@@ -132,6 +131,6 @@ namespace Bootstrap.Admin.Api
         ///
         /// </summary>
         /// <returns></returns>
-        protected override IWebHostBuilder CreateWebHostBuilder() => WebHost.CreateDefaultBuilder<TStartup>(null);
+        protected override IHostBuilder CreateHostBuilder() => Host.CreateDefaultBuilder().ConfigureWebHostDefaults(builder => builder.UseStartup<TStartup>());
     }
 }

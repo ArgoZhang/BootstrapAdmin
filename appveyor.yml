@@ -1,8 +1,10 @@
 ﻿version: 1.0.{build}
 branches:
   only:
+  - release
   - master
-image: Visual Studio 2017
+  - dev
+image: Visual Studio 2019
 clone_depth: 1
 init:
 - ps: git version
@@ -18,16 +20,11 @@ environment:
     secure: +22PuAn5seq4bbCVCly8zDFuyEV3m2NjW3QuM0+2gm4c8akwicNFmv2T/ZGd0Jpd
 cache: C:\ProgramData\chocolatey\lib\codecov\tools
 services:
-- mssql2014
-- mysql
+- mssql2017
 - mongodb
 install:
 - ps: >-
-    #copy my.ini into mysql folder
-    
     dotnet --version
-    
-    xcopy "$($env:appveyor_build_folder)\db\MySQL\my.ini" "C:\Program Files\MySQL\MySQL Server 5.7" /y
 build_script:
 - ps: >-
     .\appveyor.build.ps1

@@ -37,10 +37,6 @@ namespace UnitTest
         {
             if (providerName == DatabaseProviderType.SQLite)
             {
-                var dbPath = RetrievePath($"UnitTest{Path.DirectorySeparatorChar}DB{Path.DirectorySeparatorChar}UnitTest.db");
-                var dbFile = Path.Combine(AppContext.BaseDirectory, "UnitTest.db");
-                File.Copy(dbPath, dbFile, true);
-
                 builder.ConfigureAppConfiguration(app => app.AddInMemoryCollection(new KeyValuePair<string, string>[] {
                     new KeyValuePair<string, string>("DB:0:Enabled", "false"),
                     new KeyValuePair<string, string>("DB:1:Enabled", "true")
