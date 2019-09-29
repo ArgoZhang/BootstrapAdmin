@@ -23,6 +23,6 @@ namespace Bootstrap.Admin
         /// <returns></returns>
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-            .ConfigureWebHostDefaults(builder => builder.UseStartup<Startup>());
+            .ConfigureWebHostDefaults(builder => builder.UseSentry().UseStartup<Startup>());
     }
 }
