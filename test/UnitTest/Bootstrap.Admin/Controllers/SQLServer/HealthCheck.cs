@@ -1,6 +1,6 @@
 ﻿using Xunit;
 
-namespace Bootstrap.Admin.Controllers.SQLServer
+namespace Bootstrap.Admin.Controllers.SqlServer
 {
     public class HealthCheck : ControllerTest
     {
