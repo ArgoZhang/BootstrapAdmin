@@ -1,4 +1,5 @@
 ﻿<Project>
+  
   <PropertyGroup>
     <Copyright>Longbow</Copyright>
     <Authors>Argo Zhang(argo@163.com)</Authors>
@@ -11,9 +12,9 @@
   <Target Condition=" '$(TargetFramework)' == 'netcoreapp3.0' " Name="PostPublish" AfterTargets="Publish">
     <Message Text="Publish -> $(PublishDir)" Importance="high" />
     <Copy Condition="'$(OS)' == 'Windows_NT'" DestinationFolder="$(PublishDir)" SourceFiles="$(MSBuildThisFileDirectory)src\admin\keys\Longbow.lic" SkipUnchangedFiles="true" />
-    <Copy Condition="'$(OS)' == 'UNIX'" DestinationFolder="$(PublishDir)" SourceFiles="$(MSBuildThisFileDirectory)src/admin/keys/Longbow.lic" SkipUnchangedFiles="true" />
     <Copy Condition="'$(OS)' == 'Windows_NT'" DestinationFolder="$(PublishDir)" SourceFiles="$(MSBuildThisFileDirectory)src\admin\Bootstrap.Admin\BootstrapAdmin.db" SkipUnchangedFiles="true" />
-    <Copy Condition="'$(OS)' == 'Windows_NT'" DestinationFolder="$(PublishDir)" SourceFiles="$(MSBuildThisFileDirectory)src/admin/Bootstrap.Admin/BootstrapAdmin.db" SkipUnchangedFiles="true" />
+    <Copy Condition="'$(OS)' == 'UNIX'" DestinationFolder="$(PublishDir)" SourceFiles="$(MSBuildThisFileDirectory)src/admin/keys/Longbow.lic" SkipUnchangedFiles="true" />
+    <Copy Condition="'$(OS)' == 'UNIX'" DestinationFolder="$(PublishDir)" SourceFiles="$(MSBuildThisFileDirectory)src/admin/Bootstrap.Admin/BootstrapAdmin.db" SkipUnchangedFiles="true" />
   </Target>
 
   <Target Condition=" '$(TargetFramework)' == 'netcoreapp3.0' " Name="PostBuild" AfterTargets="PostBuildEvent">
