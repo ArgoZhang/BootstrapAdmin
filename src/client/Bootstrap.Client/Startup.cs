@@ -1,6 +1,7 @@
 ﻿using Bootstrap.Client.DataAccess;
 using Longbow.Web;
 using Longbow.Web.SignalR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
@@ -54,19 +56,19 @@ namespace Bootstrap.Client
             services.AddBootstrapHttpClient();
             services.AddIPLocator(DictHelper.ConfigIPLocator);
             services.AddOnlineUsers();
-            services.AddSignalR().AddJsonProtocalDefault();
             services.AddResponseCompression();
             services.AddBootstrapAdminAuthentication();
-            services.AddMvc(options =>
+            services.AddAuthorization(options => options.DefaultPolicy = new AuthorizationPolicyBuilder().RequireBootstrapAdminAuthorizate().Build());
+            services.AddControllersWithViews(options =>
             {
-                options.Filters.Add<BootstrapAdminAuthorizeFilter>();
                 options.Filters.Add<ExceptionFilter>();
-            }).AddJsonOptions(options =>
+                options.Filters.Add<SignalRExceptionFilter<SignalRHub>>();
+            }).AddNewtonsoftJson(op =>
             {
-                options.SerializerSettings.ContractResolver = new DefaultContractResolver();
-                options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
-                JsonConvert.DefaultSettings = () => options.SerializerSettings;
-            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+                op.SerializerSettings.ContractResolver = new DefaultContractResolver();
+                op.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
+                JsonConvert.DefaultSettings = () => op.SerializerSettings;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -75,7 +77,7 @@ namespace Bootstrap.Client
         /// </summary>
         /// <param name="app"></param>
         /// <param name="env"></param>
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseForwardedHeaders(new ForwardedHeadersOptions() { ForwardedHeaders = ForwardedHeaders.All });
             if (env.IsDevelopment())
@@ -94,15 +96,16 @@ namespace Bootstrap.Client
             app.UseResponseCompression();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-            app.UseBootstrapAdminAuthentication(RoleHelper.RetrievesByUserName, RoleHelper.RetrievesByUrl, AppHelper.RetrievesByUserName);
+
+            app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
+            app.UseBootstrapAdminAuthorization(RoleHelper.RetrievesByUserName, RoleHelper.RetrievesByUrl, AppHelper.RetrievesByUserName);
             app.UseCacheManager();
             app.UseOnlineUsers(callback: TraceHelper.Save);
-            app.UseSignalR(routes => { routes.MapHub<SignalRHub>("/NotiHub"); });
-            app.UseMvc(routes =>
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapDefaultControllerRoute().RequireAuthorization();
             });
         }
     }
