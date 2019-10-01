@@ -70,7 +70,10 @@
             {
                 title: "值", field: "value", formatter: function (value, row) {
                     if (row.name === "Exception") value = $.format("<span class='text-danger'>{0}</span>", value);
-                    if (row.name === "dotnet --info") value = value.replace(/\r\n/g, "<br>");
+                    if (row.name === "dotnet --info") {
+                        value = value.replace(/\r\n/g, "<br>");
+                        value = value.replace(/\n/g, "<br>");
+                    }
                     return value;
                 }
             }
