@@ -4,6 +4,7 @@ using PetaPoco;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace Bootstrap.DataAccess
@@ -81,9 +82,12 @@ namespace Bootstrap.DataAccess
                 {
                     logs.Add(log);
                 };
-                using (var db = DbManager.Create(enableLog: false))
+                if (logs.Any())
                 {
-                    db.InsertBatch(logs);
+                    using (var db = DbManager.Create(enableLog: false))
+                    {
+                        db.InsertBatch(logs);
+                    }
                 }
                 return System.Threading.Tasks.Task.CompletedTask;
             }
