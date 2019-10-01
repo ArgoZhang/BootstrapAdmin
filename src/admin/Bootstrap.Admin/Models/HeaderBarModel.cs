@@ -24,6 +24,10 @@ namespace Bootstrap.Admin.Models
                 AppCode = user.App;
                 Css = user.Css;
                 ActiveCss = string.IsNullOrEmpty(Css) ? Theme : Css;
+
+                // 通过 AppCode 获取用户默认应用的标题
+                Title = DictHelper.RetrieveWebTitle(AppCode);
+                Footer = DictHelper.RetrieveWebFooter(AppCode);
             }
         }
 

@@ -98,14 +98,16 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获取站点 Title 配置信息
         /// </summary>
+        /// <param name="appId"></param>
         /// <returns></returns>
-        public static string RetrieveWebTitle() => DbContextManager.Create<Dict>().RetrieveWebTitle();
+        public static string RetrieveWebTitle(string appId = "0") => DbContextManager.Create<Dict>().RetrieveWebTitle(appId);
 
         /// <summary>
         /// 获取站点 Footer 配置信息
         /// </summary>
+        /// <param name="appId"></param>
         /// <returns></returns>
-        public static string RetrieveWebFooter() => DbContextManager.Create<Dict>().RetrieveWebFooter();
+        public static string RetrieveWebFooter(string appId = "0") => DbContextManager.Create<Dict>().RetrieveWebFooter(appId);
 
         /// <summary>
         /// 获得系统中配置的可以使用的网站样式
