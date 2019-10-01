@@ -10,10 +10,11 @@ namespace Bootstrap.Admin.Models
         /// <summary>
         /// 默认构造函数
         /// </summary>
-        public ModelBase()
+        /// <param name="appId"></param>
+        public ModelBase(string appId = "0")
         {
-            Title = DictHelper.RetrieveWebTitle();
-            Footer = DictHelper.RetrieveWebFooter();
+            Title = DictHelper.RetrieveWebTitle(appId);
+            Footer = DictHelper.RetrieveWebFooter(appId);
             Theme = DictHelper.RetrieveActiveTheme();
             IsDemo = DictHelper.RetrieveSystemModel();
             ShowCardTitle = DictHelper.RetrieveCardTitleStatus() ? "" : "no-card-header";
@@ -24,6 +25,14 @@ namespace Bootstrap.Admin.Models
             ShowOAuth = AllowOAuth ? "" : "oauth";
             LockScreenPeriod = DictHelper.RetrieveAutoLockScreenPeriod();
             EnableAutoLockScreen = DictHelper.RetrieveAutoLockScreen();
+        }
+
+        /// <summary>
+        /// 默认构造函数
+        /// </summary>
+        public ModelBase() : this("0")
+        {
+
         }
 
         /// <summary>

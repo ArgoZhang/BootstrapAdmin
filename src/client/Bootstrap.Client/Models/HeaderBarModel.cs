@@ -29,6 +29,7 @@ namespace Bootstrap.Client.Models
             var authHost = ConfigurationManager.Get<BootstrapAdminAuthenticationOptions>().AuthHost;
             var uriBuilder = new UriBuilder(authHost);
             uriBuilder.Path = uriBuilder.Path == "/" ? CookieAuthenticationDefaults.LogoutPath.Value : $"{uriBuilder.Path.TrimEnd('/')}{CookieAuthenticationDefaults.LogoutPath.Value}";
+            uriBuilder.Query = $"AppId={AppId}";
             LogoutUrl = uriBuilder.ToString();
 
             // set Icon

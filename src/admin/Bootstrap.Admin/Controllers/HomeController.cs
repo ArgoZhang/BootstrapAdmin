@@ -19,7 +19,7 @@ namespace Bootstrap.Admin.Controllers
         {
             var model = new HeaderBarModel(User.Identity);
             if (string.IsNullOrEmpty(model.UserName)) return Redirect(Request.PathBase + CookieAuthenticationDefaults.LogoutPath);
-            var url = DictHelper.RetrieveHomeUrl(model.AppCode);
+            var url = DictHelper.RetrieveHomeUrl(model.AppId);
             return url.Equals("~/Home/Index", System.StringComparison.OrdinalIgnoreCase) ? (IActionResult)View(model) : Redirect(url);
         }
 
