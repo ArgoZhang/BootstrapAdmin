@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Linq;
@@ -67,16 +68,17 @@ namespace Bootstrap.Admin.Controllers
         /// <summary>
         /// 系统登录方法
         /// </summary>
+        /// <param name="appId"></param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult Login()
+        public ActionResult Login([FromQuery] string appId = "0")
         {
             if (DictHelper.RetrieveSystemModel())
             {
                 ViewBag.UserName = "Admin";
                 ViewBag.Password = "123789";
             }
-            return User.Identity.IsAuthenticated ? (ActionResult)Redirect("~/Home/Index") : View("Login", new LoginModel());
+            return User.Identity.IsAuthenticated ? (ActionResult)Redirect("~/Home/Index") : View("Login", new LoginModel(appId));
         }
 
         /// <summary>
@@ -125,12 +127,13 @@ namespace Bootstrap.Admin.Controllers
         /// <param name="userName">User name.</param>
         /// <param name="password">Password.</param>
         /// <param name="remember">Remember.</param>
+        /// <param name="appId"></param>
         [HttpPost]
-        public async Task<IActionResult> Login(string userName, string password, string remember)
+        public async Task<IActionResult> Login(string userName, string password, string remember, string appId = "0")
         {
             var auth = UserHelper.Authenticate(userName, password);
             HttpContext.Log(userName, auth);
-            return auth ? await SignInAsync(userName, remember == "true") : View("Login", new LoginModel() { AuthFailed = true });
+            return auth ? await SignInAsync(userName, remember == "true") : View("Login", new LoginModel(appId) { AuthFailed = true });
         }
 
         private async Task<IActionResult> SignInAsync(string userName, bool persistent, string authenticationScheme = CookieAuthenticationDefaults.AuthenticationScheme)
@@ -163,12 +166,13 @@ namespace Bootstrap.Admin.Controllers
         /// <summary>
         /// Logout this instance.
         /// </summary>
+        /// <param name="appId"></param>
         /// <returns>The logout.</returns>
         [HttpGet]
-        public async Task<IActionResult> Logout()
+        public async Task<IActionResult> Logout([FromQuery]string appId = "0")
         {
             await HttpContext.SignOutAsync();
-            return Redirect(Request.PathBase + CookieAuthenticationDefaults.LoginPath);
+            return Redirect(QueryHelpers.AddQueryString(Request.PathBase + CookieAuthenticationDefaults.LoginPath, "AppId", appId));
         }
 
         /// <summary>
