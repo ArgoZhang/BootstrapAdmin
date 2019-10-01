@@ -4,7 +4,7 @@
         return healthStatus[value];
     };
 
-    var cate = { "db": "数据库", "file": "组件文件", "mem": "内存", "Gitee": "Gitee 接口", "gc": "垃圾回收器" };
+    var cate = { "db": "数据库", "file": "组件文件", "mem": "内存", "Gitee": "Gitee 接口", "gc": "垃圾回收器", "dotnet-runtime": "运行时" };
     var CategoryFormatter = function (value) {
         return cate[value];
     };
@@ -70,6 +70,7 @@
             {
                 title: "值", field: "value", formatter: function (value, row) {
                     if (row.name === "Exception") value = $.format("<span class='text-danger'>{0}</span>", value);
+                    if (row.name === "dotnet --info") value = value.replace(/\r\n/g, "<br>");
                     return value;
                 }
             }
