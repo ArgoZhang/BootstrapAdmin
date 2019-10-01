@@ -29,12 +29,12 @@ namespace Bootstrap.Admin.Models
         /// <summary>
         /// 获取 网站标题
         /// </summary>
-        public string Title { get; private set; }
+        public string Title { get; protected set; }
 
         /// <summary>
         /// 获取 网站页脚
         /// </summary>
-        public string Footer { get; private set; }
+        public string Footer { get; protected set; }
 
         /// <summary>
         /// 网站样式全局设置

@@ -74,21 +74,23 @@ namespace Bootstrap.DataAccess.MongoDB
         }
 
         /// <summary>
-        /// 
+        /// 获得网站标题设置
         /// </summary>
+        /// <param name="appId"></param>
         /// <returns></returns>
-        public override string RetrieveWebTitle()
+        public override string RetrieveWebTitle(string appId = "0")
         {
-            var code = RetrieveAppName("网站标题");
+            var code = RetrieveAppName("网站标题", appId);
             if (code == "网站标题未设置") code = DictHelper.RetrieveDicts().FirstOrDefault(d => d.Name == "网站标题" && d.Category == "网站设置" && d.Define == 0)?.Code ?? "后台管理系统";
             return code;
         }
 
         /// <summary>
-        /// 
+        /// 获得网站页脚设置
         /// </summary>
+        /// <param name="appId"></param>
         /// <returns></returns>
-        public override string RetrieveWebFooter()
+        public override string RetrieveWebFooter(string appId = "0")
         {
             var code = RetrieveAppName("网站页脚");
             if (code == "网站页脚未设置") code = DictHelper.RetrieveDicts().FirstOrDefault(d => d.Name == "网站页脚" && d.Category == "网站设置" && d.Define == 0)?.Code ?? "2016 © 通用后台管理系统";
