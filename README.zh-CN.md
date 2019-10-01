@@ -26,7 +26,7 @@
 ## 项目介绍
 一直需要一款后台管理系统，但是网上很多开源项目都是 **Java** 开发的，本人是 **NET** 平台的对 **Java** 一窍不通，C#版本的本来就少而且还没有合适的。于是决定自己开发一套后台管理系统。由于前台采用 **Bootstrap** 布局样式，所以就叫做 **BootstrapAdmin** 。本系统可以用于所有的 Web 应用程序，目前版本已经升级到 **NET CORE** 具备跨平台能力。数据库方面同时支持多种数据库，详细列表见后面**数据库**的详细列表，切换数据源仅需更改配置文件无需重启应用程序，配置简单灵活。UI 前端使用流行的 Bootstrap 框架布局对移动设备的兼容性非常好，自适应目前市场几乎所有终端设备。本系统还具备单一后台支持多前台的特色，提供 **单点登录（SSO）** 的能力。  
 
-使用 HTML 5 + jQuery + NET Core 2.2 + Bootstrap 4.1 + PetaPoco 构建的后台管理平台  
+使用 HTML 5 + jQuery + NET Core + Bootstrap + PetaPoco 构建的后台管理平台  
 
 ### 特别说明
 **BootstrapAdmin** 无需二次开发，要做的仅仅是与前台系统集成，前台系统模板工程为 **Bootstrap.Client**   
@@ -51,17 +51,19 @@
 11. 内置数据 **操作日志** 与用户 **登录日志**   
 跟踪记录用户 **登录主机地点**  **浏览器**  **操作系统** 信息  
 
+更新日志：[传送门](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/更新日志)
+
 ### 优势
 1. 前台系统不用编写登录、授权、认证模块；只负责编写业务模块即可
 2. 后台系统无需任何二次开发，直接发布即可使用
 3. 前台与后台系统分离，分别为不同的系统（域名可独立）
 4. 可扩展为多租户应用
 
-详细资料请点击 [查看文档](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D?sort_id=1333473)  
+详细资料请点击 [查看文档](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D)  
 
 ### 数据库
 数据库支持列表如下：  
-**MSSQL/Oracle/SQLite/MySql/MariaDB/Postgresql/Firebird/MsAccess/MongoDB**  
+**MSSQL/Oracle/SQLite/MySql/MariaDB/Postgresql/Firebird/MongoDB**  
 
 ### 浏览器支持
 
@@ -114,29 +116,23 @@
 ## 开发环境搭建
 1. 安装 .net core sdk [官方网址](http://www.microsoft.com/net/download)
 2. 安装 Visual Studio IDE 2017以上 [官方网址](https://visualstudio.microsoft.com/vs/getting-started/)
-3. 获取本项目代码 [BootstrapAdmin](https://gitee.com/LongbowEnterprise/BootstrapAdmin)
-4. 系统登录用户名与口令  
-用户名：**Admin**  
-密码：**123789**  
+3. 获取本项目代码 [BootstrapAdmin](https://gitee.com/LongbowEnterprise/BootstrapAdmin)  
 
 ### 安装数据库
-系统默认使用 SQLite 数据库，如需更改为其他数据库，执行解决方案中 DatabaseScripts目录下相对应脚本  
+系统默认使用 SQLite 数据库，如需更改为其他数据库，执行解决方案中 DatabaseScripts 目录下相对应脚本  
 Install.sql 创建数据库脚本  
 InitData.sql 初始化数据脚本  
 
 ## 分支说明  
- **master** 发布分支与在线演示版本同步  
- **dev** 开发分支目前开发环境配置是 windows + SQLite  
- **dev-Tabs** 利用 IFrame 多标签样式分支   
- **dev-Localization** 支持多国语言分支  
+分支说明 [详细说明](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/分支说明)
 
 ## 演示地址  
 [![website1](https://img.shields.io/badge/linux-http://ba.zylweb.cn-success.svg?logo=buzzfeed&logoColor=green)](http://ba.zylweb.cn)
 [![website2](https://img.shields.io/badge/windows-http://ba.sdgxgz.com-success.svg?logo=buzzfeed&logoColor=green)](http://ba.sdgxgz.com)  
 
 ### 登录用户名与密码  
-管理员：**Admin/123789**  
-普通用户：**User/123789**  
+管理账号：Admin/123789  
+普通账号：User/123789
 
 ## Docker 镜像
 [![Docker](https://img.shields.io/docker/cloud/automated/argozhang/ba.svg?logo=docker&logoColor=success)](https://hub.docker.com/r/argozhang/ba)
@@ -174,10 +170,12 @@ docker pull reg.qiniu.com/argozhang/ba
 更多截图请点击 [查看文档](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis) 查看项目截图小节  
 
 ## 特别鸣谢
+
 1. <a href="https://gitee.com/571183806" target="_blank">**云龙**</a> 提供云服务器搭建在线演示系统
 2. <a href="https://gitee.com/Ysmc" target="_blank">**一事冇诚**</a> 对 MongoDB 数据库提供了详细测试
 3. <a href="https://gitee.com/Axxbis" target="_blank">**爱吃油麦菜**</a> 提供云服务器与二级域名搭建备份演示系统、测试环境以及图床
 4. <a href="https://gitee.com/kasenhoo" target="_blank">**kasenhoo**</a> 对 CentOS + MySql 环境提供详细测试
+5. <a href="https://gitee.com/finally44177" target="_blank">**finally44177**</a> 提供 AdminLTE UI 样式 PR 对 MongoDB 数据库提供了详细测试
 
 ## 参与贡献
 

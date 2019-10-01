@@ -48,16 +48,18 @@ Departments Authorize Users
 10. Built-in data memory caching mechanism, page fast response
 11. Built-in Data **Operation Log** and User **Log on**  
 
+[Update log](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/更新日志)
+
 ### Advantage
 1. The front-end system does not need to write login, authorization and authentication modules; it is only responsible for writing business modules.
 2. Background system can be used directly without any secondary development.
 3. Front-end and back-end systems are separated, which are different systems (domain name can be independent)
 4. Extensible to multi-tenant applications
 
-For more information, please click [wiki](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D?sort_id=1333473)  
+For more information, please click [wiki](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D)  
 
 ### Database 
-**MSSQL/Oracle/SQLite/MySql/MariaDB/Postgresql/Firebird/MsAccess/MongoDB**  
+**MSSQL/Oracle/SQLite/MySql/MariaDB/Postgresql/Firebird/MongoDB**  
 
 ### Browser
 ![chrome](https://img.shields.io/badge/chrome->%3D4.5-success.svg?logo=google%20chrome&logoColor=red)
@@ -113,10 +115,7 @@ For more information, please click [wiki](https://gitee.com/LongbowEnterprise/Bo
 4. Login as Admin/123789  
 
 ## Branchs  
- **master** Synchronized with Online Demo  
- **dev** env: windows + SQLite  
- **dev-Tabs** Multiple tabs branch     
- **dev-Localization** support multiple language branch
+[Details](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/分支说明)
 
 ## Online Demonstration   
 [![website1](https://img.shields.io/badge/linux-http://ba.zylweb.cn-success.svg?logo=buzzfeed&logoColor=green)](http://ba.zylweb.cn)
