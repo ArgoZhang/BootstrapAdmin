@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
@@ -93,7 +94,7 @@ namespace Bootstrap.Client
             app.UseResponseCompression();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-            app.UseBootstrapAdminAuthentication(RoleHelper.RetrievesByUserName, RoleHelper.RetrievesByUrl, AppHelper.RetrievesByUserName);
+            app.UseBootstrapAdminAuthorization(RoleHelper.RetrievesByUserName, RoleHelper.RetrievesByUrl, AppHelper.RetrievesByUserName);
             app.UseCacheManager();
             app.UseOnlineUsers(callback: TraceHelper.Save);
             app.UseSignalR(routes => { routes.MapHub<SignalRHub>("/NotiHub"); });
