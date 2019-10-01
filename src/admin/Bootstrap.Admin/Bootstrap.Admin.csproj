@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="Bootstrap.Security.DataAccess" Version="2.2.21" />
-    <PackageReference Include="Bootstrap.Security.Mvc" Version="3.0.1-beta4" />
+    <PackageReference Include="Bootstrap.Security.Mvc" Version="3.0.1-beta5" />
     <PackageReference Include="Longbow.Configuration" Version="2.2.7" />
     <PackageReference Include="Longbow.Logging" Version="3.0.0" />
     <PackageReference Include="Longbow.Tasks" Version="2.2.24" />
