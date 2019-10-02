@@ -11,7 +11,7 @@
         /// </summary>
         public override void CheckDB(string folder)
         {
-
+            // 没有环境暂时未写代码
         }
     }
 }
