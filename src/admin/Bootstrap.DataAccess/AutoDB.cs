@@ -35,6 +35,7 @@ namespace Bootstrap.DataAccess
                         break;
                     case "MySqlDatabaseProvider":
                     case "MariaDbDatabaseProvider":
+                        // UNDONE: 本地没有环境此处代码未测试
                         if (db.ExecuteScalar<int>("select count(*) from information_schema.tables where table_name ='Users' and Table_Schema = 'BootstrapAdmin'") == 0) GenerateMySql();
                         break;
                 }
@@ -87,7 +88,7 @@ namespace Bootstrap.DataAccess
 
         private void GenerateMySql()
         {
-            // 没有环境暂时未写代码
+            // UNDONE: 没有环境暂时未写代码
         }
     }
 }
