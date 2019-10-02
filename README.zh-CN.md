@@ -119,16 +119,22 @@
 3. 获取本项目代码 [BootstrapAdmin](https://gitee.com/LongbowEnterprise/BootstrapAdmin)  
 
 ### 安装数据库
-系统默认使用 SQLite 数据库，如需更改为其他数据库，执行解决方案中 DatabaseScripts 目录下相对应脚本  
-Install.sql 创建数据库脚本  
-InitData.sql 初始化数据脚本  
+
+本项目默认使用 SQLite 数据库，内置数据库脚本 
+1. SQLite
+2. SqlServer
+3. MySql
+4. PostgresSql
+5. MongoDB   
+
+数据库配置 [详细说明](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/数据库连接配置?sort_id=1333482)   
 
 ## 分支说明  
 分支说明 [详细说明](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/分支说明)
 
 ## 演示地址  
 [![website1](https://img.shields.io/badge/linux-http://ba.zylweb.cn-success.svg?logo=buzzfeed&logoColor=green)](http://ba.zylweb.cn)
-[![website2](https://img.shields.io/badge/windows-http://ba.sdgxgz.com-success.svg?logo=buzzfeed&logoColor=green)](http://ba.sdgxgz.com)  
+[![website2](https://img.shields.io/badge/linux-http://ba.sdgxgz.com-success.svg?logo=buzzfeed&logoColor=green)](http://ba.sdgxgz.com)  
 
 ### 登录用户名与密码  
 管理账号：Admin/123789  
@@ -183,3 +189,9 @@ docker pull reg.qiniu.com/argozhang/ba
 2. 新建 Feat_xxx 分支
 3. 提交代码
 4. 新建 Pull Request
+
+## 捐助
+
+如果这个项目对您有所帮助，请扫下方二维码打赏一杯咖啡。    
+
+![WeChat](https://gitee.com/LongbowEnterprise/Pictures/raw/master/WeChat/WeChat.png "微信扫码")

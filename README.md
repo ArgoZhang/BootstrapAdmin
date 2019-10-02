@@ -61,6 +61,8 @@ For more information, please click [wiki](https://gitee.com/LongbowEnterprise/Bo
 ### Database 
 **MSSQL/Oracle/SQLite/MySql/MariaDB/Postgresql/Firebird/MongoDB**  
 
+For more information, please click [wiki](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/数据库连接配置?sort_id=1333482)  
+
 ### Browser
 ![chrome](https://img.shields.io/badge/chrome->%3D4.5-success.svg?logo=google%20chrome&logoColor=red)
 ![firefox](https://img.shields.io/badge/firefox->38-success.svg?logo=mozilla%20firefox&logoColor=red)
@@ -119,7 +121,7 @@ For more information, please click [wiki](https://gitee.com/LongbowEnterprise/Bo
 
 ## Online Demonstration   
 [![website1](https://img.shields.io/badge/linux-http://ba.zylweb.cn-success.svg?logo=buzzfeed&logoColor=green)](http://ba.zylweb.cn)
-[![website2](https://img.shields.io/badge/windows-http://ba.sdgxgz.com-success.svg?logo=buzzfeed&logoColor=green)](http://ba.sdgxgz.com)  
+[![website2](https://img.shields.io/badge/linux-http://ba.sdgxgz.com-success.svg?logo=buzzfeed&logoColor=green)](http://ba.sdgxgz.com)  
 
 ### Login  
 Administrator: Admin/123789  
@@ -166,3 +168,9 @@ For more screenshots, Click [wiki](https://gitee.com/LongbowEnterprise/Bootstrap
 2. Create Feat_xxx branch
 3. Commit
 4. Create Pull Request
+
+## Donate
+
+If this project is helpful to you, please scan the QR code below for a cup of coffee.
+
+![WeChat](https://gitee.com/LongbowEnterprise/Pictures/raw/master/WeChat/WeChat.png "WeChat")
