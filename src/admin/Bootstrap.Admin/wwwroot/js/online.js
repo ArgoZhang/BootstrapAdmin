@@ -37,20 +37,18 @@ $(function () {
         var $this = $(this);
         if (!$this.data($.fn.popover.Constructor.DATA_KEY)) {
             var id = $this.attr('data-id');
-            $.bc({
-                id: id, url: apiUrl,
-                callback: function (result) {
-                    if (!result) return;
-                    var content = result.map(function (item) {
-                        return $.format("<tr><td>{0}</td><td>{1}</td></tr>", item.Key, item.Value);
-                    }).join('');
-                    content = content === '' ?
-                        '已断开' :
-                        $.format('<div class="bootstrap-table" style="margin: 4px 0;"><div class="fixed-table-container"><div class="fixed-table-body"><table class="table table-bordered table-hover"><thead><tr><th class="p-1"><b>访问时间</b></th><th class="p-1">访问地址</th></tr></thead><tbody>{0}</tbody></table></div></div></div>', content);
-                    $this.popover({ content: content, placement: $(window).width() < 768 ? 'top' : 'left' });
-                    $this.popover('show');
-                }
+            var data = $table.bootstrapTable('getData');
+            var row = data.filter(function (v) {
+                return v.ConnectionId === id;
             });
+            var content = row[0].RequestUrls.map(function (item) {
+                return $.format("<tr><td>{0}</td><td>{1}</td></tr>", item.Key, item.Value);
+            }).join('');
+            content = content === '' ?
+                '已断开' :
+                $.format("<div class='bootstrap-table' style='margin: 4px 0;'><div class='fixed-table-container'><div class='fixed-table-body'><table class='table table-bordered table-hover'><thead><tr><th class='p-1'><b>访问时间</b></th><th class='p-1'>访问地址</th></tr></thead><tbody>{0}</tbody></table></div></div></div>", content);
+            $this.popover({ content: content, sanitize: false, placement: $(window).width() < 768 ? 'top' : 'left' });
+            $this.popover('show');
         }
     }).on('mouseup', 'button[data-id]', function () {
         $(this).focus();
