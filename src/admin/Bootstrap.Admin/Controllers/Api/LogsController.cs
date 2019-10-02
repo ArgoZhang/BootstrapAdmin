@@ -8,14 +8,14 @@ using System.Net;
 namespace Bootstrap.Admin.Controllers.Api
 {
     /// <summary>
-    /// 
+    /// 操作日志控制器
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class LogsController : ControllerBase
     {
         /// <summary>
-        /// 
+        /// 前台获取操作日志数据调用
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
@@ -26,14 +26,13 @@ namespace Bootstrap.Admin.Controllers.Api
         }
 
         /// <summary>
-        /// 
+        /// 操作日志记录方法
         /// </summary>
-        /// <param name="onlineUserSvr"></param>
         /// <param name="ipLocator"></param>
         /// <param name="value"></param>
         /// <returns></returns>
         [HttpPost]
-        public bool Post([FromServices]IOnlineUsers onlineUserSvr, [FromServices]IIPLocatorProvider ipLocator, [FromBody]Log value)
+        public bool Post([FromServices]IIPLocatorProvider ipLocator, [FromBody]Log value)
         {
             value.UserAgent = Request.Headers["User-Agent"];
             var agent = new UserAgent(value.UserAgent);

@@ -7,11 +7,18 @@ using System.Linq;
 
 namespace Microsoft.AspNetCore.Builder
 {
+    /// <summary>
+    /// HttpClient 扩展类
+    /// </summary>
     internal static class HttpClientExtensions
     {
+        /// <summary>
+        /// 注入 TraceHttpClient 到容器中
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
         public static IServiceCollection AddBootstrapHttpClient(this IServiceCollection services)
         {
-            services.AddHttpClient("BootstrapAdmin", client => client.DefaultRequestHeaders.Connection.Add("keep-alive"));
             services.AddHttpClient<TraceHttpClient>((provider, client) =>
             {
                 client.Timeout = TimeSpan.FromSeconds(10);

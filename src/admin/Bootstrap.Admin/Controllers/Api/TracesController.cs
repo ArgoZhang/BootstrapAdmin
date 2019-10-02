@@ -7,14 +7,14 @@ using Microsoft.AspNetCore.Mvc;
 namespace Bootstrap.Admin.Controllers.Api
 {
     /// <summary>
-    /// 
+    /// 在线用户跟踪控制器
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class TracesController : ControllerBase
     {
         /// <summary>
-        /// 
+        /// 客户端脚本获取在线用户数据
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
