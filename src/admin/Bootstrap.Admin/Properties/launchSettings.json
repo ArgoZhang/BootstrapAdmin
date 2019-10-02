@@ -16,6 +16,11 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
+    "Docker": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}"
+    },
     "Bootstrap.Admin": {
       "commandName": "Project",
       "launchBrowser": true,
@@ -23,11 +28,6 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "applicationUrl": "http://localhost:50852/"
-    },
-    "Docker": {
-      "commandName": "Docker",
-      "launchBrowser": true,
-      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}"
     }
   }
 }
