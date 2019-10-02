@@ -1,5 +1,9 @@
 # init sqlserver database
-$startPath = "Z:\src\Longbow\BootstrapAdmin\DatabaseScripts\SqlServer"
+$startPath = $args[0]
+if ($startPath -eq $null) {
+    $startPath = "Z:\src\Longbow\BootstrapAdmin\db\SqlServer"
+}
+
 $sqlInstance = "localhost"
 $outFile = join-path $startPath "output.log"
 $sqlFile = join-path $startPath "Install.sql"
