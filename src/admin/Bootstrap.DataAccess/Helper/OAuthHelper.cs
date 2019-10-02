@@ -50,6 +50,27 @@ namespace Bootstrap.DataAccess
             };
         }
 
+#if NETCOREAPP3_0
+        private static T ToObject<T>(this System.Text.Json.JsonElement element) where T: OAuthUser
+        {
+            var user = new OAuthUser();
+            var target = element.EnumerateObject();
+            user.Id = target.TryGetValue("Id");
+            user.Login = target.TryGetValue("Login");
+            user.Name = target.TryGetValue("Name");
+            user.Avatar_Url = target.TryGetValue("Avatar_Url");
+            return user as T;
+        }
+
+        private static string TryGetValue(this System.Text.Json.JsonElement.ObjectEnumerator target, string propertyName)
+        {
+            var ret = string.Empty;
+            var property = target.FirstOrDefault(t => t.Name.Equals(propertyName, StringComparison.OrdinalIgnoreCase));
+            ret = property.Value.ToString();
+            return ret;
+        }
+#endif
+
         /// <summary>
         /// 插入 Gitee 授权用户到数据库中
         /// </summary>

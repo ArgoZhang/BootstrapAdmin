@@ -3,6 +3,7 @@ using Longbow.Security.Cryptography;
 using Longbow.WeChatAuth;
 using Microsoft.AspNetCore.Authentication.OAuth;
 using System;
+using System.Linq;
 
 namespace Bootstrap.DataAccess
 {
@@ -50,5 +51,32 @@ namespace Bootstrap.DataAccess
                 Description = $"{context.Scheme.Name}"
             };
         }
+
+#if NETCOREAPP3_0
+        private static T ToObject<T>(this System.Text.Json.JsonElement element) where T : WeChatUser
+        {
+            var user = new WeChatUser();
+            var target = element.EnumerateObject();
+            user.OpenId = target.TryGetValue("OpenId");
+            user.UnionId = target.TryGetValue("UnionId");
+            user.NickName = target.TryGetValue("NickName");
+            user.Privilege = target.TryGetValue("Privilege");
+            user.Sex = target.TryGetValue("Sex");
+            user.Province = target.TryGetValue("Province");
+            user.City = target.TryGetValue("City");
+            user.Country = target.TryGetValue("Country");
+            user.HeadImgUrl = target.TryGetValue("HeadImgUrl");
+            user.Privilege = target.TryGetValue("Privilege");
+            return user as T;
+        }
+
+        private static string TryGetValue(this System.Text.Json.JsonElement.ObjectEnumerator target, string propertyName)
+        {
+            var ret = string.Empty;
+            var property = target.FirstOrDefault(t => t.Name.Equals(propertyName, StringComparison.OrdinalIgnoreCase));
+            ret = property.Value.ToString();
+            return ret;
+        }
+#endif
     }
 }
