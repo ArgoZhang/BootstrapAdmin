@@ -8,8 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
-using Newtonsoft.Json;
 using System.Net.Http;
+using System.Text.Json;
 using UnitTest;
 using Xunit;
 
@@ -85,8 +85,7 @@ namespace Bootstrap.Admin.Api
             services.AddCacheManager();
             services.AddConfigurationManager();
             services.AddDbAdapter();
-            var builder = services.AddHealthChecks();
-            builder.AddCheck<DBHealthCheck>("db");
+            services.AddHealthChecks().AddCheck<DBHealthCheck>("db");
             services.AddControllers();
         }
 
@@ -101,10 +100,10 @@ namespace Bootstrap.Admin.Api
             });
             app.UseEndpoints(builder => builder.MapHealthChecks("/Healths", new HealthCheckOptions()
             {
-                ResponseWriter = (context, report) =>
+                ResponseWriter = async (context, report) =>
                 {
                     context.Response.ContentType = "application/json";
-                    return context.Response.WriteAsync(JsonConvert.SerializeObject(new { report.Entries.Keys, Report = report }));
+                    await context.Response.WriteAsync(JsonSerializer.Serialize(new { report.Status, report.TotalDuration }));
                 },
                 ResultStatusCodes =
                 {

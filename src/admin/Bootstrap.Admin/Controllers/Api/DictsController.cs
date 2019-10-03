@@ -1,4 +1,4 @@
-using Bootstrap.Admin.Query;
+﻿using Bootstrap.Admin.Query;
 using Bootstrap.DataAccess;
 using Bootstrap.Security;
 using Longbow.Web.Mvc;
