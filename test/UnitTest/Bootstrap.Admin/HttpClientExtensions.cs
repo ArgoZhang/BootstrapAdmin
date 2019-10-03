@@ -6,10 +6,13 @@ using System.Threading.Tasks;
 
 namespace Bootstrap.Admin
 {
+    /// <summary>
+    /// HttpClient 扩展操作类
+    /// </summary>
     public static class HttpClientExtensions
     {
         /// <summary>
-        /// 
+        /// GetJson 异步方法
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="client"></param>
@@ -19,11 +22,11 @@ namespace Bootstrap.Admin
         {
             var resp = await client.GetAsync(requestUri);
             var json = await resp.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<T>(json, new JsonSerializerOptions().Configure());
+            return JsonSerializer.Deserialize<T>(json, new JsonSerializerOptions().AddDefaultConverters());
         }
 
         /// <summary>
-        /// 
+        /// PostJson 异步方法
         /// </summary>
         /// <typeparam name="TValue"></typeparam>
         /// <typeparam name="TRet"></typeparam>
@@ -35,11 +38,11 @@ namespace Bootstrap.Admin
         {
             var resp = await client.PostAsJsonAsync(requestUri, t);
             var json = await resp.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<TRet>(json, new JsonSerializerOptions().Configure());
+            return JsonSerializer.Deserialize<TRet>(json, new JsonSerializerOptions().AddDefaultConverters());
         }
 
         /// <summary>
-        /// 
+        /// PostJson 异步方法
         /// </summary>
         /// <typeparam name="TValue"></typeparam>
         /// <typeparam name="TRet"></typeparam>
@@ -49,7 +52,7 @@ namespace Bootstrap.Admin
         public static async Task<TRet> PostAsJsonAsync<TValue, TRet>(this HttpClient client, TValue t) => await PostAsJsonAsync<TValue, TRet>(client, string.Empty, t);
 
         /// <summary>
-        /// 
+        /// DeleteJson 异步方法
         /// </summary>
         /// <typeparam name="TValue"></typeparam>
         /// <typeparam name="TRet"></typeparam>
@@ -65,11 +68,11 @@ namespace Bootstrap.Admin
 
             var resp = await client.SendAsync(req);
             var json = await resp.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<TRet>(json, new JsonSerializerOptions().Configure());
+            return JsonSerializer.Deserialize<TRet>(json, new JsonSerializerOptions().AddDefaultConverters());
         }
 
         /// <summary>
-        /// 
+        /// DeleteJson 异步方法
         /// </summary>
         /// <typeparam name="TValue"></typeparam>
         /// <typeparam name="TRet"></typeparam>
@@ -79,7 +82,7 @@ namespace Bootstrap.Admin
         public static async Task<TRet> DeleteAsJsonAsync<TValue, TRet>(this HttpClient client, TValue t) => await DeleteAsJsonAsync<TValue, TRet>(client, string.Empty, t);
 
         /// <summary>
-        /// 
+        /// PutJson 异步方法
         /// </summary>
         /// <typeparam name="TValue"></typeparam>
         /// <typeparam name="TRet"></typeparam>
@@ -91,11 +94,11 @@ namespace Bootstrap.Admin
         {
             var resp = await client.PutAsJsonAsync(requestUri, t);
             var json = await resp.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<TRet>(json, new JsonSerializerOptions().Configure());
+            return JsonSerializer.Deserialize<TRet>(json, new JsonSerializerOptions().AddDefaultConverters());
         }
 
         /// <summary>
-        /// 
+        /// PutJson 异步方法
         /// </summary>
         /// <typeparam name="TValue"></typeparam>
         /// <typeparam name="TRet"></typeparam>
@@ -104,6 +107,14 @@ namespace Bootstrap.Admin
         /// <returns></returns>
         public static async Task<TRet> PutAsJsonAsync<TValue, TRet>(this HttpClient client, TValue t) => await PutAsJsonAsync<TValue, TRet>(client, string.Empty, t);
 
+
+        /// <summary>
+        /// LoginAsync 异步方法
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public static async Task LoginAsync(this HttpClient client, string userName = "Admin", string password = "123789")
         {
             var r = await client.GetAsync("/Account/Login");
