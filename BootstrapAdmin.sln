@@ -112,6 +112,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ci", "ci", "{5F732D4E-133B-
 		appveyor.yml = appveyor.yml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "service", "service", "{68F7C160-3FB2-4129-8F89-96F78B2DA0A9}"
+	ProjectSection(SolutionItems) = preProject
+		scripts\ba.admin.service = scripts\ba.admin.service
+		scripts\ba.client.service = scripts\ba.client.service
+		init.sh = init.sh
+		scripts\nginx.service = scripts\nginx.service
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -168,6 +176,7 @@ Global
 		{C6F2DCA0-7941-4C28-9328-2D495F5DCB00} = {72C103DB-E1D3-449F-97C2-DF12CA111FD4}
 		{FDCFC3E3-14CF-40B2-9FE5-5BC239AAC110} = {72C103DB-E1D3-449F-97C2-DF12CA111FD4}
 		{5F732D4E-133B-4DA6-811B-C369CDC3FB89} = {72C103DB-E1D3-449F-97C2-DF12CA111FD4}
+		{68F7C160-3FB2-4129-8F89-96F78B2DA0A9} = {72C103DB-E1D3-449F-97C2-DF12CA111FD4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {221EAE38-5F75-4391-9A48-E462A9F3B8FC}
