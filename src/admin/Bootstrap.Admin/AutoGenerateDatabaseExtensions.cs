@@ -15,7 +15,7 @@ namespace Microsoft.AspNetCore.Builder
     {
         private static bool _init;
         private static object _locker = new object();
-
+        private const string SqlFolderKey = "SqlFolder";
         /// <summary>
         /// 自动生成数据库中间件
         /// </summary>
@@ -36,7 +36,7 @@ namespace Microsoft.AspNetCore.Builder
                             var dbSection = config.GetSection("DB").GetChildren().FirstOrDefault(c => c.GetValue("Enabled", false));
                             if (dbSection != null)
                             {
-                                var folder = dbSection["SqlFolder"].ReplaceOSPlatformPath();
+                                var folder = dbSection[SqlFolderKey]?.ReplaceOSPlatformPath();
                                 if (!string.IsNullOrEmpty(folder))
                                 {
                                     // 判断文件夹是否存在
