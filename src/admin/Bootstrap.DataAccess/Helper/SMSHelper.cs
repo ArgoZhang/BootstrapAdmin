@@ -44,7 +44,12 @@ namespace Bootstrap.DataAccess
             var req = await client.GetAsync(url);
             var content = await req.Content.ReadAsStringAsync();
 #if NETCOREAPP3_0
-            var result = JsonSerializer.Deserialize<SMSResult>(content);
+            // UNDONE: 此处反序列化失败原因不明
+            // var result = JsonSerializer.Deserialize<SMSResult>(content);
+            var result = new SMSResult();
+            var doc = JsonDocument.Parse(content);
+            result.Code = doc.RootElement.GetProperty("code").GetInt32();
+            result.Data = doc.RootElement.GetProperty("data").GetString();
 #else
             var result = JsonConvert.DeserializeObject<SMSResult>(content, new JsonSerializerSettings() { ContractResolver = new DefaultContractResolver() });
 #endif
