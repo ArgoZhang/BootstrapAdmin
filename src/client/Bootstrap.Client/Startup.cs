@@ -94,7 +94,7 @@ namespace Bootstrap.Client
             app.UseResponseCompression();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-            app.UseBootstrapAdminAuthorization(RoleHelper.RetrievesByUserName, RoleHelper.RetrievesByUrl, AppHelper.RetrievesByUserName);
+            app.UseBootstrapAdminAuthentication(RoleHelper.RetrievesByUserName, RoleHelper.RetrievesByUrl, AppHelper.RetrievesByUserName);
             app.UseCacheManager();
             app.UseOnlineUsers(callback: TraceHelper.Save);
             app.UseSignalR(routes => { routes.MapHub<SignalRHub>("/NotiHub"); });

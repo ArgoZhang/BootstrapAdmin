@@ -110,8 +110,7 @@ namespace Bootstrap.Admin
             app.UseHttpsRedirection();
             app.UseResponseCompression();
             app.UseStaticFiles();
-            app.UseAuthentication();
-            app.UseBootstrapAdminAuthorization(RoleHelper.RetrievesByUserName, RoleHelper.RetrievesByUrl, AppHelper.RetrievesByUserName);
+            app.UseBootstrapAdminAuthentication(RoleHelper.RetrievesByUserName, RoleHelper.RetrievesByUrl, AppHelper.RetrievesByUserName);
             app.UseBootstrapHealthChecks();
             app.UseOnlineUsers(TraceHelper.Filter, TraceHelper.Save);
             app.UseCacheManager();
