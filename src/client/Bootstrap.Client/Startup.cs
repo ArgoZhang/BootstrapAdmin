@@ -90,9 +90,8 @@ namespace Bootstrap.Client
             app.UseCookiePolicy();
 
             app.UseRouting();
-            app.UseAuthentication();
+            app.UseBootstrapAdminAuthentication(RoleHelper.RetrievesByUserName, RoleHelper.RetrievesByUrl, AppHelper.RetrievesByUserName);
             app.UseAuthorization();
-            app.UseBootstrapAdminAuthorization(RoleHelper.RetrievesByUserName, RoleHelper.RetrievesByUrl, AppHelper.RetrievesByUserName);
             app.UseCacheManager();
             app.UseOnlineUsers(callback: TraceHelper.Save);
             app.UseEndpoints(endpoints =>
