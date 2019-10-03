@@ -44,15 +44,12 @@ namespace Bootstrap.DataAccess
             var req = await client.GetAsync(url);
             var content = await req.Content.ReadAsStringAsync();
 #if NETCOREAPP3_0
-            var result = JsonSerializer.Deserialize<SMSResult>(content, new JsonSerializerOptions()
-            {
-                PropertyNameCaseInsensitive = true
-            });
+            var result = JsonSerializer.Deserialize<SMSResult>(content);
 #else
             var result = JsonConvert.DeserializeObject<SMSResult>(content, new JsonSerializerSettings() { ContractResolver = new DefaultContractResolver() });
 #endif
             var ret = false;
-            if (result.Code == "1")
+            if (result.Code == 1)
             {
                 _pool.AddOrUpdate(option.Phone, key => new AutoExpireValidateCode(option.Phone, result.Data, option.Expires), (key, v) => v.Reset(result.Data));
                 ret = true;
@@ -95,7 +92,7 @@ namespace Bootstrap.DataAccess
 
         private class SMSResult
         {
-            public string Code { get; set; }
+            public int Code { get; set; }
 
             public string Data { get; set; }
         }
