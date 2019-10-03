@@ -96,6 +96,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "win", "win", "{C6F2DCA0-794
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "linux", "linux", "{FDCFC3E3-14CF-40B2-9FE5-5BC239AAC110}"
 	ProjectSection(SolutionItems) = preProject
+		deploy-admin.sh = deploy-admin.sh
+		deploy-client.sh = deploy-client.sh
 		publish-admin.sh = publish-admin.sh
 		publish-client.sh = publish-client.sh
 		watch-run-admin.sh = watch-run-admin.sh
