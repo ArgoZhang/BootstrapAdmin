@@ -29,16 +29,15 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <summary>
         /// JWT 登陆认证接口
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="user"></param>
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPost]
-        public string Post([FromBody]JObject value)
+        public string Post([FromBody]User user)
         {
-            string token = null;
-            dynamic user = value;
-            string userName = user.userName;
-            string password = user.password;
+            var token = string.Empty;
+            string userName = user.UserName;
+            string password = user.Password;
             if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(password) && UserHelper.Authenticate(userName, password))
             {
                 token = BootstrapAdminJwtTokenHandler.CreateToken(userName);

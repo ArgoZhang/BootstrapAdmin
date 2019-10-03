@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.WebUtilities;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -8,6 +7,12 @@ using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
+#if NETCOREAPP3_0
+using System.Text.Json;
+#else
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+#endif
 
 namespace Bootstrap.DataAccess
 {
@@ -38,7 +43,14 @@ namespace Bootstrap.DataAccess
             var url = QueryHelpers.AddQueryString("http://open.bluegoon.com/api/sms/sendcode", requestParameters);
             var req = await client.GetAsync(url);
             var content = await req.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<SMSResult>(content);
+#if NETCOREAPP3_0
+            var result = JsonSerializer.Deserialize<SMSResult>(content, new JsonSerializerOptions()
+            {
+                PropertyNameCaseInsensitive = true
+            });
+#else
+            var result = JsonConvert.DeserializeObject<SMSResult>(content, new JsonSerializerSettings() { ContractResolver = new DefaultContractResolver() });
+#endif
             var ret = false;
             if (result.Code == "1")
             {

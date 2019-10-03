@@ -9,8 +9,6 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using System;
 
 namespace Bootstrap.Client
@@ -62,12 +60,7 @@ namespace Bootstrap.Client
             {
                 options.Filters.Add<ExceptionFilter>();
                 options.Filters.Add<SignalRExceptionFilter<SignalRHub>>();
-            }).AddNewtonsoftJson(op =>
-            {
-                op.SerializerSettings.ContractResolver = new DefaultContractResolver();
-                op.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
-                JsonConvert.DefaultSettings = () => op.SerializerSettings;
-            });
+            }).AddJsonOptions(op => op.JsonSerializerOptions.Configure());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -97,9 +90,8 @@ namespace Bootstrap.Client
             app.UseCookiePolicy();
 
             app.UseRouting();
-            app.UseAuthentication();
+            app.UseBootstrapAdminAuthentication(RoleHelper.RetrievesByUserName, RoleHelper.RetrievesByUrl, AppHelper.RetrievesByUserName);
             app.UseAuthorization();
-            app.UseBootstrapAdminAuthorization(RoleHelper.RetrievesByUserName, RoleHelper.RetrievesByUrl, AppHelper.RetrievesByUserName);
             app.UseCacheManager();
             app.UseOnlineUsers(callback: TraceHelper.Save);
             app.UseEndpoints(endpoints =>
