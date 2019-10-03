@@ -60,7 +60,7 @@ namespace Bootstrap.Client
             {
                 options.Filters.Add<ExceptionFilter>();
                 options.Filters.Add<SignalRExceptionFilter<SignalRHub>>();
-            }).AddJsonOptions(op => op.JsonSerializerOptions.Configure());
+            }).AddJsonOptions(op => op.JsonSerializerOptions.AddDefaultConverters());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

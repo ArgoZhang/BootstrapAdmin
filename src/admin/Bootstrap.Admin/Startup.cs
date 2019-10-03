@@ -57,7 +57,7 @@ namespace Bootstrap.Admin
             services.AddDbAdapter();
             services.AddIPLocator(DictHelper.ConfigIPLocator);
             services.AddOnlineUsers();
-            services.AddSignalR().AddJsonProtocol(op => op.PayloadSerializerOptions.Configure());
+            services.AddSignalR().AddJsonProtocol(op => op.PayloadSerializerOptions.AddDefaultConverters());
             services.AddSignalRExceptionFilterHandler<SignalRHub>(async (client, ex) => await client.SendMessageBody(ex).ConfigureAwait(false));
             services.AddResponseCompression();
             services.AddBootstrapAdminAuthentication().AddGitee(OAuthHelper.Configure).AddGitHub(OAuthHelper.Configure);
@@ -71,7 +71,7 @@ namespace Bootstrap.Admin
             {
                 options.Filters.Add<ExceptionFilter>();
                 options.Filters.Add<SignalRExceptionFilter<SignalRHub>>();
-            }).AddJsonOptions(op => op.JsonSerializerOptions.Configure());
+            }).AddJsonOptions(op => op.JsonSerializerOptions.AddDefaultConverters());
             services.AddApiVersioning(option =>
             {
                 option.DefaultApiVersion = new ApiVersion(1, 0);
