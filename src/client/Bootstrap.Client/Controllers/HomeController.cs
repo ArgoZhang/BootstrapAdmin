@@ -1,4 +1,5 @@
 ﻿using Bootstrap.Client.Models;
+using Bootstrap.Client.Tasks;
 using Longbow.Configuration;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -10,28 +11,30 @@ using System;
 namespace Bootstrap.Client.Controllers
 {
     /// <summary>
-    /// 
+    /// 前台主页控制器
     /// </summary>
     public class HomeController : Controller
     {
         /// <summary>
-        /// 
+        /// 默认视图
         /// </summary>
         /// <returns></returns>
         public IActionResult Index()
         {
             return View(new NavigatorBarModel(this));
         }
+
         /// <summary>
-        /// 
+        /// About 视图
         /// </summary>
         /// <returns></returns>
         public IActionResult About()
         {
             return View(new NavigatorBarModel(this));
         }
+
         /// <summary>
-        /// 
+        /// 错误视图
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
