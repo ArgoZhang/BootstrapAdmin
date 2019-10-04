@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Bootstrap.Security.DataAccess" Version="2.2.21" />
-    <PackageReference Include="Longbow" Version="3.0.0-beta4" />
+    <PackageReference Include="Longbow" Version="3.0.0-beta5" />
     <PackageReference Include="Longbow.Cache" Version="2.2.15" />
     <PackageReference Include="Longbow.Configuration" Version="2.2.7" />
     <PackageReference Include="Longbow.Data" Version="2.3.8" />
