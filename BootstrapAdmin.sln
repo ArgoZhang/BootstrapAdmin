@@ -98,6 +98,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "linux", "linux", "{FDCFC3E3
 	ProjectSection(SolutionItems) = preProject
 		deploy-admin.sh = deploy-admin.sh
 		deploy-client.sh = deploy-client.sh
+		init.sh = init.sh
 		publish-admin.sh = publish-admin.sh
 		publish-client.sh = publish-client.sh
 		watch-run-admin.sh = watch-run-admin.sh
@@ -111,12 +112,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ci", "ci", "{5F732D4E-133B-
 		appveyor.yml = appveyor.yml
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "service", "service", "{68F7C160-3FB2-4129-8F89-96F78B2DA0A9}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{68F7C160-3FB2-4129-8F89-96F78B2DA0A9}"
 	ProjectSection(SolutionItems) = preProject
-		scripts\ba.admin.service = scripts\ba.admin.service
-		scripts\ba.client.service = scripts\ba.client.service
-		init.sh = init.sh
-		scripts\nginx.service = scripts\nginx.service
+		services\ba.admin.service = services\ba.admin.service
+		services\ba.client.service = services\ba.client.service
+		services\nginx.service = services\nginx.service
 	EndProjectSection
 EndProject
 Global
@@ -175,7 +175,7 @@ Global
 		{C6F2DCA0-7941-4C28-9328-2D495F5DCB00} = {72C103DB-E1D3-449F-97C2-DF12CA111FD4}
 		{FDCFC3E3-14CF-40B2-9FE5-5BC239AAC110} = {72C103DB-E1D3-449F-97C2-DF12CA111FD4}
 		{5F732D4E-133B-4DA6-811B-C369CDC3FB89} = {72C103DB-E1D3-449F-97C2-DF12CA111FD4}
-		{68F7C160-3FB2-4129-8F89-96F78B2DA0A9} = {72C103DB-E1D3-449F-97C2-DF12CA111FD4}
+		{68F7C160-3FB2-4129-8F89-96F78B2DA0A9} = {FDCFC3E3-14CF-40B2-9FE5-5BC239AAC110}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {221EAE38-5F75-4391-9A48-E462A9F3B8FC}
