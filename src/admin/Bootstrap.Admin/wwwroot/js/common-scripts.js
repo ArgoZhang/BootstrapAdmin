@@ -167,6 +167,9 @@
 })(jQuery);
 
 $(function () {
+    // enable animoation effect
+    $('body').removeClass('trans-mute');
+
     // 自动锁屏功能
     var mousePosition = { screenX: 0, screenY: 0 };
     var count = 1;
