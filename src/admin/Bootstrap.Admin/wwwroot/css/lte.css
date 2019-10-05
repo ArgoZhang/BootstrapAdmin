@@ -47,7 +47,6 @@
     border-radius: 4px;
     width: 2rem;
     height: 2rem;
-    margin: 0.25rem 0;
 }
 
 .userinfo .username {
@@ -56,6 +55,9 @@
 
 .userinfo .dropdown-toggle {
     border-radius: 0;
+    height: 50px;
+    display: flex;
+    align-items: center;
 }
 
     .userinfo .dropdown-toggle, .userinfo .dropdown-toggle:hover, .userinfo.show .dropdown-toggle, .header .nav a, .header .nav a:hover {
@@ -116,12 +118,12 @@
         }
 
 .userinfo.show .dropdown-menu {
-    margin-top: 4px;
+    margin-top: 5px;
     cursor: default;
 }
 
 aside, .main-content {
-    top: 55px;
+    top: 51px;
 }
 
 aside {
@@ -129,7 +131,7 @@ aside {
 }
 
     aside .nav-brand, .sidebar-open aside:hover .nav-brand {
-        height: 55px;
+        height: 50px;
         align-items: center;
         padding: 0 0.625rem;
     }
@@ -180,10 +182,6 @@ aside {
 
 .breadcrumb {
     border-top: none;
-}
-
-.card-header {
-    padding: 0.625rem 1rem;
 }
 
 /* color */
@@ -265,6 +263,7 @@ footer {
     .header .nav {
         display: flex;
         flex: 0 1 auto;
+        height: 3.125rem;
     }
 
     .sidebar-toggle-box {
@@ -291,7 +290,7 @@ footer {
     }
 
         aside .sidebar, .sidebar-open aside:hover .sidebar {
-            top: 121px;
+            top: 116px;
             transition: top .3s linear;
         }
 
@@ -383,7 +382,7 @@ footer {
         }
 
         .sidebar-open aside .sidebar {
-            top: 115px;
+            top: 107px;
         }
 
     .sidebar-open .main-content {
