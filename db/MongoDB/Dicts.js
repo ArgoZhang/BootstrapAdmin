@@ -281,5 +281,11 @@
         "Name": "自动锁屏",
         "Code": "0",
         "Define": NumberInt(0)
+    },
+    {
+        "Category": "测试平台",
+        "Name": "网站图标",
+        "Code": "http://localhost:49185/favicon.ico",
+        "Define": NumberInt(1)
     }
 ];

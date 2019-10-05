@@ -28,12 +28,9 @@ namespace Bootstrap.Admin.Models
         }
 
         /// <summary>
-        /// 默认构造函数
+        /// 获取 网站 logo 小图标
         /// </summary>
-        public ModelBase() : this("0")
-        {
-
-        }
+        public string WebSiteLogo { get; protected set; } = "~/favicon.ico";
 
         /// <summary>
         /// 获取 网站标题
