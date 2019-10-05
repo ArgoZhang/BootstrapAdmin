@@ -28,6 +28,10 @@ namespace Bootstrap.Admin.Models
                 // 通过 AppCode 获取用户默认应用的标题
                 Title = DictHelper.RetrieveWebTitle(AppId);
                 Footer = DictHelper.RetrieveWebFooter(AppId);
+
+                // feat: https://gitee.com/LongbowEnterprise/dashboard/issues?id=I12VKZ
+                // 后台系统网站图标跟随个人中心设置的默认应用站点的展示
+                WebSiteLogo = DictHelper.RetrieveWebLogo(AppId);
             }
         }
 
