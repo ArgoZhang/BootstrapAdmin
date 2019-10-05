@@ -17,6 +17,10 @@
         padding: 16px 12px;
     }
 
+    .header .badge {
+        top: 4px;
+    }
+
 .header nav, .userinfo .dropdown-toggle:after {
     display: none;
 }
@@ -106,7 +110,7 @@
         .userinfo .dropdown-item a .badge {
             top: 74px;
             left: auto;
-            right: 42px;
+            right: 36px;
         }
 
     .userinfo .dropdown-item:last-child {

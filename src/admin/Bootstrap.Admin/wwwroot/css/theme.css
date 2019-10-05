@@ -39,8 +39,8 @@ aside .bg, aside .nav-brand, aside .nav-header, .header .nav, .userinfo .dropdow
 
     .header .badge {
         position: absolute;
-        right: -6px;
-        top: 4px;
+        right: -12px;
+        top: -4px;
         opacity: 0.8;
         z-index: 1;
     }
@@ -157,7 +157,7 @@ aside .bg, aside .nav-brand, aside .nav-header, .header .nav, .userinfo .dropdow
 }
 
 .userinfo .badge {
-    left: 234px;
+    left: 224px;
     right: auto;
     top: 6px;
 }
