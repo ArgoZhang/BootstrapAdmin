@@ -56,11 +56,8 @@ namespace Bootstrap.Client
             services.AddResponseCompression();
             services.AddBootstrapAdminAuthentication();
             services.AddAuthorization(options => options.DefaultPolicy = new AuthorizationPolicyBuilder().RequireBootstrapAdminAuthorizate().Build());
-            services.AddControllersWithViews(options =>
-            {
-                options.Filters.Add<ExceptionFilter>();
-                options.Filters.Add<SignalRExceptionFilter<SignalRHub>>();
-            }).AddJsonOptions(op => op.JsonSerializerOptions.AddDefaultConverters());
+            services.AddControllersWithViews(options => options.Filters.Add<ExceptionFilter>()).AddJsonOptions(op => op.JsonSerializerOptions.AddDefaultConverters());
+            services.AddAutoPublish();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
