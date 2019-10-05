@@ -32,6 +32,19 @@ namespace Bootstrap.DataAccess
         private static IEnumerable<BootstrapDict> RetrieveProtectedDicts() => RetrieveDicts().Where(d => d.Define == 0 || d.Category == "测试平台");
 
         /// <summary>
+        /// 获取网站 logo 小图标
+        /// </summary>
+        /// <param name="appId"></param>
+        /// <returns></returns>
+        public static string RetrieveWebLogo(string appId)
+        {
+            // 获取应用程序 logo
+            var ditcs = RetrieveDicts();
+            var platName = ditcs.FirstOrDefault(d => d.Category == "应用程序" && d.Code == appId)?.Name;
+            return ditcs.FirstOrDefault(d => d.Category == platName && d.Name == "网站图标")?.Code ?? $"~/favicon.ico";
+        }
+
+        /// <summary>
         /// 删除字典中的数据
         /// </summary>
         /// <param name="value">需要删除的IDs</param>

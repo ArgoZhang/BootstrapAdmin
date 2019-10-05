@@ -1,11 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@model ModelBase
+<!DOCTYPE html>
 <html lang="zh-cn">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" href="~/favicon.ico" type="image/x-icon" />
-    <link rel="shortcut icon" href="~/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="@Url.Content(Model.WebSiteLogo)" type="image/x-icon" />
+    <link rel="shortcut icon" href="@Url.Content(Model.WebSiteLogo)" type="image/x-icon" />
     <link rel="apple-touch-icon" href="~/favicon.png"/> 
     <title>@ViewBag.Title</title>
     @RenderSection("css", false)
@@ -13,7 +14,7 @@
         <link href="../css/IE8.css" rel="stylesheet" />
     <![endif]-->
 </head>
-<body>
+<body class="trans-mute">
     <!--[if lt IE 10 ]>
     <div id="ieAlert" class="alert alert-danger alert-dismissible">
         <div>当前浏览器版本太低，不支持本系统，请升级到至少IE10 <a href="../browser/IE10.exe" target="_blank">本地下载</a> <a href="https://support.microsoft.com/zh-cn/help/17621/internet-explorer-downloads" target="_blank">微软下载</a>，或者使用Chrome浏览器 <a href="../browser/ChromeSetup.exe" target="_blank">本地下载</a></div>
