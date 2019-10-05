@@ -35,14 +35,6 @@
     transform: none;
 }
 
-.header .badge {
-    top: 4px;
-}
-
-.userinfo .badge {
-    top: 64px;
-}
-
 .username {
     font-size: 1rem;
     vertical-align: middle;
@@ -109,6 +101,12 @@
         .userinfo .dropdown-item a i {
             display: inline-block;
             margin-right: 10px;
+        }
+
+        .userinfo .dropdown-item a .badge {
+            top: 74px;
+            left: auto;
+            right: 42px;
         }
 
     .userinfo .dropdown-item:last-child {

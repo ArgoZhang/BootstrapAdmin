@@ -24,7 +24,7 @@ namespace Bootstrap.Client.Controllers.Api
             var sum = datas.Sum();
             var avg = sum * 1.0 / datas.Count;
             var stddev = datas.Select(v => Math.Pow(v - avg, 2)).Sum() / datas.Count;
-            return stddev != 0;
+            return stddev > 0;
         }
     }
 }
