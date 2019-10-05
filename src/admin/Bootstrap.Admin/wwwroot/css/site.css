@@ -25,7 +25,7 @@ body.trans-mute * {
         font-weight: bold;
         color: #0077de;
         background-color: #b5f1b6;
-        padding: 12px 15px;
+        padding: 0.5rem 1rem;
         border-radius: 4px 4px 0 0;
         margin-bottom: 0;
     }
@@ -33,7 +33,7 @@ body.trans-mute * {
 .cache-item {
     display: flex;
     align-items: center;
-    padding: 10px;
+    padding: 0.5rem 0.625rem;
     border: 1px solid #eee;
     border-width: 0 1px 1px 1px;
 }
