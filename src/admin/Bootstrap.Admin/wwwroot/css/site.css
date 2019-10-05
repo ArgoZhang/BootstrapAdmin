@@ -1,4 +1,8 @@
 ﻿/*Title*/
+body.trans-mute * {
+    transition: none !important;
+}
+
 .header {
     border-bottom: 1px solid #ddd;
     padding: 0 15px;
