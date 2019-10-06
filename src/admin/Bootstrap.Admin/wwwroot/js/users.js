@@ -86,8 +86,8 @@ $(function () {
             }
         },
         smartTable: {
-            sortName: 'DisplayName',
-            sortOrder: "asc",
+            sortName: 'RegisterTime',
+            sortOrder: "desc",
             queryParams: function (params) { return $.extend(params, { name: $("#txt_search_name").val(), displayName: $('#txt_display_name').val() }); },           //传递参数（*）
             columns: [
                 { title: "登录名称", field: "UserName", sortable: true },
