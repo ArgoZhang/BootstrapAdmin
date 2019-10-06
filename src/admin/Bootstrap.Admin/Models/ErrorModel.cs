@@ -3,7 +3,7 @@
     /// <summary>
     /// 
     /// </summary>
-    public class ErrorModel
+    public class ErrorModel : ModelBase
     {
         /// <summary>
         /// 
