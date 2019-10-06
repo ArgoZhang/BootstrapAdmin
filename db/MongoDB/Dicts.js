@@ -284,7 +284,7 @@
     },
     {
         "Category": "测试平台",
-        "Name": "网站图标",
+        "Name": "favicon",
         "Code": "http://localhost:49185/favicon.ico",
         "Define": NumberInt(1)
     }
