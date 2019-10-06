@@ -170,7 +170,7 @@ Insert Dicts (Category, Name, Code, Define) values (@AppName, N'网站页脚', N
 Insert Dicts (Category, Name, Code, Define) values (@AppName, N'个人中心地址', N'http://localhost:50852/Admin/Profiles', 1);
 Insert Dicts (Category, Name, Code, Define) values (@AppName, N'系统设置地址', N'http://localhost:50852/Admin/Index', 1);
 Insert Dicts (Category, Name, Code, Define) values (@AppName, N'系统通知地址', N'http://localhost:50852/Admin/Notifications', 1);
-INSERT Dicts (Category, Name, Code, Define) VALUES (@AppName, N'网站图标', N'http://localhost:49185/favicon.ico', 1);
+INSERT Dicts (Category, Name, Code, Define) VALUES (@AppName, N'favicon', N'http://localhost:49185/favicon.ico', 1);
 
 -- 菜单
 DELETE FROM Navigations Where [Application] = @AppId
