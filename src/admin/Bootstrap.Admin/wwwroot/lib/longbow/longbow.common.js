@@ -574,5 +574,11 @@
         $('.date').lgbDatePicker().on('show hide', function (e) {
             e.stopPropagation();
         });
+
+        // 移动设备支持 bootstrap-toggle 扩展
+        $('[data-toggle="toggle"]').on('touchend', function (e) {
+            $(this).tigger('click.bs.toggle');
+            e.preventDefault();
+        });
     });
 })(jQuery);
