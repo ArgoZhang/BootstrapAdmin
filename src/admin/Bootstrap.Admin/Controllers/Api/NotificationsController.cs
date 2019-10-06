@@ -2,18 +2,19 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
+using Longbow.Tasks;
 
 namespace Bootstrap.Admin.Controllers.Api
 {
     /// <summary>
-    /// 
+    /// 系统通知控制器
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class NotificationsController : ControllerBase
     {
         /// <summary>
-        /// 
+        /// 后台 Header 状态条调用
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -36,7 +37,7 @@ namespace Bootstrap.Admin.Controllers.Api
             });
 
             // Tasks
-            var task = TaskHelper.Retrieves();
+            var task = TaskServicesManager.ToList().Where(s => s.NextRuntime != null).Select(s => new { s.Name, s.LastRuntime, s.LastRunResult });
             var tasksCount = task.Count();
 
             //Message
