@@ -31,7 +31,7 @@ namespace Bootstrap.Admin.Models
 
                 // feat: https://gitee.com/LongbowEnterprise/dashboard/issues?id=I12VKZ
                 // 后台系统网站图标跟随个人中心设置的默认应用站点的展示
-                WebSiteLogo = DictHelper.RetrieveWebLogo(AppId);
+                WebSiteIcon = DictHelper.RetrieveWebIcon(AppId);
             }
         }
 

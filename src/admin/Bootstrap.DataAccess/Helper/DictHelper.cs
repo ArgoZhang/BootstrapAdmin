@@ -32,6 +32,19 @@ namespace Bootstrap.DataAccess
         private static IEnumerable<BootstrapDict> RetrieveProtectedDicts() => RetrieveDicts().Where(d => d.Define == 0 || d.Category == "测试平台");
 
         /// <summary>
+        /// 获取网站 favicon 图标
+        /// </summary>
+        /// <param name="appId"></param>
+        /// <returns></returns>
+        public static string RetrieveWebIcon(string appId)
+        {
+            // 获取应用程序 logo
+            var ditcs = RetrieveDicts();
+            var platName = ditcs.FirstOrDefault(d => d.Category == "应用程序" && d.Code == appId)?.Name;
+            return ditcs.FirstOrDefault(d => d.Category == platName && d.Name == "favicon")?.Code ?? $"~/favicon.ico";
+        }
+
+        /// <summary>
         /// 获取网站 logo 小图标
         /// </summary>
         /// <param name="appId"></param>
@@ -41,7 +54,7 @@ namespace Bootstrap.DataAccess
             // 获取应用程序 logo
             var ditcs = RetrieveDicts();
             var platName = ditcs.FirstOrDefault(d => d.Category == "应用程序" && d.Code == appId)?.Name;
-            return ditcs.FirstOrDefault(d => d.Category == platName && d.Name == "网站图标")?.Code ?? $"~/favicon.ico";
+            return ditcs.FirstOrDefault(d => d.Category == platName && d.Name == "网站图标")?.Code ?? $"~/favicon.png";
         }
 
         /// <summary>
