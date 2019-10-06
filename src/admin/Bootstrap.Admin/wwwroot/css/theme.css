@@ -554,37 +554,37 @@ input.pending {
         box-shadow: none;
     }
 
-    .card-header {
-        padding: 0.5rem 1rem;
+.card-header {
+    padding: 0.5rem 1rem;
+}
+
+.card .card-header a {
+    color: #797979;
+}
+
+    .card .card-header a[data-toggle="collapse"] {
+        display: block;
     }
 
-    .card .card-header a {
-        color: #797979;
-    }
-
-        .card .card-header a[data-toggle="collapse"] {
-            display: block;
+        .card .card-header a[data-toggle="collapse"] i {
+            transition: all .25s linear;
         }
 
-            .card .card-header a[data-toggle="collapse"] i {
-                transition: all .25s linear;
-            }
-
-            .card .card-header a[data-toggle="collapse"].collapsed i {
-                transform: rotate(-90deg);
-            }
-
-        .card .card-header a.fa {
-            transition: color .3s linear;
+        .card .card-header a[data-toggle="collapse"].collapsed i {
+            transform: rotate(-90deg);
         }
 
-            .card .card-header a.fa:hover {
-                color: #333;
-            }
-
-    .card .card-header i + span {
-        margin-left: 6px;
+    .card .card-header a.fa {
+        transition: color .3s linear;
     }
+
+        .card .card-header a.fa:hover {
+            color: #333;
+        }
+
+.card .card-header i + span {
+    margin-left: 6px;
+}
 
 .card-body .bootstrap-table {
     margin-top: -10px;
@@ -940,3 +940,12 @@ label[for] {
     display: inline-block;
     margin-left: 0;
 }
+
+.custom-control-label {
+    color: #333;
+    font-weight: bold;
+}
+
+    .custom-control-label:before, .custom-control-label::after {
+        top: 3px;
+    }
