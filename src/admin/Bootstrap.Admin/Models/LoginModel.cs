@@ -5,7 +5,7 @@ namespace Bootstrap.Admin.Models
     /// <summary>
     /// 登陆页面 Model
     /// </summary>
-    public class LoginModel : ModelBase
+    public class LoginModel : AdminModel
     {
         /// <summary>
         /// 默认构造函数

@@ -7,7 +7,7 @@ namespace Bootstrap.Admin.Models
     /// <summary>
     /// 
     /// </summary>
-    public class HeaderBarModel : ModelBase
+    public class HeaderBarModel : AdminModel
     {
         /// <summary>
         /// 
