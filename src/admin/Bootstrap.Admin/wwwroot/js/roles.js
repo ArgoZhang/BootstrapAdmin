@@ -155,4 +155,20 @@ $(function () {
             });
         }).children('.radio').hide();
     });
+
+    // 菜单弹窗过滤条件
+    $('.custom-radio').on('click', ':radio', function (e) {
+        var filter = $(this).val();
+        if (filter === 'all') {
+            $nestMenu.find('[data-category]').removeClass('d-none');
+        }
+        else if (filter === 'system') {
+            $nestMenu.find('[data-category]').addClass('d-none');
+            $nestMenu.find('[data-category="0"]').removeClass('d-none');
+        }
+        else if (filter === 'custom') {
+            $nestMenu.find('[data-category]').addClass('d-none');
+            $nestMenu.find('[data-category="1"]').removeClass('d-none');
+        }
+    });
 });
