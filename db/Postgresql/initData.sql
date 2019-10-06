@@ -159,6 +159,7 @@ Insert into Dicts (Category, Name, Code, Define) values ('测试平台', '个人
 Insert into Dicts (Category, Name, Code, Define) values ('测试平台', '系统设置地址', 'http://localhost:50852/Admin/Index', 1);
 Insert into Dicts (Category, Name, Code, Define) values ('测试平台', '系统通知地址', 'http://localhost:50852/Admin/Notifications', 1);
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('测试平台', 'favicon', 'http://localhost:49185/favicon.ico', 1);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('测试平台', '网站图标', 'http://localhost:49185/favicon.png', 1);
 
 Delete from Navigations where Application = '2';
 INSERT into Navigations (ParentId, Name, "order", Icon, Url, Category, Application) VALUES (0, '首页', 10, 'fa fa-fa', '~/Home/Index', '1', 2);
