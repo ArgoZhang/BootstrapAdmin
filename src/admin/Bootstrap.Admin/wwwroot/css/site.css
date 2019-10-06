@@ -455,3 +455,14 @@ pre {
     .refreshIcon:hover {
         color: #fff;
     }
+
+.header .badge.badge-task {
+    right: 8px;
+    top: 2px;
+}
+
+.header .content-task {
+    position: relative;
+    top: 6px;
+    right: 26px;
+}

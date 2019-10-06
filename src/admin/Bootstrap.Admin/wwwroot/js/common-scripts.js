@@ -72,9 +72,13 @@
 
                     // tasks
                     $('#msgHeaderTask').text(result.TasksCount);
-                    var htmlUserTemplate = '<a class="dropdown-item" href="{4}?id={3}"><span class="desc">{0}-{2}</span><span class="percent">{1}%</span></span><div class="progress progress-striped"><div class="progress-bar" role="progressbar" aria-valuenow="{1}" aria-valuemin="0" aria-valuemax="100" style="width: {1}%"><span class="sr-only">{1}% 完成</span></div></div></a>';
+                    var resultFormat = {
+                        "Success": '<span class="badge badge-pill badge-success badge-task"><i class="fa fa-check-circle"></i><span>成功</span></span>',
+                        "Timeout": '<span class="badge badge-pill badge-warning badge-task"><i class="fa fa-exclamation-circle"></i><span>亚健康</span></span>'
+                    }
+                    var htmlUserTemplate = '<a class="dropdown-item position-relative" href="{0}"><span class="label label-primary"><i class="fa fa-thumb-tack"></i></span><div class="content">{1}</div><div class="small italic content-task">{2}</div>{3}</a>';
                     var html = result.Tasks.map(function (u) {
-                        return $.format(htmlUserTemplate, u.TaskName, u.TaskProgress, u.AssignDisplayName, u.Id, $.formatUrl('Admin/Tasks'));
+                        return $.format(htmlUserTemplate, $.formatUrl('Admin/Tasks'), u.Name, u.LastRuntime, resultFormat[u.LastRunResult]);
                     }).join('');
                     $(html).insertAfter($('#msgHeaderTaskContent'));
 
