@@ -157,6 +157,7 @@ $(function () {
     });
 
     // 菜单弹窗过滤条件
+    $('.modal-footer > .flex-fill.d-none').addClass('d-sm-block')
     $('.custom-radio').on('click', ':radio', function (e) {
         var filter = $(this).val();
         if (filter === 'all') {
