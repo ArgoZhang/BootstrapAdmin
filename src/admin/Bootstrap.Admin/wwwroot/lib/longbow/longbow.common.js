@@ -577,7 +577,7 @@
 
         // 移动设备支持 bootstrap-toggle 扩展
         $('[data-toggle="toggle"]').on('touchend', function (e) {
-            $(this).tigger('click.bs.toggle');
+            $(this).trigger('click.bs.toggle');
             e.preventDefault();
         });
     });
