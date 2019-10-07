@@ -159,22 +159,6 @@ namespace Bootstrap.Admin.Controllers
         }
 
         /// <summary>
-        /// 创建登录用户信息
-        /// </summary>
-        /// <param name="ipLocator"></param>
-        /// <param name="context"></param>
-        /// <param name="loginUser"></param>
-        internal static void CreateLoginUser(IIPLocatorProvider ipLocator, HttpContext context, LoginUser loginUser)
-        {
-            loginUser.UserAgent = context.Request.Headers["User-Agent"];
-            var agent = new UserAgent(loginUser.UserAgent);
-            loginUser.Ip = context.Connection.RemoteIpAddress.ToIPv4String();
-            loginUser.City = ipLocator.Locate(loginUser.Ip);
-            loginUser.Browser = $"{agent.Browser?.Name} {agent.Browser?.Version}";
-            loginUser.OS = $"{agent.OS?.Name} {agent.OS?.Version}";
-        }
-
-        /// <summary>
         /// Logout this instance.
         /// </summary>
         /// <param name="appId"></param>
