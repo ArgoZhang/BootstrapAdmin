@@ -517,6 +517,10 @@
                 var defaultVal = this.$element.attr('data-default-val') || '';
                 if (defaultVal === '') this.$element.prop('checked', true);
                 oldFunc.call(this);
+                this.$toggle.on('touchend', function (e) {
+                    $(this).trigger('click.bs.toggle');
+                    e.preventDefault();
+                });
             }
         }
 
@@ -573,12 +577,6 @@
         $('[data-toggle="lgbinfo"]').lgbInfo();
         $('.date').lgbDatePicker().on('show hide', function (e) {
             e.stopPropagation();
-        });
-
-        // 移动设备支持 bootstrap-toggle 扩展
-        $('[data-toggle="toggle"]').on('touchend', function (e) {
-            $(this).trigger('click.bs.toggle');
-            e.preventDefault();
         });
     });
 })(jQuery);
