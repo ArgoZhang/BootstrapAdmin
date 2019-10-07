@@ -20,31 +20,28 @@
     </div>
 }
 @section query {
-    <div>
-        <div class="alert alert-info">
-            <p class="font-weight-bold">后台任务说明：</p>
-            <p>1. 默认任务 (立即执行，仅执行一次)</p>
-            <p>
-                <code>
-                    TaskServicesManager.GetOrAdd("简单任务", token => Task.Delay(1000));
-                </code>
-            </p>
-            <p>2. 周期性任务 (1 分钟后间隔 5 秒执行 2 次任务)</p>
-            <p>
-                <code>
-                    var trigger = TriggerBuilder.Default.WithInterval(TimeSpan.FromSeconds(5)).WithRepeatCount(2).WithStartTime(DateTimeOffset.Now.AddMinutes(1)).Build();
-                    <br />
-                    TaskServicesManager.GetOrAdd("测试任务", token => Task.Delay(1000), trigger);
-                </code>
-            </p>
-            <p>3. Cron 表达式任务 (间隔 5 秒循环执行任务)</p>
-            <p>
-                <code>
-                    TaskServicesManager.GetOrAdd("Cron 表达式任务", token => Task.Delay(1000), TriggerBuilder.Build("*/5 * * * * *"));
-                </code>
-            </p>
-            <p class="mb-0">开源地址: <a href="https://gitee.com/LongbowGroup/Longbow.Tasks" target="_blank">https://gitee.com/LongbowGroup/Longbow.Tasks</a></p>
-        </div>
+    <div class="alert alert-info">
+        <p class="font-weight-bold">后台任务说明：</p>
+        <p>1. 默认任务 (立即执行，仅执行一次)</p>
+        <p>
+            <code>
+                TaskServicesManager.GetOrAdd("简单任务", token => Task.Delay(1000));
+            </code>
+        </p>
+        <p>2. 周期性任务 (1 分钟后间隔 5 秒执行 2 次任务)</p>
+        <p>
+            <code>
+                var trigger = TriggerBuilder.Default.WithInterval(TimeSpan.FromSeconds(5)).WithRepeatCount(2).WithStartTime(DateTimeOffset.Now.AddMinutes(1)).Build();
+                <br />
+                TaskServicesManager.GetOrAdd("测试任务", token => Task.Delay(1000), trigger);
+            </code>
+        </p>
+        <p>3. Cron 表达式任务 (间隔 5 秒循环执行任务)</p>
+        <p>
+            <code>
+                TaskServicesManager.GetOrAdd("Cron 表达式任务", token => Task.Delay(1000), TriggerBuilder.Build("*/5 * * * * *"));
+            </code>
+        </p>
     </div>
 }
 @section modal {
