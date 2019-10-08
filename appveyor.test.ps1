@@ -38,7 +38,7 @@
 
 function runUnitTest() {
     write-host "dotnet test test\UnitTest" -ForegroundColor Cyan
-    dotnet test test\UnitTest --filter "FullyQualifiedName!~MySql" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Include="[Bootstrap*]*" /p:ExcludeByFile="..\..\src\admin\Bootstrap.Admin\Program.cs%2c..\..\src\admin\Bootstrap.Admin\Startup.cs" /p:CoverletOutput=..\..\
+    dotnet test test\UnitTest /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Exclude="[*]*.MySql.*" /p:ExcludeByFile="..\..\src\admin\Bootstrap.Admin\Program.cs%2c..\..\src\admin\Bootstrap.Admin\Startup.cs%2c..\..\src\admin\Bootstrap.Admin\Extensions\SMSExtensions.cs%2c..\..\src\admin\Bootstrap.DataAccess\AutoDB.cs" /p:CoverletOutput=..\..\
 }
 
 function coverallUnitTest() {
