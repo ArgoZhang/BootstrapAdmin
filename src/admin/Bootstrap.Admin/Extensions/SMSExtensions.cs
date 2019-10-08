@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -241,7 +240,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <summary>
         /// 获得/设置 默认授权 App
         /// </summary>
-        public string App { get; set; }
+        public string App { get; set; } = "0";
 
         /// <summary>
         /// 获得/设置 短信下发网关地址

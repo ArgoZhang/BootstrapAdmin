@@ -2,7 +2,6 @@
 using Bootstrap.DataAccess;
 using Longbow.GiteeAuth;
 using Longbow.GitHubAuth;
-using Longbow.Web;
 using Longbow.WeChatAuth;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;

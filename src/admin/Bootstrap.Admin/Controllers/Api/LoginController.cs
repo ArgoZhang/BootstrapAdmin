@@ -52,11 +52,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPut]
-        public async Task<bool> Put([FromServices]ISMSProvider provider, [FromQuery]string phone)
-        {
-            if (string.IsNullOrEmpty(phone)) return false;
-            return await provider.SendCodeAsync(phone);
-        }
+        public async Task<bool> Put([FromServices]ISMSProvider provider, [FromQuery]string phone) => string.IsNullOrEmpty(phone) ? false : await provider.SendCodeAsync(phone);
 
         /// <summary>
         /// 跨域握手协议
