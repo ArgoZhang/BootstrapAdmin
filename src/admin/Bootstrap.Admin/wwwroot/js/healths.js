@@ -14,7 +14,7 @@
     };
 
     var $table = $('#tbCheck').smartTable({
-        sidePagination: "client",
+        pagination: false,
         showToggle: false,
         showRefresh: false,
         showColumns: false,
@@ -61,7 +61,7 @@
 
     // init detail Table
     var $checkDetail = $('#checkDetail').smartTable({
-        sidePagination: "client",
+        pagination: false,
         showToggle: false,
         showRefresh: false,
         showColumns: false,
