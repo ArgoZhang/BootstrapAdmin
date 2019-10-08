@@ -109,14 +109,13 @@ namespace Bootstrap.Admin
             app.UseBootstrapAdminAuthentication(RoleHelper.RetrievesByUserName, RoleHelper.RetrievesByUrl, AppHelper.RetrievesByUserName);
             app.UseAuthorization();
             app.UseSwagger(Configuration["SwaggerPathBase"].TrimEnd('/'));
-            app.UseBootstrapHealthChecks();
             app.UseOnlineUsers(TraceHelper.Filter, TraceHelper.Save);
             app.UseCacheManager();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHub<SignalRHub>("/NotiHub");
                 endpoints.MapHub<TaskLogHub>("/TaskLogHub");
-                endpoints.MapHealthChecks("/healths");
+                endpoints.MapBootstrapHealthChecks();
                 endpoints.MapDefaultControllerRoute().RequireAuthorization();
             });
         }
