@@ -33,6 +33,19 @@ namespace Bootstrap.Admin.Api.SqlServer
         }
 
         [Fact]
+        public async void Put_Ok()
+        {
+            var resq = await Client.PutAsync("?phone=", new StringContent(""));
+            var _token = await resq.Content.ReadAsStringAsync();
+            Assert.Equal("false", _token);
+
+            // UNDONE: 重构短信登陆后完善
+            //resq = await Client.PutAsync("?phone=", new StringContent(""));
+            //_token = await resq.Content.ReadAsStringAsync();
+            //Assert.Equal("true", _token);
+        }
+
+        [Fact]
         public async void Option_Ok()
         {
             var req = new HttpRequestMessage(HttpMethod.Options, "");

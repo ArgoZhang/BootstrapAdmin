@@ -132,22 +132,23 @@
     var $loginSMS = $('#loginSMS');
     if ($login.attr('data-demo') === 'True') {
         $login.find('[name="userName"], [name="password"]').attr('data-valid', 'false');
-        $login.on('submit', function (e) {
-            var model = $loginType.attr('data-value');
-            if (model === 'username') {
-                if ($username.val() === '' && $password.val() === '') {
-                    e.preventDefault();
-                    location.href = "Gitee";
-                }
-            }
-            else {
-                // sms
-                var url = $.format('Account/Mobile?phone={0}&code={1}', $('#txtPhone').val(), $('#smscode').val());
-                $login.attr('action', $.formatUrl(url));
-                return true;
-            }
-        });
     }
+
+    $login.on('submit', function (e) {
+        var model = $loginType.attr('data-value');
+        if (model === 'username') {
+            if ($username.val() === '' && $password.val() === '') {
+                e.preventDefault();
+                location.href = "Gitee";
+            }
+        }
+        else {
+            // sms
+            var url = $.format('Account/Mobile{0}', location.search);
+            $login.attr('action', $.formatUrl(url));
+            return true;
+        }
+    });
 
     // login type
     var $loginType = $('#loginType').on('click', function (e) {
@@ -177,7 +178,7 @@
     var timeHanlder = null;
     $('#btnSendCode').on('click', function () {
         // validate mobile phone
-        var $phone = $('#txtPhone');
+        var $phone = $('#phone');
         var validator = $login.find('[data-toggle="LgbValidate"]').lgbValidator();
         if (!validator.validElement($phone.get(0))) {
             $phone.tooltip('show');
@@ -200,7 +201,7 @@
                 if (result) {
                     // send success
                     $this.text('已发送').attr('disabled', true);
-                    $('#smscode').removeAttr('disabled');
+                    $('#code').removeAttr('disabled');
                     timeHanlder = setTimeout(function () {
                         clearTimeout(timeHanlder);
                         var count = 299;

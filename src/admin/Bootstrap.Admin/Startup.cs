@@ -79,6 +79,7 @@ namespace Bootstrap.Admin
                 option.AssumeDefaultVersionWhenUnspecified = true;
                 option.ApiVersionReader = ApiVersionReader.Combine(new HeaderApiVersionReader("api-version"), new QueryStringApiVersionReader("api-version"));
             });
+            services.AddSMSProvider();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

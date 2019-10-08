@@ -36,7 +36,7 @@ namespace Bootstrap.Admin.Controllers.Api
                 var result = string.IsNullOrEmpty(content) ? new string[] { "unknown" } : regex.Select((m, i) => $"{labels[i]} {m.Groups[1].Value}");
                 return string.Join(" ", result);
             });
-            color = ret.StartsWith("open 0 progressing 0") ? "success" : color;
+            color = ret.StartsWith("open 0 progressing 0", StringComparison.OrdinalIgnoreCase) ? "success" : color;
             return new JsonResult(new { schemaVersion = 1, label, message = ret, color });
         }
 
