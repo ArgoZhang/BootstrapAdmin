@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -6,59 +8,112 @@ using System.Collections.Specialized;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading;
-#if NETCOREAPP3_0
 using System.Text.Json;
-#else
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-#endif
+using System.Threading;
+using System.Threading.Tasks;
 
-namespace Bootstrap.DataAccess
+namespace Microsoft.Extensions.DependencyInjection
 {
+    /// <summary>
+    /// 短信登录扩展类 
+    /// </summary>
+    public static class SMSExtensions
+    {
+        /// <summary>
+        /// 注入短信登录服务到容器中
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
+        public static IServiceCollection AddSMSProvider(this IServiceCollection services)
+        {
+            services.AddTransient<ISMSProvider, DefaultSMSProvider>();
+            return services;
+        }
+    }
+
+    /// <summary>
+    /// 短信登录接口
+    /// </summary>
+    public interface ISMSProvider
+    {
+        /// <summary>
+        ///  手机下发验证码方法
+        /// </summary>
+        /// <param name="phoneNumber">手机号</param>
+        /// <returns></returns>
+        Task<bool> SendCodeAsync(string phoneNumber);
+
+        /// <summary>
+        ///  验证手机验证码是否正确方法
+        /// </summary>
+        /// <param name="phoneNumber">手机号</param>
+        /// <param name="code">验证码</param>
+        /// <returns></returns>
+        bool Validate(string phoneNumber, string code);
+
+        /// <summary>
+        /// 获得 配置信息
+        /// </summary>
+        SMSOptions Option { get; }
+    }
+
     /// <summary>
     /// 手机号登陆帮助类
     /// </summary>
-    public static class SMSHelper
+    internal class DefaultSMSProvider : ISMSProvider
     {
         private static ConcurrentDictionary<string, AutoExpireValidateCode> _pool = new ConcurrentDictionary<string, AutoExpireValidateCode>();
 
         /// <summary>
+        /// 获得 短信配置信息
+        /// </summary>
+        public SMSOptions Option { get; protected set; }
+
+        private HttpClient _client;
+
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="configuration"></param>
+        /// <param name="factory"></param>
+        public DefaultSMSProvider(IConfiguration configuration, IHttpClientFactory factory)
+        {
+            Option = configuration.GetSection<SMSOptions>().Get<SMSOptions>();
+            _client = factory.CreateClient();
+        }
+
+        /// <summary>
         /// 下发验证码方法
         /// </summary>
-        /// <param name="client"></param>
-        /// <param name="option"></param>
+        /// <param name="phoneNumber"></param>
         /// <returns></returns>
-        public static async System.Threading.Tasks.Task<bool> SendCode(this HttpClient client, SMSOptions option)
+        public async Task<bool> SendCodeAsync(string phoneNumber)
         {
-            option.Timestamp = (DateTimeOffset.UtcNow.Ticks - 621355968000000000) / 10000000;
+            Option.Timestamp = (DateTimeOffset.UtcNow.Ticks - 621355968000000000) / 10000000;
+            Option.Phone = phoneNumber;
             var requestParameters = new Dictionary<string, string>()
             {
-                { "CompanyCode", option.CompanyCode },
-                { "Phone", option.Phone },
-                { "TimeStamp", option.Timestamp.ToString() },
-                { "Sign", option.Sign() }
+                { "CompanyCode", Option.CompanyCode },
+                { "Phone", Option.Phone },
+                { "TimeStamp", Option.Timestamp.ToString() },
+                { "Sign", Sign() }
             };
 
-            var url = QueryHelpers.AddQueryString("http://open.bluegoon.com/api/sms/sendcode", requestParameters);
-            var req = await client.GetAsync(url);
+            var url = QueryHelpers.AddQueryString(Option.RequestUrl, requestParameters);
+            var req = await _client.GetAsync(url);
             var content = await req.Content.ReadAsStringAsync();
-#if NETCOREAPP3_0
             var result = JsonSerializer.Deserialize<SMSResult>(content, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
-#else
-            var result = JsonConvert.DeserializeObject<SMSResult>(content, new JsonSerializerSettings() { ContractResolver = new DefaultContractResolver() });
-#endif
             var ret = false;
             if (result.Code == 1)
             {
-                _pool.AddOrUpdate(option.Phone, key => new AutoExpireValidateCode(option.Phone, result.Data, option.Expires), (key, v) => v.Reset(result.Data));
+                _pool.AddOrUpdate(Option.Phone, key => new AutoExpireValidateCode(Option.Phone, result.Data, Option.Expires), (key, v) => v.Reset(result.Data));
                 ret = true;
             }
             else
             {
                 new Exception("SMS Send Fail").Log(new NameValueCollection()
                 {
-                    ["UserId"] = option.Phone,
+                    ["UserId"] = Option.Phone,
                     ["url"] = url,
                     ["content"] = content
                 });
@@ -71,13 +126,12 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="phone">手机号</param>
         /// <param name="code">验证码</param>
-        /// <param name="secret">密钥</param>
         /// <returns></returns>
-        public static bool Validate(string phone, string code, string secret) => _pool.TryGetValue(phone, out var signKey) && Hash($"{code}{secret}") == signKey.Code;
+        public bool Validate(string phone, string code) => _pool.TryGetValue(phone, out var signKey) && Hash($"{code}{Option.MD5Key}") == signKey.Code;
 
-        private static string Sign(this SMSOptions option)
+        private string Sign()
         {
-            return Hash($"{option.CompanyCode}{option.Phone}{option.Timestamp}{option.MD5Key}");
+            return Hash($"{Option.CompanyCode}{Option.Phone}{Option.Timestamp}{Option.MD5Key}");
         }
 
         private static string Hash(string data)
@@ -124,7 +178,7 @@ namespace Bootstrap.DataAccess
 
             private CancellationTokenSource _tokenSource;
 
-            private System.Threading.Tasks.Task RunAsync() => System.Threading.Tasks.Task.Run(() =>
+            private Task RunAsync() => Task.Run(() =>
             {
                 _tokenSource = new CancellationTokenSource();
                 if (!_tokenSource.Token.WaitHandle.WaitOne(Expires)) _pool.TryRemove(Phone, out var _);
@@ -188,5 +242,10 @@ namespace Bootstrap.DataAccess
         /// 获得/设置 默认授权 App
         /// </summary>
         public string App { get; set; }
+
+        /// <summary>
+        /// 获得/设置 短信下发网关地址
+        /// </summary>
+        public string RequestUrl { get; set; } = "http://open.bluegoon.com/api/sms/sendcode";
     }
 }

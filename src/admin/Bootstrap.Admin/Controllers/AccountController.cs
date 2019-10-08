@@ -11,7 +11,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Security.Claims;
@@ -49,18 +51,18 @@ namespace Bootstrap.Admin.Controllers
         /// <summary>
         /// 系统锁屏界面
         /// </summary>
-        /// <param name="configuration"></param>
+        /// <param name="provider"></param>
         /// <param name="userName"></param>
         /// <param name="password"></param>
         /// <param name="authType"></param>
         /// <returns></returns>
         [HttpPost]
         [IgnoreAntiforgeryToken]
-        public Task<IActionResult> Lock([FromServices]IConfiguration configuration, string userName, string password, string authType)
+        public Task<IActionResult> Lock([FromServices]ISMSProvider provider, string userName, string password, string authType)
         {
             // 根据不同的登陆方式
             Task<IActionResult> ret;
-            if (authType == MobileSchema) ret = Mobile(configuration, userName, password);
+            if (authType == MobileSchema) ret = Mobile(provider, userName, password);
             else ret = Login(userName, password, string.Empty);
             return ret;
         }
@@ -84,15 +86,14 @@ namespace Bootstrap.Admin.Controllers
         /// <summary>
         /// 短信验证登陆方法
         /// </summary>
-        /// <param name="configuration"></param>
+        /// <param name="provider"></param>
         /// <param name="phone"></param>
         /// <param name="code"></param>
         /// <returns></returns>
         [HttpPost()]
-        public async Task<IActionResult> Mobile([FromServices]IConfiguration configuration, [FromQuery]string phone, [FromQuery]string code)
+        public async Task<IActionResult> Mobile([FromServices]ISMSProvider provider, string phone, string code)
         {
-            var option = configuration.GetSection(nameof(SMSOptions)).Get<SMSOptions>();
-            var auth = SMSHelper.Validate(phone, code, option.MD5Key);
+            var auth = provider.Validate(phone, code);
             HttpContext.Log(phone, auth);
             if (auth)
             {
@@ -108,16 +109,26 @@ namespace Bootstrap.Admin.Controllers
                         Password = code,
                         Icon = "default.jpg",
                         Description = "手机用户",
-                        App = option.App
+                        App = provider.Option.App
                     };
                     UserHelper.Save(user);
 
                     // 根据配置文件设置默认角色
-                    var roles = RoleHelper.Retrieves().Where(r => option.Roles.Any(rl => rl.Equals(r.RoleName, StringComparison.OrdinalIgnoreCase))).Select(r => r.Id);
+                    var roles = RoleHelper.Retrieves().Where(r => provider.Option.Roles.Any(rl => rl.Equals(r.RoleName, StringComparison.OrdinalIgnoreCase))).Select(r => r.Id);
                     RoleHelper.SaveByUserId(user.Id, roles);
                 }
             }
-            return auth ? await SignInAsync(phone, true, MobileSchema) : View("Login", new LoginModel() { AuthFailed = true });
+            return auth ? await SignInAsync(phone, true, MobileSchema) : RedirectLogin();
+        }
+
+        private IActionResult RedirectLogin()
+        {
+            var query = Request.Query.Aggregate(new Dictionary<string, string>(), (d, v) =>
+            {
+                d.Add(v.Key, v.Value.ToString());
+                return d;
+            });
+            return Redirect(QueryHelpers.AddQueryString(Request.PathBase + CookieAuthenticationDefaults.LoginPath, query));
         }
 
         /// <summary>

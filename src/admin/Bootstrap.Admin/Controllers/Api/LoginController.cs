@@ -4,9 +4,7 @@ using Bootstrap.Security.Authentication;
 using Longbow.Web.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json.Linq;
-using System.Net.Http;
+using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
 
 namespace Bootstrap.Admin.Controllers.Api
@@ -49,19 +47,15 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <summary>
         /// 下发手机短信方法
         /// </summary>
-        /// <param name="configuration"></param>
-        /// <param name="factory"></param>
+        /// <param name="provider"></param>
         /// <param name="phone"></param>
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPut]
-        public async Task<bool> Put([FromServices]IConfiguration configuration, [FromServices]IHttpClientFactory factory, [FromQuery]string phone)
+        public async Task<bool> Put([FromServices]ISMSProvider provider, [FromQuery]string phone)
         {
             if (string.IsNullOrEmpty(phone)) return false;
-
-            var option = configuration.GetSection(nameof(SMSOptions)).Get<SMSOptions>();
-            option.Phone = phone;
-            return await factory.CreateClient().SendCode(option);
+            return await provider.SendCodeAsync(phone);
         }
 
         /// <summary>
