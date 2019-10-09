@@ -1,4 +1,5 @@
 ﻿using Bootstrap.DataAccess;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace Bootstrap.Admin.Controllers
     /// 
     /// </summary>
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class NewController : ControllerBase
     {

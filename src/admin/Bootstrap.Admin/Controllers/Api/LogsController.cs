@@ -2,6 +2,7 @@
 using Bootstrap.DataAccess;
 using Longbow.Web;
 using Longbow.Web.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -11,6 +12,7 @@ namespace Bootstrap.Admin.Controllers.Api
     /// 操作日志控制器
     /// </summary>
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class LogsController : ControllerBase
     {

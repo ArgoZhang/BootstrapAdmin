@@ -2,6 +2,7 @@
 using Bootstrap.DataAccess;
 using Longbow.Web;
 using Longbow.Web.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bootstrap.Admin.Controllers.Api
@@ -10,6 +11,7 @@ namespace Bootstrap.Admin.Controllers.Api
     /// 在线用户跟踪控制器
     /// </summary>
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class TracesController : ControllerBase
     {

@@ -1,6 +1,7 @@
 ﻿using Bootstrap.Admin.Query;
 using Bootstrap.DataAccess;
 using Longbow.Web.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bootstrap.Admin.Controllers.Api
@@ -9,6 +10,7 @@ namespace Bootstrap.Admin.Controllers.Api
     /// SQL 语句执行日志 webapi
     /// </summary>
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class SQLController : ControllerBase
     {

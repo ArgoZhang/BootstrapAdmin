@@ -14,6 +14,7 @@ namespace Bootstrap.Admin.Controllers.Api
     /// 在线用户接口
     /// </summary>
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class OnlineUsersController : ControllerBase
     {

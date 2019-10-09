@@ -1,5 +1,6 @@
 using Bootstrap.Admin.Query;
 using Longbow.Web.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace Bootstrap.Admin.Controllers.Api
     /// 
     /// </summary>
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class ExceptionsController : ControllerBase
     {

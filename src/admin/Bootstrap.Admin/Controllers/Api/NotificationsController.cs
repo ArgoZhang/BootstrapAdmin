@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
 using Longbow.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Bootstrap.Admin.Controllers.Api
 {
@@ -10,6 +11,7 @@ namespace Bootstrap.Admin.Controllers.Api
     /// 系统通知控制器
     /// </summary>
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class NotificationsController : ControllerBase
     {

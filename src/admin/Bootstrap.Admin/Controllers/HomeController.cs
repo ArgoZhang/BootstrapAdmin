@@ -9,6 +9,7 @@ namespace Bootstrap.Admin.Controllers
     /// <summary>
     /// 
     /// </summary>
+    [Authorize]
     public class HomeController : Controller
     {
         /// <summary>

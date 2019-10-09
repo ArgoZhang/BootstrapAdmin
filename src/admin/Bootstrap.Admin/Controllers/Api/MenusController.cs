@@ -2,6 +2,7 @@ using Bootstrap.Admin.Query;
 using Bootstrap.DataAccess;
 using Bootstrap.Security;
 using Longbow.Web.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -11,6 +12,7 @@ namespace Bootstrap.Admin.Controllers.Api
     /// 
     /// </summary>
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class MenusController : ControllerBase
     {

@@ -10,6 +10,7 @@ namespace Bootstrap.Admin.Controllers.Api
     /// 数据字典分类
     /// </summary>
     [Route("api/[controller]/[action]")]
+    [Authorize]
     [ApiController]
     public class CategoryController : ControllerBase
     {

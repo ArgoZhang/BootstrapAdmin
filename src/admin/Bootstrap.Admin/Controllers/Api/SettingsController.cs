@@ -1,6 +1,7 @@
 using Bootstrap.DataAccess;
 using Bootstrap.Security;
 using Longbow.Cache;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -10,6 +11,7 @@ namespace Bootstrap.Admin.Controllers.Api
     /// 
     /// </summary>
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class SettingsController : ControllerBase
     {

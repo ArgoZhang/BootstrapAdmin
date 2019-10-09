@@ -12,8 +12,8 @@ namespace Bootstrap.Admin.Controllers.Api
     /// <summary>
     /// 注册用户操作类
     /// </summary>
-    [AllowAnonymous]
     [Route("api/[controller]")]
+    [AllowAnonymous]
     [ApiController]
     public class RegisterController : ControllerBase
     {

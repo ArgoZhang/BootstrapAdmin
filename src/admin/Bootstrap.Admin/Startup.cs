@@ -117,7 +117,7 @@ namespace Bootstrap.Admin
                 endpoints.MapHub<SignalRHub>("/NotiHub");
                 endpoints.MapHub<TaskLogHub>("/TaskLogHub");
                 endpoints.MapBootstrapHealthChecks();
-                endpoints.MapDefaultControllerRoute().RequireAuthorization();
+                endpoints.MapDefaultControllerRoute();
             });
         }
     }

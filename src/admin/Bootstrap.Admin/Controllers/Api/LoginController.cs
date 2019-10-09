@@ -13,6 +13,7 @@ namespace Bootstrap.Admin.Controllers.Api
     /// 登陆接口
     /// </summary>
     [Route("api/[controller]")]
+    [AllowAnonymous]
     [ApiController]
     public class LoginController : ControllerBase
     {
@@ -21,6 +22,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
+        [Authorize]
         [HttpGet]
         public QueryData<LoginUser> Get([FromQuery]QueryLoginOption value) => value.RetrieveData();
 
@@ -29,7 +31,6 @@ namespace Bootstrap.Admin.Controllers.Api
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        [AllowAnonymous]
         [HttpPost]
         public string Post([FromBody]User user)
         {
@@ -50,7 +51,6 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="provider"></param>
         /// <param name="phone"></param>
         /// <returns></returns>
-        [AllowAnonymous]
         [HttpPut]
         public async Task<bool> Put([FromServices]ISMSProvider provider, [FromQuery]string phone)
         {
@@ -62,7 +62,6 @@ namespace Bootstrap.Admin.Controllers.Api
         /// 跨域握手协议
         /// </summary>
         /// <returns></returns>
-        [AllowAnonymous]
         [HttpOptions]
         public string Options()
         {
