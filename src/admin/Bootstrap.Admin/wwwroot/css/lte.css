@@ -19,6 +19,7 @@
 
     .header .badge {
         top: 4px;
+        right: auto;
     }
 
 .header nav, .userinfo .dropdown-toggle:after {
@@ -109,8 +110,7 @@
 
         .userinfo .dropdown-item a .badge {
             top: 74px;
-            left: auto;
-            right: 36px;
+            left: 202px;
         }
 
     .userinfo .dropdown-item:last-child {
