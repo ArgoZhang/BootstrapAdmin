@@ -10,6 +10,8 @@ using System.Net;
 using System.Net.Http;
 using UnitTest;
 using Xunit;
+using Microsoft.Extensions.DependencyInjection;
+using System.Threading.Tasks;
 
 namespace Bootstrap.Admin
 {
@@ -119,6 +121,39 @@ namespace Bootstrap.Admin
                 builder.ConfigureAppConfiguration(app => app.AddJsonFile(TestHelper.RetrievePath($"UnitTest{Path.DirectorySeparatorChar}appsettings.appveyor.json"), false, true));
             }
             TestHelper.ConfigureWebHost(builder);
+
+            // 替换 SMS 服务
+            builder.ConfigureServices(services =>
+            {
+                services.AddTransient<ISMSProvider, DefaultSMSProvider>();
+            });
+        }
+
+
+        /// <summary>
+        /// 手机号登陆帮助类
+        /// </summary>
+        class DefaultSMSProvider : ISMSProvider
+        {
+            /// <summary>
+            /// 获得 短信配置信息
+            /// </summary>
+            public SMSOptions Option { get; protected set; } = new SMSOptions();
+
+            /// <summary>
+            /// 下发验证码方法
+            /// </summary>
+            /// <param name="phoneNumber"></param>
+            /// <returns></returns>
+            public Task<bool> SendCodeAsync(string phoneNumber) => Task.FromResult(true);
+
+            /// <summary>
+            /// 验证验证码方法
+            /// </summary>
+            /// <param name="phone">手机号</param>
+            /// <param name="code">验证码</param>
+            /// <returns></returns>
+            public bool Validate(string phone, string code) => code == "1234";
         }
     }
 }

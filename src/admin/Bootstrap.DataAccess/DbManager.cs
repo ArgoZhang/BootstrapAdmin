@@ -18,7 +18,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="connectionName"></param>
         /// <param name="keepAlive"></param>
-        /// <param name="log">是否记录日志</param>
+        /// <param name="enableLog">是否记录日志</param>
         /// <returns></returns>
         public static IDatabase Create(string connectionName = null, bool keepAlive = false, bool enableLog = true)
         {

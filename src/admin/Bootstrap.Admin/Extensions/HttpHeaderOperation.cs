@@ -17,8 +17,6 @@ namespace Bootstrap.Admin
         /// <param name="context"></param>
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
-            if (operation.Parameters == null) operation.Parameters = new List<OpenApiParameter>();
-
             if (context.MethodInfo.GetCustomAttributes(typeof(AllowAnonymousAttribute), true).Length == 0)
             {
                 operation.Parameters.Add(new OpenApiParameter()

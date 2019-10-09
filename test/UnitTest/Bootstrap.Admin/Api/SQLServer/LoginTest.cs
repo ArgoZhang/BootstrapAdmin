@@ -39,10 +39,9 @@ namespace Bootstrap.Admin.Api.SqlServer
             var _token = await resq.Content.ReadAsStringAsync();
             Assert.Equal("false", _token);
 
-            // UNDONE: 重构短信登陆后完善
-            //resq = await Client.PutAsync("?phone=", new StringContent(""));
-            //_token = await resq.Content.ReadAsStringAsync();
-            //Assert.Equal("true", _token);
+            resq = await Client.PutAsync("?phone=18910001000", new StringContent(""));
+            _token = await resq.Content.ReadAsStringAsync();
+            Assert.Equal("true", _token);
         }
 
         [Fact]

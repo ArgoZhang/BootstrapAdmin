@@ -81,7 +81,7 @@ namespace Bootstrap.DataAccess
                 while (_messageQueue.TryTake(out var log))
                 {
                     logs.Add(log);
-                };
+                }
                 if (logs.Any())
                 {
                     using (var db = DbManager.Create(enableLog: false))

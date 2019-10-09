@@ -1,10 +1,8 @@
 ﻿using Bootstrap.DataAccess;
 using System;
-using System.Collections.Concurrent;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Reflection;
 using Xunit;
 
 namespace Bootstrap.Admin.Controllers.SqlServer
@@ -123,22 +121,54 @@ namespace Bootstrap.Admin.Controllers.SqlServer
         }
 
         [Fact]
-        public void Mobile_Ok()
+        public async void Mobile_Ok()
         {
-            // UNDONE: Mobile 单元测试未完成
+            using (var db = DbManager.Create()) db.Execute("delete from Users where UserName = @0", "18910001000");
+            var client = Host.CreateClient();
+            var r = await client.GetAsync("/Account/Login");
+            var view = await r.Content.ReadAsStringAsync();
+            var tokenTag = "<input name=\"__RequestVerificationToken\" type=\"hidden\" value=\"";
+            var index = view.IndexOf(tokenTag);
+            view = view.Substring(index + tokenTag.Length);
+            index = view.IndexOf("\" /></form>");
+            var antiToken = view.Substring(0, index);
 
-            // 反射设置 SMSHelper 内部验证码保证 Validate 方法返回真
-            var validateCodeInstance = Activator.CreateInstance(Type.GetType("Bootstrap.DataAccess.SMSHelper+AutoExpireValidateCode, Bootstrap.DataAccess"), new object[] { "18910001000", "1234", TimeSpan.FromSeconds(10)});
-            var _poolInstance = typeof(SMSHelper).GetField("_pool", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
-            //_pool.AddOrUpdate(option.Phone, key => new AutoExpireValidateCode(option.Phone, result.Data, option.Expires), (key, v) => v.Reset(result.Data));
-            //var addMethod = _poolInstance.GetType().GetMethod("AddOrUpdate");
-            //addMethod.Invoke(_poolInstance, new object[] { "18910001000", validateCodeInstance, null });
+            var content = new MultipartFormDataContent
+            {
+                { new StringContent("18910001000"), "phone" },
+                { new StringContent("1234"), "code" },
+                { new StringContent(antiToken), "__RequestVerificationToken" }
+            };
+            var m = await client.PostAsync("/Account/Mobile", content);
+            Assert.True(m.IsSuccessStatusCode);
+            var payload = await r.Content.ReadAsStringAsync();
+            Assert.Contains("登 录", payload);
+        }
 
-            //var client = Host.CreateClient();
-            //var r = await client.GetAsync($"/Account/Mobile?phone=18910001000&code=1234");
-            //Assert.True(r.IsSuccessStatusCode);
-            //var content = await r.Content.ReadAsStringAsync();
-            //Assert.Contains("登 录", content);
+        [Fact]
+        public async void Mobile_Fail()
+        {
+            using (var db = DbManager.Create()) db.Execute("delete from Users where UserName = @0", "18910001000");
+
+            var client = Host.CreateClient();
+            var r = await client.GetAsync("/Account/Login");
+            var view = await r.Content.ReadAsStringAsync();
+            var tokenTag = "<input name=\"__RequestVerificationToken\" type=\"hidden\" value=\"";
+            var index = view.IndexOf(tokenTag);
+            view = view.Substring(index + tokenTag.Length);
+            index = view.IndexOf("\" /></form>");
+            var antiToken = view.Substring(0, index);
+
+            var content = new MultipartFormDataContent
+            {
+                { new StringContent("18910001000"), "phone" },
+                { new StringContent("1000"), "code" },
+                { new StringContent(antiToken), "__RequestVerificationToken" }
+            };
+            var m = await client.PostAsync("/Account/Mobile?AppId=0", content);
+            Assert.True(m.IsSuccessStatusCode);
+            var payload = await r.Content.ReadAsStringAsync();
+            Assert.Contains("登 录", payload);
         }
     }
 }
