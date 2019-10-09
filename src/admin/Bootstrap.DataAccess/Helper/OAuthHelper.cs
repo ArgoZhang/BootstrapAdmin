@@ -74,7 +74,7 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 插入 Gitee 授权用户到数据库中
         /// </summary>
-        /// <param name="userName"></param>
+        /// <param name="context"></param>
         /// <returns></returns>
         private static User ParseUser(OAuthCreatingTicketContext context)
         {

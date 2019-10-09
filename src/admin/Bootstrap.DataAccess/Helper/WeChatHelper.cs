@@ -4,6 +4,9 @@ using Longbow.WeChatAuth;
 using Microsoft.AspNetCore.Authentication.OAuth;
 using System;
 using System.Linq;
+#if NETCOREAPP3_0
+using System.Text.Json;
+#endif
 
 namespace Bootstrap.DataAccess
 {
@@ -35,7 +38,7 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 插入 Gitee 授权用户到数据库中
         /// </summary>
-        /// <param name="userName"></param>
+        /// <param name="context"></param>
         /// <returns></returns>
         private static User ParseUser(OAuthCreatingTicketContext context)
         {
@@ -53,7 +56,7 @@ namespace Bootstrap.DataAccess
         }
 
 #if NETCOREAPP3_0
-        private static T ToObject<T>(this System.Text.Json.JsonElement element) where T : WeChatUser
+        private static T ToObject<T>(this JsonElement element) where T : WeChatUser
         {
             var user = new WeChatUser();
             var target = element.EnumerateObject();
@@ -70,7 +73,7 @@ namespace Bootstrap.DataAccess
             return user as T;
         }
 
-        private static string TryGetValue(this System.Text.Json.JsonElement.ObjectEnumerator target, string propertyName)
+        private static string TryGetValue(this JsonElement.ObjectEnumerator target, string propertyName)
         {
             var ret = string.Empty;
             var property = target.FirstOrDefault(t => t.Name.Equals(propertyName, StringComparison.OrdinalIgnoreCase));
