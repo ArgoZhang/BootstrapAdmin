@@ -88,7 +88,8 @@ CREATE TABLE Logs(
 	City 		VARCHAR (50) NULL,
 	RequestUrl 	VARCHAR (500) NOT NULL,
 	RequestData TEXT		 NULL,
-	UserAgent	VARCHAR (2000) NULL
+	UserAgent	VARCHAR (2000) NULL,
+    Referer         VARCHAR (2000) 
 );
 
 CREATE TABLE Groups(

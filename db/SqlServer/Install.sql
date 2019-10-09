@@ -282,6 +282,7 @@ CREATE TABLE [dbo].[Logs](
 	[RequestUrl] [nvarchar](500) NOT NULL,
 	[RequestData] [nvarchar](max) NULL,
 	[UserAgent] [varchar](2000) NULL,
+    [Referer]   [varchar](2000) NULL,
  CONSTRAINT [PK_Logs] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
@@ -568,6 +569,7 @@ CREATE TABLE [dbo].[Traces](
 	[City] [nvarchar](50) NULL,
 	[RequestUrl] [nvarchar](500) NOT NULL,
 	[UserAgent] [varchar](2000) NULL,
+    [Referer] [nvarchar](2000) NULL,
  CONSTRAINT [PK_Traces] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
