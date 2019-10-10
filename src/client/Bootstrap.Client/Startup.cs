@@ -91,10 +91,7 @@ namespace Bootstrap.Client
             app.UseAuthorization();
             app.UseCacheManager();
             app.UseOnlineUsers(callback: TraceHelper.Save);
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapDefaultControllerRoute().RequireAuthorization();
-            });
+            app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
         }
     }
 }

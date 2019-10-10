@@ -1,5 +1,4 @@
 ﻿using Bootstrap.Client.Models;
-using Bootstrap.Client.Tasks;
 using Longbow.Configuration;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -13,6 +12,7 @@ namespace Bootstrap.Client.Controllers
     /// <summary>
     /// 前台主页控制器
     /// </summary>
+    [Authorize]
     public class HomeController : Controller
     {
         /// <summary>

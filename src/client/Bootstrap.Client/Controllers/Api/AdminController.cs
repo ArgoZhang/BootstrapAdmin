@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Bootstrap.Client.Controllers.Api
 {
@@ -6,6 +7,7 @@ namespace Bootstrap.Client.Controllers.Api
     /// 运维管理接口
     /// </summary>
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class AdminController : ControllerBase
     {
