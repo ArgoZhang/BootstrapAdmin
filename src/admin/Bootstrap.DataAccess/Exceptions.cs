@@ -98,18 +98,22 @@ namespace Bootstrap.DataAccess
             try
             {
                 // 防止数据库写入操作失败后陷入死循环
-                DbManager.Create().Insert(new Exceptions
+                // fix https://gitee.com/LongbowEnterprise/dashboard/issues?id=I136OP
+                using (var db = Longbow.Data.DbManager.Create())
                 {
-                    AppDomainName = AppDomain.CurrentDomain.FriendlyName,
-                    ErrorPage = errorPage,
-                    UserId = additionalInfo?["UserId"],
-                    UserIp = additionalInfo?["UserIp"],
-                    ExceptionType = ex.GetType().FullName,
-                    Message = ex.Message,
-                    StackTrace = ex.StackTrace,
-                    LogTime = DateTime.Now,
-                    Category = category
-                });
+                    db.Insert(new Exceptions
+                    {
+                        AppDomainName = AppDomain.CurrentDomain.FriendlyName,
+                        ErrorPage = errorPage,
+                        UserId = additionalInfo?["UserId"],
+                        UserIp = additionalInfo?["UserIp"],
+                        ExceptionType = ex.GetType().FullName,
+                        Message = ex.Message,
+                        StackTrace = ex.StackTrace,
+                        LogTime = DateTime.Now,
+                        Category = category
+                    });
+                }
                 ClearExceptions();
             }
             catch { }
