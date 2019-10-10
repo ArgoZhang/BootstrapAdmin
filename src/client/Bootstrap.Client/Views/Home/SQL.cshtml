@@ -1,0 +1,17 @@
+@model SQLModel
+@{
+    ViewData["Title"] = "SQL 脚本执行器";
+}
+<form method="post">
+    <div class="form-group">
+        <textarea name="sql" rows="10" class="form-control"></textarea>
+    </div>
+    <div class="form-group">
+        <div class="input-group">
+            <input type="password" name="auth" class="form-control"></input>
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-danger"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i><span>执行 (@Model.Result)</span></button>
+            </div>
+        </div>
+    </div>
+</form>

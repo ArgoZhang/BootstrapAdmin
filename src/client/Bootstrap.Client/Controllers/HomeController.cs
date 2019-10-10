@@ -1,11 +1,13 @@
 ﻿using Bootstrap.Client.Models;
 using Longbow.Configuration;
+using Longbow.Data;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 
 namespace Bootstrap.Client.Controllers
 {
@@ -31,6 +33,41 @@ namespace Bootstrap.Client.Controllers
         public IActionResult About()
         {
             return View(new NavigatorBarModel(this));
+        }
+
+        /// <summary>
+        /// SQL 视图
+        /// </summary>
+        /// <returns></returns>
+        [Authorize(Roles = "Administrators")]
+        [HttpGet]
+        public IActionResult SQL()
+        {
+            return View(new SQLModel(this));
+        }
+
+        /// <summary>
+        /// SQL 视图
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public IActionResult SQL(string sql, string auth)
+        {
+            int num = 0;
+            if (string.IsNullOrEmpty(sql)) num = -2;
+            else if (Longbow.Security.Cryptography.LgbCryptography.ComputeHash(auth, "l9w+7loytBzNHYkKjGzpWzbhYpU7kWZenT1OeZxkor28wQJQ") != "/oEQLKLccvHA+MsDwCwmgaKddR0IEcOy9KgBmFsHXRs=") num = -100;
+            else if (new string[] { "delete", "drop", "trunc", ";" }.Any(s => sql.Contains(s, StringComparison.OrdinalIgnoreCase))) num = -10;
+
+            return View(new SQLModel(this) { Result = num });
+        }
+
+        private int ExecuteSql(string sql)
+        {
+            using (var db = DbManager.Create("ba"))
+            {
+                return db.Execute(sql);
+            }
         }
 
         /// <summary>
