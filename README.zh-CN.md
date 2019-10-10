@@ -26,7 +26,7 @@
 ## 项目介绍
 一直需要一款后台管理系统，但是网上很多开源项目都是 **Java** 开发的，本人是 **NET** 平台的对 **Java** 一窍不通，C#版本的本来就少而且还没有合适的。于是决定自己开发一套后台管理系统。由于前台采用 **Bootstrap** 布局样式，所以就叫做 **BootstrapAdmin** 。本系统可以用于所有的 Web 应用程序，目前版本已经升级到 **NET CORE** 具备跨平台能力。数据库方面同时支持多种数据库，详细列表见后面**数据库**的详细列表，切换数据源仅需更改配置文件无需重启应用程序，配置简单灵活。UI 前端使用流行的 Bootstrap 框架布局对移动设备的兼容性非常好，自适应目前市场几乎所有终端设备。本系统还具备单一后台支持多前台的特色，提供 **单点登录（SSO）** 的能力。  
 
-使用 HTML 5 + jQuery + NET Core + Bootstrap + PetaPoco 构建的后台管理平台  
+使用 NET Core + Bootstrap + PetaPoco + HTML 5 + jQuery 构建的后台管理平台  
 
 ### 特别说明
 **BootstrapAdmin** 无需二次开发，要做的仅仅是与前台系统集成，前台系统模板工程为 **Bootstrap.Client**   
@@ -115,8 +115,12 @@
 
 ## 开发环境搭建
 1. 安装 .net core sdk [官方网址](http://www.microsoft.com/net/download)
-2. 安装 Visual Studio IDE 2017以上 [官方网址](https://visualstudio.microsoft.com/vs/getting-started/)
+2. 安装 Visual Studio 2017 以上 [官方网址](https://visualstudio.microsoft.com/vs/getting-started/)
 3. 获取本项目代码 [BootstrapAdmin](https://gitee.com/LongbowEnterprise/BootstrapAdmin)  
+
+*注意*   
+master 分支为 NETCore 3.0 框架 必须使用 Visual Studio 2019 (v16.3)  
+netcore-2.2 分支为 NETCore 2.2 框架支持 Visual Studio 2017 (v15.9+)
 
 ### 安装数据库
 
