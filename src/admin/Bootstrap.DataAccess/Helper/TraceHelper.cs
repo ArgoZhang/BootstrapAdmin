@@ -39,7 +39,8 @@ namespace Bootstrap.DataAccess
                     Browser = v.Browser,
                     OS = v.OS,
                     UserName = v.UserName,
-                    UserAgent = v.UserAgent
+                    UserAgent = v.UserAgent,
+                    Referer = v.Referer
                 });
             }
         }
@@ -52,7 +53,7 @@ namespace Bootstrap.DataAccess
         public static bool Filter(HttpContext context)
         {
             var url = context.Request.Path;
-            return !new string[] { "/api", "/NotiHub", "/TaskLogHub", "/swagger" }.Any(r => url.StartsWithSegments(r, StringComparison.OrdinalIgnoreCase));
+            return !new string[] { "/api", "/lib", "/NotiHub", "/TaskLogHub", "/swagger", "/CacheList.axd" }.Any(r => url.StartsWithSegments(r, StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>

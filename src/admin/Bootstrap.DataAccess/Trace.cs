@@ -57,6 +57,11 @@ namespace Bootstrap.DataAccess
         public string UserAgent { get; set; }
 
         /// <summary>
+        /// 获得/设置 客户端 Referer
+        /// </summary>
+        public string Referer { get; set; }
+
+        /// <summary>
         /// 保存用户访问数据历史记录
         /// </summary>
         /// <param name="p"></param>

@@ -16,7 +16,7 @@
     <PackageReference Include="Longbow.Configuration" Version="2.2.7" />
     <PackageReference Include="Longbow.Logging" Version="3.0.0" />
     <PackageReference Include="Longbow.Tasks" Version="3.0.0-beta1" />
-    <PackageReference Include="Longbow.Web" Version="3.0.0-beta2" />
+    <PackageReference Include="Longbow.Web" Version="3.0.0-beta3" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="4.0.0-preview8.19405.7" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.0.0" />
     <PackageReference Include="Sentry.AspNetCore" Version="2.0.0-beta4" />
