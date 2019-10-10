@@ -13,7 +13,8 @@ $(function () {
             { title: "操作地点", field: "City", sortable: true },
             { title: "浏览器", field: "Browser", sortable: true },
             { title: "操作系统", field: "OS", sortable: true },
-            { title: "操作页面", field: "RequestUrl", sortable: true }
+            { title: "操作页面", field: "RequestUrl", sortable: true },
+            { title: "Referer", field: "Referer", sortable: false }
         ],
         exportOptions: {
             fileName: "访问日志数据",

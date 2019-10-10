@@ -339,7 +339,7 @@
                 showColumns: true,                  //是否显示所有的列
                 showRefresh: true,                  //是否显示刷新按钮
                 showToggle: true,                   //是否显示详细视图和列表视图的切换按钮
-                cardView: $(window).width() < 768,                    //是否显示详细视图
+                cardView: $(window).width() < 768,  //是否显示详细视图
                 queryButton: '#btn_query',
                 onLoadSuccess: function (data) {
                     $.footer();
