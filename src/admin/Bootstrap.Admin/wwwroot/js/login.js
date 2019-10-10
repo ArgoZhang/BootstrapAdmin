@@ -134,46 +134,49 @@
         $login.find('[name="userName"], [name="password"]').attr('data-valid', 'false');
     }
 
-    $login.on('submit', function (e) {
-        var model = $loginType.attr('data-value');
-        if (model === 'username') {
-            if ($username.val() === '' && $password.val() === '') {
-                e.preventDefault();
-                location.href = "Gitee";
+    var $loginType = $('#loginType');
+    if ($loginType.length === 1) {
+        $login.on('submit', function (e) {
+            var model = $loginType.attr('data-value');
+            if (model === 'username') {
+                if ($username.val() === '' && $password.val() === '') {
+                    e.preventDefault();
+                    location.href = "Gitee";
+                }
             }
-        }
-        else {
-            // sms
-            var url = $.format('Account/Mobile{0}', location.search);
-            $login.attr('action', $.formatUrl(url));
-            return true;
-        }
-    });
+            else {
+                // sms
+                var url = $.format('Account/Mobile{0}', location.search);
+                $login.attr('action', $.formatUrl(url));
+                return true;
+            }
+        });
 
-    // login type
-    var $loginType = $('#loginType').on('click', function (e) {
-        e.preventDefault();
-        var $this = $(this);
-        $login.find('[data-toggle="tooltip"]').tooltip('hide');
-        var model = $this.attr('data-value');
-        if (model === 'username') {
-            $loginUser.addClass('d-none');
-            $loginPwd.addClass('d-none');
-            $loginSMS.removeClass('d-none');
-            $loginMobile.removeClass('d-none');
+        // login type
+        $loginType.on('click', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            $login.find('[data-toggle="tooltip"]').tooltip('hide');
+            var model = $this.attr('data-value');
+            if (model === 'username') {
+                $loginUser.addClass('d-none');
+                $loginPwd.addClass('d-none');
+                $loginSMS.removeClass('d-none');
+                $loginMobile.removeClass('d-none');
 
-            $this.attr('data-value', 'sms').text('用户名密码登陆');
-        }
-        else {
-            // sms model
-            $loginUser.removeClass('d-none');
-            $loginPwd.removeClass('d-none');
-            $loginSMS.addClass('d-none');
-            $loginMobile.addClass('d-none');
+                $this.attr('data-value', 'sms').text('用户名密码登陆');
+            }
+            else {
+                // sms model
+                $loginUser.removeClass('d-none');
+                $loginPwd.removeClass('d-none');
+                $loginSMS.addClass('d-none');
+                $loginMobile.addClass('d-none');
 
-            $this.attr('data-value', 'username').text('短信验证登陆');
-        }
-    });
+                $this.attr('data-value', 'username').text('短信验证登陆');
+            }
+        });
+    }
 
     var timeHanlder = null;
     $('#btnSendCode').on('click', function () {
