@@ -66,7 +66,6 @@ namespace UnitTest
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="t"></param>
         /// <param name="callback"></param>
         public static void RevokeMapper(Action callback)
         {
