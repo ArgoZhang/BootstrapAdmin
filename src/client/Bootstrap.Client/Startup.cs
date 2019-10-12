@@ -1,6 +1,5 @@
 ﻿using Bootstrap.Client.DataAccess;
 using Longbow.Web;
-using Longbow.Web.SignalR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

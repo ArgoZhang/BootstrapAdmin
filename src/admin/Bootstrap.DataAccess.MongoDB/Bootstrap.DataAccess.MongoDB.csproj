@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.0;netstandard2.0</TargetFrameworks>
+    <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Bootstrap.Security" Version="1.8.0" />
+    <PackageReference Include="Bootstrap.Security" Version="3.0.0-beta1" />
     <PackageReference Include="Longbow.Configuration" Version="2.2.7" />
     <PackageReference Include="MongoDB.Driver" Version="2.9.2" />
   </ItemGroup>

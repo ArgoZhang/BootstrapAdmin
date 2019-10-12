@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
-    <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -11,17 +10,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Bootstrap.Security.DataAccess" Version="2.2.21" />
-    <PackageReference Include="Bootstrap.Security.Mvc" Version="3.0.1-beta7" />
-    <PackageReference Include="Longbow.Configuration" Version="2.2.7" />
+    <PackageReference Include="Bootstrap.Security.Mvc" Version="3.0.1-beta9" />
     <PackageReference Include="Longbow.Logging" Version="3.0.0" />
-    <PackageReference Include="Longbow.Tasks" Version="3.0.0-beta1" />
-    <PackageReference Include="Longbow.Web" Version="3.0.0-beta3" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="4.0.0-preview8.19405.7" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.0.0" />
     <PackageReference Include="Sentry.AspNetCore" Version="2.0.0-beta4" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0-rc4" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.7.0" />
   </ItemGroup>
 
   <ItemGroup>

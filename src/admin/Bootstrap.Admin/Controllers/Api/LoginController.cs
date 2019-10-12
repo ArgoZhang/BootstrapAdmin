@@ -1,6 +1,5 @@
 ﻿using Bootstrap.Admin.Query;
 using Bootstrap.DataAccess;
-using Bootstrap.Security.Authentication;
 using Longbow.Web.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -39,7 +38,7 @@ namespace Bootstrap.Admin.Controllers.Api
             string password = user.Password;
             if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(password) && UserHelper.Authenticate(userName, password))
             {
-                token = BootstrapAdminJwtTokenHandler.CreateToken(userName);
+                token = "NOT Support yet!"; // BootstrapAdminJwtTokenHandler.CreateToken(userName);
             }
             HttpContext.Log(userName, token != null);
             return token;

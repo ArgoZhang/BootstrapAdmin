@@ -5,12 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Bootstrap.Security.DataAccess" Version="2.2.21" />
+    <PackageReference Include="Bootstrap.Security.DataAccess" Version="3.0.0-beta1" />
     <PackageReference Include="Longbow" Version="3.0.0-beta6" />
     <PackageReference Include="Longbow.Cache" Version="3.0.0-beta1" />
     <PackageReference Include="Longbow.Configuration" Version="2.2.7" />
     <PackageReference Include="Longbow.Data" Version="2.3.8" />
-    <PackageReference Include="Longbow.Logging" Version="3.0.0" />
     <PackageReference Include="Longbow.Web" Version="3.0.0-beta4" />
   </ItemGroup>
 
