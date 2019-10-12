@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="Bootstrap.Security.Mvc" Version="3.0.1-beta9" />
-    <PackageReference Include="Longbow.Logging" Version="3.0.0" />
+    <PackageReference Include="Longbow.Logging" Version="3.0.1-beta1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="4.0.0-preview8.19405.7" />
     <PackageReference Include="Sentry.AspNetCore" Version="2.0.0-beta4" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0-rc4" />
