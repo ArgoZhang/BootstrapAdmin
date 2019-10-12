@@ -151,15 +151,16 @@ namespace Bootstrap.DataAccess.SqlServer
         {
             var ipUri = DictHelper.RetrieveLocaleIPSvrUrl("BaiDuIPSvr");
 
-            var client = HttpClientFactory.Create();
+            using (var client = new HttpClient())
+            {
+                // 日本东京
+                var locator = await client.GetAsJsonAsync<BaiDuIPLocator>($"{ipUri}207.148.111.94");
+                Assert.NotEqual("0", locator.Status);
 
-            // 日本东京
-            var locator = await client.GetAsJsonAsync<BaiDuIPLocator>($"{ipUri}207.148.111.94");
-            Assert.NotEqual("0", locator.Status);
-
-            // 四川成都
-            locator = await client.GetAsJsonAsync<BaiDuIPLocator>($"{ipUri}182.148.123.196");
-            Assert.Equal("0", locator.Status);
+                // 四川成都
+                locator = await client.GetAsJsonAsync<BaiDuIPLocator>($"{ipUri}182.148.123.196");
+                Assert.Equal("0", locator.Status);
+            }
         }
 
         [Fact]
@@ -168,13 +169,15 @@ namespace Bootstrap.DataAccess.SqlServer
             var ipUri = DictHelper.RetrieveLocaleIPSvrUrl("JuheIPSvr");
 
             // 日本东京
-            var client = HttpClientFactory.Create();
-            var locator = await client.GetAsJsonAsync<JuheIPLocator>($"{ipUri}207.148.111.94");
-            Assert.Contains(new int[] { 0, 10012 }, c => c == locator.Error_Code);
+            using (var client = new HttpClient())
+            {
+                var locator = await client.GetAsJsonAsync<JuheIPLocator>($"{ipUri}207.148.111.94");
+                Assert.Contains(new int[] { 0, 10012 }, c => c == locator.Error_Code);
 
-            // 四川成都
-            locator = await client.GetAsJsonAsync<JuheIPLocator>($"{ipUri}182.148.123.196");
-            Assert.Contains(new int[] { 0, 10012 }, c => c == locator.Error_Code);
+                // 四川成都
+                locator = await client.GetAsJsonAsync<JuheIPLocator>($"{ipUri}182.148.123.196");
+                Assert.Contains(new int[] { 0, 10012 }, c => c == locator.Error_Code);
+            }
         }
 
         [Fact]
