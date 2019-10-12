@@ -1,6 +1,7 @@
 ﻿using Bootstrap.DataAccess;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using Xunit;
 
 namespace Bootstrap.Admin.Api.SqlServer
@@ -29,7 +30,7 @@ namespace Bootstrap.Admin.Api.SqlServer
 
             // Approve
             nusr.UserStatus = UserStates.ApproveUser;
-            var resp = await Client.PutAsJsonAsync<User, bool>(nusr);
+            var resp = await Client.PutAsJsonAsync<User, bool>("", nusr);
             Assert.True(resp);
 
             // 删除新用户
@@ -38,7 +39,7 @@ namespace Bootstrap.Admin.Api.SqlServer
             // Reject
             nusr = InsertNewUser();
             nusr.UserStatus = UserStates.RejectUser;
-            resp = await Client.PutAsJsonAsync<User, bool>(nusr);
+            resp = await Client.PutAsJsonAsync<User, bool>("", nusr);
             Assert.True(resp);
 
             // 删除新用户

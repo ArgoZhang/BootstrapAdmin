@@ -49,11 +49,11 @@ namespace Bootstrap.Admin.Api.SqlServer
             Assert.True(resp);
 
             nusr.Id = UserHelper.Retrieves().First(u => u.UserName == nusr.UserName).Id;
-            resp = await Client.PostAsJsonAsync<User, bool>(nusr);
+            resp = await Client.PostAsJsonAsync<User, bool>("", nusr);
             Assert.True(resp);
 
             var ids = UserHelper.Retrieves().Where(d => d.UserName == nusr.UserName).Select(d => d.Id);
-            Assert.True(await Client.DeleteAsJsonAsync<IEnumerable<string>, bool>(ids));
+            Assert.True(await Client.DeleteAsJsonAsync<IEnumerable<string>, bool>("", ids));
         }
 
         [Fact]

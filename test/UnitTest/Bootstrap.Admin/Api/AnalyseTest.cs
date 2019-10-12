@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using System.Net.Http;
+using Xunit;
 using static Bootstrap.Admin.Controllers.Api.AnalyseController;
 
 namespace Bootstrap.Admin.Api

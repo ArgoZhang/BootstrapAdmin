@@ -2,6 +2,7 @@
 using Longbow.Web.Mvc;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using Xunit;
 
 namespace Bootstrap.Admin.Api.SqlServer
@@ -23,11 +24,11 @@ namespace Bootstrap.Admin.Api.SqlServer
         [Fact]
         public async void PostAndDelete_Ok()
         {
-            var ret = await Client.PostAsJsonAsync<Role, bool>(new Role() { RoleName = "UnitTest-Role", Description = "UnitTest-Desc" });
+            var ret = await Client.PostAsJsonAsync<Role, bool>("", new Role() { RoleName = "UnitTest-Role", Description = "UnitTest-Desc" });
             Assert.True(ret);
 
             var ids = RoleHelper.Retrieves().Where(d => d.RoleName == "UnitTest-Role").Select(d => d.Id);
-            Assert.True(await Client.DeleteAsJsonAsync<IEnumerable<string>, bool>(ids));
+            Assert.True(await Client.DeleteAsJsonAsync<IEnumerable<string>, bool>("", ids));
         }
 
         [Fact]

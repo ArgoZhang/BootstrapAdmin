@@ -3,6 +3,7 @@ using Longbow.Web.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using Xunit;
 using static Bootstrap.Admin.Controllers.Api.ExceptionsController;
 
@@ -31,13 +32,13 @@ namespace Bootstrap.Admin.Api.SqlServer
         [Fact]
         public async void Post_Ok()
         {
-            var files = await Client.PostAsJsonAsync<string, IEnumerable<string>>(string.Empty);
+            var files = await Client.PostAsJsonAsync<string, IEnumerable<string>>(string.Empty, "");
             Assert.NotNull(files);
 
             var fileName = files.FirstOrDefault();
             if (!string.IsNullOrEmpty(fileName))
             {
-                var resp = await Client.PutAsJsonAsync<ExceptionFileQuery, string>(new ExceptionFileQuery() { FileName = fileName });
+                var resp = await Client.PutAsJsonAsync<ExceptionFileQuery, string>("", new ExceptionFileQuery() { FileName = fileName });
                 Assert.NotNull(resp);
             }
 

@@ -1,6 +1,7 @@
 ﻿using Longbow.Web;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using Xunit;
 
 namespace Bootstrap.Admin.Api.SqlServer
@@ -27,10 +28,10 @@ namespace Bootstrap.Admin.Api.SqlServer
         public async void Put_Ok()
         {
             // 三次 Put 请求后返回真
-            var ret = await Client.PutAsJsonAsync<string, bool>("");
-            ret = await Client.PutAsJsonAsync<string, bool>("");
-            ret = await Client.PutAsJsonAsync<string, bool>("");
-            ret = await Client.PutAsJsonAsync<string, bool>("");
+            var ret = await Client.PutAsJsonAsync<string, bool>("", "");
+            ret = await Client.PutAsJsonAsync<string, bool>("", "");
+            ret = await Client.PutAsJsonAsync<string, bool>("", "");
+            ret = await Client.PutAsJsonAsync<string, bool>("", "");
             Assert.True(ret);
         }
     }

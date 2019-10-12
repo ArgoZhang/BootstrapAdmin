@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using System.Net.Http;
+using Xunit;
 
 namespace Bootstrap.Admin.Api.SqlServer
 {

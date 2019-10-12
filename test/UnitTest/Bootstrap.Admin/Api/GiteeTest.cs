@@ -1,5 +1,6 @@
 ﻿using Bootstrap.Admin.Controllers.Api;
 using System;
+using System.Net.Http;
 using System.Reflection;
 using System.Threading.Tasks;
 using Xunit;

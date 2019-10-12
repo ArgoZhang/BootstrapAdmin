@@ -7,10 +7,10 @@
   <ItemGroup>
     <PackageReference Include="Bootstrap.Security.DataAccess" Version="3.0.0-beta1" />
     <PackageReference Include="Longbow" Version="3.0.0-beta6" />
-    <PackageReference Include="Longbow.Cache" Version="3.0.0-beta1" />
+    <PackageReference Include="Longbow.Cache" Version="3.0.0-beta2" />
     <PackageReference Include="Longbow.Configuration" Version="3.0.0-beta1" />
     <PackageReference Include="Longbow.Data" Version="3.0.0-beta1" />
-    <PackageReference Include="Longbow.Web" Version="3.0.0-beta5" />
+    <PackageReference Include="Longbow.Web" Version="3.0.0-beta6" />
   </ItemGroup>
 
 </Project>

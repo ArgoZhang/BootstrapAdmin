@@ -3,6 +3,7 @@ using Bootstrap.Security;
 using Longbow.Web.Mvc;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using Xunit;
 
 namespace Bootstrap.Admin.Api.SqlServer
@@ -34,7 +35,7 @@ namespace Bootstrap.Admin.Api.SqlServer
             Assert.True(ret);
 
             var ids = DictHelper.RetrieveDicts().Where(d => d.Name == "UnitTest-Dict").Select(d => d.Id);
-            Assert.True(await Client.DeleteAsJsonAsync<IEnumerable<string>, bool>(ids));
+            Assert.True(await Client.DeleteAsJsonAsync<IEnumerable<string>, bool>("", ids));
         }
     }
 }

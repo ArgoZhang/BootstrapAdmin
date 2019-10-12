@@ -2,6 +2,7 @@
 using Longbow.Web;
 using Longbow.Web.Mvc;
 using System;
+using System.Net.Http;
 using Xunit;
 
 namespace Bootstrap.Admin.Api.SqlServer
@@ -38,7 +39,7 @@ namespace Bootstrap.Admin.Api.SqlServer
                 OS = "UniTest",
                 UserAgent = "UniTest"
             };
-            var result = await Client.PostAsJsonAsync<OnlineUser, bool>(onlineUser);
+            var result = await Client.PostAsJsonAsync<OnlineUser, bool>("", onlineUser);
             Assert.True(result);
         }
     }

@@ -1,5 +1,6 @@
 ﻿using Bootstrap.DataAccess;
 using System.Collections.Generic;
+using System.Net.Http;
 using Xunit;
 
 namespace Bootstrap.Admin.Api.SqlServer

@@ -19,7 +19,7 @@ namespace Bootstrap.Admin.Api.SqlServer
             // change theme
             usr.Css = "blue.css";
             usr.UserStatus = UserStates.ChangeTheme;
-            var resp = await Client.PutAsJsonAsync<User, bool>(usr);
+            var resp = await Client.PutAsJsonAsync<User, bool>("", usr);
             Assert.True(resp);
         }
 
@@ -31,7 +31,7 @@ namespace Bootstrap.Admin.Api.SqlServer
             usr.UserStatus = UserStates.ChangePassword;
             usr.NewPassword = "123789";
             usr.Password = "123789";
-            var resp = await Client.PutAsJsonAsync<User, bool>(usr);
+            var resp = await Client.PutAsJsonAsync<User, bool>("", usr);
             Assert.True(resp);
         }
 
@@ -42,7 +42,7 @@ namespace Bootstrap.Admin.Api.SqlServer
             // change displayname
             usr.UserStatus = UserStates.ChangeDisplayName;
             usr.DisplayName = "Administrator";
-            var resp = await Client.PutAsJsonAsync<User, bool>(usr);
+            var resp = await Client.PutAsJsonAsync<User, bool>("", usr);
             Assert.True(resp);
         }
 
@@ -53,7 +53,7 @@ namespace Bootstrap.Admin.Api.SqlServer
             // change app
             usr.App = "UnitTest";
             usr.UserStatus = UserStates.SaveApp;
-            var resp = await Client.PutAsJsonAsync<User, bool>(usr);
+            var resp = await Client.PutAsJsonAsync<User, bool>("", usr);
             Assert.True(resp);
         }
 

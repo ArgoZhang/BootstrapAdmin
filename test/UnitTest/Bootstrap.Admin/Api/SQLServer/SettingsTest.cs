@@ -3,6 +3,7 @@ using Bootstrap.Security;
 using Longbow.Cache;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using Xunit;
 
 namespace Bootstrap.Admin.Api.SqlServer
@@ -29,7 +30,7 @@ namespace Bootstrap.Admin.Api.SqlServer
             Assert.True(DictHelper.Save(new BootstrapDict() { Category = "UnitTest-Settings", Name = "UnitTest", Code = "0", Define = 0 }));
 
             // 获得原来值
-            var resp = await Client.PostAsJsonAsync<BootstrapDict, bool>(new BootstrapDict() { Category = "UnitTest-Settings", Name = "UnitTest", Code = "UnitTest" });
+            var resp = await Client.PostAsJsonAsync<BootstrapDict, bool>("", new BootstrapDict() { Category = "UnitTest-Settings", Name = "UnitTest", Code = "UnitTest" });
             Assert.True(resp);
 
             var code = DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "UnitTest-Settings").Code;

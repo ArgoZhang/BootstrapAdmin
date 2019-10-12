@@ -1,7 +1,10 @@
 ﻿using Bootstrap.Security;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
 using System.Net.Http;
+using System.Text.Json;
+using System.Threading;
 using Xunit;
 
 namespace Bootstrap.DataAccess.SqlServer
@@ -147,6 +150,16 @@ namespace Bootstrap.DataAccess.SqlServer
         }
 
         [Fact]
+        public void Test()
+        {
+            var payload = "{\"status\":1,\"message\":\"Internal Service Error: ip[207.148.111.94] loc failed\"}";
+            var options = new JsonSerializerOptions().AddDefaultConverters();
+
+            var state = JsonSerializer.Deserialize<BaiDuIPLocator>(payload, options);
+            Assert.Equal(1, state.Status);
+        }
+
+        [Fact]
         public async void BaiduIPSvr_Ok()
         {
             var ipUri = DictHelper.RetrieveLocaleIPSvrUrl("BaiDuIPSvr");
@@ -155,11 +168,11 @@ namespace Bootstrap.DataAccess.SqlServer
             {
                 // 日本东京
                 var locator = await client.GetAsJsonAsync<BaiDuIPLocator>($"{ipUri}207.148.111.94");
-                Assert.NotEqual("0", locator.Status);
+                Assert.NotEqual(0, locator.Status);
 
                 // 四川成都
                 locator = await client.GetAsJsonAsync<BaiDuIPLocator>($"{ipUri}182.148.123.196");
-                Assert.Equal("0", locator.Status);
+                Assert.Equal(0, locator.Status);
             }
         }
 
@@ -206,7 +219,7 @@ namespace Bootstrap.DataAccess.SqlServer
             /// <summary>
             /// 结果状态返回码
             /// </summary>
-            public string Status { get; set; }
+            public int Status { get; set; }
 
             /// <summary>
             /// 
@@ -214,7 +227,7 @@ namespace Bootstrap.DataAccess.SqlServer
             /// <returns></returns>
             public override string ToString()
             {
-                return Status == "0" ? string.Join(" ", Address.SpanSplit("|").Skip(1).Take(2)) : "XX XX";
+                return Status == 0 ? string.Join(" ", Address.SpanSplit("|").Skip(1).Take(2)) : "XX XX";
             }
         }
 

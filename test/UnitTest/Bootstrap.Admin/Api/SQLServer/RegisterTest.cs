@@ -1,5 +1,6 @@
 ﻿using Bootstrap.DataAccess;
 using System.Linq;
+using System.Net.Http;
 using Xunit;
 
 namespace Bootstrap.Admin.Api.SqlServer
@@ -20,7 +21,7 @@ namespace Bootstrap.Admin.Api.SqlServer
         {
             // register new user
             var nusr = new User() { UserName = "U_Register", DisplayName = "UnitTest", Password = "1", Description = "UnitTest" };
-            var resp = await Client.PostAsJsonAsync<User, bool>(nusr);
+            var resp = await Client.PostAsJsonAsync<User, bool>("", nusr);
             Assert.True(resp);
             UserHelper.Delete(nusr.RetrieveNewUsers().Where(u => u.UserName == nusr.UserName).Select(u => u.Id));
         }
@@ -29,7 +30,7 @@ namespace Bootstrap.Admin.Api.SqlServer
         public async void Put_Ok()
         {
             var user = new ResetUser() { DisplayName = "UnitTest", UserName = "UnitTest", Reason = "UnitTest" };
-            var resp = await Client.PutAsJsonAsync<ResetUser, bool>(user);
+            var resp = await Client.PutAsJsonAsync<ResetUser, bool>("", user);
             Assert.True(resp);
         }
 
@@ -41,7 +42,7 @@ namespace Bootstrap.Admin.Api.SqlServer
             Assert.False(resp);
 
             // 重置Admin密码
-            await Client.PutAsJsonAsync<ResetUser, bool>(new ResetUser { UserName = "Admin", DisplayName = "Administrator", Reason = "UnitTest" });
+            await Client.PutAsJsonAsync<ResetUser, bool>("", new ResetUser { UserName = "Admin", DisplayName = "Administrator", Reason = "UnitTest" });
             resp = await Client.PutAsJsonAsync<User, bool>("Admin", new User() { Password = "123789" });
             Assert.True(resp);
         }

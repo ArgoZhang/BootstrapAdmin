@@ -3,6 +3,7 @@ using Bootstrap.Security;
 using Longbow.Web.Mvc;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using Xunit;
 
 namespace Bootstrap.Admin.Api.SqlServer
@@ -35,7 +36,7 @@ namespace Bootstrap.Admin.Api.SqlServer
         [Fact]
         public async void PostAndDelete_Ok()
         {
-            var ret = await Client.PostAsJsonAsync<BootstrapMenu, bool>(new BootstrapMenu() { Name = "UnitTest-Menu", Application = "0", Category = "0", ParentId = "0", Url = "#", Target = "_self", IsResource = 0 });
+            var ret = await Client.PostAsJsonAsync<BootstrapMenu, bool>("", new BootstrapMenu() { Name = "UnitTest-Menu", Application = "0", Category = "0", ParentId = "0", Url = "#", Target = "_self", IsResource = 0 });
             Assert.True(ret);
 
             var ids = MenuHelper.RetrieveAllMenus("Admin").Where(d => d.Name == "UnitTest-Menu").Select(d => d.Id);
