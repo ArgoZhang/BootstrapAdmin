@@ -182,7 +182,8 @@ CREATE TABLE Traces(
     OS         VARCHAR (50),
     City       VARCHAR (50),
     RequestUrl VARCHAR (500) NOT NULL,
-	UserAgent  VARCHAR (2000)
+	UserAgent  VARCHAR (2000),
+    Referer    VARCHAR (2000) 
 );
 
 CREATE TABLE DBLogs (
