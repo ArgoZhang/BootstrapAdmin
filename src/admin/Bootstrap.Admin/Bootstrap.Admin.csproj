@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
+    <IsWebProject>true</IsWebProject>
   </PropertyGroup>
 
   <PropertyGroup>
