@@ -86,7 +86,7 @@ namespace Bootstrap.Client
             app.UseCookiePolicy();
 
             app.UseRouting();
-            app.UseBootstrapAdminAuthentication(RoleHelper.RetrievesByUserName, RoleHelper.RetrievesByUrl, AppHelper.RetrievesByUserName);
+            app.UseBootstrapAdminAuthentication(Configuration.GetValue("AppId", "2"), RoleHelper.RetrievesByUserName, RoleHelper.RetrievesByUrl, AppHelper.RetrievesByUserName);
             app.UseAuthorization();
             app.UseCacheManager();
             app.UseOnlineUsers(callback: TraceHelper.Save);

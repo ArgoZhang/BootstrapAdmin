@@ -19,14 +19,6 @@ namespace Bootstrap.Admin
         /// <param name="pathBase"></param>
         public static void UseSwagger(this IApplicationBuilder app, string pathBase)
         {
-            app.UseWhen(context => context.Request.Path.StartsWithSegments("/swagger"), builder =>
-            {
-                builder.Use(async (context, next) =>
-                {
-                    if (!context.User.Identity.IsAuthenticated) await context.ChallengeAsync();
-                    else await next();
-                });
-            });
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
@@ -51,7 +43,30 @@ namespace Bootstrap.Admin
                 //Set the comments path for the swagger json and ui.  
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, "Bootstrap.Admin.xml");
                 options.IncludeXmlComments(xmlPath);
-                options.OperationFilter<HttpHeaderOperation>(); // 添加httpHeader参数
+
+                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "JWT Authorization header using the Bearer scheme."
+                });
+                options.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[]{ }
+                    }
+                });
             });
         }
     }

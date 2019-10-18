@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Bootstrap.Security.Mvc" Version="3.0.1-beta9" />
+    <PackageReference Include="Bootstrap.Security.Mvc" Version="3.0.1-beta10" />
     <PackageReference Include="Longbow.Logging" Version="3.0.1-beta1" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="3.0.0" />
   </ItemGroup>
