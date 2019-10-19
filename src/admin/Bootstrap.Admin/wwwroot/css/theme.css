@@ -261,7 +261,7 @@ body, .form-control, .dropdown-menu, .btn:not(.btn-lg):not(.btn-xs), .input-grou
     }
 
     .sidebar .nav-sidebar {
-        margin: 10px 0;
+        margin: 2px 0;
     }
 
     .sidebar .nav-link {
@@ -277,7 +277,7 @@ body, .form-control, .dropdown-menu, .btn:not(.btn-lg):not(.btn-xs), .input-grou
         }
 
     .sidebar .sub {
-        margin-top: 4px;
+        margin-top: 2px;
     }
 
         .sidebar .sub .nav-item {
@@ -317,9 +317,9 @@ body, .form-control, .dropdown-menu, .btn:not(.btn-lg):not(.btn-xs), .input-grou
         left: 10px;
         right: 10px;
         border-radius: 4px;
-        height: 41px;
+        height: 37px;
         transition: all .3s linear;
-        margin-top: -10px;
+        margin-top: -8px;
     }
 
     .sidebar .sub .nav-item .nav-link i, .sidebar .sub .nav-item .nav-link span {
