@@ -17,7 +17,9 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 记录登陆日志方法
         /// </summary>
-        /// <param name="userName"></param>
+        /// <param name="context"></param>
+        /// <param name="userName">登录用户名</param>
+        /// <param name="auth">是否登录成功</param>
         /// <returns></returns>
         public static bool Log(this HttpContext context, string userName, bool auth)
         {

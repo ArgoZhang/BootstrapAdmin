@@ -53,7 +53,7 @@ namespace Bootstrap.Client
             services.AddIPLocator(DictHelper.ConfigIPLocator);
             services.AddOnlineUsers();
             services.AddResponseCompression();
-            services.AddBootstrapAdminAuthentication();
+            services.AddBootstrapAdminAuthentication(Configuration);
             services.AddAuthorization(options => options.DefaultPolicy = new AuthorizationPolicyBuilder().RequireBootstrapAdminAuthorizate().Build());
             services.AddControllersWithViews(options => options.Filters.Add<ExceptionFilter>()).AddJsonOptions(op => op.JsonSerializerOptions.AddDefaultConverters());
             services.AddAutoPublish();
@@ -86,7 +86,7 @@ namespace Bootstrap.Client
             app.UseCookiePolicy();
 
             app.UseRouting();
-            app.UseBootstrapAdminAuthentication(Configuration.GetValue("AppId", "2"), RoleHelper.RetrievesByUserName, RoleHelper.RetrievesByUrl, AppHelper.RetrievesByUserName);
+            app.UseBootstrapAdminAuthentication("2", RoleHelper.RetrievesByUserName, RoleHelper.RetrievesByUrl, AppHelper.RetrievesByUserName);
             app.UseAuthorization();
             app.UseCacheManager();
             app.UseOnlineUsers(callback: TraceHelper.Save);

@@ -19,6 +19,9 @@ namespace Bootstrap.Client.Models
             Theme = DictHelper.RetrieveActiveTheme();
         }
 
+        /// <summary>
+        /// 获得 应用程序标识
+        /// </summary>
         public string AppId { get; private set; }
 
         /// <summary>
