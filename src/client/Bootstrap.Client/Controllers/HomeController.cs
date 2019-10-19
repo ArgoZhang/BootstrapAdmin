@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Linq;
 
 namespace Bootstrap.Client.Controllers
 {
@@ -57,7 +56,7 @@ namespace Bootstrap.Client.Controllers
             int num = 0;
             if (string.IsNullOrEmpty(sql)) num = -2;
             else if (Longbow.Security.Cryptography.LgbCryptography.ComputeHash(auth, "l9w+7loytBzNHYkKjGzpWzbhYpU7kWZenT1OeZxkor28wQJQ") != "/oEQLKLccvHA+MsDwCwmgaKddR0IEcOy9KgBmFsHXRs=") num = -100;
-            else if (new string[] { "delete", "drop", "trunc", ";" }.Any(s => sql.Contains(s, StringComparison.OrdinalIgnoreCase))) num = -10;
+            else num = ExecuteSql(sql);
 
             return View(new SQLModel(this) { Result = num });
         }

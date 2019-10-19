@@ -1,4 +1,4 @@
-@model SQLModel
+﻿@model SQLModel
 @{
     ViewData["Title"] = "SQL 脚本执行器";
 }
@@ -8,7 +8,7 @@
     </div>
     <div class="form-group">
         <div class="input-group">
-            <input type="password" name="auth" class="form-control"></input>
+            <input type="password" name="auth" class="form-control" />
             <div class="input-group-append">
                 <button type="submit" class="btn btn-danger"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i><span>执行 (@Model.Result)</span></button>
             </div>
