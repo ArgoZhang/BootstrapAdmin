@@ -348,7 +348,7 @@ ASALocalRun/
 
 # Net Core Keys
 **/[Kk]eys/*.xml
-Bootstrap.Admin.xml
+Bootstrap.*.xml
 
 ###### -- Custom Ignore Section, Make sure all files you add to the git repo are below this line  --  ######
 

@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <DocumentationFile>$(MSBuildProjectName).xml</DocumentationFile>
     <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
   </PropertyGroup>
 
