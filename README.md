@@ -113,7 +113,7 @@ For more information, please click [wiki](https://gitee.com/LongbowEnterprise/Bo
 ## Installation
 1. Install .net core sdk [Offical website](http://www.microsoft.com/net/download)
 2. Install Visual Studio 2019 lastest [Offical website](https://visualstudio.microsoft.com/vs/getting-started/)
-3. Git clone `git clone https://github.com/ArgoZhang/BootstrapAdmin.git`
+3. Git clone `git clone https://gitee.com/LongbowEnterprise/BootstrapAdmin.git`
 4. Login as Admin/123789  
 
 ## Branchs  
