@@ -17,10 +17,10 @@
         padding: 16px 12px;
     }
 
-    .header .badge {
-        top: 4px;
-        right: auto;
-    }
+.header .badge {
+    top: 4px;
+    right: auto;
+}
 
 .header nav, .userinfo .dropdown-toggle:after {
     display: none;
@@ -135,7 +135,7 @@ aside {
 }
 
     aside .nav-brand, .sidebar-open aside:hover .nav-brand {
-        height: 50px;
+        height: 51px;
         align-items: center;
         padding: 0 0.625rem;
     }
@@ -238,9 +238,9 @@ aside .nav-brand {
     border-bottom: 1px solid #367fa9;
 }
 
-.header .nav .dropdown-menu a {
-    color: #333;
-}
+    .header .nav .dropdown-menu a {
+        color: #333;
+    }
 
 .breadcrumb > li > a {
     color: #444;
@@ -294,7 +294,7 @@ footer {
     }
 
         aside .sidebar, .sidebar-open aside:hover .sidebar {
-            top: 116px;
+            top: 117px;
             transition: top .3s linear;
         }
 

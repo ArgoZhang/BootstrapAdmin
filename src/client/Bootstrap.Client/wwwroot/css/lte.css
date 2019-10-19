@@ -7,8 +7,6 @@
 }
 
     .header .nav .dropdown, .userinfo {
-        display: flex;
-        align-items: center;
         transition: all .3s linear;
         cursor: pointer;
         margin: 0;
@@ -18,6 +16,11 @@
     .header .nav [data-toggle="dropdown"] {
         padding: 16px 12px;
     }
+
+.header .badge {
+    top: 4px;
+    right: auto;
+}
 
 .header nav, .userinfo .dropdown-toggle:after {
     display: none;
@@ -49,7 +52,6 @@
     border-radius: 4px;
     width: 2rem;
     height: 2rem;
-    margin: 0.25rem 0;
 }
 
 .userinfo .username {
@@ -58,13 +60,16 @@
 
 .userinfo .dropdown-toggle {
     border-radius: 0;
+    height: 50px;
+    display: flex;
+    align-items: center;
 }
 
-    .userinfo .dropdown-toggle, .userinfo .dropdown-toggle:hover, .userinfo.show .dropdown-toggle, .nav [data-toggle="dropdown"], .nav [data-toggle="dropdown"]:hover {
+    .userinfo .dropdown-toggle, .userinfo .dropdown-toggle:hover, .userinfo.show .dropdown-toggle, .header .nav a, .header .nav a:hover {
         border: none !important;
     }
 
-        .userinfo .shadow-default, .nav [data-toggle="dropdown"], .nav [data-toggle="dropdown"]:hover {
+        .userinfo .shadow-default, .header .nav a, .header .nav a:hover {
             box-shadow: none;
         }
 
@@ -105,8 +110,7 @@
 
         .userinfo .dropdown-item a .badge {
             top: 74px;
-            left: auto;
-            right: 42px;
+            left: 202px;
         }
 
     .userinfo .dropdown-item:last-child {
@@ -118,12 +122,12 @@
         }
 
 .userinfo.show .dropdown-menu {
-    margin-top: 4px;
+    margin-top: 5px;
     cursor: default;
 }
 
 aside, .main-content {
-    top: 55px;
+    top: 51px;
 }
 
 aside {
@@ -131,7 +135,7 @@ aside {
 }
 
     aside .nav-brand, .sidebar-open aside:hover .nav-brand {
-        height: 55px;
+        height: 51px;
         align-items: center;
         padding: 0 0.625rem;
     }
@@ -184,10 +188,6 @@ aside {
     border-top: none;
 }
 
-.card-header {
-    padding: 0.625rem 1rem;
-}
-
 /* color */
 .main-content {
     background-color: #ecf0f5;
@@ -209,11 +209,11 @@ aside .nav-brand {
     color: #b8c7ce;
 }
 
-.header, .header .breadcrumb-item a, aside .nav-brand a, .sidebar-toggle-box, .userinfo .dropdown-toggle, .nav [data-toggle="dropdown"], .userinfo .dropdown-item, .userinfo .dropdown-item a, .userinfo .dropdown-item:last-child a {
+.header, .header .breadcrumb-item a, aside .nav-brand a, .sidebar-toggle-box, .userinfo .dropdown-toggle, .header .nav .dropdown > a, .userinfo .dropdown-item, .userinfo .dropdown-item a, .userinfo .dropdown-item:last-child a {
     color: #eee;
 }
 
-    .sidebar-toggle-box:hover, aside .nav-brand a:hover, .userinfo .dropdown-toggle:hover, .userinfo.show .dropdown-toggle, .nav [data-toggle="dropdown"]:hover, .sidebar .nav-link:hover, .userinfo .dropdown-item:hover, .userinfo .dropdown-item a:hover, .userinfo .dropdown-item:last-child a:hover {
+    .sidebar-toggle-box:hover, aside .nav-brand a:hover, .userinfo .dropdown-toggle:hover, .userinfo.show .dropdown-toggle, .header .nav .dropdown > a:hover, .sidebar .nav-link:hover, .userinfo .dropdown-item:hover, .userinfo .dropdown-item a:hover, .userinfo .dropdown-item:last-child a:hover {
         color: #fff;
     }
 
@@ -237,6 +237,10 @@ aside .nav-brand {
 .header, aside .nav-brand {
     border-bottom: 1px solid #367fa9;
 }
+
+    .header .nav .dropdown-menu a {
+        color: #333;
+    }
 
 .breadcrumb > li > a {
     color: #444;
@@ -263,7 +267,7 @@ footer {
     .header .nav {
         display: flex;
         flex: 0 1 auto;
-        flex-wrap: nowrap;
+        height: 3.125rem;
     }
 
     .sidebar-toggle-box {
@@ -290,7 +294,7 @@ footer {
     }
 
         aside .sidebar, .sidebar-open aside:hover .sidebar {
-            top: 136px;
+            top: 117px;
             transition: top .3s linear;
         }
 
@@ -312,8 +316,8 @@ footer {
             }
 
             aside .nav-header img, .sidebar-open aside:hover .nav-header img {
-                width: 3.75rem;
-                height: 3.75rem;
+                width: 2.8125rem;
+                height: 2.8125rem;
                 border-radius: 50%;
             }
 
@@ -382,7 +386,7 @@ footer {
         }
 
         .sidebar-open aside .sidebar {
-            top: 115px;
+            top: 107px;
         }
 
     .sidebar-open .main-content {
@@ -426,6 +430,6 @@ footer {
     }
 
     aside .nav-brand, .sidebar-open aside:hover .nav-brand {
-        height: 55px;
+        height: 51px;
     }
 }
