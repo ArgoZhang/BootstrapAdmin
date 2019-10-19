@@ -39,6 +39,9 @@
 })(jQuery);
 
 $(function () {
+    // enable animoation effect
+    $('body').removeClass('trans-mute');
+
     var $sideMenu = $(".sidebar ul");
 
     // breadcrumb
