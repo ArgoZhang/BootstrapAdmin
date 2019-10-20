@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -55,7 +56,11 @@ namespace Bootstrap.Client
             services.AddResponseCompression();
             services.AddBootstrapAdminAuthentication(Configuration);
             services.AddAuthorization(options => options.DefaultPolicy = new AuthorizationPolicyBuilder().RequireBootstrapAdminAuthorizate().Build());
-            services.AddControllersWithViews(options => options.Filters.Add<ExceptionFilter>()).AddJsonOptions(op => op.JsonSerializerOptions.AddDefaultConverters());
+            services.AddControllersWithViews(options =>
+            {
+                options.Filters.Add<BootstrapAdminAuthorizeFilter>();
+                options.Filters.Add<ExceptionFilter>();
+            }).AddJsonOptions(op => op.JsonSerializerOptions.AddDefaultConverters());
             services.AddAutoPublish();
         }
 

@@ -4,6 +4,7 @@ using Bootstrap.Security;
 using Longbow.Web.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using System.Collections.Generic;
 
 namespace Bootstrap.Admin.Controllers.Api

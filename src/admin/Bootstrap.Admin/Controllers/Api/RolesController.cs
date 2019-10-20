@@ -1,8 +1,9 @@
-using Bootstrap.Admin.Query;
+﻿using Bootstrap.Admin.Query;
 using Bootstrap.DataAccess;
 using Longbow.Web.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using System.Collections.Generic;
 using System.Linq;
 

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -69,6 +70,7 @@ namespace Bootstrap.Admin
             services.AddAdminHealthChecks();
             services.AddControllersWithViews(options =>
             {
+                options.Filters.Add<BootstrapAdminAuthorizeFilter>();
                 options.Filters.Add<ExceptionFilter>();
                 options.Filters.Add<SignalRExceptionFilter<SignalRHub>>();
             }).AddJsonOptions(op => op.JsonSerializerOptions.AddDefaultConverters());
