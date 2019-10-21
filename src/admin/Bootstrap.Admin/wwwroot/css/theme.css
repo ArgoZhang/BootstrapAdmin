@@ -272,8 +272,9 @@ body, .form-control, .dropdown-menu, .btn:not(.btn-lg):not(.btn-xs), .input-grou
         color: #aeb2b7;
         padding: 0.5rem 0.625rem;
         transition: background .3s linear, color .3s linear;
-        display: block;
         white-space: nowrap;
+        display: flex;
+        align-items: center;
     }
 
         .sidebar .nav-link i:first-child {
@@ -298,7 +299,6 @@ body, .form-control, .dropdown-menu, .btn:not(.btn-lg):not(.btn-xs), .input-grou
     }
 
     .sidebar .nav-item.parent .nav-link .fa-angle-left {
-        float: right;
         margin-top: 4px;
     }
 
@@ -323,7 +323,6 @@ body, .form-control, .dropdown-menu, .btn:not(.btn-lg):not(.btn-xs), .input-grou
         border-radius: 4px;
         height: 37px;
         transition: all .3s linear;
-        margin-top: -8px;
     }
 
     .sidebar .sub .nav-item .nav-link i, .sidebar .sub .nav-item .nav-link span {

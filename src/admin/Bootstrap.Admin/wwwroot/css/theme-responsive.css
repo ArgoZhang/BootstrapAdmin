@@ -144,4 +144,8 @@
     .main-content, aside:not(:hover), header, .nav-brand a img, .nav-brand a span {
         transition: none !important;
     }
+
+    .sidebar .sub .nav-item .nav-link:before {
+        margin-top: -18px;
+    }
 }
