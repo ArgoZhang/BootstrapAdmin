@@ -1,4 +1,4 @@
-@model LoginModel
+﻿@model LoginModel
 @{
     ViewBag.Title = Model.Title;
     Layout = "_Layout";
@@ -64,7 +64,7 @@
                             <span class="fa fa-lock"></span>
                         </div>
                     </div>
-                    <input type="password" name="password" class="form-control" value="" data-toggle="tooltip" placeholder="密码" maxlength="16" data-required-msg="请输入密码" data-valid="true" />
+                    <input type="password" name="password" class="form-control" value="" data-toggle="tooltip" placeholder="密码" maxlength="16" autocomplete="off" data-required-msg="请输入密码" data-valid="true" />
                 </div>
             </div>
             <div asp-condition="@Model.AllowMobile">
@@ -189,7 +189,7 @@
                                 <span class="fa fa-lock"></span>
                             </div>
                         </div>
-                        <input type="password" id="password" class="form-control" value="" placeholder="密码不可为空" maxlength="16" data-valid="true" />
+                        <input type="password" id="password" class="form-control" value="" placeholder="密码不可为空" maxlength="16" data-valid="true" autocomplete="off" />
                     </div>
                 </div>
                 <div class="form-group">
@@ -200,7 +200,7 @@
                                 <span class="fa fa-lock"></span>
                             </div>
                         </div>
-                        <input type="password" id="assurePassword" class="form-control" value="" placeholder="确认密码" maxlength="16" equalTo="#password" data-valid="true" />
+                        <input type="password" id="assurePassword" class="form-control" value="" placeholder="确认密码" maxlength="16" equalTo="#password" data-valid="true" autocomplete="off" />
                     </div>
                 </div>
                 <div class="form-group">
