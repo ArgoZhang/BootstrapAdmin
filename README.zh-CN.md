@@ -115,7 +115,7 @@
 
 ## 开发环境搭建
 1. 安装 .net core sdk [官方网址](http://www.microsoft.com/net/download)
-2. 安装 Visual Studio 2017 以上 [官方网址](https://visualstudio.microsoft.com/vs/getting-started/)
+2. 安装 Visual Studio 2019 以上 [官方网址](https://visualstudio.microsoft.com/vs/getting-started/)
 3. 获取本项目代码 [BootstrapAdmin](https://gitee.com/LongbowEnterprise/BootstrapAdmin)  
 
 *注意*   
