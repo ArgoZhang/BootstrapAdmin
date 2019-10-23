@@ -99,7 +99,6 @@ aside .bg, aside .nav-brand, aside .nav-header, .header .nav, .userinfo .dropdow
 
     .userinfo .dropdown-toggle, .header .nav .dropdown > a {
         border: 1px solid #eee;
-        color: #777;
     }
 
         .userinfo .dropdown-toggle:after {

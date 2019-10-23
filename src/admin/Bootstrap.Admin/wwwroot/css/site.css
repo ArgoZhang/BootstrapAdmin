@@ -466,3 +466,7 @@ pre {
     top: 6px;
     right: 26px;
 }
+
+.userinfo .dropdown-toggle, .header .nav .dropdown > a {
+    color: #777;
+}
