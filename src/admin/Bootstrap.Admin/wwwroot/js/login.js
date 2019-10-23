@@ -195,7 +195,7 @@
             url: apiUrl,
             method: 'PUT',
             callback: function (result) {
-                $this.attr('data-original-title', result ? "发送成功" : "发送失败").tooltip('show');
+                $this.attr('data-original-title', result ? "发送成功" : "短信登录体验活动结束").tooltip('show');
                 var handler = setTimeout(function () {
                     clearTimeout(handler);
                     $this.tooltip('hide').attr('data-original-title', "点击发送验证码");

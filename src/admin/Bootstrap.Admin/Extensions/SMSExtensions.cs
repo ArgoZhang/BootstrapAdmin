@@ -110,7 +110,7 @@ namespace Microsoft.Extensions.DependencyInjection
             }
             else
             {
-                new Exception("SMS Send Fail").Log(new NameValueCollection()
+                new Exception(result.Msg).Log(new NameValueCollection()
                 {
                     ["UserId"] = Option.Phone,
                     ["url"] = url,
@@ -148,6 +148,8 @@ namespace Microsoft.Extensions.DependencyInjection
             public int Code { get; set; }
 
             public string Data { get; set; }
+
+            public string Msg { get; set; }
         }
 
         private class AutoExpireValidateCode
