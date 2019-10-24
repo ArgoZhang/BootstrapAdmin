@@ -252,7 +252,7 @@
 
             that.sliderContainer.addClass('sliderContainer_active');
             that.sliderMask.style.width = (moveX + 4) + 'px';
-            trail.push(moveY);
+            trail.push(Math.round(moveY));
         };
 
         var handleDragEnd = function (e) {
