@@ -7,12 +7,11 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Policy;
 
 namespace Bootstrap.Admin.Controllers.Api
 {
     /// <summary>
-    /// 
+    /// 用户控制器
     /// </summary>
     [Route("api/[controller]")]
     [Authorize]
@@ -20,7 +19,7 @@ namespace Bootstrap.Admin.Controllers.Api
     public class UsersController : ControllerBase
     {
         /// <summary>
-        /// 
+        /// 调用获取所有用户信息 用户管理查询按钮
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
@@ -31,10 +30,10 @@ namespace Bootstrap.Admin.Controllers.Api
         }
 
         /// <summary>
-        /// 
+        /// 用户相关授权操作
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="type"></param>
+        /// <param name="id">主键</param>
+        /// <param name="type">类型 如角色、部门</param>
         /// <returns></returns>
         [HttpPost("{id}")]
         public IEnumerable<object> Post(string id, [FromQuery]string type)
@@ -49,7 +48,7 @@ namespace Bootstrap.Admin.Controllers.Api
                         p.DisplayName,
                         p.UserName,
                         p.Checked
-                    });
+                    }).OrderBy(u => u.DisplayName);
                     break;
                 case "group":
                     ret = UserHelper.RetrievesByGroupId(id);
@@ -85,7 +84,7 @@ namespace Bootstrap.Admin.Controllers.Api
         }
 
         /// <summary>
-        /// 
+        /// 保存授权操作
         /// </summary>
         /// <param name="id"></param>
         /// <param name="values"></param>
@@ -109,7 +108,7 @@ namespace Bootstrap.Admin.Controllers.Api
         }
 
         /// <summary>
-        /// 
+        /// 删除用户操作
         /// </summary>
         /// <param name="value"></param>
         [HttpDelete]
@@ -120,7 +119,7 @@ namespace Bootstrap.Admin.Controllers.Api
         }
 
         /// <summary>
-        /// 
+        /// api 握手协议
         /// </summary>
         /// <returns></returns>
         [AllowAnonymous]
