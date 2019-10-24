@@ -951,3 +951,7 @@ label[for] {
     .custom-control-label:before, .custom-control-label::after {
         top: 3px;
     }
+
+.file-preview .file-preview-thumbnails {
+    display: flex;
+}
