@@ -339,7 +339,7 @@
                 showColumns: true,                  //是否显示所有的列
                 showRefresh: true,                  //是否显示刷新按钮
                 showToggle: true,                   //是否显示详细视图和列表视图的切换按钮
-                cardView: $(window).width() < 768,                    //是否显示详细视图
+                cardView: $(window).width() < 768,  //是否显示详细视图
                 queryButton: '#btn_query',
                 onLoadSuccess: function (data) {
                     $.footer();
@@ -517,6 +517,10 @@
                 var defaultVal = this.$element.attr('data-default-val') || '';
                 if (defaultVal === '') this.$element.prop('checked', true);
                 oldFunc.call(this);
+                this.$toggle.on('touchend', function (e) {
+                    $(this).trigger('click.bs.toggle');
+                    e.preventDefault();
+                });
             }
         }
 
