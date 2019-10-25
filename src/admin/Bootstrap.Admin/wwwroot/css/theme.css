@@ -955,3 +955,11 @@ label[for] {
 .file-preview .file-preview-thumbnails {
     display: flex;
 }
+
+.file-drop-zone .file-preview-thumbnails {
+    cursor: pointer;
+}
+
+.krajee-default.file-preview-frame {
+    cursor: default;
+}
