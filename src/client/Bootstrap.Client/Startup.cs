@@ -84,13 +84,12 @@ namespace Bootstrap.Client
             }
 
             app.UseStatusCodePagesWithReExecute("/Home/Error/{0}");
-            app.UseCors(builder => builder.WithOrigins(Configuration["AllowOrigins"].Split(',', StringSplitOptions.RemoveEmptyEntries)).AllowAnyHeader().AllowAnyMethod().AllowCredentials());
             app.UseHttpsRedirection();
             app.UseResponseCompression();
             app.UseStaticFiles();
-            app.UseCookiePolicy();
 
             app.UseRouting();
+            app.UseCors(builder => builder.WithOrigins(Configuration["AllowOrigins"].Split(',', StringSplitOptions.RemoveEmptyEntries)).AllowAnyHeader().AllowAnyMethod().AllowCredentials());
             app.UseBootstrapAdminAuthentication("2", RoleHelper.RetrievesByUserName, RoleHelper.RetrievesByUrl, AppHelper.RetrievesByUserName);
             app.UseAuthorization();
             app.UseCacheManager();
