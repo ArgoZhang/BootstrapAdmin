@@ -13,8 +13,8 @@
     },
     {
         "Category": "应用程序",
-        "Name": "未设置",
-        "Code": "0",
+        "Name": "后台管理",
+        "Code": "BA",
         "Define": NumberInt(0)
     },
     {
@@ -140,19 +140,19 @@
     {
         "Category": "应用程序",
         "Name": "测试平台",
-        "Code": "2",
+        "Code": "Demo",
         "Define": NumberInt(0)
     },
     {
         "Category": "测试平台",
         "Name": "网站标题",
-        "Code": "托盘组垛程序",
+        "Code": "前台演示系统",
         "Define": NumberInt(1)
     },
     {
         "Category": "测试平台",
         "Name": "网站页脚",
-        "Code": "通用后台管理测试平台",
+        "Code": "前台演示程序后台权限管理框架",
         "Define": NumberInt(1)
     },
     {
@@ -175,7 +175,7 @@
     },
     {
         "Category": "应用首页",
-        "Name": "2",
+        "Name": "Demo",
         "Code": "http://localhost:49185/",
         "Define": NumberInt(0)
     },

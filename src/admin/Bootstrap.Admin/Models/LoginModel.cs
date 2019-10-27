@@ -11,7 +11,7 @@ namespace Bootstrap.Admin.Models
         /// 默认构造函数
         /// </summary>
         /// <param name="appId"></param>
-        public LoginModel(string appId = "0") : base(appId)
+        public LoginModel(string appId = null) : base(appId)
         {
             ImageLibUrl = DictHelper.RetrieveImagesLibUrl();
         }

@@ -111,7 +111,7 @@ namespace Bootstrap.Admin
 
             app.UseRouting();
             app.UseCors(builder => builder.WithOrigins(Configuration["AllowOrigins"].Split(',', StringSplitOptions.RemoveEmptyEntries)).AllowAnyHeader().AllowAnyMethod().AllowCredentials());
-            app.UseBootstrapAdminAuthentication("", RoleHelper.RetrievesByUserName, RoleHelper.RetrievesByUrl, AppHelper.RetrievesByUserName);
+            app.UseBootstrapAdminAuthentication(RoleHelper.RetrievesByUserName, RoleHelper.RetrievesByUrl, AppHelper.RetrievesByUserName);
             app.UseAuthorization();
             app.UseSwagger(Configuration["SwaggerPathBase"].TrimEnd('/'));
             app.UseCacheManager();

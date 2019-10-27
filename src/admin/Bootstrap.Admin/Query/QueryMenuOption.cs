@@ -33,7 +33,7 @@ namespace Bootstrap.Admin.Query
         /// <summary>
         /// 
         /// </summary>
-        public string AppCode { get; set; }
+        public string AppId { get; set; }
 
         /// <summary>
         /// 
@@ -59,9 +59,9 @@ namespace Bootstrap.Admin.Query
             {
                 data = data.Where(t => t.IsResource.ToString() == IsResource);
             }
-            if (!string.IsNullOrEmpty(AppCode))
+            if (!string.IsNullOrEmpty(AppId))
             {
-                data = data.Where(t => t.Application.Equals(AppCode, StringComparison.OrdinalIgnoreCase));
+                data = data.Where(t => t.Application.Equals(AppId, StringComparison.OrdinalIgnoreCase));
             }
             var ret = new QueryData<object>();
             ret.total = data.Count();

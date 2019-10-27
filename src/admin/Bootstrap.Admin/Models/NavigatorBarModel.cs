@@ -1,4 +1,4 @@
-using Bootstrap.DataAccess;
+﻿using Bootstrap.DataAccess;
 using Bootstrap.Security;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -20,17 +20,8 @@ namespace Bootstrap.Admin.Models
         {
             Navigations = MenuHelper.RetrieveSystemMenus(UserName, $"~{controller.HttpContext.Request.Path}");
             var authApps = AppHelper.RetrievesByUserName(controller.User.Identity.Name);
-            Applications = DictHelper.RetrieveApps().Where(app => app.Key == "0" || authApps.Any(key => key.Equals(app.Key, StringComparison.OrdinalIgnoreCase)));
-
-            // feat: https://gitee.com/LongbowEnterprise/dashboard/issues?id=I12VKZ
-            // 后台系统网站图标跟随个人中心设置的默认应用站点的展示
-            WebSiteLogo = DictHelper.RetrieveWebLogo(AppId);
+            Applications = DictHelper.RetrieveApps().Where(app => app.Key.IsNullOrEmpty() || authApps.Any(key => key.Equals(app.Key, StringComparison.OrdinalIgnoreCase)));
         }
-
-        /// <summary>
-        /// 获得 网站图标
-        /// </summary>
-        public string WebSiteLogo { get; protected set; }
 
         /// <summary>
         /// 获得 网站菜单

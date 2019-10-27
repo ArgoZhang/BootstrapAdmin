@@ -1,4 +1,5 @@
 ﻿using MongoDB.Driver;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -193,11 +194,12 @@ namespace Bootstrap.DataAccess.MongoDB
         /// 
         /// </summary>
         /// <param name="url"></param>
+        /// <param name="appId"></param>
         /// <returns></returns>
-        public override IEnumerable<string> RetrievesByUrl(string url)
+        public override IEnumerable<string> RetrievesByUrl(string url, string appId)
         {
             var menu = DbManager.Menus.Find(md => md.Url.StartsWith(url)).FirstOrDefault();
-            var ret = RoleHelper.Retrieves().Cast<Role>().Where(md => md.Menus != null && md.Menus.Contains(menu.Id)).Select(m => m.RoleName).ToList();
+            var ret = RoleHelper.Retrieves().Cast<Role>().Where(md => md.Menus != null && md.Menus.Any(m => m.Equals(menu.Id, StringComparison.OrdinalIgnoreCase)) && md.Apps.Contains(appId)).Select(m => m.RoleName).ToList();
             if (!ret.Contains("Administrators")) ret.Add("Administrators");
             return ret;
         }

@@ -193,7 +193,9 @@ namespace Bootstrap.DataAccess
         /// 从NavigatorRole表查
         /// 从Navigators -> GroupNavigatorRole -> Role查查询某个用户所拥有的角色
         /// </summary>
+        /// <param name="url"></param>
+        /// <param name="appId"></param>
         /// <returns></returns>
-        public virtual IEnumerable<string> RetrievesByUrl(string url) => DbHelper.RetrieveRolesByUrl(url);
+        public virtual IEnumerable<string> RetrievesByUrl(string url, string appId) => DbHelper.RetrieveRolesByUrl(url, appId);
     }
 }

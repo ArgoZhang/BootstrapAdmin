@@ -47,12 +47,13 @@ namespace Bootstrap.Client.DataAccess.MongoDB
         /// 从NavigatorRole表查
         /// 从Navigators -> GroupNavigatorRole -> Role查查询某个用户所拥有的角色
         /// </summary>
+        /// <param name="url"></param>
+        /// <param name="appId"></param>
         /// <returns></returns>
-        public override IEnumerable<string> RetrievesByUrl(string url)
+        public override IEnumerable<string> RetrievesByUrl(string url, string appId)
         {
             var menu = DbManager.Menus.Find(md => md.Url.StartsWith(url)).FirstOrDefault();
-            var appId = ConfigurationManager.GetValue("AppId", "2");
-            var ret = RoleHelper.Retrieves().Where(md => md.Menus.Any(m => m == menu.Id) && md.Apps.Any(m => m == appId)).Select(m => m.RoleName).ToList();
+            var ret = RoleHelper.Retrieves().Where(md => md.Menus.Any(m => m == menu.Id) && md.Apps.Any(m => m.Equals(appId, StringComparison.OrdinalIgnoreCase))).Select(m => m.RoleName).ToList();
             if (!ret.Any(r => r.Equals("Administrators", StringComparison.OrdinalIgnoreCase))) ret.Add("Administrators");
             return ret;
         }

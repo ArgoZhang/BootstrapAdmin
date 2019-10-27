@@ -126,14 +126,14 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="appId"></param>
         /// <returns></returns>
-        public static string RetrieveWebTitle(string appId = "0") => DbContextManager.Create<Dict>().RetrieveWebTitle(appId);
+        public static string RetrieveWebTitle(string appId) => DbContextManager.Create<Dict>().RetrieveWebTitle(appId);
 
         /// <summary>
         /// 获取站点 Footer 配置信息
         /// </summary>
         /// <param name="appId"></param>
         /// <returns></returns>
-        public static string RetrieveWebFooter(string appId = "0") => DbContextManager.Create<Dict>().RetrieveWebFooter(appId);
+        public static string RetrieveWebFooter(string appId) => DbContextManager.Create<Dict>().RetrieveWebFooter(appId);
 
         /// <summary>
         /// 获得系统中配置的可以使用的网站样式
@@ -156,9 +156,9 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获得默认的前台首页地址，默认为 ~/Home/Index
         /// </summary>
-        /// <param name="appCode">应用程序编码</param>
+        /// <param name="appId">应用程序编码</param>
         /// <returns></returns>
-        public static string RetrieveHomeUrl(string appCode) => DbContextManager.Create<Dict>().RetrieveHomeUrl(appCode);
+        public static string RetrieveHomeUrl(string appId) => DbContextManager.Create<Dict>().RetrieveHomeUrl(appId);
 
         /// <summary>
         /// 获取所有应用程序数据方法

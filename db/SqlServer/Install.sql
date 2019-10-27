@@ -240,7 +240,7 @@ GO
 ALTER TABLE [dbo].[Navigations] ADD  CONSTRAINT [DF_Navigations_IsResource]  DEFAULT ((0)) FOR [IsResource]
 GO
 
-ALTER TABLE [dbo].[Navigations] ADD  CONSTRAINT [DF_Navigations_Application]  DEFAULT ((0)) FOR [Application]
+ALTER TABLE [dbo].[Navigations] ADD  CONSTRAINT [DF_Navigations_Application]  DEFAULT (N'BA') FOR [Application]
 GO
 
 ALTER TABLE [dbo].[Navigations] ADD  CONSTRAINT [DF_Navigations_Target]  DEFAULT ('_self') FOR [Target]

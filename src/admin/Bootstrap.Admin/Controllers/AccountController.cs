@@ -1,5 +1,6 @@
 ﻿using Bootstrap.Admin.Models;
 using Bootstrap.DataAccess;
+using Bootstrap.Security.Mvc;
 using Longbow.GiteeAuth;
 using Longbow.GitHubAuth;
 using Longbow.WeChatAuth;
@@ -72,7 +73,7 @@ namespace Bootstrap.Admin.Controllers
         /// <param name="appId"></param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult Login([FromQuery] string appId = "0")
+        public ActionResult Login([FromQuery]string appId = null)
         {
             if (DictHelper.RetrieveSystemModel())
             {
@@ -137,13 +138,12 @@ namespace Bootstrap.Admin.Controllers
         /// <param name="userName">User name.</param>
         /// <param name="password">Password.</param>
         /// <param name="remember">Remember.</param>
-        /// <param name="appId"></param>
         [HttpPost]
-        public async Task<IActionResult> Login(string userName, string password, string remember, string appId = "0")
+        public async Task<IActionResult> Login(string userName, string password, string remember)
         {
             var auth = UserHelper.Authenticate(userName, password);
             HttpContext.Log(userName, auth);
-            return auth ? await SignInAsync(userName, remember == "true") : View("Login", new LoginModel(appId) { AuthFailed = true });
+            return auth ? await SignInAsync(userName, remember == "true") : View("Login", new LoginModel() { AuthFailed = true });
         }
 
         private async Task<IActionResult> SignInAsync(string userName, bool persistent, string authenticationScheme = CookieAuthenticationDefaults.AuthenticationScheme)
@@ -163,10 +163,10 @@ namespace Bootstrap.Admin.Controllers
         /// <param name="appId"></param>
         /// <returns>The logout.</returns>
         [HttpGet]
-        public async Task<IActionResult> Logout([FromQuery]string appId = "0")
+        public async Task<IActionResult> Logout([FromQuery]string appId)
         {
             await HttpContext.SignOutAsync();
-            return Redirect(QueryHelpers.AddQueryString(Request.PathBase + CookieAuthenticationDefaults.LoginPath, "AppId", appId));
+            return Redirect(QueryHelpers.AddQueryString(Request.PathBase + CookieAuthenticationDefaults.LoginPath, "AppId", appId ?? BootstrapAppContext.AppId));
         }
 
         /// <summary>

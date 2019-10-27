@@ -65,7 +65,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="appId"></param>
         /// <returns></returns>
-        public virtual string RetrieveWebTitle(string appId = "0")
+        public virtual string RetrieveWebTitle(string appId)
         {
             // 优先查找配置的应用程序网站标题
             var code = DbHelper.RetrieveTitle(appId);
@@ -78,7 +78,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="appId"></param>
         /// <returns></returns>
-        public virtual string RetrieveWebFooter(string appId = "0")
+        public virtual string RetrieveWebFooter(string appId)
         {
             // 优先查找配置的应用程序网站标题
             var code = DbHelper.RetrieveFooter(appId);
@@ -111,16 +111,16 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获得默认的前台首页地址，默认为~/Home/Index
         /// </summary>
-        /// <param name="appCode"></param>
+        /// <param name="appId"></param>
         /// <returns></returns>
-        public virtual string RetrieveHomeUrl(string appCode)
+        public virtual string RetrieveHomeUrl(string appId)
         {
             // https://gitee.com/LongbowEnterprise/dashboard/issues?id=IS0WK
             var url = "~/Home/Index";
             var dicts = DictHelper.RetrieveDicts();
-            if (appCode != "0")
+            if (!appId.IsNullOrEmpty())
             {
-                var appUrl = dicts.FirstOrDefault(d => d.Name.Equals(appCode, StringComparison.OrdinalIgnoreCase) && d.Category == "应用首页" && d.Define == 0)?.Code;
+                var appUrl = dicts.FirstOrDefault(d => d.Name.Equals(appId, StringComparison.OrdinalIgnoreCase) && d.Category == "应用首页" && d.Define == 0)?.Code;
                 if (!string.IsNullOrEmpty(appUrl)) return appUrl;
             }
             var defaultUrl = dicts.FirstOrDefault(d => d.Name == "前台首页" && d.Category == "网站设置" && d.Define == 0)?.Code;
@@ -129,7 +129,7 @@ namespace Bootstrap.DataAccess
         }
 
         /// <summary>
-        /// 
+        /// 获得字典表中配置的所有应用程序
         /// </summary>
         /// <returns></returns>
         public virtual IEnumerable<KeyValuePair<string, string>> RetrieveApps() => DictHelper.RetrieveDicts().Where(d => d.Category == "应用程序" && d.Define == 0).Select(d => new KeyValuePair<string, string>(d.Code, d.Name)).OrderBy(d => d.Key);

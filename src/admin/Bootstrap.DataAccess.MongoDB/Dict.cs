@@ -66,7 +66,7 @@ namespace Bootstrap.DataAccess.MongoDB
             return true;
         }
 
-        private static string RetrieveAppName(string name, string appId = "0", string defaultValue = "未设置")
+        private static string RetrieveAppName(string name, string appId = "", string defaultValue = "未设置")
         {
             var dicts = DictHelper.RetrieveDicts();
             var platName = dicts.FirstOrDefault(d => d.Category == "应用程序" && d.Code == appId)?.Name;
@@ -78,7 +78,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// </summary>
         /// <param name="appId"></param>
         /// <returns></returns>
-        public override string RetrieveWebTitle(string appId = "0")
+        public override string RetrieveWebTitle(string appId)
         {
             var code = RetrieveAppName("网站标题", appId);
             if (code == "网站标题未设置") code = DictHelper.RetrieveDicts().FirstOrDefault(d => d.Name == "网站标题" && d.Category == "网站设置" && d.Define == 0)?.Code ?? "后台管理系统";
@@ -90,9 +90,9 @@ namespace Bootstrap.DataAccess.MongoDB
         /// </summary>
         /// <param name="appId"></param>
         /// <returns></returns>
-        public override string RetrieveWebFooter(string appId = "0")
+        public override string RetrieveWebFooter(string appId)
         {
-            var code = RetrieveAppName("网站页脚");
+            var code = RetrieveAppName("网站页脚", appId);
             if (code == "网站页脚未设置") code = DictHelper.RetrieveDicts().FirstOrDefault(d => d.Name == "网站页脚" && d.Category == "网站设置" && d.Define == 0)?.Code ?? "2016 © 通用后台管理系统";
             return code;
         }

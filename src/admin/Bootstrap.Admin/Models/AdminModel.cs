@@ -1,4 +1,5 @@
 ﻿using Bootstrap.DataAccess;
+using Bootstrap.Security.Mvc;
 
 namespace Bootstrap.Admin.Models
 {
@@ -11,8 +12,10 @@ namespace Bootstrap.Admin.Models
         /// 默认构造函数
         /// </summary>
         /// <param name="appId"></param>
-        public AdminModel(string appId = "0")
+        public AdminModel(string appId = null)
         {
+            if (string.IsNullOrEmpty(appId)) appId = BootstrapAppContext.AppId;
+
             Title = DictHelper.RetrieveWebTitle(appId);
             Footer = DictHelper.RetrieveWebFooter(appId);
             Theme = DictHelper.RetrieveActiveTheme();

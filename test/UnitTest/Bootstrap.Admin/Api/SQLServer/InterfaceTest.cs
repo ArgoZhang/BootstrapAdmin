@@ -40,7 +40,7 @@ namespace Bootstrap.Admin.Api.SqlServer
         [Fact]
         public async void RetrieveAppMenus_Ok()
         {
-            var ret = await Client.PostAsJsonAsync<AppMenuOption, IEnumerable<BootstrapMenu>>("RetrieveAppMenus", new AppMenuOption() { AppId = "0", UserName = "Admin", Url = "~/Admin/Index" });
+            var ret = await Client.PostAsJsonAsync<AppMenuOption, IEnumerable<BootstrapMenu>>("RetrieveAppMenus", new AppMenuOption() { AppId = "", UserName = "Admin", Url = "~/Admin/Index" });
             Assert.NotEmpty(ret);
         }
     }

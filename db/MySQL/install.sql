@@ -68,7 +68,7 @@ CREATE TABLE Navigations(
 	Category 		VARCHAR (50) DEFAULT 0,
 	Target 			VARCHAR (10) DEFAULT '_self',
 	IsResource 		INT DEFAULT 0,
-	Application 	VARCHAR (200) DEFAULT 0
+	Application 	VARCHAR (200) DEFAULT 'BA'
 );
 
 CREATE TABLE NavigationRole(

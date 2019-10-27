@@ -1,14 +1,16 @@
 ﻿using Bootstrap.DataAccess;
 using Bootstrap.Security;
+using Bootstrap.Security.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Security.Principal;
 
 namespace Bootstrap.Admin.Controllers
 {
     /// <summary>
-    /// 
+    /// 接口控制器
     /// </summary>
     [Route("api/[controller]/[action]")]
     [AllowAnonymous]
@@ -16,7 +18,7 @@ namespace Bootstrap.Admin.Controllers
     public class InterfaceController : ControllerBase
     {
         /// <summary>
-        /// 
+        /// 获取所有字典表数据
         /// </summary>
         /// <returns></returns>
         [HttpPost]
@@ -24,17 +26,19 @@ namespace Bootstrap.Admin.Controllers
         {
             return DictHelper.RetrieveDicts();
         }
+
         /// <summary>
-        /// 
+        /// 通过请求地址获取相对应角色集合
         /// </summary>
         /// <returns></returns>
         [HttpPost]
         public IEnumerable<string> RetrieveRolesByUrl([FromBody]string url)
         {
-            return RoleHelper.RetrievesByUrl(url);
+            return RoleHelper.RetrievesByUrl(url, BootstrapAppContext.AppId);
         }
+
         /// <summary>
-        /// 
+        /// 通过用户名获得分配所有角色
         /// </summary>
         /// <returns></returns>
         [HttpPost]
@@ -42,8 +46,9 @@ namespace Bootstrap.Admin.Controllers
         {
             return RoleHelper.RetrievesByUserName(userName);
         }
+
         /// <summary>
-        /// 
+        /// 通过用户名获得 User 实例
         /// </summary>
         /// <returns></returns>
         [HttpPost]
@@ -51,9 +56,11 @@ namespace Bootstrap.Admin.Controllers
         {
             return UserHelper.RetrieveUserByUserName(new GenericIdentity(userName));
         }
+
         /// <summary>
-        /// 
+        /// 通过指定条件获得应用程序菜单
         /// </summary>
+        /// <param name="args"></param>
         /// <returns></returns>
         [HttpPost]
         public IEnumerable<BootstrapMenu> RetrieveAppMenus([FromBody]AppMenuOption args)

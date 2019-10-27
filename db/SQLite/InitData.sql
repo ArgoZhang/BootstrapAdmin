@@ -2,12 +2,12 @@
 -- User/123789
 DELETE From Users where UserName in ('Admin', 'User');
 INSERT INTO Users (UserName, Password, PassSalt, DisplayName, RegisterTime, ApprovedTime, ApprovedBy, [Description]) values ('Admin', 'Es7WVgNsJuELwWK8daCqufUBknCsSC0IYDphQZAiGOo=', 'W5vpBEOYRGHkQXatN0t+ECM/U8cHDuEgrq56+zZBk4J481xH', 'Administrator', datetime(CURRENT_TIMESTAMP, 'localtime'), datetime(CURRENT_TIMESTAMP, 'localtime'), 'system', '系统默认创建');
-INSERT INTO Users (UserName, Password, PassSalt, DisplayName, RegisterTime, ApprovedTime, ApprovedBy, [Description], [App]) values ('User', 'tXG/yNffpnm6cThrCH7wf6jN1ic3VHvLoY4OrzKtrZ4=', 'c5cIrRMn8XjB84M/D/X7Lg9uUqQFmYNEdxb/4HWH8OLa4pNZ', '测试账号', datetime(CURRENT_TIMESTAMP, 'localtime'), datetime(CURRENT_TIMESTAMP, 'localtime'), 'system', '系统默认创建', '2');
+INSERT INTO Users (UserName, Password, PassSalt, DisplayName, RegisterTime, ApprovedTime, ApprovedBy, [Description], [App]) values ('User', 'tXG/yNffpnm6cThrCH7wf6jN1ic3VHvLoY4OrzKtrZ4=', 'c5cIrRMn8XjB84M/D/X7Lg9uUqQFmYNEdxb/4HWH8OLa4pNZ', '测试账号', datetime(CURRENT_TIMESTAMP, 'localtime'), datetime(CURRENT_TIMESTAMP, 'localtime'), 'system', '系统默认创建', 'Demo');
 
 DELETE From Dicts Where Define = 0;
 INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('菜单', '系统菜单', '0', 0);
 INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('菜单', '外部菜单', '1', 0);
-INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('应用程序', '未设置', '0', 0);
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('应用程序', '后台管理', 'BA', 0);
 INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('网站设置', '网站标题', '后台管理系统', 0);
 INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('网站设置', '网站页脚', '2016 © 通用后台管理系统', 0);
 INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('系统通知', '用户注册', '0', 0);
@@ -138,46 +138,46 @@ INSERT INTO [Roles] ([RoleName], [Description]) VALUES ('Administrators', '系�
 INSERT INTO [Roles] ([RoleName], [Description]) VALUES ('Default', '默认用户，可访问前台页面');
 
 DELETE FROM RoleGroup;
-INSERT INTO RoleGroup (GroupId, RoleId) SELECT g.Id, r.Id From Groups g left join Roles r where GroupName = 'Admin' and RoleName = 'Administrators';
+INSERT INTO RoleGroup (GroupId, RoleId) SELECT g.Id, r.Id From Groups g left join Roles r on 1=1 where GroupName = 'Admin' and RoleName = 'Administrators';
 
 DELETE FROM UserGroup;
 
 DELETE FROM UserRole;
-INSERT INTO UserRole (UserId, RoleId) SELECT u.Id, r.Id From Users u left join Roles r where UserName = 'Admin' and RoleName = 'Administrators';
-INSERT INTO UserRole (UserId, RoleId) SELECT u.Id, r.Id From Users u left join Roles r where UserName = 'User' and RoleName = 'Default';
+INSERT INTO UserRole (UserId, RoleId) SELECT u.Id, r.Id From Users u left join Roles r on 1=1 where UserName = 'Admin' and RoleName = 'Administrators';
+INSERT INTO UserRole (UserId, RoleId) SELECT u.Id, r.Id From Users u left join Roles r on 1=1 where UserName = 'User' and RoleName = 'Default';
 
 DELETE FROM NavigationRole;
-INSERT INTO NavigationRole (NavigationID, RoleID) SELECT n.Id, r.Id FROM Navigations n left join Roles r Where RoleName = 'Administrators';
-INSERT INTO NavigationRole (NavigationID, RoleID) SELECT n.Id, r.Id FROM Navigations n left join Roles r Where RoleName = 'Default' and Name in ('后台管理', '个人中心', '返回前台', '通知管理');
-INSERT INTO NavigationRole (NavigationID, RoleID) SELECT n.Id, r.Id FROM Navigations n left join Roles r Where RoleName = 'Default' and ParentId in (select id from Navigations where Name in ('个人中心'));
+INSERT INTO NavigationRole (NavigationID, RoleID) SELECT n.Id, r.Id FROM Navigations n left join Roles r on 1=1 Where RoleName = 'Administrators';
+INSERT INTO NavigationRole (NavigationID, RoleID) SELECT n.Id, r.Id FROM Navigations n left join Roles r on 1=1 Where RoleName = 'Default' and Name in ('后台管理', '个人中心', '返回前台', '通知管理');
+INSERT INTO NavigationRole (NavigationID, RoleID) SELECT n.Id, r.Id FROM Navigations n left join Roles r on 1=1 Where RoleName = 'Default' and ParentId in (select id from Navigations where Name in ('个人中心'));
 
 -- Client Data
-Delete From [Dicts] Where Category = '应用程序' and Code = 2;
-INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('应用程序', '测试平台', 2, 0);
-Delete From [Dicts] Where Category = '应用首页' and Name = 2;
-INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('应用首页', 2, 'http://localhost:49185/', 0);
+Delete From [Dicts] Where Category = '应用程序' and Code = 'Demo';
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('应用程序', '测试平台', 'Demo', 0);
+Delete From [Dicts] Where Category = '应用首页' and Name = 'Demo';
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('应用首页', 'Demo', 'http://localhost:49185/', 0);
 
 Delete From [Dicts] Where Category = '测试平台';
 Insert into Dicts (Category, [Name], Code, Define) values ('测试平台', '网站标题', '前台演示系统', 1);
-Insert into Dicts (Category, [Name], Code, Define) values ('测试平台', '网站页脚', '通用后台管理测试平台', 1);
+Insert into Dicts (Category, [Name], Code, Define) values ('测试平台', '网站页脚', '前台演示程序后台权限管理框架', 1);
 Insert into Dicts (Category, [Name], Code, Define) values ('测试平台', '个人中心地址', 'http://localhost:50852/Admin/Profiles', 1);
 Insert into Dicts (Category, [Name], Code, Define) values ('测试平台', '系统设置地址', 'http://localhost:50852/Admin/Index', 1);
 Insert into Dicts (Category, [Name], Code, Define) values ('测试平台', '系统通知地址', 'http://localhost:50852/Admin/Notifications', 1);
 INSERT INTO Dicts (Category, [Name], Code, Define) VALUES ('测试平台', 'favicon', 'http://localhost:49185/favicon.ico', 1);
 INSERT INTO Dicts (Category, [Name], Code, Define) VALUES ('测试平台', '网站图标', 'http://localhost:49185/favicon.png', 1);
 
-Delete from [Navigations] where Application = 2;
-INSERT into [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], [Application]) VALUES (0, '首页', 10, 'fa fa-fa', '~/Home/Index', '1', 2);
+Delete from [Navigations] where Application = 'Demo';
+INSERT into [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], [Application]) VALUES (0, '首页', 10, 'fa fa-fa', '~/Home/Index', '1', 'Demo');
 
-INSERT into [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], [Application]) VALUES (0, '测试页面', 20, 'fa fa-fa', '#', '1', 2);
-INSERT into [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], [Application]) VALUES (last_insert_rowid(), '关于', 10, 'fa fa-fa', '~/Home/About', '1', 2);
+INSERT into [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], [Application]) VALUES (0, '测试页面', 20, 'fa fa-fa', '#', '1', 'Demo');
+INSERT into [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], [Application]) VALUES (last_insert_rowid(), '关于', 10, 'fa fa-fa', '~/Home/About', '1', 'Demo');
 
-INSERT into [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], [Application]) VALUES (0, '返回码云', 20, 'fa fa-fa', 'https://gitee.com/LongbowEnterprise/BootstrapAdmin', '1', 2);
+INSERT into [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], [Application]) VALUES (0, '返回码云', 20, 'fa fa-fa', 'https://gitee.com/LongbowEnterprise/BootstrapAdmin', '1', 'Demo');
 
 -- 菜单授权
-INSERT INTO NavigationRole (NavigationId, RoleId) SELECT n.ID, r.ID FROM Navigations n left join Roles r Where r.RoleName = 'Administrators' and [Application] = 2;
-INSERT INTO NavigationRole (NavigationId, RoleId) SELECT n.ID, r.ID FROM Navigations n left join Roles r Where r.RoleName = 'Default' and [Application] = 2;
+INSERT INTO NavigationRole (NavigationId, RoleId) SELECT n.ID, r.ID FROM Navigations n left join Roles r on 1=1 Where r.RoleName = 'Administrators' and [Application] = 'Demo';
+INSERT INTO NavigationRole (NavigationId, RoleId) SELECT n.ID, r.ID FROM Navigations n left join Roles r on 1=1 Where r.RoleName = 'Default' and [Application] = 'Demo';
 
 -- 角色对应用授权
-DELETE From RoleApp where AppId = '2';
-INSERT INTO RoleApp (AppId, RoleId) SELECT '2', ID From Roles Where RoleName = 'Default';
+DELETE From RoleApp where AppId = 'Demo';
+INSERT INTO RoleApp (AppId, RoleId) SELECT 'Demo', ID From Roles Where RoleName = 'Default';

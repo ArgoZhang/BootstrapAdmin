@@ -4,7 +4,6 @@ using System;
 using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Xunit;
 
 namespace Bootstrap.DataAccess.SqlServer
@@ -58,13 +57,13 @@ namespace Bootstrap.DataAccess.SqlServer
         [Fact]
         public void RetrieveWebTitle_Ok()
         {
-            Assert.Equal("后台管理系统", DictHelper.RetrieveWebTitle());
+            Assert.Equal("后台管理系统", DictHelper.RetrieveWebTitle("BA"));
         }
 
         [Fact]
         public void RetrieveWebFooter_Ok()
         {
-            Assert.Equal("2016 © 通用后台管理系统", DictHelper.RetrieveWebFooter());
+            Assert.Equal("2016 © 通用后台管理系统", DictHelper.RetrieveWebFooter("BA"));
         }
 
         [Fact]
@@ -88,7 +87,7 @@ namespace Bootstrap.DataAccess.SqlServer
         [Fact]
         public void RetrieveHomeUrl_Ok()
         {
-            Assert.Equal("~/Home/Index", DictHelper.RetrieveHomeUrl("0"));
+            Assert.Equal("~/Home/Index", DictHelper.RetrieveHomeUrl(string.Empty));
             var url = DictHelper.RetrieveHomeUrl("2");
             Assert.NotEqual("~/Home/Index", url);
 

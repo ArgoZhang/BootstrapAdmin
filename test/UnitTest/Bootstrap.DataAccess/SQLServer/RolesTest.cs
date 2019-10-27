@@ -86,7 +86,7 @@ namespace Bootstrap.DataAccess.SqlServer
         [Fact]
         public void RetrieveRolesByUrl_Ok()
         {
-            Assert.NotEmpty(RoleHelper.RetrievesByUrl("~/Home/Index"));
+            Assert.NotEmpty(RoleHelper.RetrievesByUrl("~/Home/Index", "BA"));
         }
 
         [Fact]

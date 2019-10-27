@@ -9,7 +9,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(0),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b91"),
@@ -21,7 +21,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(0),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4a01"),
@@ -33,7 +33,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(2),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4a02"),
@@ -45,7 +45,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(2),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4a03"),
@@ -57,7 +57,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(2),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4a04"),
@@ -69,7 +69,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(2),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4a05"),
@@ -81,7 +81,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(2),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4a06"),
@@ -93,7 +93,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(2),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("4bd7b8445fa31256f77e4a01"),
@@ -105,7 +105,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(0),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b92"),
@@ -117,7 +117,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(0),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b93"),
@@ -129,7 +129,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(0),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b01"),
@@ -141,7 +141,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(2),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b02"),
@@ -153,7 +153,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(2),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b03"),
@@ -165,7 +165,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(2),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b04"),
@@ -177,7 +177,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(2),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b05"),
@@ -189,7 +189,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(2),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b06"),
@@ -201,7 +201,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(2),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b07"),
@@ -213,7 +213,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(2),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b94"),
@@ -225,7 +225,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(0),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b10"),
@@ -237,7 +237,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(2),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b11"),
@@ -249,7 +249,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(2),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b12"),
@@ -261,7 +261,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(2),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b13"),
@@ -273,7 +273,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(2),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b14"),
@@ -285,7 +285,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(1),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b95"),
@@ -297,7 +297,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(0),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b20"),
@@ -309,7 +309,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(2),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b21"),
@@ -321,7 +321,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(2),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b22"),
@@ -333,7 +333,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(2),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b23"),
@@ -345,7 +345,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(2),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b24"),
@@ -357,7 +357,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(2),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b96"),
@@ -369,7 +369,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(0),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b30"),
@@ -381,7 +381,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(2),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b31"),
@@ -393,7 +393,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(2),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b32"),
@@ -405,7 +405,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(2),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b33"),
@@ -417,7 +417,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(2),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b34"),
@@ -429,7 +429,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(2),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b35"),
@@ -441,7 +441,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(2),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b36"),
@@ -453,7 +453,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(2),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b97"),
@@ -465,7 +465,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(0),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b40"),
@@ -477,7 +477,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(2),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b41"),
@@ -489,7 +489,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(2),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b42"),
@@ -501,7 +501,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(2),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b43"),
@@ -513,7 +513,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(2),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b44"),
@@ -525,7 +525,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(2),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b98"),
@@ -537,7 +537,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(0),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b50"),
@@ -549,7 +549,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(2),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b51"),
@@ -561,7 +561,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(2),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b52"),
@@ -573,7 +573,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(2),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b99"),
@@ -585,7 +585,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(0),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b9a"),
@@ -597,7 +597,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(0),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b9b"),
@@ -609,7 +609,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(0),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b9c"),
@@ -621,7 +621,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(0),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd9b3d868aa001661776f57"),
@@ -633,7 +633,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(0),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd9b3d868aa001661776f58"),
@@ -645,7 +645,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(0),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd9b3d868aa001661776f59"),
@@ -657,7 +657,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(0),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd9b3d868aa001661776f60"),
@@ -669,7 +669,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(0),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b89"),
@@ -681,7 +681,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(0),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5cd7b8445fa31256f77e4b90"),
@@ -693,7 +693,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(0),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b9d"),
@@ -705,7 +705,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(0),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b59"),
@@ -717,7 +717,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(0),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b60"),
@@ -729,7 +729,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(2),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b9e"),
@@ -741,7 +741,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(0),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4b9f"),
@@ -753,7 +753,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(0),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4ba0"),
@@ -765,7 +765,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(0),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4ba1"),
@@ -777,7 +777,7 @@
         "Category": "0",
         "Target": "_self",
         "IsResource": NumberInt(0),
-        "Application": "0"
+        "Application": "BA"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4ba2"),
@@ -789,7 +789,7 @@
         "Category": "1",
         "Target": "_self",
         "IsResource": NumberInt(0),
-        "Application": "2"
+        "Application": "Demo"
     },
     {
         "_id": ObjectId("5bd7b8445fa31256f77e4ba4"),
@@ -801,7 +801,7 @@
         "Category": "1",
         "Target": "_self",
         "IsResource": NumberInt(0),
-        "Application": "2"
+        "Application": "Demo"
     },
     {
         "_id": ObjectId("5bd9b3d868aa001661776f56"),
@@ -813,6 +813,6 @@
         "Category": "1",
         "Target": "_self",
         "IsResource": NumberInt(0),
-        "Application": "2"
+        "Application": "Demo"
     }
 ];

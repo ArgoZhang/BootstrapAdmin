@@ -23,7 +23,7 @@ namespace Bootstrap.Client.DataAccess.MongoDB
         /// <param name="appId"></param>
         /// <param name="defaultValue"></param>
         /// <returns></returns>
-        private string RetrieveAppName(string name, string appId = "0", string defaultValue = "未设置")
+        private string RetrieveAppName(string name, string appId = "", string defaultValue = "未设置")
         {
             var dicts = DictHelper.RetrieveDicts();
             var platName = dicts.FirstOrDefault(d => d.Category == "应用程序" && d.Code == appId)?.Name;

@@ -7,7 +7,7 @@ INSERT INTO Users (UserName, Password, PassSalt, DisplayName, RegisterTime, Appr
 DELETE From Dicts Where Define = 0;
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('菜单', '系统菜单', '0', 0);
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('菜单', '外部菜单', '1', 0);
-INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('应用程序', '未设置', '0', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('应用程序', '未设置', '', 0);
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('网站设置', '网站标题', '后台管理系统', 0);
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('网站设置', '网站页脚', '2016 © 通用后台管理系统', 0);
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统通知', '用户注册', '0', 0);

@@ -90,7 +90,7 @@ namespace Bootstrap.Client
 
             app.UseRouting();
             app.UseCors(builder => builder.WithOrigins(Configuration["AllowOrigins"].Split(',', StringSplitOptions.RemoveEmptyEntries)).AllowAnyHeader().AllowAnyMethod().AllowCredentials());
-            app.UseBootstrapAdminAuthentication("2", RoleHelper.RetrievesByUserName, RoleHelper.RetrievesByUrl, AppHelper.RetrievesByUserName);
+            app.UseBootstrapAdminAuthentication(RoleHelper.RetrievesByUserName, RoleHelper.RetrievesByUrl, AppHelper.RetrievesByUserName);
             app.UseAuthorization();
             app.UseCacheManager();
             app.UseOnlineUsers(callback: TraceHelper.Save);

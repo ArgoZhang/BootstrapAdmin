@@ -7,25 +7,26 @@ using Microsoft.AspNetCore.Mvc;
 namespace Bootstrap.Admin.Controllers
 {
     /// <summary>
-    /// 
+    /// Home Controller
     /// </summary>
     [Authorize]
     public class HomeController : Controller
     {
         /// <summary>
-        /// 
+        /// Index View
         /// </summary>
         /// <returns></returns>
         public IActionResult Index()
         {
             var model = new HeaderBarModel(User.Identity);
             if (string.IsNullOrEmpty(model.UserName)) return Redirect(Request.PathBase + CookieAuthenticationDefaults.LogoutPath);
-            var url = DictHelper.RetrieveHomeUrl(model.AppId);
-            return url.Equals("~/Home/Index", System.StringComparison.OrdinalIgnoreCase) ? (IActionResult)View(model) : Redirect(url);
+
+            var homeUrl = DictHelper.RetrieveHomeUrl(model.AppId);
+            return homeUrl.Equals("~/Home/Index", System.StringComparison.OrdinalIgnoreCase) ? (IActionResult)View(model) : Redirect(homeUrl);
         }
 
         /// <summary>
-        /// 
+        /// Error View
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

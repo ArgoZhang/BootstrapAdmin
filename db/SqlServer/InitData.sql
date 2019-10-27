@@ -5,12 +5,12 @@ GO
 -- User/123789
 DELETE From Users where UserName in ('Admin', 'User')
 INSERT INTO Users (UserName, Password, PassSalt, DisplayName, RegisterTime, ApprovedTime, ApprovedBy, [Description]) values ('Admin', 'Es7WVgNsJuELwWK8daCqufUBknCsSC0IYDphQZAiGOo=', 'W5vpBEOYRGHkQXatN0t+ECM/U8cHDuEgrq56+zZBk4J481xH', 'Administrator', GetDate(), GetDate(), 'system', N'系统默认创建')
-INSERT INTO Users (UserName, Password, PassSalt, DisplayName, RegisterTime, ApprovedTime, ApprovedBy, [Description], App) values ('User', 'tXG/yNffpnm6cThrCH7wf6jN1ic3VHvLoY4OrzKtrZ4=', 'c5cIrRMn8XjB84M/D/X7Lg9uUqQFmYNEdxb/4HWH8OLa4pNZ', N'测试账号', GetDate(), GetDate(), 'system', N'系统默认创建', '2')
+INSERT INTO Users (UserName, Password, PassSalt, DisplayName, RegisterTime, ApprovedTime, ApprovedBy, [Description], App) values ('User', 'tXG/yNffpnm6cThrCH7wf6jN1ic3VHvLoY4OrzKtrZ4=', 'c5cIrRMn8XjB84M/D/X7Lg9uUqQFmYNEdxb/4HWH8OLa4pNZ', N'测试账号', GetDate(), GetDate(), 'system', N'系统默认创建', 'Demo')
 
 DELETE From Dicts Where Define = 0
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'菜单', N'系统菜单', N'0', 0)
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'菜单', N'外部菜单', N'1', 0)
-INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'应用程序', N'未设置', N'0', 0)
+INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'应用程序', N'后台管理', N'BA', 0)
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'网站设置', N'网站标题', N'后台管理系统', 0)
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'网站设置', N'网站页脚', N'2016 © 通用后台管理系统', 0)
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'系统通知', N'用户注册', N'0', 0)
@@ -154,9 +154,9 @@ INSERT INTO NavigationRole (NavigationID, RoleID) SELECT n.Id, r.Id FROM Navigat
 INSERT INTO NavigationRole (NavigationID, RoleID) SELECT n.Id, r.Id FROM Navigations n left join Roles r on 1=1 where RoleName = 'Default' and ParentId in (select Id from Navigations where Name in (N'个人中心'))
 
 -- Client Data
-Declare @AppId nvarchar(1)
-set @AppId = N'2'
-declare @AppName nvarchar(8)
+Declare @AppId nvarchar(50)
+set @AppId = N'Demo'
+declare @AppName nvarchar(50)
 set @AppName = N'测试平台'
 
 Delete From [dbo].[Dicts] Where Category = N'应用程序' and Code = @AppId
@@ -165,8 +165,8 @@ Delete From [Dicts] Where Category = '应用首页' and Name = @AppId
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'应用首页', @AppId, 'http://localhost:49185/', 0)
 
 Delete From [dbo].[Dicts] Where Category = @AppName
-Insert Dicts (Category, Name, Code, Define) values (@AppName, N'网站标题', N'托盘组垛程序', 1);
-Insert Dicts (Category, Name, Code, Define) values (@AppName, N'网站页脚', N'通用后台管理测试平台', 1);
+Insert Dicts (Category, Name, Code, Define) values (@AppName, N'网站标题', N'前台演示程序', 1);
+Insert Dicts (Category, Name, Code, Define) values (@AppName, N'网站页脚', N'前台演示程序后台权限管理框架', 1);
 Insert Dicts (Category, Name, Code, Define) values (@AppName, N'个人中心地址', N'http://localhost:50852/Admin/Profiles', 1);
 Insert Dicts (Category, Name, Code, Define) values (@AppName, N'系统设置地址', N'http://localhost:50852/Admin/Index', 1);
 Insert Dicts (Category, Name, Code, Define) values (@AppName, N'系统通知地址', N'http://localhost:50852/Admin/Notifications', 1);

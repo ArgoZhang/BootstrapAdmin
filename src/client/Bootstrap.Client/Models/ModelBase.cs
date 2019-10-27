@@ -1,5 +1,5 @@
 ﻿using Bootstrap.Client.DataAccess;
-using Longbow.Configuration;
+using Bootstrap.Security.Mvc;
 
 namespace Bootstrap.Client.Models
 {
@@ -13,7 +13,7 @@ namespace Bootstrap.Client.Models
         /// </summary>
         public ModelBase()
         {
-            AppId = ConfigurationManager.GetValue("AppId", "2");
+            AppId = BootstrapAppContext.AppId;
             Title = DictHelper.RetrieveWebTitle(AppId);
             Footer = DictHelper.RetrieveWebFooter(AppId);
             Theme = DictHelper.RetrieveActiveTheme();

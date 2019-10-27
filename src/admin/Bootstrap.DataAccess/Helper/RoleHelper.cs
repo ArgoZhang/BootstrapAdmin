@@ -148,7 +148,8 @@ namespace Bootstrap.DataAccess
         /// 通过指定 Url 地址获得授权角色集合
         /// </summary>
         /// <param name="url">请求 Url 地址</param>
+        /// <param name="appId">应用程序Id</param>
         /// <returns>角色名称集合</returns>
-        public static IEnumerable<string> RetrievesByUrl(string url) => CacheManager.GetOrAdd(string.Format("{0}-{1}", DbHelper.RetrieveRolesByUrlDataKey, url), key => DbContextManager.Create<Role>().RetrievesByUrl(url), DbHelper.RetrieveRolesByUrlDataKey);
+        public static IEnumerable<string> RetrievesByUrl(string url, string appId) => CacheManager.GetOrAdd(string.Format("{0}-{1}-{2}", DbHelper.RetrieveRolesByUrlDataKey, url, appId), key => DbContextManager.Create<Role>().RetrievesByUrl(url, appId), DbHelper.RetrieveRolesByUrlDataKey);
     }
 }
