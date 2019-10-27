@@ -8,52 +8,53 @@ using System.Data.Common;
 namespace Bootstrap.DataAccess
 {
     /// <summary>
-    /// 
+    /// 异常实体类
     /// </summary>
+    [PrimaryKey("Id", AutoIncrement = true)]
     public class Exceptions
     {
         /// <summary>
-        /// 
+        /// 获得/设置 主键
         /// </summary>
         public string Id { get; set; }
 
         /// <summary>
-        /// 
+        /// 获得/设置 主键
         /// </summary>
         public string AppDomainName { get; set; }
 
         /// <summary>
-        /// 
+        /// 获得/设置 用户请求页面地址
         /// </summary>
         public string ErrorPage { get; set; }
 
         /// <summary>
-        /// 
+        /// 获得/设置 用户 ID
         /// </summary>
         public string UserId { get; set; }
 
         /// <summary>
-        /// 
+        /// 获得/设置 用户 IP
         /// </summary>
         public string UserIp { get; set; }
 
         /// <summary>
-        /// 
+        /// 获得/设置 异常类型
         /// </summary>
         public string ExceptionType { get; set; }
 
         /// <summary>
-        /// 
+        /// 获得/设置 异常错误描述信息
         /// </summary>
         public string Message { get; set; }
 
         /// <summary>
-        /// 
+        /// 获得/设置 异常堆栈信息
         /// </summary>
         public string StackTrace { get; set; }
 
         /// <summary>
-        /// 
+        /// 获得/设置 日志时间戳
         /// </summary>
         public DateTime LogTime { get; set; }
 
@@ -64,7 +65,7 @@ namespace Bootstrap.DataAccess
         public string Period { get; set; }
 
         /// <summary>
-        /// 
+        /// 获得/设置 分类信息
         /// </summary>
         public string Category { get; set; }
 
