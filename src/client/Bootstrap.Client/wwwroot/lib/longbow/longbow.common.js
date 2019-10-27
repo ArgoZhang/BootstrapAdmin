@@ -206,6 +206,10 @@
                     success(result);
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    if (errorThrown === "Unauthorized") {
+                        window.location.href = $.formatUrl('Account/Logout');
+                        return;
+                    }
                     if (window.toastr) {
                         if (errorThrown === '') errorThrown = url;
                         toastr.error(XMLHttpRequest.status === 500 ? '后台应用程序错误' : errorThrown, '程序错误');
