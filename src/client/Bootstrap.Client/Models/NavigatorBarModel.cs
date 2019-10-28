@@ -14,7 +14,7 @@ namespace Bootstrap.Client.Models
         /// 
         /// </summary>
         /// <param name="controller"></param>
-        public NavigatorBarModel(ControllerBase controller) : base(controller.User.Identity)
+        public NavigatorBarModel(ControllerBase controller) : base(controller)
         {
             Navigations = MenuHelper.RetrieveAppMenus(UserName, $"~/{controller.ControllerContext.ActionDescriptor.ControllerName}/{controller.ControllerContext.ActionDescriptor.ActionName}");
             ImageLibUrl = DictHelper.RetrieveImagesLibUrl();

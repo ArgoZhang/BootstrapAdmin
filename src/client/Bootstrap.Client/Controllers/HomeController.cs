@@ -1,11 +1,11 @@
 ﻿using Bootstrap.Client.Models;
-using Longbow.Configuration;
 using Longbow.Data;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
 
 namespace Bootstrap.Client.Controllers
@@ -72,12 +72,13 @@ namespace Bootstrap.Client.Controllers
         /// <summary>
         /// 错误视图
         /// </summary>
+        /// <param name="config"></param>
         /// <param name="id"></param>
         /// <returns></returns>
         [AllowAnonymous]
-        public IActionResult Error(int id)
+        public IActionResult Error([FromServices]IConfiguration config, int id)
         {
-            var options = ConfigurationManager.Get<BootstrapAdminAuthenticationOptions>();
+            var options = config.GetBootstrapAdminAuthenticationOptions();
             var uriBuilder = new UriBuilder(options.AuthHost) { Query = QueryString.Create(CookieAuthenticationDefaults.ReturnUrlParameter, $"{Request.Scheme}://{Request.Host}{Request.PathBase}").ToString() };
             uriBuilder.Path = uriBuilder.Path == "/" ? Request.Path.Value : uriBuilder.Path + Request.Path.Value;
             return Redirect(uriBuilder.ToString());

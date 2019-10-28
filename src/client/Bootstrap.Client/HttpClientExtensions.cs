@@ -1,6 +1,6 @@
 ﻿using Bootstrap.Client.DataAccess;
-using Longbow.Configuration;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
@@ -29,7 +29,8 @@ namespace Microsoft.AspNetCore.Builder
                 var cookieValues = context.HttpContext.Request.Cookies.Select(cookie => $"{cookie.Key}={cookie.Value}");
                 client.DefaultRequestHeaders.Add("Cookie", cookieValues);
 
-                var authHost = ConfigurationManager.Get<BootstrapAdminAuthenticationOptions>().AuthHost.TrimEnd(new char[] { '/' });
+                var config = provider.GetRequiredService<IConfiguration>();
+                var authHost = config.GetBootstrapAdminAuthenticationOptions().AuthHost.TrimEnd(new char[] { '/' });
                 var url = $"{authHost}/api/Traces";
                 client.BaseAddress = new Uri(url);
             });

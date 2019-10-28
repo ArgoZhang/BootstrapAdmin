@@ -38,7 +38,7 @@ namespace Bootstrap.Admin.Api
             Assert.Contains("TotalDuration", cates);
 
             // 测试数据库不能加载时健康检查
-            var config = Longbow.Configuration.ConfigurationManager.AppSettings;
+            var config = HealthCheckStartup.Configuration;
             config["DB:0:Enabled"] = "false";
             config["DB:4:Enabled"] = "true";
             config["DB:4:Widget"] = "Bootstrap.DataAccess.MongoDB1";
@@ -77,13 +77,12 @@ namespace Bootstrap.Admin.Api
         /// <summary>
         /// 获得 系统配置项 Iconfiguration 实例
         /// </summary>
-        public IConfiguration Configuration { get; }
+        public static IConfiguration Configuration { get; private set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCacheManager();
-            services.AddConfigurationManager();
             services.AddDbAdapter();
             services.AddHealthChecks().AddCheck<DBHealthCheck>("db");
             services.AddControllers();

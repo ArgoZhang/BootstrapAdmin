@@ -1,7 +1,9 @@
 ﻿using Bootstrap.Client.DataAccess;
-using Longbow.Configuration;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Security.Principal;
 
@@ -15,10 +17,10 @@ namespace Bootstrap.Client.Models
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="identity"></param>
-        public HeaderBarModel(IIdentity identity)
+        /// <param name="controller"></param>
+        public HeaderBarModel(ControllerBase controller)
         {
-            var user = UserHelper.RetrieveUserByUserName(identity.Name);
+            var user = UserHelper.RetrieveUserByUserName(controller.User.Identity.Name);
             DisplayName = user.DisplayName;
             UserName = user.UserName;
             SettingsUrl = DictHelper.RetrieveSettingsUrl(AppId);
@@ -26,7 +28,8 @@ namespace Bootstrap.Client.Models
             NotisUrl = DictHelper.RetrieveNotisUrl(AppId);
 
             // set LogoutUrl
-            var authHost = ConfigurationManager.Get<BootstrapAdminAuthenticationOptions>().AuthHost;
+            var config = controller.HttpContext.RequestServices.GetRequiredService<IConfiguration>();
+            var authHost = config.GetBootstrapAdminAuthenticationOptions().AuthHost;
             var uriBuilder = new UriBuilder(authHost);
             uriBuilder.Path = uriBuilder.Path == "/" ? CookieAuthenticationDefaults.LogoutPath.Value : $"{uriBuilder.Path.TrimEnd('/')}{CookieAuthenticationDefaults.LogoutPath.Value}";
             uriBuilder.Query = $"AppId={AppId}";
@@ -34,7 +37,7 @@ namespace Bootstrap.Client.Models
 
             // set Icon
             var icon = $"/{DictHelper.RetrieveIconFolderPath().Trim('~', '/')}/{user.Icon}";
-            Icon = user.Icon.Contains("://", StringComparison.OrdinalIgnoreCase) ? user.Icon : (string.IsNullOrEmpty(ConfigurationManager.GetValue("SimulateUserName", string.Empty)) ? $"{authHost.TrimEnd('/')}{icon}" : "/images/admin.jpg");
+            Icon = user.Icon.Contains("://", StringComparison.OrdinalIgnoreCase) ? user.Icon : (string.IsNullOrEmpty(config.GetValue("SimulateUserName", string.Empty)) ? $"{authHost.TrimEnd('/')}{icon}" : "/images/admin.jpg");
             if (!string.IsNullOrEmpty(user.Css)) Theme = user.Css;
         }
 

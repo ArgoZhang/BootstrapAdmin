@@ -53,7 +53,6 @@ namespace Bootstrap.Admin
             });
             services.AddLogging(logging => logging.AddFileLogger().AddDBLogger(ExceptionsHelper.Log));
             services.AddCors();
-            services.AddConfigurationManager();
             services.AddCacheManager();
             services.AddDbAdapter();
             services.AddIPLocator(DictHelper.ConfigIPLocator);

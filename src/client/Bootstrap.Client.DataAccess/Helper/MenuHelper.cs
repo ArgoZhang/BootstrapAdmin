@@ -1,7 +1,7 @@
 ﻿using Bootstrap.Security;
 using Bootstrap.Security.DataAccess;
+using Bootstrap.Security.Mvc;
 using Longbow.Cache;
-using Longbow.Configuration;
 using Longbow.Data;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +26,7 @@ namespace Bootstrap.Client.DataAccess
         /// <returns></returns>
         public static IEnumerable<BootstrapMenu> RetrieveAppMenus(string userName, string activeUrl)
         {
-            var appId = ConfigurationManager.GetValue("AppId", "");
+            var appId = BootstrapAppContext.AppId;
             var menus = RetrieveAllMenus(userName).Where(m => m.Category == "1" && m.IsResource == 0 && m.Application == appId);
             return DbHelper.CascadeMenus(menus, activeUrl);
         }

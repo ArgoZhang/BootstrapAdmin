@@ -1,5 +1,5 @@
 ﻿using Bootstrap.Security;
-using Longbow.Configuration;
+using Bootstrap.Security.Mvc;
 using Microsoft.Extensions.Primitives;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
@@ -31,7 +31,7 @@ namespace Bootstrap.DataAccess.MongoDB
                         if (!_register)
                         {
                             _register = true;
-                            ChangeToken.OnChange(() => ConfigurationManager.AppSettings.GetReloadToken(), () => _db = null);
+                            ChangeToken.OnChange(() => BootstrapAppContext.Configuration.GetReloadToken(), () => _db = null);
                             InitClassMap();
                         }
                         if (_db == null)

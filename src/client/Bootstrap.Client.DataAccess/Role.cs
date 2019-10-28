@@ -1,5 +1,4 @@
 ﻿using Bootstrap.Security.DataAccess;
-using Longbow.Configuration;
 using System.Collections.Generic;
 
 namespace Bootstrap.Client.DataAccess
@@ -24,6 +23,6 @@ namespace Bootstrap.Client.DataAccess
         /// <param name="url"></param>
         /// <param name="appId"></param>
         /// <returns></returns>
-        public virtual IEnumerable<string> RetrievesByUrl(string url, string appId) => DbHelper.RetrieveRolesByUrl(url, ConfigurationManager.GetValue("AppId", appId));
+        public virtual IEnumerable<string> RetrievesByUrl(string url, string appId) => DbHelper.RetrieveRolesByUrl(url, appId);
     }
 }

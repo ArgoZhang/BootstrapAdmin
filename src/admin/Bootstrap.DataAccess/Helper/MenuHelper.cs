@@ -1,7 +1,7 @@
 ﻿using Bootstrap.Security;
 using Bootstrap.Security.DataAccess;
+using Bootstrap.Security.Mvc;
 using Longbow.Cache;
-using Longbow.Configuration;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,7 +45,7 @@ namespace Bootstrap.DataAccess
                     if (menu != null && menu.Category == "0") return true;
 
                     // 演示系统
-                    var appMenus = ConfigurationManager.GetSection("AppMenus").Get<ICollection<string>>();
+                    var appMenus = BootstrapAppContext.Configuration.GetSection("AppMenus").Get<ICollection<string>>();
                     if (appMenus.Any(m => m.Equals(menu.Name, System.StringComparison.OrdinalIgnoreCase))) return true;
                 }
             }
@@ -70,7 +70,7 @@ namespace Bootstrap.DataAccess
                 if (!value.Any()) return true;
 
                 // 演示系统
-                var appMenus = ConfigurationManager.GetSection("AppMenus").Get<ICollection<string>>();
+                var appMenus = BootstrapAppContext.Configuration.GetSection("AppMenus").Get<ICollection<string>>();
                 var appIds = RetrieveAllMenus("Admin").Where(m => appMenus.Any(app => m.Name.Equals(app, System.StringComparison.OrdinalIgnoreCase))).Select(m => m.Id);
                 value = value.Where(m => !appIds.Any(app => app.Equals(m, System.StringComparison.OrdinalIgnoreCase)));
                 if (!value.Any()) return true;
