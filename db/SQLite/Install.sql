@@ -63,12 +63,12 @@ CREATE TABLE Navigations(
 	ParentId 	INT DEFAULT (0),
 	Name 		VARCHAR (50) NOT NULL,
 	[Order] 	INT NOT NULL DEFAULT (0),
-	Icon 		VARCHAR (50) DEFAULT (none),
+	Icon 		VARCHAR (50) DEFAULT [fa fa-fa],
 	Url 		VARCHAR (4000) NULL,
 	Category 	VARCHAR (50) DEFAULT 0,
-	Target 		VARCHAR (10) DEFAULT (_self),
+	Target 		VARCHAR (10) DEFAULT [_self],
 	IsResource 	INT DEFAULT (0),
-	Application VARCHAR (200) DEFAULT (BA) COLLATE NOCASE
+	Application VARCHAR (200) DEFAULT [BA] COLLATE NOCASE
 );
 
 CREATE TABLE NavigationRole(

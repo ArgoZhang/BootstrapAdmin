@@ -10,6 +10,6 @@
         "RoleName": "Default",
         "Description": "默认用户，可访问前台页面",
         "Menus": [],
-        "Apps": []
+        "Apps": ["BA", "Demo"]
     }
 ];

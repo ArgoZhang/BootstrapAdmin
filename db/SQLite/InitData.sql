@@ -175,9 +175,9 @@ INSERT into [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category
 INSERT into [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], [Application]) VALUES (0, '返回码云', 20, 'fa fa-fa', 'https://gitee.com/LongbowEnterprise/BootstrapAdmin', '1', 'Demo');
 
 -- 菜单授权
-INSERT INTO NavigationRole (NavigationId, RoleId) SELECT n.ID, r.ID FROM Navigations n left join Roles r on 1=1 Where r.RoleName = 'Administrators' and [Application] = 'Demo';
 INSERT INTO NavigationRole (NavigationId, RoleId) SELECT n.ID, r.ID FROM Navigations n left join Roles r on 1=1 Where r.RoleName = 'Default' and [Application] = 'Demo';
 
 -- 角色对应用授权
-DELETE From RoleApp where AppId = 'Demo';
+DELETE From RoleApp where AppId in ('Demo', 'BA');
 INSERT INTO RoleApp (AppId, RoleId) SELECT 'Demo', ID From Roles Where RoleName = 'Default';
+INSERT INTO RoleApp (AppId, RoleId) SELECT 'BA', ID From Roles Where RoleName = 'Default';

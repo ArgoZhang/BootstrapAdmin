@@ -182,9 +182,9 @@ INSERT [dbo].[Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Categor
 INSERT into [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], [Application]) VALUES (0, N'返回码云', 20, 'fa fa-fa', 'https://gitee.com/LongbowEnterprise/BootstrapAdmin', '1', @AppId)
 
 -- 菜单授权
-INSERT INTO NavigationRole (NavigationId, RoleId) SELECT n.ID, r.ID FROM Navigations n left join Roles r on 1=1 Where r.RoleName = 'Administrators' and [Application] = @AppId;
 INSERT INTO NavigationRole SELECT n.ID, r.ID FROM Navigations n left join Roles r on 1=1 Where r.RoleName = 'Default' and [Application] = @AppId
 
 -- 角色对应用授权
 DELETE From RoleApp where AppId = @AppId;
 INSERT INTO RoleApp (AppId, RoleId) SELECT @AppId, ID From Roles Where RoleName = 'Default'
+INSERT INTO RoleApp (AppId, RoleId) SELECT 'BA', ID From Roles Where RoleName = 'Default'
