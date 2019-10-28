@@ -18,7 +18,7 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public IActionResult Index()
         {
-            var model = new HeaderBarModel(User.Identity);
+            var model = new HeaderBarModel(User.Identity.Name);
             if (string.IsNullOrEmpty(model.UserName)) return Redirect(Request.PathBase + CookieAuthenticationDefaults.LogoutPath);
 
             var homeUrl = DictHelper.RetrieveHomeUrl(model.AppId);

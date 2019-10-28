@@ -293,9 +293,9 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 通过登录名获取登录用户方法
         /// </summary>
-        /// <param name="identity"></param>
+        /// <param name="userName"></param>
         /// <returns></returns>
-        public static BootstrapUser RetrieveUserByUserName(IIdentity identity) => CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveUsersByNameDataKey, identity.Name), k => DbContextManager.Create<User>().RetrieveUserByUserName(identity.Name), RetrieveUsersByNameDataKey);
+        public static BootstrapUser RetrieveUserByUserName(string userName) => CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveUsersByNameDataKey, userName), k => DbContextManager.Create<User>().RetrieveUserByUserName(userName), RetrieveUsersByNameDataKey);
 
         /// <summary>
         /// 通过登录账号获得用户信息

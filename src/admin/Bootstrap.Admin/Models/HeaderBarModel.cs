@@ -13,10 +13,10 @@ namespace Bootstrap.Admin.Models
         /// <summary>
         /// 默认构造函数
         /// </summary>
-        /// <param name="identity"></param>
-        public HeaderBarModel(IIdentity identity)
+        /// <param name="userName"></param>
+        public HeaderBarModel(string userName)
         {
-            var user = UserHelper.RetrieveUserByUserName(identity);
+            var user = UserHelper.RetrieveUserByUserName(userName);
             if (user != null)
             {
                 Icon = user.Icon.Contains("://", StringComparison.OrdinalIgnoreCase) ? user.Icon : string.Format("{0}{1}", DictHelper.RetrieveIconFolderPath(), user.Icon);

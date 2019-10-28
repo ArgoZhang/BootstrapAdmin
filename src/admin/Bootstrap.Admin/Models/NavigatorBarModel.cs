@@ -16,7 +16,7 @@ namespace Bootstrap.Admin.Models
         /// 构造函数
         /// </summary>
         /// <param name="controller"></param>
-        public NavigatorBarModel(ControllerBase controller) : base(controller.User.Identity)
+        public NavigatorBarModel(ControllerBase controller) : base(controller.User.Identity.Name)
         {
             Navigations = MenuHelper.RetrieveSystemMenus(UserName, $"~{controller.HttpContext.Request.Path}");
             var authApps = AppHelper.RetrievesByUserName(controller.User.Identity.Name);

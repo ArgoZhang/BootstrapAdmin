@@ -10,8 +10,8 @@ namespace Bootstrap.Admin.Models
         /// <summary>
         /// 构造函数
         /// </summary>
-        /// <param name="controller"></param>
-        public LockModel(ControllerBase controller) : base(controller.User.Identity)
+        /// <param name="userName"></param>
+        public LockModel(string userName) : base(userName)
         {
 
         }

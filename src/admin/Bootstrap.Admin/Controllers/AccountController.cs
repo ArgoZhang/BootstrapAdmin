@@ -41,7 +41,7 @@ namespace Bootstrap.Admin.Controllers
             var authenticationType = User.Identity.AuthenticationType;
             await HttpContext.SignOutAsync();
             var urlReferrer = Request.Headers["Referer"].FirstOrDefault();
-            return View(new LockModel(this)
+            return View(new LockModel(User.Identity.Name)
             {
                 AuthenticationType = authenticationType,
                 ReturnUrl = WebUtility.UrlEncode(string.IsNullOrEmpty(urlReferrer) ? CookieAuthenticationDefaults.LoginPath.Value : urlReferrer)

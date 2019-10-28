@@ -69,7 +69,7 @@ namespace Bootstrap.Admin.HealthChecks
             try
             {
                 DbContextManager.Exception = null;
-                var user = UserHelper.RetrieveUserByUserName(new GenericIdentity(userName));
+                var user = UserHelper.RetrieveUserByUserName(userName);
                 displayName = user?.DisplayName;
                 roles = string.Join(",", RoleHelper.RetrievesByUserName(userName) ?? new string[0]);
                 menusCount = MenuHelper.RetrieveMenusByUserName(userName)?.Count() ?? 0;

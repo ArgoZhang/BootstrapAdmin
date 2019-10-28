@@ -105,7 +105,7 @@ namespace Bootstrap.DataAccess.MongoDB
         public override bool Save(DataAccess.User user)
         {
             // 已经存在或者已经在新用户中了
-            if (UserHelper.RetrieveUserByUserName(new GenericIdentity(user.UserName)) != null || UserHelper.RetrieveNewUsers().Any(u => u.UserName == user.UserName)) return false;
+            if (UserHelper.RetrieveUserByUserName(user.UserName) != null || UserHelper.RetrieveNewUsers().Any(u => u.UserName == user.UserName)) return false;
 
             user.PassSalt = LgbCryptography.GenerateSalt();
             user.Password = LgbCryptography.ComputeHash(user.Password, user.PassSalt);

@@ -135,7 +135,7 @@ namespace Bootstrap.DataAccess.SqlServer
         [Fact]
         public void RetrieveUserByUserName_Ok()
         {
-            var usr = UserHelper.RetrieveUserByUserName(new GenericIdentity("Admin"));
+            var usr = UserHelper.RetrieveUserByUserName("Admin");
             Assert.Equal("Administrator", usr.DisplayName);
         }
 

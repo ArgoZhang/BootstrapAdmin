@@ -54,7 +54,7 @@ namespace Bootstrap.Admin.Controllers
         [HttpPost]
         public BootstrapUser RetrieveUserByUserName([FromBody]string userName)
         {
-            return UserHelper.RetrieveUserByUserName(new GenericIdentity(userName));
+            return UserHelper.RetrieveUserByUserName(userName);
         }
 
         /// <summary>
