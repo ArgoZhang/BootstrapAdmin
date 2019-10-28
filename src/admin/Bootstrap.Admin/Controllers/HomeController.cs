@@ -9,7 +9,7 @@ namespace Bootstrap.Admin.Controllers
     /// <summary>
     /// Home Controller
     /// </summary>
-    [Authorize]
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         /// <summary>
@@ -18,7 +18,10 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public IActionResult Index()
         {
-            var model = new HeaderBarModel(User.Identity.Name);
+            var userName = User.Identity.Name;
+            if (string.IsNullOrEmpty(userName)) return Redirect(Request.PathBase + CookieAuthenticationDefaults.LoginPath);
+
+            var model = new HeaderBarModel(userName);
             if (string.IsNullOrEmpty(model.UserName)) return Redirect(Request.PathBase + CookieAuthenticationDefaults.LogoutPath);
 
             var homeUrl = DictHelper.RetrieveHomeUrl(model.AppId);
@@ -30,7 +33,6 @@ namespace Bootstrap.Admin.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [AllowAnonymous]
         public IActionResult Error(int id)
         {
             var model = ErrorModel.CreateById(id);
