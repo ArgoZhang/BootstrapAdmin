@@ -1,4 +1,5 @@
 ﻿using Bootstrap.Security;
+using Bootstrap.Security.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
@@ -57,13 +58,13 @@ namespace Bootstrap.DataAccess.SqlServer
         [Fact]
         public void RetrieveWebTitle_Ok()
         {
-            Assert.Equal("后台管理系统", DictHelper.RetrieveWebTitle("BA"));
+            Assert.Equal("后台管理系统", DictHelper.RetrieveWebTitle(BootstrapAppContext.AppId));
         }
 
         [Fact]
         public void RetrieveWebFooter_Ok()
         {
-            Assert.Equal("2016 © 通用后台管理系统", DictHelper.RetrieveWebFooter("BA"));
+            Assert.Equal("2016 © 通用后台管理系统", DictHelper.RetrieveWebFooter(BootstrapAppContext.AppId));
         }
 
         [Fact]
@@ -87,16 +88,16 @@ namespace Bootstrap.DataAccess.SqlServer
         [Fact]
         public void RetrieveHomeUrl_Ok()
         {
-            Assert.Equal("~/Home/Index", DictHelper.RetrieveHomeUrl(string.Empty));
-            var url = DictHelper.RetrieveHomeUrl("2");
-            Assert.NotEqual("~/Home/Index", url);
+            Assert.Equal("~/Home/Index", DictHelper.RetrieveHomeUrl("BA"));
+            var url = DictHelper.RetrieveHomeUrl("Demo");
+            Assert.Equal("http://localhost:49185/", url);
 
             // INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('应用首页', 2, 'http://localhost:49185/', 0);
-            var dict = DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "应用首页" && d.Name == "2");
+            var dict = DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "应用首页" && d.Name == "Demo");
             url = dict.Code;
-            dict.Code = "";
+            dict.Code = "BA";
             Assert.True(DictHelper.Save(dict));
-            Assert.Equal("~/Home/Index", DictHelper.RetrieveHomeUrl("2"));
+            Assert.Equal("BA", DictHelper.RetrieveHomeUrl("Demo"));
 
             dict.Code = url;
             Assert.True(DictHelper.Save(dict));

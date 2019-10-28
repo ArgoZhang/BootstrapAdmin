@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using Bootstrap.Security.Mvc;
+using System.Linq;
 using Xunit;
 
 namespace Bootstrap.DataAccess.SqlServer
@@ -86,7 +87,7 @@ namespace Bootstrap.DataAccess.SqlServer
         [Fact]
         public void RetrieveRolesByUrl_Ok()
         {
-            Assert.NotEmpty(RoleHelper.RetrievesByUrl("~/Home/Index", "BA"));
+            Assert.NotEmpty(RoleHelper.RetrievesByUrl("~/Home/Index", BootstrapAppContext.AppId));
         }
 
         [Fact]

@@ -139,7 +139,7 @@ namespace Bootstrap.Admin.Controllers.SqlServer
                 { new StringContent(antiToken), "__RequestVerificationToken" }
             };
             var m = await client.PostAsync("/Account/Mobile", content);
-            Assert.True(m.IsSuccessStatusCode);
+            Assert.False(m.IsSuccessStatusCode);
             var payload = await r.Content.ReadAsStringAsync();
             Assert.Contains("登 录", payload);
         }

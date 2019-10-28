@@ -1,4 +1,5 @@
 ﻿using Bootstrap.Security;
+using Bootstrap.Security.Mvc;
 using System.Collections.Generic;
 using System.Net.Http;
 using Xunit;
@@ -40,7 +41,7 @@ namespace Bootstrap.Admin.Api.SqlServer
         [Fact]
         public async void RetrieveAppMenus_Ok()
         {
-            var ret = await Client.PostAsJsonAsync<AppMenuOption, IEnumerable<BootstrapMenu>>("RetrieveAppMenus", new AppMenuOption() { AppId = "", UserName = "Admin", Url = "~/Admin/Index" });
+            var ret = await Client.PostAsJsonAsync<AppMenuOption, IEnumerable<BootstrapMenu>>("RetrieveAppMenus", new AppMenuOption() { AppId = "Demo", UserName = "Admin", Url = "~/Admin/Index" });
             Assert.NotEmpty(ret);
         }
     }
