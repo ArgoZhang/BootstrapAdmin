@@ -1,7 +1,6 @@
 ﻿using Bootstrap.DataAccess;
 using Bootstrap.Security.Mvc;
 using System;
-using System.Security.Principal;
 
 namespace Bootstrap.Admin.Models
 {

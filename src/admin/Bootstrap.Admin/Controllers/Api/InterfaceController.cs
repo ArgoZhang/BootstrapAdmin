@@ -3,9 +3,7 @@ using Bootstrap.Security;
 using Bootstrap.Security.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
-using System.Security.Principal;
 
 namespace Bootstrap.Admin.Controllers
 {

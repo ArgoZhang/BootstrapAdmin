@@ -1,7 +1,6 @@
 ﻿using Longbow.Web.Mvc;
 using System;
 using System.Linq;
-using System.Security.Principal;
 using Xunit;
 
 namespace Bootstrap.DataAccess.SqlServer

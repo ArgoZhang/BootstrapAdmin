@@ -1,6 +1,5 @@
 ﻿using Bootstrap.Client.Models;
 using Longbow.Data;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

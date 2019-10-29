@@ -1,11 +1,9 @@
 ﻿using Bootstrap.Client.DataAccess;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Security.Principal;
 
 namespace Bootstrap.Client.Models
 {

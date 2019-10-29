@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace Bootstrap.Admin.Models
+﻿namespace Bootstrap.Admin.Models
 {
     /// <summary>
     /// 系统锁屏数据模型

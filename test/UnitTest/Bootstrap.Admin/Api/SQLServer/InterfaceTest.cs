@@ -1,5 +1,4 @@
 ﻿using Bootstrap.Security;
-using Bootstrap.Security.Mvc;
 using System.Collections.Generic;
 using System.Net.Http;
 using Xunit;

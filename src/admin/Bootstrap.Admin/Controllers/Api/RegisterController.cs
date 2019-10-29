@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using System.Linq;
-using System.Security.Principal;
 using System.Threading.Tasks;
 
 namespace Bootstrap.Admin.Controllers.Api
