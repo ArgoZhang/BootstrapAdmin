@@ -26,6 +26,11 @@ namespace Bootstrap.Admin.Models
         public bool External { get; }
 
         /// <summary>
+        /// 获得 当前用户默认应用程序名称
+        /// </summary>
+        public string AppName { get; }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="host"></param>
@@ -46,6 +51,9 @@ namespace Bootstrap.Admin.Models
             }
 
             if (controller.User.Identity.AuthenticationType != Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.AuthenticationScheme) External = true;
+
+            // 设置 当前用户默认应用名称
+            AppName = Applications.FirstOrDefault(app => app.Key == AppId).Value;
         }
     }
 }

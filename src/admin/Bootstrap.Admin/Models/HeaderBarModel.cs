@@ -36,7 +36,6 @@ namespace Bootstrap.Admin.Models
                 // 后台系统网站图标跟随个人中心设置的默认应用站点的展示
                 WebSiteIcon = DictHelper.RetrieveWebIcon(AppId);
                 WebSiteLogo = DictHelper.RetrieveWebLogo(AppId);
-
             }
         }
 
