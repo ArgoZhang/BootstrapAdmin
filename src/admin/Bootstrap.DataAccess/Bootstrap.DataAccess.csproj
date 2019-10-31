@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Bootstrap.Security.DataAccess" Version="3.0.1-beta3" />
-    <PackageReference Include="Bootstrap.Security.Mvc" Version="3.0.2-beta5" />
+    <PackageReference Include="Bootstrap.Security.Mvc" Version="3.0.2-beta6" />
     <PackageReference Include="Longbow" Version="3.0.0" />
     <PackageReference Include="Longbow.Cache" Version="3.0.1-beta1" />
     <PackageReference Include="Longbow.Data" Version="3.0.1-beta1" />
