@@ -53,26 +53,23 @@ namespace Bootstrap.Admin
             });
             services.AddLogging(logging => logging.AddFileLogger().AddDBLogger(ExceptionsHelper.Log));
             services.AddCors();
+            services.AddResponseCompression();
+
             services.AddCacheManager();
             services.AddDbAdapter();
             services.AddIPLocator(DictHelper.ConfigIPLocator);
             services.AddOnlineUsers();
             services.AddSignalR().AddJsonProtocol(op => op.PayloadSerializerOptions.AddDefaultConverters());
             services.AddSignalRExceptionFilterHandler<SignalRHub>(async (client, ex) => await client.SendMessageBody(ex).ConfigureAwait(false));
-            services.AddResponseCompression();
             services.AddBootstrapAdminAuthentication(Configuration).AddGitee(OAuthHelper.Configure).AddGitHub(OAuthHelper.Configure);
             services.AddAuthorization(options => options.DefaultPolicy = new AuthorizationPolicyBuilder().RequireBootstrapAdminAuthorizate().Build());
-            services.AddSwagger();
             services.AddButtonAuthorization(MenuHelper.AuthorizateButtons);
             services.AddBootstrapAdminBackgroundTask();
             services.AddHttpClient<GiteeHttpClient>();
             services.AddAdminHealthChecks();
-            services.AddControllersWithViews(options =>
-            {
-                options.Filters.Add<BootstrapAdminAuthorizeFilter>();
-                options.Filters.Add<ExceptionFilter>();
-                options.Filters.Add<SignalRExceptionFilter<SignalRHub>>();
-            }).AddJsonOptions(op => op.JsonSerializerOptions.AddDefaultConverters());
+            services.AddSMSProvider();
+
+            services.AddSwagger();
             services.AddApiVersioning(option =>
             {
                 option.DefaultApiVersion = new ApiVersion(1, 0);
@@ -80,7 +77,12 @@ namespace Bootstrap.Admin
                 option.AssumeDefaultVersionWhenUnspecified = true;
                 option.ApiVersionReader = ApiVersionReader.Combine(new HeaderApiVersionReader("api-version"), new QueryStringApiVersionReader("api-version"));
             });
-            services.AddSMSProvider();
+            services.AddControllersWithViews(options =>
+            {
+                options.Filters.Add<BootstrapAdminAuthorizeFilter>();
+                options.Filters.Add<ExceptionFilter>();
+                options.Filters.Add<SignalRExceptionFilter<SignalRHub>>();
+            }).AddJsonOptions(op => op.JsonSerializerOptions.AddDefaultConverters());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

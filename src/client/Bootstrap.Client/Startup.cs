@@ -45,22 +45,24 @@ namespace Bootstrap.Client
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            services.AddCors();
             services.AddLogging(builder => builder.AddFileLogger());
+            services.AddCors();
+            services.AddResponseCompression();
+
             services.AddCacheManager();
             services.AddDbAdapter();
             services.AddBootstrapHttpClient();
             services.AddIPLocator(DictHelper.ConfigIPLocator);
             services.AddOnlineUsers();
-            services.AddResponseCompression();
+            services.AddAutoPublish();
             services.AddBootstrapAdminAuthentication(Configuration);
             services.AddAuthorization(options => options.DefaultPolicy = new AuthorizationPolicyBuilder().RequireBootstrapAdminAuthorizate().Build());
+
             services.AddControllersWithViews(options =>
             {
                 options.Filters.Add<BootstrapAdminAuthorizeFilter>();
                 options.Filters.Add<ExceptionFilter>();
             }).AddJsonOptions(op => op.JsonSerializerOptions.AddDefaultConverters());
-            services.AddAutoPublish();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
