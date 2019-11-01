@@ -2,9 +2,9 @@
 using Bootstrap.DataAccess;
 using Bootstrap.Security.Authentication;
 using Longbow.Web.Mvc;
+using Longbow.Web.SMS;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
 
 namespace Bootstrap.Admin.Controllers.Api
@@ -52,7 +52,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="phone"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<bool> Put([FromServices]ISMSProvider provider, [FromQuery]string phone) => string.IsNullOrEmpty(phone) ? false : await provider.SendCodeAsync(phone);
+        public async Task<SMSResult> Put([FromServices]ISMSProvider provider, [FromQuery]string phone) => string.IsNullOrEmpty(phone) ? new SMSResult() { Result = false, Msg = "手机号不可为空" } : await provider.SendCodeAsync(phone);
 
         /// <summary>
         /// 跨域握手协议

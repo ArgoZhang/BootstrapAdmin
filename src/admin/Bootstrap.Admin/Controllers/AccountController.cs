@@ -3,6 +3,7 @@ using Bootstrap.DataAccess;
 using Bootstrap.Security.Mvc;
 using Longbow.GiteeAuth;
 using Longbow.GitHubAuth;
+using Longbow.Web.SMS;
 using Longbow.WeChatAuth;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -11,7 +12,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -109,12 +109,12 @@ namespace Bootstrap.Admin.Controllers
                         Password = code,
                         Icon = "default.jpg",
                         Description = "手机用户",
-                        App = provider.Option.App
+                        App = provider.Options.App
                     };
                     UserHelper.Save(user);
 
                     // 根据配置文件设置默认角色
-                    var roles = RoleHelper.Retrieves().Where(r => provider.Option.Roles.Any(rl => rl.Equals(r.RoleName, StringComparison.OrdinalIgnoreCase))).Select(r => r.Id);
+                    var roles = RoleHelper.Retrieves().Where(r => provider.Options.Roles.Any(rl => rl.Equals(r.RoleName, StringComparison.OrdinalIgnoreCase))).Select(r => r.Id);
                     RoleHelper.SaveByUserId(user.Id, roles);
                 }
             }

@@ -1,5 +1,6 @@
 ﻿using Bootstrap.DataAccess;
 using Longbow.Web.Mvc;
+using Longbow.Web.SMS;
 using System.Net.Http;
 using Xunit;
 
@@ -36,12 +37,14 @@ namespace Bootstrap.Admin.Api.SqlServer
         public async void Put_Ok()
         {
             var resq = await Client.PutAsync("?phone=", new StringContent(""));
-            var _token = await resq.Content.ReadAsStringAsync();
-            Assert.Equal("false", _token);
+            var payload = await resq.Content.ReadAsStringAsync();
+            var resp = System.Text.Json.JsonSerializer.Deserialize<SMSResult>(payload, new System.Text.Json.JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+            Assert.False(resp.Result);
 
-            resq = await Client.PutAsync("?phone=18910001000", new StringContent(""));
-            _token = await resq.Content.ReadAsStringAsync();
-            Assert.Equal("true", _token);
+            resq = await Client.PutAsync("?phone=18910281024", new StringContent(""));
+            payload = await resq.Content.ReadAsStringAsync();
+            resp = System.Text.Json.JsonSerializer.Deserialize<SMSResult>(payload, new System.Text.Json.JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+            Assert.True(resp.Result);
         }
 
         [Fact]

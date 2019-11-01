@@ -90,7 +90,7 @@
         return false;
     });
 
-    $('button[type="submit"]').on('click', function (e) {
+    var $loginButton = $('button[type="submit"]').on('click', function (e) {
         $.captchaCheck($('#login .slidercaptcha'), function () {
             $('form').submit();
         });
@@ -165,6 +165,7 @@
                 $loginMobile.removeClass('d-none');
 
                 $this.attr('data-value', 'sms').text('用户名密码登陆');
+                $loginButton.attr('data-original-title', '请输入手机号码并点击发送验证码');
             }
             else {
                 // sms model
@@ -174,6 +175,7 @@
                 $loginMobile.addClass('d-none');
 
                 $this.attr('data-value', 'username').text('短信验证登陆');
+                $loginButton.attr('data-original-title', '不填写密码默认使用 Gitee 认证');
             }
         });
     }
@@ -195,16 +197,22 @@
             url: apiUrl,
             method: 'PUT',
             callback: function (result) {
-                $this.attr('data-original-title', result ? "发送成功" : "短信登录体验活动结束").tooltip('show');
+                $this.attr('data-original-title', result.Result ? "发送成功" : "短信登录体验活动结束").tooltip('show');
                 var handler = setTimeout(function () {
                     clearTimeout(handler);
                     $this.tooltip('hide').attr('data-original-title', "点击发送验证码");
-                }, 1000);
+                }, 2000);
 
-                if (result) {
+                if (result.Result) {
                     // send success
                     $this.text('已发送').attr('disabled', true);
                     $('#code').removeAttr('disabled');
+                    if (result.Data === null) $loginButton.attr('data-original-title', '请输入验证码');
+                    else {
+                        $('#code').val(result.Data);
+                        $loginButton.attr('data-original-title', '点击登录系统');
+                    }
+
                     timeHanlder = setTimeout(function () {
                         clearTimeout(timeHanlder);
                         var count = 299;
