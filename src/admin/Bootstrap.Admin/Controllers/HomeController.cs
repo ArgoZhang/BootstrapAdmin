@@ -9,7 +9,7 @@ namespace Bootstrap.Admin.Controllers
     /// <summary>
     /// Home Controller
     /// </summary>
-    [AllowAnonymous]
+    [Authorize]
     public class HomeController : Controller
     {
         /// <summary>
@@ -28,6 +28,7 @@ namespace Bootstrap.Admin.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [AllowAnonymous]
         public IActionResult Error(int id)
         {
             var model = ErrorModel.CreateById(id);
