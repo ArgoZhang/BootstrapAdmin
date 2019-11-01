@@ -31,6 +31,7 @@ namespace Bootstrap.Admin.Query
         public QueryData<LoginUser> RetrieveData()
         {
             if (string.IsNullOrEmpty(Order)) Order = "desc";
+            if (string.IsNullOrEmpty(Sort)) Sort = "LoginTime";
             var data = LoginHelper.RetrievePages(this, StartTime, EndTime, LoginIP);
             return new QueryData<LoginUser>
             {
