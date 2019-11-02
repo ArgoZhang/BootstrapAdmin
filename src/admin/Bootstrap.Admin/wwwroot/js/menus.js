@@ -69,7 +69,9 @@ $(function () {
             callback: function (result) {
                 if (!result.success) return;
                 if ((result.oper === "save") || result.oper === "del") {
-                    refreshSidebar();
+                    if (result.data.filter(function (element) {
+                        return element.Category === "0";
+                    }).length > 0) refreshSidebar();
                     $nestMenu.nestMenu(initNestMenu);
                 }
             }
