@@ -297,10 +297,6 @@ body, .form-control, .dropdown-menu, .btn:not(.btn-lg):not(.btn-xs), .input-grou
         transform: rotate(-90deg);
     }
 
-    .sidebar .nav-item.parent .nav-link .fa-angle-left {
-        margin-top: 4px;
-    }
-
     .sidebar .nav-sidebar > .nav-item > .nav-link:hover,
     .sidebar .nav-sidebar > .nav-item > .nav-link[aria-expanded="true"],
     .sidebar .show .nav-item .nav-link:hover:before,
