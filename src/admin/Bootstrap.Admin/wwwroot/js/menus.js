@@ -15,6 +15,7 @@ $(function () {
     var $parentMenuID = $('#parentId');
     var $parentMenuName = $('#parentName');
     var $category = $('#category');
+    var $sidebar = $('.sidebar');
 
     var initNestMenu = function () {
         $nestMenuInput = $nestMenu.find('div.dd3-content');
@@ -68,6 +69,15 @@ $(function () {
             callback: function (result) {
                 if (!result.success) return;
                 if ((result.oper === "save") || result.oper === "del") {
+                    if (result.oper === "del") {
+                        var $menu = $sidebar.find('#menus_' + result.Id + '');
+                        var $menuCount = $menu.parent().parent().parent();
+                        $menu.remove();
+                        if ($menuCount.find('li').length === 0) {
+                            $menuCount.find('.fa-angle-left').remove();
+
+                        }
+                    }
                     $nestMenu.nestMenu(initNestMenu);
                 }
             }

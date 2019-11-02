@@ -1,32 +1,32 @@
 ﻿@model Bootstrap.Security.BootstrapMenu
-@if(Model.Menus.Any()) 
+@if (Model.Menus.Any())
 {
-    <li class="nav-item parent">
-        @if(Model.Active == "active")
+    <li class="nav-item parent" id="@string.Format("menus_{0}",Model.Id)">
+        @if (Model.Active == "active")
         {
             <a href="@string.Format("#collapse_{0}", Model.Id)" role="button" data-toggle="collapse" class="nav-link active"><i class="@Model.Icon"></i><span class="flex-fill">@Model.Name</span><i class="fa fa-angle-left"></i></a>
             <div class="show" id="@string.Format("collapse_{0}", Model.Id)">
-            @if (Model.Menus.Any())
-            {
-                @await Html.PartialAsync("SubNavigation", Model.Menus)
-            }
+                @if (Model.Menus.Any())
+                {
+                    @await Html.PartialAsync("SubNavigation", Model.Menus)
+                }
             </div>
         }
-        else 
+        else
         {
             <a href="@string.Format("#collapse_{0}", Model.Id)" role="button" data-toggle="collapse" class="nav-link collapsed"><i class="@Model.Icon"></i><span class="flex-fill">@Model.Name</span><i class="fa fa-angle-left"></i></a>
             <div class="collapse" id="@string.Format("collapse_{0}", Model.Id)">
-            @if (Model.Menus.Any())
-            {
-                @await Html.PartialAsync("SubNavigation", Model.Menus)
-            }
+                @if (Model.Menus.Any())
+                {
+                    @await Html.PartialAsync("SubNavigation", Model.Menus)
+                }
             </div>
         }
     </li>
 }
-else 
+else
 {
-    <li class="nav-item">
+    <li class="nav-item" id="@string.Format("menus_{0}",Model.Id)">
         <a href="@Url.Content(Model.Url)" class="nav-link @Model.Active" target="@Model.Target"><i class="@Model.Icon"></i><span class="flex-fill">@Model.Name</span></a>
     </li>
 }
