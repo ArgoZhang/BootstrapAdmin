@@ -6,7 +6,7 @@ using System.Linq;
 namespace Bootstrap.Admin.Query
 {
     /// <summary>
-    /// 
+    /// 字典表查询类
     /// </summary>
     public class QueryDictOption : PaginationOption
     {
@@ -28,6 +28,9 @@ namespace Bootstrap.Admin.Query
         /// <returns></returns>
         public QueryData<BootstrapDict> RetrieveData()
         {
+            if (string.IsNullOrEmpty(Order)) Order = "asc";
+            if (string.IsNullOrEmpty(Sort)) Sort = "Category";
+
             var data = DictHelper.RetrieveDicts();
             if (!string.IsNullOrEmpty(Category))
             {
