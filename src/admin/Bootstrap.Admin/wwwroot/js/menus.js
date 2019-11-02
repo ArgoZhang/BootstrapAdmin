@@ -270,6 +270,8 @@ $(function () {
     $nestMenu.nestMenu(initNestMenu);
 
     function refreshSidebar() {
+        // 获取当前菜单
+        var id = $sidebar.find('.nav-link.active').parent().attr('id');
         $.bc({
             url: Menu.sidebar,
             contentType: 'text/html',
@@ -277,6 +279,8 @@ $(function () {
             callback: function (result) {
                 if (result) {
                     $sidebar.html(result);
+                    // reactive menu
+                    $sidebar.find('.nav-item[id="' + id + '"] .nav-link').addClass('active');
                 }
             }
         });
