@@ -1,5 +1,5 @@
-﻿body, a {
-    color: #777;
+body, a, .table {
+    color: #eee;
 }
 
 body, .modal-content {
@@ -12,7 +12,7 @@ body, .modal-content {
 }
 
 .sidebar-toggle-box:hover, .userinfo .dropdown-toggle:hover, .userinfo.show .dropdown-toggle, .nav [data-toggle="dropdown"]:hover {
-    color: rgba(255,255,255,0.6);
+    color: #f8f9fa;
 }
 
 .userinfo .dropdown-toggle, .nav [data-toggle="dropdown"] {
@@ -24,13 +24,13 @@ body, .modal-content {
 }
 
 .card {
-    background-color: rgba(0,0,0,0.2);
+    background-color: #343a40;
 }
 
 .form-control {
-    background-color: rgba(255,255,255,0.5);
+    /* background-color: rgba(255,255,255,0.5); */
     border: 1px solid rgba(0, 0, 0, 0.125);
-    color: #212529;
+    color: #000000e6;
 }
 
 .form-control:disabled, .form-control[readonly] {
@@ -45,10 +45,6 @@ body, .modal-content {
     border-top: 1px solid rgba(0,0,0,0.125);
 }
 
-.file-preview, .fixed-table-container, .page-link, .page-item.active .page-link {
-    border: 1px solid rgba(0, 0, 0, 0.125);
-}
-
 .file-drop-zone.clickable:focus {
     border: 1px solid #5acde2;
 }
@@ -57,20 +53,8 @@ body, .modal-content {
     border-top: 1px solid rgba(0, 0, 0, 0.125);
 }
 
-.fixed-table-container tbody td, .fixed-table-container thead th {
-    border-left: 1px solid rgba(0, 0, 0, 0.125);
-}
-
-.bootstrap-table .table > thead > tr > th, .fixed-table-container thead th, .modal-header {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
-}
-
-.page-link {
-    background-color: #293542;
-}
-
-.page-item.active .page-link {
-    background-color: #6d757d;
+.table-hover tbody tr:hover {
+    color: #fff;
 }
 
 .fixed-table-container tbody .selected td {
@@ -109,4 +93,8 @@ body, .modal-content {
 
 .close {
     text-shadow: 0 1px 0 #000;
+}
+
+.fontawesome-icon-list .fa-hover a, .sidebar-toggle-box, .userinfo .dropdown-toggle, .header .nav .dropdown > a, .sidebar .nav-link {
+    color: #eee;
 }
