@@ -167,7 +167,7 @@
                                     url: options.url, data: iDs, method: 'delete', title: options.delTitle, logData: arrselections,
                                     callback: function (result) {
                                         if (result) $(options.bootstrapTable).bootstrapTable('refresh');
-                                        handlerCallback.call(that, null, element, { oper: 'del', success: result, data: iDs });
+                                        handlerCallback.call(that, null, element, { oper: 'del', success: result, data: arrselections });
                                     }
                                 });
                             }
