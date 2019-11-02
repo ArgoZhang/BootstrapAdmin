@@ -1,17 +1,18 @@
 ﻿using Longbow.Data;
+using Longbow.Web.SMS;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.Mvc.Testing.Handlers;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using UnitTest;
 using Xunit;
-using Microsoft.Extensions.DependencyInjection;
-using System.Threading.Tasks;
 
 namespace Bootstrap.Admin
 {
@@ -138,14 +139,14 @@ namespace Bootstrap.Admin
             /// <summary>
             /// 获得 短信配置信息
             /// </summary>
-            public SMSOptions Option { get; protected set; } = new SMSOptions();
+            public SMSOptions Options { get; protected set; } = new SMSOptions();
 
             /// <summary>
             /// 下发验证码方法
             /// </summary>
             /// <param name="phoneNumber"></param>
             /// <returns></returns>
-            public Task<bool> SendCodeAsync(string phoneNumber) => Task.FromResult(true);
+            public Task<SMSResult> SendCodeAsync(string phoneNumber) => Task.FromResult(new SMSResult() { Result = true });
 
             /// <summary>
             /// 验证验证码方法
