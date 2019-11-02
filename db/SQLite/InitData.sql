@@ -83,6 +83,7 @@ INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (last_insert_rowid() - 2, '删除', 30, 'fa fa-fa', 'del', '0', 2);
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (last_insert_rowid() - 3, '分配角色', 40, 'fa fa-fa', 'assignRole', '0', 2);
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (0, '图标页面', 50, 'fa fa-fa', '~/Admin/IconView', '0', 1);
+INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (0, '侧边栏', 55, 'fa fa-fa', '~/Admin/Sidebar', '0', 1);
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, '用户管理', 60, 'fa fa-user', '~/Admin/Users', '0');
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (last_insert_rowid(), '新增', 10, 'fa fa-fa', 'add', '0', 2);
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (last_insert_rowid() - 1, '编辑', 20, 'fa fa-fa', 'edit', '0', 2);

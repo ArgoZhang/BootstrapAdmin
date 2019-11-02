@@ -93,6 +93,13 @@ namespace Bootstrap.Admin.Controllers
         public PartialViewResult IconView() => PartialView("IconView");
 
         /// <summary>
+        /// 侧边栏局部视图
+        /// </summary>
+        /// <returns></returns>
+        /// <remark>菜单维护页面增删菜单时局部刷新时调用</remark>
+        public PartialViewResult Sidebar() => PartialView("Sidebar", new NavigatorBarModel(this));
+
+        /// <summary>
         /// 网站设置
         /// </summary>
         /// <returns></returns>

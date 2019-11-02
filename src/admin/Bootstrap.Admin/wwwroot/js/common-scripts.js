@@ -252,6 +252,7 @@ $(function () {
     window.Menu = {
         url: 'api/Menus',
         iconView: 'Admin/IconView',
+        sidebar: 'Admin/Sidebar',
         title: "分配菜单"
     };
 

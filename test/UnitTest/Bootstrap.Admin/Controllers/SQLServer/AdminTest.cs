@@ -18,6 +18,7 @@ namespace Bootstrap.Admin.Controllers.SqlServer
         [InlineData("Traces", "访问日志")]
         [InlineData("Logins", "登录日志")]
         [InlineData("FAIcon", "图标集")]
+        [InlineData("Sidebar", "后台管理")]
         [InlineData("IconView", "图标分类")]
         [InlineData("Settings", "网站设置")]
         [InlineData("Notifications", "通知管理")]

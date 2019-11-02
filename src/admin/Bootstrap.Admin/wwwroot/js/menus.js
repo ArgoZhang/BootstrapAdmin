@@ -15,7 +15,7 @@ $(function () {
     var $parentMenuID = $('#parentId');
     var $parentMenuName = $('#parentName');
     var $category = $('#category');
-    var $sidebar = $('.sidebar');
+    var $sidebar = $('.sidebar .nav-sidebar');
 
     var initNestMenu = function () {
         $nestMenuInput = $nestMenu.find('div.dd3-content');
@@ -69,15 +69,7 @@ $(function () {
             callback: function (result) {
                 if (!result.success) return;
                 if ((result.oper === "save") || result.oper === "del") {
-                    if (result.oper === "del") {
-                        var $menu = $sidebar.find('#menus_' + result.Id + '');
-                        var $menuCount = $menu.parent().parent().parent();
-                        $menu.remove();
-                        if ($menuCount.find('li').length === 0) {
-                            $menuCount.find('.fa-angle-left').remove();
-
-                        }
-                    }
+                    refreshSidebar();
                     $nestMenu.nestMenu(initNestMenu);
                 }
             }
@@ -232,7 +224,7 @@ $(function () {
         $dialogNew.find('[data-toggle="LgbValidate"] [aria-describedby]').tooltip('hide');
         $dialogNew.hide();
         $dialogMenu.modal('show');
-    }
+    };
 
     $dialogMenu.on('hidden.bs.modal', function () {
         var sta = state.pop();
@@ -274,6 +266,19 @@ $(function () {
     });
 
     $nestMenu.nestMenu(initNestMenu);
+
+    function refreshSidebar() {
+        $.bc({
+            url: Menu.sidebar,
+            contentType: 'text/html',
+            dataType: 'html',
+            callback: function (result) {
+                if (result) {
+                    $sidebar.html(result);
+                }
+            }
+        });
+    };
 
     var $scroll = null;
     $.bc({

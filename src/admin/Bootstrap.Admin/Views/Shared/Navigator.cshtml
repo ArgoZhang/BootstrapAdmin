@@ -16,10 +16,7 @@
     <!-- sidebar menu start-->
     <div class="sidebar">
         <ul class="nav-sidebar nav nav-pills flex-column flex-nowrap">
-            @foreach (var menu in Model.Navigations)
-            {
-                @await Html.PartialAsync("SubNavItem", menu)
-            }
+            @await Html.PartialAsync("Sidebar", Model)
         </ul>
     </div>
     <!-- sidebar menu end-->
