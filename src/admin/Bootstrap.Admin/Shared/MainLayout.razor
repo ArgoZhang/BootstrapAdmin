@@ -1,0 +1,27 @@
+﻿@inherits LayoutComponentBase
+
+<Header></Header>
+<div class="sidebar">
+    <NavMenu />
+</div>
+<section id="main-content" class="main-content @Model.ShowCardTitle">
+    <input id="lockScreenPeriod" type="hidden" asp-condition="@Model.EnableAutoLockScreen" value="@Model.LockScreenPeriod" />
+    <div class="main-header">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="~/Admin/Index"><i class="fa fa-home"></i>首页</a></li>
+            <li class="breadcrumb-item d-none"></li>
+        </ol>
+    </div>
+    @Body
+</section>
+<Footer></Footer>
+
+@code {
+    private AdminModel Model;
+
+    protected override Task OnInitializedAsync()
+    {
+        Model = new AdminModel();
+        return Task.CompletedTask;
+    }
+}

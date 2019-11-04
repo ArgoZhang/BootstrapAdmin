@@ -1,0 +1,48 @@
+﻿@page "/"
+@namespace Bootstrap.Admin.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="~/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="~/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="~/favicon.png" />
+    <base href="~/" />
+    <title>Host</title>
+
+    <environment include="Development">
+        <link href="~/lib/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
+        <link href="~/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
+        <link href="~/lib/sweetalert/sweetalert2.css" rel="stylesheet" />
+        <link href="~/lib/toastr.js/toastr.css" rel="stylesheet" />
+        <link href="~/lib/nprogress/nprogress.css" rel="stylesheet" />
+        <link href="~/lib/sweetalert/sweetalert2.css" rel="stylesheet" />
+        <link href="~/lib/overlayscrollbars/OverlayScrollbars.css" rel="stylesheet" />
+    </environment>
+    <environment exclude="Development">
+        <link href="~/lib/twitter-bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="~/lib/sweetalert/sweetalert2.min.css" rel="stylesheet" />
+        <link href="~/lib/toastr.js/toastr.min.css" rel="stylesheet" />
+        <link href="~/lib/nprogress/nprogress.min.css" rel="stylesheet" />
+        <link href="~/lib/sweetalert/sweetalert2.min.css" rel="stylesheet" />
+        <link href="~/lib/overlayscrollbars/OverlayScrollbars.min.css" rel="stylesheet" />
+    </environment>
+    <link href="~/lib/captcha/slidercaptcha.css" rel="stylesheet" />
+    <link href="~/css/theme.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/theme-responsive.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/site-responsive.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/lte.css" rel="stylesheet" asp-append-version="true" />
+</head>
+<body class="trans-mute">
+    <app>
+        @(await Html.RenderComponentAsync<App>(RenderMode.ServerPrerendered))
+    </app>
+    <script src="_framework/blazor.server.js"></script>
+</body>
+</html>

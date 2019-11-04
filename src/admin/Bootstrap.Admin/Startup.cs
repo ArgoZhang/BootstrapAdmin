@@ -1,5 +1,4 @@
 ﻿using Bootstrap.DataAccess;
-using Longbow.Web;
 using Longbow.Web.SignalR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -83,6 +82,8 @@ namespace Bootstrap.Admin
                 options.Filters.Add<ExceptionFilter>();
                 options.Filters.Add<SignalRExceptionFilter<SignalRHub>>();
             }).AddJsonOptions(op => op.JsonSerializerOptions.AddDefaultConverters());
+            services.AddRazorPages();
+            services.AddServerSideBlazor();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -122,6 +123,8 @@ namespace Bootstrap.Admin
                 endpoints.MapHub<SignalRHub>("/NotiHub");
                 endpoints.MapHub<TaskLogHub>("/TaskLogHub");
                 endpoints.MapBootstrapHealthChecks();
+                endpoints.MapBlazorHub();
+                endpoints.MapFallbackToPage("/_Host");
                 endpoints.MapDefaultControllerRoute();
             });
         }
