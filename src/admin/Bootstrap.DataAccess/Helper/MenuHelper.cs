@@ -3,6 +3,7 @@ using Bootstrap.Security.DataAccess;
 using Bootstrap.Security.Mvc;
 using Longbow.Cache;
 using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -116,8 +117,10 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<BootstrapMenu> RetrieveAppMenus(string appId, string userName, string activeUrl)
         {
+            if (string.IsNullOrEmpty(appId) || string.IsNullOrEmpty(userName)) return new BootstrapMenu[0];
+
             var menus = RetrieveAllMenus(userName).Where(m => m.Category == "1" && m.IsResource == 0);
-            if (appId != "0") menus = menus.Where(m => m.Application == appId);
+            menus = menus.Where(m => m.Application.Equals(appId, StringComparison.OrdinalIgnoreCase));
             return DbHelper.CascadeMenus(menus, activeUrl);
         }
 
@@ -129,6 +132,8 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<BootstrapMenu> RetrieveSystemMenus(string userName, string activeUrl = null)
         {
+            if (string.IsNullOrEmpty(userName)) return new BootstrapMenu[0];
+
             var menus = RetrieveAllMenus(userName).Where(m => m.Category == "0" && m.IsResource == 0);
             return DbHelper.CascadeMenus(menus, activeUrl);
         }
