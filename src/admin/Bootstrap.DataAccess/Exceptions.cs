@@ -136,6 +136,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual Page<Exceptions> RetrievePages(PaginationOption po, DateTime? startTime, DateTime? endTime)
         {
+            if (string.IsNullOrEmpty(po.Sort)) po.Sort = "LogTime";
             var sql = new Sql("select * from Exceptions");
             if (startTime.HasValue) sql.Append("where LogTime > @0", startTime.Value);
             if (endTime.HasValue) sql.Append("where LogTime < @0", endTime.Value.AddDays(1).AddSeconds(-1));

@@ -57,8 +57,8 @@ namespace Bootstrap.Admin.Controllers.Api
             var filePath = Path.Combine(AppContext.BaseDirectory, "Error");
             var logName = $"{Path.Combine(filePath, exceptionFile.FileName)}.log";
             if (!System.IO.File.Exists(logName)) return new JsonResult("无此日志文件");
-            StringBuilder sb = new StringBuilder();
-            using (StreamReader reader = new StreamReader(logName))
+            var sb = new StringBuilder();
+            using (var reader = new StreamReader(logName))
             {
                 while (!reader.EndOfStream)
                 {
