@@ -42,7 +42,7 @@ namespace Bootstrap.DataAccess
         }
 
         #region 数据库脚本执行日志相关代码
-        private static BlockingCollection<DBLog> _messageQueue = new BlockingCollection<DBLog>(new ConcurrentQueue<DBLog>());
+        private static readonly BlockingCollection<DBLog> _messageQueue = new BlockingCollection<DBLog>(new ConcurrentQueue<DBLog>());
         /// <summary>
         /// 添加数据库日志实体类到内部集合中
         /// </summary>
@@ -84,10 +84,8 @@ namespace Bootstrap.DataAccess
                 }
                 if (logs.Any())
                 {
-                    using (var db = DbManager.Create(enableLog: false))
-                    {
-                        db.InsertBatch(logs);
-                    }
+                    using var db = DbManager.Create(enableLog: false);
+                    db.InsertBatch(logs);
                 }
                 return System.Threading.Tasks.Task.CompletedTask;
             }

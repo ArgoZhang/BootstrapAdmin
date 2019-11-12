@@ -29,7 +29,7 @@ namespace Bootstrap.DataAccess
         /// <param name="endTime"></param>
         /// <param name="opType"></param>
         /// <returns></returns>
-        public virtual new Page<Log> RetrievePages(PaginationOption po, DateTime? startTime, DateTime? endTime, string? opType)
+        public new virtual Page<Log> RetrievePages(PaginationOption po, DateTime? startTime, DateTime? endTime, string? opType)
         {
             if (string.IsNullOrEmpty(po.Order)) po.Order = "desc";
             if (string.IsNullOrEmpty(po.Sort)) po.Sort = "LogTime";
@@ -40,7 +40,8 @@ namespace Bootstrap.DataAccess
             if (!string.IsNullOrEmpty(opType)) sql.Where("CRUD = @0", opType);
             sql.OrderBy($"{po.Sort} {po.Order}");
 
-            return DbManager.Create().Page<Log>(po.PageIndex, po.Limit, sql);
+            using var db = DbManager.Create();
+            return db.Page<Log>(po.PageIndex, po.Limit, sql);
         }
 
         /// <summary>
@@ -50,7 +51,7 @@ namespace Bootstrap.DataAccess
         /// <param name="endTime"></param>
         /// <param name="opType"></param>
         /// <returns></returns>
-        public virtual new IEnumerable<Log> RetrieveAll(DateTime? startTime, DateTime? endTime, string? opType)
+        public new virtual IEnumerable<Log> RetrieveAll(DateTime? startTime, DateTime? endTime, string? opType)
         {
             var sql = new Sql("select CRUD, UserName, LogTime, Ip, Browser, OS, City, RequestUrl, RequestData from Logs");
             if (startTime.HasValue) sql.Where("LogTime >= @0", startTime.Value);
@@ -58,7 +59,8 @@ namespace Bootstrap.DataAccess
             if (!string.IsNullOrEmpty(opType)) sql.Where("CRUD = @0", opType);
             sql.OrderBy("LogTime");
 
-            return DbManager.Create().Fetch<Log>(sql);
+            using var db = DbManager.Create();
+            return db.Fetch<Log>(sql);
         }
 
         /// <summary>
@@ -70,7 +72,8 @@ namespace Bootstrap.DataAccess
             System.Threading.Tasks.Task.Run(() =>
             {
                 var dtm = DateTime.Now.AddMonths(0 - DictHelper.RetrieveLogsPeriod());
-                DbManager.Create().Execute("delete from Logs where LogTime < @0", dtm);
+                using var db = DbManager.Create();
+                db.Execute("delete from Logs where LogTime < @0", dtm);
             });
         }
 
@@ -83,7 +86,8 @@ namespace Bootstrap.DataAccess
         {
             if (p == null) throw new ArgumentNullException(nameof(p));
             DeleteLogAsync();
-            DbManager.Create().Save(p);
+            using var db = DbManager.Create();
+            db.Save(p);
             return true;
         }
     }

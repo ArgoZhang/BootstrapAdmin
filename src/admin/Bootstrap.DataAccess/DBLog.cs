@@ -50,7 +50,8 @@ namespace Bootstrap.DataAccess
             if (!string.IsNullOrEmpty(userName)) sql.Where("UserName = @0", userName);
             sql.OrderBy($"{po.Sort} {po.Order}");
 
-            return DbManager.Create().Page<DBLog>(po.PageIndex, po.Limit, sql);
+            using var db = DbManager.Create();
+            return db.Page<DBLog>(po.PageIndex, po.Limit, sql);
         }
 
         /// <summary>
@@ -75,7 +76,8 @@ namespace Bootstrap.DataAccess
         {
             if (p == null) throw new ArgumentNullException(nameof(p));
             DeleteLogAsync();
-            DbManager.Create(enableLog: false).Save(p);
+            using var db = DbManager.Create(enableLog: false);
+            db.Save(p);
             return true;
         }
     }

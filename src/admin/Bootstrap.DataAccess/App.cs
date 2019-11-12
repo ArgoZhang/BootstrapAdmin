@@ -33,7 +33,8 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual IEnumerable<App> RetrievesByRoleId(string roleId)
         {
-            var ret = DbManager.Create().Fetch<App>($"select d.Code as Id, d.Name as AppName, case ra.AppId when d.Code then 'checked' else '' end Checked from Dicts d left join RoleApp ra on d.Code = ra.AppId and ra.RoleId = @1 where d.Code > '0' and d.Category = @0", "应用程序", roleId);
+            using var db = DbManager.Create();
+            var ret = db.Fetch<App>($"select d.Code as Id, d.Name as AppName, case ra.AppId when d.Code then 'checked' else '' end Checked from Dicts d left join RoleApp ra on d.Code = ra.AppId and ra.RoleId = @1 where d.Code > '0' and d.Category = @0", "应用程序", roleId);
 
             // 判断是否为Administrators
             var role = RoleHelper.Retrieves().FirstOrDefault(r => r.Id == roleId);

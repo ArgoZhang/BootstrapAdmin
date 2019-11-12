@@ -19,26 +19,24 @@ namespace Bootstrap.DataAccess
         public virtual void CheckDB(string folder)
         {
             _folder = folder;
-            using (var db = Longbow.Data.DbManager.Create())
+            using var db = Longbow.Data.DbManager.Create();
+            db.CommandTimeout = 5000;
+            switch (db.Provider.GetType().Name)
             {
-                db.CommandTimeout = 5000;
-                switch (db.Provider.GetType().Name)
-                {
-                    case "SQLiteDatabaseProvider":
-                        if (db.ExecuteScalar<int>("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='Users'") == 0) GenerateSQLiteDB(db);
-                        break;
-                    case "SqlServerDatabaseProvider":
-                        using (var newDB = ModifyConnectionString(db))
-                        {
-                            if (newDB.ExecuteScalar<int?>("select COUNT(1) from sys.databases where name = N'BootstrapAdmin'") == 0) GenerateSqlServer();
-                        }
-                        break;
-                    case "MySqlDatabaseProvider":
-                    case "MariaDbDatabaseProvider":
-                        // UNDONE: 本地没有环境此处代码未测试
-                        if (db.ExecuteScalar<int>("select count(*) from information_schema.tables where table_name ='Users' and Table_Schema = 'BootstrapAdmin'") == 0) GenerateMySql();
-                        break;
-                }
+                case "SQLiteDatabaseProvider":
+                    if (db.ExecuteScalar<int>("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='Users'") == 0) GenerateSQLiteDB(db);
+                    break;
+                case "SqlServerDatabaseProvider":
+                    using (var newDB = ModifyConnectionString(db))
+                    {
+                        if (newDB.ExecuteScalar<int?>("select COUNT(1) from sys.databases where name = N'BootstrapAdmin'") == 0) GenerateSqlServer();
+                    }
+                    break;
+                case "MySqlDatabaseProvider":
+                case "MariaDbDatabaseProvider":
+                    // UNDONE: 本地没有环境此处代码未测试
+                    if (db.ExecuteScalar<int>("select count(*) from information_schema.tables where table_name ='Users' and Table_Schema = 'BootstrapAdmin'") == 0) GenerateMySql();
+                    break;
             }
         }
 

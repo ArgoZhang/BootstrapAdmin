@@ -67,8 +67,8 @@ namespace Bootstrap.DataAccess
         /// <param name="p"></param>
         public virtual bool Save(Trace p)
         {
-            if (p == null) throw new ArgumentNullException(nameof(p));
-            DbManager.Create().Save(p);
+            using var db = DbManager.Create();
+            db.Save(p);
             ClearTraces();
             return true;
         }
@@ -92,7 +92,8 @@ namespace Bootstrap.DataAccess
             if (!string.IsNullOrEmpty(ip)) sql.Where("IP = @0", ip);
             sql.OrderBy($"{po.Sort} {po.Order}");
 
-            return DbManager.Create().Page<Trace>(po.PageIndex, po.Limit, sql);
+            using var db = DbManager.Create();
+            return db.Page<Trace>(po.PageIndex, po.Limit, sql);
         }
 
         /// <summary>
@@ -110,12 +111,14 @@ namespace Bootstrap.DataAccess
             if (!string.IsNullOrEmpty(ip)) sql.Where("IP = @0", ip);
             sql.OrderBy("LogTime");
 
-            return DbManager.Create().Fetch<Trace>(sql);
+            using var db = DbManager.Create();
+            return db.Fetch<Trace>(sql);
         }
 
         private static void ClearTraces() => System.Threading.Tasks.Task.Run(() =>
         {
-            DbManager.Create().Execute("delete from Traces where LogTime < @0", DateTime.Now.AddMonths(0 - DictHelper.RetrieveAccessLogPeriod()));
+            using var db = DbManager.Create();
+            return db.Execute("delete from Traces where LogTime < @0", DateTime.Now.AddMonths(0 - DictHelper.RetrieveAccessLogPeriod()));
         });
     }
 }

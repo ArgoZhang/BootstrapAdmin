@@ -24,7 +24,8 @@ namespace Bootstrap.DataAccess
             if (!value.Any()) return true;
             var ids = string.Join(",", value);
             string sql = $"where ID in ({ids})";
-            DbManager.Create().Delete<BootstrapDict>(sql);
+            using var db = DbManager.Create();
+            db.Delete<BootstrapDict>(sql);
             return true;
         }
 
@@ -39,7 +40,8 @@ namespace Bootstrap.DataAccess
             if (dict.Name.Length > 50) dict.Name = dict.Name.Substring(0, 50);
             if (dict.Code.Length > 2000) dict.Code = dict.Code.Substring(0, 2000);
 
-            DbManager.Create().Save(dict);
+            using var db = DbManager.Create();
+            db.Save(dict);
             return true;
         }
 
@@ -50,7 +52,8 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual bool SaveSettings(BootstrapDict dict)
         {
-            DbManager.Create().Update<BootstrapDict>("set Code = @Code where Category = @Category and Name = @Name", dict);
+            using var db = DbManager.Create();
+            db.Update<BootstrapDict>("set Code = @Code where Category = @Category and Name = @Name", dict);
             return true;
         }
 

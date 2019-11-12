@@ -127,7 +127,11 @@ namespace Bootstrap.DataAccess
         /// 查询一周内所有异常
         /// </summary>
         /// <returns></returns>
-        public virtual IEnumerable<Exceptions> Retrieves() => DbManager.Create().Fetch<Exceptions>("select * from Exceptions where LogTime > @0 order by LogTime desc", DateTime.Now.AddMonths(0 - DictHelper.RetrieveExceptionsLogPeriod()));
+        public virtual IEnumerable<Exceptions> Retrieves()
+        {
+            using var db = DbManager.Create();
+            return db.Fetch<Exceptions>("select * from Exceptions where LogTime > @0 order by LogTime desc", DateTime.Now.AddMonths(0 - DictHelper.RetrieveExceptionsLogPeriod()));
+        }
 
         /// <summary>
         /// 
@@ -147,7 +151,8 @@ namespace Bootstrap.DataAccess
             if (startTime == null && endTime == null) sql.Append("where LogTime > @0", DateTime.Today.AddMonths(0 - DictHelper.RetrieveExceptionsLogPeriod()));
             sql.Append($"order by {po.Sort} {po.Order}");
 
-            return DbManager.Create().Page<Exceptions>(po.PageIndex, po.Limit, sql);
+            using var db = DbManager.Create();
+            return db.Page<Exceptions>(po.PageIndex, po.Limit, sql);
         }
     }
 }
