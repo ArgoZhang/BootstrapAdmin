@@ -9,7 +9,7 @@
         /// 构造函数
         /// </summary>
         /// <param name="userName"></param>
-        public LockModel(string userName) : base(userName)
+        public LockModel(string? userName) : base(userName)
         {
 
         }
@@ -17,11 +17,11 @@
         /// <summary>
         /// 获得/设置 返回路径
         /// </summary>
-        public string ReturnUrl { get; set; }
+        public string? ReturnUrl { get; set; }
 
         /// <summary>
         /// 获得/设置 认证方式 Cookie Mobile Gitee GitHub
         /// </summary>
-        public string AuthenticationType { get; set; }
+        public string? AuthenticationType { get; set; }
     }
 }

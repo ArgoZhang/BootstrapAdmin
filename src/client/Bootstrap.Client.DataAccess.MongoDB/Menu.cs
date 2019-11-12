@@ -44,8 +44,8 @@ namespace Bootstrap.Client.DataAccess.MongoDB
             var dicts = DictHelper.RetrieveDicts().Where(m => m.Category == "菜单");
             menus.ForEach(m =>
             {
-                m.CategoryName = dicts.FirstOrDefault(d => d.Code == m.Category)?.Name;
-                if (m.ParentId != "0") m.ParentName = menus.FirstOrDefault(p => p.Id == m.ParentId)?.Name;
+                m.CategoryName = dicts.FirstOrDefault(d => d.Code == m.Category)?.Name ?? "";
+                if (m.ParentId != "0") m.ParentName = menus.FirstOrDefault(p => p.Id == m.ParentId)?.Name ?? "";
             });
 
             return menus;

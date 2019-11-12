@@ -16,13 +16,13 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获得/设置 群组描述
         /// </summary>
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         /// <summary>
         /// 获取/设置 用户群组关联状态 checked 标示已经关联 '' 标示未关联
         /// </summary>
         [ResultColumn]
-        public string Checked { get; set; }
+        public string Checked { get; set; } = "";
 
         /// <summary>
         /// 查询所有群组信息
@@ -64,7 +64,7 @@ namespace Bootstrap.DataAccess
         public virtual bool Save(Group p)
         {
             DbManager.Create().Save(p);
-            return !p.Id.IsNullOrEmpty();
+            return true;
         }
 
         /// <summary>

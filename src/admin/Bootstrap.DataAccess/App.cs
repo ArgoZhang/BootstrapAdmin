@@ -14,17 +14,17 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获得/设置 应用程序主键ID
         /// </summary>
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
         /// <summary>
         /// 获得/设置 群组名称
         /// </summary>
-        public string AppName { get; set; }
+        public string AppName { get; set; } = "未设置";
 
         /// <summary>
         /// 获取/设置 用户群组关联状态 checked 标示已经关联 '' 标示未关联
         /// </summary>
-        public string Checked { get; set; }
+        public string Checked { get; set; } = "";
 
         /// <summary>
         /// 根据角色ID指派部门

@@ -13,7 +13,7 @@ namespace Bootstrap.DataAccess.MongoDB
     /// </summary>
     internal static class DbManager
     {
-        private static IMongoDatabase _db = null;
+        private static IMongoDatabase? _db = null;
         private static bool _register = false;
         private static readonly object _locker = new object();
 
@@ -38,7 +38,9 @@ namespace Bootstrap.DataAccess.MongoDB
                             InitDb();
                     }
                 }
+#pragma warning disable CS8603 // 可能的 null 引用返回。
                 return _db;
+#pragma warning restore CS8603 // 可能的 null 引用返回。
             }
         }
 

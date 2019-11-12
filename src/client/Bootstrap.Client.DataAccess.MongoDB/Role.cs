@@ -13,22 +13,22 @@ namespace Bootstrap.Client.DataAccess.MongoDB
         /// <summary>
         /// 此角色关联的所有菜单
         /// </summary>
-        public IEnumerable<string> Menus { get; set; }
+        public IEnumerable<string> Menus { get; set; } = new string[0];
 
         /// <summary>
         /// 此角色关联的所有应用程序
         /// </summary>
-        public IEnumerable<string> Apps { get; set; }
+        public IEnumerable<string> Apps { get; set; } = new string[0];
 
         /// <summary>
         /// 获得/设置 角色主键ID
         /// </summary>
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
         /// <summary>
         /// 获得/设置 角色名称
         /// </summary>
-        public string RoleName { get; set; }
+        public string RoleName { get; set; } = "";
 
         /// <summary>
         /// 通过指定登录名获取授权角色名称数据集合
@@ -38,7 +38,7 @@ namespace Bootstrap.Client.DataAccess.MongoDB
         public override IEnumerable<string> RetrievesByUserName(string userName)
         {
             var user = UserHelper.RetrieveUserByUserName(userName) as User;
-            return RoleHelper.Retrieves().Where(r => user.Roles.Any(ur => ur == r.Id)).Select(r => r.RoleName);
+            return user == null ? new string[0] : RoleHelper.Retrieves().Where(r => user.Roles.Any(ur => ur == r.Id)).Select(r => r.RoleName);
         }
 
         /// <summary>

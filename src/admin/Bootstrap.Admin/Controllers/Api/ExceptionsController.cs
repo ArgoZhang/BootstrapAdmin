@@ -62,15 +62,18 @@ namespace Bootstrap.Admin.Controllers.Api
             {
                 while (!reader.EndOfStream)
                 {
-                    var line = reader.ReadLine().Replace("<", "&lt;").Replace(">", "&gt;");
-                    if (line == "General Information ") sb.AppendFormat("<h4><b>{0}</b></h4>", line);
-                    else if (line.StartsWith("TimeStamp:")) sb.AppendFormat("<div class='logTs'>{0}</div>", line);
-                    else if (line.EndsWith("Exception Information")) sb.AppendFormat("<div class='logExcep'>{0}</div>", line);
-                    else if (line.StartsWith("Message:")) sb.AppendFormat("<div class='logMsg'>{0}</div>", line);
-                    else if (line.StartsWith("ErrorSql:")) sb.AppendFormat("<div class='logSql'>{0}</div>", line);
-                    else if (line.StartsWith("Exception Type: Longbow.Data.DBAccessException")) sb.AppendFormat("<div class='logDbExcep'>{0}</div>", line);
-                    else if (line.StartsWith("StackTrace Information")) sb.AppendFormat("<b>{0}</b><br>", line);
-                    else sb.AppendFormat("{0}<br>", line);
+                    var line = reader.ReadLine()?.Replace("<", "&lt;").Replace(">", "&gt;");
+                    if (!string.IsNullOrEmpty(line))
+                    {
+                        if (line == "General Information ") sb.AppendFormat("<h4><b>{0}</b></h4>", line);
+                        else if (line.StartsWith("TimeStamp:")) sb.AppendFormat("<div class='logTs'>{0}</div>", line);
+                        else if (line.EndsWith("Exception Information")) sb.AppendFormat("<div class='logExcep'>{0}</div>", line);
+                        else if (line.StartsWith("Message:")) sb.AppendFormat("<div class='logMsg'>{0}</div>", line);
+                        else if (line.StartsWith("ErrorSql:")) sb.AppendFormat("<div class='logSql'>{0}</div>", line);
+                        else if (line.StartsWith("Exception Type: Longbow.Data.DBAccessException")) sb.AppendFormat("<div class='logDbExcep'>{0}</div>", line);
+                        else if (line.StartsWith("StackTrace Information")) sb.AppendFormat("<b>{0}</b><br>", line);
+                        else sb.AppendFormat("{0}<br>", line);
+                    }
                 }
             }
             return new JsonResult(sb.ToString());
@@ -84,7 +87,7 @@ namespace Bootstrap.Admin.Controllers.Api
             /// <summary>
             /// 
             /// </summary>
-            public string FileName { get; set; }
+            public string FileName { get; set; } = "";
         }
     }
 }

@@ -8,11 +8,11 @@
         /// <summary>
         /// 
         /// </summary>
-        public string Message { get; set; }
+        public string Message { get; set; } = "";
         /// <summary>
         /// 
         /// </summary>
-        public string Category { get; set; }
+        public string Category { get; set; } = "";
         /// <summary>
         /// 
         /// </summary>

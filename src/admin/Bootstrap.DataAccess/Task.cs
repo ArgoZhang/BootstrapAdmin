@@ -13,28 +13,28 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获取/设置  任务ID
         /// </summary>
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
         /// <summary>
         /// 获取/设置  任务名称
         /// </summary>
-        public string TaskName { get; set; }
+        public string TaskName { get; set; } = "";
 
         /// <summary>
         /// 获取/设置  分配人
         /// </summary>
-        public string AssignName { get; set; }
+        public string AssignName { get; set; } = "";
 
         /// <summary>
         /// 获得/设置 分配人昵称
         /// </summary>
         [ResultColumn]
-        public string AssignDisplayName { get; set; }
+        public string AssignDisplayName { get; set; } = "";
 
         /// <summary>
         /// 获取/设置  完成任务人
         /// </summary>
-        public string UserName { get; set; }
+        public string UserName { get; set; } = "";
 
         /// <summary>
         /// 获取/设置  任务所需时间（天）

@@ -56,7 +56,7 @@ namespace Bootstrap.Admin.Controllers.Api
             apps = apps.Take(6);
             apps.AsParallel().ForAll(n =>
             {
-                n.ExceptionType = n.ExceptionType.Split('.').Last();
+                n.ExceptionType = n.ExceptionType?.Split('.').Last();
                 var ts = DateTime.Now - n.LogTime;
                 if (ts.TotalMinutes < 5) n.Period = "刚刚";
                 else if (ts.Days > 0) n.Period = string.Format("{0}天", ts.Days);

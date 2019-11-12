@@ -18,7 +18,7 @@ namespace Bootstrap.Admin.Models
         /// <summary>
         /// 获得 头像文件名称
         /// </summary>
-        public string FileName { get; }
+        public string FileName { get; } = "";
 
         /// <summary>
         /// 获得 是否为第三方用户

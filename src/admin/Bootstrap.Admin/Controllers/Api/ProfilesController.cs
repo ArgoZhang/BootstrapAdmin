@@ -44,7 +44,7 @@ namespace Bootstrap.Admin.Controllers.Api
             fileSize = new FileInfo(filePath).Length;
             var iconName = $"{fileName}?v={DateTime.Now.Ticks}";
             previewUrl = Url.Content($"{webSiteUrl}{iconName}");
-            UserHelper.SaveUserIconByName(userName, iconName);
+            if (!string.IsNullOrEmpty(userName)) UserHelper.SaveUserIconByName(userName, iconName);
 
             return new JsonResult(new
             {
@@ -64,7 +64,7 @@ namespace Bootstrap.Admin.Controllers.Api
             /// <summary>
             /// 
             /// </summary>
-            public string Key { get; set; }
+            public string Key { get; set; } = "";
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace Bootstrap.Admin.Controllers.Api
                 }
                 var iconName = $"{fileName}?v={DateTime.Now.Ticks}";
                 previewUrl = Url.Content($"{webSiteUrl}{iconName}");
-                UserHelper.SaveUserIconByName(userName, iconName);
+                if (!string.IsNullOrEmpty(userName)) UserHelper.SaveUserIconByName(userName, iconName);
             }
             return new JsonResult(new
             {

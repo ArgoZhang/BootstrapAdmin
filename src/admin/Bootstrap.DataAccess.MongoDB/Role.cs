@@ -13,12 +13,12 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <summary>
         /// 此角色关联的所有菜单
         /// </summary>
-        public IEnumerable<string> Menus { get; set; }
+        public IEnumerable<string> Menus { get; set; } = new List<string>();
 
         /// <summary>
         /// 此角色关联的所有应用程序
         /// </summary>
-        public IEnumerable<string> Apps { get; set; }
+        public IEnumerable<string> Apps { get; set; } = new List<string>();
 
         /// <summary>
         /// 
@@ -130,7 +130,7 @@ namespace Bootstrap.DataAccess.MongoDB
         {
             var roles = RoleHelper.Retrieves().Cast<Role>().ToList();
             roles.ForEach(r => r.Checked = (r.Menus != null && r.Menus.Contains(menuId)) ? "checked" : "");
-            roles.ForEach(r => r.Menus = null);
+            roles.ForEach(r => r.Menus = new List<string>());
             return roles;
         }
 

@@ -67,7 +67,7 @@ namespace Bootstrap.Admin.Controllers.Api
             /// <summary>
             /// 
             /// </summary>
-            public IEnumerable<string> Polylines { get; set; }
+            public IEnumerable<string> Polylines { get; set; } = new List<string>();
 
             /// <summary>
             /// 

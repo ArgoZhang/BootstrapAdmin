@@ -47,16 +47,16 @@ namespace Bootstrap.DataAccess
             {
                 ApprovedBy = "OAuth",
                 ApprovedTime = DateTime.Now,
-                DisplayName = user.NickName,
-                UserName = user.UnionId,
+                DisplayName = user?.NickName ?? "",
+                UserName = user?.UnionId ?? "",
                 Password = LgbCryptography.GenerateSalt(),
-                Icon = user.HeadImgUrl,
+                Icon = user?.HeadImgUrl ?? "",
                 Description = $"{context.Scheme.Name}"
             };
         }
 
 #if NETCOREAPP3_0
-        private static T ToObject<T>(this JsonElement element) where T : WeChatUser
+        private static T? ToObject<T>(this JsonElement element) where T : WeChatUser
         {
             var user = new WeChatUser();
             var target = element.EnumerateObject();

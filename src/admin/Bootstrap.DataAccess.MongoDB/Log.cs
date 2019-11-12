@@ -20,7 +20,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <param name="endTime"></param>
         /// <param name="opType"></param>
         /// <returns></returns>
-        public override Page<DataAccess.Log> RetrievePages(PaginationOption po, DateTime? startTime, DateTime? endTime, string opType)
+        public override Page<DataAccess.Log> RetrievePages(PaginationOption po, DateTime? startTime, DateTime? endTime, string? opType)
         {
             var filterBuilder = Builders<DataAccess.Log>.Filter;
             var filter = filterBuilder.Empty;
@@ -31,7 +31,7 @@ namespace Bootstrap.DataAccess.MongoDB
 
             // sort
             var sortBuilder = Builders<DataAccess.Log>.Sort;
-            SortDefinition<DataAccess.Log> sort = null;
+            var sort = po.Order == "asc" ? sortBuilder.Ascending(t => t.LogTime) : sortBuilder.Descending(t => t.LogTime);
             switch (po.Sort)
             {
                 case "CRUD":
@@ -39,9 +39,6 @@ namespace Bootstrap.DataAccess.MongoDB
                     break;
                 case "UserName":
                     sort = po.Order == "asc" ? sortBuilder.Ascending(t => t.UserName) : sortBuilder.Descending(t => t.UserName);
-                    break;
-                case "LogTime":
-                    sort = po.Order == "asc" ? sortBuilder.Ascending(t => t.LogTime) : sortBuilder.Descending(t => t.LogTime);
                     break;
                 case "Ip":
                     sort = po.Order == "asc" ? sortBuilder.Ascending(t => t.Ip) : sortBuilder.Descending(t => t.Ip);
@@ -70,7 +67,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <param name="endTime"></param>
         /// <param name="opType"></param>
         /// <returns></returns>
-        public override IEnumerable<DataAccess.Log> RetrieveAll(DateTime? startTime, DateTime? endTime, string opType)
+        public override IEnumerable<DataAccess.Log> RetrieveAll(DateTime? startTime, DateTime? endTime, string? opType)
         {
             var filterBuilder = Builders<DataAccess.Log>.Filter;
             var filter = filterBuilder.Empty;

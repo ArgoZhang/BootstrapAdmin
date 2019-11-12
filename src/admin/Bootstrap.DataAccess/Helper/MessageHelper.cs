@@ -18,41 +18,41 @@ namespace Bootstrap.DataAccess
         /// 收件箱
         /// </summary>
         /// <param name="userName"></param>
-        public static IEnumerable<Message> Inbox(string userName) => DbContextManager.Create<Message>().Inbox(userName);
+        public static IEnumerable<Message> Inbox(string? userName) => string.IsNullOrEmpty(userName) ? new Message[0] : DbContextManager.Create<Message>()?.Inbox(userName) ?? new Message[0];
 
         /// <summary>
         /// 发件箱
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public static IEnumerable<Message> SendMail(string userName) => DbContextManager.Create<Message>().SendMail(userName);
+        public static IEnumerable<Message> SendMail(string? userName) => string.IsNullOrEmpty(userName) ? new Message[0] : DbContextManager.Create<Message>()?.SendMail(userName) ?? new Message[0];
 
         /// <summary>
         /// 垃圾箱
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public static IEnumerable<Message> Trash(string userName) => DbContextManager.Create<Message>().Trash(userName);
+        public static IEnumerable<Message> Trash(string? userName) => string.IsNullOrEmpty(userName) ? new Message[0] : DbContextManager.Create<Message>()?.Trash(userName) ?? new Message[0];
 
         /// <summary>
         /// 标旗
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public static IEnumerable<Message> Mark(string userName) => DbContextManager.Create<Message>().Mark(userName);
+        public static IEnumerable<Message> Mark(string? userName) => string.IsNullOrEmpty(userName) ? new Message[0] : DbContextManager.Create<Message>()?.Mark(userName) ?? new Message[0];
 
         /// <summary>
         /// 获取Header处显示的消息列表
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public static IEnumerable<Message> Retrieves(string userName) => CacheManager.GetOrAdd(RetrieveMessageDataKey, key => DbContextManager.Create<Message>().RetrieveHeaders(userName).OrderByDescending(n => n.SendTime));
+        public static IEnumerable<Message> Retrieves(string? userName) => (string.IsNullOrEmpty(userName) ? new Message[0] : CacheManager.GetOrAdd(RetrieveMessageDataKey, key => (DbContextManager.Create<Message>()?.RetrieveHeaders(userName) ?? new Message[0]))).OrderByDescending(n => n.SendTime);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="msg"></param>
         /// <returns></returns>
-        public static bool Save(Message msg) => DbContextManager.Create<Message>().Save(msg);
+        public static bool Save(Message msg) => DbContextManager.Create<Message>()?.Save(msg) ?? false;
     }
 }

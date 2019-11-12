@@ -5,20 +5,22 @@ using System.Linq;
 namespace Bootstrap.Admin.Query
 {
     /// <summary>
-    /// 
+    /// 用户维护查询条件类
     /// </summary>
     public class QueryUserOption : PaginationOption
     {
         /// <summary>
-        /// 
+        /// 获得/设置 用户登录名称
         /// </summary>
-        public string Name { get; set; }
+        public string? Name { get; set; }
+
         /// <summary>
-        /// 
+        /// 获得/设置 用户显示名称
         /// </summary>
-        public string DisplayName { get; set; }
+        public string? DisplayName { get; set; }
+
         /// <summary>
-        /// 
+        /// 获取用户分页数据
         /// </summary>
         /// <returns></returns>
         public QueryData<object> RetrieveData()

@@ -5,20 +5,22 @@ using System.Linq;
 namespace Bootstrap.Admin.Query
 {
     /// <summary>
-    /// 
+    /// 部门查询条件类
     /// </summary>
     public class QueryGroupOption : PaginationOption
     {
         /// <summary>
-        /// 
+        /// 获得/设置 部门名称
         /// </summary>
-        public string GroupName { get; set; }
+        public string? GroupName { get; set; }
+
         /// <summary>
-        /// 
+        /// 获得/设置 部门描述
         /// </summary>
-        public string Description { get; set; }
+        public string? Description { get; set; }
+
         /// <summary>
-        /// 
+        /// 部门查询数据方法
         /// </summary>
         /// <returns></returns>
         public QueryData<object> RetrieveData()
@@ -27,11 +29,11 @@ namespace Bootstrap.Admin.Query
             var data = GroupHelper.Retrieves();
             if (!string.IsNullOrEmpty(GroupName))
             {
-                data = data.Where(t => t.GroupName.Contains(GroupName));
+                data = data.Where(t => t.GroupName?.Contains(GroupName) ?? false);
             }
             if (!string.IsNullOrEmpty(Description))
             {
-                data = data.Where(t => t.Description.Contains(Description));
+                data = data.Where(t => t.Description?.Contains(Description) ?? false);
             }
             var ret = new QueryData<object>();
             ret.total = data.Count();

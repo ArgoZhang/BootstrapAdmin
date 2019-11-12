@@ -50,7 +50,7 @@ namespace Bootstrap.Admin.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public BootstrapUser RetrieveUserByUserName([FromBody]string userName)
+        public BootstrapUser? RetrieveUserByUserName([FromBody]string userName)
         {
             return UserHelper.RetrieveUserByUserName(userName);
         }
@@ -63,6 +63,7 @@ namespace Bootstrap.Admin.Controllers
         [HttpPost]
         public IEnumerable<BootstrapMenu> RetrieveAppMenus([FromBody]AppMenuOption args)
         {
+            if (string.IsNullOrEmpty(args.AppId) || string.IsNullOrEmpty(args.UserName)) return new BootstrapMenu[0];
             return MenuHelper.RetrieveAppMenus(args.AppId, args.UserName, args.Url);
         }
     }

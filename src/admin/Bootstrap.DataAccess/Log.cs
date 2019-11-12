@@ -14,12 +14,12 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获得/设置 操作类型
         /// </summary>
-        public string CRUD { get; set; }
+        public string CRUD { get; set; } = "";
 
         /// <summary>
         /// 获得/设置 请求数据
         /// </summary>
-        public string RequestData { get; set; }
+        public string RequestData { get; set; } = "";
 
         /// <summary>
         /// 查询所有操作日志信息
@@ -29,8 +29,10 @@ namespace Bootstrap.DataAccess
         /// <param name="endTime"></param>
         /// <param name="opType"></param>
         /// <returns></returns>
-        public virtual new Page<Log> RetrievePages(PaginationOption po, DateTime? startTime, DateTime? endTime, string opType)
+        public virtual new Page<Log> RetrievePages(PaginationOption po, DateTime? startTime, DateTime? endTime, string? opType)
         {
+            if (string.IsNullOrEmpty(po.Order)) po.Order = "desc";
+            if (string.IsNullOrEmpty(po.Sort)) po.Sort = "LogTime";
             var sql = new Sql("select * from Logs");
             if (startTime.HasValue) sql.Where("LogTime >= @0", startTime.Value);
             if (endTime.HasValue) sql.Where("LogTime < @0", endTime.Value.AddDays(1).AddSeconds(-1));
@@ -48,7 +50,7 @@ namespace Bootstrap.DataAccess
         /// <param name="endTime"></param>
         /// <param name="opType"></param>
         /// <returns></returns>
-        public virtual new IEnumerable<Log> RetrieveAll(DateTime? startTime, DateTime? endTime, string opType)
+        public virtual new IEnumerable<Log> RetrieveAll(DateTime? startTime, DateTime? endTime, string? opType)
         {
             var sql = new Sql("select CRUD, UserName, LogTime, Ip, Browser, OS, City, RequestUrl, RequestData from Logs");
             if (startTime.HasValue) sql.Where("LogTime >= @0", startTime.Value);

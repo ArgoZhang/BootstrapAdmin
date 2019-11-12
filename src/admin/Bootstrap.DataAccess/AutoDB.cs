@@ -11,7 +11,7 @@ namespace Bootstrap.DataAccess
     /// </summary>
     public class AutoDB
     {
-        private string _folder;
+        private string _folder = "";
 
         /// <summary>
         /// 数据库检查方法

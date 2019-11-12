@@ -26,22 +26,23 @@ namespace Bootstrap.DataAccess
 
                 // user == null 以前登录过客户端保留了 Cookie 但是用户名可能被系统删除
                 // link bug: https://gitee.com/LongbowEnterprise/BootstrapAdmin/issues/I123MH
-                if (user == null) return;
-
-                v.UserName = user.UserName;
-                v.DisplayName = user.DisplayName;
-                DbContextManager.Create<Trace>().Save(new Trace
+                if (user != null)
                 {
-                    Ip = v.Ip,
-                    RequestUrl = v.RequestUrl,
-                    LogTime = v.LastAccessTime,
-                    City = v.Location,
-                    Browser = v.Browser,
-                    OS = v.OS,
-                    UserName = v.UserName,
-                    UserAgent = v.UserAgent,
-                    Referer = v.Referer
-                });
+                    v.UserName = user.UserName;
+                    v.DisplayName = user.DisplayName;
+                    DbContextManager.Create<Trace>()?.Save(new Trace
+                    {
+                        Ip = v.Ip,
+                        RequestUrl = v.RequestUrl,
+                        LogTime = v.LastAccessTime,
+                        City = v.Location,
+                        Browser = v.Browser,
+                        OS = v.OS,
+                        UserName = v.UserName,
+                        UserAgent = v.UserAgent,
+                        Referer = v.Referer
+                    });
+                }
             }
         }
 
@@ -64,7 +65,7 @@ namespace Bootstrap.DataAccess
         /// <param name="endTime"></param>
         /// <param name="ip"></param>
         /// <returns></returns>
-        public static Page<Trace> Retrieves(PaginationOption po, DateTime? startTime, DateTime? endTime, string ip) => DbContextManager.Create<Trace>().RetrievePages(po, startTime, endTime, ip);
+        public static Page<Trace> Retrieves(PaginationOption po, DateTime? startTime, DateTime? endTime, string? ip) => DbContextManager.Create<Trace>()?.RetrievePages(po, startTime, endTime, ip) ?? new Page<Trace>() { Items = new List<Trace>() };
 
         /// <summary>
         /// 获得指定IP历史访问记录
@@ -73,6 +74,6 @@ namespace Bootstrap.DataAccess
         /// <param name="endTime"></param>
         /// <param name="ip"></param>
         /// <returns></returns>
-        public static IEnumerable<Trace> RetrieveAll(DateTime? startTime, DateTime? endTime, string ip) => DbContextManager.Create<Trace>().RetrieveAll(startTime, endTime, ip);
+        public static IEnumerable<Trace> RetrieveAll(DateTime? startTime, DateTime? endTime, string? ip) => DbContextManager.Create<Trace>()?.RetrieveAll(startTime, endTime, ip) ?? new Trace[0];
     }
 }

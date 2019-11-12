@@ -22,13 +22,13 @@ namespace Bootstrap.DataAccess
         /// <param name="endTime"></param>
         /// <param name="opType"></param>
         /// <returns></returns>
-        public static Page<Log> RetrievePages(PaginationOption op, DateTime? startTime, DateTime? endTime, string opType) => DbContextManager.Create<Log>().RetrievePages(op, startTime, endTime, opType);
+        public static Page<Log> RetrievePages(PaginationOption op, DateTime? startTime, DateTime? endTime, string? opType) => DbContextManager.Create<Log>()?.RetrievePages(op, startTime, endTime, opType) ?? new Page<Log>() { Items = new List<Log>() };
 
         /// <summary>
         /// 查询所有日志信息
         /// </summary>
         /// <returns></returns>
-        public static IEnumerable<Log> RetrieveAll(DateTime? startTime, DateTime? endTime, string opType) => DbContextManager.Create<Log>().RetrieveAll(startTime, endTime, opType);
+        public static IEnumerable<Log> RetrieveAll(DateTime? startTime, DateTime? endTime, string? opType) => DbContextManager.Create<Log>()?.RetrieveAll(startTime, endTime, opType) ?? new Log[0];
 
         /// <summary>
         /// 保存新增的日志信息
@@ -38,7 +38,7 @@ namespace Bootstrap.DataAccess
         public static bool Save(Log log)
         {
             log.LogTime = DateTime.Now;
-            return DbContextManager.Create<Log>().Save(log);
+            return DbContextManager.Create<Log>()?.Save(log) ?? false;
         }
 
         #region 数据库脚本执行日志相关代码
@@ -63,7 +63,7 @@ namespace Bootstrap.DataAccess
         /// <param name="endTime"></param>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public static Page<DBLog> RetrieveDBLogs(PaginationOption op, DateTime? startTime, DateTime? endTime, string userName) => DbContextManager.Create<DBLog>().RetrievePages(op, startTime, endTime, userName);
+        public static Page<DBLog> RetrieveDBLogs(PaginationOption op, DateTime? startTime, DateTime? endTime, string? userName) => DbContextManager.Create<DBLog>()?.RetrievePages(op, startTime, endTime, userName) ?? new Page<DBLog>() { Items = new List<DBLog>() };
 
         /// <summary>
         /// 数据库脚本执行日志任务实体类

@@ -13,7 +13,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <summary>
         /// 
         /// </summary>
-        public IEnumerable<string> Roles { get; set; }
+        public IEnumerable<string> Roles { get; set; } = new List<string>();
 
         /// <summary>
         /// 

@@ -62,7 +62,9 @@ namespace Bootstrap.DataAccess
         public virtual IEnumerable<string> RetrieveMenusByRoleId(string roleId)
         {
             var menus = DbManager.Create().Fetch<BootstrapMenu>("select NavigationID as Id from NavigationRole where RoleID = @0", roleId);
+#pragma warning disable CS8619 // 值中的引用类型的为 Null 性与目标类型不匹配。
             return menus.Select(m => m.Id);
+#pragma warning restore CS8619 // 值中的引用类型的为 Null 性与目标类型不匹配。
         }
 
         /// <summary>

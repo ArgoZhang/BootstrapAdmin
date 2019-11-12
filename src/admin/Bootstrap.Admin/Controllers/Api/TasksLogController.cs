@@ -25,9 +25,14 @@ namespace Bootstrap.Admin.Controllers.Api
         public ActionResult Get([FromQuery]string name, [FromServices]IHubContext<TaskLogHub> hub)
         {
             var sche = TaskServicesManager.Get(name);
-            sche.Triggers.First().PulseCallback = t => SendTaskLog(sche, name, hub);
-            SendTaskLog(sche, name, hub);
-            return Ok(true);
+            var ret = false;
+            if (sche != null)
+            {
+                sche.Triggers.First().PulseCallback = t => SendTaskLog(sche, name, hub);
+                SendTaskLog(sche, name, hub);
+                ret = true;
+            }
+            return Ok(ret);
         }
 
         private Task SendTaskLog(IScheduler sche, string name, IHubContext<TaskLogHub> hub)

@@ -15,6 +15,6 @@ namespace Bootstrap.Client.DataAccess
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public static IEnumerable<string> RetrievesByUserName(string userName) => CacheManager.GetOrAdd($"{DbHelper.RetrieveAppsByUserNameDataKey}-{userName}", key => DbContextManager.Create<App>().RetrievesByUserName(userName), DbHelper.RetrieveAppsByUserNameDataKey);
+        public static IEnumerable<string> RetrievesByUserName(string userName) => CacheManager.GetOrAdd($"{DbHelper.RetrieveAppsByUserNameDataKey}-{userName}", key => DbContextManager.Create<App>()?.RetrievesByUserName(userName), DbHelper.RetrieveAppsByUserNameDataKey) ?? new string[0];
     }
 }

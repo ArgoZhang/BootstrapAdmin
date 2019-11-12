@@ -13,7 +13,7 @@
         /// <summary>
         /// 获得/设置 自动部署脚本文件
         /// </summary>
-        public string DeployFile { get; set; }
+        public string DeployFile { get; set; } = "";
 
         /// <summary>
         /// 获得/设置 自动部署分支

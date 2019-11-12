@@ -17,28 +17,28 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获得/设置 用户主键ID
         /// </summary>
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
         /// <summary>
         /// 获取/设置 密码
         /// </summary>
-        public string Password { get; set; }
+        public string Password { get; set; } = "";
 
         /// <summary>
         /// 获取/设置 密码盐
         /// </summary>
-        public string PassSalt { get; set; }
+        public string PassSalt { get; set; } = "";
 
         /// <summary>
         /// 获取/设置 角色用户关联状态 checked 标示已经关联 '' 标示未关联
         /// </summary>
         [ResultColumn]
-        public string Checked { get; set; }
+        public string Checked { get; set; } = "";
 
         /// <summary>
         /// 获得/设置 用户注册时间
         /// </summary>
-        public DateTime RegisterTime { get; set; }
+        public DateTime RegisterTime { get; set; } = DateTime.Now;
 
         /// <summary>
         /// 获得/设置 用户被批复时间
@@ -48,12 +48,12 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获得/设置 用户批复人
         /// </summary>
-        public string ApprovedBy { get; set; }
+        public string? ApprovedBy { get; set; }
 
         /// <summary>
         /// 获得/设置 用户的申请理由
         /// </summary>
-        public string Description { get; set; }
+        public string Description { get; set; } = "";
 
         /// <summary>
         /// 获得/设置 用户当前状态 0 表示管理员注册用户 1 表示用户注册 2 表示更改密码 3 表示更改个人皮肤 4 表示更改显示名称 5 批复新用户注册操作
@@ -65,13 +65,13 @@ namespace Bootstrap.DataAccess
         /// 获得/设置 通知描述 2分钟内为刚刚
         /// </summary>
         [ResultColumn]
-        public string Period { get; set; }
+        public string? Period { get; set; }
 
         /// <summary>
         /// 获得/设置 新密码
         /// </summary>
         [ResultColumn]
-        public string NewPassword { get; set; }
+        public string NewPassword { get; set; } = "";
 
         /// <summary>
         /// 获得/设置 是否重置密码
@@ -93,7 +93,7 @@ namespace Bootstrap.DataAccess
         }
 
         /// <summary>
-        /// 
+        /// 保存默认应用方法
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="app"></param>
@@ -101,7 +101,7 @@ namespace Bootstrap.DataAccess
         public virtual bool SaveApp(string userName, string app) => DbManager.Create().Update<User>("set App = @1 where UserName = @0", userName, app) == 1;
 
         /// <summary>
-        /// 
+        /// 更改密码方法
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="password"></param>
@@ -160,7 +160,7 @@ namespace Bootstrap.DataAccess
         }
 
         /// <summary>
-        /// 
+        /// 重置密码方法
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="password"></param>
@@ -191,7 +191,7 @@ namespace Bootstrap.DataAccess
         }
 
         /// <summary>
-        /// 
+        /// 忘记密码方法
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
@@ -244,7 +244,7 @@ namespace Bootstrap.DataAccess
         }
 
         /// <summary>
-        /// 
+        /// 通过新用户方法
         /// </summary>
         /// <param name="id"></param>
         /// <param name="approvedBy"></param>
@@ -252,7 +252,7 @@ namespace Bootstrap.DataAccess
         public virtual bool Approve(string id, string approvedBy) => DbManager.Create().Update<User>("set ApprovedTime = @1, ApprovedBy = @2 where ID = @0", id, DateTime.Now, approvedBy) == 1;
 
         /// <summary>
-        /// 
+        /// 拒绝新用户方法
         /// </summary>
         /// <param name="id"></param>
         /// <param name="rejectBy"></param>
@@ -356,7 +356,7 @@ namespace Bootstrap.DataAccess
         public virtual bool SaveUserIconByName(string userName, string iconName) => DbManager.Create().Update<User>("set Icon = @1 where UserName = @0", userName, iconName) == 1;
 
         /// <summary>
-        /// 
+        /// 保存显示名称方法
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="displayName"></param>
@@ -372,14 +372,14 @@ namespace Bootstrap.DataAccess
         public virtual bool SaveUserCssByName(string userName, string cssName) => DbManager.Create().Update<User>("set Css = @1 where UserName = @0", userName, cssName) == 1;
 
         /// <summary>
-        /// 
+        /// 获得指定用户方法
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public virtual BootstrapUser RetrieveUserByUserName(string userName) => DbHelper.RetrieveUserByUserName(userName);
+        public virtual BootstrapUser? RetrieveUserByUserName(string userName) => DbHelper.RetrieveUserByUserName(userName);
 
         /// <summary>
-        /// 
+        /// ToString 方法
         /// </summary>
         /// <returns></returns>
         public override string ToString()
@@ -389,32 +389,32 @@ namespace Bootstrap.DataAccess
     }
 
     /// <summary>
-    /// 
+    /// 用户状态枚举类型
     /// </summary>
     public enum UserStates
     {
         /// <summary>
-        /// 
+        /// 更改密码
         /// </summary>
         ChangePassword,
         /// <summary>
-        /// 
+        /// 更改样式
         /// </summary>
         ChangeTheme,
         /// <summary>
-        /// 
+        /// 更改显示名称
         /// </summary>
         ChangeDisplayName,
         /// <summary>
-        /// 
+        /// 审批用户
         /// </summary>
         ApproveUser,
         /// <summary>
-        /// 
+        /// 拒绝用户
         /// </summary>
         RejectUser,
         /// <summary>
-        /// 
+        /// 保存默认应用
         /// </summary>
         SaveApp
     }

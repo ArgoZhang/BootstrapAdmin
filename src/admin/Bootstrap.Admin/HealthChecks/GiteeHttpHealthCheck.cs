@@ -41,7 +41,7 @@ namespace Bootstrap.Admin.HealthChecks
             Task.WaitAll(urls.Select(url => Task.Run(async () =>
             {
                 var sw = Stopwatch.StartNew();
-                Exception error = null;
+                Exception? error = null;
                 var result = await _client.HttpClient.GetAsJsonAsync<object>($"/api/Gitee/{url}", ex => error = ex, cancellationToken);
                 sw.Stop();
                 data.Add(url, error == null ? $"{result} Elapsed: {sw.Elapsed}" : $"{result} Elapsed: {sw.Elapsed} Exception: {error}");

@@ -22,7 +22,7 @@ namespace Bootstrap.Admin.Query
         /// <summary>
         /// 登录IP地址
         /// </summary>
-        public string LoginIP { get; set; }
+        public string? LoginIP { get; set; }
 
         /// <summary>
         /// 
@@ -30,8 +30,6 @@ namespace Bootstrap.Admin.Query
         /// <returns></returns>
         public QueryData<LoginUser> RetrieveData()
         {
-            if (string.IsNullOrEmpty(Order)) Order = "desc";
-            if (string.IsNullOrEmpty(Sort)) Sort = "LoginTime";
             var data = LoginHelper.RetrievePages(this, StartTime, EndTime, LoginIP);
             return new QueryData<LoginUser>
             {

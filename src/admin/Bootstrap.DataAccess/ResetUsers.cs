@@ -14,22 +14,22 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获得/设置 用户主键ID
         /// </summary>
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public string UserName { get; set; }
+        public string UserName { get; set; } = "";
 
         /// <summary>
         /// 
         /// </summary>
-        public string DisplayName { get; set; }
+        public string DisplayName { get; set; } = "";
 
         /// <summary>
         /// 
         /// </summary>
-        public string Reason { get; set; }
+        public string Reason { get; set; } = "";
 
         /// <summary>
         /// 

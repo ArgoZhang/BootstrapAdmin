@@ -13,6 +13,6 @@ namespace Bootstrap.Client.DataAccess
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public virtual BootstrapUser RetrieveUserByUserName(string userName) => DbHelper.RetrieveUserByUserName(userName);
+        public virtual BootstrapUser? RetrieveUserByUserName(string userName) => DbHelper.RetrieveUserByUserName(userName);
     }
 }

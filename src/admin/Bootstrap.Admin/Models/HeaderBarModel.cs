@@ -13,7 +13,7 @@ namespace Bootstrap.Admin.Models
         /// 默认构造函数
         /// </summary>
         /// <param name="userName"></param>
-        public HeaderBarModel(string userName)
+        public HeaderBarModel(string? userName)
         {
             var user = UserHelper.RetrieveUserByUserName(userName);
             if (user != null)
@@ -42,31 +42,31 @@ namespace Bootstrap.Admin.Models
         /// <summary>
         /// 获得 当前用户登录名
         /// </summary>
-        public string UserName { get; }
+        public string UserName { get; } = "";
 
         /// <summary>
         /// 获得 当前用户显示名称
         /// </summary>
-        public string DisplayName { get; }
+        public string DisplayName { get; } = "";
 
         /// <summary>
         /// 获得 用户头像地址
         /// </summary>
-        public string Icon { get; }
+        public string Icon { get; } = "";
 
         /// <summary>
         /// 获取 个人网站样式
         /// </summary>
-        public string Css { get; }
+        public string Css { get; } = "";
 
         /// <summary>
         /// 获得 当前设置的默认应用
         /// </summary>
-        public string AppId { get; }
+        public string AppId { get; } = "";
 
         /// <summary>
         /// 获得 当前样式
         /// </summary>
-        public string ActiveCss { get; }
+        public string ActiveCss { get; } = "";
     }
 }

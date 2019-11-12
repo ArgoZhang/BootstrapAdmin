@@ -32,7 +32,7 @@ namespace Bootstrap.DataAccess
         /// 查询一周内所有异常
         /// </summary>
         /// <returns></returns>
-        public static IEnumerable<Exceptions> Retrieves() => CacheManager.GetOrAdd(RetrieveExceptionsDataKey, key => DbContextManager.Create<Exceptions>().Retrieves());
+        public static IEnumerable<Exceptions> Retrieves() => CacheManager.GetOrAdd(RetrieveExceptionsDataKey, key => DbContextManager.Create<Exceptions>()?.Retrieves()) ?? new Exceptions[0];
 
         /// <summary>
         /// 
@@ -41,6 +41,6 @@ namespace Bootstrap.DataAccess
         /// <param name="startTime"></param>
         /// <param name="endTime"></param>
         /// <returns></returns>
-        public static Page<Exceptions> RetrievePages(PaginationOption po, DateTime? startTime, DateTime? endTime) => DbContextManager.Create<Exceptions>().RetrievePages(po, startTime, endTime);
+        public static Page<Exceptions> RetrievePages(PaginationOption po, DateTime? startTime, DateTime? endTime) => DbContextManager.Create<Exceptions>()?.RetrievePages(po, startTime, endTime) ?? new Page<Exceptions>() { Items = new List<Exceptions>() };
     }
 }

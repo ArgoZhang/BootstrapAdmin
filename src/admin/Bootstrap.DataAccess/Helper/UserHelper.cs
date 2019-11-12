@@ -41,14 +41,14 @@ namespace Bootstrap.DataAccess
             if (user.Password?.Length > 50) user.Password = user.Password.Substring(0, 50);
             if (user.DisplayName?.Length > 20) user.DisplayName = user.DisplayName.Substring(0, 20);
             var pattern = @"^[a-zA-Z0-9_@.]*$";
-            return user.UserName.IsNullOrEmpty() || Regex.IsMatch(user.UserName, pattern);
+            return Regex.IsMatch(user.UserName, pattern);
         }
 
         /// <summary>
         /// 查询所有用户
         /// </summary>
         /// <returns></returns>
-        public static IEnumerable<User> Retrieves() => CacheManager.GetOrAdd(RetrieveUsersDataKey, key => DbContextManager.Create<User>().Retrieves());
+        public static IEnumerable<User> Retrieves() => CacheManager.GetOrAdd(RetrieveUsersDataKey, key => DbContextManager.Create<User>()?.Retrieves()) ?? new User[0];
 
         /// <summary>
         /// 认证方法
@@ -56,13 +56,13 @@ namespace Bootstrap.DataAccess
         /// <param name="userName"></param>
         /// <param name="password"></param>
         /// <returns>返回真表示认证通过</returns>
-        public static bool Authenticate(string userName, string password) => DbContextManager.Create<User>().Authenticate(userName, password);
+        public static bool Authenticate(string userName, string password) => DbContextManager.Create<User>()?.Authenticate(userName, password) ?? false;
 
         /// <summary>
         /// 查询所有的新注册用户
         /// </summary>
         /// <returns></returns>
-        public static IEnumerable<User> RetrieveNewUsers() => CacheManager.GetOrAdd(RetrieveNewUsersDataKey, key => DbContextManager.Create<User>().RetrieveNewUsers());
+        public static IEnumerable<User> RetrieveNewUsers() => CacheManager.GetOrAdd(RetrieveNewUsersDataKey, key => DbContextManager.Create<User>()?.RetrieveNewUsers()) ?? new User[0];
 
         private static IEnumerable<User> RetrieveConstUsers()
         {
@@ -79,7 +79,7 @@ namespace Bootstrap.DataAccess
             var admins = RetrieveConstUsers();
             value = value.Where(v => !admins.Any(u => u.Id == v));
             if (!value.Any()) return true;
-            var ret = DbContextManager.Create<User>().Delete(value);
+            var ret = DbContextManager.Create<User>()?.Delete(value) ?? false;
             if (ret) CacheCleanUtility.ClearCache(userIds: value, cacheKey: RetrieveUsersByNameDataKey + "*");
             return ret;
         }
@@ -92,7 +92,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static bool SaveApp(string userName, string app)
         {
-            var ret = DbContextManager.Create<User>().SaveApp(userName, app);
+            var ret = DbContextManager.Create<User>()?.SaveApp(userName, app) ?? false;
             if (ret) CacheCleanUtility.ClearCache(cacheKey: $"{RetrieveUsersByNameDataKey}*");
             return ret;
         }
@@ -107,7 +107,7 @@ namespace Bootstrap.DataAccess
             if (!UserChecker(user)) return false;
             if (DictHelper.RetrieveSystemModel() && !string.IsNullOrEmpty(user.Id) && RetrieveConstUsers().Any(u => u.Id == user.Id)) return true;
 
-            var ret = DbContextManager.Create<User>().Save(user);
+            var ret = DbContextManager.Create<User>()?.Save(user) ?? false;
             if (ret) CacheCleanUtility.ClearCache(userIds: string.IsNullOrEmpty(user.Id) ? new List<string>() : new List<string>() { user.Id }, cacheKey: $"{RetrieveUsersByNameDataKey}-{user.UserName}");
             return ret;
         }
@@ -124,7 +124,7 @@ namespace Bootstrap.DataAccess
             if (!UserChecker(new User { Password = password, DisplayName = displayName })) return false;
             if (DictHelper.RetrieveSystemModel() && RetrieveConstUsers().Any(v => v.Id == id)) return true;
 
-            var ret = DbContextManager.Create<User>().Update(id, password, displayName);
+            var ret = DbContextManager.Create<User>()?.Update(id, password, displayName) ?? false;
             if (ret) CacheCleanUtility.ClearCache(userIds: string.IsNullOrEmpty(id) ? new List<string>() : new List<string>() { id }, cacheKey: $"{RetrieveUsersByNameDataKey}*");
             return ret;
         }
@@ -137,7 +137,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static bool Approve(string id, string approvedBy)
         {
-            var ret = DbContextManager.Create<User>().Approve(id, approvedBy);
+            var ret = DbContextManager.Create<User>()?.Approve(id, approvedBy) ?? false;
             if (ret) CacheCleanUtility.ClearCache(userIds: new List<string>() { id });
             return ret;
         }
@@ -155,7 +155,7 @@ namespace Bootstrap.DataAccess
             if (DictHelper.RetrieveSystemModel()
                 && RetrieveConstUsers().Any(u => userName.Equals(u.UserName, StringComparison.OrdinalIgnoreCase)))
                 return true;
-            return DbContextManager.Create<User>().ChangePassword(userName, password, newPass);
+            return DbContextManager.Create<User>()?.ChangePassword(userName, password, newPass) ?? false;
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Bootstrap.DataAccess
         {
             if (!UserChecker(new User { UserName = userName, Password = password })) return false;
             if (DictHelper.RetrieveSystemModel() && RetrieveConstUsers().Any(u => userName.Equals(u.UserName, StringComparison.OrdinalIgnoreCase))) return true;
-            var ret = DbContextManager.Create<User>().ResetPassword(userName, password);
+            var ret = DbContextManager.Create<User>()?.ResetPassword(userName, password) ?? false;
             if (ret) CacheCleanUtility.ClearCache(cacheKey: RetrieveUsersDataKey);
             return ret;
         }
@@ -180,7 +180,7 @@ namespace Bootstrap.DataAccess
         /// <param name="user"></param>
         public static bool ForgotPassword(ResetUser user)
         {
-            var ret = DbContextManager.Create<User>().ForgotPassword(user);
+            var ret = DbContextManager.Create<User>()?.ForgotPassword(user) ?? false;
             if (ret) CacheCleanUtility.ClearCache(cacheKey: RetrieveUsersDataKey);
             return ret;
         }
@@ -193,7 +193,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static bool Reject(string id, string rejectBy)
         {
-            var ret = DbContextManager.Create<User>().Reject(id, rejectBy);
+            var ret = DbContextManager.Create<User>()?.Reject(id, rejectBy) ?? false;
             if (ret) CacheCleanUtility.ClearCache(userIds: new List<string>() { id });
             return ret;
         }
@@ -203,7 +203,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="roleId"></param>
         /// <returns></returns>
-        public static IEnumerable<User> RetrievesByRoleId(string roleId) => CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveUsersByRoleIdDataKey, roleId), k => DbContextManager.Create<User>().RetrievesByRoleId(roleId), RetrieveUsersByRoleIdDataKey);
+        public static IEnumerable<User> RetrievesByRoleId(string roleId) => CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveUsersByRoleIdDataKey, roleId), k => DbContextManager.Create<User>()?.RetrievesByRoleId(roleId), RetrieveUsersByRoleIdDataKey) ?? new User[0];
 
         /// <summary>
         /// 通过角色ID保存当前授权用户（插入）
@@ -216,15 +216,15 @@ namespace Bootstrap.DataAccess
             // 演示模式时禁止修改 Admin 对 Administrators 角色的移除操作
             if (DictHelper.RetrieveSystemModel())
             {
-                var adminRole = RoleHelper.Retrieves().FirstOrDefault(r => r.RoleName.Equals("Administrators", StringComparison.OrdinalIgnoreCase)).Id;
-                if (roleId.Equals(adminRole, StringComparison.OrdinalIgnoreCase))
+                var adminRole = RoleHelper.Retrieves().FirstOrDefault(r => r.RoleName.Equals("Administrators", StringComparison.OrdinalIgnoreCase))?.Id;
+                if (!string.IsNullOrEmpty(adminRole) && roleId.Equals(adminRole, StringComparison.OrdinalIgnoreCase))
                 {
-                    var adminId = Retrieves().FirstOrDefault(u => u.UserName.Equals("Admin", StringComparison.OrdinalIgnoreCase)).Id;
-                    userIds = userIds.Union(new string[] { adminId });
+                    var adminId = Retrieves().FirstOrDefault(u => u.UserName.Equals("Admin", StringComparison.OrdinalIgnoreCase))?.Id;
+                    if (!string.IsNullOrEmpty(adminId)) userIds = userIds.Union(new string[] { adminId });
                 }
             }
 
-            var ret = DbContextManager.Create<User>().SaveByRoleId(roleId, userIds);
+            var ret = DbContextManager.Create<User>()?.SaveByRoleId(roleId, userIds) ?? false;
             if (ret) CacheCleanUtility.ClearCache(userIds: userIds, roleIds: new List<string>() { roleId });
             return ret;
         }
@@ -234,7 +234,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="groupId"></param>
         /// <returns></returns>
-        public static IEnumerable<User> RetrievesByGroupId(string groupId) => CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveUsersByGroupIdDataKey, groupId), k => DbContextManager.Create<User>().RetrievesByGroupId(groupId), RetrieveUsersByRoleIdDataKey);
+        public static IEnumerable<User> RetrievesByGroupId(string groupId) => CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveUsersByGroupIdDataKey, groupId), k => DbContextManager.Create<User>()?.RetrievesByGroupId(groupId), RetrieveUsersByRoleIdDataKey) ?? new User[0];
 
         /// <summary>
         /// 通过部门ID保存当前授权用户（插入）
@@ -244,7 +244,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static bool SaveByGroupId(string groupId, IEnumerable<string> userIds)
         {
-            var ret = DbContextManager.Create<User>().SaveByGroupId(groupId, userIds);
+            var ret = DbContextManager.Create<User>()?.SaveByGroupId(groupId, userIds) ?? false;
             if (ret) CacheCleanUtility.ClearCache(userIds: userIds, groupIds: new List<string>() { groupId });
             return ret;
         }
@@ -257,7 +257,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static bool SaveUserIconByName(string userName, string iconName)
         {
-            var ret = DbContextManager.Create<User>().SaveUserIconByName(userName, iconName);
+            var ret = DbContextManager.Create<User>()?.SaveUserIconByName(userName, iconName) ?? false;
             if (ret) CacheCleanUtility.ClearCache(cacheKey: $"{RetrieveUsersByNameDataKey}*");
             return ret;
         }
@@ -271,7 +271,7 @@ namespace Bootstrap.DataAccess
         public static bool SaveDisplayName(string userName, string displayName)
         {
             if (!UserChecker(new User { UserName = userName, DisplayName = displayName })) return false;
-            var ret = DbContextManager.Create<User>().SaveDisplayName(userName, displayName);
+            var ret = DbContextManager.Create<User>()?.SaveDisplayName(userName, displayName) ?? false;
             if (ret) CacheCleanUtility.ClearCache(cacheKey: $"{RetrieveUsersByNameDataKey}*");
             return ret;
         }
@@ -284,7 +284,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static bool SaveUserCssByName(string userName, string cssName)
         {
-            var ret = DbContextManager.Create<User>().SaveUserCssByName(userName, cssName);
+            var ret = DbContextManager.Create<User>()?.SaveUserCssByName(userName, cssName) ?? false;
             if (ret) CacheCleanUtility.ClearCache(cacheKey: $"{RetrieveUsersByNameDataKey}*");
             return ret;
         }
@@ -294,20 +294,20 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public static BootstrapUser RetrieveUserByUserName(string userName) => CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveUsersByNameDataKey, userName), k => DbContextManager.Create<User>().RetrieveUserByUserName(userName), RetrieveUsersByNameDataKey);
+        public static BootstrapUser? RetrieveUserByUserName(string? userName) => string.IsNullOrEmpty(userName) ? null : CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveUsersByNameDataKey, userName), k => DbContextManager.Create<User>()?.RetrieveUserByUserName(userName), RetrieveUsersByNameDataKey);
 
         /// <summary>
         /// 通过登录账号获得用户信息
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public static ResetUser RetrieveResetUserByUserName(string userName) => DbContextManager.Create<ResetUser>().RetrieveUserByUserName(userName);
+        public static ResetUser? RetrieveResetUserByUserName(string userName) => DbContextManager.Create<ResetUser>()?.RetrieveUserByUserName(userName);
 
         /// <summary>
         /// 通过登录账户获得重置密码原因
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public static IEnumerable<KeyValuePair<DateTime, string>> RetrieveResetReasonsByUserName(string userName) => DbContextManager.Create<ResetUser>().RetrieveResetReasonsByUserName(userName);
+        public static IEnumerable<KeyValuePair<DateTime, string>> RetrieveResetReasonsByUserName(string userName) => DbContextManager.Create<ResetUser>()?.RetrieveResetReasonsByUserName(userName) ?? new KeyValuePair<DateTime, string>[0];
     }
 }

@@ -23,7 +23,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="roleId"></param>
         /// <returns></returns>
-        public static IEnumerable<App> RetrievesByRoleId(string roleId) => CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveAppsByRoleIdDataKey, roleId), key => DbContextManager.Create<App>().RetrievesByRoleId(roleId), RetrieveAppsByRoleIdDataKey);
+        public static IEnumerable<App> RetrievesByRoleId(string roleId) => CacheManager.GetOrAdd(string.Format("{0}-{1}", RetrieveAppsByRoleIdDataKey, roleId), key => DbContextManager.Create<App>()?.RetrievesByRoleId(roleId), RetrieveAppsByRoleIdDataKey) ?? new App[0];
 
         /// <summary>
         /// 根据角色ID以及选定的App ID，保到角色应用表
@@ -33,7 +33,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static bool SaveByRoleId(string roleId, IEnumerable<string> appIds)
         {
-            var ret = DbContextManager.Create<App>().SaveByRoleId(roleId, appIds);
+            var ret = DbContextManager.Create<App>()?.SaveByRoleId(roleId, appIds) ?? false;
             if (ret) CacheCleanUtility.ClearCache(appIds: appIds, roleIds: new List<string>() { roleId });
             return ret;
         }
@@ -43,6 +43,6 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public static IEnumerable<string> RetrievesByUserName(string userName) => CacheManager.GetOrAdd($"{DbHelper.RetrieveAppsByUserNameDataKey}-{userName}", key => DbContextManager.Create<App>().RetrievesByUserName(userName), RetrieveAppsByUserNameDataKey);
+        public static IEnumerable<string> RetrievesByUserName(string? userName) => string.IsNullOrEmpty(userName) ? new string[0] : CacheManager.GetOrAdd($"{DbHelper.RetrieveAppsByUserNameDataKey}-{userName}", key => DbContextManager.Create<App>()?.RetrievesByUserName(userName), RetrieveAppsByUserNameDataKey) ?? new string[0];
     }
 }

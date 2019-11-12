@@ -22,7 +22,7 @@ namespace Bootstrap.Admin.Query
         /// <summary>
         /// 请求IP地址
         /// </summary>
-        public string AccessIP { get; set; }
+        public string? AccessIP { get; set; }
 
         /// <summary>
         /// 

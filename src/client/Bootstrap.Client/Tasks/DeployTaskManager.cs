@@ -18,7 +18,7 @@ namespace Bootstrap.Client.Tasks
     public static class DeployTaskManager
     {
         private static BlockingCollection<GiteePushEventArgs> _pool = new BlockingCollection<GiteePushEventArgs>(new ConcurrentQueue<GiteePushEventArgs>());
-        private static IServiceCollection _services;
+        private static IServiceCollection? _services;
 
         /// <summary>
         /// IServiceCollection 实例
@@ -33,18 +33,21 @@ namespace Bootstrap.Client.Tasks
         public static void Add(GiteePushEventArgs args)
         {
             // 判断是否需要自动发布
-            var sp = _services.BuildServiceProvider();
-            var config = sp.GetRequiredService<IConfiguration>();
-            var logger = sp.GetRequiredService<ILogger<DeployController>>();
-            var option = config.GetSection<DeployOptions>().Get<DeployOptions>();
-            if (option.Enabled && !string.IsNullOrEmpty(option.DeployFile))
+            if (_services != null)
             {
-                if (!_pool.IsAddingCompleted)
+                var sp = _services.BuildServiceProvider();
+                var config = sp.GetRequiredService<IConfiguration>();
+                var logger = sp.GetRequiredService<ILogger<DeployController>>();
+                var option = config.GetSection<DeployOptions>().Get<DeployOptions>();
+                if (option.Enabled && !string.IsNullOrEmpty(option.DeployFile))
                 {
-                    _pool.Add(args);
-                }
+                    if (!_pool.IsAddingCompleted)
+                    {
+                        _pool.Add(args);
+                    }
 
-                RunAsync(logger, option).ConfigureAwait(false);
+                    RunAsync(logger, option).ConfigureAwait(false);
+                }
             }
         }
 

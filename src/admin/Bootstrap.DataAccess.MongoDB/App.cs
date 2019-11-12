@@ -22,8 +22,8 @@ namespace Bootstrap.DataAccess.MongoDB
                 Id = d.Key,
                 AppName = d.Value
             }).ToList();
-            var role = RoleHelper.Retrieves().Cast<Role>().FirstOrDefault(r => r.Id == roleId);
-            apps.ForEach(p => p.Checked = (role != null && (role.Apps.Contains(p.Id)) || role.RoleName.Equals("Administrators", StringComparison.OrdinalIgnoreCase)) ? "checked" : "");
+            var role = RoleHelper.Retrieves().Cast<Role>().FirstOrDefault(r => r.Id == roleId) ?? new Role();
+            apps.ForEach(p => p.Checked = (role.Apps.Contains(p.Id) || role.RoleName.Equals("Administrators", StringComparison.OrdinalIgnoreCase)) ? "checked" : "");
             return apps;
         }
 

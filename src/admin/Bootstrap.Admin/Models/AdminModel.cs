@@ -12,7 +12,7 @@ namespace Bootstrap.Admin.Models
         /// 默认构造函数
         /// </summary>
         /// <param name="appId"></param>
-        public AdminModel(string appId = null)
+        public AdminModel(string? appId = null)
         {
             if (string.IsNullOrEmpty(appId)) appId = BootstrapAppContext.AppId;
 

@@ -27,7 +27,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="color"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> Issues([FromServices]GiteeHttpClient client, [FromQuery]string userName = "LongbowEnterprise", [FromQuery]string repoName = "BootstrapAdmin", [FromQuery]string label = "custom badge", [FromQuery]string color = "orange")
+        public async Task<ActionResult> Issues([FromServices]GiteeHttpClient client, [FromQuery]string? userName = "LongbowEnterprise", [FromQuery]string? repoName = "BootstrapAdmin", [FromQuery]string? label = "custom badge", [FromQuery]string? color = "orange")
         {
             var ret = await GetJsonAsync(() => client.HttpClient.GetStringAsync($"https://gitee.com/{userName}/{repoName}/issues"), content =>
             {
@@ -50,7 +50,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="color"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> Pulls([FromServices]GiteeHttpClient client, [FromQuery]string userName = "LongbowEnterprise", [FromQuery]string repoName = "BootstrapAdmin", [FromQuery]string label = "custom badge", [FromQuery]string color = "orange")
+        public async Task<ActionResult> Pulls([FromServices]GiteeHttpClient client, [FromQuery]string? userName = "LongbowEnterprise", [FromQuery]string? repoName = "BootstrapAdmin", [FromQuery]string? label = "custom badge", [FromQuery]string? color = "orange")
         {
             var ret = await GetJsonAsync(() => client.HttpClient.GetStringAsync($"https://gitee.com/{userName}/{repoName}/pulls"), content =>
             {
@@ -72,7 +72,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="color"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> Releases([FromServices]GiteeHttpClient client, [FromQuery]string userName = "LongbowEnterprise", [FromQuery]string repoName = "BootstrapAdmin", [FromQuery]string label = "custom badge", [FromQuery]string color = "orange")
+        public async Task<ActionResult> Releases([FromServices]GiteeHttpClient client, [FromQuery]string? userName = "LongbowEnterprise", [FromQuery]string? repoName = "BootstrapAdmin", [FromQuery]string? label = "custom badge", [FromQuery]string? color = "orange")
         {
             var ret = await GetJsonAsync(() => client.HttpClient.GetStringAsync($"https://gitee.com/{userName}/{repoName}/releases"), content =>
             {
@@ -93,7 +93,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="color"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> Builds([FromServices]GiteeHttpClient client, [FromQuery]string userName = "ArgoZhang", [FromQuery]string projName = "bootstrapadmin", [FromQuery]string branchName = "master", [FromQuery]string label = "custom badge", [FromQuery]string color = "orange")
+        public async Task<ActionResult> Builds([FromServices]GiteeHttpClient client, [FromQuery]string? userName = "ArgoZhang", [FromQuery]string? projName = "bootstrapadmin", [FromQuery]string? branchName = "master", [FromQuery]string? label = "custom badge", [FromQuery]string? color = "orange")
         {
             var ret = await GetJsonAsync(() => client.HttpClient.GetAsJsonAsync<AppveyorBuildResult>($"https://ci.appveyor.com/api/projects/{userName}/{projName}/branch/{branchName}", null, new CancellationTokenSource(10000).Token), content =>
             {
@@ -126,7 +126,7 @@ namespace Bootstrap.Admin.Controllers.Api
             /// <summary>
             /// Appveyor 编译版本实例
             /// </summary>
-            public Build Build { get; set; }
+            public Build Build { get; set; } = new Build();
         }
 
         private class Build
@@ -134,7 +134,7 @@ namespace Bootstrap.Admin.Controllers.Api
             /// <summary>
             /// Build 版本信息
             /// </summary>
-            public string Version { get; set; }
+            public string Version { get; set; } = "";
         }
     }
 }

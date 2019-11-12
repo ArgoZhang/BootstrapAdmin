@@ -38,13 +38,17 @@ namespace Bootstrap.Admin.Controllers
         public bool Put([FromBody]User value)
         {
             var ret = false;
-            if (value.UserStatus == UserStates.ApproveUser)
+            var userName = User.Identity.Name;
+            if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(value.Id))
             {
-                ret = UserHelper.Approve(value.Id, User.Identity.Name);
-            }
-            else if (value.UserStatus == UserStates.RejectUser)
-            {
-                ret = UserHelper.Reject(value.Id, User.Identity.Name);
+                if (value.UserStatus == UserStates.ApproveUser)
+                {
+                    ret = UserHelper.Approve(value.Id, userName);
+                }
+                else if (value.UserStatus == UserStates.RejectUser)
+                {
+                    ret = UserHelper.Reject(value.Id, userName);
+                }
             }
             return ret;
         }
