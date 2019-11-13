@@ -7,7 +7,7 @@ using System.Linq;
 namespace Bootstrap.Admin.Controllers
 {
     /// <summary>
-    /// 
+    /// 新用户注册控制器
     /// </summary>
     [Route("api/[controller]")]
     [Authorize]

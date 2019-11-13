@@ -15,7 +15,7 @@ namespace Bootstrap.Admin.Controllers.Api
     public class CategoryController : ControllerBase
     {
         /// <summary>
-        /// 获取字典表中所有Category数据
+        /// 获取字典表中所有 Category 数据
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -26,7 +26,7 @@ namespace Bootstrap.Admin.Controllers.Api
         }
 
         /// <summary>
-        /// 
+        /// 获取所有菜单数据
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -36,7 +36,7 @@ namespace Bootstrap.Admin.Controllers.Api
         }
 
         /// <summary>
-        /// 
+        /// 获取所有父级菜单数据
         /// </summary>
         /// <returns></returns>
         [HttpGet]

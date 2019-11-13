@@ -80,12 +80,12 @@ namespace Bootstrap.Admin.Controllers.Api
         }
 
         /// <summary>
-        /// 
+        /// 查询服务器端日志文件参数类
         /// </summary>
         public class ExceptionFileQuery
         {
             /// <summary>
-            /// 
+            /// 获取/设置 文件名称
             /// </summary>
             public string FileName { get; set; } = "";
         }

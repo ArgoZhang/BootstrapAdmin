@@ -36,10 +36,10 @@ namespace Bootstrap.DataAccess
 
         private static bool UserChecker(User user)
         {
-            if (user.Description?.Length > 500) user.Description = user.Description.Substring(0, 500);
-            if (user.UserName?.Length > 16) user.UserName = user.UserName.Substring(0, 16);
-            if (user.Password?.Length > 50) user.Password = user.Password.Substring(0, 50);
-            if (user.DisplayName?.Length > 20) user.DisplayName = user.DisplayName.Substring(0, 20);
+            if (user.Description.Length > 500) user.Description = user.Description.Substring(0, 500);
+            if (user.UserName.Length > 16) user.UserName = user.UserName.Substring(0, 16);
+            if (user.Password.Length > 50) user.Password = user.Password.Substring(0, 50);
+            if (user.DisplayName.Length > 20) user.DisplayName = user.DisplayName.Substring(0, 20);
             var pattern = @"^[a-zA-Z0-9_@.]*$";
             return Regex.IsMatch(user.UserName, pattern);
         }

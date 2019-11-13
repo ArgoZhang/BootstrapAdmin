@@ -9,7 +9,7 @@ using System.Collections.Generic;
 namespace Bootstrap.Admin.Controllers.Api
 {
     /// <summary>
-    /// 
+    /// 网站设置控制器
     /// </summary>
     [Route("api/[controller]")]
     [Authorize]
@@ -17,7 +17,7 @@ namespace Bootstrap.Admin.Controllers.Api
     public class SettingsController : ControllerBase
     {
         /// <summary>
-        /// 
+        /// 保存网站设置方法
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
@@ -26,7 +26,7 @@ namespace Bootstrap.Admin.Controllers.Api
         public bool Post([FromBody]BootstrapDict value) => DictHelper.SaveSettings(value);
 
         /// <summary>
-        /// 
+        /// 获取网站缓存站点集合
         /// </summary>
         [HttpGet]
         public IEnumerable<ICacheCorsItem> Get() => CacheManager.CorsSites;

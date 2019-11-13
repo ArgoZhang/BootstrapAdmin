@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Bootstrap.Admin.Controllers.Api
 {
     /// <summary>
-    /// 
+    /// 字典表维护控制器
     /// </summary>
     [Route("api/[controller]")]
     [Authorize]
@@ -18,7 +18,7 @@ namespace Bootstrap.Admin.Controllers.Api
     public class DictsController : ControllerBase
     {
         /// <summary>
-        /// 
+        /// 获取所有字典表数据方法
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
@@ -28,7 +28,7 @@ namespace Bootstrap.Admin.Controllers.Api
             return value.RetrieveData();
         }
         /// <summary>
-        /// 
+        /// 保存字典方法
         /// </summary>
         /// <param name="value"></param>
         [HttpPost]
@@ -38,7 +38,7 @@ namespace Bootstrap.Admin.Controllers.Api
             return DictHelper.Save(value);
         }
         /// <summary>
-        /// 
+        /// 删除字典项方法
         /// </summary>
         /// <param name="value"></param>
         [HttpDelete]

@@ -7,7 +7,7 @@ using System.Linq;
 namespace Bootstrap.Admin.Controllers.Api
 {
     /// <summary>
-    ///
+    /// 任务管理控制器
     /// </summary>
     [Route("api/[controller]")]
     [Authorize]
@@ -15,7 +15,7 @@ namespace Bootstrap.Admin.Controllers.Api
     public class TasksController : ControllerBase
     {
         /// <summary>
-        ///
+        /// 获取所有任务数据
         /// </summary>
         /// <returns></returns>
         [HttpGet]

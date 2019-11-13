@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Bootstrap.Admin.Controllers.Api
 {
     /// <summary>
-    ///
+    /// 任务日志控制器
     /// </summary>
     [Route("api/[controller]")]
     [Authorize]
