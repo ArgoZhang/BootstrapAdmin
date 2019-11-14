@@ -119,6 +119,12 @@
             if (value !== undefined) attrs.push({ name: v, value: value });
         });
 
+        var disabled = this.$element.prop('disabled');
+        // set disabled property
+        if (disabled) {
+            this.disabled();
+        }
+
         // replace element select -> input hidden
         this.$element.remove();
         this.$element = $('<input type="hidden" data-toggle="lgbSelect" />').val(that.val()).insertBefore(this.$input);
