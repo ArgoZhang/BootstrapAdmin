@@ -340,4 +340,22 @@ $(function () {
         var val = defaultVal === $app.val() ? '0' : '1';
         $category.lgbSelect('val', val);
     })
+
+    if ($.isFunction($.validator)) {
+        $.validator.addMethod("menuChild", function (value, element) {
+            var id = $("#menuID").val();
+            var check = id === "" || value === "菜单";
+            if (!check) {
+                $.get({
+                    url: $.formatUrl('api/Category/ValidateMenuBySubMenu/' + id),
+                    async: false,
+                    cache: false,
+                    success: function (result) {
+                        check = result
+                    }
+                });
+            }
+            return check;
+        }, "拥有子菜单时菜单类型不可更改为资源或者按钮");
+    }
 });

@@ -44,5 +44,15 @@ namespace Bootstrap.Admin.Controllers.Api
         {
             return MenuHelper.RetrieveMenus(User.Identity.Name).Where(m => m.Menus.Count() > 0).OrderBy(m => m.Name).Select(m => m.Name);
         }
+
+        /// <summary>
+        /// 通过指定菜单检查子菜单是否有子菜单
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("{id}")]
+        public bool ValidateMenuBySubMenu(string id)
+        {
+            return !MenuHelper.RetrieveAllMenus(User.Identity.Name).Where(m => m.ParentId == id).Any();
+        }
     }
 }

@@ -114,7 +114,7 @@
 
         // save attributes
         var attrs = [];
-        ["id", "name", "data-default-val"].forEach(function (v, index) {
+        ["id", "name", "class", "data-valid", "data-default-val"].forEach(function (v, index) {
             var value = that.$element.attr(v);
             if (value !== undefined) attrs.push({ name: v, value: value });
         });
