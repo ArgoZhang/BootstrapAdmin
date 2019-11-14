@@ -333,4 +333,11 @@ $(function () {
             });
         }
     });
+
+    // 所属应用更新是联动菜单类别
+    var $app = $('#app').on('changed.lgbSelect', function (e) {
+        var defaultVal = $app.attr('data-default-val');
+        var val = defaultVal === $app.val() ? '0' : '1';
+        $category.lgbSelect('val', val);
+    })
 });
