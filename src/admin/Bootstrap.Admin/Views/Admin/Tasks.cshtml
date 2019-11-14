@@ -1,80 +1,86 @@
 ﻿@model TaskModel
 @{
     ViewBag.Title = "任务管理";
-    Layout = "_Default";
+    Layout = "_Admin";
 }
 @section css {
+    <environment include="Development">
+        <link href="~/lib/bootstrap-table/bootstrap-table.css" rel="stylesheet" />
+    </environment>
+    <environment exclude="Development">
+        <link href="~/lib/bootstrap-table/bootstrap-table.min.css" rel="stylesheet" />
+    </environment>
     <link href="~/lib/longbow-select/longbow-select.css" rel="stylesheet" />
     <link href="~/css/tasks.css" rel="stylesheet" asp-append-version="true" />
 }
 @section javascript {
+    <environment include="Development">
+        <script src="~/lib/bootstrap-table/bootstrap-table.js"></script>
+        <script src="~/lib/bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
+        <script src="~/lib/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+        <script src="~/lib/tablexport/tableExport.js"></script>
+        <script src="~/lib/validate/jquery.validate.js"></script>
+        <script src="~/lib/validate/localization/messages_zh.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/lib/bootstrap-table/bootstrap-table.min.js"></script>
+        <script src="~/lib/bootstrap-table/extensions/export/bootstrap-table-export.min.js"></script>
+        <script src="~/lib/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+        <script src="~/lib/tablexport/tableExport.min.js"></script>
+        <script src="~/lib/validate/jquery.validate.min.js"></script>
+        <script src="~/lib/validate/localization/messages_zh.min.js"></script>
+    </environment>
+    <script src="~/lib/longbow-checkbox/longbow-checkbox.js"></script>
     <script src="~/lib/longbow-select/longbow-select.js"></script>
+    <script src="~/lib/longbow/longbow.dataentity.js" asp-append-version="true"></script>
+    <script src="~/lib/longbow/longbow.validate.js" asp-append-version="true"></script>
     <script src="~/js/tasks.js" asp-append-version="true"></script>
 }
-@section tableButtons {
-    <button class='info btn btn-sm btn-info' asp-auth="info"><i class='fa fa-info'></i><span>日志</span></button>
-}
-@section cardbody {
-    <div class="alert alert-danger" role="alert" asp-condition="@Model.IsDemo">
-        <span>演示系统禁止修改定时后台任务</span>
-    </div>
-}
-@section query {
-    <div class="alert alert-info">
-        <p class="font-weight-bold">后台任务说明：</p>
-        <p>1. 默认任务 (立即执行，仅执行一次)</p>
-        <p>
-            <code>
-                TaskServicesManager.GetOrAdd("简单任务", token => Task.Delay(1000));
-            </code>
-        </p>
-        <p>2. 周期性任务 (1 分钟后间隔 5 秒执行 2 次任务)</p>
-        <p>
-            <code>
-                var trigger = TriggerBuilder.Default.WithInterval(TimeSpan.FromSeconds(5)).WithRepeatCount(2).WithStartTime(DateTimeOffset.Now.AddMinutes(1)).Build();
-                <br />
-                TaskServicesManager.GetOrAdd("测试任务", token => Task.Delay(1000), trigger);
-            </code>
-        </p>
-        <p>3. Cron 表达式任务 (间隔 5 秒循环执行任务)</p>
-        <p>
-            <code>
-                TaskServicesManager.GetOrAdd("Cron 表达式任务", token => Task.Delay(1000), TriggerBuilder.Build("*/5 * * * * *"));
-            </code>
-        </p>
-    </div>
-}
 @section modal {
-    <div class="modal-header">
-        <h5 class="modal-title" id="myModalLabel">任务编辑窗口</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    </div>
-    <div class="modal-body">
-        <form class="form-inline">
-            <div class="row">
-                <input type="hidden" id="taskID" />
-                <div class="form-group col-12">
-                    <label class="control-label" for="taskName">任务名称</label>
-                    <input type="text" class="form-control flex-sm-fill" id="taskName" placeholder="不可为空，50字以内" maxlength="50" data-valid="true" />
+    <div class="modal fade" id="dialogNew" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content" data-toggle="LgbValidate" data-valid-button="#btnSubmit" data-valid-modal="#dialogNew">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myModalLabel">任务编辑窗口</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
-                <div class="form-group col-12">
-                    <label class="control-label" for="taskCron">Cron表达式</label>
-                    <input type="text" class="form-control flex-sm-fill" id="taskCron" placeholder="不可为空，2000字以内" maxlength="2000" data-valid="true" />
+                <div class="modal-body">
+                    <form class="form-inline">
+                        <div class="row">
+                            <input type="hidden" id="taskID" />
+                            <div class="form-group col-12">
+                                <label class="control-label" for="taskName">任务名称</label>
+                                <input type="text" class="form-control flex-sm-fill" id="taskName" placeholder="不可为空，50字以内" maxlength="50" data-valid="true" />
+                            </div>
+                            <div class="form-group col-12">
+                                <label class="control-label" for="taskCron">Cron表达式</label>
+                                <input type="text" class="form-control flex-sm-fill" id="taskCron" placeholder="不可为空，2000字以内" maxlength="2000" data-valid="true" />
+                            </div>
+                            <div class="form-group col-12">
+                                <label class="control-label" for="taskContent">内置任务</label>
+                                <select id="taskList" data-toggle="lgbSelect">
+                                    @foreach (var name in Model.Tasks)
+                                    {
+                                        <option value="@name">@name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <div class="form-group col-12">
-                    <label class="control-label" for="taskContent">内置任务</label>
-                    <select id="taskList" data-toggle="lgbSelect">
-                        @foreach (var name in Model.Tasks)
-                        {
-                            <option value="@name">@name</option>
-                        }
-                    </select>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        <i class="fa fa-times"></i>
+                        <span>关闭</span>
+                    </button>
+                    <button type="button" class="btn btn-primary" id="btnSubmit">
+                        <i class="fa fa-save"></i>
+                        <span>保存</span>
+                    </button>
                 </div>
             </div>
-        </form>
+        </div>
     </div>
-}
-@section customModal {
     <div class="modal fade" id="dialogLog" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="taskModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
@@ -98,3 +104,49 @@
         </div>
     </div>
 }
+<div class="card">
+    <div class="card-header">任务介绍</div>
+    <div class="card-body">
+        <div class="alert alert-info">
+            <p class="font-weight-bold">后台任务说明：</p>
+            <p>1. 默认任务 (立即执行，仅执行一次)</p>
+            <p>
+                <code>
+                    TaskServicesManager.GetOrAdd("简单任务", token => Task.Delay(1000));
+                </code>
+            </p>
+            <p>2. 周期性任务 (1 分钟后间隔 5 秒执行 2 次任务)</p>
+            <p>
+                <code>
+                    var trigger = TriggerBuilder.Default.WithInterval(TimeSpan.FromSeconds(5)).WithRepeatCount(2).WithStartTime(DateTimeOffset.Now.AddMinutes(1)).Build();
+                    <br />
+                    TaskServicesManager.GetOrAdd("测试任务", token => Task.Delay(1000), trigger);
+                </code>
+            </p>
+            <p>3. Cron 表达式任务 (间隔 5 秒循环执行任务)</p>
+            <div>
+                <code>
+                    TaskServicesManager.GetOrAdd("Cron 表达式任务", token => Task.Delay(1000), TriggerBuilder.Build("*/5 * * * * *"));
+                </code>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-header">
+        查询结果
+    </div>
+    <div class="card-body">
+        <div class="alert alert-danger" role="alert" asp-condition="@Model.IsDemo">
+            <span>演示系统禁止修改定时后台任务</span>
+        </div>
+        <table></table>
+    </div>
+</div>
+<div id="tableButtons" class="d-none">
+    <div class='btn-group'>
+        <button class='pause btn btn-sm btn-danger' asp-auth="pause"><i class='fa fa-pause-circle'></i><span>暂停</span></button>
+        <button class='run btn btn-sm btn-success' asp-auth="pause"><i class='fa fa-play-circle'></i><span>运行</span></button>
+        <button class='info btn btn-sm btn-info' asp-auth="info"><i class='fa fa-info-circle'></i><span>日志</span></button>
+    </div>
+</div>

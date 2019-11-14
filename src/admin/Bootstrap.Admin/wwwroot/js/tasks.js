@@ -11,7 +11,7 @@
             content = $.format(template, 'success', 'play-circle', '运行中');
         }
         else if (value === "Disabled") {
-            content = $.format(template, 'danger', 'times-circle', '已禁用');
+            content = $.format(template, 'danger', 'times-circle', '已停止');
         }
         return content;
     };
@@ -33,7 +33,7 @@
         return content;
     };
 
-    $('.card-body table').lgbTable({
+    var $task = $('.card-body table').lgbTable({
         url: Tasks.url,
         dataBinder: {
             map: {
@@ -93,6 +93,22 @@
                             },
                             onclose: function (error) {
                                 console.log(error);
+                            }
+                        });
+                    },
+                    'click .pause': function (e, value, row, index) {
+                        $.bc({
+                            url: 'api/Tasks/' + row.Name + "?operType=" + "pause", method: 'put',
+                            callback: function (result) {
+                                if (result) $task.bootstrapTable('refresh');
+                            }
+                        });
+                    },
+                    'click .run': function (e, value, row, index) {
+                        $.bc({
+                            url: 'api/Tasks/' + row.Name + "?operType=" + "run", method: 'put',
+                            callback: function (result) {
+                                if (result) $task.bootstrapTable('refresh');
                             }
                         });
                     }

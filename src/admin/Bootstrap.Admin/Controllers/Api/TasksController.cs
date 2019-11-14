@@ -23,5 +23,18 @@ namespace Bootstrap.Admin.Controllers.Api
         {
             return TaskServicesManager.ToList().Select(s => new { s.Name, Status = s.Status.ToString(), s.LastRuntime, s.CreatedTime, s.NextRuntime, LastRunResult = s.Triggers.First().LastResult.ToString(), TriggerExpression = s.Triggers.FirstOrDefault().ToString() }).OrderBy(s => s.Name);
         }
+
+        /// <summary>
+        /// 任务相关操作
+        /// </summary>
+        /// <param name="scheName">调度名称</param>
+        /// <param name="operType">操作方式 pause run</param>
+        [HttpPut("{scheName}")]
+        public bool Put(string scheName, [FromQuery]string operType)
+        {
+            var sche = TaskServicesManager.Get(scheName);
+            if (sche != null) sche.Status = operType == "pause" ? SchedulerStatus.Disabled : SchedulerStatus.Running;
+            return true;
+        }
     }
 }

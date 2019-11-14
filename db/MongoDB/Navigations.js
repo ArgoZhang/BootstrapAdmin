@@ -612,6 +612,30 @@
         "Application": "BA"
     },
     {
+        "_id": ObjectId("1bd7b8445fa31256f77e4b9c"),
+        "ParentId": "5bd7b8445fa31256f77e4b9a",
+        "Name": "暂停",
+        "Order": NumberInt(20),
+        "Icon": "fa fa-fa",
+        "Url": "pause",
+        "Category": "0",
+        "Target": "_self",
+        "IsResource": NumberInt(2),
+        "Application": "BA"
+    },
+    {
+        "_id": ObjectId("1bd7b8445fa31256f77e4b9d"),
+        "ParentId": "5bd7b8445fa31256f77e4b9a",
+        "Name": "日志",
+        "Order": NumberInt(30),
+        "Icon": "fa fa-fa",
+        "Url": "info",
+        "Category": "0",
+        "Target": "_self",
+        "IsResource": NumberInt(2),
+        "Application": "BA"
+    },
+    {
         "_id": ObjectId("5bd7b8445fa31256f77e4b9b"),
         "ParentId": "0",
         "Name": "通知管理",

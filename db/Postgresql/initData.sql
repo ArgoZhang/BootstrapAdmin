@@ -111,6 +111,8 @@ INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (currval('navigations_id_seq') - 3, '删除', 30, 'fa fa-fa', 'del', '0', 2);
 INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (0, '站内消息', 100, 'fa fa-envelope', '~/Admin/Messages', '0');
 INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (0, '任务管理', 110, 'fa fa fa-tasks', '~/Admin/Tasks', '0');
+INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (currval('navigations_id_seq') - 1, '暂停', 10, 'fa fa-fa', 'pause', '0', 2);
+INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (currval('navigations_id_seq') - 2, '日志', 20, 'fa fa-fa', 'info', '0', 2);
 INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (0, '通知管理', 120, 'fa fa-bell', '~/Admin/Notifications', '0');
 INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (0, '系统日志', 130, 'fa fa-gears', '#', '0');
 INSERT INTO Navigations (ParentId, Name, "order", Icon, Url, Category) VALUES (currval('navigations_id_seq') - 1, 0, '操作日志', 10, 'fa fa-edit', '~/Admin/Logs', '0');
