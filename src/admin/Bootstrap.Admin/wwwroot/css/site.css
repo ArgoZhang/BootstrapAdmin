@@ -353,6 +353,10 @@ body.trans-mute * {
         right: 45px;
     }
 
+li.is-disabled .dd3-content {
+    color: #c0c4cc;
+}
+
 @media (max-width: 480px) {
     .dd3-content .menuType {
         display: none;

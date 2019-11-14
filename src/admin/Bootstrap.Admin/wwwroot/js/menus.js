@@ -217,7 +217,7 @@ $(function () {
         $btnSubmitMenu.data('type', 'parent');
         $nestMenuInput.find('label:last').find('input').show();
         $nestMenu.find('li.dd-item').hide().remove('[data-id="0"]');
-        $nestMenu.find('li[data-resource!="0"]').find(':radio').prop('disabled', true)
+        $nestMenu.find('li[data-resource!="0"]').addClass('is-disabled').find(':radio').prop('disabled', true)
         $nestMenu.find('li[data-category="' + $category.val() + '"]').show();
         showDialog();
     });
