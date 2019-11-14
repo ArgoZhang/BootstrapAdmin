@@ -135,21 +135,35 @@ namespace Bootstrap.DataAccess
         }
 
         /// <summary>
-        /// 
+        /// 通过指定菜单 ID 保存角色集合数据
         /// </summary>
         /// <param name="menuId"></param>
         /// <param name="roleIds"></param>
         /// <returns></returns>
         public virtual bool SavaByMenuId(string menuId, IEnumerable<string> roleIds)
         {
+            // 参数 id 可能是子菜单
+            // https://gitee.com/LongbowEnterprise/dashboard/issues?id=IQW93
+
             var ret = false;
             using var db = DbManager.Create();
             db.BeginTransaction();
             try
             {
-                // delete role from config table
-                db.Execute("delete from NavigationRole where NavigationID = @0", menuId);
-                db.InsertBatch("NavigationRole", roleIds.Select(g => new { NavigationID = menuId, RoleID = g }));
+                string? parentId = menuId;
+                if (!string.IsNullOrEmpty(parentId))
+                {
+                    do
+                    {
+                        // delete role from config table
+                        db.Execute("delete from NavigationRole where NavigationID = @0", parentId);
+                        db.InsertBatch("NavigationRole", roleIds.Select(g => new { NavigationID = parentId, RoleID = g }));
+
+                        // find parent Menu Id
+                        parentId = db.ExecuteScalar<string?>("select ParentId from Navigations Where Id = @0", parentId);
+                    }
+                    while (!string.IsNullOrEmpty(parentId) && parentId != "0");
+                }
                 db.CompleteTransaction();
                 ret = true;
             }
