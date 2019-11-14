@@ -183,7 +183,7 @@
                     callback: function (result) {
                         if (result) {
                             $(options.bootstrapTable).bootstrapTable('refresh');
-                            handlerCallback.call(that, null, element, { oper: 'save', success: result, data: options.data });
+                            handlerCallback.call(that, null, element, { oper: 'save', success: result, data: [options.data] });
                         }
                     }
                 });
