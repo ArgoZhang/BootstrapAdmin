@@ -44,5 +44,25 @@ namespace Bootstrap.Admin.Controllers.Api
         {
             return MenuHelper.RetrieveMenus(User.Identity.Name).Where(m => m.Menus.Count() > 0).OrderBy(m => m.Name).Select(m => m.Name);
         }
+
+        /// <summary>
+        /// 通过指定菜单检查子菜单是否有子菜单
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("{id}")]
+        public bool ValidateMenuBySubMenu(string id)
+        {
+            return !MenuHelper.RetrieveAllMenus(User.Identity.Name).Where(m => m.ParentId == id).Any();
+        }
+
+        /// <summary>
+        /// 通过指定菜单检查父级菜单是否为菜单类型 资源与按钮返回 false
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("{id}")]
+        public bool ValidateParentMenuById(string id)
+        {
+            return MenuHelper.RetrieveAllMenus(User.Identity.Name).FirstOrDefault(m => m.Id == id)?.IsResource == 0;
+        }
     }
 }

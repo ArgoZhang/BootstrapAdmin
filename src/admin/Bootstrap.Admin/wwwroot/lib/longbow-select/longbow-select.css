@@ -50,6 +50,10 @@
     cursor: not-allowed;
 }
 
+.form-select.is-disabled .form-select-append {
+    color: #c0c4cc;
+}
+
 .form-select-input {
     color: #606266;
     outline: none;
