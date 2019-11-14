@@ -114,7 +114,7 @@
 
         // save attributes
         var attrs = [];
-        ["id", "data-default-val"].forEach(function (v, index) {
+        ["id", "name", "data-default-val"].forEach(function (v, index) {
             var value = that.$element.attr(v);
             if (value !== undefined) attrs.push({ name: v, value: value });
         });
@@ -139,11 +139,14 @@
         this.$input.removeAttr('disabled');
     };
 
-    _proto.reset = function (value) {
+    _proto.reset = function (value, init) {
         var that = this;
 
         // keep old value
         var oldValue = this.$input.attr('value');
+
+        // default select value
+        if (init == undefined) init = true;
 
         // warning: must use attr('value') method instead of val(). otherwise the others input html element will filled by first element value.
         // see https://gitee.com/LongbowEnterprise/longbow-select/issues/IZ3BR?from=project-issue
@@ -153,10 +156,12 @@
         $.each(value, function (index) {
             var $item = $('<a class="dropdown-item" href="#" data-val="' + this.value + '">' + this.text + '</a>');
             that.$menus.append($item);
-            if (this.selected === true || this.value === oldValue || index === 0 || this.value === that.$element.attr('data-default-val')) {
-                that.$input.attr('value', this.text);
-                that.$element.val(this.value).attr('data-text', this.text);
-                $activeItem = $item;
+            if (init) {
+                if (this.selected === true || this.value === oldValue || index === 0 || this.value === that.$element.attr('data-default-val')) {
+                    that.$input.attr('value', this.text);
+                    that.$element.val(this.value).attr('data-text', this.text);
+                    $activeItem = $item;
+                }
             }
         });
         if ($activeItem !== null) $activeItem.addClass('active');
