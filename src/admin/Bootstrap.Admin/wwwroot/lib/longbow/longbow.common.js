@@ -125,6 +125,19 @@
                 document.webkitIsFullScreen || window.fullscreen ||
                 false;
         },
+        remoteValidate: function (url, method) {
+            if (method === undefined) method = 'get';
+            var check = false;
+            jQuery[method]({
+                url: $.formatUrl(url),
+                async: false,
+                cache: false,
+                success: function (result) {
+                    check = result
+                }
+            });
+            return check;
+        },
         bc: function (options) {
             options = $.extend({
                 id: "",

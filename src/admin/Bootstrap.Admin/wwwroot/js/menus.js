@@ -217,6 +217,7 @@ $(function () {
         $btnSubmitMenu.data('type', 'parent');
         $nestMenuInput.find('label:last').find('input').show();
         $nestMenu.find('li.dd-item').hide().remove('[data-id="0"]');
+        $nestMenu.find('li[data-resource!="0"]').find(':radio').prop('disabled', true)
         $nestMenu.find('li[data-category="' + $category.val() + '"]').show();
         showDialog();
     });
@@ -240,8 +241,16 @@ $(function () {
         var type = $(this).data('type');
         switch (type) {
             case "parent":
-                $parentMenuID.val($('.dd3-content :radio:checked').val());
-                $parentMenuName.val($('.dd3-content :radio:checked').next('span').text());
+                // 父级菜单不可以是资源或者按钮类型
+                var pId = $('.dd3-content :radio:checked').val();
+                var check = $.remoteValidate('api/Category/ValidateParentMenuById/' + pId);
+                if (check) {
+                    $parentMenuID.val(pId);
+                    $parentMenuName.val($('.dd3-content :radio:checked').next('span').text());
+                }
+                else {
+                    return false;
+                }
                 break;
             case "order":
                 var data = $nestMenu.find('li:visible');
@@ -344,17 +353,7 @@ $(function () {
     if ($.isFunction($.validator)) {
         $.validator.addMethod("menuChild", function (value, element) {
             var id = $("#menuID").val();
-            var check = id === "" || value === "菜单";
-            if (!check) {
-                $.get({
-                    url: $.formatUrl('api/Category/ValidateMenuBySubMenu/' + id),
-                    async: false,
-                    cache: false,
-                    success: function (result) {
-                        check = result
-                    }
-                });
-            }
+            var check = id === "" || value === "菜单" || $.remoteValidate('api/Category/ValidateMenuBySubMenu/' + id);
             return check;
         }, "拥有子菜单时菜单类型不可更改为资源或者按钮");
     }
