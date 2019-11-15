@@ -1,4 +1,5 @@
-﻿using Longbow.Tasks;
+﻿using Bootstrap.DataAccess;
+using Longbow.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -34,6 +35,13 @@ namespace Bootstrap.Admin.Controllers.Api
         {
             var sche = TaskServicesManager.Get(scheName);
             if (sche != null) sche.Status = operType == "pause" ? SchedulerStatus.Disabled : SchedulerStatus.Running;
+
+            // SQL 日志任务特殊处理
+            if (scheName == "SQL日志")
+            {
+                if (operType == "pause") LogHelper.Pause();
+                else LogHelper.Run();
+            }
             return true;
         }
     }

@@ -49,11 +49,22 @@ namespace Bootstrap.DataAccess
         /// <param name="log"></param>
         public static System.Threading.Tasks.Task AddDBLog(DBLog log) => System.Threading.Tasks.Task.Run(() =>
         {
-            if (!_messageQueue.IsAddingCompleted)
+            if (!_messageQueue.IsAddingCompleted && !_pause)
             {
                 _messageQueue.Add(log);
             }
         });
+
+        private static bool _pause;
+        /// <summary>
+        /// 暂停接收脚本执行日志
+        /// </summary>
+        public static void Pause() => _pause = true;
+
+        /// <summary>
+        /// 开始接收脚本执行日志
+        /// </summary>
+        public static void Run() => _pause = false;
 
         /// <summary>
         /// 查询所有SQL日志信息
@@ -80,7 +91,8 @@ namespace Bootstrap.DataAccess
                 var logs = new List<DBLog>();
                 while (_messageQueue.TryTake(out var log))
                 {
-                    logs.Add(log);
+                    if (log != null) logs.Add(log);
+                    if (logs.Count >= 100) break;
                 }
                 if (logs.Any())
                 {
