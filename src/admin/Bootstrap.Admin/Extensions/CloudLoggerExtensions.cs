@@ -54,7 +54,7 @@ namespace Microsoft.Extensions.DependencyInjection
             {
                 if (!string.IsNullOrEmpty(option.Url))
                 {
-                    try { await httpClient.PostAsJsonAsync(option.Url, message); }
+                    try { await httpClient.PostAsJsonAsync(option.Url, message).ConfigureAwait(false); }
                     catch { }
                 }
             });

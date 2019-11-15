@@ -1,7 +1,7 @@
 (function ($) {
     $.extend({
         sendHealths: function (data) {
-            $.bc({ url: 'http://client.sdgxgz.com/api/Interface/Log', data: JSON.stringify(data), method: 'post' });
+            $.bc({ url: 'api/Interface/Healths', data: JSON.stringify(data), method: 'post' });
         }
     });
     $.fn.extend({

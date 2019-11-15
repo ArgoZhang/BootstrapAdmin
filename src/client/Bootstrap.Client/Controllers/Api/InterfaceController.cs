@@ -21,12 +21,35 @@ namespace Bootstrap.Client.Controllers.Api
         /// <param name="config"></param>
         /// <param name="message"></param>
         /// <returns></returns>
+        [HttpPost]
         public async Task<bool> Log([FromServices]IConfiguration config, [FromBody]string message)
         {
-            return await SendMailAsync(config, message);
+            return await SendMailAsync(config, "BootstrapAdmin Exception", message);
         }
 
-        private async Task<bool> SendMailAsync(IConfiguration config, string message)
+        /// <summary>
+        /// 邮件发送健康检查方法
+        /// </summary>
+        /// <param name="config"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<bool> Healths([FromServices]IConfiguration config, [FromBody]string message)
+        {
+            return await SendMailAsync(config, "Healths Report", message);
+        }
+
+        /// <summary>
+        /// 跨域握手协议
+        /// </summary>
+        /// <returns></returns>
+        [HttpOptions]
+        public string Options()
+        {
+            return string.Empty;
+        }
+
+        private async Task<bool> SendMailAsync(IConfiguration config, string title, string message)
         {
             var section = config.GetSection("SmtpClient");
             var smtpHost = section.GetValue("Host", "smtp.163.com");
@@ -40,7 +63,7 @@ namespace Bootstrap.Client.Controllers.Api
                 {
                     Credentials = new NetworkCredential(from, password)
                 };
-                await mailSender.SendMailAsync(from, to, "BootstrapAdmin Exception", message);
+                await mailSender.SendMailAsync(from, to, title, message);
             }
             return true;
         }
