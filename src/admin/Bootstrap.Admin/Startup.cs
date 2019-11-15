@@ -45,12 +45,6 @@ namespace Bootstrap.Admin
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
             services.AddLogging(logging => logging.AddFileLogger().AddDBLogger(ExceptionsHelper.Log));
             services.AddCors();
             services.AddResponseCompression();

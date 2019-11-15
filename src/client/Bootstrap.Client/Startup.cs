@@ -39,12 +39,6 @@ namespace Bootstrap.Client
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
             services.AddLogging(builder => builder.AddFileLogger());
             services.AddCors();
             services.AddResponseCompression();
