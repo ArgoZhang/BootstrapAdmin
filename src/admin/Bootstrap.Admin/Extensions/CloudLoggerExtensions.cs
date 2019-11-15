@@ -35,6 +35,7 @@ namespace Microsoft.Extensions.DependencyInjection
         private readonly HttpClient httpClient;
         private readonly IDisposable optionsReloadToken;
         private CloudLoggerOption option;
+
         /// <summary>
         /// 构造函数
         /// </summary>
@@ -43,8 +44,10 @@ namespace Microsoft.Extensions.DependencyInjection
             optionsReloadToken = options.OnChange(op => option = op);
             option = options.CurrentValue;
 
-            httpClient = new HttpClient();
-            httpClient.Timeout = TimeSpan.FromSeconds(10);
+            httpClient = new HttpClient
+            {
+                Timeout = TimeSpan.FromSeconds(10)
+            };
             httpClient.DefaultRequestHeaders.Connection.Add("keep-alive");
 
             LogCallback = new Action<string>(async message =>

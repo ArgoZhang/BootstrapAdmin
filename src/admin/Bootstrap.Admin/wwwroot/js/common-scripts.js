@@ -1,4 +1,9 @@
 (function ($) {
+    $.extend({
+        sendHealths: function (data) {
+            $.bc({ url: 'http://client.sdgxgz.com/api/Interface/Log', data: JSON.stringify(data), method: 'post' });
+        }
+    });
     $.fn.extend({
         autoScrollSidebar: function (options) {
             var option = $.extend({ target: null, offsetTop: 0 }, options);
@@ -75,7 +80,7 @@
                     var resultFormat = {
                         "Success": '<span class="badge badge-pill badge-success badge-task"><i class="fa fa-check-circle"></i><span>成功</span></span>',
                         "Timeout": '<span class="badge badge-pill badge-warning badge-task"><i class="fa fa-exclamation-circle"></i><span>超时</span></span>'
-                    }
+                    };
                     var htmlUserTemplate = '<a class="dropdown-item position-relative" href="{0}"><span class="label label-primary"><i class="fa fa-thumb-tack"></i></span><div class="content">{1}</div><div class="small italic content-task">{2}</div>{3}</a>';
                     var html = result.Tasks.map(function (u) {
                         return $.format(htmlUserTemplate, $.formatUrl('Admin/Tasks'), u.Name, u.LastRuntime, resultFormat[u.LastRunResult]);
