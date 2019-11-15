@@ -45,7 +45,7 @@ namespace Bootstrap.Admin
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
-            services.AddLogging(logging => logging.AddFileLogger().AddDBLogger(ExceptionsHelper.Log));
+            services.AddLogging(logging => logging.AddFileLogger().AddCloudLogger().AddDBLogger(ExceptionsHelper.Log));
             services.AddCors();
             services.AddResponseCompression();
 
