@@ -22,5 +22,16 @@ namespace Bootstrap.Admin.Api.SqlServer
             // for test SignalRManager.SendTaskLog
             await System.Threading.Tasks.Task.Delay(6000);
         }
+
+        [Fact]
+        public async void Put_Ok()
+        {
+            var resp = await Client.PutAsJsonAsync<string, bool>("/api/Tasks/SQL日志?operType=pause", "");
+            Assert.True(resp);
+
+            // receive log
+            var recv = await Client.PutAsJsonAsync<string, bool>("/api/Tasks/SQL日志?operType=run", "");
+            Assert.True(recv);
+        }
     }
 }
