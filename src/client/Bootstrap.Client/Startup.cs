@@ -1,9 +1,7 @@
 ﻿using Bootstrap.Client.DataAccess;
-using Longbow.Web;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Configuration;
@@ -48,7 +46,6 @@ namespace Bootstrap.Client
             services.AddBootstrapHttpClient();
             services.AddIPLocator(DictHelper.ConfigIPLocator);
             services.AddOnlineUsers();
-            services.AddAutoPublish();
             services.AddBootstrapAdminAuthentication(Configuration);
             services.AddAuthorization(options => options.DefaultPolicy = new AuthorizationPolicyBuilder().RequireBootstrapAdminAuthorizate().Build());
 
