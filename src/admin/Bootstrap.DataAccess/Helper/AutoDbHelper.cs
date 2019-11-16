@@ -8,6 +8,6 @@
         /// <summary>
         /// 数据库检查方法
         /// </summary>
-        public static void CheckDB(string folder) => DbContextManager.Create<AutoDB>()?.CheckDB(folder);
+        public static void EnsureCreated(string folder) => DbContextManager.Create<AutoDB>()?.EnsureCreated(folder);
     }
 }

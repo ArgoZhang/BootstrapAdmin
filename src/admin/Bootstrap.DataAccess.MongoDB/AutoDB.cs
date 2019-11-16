@@ -9,7 +9,7 @@
         /// 数据库检查方法
         /// <paramref name="folder"></paramref>
         /// </summary>
-        public override void CheckDB(string folder)
+        public override void EnsureCreated(string folder)
         {
             // UNDONE: 没有环境暂时未写代码
         }

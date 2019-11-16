@@ -16,7 +16,7 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 数据库检查方法
         /// </summary>
-        public virtual void CheckDB(string folder)
+        public virtual void EnsureCreated(string folder)
         {
             _folder = folder;
             using var db = Longbow.Data.DbManager.Create();
@@ -29,7 +29,7 @@ namespace Bootstrap.DataAccess
                 case "SqlServerDatabaseProvider":
                     using (var newDB = ModifyConnectionString(db))
                     {
-                        if (newDB.ExecuteScalar<int?>("select COUNT(1) from sys.databases where name = N'BootstrapAdmin'") == 0) GenerateSqlServer();
+                        if (newDB.ExecuteScalar<int?>("select COUNT(*) from sys.databases where name = N'BootstrapAdmin'") == 0) GenerateSqlServer();
                     }
                     break;
                 case "MySqlDatabaseProvider":
