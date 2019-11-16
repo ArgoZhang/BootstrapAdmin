@@ -29,13 +29,13 @@ namespace Bootstrap.DataAccess
                 case "SqlServerDatabaseProvider":
                     using (var newDB = ModifyConnectionString(db))
                     {
-                        if (newDB.ExecuteScalar<int?>("select COUNT(*) from sys.databases where name = N'BootstrapAdmin'") == 0) GenerateSqlServer();
+                        if (newDB.ExecuteScalar<int?>("select COUNT(*) from sys.databases where name = N'BootstrapAdmin'") == 0) GenerateDB();
                     }
                     break;
                 case "MySqlDatabaseProvider":
                 case "MariaDbDatabaseProvider":
                     // UNDONE: 本地没有环境此处代码未测试
-                    if (db.ExecuteScalar<int>("select count(*) from information_schema.tables where table_name ='Users' and Table_Schema = 'BootstrapAdmin'") == 0) GenerateMySql();
+                    if (db.ExecuteScalar<int>("select count(*) from information_schema.tables where table_name ='Users' and Table_Schema = 'BootstrapAdmin'") == 0) GenerateDB();
                     break;
             }
         }
@@ -72,7 +72,7 @@ namespace Bootstrap.DataAccess
             }
         }
 
-        private void GenerateSqlServer()
+        private void GenerateDB()
         {
             // 检查 install.ps1 脚本
             var file = Path.Combine(_folder, $"install.ps1");
@@ -82,11 +82,6 @@ namespace Bootstrap.DataAccess
                 var p = Process.Start(psi);
                 p.WaitForExit();
             }
-        }
-
-        private void GenerateMySql()
-        {
-            // UNDONE: 没有环境暂时未写代码
         }
     }
 }

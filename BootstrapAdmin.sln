@@ -43,6 +43,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MySQL", "MySQL", "{084E2E94-6B7D-4D3E-9BF1-6972427FBF80}"
 	ProjectSection(SolutionItems) = preProject
 		db\MySQL\initData.sql = db\MySQL\initData.sql
+		db\MySQL\install.ps1 = db\MySQL\install.ps1
 		db\MySQL\install.sh = db\MySQL\install.sh
 		db\MySQL\install.sql = db\MySQL\install.sql
 		db\MySQL\my.ini = db\MySQL\my.ini
