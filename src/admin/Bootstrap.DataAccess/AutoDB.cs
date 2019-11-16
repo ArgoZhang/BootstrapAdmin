@@ -11,31 +11,27 @@ namespace Bootstrap.DataAccess
     /// </summary>
     public class AutoDB
     {
-        private string _folder = "";
-
         /// <summary>
         /// 数据库检查方法
         /// </summary>
         public virtual void EnsureCreated(string folder)
         {
-            _folder = folder;
             using var db = Longbow.Data.DbManager.Create();
             db.CommandTimeout = 5000;
             switch (db.Provider.GetType().Name)
             {
                 case "SQLiteDatabaseProvider":
-                    if (db.ExecuteScalar<int>("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='Users'") == 0) GenerateSQLiteDB(db);
+                    if (db.ExecuteScalar<int>("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='Users'") == 0) GenerateSQLiteDB(db, folder);
                     break;
                 case "SqlServerDatabaseProvider":
                     using (var newDB = ModifyConnectionString(db))
                     {
-                        if (newDB.ExecuteScalar<int?>("select COUNT(*) from sys.databases where name = N'BootstrapAdmin'") == 0) GenerateDB();
+                        if (newDB.ExecuteScalar<int?>("select COUNT(*) from sys.databases where name = N'BootstrapAdmin'") == 0) GenerateDB(folder);
                     }
                     break;
                 case "MySqlDatabaseProvider":
                 case "MariaDbDatabaseProvider":
-                    // UNDONE: 本地没有环境此处代码未测试
-                    if (db.ExecuteScalar<int>("select count(*) from information_schema.tables where table_name ='Users' and Table_Schema = 'BootstrapAdmin'") == 0) GenerateDB();
+                    if (db.ExecuteScalar<int>("select count(*) from information_schema.tables where table_name ='Users' and Table_Schema = 'BootstrapAdmin'") == 0) GenerateDB(folder);
                     break;
             }
         }
@@ -54,9 +50,8 @@ namespace Bootstrap.DataAccess
             return new Database(string.Join(";", newsegs), provider);
         }
 
-        private void GenerateSQLiteDB(IDatabase db)
+        private void GenerateSQLiteDB(IDatabase db, string folder)
         {
-            var folder = _folder;
             var initFile = Path.Combine(folder, "Install.sql");
             if (File.Exists(initFile))
             {
@@ -72,13 +67,16 @@ namespace Bootstrap.DataAccess
             }
         }
 
-        private void GenerateDB()
+        /// <summary>
+        /// 执行建库脚本
+        /// </summary>
+        protected void GenerateDB(string folder)
         {
             // 检查 install.ps1 脚本
-            var file = Path.Combine(_folder, $"install.ps1");
+            var file = Path.Combine(folder, $"install.ps1");
             if (File.Exists(file))
             {
-                var psi = new ProcessStartInfo("powershell", $"{file} \"{_folder}\"");
+                var psi = new ProcessStartInfo("powershell", $"{file} \"{folder}\"");
                 var p = Process.Start(psi);
                 p.WaitForExit();
             }
