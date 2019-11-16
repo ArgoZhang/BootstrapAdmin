@@ -43,8 +43,8 @@
         },
         smartTable: {
             sidePagination: "client",
-            sortName: 'CreateTime',
-            sortOrder: 'desc',
+            sortName: 'Name',
+            sortOrder: 'asc',
             queryParams: function (params) { return $.extend(params, { operateType: $("#txt_operate_type").val(), OperateTimeStart: $("#txt_operate_start").val(), OperateTimeEnd: $("#txt_operate_end").val() }); },
             columns: [
                 { title: "名称", field: "Name", sortable: true },
