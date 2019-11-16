@@ -8,7 +8,7 @@
     <PackageReference Include="Bootstrap.Security.DataAccess" Version="3.0.1" />
     <PackageReference Include="Bootstrap.Security.Mvc" Version="3.0.2" />
     <PackageReference Include="Longbow" Version="3.0.1" />
-    <PackageReference Include="Longbow.Cache" Version="3.0.2" />
+    <PackageReference Include="Longbow.Cache" Version="3.0.3-beta1" />
     <PackageReference Include="Longbow.Data" Version="3.0.1" />
     <PackageReference Include="Longbow.Web" Version="3.0.1" />
     <PackageReference Include="System.Data.SqlClient" Version="4.7.0" />
