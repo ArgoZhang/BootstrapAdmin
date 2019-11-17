@@ -12,7 +12,7 @@
 
     protected override Task OnInitializedAsync()
     {
-        Model = new AdminModel(configuration.GetValue("AppId", "BA"));
+        Model = new AdminModel(configuration.GetAppId());
         return Task.CompletedTask;
     }
 }

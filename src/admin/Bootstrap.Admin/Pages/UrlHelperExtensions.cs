@@ -3,7 +3,7 @@
     /// <summary>
     /// Url 地址辅助操作类
     /// </summary>
-    public static class UrlHelper
+    public static class UrlHelperExtensions
     {
         /// <summary>
         /// 转换为 Blazor 地址
