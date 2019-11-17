@@ -26,7 +26,7 @@ namespace Bootstrap.Admin.Models
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="activeUrl"></param>
-        public NavigatorBarModel(string userName, string activeUrl = "~/Admin/Index") : base(userName)
+        public NavigatorBarModel(string? userName, string activeUrl = "~/Admin/Index") : base(userName)
         {
             Navigations = MenuHelper.RetrieveSystemMenus(UserName, activeUrl);
             var authApps = AppHelper.RetrievesByUserName(userName);

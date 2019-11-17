@@ -14,22 +14,22 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获得/设置 用户主键ID
         /// </summary>
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public string UserName { get; set; }
+        public string UserName { get; set; } = "";
 
         /// <summary>
         /// 
         /// </summary>
-        public string DisplayName { get; set; }
+        public string DisplayName { get; set; } = "";
 
         /// <summary>
         /// 
         /// </summary>
-        public string Reason { get; set; }
+        public string Reason { get; set; } = "";
 
         /// <summary>
         /// 
@@ -42,7 +42,8 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual bool Save(ResetUser user)
         {
-            DbManager.Create().Save(user);
+            using var db = DbManager.Create();
+            db.Save(user);
             return true;
         }
 
@@ -51,13 +52,21 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public virtual ResetUser RetrieveUserByUserName(string userName) => DbManager.Create().FirstOrDefault<ResetUser>("where UserName = @0 order by ResetTime desc", userName);
+        public virtual ResetUser RetrieveUserByUserName(string userName)
+        {
+            using var db = DbManager.Create();
+            return db.FirstOrDefault<ResetUser>("where UserName = @0 order by ResetTime desc", userName);
+        }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public virtual IEnumerable<KeyValuePair<DateTime, string>> RetrieveResetReasonsByUserName(string userName) => DbManager.Create().Fetch<ResetUser>("where UserName = @0 order by ResetTime desc", userName).Select(user => new KeyValuePair<DateTime, string>(user.ResetTime, user.Reason));
+        public virtual IEnumerable<KeyValuePair<DateTime, string>> RetrieveResetReasonsByUserName(string userName)
+        {
+            using var db = DbManager.Create();
+            return db.Fetch<ResetUser>("where UserName = @0 order by ResetTime desc", userName).Select(user => new KeyValuePair<DateTime, string>(user.ResetTime, user.Reason));
+        }
     }
 }

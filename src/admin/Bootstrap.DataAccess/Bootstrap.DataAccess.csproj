@@ -5,22 +5,22 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Bootstrap.Security.DataAccess" Version="3.0.1-beta3" />
-    <PackageReference Include="Bootstrap.Security.Mvc" Version="3.0.2-beta7" />
-    <PackageReference Include="Longbow" Version="3.0.0" />
-    <PackageReference Include="Longbow.Cache" Version="3.0.1-beta2" />
-    <PackageReference Include="Longbow.Data" Version="3.0.1-beta1" />
-    <PackageReference Include="Longbow.GiteeAuth" Version="3.0.1-beta1" />
-    <PackageReference Include="Longbow.GitHubAuth" Version="3.0.1-beta1" />
-    <PackageReference Include="Longbow.OAuth" Version="3.0.1" />
+    <PackageReference Include="Bootstrap.Security.DataAccess" Version="3.0.1" />
+    <PackageReference Include="Bootstrap.Security.Mvc" Version="3.0.2" />
+    <PackageReference Include="Longbow" Version="3.0.1" />
+    <PackageReference Include="Longbow.Cache" Version="3.0.3-beta1" />
+    <PackageReference Include="Longbow.Data" Version="3.0.1" />
+    <PackageReference Include="Longbow.GiteeAuth" Version="3.0.1" />
+    <PackageReference Include="Longbow.GitHubAuth" Version="3.0.1" />
+    <PackageReference Include="Longbow.OAuth" Version="3.0.2" />
     <PackageReference Include="Longbow.PetaPoco" Version="1.0.2" />
     <PackageReference Include="Longbow.Security.Cryptography" Version="1.3.0" />
-    <PackageReference Include="Longbow.Tasks" Version="3.0.0" />
-    <PackageReference Include="Longbow.Web" Version="3.0.1-beta1" />
-    <PackageReference Include="Longbow.WeChatAuth" Version="3.0.0" />
+    <PackageReference Include="Longbow.Tasks" Version="3.0.2-beta2" />
+    <PackageReference Include="Longbow.Web" Version="3.0.1" />
+    <PackageReference Include="Longbow.WeChatAuth" Version="3.0.1" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="3.0.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.7.0" />
-    <PackageReference Include="PetaPoco.Extensions" Version="3.0.0" />
+    <PackageReference Include="PetaPoco.Extensions" Version="3.0.1" />
   </ItemGroup>
 
 </Project>

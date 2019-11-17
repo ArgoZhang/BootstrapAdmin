@@ -32,20 +32,20 @@ namespace Bootstrap.Client.DataAccess
         /// 获得 IP地理位置
         /// </summary>
         /// <returns></returns>
-        public string RetrieveLocaleIPSvr() => DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "IP地理位置接口" && d.Define == 0)?.Code;
+        public string RetrieveLocaleIPSvr() => DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "IP地理位置接口" && d.Define == 0)?.Code ?? "";
 
         /// <summary>
         /// 获取 IP 地理位置查询服务缓存时长
         /// </summary>
         /// <returns></returns>
-        public string RetrieveLocaleIPSvrCachePeriod() => DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "IP请求缓存时长" && d.Define == 0)?.Code;
+        public string RetrieveLocaleIPSvrCachePeriod() => DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "IP请求缓存时长" && d.Define == 0)?.Code ?? "";
 
         /// <summary>
         /// 获得 项目是否获取登录地点 默认为 false
         /// </summary>
         /// <param name="ipSvr">服务提供名称</param>
         /// <returns></returns>
-        public string RetrieveLocaleIPSvrUrl(string ipSvr) => DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == ipSvr && d.Define == 0)?.Code;
+        public string RetrieveLocaleIPSvrUrl(string ipSvr) => DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == ipSvr && d.Define == 0)?.Code ?? "";
 
         /// <summary>
         /// 获得 是否为演示系统 默认为 false 不是演示系统

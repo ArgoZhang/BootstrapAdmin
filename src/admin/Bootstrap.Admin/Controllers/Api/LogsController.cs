@@ -42,7 +42,7 @@ namespace Bootstrap.Admin.Controllers.Api
             value.Browser = $"{agent.Browser?.Name} {agent.Browser?.Version}";
             value.OS = $"{agent.OS?.Name} {agent.OS?.Version}";
             value.City = ipLocator.Locate(value.Ip);
-            value.UserName = User.Identity.Name;
+            value.UserName = User.Identity.Name ?? string.Empty;
             return LogHelper.Save(value);
         }
     }

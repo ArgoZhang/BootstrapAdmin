@@ -7,8 +7,13 @@
     <LangVersion>latest</LangVersion>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)src\Keys\Longbow.Utility.snk</AssemblyOriginatorKeyFile>
-    <DocumentationFile>$(MSBuildProjectName).xml</DocumentationFile>
   </PropertyGroup>
+
+  <Target Condition=" $(IsWebProject) == true Or $(IsTestProject) == true" Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Message Text="Copy lic file -> $(TargetDir)" Importance="high" />
+    <Copy Condition="'$(OS)' == 'Windows_NT'" DestinationFolder="$(TargetDir)" SourceFiles="$(MSBuildThisFileDirectory)src\admin\keys\Longbow.lic" SkipUnchangedFiles="true" />
+    <Copy Condition="'$(OS)' == 'UNIX'" DestinationFolder="$(TargetDir)" SourceFiles="$(MSBuildThisFileDirectory)src/admin/keys/Longbow.lic" SkipUnchangedFiles="true" />
+  </Target>
 
   <Target Condition=" $(IsWebProject) == true " Name="PostPublish" AfterTargets="Publish">
     <Message Text="Publish lic file -> $(PublishDir)" Importance="high" />
@@ -17,13 +22,6 @@
     <Message Text="Publish db file -> $(PublishDir)" Importance="high" />
     <Copy Condition="'$(OS)' == 'Windows_NT'" DestinationFolder="$(PublishDir)" SourceFiles="$(MSBuildThisFileDirectory)src\admin\Bootstrap.Admin\BootstrapAdmin.db" SkipUnchangedFiles="true" />
     <Copy Condition="'$(OS)' == 'UNIX'" DestinationFolder="$(PublishDir)" SourceFiles="$(MSBuildThisFileDirectory)src/admin/Bootstrap.Admin/BootstrapAdmin.db" SkipUnchangedFiles="true" />
-  </Target>
-
-  <Target Condition=" $(IsWebProject) == true " Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Message Text="Copy lic file -> $(TargetDir)" Importance="high" />
-    <Copy Condition="'$(OS)' == 'Windows_NT'" DestinationFolder="$(TargetDir)" SourceFiles="$(MSBuildThisFileDirectory)src\admin\keys\Longbow.lic" SkipUnchangedFiles="true" />
-    <Message Text="Copy db file -> $(TargetDir)" Importance="high" />
-    <Copy Condition="'$(OS)' == 'UNIX'" DestinationFolder="$(TargetDir)" SourceFiles="$(MSBuildThisFileDirectory)src/admin/keys/Longbow.lic" SkipUnchangedFiles="true" />
   </Target>
 
 </Project>

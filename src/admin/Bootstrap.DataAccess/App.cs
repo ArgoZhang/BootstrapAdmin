@@ -14,17 +14,17 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获得/设置 应用程序主键ID
         /// </summary>
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
         /// <summary>
         /// 获得/设置 群组名称
         /// </summary>
-        public string AppName { get; set; }
+        public string AppName { get; set; } = "未设置";
 
         /// <summary>
         /// 获取/设置 用户群组关联状态 checked 标示已经关联 '' 标示未关联
         /// </summary>
-        public string Checked { get; set; }
+        public string Checked { get; set; } = "";
 
         /// <summary>
         /// 根据角色ID指派部门
@@ -33,7 +33,8 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual IEnumerable<App> RetrievesByRoleId(string roleId)
         {
-            var ret = DbManager.Create().Fetch<App>($"select d.Code as Id, d.Name as AppName, case ra.AppId when d.Code then 'checked' else '' end Checked from Dicts d left join RoleApp ra on d.Code = ra.AppId and ra.RoleId = @1 where d.Code > '0' and d.Category = @0", "应用程序", roleId);
+            using var db = DbManager.Create();
+            var ret = db.Fetch<App>($"select d.Code as Id, d.Name as AppName, case ra.AppId when d.Code then 'checked' else '' end Checked from Dicts d left join RoleApp ra on d.Code = ra.AppId and ra.RoleId = @1 where d.Category = @0", "应用程序", roleId);
 
             // 判断是否为Administrators
             var role = RoleHelper.Retrieves().FirstOrDefault(r => r.Id == roleId);

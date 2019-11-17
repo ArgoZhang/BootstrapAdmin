@@ -40,7 +40,7 @@ namespace Bootstrap.DataAccess
                 OS = $"{agent.OS?.Name} {agent.OS?.Version}",
                 Result = auth ? "登录成功" : "登录失败"
             };
-            return DbContextManager.Create<LoginUser>().Log(loginUser);
+            return DbContextManager.Create<LoginUser>()?.Log(loginUser) ?? false;
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Bootstrap.DataAccess
         /// <param name="startTime"></param>
         /// <param name="endTime"></param>
         /// <param name="ip"></param>
-        public static Page<LoginUser> RetrievePages(PaginationOption po, DateTime? startTime, DateTime? endTime, string ip) => DbContextManager.Create<LoginUser>().RetrieveByPages(po, startTime, endTime, ip);
+        public static Page<LoginUser> RetrievePages(PaginationOption po, DateTime? startTime, DateTime? endTime, string? ip) => DbContextManager.Create<LoginUser>()?.RetrieveByPages(po, startTime, endTime, ip) ?? new Page<LoginUser>() { Items = new List<LoginUser>() };
 
         /// <summary>
         /// 查询所有登录日志
@@ -59,9 +59,9 @@ namespace Bootstrap.DataAccess
         /// <param name="endTime"></param>
         /// <param name="ip"></param>
         /// <returns></returns>
-        public static IEnumerable<LoginUser> RetrieveAll(DateTime? startTime, DateTime? endTime, string ip)
+        public static IEnumerable<LoginUser> RetrieveAll(DateTime? startTime, DateTime? endTime, string? ip)
         {
-            return DbContextManager.Create<LoginUser>().RetrieveAll(startTime, endTime, ip);
+            return DbContextManager.Create<LoginUser>()?.RetrieveAll(startTime, endTime, ip) ?? new LoginUser[0];
         }
     }
 }

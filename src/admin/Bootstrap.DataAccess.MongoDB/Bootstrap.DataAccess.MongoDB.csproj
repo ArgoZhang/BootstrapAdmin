@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Bootstrap.Security" Version="3.0.0" />
-    <PackageReference Include="MongoDB.Driver" Version="2.9.2" />
+    <PackageReference Include="Bootstrap.Security" Version="3.0.1" />
+    <PackageReference Include="MongoDB.Driver" Version="2.9.3" />
   </ItemGroup>
 
   <ItemGroup>

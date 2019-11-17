@@ -24,7 +24,8 @@ namespace Bootstrap.DataAccess
             if (!value.Any()) return true;
             var ids = string.Join(",", value);
             string sql = $"where ID in ({ids})";
-            DbManager.Create().Delete<BootstrapDict>(sql);
+            using var db = DbManager.Create();
+            db.Delete<BootstrapDict>(sql);
             return true;
         }
 
@@ -39,7 +40,8 @@ namespace Bootstrap.DataAccess
             if (dict.Name.Length > 50) dict.Name = dict.Name.Substring(0, 50);
             if (dict.Code.Length > 2000) dict.Code = dict.Code.Substring(0, 2000);
 
-            DbManager.Create().Save(dict);
+            using var db = DbManager.Create();
+            db.Save(dict);
             return true;
         }
 
@@ -50,7 +52,8 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual bool SaveSettings(BootstrapDict dict)
         {
-            DbManager.Create().Update<BootstrapDict>("set Code = @Code where Category = @Category and Name = @Name", dict);
+            using var db = DbManager.Create();
+            db.Update<BootstrapDict>("set Code = @Code where Category = @Category and Name = @Name", dict);
             return true;
         }
 
@@ -106,7 +109,7 @@ namespace Bootstrap.DataAccess
         /// 获取头像路径
         /// </summary>
         /// <returns></returns>
-        public virtual string RetrieveIconFolderPath() => (DictHelper.RetrieveDicts().FirstOrDefault(d => d.Name == "头像路径" && d.Category == "头像地址" && d.Define == 0) ?? new BootstrapDict { Code = "~/images/uploader/" }).Code;
+        public virtual string? RetrieveIconFolderPath() => DictHelper.RetrieveDicts().FirstOrDefault(d => d.Name == "头像路径" && d.Category == "头像地址" && d.Define == 0)?.Code;
 
         /// <summary>
         /// 获得默认的前台首页地址，默认为~/Home/Index
@@ -168,20 +171,26 @@ namespace Bootstrap.DataAccess
         /// 获得 IP地理位置
         /// </summary>
         /// <returns></returns>
-        public string RetrieveLocaleIPSvr() => DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "IP地理位置接口" && d.Define == 0)?.Code;
+        public string RetrieveLocaleIPSvr() => DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "IP地理位置接口" && d.Define == 0)?.Code ?? string.Empty;
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public string RetrieveLocaleIPSvrCachePeriod() => DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "IP请求缓存时长" && d.Define == 0)?.Code;
+        public int RetrieveLocaleIPSvrCachePeriod()
+        {
+            var period = DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "IP请求缓存时长" && d.Define == 0)?.Code;
+            var ret = 10;
+            if (!string.IsNullOrEmpty(period) && int.TryParse(period, out var svrPeriod)) ret = svrPeriod;
+            return ret;
+        }
 
         /// <summary>
         /// 获得 项目是否获取登录地点 默认为false
         /// </summary>
         /// <param name="ipSvr">服务提供名称</param>
         /// <returns></returns>
-        public string RetrieveLocaleIPSvrUrl(string ipSvr) => DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == ipSvr && d.Define == 0)?.Code;
+        public string? RetrieveLocaleIPSvrUrl(string ipSvr) => DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == ipSvr && d.Define == 0)?.Code;
 
         /// <summary>
         /// 获得 访问日志保留时长 默认为1个月

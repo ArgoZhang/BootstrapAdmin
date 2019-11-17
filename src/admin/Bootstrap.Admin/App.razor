@@ -1,14 +1,6 @@
 ﻿<Router AppAssembly="@typeof(Program).Assembly">
     <Found Context="routeData">
-        <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
-            <NotAuthorized>
-                <NotAuthorizedHandler></NotAuthorizedHandler>
-            </NotAuthorized>
-            <Authorizing>
-                <h1>Authentication in progress</h1>
-                <p>Only visible while authentication is in progress.</p>
-            </Authorizing>
-        </AuthorizeRouteView>
+        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
     </Found>
     <NotFound>
         <CascadingAuthenticationState>

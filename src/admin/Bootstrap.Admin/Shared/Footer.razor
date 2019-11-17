@@ -1,16 +1,18 @@
-﻿<footer class="position-fixed">
-    <div><span id="websiteFooter">@Model.Footer</span><span asp-condition="@Model.IsDemo">（演示系统）</span></div>
+﻿@inject IConfiguration configuration
+
+<footer class="position-fixed">
+    <div><span id="websiteFooter">@Model?.Footer</span><span asp-condition="@Model?.IsDemo">（演示系统）</span></div>
     <a id="gotoTop" href="#" class="go-top" title="返回顶部" data-toggle="tooltip" data-placement="left">
         <i class="fa fa-angle-up"></i>
     </a>
 </footer>
 
 @code {
-    private AdminModel Model;
+    private AdminModel? Model;
 
     protected override Task OnInitializedAsync()
     {
-        Model = new AdminModel();
+        Model = new AdminModel(configuration.GetValue("AppId", "BA"));
         return Task.CompletedTask;
     }
 }

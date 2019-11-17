@@ -43,5 +43,12 @@ namespace Bootstrap.Admin.Api.SqlServer
             var ret = await Client.PostAsJsonAsync<AppMenuOption, IEnumerable<BootstrapMenu>>("RetrieveAppMenus", new AppMenuOption() { AppId = "Demo", UserName = "Admin", Url = "~/Admin/Index" });
             Assert.NotEmpty(ret);
         }
+
+        [Fact]
+        public async void Healths_Ok()
+        {
+            var ret = await Client.PostAsJsonAsync<string, bool>("Healths", "UnitTest");
+            Assert.False(ret);
+        }
     }
 }

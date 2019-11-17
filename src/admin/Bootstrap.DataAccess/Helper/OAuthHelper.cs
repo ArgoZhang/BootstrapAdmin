@@ -51,7 +51,7 @@ namespace Bootstrap.DataAccess
         }
 
 #if NETCOREAPP3_0
-        private static T ToObject<T>(this System.Text.Json.JsonElement element) where T: OAuthUser
+        private static T? ToObject<T>(this System.Text.Json.JsonElement element) where T : OAuthUser
         {
             var user = new OAuthUser();
             var target = element.EnumerateObject();
@@ -83,11 +83,11 @@ namespace Bootstrap.DataAccess
             {
                 ApprovedBy = "OAuth",
                 ApprovedTime = DateTime.Now,
-                DisplayName = user.Name,
-                UserName = user.Login,
+                DisplayName = user?.Name ?? "",
+                UserName = user?.Login ?? "",
                 Password = LgbCryptography.GenerateSalt(),
-                Icon = user.Avatar_Url,
-                Description = $"{context.Scheme.Name}({user.Id})"
+                Icon = user?.Avatar_Url ?? "",
+                Description = $"{context.Scheme.Name}({user?.Id})"
             };
         }
 
@@ -98,14 +98,31 @@ namespace Bootstrap.DataAccess
         /// <param name="roles"></param>
         internal static void SaveUser(User newUser, IEnumerable<string> roles)
         {
-            var uid = UserHelper.Retrieves().FirstOrDefault(u => u.UserName == newUser.UserName)?.Id;
-            if (uid != null) DbContextManager.Create<User>().Delete(new string[] { uid });
-            DbContextManager.Create<User>().Save(newUser);
-
-            // 根据配置文件设置默认角色
-            var roleIds = DbContextManager.Create<Role>().Retrieves().Where(r => roles.Any(rl => rl.Equals(r.RoleName, StringComparison.OrdinalIgnoreCase))).Select(r => r.Id);
-            DbContextManager.Create<Role>().SaveByUserId(newUser.Id, roleIds);
-            CacheCleanUtility.ClearCache(userIds: new string[0], roleIds: new string[0], cacheKey: $"{UserHelper.RetrieveUsersByNameDataKey}-{newUser.UserName}");
+            if (!string.IsNullOrEmpty(newUser.Id))
+            {
+                var uid = UserHelper.Retrieves().FirstOrDefault(u => u.UserName == newUser.UserName)?.Id;
+                var user = DbContextManager.Create<User>();
+                if (user != null)
+                {
+                    if (!string.IsNullOrEmpty(uid)) user.Delete(new string[] { uid });
+                    if (user.Save(newUser))
+                    {
+                        // 根据配置文件设置默认角色
+                        var role = DbContextManager.Create<Role>();
+                        if (role != null)
+                        {
+                            var roleIds = role.Retrieves().Where(r => roles.Any(rl => rl.Equals(r.RoleName, StringComparison.OrdinalIgnoreCase))).Select(r => r.Id);
+                            if (roleIds.Any())
+                            {
+#pragma warning disable CS8620 // 由于引用类型的可为 null 性差异，实参不能用于形参。
+                                role.SaveByUserId(newUser.Id, roleIds);
+#pragma warning restore CS8620 // 由于引用类型的可为 null 性差异，实参不能用于形参。
+                                CacheCleanUtility.ClearCache(userIds: new string[0], roleIds: new string[0], cacheKey: $"{UserHelper.RetrieveUsersByNameDataKey}-{newUser.UserName}");
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

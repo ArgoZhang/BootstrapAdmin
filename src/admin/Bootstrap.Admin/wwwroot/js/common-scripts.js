@@ -1,4 +1,9 @@
 (function ($) {
+    $.extend({
+        sendHealths: function (data) {
+            $.bc({ url: 'api/Interface/Healths', data: JSON.stringify(data), method: 'post' });
+        }
+    });
     $.fn.extend({
         autoScrollSidebar: function (options) {
             var option = $.extend({ target: null, offsetTop: 0 }, options);
@@ -75,7 +80,7 @@
                     var resultFormat = {
                         "Success": '<span class="badge badge-pill badge-success badge-task"><i class="fa fa-check-circle"></i><span>成功</span></span>',
                         "Timeout": '<span class="badge badge-pill badge-warning badge-task"><i class="fa fa-exclamation-circle"></i><span>超时</span></span>'
-                    }
+                    };
                     var htmlUserTemplate = '<a class="dropdown-item position-relative" href="{0}"><span class="label label-primary"><i class="fa fa-thumb-tack"></i></span><div class="content">{1}</div><div class="small italic content-task">{2}</div>{3}</a>';
                     var html = result.Tasks.map(function (u) {
                         return $.format(htmlUserTemplate, $.formatUrl('Admin/Tasks'), u.Name, u.LastRuntime, resultFormat[u.LastRunResult]);
@@ -131,10 +136,10 @@
         var html = "";
         $.each(menus, function (index, menu) {
             if (menu.Menus.length === 0) {
-                html += $.format('<li class="dd-item dd3-item" data-id="{0}" data-order="{4}" data-category="{3}"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><div class="checkbox"><label><input type="checkbox" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><div class="radio"><label><input type="radio" name="menu" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><span class="menuType">{5}</span><span class="menuOrder">{4}</span></div></li>', menu.Id, menu.Icon, menu.Name, menu.Category, menu.Order, formatCategoryName(menu));
+                html += $.format('<li class="dd-item dd3-item" data-id="{0}" data-order="{4}" data-category="{3}" data-resource="{6}"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><div class="checkbox"><label><input type="checkbox" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><div class="radio"><label><input type="radio" name="menu" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><span class="menuType">{5}</span><span class="menuOrder">{4}</span></div></li>', menu.Id, menu.Icon, menu.Name, menu.Category, menu.Order, formatCategoryName(menu), menu.IsResource);
             }
             else {
-                html += $.format('<li class="dd-item dd3-item" data-id="{0}" data-order="{5}" data-category="{3}"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><div class="checkbox"><label><input type="checkbox" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><div class="radio"><label><input type="radio" name="menu" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><span class="menuType">{6}</span><span class="menuOrder">{5}</span></div><ol class="dd-list">{4}</ol></li>', menu.Id, menu.Icon, menu.Name, menu.Category, cascadeSubMenu(menu.Menus), menu.Order, formatCategoryName(menu));
+                html += $.format('<li class="dd-item dd3-item" data-id="{0}" data-order="{5}" data-category="{3}" data-resource="{7}"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><div class="checkbox"><label><input type="checkbox" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><div class="radio"><label><input type="radio" name="menu" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><span class="menuType">{6}</span><span class="menuOrder">{5}</span></div><ol class="dd-list">{4}</ol></li>', menu.Id, menu.Icon, menu.Name, menu.Category, cascadeSubMenu(menu.Menus), menu.Order, formatCategoryName(menu), menu.IsResource);
             }
         });
         return html;
@@ -144,10 +149,10 @@
         var html = "";
         $.each(menus, function (index, menu) {
             if (menu.Menus.length === 0) {
-                html += $.format('<li class="dd-item dd3-item" data-id="{0}" data-order="{4}" data-category="{3}"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><div class="checkbox"><label><input type="checkbox" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><div class="radio"><label><input type="radio" name="menu" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><span class="menuType">{5}</span><span class="menuOrder">{4}</span></div></li>', menu.Id, menu.Icon, menu.Name, menu.Category, menu.Order, formatCategoryName(menu));
+                html += $.format('<li class="dd-item dd3-item" data-id="{0}" data-order="{4}" data-category="{3}" data-resource="{6}"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><div class="checkbox"><label><input type="checkbox" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><div class="radio"><label><input type="radio" name="menu" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><span class="menuType">{5}</span><span class="menuOrder">{4}</span></div></li>', menu.Id, menu.Icon, menu.Name, menu.Category, menu.Order, formatCategoryName(menu), menu.IsResource);
             }
             else {
-                html += $.format('<li class="dd-item dd3-item" data-id="{0}" data-order="{5}" data-category="{3}"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><div class="checkbox"><label><input type="checkbox" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><div class="radio"><label><input type="radio" name="menu" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><span class="menuType">{6}</span><span class="menuOrder">{5}</span></div><ol class="dd-list">{4}</ol></li>', menu.Id, menu.Icon, menu.Name, menu.Category, cascadeSubMenu(menu.Menus), menu.Order, formatCategoryName(menu));
+                html += $.format('<li class="dd-item dd3-item" data-id="{0}" data-order="{5}" data-category="{3}" data-resource="{7}"><div class="dd-handle dd3-handle"></div><div class="dd3-content"><div class="checkbox"><label><input type="checkbox" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><div class="radio"><label><input type="radio" name="menu" value="{0}"><span><i class="{1}"></i>{2}</span></label></div><span class="menuType">{6}</span><span class="menuOrder">{5}</span></div><ol class="dd-list">{4}</ol></li>', menu.Id, menu.Icon, menu.Name, menu.Category, cascadeSubMenu(menu.Menus), menu.Order, formatCategoryName(menu), menu.IsResource);
             }
         });
         return html;

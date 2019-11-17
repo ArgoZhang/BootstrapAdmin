@@ -13,34 +13,34 @@ namespace Bootstrap.Admin.Query
         /// <summary>
         /// 
         /// </summary>
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public string ParentName { get; set; }
+        public string? ParentName { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public string Category { get; set; }
+        public string? Category { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public string IsResource { get; set; }
+        public string? IsResource { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public string AppId { get; set; }
+        public string? AppId { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public QueryData<object> RetrieveData(string userName)
+        public QueryData<object> RetrieveData(string? userName)
         {
             var data = MenuHelper.RetrieveMenusByUserName(userName);
             if (!string.IsNullOrEmpty(ParentName))

@@ -14,27 +14,27 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 消息主键 数据库自增
         /// </summary>
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
         /// <summary>
         /// 标题
         /// </summary>
-        public string Title { get; set; }
+        public string Title { get; set; } = "";
 
         /// <summary>
         /// 内容
         /// </summary>
-        public string Content { get; set; }
+        public string Content { get; set; } = "";
 
         /// <summary>
         /// 发消息人
         /// </summary>
-        public string From { get; set; }
+        public string From { get; set; } = "";
 
         /// <summary>
         /// 收消息人
         /// </summary>
-        public string To { get; set; }
+        public string To { get; set; } = "";
 
         /// <summary>
         /// 消息发送时间
@@ -44,7 +44,7 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 消息状态：0-未读，1-已读 和Dict表的通知消息关联
         /// </summary>
-        public string Status { get; set; }
+        public string Status { get; set; } = "0";
 
         /// <summary>
         /// 标旗状态：0-未标旗，1-已标旗
@@ -59,31 +59,31 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 消息标签：0-一般，1-紧要 和Dict表的消息标签关联
         /// </summary>
-        public string Label { get; set; }
+        public string Label { get; set; } = "0";
 
         /// <summary>
         /// 获得/设置 标签名称
         /// </summary>
         [ResultColumn]
-        public string LabelName { get; set; }
+        public string LabelName { get; set; } = "";
 
         /// <summary>
         /// 获得/设置 时间描述 2分钟内为刚刚
         /// </summary>
         [ResultColumn]
-        public string Period { get; set; }
+        public string Period { get; set; } = "";
 
         /// <summary>
         /// 获得/设置 发件人头像
         /// </summary>
         [ResultColumn]
-        public string FromIcon { get; set; }
+        public string FromIcon { get; set; } = "";
 
         /// <summary>
         /// 获得/设置 发件人昵称
         /// </summary>
         [ResultColumn]
-        public string FromDisplayName { get; set; }
+        public string FromDisplayName { get; set; } = "";
 
         /// <summary>
         /// 所有有关userName所有消息列表
@@ -92,7 +92,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         protected virtual IEnumerable<Message> Retrieves(string userName)
         {
-            var db = DbManager.Create();
+            using var db = DbManager.Create();
             var t = db.Provider.EscapeSqlIdentifier("To");
             var f = db.Provider.EscapeSqlIdentifier("From");
             return db.Fetch<Message>($"select m.*, d.Name, u.DisplayName from Messages m left join Dicts d on m.Label = d.Code and d.Category = @0 and d.Define = 0 inner join Users u on m.{f} = u.UserName where {t} = @1 or {f} = @1 order by SendTime desc", "消息标签", userName);
@@ -167,7 +167,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual bool Save(Message msg)
         {
-            var db = DbManager.Create();
+            using var db = DbManager.Create();
             db.Save(msg);
             return true;
         }

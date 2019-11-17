@@ -11,7 +11,7 @@ namespace Bootstrap.Client.Tasks
         /// <summary>
         /// 获得/设置 提交分支信息
         /// </summary>
-        public string Ref { get; set; }
+        public string Ref { get; set; } = "";
 
         /// <summary>
         /// 获得/设置 提交信息集合
@@ -32,7 +32,7 @@ namespace Bootstrap.Client.Tasks
         /// <summary>
         /// 获得/设置 提交消息
         /// </summary>
-        public string Message { get; set; }
+        public string? Message { get; set; }
 
         /// <summary>
         /// 获得/设置 提交时间戳
@@ -42,12 +42,12 @@ namespace Bootstrap.Client.Tasks
         /// <summary>
         /// 获得/设置 提交地址
         /// </summary>
-        public string Url { get; set; }
+        public string? Url { get; set; }
 
         /// <summary>
         /// 获得/设置 提交作者
         /// </summary>
-        public GiteeAuthor Author { get; set; }
+        public GiteeAuthor Author { get; set; } = new GiteeAuthor();
     }
 
     /// <summary>
@@ -68,21 +68,21 @@ namespace Bootstrap.Client.Tasks
         /// <summary>
         /// 获得/设置 提交人名称
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; set; } = "";
 
         /// <summary>
         /// 获得/设置 提交人邮件地址
         /// </summary>
-        public string Email { get; set; }
+        public string Email { get; set; } = "";
 
         /// <summary>
         /// 获得/设置 提交人名称
         /// </summary>
-        public string UserName { get; set; }
+        public string UserName { get; set; } = "";
 
         /// <summary>
         /// 获得/设置 提交人 Gitee 地址
         /// </summary>
-        public string Url { get; set; }
+        public string Url { get; set; } = "";
     }
 }

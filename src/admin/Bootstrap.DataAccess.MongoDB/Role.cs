@@ -13,12 +13,12 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <summary>
         /// 此角色关联的所有菜单
         /// </summary>
-        public IEnumerable<string> Menus { get; set; }
+        public IEnumerable<string> Menus { get; set; } = new List<string>();
 
         /// <summary>
         /// 此角色关联的所有应用程序
         /// </summary>
-        public IEnumerable<string> Apps { get; set; }
+        public IEnumerable<string> Apps { get; set; } = new List<string>();
 
         /// <summary>
         /// 
@@ -41,9 +41,7 @@ namespace Bootstrap.DataAccess.MongoDB
                 DbManager.Roles.InsertOne(new Role()
                 {
                     RoleName = p.RoleName,
-                    Description = p.Description,
-                    Menus = new List<string>(),
-                    Apps = new List<string>()
+                    Description = p.Description
                 });
                 p.Id = DbManager.Roles.Find(r => r.RoleName == p.RoleName && r.Description == p.Description).FirstOrDefault().Id;
             }
@@ -130,7 +128,7 @@ namespace Bootstrap.DataAccess.MongoDB
         {
             var roles = RoleHelper.Retrieves().Cast<Role>().ToList();
             roles.ForEach(r => r.Checked = (r.Menus != null && r.Menus.Contains(menuId)) ? "checked" : "");
-            roles.ForEach(r => r.Menus = null);
+            roles.ForEach(r => r.Menus = new List<string>());
             return roles;
         }
 
@@ -142,26 +140,41 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <returns></returns>
         public override bool SavaByMenuId(string menuId, IEnumerable<string> roleIds)
         {
-            var roles = DbManager.Roles.Find(md => md.Menus != null && md.Menus.Contains(menuId)).ToList();
-
-            // Remove roles
-            roles.ForEach(p =>
+            // 参数 id 可能是子菜单
+            // https://gitee.com/LongbowEnterprise/dashboard/issues?id=IQW93
+            if (!string.IsNullOrEmpty(menuId))
             {
-                var menus = p.Menus == null ? new List<string>() : p.Menus.ToList();
-                menus.Remove(menuId);
-                DbManager.Roles.UpdateOne(md => md.Id == p.Id, Builders<Role>.Update.Set(md => md.Menus, menus));
-            });
+                // 找到所有包含此菜单的角色集合
+                var roles = DbManager.Roles.Find(md => md.Menus != null && md.Menus.Contains(menuId)).ToList();
 
-            roles = DbManager.Roles.Find(md => roleIds.Contains(md.Id)).ToList();
-            roles.ForEach(role =>
-            {
-                var menus = role.Menus == null ? new List<string>() : role.Menus.ToList();
-                if (!menus.Contains(menuId))
+                // 所有角色集合移除此菜单
+                roles.ForEach(p =>
                 {
-                    menus.Add(menuId);
-                    DbManager.Roles.UpdateOne(md => md.Id == role.Id, Builders<Role>.Update.Set(md => md.Menus, menus));
+                    var menus = p.Menus.ToList();
+                    menus.Remove(menuId);
+                    DbManager.Roles.UpdateOne(md => md.Id == p.Id, Builders<Role>.Update.Set(md => md.Menus, menus));
+                });
+
+                // 授权角色集合
+                string? parentId = menuId;
+                roles = DbManager.Roles.Find(md => roleIds.Contains(md.Id)).ToList();
+                do
+                {
+                    roles.ForEach(role =>
+                    {
+                        var menus = role.Menus.ToList();
+                        if (!menus.Contains(parentId))
+                        {
+                            menus.Add(parentId);
+                            DbManager.Roles.UpdateOne(md => md.Id == role.Id, Builders<Role>.Update.Set(md => md.Menus, menus));
+                        }
+                    });
+
+                    // 查找父级菜单
+                    parentId = DbManager.Menus.Find(md => md.Id == parentId).FirstOrDefault()?.ParentId;
                 }
-            });
+                while (!string.IsNullOrEmpty(parentId) && parentId != "0");
+            }
             return true;
         }
 

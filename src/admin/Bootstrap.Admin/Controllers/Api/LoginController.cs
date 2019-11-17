@@ -32,7 +32,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="user"></param>
         /// <returns></returns>
         [HttpPost]
-        public string Post([FromBody]User user)
+        public string? Post([FromBody]User user)
         {
             var token = string.Empty;
             string userName = user.UserName;
@@ -59,7 +59,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// </summary>
         /// <returns></returns>
         [HttpOptions]
-        public string Options()
+        public string? Options()
         {
             return null;
         }

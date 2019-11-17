@@ -20,8 +20,8 @@ namespace Bootstrap.DataAccess
         public virtual bool Delete(IEnumerable<string> value)
         {
             if (!value.Any()) return true;
-            var ret = false;
-            var db = DbManager.Create();
+            using var db = DbManager.Create();
+            bool ret;
             try
             {
                 db.BeginTransaction();
@@ -50,7 +50,8 @@ namespace Bootstrap.DataAccess
             if (p.Name.Length > 50) p.Name = p.Name.Substring(0, 50);
             if (p.Icon != null && p.Icon.Length > 50) p.Icon = p.Icon.Substring(0, 50);
             if (p.Url != null && p.Url.Length > 4000) p.Url = p.Url.Substring(0, 4000);
-            DbManager.Create().Save(p);
+            using var db = DbManager.Create();
+            db.Save(p);
             return true;
         }
 
@@ -61,8 +62,11 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual IEnumerable<string> RetrieveMenusByRoleId(string roleId)
         {
-            var menus = DbManager.Create().Fetch<BootstrapMenu>("select NavigationID as Id from NavigationRole where RoleID = @0", roleId);
+            using var db = DbManager.Create();
+            var menus = db.Fetch<BootstrapMenu>("select NavigationID as Id from NavigationRole where RoleID = @0", roleId);
+#pragma warning disable CS8619 // 值中的引用类型的为 Null 性与目标类型不匹配。
             return menus.Select(m => m.Id);
+#pragma warning restore CS8619 // 值中的引用类型的为 Null 性与目标类型不匹配。
         }
 
         /// <summary>
@@ -74,7 +78,7 @@ namespace Bootstrap.DataAccess
         public virtual bool SaveMenusByRoleId(string roleId, IEnumerable<string> menuIds)
         {
             bool ret = false;
-            var db = DbManager.Create();
+            using var db = DbManager.Create();
             try
             {
                 db.BeginTransaction();

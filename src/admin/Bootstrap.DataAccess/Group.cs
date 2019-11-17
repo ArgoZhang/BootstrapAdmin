@@ -16,19 +16,23 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获得/设置 群组描述
         /// </summary>
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         /// <summary>
         /// 获取/设置 用户群组关联状态 checked 标示已经关联 '' 标示未关联
         /// </summary>
         [ResultColumn]
-        public string Checked { get; set; }
+        public string Checked { get; set; } = "";
 
         /// <summary>
         /// 查询所有群组信息
         /// </summary>
         /// <returns></returns>
-        public virtual IEnumerable<Group> Retrieves() => DbManager.Create().Fetch<Group>();
+        public virtual IEnumerable<Group> Retrieves()
+        {
+            using var db = DbManager.Create();
+            return db.Fetch<Group>();
+        }
 
         /// <summary>
         /// 删除群组信息
@@ -36,9 +40,9 @@ namespace Bootstrap.DataAccess
         /// <param name="value"></param>
         public virtual bool Delete(IEnumerable<string> value)
         {
-            bool ret = false;
             var ids = string.Join(",", value);
-            var db = DbManager.Create();
+            using var db = DbManager.Create();
+            bool ret;
             try
             {
                 db.BeginTransaction();
@@ -63,8 +67,9 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual bool Save(Group p)
         {
-            DbManager.Create().Save(p);
-            return !p.Id.IsNullOrEmpty();
+            using var db = DbManager.Create();
+            db.Save(p);
+            return true;
         }
 
         /// <summary>
@@ -74,7 +79,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual IEnumerable<Group> RetrievesByUserId(string userId)
         {
-            var db = DbManager.Create();
+            using var db = DbManager.Create();
             return db.Fetch<Group>($"select g.ID, g.GroupCode, g.GroupName, g.Description, case ug.GroupID when g.ID then 'checked' else '' end Checked from {db.Provider.EscapeSqlIdentifier("Groups")} g left join UserGroup ug on g.ID = ug.GroupID and UserID = @0", userId);
         }
 
@@ -85,7 +90,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual IEnumerable<Group> RetrievesByRoleId(string roleId)
         {
-            var db = DbManager.Create();
+            using var db = DbManager.Create();
             return db.Fetch<Group>($"select g.ID, g.GroupCode, g.GroupName, g.Description, case rg.GroupID when g.ID then 'checked' else '' end Checked from {db.Provider.EscapeSqlIdentifier("Groups")} g left join RoleGroup rg on g.ID = rg.GroupID and RoleID = @0", roleId);
         }
 

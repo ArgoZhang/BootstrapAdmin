@@ -13,28 +13,28 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获取/设置  任务ID
         /// </summary>
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
         /// <summary>
         /// 获取/设置  任务名称
         /// </summary>
-        public string TaskName { get; set; }
+        public string TaskName { get; set; } = "";
 
         /// <summary>
         /// 获取/设置  分配人
         /// </summary>
-        public string AssignName { get; set; }
+        public string AssignName { get; set; } = "";
 
         /// <summary>
         /// 获得/设置 分配人昵称
         /// </summary>
         [ResultColumn]
-        public string AssignDisplayName { get; set; }
+        public string AssignDisplayName { get; set; } = "";
 
         /// <summary>
         /// 获取/设置  完成任务人
         /// </summary>
-        public string UserName { get; set; }
+        public string UserName { get; set; } = "";
 
         /// <summary>
         /// 获取/设置  任务所需时间（天）
@@ -55,7 +55,11 @@ namespace Bootstrap.DataAccess
         /// 查询所有任务
         /// </summary>
         /// <returns></returns>
-        public virtual IEnumerable<Task> Retrieves() => DbManager.Create().SkipTake<Task>(0, 1000, "select t.*, u.DisplayName AssignDisplayName from Tasks t inner join Users u on t.UserName = u.UserName order by AssignTime desc");
+        public virtual IEnumerable<Task> Retrieves()
+        {
+            using var db = DbManager.Create();
+            return db.SkipTake<Task>(0, 1000, "select t.*, u.DisplayName AssignDisplayName from Tasks t inner join Users u on t.UserName = u.UserName order by AssignTime desc");
+        }
 
         /// <summary>
         /// 
@@ -64,7 +68,8 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual bool Save(Task task)
         {
-            DbManager.Create().Save(task);
+            using var db = DbManager.Create();
+            db.Save(task);
             return true;
         }
     }

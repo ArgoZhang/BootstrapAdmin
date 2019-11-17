@@ -10,20 +10,21 @@ namespace Bootstrap.DataAccess
     [TableName("DBLogs")]
     public class DBLog
     {
+
         /// <summary>
         /// 获得/设置 主键ID
         /// </summary>
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
         /// <summary>
         /// 获得/设置 当前登陆名
         /// </summary>
-        public string UserName { get; set; }
+        public string? UserName { get; set; }
 
         /// <summary>
         /// 获得/设置 数据库执行脚本
         /// </summary>
-        public string SQL { get; set; }
+        public string SQL { get; set; } = "";
 
         /// <summary>
         /// 获取/设置 用户角色关联状态 checked 标示已经关联 '' 标示未关联
@@ -38,8 +39,10 @@ namespace Bootstrap.DataAccess
         /// <param name="endTime"></param>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public virtual Page<DBLog> RetrievePages(PaginationOption po, DateTime? startTime, DateTime? endTime, string userName)
+        public virtual Page<DBLog> RetrievePages(PaginationOption po, DateTime? startTime, DateTime? endTime, string? userName)
         {
+            if (string.IsNullOrEmpty(po.Sort)) po.Sort = "LogTime";
+            if (string.IsNullOrEmpty(po.Order)) po.Order = "desc";
             var sql = new Sql("select * from DBLogs");
             if (startTime.HasValue) sql.Where("LogTime >= @0", startTime.Value);
             if (endTime.HasValue) sql.Where("LogTime < @0", endTime.Value.AddDays(1).AddSeconds(-1));
@@ -47,7 +50,8 @@ namespace Bootstrap.DataAccess
             if (!string.IsNullOrEmpty(userName)) sql.Where("UserName = @0", userName);
             sql.OrderBy($"{po.Sort} {po.Order}");
 
-            return DbManager.Create().Page<DBLog>(po.PageIndex, po.Limit, sql);
+            using var db = DbManager.Create();
+            return db.Page<DBLog>(po.PageIndex, po.Limit, sql);
         }
 
         /// <summary>
@@ -72,7 +76,8 @@ namespace Bootstrap.DataAccess
         {
             if (p == null) throw new ArgumentNullException(nameof(p));
             DeleteLogAsync();
-            DbManager.Create(enableLog: false).Save(p);
+            using var db = DbManager.Create(enableLog: false);
+            db.Save(p);
             return true;
         }
     }

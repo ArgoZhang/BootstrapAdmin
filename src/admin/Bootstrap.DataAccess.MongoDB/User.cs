@@ -1,4 +1,5 @@
 ﻿using Bootstrap.Security;
+using Bootstrap.Security.Mvc;
 using Longbow.Security.Cryptography;
 using MongoDB.Driver;
 using System;
@@ -15,19 +16,19 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <summary>
         /// 
         /// </summary>
-        public IEnumerable<string> Roles { get; set; }
+        public IEnumerable<string> Roles { get; set; } = new List<string>();
 
         /// <summary>
         /// 
         /// </summary>
-        public IEnumerable<string> Groups { get; set; }
+        public IEnumerable<string> Groups { get; set; } = new List<string>();
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public override BootstrapUser RetrieveUserByUserName(string userName)
+        public override BootstrapUser? RetrieveUserByUserName(string userName)
         {
             var project = Builders<User>.Projection.Include(u => u.Id)
                .Include(u => u.UserName)
@@ -39,7 +40,7 @@ namespace Bootstrap.DataAccess.MongoDB
             if (ret != null)
             {
                 if (string.IsNullOrEmpty(ret.Icon)) ret.Icon = "default.jpg";
-                if (string.IsNullOrEmpty(ret.App)) ret.App = "0";
+                if (string.IsNullOrEmpty(ret.App)) ret.App = BootstrapAppContext.AppId;
             }
             return ret;
         }
@@ -118,8 +119,6 @@ namespace Bootstrap.DataAccess.MongoDB
                 RegisterTime = DateTime.Now,
                 ApprovedTime = user.ApprovedTime,
                 ApprovedBy = user.ApprovedBy,
-                Roles = new List<string>(),
-                Groups = new List<string>(),
                 Icon = user.Icon,
                 Description = user.Description,
                 IsReset = 0

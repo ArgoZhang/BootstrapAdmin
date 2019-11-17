@@ -18,7 +18,7 @@ namespace Bootstrap.Admin.HealthChecks
     {
         private readonly IConfiguration _configuration;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private static readonly Func<IConfiguration, string, string> ConnectionStringResolve = (c, name) => string.IsNullOrEmpty(name)
+        private static readonly Func<IConfiguration, string, string?> ConnectionStringResolve = (c, name) => string.IsNullOrEmpty(name)
             ? c.GetSection("ConnectionStrings").GetChildren().FirstOrDefault()?.Value
             : c.GetConnectionString(name);
 
@@ -42,13 +42,13 @@ namespace Bootstrap.Admin.HealthChecks
         public Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)
         {
             var db = _configuration.GetSection("DB").GetChildren()
-                .Select(config => new
+                .Select(config => new DbOption()
                 {
                     Enabled = bool.TryParse(config["Enabled"], out var en) ? en : false,
                     ProviderName = config["ProviderName"],
                     Widget = config["Widget"],
                     ConnectionString = ConnectionStringResolve(config.GetSection("ConnectionStrings").Exists() ? config : _configuration, string.Empty)
-                }).FirstOrDefault(i => i.Enabled) ?? new
+                }).FirstOrDefault(i => i.Enabled) ?? new DbOption()
                 {
                     Enabled = true,
                     ProviderName = Longbow.Data.DatabaseProviderType.SqlServer.ToString(),
@@ -64,12 +64,11 @@ namespace Bootstrap.Admin.HealthChecks
             var roles = string.Empty;
             var displayName = string.Empty;
             var healths = false;
-            Exception error = null;
+            Exception? error = null;
             try
             {
-                DbContextManager.Exception = null;
                 var user = UserHelper.RetrieveUserByUserName(userName);
-                displayName = user?.DisplayName;
+                displayName = user?.DisplayName ?? string.Empty;
                 roles = string.Join(",", RoleHelper.RetrievesByUserName(userName) ?? new string[0]);
                 menusCount = MenuHelper.RetrieveMenusByUserName(userName)?.Count() ?? 0;
                 dictsCount = DictHelper.RetrieveDicts()?.Count() ?? 0;
@@ -79,32 +78,41 @@ namespace Bootstrap.Admin.HealthChecks
             {
                 error = ex;
             }
-            var data = new Dictionary<string, object>()
+            var data = new Dictionary<string, object?>()
             {
                 { "ConnectionString", db.ConnectionString },
                 { "Reference", DbContextManager.Create<Dict>()?.GetType().Assembly.FullName ?? db.Widget },
                 { "DbType", db?.ProviderName },
                 { "Dicts", dictsCount },
-                { "LoginName", loginUser },
+                { "LoginName", userName },
                 { "DisplayName", displayName },
                 { "Roles", roles },
                 { "Navigations", menusCount }
             };
 
-            if (string.IsNullOrEmpty(db.ConnectionString))
+            if (string.IsNullOrEmpty(db?.ConnectionString))
             {
                 // 未启用连接字符串
                 data["ConnectionString"] = "未配置数据库连接字符串";
                 return Task.FromResult(HealthCheckResult.Unhealthy("Error", null, data));
             }
 
-            if (error != null || DbContextManager.Exception != null)
+            if (DbContextManager.Exception != null) error = DbContextManager.Exception;
+            if (error != null)
             {
-                data.Add("Exception", (DbContextManager.Exception ?? error).Message);
-                return Task.FromResult(HealthCheckResult.Unhealthy("Error", error ?? DbContextManager.Exception, data));
+                data.Add("Exception", error.Message);
+                return Task.FromResult(HealthCheckResult.Unhealthy("Error", error, data));
             }
 
             return healths ? Task.FromResult(HealthCheckResult.Healthy("Ok", data)) : Task.FromResult(HealthCheckResult.Degraded("Failed", null, data));
+        }
+
+        private class DbOption
+        {
+            public bool Enabled { get; set; }
+            public string? ProviderName { get; set; }
+            public string? Widget { get; set; }
+            public string? ConnectionString { get; set; }
         }
     }
 }

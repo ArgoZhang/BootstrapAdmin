@@ -12,7 +12,7 @@ namespace Bootstrap.Admin.Query
         /// <summary>
         /// 获得/设置 用户登录名
         /// </summary>
-        public string UserName { get; set; }
+        public string? UserName { get; set; }
 
         /// <summary>
         /// 获得/设置 开始时间
@@ -30,7 +30,6 @@ namespace Bootstrap.Admin.Query
         /// <returns></returns>
         public QueryData<DBLog> RetrieveData()
         {
-            if (string.IsNullOrEmpty(Order)) Order = "LogTime";
             var data = LogHelper.RetrieveDBLogs(this, OperateTimeStart, OperateTimeEnd, UserName);
             var ret = new QueryData<DBLog>();
             ret.total = data.TotalItems;

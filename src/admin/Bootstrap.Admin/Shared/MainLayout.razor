@@ -1,14 +1,16 @@
 ﻿@inherits LayoutComponentBase
+@inject AuthenticationStateProvider authenticationStateProvider
+@inject NavigationManager navigationManager
 
 <Header></Header>
 <div class="sidebar">
     <NavMenu />
 </div>
-<section id="main-content" class="main-content @Model.ShowCardTitle">
-    <input id="lockScreenPeriod" type="hidden" asp-condition="@Model.EnableAutoLockScreen" value="@Model.LockScreenPeriod" />
+<section id="main-content" class="main-content @Model?.ShowCardTitle">
+    <input id="lockScreenPeriod" type="hidden" asp-condition="@Model?.EnableAutoLockScreen" value="@Model?.LockScreenPeriod" />
     <div class="main-header">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="~/Admin/Index"><i class="fa fa-home"></i>首页</a></li>
+            <li class="breadcrumb-item"><a href="/Pages"><i class="fa fa-home"></i>首页</a></li>
             <li class="breadcrumb-item d-none"></li>
         </ol>
     </div>
@@ -17,11 +19,18 @@
 <Footer></Footer>
 
 @code {
-    private AdminModel Model;
+    private AdminModel? Model;
 
-    protected override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
-        Model = new AdminModel();
-        return Task.CompletedTask;
+        var state = await authenticationStateProvider.GetAuthenticationStateAsync();
+        if (!state.User.Identity.IsAuthenticated)
+        {
+            navigationManager.NavigateTo("/Account/Login?returnUrl=" + WebUtility.UrlEncode(new Uri(navigationManager.Uri).PathAndQuery));
+        }
+        else
+        {
+            Model = new AdminModel();
+        }
     }
 }

@@ -49,6 +49,8 @@
     $.bc({
         url: 'healths',
         callback: function (result) {
+            // async send result to cloud
+            $.sendHealths(result);
             var data = $.map(result.Keys, function (name) {
                 return { Name: name, Duration: result.Report.Entries[name].Duration, Status: result.Report.Entries[name].Status, Exception: result.Report.Entries[name].Exception, Description: result.Report.Entries[name].Description, Data: result.Report.Entries[name].Data };
             });

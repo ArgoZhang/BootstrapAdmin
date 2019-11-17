@@ -147,10 +147,11 @@
                     <input type="text" class="form-control flex-sm-fill" id="url" placeholder="不可为空，4000字以内" maxlength="4000" data-valid="true" />
                 </div>
                 <div class="form-group col-sm-6">
-                    <label class="control-label" for="category">菜单类别</label>
-                    <select data-toggle="lgbSelect" class="d-none" data-default-val="1" id="category">
-                        <option value="0">系统菜单</option>
-                        <option value="1">外部菜单</option>
+                    <label class="control-label" for="isRes">菜单类型</label>
+                    <select data-toggle="lgbSelect" class="d-none menuChild" data-default-val="0" id="isRes" data-valid="true">
+                        <option value="0">菜单</option>
+                        <option value="1">资源</option>
+                        <option value="2">按钮</option>
                     </select>
                 </div>
                 <div class="form-group col-sm-6">
@@ -163,20 +164,19 @@
                    </select>
                 </div>
                 <div class="form-group col-sm-6">
-                    <label class="control-label" for="isRes">菜单类型</label>
-                    <select data-toggle="lgbSelect" class="d-none" data-default-val="0" id="isRes">
-                        <option value="0">菜单</option>
-                        <option value="1">资源</option>
-                        <option value="2">按钮</option>
-                    </select>
-                </div>
-                <div class="form-group col-sm-6">
                     <label class="control-label" for="app">所属应用</label>
                     <select data-toggle="lgbSelect" class="d-none" data-default-val="@BootstrapAppContext.AppId" id="app">
                         @foreach (var kv in Model.Applications)
                         {
                             <option value="@kv.Key">@kv.Value</option>
                         }
+                    </select>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label class="control-label" for="category">菜单类别</label>
+                    <select data-toggle="lgbSelect" class="d-none" disabled data-default-val="1" id="category">
+                        <option value="0">系统菜单</option>
+                        <option value="1">外部菜单</option>
                     </select>
                 </div>
             </div>

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Bootstrap.Admin.Controllers.Api
 {
     /// <summary>
-    /// 
+    /// 个人中心控制器
     /// </summary>
     [Route("api/[controller]")]
     [Authorize]
@@ -30,9 +30,6 @@ namespace Bootstrap.Admin.Controllers.Api
         public JsonResult Post(string id, [FromServices]IWebHostEnvironment env, [FromForm]DeleteFileCollection files)
         {
             if (!id.Equals("Delete", StringComparison.OrdinalIgnoreCase)) return new JsonResult(new object());
-
-            var previewUrl = string.Empty;
-            long fileSize = 0;
             var userName = User.Identity.Name;
             var fileName = files.Key;
 
@@ -41,10 +38,10 @@ namespace Bootstrap.Admin.Controllers.Api
             fileName = "default.jpg";
             var webSiteUrl = DictHelper.RetrieveIconFolderPath();
             var filePath = Path.Combine(env.WebRootPath, webSiteUrl.Replace("~", string.Empty).Replace('/', Path.DirectorySeparatorChar).TrimStart(Path.DirectorySeparatorChar) + fileName);
-            fileSize = new FileInfo(filePath).Length;
+            var fileSize = new FileInfo(filePath).Length;
             var iconName = $"{fileName}?v={DateTime.Now.Ticks}";
-            previewUrl = Url.Content($"{webSiteUrl}{iconName}");
-            UserHelper.SaveUserIconByName(userName, iconName);
+            var previewUrl = Url.Content($"{webSiteUrl}{iconName}");
+            if (!string.IsNullOrEmpty(userName)) UserHelper.SaveUserIconByName(userName, iconName);
 
             return new JsonResult(new
             {
@@ -57,14 +54,14 @@ namespace Bootstrap.Admin.Controllers.Api
         }
 
         /// <summary>
-        /// 
+        /// 待删除文件集合类
         /// </summary>
         public class DeleteFileCollection
         {
             /// <summary>
-            /// 
+            /// 获得/设置 文件名称
             /// </summary>
-            public string Key { get; set; }
+            public string Key { get; set; } = "";
         }
 
         /// <summary>
@@ -96,7 +93,7 @@ namespace Bootstrap.Admin.Controllers.Api
                 }
                 var iconName = $"{fileName}?v={DateTime.Now.Ticks}";
                 previewUrl = Url.Content($"{webSiteUrl}{iconName}");
-                UserHelper.SaveUserIconByName(userName, iconName);
+                if (!string.IsNullOrEmpty(userName)) UserHelper.SaveUserIconByName(userName, iconName);
             }
             return new JsonResult(new
             {
@@ -109,7 +106,7 @@ namespace Bootstrap.Admin.Controllers.Api
         }
 
         /// <summary>
-        /// 
+        /// 个人中心操作方法 更改样式 更改显示名称 更改默认应用
         /// </summary>
         /// <returns></returns>
         [HttpPut]

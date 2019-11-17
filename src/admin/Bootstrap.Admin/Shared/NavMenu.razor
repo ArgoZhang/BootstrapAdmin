@@ -1,27 +1,31 @@
 ﻿@inject AuthenticationStateProvider authenticationStateProvider
+@inject NavigationManager navigationManager
 
-<aside class="@Model.ShowSideBar">
+<aside class="@Model?.ShowSideBar">
     <div class="bg"></div>
     <div class="nav-brand justify-content-center">
         <a href="#">
-            <img src="@Model.WebSiteLogo" />
-            <span>@Model.Title</span>
+            <img src="@Model?.WebSiteLogo.ToBlazorLink()" />
+            <span>@Model?.Title</span>
         </a>
     </div>
     <div class="nav-header flex-fill align-items-center">
-        <a href="~/Admin/Profiles">
-            <img src="@Model.Icon" />
-            <span class="username d-inline-block text-truncate flex-fill">@Model.DisplayName</span>
+        <a href="/Pages/Admin/Profiles">
+            <img src="@Model?.Icon.ToBlazorLink()" />
+            <span class="username d-inline-block text-truncate flex-fill">@Model?.DisplayName</span>
         </a>
     </div>
     <!-- sidebar menu start-->
     <div class="sidebar">
         <ul class="nav-sidebar nav nav-pills flex-column flex-nowrap">
-            @foreach (var menu in Model.Navigations)
+            @if (Model != null)
             {
-                <li class="nav-item" id="@string.Format("menus_{0}",menu.Id)">
-                    <a href="@menu.Url" class="nav-link @menu.Active" target="@menu.Target"><i class="@menu.Icon"></i><span class="flex-fill">@menu.Name</span></a>
-                </li>
+                foreach (var menu in Model.Navigations)
+                {
+                    <li class="nav-item" id="@string.Format("menus_{0}",menu.Id)">
+                        <a href="@menu.Url.ToBlazorMenuUrl()" class="nav-link @menu.Active" target="@menu.Target"><i class="@menu.Icon"></i><span class="flex-fill">@menu.Name</span></a>
+                    </li>
+                }
             }
         </ul>
     </div>
@@ -29,14 +33,11 @@
 </aside>
 
 @code {
-    private NavigatorBarModel Model;
+    private NavigatorBarModel? Model;
 
     protected override async Task OnInitializedAsync()
     {
         var state = await authenticationStateProvider.GetAuthenticationStateAsync();
-        if (state.User.Identity.IsAuthenticated)
-        {
-            Model = new NavigatorBarModel(state.User.Identity.Name);
-        }
+        Model = new NavigatorBarModel(state.User.Identity.Name);
     }
 }

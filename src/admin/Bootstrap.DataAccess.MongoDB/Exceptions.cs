@@ -1,4 +1,4 @@
-using Longbow.Web.Mvc;
+﻿using Longbow.Web.Mvc;
 using MongoDB.Driver;
 using PetaPoco;
 using System;
@@ -75,12 +75,9 @@ namespace Bootstrap.DataAccess.MongoDB
 
             // sort
             var sortBuilder = Builders<DataAccess.Exceptions>.Sort;
-            SortDefinition<DataAccess.Exceptions> sort = null;
+            var sort = po.Order == "asc" ? sortBuilder.Ascending(t => t.LogTime) : sortBuilder.Descending(t => t.LogTime);
             switch (po.Sort)
             {
-                case "LogTime":
-                    sort = po.Order == "asc" ? sortBuilder.Ascending(t => t.LogTime) : sortBuilder.Descending(t => t.LogTime);
-                    break;
                 case "ErrorPage":
                     sort = po.Order == "asc" ? sortBuilder.Ascending(t => t.ErrorPage) : sortBuilder.Descending(t => t.ErrorPage);
                     break;

@@ -11,7 +11,7 @@ using System.Linq;
 namespace Bootstrap.Admin.Controllers.Api
 {
     /// <summary>
-    /// 
+    /// 角色维护控制器
     /// </summary>
     [Route("api/[controller]")]
     [Authorize]
@@ -19,7 +19,7 @@ namespace Bootstrap.Admin.Controllers.Api
     public class RolesController : ControllerBase
     {
         /// <summary>
-        /// 
+        /// 获取所有角色数据
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
@@ -37,7 +37,7 @@ namespace Bootstrap.Admin.Controllers.Api
         [HttpPost("{id}")]
         public IEnumerable<object> Post(string id, [FromQuery]string type)
         {
-            IEnumerable<Role> ret = new List<Role>();
+            IEnumerable<Role> ret = new Role[0];
             switch (type)
             {
                 case "user":
@@ -53,7 +53,7 @@ namespace Bootstrap.Admin.Controllers.Api
             return ret.Select(m => new { m.Id, m.Checked, m.RoleName, m.Description });
         }
         /// <summary>
-        /// 保存角色
+        /// 保存角色授权方法
         /// </summary>
         /// <param name="id">角色ID</param>
         /// <param name="values">选中的ID集合</param>
@@ -82,7 +82,7 @@ namespace Bootstrap.Admin.Controllers.Api
             return ret;
         }
         /// <summary>
-        /// 
+        /// 保存角色方法
         /// </summary>
         /// <param name="value"></param>
         [HttpPost]
@@ -92,7 +92,7 @@ namespace Bootstrap.Admin.Controllers.Api
             return RoleHelper.Save(value);
         }
         /// <summary>
-        /// 
+        /// 删除角色方法
         /// </summary>
         /// <param name="value"></param>
         [HttpDelete]

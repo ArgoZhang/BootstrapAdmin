@@ -1,4 +1,4 @@
-using Longbow.Web.Mvc;
+﻿using Longbow.Web.Mvc;
 using PetaPoco;
 using System;
 using System.Collections.Generic;
@@ -14,12 +14,12 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获得/设置 操作日志主键ID
         /// </summary>
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
         /// <summary>
         /// 获得/设置 用户名称
         /// </summary>
-        public string UserName { get; set; }
+        public string UserName { get; set; } = "";
 
         /// <summary>
         /// 获得/设置 操作时间
@@ -29,37 +29,37 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获得/设置 客户端IP
         /// </summary>
-        public string Ip { get; set; }
+        public string Ip { get; set; } = "";
 
         /// <summary>
         /// 获得/设置 客户端地点
         /// </summary>
-        public string City { get; set; }
+        public string City { get; set; } = "";
 
         /// <summary>
         /// 获得/设置 客户端浏览器
         /// </summary>
-        public string Browser { get; set; }
+        public string Browser { get; set; } = "";
 
         /// <summary>
         /// 获得/设置 客户端操作系统
         /// </summary>
-        public string OS { get; set; }
+        public string OS { get; set; } = "";
 
         /// <summary>
         /// 获取/设置 请求网址
         /// </summary>
-        public string RequestUrl { get; set; }
+        public string RequestUrl { get; set; } = "";
 
         /// <summary>
         /// 获得/设置 客户端 UserAgent
         /// </summary>
-        public string UserAgent { get; set; }
+        public string UserAgent { get; set; } = "";
 
         /// <summary>
         /// 获得/设置 客户端 Referer
         /// </summary>
-        public string Referer { get; set; }
+        public string Referer { get; set; } = "";
 
         /// <summary>
         /// 保存用户访问数据历史记录
@@ -67,8 +67,8 @@ namespace Bootstrap.DataAccess
         /// <param name="p"></param>
         public virtual bool Save(Trace p)
         {
-            if (p == null) throw new ArgumentNullException(nameof(p));
-            DbManager.Create().Save(p);
+            using var db = DbManager.Create();
+            db.Save(p);
             ClearTraces();
             return true;
         }
@@ -81,8 +81,10 @@ namespace Bootstrap.DataAccess
         /// <param name="endTime"></param>
         /// <param name="ip"></param>
         /// <returns></returns>
-        public virtual Page<Trace> RetrievePages(PaginationOption po, DateTime? startTime, DateTime? endTime, string ip)
+        public virtual Page<Trace> RetrievePages(PaginationOption po, DateTime? startTime, DateTime? endTime, string? ip)
         {
+            if (string.IsNullOrEmpty(po.Order)) po.Order = "desc";
+            if (string.IsNullOrEmpty(po.Sort)) po.Sort = "LogTime";
             var sql = new Sql("select * from Traces");
             if (startTime.HasValue) sql.Where("LogTime > @0", startTime.Value);
             if (endTime.HasValue) sql.Where("LogTime < @0", endTime.Value.AddDays(1).AddSeconds(-1));
@@ -90,7 +92,8 @@ namespace Bootstrap.DataAccess
             if (!string.IsNullOrEmpty(ip)) sql.Where("IP = @0", ip);
             sql.OrderBy($"{po.Sort} {po.Order}");
 
-            return DbManager.Create().Page<Trace>(po.PageIndex, po.Limit, sql);
+            using var db = DbManager.Create();
+            return db.Page<Trace>(po.PageIndex, po.Limit, sql);
         }
 
         /// <summary>
@@ -100,7 +103,7 @@ namespace Bootstrap.DataAccess
         /// <param name="endTime"></param>
         /// <param name="ip"></param>
         /// <returns></returns>
-        public virtual IEnumerable<Trace> RetrieveAll(DateTime? startTime, DateTime? endTime, string ip)
+        public virtual IEnumerable<Trace> RetrieveAll(DateTime? startTime, DateTime? endTime, string? ip)
         {
             var sql = new Sql("select UserName, LogTime, IP, Browser, OS, City, RequestUrl from Traces");
             if (startTime.HasValue) sql.Where("LogTime > @0", startTime.Value);
@@ -108,12 +111,14 @@ namespace Bootstrap.DataAccess
             if (!string.IsNullOrEmpty(ip)) sql.Where("IP = @0", ip);
             sql.OrderBy("LogTime");
 
-            return DbManager.Create().Fetch<Trace>(sql);
+            using var db = DbManager.Create();
+            return db.Fetch<Trace>(sql);
         }
 
         private static void ClearTraces() => System.Threading.Tasks.Task.Run(() =>
         {
-            DbManager.Create().Execute("delete from Traces where LogTime < @0", DateTime.Now.AddMonths(0 - DictHelper.RetrieveAccessLogPeriod()));
+            using var db = DbManager.Create();
+            return db.Execute("delete from Traces where LogTime < @0", DateTime.Now.AddMonths(0 - DictHelper.RetrieveAccessLogPeriod()));
         });
     }
 }

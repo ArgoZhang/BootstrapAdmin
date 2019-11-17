@@ -23,14 +23,6 @@ namespace Bootstrap.Admin.Api.SqlServer
         }
 
         [Fact]
-        public async void GetById_Ok()
-        {
-            var id = GroupHelper.Retrieves().Where(gp => gp.GroupName == "Admin").First().Id;
-            var g = await Client.GetAsJsonAsync<Group>(id);
-            Assert.Equal("Admin", g.GroupName);
-        }
-
-        [Fact]
         public async void PostAndDelete_Ok()
         {
             var ret = await Client.PostAsJsonAsync<Group, bool>("", new Group() { GroupCode = "002", GroupName = "UnitTest-Group", Description = "UnitTest-Desc" });

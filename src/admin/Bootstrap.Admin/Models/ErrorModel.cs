@@ -13,28 +13,28 @@
         /// <summary>
         /// 
         /// </summary>
-        public string Title { get; set; }
+        public string Title { get; set; } = "";
 
         /// <summary>
         /// 
         /// </summary>
-        public string Content { get; set; }
+        public string Content { get; set; } = "";
 
         /// <summary>
         /// 
         /// </summary>
-        public string Image { get; set; }
+        public string Image { get; set; } = "";
 
         /// <summary>
         /// 
         /// </summary>
 
-        public string Detail { get; set; }
+        public string Detail { get; set; } = "";
 
         /// <summary>
         /// 
         /// </summary>
-        public string ReturnUrl { get; set; }
+        public string ReturnUrl { get; set; } = "";
 
         /// <summary>
         /// 

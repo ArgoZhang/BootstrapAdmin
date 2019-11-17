@@ -16,7 +16,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// 
         /// </summary>
         /// <returns></returns>
-        public override Page<DataAccess.Trace> RetrievePages(PaginationOption po, DateTime? startTime, DateTime? endTime, string ip)
+        public override Page<DataAccess.Trace> RetrievePages(PaginationOption po, DateTime? startTime, DateTime? endTime, string? ip)
         {
             // filter
             var filterBuilder = Builders<DataAccess.Trace>.Filter;
@@ -28,12 +28,9 @@ namespace Bootstrap.DataAccess.MongoDB
 
             // sort
             var sortBuilder = Builders<DataAccess.Trace>.Sort;
-            SortDefinition<DataAccess.Trace> sort = null;
+            var sort = po.Order == "asc" ? sortBuilder.Ascending(t => t.LogTime) : sortBuilder.Descending(t => t.LogTime);
             switch (po.Sort)
             {
-                case "LogTime":
-                    sort = po.Order == "asc" ? sortBuilder.Ascending(t => t.LogTime) : sortBuilder.Descending(t => t.LogTime);
-                    break;
                 case "IP":
                     sort = po.Order == "asc" ? sortBuilder.Ascending(t => t.Ip) : sortBuilder.Descending(t => t.Ip);
                     break;
@@ -73,7 +70,7 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <param name="endTime"></param>
         /// <param name="ip"></param>
         /// <returns></returns>
-        public override IEnumerable<DataAccess.Trace> RetrieveAll(DateTime? startTime, DateTime? endTime, string ip)
+        public override IEnumerable<DataAccess.Trace> RetrieveAll(DateTime? startTime, DateTime? endTime, string? ip)
         {
             var filterBuilder = Builders<DataAccess.Trace>.Filter;
             var filter = filterBuilder.Empty;

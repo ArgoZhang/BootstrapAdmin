@@ -73,7 +73,7 @@ namespace Bootstrap.Admin.Controllers
         /// <param name="appId"></param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult Login([FromQuery]string appId = null)
+        public ActionResult Login([FromQuery]string? appId = null)
         {
             if (DictHelper.RetrieveSystemModel())
             {
@@ -111,11 +111,14 @@ namespace Bootstrap.Admin.Controllers
                         Description = "手机用户",
                         App = provider.Options.App
                     };
-                    UserHelper.Save(user);
-
-                    // 根据配置文件设置默认角色
-                    var roles = RoleHelper.Retrieves().Where(r => provider.Options.Roles.Any(rl => rl.Equals(r.RoleName, StringComparison.OrdinalIgnoreCase))).Select(r => r.Id);
-                    RoleHelper.SaveByUserId(user.Id, roles);
+                    if (UserHelper.Save(user) && !string.IsNullOrEmpty(user.Id))
+                    {
+                        // 根据配置文件设置默认角色
+                        var roles = RoleHelper.Retrieves().Where(r => provider.Options.Roles.Any(rl => rl.Equals(r.RoleName, StringComparison.OrdinalIgnoreCase))).Select(r => r.Id);
+#pragma warning disable CS8620 // 由于引用类型的可为 null 性差异，实参不能用于形参。
+                        RoleHelper.SaveByUserId(user.Id, roles);
+#pragma warning restore CS8620 // 由于引用类型的可为 null 性差异，实参不能用于形参。
+                    }
                 }
             }
             return auth ? await SignInAsync(phone, true, MobileSchema) : RedirectLogin();

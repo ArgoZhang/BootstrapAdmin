@@ -113,6 +113,8 @@ INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (@@Identity - 2, N'删除', 30, 'fa fa-fa', 'del', '0', 2);
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, N'站内消息', 100, N'fa fa-envelope', N'~/Admin/Messages', N'0')
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, N'任务管理', 110, N'fa fa fa-tasks', N'~/Admin/Tasks', N'0')
+INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (@@Identity, N'暂停', 10, 'fa fa-fa', 'pause', '0', 2);
+INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (@@Identity - 1, N'日志', 20, 'fa fa-fa', 'info', '0', 2);
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, N'通知管理', 120, N'fa fa-bell', N'~/Admin/Notifications', N'0')
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, N'日志管理', 130, N'fa fa-gears', N'#', N'0')
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (@@Identity, N'操作日志', 10, N'fa fa-edit', N'~/Admin/Logs', N'0')

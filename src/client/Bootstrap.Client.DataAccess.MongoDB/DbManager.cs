@@ -13,8 +13,8 @@ namespace Bootstrap.Client.DataAccess.MongoDB
     /// </summary>
     internal static class DbManager
     {
-        private static IMongoDatabase _db = null;
-        private static bool _register = false;
+        private static IMongoDatabase? _db;
+        private static bool _register;
         private static readonly object _locker = new object();
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace Bootstrap.Client.DataAccess.MongoDB
                             InitClassMap();
                         }
                         if (_db == null)
-                            InitDb("ba");
+                            _db = InitDb("ba");
                     }
                 }
                 return _db;
@@ -99,11 +99,11 @@ namespace Bootstrap.Client.DataAccess.MongoDB
         }
         #endregion
 
-        private static void InitDb(string name = null)
+        private static IMongoDatabase InitDb(string name)
         {
             var (connectString, databaseName) = Longbow.Data.DbManager.GetMongoDB(name);
             var client = new MongoClient(connectString);
-            _db = client.GetDatabase(databaseName);
+            return client.GetDatabase(databaseName);
         }
 
         private static void InitClassMap()

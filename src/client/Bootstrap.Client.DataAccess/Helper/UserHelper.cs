@@ -15,6 +15,6 @@ namespace Bootstrap.Client.DataAccess
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public static BootstrapUser RetrieveUserByUserName(string userName) => CacheManager.GetOrAdd(string.Format("{0}-{1}", DbHelper.RetrieveUsersByNameDataKey, userName), k => DbContextManager.Create<User>().RetrieveUserByUserName(userName), DbHelper.RetrieveUsersByNameDataKey);
+        public static BootstrapUser? RetrieveUserByUserName(string? userName) => string.IsNullOrEmpty(userName) ? null : CacheManager.GetOrAdd(string.Format("{0}-{1}", DbHelper.RetrieveUsersByNameDataKey, userName), k => DbContextManager.Create<User>()?.RetrieveUserByUserName(userName), DbHelper.RetrieveUsersByNameDataKey);
     }
 }

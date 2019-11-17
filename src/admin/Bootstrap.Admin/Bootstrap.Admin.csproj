@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Longbow.Logging" Version="3.0.2-beta1" />
+    <PackageReference Include="Longbow.Logging" Version="3.0.3-beta1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="4.0.0" />
     <PackageReference Include="Sentry.AspNetCore" Version="2.0.0-beta6" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0-rc4" />

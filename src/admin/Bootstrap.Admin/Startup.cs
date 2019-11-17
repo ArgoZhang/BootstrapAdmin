@@ -3,7 +3,6 @@ using Longbow.Web.SignalR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -44,13 +43,7 @@ namespace Bootstrap.Admin
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
-            services.AddLogging(logging => logging.AddFileLogger().AddDBLogger(ExceptionsHelper.Log));
+            services.AddLogging(logging => logging.AddFileLogger().AddCloudLogger().AddDBLogger(ExceptionsHelper.Log));
             services.AddCors();
             services.AddResponseCompression();
 

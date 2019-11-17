@@ -72,7 +72,7 @@ namespace Bootstrap.Admin.Controllers.Api
             /// <summary>
             /// 
             /// </summary>
-            public string Ip { get; set; }
+            public string? Ip { get; set; }
 
             /// <summary>
             /// 
@@ -108,7 +108,7 @@ namespace Bootstrap.Admin.Controllers.Api
             /// </summary>
             public void Reset()
             {
-                if (dispatcher != null) dispatcher.Change(TimeSpan.FromSeconds(30), Timeout.InfiniteTimeSpan);
+                dispatcher.Change(TimeSpan.FromSeconds(30), Timeout.InfiniteTimeSpan);
             }
 
             #region Impletement IDispose
@@ -123,7 +123,6 @@ namespace Bootstrap.Admin.Controllers.Api
                     if (dispatcher != null)
                     {
                         dispatcher.Dispose();
-                        dispatcher = null;
                     }
                 }
             }

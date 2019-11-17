@@ -13,15 +13,18 @@ namespace Bootstrap.Admin.Query
         /// <summary>
         /// 字典分项
         /// </summary>
-        public string Category { get; set; }
+        public string? Category { get; set; }
+
         /// <summary>
         /// 字典名称
         /// </summary>
-        public string Name { get; set; }
+        public string? Name { get; set; }
+
         /// <summary>
         /// 字典种类
         /// </summary>
-        public string Define { get; set; }
+        public string? Define { get; set; }
+
         /// <summary>
         /// 字典表查询
         /// </summary>
@@ -34,15 +37,15 @@ namespace Bootstrap.Admin.Query
             var data = DictHelper.RetrieveDicts();
             if (!string.IsNullOrEmpty(Category))
             {
-                data = data.Where(t => t.Category.Contains(Category));
+                data = data.Where(t => t.Category?.Contains(Category) ?? false);
             }
             if (!string.IsNullOrEmpty(Name))
             {
-                data = data.Where(t => t.Name.Contains(Name));
+                data = data.Where(t => t.Name?.Contains(Name) ?? false);
             }
             if (!string.IsNullOrEmpty(Define))
             {
-                data = data.Where(t => t.Define.ToString() == Define);
+                data = data.Where(t => t.Define.ToString() == (Define ?? ""));
             }
             var ret = new QueryData<BootstrapDict>();
             ret.total = data.Count();

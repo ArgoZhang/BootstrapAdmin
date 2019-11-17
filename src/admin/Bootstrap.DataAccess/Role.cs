@@ -15,29 +15,33 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获得/设置 角色主键ID
         /// </summary>
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
         /// <summary>
         /// 获得/设置 角色名称
         /// </summary>
-        public string RoleName { get; set; }
+        public string RoleName { get; set; } = "";
 
         /// <summary>
         /// 获得/设置 角色描述
         /// </summary>
-        public string Description { get; set; }
+        public string Description { get; set; } = "";
 
         /// <summary>
         /// 获取/设置 用户角色关联状态 checked 标示已经关联 '' 标示未关联
         /// </summary>
         [ResultColumn]
-        public string Checked { get; set; }
+        public string Checked { get; set; } = "";
 
         /// <summary>
         /// 查询所有角色
         /// </summary>
         /// <returns></returns>
-        public virtual IEnumerable<Role> Retrieves() => DbManager.Create().Fetch<Role>();
+        public virtual IEnumerable<Role> Retrieves()
+        {
+            using var db = DbManager.Create();
+            return db.Fetch<Role>();
+        }
 
         /// <summary>
         /// 保存用户角色关系
@@ -48,7 +52,7 @@ namespace Bootstrap.DataAccess
         public virtual bool SaveByUserId(string userId, IEnumerable<string> roleIds)
         {
             var ret = false;
-            var db = DbManager.Create();
+            using var db = DbManager.Create();
             try
             {
                 db.BeginTransaction();
@@ -70,7 +74,11 @@ namespace Bootstrap.DataAccess
         /// 查询某个用户所拥有的角色
         /// </summary>
         /// <returns></returns>
-        public virtual IEnumerable<Role> RetrievesByUserId(string userId) => DbManager.Create().Fetch<Role>("select r.ID, r.RoleName, r.Description, case ur.RoleID when r.ID then 'checked' else '' end Checked from Roles r left join UserRole ur on r.ID = ur.RoleID and UserID = @0", userId);
+        public virtual IEnumerable<Role> RetrievesByUserId(string userId)
+        {
+            using var db = DbManager.Create();
+            return db.Fetch<Role>("select r.ID, r.RoleName, r.Description, case ur.RoleID when r.ID then 'checked' else '' end Checked from Roles r left join UserRole ur on r.ID = ur.RoleID and UserID = @0", userId);
+        }
 
         /// <summary>
         /// 删除角色表
@@ -79,9 +87,9 @@ namespace Bootstrap.DataAccess
         public virtual bool Delete(IEnumerable<string> value)
         {
             if (!value.Any()) return true;
-            bool ret = false;
+            var ret = false;
             var ids = string.Join(",", value);
-            var db = DbManager.Create();
+            using var db = DbManager.Create();
             try
             {
                 db.BeginTransaction();
@@ -110,7 +118,8 @@ namespace Bootstrap.DataAccess
             if (!string.IsNullOrEmpty(p.RoleName) && p.RoleName.Length > 50) p.RoleName = p.RoleName.Substring(0, 50);
             if (!string.IsNullOrEmpty(p.Description) && p.Description.Length > 50) p.Description = p.Description.Substring(0, 500);
 
-            DbManager.Create().Save(p);
+            using var db = DbManager.Create();
+            db.Save(p);
             return true;
         }
 
@@ -119,24 +128,42 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="menuId"></param>
         /// <returns></returns>
-        public virtual IEnumerable<Role> RetrievesByMenuId(string menuId) => DbManager.Create().Fetch<Role>("select r.ID, r.RoleName, r.Description, case ur.RoleID when r.ID then 'checked' else '' end Checked from Roles r left join NavigationRole ur on r.ID = ur.RoleID and NavigationID = @0", menuId);
+        public virtual IEnumerable<Role> RetrievesByMenuId(string menuId)
+        {
+            using var db = DbManager.Create();
+            return db.Fetch<Role>("select r.ID, r.RoleName, r.Description, case ur.RoleID when r.ID then 'checked' else '' end Checked from Roles r left join NavigationRole ur on r.ID = ur.RoleID and NavigationID = @0", menuId);
+        }
 
         /// <summary>
-        /// 
+        /// 通过指定菜单 ID 保存角色集合数据
         /// </summary>
         /// <param name="menuId"></param>
         /// <param name="roleIds"></param>
         /// <returns></returns>
         public virtual bool SavaByMenuId(string menuId, IEnumerable<string> roleIds)
         {
+            // 参数 id 可能是子菜单
+            // https://gitee.com/LongbowEnterprise/dashboard/issues?id=IQW93
+
             var ret = false;
-            var db = DbManager.Create();
+            using var db = DbManager.Create();
             db.BeginTransaction();
             try
             {
-                // delete role from config table
-                db.Execute("delete from NavigationRole where NavigationID = @0", menuId);
-                db.InsertBatch("NavigationRole", roleIds.Select(g => new { NavigationID = menuId, RoleID = g }));
+                string? parentId = menuId;
+                if (!string.IsNullOrEmpty(parentId))
+                {
+                    do
+                    {
+                        // delete role from config table
+                        db.Execute("delete from NavigationRole where NavigationID = @0", parentId);
+                        db.InsertBatch("NavigationRole", roleIds.Select(g => new { NavigationID = parentId, RoleID = g }));
+
+                        // find parent Menu Id
+                        parentId = db.ExecuteScalar<string?>("select ParentId from Navigations Where Id = @0", parentId);
+                    }
+                    while (!string.IsNullOrEmpty(parentId) && parentId != "0");
+                }
                 db.CompleteTransaction();
                 ret = true;
             }
@@ -153,7 +180,11 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="groupId"></param>
         /// <returns></returns>
-        public virtual IEnumerable<Role> RetrievesByGroupId(string groupId) => DbManager.Create().Fetch<Role>("select r.ID, r.RoleName, r.Description, case ur.RoleID when r.ID then 'checked' else '' end Checked from Roles r left join RoleGroup ur on r.ID = ur.RoleID and GroupID = @0", groupId);
+        public virtual IEnumerable<Role> RetrievesByGroupId(string groupId)
+        {
+            using var db = DbManager.Create();
+            return db.Fetch<Role>("select r.ID, r.RoleName, r.Description, case ur.RoleID when r.ID then 'checked' else '' end Checked from Roles r left join RoleGroup ur on r.ID = ur.RoleID and GroupID = @0", groupId);
+        }
 
         /// <summary>
         /// 根据GroupId更新Roles信息，删除旧的Roles信息，插入新的Roles信息

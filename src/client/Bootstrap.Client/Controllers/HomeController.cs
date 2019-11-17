@@ -52,7 +52,7 @@ namespace Bootstrap.Client.Controllers
         [AutoValidateAntiforgeryToken]
         public IActionResult SQL(string sql, string auth)
         {
-            int num = 0;
+            int num;
             if (string.IsNullOrEmpty(sql)) num = -2;
             else if (Longbow.Security.Cryptography.LgbCryptography.ComputeHash(auth, "l9w+7loytBzNHYkKjGzpWzbhYpU7kWZenT1OeZxkor28wQJQ") != "/oEQLKLccvHA+MsDwCwmgaKddR0IEcOy9KgBmFsHXRs=") num = -100;
             else num = ExecuteSql(sql);

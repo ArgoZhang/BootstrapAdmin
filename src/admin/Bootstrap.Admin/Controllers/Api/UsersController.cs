@@ -38,7 +38,7 @@ namespace Bootstrap.Admin.Controllers.Api
         [HttpPost("{id}")]
         public IEnumerable<object> Post(string id, [FromQuery]string type)
         {
-            IEnumerable<object> ret = null;
+            IEnumerable<object> ret = new string[0];
             switch (type)
             {
                 case "role":
@@ -68,7 +68,7 @@ namespace Bootstrap.Admin.Controllers.Api
         [ButtonAuthorize(Url = "~/Admin/Users", Auth = "add,edit")]
         public bool Post([FromBody]User value)
         {
-            var ret = false;
+            bool ret;
             if (string.IsNullOrEmpty(value.Id))
             {
                 value.Description = string.Format("管理员{0}创建用户", User.Identity.Name);
@@ -124,7 +124,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <returns></returns>
         [AllowAnonymous]
         [HttpOptions]
-        public string Options()
+        public string? Options()
         {
             return null;
         }

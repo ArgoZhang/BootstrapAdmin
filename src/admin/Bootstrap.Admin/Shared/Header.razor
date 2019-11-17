@@ -5,10 +5,10 @@
     <div class="d-flex align-items-center">
         <a id="navbar" href="#" class="sidebar-toggle-box">
             <i class="fa fa-bars"></i>
-            <span id="websiteTitle">@Model.Title</span>
+            <span id="websiteTitle">@Model?.Title</span>
         </a>
         <div class="nav">
-            @if (User.IsInRole("Administrators"))
+            @if (User?.IsInRole("Administrators") ?? false)
             {
                 <!-- tasks start -->
                 <div class="dropdown">
@@ -20,7 +20,7 @@
                         <div class="dropdown-arrow arrow-primary"></div>
                         <div id="msgHeaderTaskContent" class="dropdown-header bg-primary">您有 <span id="msgHeaderTask">0</span> 个未完成的任务</div>
                         <div class="dropdown-footer">
-                            <a href="~/Admin/Tasks">查看所有任务</a>
+                            <a href="/Pages/Admin/Tasks">查看所有任务</a>
                         </div>
                     </div>
                 </div>
@@ -35,7 +35,7 @@
                         <div class="dropdown-arrow arrow-info"></div>
                         <div id="msgHeaderMsgContent" class="dropdown-header bg-info">您有 <span id="msgHeaderMsg">0</span> 个未读的消息</div>
                         <div class="dropdown-footer">
-                            <a href="~/Admin/Messages">查看所有消息</a>
+                            <a href="/Pages/Admin/Messages">查看所有消息</a>
                         </div>
                     </div>
                 </div>
@@ -65,7 +65,7 @@
                         <div class="dropdown-arrow arrow-warning"></div>
                         <div id="msgHeaderAppContent" class="dropdown-header bg-warning">您有 <span id="msgHeaderApp">0</span> 条程序异常通知</div>
                         <div class="dropdown-footer">
-                            <a href="~/Admin/Exceptions">查看所有异常</a>
+                            <a href="/Pages/Admin/Exceptions">查看所有异常</a>
                         </div>
                     </div>
                 </div>
@@ -80,13 +80,13 @@
                         <div class="dropdown-arrow arrow-danger"></div>
                         <div id="msgHeaderDbContent" class="dropdown-header bg-danger">您有 <span id="msgHeaderDb">0</span> 条数据库异常通知</div>
                         <div class="dropdown-footer">
-                            <a href="~/Admin/Exceptions">查看所有异常</a>
+                            <a href="/Pages/Admin/Exceptions">查看所有异常</a>
                         </div>
                     </div>
                 </div>
                 <!-- db dropdown end -->
                 <div class="dropdown">
-                    <a class="shadow-success" href="~/Account/Lock" data-toggle="tooltip" title="系统锁屏">
+                    <a class="shadow-success" href="/Account/Lock" data-toggle="tooltip" title="系统锁屏">
                         <i class="fa fa-tv"></i>
                     </a>
                 </div>
@@ -94,41 +94,41 @@
         </div>
         <div class="dropdown userinfo">
             <a data-toggle="dropdown" class="dropdown-toggle shadow-default" href="#">
-                <img id="headerIcon" alt="" src="@Model.Icon" />
-                <span id="userDisplayName" data-userName="@Model.UserName" class="username text-truncate d-inline-block">@Model.DisplayName</span>
+                <img id="headerIcon" alt="" src="@Model?.Icon.ToBlazorLink()" />
+                <span id="userDisplayName" data-userName="@Model?.UserName" class="username text-truncate d-inline-block">@Model?.DisplayName</span>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
                 <div class="dropdown-item">
                     <div class="d-flex flex-fill align-items-center">
-                        <img src="@Model.Icon">
+                        <img src="@Model?.Icon.ToBlazorLink()">
                         <div class="flex-fill">
-                            <div class="username text-truncate">@Model.DisplayName</div>
-                            <div>登录名：@Model.UserName</div>
+                            <div class="username text-truncate">@Model?.DisplayName</div>
+                            <div>登录名：@Model?.UserName</div>
                         </div>
                     </div>
                 </div>
                 <div class="dropdown-item">
-                    <a href="~/Admin/Profiles"><i class=" fa fa-suitcase"></i>个人中心</a>
-                    <a href="~/Admin/Index"><i class="fa fa-cog"></i>设置</a>
-                    <a href="~/Admin/Notifications"><i class="fa fa-bell"></i>通知<span id="logoutNoti" class="badge badge-pill badge-success"></span></a>
+                    <a href="/Pages/Admin/Profiles"><i class=" fa fa-suitcase"></i>个人中心</a>
+                    <a href="/Pages/Admin/Index"><i class="fa fa-cog"></i>设置</a>
+                    <a href="/Pages/Admin/Notifications"><i class="fa fa-bell"></i>通知<span id="logoutNoti" class="badge badge-pill badge-success"></span></a>
                 </div>
                 <div class="dropdown-item">
-                    <a href="~/Account/Logout"><i class="fa fa-key"></i>注销</a>
+                    <a href="/Account/Logout"><i class="fa fa-key"></i>注销</a>
                 </div>
             </div>
         </div>
     </div>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="~/Admin/Index"><i class="fa fa-home"></i>首页</a></li>
+            <li class="breadcrumb-item"><a href="/Pages"><i class="fa fa-home"></i>首页</a></li>
             <li class="breadcrumb-item d-none" id="breadNav"></li>
         </ol>
     </nav>
 </header>
 
 @code {
-    private HeaderBarModel Model;
-    private ClaimsPrincipal User;
+    private HeaderBarModel? Model;
+    private ClaimsPrincipal? User;
 
     protected override async Task OnInitializedAsync()
     {

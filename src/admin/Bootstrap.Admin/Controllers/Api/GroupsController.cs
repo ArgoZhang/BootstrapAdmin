@@ -5,12 +5,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Bootstrap.Admin.Controllers.Api
 {
     /// <summary>
-    /// 
+    /// 部门维护控制器
     /// </summary>
     [Route("api/[controller]")]
     [Authorize]
@@ -18,7 +17,7 @@ namespace Bootstrap.Admin.Controllers.Api
     public class GroupsController : ControllerBase
     {
         /// <summary>
-        /// 
+        /// 部门数据查询方法
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
@@ -29,18 +28,7 @@ namespace Bootstrap.Admin.Controllers.Api
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpGet("{id}")]
-        public Group Get(string id)
-        {
-            return GroupHelper.Retrieves().FirstOrDefault(t => t.Id == id);
-        }
-
-        /// <summary>
-        /// 
+        /// 保存部门方法
         /// </summary>
         /// <param name="value"></param>
         [HttpPost]
@@ -51,7 +39,7 @@ namespace Bootstrap.Admin.Controllers.Api
         }
 
         /// <summary>
-        /// 
+        /// 删除部门方法
         /// </summary>
         /// <param name="value"></param>
         [HttpDelete]
@@ -64,7 +52,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <summary>
         /// 获取部门授权
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">用户ID或者角色ID</param>
         /// <param name="type"></param>
         /// <returns></returns>
         [HttpPost("{id}")]

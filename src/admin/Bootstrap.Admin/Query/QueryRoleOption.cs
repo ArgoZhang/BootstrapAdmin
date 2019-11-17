@@ -5,20 +5,22 @@ using System.Linq;
 namespace Bootstrap.Admin.Query
 {
     /// <summary>
-    /// 
+    /// 角色查询条件类
     /// </summary>
     public class QueryRoleOption : PaginationOption
     {
         /// <summary>
-        /// 
+        /// 角色名称
         /// </summary>
-        public string RoleName { get; set; }
+        public string? RoleName { get; set; }
+
         /// <summary>
-        /// 
+        /// 角色描述
         /// </summary>
-        public string Description { get; set; }
+        public string? Description { get; set; }
+
         /// <summary>
-        /// 
+        /// 角色数据
         /// </summary>
         /// <returns></returns>
         public QueryData<object> RetrieveData()

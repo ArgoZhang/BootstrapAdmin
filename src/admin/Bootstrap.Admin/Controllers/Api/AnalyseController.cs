@@ -8,7 +8,7 @@ using System.Linq;
 namespace Bootstrap.Admin.Controllers.Api
 {
     /// <summary>
-    /// 
+    /// 网站分析控制器
     /// </summary>
     [Route("api/[controller]")]
     [Authorize]
@@ -16,11 +16,11 @@ namespace Bootstrap.Admin.Controllers.Api
     public class AnalyseController : ControllerBase
     {
         /// <summary>
-        /// 
+        /// 通过 logType 查询分析数据接口
         /// </summary>
         /// <returns></returns>
         [HttpGet()]
-        public ActionResult<AnalyseData> Get([FromQuery]string logType = "")
+        public ActionResult<AnalyseData> Get([FromQuery]string logType)
         {
             var ret = new AnalyseData();
             if (logType.Equals("LoginUsers", StringComparison.OrdinalIgnoreCase))
@@ -60,19 +60,19 @@ namespace Bootstrap.Admin.Controllers.Api
         }
 
         /// <summary>
-        /// 
+        /// 分析数据实体类
         /// </summary>
         public class AnalyseData
         {
             /// <summary>
-            /// 
+            /// 获得/设置 折线数据集合
             /// </summary>
-            public IEnumerable<string> Polylines { get; set; }
+            public IEnumerable<string> Polylines { get; set; } = new string[0];
 
             /// <summary>
-            /// 
+            /// 获得 数据集合
             /// </summary>
-            public List<KeyValuePair<string, string>> Datas { get; set; } = new List<KeyValuePair<string, string>>();
+            public List<KeyValuePair<string, string>> Datas { get; } = new List<KeyValuePair<string, string>>();
         }
     }
 }

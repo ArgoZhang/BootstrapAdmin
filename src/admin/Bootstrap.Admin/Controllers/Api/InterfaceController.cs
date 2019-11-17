@@ -3,7 +3,10 @@ using Bootstrap.Security;
 using Bootstrap.Security.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Bootstrap.Admin.Controllers
 {
@@ -50,7 +53,7 @@ namespace Bootstrap.Admin.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public BootstrapUser RetrieveUserByUserName([FromBody]string userName)
+        public BootstrapUser? RetrieveUserByUserName([FromBody]string userName)
         {
             return UserHelper.RetrieveUserByUserName(userName);
         }
@@ -63,7 +66,28 @@ namespace Bootstrap.Admin.Controllers
         [HttpPost]
         public IEnumerable<BootstrapMenu> RetrieveAppMenus([FromBody]AppMenuOption args)
         {
+            if (string.IsNullOrEmpty(args.AppId) || string.IsNullOrEmpty(args.UserName)) return new BootstrapMenu[0];
             return MenuHelper.RetrieveAppMenus(args.AppId, args.UserName, args.Url);
+        }
+
+        /// <summary>
+        /// 发送健康检查结果
+        /// </summary>
+        /// <param name="httpClient"></param>
+        /// <param name="config"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<bool> Healths([FromServices]GiteeHttpClient httpClient, [FromServices]IConfiguration config, [FromBody]string message)
+        {
+            var ret = false;
+            var url = config.GetValue("HealthsCloudUrl", "");
+            if (!string.IsNullOrEmpty(url))
+            {
+                try { await httpClient.HttpClient.PostAsJsonAsync(url, message); ret = true; }
+                catch { }
+            }
+            return ret;
         }
     }
 }

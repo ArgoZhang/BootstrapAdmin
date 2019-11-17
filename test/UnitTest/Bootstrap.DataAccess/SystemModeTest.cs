@@ -1,4 +1,5 @@
 ﻿using Bootstrap.Security;
+using Longbow.Cache;
 using Longbow.Web;
 using System.Linq;
 using Xunit;
@@ -33,6 +34,8 @@ namespace Bootstrap.DataAccess
             var name = menu.Name;
             menu.Name = "UnitTest";
             Assert.True(MenuHelper.Save(menu));
+
+            CacheManager.Clear(MenuHelper.RetrieveMenusAll + "*");
             var menu2 = MenuHelper.RetrieveMenus("Admin").FirstOrDefault(m => m.Id == menu.Id);
             Assert.Equal(name, menu2.Name);
         }
@@ -79,6 +82,8 @@ namespace Bootstrap.DataAccess
             var user = UserHelper.Retrieves().FirstOrDefault(m => m.UserName == "User");
             user.DisplayName = "UnitTest";
             Assert.True(UserHelper.Save(user));
+
+            CacheManager.Clear(UserHelper.RetrieveUsersDataKey);
             var user2 = UserHelper.Retrieves().FirstOrDefault(m => m.Id == user.Id);
             Assert.NotEqual("UnitTest", user2.DisplayName);
         }
@@ -90,6 +95,8 @@ namespace Bootstrap.DataAccess
             var user = UserHelper.Retrieves().FirstOrDefault(m => m.UserName == "User");
             user.DisplayName = "UnitTest";
             Assert.True(UserHelper.Update(user.Id, "123789", "UnitTest"));
+
+            CacheManager.Clear(UserHelper.RetrieveUsersDataKey);
             var user2 = UserHelper.Retrieves().FirstOrDefault(m => m.Id == user.Id);
             Assert.NotEqual("UnitTest", user2.DisplayName);
         }
