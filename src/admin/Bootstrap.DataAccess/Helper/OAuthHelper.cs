@@ -98,7 +98,7 @@ namespace Bootstrap.DataAccess
         /// <param name="roles"></param>
         internal static void SaveUser(User newUser, IEnumerable<string> roles)
         {
-            if (!string.IsNullOrEmpty(newUser.Id))
+            if (string.IsNullOrEmpty(newUser.Id))
             {
                 var uid = UserHelper.Retrieves().FirstOrDefault(u => u.UserName == newUser.UserName)?.Id;
                 var user = DbContextManager.Create<User>();
