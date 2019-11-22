@@ -1,6 +1,6 @@
 ﻿(function ($) {
     var findIdField = function (tableName) {
-        var idField = $(tableName).bootstrapTable("getOptions").idField;
+        var idField = tableName.bootstrapTable("getOptions").idField;
         if (idField === undefined) idField = "Id";
         return idField;
     };
@@ -97,8 +97,8 @@
             $(cId).on('click', { handler: this.options.events[cId] }, function (e) {
                 var options = that.options;
                 var row = {};
-                if (options.bootstrapTable && options.bootstrapTable.constructor === String) {
-                    var arrselections = $(options.bootstrapTable).bootstrapTable('getSelections');
+                if (options.bootstrapTable !== null) {
+                    var arrselections = options.bootstrapTable.bootstrapTable('getSelections');
                     if (arrselections.length === 0) {
                         lgbSwal({ title: '请选择要编辑的数据', type: "warning" });
                         return;
@@ -118,25 +118,25 @@
 
     DataTable.settings = {
         url: undefined,
-        bootstrapTable: 'table',
+        bootstrapTable: null,
         treegridParentId: 'ParentId',
         modal: '#dialogNew',
         click: {
             '#btn_query': function (element) {
-                if (this.options.bootstrapTable.constructor === String) $(this.options.bootstrapTable).bootstrapTable('refresh');
+                if (this.options.bootstrapTable !== null) this.options.bootstrapTable.bootstrapTable('refresh');
                 handlerCallback.call(this, null, element, { oper: 'query' });
             },
             '#btn_add': function (element) {
                 this.dataEntity.reset();
                 if (this.options.modal.constructor === String) $(this.options.modal).modal("show");
-                if (this.options.bootstrapTable.constructor === String) $(this.options.bootstrapTable).bootstrapTable('uncheckAll');
+                if (this.options.bootstrapTable !== null) this.options.bootstrapTable.bootstrapTable('uncheckAll');
                 handlerCallback.call(this, null, element, { oper: 'create' });
             },
             '#btn_edit': function (element) {
                 var options = this.options;
                 var data = {};
-                if (options.bootstrapTable.constructor === String) {
-                    var arrselections = $(options.bootstrapTable).bootstrapTable('getSelections');
+                if (options.bootstrapTable !== null) {
+                    var arrselections = options.bootstrapTable.bootstrapTable('getSelections');
                     if (arrselections.length === 0) {
                         lgbSwal({ title: '请选择要编辑的数据', type: "warning" });
                         return;
@@ -156,8 +156,8 @@
             '#btn_delete': function (element) {
                 var that = this;
                 var options = this.options;
-                if (options.bootstrapTable.constructor === String) {
-                    var arrselections = $(options.bootstrapTable).bootstrapTable('getSelections');
+                if (options.bootstrapTable !== null) {
+                    var arrselections = options.bootstrapTable.bootstrapTable('getSelections');
                     if (arrselections.length === 0) {
                         lgbSwal({ title: '请选择要删除的数据', type: "warning" });
                         return;
@@ -170,7 +170,7 @@
                                 $.bc({
                                     url: options.url, data: iDs, method: 'delete', title: options.delTitle, logData: arrselections,
                                     callback: function (result) {
-                                        if (result) $(options.bootstrapTable).bootstrapTable('refresh');
+                                        if (result) options.bootstrapTable.bootstrapTable('refresh');
                                         handlerCallback.call(that, null, element, { oper: 'del', success: result, data: arrselections });
                                     }
                                 });
@@ -186,7 +186,7 @@
                     url: options.url, data: options.data, title: options.saveTitle, modal: options.modal, method: "post",
                     callback: function (result) {
                         if (result) {
-                            $(options.bootstrapTable).bootstrapTable('refresh');
+                            options.bootstrapTable.bootstrapTable('refresh');
                             handlerCallback.call(that, null, element, { oper: 'save', success: result, data: [options.data] });
                         }
                     }
@@ -209,8 +209,8 @@
             return {
                 'click .edit': function (e, value, row, index) {
                     op.dataEntity.load(row);
-                    $(op.table).bootstrapTable('uncheckAll');
-                    $(op.table).bootstrapTable('check', index);
+                    op.table.bootstrapTable('uncheckAll');
+                    op.table.bootstrapTable('check', index);
                     handlerCallback.call(op.src, null, e, { oper: 'edit', data: row });
                     $(op.modal).modal("show");
                 },
@@ -225,7 +225,7 @@
                     var idField = findIdField(op.table);
                     var idValue = row[idField];
 
-                    var nodes = $(op.table).bootstrapTable('getData').filter(function (row, index, data) {
+                    var nodes = op.table.bootstrapTable('getData').filter(function (row, index, data) {
                         return idValue == row[op.treegridParentId];
                     });
                     if ($.isArray(nodes) && nodes.length > 0) {
@@ -243,7 +243,7 @@
                             $.bc({
                                 url: op.url, data: iDs, method: 'delete', title: '删除数据', logData: data,
                                 callback: function (result) {
-                                    if (result) $(op.table).bootstrapTable('refresh');
+                                    if (result) op.table.bootstrapTable('refresh');
                                     handlerCallback.call(op.src, null, e, { oper: 'del', success: result, data: data });
                                 }
                             });
