@@ -98,7 +98,7 @@ namespace Bootstrap.DataAccess
         /// <param name="roles"></param>
         internal static void SaveUser(User newUser, IEnumerable<string> roles)
         {
-            if (!string.IsNullOrEmpty(newUser.Id))
+            if (string.IsNullOrEmpty(newUser.Id))
             {
                 var uid = UserHelper.Retrieves().FirstOrDefault(u => u.UserName == newUser.UserName)?.Id;
                 var user = DbContextManager.Create<User>();
@@ -114,9 +114,9 @@ namespace Bootstrap.DataAccess
                             var roleIds = role.Retrieves().Where(r => roles.Any(rl => rl.Equals(r.RoleName, StringComparison.OrdinalIgnoreCase))).Select(r => r.Id);
                             if (roleIds.Any())
                             {
-#pragma warning disable CS8620 // 由于引用类型的可为 null 性差异，实参不能用于形参。
+#nullable disable
                                 role.SaveByUserId(newUser.Id, roleIds);
-#pragma warning restore CS8620 // 由于引用类型的可为 null 性差异，实参不能用于形参。
+#nullable restore
                                 CacheCleanUtility.ClearCache(userIds: new string[0], roleIds: new string[0], cacheKey: $"{UserHelper.RetrieveUsersByNameDataKey}-{newUser.UserName}");
                             }
                         }
