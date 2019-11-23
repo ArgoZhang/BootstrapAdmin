@@ -311,7 +311,7 @@
             return this;
         },
         lgbTable: function (options) {
-            var bsa = new DataTable($.extend(options.dataBinder, { url: options.url }));
+            var bsa = new DataTable($.extend(options.dataBinder, { url: options.url, bootstrapTable: this }));
 
             var settings = $.extend(true, {
                 url: options.url,
