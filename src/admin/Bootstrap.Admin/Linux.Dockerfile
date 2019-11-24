@@ -7,9 +7,9 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.0 AS build
 WORKDIR /src
-COPY src/admin .
+COPY . .
 
-WORKDIR "/src/Bootstrap.Admin"
+WORKDIR "src/admin/Bootstrap.Admin"
 FROM build AS publish
 RUN dotnet publish -c Release -o /app
 

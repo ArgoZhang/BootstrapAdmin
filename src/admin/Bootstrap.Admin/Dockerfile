@@ -7,9 +7,9 @@ EXPOSE 80
 
 FROM microsoft/dotnet:3.0-sdk-nanoserver-1903 AS build
 WORKDIR /src
-COPY src/admin .
+COPY . .
 
-WORKDIR "/src/Bootstrap.Admin"
+WORKDIR "src/admin/Bootstrap.Admin"
 FROM build AS publish
 RUN dotnet publish -c Release -o /app
 
