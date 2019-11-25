@@ -27,7 +27,7 @@ namespace Bootstrap.Admin.Components
         /// 
         /// </summary>
         [CascadingParameter(Name = "Default")]
-        public DefaultLayout Layout { get; protected set; } = new DefaultLayout();
+        public DefaultLayout RootLayout { get; protected set; } = new DefaultLayout();
 
         /// <summary>
         /// 
@@ -60,7 +60,7 @@ namespace Bootstrap.Admin.Components
         {
             if (TabSet != null)
             {
-                if (TabSet.TabCount == 1) Layout.NavigationManager?.NavigateTo(Layout.HomeUrl);
+                if (TabSet.TabCount == 1) RootLayout.NavigationManager?.NavigateTo(RootLayout.HomeUrl);
                 else
                 {
                     var pageId = await TabSet.CloseTab(tabId);
@@ -74,16 +74,15 @@ namespace Bootstrap.Admin.Components
         /// </summary>
         /// <param name="firstRender"></param>
         /// <returns></returns>
-        protected override Task OnAfterRenderAsync(bool firstRender)
+        protected override void OnAfterRender(bool firstRender)
         {
-            if (firstRender) Layout.JSRuntime.EnableAnimation();
+            if (firstRender) RootLayout.JSRuntime.EnableAnimation();
 
-            var requestUrl = Layout.NavigationManager?.Uri ?? "";
+            var requestUrl = RootLayout.NavigationManager?.Uri ?? "";
             var path = new Uri(requestUrl).PathAndQuery;
-            var menus = DataAccess.MenuHelper.RetrieveAllMenus(Layout.UserName);
+            var menus = DataAccess.MenuHelper.RetrieveAllMenus(RootLayout.UserName);
             var menu = menus.FirstOrDefault(menu => path.Contains(menu.Url.ToBlazorMenuUrl()));
             AddTab(menu);
-            return base.OnAfterRenderAsync(firstRender);
         }
     }
 }

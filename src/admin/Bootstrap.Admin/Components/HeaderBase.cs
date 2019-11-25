@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 
 namespace Bootstrap.Admin.Components
 {
@@ -43,12 +42,6 @@ namespace Bootstrap.Admin.Components
         /// </summary>
         [Parameter]
         public string Icon { get; set; } = "";
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [Inject]
-        protected IJSRuntime? JSRuntime { get; set; }
 
         /// <summary>
         /// 更新登录用户显示名称方法

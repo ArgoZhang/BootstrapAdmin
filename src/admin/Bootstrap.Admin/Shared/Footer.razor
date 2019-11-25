@@ -1,7 +1,7 @@
 ﻿<footer class="position-fixed">
     <div>
         <span id="websiteFooter">@Text</span>
-        @if (IsDemo ?? false)
+        @if (IsDemo)
         {
             <span>（演示系统）</span>
         }
@@ -16,5 +16,5 @@
     public string Text { get; set; } = "未设置";
 
     [Parameter]
-    public bool? IsDemo { get; set; }
+    public bool IsDemo { get; set; }
 }

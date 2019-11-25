@@ -30,6 +30,5 @@ namespace Bootstrap.Admin.Components
         /// </summary>
         [Parameter]
         public RenderFragment? ChildContent { get; set; }
-
     }
 }

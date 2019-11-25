@@ -1,7 +1,5 @@
 ﻿using Bootstrap.Admin.Extensions;
 using Bootstrap.Security;
-using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,12 +15,6 @@ namespace Bootstrap.Admin.Components
         /// </summary>
         protected List<PageContentAttributes> Pages { get; set; } = new List<PageContentAttributes>();
         private string? curId = "";
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [Inject]
-        protected IJSRuntime? JSRuntime { get; set; }
 
         /// <summary>
         /// 

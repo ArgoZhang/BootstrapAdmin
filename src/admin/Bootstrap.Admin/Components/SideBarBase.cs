@@ -1,6 +1,5 @@
 ﻿using Bootstrap.Admin.Models;
 using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 
 namespace Bootstrap.Admin.Components
 {
@@ -12,13 +11,7 @@ namespace Bootstrap.Admin.Components
         /// <summary>
         /// 
         /// </summary>
-        [Inject]
-        protected IJSRuntime? JSRuntime { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
         [Parameter]
-        public NavigatorBarModel? Model { get; set; }
+        public NavigatorBarModel Model { get; set; } = new NavigatorBarModel("");
     }
 }

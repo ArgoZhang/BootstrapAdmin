@@ -1,5 +1,6 @@
 ﻿using Bootstrap.Admin.Shared;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 
 namespace Bootstrap.Admin.Components
 {
@@ -17,13 +18,13 @@ namespace Bootstrap.Admin.Components
         /// <summary>
         /// 
         /// </summary>
-        [CascadingParameter(Name = "Default")]
-        protected DefaultLayout RootLayout { get; set; } = new DefaultLayout();
+        [Inject]
+        public NavigationManager? NavigationManager { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
         [Inject]
-        public NavigationManager? NavigationManager { get; set; }
+        protected IJSRuntime? JSRuntime { get; set; }
     }
 }

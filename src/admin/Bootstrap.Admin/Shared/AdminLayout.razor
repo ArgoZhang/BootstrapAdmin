@@ -2,7 +2,7 @@
 @layout DefaultLayout
 
 <CascadingValue Value=this Name="Admin">
-    <Section ShowCardTitle="@Layout.Model?.ShowCardTitle" LockScreenPeriod=@(Layout.Model?.LockScreenPeriod ?? 0)>
+    <Section ShowCardTitle="@RootLayout.Model.ShowCardTitle" LockScreenPeriod=@RootLayout.Model.LockScreenPeriod>
         <TabSet @ref="TabSet"></TabSet>
         <PageSet @ref="PageSet"></PageSet>
     </Section>

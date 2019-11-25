@@ -2,6 +2,7 @@
 using Bootstrap.Admin.Shared;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components.Server;
 using Microsoft.JSInterop;
 using System;
 using System.Net;
@@ -18,7 +19,7 @@ namespace Bootstrap.Admin.Components
         /// 
         /// </summary>
         [Inject]
-        public AuthenticationStateProvider? AuthenticationStateProvider { get; set; }
+        public AuthenticationStateProvider AuthenticationStateProvider { get; set; } = new ServerAuthenticationStateProvider();
 
         /// <summary>
         /// 
@@ -35,7 +36,7 @@ namespace Bootstrap.Admin.Components
         /// <summary>
         /// 
         /// </summary>
-        public NavigatorBarModel? Model { get; set; }
+        public NavigatorBarModel Model { get; set; } = new NavigatorBarModel("");
 
         /// <summary>
         /// 
@@ -73,20 +74,17 @@ namespace Bootstrap.Admin.Components
         /// <returns></returns>
         protected override async Task OnInitializedAsync()
         {
-            if (AuthenticationStateProvider != null)
+            var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            if (!state.User.Identity.IsAuthenticated)
             {
-                var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-                if (!state.User.Identity.IsAuthenticated)
-                {
-                    NavigationManager?.NavigateTo("/Account/Login?returnUrl=" + WebUtility.UrlEncode(new Uri(NavigationManager.Uri).PathAndQuery));
-                }
-                else
-                {
-                    Model = new NavigatorBarModel(state.User.Identity.Name);
-                    IsAdmin = state.User.IsInRole("Administrators");
-                    UserName = state.User.Identity.Name ?? "";
-                    DisplayName = Model.DisplayName;
-                }
+                NavigationManager?.NavigateTo("/Account/Login?returnUrl=" + WebUtility.UrlEncode(new Uri(NavigationManager.Uri).PathAndQuery));
+            }
+            else
+            {
+                Model = new NavigatorBarModel(state.User.Identity.Name);
+                IsAdmin = state.User.IsInRole("Administrators");
+                UserName = state.User.Identity.Name ?? "";
+                DisplayName = Model.DisplayName;
             }
         }
     }

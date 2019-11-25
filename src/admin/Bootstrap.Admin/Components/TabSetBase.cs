@@ -1,8 +1,6 @@
 ﻿using Bootstrap.Admin.Extensions;
 using Bootstrap.Admin.Shared;
 using Bootstrap.Security;
-using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,12 +12,6 @@ namespace Bootstrap.Admin.Components
     /// </summary>
     public class TabSetBase : BootstrapComponentBase
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        [Inject]
-        protected IJSRuntime? JSRuntime { get; set; }
-
         /// <summary>
         /// 
         /// </summary>
@@ -91,7 +83,7 @@ namespace Bootstrap.Admin.Components
         /// </summary>
         protected void CloseAllTab()
         {
-            NavigationManager?.NavigateTo(RootLayout?.HomeUrl);
+            NavigationManager?.NavigateTo(Layout.RootLayout.HomeUrl);
         }
 
         /// <summary>
