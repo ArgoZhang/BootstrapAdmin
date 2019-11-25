@@ -1,0 +1,24 @@
+﻿@page "/Pages"
+@page "/Pages/Admin"
+@page "/Pages/Admin/Index"
+@layout DefaultLayout
+@attribute [Authorize]
+
+<Section ShowCardTitle="@ShowCardTitle" LockScreenPeriod="@LockScreenPeriod" ShowBackground="true">
+    <h4 style="color: #fff">欢迎使用后台管理</h4>
+</Section>
+
+@code {
+    protected string? ShowCardTitle { get; set; } = "";
+
+    protected int LockScreenPeriod { get; set; } = 30;
+
+    [CascadingParameter]
+    protected DefaultLayout? Layout { get; set; }
+
+    protected override void OnInitialized()
+    {
+        ShowCardTitle = Layout?.Model?.ShowCardTitle;
+        LockScreenPeriod = Layout?.Model?.LockScreenPeriod ?? 30;
+    }
+}

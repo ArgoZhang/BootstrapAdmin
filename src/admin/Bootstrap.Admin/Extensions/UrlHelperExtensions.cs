@@ -1,4 +1,4 @@
-﻿namespace Bootstrap.Admin.Pages
+﻿namespace Bootstrap.Admin.Extensions
 {
     /// <summary>
     /// Url 地址辅助操作类
@@ -6,7 +6,7 @@
     public static class UrlHelperExtensions
     {
         /// <summary>
-        /// 转换为 Blazor 地址
+        /// 转换为 Blazor 地址 移除开始 ~ 字符
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>

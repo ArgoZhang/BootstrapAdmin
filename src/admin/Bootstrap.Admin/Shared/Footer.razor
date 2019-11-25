@@ -1,18 +1,20 @@
-﻿@inject IConfiguration configuration
-
-<footer class="position-fixed">
-    <div><span id="websiteFooter">@Model?.Footer</span><span asp-condition="@Model?.IsDemo">（演示系统）</span></div>
+﻿<footer class="position-fixed">
+    <div>
+        <span id="websiteFooter">@Text</span>
+        @if (IsDemo ?? false)
+        {
+            <span>（演示系统）</span>
+        }
+    </div>
     <a id="gotoTop" href="#" class="go-top" title="返回顶部" data-toggle="tooltip" data-placement="left">
         <i class="fa fa-angle-up"></i>
     </a>
 </footer>
 
 @code {
-    private AdminModel? Model;
+    [Parameter]
+    public string Text { get; set; } = "未设置";
 
-    protected override Task OnInitializedAsync()
-    {
-        Model = new AdminModel(configuration.GetAppId());
-        return Task.CompletedTask;
-    }
+    [Parameter]
+    public bool? IsDemo { get; set; }
 }

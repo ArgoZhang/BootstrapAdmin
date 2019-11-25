@@ -21,6 +21,15 @@ namespace Bootstrap.Admin.Models
         }
 
         /// <summary>
+        /// 构造函数 Blazor 使用
+        /// </summary>
+        public SettingsModel(string? userName) : base(userName)
+        {
+            Themes = DictHelper.RetrieveThemes();
+            AutoLockScreen = EnableAutoLockScreen ? "" : "lockScreen";
+        }
+
+        /// <summary>
         /// 获得 系统配置的所有样式表
         /// </summary>
         public IEnumerable<BootstrapDict> Themes { get; }

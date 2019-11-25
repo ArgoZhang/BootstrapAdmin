@@ -1,10 +1,9 @@
-﻿@inject AuthenticationStateProvider authenticationStateProvider
-@inject NavigationManager navigationManager
+﻿@inherits SideBarBase
 
 <aside class="@Model?.ShowSideBar">
     <div class="bg"></div>
     <div class="nav-brand justify-content-center">
-        <a href="#">
+        <a href="@RootLayout?.HomeUrl">
             <img src="@Model?.WebSiteLogo.ToBlazorLink()" />
             <span>@Model?.Title</span>
         </a>
@@ -15,29 +14,15 @@
             <span class="username d-inline-block text-truncate flex-fill">@Model?.DisplayName</span>
         </a>
     </div>
-    <!-- sidebar menu start-->
     <div class="sidebar">
         <ul class="nav-sidebar nav nav-pills flex-column flex-nowrap">
             @if (Model != null)
             {
                 foreach (var menu in Model.Navigations)
                 {
-                    <li class="nav-item" id="@string.Format("menus_{0}",menu.Id)">
-                        <a href="@menu.Url.ToBlazorMenuUrl()" class="nav-link @menu.Active" target="@menu.Target"><i class="@menu.Icon"></i><span class="flex-fill">@menu.Name</span></a>
-                    </li>
+                    <NavItem Menu="@menu"></NavItem>
                 }
             }
         </ul>
     </div>
-    <!-- sidebar menu end-->
 </aside>
-
-@code {
-    private NavigatorBarModel? Model;
-
-    protected override async Task OnInitializedAsync()
-    {
-        var state = await authenticationStateProvider.GetAuthenticationStateAsync();
-        Model = new NavigatorBarModel(state.User.Identity.Name);
-    }
-}

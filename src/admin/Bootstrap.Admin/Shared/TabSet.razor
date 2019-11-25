@@ -1,0 +1,19 @@
+﻿@inherits TabSetBase
+
+<nav class="d-flex">
+    <div class="nav-link-bar" @onclick="MovePrev"><i class="fa fa-chevron-left"></i></div>
+    <ul id="navBar" class="nav nav-tabs flex-fill flex-nowrap overflow-hidden">
+        @foreach (var tab in Tabs)
+        {
+            <Tab @key="@tab.Id" Id="@tab.Id" Icon="@tab.Icon" Url="@tab.Url.ToBlazorMenuUrl()" Title="@tab.Title"></Tab>
+        }
+    </ul>
+    <div class="nav-link-bar" @onclick="MoveNext"><i class="fa fa-chevron-right"></i></div>
+    <div class="dropdown nav-link-bar">
+        <div class="nav-link-close dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-chevron-down"></i></div>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="关闭标签下拉菜单">
+            <div class="dropdown-item" @onclick="CloseAllTab"><span>关闭所有标签</span></div>
+            <div class="dropdown-item"><span>其他全部关闭</span></div>
+        </div>
+    </div>
+</nav>

@@ -502,21 +502,23 @@
     });
 
     //extend dropdown method
-    $.extend($.fn.dropdown.Constructor.prototype, {
-        val: function () {
-            var $element = $(this._element);
-            var $op = $(this._menu).find('[data-val="' + $element.val() + '"]:first');
-            $element.text($op.text());
-        },
-        select: function () {
-            var $element = $(this._element);
-            $(this._menu).on('click', 'a', function (event) {
-                event.preventDefault();
-                var $op = $(this);
-                $element.text($op.text()).val($op.attr('data-val'));
-            });
-        }
-    });
+    if ($.fn.dropdown) {
+        $.extend($.fn.dropdown.Constructor.prototype, {
+            val: function () {
+                var $element = $(this._element);
+                var $op = $(this._menu).find('[data-val="' + $element.val() + '"]:first');
+                $element.text($op.text());
+            },
+            select: function () {
+                var $element = $(this._element);
+                $(this._menu).on('click', 'a', function (event) {
+                    event.preventDefault();
+                    var $op = $(this);
+                    $element.text($op.text()).val($op.attr('data-val'));
+                });
+            }
+        });
+    }
 
     $(function () {
         // fix bug bootstrap-table 1.14.2 showToggle

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace Bootstrap.Admin.Pages
+namespace Bootstrap.Admin.Extensions
 {
     /// <summary>
     /// 配置文件静态操作类

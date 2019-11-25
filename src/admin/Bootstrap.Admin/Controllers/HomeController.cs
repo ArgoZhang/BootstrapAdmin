@@ -22,7 +22,7 @@ namespace Bootstrap.Admin.Controllers
             var model = new HeaderBarModel(User.Identity.Name);
             var homeUrl = DictHelper.RetrieveHomeUrl(model.AppId);
             var useBlazor = configuration.GetValue("UseBlazor", false);
-            return useBlazor ? Redirect("~/Pages") : homeUrl.Equals("~/Home/Index", System.StringComparison.OrdinalIgnoreCase) ? (IActionResult)View(model) : Redirect(homeUrl);
+            return homeUrl.Equals("~/Home/Index", System.StringComparison.OrdinalIgnoreCase) ? (useBlazor ? Redirect("~/Pages") : (IActionResult)View(model)) : Redirect(homeUrl);
         }
 
         /// <summary>
@@ -31,9 +31,9 @@ namespace Bootstrap.Admin.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [AllowAnonymous]
-        public IActionResult Error(int id)
+        public IActionResult Error(int? id = 0)
         {
-            var model = ErrorModel.CreateById(id);
+            var model = ErrorModel.CreateById(id ?? 0);
             if (id != 403)
             {
                 var returnUrl = Request.Query[CookieAuthenticationDefaults.ReturnUrlParameter].ToString();

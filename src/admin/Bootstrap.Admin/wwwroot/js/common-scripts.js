@@ -1,9 +1,4 @@
 (function ($) {
-    $.extend({
-        sendHealths: function (data) {
-            $.bc({ url: 'api/Interface/Healths', data: JSON.stringify(data), method: 'post' });
-        }
-    });
     $.fn.extend({
         autoScrollSidebar: function (options) {
             var option = $.extend({ target: null, offsetTop: 0 }, options);

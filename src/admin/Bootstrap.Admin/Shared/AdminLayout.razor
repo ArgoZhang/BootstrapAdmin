@@ -1,31 +1,9 @@
-﻿@inherits LayoutComponentBase
-@inject AuthenticationStateProvider authenticationStateProvider
-@inject NavigationManager navigationManager
-@inject IConfiguration configuration
+﻿@inherits AdminLayoutComponentBase
+@layout DefaultLayout
 
-<Header></Header>
-<div class="sidebar">
-    <NavMenu />
-</div>
-<section id="main-content" class="main-content @Model?.ShowCardTitle welcome-bg">
-    <input id="lockScreenPeriod" type="hidden" asp-condition="@Model?.EnableAutoLockScreen" value="@Model?.LockScreenPeriod" />
-    @Body
-</section>
-<Footer></Footer>
-
-@code {
-    protected AdminModel? Model;
-
-    protected override async Task OnInitializedAsync()
-    {
-        var state = await authenticationStateProvider.GetAuthenticationStateAsync();
-        if (!state.User.Identity.IsAuthenticated)
-        {
-            navigationManager.NavigateTo("/Account/Login?returnUrl=" + WebUtility.UrlEncode(new Uri(navigationManager.Uri).PathAndQuery));
-        }
-        else
-        {
-            Model = new AdminModel(configuration.GetAppId());
-        }
-    }
-}
+<CascadingValue Value=this Name="Admin">
+    <Section ShowCardTitle="@Layout.Model?.ShowCardTitle" LockScreenPeriod=@(Layout.Model?.LockScreenPeriod ?? 0)>
+        <TabSet @ref="TabSet"></TabSet>
+        <PageSet @ref="PageSet"></PageSet>
+    </Section>
+</CascadingValue>
