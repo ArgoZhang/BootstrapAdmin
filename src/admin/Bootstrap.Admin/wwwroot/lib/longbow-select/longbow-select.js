@@ -75,7 +75,7 @@
         // 新控件 <div class="form-select">
         this.$ctl = $(lgbSelect.Template).insertBefore(this.$element);
         if ($input.attr('data-toggle') === 'lgbSelect') {
-            this.$input = $input.addClass("form-select-input").attr("aria-haspopup", "true").attr("aria-expanded", "false").attr("data-toggle", "dropdown");
+            this.$input = $input.addClass("form-select-input").attr("aria-haspopup", "true").attr("aria-expanded", "false").attr("data-toggle", "dropdown").attr("readonly", true);
         }
         else {
             this.$input = $('<input type="text" readonly="readonly" class="form-control form-select-input" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"/>');
