@@ -86,24 +86,6 @@ namespace Bootstrap.DataAccess.SqlServer
         }
 
         [Fact]
-        public void RetrieveHomeUrl_Ok()
-        {
-            Assert.Equal("~/Home/Index", DictHelper.RetrieveHomeUrl("BA"));
-            var url = DictHelper.RetrieveHomeUrl("Demo");
-            Assert.Equal("http://localhost:49185/", url);
-
-            // INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('应用首页', 2, 'http://localhost:49185/', 0);
-            var dict = DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "应用首页" && d.Name == "Demo");
-            url = dict.Code;
-            dict.Code = "BA";
-            Assert.True(DictHelper.Save(dict));
-            Assert.Equal("BA", DictHelper.RetrieveHomeUrl("Demo"));
-
-            dict.Code = url;
-            Assert.True(DictHelper.Save(dict));
-        }
-
-        [Fact]
         public void RetrieveApps_Ok()
         {
             Assert.NotEmpty(DictHelper.RetrieveApps());
