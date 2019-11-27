@@ -59,8 +59,6 @@
             var menuId = 'menus_' + id;
             var $curMenu = $('.sidebar .active').first();
             if ($curMenu.attr('id') !== menuId) {
-                $curMenu.removeClass('active');
-                var $menu = $('#' + menuId).addClass('active');
                 // set website title
                 $('head title').text($menu.text());
                 this.resetTab(id);

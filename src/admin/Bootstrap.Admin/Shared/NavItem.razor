@@ -12,6 +12,6 @@
 else
 {
     <li class="nav-item">
-        <a href="@Menu.Url.ToBlazorMenuUrl()" id="@string.Format("menus_{0}",Menu.Id)" class="nav-link @Menu.Active"><i class="@Menu.Icon"></i><span class="flex-fill">@Menu.Name</span></a>
+        <a href="@Menu.Url.ToBlazorMenuUrl()" id="@string.Format("menus_{0}",Menu.Id)" class="@(Menu.Active =="active" ? "nav-link active" : "nav-link")"><i class="@Menu.Icon"></i><span class="flex-fill">@Menu.Name</span></a>
     </li>
 }

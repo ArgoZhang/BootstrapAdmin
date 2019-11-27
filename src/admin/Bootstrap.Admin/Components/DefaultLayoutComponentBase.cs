@@ -1,4 +1,5 @@
-﻿using Bootstrap.Admin.Models;
+﻿using Bootstrap.Admin.Extensions;
+using Bootstrap.Admin.Models;
 using Bootstrap.Admin.Shared;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -69,7 +70,12 @@ namespace Bootstrap.Admin.Components
         public string HomeUrl { get; protected set; } = "/Pages";
 
         /// <summary>
-        /// 
+        /// 获得/设置 当前请求路径
+        /// </summary>
+        protected string RequestUrl { get; set; } = "";
+
+        /// <summary>
+        /// OnInitializedAsync 方法
         /// </summary>
         /// <returns></returns>
         protected override async Task OnInitializedAsync()
@@ -81,11 +87,31 @@ namespace Bootstrap.Admin.Components
             }
             else
             {
-                Model = new NavigatorBarModel(state.User.Identity.Name);
+                RequestUrl = new UriBuilder(NavigationManager?.Uri ?? "").Path;
+                Model = new NavigatorBarModel(state.User.Identity.Name, RequestUrl.ToMvcMenuUrl());
                 IsAdmin = state.User.IsInRole("Administrators");
                 UserName = state.User.Identity.Name ?? "";
                 DisplayName = Model.DisplayName;
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="firstRender"></param>
+        protected override void OnAfterRender(bool firstRender)
+        {
+            if (!firstRender) ResetSideBar();
+        }
+
+        /// <summary>
+        /// 更新侧边栏方法
+        /// </summary>
+        public void ResetSideBar()
+        {
+            RequestUrl = new UriBuilder(NavigationManager?.Uri ?? "").Path;
+            Model = new NavigatorBarModel(UserName, RequestUrl.ToMvcMenuUrl());
+            SideBar?.Update(Model);
         }
     }
 }
