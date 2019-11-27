@@ -1,50 +1,57 @@
 ﻿using Bootstrap.Admin.Extensions;
 using Bootstrap.Security;
 using Microsoft.AspNetCore.Components;
+using System.Threading.Tasks;
 
 namespace Bootstrap.Admin.Components
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class TabBase : BootstrapComponentBase
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [Parameter]
         public string Title { get; set; } = "";
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [Parameter]
         public string? Id { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [Parameter]
         public string Url { get; set; } = "";
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [Parameter]
         public string Icon { get; set; } = "";
 
+        /// <summary>
+        ///
+        /// </summary>
+        [Parameter]
+        public bool Active { get; set; }
+
         private bool closeTab;
         /// <summary>
-        /// 
+        ///
         /// </summary>
-        protected void CloseTab()
+        protected async Task CloseTab()
         {
             closeTab = true;
-            Layout?.CloseTab(Id);
+            if (Layout.TabSet != null) await Layout.TabSet.CloseTab(Id);
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         protected void ClickTab()
         {
@@ -53,7 +60,7 @@ namespace Bootstrap.Admin.Components
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="menu"></param>
         public void Init(BootstrapMenu menu)
@@ -62,6 +69,13 @@ namespace Bootstrap.Admin.Components
             Url = menu.Url.ToBlazorMenuUrl();
             Icon = menu.Icon;
             Id = menu.Id;
+            Active = true;
         }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="val"></param>
+        public void SetActive(bool val) => Active = val;
     }
 }

@@ -34,16 +34,6 @@ namespace Bootstrap.Admin.Extensions
         public static async ValueTask<string> MoveNextTabAsync(this IJSRuntime? jSRuntime) => jSRuntime == null ? "" : await jSRuntime.InvokeAsync<string>("$.moveNextTab");
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="jsRuntime"></param>
-        /// <param name="pageId"></param>
-        public static void ActivePage(this IJSRuntime? jsRuntime, string? pageId)
-        {
-            if (!string.IsNullOrEmpty(pageId) && jsRuntime != null) jsRuntime.InvokeVoidAsync("$.activePage", pageId);
-        }
-
-        /// <summary>
         /// 移除指定 ID 的导航条
         /// </summary>
         /// <param name="jSRuntime"></param>
@@ -52,16 +42,9 @@ namespace Bootstrap.Admin.Extensions
         public static async ValueTask<string> RemoveTabAsync(this IJSRuntime? jSRuntime, string? tabId) => string.IsNullOrEmpty(tabId) || jSRuntime == null ? "" : await jSRuntime.InvokeAsync<string>("$.removeTab", tabId);
 
         /// <summary>
-        /// 
+        /// 启用动画
         /// </summary>
         /// <param name="jSRuntime"></param>
         public static void EnableAnimation(this IJSRuntime? jSRuntime) => jSRuntime.InvokeVoidAsync("$.enableAnimation");
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="jSRuntime"></param>
-        /// <param name="val"></param>
-        public static void EnableBackground(this IJSRuntime? jSRuntime, bool val) => jSRuntime.InvokeVoidAsync("$.enableBackground", val);
     }
 }

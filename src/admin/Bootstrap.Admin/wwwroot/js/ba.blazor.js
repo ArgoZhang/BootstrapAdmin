@@ -1,4 +1,4 @@
-(function ($) {
+﻿(function ($) {
     $.fn.extend({
         autoScrollSidebar: function (options) {
             var option = $.extend({ target: null, offsetTop: 0 }, options);
@@ -54,52 +54,46 @@
             });
             return source;
         },
-        activePage: function (id) {
-            $('.main-content .content').addClass('d-none');
-            $('#page_' + id).removeClass('d-none');
-        },
         activeMenu: function (id) {
-            var $menu = $('#menus_' + id);
-            $('.sidebar .active').removeClass('active');
-            $menu.addClass('active');
-            // set website title
-            $('head title').text($menu.text());
-            this.moveTab(id);
+            // 通过指定 ID 设置站点 Title
+            var menuId = 'menus_' + id;
+            var $curMenu = $('.sidebar .active').first();
+            if ($curMenu.attr('id') !== menuId) {
+                $curMenu.removeClass('active');
+                var $menu = $('#' + menuId).addClass('active');
+                // set website title
+                $('head title').text($menu.text());
+                this.resetTab(id);
+            }
         },
         removeTab: function (tabId) {
-            var nextId = $('#navBar').find('.active').first().attr('id');
+            // 通过当前 Tab 返回如果移除后新的 TabId
+            var activeTabId = $('#navBar').find('.active').first().attr('id');
             var $curTab = $('#' + tabId);
             if ($curTab.hasClass('active')) {
-                var $nextTab = $curTab.parent().next().find('.nav-link');
-                var $prevTab = $curTab.parent().prev().find('.nav-link');
-                if ($nextTab.length === 1) nextId = $nextTab.attr('id');
-                else if ($prevTab.length === 1) nextId = $prevTab.attr('id');
-                else nextId = "";
-                if (nextId !== "") {
-                    this.activeMenu(nextId);
-                    this.activePage(nextId);
-                }
+                var $nextTab = $curTab.next();
+                var $prevTab = $curTab.prev();
+                if ($nextTab.length === 1) activeTabId = $nextTab.attr('id');
+                else if ($prevTab.length === 1) activeTabId = $prevTab.attr('id');
+                else activeTabId = "";
             }
-            return nextId;
+            return activeTabId;
         },
-        moveTab: function (tabId) {
+        resetTab: function (tabId) {
+            // 通过计算 Tab 宽度控制滚动条显示完整 Tab
             var $tab = $('#' + tabId);
             if ($tab.length === 0) return;
+
             var $navBar = $('#navBar');
-            $navBar.parent().addClass('d-flex').removeClass('d-none');
-
-            // reset active
-            $navBar.find('.active').removeClass('active');
-            $tab.addClass('active');
-
             var $first = $navBar.children().first();
-            var marginLeft = $tab.position().left - 2 - $first.position().left;
+            var marginLeft = $tab.position().left - $first.position().left;
             var scrollLeft = $navBar.scrollLeft();
             if (marginLeft < scrollLeft) {
                 // overflow left
                 $navBar.scrollLeft(marginLeft);
                 return;
             }
+
             var marginRight = $tab.position().left + $tab.outerWidth() - $navBar.outerWidth();
             if (marginRight < 0) return;
             $navBar.scrollLeft(marginRight - $first.position().left);
@@ -107,12 +101,12 @@
         movePrevTab: function () {
             var $navBar = $('#navBar');
             var $curTab = $navBar.find('.active').first();
-            return $curTab.parent().prev().find('.nav-link').first().attr('url');
+            return $curTab.prev().attr('url');
         },
         moveNextTab: function () {
             var $navBar = $('#navBar');
             var $curTab = $navBar.find('.active').first();
-            return $curTab.parent().next().find('.nav-link').first().attr('url');
+            return $curTab.next().attr('url');
         },
         enableAnimation: function () {
             $('body').removeClass('trans-mute');
@@ -128,7 +122,7 @@
 
     $(function () {
         $(document)
-            .on('click', '.nav-link-bar.dropdown', function (e) {
+            .on('click', '.nav-tabs .nav-link', function (e) {
 
             });
     });

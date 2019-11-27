@@ -1,9 +1,0 @@
-﻿@inherits PageSetBase
-
-@foreach (var comp in Pages)
-{
-    <div id="@string.Format("page_{0}", comp.Id)" class="content d-none">
-        <PageContent @key="comp" Name="@comp.Name"></PageContent>
-    </div>
-}
-

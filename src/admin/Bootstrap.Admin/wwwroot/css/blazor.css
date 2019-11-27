@@ -1,4 +1,4 @@
-nav {
+﻿nav {
     margin-bottom: 10px;
 }
 
@@ -21,6 +21,7 @@ nav {
     .dropdown-item:hover {
         background-color: #4f9ecc;
     }
+
 
 .nav-tabs .nav-link, .nav-link-bar, .fa-close {
     transition: all .3s linear;
