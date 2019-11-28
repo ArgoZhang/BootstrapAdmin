@@ -67,6 +67,18 @@ nav .dropdown .nav-link-close.dropdown-toggle:after {
     padding: 0.5rem;
 }
 
+.card-body .bootstrap-table {
+    margin-top: 0rem;
+}
+
+.bs-bars {
+    margin-bottom: 0.625rem;
+}
+
+.bootstrap-table {
+    margin-bottom: 0;
+}
+
 .pagination-bar {
     flex: 1 1 auto;
     margin-bottom: 1rem;

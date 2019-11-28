@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Bootstrap.Admin.Extensions;
+using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using System;
 using System.Collections.Generic;
 
 namespace Bootstrap.Admin.Components
@@ -14,12 +16,6 @@ namespace Bootstrap.Admin.Components
         /// </summary>
         [Inject]
         protected IJSRuntime? JSRuntime { get; set; }
-
-        /// <summary>
-        ///
-        /// </summary>
-        [Parameter]
-        public string Id { get; set; } = "";
 
         /// <summary>
         /// 
@@ -43,12 +39,29 @@ namespace Bootstrap.Admin.Components
         /// 
         /// </summary>
         [Parameter]
+        public bool ShowToolBar { get; set; } = true;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Parameter]
         public IEnumerable<TItem> Items { get; set; } = new TItem[0];
 
         /// <summary>
-        /// 数据
+        /// 
         /// </summary>
-        [Parameter]
-        public int ItemsCount { get; set; } = 0;
+        public Action AddCallback { get; set; } = new Action(() => { });
+        /// <summary>
+        /// 
+        /// </summary>
+        public Action EditCallback { get; set; } = new Action(() => { });
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void Delete()
+        {
+
+        }
     }
 }

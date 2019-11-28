@@ -1,4 +1,6 @@
-﻿<div class="card">
+﻿@inject IJSRuntime JSRuntime
+
+<div class="card">
     <div class="card-header">查询条件</div>
     <div class="card-body">
         <form class="form-inline">
@@ -26,41 +28,28 @@
         </form>
     </div>
 </div>
-<div id="toolbar" class="d-none">
-    <div class="gear btn-group">
-        <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" type="button"><i class="fa fa-gear"></i></button>
-        <div class="dropdown-menu">
-            <a id="tb_add" href="#" title="新增" asp-auth="add"><i class="fa fa-plus"></i></a>
-            <a id="tb_delete" href="#" title="删除" asp-auth="del"><i class="fa fa-remove"></i></a>
-            <a id="tb_edit" href="#" title="编辑" asp-auth="edit"><i class="fa fa-pencil"></i></a>
-        </div>
-    </div>
-    <div class="toolbar btn-group">
-        <button id="btn_add" type="button" class="btn btn-success" asp-auth="add"><i class="fa fa-plus" aria-hidden="true"></i><span>新增</span></button>
-        <button id="btn_delete" type="button" class="btn btn-danger" asp-auth="del"><i class="fa fa-remove" aria-hidden="true"></i><span>删除</span></button>
-        <button id="btn_edit" type="button" class="btn btn-primary" asp-auth="edit"><i class="fa fa-pencil" aria-hidden="true"></i><span>编辑</span></button>
-    </div>
-</div>
 <div class="card">
     <div class="card-header">
         查询结果
     </div>
     <div class="card-body">
-        <Table Id="tb_Dict" Items="Items" TItem="Bootstrap.Security.BootstrapDict" ItemsCount="ItemsCount">
-            <TableHeader>
-                <th>字典标签</th>
-                <th>字典名称</th>
-                <th>字典代码</th>
-                <th>字典类型</th>
-            </TableHeader>
-            <RowTemplate>
-                <td>@context.Category</td>
-                <td>@context.Name</td>
-                <td>@context.Code</td>
-                <td>@context.Define</td>
-            </RowTemplate>
-        </Table>
-        <Pagination @ref="Pagination" PageCount="PageCount" PageIndex="PageIndex" ItemsCount="ItemsCount"></Pagination>
+        <div class="bootstrap-table">
+            <Table @ref="Table" Items="Items" TItem="Bootstrap.Security.BootstrapDict">
+                <TableHeader>
+                    <th>字典标签</th>
+                    <th>字典名称</th>
+                    <th>字典代码</th>
+                    <th>字典类型</th>
+                </TableHeader>
+                <RowTemplate>
+                    <td>@context.Category</td>
+                    <td>@context.Name</td>
+                    <td>@context.Code</td>
+                    <td>@context.Define</td>
+                </RowTemplate>
+            </Table>
+            <Pagination @ref="Pagination" PageCount="PageCount" PageIndex="PageIndex" ItemsCount="ItemsCount"></Pagination>
+        </div>
     </div>
 </div>
 <div id="tableButtons" class="d-none">
@@ -70,34 +59,29 @@
     </div>
 </div>
 
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-    Launch demo modal
-</button>
-
-<Modal Id="exampleModal" Title="字典编辑窗口">
+<Modal Id="DialogDict" Title="字典编辑窗口">
     <ModalBody>
         <form class="form-inline">
             <div class="row">
-                <input type="hidden" id="dictID" />
                 <div class="form-group col-sm-6">
                     <label class="control-label" for="dictCate">字典标签</label>
-                    <input type="text" class="form-control" id="dictCate" placeholder="不可为空，50字以内" maxlength="50" data-valid="true" />
+                    <input type="text" class="form-control" id="dictCate" @bind="Model.Category" placeholder="不可为空，50字以内" maxlength="50" data-valid="true" />
                 </div>
                 <div class="form-group col-sm-6">
                     <label class="control-label" for="dictDefine">字典类型</label>
-                    <input class="form-control" data-toggle="lgbSelect" />
-                    <select data-toggle="lgbSelect" class="d-none" data-default-val="1" id="dictDefine">
-                        <option value="0">系统使用</option>
-                        <option value="1">自定义</option>
-                    </select>
+                    <Select Id="dictDefine" @bind-SelectedValue="Model.Define">
+                        <SelectItem Text="系统使用" Value="0" Active="true"></SelectItem>
+                        <SelectItem Text="自定义" Value="1"></SelectItem>
+                    </Select>
+
                 </div>
                 <div class="form-group col-sm-6">
                     <label class="control-label" for="dictName">字典名称</label>
-                    <input type="text" class="form-control" id="dictName" placeholder="不可为空，50字以内" maxlength="50" data-valid="true" />
+                    <input type="text" class="form-control" id="dictName" @bind="Model.Name" placeholder="不可为空，50字以内" maxlength="50" data-valid="true" />
                 </div>
                 <div class="form-group col-sm-6">
                     <label class="control-label" for="dictCode">字典代码</label>
-                    <input type="text" class="form-control" id="dictCode" placeholder="不可为空，2000字以内" maxlength="2000" data-valid="true" />
+                    <input type="text" class="form-control" id="dictCode" @bind="Model.Code" placeholder="不可为空，2000字以内" maxlength="2000" data-valid="true" />
                 </div>
             </div>
         </form>
@@ -107,7 +91,7 @@
             <i class="fa fa-times"></i>
             <span>关闭</span>
         </button>
-        <button type="button" class="btn btn-primary" id="btnSubmit">
+        <button type="button" class="btn btn-primary" @onclick="Save">
             <i class="fa fa-save"></i>
             <span>保存</span>
         </button>
@@ -131,6 +115,10 @@
 
     protected Pagination? Pagination { get; set; }
 
+    protected Table<BootstrapDict>? Table { get; set; }
+
+    protected BootstrapDict Model { get; set; } = new BootstrapDict();
+
     protected override void OnInitialized()
     {
         Query(1);
@@ -138,21 +126,35 @@
 
     protected override void OnAfterRender(bool firstRender)
     {
-        if (firstRender && Pagination != null)
+        if (firstRender)
         {
-            Pagination.ClickPageCallback = pageIndex =>
+            if (Pagination != null)
             {
-                if (pageIndex != PageIndex)
+                Pagination.ClickPageCallback = pageIndex =>
                 {
-                    Query(pageIndex);
+                    if (pageIndex != PageIndex)
+                    {
+                        Query(pageIndex);
+                        StateHasChanged();
+                    }
+                };
+                Pagination.PageItemsChangeCallback = () =>
+                {
+                    Query(1);
                     StateHasChanged();
-                }
-            };
-            Pagination.PageItemsChangeCallback = () =>
+                };
+            }
+            if (Table != null)
             {
-                Query(1);
-                StateHasChanged();
-            };
+                Table.AddCallback = () =>
+                {
+                    JSRuntime.ToggleModal("#DialogDict");
+                };
+                Table.EditCallback = () =>
+                {
+
+                };
+            }
         }
     }
 
@@ -166,5 +168,10 @@
         Items = data.Skip((pageIndex - 1) * pageItems).Take(pageItems);
         PageCount = (int)Math.Ceiling(data.Count() * 1.0d / pageItems);
         PageIndex = pageIndex;
+    }
+
+    protected void Save()
+    {
+        JSRuntime.ToggleModal("#DialogDict");
     }
 }

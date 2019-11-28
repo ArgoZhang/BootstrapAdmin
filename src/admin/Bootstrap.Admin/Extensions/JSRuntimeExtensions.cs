@@ -52,5 +52,12 @@ namespace Bootstrap.Admin.Extensions
         /// </summary>
         /// <param name="jSRuntime"></param>
         public static void InitModal(this IJSRuntime? jSRuntime) => jSRuntime.InvokeVoidAsync("$.initModal");
+
+        /// <summary>
+        /// 弹出 Modal 组件
+        /// </summary>
+        /// <param name="jSRuntime"></param>
+        /// <param name="modalId"></param>
+        public static void ToggleModal(this IJSRuntime? jSRuntime, string modalId) => jSRuntime.InvokeVoidAsync("$.toggleModal", modalId);
     }
 }

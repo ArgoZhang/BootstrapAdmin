@@ -12,6 +12,12 @@ namespace Bootstrap.Admin.Components
         /// 
         /// </summary>
         [Parameter]
+        public string Id { get; set; } = "";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Parameter]
         public RenderFragment? ChildContent { get; set; }
 
         /// <summary>
@@ -24,6 +30,18 @@ namespace Bootstrap.Admin.Components
         /// 当前选择项实例
         /// </summary>
         public SelectItemBase? SelectedItem { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Parameter]
+        public int SelectedValue { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Parameter]
+        public EventCallback<int> SelectedValueChanged { get; set; }
 
         /// <summary>
         /// 

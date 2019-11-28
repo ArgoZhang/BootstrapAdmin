@@ -118,6 +118,9 @@
         },
         initModal: function () {
             $('.modal').appendTo($('body'));
+        },
+        toggleModal: function (modalId) {
+            $(modalId).modal('toggle');
         }
     });
 

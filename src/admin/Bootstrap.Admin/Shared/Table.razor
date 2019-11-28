@@ -1,6 +1,22 @@
 ﻿@typeparam TItem
 @inherits TableBase<TItem>
 
+    <div class="@(ShowToolBar ? "bs-bars" : "bs-bars d-none")">
+        <div class="toolbar btn-group">
+            <button id="btn_add" type="button" @onclick="(e => AddCallback())" class="btn btn-success" asp-auth="add"><i class="fa fa-plus" aria-hidden="true"></i><span>新增</span></button>
+            <button id="btn_delete" type="button" @onclick="Delete" class="btn btn-danger" asp-auth="del"><i class="fa fa-remove" aria-hidden="true"></i><span>删除</span></button>
+            <button id="btn_edit" type="button" @onclick="(e => EditCallback())" class="btn btn-primary" asp-auth="edit"><i class="fa fa-pencil" aria-hidden="true"></i><span>编辑</span></button>
+        </div>
+        <div class="gear btn-group">
+            <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" type="button"><i class="fa fa-gear"></i></button>
+            <div class="dropdown-menu">
+                <div id="tb_add" title="新增" @onclick="(e => AddCallback())" asp-auth="add"><i class="fa fa-plus"></i></div>
+                <div id="tb_delete" title="删除" @onclick="Delete" asp-auth="del"><i class="fa fa-remove"></i></div>
+                <div id="tb_edit" title="编辑" @onclick="(e => EditCallback())" asp-auth="edit"><i class="fa fa-pencil"></i></div>
+            </div>
+        </div>
+    </div>
+
 <table class="table table-striped table-bordered table-hover">
     <thead>
         <tr>@TableHeader</tr>
