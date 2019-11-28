@@ -1,0 +1,19 @@
+﻿@inherits PaginationBase
+
+<nav class="d-flex align-items-center" aria-label="分页组件">
+    <div class="pagination-bar">显示第 1 到第 20 条记录，总共 264 条记录 每页显示  条记录</div>
+    <ul class="pagination">
+        <li class="page-item" @onclick="MovePrev"><div class="page-link" aria-label="上一页"><i class="fa fa-angle-double-left"></i></div></li>
+        <CascadingValue Value="this">
+            @for (int i = 1; i <= PageCount; i++)
+            {
+                <PaginationItem Active="i == PageIndex" PageIndex="i"></PaginationItem>
+            }
+        </CascadingValue>
+        <li class="page-item" @onclick="MoveNext"><div class="page-link" aria-label="下一页"><i class="fa fa-angle-double-right"></i></div></li>
+    </ul>
+</nav>
+
+@code {
+
+}

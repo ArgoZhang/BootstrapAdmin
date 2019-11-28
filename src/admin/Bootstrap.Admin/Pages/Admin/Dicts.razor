@@ -21,7 +21,7 @@
                     </select>
                 </div>
                 <div class="form-group col-sm-6 col-md-auto flex-sm-fill justify-content-sm-end align-self-sm-end">
-                    <button type="button" id="btn_query" class="btn btn-primary btn-fill"><i class="fa fa-search" aria-hidden="true"></i><span>查询</span></button>
+                    <button type="button" id="btn_query" class="btn btn-primary btn-fill" @onclick="e => Query(1)"><i class="fa fa-search" aria-hidden="true"></i><span>查询</span></button>
                 </div>
             </div>
         </form>
@@ -47,7 +47,21 @@
         查询结果
     </div>
     <div class="card-body">
-        <table></table>
+        <Table Id="tb_Dict" Items="Items" TItem="Bootstrap.Security.BootstrapDict" ItemsCount="ItemsCount">
+            <TableHeader>
+                <th>字典标签</th>
+                <th>字典名称</th>
+                <th>字典代码</th>
+                <th>字典分类</th>
+            </TableHeader>
+            <RowTemplate>
+                <td>@context.Category</td>
+                <td>@context.Name</td>
+                <td>@context.Code</td>
+                <td>@context.Define</td>
+            </RowTemplate>
+        </Table>
+        <Pagination @ref="Pagination" PageCount="PageCount" PageIndex="PageIndex"></Pagination>
     </div>
 </div>
 <div id="tableButtons" class="d-none">
@@ -102,5 +116,45 @@
 </Modal>
 
 @code {
+    [Parameter]
+    public IEnumerable<BootstrapDict> Items { get; set; } = new BootstrapDict[0];
 
+    [Parameter]
+    public int ItemsCount { get; set; } = 0;
+
+    [Parameter]
+    public int PageCount { get; set; } = 0;
+
+    [Parameter]
+    public int PageIndex { get; set; } = 1;
+
+    protected int PageItem { get; set; } = 20;
+
+    protected Pagination? Pagination { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Query(1);
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender && Pagination != null) Pagination.ClickPageCallback = pageIndex =>
+        {
+            if (pageIndex != PageIndex)
+            {
+                Query(pageIndex);
+                StateHasChanged();
+            }
+        };
+    }
+
+    protected void Query(int pageIndex)
+    {
+        var data = DataAccess.DictHelper.RetrieveDicts();
+        ItemsCount = data.Count();
+        Items = data.Skip((pageIndex - 1) * PageItem).Take(PageItem);
+        PageCount = (int)Math.Ceiling(data.Count() * 1.0d / PageItem);
+        PageIndex = pageIndex;
+    }
 }

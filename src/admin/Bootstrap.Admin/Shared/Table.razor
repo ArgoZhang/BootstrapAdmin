@@ -1,0 +1,21 @@
+﻿@typeparam TItem
+@inherits TableBase<TItem>
+
+<table class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>@TableHeader</tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Items)
+        {
+            <tr>@RowTemplate?.Invoke(item)</tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>@TableFooter</tr>
+    </tfoot>
+</table>
+
+@code {
+
+}

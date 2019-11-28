@@ -1,20 +1,16 @@
-﻿nav {
-    margin-bottom: 10px;
+.nav-link-bar {
+    border: 1px solid #dee2e6;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+    padding: 0.5rem 1rem;
+    background-color: #fff;
 }
 
-    nav .nav-link-bar {
-        border: 1px solid #dee2e6;
-        border-top-left-radius: 0.25rem;
-        border-top-right-radius: 0.25rem;
-        padding: 0.5rem 1rem;
-        background-color: #fff;
-    }
+nav .dropdown .nav-link-close.dropdown-toggle:after {
+    display: none;
+}
 
-    nav .dropdown .nav-link-close.dropdown-toggle:after {
-        display: none;
-    }
-
-.dropdown-item, .nav-tabs .nav-link .fa, .nav-link, .nav-link-bar {
+.dropdown-item, .nav-tabs .nav-link .fa, .nav-link, .nav-link-bar, .page-link {
     cursor: pointer;
 }
 
@@ -61,4 +57,13 @@
 
 .nav-link-close {
     padding: 0.5rem 1rem;
+}
+
+.table th, .table td {
+    padding: 0.5rem;
+}
+
+.pagination-bar {
+    flex: 1 1 auto;
+    margin-bottom: 1rem;
 }
