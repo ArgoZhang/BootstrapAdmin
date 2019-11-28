@@ -46,5 +46,11 @@ namespace Bootstrap.Admin.Extensions
         /// </summary>
         /// <param name="jSRuntime"></param>
         public static void EnableAnimation(this IJSRuntime? jSRuntime) => jSRuntime.InvokeVoidAsync("$.enableAnimation");
+
+        /// <summary>
+        /// 修复 Modal 组件
+        /// </summary>
+        /// <param name="jSRuntime"></param>
+        public static void InitModal(this IJSRuntime? jSRuntime) => jSRuntime.InvokeVoidAsync("$.initModal");
     }
 }

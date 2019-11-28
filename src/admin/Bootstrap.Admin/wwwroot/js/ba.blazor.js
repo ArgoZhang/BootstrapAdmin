@@ -115,6 +115,9 @@
         enableBackground: function (val) {
             if (val) $('.main-content').addClass('welcome-bg').find('nav').addClass('d-none').removeClass('d-flex');
             else $('.main-content').removeClass('welcome-bg').find('nav').addClass('d-flex').removeClass('d-none');
+        },
+        initModal: function () {
+            $('.modal').appendTo($('body'));
         }
     });
 
