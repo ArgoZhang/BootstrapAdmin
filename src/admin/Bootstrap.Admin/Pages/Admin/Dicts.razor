@@ -57,7 +57,49 @@
     </div>
 </div>
 
-<Modal></Modal>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    Launch demo modal
+</button>
+
+<Modal Id="exampleModal" Title="字典编辑窗口">
+    <ModalBody>
+        <form class="form-inline">
+            <div class="row">
+                <input type="hidden" id="dictID" />
+                <div class="form-group col-sm-6">
+                    <label class="control-label" for="dictCate">字典标签</label>
+                    <input type="text" class="form-control" id="dictCate" placeholder="不可为空，50字以内" maxlength="50" data-valid="true" />
+                </div>
+                <div class="form-group col-sm-6">
+                    <label class="control-label" for="dictDefine">字典类型</label>
+                    <input class="form-control" data-toggle="lgbSelect" />
+                    <select data-toggle="lgbSelect" class="d-none" data-default-val="1" id="dictDefine">
+                        <option value="0">系统使用</option>
+                        <option value="1">自定义</option>
+                    </select>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label class="control-label" for="dictName">字典名称</label>
+                    <input type="text" class="form-control" id="dictName" placeholder="不可为空，50字以内" maxlength="50" data-valid="true" />
+                </div>
+                <div class="form-group col-sm-6">
+                    <label class="control-label" for="dictCode">字典代码</label>
+                    <input type="text" class="form-control" id="dictCode" placeholder="不可为空，2000字以内" maxlength="2000" data-valid="true" />
+                </div>
+            </div>
+        </form>
+    </ModalBody>
+    <ModalFooter>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            <i class="fa fa-times"></i>
+            <span>关闭</span>
+        </button>
+        <button type="button" class="btn btn-primary" id="btnSubmit">
+            <i class="fa fa-save"></i>
+            <span>保存</span>
+        </button>
+    </ModalFooter>
+</Modal>
 
 @code {
 
