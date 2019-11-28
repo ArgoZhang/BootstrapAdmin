@@ -1,18 +1,29 @@
 ﻿@inherits PaginationBase
 
-<nav class="d-flex align-items-center" aria-label="分页组件">
-    <div class="pagination-bar">显示第 1 到第 20 条记录，总共 264 条记录 每页显示  条记录</div>
-    <ul class="pagination">
-        <li class="page-item" @onclick="MovePrev"><div class="page-link" aria-label="上一页"><i class="fa fa-angle-double-left"></i></div></li>
-        <CascadingValue Value="this">
+<CascadingValue Value="this">
+    <nav class="d-flex align-items-center" aria-label="分页组件">
+        <div class="pagination-bar">
+            显示第 <span>@((PageIndex - 1) * PageItems + 1)</span> 到第 <span>@(Math.Min(PageIndex * PageItems, ItemsCount))</span> 条记录，总共 <span>@ItemsCount</span> 条记录 每页显示
+            <div class="btn-group dropup">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@PageItems</button>
+                <div class="dropdown-menu">
+                    <div class="@(PageItems == 20 ? "dropdown-item active" : "dropdown-item")" @onclick="@(e => ClickItem(20))">20</div>
+                    <div class="@(PageItems == 40 ? "dropdown-item active" : "dropdown-item")" @onclick="@(e => ClickItem(40))">40</div>
+                    <div class="@(PageItems == 80 ? "dropdown-item active" : "dropdown-item")" @onclick="@(e => ClickItem(80))">80</div>
+                </div>
+            </div>
+            条记录
+        </div>
+        <ul class="@(PageCount == 1 ? "pagination d-none" : "pagination")">
+            <li class="page-item" @onclick="MovePrev"><div class="page-link" aria-label="上一页"><i class="fa fa-angle-double-left"></i></div></li>
             @for (int i = 1; i <= PageCount; i++)
             {
                 <PaginationItem Active="i == PageIndex" PageIndex="i"></PaginationItem>
             }
-        </CascadingValue>
-        <li class="page-item" @onclick="MoveNext"><div class="page-link" aria-label="下一页"><i class="fa fa-angle-double-right"></i></div></li>
-    </ul>
-</nav>
+            <li class="page-item" @onclick="MoveNext"><div class="page-link" aria-label="下一页"><i class="fa fa-angle-double-right"></i></div></li>
+        </ul>
+    </nav>
+</CascadingValue>
 
 @code {
 

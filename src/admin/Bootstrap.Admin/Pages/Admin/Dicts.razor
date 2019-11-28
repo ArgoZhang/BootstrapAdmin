@@ -60,7 +60,7 @@
                 <td>@context.Define</td>
             </RowTemplate>
         </Table>
-        <Pagination @ref="Pagination" PageCount="PageCount" PageIndex="PageIndex"></Pagination>
+        <Pagination @ref="Pagination" PageCount="PageCount" PageIndex="PageIndex" ItemsCount="ItemsCount"></Pagination>
     </div>
 </div>
 <div id="tableButtons" class="d-none">
@@ -129,8 +129,6 @@
 
     protected Select? DictCate { get; set; }
 
-    protected int PageItem { get; set; } = 20;
-
     protected Pagination? Pagination { get; set; }
 
     protected override void OnInitialized()
@@ -140,14 +138,22 @@
 
     protected override void OnAfterRender(bool firstRender)
     {
-        if (firstRender && Pagination != null) Pagination.ClickPageCallback = pageIndex =>
+        if (firstRender && Pagination != null)
         {
-            if (pageIndex != PageIndex)
+            Pagination.ClickPageCallback = pageIndex =>
             {
-                Query(pageIndex);
+                if (pageIndex != PageIndex)
+                {
+                    Query(pageIndex);
+                    StateHasChanged();
+                }
+            };
+            Pagination.PageItemsChangeCallback = () =>
+            {
+                Query(1);
                 StateHasChanged();
-            }
-        };
+            };
+        }
     }
 
     protected void Query(int pageIndex)
@@ -155,8 +161,10 @@
         var data = DataAccess.DictHelper.RetrieveDicts();
         if (!string.IsNullOrEmpty(DictCate?.SelectedItem?.Value)) data = data.Where(d => d.Define.ToString() == DictCate?.SelectedItem?.Value);
         ItemsCount = data.Count();
-        Items = data.Skip((pageIndex - 1) * PageItem).Take(PageItem);
-        PageCount = (int)Math.Ceiling(data.Count() * 1.0d / PageItem);
+
+        var pageItems = Pagination?.PageItems ?? 20;
+        Items = data.Skip((pageIndex - 1) * pageItems).Take(pageItems);
+        PageCount = (int)Math.Ceiling(data.Count() * 1.0d / pageItems);
         PageIndex = pageIndex;
     }
 }
