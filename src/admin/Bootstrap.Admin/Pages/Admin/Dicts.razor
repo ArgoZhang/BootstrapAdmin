@@ -13,12 +13,11 @@
                 </div>
                 <div class="form-group col-sm-6 col-md-auto">
                     <label class="control-label" for="txt_dict_define">字典类别</label>
-                    <input class="form-control" data-toggle="lgbSelect" />
-                    <select data-toggle="lgbSelect" class="d-none" id="txt_dict_define">
-                        <option value="">全部</option>
-                        <option value="0">系统使用</option>
-                        <option value="1">自定义</option>
-                    </select>
+                    <Select @ref="DictCate">
+                        <SelectItem Text="全部" Value="" Active="true"></SelectItem>
+                        <SelectItem Text="系统使用" Value="0"></SelectItem>
+                        <SelectItem Text="自定义" Value="1"></SelectItem>
+                    </Select>
                 </div>
                 <div class="form-group col-sm-6 col-md-auto flex-sm-fill justify-content-sm-end align-self-sm-end">
                     <button type="button" id="btn_query" class="btn btn-primary btn-fill" @onclick="e => Query(1)"><i class="fa fa-search" aria-hidden="true"></i><span>查询</span></button>
@@ -52,7 +51,7 @@
                 <th>字典标签</th>
                 <th>字典名称</th>
                 <th>字典代码</th>
-                <th>字典分类</th>
+                <th>字典类型</th>
             </TableHeader>
             <RowTemplate>
                 <td>@context.Category</td>
@@ -128,6 +127,8 @@
     [Parameter]
     public int PageIndex { get; set; } = 1;
 
+    protected Select? DictCate { get; set; }
+
     protected int PageItem { get; set; } = 20;
 
     protected Pagination? Pagination { get; set; }
@@ -152,6 +153,7 @@
     protected void Query(int pageIndex)
     {
         var data = DataAccess.DictHelper.RetrieveDicts();
+        if (!string.IsNullOrEmpty(DictCate?.SelectedItem?.Value)) data = data.Where(d => d.Define.ToString() == DictCate?.SelectedItem?.Value);
         ItemsCount = data.Count();
         Items = data.Skip((pageIndex - 1) * PageItem).Take(PageItem);
         PageCount = (int)Math.Ceiling(data.Count() * 1.0d / PageItem);
