@@ -59,6 +59,10 @@ nav .dropdown .nav-link-close.dropdown-toggle:after {
     padding: 0.5rem 1rem;
 }
 
+.tab-content {
+    padding-top: 1rem;
+}
+
 .table th, .table td {
     padding: 0.5rem;
 }
