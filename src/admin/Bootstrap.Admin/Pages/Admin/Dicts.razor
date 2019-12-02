@@ -1,177 +1,56 @@
-﻿@inject IJSRuntime JSRuntime
+﻿@inherits DictsBase
 
-<div class="card">
-    <div class="card-header">查询条件</div>
-    <div class="card-body">
-        <form class="form-inline">
-            <div class="row">
-                <div class="form-group col-sm-6 col-md-auto">
-                    <label class="control-label" for="txt_dict_name">字典名称</label>
-                    <input type="text" class="form-control" id="txt_dict_name" />
-                </div>
-                <div class="form-group col-sm-6 col-md-auto">
-                    <label class="control-label" for="txt_dict_cate">字典标签</label>
-                    <input type="text" class="form-control" id="txt_dict_cate" data-provide="typeahead" />
-                </div>
-                <div class="form-group col-sm-6 col-md-auto">
-                    <label class="control-label" for="txt_dict_define">字典类别</label>
-                    <Select @ref="DictCate">
-                        <SelectItem Text="全部" Value="" Active="true"></SelectItem>
-                        <SelectItem Text="系统使用" Value="0"></SelectItem>
-                        <SelectItem Text="自定义" Value="1"></SelectItem>
-                    </Select>
-                </div>
-                <div class="form-group col-sm-6 col-md-auto flex-sm-fill justify-content-sm-end align-self-sm-end">
-                    <button type="button" id="btn_query" class="btn btn-primary btn-fill" @onclick="e => Query(1)"><i class="fa fa-search" aria-hidden="true"></i><span>查询</span></button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-<div class="card">
-    <div class="card-header">
-        查询结果
-    </div>
-    <div class="card-body">
-        <div class="bootstrap-table">
-            <Table @ref="Table" Items="Items" TItem="Bootstrap.Security.BootstrapDict">
-                <TableHeader>
-                    <th>字典标签</th>
-                    <th>字典名称</th>
-                    <th>字典代码</th>
-                    <th>字典类型</th>
-                </TableHeader>
-                <RowTemplate>
-                    <td>@context.Category</td>
-                    <td>@context.Name</td>
-                    <td>@context.Code</td>
-                    <td>@context.Define</td>
-                </RowTemplate>
-            </Table>
-            <Pagination @ref="Pagination" PageCount="PageCount" PageIndex="PageIndex" ItemsCount="ItemsCount"></Pagination>
+<EditPage Id="dict" TItem="Bootstrap.Security.BootstrapDict" QueryModel="QueryModel" OnQuery="Query" OnAdd="Add" OnDelete="Delete" OnSave="Save">
+    <QueryBody>
+        <div class="form-group col-sm-6 col-md-auto">
+            <label class="control-label" for="txt_dict_cate">字典标签</label>
+            <input type="text" class="form-control" @bind="context.Category" data-provide="typeahead" />
         </div>
-    </div>
-</div>
-<div id="tableButtons" class="d-none">
-    <div class='btn-group'>
-        <button class='edit btn btn-sm btn-success' asp-auth="edit"><i class='fa fa-edit'></i><span>编辑</span></button>
-        <button class='del btn btn-sm btn-danger' asp-auth="del"><i class='fa fa-remove'></i><span>删除</span></button>
-    </div>
-</div>
-
-<Modal Id="DialogDict" Title="字典编辑窗口">
-    <ModalBody>
-        <form class="form-inline">
-            <div class="row">
-                <div class="form-group col-sm-6">
-                    <label class="control-label" for="dictCate">字典标签</label>
-                    <input type="text" class="form-control" id="dictCate" @bind="Model.Category" placeholder="不可为空，50字以内" maxlength="50" data-valid="true" />
-                </div>
-                <div class="form-group col-sm-6">
-                    <label class="control-label" for="dictDefine">字典类型</label>
-                    <Select Id="dictDefine" @bind-SelectedValue="Model.Define">
-                        <SelectItem Text="系统使用" Value="0" Active="true"></SelectItem>
-                        <SelectItem Text="自定义" Value="1"></SelectItem>
-                    </Select>
-
-                </div>
-                <div class="form-group col-sm-6">
-                    <label class="control-label" for="dictName">字典名称</label>
-                    <input type="text" class="form-control" id="dictName" @bind="Model.Name" placeholder="不可为空，50字以内" maxlength="50" data-valid="true" />
-                </div>
-                <div class="form-group col-sm-6">
-                    <label class="control-label" for="dictCode">字典代码</label>
-                    <input type="text" class="form-control" id="dictCode" @bind="Model.Code" placeholder="不可为空，2000字以内" maxlength="2000" data-valid="true" />
-                </div>
+        <div class="form-group col-sm-6 col-md-auto">
+            <label class="control-label" for="txt_dict_name">字典名称</label>
+            <input type="text" class="form-control" @bind="context.Name" />
+        </div>
+        <div class="form-group col-sm-6 col-md-auto">
+            <label class="control-label" for="txt_dict_define">字典类型</label>
+            <Select Items="QueryDefine" TItem="int" SelectedItemChanged="item=>context.Define = int.Parse(item.Value)"></Select>
+        </div>
+    </QueryBody>
+    <TableHeader>
+        <th>字典标签</th>
+        <th>字典名称</th>
+        <th>字典代码</th>
+        <th>字典类型</th>
+    </TableHeader>
+    <RowTemplate>
+        <td>@context.Category</td>
+        <td>@context.Name</td>
+        <td>@context.Code</td>
+        <td>@context.Define</td>
+    </RowTemplate>
+    <EditTemplate>
+        <div class="row">
+            <div class="form-group col-sm-6">
+                <label class="control-label" for="dictCate">字典标签</label>
+                <LgbInputText Id="dictCate" type="text" class="form-control" data-toggle="tooltip" @bind-Value="context.Category" placeholder="不可为空，50字以内">
+                    <RequiredValidator AllowEmptyString="false" ErrorMessage="这是必填字段" />
+                    <StringLengthValidator Length="5" ErrorMessage="不可为空，50字以内" />
+                </LgbInputText>
             </div>
-        </form>
-    </ModalBody>
-    <ModalFooter>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-            <i class="fa fa-times"></i>
-            <span>关闭</span>
-        </button>
-        <button type="button" class="btn btn-primary" @onclick="Save">
-            <i class="fa fa-save"></i>
-            <span>保存</span>
-        </button>
-    </ModalFooter>
-</Modal>
-
-@code {
-    [Parameter]
-    public IEnumerable<BootstrapDict> Items { get; set; } = new BootstrapDict[0];
-
-    [Parameter]
-    public int ItemsCount { get; set; } = 0;
-
-    [Parameter]
-    public int PageCount { get; set; } = 0;
-
-    [Parameter]
-    public int PageIndex { get; set; } = 1;
-
-    protected Select? DictCate { get; set; }
-
-    protected Pagination? Pagination { get; set; }
-
-    protected Table<BootstrapDict>? Table { get; set; }
-
-    protected BootstrapDict Model { get; set; } = new BootstrapDict();
-
-    protected override void OnInitialized()
-    {
-        Query(1);
-    }
-
-    protected override void OnAfterRender(bool firstRender)
-    {
-        if (firstRender)
-        {
-            if (Pagination != null)
-            {
-                Pagination.ClickPageCallback = pageIndex =>
-                {
-                    if (pageIndex != PageIndex)
-                    {
-                        Query(pageIndex);
-                        StateHasChanged();
-                    }
-                };
-                Pagination.PageItemsChangeCallback = () =>
-                {
-                    Query(1);
-                    StateHasChanged();
-                };
-            }
-            if (Table != null)
-            {
-                Table.AddCallback = () =>
-                {
-                    JSRuntime.ToggleModal("#DialogDict");
-                };
-                Table.EditCallback = () =>
-                {
-
-                };
-            }
-        }
-    }
-
-    protected void Query(int pageIndex)
-    {
-        var data = DataAccess.DictHelper.RetrieveDicts();
-        if (!string.IsNullOrEmpty(DictCate?.SelectedItem?.Value)) data = data.Where(d => d.Define.ToString() == DictCate?.SelectedItem?.Value);
-        ItemsCount = data.Count();
-
-        var pageItems = Pagination?.PageItems ?? 20;
-        Items = data.Skip((pageIndex - 1) * pageItems).Take(pageItems);
-        PageCount = (int)Math.Ceiling(data.Count() * 1.0d / pageItems);
-        PageIndex = pageIndex;
-    }
-
-    protected void Save()
-    {
-        JSRuntime.ToggleModal("#DialogDict");
-    }
-}
+            <div class="form-group col-sm-6">
+                <label class="control-label" for="dictDefine">字典类型</label>
+                <Select Id="dictDefine" Items="DefineItems" TItem="int" @bind-SelectedValue="context.Define" SelectedItemChanged="@(item=>context.Define = int.Parse(item.Value))"></Select>
+            </div>
+            <div class="form-group col-sm-6">
+                <label class="control-label" for="dictName">字典名称</label>
+                <LgbInputText Id="dictName" type="text" class="form-control" @bind-Value="context.Name" placeholder="不可为空，50字以内" maxlength="50">
+                    <RequiredValidator AllowEmptyString="false" ErrorMessage="这是必填字段" />
+                    <StringLengthValidator Length="5" ErrorMessage="不可为空，50字以内" />
+                </LgbInputText>
+            </div>
+            <div class="form-group col-sm-6">
+                <label class="control-label" for="dictCode">字典代码</label>
+                <LgbInputText Id="dictCode" type="text" class="form-control" @bind-Value="context.Code" placeholder="不可为空，2000字以内" maxlength="2000" />
+            </div>
+        </div>
+    </EditTemplate>
+</EditPage>

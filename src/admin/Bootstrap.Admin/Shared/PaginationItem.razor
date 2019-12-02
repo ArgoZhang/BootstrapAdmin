@@ -17,13 +17,13 @@
     ///
     /// </summary>
     [Parameter]
-    public int PageIndex { get; set; } = 0;
+    public int PageIndex { get; set; } = 1;
 
     /// <summary>
     ///
     /// </summary>
     protected void ClickPage()
     {
-        Pagination?.ClickPageCallback?.Invoke(PageIndex);
+        Pagination?.OnPageClick?.Invoke(PageIndex, Pagination.PageItems);
     }
 }

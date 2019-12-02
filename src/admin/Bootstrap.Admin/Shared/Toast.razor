@@ -1,0 +1,19 @@
+﻿@inherits ToastBase
+
+<div class="toast fade @Placement.ToCss("toast")" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="@(AutoHide ? "true":"false")" data-delay="@Interval">
+    <div class="toast-header">
+        <div class="toast-bar"><i class="@RenderCategory()"></i></div>
+        <strong class="mr-auto">@Title</strong>
+        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="toast-body">
+        @Text
+    </div>
+    <div class="toast-progress" style="@RenderAnimation()"></div>
+</div>
+
+@code {
+
+}

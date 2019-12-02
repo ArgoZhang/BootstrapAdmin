@@ -106,8 +106,9 @@
             var $curTab = $navBar.find('.active').first();
             return $curTab.next().attr('url');
         },
-        enableAnimation: function () {
+        initDocument: function () {
             $('body').removeClass('trans-mute');
+            $('[data-toggle="tooltip"]').tooltip();
         },
         initSidebar: function () {
             $('.sidebar').addNiceScroll().autoScrollSidebar();
@@ -119,15 +120,30 @@
         initModal: function () {
             $('.modal').appendTo($('body'));
         },
+        initToast: function () {
+            $('.toast').appendTo($('body'));
+        },
         toggleModal: function (modalId) {
             $(modalId).modal('toggle');
+        },
+        showToast: function () {
+            $('.toast').toast('show');
+        },
+        tooltip: function (id, method) {
+            $(id).tooltip(method);
+        },
+        submitForm: function (btn) {
+            $(btn).parent().prev().find('form :submit').click();
         }
     });
 
     $(function () {
         $(document)
-            .on('click', '.nav-tabs .nav-link', function (e) {
-
+            .on('hidden.bs.toast', '.toast', function () {
+                $(this).removeClass('hide');
+            })
+            .on('inserted.bs.tooltip', '.is-invalid', function () {
+                $('#' + $(this).attr('aria-describedby')).addClass('is-invalid');
             });
     });
 })(jQuery);

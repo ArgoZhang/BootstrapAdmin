@@ -1,3 +1,7 @@
+﻿#components-reconnect-modal {
+    z-index: 9999 !important;
+}
+
 .nav-link-bar {
     border: 1px solid #dee2e6;
     border-top-left-radius: 0.25rem;
@@ -67,6 +71,35 @@ nav .dropdown .nav-link-close.dropdown-toggle:after {
     padding: 0.5rem;
 }
 
+.table .btn.btn-sm {
+    font-size: 0.75rem;
+    padding: 1px 5px;
+}
+
+.table .btn-group {
+    white-space: nowrap;
+}
+
+.table-col-lineno {
+    width: 46px;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.table-col-checkbox {
+    width: 32px;
+    text-align: center;
+}
+
+    .table-col-checkbox .checkbox-label {
+        display: none;
+    }
+
+.table-selected .form-checkbox {
+    line-height: 1;
+    vertical-align: text-bottom;
+}
+
 .card-body .bootstrap-table {
     margin-top: 0rem;
 }
@@ -75,6 +108,19 @@ nav .dropdown .nav-link-close.dropdown-toggle:after {
     margin-bottom: 0.625rem;
 }
 
+    .bs-bars .dropdown-menu.show {
+        display: flex;
+        min-width: unset;
+    }
+
+    .bs-bars .dropdown-item {
+        padding: 6px 12px;
+    }
+
+        .bs-bars .dropdown-item:not(:first-child) {
+            border-left: solid 1px #aeb2b7;
+        }
+
 .bootstrap-table {
     margin-bottom: 0;
 }
@@ -82,4 +128,95 @@ nav .dropdown .nav-link-close.dropdown-toggle:after {
 .pagination-bar {
     flex: 1 1 auto;
     margin-bottom: 1rem;
+}
+
+.toast {
+    position: absolute;
+    z-index: -1;
+    min-width: 260px;
+}
+
+    .toast.show {
+        z-index: 1080;
+    }
+
+.toast-top {
+    left: 0;
+    right: 0;
+    top: 1rem;
+    margin: 0 auto;
+}
+
+.toast-top-left {
+    top: 1rem;
+    left: 1rem;
+}
+
+.toast-top-right {
+    top: 1rem;
+    right: 1rem;
+}
+
+.toast-bottom {
+    left: 0;
+    right: 0;
+    bottom: 1rem;
+    margin: 0 auto;
+}
+
+.toast-bottom-left {
+    bottom: 1rem;
+    left: 1rem;
+}
+
+.toast-bottom-right {
+    bottom: 1rem;
+    right: 1rem;
+}
+
+.toast-center {
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    margin-top: calc(50vh - 42px);
+}
+
+.toast-bar {
+    margin-right: 8px;
+}
+
+.toast-header {
+    border-bottom: 1px solid #ccc;
+}
+
+.toast-body {
+    background-color: #e9ecef;
+    color: rgba(0, 0, 0, 0.9);
+    word-break: break-all;
+}
+
+.toast-progress {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    height: 4px;
+    background-color: #000000;
+    opacity: 0.4;
+    -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=40);
+    filter: alpha(opacity=40);
+    width: 0;
+}
+
+.showing .toast-progress, .show .toast-progress {
+    width: 100%;
+}
+
+.modal-confirm-body {
+    margin-bottom: 15px;
+    font-size: 1.125rem;
+}
+
+/* Validation */
+input[type="text"].valid, input[type="password"].valid {
+    padding-right: 30px;
 }

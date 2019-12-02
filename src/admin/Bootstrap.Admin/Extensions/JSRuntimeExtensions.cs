@@ -45,7 +45,7 @@ namespace Bootstrap.Admin.Extensions
         /// 启用动画
         /// </summary>
         /// <param name="jSRuntime"></param>
-        public static void EnableAnimation(this IJSRuntime? jSRuntime) => jSRuntime.InvokeVoidAsync("$.enableAnimation");
+        public static void EnableAnimation(this IJSRuntime? jSRuntime) => jSRuntime.InvokeVoidAsync("$.initDocument");
 
         /// <summary>
         /// 修复 Modal 组件
@@ -54,10 +54,30 @@ namespace Bootstrap.Admin.Extensions
         public static void InitModal(this IJSRuntime? jSRuntime) => jSRuntime.InvokeVoidAsync("$.initModal");
 
         /// <summary>
+        /// 修复 Modal 组件
+        /// </summary>
+        /// <param name="jSRuntime"></param>
+        public static void InitToast(this IJSRuntime? jSRuntime) => jSRuntime.InvokeVoidAsync("$.initToast");
+
+        /// <summary>
         /// 弹出 Modal 组件
         /// </summary>
         /// <param name="jSRuntime"></param>
         /// <param name="modalId"></param>
         public static void ToggleModal(this IJSRuntime? jSRuntime, string modalId) => jSRuntime.InvokeVoidAsync("$.toggleModal", modalId);
+
+        /// <summary>
+        /// 弹出 Toast 组件
+        /// </summary>
+        /// <param name="jSRuntime"></param>
+        public static void ShowToast(this IJSRuntime? jSRuntime) => jSRuntime.InvokeVoidAsync("$.showToast");
+
+        /// <summary>
+        /// 弹出 Tooltip 组件
+        /// </summary>
+        /// <param name="jSRuntime"></param>
+        /// <param name="id"></param>
+        /// <param name="method"></param>
+        public static void Tooltip(this IJSRuntime? jSRuntime, string id, string method) => jSRuntime.InvokeVoidAsync("$.tooltip", $"#{id}", method);
     }
 }

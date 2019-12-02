@@ -1,5 +1,5 @@
-﻿using Bootstrap.Admin.Shared;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
+using System;
 
 namespace Bootstrap.Admin.Components
 {
@@ -12,44 +12,12 @@ namespace Bootstrap.Admin.Components
         /// 
         /// </summary>
         [Parameter]
-        public bool Active { get; set; }
+        public SelectedItem Item { get; set; } = new SelectedItem();
 
         /// <summary>
         /// 
         /// </summary>
         [Parameter]
-        public string Text { get; set; } = "";
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [Parameter]
-        public string Value { get; set; } = "";
-
-        /// <summary>
-        ///
-        /// </summary>
-        [CascadingParameter]
-        public Select? Select { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="firstRender"></param>
-        protected override void OnAfterRender(bool firstRender)
-        {
-            if (firstRender)
-            {
-                if (Active) Select?.ActiveChanged?.Invoke(this);
-            }
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        protected void ClickItem()
-        {
-            Select?.ClickItemCallback?.Invoke(this);
-        }
+        public Action<SelectedItem> ItemClickCallback { get; set; } = new Action<SelectedItem>(SelectedItem => { });
     }
 }

@@ -1,0 +1,16 @@
+﻿@typeparam TItem
+@inherits QueryBase<TItem>
+
+<div class="card">
+    <div class="card-header">@Title</div>
+    <div class="card-body">
+        <div class="form-inline">
+            <div class="row">
+                @ChildContent?.Invoke(QueryModel)
+                <div class="form-group col-sm-6 col-md-auto flex-sm-fill justify-content-sm-end align-self-sm-end">
+                    <button type="button" id="btn_query" class="btn btn-primary btn-fill" @onclick="e => OnQuery?.Invoke()"><i class="fa fa-search" aria-hidden="true"></i><span>@Text</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

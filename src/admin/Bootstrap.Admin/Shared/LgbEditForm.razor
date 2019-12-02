@@ -1,0 +1,13 @@
+﻿@inherits LgbEditFormBase
+
+<CascadingValue Value="this">
+    <EditForm Model="@Model" AdditionalAttributes="@AdditionalAttributes" OnSubmit="OnSubmit" OnValidSubmit="OnValidSubmit" OnInvalidSubmit="OnInvalidSubmit">
+        <BootstrapAdminDataAnnotationsValidator />
+        @ChildContent
+        <button type="submit" class="d-none">submit</button>
+    </EditForm>
+</CascadingValue>
+
+@code {
+
+}
