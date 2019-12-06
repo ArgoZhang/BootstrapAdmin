@@ -56,12 +56,16 @@ namespace Bootstrap.Client.Controllers.Api
             var password = section.GetValue("Password", "");
             var from = section.GetValue("From", "");
             var to = section.GetValue("To", "");
+            var port = section.GetValue("Port", 25);
+            var enableSsl = section.GetValue("EnableSsl", false);
 
             if (!string.IsNullOrEmpty(password))
             {
                 using var mailSender = new SmtpClient(smtpHost)
                 {
-                    Credentials = new NetworkCredential(from, password)
+                    Credentials = new NetworkCredential(from, password),
+                    Port = port,
+                    EnableSsl = enableSsl
                 };
                 await mailSender.SendMailAsync(from, to, title, message);
             }
