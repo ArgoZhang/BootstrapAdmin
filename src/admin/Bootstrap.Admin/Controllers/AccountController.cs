@@ -93,6 +93,8 @@ namespace Bootstrap.Admin.Controllers
         [HttpPost()]
         public async Task<IActionResult> Mobile([FromServices]ISMSProvider provider, string phone, string code)
         {
+            if (string.IsNullOrEmpty(phone) || string.IsNullOrEmpty(code)) return RedirectLogin();
+
             var auth = provider.Validate(phone, code);
             HttpContext.Log(phone, auth);
             if (auth)
