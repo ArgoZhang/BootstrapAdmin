@@ -172,4 +172,13 @@ $(function () {
             $nestMenu.find('[data-category="1"]').removeClass('d-none');
         }
     });
+
+    // 用户列表过滤
+    var $userFilter = $('#useFilter').on('input', 'input', function (e) {
+        var userName = $(this).val();
+        $userFilter.next().find('.checkbox-label').each(function (index, element) {
+            if ($(element).text().toLocaleLowerCase().indexOf(userName.toLocaleLowerCase()) === -1) $(element).parents(".form-group").hide();
+            else $(element).parents(".form-group").show();
+        });
+    });
 });
