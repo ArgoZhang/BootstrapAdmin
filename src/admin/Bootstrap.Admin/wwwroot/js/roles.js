@@ -157,7 +157,7 @@ $(function () {
     });
 
     // 菜单弹窗过滤条件
-    $('.modal-footer > .flex-fill.d-none').addClass('d-sm-block')
+    $('.modal-footer > .flex-fill.d-none').addClass('d-sm-block');
     $('.custom-radio').on('click', ':radio', function (e) {
         var filter = $(this).val();
         if (filter === 'all') {
@@ -173,12 +173,16 @@ $(function () {
         }
     });
 
-    // 用户列表过滤
-    var $userFilter = $('#useFilter').on('input', 'input', function (e) {
+    var userFilterFunc = function (e) {
         var userName = $(this).val();
         $userFilter.next().find('.checkbox-label').each(function (index, element) {
             if ($(element).text().toLocaleLowerCase().indexOf(userName.toLocaleLowerCase()) === -1) $(element).parents(".form-group").hide();
             else $(element).parents(".form-group").show();
         });
-    });
+    };
+
+    // 用户列表过滤
+    var $userFilter = $('#useFilter')
+        .on('input', 'input', userFilterFunc)
+        .on('click', 'button', function (e) { $(this).parent().prev().trigger('input'); });
 });
