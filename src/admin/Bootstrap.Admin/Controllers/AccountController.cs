@@ -93,6 +93,8 @@ namespace Bootstrap.Admin.Controllers
         [HttpPost()]
         public async Task<IActionResult> Mobile([FromServices]ISMSProvider provider, string phone, string code)
         {
+            if (string.IsNullOrEmpty(phone) || string.IsNullOrEmpty(code)) return RedirectLogin();
+
             var auth = provider.Validate(phone, code);
             HttpContext.Log(phone, auth);
             if (auth)
@@ -144,6 +146,8 @@ namespace Bootstrap.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(string userName, string password, string remember)
         {
+            if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password)) return RedirectLogin();
+
             var auth = UserHelper.Authenticate(userName, password);
             HttpContext.Log(userName, auth);
             return auth ? await SignInAsync(userName, remember == "true") : View("Login", new LoginModel() { AuthFailed = true });
