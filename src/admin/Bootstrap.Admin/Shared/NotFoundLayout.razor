@@ -4,7 +4,7 @@
         <img src="@model?.Image.ToBlazorLink()" />
         <h1>@model?.Content</h1>
         <h3>@model?.Detail</h3>
-        <p><a href="/Account/Logout">登录</a> <span>或者</span> <a href="@model?.ReturnUrl.ToBlazorMenuUrl()">返回首页</a> <span>或者</span> <a href="/healths-ui">系统自检</a></p>
+        <p><a href="/Account/Logout">登录</a> <span>或者</span> <a href="@model?.ReturnUrl.ToBlazorLink()">返回首页</a> <span>或者</span> <a href="/healths-ui">系统自检</a></p>
         @if (@model?.Id == 403)
         {
             <div>

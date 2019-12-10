@@ -58,11 +58,10 @@
             // 通过指定 ID 设置站点 Title
             var menuId = 'menus_' + id;
             var $curMenu = $('.sidebar .active').first();
-            if ($curMenu.attr('id') !== menuId) {
-                // set website title
-                $('head title').text($menu.text());
-                this.resetTab(id);
-            }
+
+            // set website title
+            $('head title').text($curMenu.text());
+            this.resetTab(id);
         },
         removeTab: function (tabId) {
             // 通过当前 Tab 返回如果移除后新的 TabId
