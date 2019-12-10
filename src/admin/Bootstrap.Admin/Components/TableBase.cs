@@ -10,7 +10,7 @@ namespace Bootstrap.Admin.Components
     /// <summary>
     /// 表格组件类
     /// </summary>
-    public class TableBase<TItem> : BootstrapComponentBase
+    public class TableBase<TItem> : ComponentBase
     {
         /// <summary>
         /// 
@@ -246,6 +246,19 @@ namespace Bootstrap.Admin.Components
         }
 
         /// <summary>
+        /// Toast 组件实例
+        /// </summary>
+        protected Toast? Toast { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="text"></param>
+        /// <param name="cate"></param>
+        protected void ShowMessage(string title, string text, ToastCategory cate = ToastCategory.Success) => Toast?.ShowMessage(title, text, cate);
+
+        /// <summary>
         /// 
         /// </summary>
         public void Edit()
@@ -322,5 +335,7 @@ namespace Bootstrap.Admin.Components
             }
             ShowMessage("删除数据", "删除数据" + (result ? "成功" : "失败"), result ? ToastCategory.Success : ToastCategory.Error);
         }
+
+        protected override void OnAfterRender(bool firstRender) => base.OnAfterRender(firstRender);
     }
 }

@@ -59,5 +59,11 @@ namespace Bootstrap.Admin.Components
         /// 
         /// </summary>
         protected bool Delete(IEnumerable<BootstrapDict> items) => DataAccess.DictHelper.Delete(items.Select(item => item.Id ?? ""));
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        protected override bool ShouldRender() => false;
     }
 }

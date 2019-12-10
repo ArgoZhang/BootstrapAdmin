@@ -23,11 +23,6 @@ namespace Bootstrap.Admin.Components
         public DefaultLayout RootLayout { get; protected set; } = new DefaultLayout();
 
         /// <summary>
-        /// Toast 组件实例
-        /// </summary>
-        protected Toast Toast { get; set; } = new Toast();
-
-        /// <summary>
         /// 
         /// </summary>
         public string UserName { get; set; } = "";
@@ -44,21 +39,11 @@ namespace Bootstrap.Admin.Components
         /// <returns></returns>
         protected override void OnAfterRender(bool firstRender)
         {
-            if (firstRender) RootLayout.JSRuntime.EnableAnimation();
-
             var requestUrl = RootLayout.NavigationManager?.Uri ?? "";
             var path = new Uri(requestUrl).PathAndQuery;
             var menus = DataAccess.MenuHelper.RetrieveAllMenus(RootLayout.UserName);
             var menu = menus.FirstOrDefault(menu => path.Contains(menu.Url.ToBlazorMenuUrl()));
             if (menu != null) TabSet?.AddTab(menu);
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="title"></param>
-        /// <param name="text"></param>
-        /// <param name="cate"></param>
-        public void ShowMessage(string title, string text, ToastCategory cate = ToastCategory.Success) => Toast.ShowMessage(title, text, cate);
     }
 }

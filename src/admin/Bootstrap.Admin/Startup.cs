@@ -87,6 +87,7 @@ namespace Bootstrap.Admin
             {
                 if (Enviroment.IsDevelopment()) options.DetailedErrors = true;
             });
+            services.AddDisplayNames();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

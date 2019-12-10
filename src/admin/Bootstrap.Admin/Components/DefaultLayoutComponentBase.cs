@@ -42,16 +42,6 @@ namespace Bootstrap.Admin.Components
         /// <summary>
         /// 
         /// </summary>
-        public SideBar? SideBar { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public Header? Header { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
         public string UserName { get; set; } = "";
 
         /// <summary>
@@ -96,22 +86,21 @@ namespace Bootstrap.Admin.Components
         }
 
         /// <summary>
+        /// 设置参数方法
+        /// </summary>
+        protected override void OnParametersSet()
+        {
+            RequestUrl = new UriBuilder(NavigationManager?.Uri ?? "").Path;
+            Model = new NavigatorBarModel(UserName, RequestUrl.ToMvcMenuUrl());
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="firstRender"></param>
         protected override void OnAfterRender(bool firstRender)
         {
-            if (!firstRender) ResetSideBar();
-        }
-
-        /// <summary>
-        /// 更新侧边栏方法
-        /// </summary>
-        public void ResetSideBar()
-        {
-            RequestUrl = new UriBuilder(NavigationManager?.Uri ?? "").Path;
-            Model = new NavigatorBarModel(UserName, RequestUrl.ToMvcMenuUrl());
-            SideBar?.Update(Model);
+            if (firstRender) JSRuntime.InitDocument();
         }
     }
 }

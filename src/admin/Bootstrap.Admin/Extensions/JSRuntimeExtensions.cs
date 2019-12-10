@@ -45,7 +45,7 @@ namespace Bootstrap.Admin.Extensions
         /// 启用动画
         /// </summary>
         /// <param name="jSRuntime"></param>
-        public static void EnableAnimation(this IJSRuntime? jSRuntime) => jSRuntime.InvokeVoidAsync("$.initDocument");
+        public static void InitDocument(this IJSRuntime? jSRuntime) => jSRuntime.InvokeVoidAsync("$.initDocument");
 
         /// <summary>
         /// 修复 Modal 组件

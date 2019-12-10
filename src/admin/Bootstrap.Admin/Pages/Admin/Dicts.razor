@@ -2,18 +2,9 @@
 
 <EditPage Id="dict" TItem="Bootstrap.Security.BootstrapDict" QueryModel="QueryModel" OnQuery="Query" OnAdd="Add" OnDelete="Delete" OnSave="Save">
     <QueryBody>
-        <div class="form-group col-sm-6 col-md-auto">
-            <label class="control-label" for="txt_dict_cate">字典标签</label>
-            <input type="text" class="form-control" @bind="context.Category" data-provide="typeahead" />
-        </div>
-        <div class="form-group col-sm-6 col-md-auto">
-            <label class="control-label" for="txt_dict_name">字典名称</label>
-            <input type="text" class="form-control" @bind="context.Name" />
-        </div>
-        <div class="form-group col-sm-6 col-md-auto">
-            <label class="control-label" for="txt_dict_define">字典类型</label>
-            <Select Items="QueryDefine" TItem="int" SelectedItemChanged="item=>context.Define = int.Parse(item.Value)"></Select>
-        </div>
+        <LgbInputText @bind-Value="@context.Category" maxlength="50" />
+        <Select Items="QueryDefine" TItem="int" @bind-Value="@context.Define" />
+        <LgbInputText @bind-Value="@context.Name" maxlength="50" />
     </QueryBody>
     <TableHeader>
         <th>字典标签</th>
@@ -25,32 +16,23 @@
         <td>@context.Category</td>
         <td>@context.Name</td>
         <td>@context.Code</td>
-        <td>@context.Define</td>
+        <td>@(DefineItems.FirstOrDefault(d => d.Value == context.Define.ToString())?.Text ?? "-")</td>
     </RowTemplate>
     <EditTemplate>
         <div class="row">
-            <div class="form-group col-sm-6">
-                <label class="control-label" for="dictCate">字典标签</label>
-                <LgbInputText Id="dictCate" type="text" class="form-control" data-toggle="tooltip" @bind-Value="context.Category" placeholder="不可为空，50字以内">
-                    <RequiredValidator AllowEmptyString="false" ErrorMessage="这是必填字段" />
-                    <StringLengthValidator Length="5" ErrorMessage="不可为空，50字以内" />
-                </LgbInputText>
-            </div>
-            <div class="form-group col-sm-6">
-                <label class="control-label" for="dictDefine">字典类型</label>
-                <Select Id="dictDefine" Items="DefineItems" TItem="int" @bind-SelectedValue="context.Define" SelectedItemChanged="@(item=>context.Define = int.Parse(item.Value))"></Select>
-            </div>
-            <div class="form-group col-sm-6">
-                <label class="control-label" for="dictName">字典名称</label>
-                <LgbInputText Id="dictName" type="text" class="form-control" @bind-Value="context.Name" placeholder="不可为空，50字以内" maxlength="50">
-                    <RequiredValidator AllowEmptyString="false" ErrorMessage="这是必填字段" />
-                    <StringLengthValidator Length="5" ErrorMessage="不可为空，50字以内" />
-                </LgbInputText>
-            </div>
-            <div class="form-group col-sm-6">
-                <label class="control-label" for="dictCode">字典代码</label>
-                <LgbInputText Id="dictCode" type="text" class="form-control" @bind-Value="context.Code" placeholder="不可为空，2000字以内" maxlength="2000" />
-            </div>
+            <LgbInputText @bind-Value="@context.Category" placeholder="不可为空，50字以内" maxlength="50">
+                <RequiredValidator />
+                <StringLengthValidator Length="50" />
+            </LgbInputText>
+            <Select Items="DefineItems" TItem="int" @bind-Value="@context.Define"></Select>
+            <LgbInputText @bind-Value="@context.Name" placeholder="不可为空，50字以内" maxlength="50">
+                <RequiredValidator />
+                <StringLengthValidator Length="50" />
+            </LgbInputText>
+            <LgbInputText @bind-Value="@context.Code" placeholder="不可为空，2000字以内" maxlength="2000">
+                <RequiredValidator />
+                <StringLengthValidator Length="2000" />
+            </LgbInputText>
         </div>
     </EditTemplate>
 </EditPage>

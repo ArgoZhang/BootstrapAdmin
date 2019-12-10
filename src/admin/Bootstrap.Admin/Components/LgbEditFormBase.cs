@@ -13,6 +13,12 @@ namespace Bootstrap.Admin.Components
     public class LgbEditFormBase : ComponentBase
     {
         /// <summary>
+        /// 
+        /// </summary>
+        [Parameter]
+        public string Id { get; set; } = "";
+
+        /// <summary>
         /// Gets or sets a collection of additional attributes that will be applied to the created <c>form</c> element.
         /// </summary>
         [Parameter(CaptureUnmatchedValues = true)]
@@ -54,14 +60,14 @@ namespace Bootstrap.Admin.Components
         /// <summary>
         /// 验证组件缓存 静态全局提高性能
         /// </summary>
-        private static ConcurrentDictionary<(Type ModelType, string FieldName), IValidateComponent> _validatorCache = new ConcurrentDictionary<(Type, string), IValidateComponent>();
+        private static ConcurrentDictionary<(LgbEditFormBase EditForm, Type ModelType, string FieldName), IValidateComponent> _validatorCache = new ConcurrentDictionary<(LgbEditFormBase, Type, string), IValidateComponent>();
 
         /// <summary>
         /// 添加数据验证组件到 EditForm 中
         /// </summary>
         /// <param name="key"></param>
         /// <param name="comp"></param>
-        public void AddValidator((Type ModelType, string FieldName) key, IValidateComponent comp) => _validatorCache.AddOrUpdate(key, k => comp, (k, c) => c = comp);
+        public void AddValidator((LgbEditFormBase EditForm, Type ModelType, string FieldName) key, IValidateComponent comp) => _validatorCache.AddOrUpdate(key, k => comp, (k, c) => c = comp);
 
         /// <summary>
         /// EditModel 数据模型验证方法
@@ -74,7 +80,7 @@ namespace Bootstrap.Admin.Components
             // 遍历所有可验证组件进行数据验证
             foreach (var key in _validatorCache)
             {
-                if (key.Key.ModelType == context.ObjectType)
+                if (key.Key.EditForm == this && key.Key.ModelType == context.ObjectType)
                 {
                     if (BootstrapAdminEditContextDataAnnotationsExtensions.TryGetValidatableProperty(new FieldIdentifier(model, key.Key.FieldName), out var propertyInfo))
                     {
@@ -100,20 +106,11 @@ namespace Bootstrap.Admin.Components
         /// <param name="results"></param>
         public void ValidateProperty(object? propertyValue, ValidationContext context, List<ValidationResult> results)
         {
-            if (_validatorCache.TryGetValue((context.ObjectType, context.MemberName), out var validator))
+            if (_validatorCache.TryGetValue((this, context.ObjectType, context.MemberName), out var validator))
             {
                 validator.ValidateProperty(propertyValue, context, results);
                 validator.ToggleMessage(results, true);
             }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="firstRender"></param>
-        protected override void OnAfterRender(bool firstRender)
-        {
-            base.OnAfterRender(firstRender);
         }
     }
 }

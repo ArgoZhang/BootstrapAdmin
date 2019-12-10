@@ -215,8 +215,3 @@ nav .dropdown .nav-link-close.dropdown-toggle:after {
     margin-bottom: 15px;
     font-size: 1.125rem;
 }
-
-/* Validation */
-input[type="text"].valid, input[type="password"].valid {
-    padding-right: 30px;
-}

@@ -9,11 +9,6 @@ namespace Bootstrap.Admin.Components
     /// </summary>
     public class BootstrapComponentBase : ComponentBase
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        [CascadingParameter(Name = "Admin")]
-        protected AdminLayout Layout { get; set; } = new AdminLayout();
 
         /// <summary>
         /// 
@@ -26,13 +21,10 @@ namespace Bootstrap.Admin.Components
         /// </summary>
         [Inject]
         protected IJSRuntime? JSRuntime { get; set; }
-
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="title"></param>
-        /// <param name="text"></param>
-        /// <param name="cate"></param>
-        protected void ShowMessage(string title, string text, ToastCategory cate = ToastCategory.Success) => Layout.ShowMessage(title, text, cate);
+        [CascadingParameter(Name = "Admin")]
+        protected AdminLayout Layout { get; set; } = new AdminLayout();
     }
 }

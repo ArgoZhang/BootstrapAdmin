@@ -17,7 +17,7 @@
         </div>
         <ul class="@(PageCount  > 1 ? "pagination" : "pagination d-none")">
             <li class="page-item" @onclick="MovePrev"><div class="page-link" aria-label="上一页"><i class="fa fa-angle-double-left"></i></div></li>
-            @for (int i = 1; i <= PageCount; i++)
+            @for (int i = StartPageIndex; i <= EndPageIndex; i++)
             {
                 <PaginationItem Active="i == PageIndex" PageIndex="i"></PaginationItem>
             }

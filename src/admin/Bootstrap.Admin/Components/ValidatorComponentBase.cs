@@ -20,7 +20,7 @@ namespace Bootstrap.Admin.Components
         /// 
         /// </summary>
         [CascadingParameter]
-        public LgbInputText? Input { get; set; }
+        public LgbInputTextBase? Input { get; set; }
 
         /// <summary>
         /// 初始化方法
@@ -30,7 +30,7 @@ namespace Bootstrap.Admin.Components
             if (Input == null)
             {
                 throw new InvalidOperationException($"{nameof(ValidatorComponentBase)} requires a cascading " +
-                    $"parameter of type {nameof(LgbInputText)}. For example, you can use {nameof(ValidatorComponentBase)} " +
+                    $"parameter of type {nameof(LgbInputTextBase)}. For example, you can use {nameof(ValidatorComponentBase)} " +
                     $"inside an LgbInputText.");
             }
 

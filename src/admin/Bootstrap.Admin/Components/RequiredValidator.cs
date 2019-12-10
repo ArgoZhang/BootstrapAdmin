@@ -10,10 +10,18 @@ namespace Bootstrap.Admin.Components
     public class RequiredValidator : ValidatorComponentBase
     {
         /// <summary>
+        /// 
+        /// </summary>
+        public RequiredValidator()
+        {
+            ErrorMessage = "这是必填字段";
+        }
+
+        /// <summary>
         /// 获得/设置 是否允许空字符串 默认 false 不允许
         /// </summary>
         [Parameter]
-        public bool AllowEmptyString { get; set; } = false;
+        public bool AllowEmptyString { get; set; }
 
         /// <summary>
         /// 

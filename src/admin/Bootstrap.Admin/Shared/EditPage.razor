@@ -1,7 +1,7 @@
 ﻿@typeparam TItem
 @inherits EditPageBase<TItem>
 
-<Query OnQuery="Query" TItem="TItem" @bind-QueryModel="QueryModel">
+<Query Id="@($"{Id}_query")" OnQuery="Query" TItem="TItem" QueryModel="QueryModel">
     @QueryBody?.Invoke(context)
 </Query>
 <div class="card">

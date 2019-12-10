@@ -28,16 +28,12 @@ namespace Bootstrap.Admin.Components
         {
             if (CurrentEditContext == null)
             {
-                throw new InvalidOperationException($"{nameof(DataAnnotationsValidator)} requires a cascading " +
-                    $"parameter of type {nameof(EditContext)}. For example, you can use {nameof(DataAnnotationsValidator)} " +
-                    $"inside an EditForm.");
+                throw new InvalidOperationException($"{nameof(DataAnnotationsValidator)} requires a cascading parameter of type {nameof(EditContext)}. For example, you can use {nameof(DataAnnotationsValidator)} inside an EditForm.");
             }
 
             if (EditForm == null)
             {
-                throw new InvalidOperationException($"{nameof(DataAnnotationsValidator)} requires a cascading " +
-                    $"parameter of type {nameof(LgbEditFormBase)}. For example, you can use {nameof(BootstrapAdminDataAnnotationsValidator)} " +
-                    $"inside an EditForm.");
+                throw new InvalidOperationException($"{nameof(DataAnnotationsValidator)} requires a cascading parameter of type {nameof(LgbEditFormBase)}. For example, you can use {nameof(BootstrapAdminDataAnnotationsValidator)} inside an EditForm.");
             }
 
             CurrentEditContext.AddBootstrapAdminDataAnnotationsValidation(EditForm);

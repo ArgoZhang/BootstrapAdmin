@@ -15,12 +15,9 @@ namespace Bootstrap.Admin.Components
         public NavigatorBarModel Model { get; set; } = new NavigatorBarModel("");
 
         /// <summary>
-        /// 视图更新方法
+        /// 侧边栏绑定 Model 改变事件
         /// </summary>
-        public void Update(NavigatorBarModel model)
-        {
-            Model = model;
-            StateHasChanged();
-        }
+        [Parameter]
+        public EventCallback<NavigatorBarModel> ModelChanged { get; set; }
     }
 }

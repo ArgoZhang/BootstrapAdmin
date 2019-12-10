@@ -8,7 +8,7 @@ namespace Bootstrap.Admin.Components
     /// <summary>
     /// 可编辑页面组件包含查询与数据表格
     /// </summary>
-    public class EditPageBase<TItem> : BootstrapComponentBase
+    public class EditPageBase<TItem> : ComponentBase
     {
         /// <summary>
         /// 

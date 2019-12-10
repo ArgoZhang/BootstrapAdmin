@@ -12,6 +12,12 @@ namespace Bootstrap.Admin.Components
         private readonly string _defaultText = "查询";
 
         /// <summary>
+        /// 
+        /// </summary>
+        [Parameter]
+        public string Id { get; set; } = "";
+
+        /// <summary>
         /// 查询组件标题 默认为 查询条件
         /// </summary>
         [Parameter]
@@ -38,12 +44,6 @@ namespace Bootstrap.Admin.Components
 #nullable restore
 
         /// <summary>
-        /// 
-        /// </summary>
-        [Parameter]
-        public EventCallback<TItem> QueryModelChanged { get; set; }
-
-        /// <summary>
         /// 查询按钮回调方法
         /// </summary>
         [Parameter]
@@ -57,5 +57,7 @@ namespace Bootstrap.Admin.Components
             if (string.IsNullOrEmpty(Title)) Title = _defaultTitle;
             if (string.IsNullOrEmpty(Text)) Text = _defaultText;
         }
+
+        protected override void OnAfterRender(bool firstRender) => base.OnAfterRender(firstRender);
     }
 }

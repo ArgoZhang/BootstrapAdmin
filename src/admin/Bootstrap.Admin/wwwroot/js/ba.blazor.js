@@ -109,13 +109,7 @@
         initDocument: function () {
             $('body').removeClass('trans-mute');
             $('[data-toggle="tooltip"]').tooltip();
-        },
-        initSidebar: function () {
             $('.sidebar').addNiceScroll().autoScrollSidebar();
-        },
-        enableBackground: function (val) {
-            if (val) $('.main-content').addClass('welcome-bg').find('nav').addClass('d-none').removeClass('d-flex');
-            else $('.main-content').removeClass('welcome-bg').find('nav').addClass('d-flex').removeClass('d-none');
         },
         initModal: function () {
             $('.modal').appendTo($('body'));
@@ -130,7 +124,12 @@
             $('.toast').toast('show');
         },
         tooltip: function (id, method) {
-            $(id).tooltip(method);
+            var $ele = $(id);
+            if (method === 'enable') {
+                $ele.tooltip();
+                $ele.parents('form').find('.invalid:first').focus();
+            }
+            else $ele.tooltip(method);
         },
         submitForm: function (btn) {
             $(btn).parent().prev().find('form :submit').click();

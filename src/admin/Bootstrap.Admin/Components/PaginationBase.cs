@@ -56,6 +56,7 @@ namespace Bootstrap.Admin.Components
         protected void MovePrev()
         {
             if (PageIndex > 1) OnPageClick(PageIndex - 1, PageItems);
+            else OnPageClick(PageCount, PageItems);
         }
 
         /// <summary>
@@ -64,6 +65,7 @@ namespace Bootstrap.Admin.Components
         protected void MoveNext()
         {
             if (PageIndex < PageCount) OnPageClick(PageIndex + 1, PageItems);
+            else OnPageClick(1, PageItems);
         }
 
         /// <summary>
@@ -95,14 +97,21 @@ namespace Bootstrap.Admin.Components
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="totalCount"></param>
-        /// <param name="pageIndex"></param>
-        /// <param name="pageItems"></param>
-        public void Update(int totalCount, int pageIndex, int pageItems)
+        protected int StartPageIndex { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected int EndPageIndex { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected override void OnParametersSet()
         {
-            TotalCount = totalCount;
-            PageIndex = pageIndex;
-            PageItems = pageItems;
+            // 计算 分页开始页码与结束页码
+            StartPageIndex = Math.Max(1, PageIndex - 4);
+            EndPageIndex = Math.Min(PageCount, PageIndex + 5);
         }
     }
 }

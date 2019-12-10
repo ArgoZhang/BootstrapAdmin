@@ -9,11 +9,20 @@ namespace Bootstrap.Admin.Components
     /// </summary>
     public class StringLengthValidator : ValidatorComponentBase
     {
+        private int _length = 50;
         /// <summary>
         /// 
         /// </summary>
         [Parameter]
-        public int Length { get; set; }
+        public int Length
+        {
+            get { return _length; }
+            set
+            {
+                _length = value;
+                ErrorMessage = $"不可为空，{_length}字以内";
+            }
+        }
 
         /// <summary>
         /// 
