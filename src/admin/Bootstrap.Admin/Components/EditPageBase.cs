@@ -75,32 +75,26 @@ namespace Bootstrap.Admin.Components
         /// 新建按钮回调方法
         /// </summary>
         [Parameter]
-        public Func<TItem>? OnAdd { get; set; }
-
-        /// <summary>
-        /// 编辑按钮回调方法
-        /// </summary>
-        [Parameter]
-        public Action<TItem>? OnEdit { get; set; }
+        public Func<TItem> OnAdd { get; set; } = () => throw new InvalidOperationException($"The property {nameof(OnAdd)} can't be set to Null");
 
         /// <summary>
         /// 保存按钮回调方法
         /// </summary>
         [Parameter]
-        public Func<TItem, bool>? OnSave { get; set; }
+        public Func<TItem, bool> OnSave { get; set; } = item => false;
 
         /// <summary>
         /// 删除按钮回调方法
         /// </summary>
         [Parameter]
-        public Func<IEnumerable<TItem>, bool>? OnDelete { get; set; }
+        public Func<IEnumerable<TItem>, bool> OnDelete { get; set; } = item => false;
 
         /// <summary>
         /// 组件初始化方法
         /// </summary>
         protected override void OnInitialized()
         {
-            if (string.IsNullOrEmpty(Id)) throw new InvalidOperationException($"The property {nameof(Id)} can't set to Null");
+            if (string.IsNullOrEmpty(Id)) throw new InvalidOperationException($"The property {nameof(Id)} can't be set to Null");
         }
 
         /// <summary>

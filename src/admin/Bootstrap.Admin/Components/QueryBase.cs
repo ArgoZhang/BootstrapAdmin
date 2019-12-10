@@ -57,7 +57,5 @@ namespace Bootstrap.Admin.Components
             if (string.IsNullOrEmpty(Title)) Title = _defaultTitle;
             if (string.IsNullOrEmpty(Text)) Text = _defaultText;
         }
-
-        protected override void OnAfterRender(bool firstRender) => base.OnAfterRender(firstRender);
     }
 }

@@ -1,4 +1,5 @@
-﻿using Bootstrap.Admin.Shared;
+﻿using Bootstrap.Admin.Extensions;
+using Bootstrap.Admin.Shared;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using System;
@@ -265,7 +266,7 @@ namespace Bootstrap.Admin.Components
         {
             if (SelectedItems.Count == 1)
             {
-                EditModel = SelectedItems[0];
+                EditModel = SelectedItems[0].Clone();
                 EditModal?.Toggle();
             }
             else
@@ -335,7 +336,5 @@ namespace Bootstrap.Admin.Components
             }
             ShowMessage("删除数据", "删除数据" + (result ? "成功" : "失败"), result ? ToastCategory.Success : ToastCategory.Error);
         }
-
-        protected override void OnAfterRender(bool firstRender) => base.OnAfterRender(firstRender);
     }
 }
