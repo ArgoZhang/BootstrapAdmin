@@ -19,6 +19,6 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public IEnumerable<App> Get(string id) => AppHelper.RetrievesByRoleId(id);
+        public IEnumerable<DataAccess.App> Get(string id) => AppHelper.RetrievesByRoleId(id);
     }
 }

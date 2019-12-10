@@ -1,0 +1,31 @@
+﻿@inherits PaginationBase
+
+<CascadingValue Value="this">
+    <nav class="d-flex align-items-center" aria-label="分页组件">
+        <div class="pagination-bar">
+            显示第 <span>@((PageIndex - 1) * PageItems + 1)</span> 到第 <span>@(Math.Min(PageIndex * PageItems, TotalCount))</span> 条记录，总共 <span>@TotalCount</span> 条记录 每页显示
+            <div class="btn-group dropup">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@PageItems</button>
+                <div class="dropdown-menu">
+                    @foreach (var page in GetPages())
+                    {
+                        <div class="@(PageItems == page ? "dropdown-item active" : "dropdown-item")" @onclick="@(e => ClickItem(page))">@(page.ToString())</div>
+                    }
+                </div>
+            </div>
+            条记录
+        </div>
+        <ul class="@(PageCount  > 1 ? "pagination" : "pagination d-none")">
+            <li class="page-item" @onclick="MovePrev"><div class="page-link" aria-label="上一页"><i class="fa fa-angle-double-left"></i></div></li>
+            @for (int i = StartPageIndex; i <= EndPageIndex; i++)
+            {
+                <PaginationItem Active="i == PageIndex" PageIndex="i"></PaginationItem>
+            }
+            <li class="page-item" @onclick="MoveNext"><div class="page-link" aria-label="下一页"><i class="fa fa-angle-double-right"></i></div></li>
+        </ul>
+    </nav>
+</CascadingValue>
+
+@code {
+
+}

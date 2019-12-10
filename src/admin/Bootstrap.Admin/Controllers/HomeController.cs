@@ -3,6 +3,7 @@ using Bootstrap.DataAccess;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 namespace Bootstrap.Admin.Controllers
 {
@@ -16,11 +17,12 @@ namespace Bootstrap.Admin.Controllers
         /// Index View
         /// </summary>
         /// <returns></returns>
-        public IActionResult Index()
+        public IActionResult Index([FromServices]IConfiguration configuration)
         {
             var model = new HeaderBarModel(User.Identity.Name);
             var homeUrl = DictHelper.RetrieveHomeUrl(model.AppId);
-            return homeUrl.Equals("~/Home/Index", System.StringComparison.OrdinalIgnoreCase) ? (IActionResult)View(model) : Redirect(homeUrl);
+            var useBlazor = configuration.GetValue("UseBlazor", false);
+            return homeUrl.Equals("~/Home/Index", System.StringComparison.OrdinalIgnoreCase) ? (useBlazor ? Redirect("~/Pages") : (IActionResult)View(model)) : Redirect(homeUrl);
         }
 
         /// <summary>
@@ -29,9 +31,9 @@ namespace Bootstrap.Admin.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [AllowAnonymous]
-        public IActionResult Error(int id)
+        public IActionResult Error(int? id = 0)
         {
-            var model = ErrorModel.CreateById(id);
+            var model = ErrorModel.CreateById(id ?? 0);
             if (id != 403)
             {
                 var returnUrl = Request.Query[CookieAuthenticationDefaults.ReturnUrlParameter].ToString();

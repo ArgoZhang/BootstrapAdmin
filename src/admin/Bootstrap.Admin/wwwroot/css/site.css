@@ -474,3 +474,56 @@ pre {
 .userinfo .dropdown-toggle, .header .nav .dropdown > a {
     color: #777;
 }
+
+.error-content {
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    right: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #8075c6;
+    color: #fff;
+    font-size: 1rem;
+}
+
+    .error-content .error-wrapper {
+        max-width: 30rem;
+    }
+
+.error-wrapper img {
+    width: 150px;
+    height: auto;
+}
+
+.error-wrapper h1 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 1.25rem 0;
+}
+
+.error-wrapper h3 {
+    font-size: 1.17rem;
+    font-weight: bold;
+    margin: 1.125rem 0;
+}
+
+.error-wrapper p {
+    padding-top: 10px;
+}
+
+.error-wrapper div {
+    text-align: left;
+}
+
+.error-wrapper a {
+    cursor: pointer;
+}
+
+    .error-wrapper a, .error-wrapper a:hover, .error-wrapper a:focus {
+        text-decoration: none;
+        outline: none;
+        color: #371ed4;
+    }

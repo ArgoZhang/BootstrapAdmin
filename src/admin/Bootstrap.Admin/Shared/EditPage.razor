@@ -1,0 +1,31 @@
+﻿@typeparam TItem
+@inherits EditPageBase<TItem>
+
+<Query Id="@($"{Id}_query")" OnQuery="Query" TItem="TItem" QueryModel="QueryModel">
+    @QueryBody?.Invoke(context)
+</Query>
+<div class="card">
+    <div class="card-header">
+        查询结果
+    </div>
+    <div class="card-body">
+        <Table @ref="Table" Id="@Id" TItem="TItem" OnQuery="QueryData" OnAdd="OnAdd" OnDelete="OnDelete" OnSave="OnSave">
+            <TableHeader>
+                @TableHeader?.Invoke(context)
+            </TableHeader>
+            <RowTemplate>
+                @RowTemplate?.Invoke(context)
+            </RowTemplate>
+            <ButtonTemplate>
+                <div class='btn-group'>
+                    <button class='btn btn-sm btn-success' asp-auth="edit" @onclick="e => Edit(context)"><i class='fa fa-edit'></i><span>编辑</span></button>
+                    <button class='btn btn-sm btn-danger' asp-auth="del" @onclick="e => Delete(context)"><i class='fa fa-remove'></i><span>删除</span></button>
+                    @ButtonTemplate
+                </div>
+            </ButtonTemplate>
+            <EditTemplate>
+                @EditTemplate?.Invoke(context)
+            </EditTemplate>
+        </Table>
+    </div>
+</div>

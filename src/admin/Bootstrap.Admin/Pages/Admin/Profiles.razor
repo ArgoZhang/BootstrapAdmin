@@ -1,0 +1,133 @@
+﻿@inherits BootstrapComponentBase
+
+<div class="card" asp-auth="saveDisplayName">
+    <div class="card-header">基本资料</div>
+    <div class="card-body" data-toggle="LgbValidate" data-valid-button="#btnSaveDisplayName">
+        @if (IsDemo)
+        {
+            <div class="alert alert-danger" role="alert">
+                <span>演示系统禁止更改管理员显示名称</span>
+            </div>
+        }
+        <form class="form-inline">
+            <div class="row">
+                <div class="form-group col-sm-6 col-md-auto">
+                    <label class="control-label" for="userName">登录名称</label>
+                    <input type="text" class="form-control ignore" value="@Model?.UserName" readonly />
+                </div>
+                <div class="form-group col-sm-6 col-md-auto">
+                    <label class="control-label" for="DisplayName">显示名称</label>
+                    <input type="text" class="form-control" @bind="Layout.DisplayName" placeholder="不可为空，20字以内" maxlength="20" data-valid="true" />
+                </div>
+            </div>
+        </form>
+        @if (!IsDemo)
+        {
+            <div class="modal-footer">
+                <button id="btnSaveDisplayName" data-method="user" class="btn btn-secondary" type="button" @onclick="SaveDisplayName"><i class="fa fa-save"></i><span>保存</span></button>
+            </div>
+        }
+    </div>
+</div>
+<div class="card" asp-auth="savePassword" asp-condition="!@Model?.External">
+    <div class="card-header">修改密码</div>
+    <div class="card-body" data-toggle="LgbValidate" data-valid-button="#btnSavePassword">
+        <div class="alert alert-danger" role="alert" asp-condition="@Model?.IsDemo">
+            <span>演示系统禁止更改管理员密码</span>
+        </div>
+        <form class="form-inline">
+            <div class="row">
+                <div class="form-group col-sm-6 col-md-auto">
+                    <label class="control-label" for="currentPassword">原密码: </label>
+                    <input type="password" class="form-control" id="currentPassword" autocomplete="off" placeholder="原密码" maxlength="16" data-valid="true" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-6 col-md-auto">
+                    <label class="control-label" for="newPassword">新密码: </label>
+                    <input type="password" class="form-control" id="newPassword" autocomplete="off" placeholder="新密码" maxlength="16" data-valid="true" />
+                </div>
+                <div class="form-group col-sm-6 col-md-auto">
+                    <label class="control-label" for="confirmPassword">确认密码: </label>
+                    <input type="password" class="form-control" id="confirmPassword" autocomplete="off" placeholder="与新密码一致" maxlength="16" equalTo="#newPassword" data-valid="true" />
+                </div>
+            </div>
+        </form>
+        <div class="modal-footer" asp-condition="!@Model?.IsDemo">
+            <button id="btnSavePassword" data-method="password" class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
+        </div>
+    </div>
+</div>
+<div class="card" asp-auth="saveApp">
+    <div class="card-header">默认应用</div>
+    <div class="card-body">
+        <div class="form-group">
+            <div class="btn-group" role="group">
+                <button id="app" class="btn btn-success dropdown-select dropdown-toggle" data-toggle="dropdown" value="@Model?.AppId">@Model?.AppName</button>
+                <div class="dropdown-menu">
+                    @foreach (var app in Model?.Applications ?? new KeyValuePair<string, string>[0])
+                    {
+                        <a href="#" data-val="@app.Key">@app.Value</a>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button id="btnSaveApp" data-method="app" class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
+        </div>
+    </div>
+</div>
+<div class="card" asp-auth="saveTheme">
+    <div class="card-header">网站样式</div>
+    <div class="card-body">
+        <div class="alert alert-info" role="alert">
+            <span>注意：本设置将覆盖<b><a class="badge-pill" href="./Settings">网站设置</a></b>中设置的网站样式</span>
+        </div>
+        <div class="form-group">
+            <div class="btn-group" role="group">
+                <button id="css" class="btn btn-success dropdown-select dropdown-toggle" data-toggle="dropdown" data-default-val="" value="@Model?.Css">默认样式</button>
+                <div class="dropdown-menu">
+                    <a href="#" data-val="">默认样式</a>
+                    @foreach (var css in Model?.Themes ?? new Bootstrap.Security.BootstrapDict[0])
+                    {
+                        <a href="#" data-val="@css.Code">@css.Name</a>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button id="btnSaveCss" data-method="profileCss" class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
+        </div>
+    </div>
+</div>
+<div class="card" asp-auth="saveIcon">
+    <div class="card-header">修改头像</div>
+    <div class="card-body">
+        <form enctype="multipart/form-data">
+            <div class="form-group">
+                <input id="fileIcon" type="file" data-init="@Model?.Size" data-file="@Model?.FileName">
+            </div>
+        </form>
+        <img class="card-img d-none" src="@Model?.Icon.ToBlazorLink()" />
+    </div>
+</div>
+
+@code {
+    private ProfilesModel? Model;
+    private bool IsDemo;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Model = new ProfilesModel(Layout?.UserName);
+        IsDemo = Model?.IsDemo ?? false;
+    }
+
+    private void SaveDisplayName()
+    {
+        if (!string.IsNullOrEmpty(Model?.UserName) && Layout != null && !string.IsNullOrEmpty(Layout.DisplayName))
+        {
+            Bootstrap.DataAccess.UserHelper.SaveDisplayName(Model.UserName, Layout.DisplayName);
+        }
+    }
+}

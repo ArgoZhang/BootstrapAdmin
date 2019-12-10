@@ -1,0 +1,9 @@
+﻿@typeparam TItem
+@inherits CheckboxBase<TItem>
+
+<label role="checkbox" aria-checked="@State.ToCss()" class="@RenderStateCss()" @onclick="e => ToggleCallback(Item, !Checked)">
+    <span class="checkbox-input">
+        <span class="checkbox-inner"></span>
+    </span>
+    <span class="checkbox-label">@Text</span>
+</label>

@@ -1,0 +1,25 @@
+﻿@page "/Pages"
+@page "/Pages/Admin"
+@page "/Pages/Admin/Index"
+@layout DefaultLayout
+@attribute [Authorize]
+@inject IJSRuntime JSRuntime
+
+<Section ShowCardTitle="@Layout.Model.ShowCardTitle" LockScreenPeriod="@Layout.Model.LockScreenPeriod" ShowBackground="true">
+    <h4 style="color: #fff">欢迎使用后台管理</h4>
+</Section>
+
+@code {
+    [CascadingParameter(Name = "Default")]
+    protected DefaultLayout Layout { get; set; } = new DefaultLayout();
+
+    /// <summary>
+    ///
+    /// </summary>
+    protected override void OnAfterRender(bool firstRender)
+    {
+        var menus = DataAccess.MenuHelper.RetrieveAllMenus(Layout.UserName);
+        var menu = menus.FirstOrDefault(menu => "/Pages/Admin/Index".Contains(menu.Url.ToBlazorMenuUrl(), StringComparison.OrdinalIgnoreCase));
+        JSRuntime.ActiveMenu(menu.Id);
+    }
+}

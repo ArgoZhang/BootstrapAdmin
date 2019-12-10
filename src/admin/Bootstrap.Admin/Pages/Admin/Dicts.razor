@@ -1,0 +1,38 @@
+﻿@inherits DictsBase
+
+<EditPage Id="dict" TItem="Bootstrap.Security.BootstrapDict" QueryModel="QueryModel" OnQuery="Query" OnAdd="Add" OnDelete="Delete" OnSave="Save">
+    <QueryBody>
+        <LgbInputText @bind-Value="@context.Category" maxlength="50" />
+        <Select Items="QueryDefine" TItem="int" @bind-Value="@context.Define" />
+        <LgbInputText @bind-Value="@context.Name" maxlength="50" />
+    </QueryBody>
+    <TableHeader>
+        <LgbTableHeader TItem="string" @bind-Value="@context.Category"></LgbTableHeader>
+        <LgbTableHeader TItem="string" @bind-Value="@context.Name"></LgbTableHeader>
+        <LgbTableHeader TItem="string" @bind-Value="@context.Code"></LgbTableHeader>
+        <LgbTableHeader TItem="int" @bind-Value="@context.Define"></LgbTableHeader>
+    </TableHeader>
+    <RowTemplate>
+        <td>@context.Category</td>
+        <td>@context.Name</td>
+        <td>@context.Code</td>
+        <td>@(DefineItems.FirstOrDefault(d => d.Value == context.Define.ToString())?.Text ?? "-")</td>
+    </RowTemplate>
+    <EditTemplate>
+        <div class="row">
+            <LgbInputText @bind-Value="@context.Category" placeholder="不可为空，50字以内" maxlength="50">
+                <RequiredValidator />
+                <StringLengthValidator Length="50" />
+            </LgbInputText>
+            <Select Items="DefineItems" TItem="int" @bind-Value="@context.Define"></Select>
+            <LgbInputText @bind-Value="@context.Name" placeholder="不可为空，50字以内" maxlength="50">
+                <RequiredValidator />
+                <StringLengthValidator Length="50" />
+            </LgbInputText>
+            <LgbInputText @bind-Value="@context.Code" placeholder="不可为空，2000字以内" maxlength="2000">
+                <RequiredValidator />
+                <StringLengthValidator Length="2000" />
+            </LgbInputText>
+        </div>
+    </EditTemplate>
+</EditPage>

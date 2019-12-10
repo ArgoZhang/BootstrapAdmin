@@ -16,10 +16,20 @@ namespace Bootstrap.Admin.Models
         /// 构造函数
         /// </summary>
         /// <param name="controller"></param>
-        public NavigatorBarModel(ControllerBase controller) : base(controller.User.Identity.Name)
+        public NavigatorBarModel(ControllerBase controller) : this(controller.User.Identity.Name)
         {
-            Navigations = MenuHelper.RetrieveSystemMenus(UserName, $"~{controller.HttpContext.Request.Path}");
-            var authApps = AppHelper.RetrievesByUserName(controller.User.Identity.Name);
+
+        }
+
+        /// <summary>
+        /// Blazor 使用构造函数
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="activeUrl"></param>
+        public NavigatorBarModel(string? userName, string activeUrl = "~/Admin/Index") : base(userName)
+        {
+            Navigations = MenuHelper.RetrieveSystemMenus(UserName, activeUrl);
+            var authApps = AppHelper.RetrievesByUserName(userName);
             Applications = DictHelper.RetrieveApps().Where(app => app.Key.IsNullOrEmpty() || authApps.Any(key => key.Equals(app.Key, StringComparison.OrdinalIgnoreCase)));
         }
 

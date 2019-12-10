@@ -1,7 +1,6 @@
 ﻿using Bootstrap.DataAccess;
 using Longbow.Tasks;
 using Microsoft.Extensions.Hosting;
-using System;
 using System.Linq;
 using System.Threading;
 using Task = System.Threading.Tasks.Task;
@@ -45,7 +44,7 @@ namespace Microsoft.Extensions.DependencyInjection
             // 本机调试时此处会抛出异常，配置文件中默认开启了任务持久化到物理文件，此处异常只有首次加载时会抛出
             // 此处异常是示例自定义任务内部未进行捕获异常时任务仍然能继续运行，不会导致整个进程崩溃退出
             // 此处代码可注释掉
-            TaskServicesManager.GetOrAdd("故障任务", token => throw new Exception("故障任务"));
+            //TaskServicesManager.GetOrAdd("故障任务", token => throw new Exception("故障任务"));
             TaskServicesManager.GetOrAdd("取消任务", token => Task.Delay(1000)).Triggers.First().Enabled = false;
 
             // 创建任务并禁用
