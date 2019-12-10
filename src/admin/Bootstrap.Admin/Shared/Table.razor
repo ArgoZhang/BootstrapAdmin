@@ -29,7 +29,7 @@
                 {
                     <th class="table-col-checkbox"><Checkbox TItem="TItem" SetCheckCallback="CheckState" ToggleCallback="ToggleCheck"></Checkbox></th>
                 }
-                @TableHeader
+                @TableHeader?.Invoke(EditModel)
                 @if (ShowButtons)
                 {
                     <th>@ButtonTemplateHeaderText</th>

@@ -11,7 +11,7 @@
     <div class="card-body">
         <Table @ref="Table" Id="@Id" TItem="TItem" OnQuery="QueryData" OnAdd="OnAdd" OnDelete="OnDelete" OnSave="OnSave">
             <TableHeader>
-                @TableHeader
+                @TableHeader?.Invoke(context)
             </TableHeader>
             <RowTemplate>
                 @RowTemplate?.Invoke(context)

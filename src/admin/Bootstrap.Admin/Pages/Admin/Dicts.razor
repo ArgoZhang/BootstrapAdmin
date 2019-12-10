@@ -7,10 +7,10 @@
         <LgbInputText @bind-Value="@context.Name" maxlength="50" />
     </QueryBody>
     <TableHeader>
-        <th>字典标签</th>
-        <th>字典名称</th>
-        <th>字典代码</th>
-        <th>字典类型</th>
+        <LgbTableHeader TItem="string" @bind-Value="@context.Category"></LgbTableHeader>
+        <LgbTableHeader TItem="string" @bind-Value="@context.Name"></LgbTableHeader>
+        <LgbTableHeader TItem="string" @bind-Value="@context.Code"></LgbTableHeader>
+        <LgbTableHeader TItem="int" @bind-Value="@context.Define"></LgbTableHeader>
     </TableHeader>
     <RowTemplate>
         <td>@context.Category</td>

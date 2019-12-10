@@ -28,7 +28,7 @@ namespace Bootstrap.Admin.Components
         /// 
         /// </summary>
         [Parameter]
-        public RenderFragment? TableHeader { get; set; }
+        public RenderFragment<TItem>? TableHeader { get; set; }
 
         /// <summary>
         /// 
@@ -224,7 +224,6 @@ namespace Bootstrap.Admin.Components
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="item"></param>
         /// <returns></returns>
         protected CheckBoxState CheckState(TItem item)
         {
