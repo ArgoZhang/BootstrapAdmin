@@ -3,8 +3,8 @@
   <Import Project="..\Directory.Build.props" />
 
   <PropertyGroup>
-    <PackageProjectUrl>https://gitee.com/LongbowGroup/$(MsBuildProjectName)</PackageProjectUrl>
-    <RepositoryUrl>https://gitee.com/LongbowGroup/$(MsBuildProjectName).git</RepositoryUrl>
+    <PackageProjectUrl>https://gitee.com/LongbowEnterprise/BootstrapAdmin</PackageProjectUrl>
+    <RepositoryUrl>https://gitee.com/LongbowEnterprise/BootstrapAdmin.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <Nullable>enable</Nullable>
     <DocumentationFile>$(MSBuildProjectName).xml</DocumentationFile>

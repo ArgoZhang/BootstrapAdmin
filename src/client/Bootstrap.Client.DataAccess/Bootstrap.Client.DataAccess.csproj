@@ -1,17 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Bootstrap.Security.DataAccess" Version="3.0.1" />
-    <PackageReference Include="Bootstrap.Security.Mvc" Version="3.0.3" />
-    <PackageReference Include="Longbow" Version="3.0.1" />
-    <PackageReference Include="Longbow.Cache" Version="3.0.3" />
-    <PackageReference Include="Longbow.Data" Version="3.0.1" />
-    <PackageReference Include="Longbow.Web" Version="3.0.1" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.7.0" />
+    <PackageReference Include="Bootstrap.Security.DataAccess" Version="3.1.0" />
+    <PackageReference Include="Bootstrap.Security.Mvc" Version="3.1.0" />
+    <PackageReference Include="Longbow" Version="3.1.0" />
+    <PackageReference Include="Longbow.Cache" Version="3.1.0" />
+    <PackageReference Include="Longbow.Data" Version="3.1.0" />
+    <PackageReference Include="Longbow.Web" Version="3.1.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.0" />
   </ItemGroup>
 
 </Project>
