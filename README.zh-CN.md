@@ -118,9 +118,7 @@
 2. 安装 Visual Studio 2019 以上 [官方网址](https://visualstudio.microsoft.com/vs/getting-started/)
 3. 获取本项目代码 [BootstrapAdmin](https://gitee.com/LongbowEnterprise/BootstrapAdmin)  
 
-*注意*   
-master 分支为 NETCore 3.0 框架 必须使用 Visual Studio 2019 (v16.3)  
-netcore-2.2 分支为 NETCore 2.2 框架支持 Visual Studio 2017 (v15.9+)
+环境搭建教程 [详细说明](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B?sort_id=1333477)   
 
 ### 安装数据库
 
