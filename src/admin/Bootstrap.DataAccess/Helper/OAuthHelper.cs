@@ -50,7 +50,6 @@ namespace Bootstrap.DataAccess
             };
         }
 
-#if NETCOREAPP3_0
         private static T? ToObject<T>(this System.Text.Json.JsonElement element) where T : OAuthUser
         {
             var user = new OAuthUser();
@@ -69,7 +68,6 @@ namespace Bootstrap.DataAccess
             ret = property.Value.ToString();
             return ret;
         }
-#endif
 
         /// <summary>
         /// 插入 Gitee 授权用户到数据库中

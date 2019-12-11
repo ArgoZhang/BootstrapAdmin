@@ -4,9 +4,7 @@ using Longbow.WeChatAuth;
 using Microsoft.AspNetCore.Authentication.OAuth;
 using System;
 using System.Linq;
-#if NETCOREAPP3_0
 using System.Text.Json;
-#endif
 
 namespace Bootstrap.DataAccess
 {
@@ -55,7 +53,6 @@ namespace Bootstrap.DataAccess
             };
         }
 
-#if NETCOREAPP3_0
         private static T? ToObject<T>(this JsonElement element) where T : WeChatUser
         {
             var user = new WeChatUser();
@@ -80,6 +77,5 @@ namespace Bootstrap.DataAccess
             ret = property.Value.ToString();
             return ret;
         }
-#endif
     }
 }

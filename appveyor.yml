@@ -36,7 +36,7 @@ test_script:
 - ps: >-
     .\appveyor.test.ps1
 artifacts:
-- path: src\admin\Bootstrap.Admin\bin\release\netcoreapp3.0\publish\
+- path: src\admin\Bootstrap.Admin\bin\release\netcoreapp3.1\publish\
   name: BootstrapAdmin
   type: WebDeployPackage
 deploy:
