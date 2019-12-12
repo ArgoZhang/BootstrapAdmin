@@ -36,7 +36,7 @@
 </head>
 <body class="trans-mute">
     <app>
-        @(await Html.RenderComponentAsync<App>(RenderMode.ServerPrerendered))
+        <component type="typeof(App)" render-mode="ServerPrerendered" />
     </app>
     <environment include="Development">
         <script src="~/lib/jquery/jquery.js"></script>
