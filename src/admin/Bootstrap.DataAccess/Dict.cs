@@ -174,7 +174,7 @@ namespace Bootstrap.DataAccess
         public string RetrieveLocaleIPSvr() => DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "IP地理位置接口" && d.Define == 0)?.Code ?? string.Empty;
 
         /// <summary>
-        /// 
+        /// 获取 IP地址位置缓存时长
         /// </summary>
         /// <returns></returns>
         public int RetrieveLocaleIPSvrCachePeriod()
