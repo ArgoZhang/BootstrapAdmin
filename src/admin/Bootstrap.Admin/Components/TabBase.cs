@@ -1,4 +1,5 @@
 ﻿using Bootstrap.Admin.Extensions;
+using Bootstrap.Admin.Shared;
 using Bootstrap.Security;
 using Microsoft.AspNetCore.Components;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ namespace Bootstrap.Admin.Components
     /// <summary>
     ///
     /// </summary>
-    public class TabBase : BootstrapComponentBase
+    public class TabBase : ComponentBase
     {
         /// <summary>
         ///
@@ -39,6 +40,18 @@ namespace Bootstrap.Admin.Components
         /// </summary>
         [Parameter]
         public bool Active { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [CascadingParameter(Name = "Admin")]
+        public AdminLayout Layout { get; protected set; } = new AdminLayout();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Inject]
+        public NavigationManager? NavigationManager { get; set; }
 
         private bool closeTab;
         /// <summary>

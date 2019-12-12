@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Bootstrap.Admin.Shared;
+using Microsoft.AspNetCore.Components;
 
 namespace Bootstrap.Admin.Components
 {
     /// <summary>
     /// 
     /// </summary>
-    public class HeaderBase : BootstrapComponentBase
+    public class HeaderBase : ComponentBase
     {
         /// <summary>
         /// 
@@ -42,6 +43,12 @@ namespace Bootstrap.Admin.Components
         /// </summary>
         [Parameter]
         public string Icon { get; set; } = "";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [CascadingParameter(Name = "Default")]
+        public DefaultLayout RootLayout { get; protected set; } = new DefaultLayout();
 
         /// <summary>
         /// 更新登录用户显示名称方法

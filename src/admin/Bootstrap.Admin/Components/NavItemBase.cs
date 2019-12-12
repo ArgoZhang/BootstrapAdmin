@@ -6,7 +6,7 @@ namespace Bootstrap.Admin.Components
     /// <summary>
     /// 
     /// </summary>
-    public class NavItemBase : BootstrapComponentBase
+    public class NavItemBase : ComponentBase
     {
         /// <summary>
         /// 

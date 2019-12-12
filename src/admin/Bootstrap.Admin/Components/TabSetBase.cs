@@ -1,6 +1,9 @@
 ﻿using Bootstrap.Admin.Extensions;
 using Bootstrap.Admin.Shared;
 using Bootstrap.Security;
+using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,8 +13,26 @@ namespace Bootstrap.Admin.Components
     /// <summary>
     /// TabSet 组件类
     /// </summary>
-    public class TabSetBase : BootstrapComponentBase
+    public class TabSetBase : ComponentBase
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        [Inject]
+        public NavigationManager? NavigationManager { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Inject]
+        protected IJSRuntime? JSRuntime { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [CascadingParameter(Name = "Default")]
+        public DefaultLayout RootLayout { get; protected set; } = new DefaultLayout();
+
         /// <summary>
         /// 页面集合
         /// </summary>
@@ -22,6 +43,18 @@ namespace Bootstrap.Admin.Components
         /// </summary>
         protected List<Tab> Tabs { get; set; } = new List<Tab>();
         private string? curId;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected override void OnParametersSet()
+        {
+            var requestUrl = NavigationManager?.Uri ?? "";
+            var path = new Uri(requestUrl).PathAndQuery;
+            var menus = DataAccess.MenuHelper.RetrieveAllMenus(RootLayout.UserName);
+            var menu = menus.FirstOrDefault(menu => path.Contains(menu.Url.ToBlazorMenuUrl()));
+            if (menu != null) AddTab(menu);
+        }
 
         /// <summary>
         /// 页面呈现后回调方法
@@ -101,7 +134,7 @@ namespace Bootstrap.Admin.Components
         /// </summary>
         protected void CloseAllTab()
         {
-            NavigationManager?.NavigateTo(Layout.RootLayout.HomeUrl);
+            NavigationManager?.NavigateTo(RootLayout.HomeUrl);
         }
 
         /// <summary>
