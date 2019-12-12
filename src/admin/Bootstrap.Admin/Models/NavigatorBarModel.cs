@@ -28,9 +28,9 @@ namespace Bootstrap.Admin.Models
         /// <param name="activeUrl"></param>
         public NavigatorBarModel(string? userName, string activeUrl = "") : base(userName)
         {
-            Navigations = MenuHelper.RetrieveSystemMenus(UserName, activeUrl);
+            Navigations = MenuHelper.RetrieveSystemMenus(userName, activeUrl);
             var authApps = AppHelper.RetrievesByUserName(userName);
-            Applications = DictHelper.RetrieveApps().Where(app => app.Key.IsNullOrEmpty() || authApps.Any(key => key.Equals(app.Key, StringComparison.OrdinalIgnoreCase)));
+            Applications = string.IsNullOrEmpty(userName) ? new KeyValuePair<string, string>[0] : DictHelper.RetrieveApps().Where(app => app.Key.IsNullOrEmpty() || authApps.Any(key => key.Equals(app.Key, StringComparison.OrdinalIgnoreCase)));
         }
 
         /// <summary>
