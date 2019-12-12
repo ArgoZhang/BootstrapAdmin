@@ -3,8 +3,6 @@
         <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
     </Found>
     <NotFound>
-        <CascadingAuthenticationState>
-            <LayoutView Layout="@typeof(NotFoundLayout)" />
-        </CascadingAuthenticationState>
+        <LayoutView Layout="@typeof(NotFoundLayout)" />
     </NotFound>
 </Router>
