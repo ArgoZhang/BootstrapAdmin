@@ -26,5 +26,13 @@ namespace Bootstrap.Admin.Components
         /// </summary>
         [CascadingParameter(Name = "Default")]
         public DefaultLayout RootLayout { get; protected set; } = new DefaultLayout();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void UpdateDisplayName()
+        {
+            StateHasChanged();
+        }
     }
 }

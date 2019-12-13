@@ -65,6 +65,16 @@ namespace Bootstrap.Admin.Components
         protected string RequestUrl { get; set; } = "";
 
         /// <summary>
+        /// Header 组件引用实例
+        /// </summary>
+        protected Header? Header { get; set; }
+
+        /// <summary>
+        /// SideBar 组件引用实例
+        /// </summary>
+        protected SideBar? SideBar { get; set; }
+
+        /// <summary>
         /// OnInitializedAsync 方法
         /// </summary>
         /// <returns></returns>
@@ -77,11 +87,8 @@ namespace Bootstrap.Admin.Components
             }
             else
             {
-                RequestUrl = new UriBuilder(NavigationManager?.Uri ?? "").Path;
-                Model = new NavigatorBarModel(state.User.Identity.Name, RequestUrl.ToMvcMenuUrl());
                 IsAdmin = state.User.IsInRole("Administrators");
                 UserName = state.User.Identity.Name ?? "";
-                DisplayName = Model.DisplayName;
             }
         }
 
@@ -92,6 +99,17 @@ namespace Bootstrap.Admin.Components
         {
             RequestUrl = new UriBuilder(NavigationManager?.Uri ?? "").Path;
             Model = new NavigatorBarModel(UserName, RequestUrl.ToMvcMenuUrl());
+            DisplayName = Model.DisplayName;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void OnDisplayNameChanged(string displayName)
+        {
+            DisplayName = displayName;
+            Header?.UpdateDisplayName();
+            SideBar?.UpdateDisplayName();
         }
 
         /// <summary>

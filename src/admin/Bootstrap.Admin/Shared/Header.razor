@@ -3,7 +3,7 @@
 <header class="header">
     <div class="bg"></div>
     <div class="d-flex align-items-center">
-        <a id="navbar" href="@RootLayout.HomeUrl" class="sidebar-toggle-box">
+        <a id="navbar" href="@HomeUrl" class="sidebar-toggle-box">
             <i class="fa fa-bars"></i>
             <span id="websiteTitle">@Title</span>
         </a>
@@ -94,15 +94,15 @@
         </div>
         <div class="dropdown userinfo">
             <div data-toggle="dropdown" class="dropdown-toggle shadow-default">
-                <img id="headerIcon" alt="" src="@Icon.ToBlazorLink()" />
-                <span id="userDisplayName" data-userName="@UserName" class="username text-truncate d-inline-block">@DisplayName</span>
+                <img alt="" src="@Icon.ToBlazorLink()" />
+                <span class="username text-truncate d-inline-block">@RootLayout.DisplayName</span>
             </div>
             <div class="dropdown-menu dropdown-menu-right">
                 <div class="dropdown-item">
                     <div class="d-flex flex-fill align-items-center">
                         <img src="@Icon.ToBlazorLink()">
                         <div class="flex-fill">
-                            <div class="username text-truncate">@DisplayName</div>
+                            <div class="username text-truncate">@RootLayout.DisplayName</div>
                             <div>登录名：@UserName</div>
                         </div>
                     </div>

@@ -12,24 +12,6 @@ namespace Bootstrap.Admin.Components
         /// 
         /// </summary>
         [Parameter]
-        public string UserName { get; set; } = "未设置";
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [Parameter]
-        public string DisplayName { get; set; } = "";
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [Parameter]
-        public EventCallback<string>? DisplayNameChanged { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [Parameter]
         public bool IsAdmin { get; set; }
 
         /// <summary>
@@ -41,20 +23,19 @@ namespace Bootstrap.Admin.Components
         /// <summary>
         /// 
         /// </summary>
+        [CascadingParameter(Name = "Default")]
+        public DefaultLayout RootLayout { get; protected set; } = new DefaultLayout();
+
+        /// <summary>
+        /// 
+        /// </summary>
         [Parameter]
         public string Icon { get; set; } = "";
 
         /// <summary>
         /// 
         /// </summary>
-        [CascadingParameter(Name = "Default")]
-        public DefaultLayout RootLayout { get; protected set; } = new DefaultLayout();
-
-        /// <summary>
-        /// 更新登录用户显示名称方法
-        /// </summary>
-        /// <param name="displayName"></param>
-        public void UpdateDisplayName(string displayName)
+        public void UpdateDisplayName()
         {
             StateHasChanged();
         }
