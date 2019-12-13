@@ -12,47 +12,47 @@ using System.Threading.Tasks;
 namespace Bootstrap.Admin.Components
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class DefaultLayoutComponentBase : LayoutComponentBase
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [Inject]
         public AuthenticationStateProvider AuthenticationStateProvider { get; set; } = new ServerAuthenticationStateProvider();
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [Inject]
         public NavigationManager? NavigationManager { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [Inject]
         public IJSRuntime? JSRuntime { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public NavigatorBarModel Model { get; set; } = new NavigatorBarModel("");
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public string UserName { get; set; } = "";
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public string DisplayName { get; set; } = "";
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
-        protected bool IsAdmin { get; set; }
+        public bool IsAdmin { get; set; }
 
         /// <summary>
         /// 获得/设置 系统首页
@@ -103,7 +103,7 @@ namespace Bootstrap.Admin.Components
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public void OnDisplayNameChanged(string displayName)
         {
@@ -113,7 +113,7 @@ namespace Bootstrap.Admin.Components
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="firstRender"></param>
         protected override void OnAfterRender(bool firstRender)

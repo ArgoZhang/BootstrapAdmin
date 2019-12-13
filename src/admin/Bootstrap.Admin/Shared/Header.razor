@@ -3,12 +3,12 @@
 <header class="header">
     <div class="bg"></div>
     <div class="d-flex align-items-center">
-        <a id="navbar" href="@HomeUrl" class="sidebar-toggle-box">
+        <a id="navbar" href="@RootLayout.HomeUrl" class="sidebar-toggle-box">
             <i class="fa fa-bars"></i>
             <span id="websiteTitle">@Title</span>
         </a>
         <div class="nav">
-            @if (IsAdmin)
+            @if (@RootLayout.IsAdmin)
             {
                 <!-- tasks start -->
                 <div class="dropdown">
@@ -103,7 +103,7 @@
                         <img src="@Icon.ToBlazorLink()">
                         <div class="flex-fill">
                             <div class="username text-truncate">@RootLayout.DisplayName</div>
-                            <div>登录名：@UserName</div>
+                            <div>登录名：@RootLayout.UserName</div>
                         </div>
                     </div>
                 </div>

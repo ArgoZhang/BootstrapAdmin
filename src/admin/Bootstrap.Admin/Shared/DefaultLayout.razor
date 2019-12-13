@@ -1,7 +1,7 @@
 ﻿@inherits DefaultLayoutComponentBase
 
 <CascadingValue Value=this Name="Default">
-    <Header @ref="Header" Icon="@Model.Icon" Title="@Model.Title" IsAdmin=@IsAdmin UserName="@UserName" HomeUrl="@HomeUrl" DisplayName="@DisplayName" />
+    <Header @ref="Header" Icon="@Model.Icon" Title="@Model.Title" />
     <SideBar @ref="SideBar" Model=@Model />
     @Body
     <Footer Text="@Model.Footer" IsDemo=@Model.IsDemo></Footer>
