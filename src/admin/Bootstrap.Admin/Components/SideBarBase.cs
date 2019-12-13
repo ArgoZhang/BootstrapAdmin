@@ -24,7 +24,7 @@ namespace Bootstrap.Admin.Components
         /// <summary>
         ///
         /// </summary>
-        public void UpdateDisplayName()
+        public void UpdateState()
         {
             StateHasChanged();
         }

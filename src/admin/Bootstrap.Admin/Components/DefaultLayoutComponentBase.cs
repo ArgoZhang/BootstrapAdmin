@@ -108,8 +108,8 @@ namespace Bootstrap.Admin.Components
         public void OnDisplayNameChanged(string displayName)
         {
             DisplayName = displayName;
-            Header?.UpdateDisplayName();
-            SideBar?.UpdateDisplayName();
+            Header?.UpdateState();
+            SideBar?.UpdateState();
         }
 
         /// <summary>
