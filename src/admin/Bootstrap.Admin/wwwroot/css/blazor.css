@@ -130,6 +130,16 @@ nav .dropdown .nav-link-close.dropdown-toggle:after {
     margin-bottom: 0;
 }
 
+.table-wrapper {
+    border-radius: 4px;
+    overflow: auto;
+    margin-bottom: 1rem;
+}
+
+    .table-wrapper .table {
+        margin-bottom: 0;
+    }
+
 .pagination-bar {
     flex: 1 1 auto;
     margin-bottom: 1rem;
@@ -219,4 +229,9 @@ nav .dropdown .nav-link-close.dropdown-toggle:after {
 .modal-confirm-body {
     margin-bottom: 15px;
     font-size: 1.125rem;
+}
+
+.card-footer {
+    text-align: right;
+    padding: 0.5rem 1rem;
 }

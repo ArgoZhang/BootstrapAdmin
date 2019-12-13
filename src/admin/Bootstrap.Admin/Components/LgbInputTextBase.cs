@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Components;
+using System;
 using System.Linq;
 
 namespace Bootstrap.Admin.Components
@@ -8,6 +9,18 @@ namespace Bootstrap.Admin.Components
     /// </summary>
     public class LgbInputTextBase : ValidateInputBase<string>
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        [Parameter]
+        public string ColumnClass { get; set; } = "col-sm-6";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Parameter]
+        public string InputType { get; set; } = "text";
+
         /// <summary>
         /// 
         /// </summary>

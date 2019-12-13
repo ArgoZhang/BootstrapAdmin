@@ -13,7 +13,7 @@ namespace Bootstrap.Admin.Components
     public class LgbEditFormBase : ComponentBase
     {
         /// <summary>
-        /// 
+        /// 获得/设置 Id 用于内部 Label-For
         /// </summary>
         [Parameter]
         public string Id { get; set; } = "";

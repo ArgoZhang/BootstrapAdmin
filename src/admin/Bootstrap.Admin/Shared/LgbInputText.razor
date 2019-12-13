@@ -1,8 +1,8 @@
 ﻿@inherits LgbInputTextBase
 
-<div class="form-group col-sm-6">
+<div class="@($"form-group {ColumnClass}")">
     <label class="control-label" for="@Id">@DisplayName</label>
-    <input Id="@Id" data-original-title="@ErrorMessage" class="@($"form-control {CssClass} {ValidCss}")" placeholder="@PlaceHolder" maxlength=@MaxLength type="text" @bind="Value" @oninput="EventCallback.Factory.CreateBinder<string>(this, __value => CurrentValueAsString = __value, CurrentValueAsString)" />
+    <input Id="@Id" data-original-title="@ErrorMessage" class="@($"form-control {CssClass} {ValidCss}")" placeholder="@PlaceHolder" maxlength=@MaxLength type="@InputType" @bind="Value" @oninput="EventCallback.Factory.CreateBinder<string>(this, __value => CurrentValueAsString = __value, CurrentValueAsString)" />
     <CascadingValue Value="this" IsFixed="true">
         @ChildContent
     </CascadingValue>

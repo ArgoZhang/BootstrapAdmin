@@ -24,6 +24,9 @@ namespace Microsoft.AspNetCore.Builder
             _displayNameCache.TryAdd((typeof(BootstrapDict), nameof(BootstrapDict.Name)), "字典名称");
             _displayNameCache.TryAdd((typeof(BootstrapDict), nameof(BootstrapDict.Code)), "字典代码");
             _displayNameCache.TryAdd((typeof(BootstrapDict), nameof(BootstrapDict.Define)), "字典类型");
+
+            _displayNameCache.TryAdd((typeof(BootstrapUser), nameof(BootstrapUser.UserName)), "登录名称");
+            _displayNameCache.TryAdd((typeof(BootstrapUser), nameof(BootstrapUser.DisplayName)), "显示名称");
             return services;
         }
 
