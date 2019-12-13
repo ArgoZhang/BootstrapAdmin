@@ -9,6 +9,11 @@
         查询结果
     </div>
     <div class="card-body">
+        <ConditionComponent>
+            <div class="alert alert-danger" role="alert">
+                <span>演示系统禁止修改系统使用字典配置项</span>
+            </div>
+        </ConditionComponent>
         <Table @ref="Table" Id="@Id" TItem="TItem" OnQuery="QueryData" OnAdd="OnAdd" OnDelete="OnDelete" OnSave="OnSave">
             <TableHeader>
                 @TableHeader?.Invoke(context)
