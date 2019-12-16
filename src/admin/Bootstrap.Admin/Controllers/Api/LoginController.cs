@@ -41,7 +41,7 @@ namespace Bootstrap.Admin.Controllers.Api
             {
                 token = BootstrapAdminJwtTokenHandler.CreateToken(userName);
             }
-            HttpContext.Log(userName, token != null);
+            HttpContext.Log(userName, !string.IsNullOrEmpty(token));
             return token;
         }
 
