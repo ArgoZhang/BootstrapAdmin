@@ -3,17 +3,6 @@
   "defaultProvider": "cdnjs",
   "libraries": [
     {
-      "provider": "unpkg",
-      "library": "@aspnet/signalr@1.0.4",
-      "destination": "wwwroot/lib/signalr/",
-      "files": [
-        "dist/browser/signalr.js",
-        "dist/browser/signalr.js.map",
-        "dist/browser/signalr.min.js",
-        "dist/browser/signalr.min.js.map"
-      ]
-    },
-    {
       "provider": "cdnjs",
       "library": "jquery@3.3.1",
       "destination": "wwwroot/lib/jquery/",
@@ -119,16 +108,6 @@
         "js/locales/bootstrap-datetimepicker.zh-CN.js",
         "js/bootstrap-datetimepicker.js",
         "js/bootstrap-datetimepicker.min.js"
-      ]
-    },
-    {
-      "provider": "unpkg",
-      "library": "dcjqaccordion@2.7.1",
-      "destination": "wwwroot/lib/dcjqaccordion/",
-      "files": [
-        "js/jquery.dcjqaccordion.2.7.js",
-        "js/jquery.dcjqaccordion.2.7.min.js",
-        "js/jquery.cookie.js"
       ]
     },
     {
