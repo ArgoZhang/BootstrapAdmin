@@ -588,6 +588,10 @@ input.pending {
     margin-top: -10px;
 }
 
+.card .modal-footer {
+    padding: 0.5rem 0rem;
+}
+
 .no-card-header .card-header {
     display: none;
 }
