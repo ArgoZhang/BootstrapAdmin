@@ -143,6 +143,22 @@
         </div>
     </div>
 </div>
+<div class="card" asp-auth="defaultApp">
+    <div class="card-header">默认应用设置</div>
+    <div class="card-body">
+        <div class="form-inline">
+            <div class="row">
+                <div class="form-group col-6">
+                    <label class="control-label" for="defaultApp">默认应用</label>
+                    <input id="defaultApp" hidden type="checkbox" data-default-val="@Model.DefaultApp" data-toggle="toggle" data-width="120" data-onstyle="success" data-on="开启" data-off="关闭" />
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer text-right">
+            <button data-method="saveDefaultApp" class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
+        </div>
+    </div>
+</div>
 <div class="card">
     <div class="card-header">
         <div class="d-flex align-items-center">

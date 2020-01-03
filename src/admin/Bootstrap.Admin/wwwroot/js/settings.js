@@ -76,6 +76,12 @@ $(function () {
                     }
                 });
                 break;
+            case 'saveDefaultApp':
+                var defaultApp = $('#defaultApp').prop('checked') ? "1" : "0";
+                $.bc({
+                    url: Settings.url, data: { name: '默认应用程序', code: defaultApp, category: '系统设置' }, title: '保存默认应用程序设置', method: "post"
+                });
+               break;
         }
     });
 

@@ -22,7 +22,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="value"></param>
         /// <returns></returns>
         [HttpPost]
-        [ButtonAuthorize(Url = "~/Admin/Settings", Auth = "saveTitle,saveFooter,saveTheme,saveUISettings")]
+        [ButtonAuthorize(Url = "~/Admin/Settings", Auth = "saveTitle,saveFooter,saveTheme,saveUISettings,clearCache,clearAllCache,loginSettings,lockScreen,defaultApp")]
         public bool Post([FromBody]BootstrapDict value) => DictHelper.SaveSettings(value);
 
         /// <summary>
