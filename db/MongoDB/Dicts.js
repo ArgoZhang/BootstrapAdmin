@@ -283,6 +283,12 @@
         "Define": NumberInt(0)
     },
     {
+        "Category": "系统设置",
+        "Name": "默认应用程序",
+        "Code": "0",
+        "Define": NumberInt(0)
+    },
+    {
         "Category": "测试平台",
         "Name": "favicon",
         "Code": "http://localhost:49185/favicon.ico",
