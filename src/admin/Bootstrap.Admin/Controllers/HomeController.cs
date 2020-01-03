@@ -19,7 +19,7 @@ namespace Bootstrap.Admin.Controllers
         public IActionResult Index()
         {
             var model = new HeaderBarModel(User.Identity.Name);
-            var homeUrl = DictHelper.RetrieveHomeUrl(model.AppId);
+            var homeUrl = DictHelper.RetrieveHomeUrl(User.Identity.Name, model.AppId);
             return homeUrl.Equals("~/Home/Index", System.StringComparison.OrdinalIgnoreCase) ? (IActionResult)View(model) : Redirect(homeUrl);
         }
 

@@ -114,21 +114,54 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获得默认的前台首页地址，默认为~/Home/Index
         /// </summary>
-        /// <param name="appId"></param>
+        /// <param name="userName">登录用户名</param>
+        /// <param name="appId">默认应用程序编码</param>
         /// <returns></returns>
-        public virtual string RetrieveHomeUrl(string appId)
+        public virtual string RetrieveHomeUrl(string? userName, string appId)
         {
             // https://gitee.com/LongbowEnterprise/dashboard/issues?id=IS0WK
+            // https://gitee.com/LongbowEnterprise/dashboard/issues?id=I17SD0
             var url = "~/Home/Index";
             var dicts = DictHelper.RetrieveDicts();
-            if (!appId.IsNullOrEmpty())
+
+            if (appId.IsNullOrEmpty())
             {
-                var appUrl = dicts.FirstOrDefault(d => d.Name.Equals(appId, StringComparison.OrdinalIgnoreCase) && d.Category == "应用首页" && d.Define == 0)?.Code;
-                if (!string.IsNullOrEmpty(appUrl)) return appUrl;
+                var defaultUrl = dicts.FirstOrDefault(d => d.Name == "前台首页" && d.Category == "网站设置" && d.Define == 0)?.Code;
+                if (!string.IsNullOrEmpty(defaultUrl)) url = defaultUrl;
             }
-            var defaultUrl = dicts.FirstOrDefault(d => d.Name == "前台首页" && d.Category == "网站设置" && d.Define == 0)?.Code;
-            if (!string.IsNullOrEmpty(defaultUrl)) url = defaultUrl;
+            else if (appId.Equals("BA", StringComparison.OrdinalIgnoreCase))
+            {
+                // 使用配置项设置是否启用默认第一个应用是默认应用
+                var defaultApp = (dicts.FirstOrDefault(d => d.Name == "默认应用程序" && d.Category == "系统设置" && d.Define == 0)?.Code ?? "0") == "1";
+                if (defaultApp)
+                {
+                    var app = AppHelper.RetrievesByUserName(userName).FirstOrDefault(key => !key.Equals("BA", StringComparison.OrdinalIgnoreCase)) ?? "";
+                    if (!string.IsNullOrEmpty(app))
+                    {
+                        // 指定应用程序的首页
+                        var appUrl = RetrieveDefaultHomeUrlByApp(dicts, app);
+                        if (!string.IsNullOrEmpty(appUrl)) url = appUrl;
+                    }
+                }
+            }
+            else
+            {
+                // 指定应用程序的首页
+                var appUrl = RetrieveDefaultHomeUrlByApp(dicts, appId);
+                if (!string.IsNullOrEmpty(appUrl)) url = appUrl;
+            }
             return url;
+        }
+
+        /// <summary>
+        /// 通过 appId 获取应用首页配置值
+        /// </summary>
+        /// <param name="dicts"></param>
+        /// <param name="appId"></param>
+        /// <returns></returns>
+        protected virtual string RetrieveDefaultHomeUrlByApp(IEnumerable<BootstrapDict> dicts, string appId)
+        {
+            return dicts.FirstOrDefault(d => d.Name.Equals(appId, StringComparison.OrdinalIgnoreCase) && d.Category == "应用首页" && d.Define == 0)?.Code ?? "";
         }
 
         /// <summary>
@@ -174,7 +207,7 @@ namespace Bootstrap.DataAccess
         public string RetrieveLocaleIPSvr() => DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "IP地理位置接口" && d.Define == 0)?.Code ?? string.Empty;
 
         /// <summary>
-        /// 
+        /// 获得 IP请求缓存时长配置值
         /// </summary>
         /// <returns></returns>
         public int RetrieveLocaleIPSvrCachePeriod()
@@ -245,5 +278,11 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <returns></returns>
         public bool RetrieveAutoLockScreen() => (DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "自动锁屏" && d.Define == 0)?.Code ?? "0") == "1";
+
+        /// <summary>
+        /// 获得默认应用是否开启 默认关闭
+        /// </summary>
+        /// <returns></returns>
+        public bool RetrieveDefaultApp() => (DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "默认应用程序" && d.Define == 0)?.Code ?? "0") == "1";
     }
 }
