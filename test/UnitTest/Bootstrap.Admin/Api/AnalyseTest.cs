@@ -17,7 +17,6 @@ namespace Bootstrap.Admin.Api
             Assert.NotNull(cates);
             cates = await Client.GetAsJsonAsync<AnalyseData>("?logType=trace");
             Assert.NotNull(cates);
-
         }
     }
 }

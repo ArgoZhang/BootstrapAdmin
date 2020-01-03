@@ -4,7 +4,7 @@ using Longbow.Web;
 using System.Linq;
 using Xunit;
 
-namespace Bootstrap.DataAccess
+namespace Bootstrap.DataAccess.SqlServer
 {
     [Collection("SQLServerContext")]
     [AutoRollback]
