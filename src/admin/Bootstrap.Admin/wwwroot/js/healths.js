@@ -1,4 +1,9 @@
 ﻿$(function () {
+    $.extend({
+        sendHealths: function (data) {
+            $.bc({ url: 'api/Interface/Healths', data: JSON.stringify(data), method: 'post' });
+        }
+    });
     var healthStatus = ['<button class="btn btn-danger"><i class="fa fa-times-circle"></i><span>不健康</span></button>', '<button class="btn btn-warning"><i class="fa fa-exclamation-circle"></i><span>亚健康</span></button>', '<button class="btn btn-success"><i class="fa fa-check-circle"></i><span>健康</span></button>'];
     var StatusFormatter = function (value) {
         return healthStatus[value];
