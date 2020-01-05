@@ -71,15 +71,7 @@ $(function () {
                     $('#app').lgbSelect('enable');
                 }
                 if (result.oper === "edit") {
-                    var valid = result.data && result.data.ParentId === "0";
-                    // 判断是否有子项
-                    if (valid) {
-                        var idValue = result.data.Id;
-                        var nodes = $table.bootstrapTable('getData').filter(function (row, index, data) {
-                            return idValue == row["ParentId"];
-                        });
-                        valid = nodes.length === 0;
-                    }
+                    var valid = result.data && result.data.ParentId === "0" && hasNodes(result.data.Id);
                     $('#app').lgbSelect(valid ? 'enable' : 'disabled');
                 }
                 if (!result.success) return;
@@ -168,6 +160,13 @@ $(function () {
         }
     });
 
+    var hasNodes = function (idValue) {
+        var nodes = $table.bootstrapTable('getData').filter(function (row, index, data) {
+            return idValue == row["ParentId"];
+        });
+        return nodes.length === 0;
+    };
+
     // validate
     $('#dataForm').on('click', '[data-method]', function () {
         var $this = $(this);
@@ -176,7 +175,9 @@ $(function () {
             case 'clear':
                 $input.val("");
                 if ($input.attr('id') === 'parentName') {
-                    $('#app').lgbSelect('enable');
+                    // 判断是否有子项
+                    var valid = hasNodes($("#menuID").val());
+                    $('#app').lgbSelect(valid ? 'enable' : 'disabled');
                 }
                 break;
             case 'sel':
