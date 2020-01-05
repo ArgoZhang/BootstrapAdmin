@@ -67,6 +67,21 @@ $(function () {
                 }
             },
             callback: function (result) {
+                if (result.oper === "create") {
+                    $('#app').lgbSelect('enable');
+                }
+                if (result.oper === "edit") {
+                    var valid = result.data && result.data.ParentId === "0";
+                    // 判断是否有子项
+                    if (valid) {
+                        var idValue = result.data.Id;
+                        var nodes = $table.bootstrapTable('getData').filter(function (row, index, data) {
+                            return idValue == row["ParentId"];
+                        });
+                        valid = nodes.length === 0;
+                    }
+                    $('#app').lgbSelect(valid ? 'enable' : 'disabled');
+                }
                 if (!result.success) return;
                 if ((result.oper === "save") || result.oper === "del") {
                     if (result.data.filter(function (element) {
@@ -160,6 +175,9 @@ $(function () {
         switch ($this.attr('data-method')) {
             case 'clear':
                 $input.val("");
+                if ($input.attr('id') === 'parentName') {
+                    $('#app').lgbSelect('enable');
+                }
                 break;
             case 'sel':
                 $input.select();
@@ -247,6 +265,7 @@ $(function () {
                 if (check) {
                     $parentMenuID.val(pId);
                     $parentMenuName.val($('.dd3-content :radio:checked').next('span').text());
+                    $('#app').lgbSelect('disabled');
                 }
                 else {
                     return false;
