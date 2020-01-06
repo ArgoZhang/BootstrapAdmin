@@ -350,6 +350,10 @@ body.trans-mute * {
     }
 
     .dd3-content .menuType {
+        right: 100px;
+    }
+
+    .dd3-content .menuApp {
         right: 45px;
     }
 

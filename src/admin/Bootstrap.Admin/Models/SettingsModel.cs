@@ -18,6 +18,7 @@ namespace Bootstrap.Admin.Models
         {
             Themes = DictHelper.RetrieveThemes();
             AutoLockScreen = EnableAutoLockScreen ? "" : "lockScreen";
+            DefaultApp = DictHelper.RetrieveDefaultApp() ? "" : "defaultApp";
         }
 
         /// <summary>
@@ -27,6 +28,7 @@ namespace Bootstrap.Admin.Models
         {
             Themes = DictHelper.RetrieveThemes();
             AutoLockScreen = EnableAutoLockScreen ? "" : "lockScreen";
+            DefaultApp = DictHelper.RetrieveDefaultApp() ? "" : "defaultApp";
         }
 
         /// <summary>
@@ -38,5 +40,10 @@ namespace Bootstrap.Admin.Models
         /// 获得 是否开启自动锁屏
         /// </summary>
         public string AutoLockScreen { get; }
+
+        /// <summary>
+        /// 获得 是否开启自动锁屏
+        /// </summary>
+        public string DefaultApp { get; }
     }
 }

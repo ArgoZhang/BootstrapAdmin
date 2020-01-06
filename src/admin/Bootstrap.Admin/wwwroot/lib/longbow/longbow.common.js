@@ -107,9 +107,6 @@
             });
             return source;
         },
-        sendHealths: function (data) {
-            $.bc({ url: 'api/Interface/Healths', data: JSON.stringify(data), method: 'post' });
-        },
         copyText: function (ele) {
             if (typeof ele !== "string") return false;
             var input = document.createElement('input');
