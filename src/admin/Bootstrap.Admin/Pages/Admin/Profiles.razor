@@ -137,6 +137,12 @@
         if (user != null) User = user;
     }
 
+    /// <summary>
+    ///
+    /// </summary>
+    /// <returns></returns>
+    protected override bool ShouldRender() => false;
+
     private void SaveDisplayName(EditContext context)
     {
         if (!string.IsNullOrEmpty(User.UserName) && Bootstrap.DataAccess.UserHelper.SaveDisplayName(User.UserName, User.DisplayName))
