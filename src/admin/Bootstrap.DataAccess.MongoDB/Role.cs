@@ -38,6 +38,7 @@ namespace Bootstrap.DataAccess.MongoDB
         {
             if (string.IsNullOrEmpty(p.Id))
             {
+                p.Id = null;
                 DbManager.Roles.InsertOne(new Role()
                 {
                     RoleName = p.RoleName,

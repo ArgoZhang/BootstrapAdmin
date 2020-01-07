@@ -3,17 +3,6 @@
   "defaultProvider": "cdnjs",
   "libraries": [
     {
-      "provider": "unpkg",
-      "library": "@aspnet/signalr@1.0.4",
-      "destination": "wwwroot/lib/signalr/",
-      "files": [
-        "dist/browser/signalr.js",
-        "dist/browser/signalr.js.map",
-        "dist/browser/signalr.min.js",
-        "dist/browser/signalr.min.js.map"
-      ]
-    },
-    {
       "provider": "cdnjs",
       "library": "jquery@3.3.1",
       "destination": "wwwroot/lib/jquery/",

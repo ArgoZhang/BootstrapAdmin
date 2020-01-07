@@ -56,6 +56,7 @@ namespace Bootstrap.DataAccess.MongoDB
         {
             if (string.IsNullOrEmpty(p.Id))
             {
+                p.Id = null;
                 DbManager.Menus.InsertOne(p);
                 p.Id = DbManager.Menus.Find(m => m.Name == p.Name && m.Category == p.Category && m.ParentId == p.ParentId && m.Url == p.Url).FirstOrDefault().Id;
             }

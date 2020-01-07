@@ -33,6 +33,7 @@ namespace Bootstrap.DataAccess.MongoDB
         {
             if (string.IsNullOrEmpty(p.Id))
             {
+                p.Id = null;
                 DbManager.Groups.InsertOne(new Group()
                 {
                     GroupCode = p.GroupCode,
