@@ -52,6 +52,12 @@ namespace Bootstrap.Admin.Components
         public string Text { get; set; } = "Toast 消息正文内容-未设置";
 
         /// <summary>
+        /// 获得/设置 组件 ID
+        /// </summary>
+        [Parameter]
+        public string Id { get; set; } = "";
+
+        /// <summary>
         /// 控件呈现后回调方法
         /// </summary>
         /// <param name="firstRender"></param>

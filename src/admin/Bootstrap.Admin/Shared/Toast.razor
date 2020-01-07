@@ -1,6 +1,6 @@
 ﻿@inherits ToastBase
 
-<div class="toast fade @Placement.ToCss("toast")" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="@(AutoHide ? "true":"false")" data-delay="@Interval">
+<div class="toast fade @Placement.ToCss("toast")" id="@Id" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="@(AutoHide ? "true":"false")" data-delay="@Interval">
     <div class="toast-header">
         <div class="toast-bar"><i class="@RenderCategory()"></i></div>
         <strong class="mr-auto">@Title</strong>
