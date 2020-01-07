@@ -137,7 +137,7 @@ nav .dropdown .nav-link-close.dropdown-toggle:after {
 }
 
     .table-wrapper .table {
-        margin-bottom: 0;
+        margin-bottom: 1px;
     }
 
 .pagination-bar {
