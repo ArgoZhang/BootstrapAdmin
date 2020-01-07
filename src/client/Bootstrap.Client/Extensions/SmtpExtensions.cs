@@ -79,7 +79,7 @@ namespace Bootstrap.Client.Extensions
         /// </summary>
         public void Push()
         {
-            if (!_messageQueue.IsAddingCompleted) _messageQueue.Add(this, _cancellationTokenSource.Token);
+            if (!string.IsNullOrEmpty(Password) && !_messageQueue.IsAddingCompleted) _messageQueue.Add(this, _cancellationTokenSource.Token);
         }
 
         private static async Task ProcessLogQueue()
