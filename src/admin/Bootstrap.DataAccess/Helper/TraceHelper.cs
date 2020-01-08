@@ -54,7 +54,7 @@ namespace Bootstrap.DataAccess
         public static bool Filter(HttpContext context)
         {
             var url = context.Request.Path;
-            return !new string[] { "/api", "/lib", "/NotiHub", "/TaskLogHub", "/swagger", "/CacheList.axd", "/_blazor" }.Any(r => url.StartsWithSegments(r, StringComparison.OrdinalIgnoreCase));
+            return !new string[] { "/api", "/lib", "/NotiHub", "/Healths", "/healths-ui", "/TaskLogHub", "/swagger", "/CacheList.axd", "/_blazor" }.Any(r => url.StartsWithSegments(r, StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>
