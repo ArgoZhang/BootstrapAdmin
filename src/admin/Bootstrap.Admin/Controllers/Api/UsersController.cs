@@ -36,29 +36,19 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="type">类型 如角色、部门</param>
         /// <returns></returns>
         [HttpPost("{id}")]
-        public IEnumerable<object> Post(string id, [FromQuery]string type)
+        public IEnumerable<object> Post(string id, [FromQuery]string type) => type switch
         {
-            IEnumerable<object> ret = new string[0];
-            switch (type)
+            "role" => UserHelper.RetrievesByRoleId(id).Select(p => new
             {
-                case "role":
-                    ret = UserHelper.RetrievesByRoleId(id).Select(p => new
-                    {
-                        p.Id,
-                        p.DisplayName,
-                        p.UserName,
-                        p.Checked
-                    }).OrderBy(u => u.DisplayName);
-                    break;
-                case "group":
-                    ret = UserHelper.RetrievesByGroupId(id);
-                    break;
-                case "reset":
-                    ret = UserHelper.RetrieveResetReasonsByUserName(id).Select(u => new { u.Key, u.Value });
-                    break;
-            }
-            return ret;
-        }
+                p.Id,
+                p.DisplayName,
+                p.UserName,
+                p.Checked
+            }).OrderBy(u => u.DisplayName),
+            "group" => UserHelper.RetrievesByGroupId(id),
+            "reset" => UserHelper.RetrieveResetReasonsByUserName(id).Select(u => new { u.Key, u.Value }),
+            _ => new string[0]
+        };
 
         /// <summary>
         /// 前台User View调用，新建/更新用户
@@ -92,20 +82,12 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <returns></returns>
         [HttpPut("{id}")]
         [ButtonAuthorize(Url = "~/Admin/Users", Auth = "assignRole,assignGroup")]
-        public bool Put(string id, [FromBody]IEnumerable<string> values, [FromQuery]string type)
+        public bool Put(string id, [FromBody]IEnumerable<string> values, [FromQuery]string type) => type switch
         {
-            var ret = false;
-            switch (type)
-            {
-                case "role":
-                    ret = RoleHelper.SaveByUserId(id, values);
-                    break;
-                case "group":
-                    ret = GroupHelper.SaveByUserId(id, values);
-                    break;
-            }
-            return ret;
-        }
+            "role" => RoleHelper.SaveByUserId(id, values),
+            "group" => GroupHelper.SaveByUserId(id, values),
+            _ => false
+        };
 
         /// <summary>
         /// 删除用户操作

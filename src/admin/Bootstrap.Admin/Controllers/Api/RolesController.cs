@@ -37,19 +37,13 @@ namespace Bootstrap.Admin.Controllers.Api
         [HttpPost("{id}")]
         public IEnumerable<object> Post(string id, [FromQuery]string type)
         {
-            IEnumerable<Role> ret = new Role[0];
-            switch (type)
+            var ret = type switch
             {
-                case "user":
-                    ret = RoleHelper.RetrievesByUserId(id);
-                    break;
-                case "group":
-                    ret = RoleHelper.RetrievesByGroupId(id);
-                    break;
-                case "menu":
-                    ret = RoleHelper.RetrievesByMenuId(id);
-                    break;
-            }
+                "user" => RoleHelper.RetrievesByUserId(id),
+                "group" => RoleHelper.RetrievesByGroupId(id),
+                "menu" => RoleHelper.RetrievesByMenuId(id),
+                _ => new Role[0]
+            };
             return ret.Select(m => new { m.Id, m.Checked, m.RoleName, m.Description });
         }
         /// <summary>
@@ -61,26 +55,14 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <returns></returns>
         [HttpPut("{id}")]
         [ButtonAuthorize(Url = "~/Admin/Roles", Auth = "assignUser,assignGroup,assignMenu,assignApp")]
-        public bool Put(string id, [FromBody]IEnumerable<string> values, [FromQuery]string type)
+        public bool Put(string id, [FromBody]IEnumerable<string> values, [FromQuery]string type) => type switch
         {
-            var ret = false;
-            switch (type)
-            {
-                case "user":
-                    ret = UserHelper.SaveByRoleId(id, values);
-                    break;
-                case "group":
-                    ret = GroupHelper.SaveByRoleId(id, values);
-                    break;
-                case "menu":
-                    ret = MenuHelper.SaveMenusByRoleId(id, values);
-                    break;
-                case "app":
-                    ret = AppHelper.SaveByRoleId(id, values);
-                    break;
-            }
-            return ret;
-        }
+            "user" => UserHelper.SaveByRoleId(id, values),
+            "group" => GroupHelper.SaveByRoleId(id, values),
+            "menu" => MenuHelper.SaveMenusByRoleId(id, values),
+            "app" => AppHelper.SaveByRoleId(id, values),
+            _ => false
+        };
         /// <summary>
         /// 保存角色方法
         /// </summary>
