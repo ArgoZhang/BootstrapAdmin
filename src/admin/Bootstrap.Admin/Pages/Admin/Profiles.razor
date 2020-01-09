@@ -1,4 +1,6 @@
-﻿<AuthorizateComponent Key="saveDisplayName">
+﻿@inherits ProfilesBase
+
+<AuthorizateComponent Key="saveDisplayName">
     <div class="card">
         <div class="card-header">基本资料</div>
         <div class="card-body">
@@ -13,7 +15,7 @@
                         <label class="control-label" for="userName">登录名称</label>
                         <input type="text" class="form-control ignore" value="@Model?.UserName" readonly />
                     </div>
-                    <LgbInputText ColumnClass="col-sm-6 col-md-auto" @bind-Value="@User.DisplayName" placeholder="不可为空，16字以内" maxlength="16">
+                    <LgbInputText ColumnClass="col-sm-6 col-md-auto" @bind-Value="@DisplayName" placeholder="不可为空，16字以内" maxlength="16">
                         <RequiredValidator />
                         <StringLengthValidator Length="16" />
                     </LgbInputText>
@@ -114,57 +116,3 @@
         <img class="card-img d-none" src="@Model?.Icon.ToBlazorLink()" />
     </div>
 </div>
-
-@code {
-    /// <summary>
-    ///
-    /// </summary>
-    [CascadingParameter(Name = "Default")]
-    public DefaultLayout? RootLayout { get; protected set; }
-
-    protected ProfilesModel? Model { get; set; }
-
-    protected bool IsDemo { get; set; } = false;
-
-    protected BootstrapUser User { get; set; } = new BootstrapUser();
-
-    protected PasswordModel Password { get; set; } = new PasswordModel();
-
-    protected override void OnInitialized()
-    {
-        Model = new ProfilesModel(RootLayout?.UserName);
-        var user = DataAccess.UserHelper.RetrieveUserByUserName(Model?.UserName);
-        if (user != null) User = user;
-    }
-
-    /// <summary>
-    ///
-    /// </summary>
-    /// <returns></returns>
-    protected override bool ShouldRender() => false;
-
-    private void SaveDisplayName(EditContext context)
-    {
-        if (!string.IsNullOrEmpty(User.UserName) && Bootstrap.DataAccess.UserHelper.SaveDisplayName(User.UserName, User.DisplayName))
-        {
-            RootLayout?.OnDisplayNameChanged(User.DisplayName);
-        }
-    }
-
-    private void SavePassword(EditContext context)
-    {
-        Bootstrap.DataAccess.UserHelper.ChangePassword(User.UserName, Password.Password, Password.NewPassword);
-    }
-
-    protected class PasswordModel
-    {
-        [DisplayName("原密码")]
-        public string Password { get; set; } = "";
-
-        [DisplayName("新密码")]
-        public string NewPassword { get; set; } = "";
-
-        [DisplayName("确认密码")]
-        public string ConfirmPassword { get; set; } = "";
-    }
-}
