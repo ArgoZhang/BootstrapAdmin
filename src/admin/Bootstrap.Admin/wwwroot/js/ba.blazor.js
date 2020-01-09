@@ -55,8 +55,6 @@
             return source;
         },
         activeMenu: function (id) {
-            // 通过指定 ID 设置站点 Title
-            var menuId = 'menus_' + id;
             var $curMenu = $('.sidebar .active').first();
 
             // set website title
