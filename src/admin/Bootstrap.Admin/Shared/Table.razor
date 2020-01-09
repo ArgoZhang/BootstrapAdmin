@@ -22,13 +22,13 @@
         <table class="table table-striped table-bordered table-hover table-selected" id="@Id">
             <thead>
                 <tr>
-                    @if (ShowLineNo)
-                    {
-                        <th class="table-col-lineno">行号</th>
-                    }
                     @if (ShowCheckbox)
                     {
                         <th class="table-col-checkbox"><Checkbox TItem="TItem" SetCheckCallback="CheckState" ToggleCallback="ToggleCheck"></Checkbox></th>
+                    }
+                    @if (ShowLineNo)
+                    {
+                        <th class="table-col-lineno">行号</th>
                     }
                     @TableHeader?.Invoke(EditModel)
                     @if (ShowButtons)
@@ -41,13 +41,13 @@
                 @for (int index = 0; index < Items.Count(); index++)
                 {
                     <tr>
-                        @if (ShowLineNo)
-                        {
-                            <td class="table-col-lineno">@(index + 1 + (PageIndex - 1) * PageItems)</td>
-                        }
                         @if (ShowCheckbox)
                         {
                             <td class="table-col-checkbox"><Checkbox TItem="TItem" Item="Items.ElementAt(index)" SetCheckCallback="item => SelectedItems.Contains(item) ? CheckBoxState.Checked : CheckBoxState.UnChecked" ToggleCallback="ToggleCheck"></Checkbox></td>
+                        }
+                        @if (ShowLineNo)
+                        {
+                            <td class="table-col-lineno">@(index + 1 + (PageIndex - 1) * PageItems)</td>
                         }
                         @RowTemplate?.Invoke(Items.ElementAt(index))
                         @if (ShowButtons)
