@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Bootstrap.Security.DataAccess" Version="3.1.1-beta-01" />
+    <PackageReference Include="Bootstrap.Security.DataAccess" Version="3.1.1-beta-02" />
     <PackageReference Include="Bootstrap.Security.Mvc" Version="3.1.1-beta-01" />
     <PackageReference Include="Longbow" Version="3.1.0" />
     <PackageReference Include="Longbow.Cache" Version="3.1.1-beta-02" />
