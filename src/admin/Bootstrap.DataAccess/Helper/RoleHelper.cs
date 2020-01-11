@@ -89,8 +89,7 @@ namespace Bootstrap.DataAccess
         {
             // 内置两个角色禁止修改
             var roles = new string[] { "Administrators", "Default" };
-            var rs = Retrieves().Where(r => roles.Any(rl => rl.Equals(r.RoleName, StringComparison.OrdinalIgnoreCase)));
-            if (rs.Any()) return true;
+            if (roles.Any(r => r.Equals(p.RoleName, StringComparison.OrdinalIgnoreCase))) return true;
 
             var ret = DbContextManager.Create<Role>()?.Save(p) ?? false;
             if (ret) CacheCleanUtility.ClearCache(roleIds: string.IsNullOrEmpty(p.Id) ? new List<string>() : new List<string> { p.Id });
