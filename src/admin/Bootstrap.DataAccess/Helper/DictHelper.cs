@@ -265,9 +265,15 @@ namespace Bootstrap.DataAccess
         public static bool RetrieveAutoLockScreen() => DbContextManager.Create<Dict>()?.RetrieveAutoLockScreen() ?? false;
 
         /// <summary>
-        /// 获得自动锁屏 默认关闭
+        /// 获得是否开启默认应用功能 默认关闭
         /// </summary>
         /// <returns></returns>
         public static bool RetrieveDefaultApp() => DbContextManager.Create<Dict>()?.RetrieveDefaultApp() ?? false;
+
+        /// <summary>
+        /// 获得是否开启 Blazor 功能 默认关闭
+        /// </summary>
+        /// <returns></returns>
+        public static bool RetrieveEnableBlazor() => DbContextManager.Create<Dict>()?.RetrieveEnableBlazor() ?? false;
     }
 }

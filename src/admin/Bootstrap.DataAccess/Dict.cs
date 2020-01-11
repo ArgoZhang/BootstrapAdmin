@@ -284,5 +284,11 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <returns></returns>
         public bool RetrieveDefaultApp() => (DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "默认应用程序" && d.Define == 0)?.Code ?? "0") == "1";
+
+        /// <summary>
+        /// 获得是否开启 Blazor 功能 默认关闭
+        /// </summary>
+        /// <returns></returns>
+        public bool RetrieveEnableBlazor() => (DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "Blazor" && d.Define == 0)?.Code ?? "0") == "1";
     }
 }
