@@ -44,6 +44,9 @@ INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'网站设�
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'网站设置', N'自动锁屏时长', N'30', 0)
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'网站设置', N'自动锁屏', N'0', 0)
 
+-- 是否启用 Blazor 默认为 0 未启用
+INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'网站设置', N'Blazor', N'0', 0)
+
 -- 时长单位 月
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'系统设置', N'程序异常保留时长', '1', 0)
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'系统设置', N'操作日志保留时长', '12', 0)

@@ -283,6 +283,12 @@
         "Define": NumberInt(0)
     },
     {
+        "Category": "网站设置",
+        "Name": "Blazor",
+        "Code": "0",
+        "Define": NumberInt(0)
+    },
+    {
         "Category": "系统设置",
         "Name": "默认应用程序",
         "Code": "0",
