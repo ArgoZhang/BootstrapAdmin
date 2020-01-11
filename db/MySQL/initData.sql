@@ -45,24 +45,24 @@ INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('网站设置', '自动
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('网站设置', 'Blazor', '0', 0);
 
 -- 时长单位 月
-INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统设置', '程序异常保留时长', '1', 0);
-INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统设置', '操作日志保留时长', '12', 0);
-INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统设置', '登录日志保留时长', '12', 0);
-INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统设置', '访问日志保留时长', '1', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('网站设置', '程序异常保留时长', '1', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('网站设置', '操作日志保留时长', '12', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('网站设置', '登录日志保留时长', '12', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('网站设置', '访问日志保留时长', '1', 0);
 
 -- 时长单位 天
-INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统设置', 'Cookie保留时长', '7', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('网站设置', 'Cookie保留时长', '7', 0);
 
-INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统设置', 'IP地理位置接口', 'None', 0);
-INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统设置', 'BaiDuIPSvr', 'http://api.map.baidu.com/location/ip?ak=6lvVPMDlm2gjLpU0aiqPsHXi2OiwGQRj&ip=', 0);
-INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统设置', 'JuheIPSvr', 'http://apis.juhe.cn/ip/ipNew?key=f57102d1b9fadd3f4a1c29072d0c0206&ip=', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('网站设置', 'IP地理位置接口', 'None', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('网站设置', 'BaiDuIPSvr', 'http://api.map.baidu.com/location/ip?ak=6lvVPMDlm2gjLpU0aiqPsHXi2OiwGQRj&ip=', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('网站设置', 'JuheIPSvr', 'http://apis.juhe.cn/ip/ipNew?key=f57102d1b9fadd3f4a1c29072d0c0206&ip=', 0);
 
 -- 时长单位 分钟
-INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统设置', 'IP请求缓存时长', '10', 0);
-INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统设置', '演示系统', '0', 0);
-INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统设置', '验证码图床', 'http://imgs.sdgxgz.com/images/', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('网站设置', 'IP请求缓存时长', '10', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('网站设置', '演示系统', '0', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('网站设置', '验证码图床', 'http://imgs.sdgxgz.com/images/', 0);
 
-INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统设置', '默认应用程序', '0', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('网站设置', '默认应用程序', '0', 0);
 
 DELETE FROM Navigations Where Category = '0';
 INSERT INTO Navigations (ParentId, Name, `Order`, Icon, Url, Category) VALUES (0, '后台管理', 10, 'fa fa-gear', '~/Admin/Index', '0');

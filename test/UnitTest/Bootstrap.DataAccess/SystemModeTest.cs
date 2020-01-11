@@ -12,7 +12,7 @@ namespace Bootstrap.DataAccess.SqlServer
     {
         private void SetSystemMode()
         {
-            var dict = DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "演示系统");
+            var dict = DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "演示系统");
             dict.Code = "1";
             DictHelper.Save(dict);
         }
@@ -115,7 +115,7 @@ namespace Bootstrap.DataAccess.SqlServer
             {
                 IP = "182.148.123.196"
             };
-            var dict = DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "IP地理位置接口" && d.Define == 0);
+            var dict = DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "IP地理位置接口" && d.Define == 0);
             Assert.NotNull(dict);
             dict.Code = "JuheIPSvr";
             DictHelper.Save(dict);

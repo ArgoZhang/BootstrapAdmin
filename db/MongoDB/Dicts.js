@@ -180,68 +180,68 @@
         "Define": NumberInt(0)
     },
     {
-        "Category": "系统设置",
+        "Category": "网站设置",
         "Name": "程序异常保留时长",
         "Code": "1",
         "Define": NumberInt(0)
     },
     {
 
-        "Category": "系统设置",
+        "Category": "网站设置",
         "Name": "操作日志保留时长",
         "Code": "12",
         "Define": NumberInt(0)
     },
     {
-        "Category": "系统设置",
+        "Category": "网站设置",
         "Name": "登录日志保留时长",
         "Code": "12",
         "Define": NumberInt(0)
     },
     {
-        "Category": "系统设置",
+        "Category": "网站设置",
         "Name": "Cookie保留时长",
         "Code": "7",
         "Define": NumberInt(0)
     },
     {
-        "Category": "系统设置",
+        "Category": "网站设置",
         "Name": "IP地理位置接口",
         "Code": "None",
         "Define": NumberInt(0)
     },
     {
-        "Category": "系统设置",
+        "Category": "网站设置",
         "Name": "BaiDuIPSvr",
         "Code": "http://api.map.baidu.com/location/ip?ak=6lvVPMDlm2gjLpU0aiqPsHXi2OiwGQRj&ip=",
         "Define": NumberInt(0)
     },
     {
-        "Category": "系统设置",
+        "Category": "网站设置",
         "Name": "JuheIPSvr",
         "Code": "http://apis.juhe.cn/ip/ipNew?key=f57102d1b9fadd3f4a1c29072d0c0206&ip=",
         "Define": NumberInt(0)
     },
     {
-        "Category": "系统设置",
+        "Category": "网站设置",
         "Name": "访问日志保留时长",
         "Code": "1",
         "Define": NumberInt(0)
     },
     {
-        "Category": "系统设置",
+        "Category": "网站设置",
         "Name": "IP请求缓存时长",
         "Code": "10",
         "Define": NumberInt(0)
     },
     {
-        "Category": "系统设置",
+        "Category": "网站设置",
         "Name": "演示系统",
         "Code": "0",
         "Define": NumberInt(0)
     },
     {
-        "Category": "系统设置",
+        "Category": "网站设置",
         "Name": "验证码图床",
         "Code": "http://imgs.sdgxgz.com/images/",
         "Define": NumberInt(0)
@@ -289,7 +289,7 @@
         "Define": NumberInt(0)
     },
     {
-        "Category": "系统设置",
+        "Category": "网站设置",
         "Name": "默认应用程序",
         "Code": "0",
         "Define": NumberInt(0)
