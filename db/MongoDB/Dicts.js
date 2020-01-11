@@ -211,13 +211,13 @@
         "Define": NumberInt(0)
     },
     {
-        "Category": "网站设置",
+        "Category": "地理位置",
         "Name": "BaiDuIPSvr",
         "Code": "http://api.map.baidu.com/location/ip?ak=6lvVPMDlm2gjLpU0aiqPsHXi2OiwGQRj&ip=",
         "Define": NumberInt(0)
     },
     {
-        "Category": "网站设置",
+        "Category": "地理位置",
         "Name": "JuheIPSvr",
         "Code": "http://apis.juhe.cn/ip/ipNew?key=f57102d1b9fadd3f4a1c29072d0c0206&ip=",
         "Define": NumberInt(0)

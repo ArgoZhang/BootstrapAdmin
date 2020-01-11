@@ -223,7 +223,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="ipSvr">服务提供名称</param>
         /// <returns></returns>
-        public string? RetrieveLocaleIPSvrUrl(string ipSvr) => DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == ipSvr && d.Define == 0)?.Code;
+        public string? RetrieveLocaleIPSvrUrl(string ipSvr) => DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "地理位置" && d.Name == ipSvr && d.Define == 0)?.Code;
 
         /// <summary>
         /// 获得 访问日志保留时长 默认为1个月

@@ -54,8 +54,8 @@ INSERT INTO Dicts (Id, Category, Name, Code, Define) Values (SEQ_DICTS_ID.NEXTVA
 INSERT INTO Dicts (Id, Category, Name, Code, Define) Values (SEQ_DICTS_ID.NEXTVAL, '网站设置', 'Cookie保留时长', '7', 0);
 
 INSERT INTO Dicts (Id, Category, Name, Code, Define) Values (SEQ_DICTS_ID.NEXTVAL, '网站设置', 'IP地理位置接口', 'None', 0);
-INSERT INTO Dicts (Id, Category, Name, Code, Define) Values (SEQ_DICTS_ID.NEXTVAL, '网站设置', 'BaiDuIPSvr', 'http://api.map.baidu.com/location/ip?ak=6lvVPMDlm2gjLpU0aiqPsHXi2OiwGQRj'||CHR(38)||'ip=', 0);
-INSERT INTO Dicts (Id, Category, Name, Code, Define) Values (SEQ_DICTS_ID.NEXTVAL, '网站设置', 'JuheIPSvr', 'http://apis.juhe.cn/ip/ipNew?key=f57102d1b9fadd3f4a1c29072d0c0206'||CHR(38)||'ip=', 0);
+INSERT INTO Dicts (Id, Category, Name, Code, Define) Values (SEQ_DICTS_ID.NEXTVAL, '地理位置', 'BaiDuIPSvr', 'http://api.map.baidu.com/location/ip?ak=6lvVPMDlm2gjLpU0aiqPsHXi2OiwGQRj'||CHR(38)||'ip=', 0);
+INSERT INTO Dicts (Id, Category, Name, Code, Define) Values (SEQ_DICTS_ID.NEXTVAL, '地理位置', 'JuheIPSvr', 'http://apis.juhe.cn/ip/ipNew?key=f57102d1b9fadd3f4a1c29072d0c0206'||CHR(38)||'ip=', 0);
 
 -- 时长单位 分钟
 INSERT INTO Dicts (Id, Category, Name, Code, Define) Values (SEQ_DICTS_ID.NEXTVAL, '网站设置', 'IP请求缓存时长', '10', 0);
