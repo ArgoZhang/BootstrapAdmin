@@ -11,7 +11,7 @@ namespace Bootstrap.Admin.Models
     public class SettingsModel : NavigatorBarModel
     {
         /// <summary>
-        /// 
+        /// 构造函数
         /// </summary>
         /// <param name="controller"></param>
         public SettingsModel(ControllerBase controller) : base(controller)
@@ -19,6 +19,7 @@ namespace Bootstrap.Admin.Models
             Themes = DictHelper.RetrieveThemes();
             AutoLockScreen = EnableAutoLockScreen ? "" : "lockScreen";
             DefaultApp = DictHelper.RetrieveDefaultApp() ? "" : "defaultApp";
+            EnableBlazor = DictHelper.RetrieveEnableBlazor() ? "" : "blazor";
         }
 
         /// <summary>
@@ -29,6 +30,7 @@ namespace Bootstrap.Admin.Models
             Themes = DictHelper.RetrieveThemes();
             AutoLockScreen = EnableAutoLockScreen ? "" : "lockScreen";
             DefaultApp = DictHelper.RetrieveDefaultApp() ? "" : "defaultApp";
+            EnableBlazor = DictHelper.RetrieveEnableBlazor() ? "" : "blazor";
         }
 
         /// <summary>
@@ -45,5 +47,10 @@ namespace Bootstrap.Admin.Models
         /// 获得 是否开启自动锁屏
         /// </summary>
         public string DefaultApp { get; }
+
+        /// <summary>
+        /// 获得 是否开启 Blazor
+        /// </summary>
+        public string EnableBlazor { get; }
     }
 }

@@ -148,7 +148,6 @@ nav .dropdown .nav-link-close.dropdown-toggle:after {
 .toast {
     position: absolute;
     z-index: -1;
-    min-width: 260px;
 }
 
     .toast.show {
@@ -208,6 +207,7 @@ nav .dropdown .nav-link-close.dropdown-toggle:after {
     background-color: #e9ecef;
     color: rgba(0, 0, 0, 0.9);
     word-break: break-all;
+    width: 288px;
 }
 
 .toast-progress {
@@ -234,4 +234,14 @@ nav .dropdown .nav-link-close.dropdown-toggle:after {
 .card-footer {
     text-align: right;
     padding: 0.5rem 1rem;
+}
+
+@media (min-width: 568px) {
+    .toast {
+        max-width: 360px;
+    }
+
+    .toast-body {
+        width: 360px;
+    }
 }

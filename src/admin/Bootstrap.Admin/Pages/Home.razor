@@ -1,0 +1,15 @@
+@page "/Pages/Account/Lock"
+@page "/Pages/Admin/Healths"
+@page "/Pages/Home"
+@page "/Pages/Home/Index"
+@layout DefaultLayout
+@attribute [Authorize]
+@inject NavigationManager NavigationManager
+
+@code {
+    protected override void OnInitialized()
+    {
+        var url = NavigationManager.Uri.Replace("/Pages", "");
+        NavigationManager.NavigateTo(url, true);
+    }
+}

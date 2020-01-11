@@ -132,7 +132,7 @@ namespace Bootstrap.DataAccess
             else if (appId.Equals("BA", StringComparison.OrdinalIgnoreCase))
             {
                 // 使用配置项设置是否启用默认第一个应用是默认应用
-                var defaultApp = (dicts.FirstOrDefault(d => d.Name == "默认应用程序" && d.Category == "系统设置" && d.Define == 0)?.Code ?? "0") == "1";
+                var defaultApp = (dicts.FirstOrDefault(d => d.Name == "默认应用程序" && d.Category == "网站设置" && d.Define == 0)?.Code ?? "0") == "1";
                 if (defaultApp)
                 {
                     var app = AppHelper.RetrievesByUserName(userName).FirstOrDefault(key => !key.Equals("BA", StringComparison.OrdinalIgnoreCase)) ?? "";
@@ -180,31 +180,31 @@ namespace Bootstrap.DataAccess
         /// 程序异常时长 默认1月
         /// </summary>
         /// <returns></returns>
-        public int RetrieveExceptionsLogPeriod() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "程序异常保留时长" && d.Define == 0)?.Code, 1);
+        public int RetrieveExceptionsLogPeriod() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "程序异常保留时长" && d.Define == 0)?.Code, 1);
 
         /// <summary>
         /// 操作日志时长 默认12月
         /// </summary>
         /// <returns></returns>
-        public int RetrieveLogsPeriod() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "操作日志保留时长" && d.Define == 0)?.Code, 12);
+        public int RetrieveLogsPeriod() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "操作日志保留时长" && d.Define == 0)?.Code, 12);
 
         /// <summary>
         /// 登录日志时长 默认12月
         /// </summary>
         /// <returns></returns>
-        public int RetrieveLoginLogsPeriod() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "登录日志保留时长" && d.Define == 0)?.Code, 12);
+        public int RetrieveLoginLogsPeriod() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "登录日志保留时长" && d.Define == 0)?.Code, 12);
 
         /// <summary>
         /// Cookie保存时长 默认7天
         /// </summary>
         /// <returns></returns>
-        public int RetrieveCookieExpiresPeriod() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "Cookie保留时长" && d.Define == 0)?.Code, 7);
+        public int RetrieveCookieExpiresPeriod() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "Cookie保留时长" && d.Define == 0)?.Code, 7);
 
         /// <summary>
         /// 获得 IP地理位置
         /// </summary>
         /// <returns></returns>
-        public string RetrieveLocaleIPSvr() => DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "IP地理位置接口" && d.Define == 0)?.Code ?? string.Empty;
+        public string RetrieveLocaleIPSvr() => DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "IP地理位置接口" && d.Define == 0)?.Code ?? string.Empty;
 
         /// <summary>
         /// 获得 IP请求缓存时长配置值
@@ -212,7 +212,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public int RetrieveLocaleIPSvrCachePeriod()
         {
-            var period = DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "IP请求缓存时长" && d.Define == 0)?.Code;
+            var period = DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "IP请求缓存时长" && d.Define == 0)?.Code;
             var ret = 10;
             if (!string.IsNullOrEmpty(period) && int.TryParse(period, out var svrPeriod)) ret = svrPeriod;
             return ret;
@@ -223,25 +223,25 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="ipSvr">服务提供名称</param>
         /// <returns></returns>
-        public string? RetrieveLocaleIPSvrUrl(string ipSvr) => DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == ipSvr && d.Define == 0)?.Code;
+        public string? RetrieveLocaleIPSvrUrl(string ipSvr) => DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "地理位置" && d.Name == ipSvr && d.Define == 0)?.Code;
 
         /// <summary>
         /// 获得 访问日志保留时长 默认为1个月
         /// </summary>
         /// <returns></returns>
-        public int RetrieveAccessLogPeriod() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "访问日志保留时长" && d.Define == 0)?.Code, 1);
+        public int RetrieveAccessLogPeriod() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "访问日志保留时长" && d.Define == 0)?.Code, 1);
 
         /// <summary>
         /// 获得 是否为演示系统 默认为 false 不是演示系统
         /// </summary>
         /// <returns></returns>
-        public bool RetrieveSystemModel() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "演示系统" && d.Define == 0)?.Code, "0") == "1";
+        public bool RetrieveSystemModel() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "演示系统" && d.Define == 0)?.Code, "0") == "1";
 
         /// <summary>
         /// 获得 验证码图床地址
         /// </summary>
         /// <returns></returns>
-        public string RetrieveImagesLibUrl() => DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "验证码图床" && d.Define == 0)?.Code ?? "http://images.sdgxgz.com/";
+        public string RetrieveImagesLibUrl() => DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "验证码图床" && d.Define == 0)?.Code ?? "http://images.sdgxgz.com/";
 
         /// <summary>
         /// 获得 数据库标题是否显示
@@ -283,6 +283,12 @@ namespace Bootstrap.DataAccess
         /// 获得默认应用是否开启 默认关闭
         /// </summary>
         /// <returns></returns>
-        public bool RetrieveDefaultApp() => (DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "默认应用程序" && d.Define == 0)?.Code ?? "0") == "1";
+        public bool RetrieveDefaultApp() => (DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "默认应用程序" && d.Define == 0)?.Code ?? "0") == "1";
+
+        /// <summary>
+        /// 获得是否开启 Blazor 功能 默认关闭
+        /// </summary>
+        /// <returns></returns>
+        public bool RetrieveEnableBlazor() => (DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "Blazor" && d.Define == 0)?.Code ?? "0") == "1";
     }
 }

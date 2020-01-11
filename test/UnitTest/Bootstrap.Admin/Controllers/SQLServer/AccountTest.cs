@@ -13,7 +13,7 @@ namespace Bootstrap.Admin.Controllers.SqlServer
         [Fact]
         public async void SystemMode_Test()
         {
-            var dict = DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "演示系统");
+            var dict = DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "演示系统");
             dict.Code = "1";
             DictHelper.Save(dict);
 

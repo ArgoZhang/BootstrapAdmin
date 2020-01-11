@@ -13,7 +13,7 @@ namespace Bootstrap.DataAccess.SQLite
         {
             Assert.Equal("~/Home/Index", DictHelper.RetrieveHomeUrl("Admin", ""));
 
-            var dict = DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "默认应用程序");
+            var dict = DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "默认应用程序");
             Assert.NotNull(dict);
             dict.Code = "1";
             DictHelper.Save(dict);
