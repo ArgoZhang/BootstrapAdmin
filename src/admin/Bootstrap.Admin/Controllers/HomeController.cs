@@ -21,7 +21,7 @@ namespace Bootstrap.Admin.Controllers
         {
             var model = new HeaderBarModel(User.Identity.Name);
             var homeUrl = DictHelper.RetrieveHomeUrl(User.Identity.Name, model.AppId);
-            var useBlazor = configuration.GetValue("UseBlazor", false);
+            var useBlazor = DictHelper.RetrieveEnableBlazor();
             return homeUrl.Equals("~/Home/Index", System.StringComparison.OrdinalIgnoreCase) ? (useBlazor ? Redirect("~/Pages") : (IActionResult)View(model)) : Redirect(homeUrl);
         }
 
