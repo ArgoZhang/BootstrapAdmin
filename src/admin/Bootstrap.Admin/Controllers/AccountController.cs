@@ -41,7 +41,7 @@ namespace Bootstrap.Admin.Controllers
             var authenticationType = User.Identity.AuthenticationType;
             await HttpContext.SignOutAsync();
             var urlReferrer = Request.Headers["Referer"].FirstOrDefault();
-            if (urlReferrer.Contains("/Pages", StringComparison.OrdinalIgnoreCase)) urlReferrer = "/Pages";
+            if (urlReferrer?.Contains("/Pages", StringComparison.OrdinalIgnoreCase) ?? false) urlReferrer = "/Pages";
             return View(new LockModel(User.Identity.Name)
             {
                 AuthenticationType = authenticationType,
