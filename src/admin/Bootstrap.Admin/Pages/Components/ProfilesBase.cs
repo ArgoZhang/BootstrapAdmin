@@ -42,7 +42,7 @@ namespace Bootstrap.Pages.Admin.Components
         /// 获得/设置  当前用户显示名称
         /// </summary>
         [DisplayName("显示名称")]
-        protected string DisplayName { get; set; } = "";
+        public string DisplayName { get; set; } = "";
 
         /// <summary>
         /// 组件初始化方法

@@ -93,7 +93,8 @@ namespace Bootstrap.Admin.Components
             var cacheKey = (ModelType: fieldIdentifier.Model.GetType(), fieldIdentifier.FieldName);
             if (!_propertyInfoCache.TryGetValue(cacheKey, out propertyInfo))
             {
-                propertyInfo = cacheKey.ModelType.GetProperty(cacheKey.FieldName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                // Validator.TryValidateProperty 只能对 Public 属性生效
+                propertyInfo = cacheKey.ModelType.GetProperty(cacheKey.FieldName);
 
                 _propertyInfoCache[cacheKey] = propertyInfo;
             }
