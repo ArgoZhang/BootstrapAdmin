@@ -223,6 +223,12 @@
         "Define": NumberInt(0)
     },
     {
+        "Category": "地理位置",
+        "Name": "BaiDuIP138Svr",
+        "Code": "https://sp0.baidu.com/8aQDcjqpAAV3otqbppnN2DJv/api.php?resource_id=6006&query=",
+        "Define": NumberInt(0)
+    },
+    {
         "Category": "网站设置",
         "Name": "访问日志保留时长",
         "Code": "1",
