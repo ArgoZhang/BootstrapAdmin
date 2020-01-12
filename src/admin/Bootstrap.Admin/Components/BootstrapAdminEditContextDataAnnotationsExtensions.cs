@@ -93,7 +93,7 @@ namespace Bootstrap.Admin.Components
             var cacheKey = (ModelType: fieldIdentifier.Model.GetType(), fieldIdentifier.FieldName);
             if (!_propertyInfoCache.TryGetValue(cacheKey, out propertyInfo))
             {
-                propertyInfo = cacheKey.ModelType.GetProperty(cacheKey.FieldName);
+                propertyInfo = cacheKey.ModelType.GetProperty(cacheKey.FieldName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
 
                 _propertyInfoCache[cacheKey] = propertyInfo;
             }

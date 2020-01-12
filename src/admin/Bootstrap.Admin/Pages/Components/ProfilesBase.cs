@@ -1,4 +1,4 @@
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using Bootstrap.Admin.Models;
 using Bootstrap.Admin.Shared;
 using Bootstrap.Security;
@@ -41,6 +41,7 @@ namespace Bootstrap.Pages.Admin.Components
         /// <summary>
         /// 获得/设置  当前用户显示名称
         /// </summary>
+        [DisplayName("显示名称")]
         protected string DisplayName { get; set; } = "";
 
         /// <summary>
