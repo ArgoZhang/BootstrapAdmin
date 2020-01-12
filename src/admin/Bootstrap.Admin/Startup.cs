@@ -11,8 +11,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.Text.Encodings.Web;
-using System.Text.Unicode;
 
 namespace Bootstrap.Admin
 {
@@ -49,11 +47,11 @@ namespace Bootstrap.Admin
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
             services.AddLogging(logging => logging.AddFileLogger().AddCloudLogger().AddDBLogger(ExceptionsHelper.Log));
             services.AddCors();
             services.AddResponseCompression();
 
+            services.AddCodePageProvider();
             services.AddCacheManager();
             services.AddDbAdapter();
             services.AddIPLocator(DictHelper.ConfigIPLocator);
