@@ -1,10 +1,15 @@
 ﻿$(function () {
+    $.extend({
+        sendHealths: function (data) {
+            $.bc({ url: 'api/Interface/Healths', data: JSON.stringify(data), method: 'post' });
+        }
+    });
     var healthStatus = ['<button class="btn btn-danger"><i class="fa fa-times-circle"></i><span>不健康</span></button>', '<button class="btn btn-warning"><i class="fa fa-exclamation-circle"></i><span>亚健康</span></button>', '<button class="btn btn-success"><i class="fa fa-check-circle"></i><span>健康</span></button>'];
     var StatusFormatter = function (value) {
         return healthStatus[value];
     };
 
-    var cate = { "db": "数据库", "file": "组件文件", "mem": "内存", "Gitee": "Gitee 接口", "gc": "垃圾回收器", "dotnet-runtime": "运行时" };
+    var cate = { "db": "数据库", "file": "组件文件", "mem": "内存", "Gitee": "Gitee 接口", "gc": "垃圾回收器", "dotnet-runtime": "运行时", "environment": "环境变量" };
     var CategoryFormatter = function (value) {
         return cate[value];
     };

@@ -4,6 +4,18 @@
 }
 @section css {
     <link href="~/lib/captcha/slidercaptcha.css" rel="stylesheet" />
+    <style>
+        .img-tab {
+            width: 345px;
+            height: auto;
+        }
+
+        @@media (min-width: 667px) {
+            .img-tab {
+                width: 500px;
+            }
+        }
+    </style>
 }
 @section javascript {
     <script src="~/lib/captcha/longbow.slidercaptcha.js"></script>
@@ -18,6 +30,8 @@
         <li>普通账号 User/123789</li>
     </ol>
 </p>
+<p>全新 Blazor 框架通用后台权限管理正在开发中 (字典表维护、个人中心) <b><a href="https://ba.sdgxgz.com/Pages/Admin/Dicts" target="_blank">预览地址</a></b></p>
+<a href="https://ba.sdgxgz.com/images/tabs.png" target="_blank" title="点击查看高清大图"><img src="https://ba.sdgxgz.com/images/tabs.png" class="img-tab" /></a>
 <p>最新功能更新请查看 <b><a href="https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97?sort_id=1585945">更新日志</a></b></p>
 <p>
     <button id="btnCaptcha" class="btn btn-success ml-2 ml-md-0"><i class="fa fa-send-o"></i><span>点击我出现行为验证码</span></button>

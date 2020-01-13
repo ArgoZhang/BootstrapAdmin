@@ -116,14 +116,14 @@ namespace Bootstrap.Admin.Controllers.Api
             var ret = false;
             if (value.UserName.Equals(User.Identity.Name, StringComparison.OrdinalIgnoreCase))
             {
-                if (value.UserStatus == UserStates.ChangeTheme)
-                    ret = UserHelper.SaveUserCssByName(value.UserName, value.Css);
-                else if (value.UserStatus == UserStates.ChangeDisplayName)
-                    ret = UserHelper.SaveDisplayName(value.UserName, value.DisplayName);
-                else if (value.UserStatus == UserStates.ChangePassword)
-                    ret = UserHelper.ChangePassword(value.UserName, value.Password, value.NewPassword);
-                else if (value.UserStatus == UserStates.SaveApp)
-                    ret = UserHelper.SaveApp(value.UserName, value.App);
+                ret = value.UserStatus switch
+                {
+                    UserStates.ChangeTheme => UserHelper.SaveUserCssByName(value.UserName, value.Css),
+                    UserStates.ChangeDisplayName => UserHelper.SaveDisplayName(value.UserName, value.DisplayName),
+                    UserStates.ChangePassword => UserHelper.ChangePassword(value.UserName, value.Password, value.NewPassword),
+                    UserStates.SaveApp => UserHelper.SaveApp(value.UserName, value.App),
+                    _ => false
+                };
             }
             return ret;
         }

@@ -4,7 +4,7 @@ using Longbow.Web;
 using System.Linq;
 using Xunit;
 
-namespace Bootstrap.DataAccess
+namespace Bootstrap.DataAccess.SqlServer
 {
     [Collection("SQLServerContext")]
     [AutoRollback]
@@ -12,7 +12,7 @@ namespace Bootstrap.DataAccess
     {
         private void SetSystemMode()
         {
-            var dict = DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "演示系统");
+            var dict = DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "演示系统");
             dict.Code = "1";
             DictHelper.Save(dict);
         }
@@ -115,7 +115,7 @@ namespace Bootstrap.DataAccess
             {
                 IP = "182.148.123.196"
             };
-            var dict = DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "系统设置" && d.Name == "IP地理位置接口" && d.Define == 0);
+            var dict = DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "IP地理位置接口" && d.Define == 0);
             Assert.NotNull(dict);
             dict.Code = "JuheIPSvr";
             DictHelper.Save(dict);
@@ -145,8 +145,8 @@ namespace Bootstrap.DataAccess
         [Fact]
         public void RetrieveHomeUrl_Ok()
         {
-            Assert.Equal("~/Home/Index", DictHelper.RetrieveHomeUrl("BA"));
-            var url = DictHelper.RetrieveHomeUrl("Demo");
+            Assert.Equal("~/Home/Index", DictHelper.RetrieveHomeUrl("Admin", "BA"));
+            var url = DictHelper.RetrieveHomeUrl("Admin", "Demo");
             Assert.Equal("http://localhost:49185/", url);
 
             // INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('应用首页', 2, 'http://localhost:49185/', 0);
@@ -154,11 +154,11 @@ namespace Bootstrap.DataAccess
             url = dict.Code;
             dict.Code = "BA";
             Assert.True(DictHelper.Save(dict));
-            Assert.Equal("BA", DictHelper.RetrieveHomeUrl("Demo"));
+            Assert.Equal("BA", DictHelper.RetrieveHomeUrl("Admin", "Demo"));
 
             dict.Code = url;
             Assert.True(DictHelper.Save(dict));
-            Assert.Equal(url, DictHelper.RetrieveHomeUrl("Demo"));
+            Assert.Equal(url, DictHelper.RetrieveHomeUrl("Admin", "Demo"));
         }
     }
 }

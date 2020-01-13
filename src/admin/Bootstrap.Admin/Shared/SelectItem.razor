@@ -1,0 +1,7 @@
+﻿@inherits SelectItemBase
+
+<div class="@(Item.Active ? "dropdown-item active" : "dropdown-item")" data-val="@Item.Value" @onclick="@(e=>ItemClickCallback(Item))">@Item.Text</div>
+
+@code {
+
+}

@@ -1,0 +1,20 @@
+﻿@typeparam TItem
+@inherits SubmitModalBase<TItem>
+
+<Modal Id="@Id" Title="@Title" Size="@Size">
+    <ModalBody>
+        <LgbEditForm class="form-inline" Id="@Id" Model="Model" OnValidSubmit="OnValidSubmit" OnInvalidSubmit="OnInvalidSubmit" OnSubmit="OnSubmit">
+            @ModalBody
+        </LgbEditForm>
+    </ModalBody>
+    <ModalFooter>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            <i class="fa fa-times"></i>
+            <span>关闭</span>
+        </button>
+        <button type="button" class="btn btn-primary" onclick="$.submitForm(this)">
+            <i class="fa fa-save"></i>
+            <span>保存</span>
+        </button>
+    </ModalFooter>
+</Modal>

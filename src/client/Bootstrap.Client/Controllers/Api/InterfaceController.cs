@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Bootstrap.Client.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Net;
@@ -59,17 +60,18 @@ namespace Bootstrap.Client.Controllers.Api
             var port = section.GetValue("Port", 25);
             var enableSsl = section.GetValue("EnableSsl", false);
 
-            if (!string.IsNullOrEmpty(password))
+            var smtpMessage = new SmtpMessage()
             {
-                using var mailSender = new SmtpClient(smtpHost)
-                {
-                    Credentials = new NetworkCredential(from, password),
-                    Port = port,
-                    EnableSsl = enableSsl
-                };
-                await mailSender.SendMailAsync(from, to, title, message);
-            }
-            return true;
+                Host = smtpHost,
+                Password = password,
+                From = from,
+                To = to,
+                Port = port,
+                EnableSsl = enableSsl,
+                Title = title,
+                Message = message
+            };
+            return await smtpMessage.SendAsync();
         }
     }
 }

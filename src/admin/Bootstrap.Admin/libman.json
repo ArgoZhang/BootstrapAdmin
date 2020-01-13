@@ -87,19 +87,6 @@
       ]
     },
     {
-      "library": "malihu-custom-scrollbar-plugin@3.1.5",
-      "destination": "wwwroot/lib/scrollbar/",
-      "files": [
-        "jquery.mCustomScrollbar.concat.min.js",
-        "jquery.mCustomScrollbar.css",
-        "jquery.mCustomScrollbar.js",
-        "jquery.mCustomScrollbar.min.css",
-        "jquery.mCustomScrollbar.min.js",
-        "jquery.mCustomScrollbar.min.js.map",
-        "mCSB_buttons.png"
-      ]
-    },
-    {
       "library": "smalot-bootstrap-datetimepicker@2.4.4",
       "destination": "wwwroot/lib/datetimepicker",
       "files": [

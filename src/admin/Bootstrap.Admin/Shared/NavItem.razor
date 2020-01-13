@@ -1,0 +1,17 @@
+﻿@inherits NavItemBase
+
+@if (Menu.Menus.Any())
+{
+    <li class="nav-item parent">
+        <a href="javascripts:void();" data-target="@string.Format("#collapse_{0}",Menu.Id)" data-toggle="collapse" id="@string.Format("menus_{0}",Menu.Id)" class="nav-link @(Menu.Active == "active" ? "collapsed show" : "collapsed")"><i class="@Menu.Icon"></i><span class="flex-fill">@Menu.Name</span><i class="fa fa-angle-left"></i></a>
+        <div id="@string.Format("collapse_{0}",Menu.Id)" class="@(Menu.Active == "active" ? "show" : "collapse")">
+            <NavItems Menus="@Menu.Menus"></NavItems>
+        </div>
+    </li>
+}
+else
+{
+    <li class="nav-item">
+        <a href="@Menu.Url.ToBlazorMenuUrl()" id="@string.Format("menus_{0}",Menu.Id)" class="@(Menu.Active =="active" ? "nav-link active" : "nav-link")"><i class="@Menu.Icon"></i><span class="flex-fill">@Menu.Name</span></a>
+    </li>
+}

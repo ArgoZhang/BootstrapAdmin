@@ -41,6 +41,7 @@ namespace Bootstrap.Client
             services.AddCors();
             services.AddResponseCompression();
 
+            services.AddCodePageProvider();
             services.AddCacheManager();
             services.AddDbAdapter();
             services.AddBootstrapHttpClient();

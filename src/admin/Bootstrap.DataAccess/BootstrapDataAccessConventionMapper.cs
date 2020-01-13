@@ -14,6 +14,7 @@ namespace Bootstrap.DataAccess
         {
             var ti = base.GetTableInfo(pocoType);
             ti.AutoIncrement = true;
+            ti.SequenceName = $"SEQ_{ti.TableName.ToUpperInvariant()}_ID";
             return ti;
         }
     }

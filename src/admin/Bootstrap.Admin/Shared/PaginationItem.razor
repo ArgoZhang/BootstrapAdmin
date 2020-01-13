@@ -1,0 +1,29 @@
+﻿<li class="@(Active ? "page-item active" : "page-item")" @onclick="ClickPage"><div class="page-link" aria-label="@string.Format("第 {0} 页", PageIndex)">@PageIndex</div></li>
+
+@code {
+    /// <summary>
+    ///
+    /// </summary>
+    [Parameter]
+    public bool Active { get; set; }
+
+    /// <summary>
+    ///
+    /// </summary>
+    [CascadingParameter]
+    public Pagination? Pagination { get; set; }
+
+    /// <summary>
+    ///
+    /// </summary>
+    [Parameter]
+    public int PageIndex { get; set; } = 1;
+
+    /// <summary>
+    ///
+    /// </summary>
+    protected void ClickPage()
+    {
+        Pagination?.OnPageClick?.Invoke(PageIndex, Pagination.PageItems);
+    }
+}

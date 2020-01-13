@@ -216,6 +216,18 @@
         "Application": "BA"
     },
     {
+        "_id": ObjectId("5bd7b8445fa31256f77e4b08"),
+        "ParentId": "5bd7b8445fa31256f77e4b93",
+        "Name": "默认应用",
+        "Order": NumberInt(80),
+        "Icon": "fa fa-fa",
+        "Url": "defaultApp",
+        "Category": "0",
+        "Target": "_self",
+        "IsResource": NumberInt(2),
+        "Application": "BA"
+    },
+    {
         "_id": ObjectId("5bd7b8445fa31256f77e4b94"),
         "ParentId": "0",
         "Name": "菜单管理",

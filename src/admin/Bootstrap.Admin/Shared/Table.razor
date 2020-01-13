@@ -1,0 +1,90 @@
+﻿@typeparam TItem
+@inherits TableBase<TItem>
+
+<div class="bootstrap-table">
+    <div class="@(ShowToolBar ? "bs-bars" : "bs-bars d-none")">
+        <div class="toolbar btn-group">
+            <button type="button" @onclick="Add" class="btn btn-success" asp-auth="add"><i class="fa fa-plus" aria-hidden="true"></i><span>新增</span></button>
+            <button type="button" @onclick="Delete" class="btn btn-danger" asp-auth="del"><i class="fa fa-remove" aria-hidden="true"></i><span>删除</span></button>
+            <button type="button" @onclick="Edit" class="btn btn-primary" asp-auth="edit"><i class="fa fa-pencil" aria-hidden="true"></i><span>编辑</span></button>
+        </div>
+        <div class="gear btn-group">
+            <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" type="button"><i class="fa fa-gear"></i></button>
+            <div class="dropdown-menu">
+                <div class="dropdown-item" title="新增" @onclick="Add" asp-auth="add"><i class="fa fa-plus"></i></div>
+                <div class="dropdown-item" title="删除" @onclick="Delete" asp-auth="del"><i class="fa fa-remove"></i></div>
+                <div class="dropdown-item" title="编辑" @onclick="Edit" asp-auth="edit"><i class="fa fa-pencil"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-wrapper">
+        <table class="table table-striped table-bordered table-hover table-selected" id="@($"{Id}_table")">
+            <thead>
+                <tr>
+                    @if (ShowCheckbox)
+                    {
+                        <th class="table-col-checkbox"><Checkbox TItem="TItem" SetCheckCallback="CheckState" ToggleCallback="ToggleCheck"></Checkbox></th>
+                    }
+                    @if (ShowLineNo)
+                    {
+                        <th class="table-col-lineno">行号</th>
+                    }
+                    @TableHeader?.Invoke(EditModel)
+                    @if (ShowButtons)
+                    {
+                        <th>@ButtonTemplateHeaderText</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @for (int index = 0; index < Items.Count(); index++)
+                {
+                    <tr>
+                        @if (ShowCheckbox)
+                        {
+                            <td class="table-col-checkbox"><Checkbox TItem="TItem" Item="Items.ElementAt(index)" SetCheckCallback="item => SelectedItems.Contains(item) ? CheckBoxState.Checked : CheckBoxState.UnChecked" ToggleCallback="ToggleCheck"></Checkbox></td>
+                        }
+                        @if (ShowLineNo)
+                        {
+                            <td class="table-col-lineno">@(index + 1 + (PageIndex - 1) * PageItems)</td>
+                        }
+                        @RowTemplate?.Invoke(Items.ElementAt(index))
+                        @if (ShowButtons)
+                        {
+                            <td>@ButtonTemplate?.Invoke(Items.ElementAt(index))</td>
+                        }
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>@TableFooter</tr>
+            </tfoot>
+        </table>
+    </div>
+    <Pagination PageItems="PageItems" TotalCount="TotalCount" PageIndex="PageIndex" OnPageClick="PageClick" OnPageItemsChange="PageItemsChange"></Pagination>
+</div>
+
+<Modal @ref="ConfirmModal" Id="@($"{Id}_confirm")" Title="数据删除">
+    <ModalBody>
+        <div class="modal-confirm-body">您确定要删除选中的所有数据吗？</div>
+    </ModalBody>
+    <ModalFooter>
+        <button type="button" class="btn btn-danger" @onclick="Confirm">
+            <i class="fa fa-trash-o"></i>
+            <span>我要删除</span>
+        </button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            <i class="fa fa-times"></i>
+            <span>取消</span>
+        </button>
+    </ModalFooter>
+</Modal>
+
+<SubmitModal @ref="EditModal" Id="@($"{Id}_edit")" TItem="TItem" Title="字典编辑窗口" Size="ModalSize.ExtraLarge" @bind-Model="EditModel" OnValidSubmit="Save">
+    <ModalBody>
+        @EditTemplate?.Invoke(EditModel)
+    </ModalBody>
+</SubmitModal>
+
+<Toast @ref="Toast" Id="@($"{Id}_toast")"></Toast>

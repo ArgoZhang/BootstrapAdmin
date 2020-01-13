@@ -124,7 +124,7 @@ namespace Bootstrap.Client.DataAccess
             if (!string.IsNullOrEmpty(name) && !name.Equals("None", StringComparison.OrdinalIgnoreCase))
             {
                 var url = RetrieveLocaleIPSvrUrl(name);
-                op.Locator = DefaultIPLocatorProvider.CreateLocator(name);
+                op.LocatorName = name;
                 op.Url = string.IsNullOrEmpty(url) ? string.Empty : $"{url}{op.IP}";
                 if (int.TryParse(RetrieveLocaleIPSvrCachePeriod(), out var period) && period > 0) op.Period = period * 60 * 1000;
             }

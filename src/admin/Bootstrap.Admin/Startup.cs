@@ -11,8 +11,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.Text.Encodings.Web;
-using System.Text.Unicode;
 
 namespace Bootstrap.Admin
 {
@@ -25,10 +23,17 @@ namespace Bootstrap.Admin
         /// 构造函数
         /// </summary>
         /// <param name="configuration"></param>
-        public Startup(IConfiguration configuration)
+        /// <param name="env"></param>
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+            Enviroment = env;
         }
+
+        /// <summary>
+        /// 获得 当前运行时环境
+        /// </summary>
+        public IWebHostEnvironment Enviroment { get; }
 
         /// <summary>
         /// 获得 系统配置项 Iconfiguration 实例
@@ -42,11 +47,11 @@ namespace Bootstrap.Admin
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
             services.AddLogging(logging => logging.AddFileLogger().AddCloudLogger().AddDBLogger(ExceptionsHelper.Log));
             services.AddCors();
             services.AddResponseCompression();
 
+            services.AddCodePageProvider();
             services.AddCacheManager();
             services.AddDbAdapter();
             services.AddIPLocator(DictHelper.ConfigIPLocator);
@@ -75,6 +80,12 @@ namespace Bootstrap.Admin
                 options.Filters.Add<ExceptionFilter>();
                 options.Filters.Add<SignalRExceptionFilter<SignalRHub>>();
             }).AddJsonOptions(op => op.JsonSerializerOptions.AddDefaultConverters());
+            services.AddRazorPages();
+            services.AddServerSideBlazor().AddCircuitOptions(options =>
+            {
+                if (Enviroment.IsDevelopment()) options.DetailedErrors = true;
+            });
+            services.AddDisplayNames();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -114,6 +125,8 @@ namespace Bootstrap.Admin
                 endpoints.MapHub<SignalRHub>("/NotiHub");
                 endpoints.MapHub<TaskLogHub>("/TaskLogHub");
                 endpoints.MapBootstrapHealthChecks();
+                endpoints.MapBlazorHub();
+                endpoints.MapFallbackToPage("/_Host");
                 endpoints.MapDefaultControllerRoute();
             });
         }

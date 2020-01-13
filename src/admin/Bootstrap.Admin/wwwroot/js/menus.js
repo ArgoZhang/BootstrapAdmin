@@ -67,6 +67,13 @@ $(function () {
                 }
             },
             callback: function (result) {
+                if (result.oper === "create") {
+                    $('#app').lgbSelect('enable');
+                }
+                if (result.oper === "edit") {
+                    var valid = result.data && result.data.ParentId === "0" && hasNodes(result.data.Id);
+                    $('#app').lgbSelect(valid ? 'enable' : 'disabled');
+                }
                 if (!result.success) return;
                 if ((result.oper === "save") || result.oper === "del") {
                     if (result.data.filter(function (element) {
@@ -153,6 +160,13 @@ $(function () {
         }
     });
 
+    var hasNodes = function (idValue) {
+        var nodes = $table.bootstrapTable('getData').filter(function (row, index, data) {
+            return idValue == row["ParentId"];
+        });
+        return nodes.length === 0;
+    };
+
     // validate
     $('#dataForm').on('click', '[data-method]', function () {
         var $this = $(this);
@@ -160,6 +174,11 @@ $(function () {
         switch ($this.attr('data-method')) {
             case 'clear':
                 $input.val("");
+                if ($input.attr('id') === 'parentName') {
+                    // 判断是否有子项
+                    var valid = hasNodes($("#menuID").val());
+                    $('#app').lgbSelect(valid ? 'enable' : 'disabled');
+                }
                 break;
             case 'sel':
                 $input.select();
@@ -247,6 +266,7 @@ $(function () {
                 if (check) {
                     $parentMenuID.val(pId);
                     $parentMenuName.val($('.dd3-content :radio:checked').next('span').text());
+                    $('#app').lgbSelect('disabled');
                 }
                 else {
                     return false;

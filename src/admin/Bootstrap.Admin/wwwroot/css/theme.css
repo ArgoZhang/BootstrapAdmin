@@ -6,7 +6,6 @@
 body {
     color: #797979;
     background: #f1f2f7;
-    -webkit-font-smoothing: antialiased;
     -webkit-overflow-scrolling: touch;
 }
 
@@ -586,6 +585,10 @@ input.pending {
 
 .card-body .bootstrap-table {
     margin-top: -10px;
+}
+
+.card .modal-footer {
+    padding: 0.5rem 0rem;
 }
 
 .no-card-header .card-header {

@@ -101,7 +101,10 @@ namespace Bootstrap.Admin.HealthChecks
             if (error != null)
             {
                 data.Add("Exception", error.Message);
-                return Task.FromResult(HealthCheckResult.Unhealthy("Error", error, data));
+
+                // UNDONE: Json 序列化循环引用导致异常 NET 5.0 修复此问题
+                // 目前使用 new Exception() 临时解决
+                return Task.FromResult(HealthCheckResult.Unhealthy("Error", new Exception(error.Message), data));
             }
 
             return healths ? Task.FromResult(HealthCheckResult.Healthy("Ok", data)) : Task.FromResult(HealthCheckResult.Degraded("Failed", null, data));

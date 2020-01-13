@@ -23,7 +23,7 @@ namespace Bootstrap.Client.Controllers.Api
             {
                 using (var db = Longbow.Data.DbManager.Create("ba"))
                 {
-                    db.Execute("Update Dicts Set Code = @0 Where Category = @1 and Name = @2", model, "系统设置", "演示系统");
+                    db.Execute("Update Dicts Set Code = @0 Where Category = @1 and Name = @2", model, "网站设置", "演示系统");
                 }
                 ret = true;
             }

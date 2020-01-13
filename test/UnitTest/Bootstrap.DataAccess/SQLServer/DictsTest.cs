@@ -183,6 +183,12 @@ namespace Bootstrap.DataAccess.SqlServer
             Assert.Equal(10, DictHelper.RetrieveLocaleIPSvrCachePeriod());
         }
 
+        [Fact]
+        public void RetrieveEnableBlazor_Ok()
+        {
+            Assert.False(DictHelper.RetrieveEnableBlazor());
+        }
+
         #region Private Class For Test
         /// <summary>
         /// 

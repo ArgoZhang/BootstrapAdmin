@@ -16,11 +16,21 @@ namespace Bootstrap.Admin.Models
         /// 构造函数
         /// </summary>
         /// <param name="controller"></param>
-        public NavigatorBarModel(ControllerBase controller) : base(controller.User.Identity.Name)
+        public NavigatorBarModel(ControllerBase controller) : this(controller.User.Identity.Name, $"~{controller.Request.Path}")
         {
-            Navigations = MenuHelper.RetrieveSystemMenus(UserName, $"~{controller.HttpContext.Request.Path}");
-            var authApps = AppHelper.RetrievesByUserName(controller.User.Identity.Name);
-            Applications = DictHelper.RetrieveApps().Where(app => app.Key.IsNullOrEmpty() || authApps.Any(key => key.Equals(app.Key, StringComparison.OrdinalIgnoreCase)));
+
+        }
+
+        /// <summary>
+        /// Blazor 使用构造函数
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="activeUrl"></param>
+        public NavigatorBarModel(string? userName, string activeUrl = "") : base(userName)
+        {
+            Navigations = MenuHelper.RetrieveSystemMenus(userName ?? "", activeUrl);
+            var authApps = AppHelper.RetrievesByUserName(userName);
+            Applications = string.IsNullOrEmpty(userName) ? new KeyValuePair<string, string>[0] : DictHelper.RetrieveApps().Where(app => app.Key.IsNullOrEmpty() || authApps.Any(key => key.Equals(app.Key, StringComparison.OrdinalIgnoreCase)));
         }
 
         /// <summary>

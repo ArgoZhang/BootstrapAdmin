@@ -97,7 +97,7 @@ namespace Bootstrap.DataAccess
             if (!string.IsNullOrEmpty(name) && !name.Equals("None", StringComparison.OrdinalIgnoreCase))
             {
                 var url = RetrieveLocaleIPSvrUrl(name);
-                op.Locator = DefaultIPLocatorProvider.CreateLocator(name);
+                op.LocatorName = name;
                 op.Url = string.IsNullOrEmpty(url) ? string.Empty : $"{url}{op.IP}";
                 op.Period = RetrieveLocaleIPSvrCachePeriod() * 60 * 1000;
             }
@@ -156,9 +156,10 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获得默认的前台首页地址，默认为 ~/Home/Index
         /// </summary>
-        /// <param name="appId">应用程序编码</param>
+        /// <param name="userName">登录用户名</param>
+        /// <param name="appId">默认应用程序编码</param>
         /// <returns></returns>
-        public static string RetrieveHomeUrl(string appId) => DbContextManager.Create<Dict>()?.RetrieveHomeUrl(appId) ?? "~/Home/Index";
+        public static string RetrieveHomeUrl(string? userName, string appId) => DbContextManager.Create<Dict>()?.RetrieveHomeUrl(userName, appId) ?? "~/Home/Index";
 
         /// <summary>
         /// 获取所有应用程序数据方法
@@ -262,5 +263,17 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <returns></returns>
         public static bool RetrieveAutoLockScreen() => DbContextManager.Create<Dict>()?.RetrieveAutoLockScreen() ?? false;
+
+        /// <summary>
+        /// 获得是否开启默认应用功能 默认关闭
+        /// </summary>
+        /// <returns></returns>
+        public static bool RetrieveDefaultApp() => DbContextManager.Create<Dict>()?.RetrieveDefaultApp() ?? false;
+
+        /// <summary>
+        /// 获得是否开启 Blazor 功能 默认关闭
+        /// </summary>
+        /// <returns></returns>
+        public static bool RetrieveEnableBlazor() => DbContextManager.Create<Dict>()?.RetrieveEnableBlazor() ?? false;
     }
 }

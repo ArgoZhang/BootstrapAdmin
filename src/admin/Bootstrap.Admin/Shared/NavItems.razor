@@ -1,0 +1,11 @@
+﻿<ul class="sub nav flex-column">
+    @foreach (var menu in Menus)
+    {
+        <NavItem Menu="@menu"></NavItem>
+    }
+</ul>
+
+@code {
+    [Parameter]
+    public IEnumerable<BootstrapMenu> Menus { get; set; } = new BootstrapMenu[0];
+}
