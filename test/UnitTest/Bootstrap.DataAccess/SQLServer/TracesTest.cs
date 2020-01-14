@@ -28,7 +28,8 @@ namespace Bootstrap.DataAccess.SqlServer
             Assert.NotNull(TraceHelper.Retrieves(new PaginationOption() { Limit = 20, Offset = 0, Order = "desc", Sort = "Browser" }, null, null, null).Items);
             Assert.NotNull(TraceHelper.Retrieves(new PaginationOption() { Limit = 20, Offset = 0, Order = "desc", Sort = "OS" }, null, null, null).Items);
             Assert.NotNull(TraceHelper.Retrieves(new PaginationOption() { Limit = 20, Offset = 0, Order = "desc", Sort = "RequestUrl" }, null, null, null).Items);
-            Assert.NotEmpty(TraceHelper.RetrieveAll(null, null, null));
+            Assert.NotNull(TraceHelper.Retrieves(new PaginationOption() { Limit = 20, Offset = 0, Order = "desc", Sort = "RequestUrl" }, DateTime.Now.AddDays(-1), DateTime.Now, "::1").Items);
+            Assert.NotEmpty(TraceHelper.RetrieveAll(DateTime.Now.AddDays(-1), DateTime.Now, "::1"));
         }
     }
 }

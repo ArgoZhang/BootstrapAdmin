@@ -1,4 +1,5 @@
 ﻿using Bootstrap.Security.Mvc;
+using System;
 using System.Linq;
 using Xunit;
 
@@ -82,6 +83,12 @@ namespace Bootstrap.DataAccess.SqlServer
             var id = RoleHelper.Retrieves().FirstOrDefault(r => r.RoleName == "Administrators").Id;
             UserHelper.SaveByRoleId(id, UserHelper.Retrieves().Select(u => u.Id));
             Assert.NotEmpty(RoleHelper.RetrievesByUserName("Admin"));
+
+            // 新建用户 默认角色为 Default
+            var user = new User { UserName = "UserForRoleTest", Password = "123", DisplayName = "DisplayName", ApprovedBy = "System", ApprovedTime = DateTime.Now, Description = "Desc", Icon = "" };
+            Assert.True(UserHelper.Save(user));
+            Assert.Single(RoleHelper.RetrievesByUserName(user.UserName));
+            Assert.True(UserHelper.Delete(UserHelper.Retrieves().Where(usr => usr.UserName == user.UserName).Select(usr => usr.Id)));
         }
 
         [Fact]

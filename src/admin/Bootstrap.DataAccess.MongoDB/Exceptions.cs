@@ -38,8 +38,6 @@ namespace Bootstrap.DataAccess.MongoDB
         /// <returns></returns>
         public override bool Log(Exception ex, NameValueCollection additionalInfo)
         {
-            if (ex == null) return true;
-
             var excep = new DataAccess.Exceptions
             {
                 Id = null,

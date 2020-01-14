@@ -2,7 +2,7 @@
 using Xunit;
 using static Bootstrap.Admin.Controllers.Api.AnalyseController;
 
-namespace Bootstrap.Admin.Api
+namespace Bootstrap.Admin.Api.SqlServer
 {
     public class AnalyseTest : ControllerTest
     {

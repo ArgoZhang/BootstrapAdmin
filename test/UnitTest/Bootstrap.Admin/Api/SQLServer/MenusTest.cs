@@ -64,5 +64,12 @@ namespace Bootstrap.Admin.Api.SqlServer
             var ret = await Client.PutAsJsonAsync<IEnumerable<string>, bool>($"{rid}", ids);
             Assert.True(ret);
         }
+
+        [Fact]
+        public void RetrieveAppMenus_Ok()
+        {
+            Assert.Empty(MenuHelper.RetrieveAppMenus("", "", ""));
+            Assert.NotEmpty(MenuHelper.RetrieveAppMenus("Demo", "Admin", ""));
+        }
     }
 }

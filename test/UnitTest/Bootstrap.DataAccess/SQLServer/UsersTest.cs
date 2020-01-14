@@ -27,6 +27,7 @@ namespace Bootstrap.DataAccess.SqlServer
         public void Authenticate_Fail()
         {
             Assert.False(UserHelper.Authenticate("Admin-NotExists", "123789"));
+            Assert.False(UserHelper.Authenticate("", ""));
         }
 
         [Fact]
@@ -73,6 +74,10 @@ namespace Bootstrap.DataAccess.SqlServer
             var user = new User { UserName = "UnitTestDelete", Password = "123", DisplayName = "DisplayName", ApprovedBy = "System", ApprovedTime = DateTime.Now, Description = "Desc", Icon = "default.jpg" };
             Assert.Equal($"{user.UserName} ({user.DisplayName})", user.ToString());
             Assert.True(UserHelper.Save(user));
+
+            // 二次保存时返回 false
+            user.Id = null;
+            Assert.False(UserHelper.Save(user));
             Assert.True(UserHelper.Delete(UserHelper.Retrieves().Where(usr => usr.UserName == user.UserName).Select(usr => usr.Id)));
         }
 
@@ -136,6 +141,13 @@ namespace Bootstrap.DataAccess.SqlServer
         {
             var usr = UserHelper.RetrieveUserByUserName("Admin");
             Assert.Equal("Administrator", usr.DisplayName);
+
+            // 新建用户 默认角色为 Default
+            var user = new User { UserName = "UnitTest_ICON", Password = "123", DisplayName = "DisplayName", ApprovedBy = "System", ApprovedTime = DateTime.Now, Description = "Desc", Icon = "" };
+            Assert.True(UserHelper.Save(user));
+            var u = UserHelper.RetrieveUserByUserName(user.UserName);
+            Assert.Equal("default.jpg", u.Icon);
+            Assert.True(UserHelper.Delete(UserHelper.Retrieves().Where(usr => usr.UserName == user.UserName).Select(usr => usr.Id)));
         }
 
         [Fact]
@@ -169,7 +181,7 @@ namespace Bootstrap.DataAccess.SqlServer
         [Fact]
         public void RetrieveLoginUsers_Ok()
         {
-            var data = LoginHelper.RetrieveAll(null, null, "");
+            var data = LoginHelper.RetrieveAll(DateTime.Now.AddDays(-1), DateTime.Now, "::1");
             Assert.NotNull(data);
         }
     }

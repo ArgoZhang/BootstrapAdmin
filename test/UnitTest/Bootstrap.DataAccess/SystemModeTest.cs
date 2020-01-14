@@ -81,6 +81,8 @@ namespace Bootstrap.DataAccess.SqlServer
             SetSystemMode();
             var user = UserHelper.Retrieves().FirstOrDefault(m => m.UserName == "User");
             user.DisplayName = "UnitTest";
+
+            // 演示模式下不允许更改  Admin User 账户信息
             Assert.True(UserHelper.Save(user));
 
             CacheManager.Clear(UserHelper.RetrieveUsersDataKey);

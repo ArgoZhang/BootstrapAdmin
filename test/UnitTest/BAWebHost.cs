@@ -136,10 +136,17 @@ namespace Bootstrap.Admin
         /// </summary>
         class DefaultSMSProvider : ISMSProvider
         {
+            public DefaultSMSProvider()
+            {
+                Options = new SMSOptions();
+                Options.Roles.Add("Administrators");
+                Options.Roles.Add("Default");
+            }
+
             /// <summary>
             /// 获得 短信配置信息
             /// </summary>
-            public SMSOptions Options { get; protected set; } = new SMSOptions();
+            public SMSOptions Options { get; protected set; }
 
             /// <summary>
             /// 下发验证码方法

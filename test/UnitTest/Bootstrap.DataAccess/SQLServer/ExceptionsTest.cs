@@ -25,6 +25,7 @@ namespace Bootstrap.DataAccess.SqlServer
             Assert.NotNull(ExceptionsHelper.RetrievePages(new PaginationOption() { Offset = 0, Limit = 20, Sort = "ErrorPage", Order = "desc" }, null, null));
             Assert.NotNull(ExceptionsHelper.RetrievePages(new PaginationOption() { Offset = 0, Limit = 20, Sort = "UserId", Order = "desc" }, null, null));
             Assert.NotNull(ExceptionsHelper.RetrievePages(new PaginationOption() { Offset = 0, Limit = 20, Sort = "UserIp", Order = "desc" }, null, null));
+            Assert.NotNull(ExceptionsHelper.RetrievePages(new PaginationOption() { Offset = 0, Limit = 20, Sort = "UserIp", Order = "desc" }, DateTime.Now.AddDays(-1), DateTime.Now));
         }
     }
 }

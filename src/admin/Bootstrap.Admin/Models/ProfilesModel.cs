@@ -24,6 +24,7 @@ namespace Bootstrap.Admin.Models
         /// <summary>
         /// 获得 是否为第三方用户
         /// </summary>
+        /// <remarks>第三方用户不允许修改密码</remarks>
         public bool External { get; }
 
         /// <summary>
@@ -32,7 +33,7 @@ namespace Bootstrap.Admin.Models
         public string AppName { get; }
 
         /// <summary>
-        /// 
+        /// 构造函数
         /// </summary>
         /// <param name="host"></param>
         /// <param name="controller"></param>

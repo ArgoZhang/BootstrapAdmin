@@ -46,6 +46,7 @@ namespace Bootstrap.DataAccess.SqlServer
         public void RetrieveAllMenus_Ok()
         {
             Assert.NotEmpty(MenuHelper.RetrieveAllMenus("Admin"));
+            Assert.Empty(MenuHelper.RetrieveAllMenus("_UnitTest"));
         }
 
         [Fact]

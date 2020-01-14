@@ -105,6 +105,10 @@ namespace Bootstrap.DataAccess
         public static bool Save(User user)
         {
             if (!UserChecker(user)) return false;
+
+            // 已经存在或者已经在新用户中了
+            if (string.IsNullOrEmpty(user.Id) && (RetrieveUserByUserName(user.UserName) != null || RetrieveNewUsers().Any(u => u.UserName == user.UserName))) return false;
+
             if (DictHelper.RetrieveSystemModel() && !string.IsNullOrEmpty(user.Id) && RetrieveConstUsers().Any(u => u.Id == user.Id)) return true;
 
             var ret = DbContextManager.Create<User>()?.Save(user) ?? false;

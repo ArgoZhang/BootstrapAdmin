@@ -28,6 +28,36 @@ namespace Bootstrap.Admin.Controllers.SqlServer
         }
 
         [Fact]
+        public async void Login_Empty()
+        {
+            var client = Host.CreateClient();
+            var r = await client.GetAsync("/Account/Login");
+            Assert.True(r.IsSuccessStatusCode);
+            var content = await r.Content.ReadAsStringAsync();
+            Assert.Contains("登 录", content);
+
+            r = await client.GetAsync("/Account/Login");
+            var view = await r.Content.ReadAsStringAsync();
+            var tokenTag = "<input name=\"__RequestVerificationToken\" type=\"hidden\" value=\"";
+            var index = view.IndexOf(tokenTag);
+            view = view.Substring(index + tokenTag.Length);
+            index = view.IndexOf("\" /></form>");
+            var antiToken = view.Substring(0, index);
+
+            var loginContent = new MultipartFormDataContent
+            {
+                { new StringContent(""), "userName" },
+                { new StringContent(""), "password" },
+                { new StringContent(""), "remember" },
+                { new StringContent(antiToken), "__RequestVerificationToken" }
+            };
+            var req = await client.PostAsync("/Account/Login", loginContent);
+            Assert.Equal(HttpStatusCode.OK, req.StatusCode);
+            content = await req.Content.ReadAsStringAsync();
+            Assert.Contains("登 录", content);
+        }
+
+        [Fact]
         public async void Login_Fail()
         {
             var client = Host.CreateClient();
@@ -51,16 +81,29 @@ namespace Bootstrap.Admin.Controllers.SqlServer
                 { new StringContent("true"), "remember" },
                 { new StringContent(antiToken), "__RequestVerificationToken" }
             };
-            var req = await client.PostAsync("/Account/Login", loginContent);
-            Assert.Equal(HttpStatusCode.OK, req.StatusCode);
-        }
+            r = await client.PostAsync("/Account/Login", loginContent);
+            Assert.Equal(HttpStatusCode.OK, r.StatusCode);
+            content = await r.Content.ReadAsStringAsync();
+            Assert.Contains("登 录", content);
 
-        [Fact]
-        public async void Login_Admin()
-        {
-            var resp = await Client.GetAsync("Login");
-            var context = await resp.Content.ReadAsStringAsync();
-            Assert.Contains("注销", context);
+            // 空密码登陆
+            view = await r.Content.ReadAsStringAsync();
+            tokenTag = "<input name=\"__RequestVerificationToken\" type=\"hidden\" value=\"";
+            index = view.IndexOf(tokenTag);
+            view = view.Substring(index + tokenTag.Length);
+            index = view.IndexOf("\" /></form>");
+            antiToken = view.Substring(0, index);
+            loginContent = new MultipartFormDataContent
+            {
+                { new StringContent(""), "userName" },
+                { new StringContent(""), "password" },
+                { new StringContent(""), "remember" },
+                { new StringContent(antiToken), "__RequestVerificationToken" }
+            };
+            r = await client.PostAsync("/Account/Login", loginContent);
+            Assert.Equal(HttpStatusCode.OK, r.StatusCode);
+            content = await r.Content.ReadAsStringAsync();
+            Assert.Contains("登 录", content);
         }
 
         [Fact]
@@ -97,11 +140,22 @@ namespace Bootstrap.Admin.Controllers.SqlServer
             content = await r.Content.ReadAsStringAsync();
             Assert.Contains("登 录", content);
 
-            // 调用Post
+            // 调用 Post Mobile
             var data = new MultipartFormDataContent
             {
+                { new StringContent("13800010001"), "userName" },
+                { new StringContent("1234"), "password" },
+                { new StringContent("Mobile"), "authType" }
+            };
+            await Client.PostAsync("Lock", data);
+            UserHelper.Delete(UserHelper.Retrieves().Where(u => u.UserName == "13800010001").Select(u => u.Id));
+
+            // 调用Post
+            data = new MultipartFormDataContent
+            {
                 { new StringContent("Admin"), "userName" },
-                { new StringContent("123789"), "password" }
+                { new StringContent("123789"), "password" },
+                { new StringContent("Cookie"), "authType" }
             };
             await Client.PostAsync("Lock", data);
         }
@@ -139,9 +193,21 @@ namespace Bootstrap.Admin.Controllers.SqlServer
                 { new StringContent(antiToken), "__RequestVerificationToken" }
             };
             var m = await client.PostAsync("/Account/Mobile", content);
-            Assert.False(m.IsSuccessStatusCode);
-            var payload = await r.Content.ReadAsStringAsync();
-            Assert.Contains("登 录", payload);
+            Assert.True(m.IsSuccessStatusCode);
+            var payload = await m.Content.ReadAsStringAsync();
+            Assert.DoesNotContain("登 录", payload);
+
+            // login as cookie
+            // 调用Post
+            var data = new MultipartFormDataContent
+            {
+                { new StringContent("Admin"), "userName" },
+                { new StringContent("123789"), "password" },
+                { new StringContent("Cookie"), "authType" }
+            };
+            m = await Client.PostAsync("Lock", data);
+            payload = await m.Content.ReadAsStringAsync();
+            Assert.DoesNotContain("登 录", payload);
         }
 
         [Fact]
@@ -166,7 +232,7 @@ namespace Bootstrap.Admin.Controllers.SqlServer
             };
             var m = await client.PostAsync("/Account/Mobile?AppId=0", content);
             Assert.True(m.IsSuccessStatusCode);
-            var payload = await r.Content.ReadAsStringAsync();
+            var payload = await m.Content.ReadAsStringAsync();
             Assert.Contains("登 录", payload);
         }
     }

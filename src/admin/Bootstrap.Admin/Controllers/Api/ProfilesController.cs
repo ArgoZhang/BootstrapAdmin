@@ -84,9 +84,7 @@ namespace Bootstrap.Admin.Controllers.Api
                 var webSiteUrl = DictHelper.RetrieveIconFolderPath();
                 fileName = $"{userName}{Path.GetExtension(uploadFile.FileName)}";
                 var filePath = Path.Combine(env.WebRootPath, webSiteUrl.Replace("~", string.Empty).Replace('/', Path.DirectorySeparatorChar).TrimStart(Path.DirectorySeparatorChar) + fileName);
-                var fileFolder = Path.GetDirectoryName(filePath);
                 fileSize = uploadFile.Length;
-                if (!Directory.Exists(fileFolder)) Directory.CreateDirectory(fileFolder);
                 using (var fs = new FileStream(filePath, FileMode.Create))
                 {
                     await uploadFile.CopyToAsync(fs);

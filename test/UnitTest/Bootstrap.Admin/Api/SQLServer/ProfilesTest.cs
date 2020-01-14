@@ -62,7 +62,7 @@ namespace Bootstrap.Admin.Api.SqlServer
         {
             var iconFile = TestHelper.RetrievePath(string.Format("..{0}src{0}admin{0}Bootstrap.Admin{0}wwwroot{0}images{0}logo.jpg", Path.DirectorySeparatorChar));
             var adminFile = TestHelper.RetrievePath(string.Format("..{0}src{0}admin{0}Bootstrap.Admin{0}wwwroot{0}images{0}uploader{0}Admin.jpg", Path.DirectorySeparatorChar));
-            FileInfo fi = new FileInfo(iconFile);
+            var fi = new FileInfo(iconFile);
             string fileName = fi.Name;
             byte[] fileContents = File.ReadAllBytes(fi.FullName);
 

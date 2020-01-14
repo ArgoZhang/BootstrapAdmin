@@ -21,6 +21,7 @@ namespace Bootstrap.Admin.Api.SqlServer
         [InlineData("Name", "desc")]
         [InlineData("Code", "desc")]
         [InlineData("Define", "desc")]
+        [InlineData("", "")]
         public async void Get_Ok(string query, string order)
         {
             // 菜单 系统菜单 系统使用条件

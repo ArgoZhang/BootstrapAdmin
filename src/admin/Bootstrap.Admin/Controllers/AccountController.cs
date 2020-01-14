@@ -118,9 +118,9 @@ namespace Bootstrap.Admin.Controllers
                     {
                         // 根据配置文件设置默认角色
                         var roles = RoleHelper.Retrieves().Where(r => provider.Options.Roles.Any(rl => rl.Equals(r.RoleName, StringComparison.OrdinalIgnoreCase))).Select(r => r.Id);
-#pragma warning disable CS8620 // 由于引用类型的可为 null 性差异，实参不能用于形参。
+#nullable disable
                         RoleHelper.SaveByUserId(user.Id, roles);
-#pragma warning restore CS8620 // 由于引用类型的可为 null 性差异，实参不能用于形参。
+#nullable restore
                     }
                 }
             }

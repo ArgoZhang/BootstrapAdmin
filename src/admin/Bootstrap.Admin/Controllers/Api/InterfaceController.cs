@@ -64,11 +64,7 @@ namespace Bootstrap.Admin.Controllers
         /// <param name="args"></param>
         /// <returns></returns>
         [HttpPost]
-        public IEnumerable<BootstrapMenu> RetrieveAppMenus([FromBody]AppMenuOption args)
-        {
-            if (string.IsNullOrEmpty(args.AppId) || string.IsNullOrEmpty(args.UserName)) return new BootstrapMenu[0];
-            return MenuHelper.RetrieveAppMenus(args.AppId, args.UserName, args.Url);
-        }
+        public IEnumerable<BootstrapMenu> RetrieveAppMenus([FromBody]AppMenuOption args) => MenuHelper.RetrieveAppMenus(args.AppId, args.UserName, args.Url);
 
         /// <summary>
         /// 发送健康检查结果

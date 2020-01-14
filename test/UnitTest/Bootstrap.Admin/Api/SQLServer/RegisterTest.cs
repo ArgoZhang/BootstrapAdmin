@@ -14,6 +14,8 @@ namespace Bootstrap.Admin.Api.SqlServer
         {
             var resp = await Client.GetAsJsonAsync<bool>("?userName=Admin");
             Assert.False(resp);
+            resp = await Client.GetAsJsonAsync<bool>("?userName=Admin1");
+            Assert.True(resp);
         }
 
         [Fact]
@@ -23,6 +25,8 @@ namespace Bootstrap.Admin.Api.SqlServer
             var nusr = new User() { UserName = "U_Register", DisplayName = "UnitTest", Password = "1", Description = "UnitTest" };
             var resp = await Client.PostAsJsonAsync<User, bool>("", nusr);
             Assert.True(resp);
+            resp = await Client.GetAsJsonAsync<bool>($"?userName={nusr.UserName}");
+            Assert.False(resp);
             UserHelper.Delete(nusr.RetrieveNewUsers().Where(u => u.UserName == nusr.UserName).Select(u => u.Id));
         }
 

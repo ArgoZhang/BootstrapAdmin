@@ -1,5 +1,6 @@
 ﻿using Longbow.Web.Mvc;
 using Xunit;
+using System;
 
 namespace Bootstrap.DataAccess.SqlServer
 {
@@ -25,7 +26,8 @@ namespace Bootstrap.DataAccess.SqlServer
             Assert.NotNull(LogHelper.RetrievePages(new PaginationOption() { Limit = 20, Sort = "UserName", Order = "desc" }, null, null, null));
             Assert.NotNull(LogHelper.RetrievePages(new PaginationOption() { Limit = 20, Sort = "Ip", Order = "desc" }, null, null, null));
             Assert.NotNull(LogHelper.RetrievePages(new PaginationOption() { Limit = 20, Sort = "RequestUrl", Order = "desc" }, null, null, null));
-            Assert.NotEmpty(LogHelper.RetrieveAll(null, null, null));
+            Assert.NotNull(LogHelper.RetrievePages(new PaginationOption() { Limit = 20, Sort = "RequestUrl", Order = "desc" }, DateTime.Now.AddDays(-1), DateTime.Now, "UnitTest"));
+            Assert.NotEmpty(LogHelper.RetrieveAll(DateTime.Now.AddDays(-1), DateTime.Now, "UnitTest"));
         }
     }
 }

@@ -68,8 +68,18 @@ namespace Bootstrap.Admin.Api.SqlServer
             ret = await Client.PostAsJsonAsync<string, IEnumerable<object>>($"{gid}?type=group", string.Empty);
             Assert.NotNull(ret);
 
-            ret = await Client.PostAsJsonAsync<string, IEnumerable<object>>("UnitTest?type=reset", string.Empty);
+            // 创建用户
+            var nusr = new User { UserName = "UnitTest_Reset", Password = "1", DisplayName = "DisplayName", ApprovedBy = "System", ApprovedTime = DateTime.Now, Description = "Desc", Icon = "default.jpg" };
+            UserHelper.Save(nusr);
+
+            // 申请重置
+            UserHelper.ForgotPassword(new ResetUser() { DisplayName = nusr.DisplayName, Reason = "UnitTest", ResetTime = DateTime.Now, UserName = nusr.UserName });
+
+            // 重置操作
+            ret = await Client.PostAsJsonAsync<string, IEnumerable<object>>($"{nusr.UserName}?type=reset", string.Empty);
             Assert.NotNull(ret);
+
+            UserHelper.Delete(UserHelper.Retrieves().Where(usr => usr.UserName == nusr.UserName).Select(usr => usr.Id));
         }
 
         [Fact]

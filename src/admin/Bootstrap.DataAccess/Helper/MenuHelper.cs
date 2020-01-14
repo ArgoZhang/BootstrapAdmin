@@ -119,7 +119,7 @@ namespace Bootstrap.DataAccess
         /// <param name="userName"></param>
         /// <param name="activeUrl"></param>
         /// <returns></returns>
-        public static IEnumerable<BootstrapMenu> RetrieveAppMenus(string appId, string userName, string? activeUrl)
+        public static IEnumerable<BootstrapMenu> RetrieveAppMenus(string? appId, string? userName, string? activeUrl)
         {
             if (string.IsNullOrEmpty(appId) || string.IsNullOrEmpty(userName)) return new BootstrapMenu[0];
 
