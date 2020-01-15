@@ -2,12 +2,13 @@
 using PetaPoco;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace Bootstrap.DataAccess
 {
     /// <summary>
-    /// 
+    /// 角色实体类
     /// </summary>
     [TableName("Roles")]
     public class Role
@@ -20,11 +21,13 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获得/设置 角色名称
         /// </summary>
+        [DisplayName("角色名称")]
         public string RoleName { get; set; } = "";
 
         /// <summary>
         /// 获得/设置 角色描述
         /// </summary>
+        [DisplayName("角色描述")]
         public string Description { get; set; } = "";
 
         /// <summary>
@@ -213,7 +216,7 @@ namespace Bootstrap.DataAccess
         }
 
         /// <summary>
-        /// 
+        /// 通过指定登录用户名获得角色列表
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
