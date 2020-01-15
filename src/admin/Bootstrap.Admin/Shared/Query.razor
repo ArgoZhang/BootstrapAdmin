@@ -7,7 +7,7 @@
         <LgbEditForm class="form-inline" Id="@Id" Model="QueryModel" OnValidSubmit="e => OnQuery?.Invoke()">
             <div class="row">
                 @ChildContent?.Invoke(QueryModel)
-                <div class="form-group col-sm-6 col-md-auto flex-sm-fill justify-content-sm-end align-self-sm-end">
+                <div class="form-group col-sm-auto flex-sm-fill justify-content-sm-end align-self-sm-end">
                     <button type="submit" class="btn btn-primary btn-fill"><i class="fa fa-search"></i><span>@Text</span></button>
                 </div>
             </div>
