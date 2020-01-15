@@ -1,41 +1,45 @@
-﻿
-@using System.Globalization
+﻿@inherits UsersBase
 
-<h1 style="font-style:@_headingFontStyle">@_headingText</h1>
-
-<form>
-    <div>
-        @*
-            A check box sets the font style and is bound to the
-            _italicsCheck field.
-        *@
-        <input type="checkbox" id="italicsCheck"
-               @bind="_italicsCheck" />
-        <label class="form-check-label"
-               for="italicsCheck">Use italics</label>
-    </div>
-
-    @*
-        When the form is submitted, the onclick event executes
-        the UpdateHeading method.
-    *@
-    <button type="button" class="btn btn-primary" @onclick="UpdateHeading">
-        Update heading
-    </button>
-</form>
-
-@code {
-    private static TextInfo _tinfo = CultureInfo.CurrentCulture.TextInfo;
-    private string _headingText =
-        _tinfo.ToTitleCase("welcome to blazor!");
-    private string _headingFontStyle = "normal";
-    private bool _italicsCheck = false;
-
-    // When UpdateHeading is executed, _italicsCheck determines
-    // the value of _headingFontStyle to set the font style of the
-    // heading.
-    public void UpdateHeading()
-    {
-        _headingFontStyle = _italicsCheck ? "italic" : "normal";
-    }
-}
+<EditPage Id="dict" TItem="Bootstrap.DataAccess.User" QueryModel="QueryModel" OnQuery="Query" OnAdd="Add" OnDelete="Delete" OnSave="Save">
+    <QueryBody>
+        <LgbInputText @bind-Value="@context.UserName" maxlength="50" />
+        <LgbInputText @bind-Value="@context.DisplayName" maxlength="50" />
+    </QueryBody>
+    <TableHeader>
+        <LgbTableHeader TItem="string" @bind-Value="@context.UserName"></LgbTableHeader>
+        <LgbTableHeader TItem="string" @bind-Value="@context.DisplayName"></LgbTableHeader>
+        <LgbTableHeader TItem="DateTime" @bind-Value="@context.RegisterTime"></LgbTableHeader>
+        <LgbTableHeader TItem="DateTime?" @bind-Value="@context.ApprovedTime"></LgbTableHeader>
+        <LgbTableHeader TItem="string" @bind-Value="@context.ApprovedBy"></LgbTableHeader>
+        <LgbTableHeader TItem="string" @bind-Value="@context.Description"></LgbTableHeader>
+    </TableHeader>
+    <RowTemplate>
+        <td>@context.UserName</td>
+        <td>@context.DisplayName</td>
+        <td>@context.RegisterTime.ToString("yyyy-MM-dd HH:mm:ss")</td>
+        <td>@(context.ApprovedTime?.ToString("yyyy-MM-dd HH:mm:ss") ?? "-")</td>
+        <td>@context.ApprovedBy</td>
+        <td>@context.Description</td>
+    </RowTemplate>
+    <EditTemplate>
+        <div class="row">
+            <LgbInputText @bind-Value="@context.UserName" placeholder="不可为空，16字以内" maxlength="16">
+                <RequiredValidator />
+                <StringLengthValidator Length="16" />
+            </LgbInputText>
+            <LgbInputText @bind-Value="@context.DisplayName" placeholder="不可为空，20字以内" maxlength="20">
+                <RequiredValidator />
+                <StringLengthValidator Length="20" />
+            </LgbInputText>
+            <LgbInputText InputType="password" @bind-Value="@context.Password" autocomplete="off" placeholder="不可为空，16字以内" maxlength="16">
+                <RequiredValidator />
+                <StringLengthValidator Length="16" />
+            </LgbInputText>
+            <LgbInputText InputType="password" @bind-Value="@context.NewPassword" autocomplete="off" placeholder="与登录密码一致" maxlength="16">
+                <RequiredValidator />
+                <StringLengthValidator Length="16" />
+                <EqualToValidator @bind-Value="@context.Password" />
+            </LgbInputText>
+        </div>
+    </EditTemplate>
+</EditPage>
