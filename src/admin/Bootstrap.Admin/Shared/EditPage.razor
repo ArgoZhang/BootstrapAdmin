@@ -9,11 +9,7 @@
         查询结果
     </div>
     <div class="card-body">
-        <ConditionComponent>
-            <div class="alert alert-danger" role="alert">
-                <span>演示系统禁止修改系统使用字典配置项</span>
-            </div>
-        </ConditionComponent>
+        @TableInfoTemplate
         <Table @ref="Table" Id="@Id" TItem="TItem" SubmitModalTitle="@SubmitModalTitle" OnQuery="QueryData" OnAdd="OnAdd" OnDelete="OnDelete" OnSave="OnSave">
             <TableHeader>
                 @TableHeader?.Invoke(context)

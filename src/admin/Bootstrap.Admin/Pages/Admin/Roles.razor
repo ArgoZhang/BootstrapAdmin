@@ -5,6 +5,11 @@
         <LgbInputText ColumnClass="col-sm-auto" @bind-Value="@context.RoleName" maxlength="50" />
         <LgbInputText ColumnClass="col-sm-auto" @bind-Value="@context.Description" maxlength="50" />
     </QueryBody>
+    <TableInfoTemplate>
+        <div class="alert alert-info" role="alert">
+            <span>禁止修改系统内置 Administrators Default 两个角色</span>
+        </div>
+    </TableInfoTemplate>
     <TableHeader>
         <LgbTableHeader TItem="string" @bind-Value="@context.RoleName"></LgbTableHeader>
         <LgbTableHeader TItem="string" @bind-Value="@context.Description"></LgbTableHeader>

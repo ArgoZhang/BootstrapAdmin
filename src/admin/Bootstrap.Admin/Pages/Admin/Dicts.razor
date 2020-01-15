@@ -6,6 +6,13 @@
         <Select ColumnClass="col-sm-auto" Items="QueryDefine" TItem="int" @bind-Value="@context.Define" />
         <LgbInputText ColumnClass="col-sm-auto" @bind-Value="@context.Name" maxlength="50" />
     </QueryBody>
+    <TableInfoTemplate>
+        <ConditionComponent>
+            <div class="alert alert-danger" role="alert">
+                <span>演示系统禁止修改系统使用字典配置项</span>
+            </div>
+        </ConditionComponent>
+    </TableInfoTemplate>
     <TableHeader>
         <LgbTableHeader TItem="string" @bind-Value="@context.Category"></LgbTableHeader>
         <LgbTableHeader TItem="string" @bind-Value="@context.Name"></LgbTableHeader>
