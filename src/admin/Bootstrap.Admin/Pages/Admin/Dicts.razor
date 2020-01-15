@@ -2,9 +2,9 @@
 
 <EditPage Id="dict" TItem="Bootstrap.Security.BootstrapDict" QueryModel="QueryModel" OnQuery="Query" OnAdd="Add" OnDelete="Delete" OnSave="Save">
     <QueryBody>
-        <LgbInputText @bind-Value="@context.Category" maxlength="50" />
-        <Select Items="QueryDefine" TItem="int" @bind-Value="@context.Define" />
-        <LgbInputText @bind-Value="@context.Name" maxlength="50" />
+        <LgbInputText ColumnClass="col-sm-auto" @bind-Value="@context.Category" maxlength="50" />
+        <Select ColumnClass="col-sm-auto" Items="QueryDefine" TItem="int" @bind-Value="@context.Define" />
+        <LgbInputText ColumnClass="col-sm-auto" @bind-Value="@context.Name" maxlength="50" />
     </QueryBody>
     <TableHeader>
         <LgbTableHeader TItem="string" @bind-Value="@context.Category"></LgbTableHeader>

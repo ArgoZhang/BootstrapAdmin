@@ -2,8 +2,8 @@
 
 <EditPage Id="dict" TItem="Bootstrap.DataAccess.User" QueryModel="QueryModel" OnQuery="Query" OnAdd="Add" OnDelete="Delete" OnSave="Save">
     <QueryBody>
-        <LgbInputText @bind-Value="@context.UserName" maxlength="50" />
-        <LgbInputText @bind-Value="@context.DisplayName" maxlength="50" />
+        <LgbInputText ColumnClass="col-sm-auto" @bind-Value="@context.UserName" maxlength="50" />
+        <LgbInputText ColumnClass="col-sm-auto" @bind-Value="@context.DisplayName" maxlength="50" />
     </QueryBody>
     <TableHeader>
         <LgbTableHeader TItem="string" @bind-Value="@context.UserName"></LgbTableHeader>

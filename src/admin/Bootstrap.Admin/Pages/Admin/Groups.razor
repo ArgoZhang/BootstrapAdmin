@@ -2,8 +2,8 @@
 
 <EditPage Id="dict" TItem="Bootstrap.DataAccess.Group" QueryModel="QueryModel" OnQuery="Query" OnAdd="Add" OnDelete="Delete" OnSave="Save">
     <QueryBody>
-        <LgbInputText @bind-Value="@context.GroupName" maxlength="50" />
-        <LgbInputText @bind-Value="@context.Description" maxlength="50" />
+        <LgbInputText ColumnClass="col-sm-auto" @bind-Value="@context.GroupName" maxlength="50" />
+        <LgbInputText ColumnClass="col-sm-auto" @bind-Value="@context.Description" maxlength="50" />
     </QueryBody>
     <TableHeader>
         <LgbTableHeader TItem="string" @bind-Value="@context.GroupCode"></LgbTableHeader>
