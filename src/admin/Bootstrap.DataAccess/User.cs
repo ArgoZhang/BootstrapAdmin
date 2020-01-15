@@ -4,6 +4,7 @@ using Longbow.Security.Cryptography;
 using PetaPoco;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace Bootstrap.DataAccess
@@ -22,6 +23,7 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获取/设置 密码
         /// </summary>
+        [DisplayName("登录密码")]
         public string Password { get; set; } = "";
 
         /// <summary>
@@ -38,21 +40,25 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获得/设置 用户注册时间
         /// </summary>
+        [DisplayName("注册时间")]
         public DateTime RegisterTime { get; set; } = DateTime.Now;
 
         /// <summary>
         /// 获得/设置 用户被批复时间
         /// </summary>
+        [DisplayName("授权时间")]
         public DateTime? ApprovedTime { get; set; }
 
         /// <summary>
         /// 获得/设置 用户批复人
         /// </summary>
+        [DisplayName("授权人")]
         public string? ApprovedBy { get; set; }
 
         /// <summary>
         /// 获得/设置 用户的申请理由
         /// </summary>
+        [DisplayName("说明")]
         public string Description { get; set; } = "";
 
         /// <summary>
@@ -71,6 +77,7 @@ namespace Bootstrap.DataAccess
         /// 获得/设置 新密码
         /// </summary>
         [ResultColumn]
+        [DisplayName("确认密码")]
         public string NewPassword { get; set; } = "";
 
         /// <summary>
