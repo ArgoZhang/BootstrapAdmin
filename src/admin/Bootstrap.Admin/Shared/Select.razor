@@ -1,7 +1,7 @@
 ﻿@typeparam TItem
 @inherits SelectBase<TItem>
 
-<div class="form-group col-sm-6">
+<div class="@($"form-group {ColumnClass}")">
     <label class="control-label" for="@Id">@DisplayName</label>
     <div data-toggle="lgbSelect" class="form-select dropdown">
         <input type="text" readonly="readonly" class="form-control form-select-input" id="@Id" data-toggle="dropdown" placeholder="@PlaceHolder" value="@SelectedItem.Text" />

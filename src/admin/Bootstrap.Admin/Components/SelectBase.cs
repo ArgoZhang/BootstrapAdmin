@@ -11,6 +11,12 @@ namespace Bootstrap.Admin.Components
     public class SelectBase<TItem> : ValidateInputBase<TItem>
     {
         /// <summary>
+        ///
+        /// </summary>
+        [Parameter]
+        public string ColumnClass { get; set; } = "col-sm-6";
+
+        /// <summary>
         /// 当前选择项实例
         /// </summary>
         public SelectedItem SelectedItem { get; set; } = new SelectedItem();
