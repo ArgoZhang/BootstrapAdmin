@@ -1,6 +1,28 @@
-﻿
-<h3>Roles</h3>
+﻿@inherits RolesBase
 
-@code {
-
-}
+<EditPage Id="role" TItem="Bootstrap.DataAccess.Role" QueryModel="QueryModel" OnQuery="Query" OnAdd="Add" OnDelete="Delete" OnSave="Save">
+    <QueryBody>
+        <LgbInputText ColumnClass="col-sm-auto" @bind-Value="@context.RoleName" maxlength="50" />
+        <LgbInputText ColumnClass="col-sm-auto" @bind-Value="@context.Description" maxlength="50" />
+    </QueryBody>
+    <TableHeader>
+        <LgbTableHeader TItem="string" @bind-Value="@context.RoleName"></LgbTableHeader>
+        <LgbTableHeader TItem="string" @bind-Value="@context.Description"></LgbTableHeader>
+    </TableHeader>
+    <RowTemplate>
+        <td>@context.RoleName</td>
+        <td>@context.Description</td>
+    </RowTemplate>
+    <EditTemplate>
+        <div class="row">
+            <LgbInputText @bind-Value="@context.RoleName" placeholder="不可为空，50字以内" maxlength="50">
+                <RequiredValidator />
+                <StringLengthValidator Length="50" />
+            </LgbInputText>
+            <LgbInputText @bind-Value="@context.Description" placeholder="不可为空，500字以内" maxlength="500">
+                <RequiredValidator />
+                <StringLengthValidator Length="500" />
+            </LgbInputText>
+        </div>
+    </EditTemplate>
+</EditPage>
