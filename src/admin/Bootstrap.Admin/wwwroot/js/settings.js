@@ -85,7 +85,13 @@ $(function () {
             case 'saveBlazor':
                 var blazor = $('#blazor').prop('checked') ? "1" : "0";
                 $.bc({
-                    url: Settings.url, data: { name: 'Blazor', code: blazor, category: '网站设置' }, title: 'Blazor 设置', method: "post"
+                    url: Settings.url, data: { name: 'Blazor', code: blazor, category: '网站设置' }, title: 'Blazor 设置', method: "post",
+                    callback: function (result) {
+                        if (result) {
+                            // 导航到 Blazor 页面
+                            window.location.href = $.formatUrl("Pages/Admin/Settings");
+                        }
+                    }
                 });
                 break;
         }
