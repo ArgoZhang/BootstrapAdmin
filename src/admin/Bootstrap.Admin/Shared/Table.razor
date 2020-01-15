@@ -81,7 +81,7 @@
     </ModalFooter>
 </Modal>
 
-<SubmitModal @ref="EditModal" Id="@($"{Id}_edit")" TItem="TItem" Title="字典编辑窗口" Size="ModalSize.ExtraLarge" @bind-Model="EditModel" OnValidSubmit="Save">
+<SubmitModal @ref="EditModal" Id="@($"{Id}_edit")" TItem="TItem" Title="@SubmitModalTitle" Size="ModalSize.ExtraLarge" @bind-Model="EditModel" OnValidSubmit="Save">
     <ModalBody>
         @EditTemplate?.Invoke(EditModel)
     </ModalBody>

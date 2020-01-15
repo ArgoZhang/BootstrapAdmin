@@ -11,14 +11,14 @@ namespace Bootstrap.Admin.Components
     public class EditPageBase<TItem> : ComponentBase
     {
         /// <summary>
-        /// 
+        /// 获得/设置 Id
         /// </summary>
         [Parameter]
         public string Id { get; set; } = "";
 
 #nullable disable
         /// <summary>
-        /// 
+        /// 获得/设置 QueryModel 实例
         /// </summary>
         [Parameter]
         public TItem QueryModel { get; set; }
@@ -37,39 +37,45 @@ namespace Bootstrap.Admin.Components
         public Func<int, int, QueryData<TItem>>? OnQuery { get; set; }
 
         /// <summary>
-        /// 
+        /// 获得/设置 TableHeader 实例
         /// </summary>
         [Parameter]
         public RenderFragment<TItem>? TableHeader { get; set; }
 
         /// <summary>
-        /// 
+        /// 获得/设置 RowTemplate 实例
         /// </summary>
         [Parameter]
         public RenderFragment<TItem>? RowTemplate { get; set; }
 
         /// <summary>
-        /// 按钮模板
+        /// 获得/设置 按钮模板
         /// </summary>
         [Parameter]
         public RenderFragment<TItem>? ButtonTemplate { get; set; }
 
         /// <summary>
-        /// 
+        /// 获得/设置 TableFooter 实例
         /// </summary>
         [Parameter]
         public RenderFragment? TableFooter { get; set; }
 
         /// <summary>
-        /// 
+        /// 获得/设置 EditTemplate 实例
         /// </summary>
         [Parameter]
         public RenderFragment<TItem>? EditTemplate { get; set; }
 
         /// <summary>
-        /// 
+        /// 获得/设置 Table 实例
         /// </summary>
         protected Table<TItem>? Table { get; set; }
+
+        /// <summary>
+        /// 编辑数据弹窗 Title
+        /// </summary>
+        [Parameter]
+        public string SubmitModalTitle { get; set; } = "";
 
         /// <summary>
         /// 新建按钮回调方法
@@ -112,7 +118,7 @@ namespace Bootstrap.Admin.Components
         }
 
         /// <summary>
-        /// 
+        /// 编辑方法
         /// </summary>
         protected void Edit(TItem item)
         {
@@ -125,7 +131,7 @@ namespace Bootstrap.Admin.Components
         }
 
         /// <summary>
-        /// 
+        /// 查询方法
         /// </summary>
         protected void Query()
         {
@@ -137,7 +143,7 @@ namespace Bootstrap.Admin.Components
         }
 
         /// <summary>
-        /// 
+        /// 分页查询方法
         /// </summary>
         /// <param name="pageIndex"></param>
         /// <param name="pageItems"></param>

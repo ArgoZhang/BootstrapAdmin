@@ -14,53 +14,53 @@ namespace Bootstrap.Admin.Components
     public class TableBase<TItem> : ComponentBase
     {
         /// <summary>
-        /// 
+        /// 每页数据数量 默认 20 行
         /// </summary>
-        public const int DefaultPageItems = 20;
+        protected const int DefaultPageItems = 20;
 
         /// <summary>
-        /// 
+        /// 获得/设置 组件 Id
         /// </summary>
         [Parameter]
         public string Id { get; set; } = "";
 
         /// <summary>
-        /// 
+        /// 获得/设置 TableHeader 实例
         /// </summary>
         [Parameter]
         public RenderFragment<TItem>? TableHeader { get; set; }
 
         /// <summary>
-        /// 
+        /// 获得/设置 RowTemplate 实例
         /// </summary>
         [Parameter]
         public RenderFragment<TItem>? RowTemplate { get; set; }
 
         /// <summary>
-        /// 按钮模板
+        /// 获得/设置 按钮模板 实例
         /// </summary>
         [Parameter]
         public RenderFragment<TItem>? ButtonTemplate { get; set; }
 
         /// <summary>
-        /// 
+        /// 获得/设置 EditTemplate 实例
         /// </summary>
         [Parameter]
         public RenderFragment<TItem>? EditTemplate { get; set; }
 
         /// <summary>
-        /// 
+        /// 获得/设置 TableFooter 实例
         /// </summary>
         [Parameter]
         public RenderFragment? TableFooter { get; set; }
 
         /// <summary>
-        /// 
+        /// 获得/设置 数据集合
         /// </summary>
         protected IEnumerable<TItem> Items { get; set; } = new TItem[0];
 
         /// <summary>
-        /// 
+        /// 获得/设置 已选择的数据集合
         /// </summary>
         public List<TItem> SelectedItems { get; } = new List<TItem>();
 
@@ -125,19 +125,19 @@ namespace Bootstrap.Admin.Components
         public Func<IEnumerable<TItem>, bool>? OnDelete { get; set; }
 
         /// <summary>
-        /// 
+        /// 获得/设置 数据总条目
         /// </summary>
         [Parameter]
         public int TotalCount { get; set; }
 
         /// <summary>
-        /// 
+        /// 获得/设置 当前页码
         /// </summary>
         [Parameter]
         public int PageIndex { get; set; } = 1;
 
         /// <summary>
-        /// 
+        /// 获得/设置 每页数据数量
         /// </summary>
         [Parameter]
         public int PageItems { get; set; } = DefaultPageItems;
@@ -149,7 +149,7 @@ namespace Bootstrap.Admin.Components
 
 #nullable disable
         /// <summary>
-        /// 
+        /// 获得/设置 EditModel 实例
         /// </summary>
         protected TItem EditModel { get; set; }
 #nullable restore
@@ -160,7 +160,13 @@ namespace Bootstrap.Admin.Components
         protected SubmitModal<TItem>? EditModal { get; set; }
 
         /// <summary>
-        /// 
+        /// 编辑数据弹窗 Title
+        /// </summary>
+        [Parameter]
+        public string SubmitModalTitle { get; set; } = "";
+
+        /// <summary>
+        /// OnInitialized 方法
         /// </summary>
         protected override void OnInitialized()
         {
@@ -174,7 +180,7 @@ namespace Bootstrap.Admin.Components
         }
 
         /// <summary>
-        /// 
+        /// 点击页码调用此方法
         /// </summary>
         /// <param name="pageIndex"></param>
         /// <param name="pageItems"></param>
@@ -189,7 +195,7 @@ namespace Bootstrap.Admin.Components
         }
 
         /// <summary>
-        /// 
+        /// 每页记录条数变化是调用此方法
         /// </summary>
         protected void PageItemsChange(int pageItems)
         {
@@ -202,7 +208,7 @@ namespace Bootstrap.Admin.Components
         }
 
         /// <summary>
-        /// 
+        /// 选择框点击时调用此方法
         /// </summary>
         /// <param name="item"></param>
         /// <param name="check"></param>
@@ -222,7 +228,7 @@ namespace Bootstrap.Admin.Components
         }
 
         /// <summary>
-        /// 
+        /// 表头 CheckBox 状态更新方法
         /// </summary>
         /// <returns></returns>
         protected CheckBoxState CheckState(TItem item)
@@ -236,7 +242,7 @@ namespace Bootstrap.Admin.Components
         }
 
         /// <summary>
-        /// 
+        /// 新建按钮方法
         /// </summary>
         public void Add()
         {
@@ -251,7 +257,7 @@ namespace Bootstrap.Admin.Components
         protected Toast? Toast { get; set; }
 
         /// <summary>
-        /// 
+        /// 显示提示信息
         /// </summary>
         /// <param name="title"></param>
         /// <param name="text"></param>
@@ -259,7 +265,7 @@ namespace Bootstrap.Admin.Components
         protected void ShowMessage(string title, string text, ToastCategory cate = ToastCategory.Success) => Toast?.ShowMessage(title, text, cate);
 
         /// <summary>
-        /// 
+        /// 编辑按钮方法
         /// </summary>
         public void Edit()
         {
@@ -293,7 +299,7 @@ namespace Bootstrap.Admin.Components
         }
 
         /// <summary>
-        /// 
+        /// 保存数据
         /// </summary>
         /// <param name="context"></param>
         protected void Save(EditContext context)

@@ -14,7 +14,7 @@
                 <span>演示系统禁止修改系统使用字典配置项</span>
             </div>
         </ConditionComponent>
-        <Table @ref="Table" Id="@Id" TItem="TItem" OnQuery="QueryData" OnAdd="OnAdd" OnDelete="OnDelete" OnSave="OnSave">
+        <Table @ref="Table" Id="@Id" TItem="TItem" SubmitModalTitle="@SubmitModalTitle" OnQuery="QueryData" OnAdd="OnAdd" OnDelete="OnDelete" OnSave="OnSave">
             <TableHeader>
                 @TableHeader?.Invoke(context)
             </TableHeader>

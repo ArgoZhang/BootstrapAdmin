@@ -1,6 +1,6 @@
 ﻿@inherits UsersBase
 
-<EditPage Id="user" TItem="Bootstrap.DataAccess.User" QueryModel="QueryModel" OnQuery="Query" OnAdd="Add" OnDelete="Delete" OnSave="Save">
+<EditPage Id="user" TItem="Bootstrap.DataAccess.User" SubmitModalTitle="用户编辑窗口" QueryModel="QueryModel" OnQuery="Query" OnAdd="Add" OnDelete="Delete" OnSave="Save">
     <QueryBody>
         <LgbInputText ColumnClass="col-sm-auto" @bind-Value="@context.UserName" maxlength="50" />
         <LgbInputText ColumnClass="col-sm-auto" @bind-Value="@context.DisplayName" maxlength="50" />
