@@ -1,5 +1,6 @@
 ﻿using Bootstrap.Admin.Components;
 using Bootstrap.Security;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -37,8 +38,8 @@ namespace Bootstrap.Pages.Admin.Components
         {
             var data = DataAccess.DictHelper.RetrieveDicts();
             if (QueryModel.Define != -1) data = data.Where(d => d.Define == QueryModel.Define);
-            if (QueryModel.Name != "") data = data.Where(d => d.Name == QueryModel.Name);
-            if (QueryModel.Category != "") data = data.Where(d => d.Category == QueryModel.Category);
+            if (!string.IsNullOrEmpty(QueryModel.Name)) data = data.Where(d => d.Name.Contains(QueryModel.Name, StringComparison.OrdinalIgnoreCase));
+            if (!string.IsNullOrEmpty(QueryModel.Category)) data = data.Where(d => d.Category.Contains(QueryModel.Category, StringComparison.OrdinalIgnoreCase));
             var totalCount = data.Count();
             var items = data.Skip((pageIndex - 1) * pageItems).Take(pageItems);
             return new QueryData<BootstrapDict>() { Items = items, TotalCount = totalCount, PageIndex = pageIndex, PageItems = pageItems };

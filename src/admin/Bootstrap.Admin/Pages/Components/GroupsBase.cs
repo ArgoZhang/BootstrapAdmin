@@ -19,7 +19,7 @@ namespace Bootstrap.Pages.Admin.Components
         protected override QueryData<Group> Query(int pageIndex, int pageItems)
         {
             var data = GroupHelper.Retrieves();
-            if (!string.IsNullOrEmpty(QueryModel.GroupName)) data = data.Where(d => d.GroupName.Equals(QueryModel.GroupName, StringComparison.OrdinalIgnoreCase));
+            if (!string.IsNullOrEmpty(QueryModel.GroupName)) data = data.Where(d => d.GroupName.Contains(QueryModel.GroupName, StringComparison.OrdinalIgnoreCase));
             if (!string.IsNullOrEmpty(QueryModel.Description)) data = data.Where(d => d.Description != null && d.Description.Contains(QueryModel.Description, StringComparison.OrdinalIgnoreCase));
             var totalCount = data.Count();
             var items = data.Skip((pageIndex - 1) * pageItems).Take(pageItems);
