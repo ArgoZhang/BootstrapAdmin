@@ -1,6 +1,34 @@
-﻿<label class="control-label" for="groupName">部门名称</label>
-<input type="text" class="form-control" id="groupName" placeholder="不可为空，50字以内" maxlength="50" data-valid="true" />
+﻿@inherits GroupsBase
 
-@code {
-
-}
+<EditPage Id="dict" TItem="Bootstrap.DataAccess.Group" QueryModel="QueryModel" OnQuery="Query" OnAdd="Add" OnDelete="Delete" OnSave="Save">
+    <QueryBody>
+        <LgbInputText @bind-Value="@context.GroupName" maxlength="50" />
+        <LgbInputText @bind-Value="@context.Description" maxlength="50" />
+    </QueryBody>
+    <TableHeader>
+        <LgbTableHeader TItem="string" @bind-Value="@context.GroupCode"></LgbTableHeader>
+        <LgbTableHeader TItem="string" @bind-Value="@context.GroupName"></LgbTableHeader>
+        <LgbTableHeader TItem="string" @bind-Value="@context.Description"></LgbTableHeader>
+    </TableHeader>
+    <RowTemplate>
+        <td>@context.GroupCode</td>
+        <td>@context.GroupName</td>
+        <td>@context.Description</td>
+    </RowTemplate>
+    <EditTemplate>
+        <div class="row">
+            <LgbInputText @bind-Value="@context.GroupName" placeholder="不可为空，50字以内" maxlength="50">
+                <RequiredValidator />
+                <StringLengthValidator Length="50" />
+            </LgbInputText>
+            <LgbInputText @bind-Value="@context.GroupCode" placeholder="不可为空，50字以内" maxlength="50">
+                <RequiredValidator />
+                <StringLengthValidator Length="50" />
+            </LgbInputText>
+            <LgbInputText @bind-Value="@context.Description" placeholder="不可为空，500字以内" maxlength="500">
+                <RequiredValidator />
+                <StringLengthValidator Length="500" />
+            </LgbInputText>
+        </div>
+    </EditTemplate>
+</EditPage>
