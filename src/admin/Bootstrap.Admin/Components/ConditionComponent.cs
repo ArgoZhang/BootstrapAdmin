@@ -1,7 +1,6 @@
 ﻿using Bootstrap.Admin.Shared;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Rendering;
-using System.Threading.Tasks;
 
 namespace Bootstrap.Admin.Components
 {
@@ -34,6 +33,8 @@ namespace Bootstrap.Admin.Components
         /// <param name="builder"></param>
         protected override void BuildRenderTree(RenderTreeBuilder builder)
         {
+            // TODO: 改造成通用的条件输出组件
+            // 目前内置了 IsDemo
             var render = RootLayout?.Model.IsDemo ?? true;
             if (Inverse) render = !render;
             if (render) builder.AddContent(0, ChildContent);
