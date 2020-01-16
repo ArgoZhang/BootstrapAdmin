@@ -5,6 +5,10 @@
         <LgbInputText ColumnClass="col-sm-auto" @bind-Value="@context.UserName" maxlength="50" />
         <LgbInputText ColumnClass="col-sm-auto" @bind-Value="@context.DisplayName" maxlength="50" />
     </QueryBody>
+    <TableToolbarTemplate>
+        <TableToolbarButton class="btn btn-info" Icon="fa fa-bank" Title="分配部门" OnClick="AssignGroups" />
+        <TableToolbarButton class="btn btn-warning" Icon="fa fa-sitemap" Title="分配角色" OnClick="AssignRoles" />
+    </TableToolbarTemplate>
     <TableHeader>
         <LgbTableHeader TItem="string" @bind-Value="@context.UserName"></LgbTableHeader>
         <LgbTableHeader TItem="string" @bind-Value="@context.DisplayName"></LgbTableHeader>
