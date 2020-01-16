@@ -49,6 +49,12 @@ namespace Bootstrap.Admin.Components
         public RenderFragment<TItem>? EditTemplate { get; set; }
 
         /// <summary>
+        /// 获得/设置 表格 Toolbar 按钮模板
+        /// </summary>
+        [Parameter]
+        public RenderFragment? TableToolbarTemplate { get; set; }
+
+        /// <summary>
         /// 获得/设置 TableFooter 实例
         /// </summary>
         [Parameter]

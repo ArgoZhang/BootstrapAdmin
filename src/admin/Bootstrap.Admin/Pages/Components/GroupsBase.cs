@@ -35,5 +35,21 @@ namespace Bootstrap.Pages.Admin.Components
         /// 删除方法
         /// </summary>
         protected override bool Delete(IEnumerable<Group> groups) => GroupHelper.Delete(groups.Select(item => item.Id ?? ""));
+
+        /// <summary>
+        /// 分配用户方法
+        /// </summary>
+        protected void AssignUsers()
+        {
+
+        }
+
+        /// <summary>
+        /// 分配角色方法
+        /// </summary>
+        protected void AssignRoles()
+        {
+
+        }
     }
 }

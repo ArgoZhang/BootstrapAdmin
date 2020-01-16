@@ -9,8 +9,10 @@
         查询结果
     </div>
     <div class="card-body">
-        @TableInfoTemplate
         <Table @ref="Table" Id="@Id" TItem="TItem" SubmitModalTitle="@SubmitModalTitle" OnQuery="QueryData" OnAdd="OnAdd" OnDelete="OnDelete" OnSave="OnSave">
+            <TableToolbarTemplate>
+                @TableToolbarTemplate
+            </TableToolbarTemplate>
             <TableHeader>
                 @TableHeader?.Invoke(context)
             </TableHeader>
