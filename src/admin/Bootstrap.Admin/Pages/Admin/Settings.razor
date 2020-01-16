@@ -1,6 +1,199 @@
-﻿
-<h3>Settings</h3>
+﻿@inherits SettingsBase
 
-@code {
-
-}
+<ConditionComponent AuthKey="saveTitle">
+    <div class="card">
+        <div class="card-header">系统名称设置</div>
+        <div class="card-body">
+            <ConditionComponent>
+                <div class="alert alert-danger" role="alert">
+                    <span>演示系统禁止更改系统名称</span>
+                </div>
+            </ConditionComponent>
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="sysName" placeholder="请输入网站标题，50字以内" value="@Model?.Title" />
+                    <ConditionComponent Inverse="true">
+                        <div class="input-group-append">
+                            <button class="btn btn-secondary" type="button">保存</button>
+                        </div>
+                    </ConditionComponent>
+                </div>
+            </div>
+        </div>
+    </div>
+</ConditionComponent>
+<ConditionComponent AuthKey="saveFooter">
+    <div class="card">
+        <div class="card-header">页脚设置</div>
+        <div class="card-body">
+            <ConditionComponent>
+                <div class="alert alert-danger" role="alert">
+                    <span>演示系统禁止更改页脚</span>
+                </div>
+            </ConditionComponent>
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="sysFoot" placeholder="请输入网站页脚，50字以内" value="@Model?.Footer" />
+                    <ConditionComponent Inverse="true">
+                        <div class="input-group-append">
+                            <button class="btn btn-secondary" type="button">保存</button>
+                        </div>
+                    </ConditionComponent>
+                </div>
+            </div>
+        </div>
+    </div>
+</ConditionComponent>
+<ConditionComponent AuthKey="saveTheme">
+    <div class="card">
+        <div class="card-header">网站样式</div>
+        <div class="card-body">
+            <div class="alert alert-info" role="alert">
+                <span>注意：<b><a class="badge-pill" href="./Profiles">个人中心</a></b>中设置的网站样式覆盖本设置</span>
+            </div>
+            <div class="form-group text-right">
+                <div class="btn-group" role="group">
+                    <div class="btn-group" role="group">
+                        <button id="dictCssDefine" class="btn btn-success dropdown-select dropdown-toggle" data-toggle="dropdown" data-default-val="" value="@Model?.Theme">默认样式</button>
+                        <div class="dropdown-menu">
+                            <a href="#" data-val="">默认样式</a>
+                            @foreach (var css in Model?.Themes)
+                            {
+                                <a href="#" data-val="@css.Code">@css.Name</a>
+                            }
+                        </div>
+                    </div>
+                    <button class="btn btn-secondary" type="button" data-method="css">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ConditionComponent>
+<ConditionComponent AuthKey="saveUISettings">
+    <div class="card">
+        <div class="card-header">网站调整</div>
+        <div class="card-body">
+            <div class="form-inline">
+                <div class="row">
+                    <div class="form-group col-6">
+                        <label class="control-label" for="sider">侧边栏设置</label>
+                        <input id="sider" hidden type="checkbox" data-default-val="@Model?.ShowSideBar" data-toggle="toggle" data-width="120" data-onstyle="success" data-on="展开" data-off="收缩" />
+                    </div>
+                    <div class="form-group col-6">
+                        <label class="control-label" for="cardTitle">标题设置</label>
+                        <input id="cardTitle" hidden type="checkbox" data-default-val="@Model?.ShowCardTitle" data-toggle="toggle" data-width="120" data-onstyle="success" data-on="显示" data-off="关闭" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer text-right">
+                <button data-method="UISettings" class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
+            </div>
+        </div>
+    </div>
+</ConditionComponent>
+<ConditionComponent AuthKey="loginSettings">
+    <div class="card" asp-auth="loginSettings">
+        <div class="card-header">登录设置</div>
+        <div class="card-body">
+            <ConditionComponent>
+                <div class="alert alert-danger" role="alert">
+                    <span>演示系统禁止更改登录设置</span>
+                </div>
+            </ConditionComponent>
+            <div class="form-inline">
+                <div class="row">
+                    <div class="form-group col-6">
+                        <label class="control-label" for="mobile">手机登录</label>
+                        <input id="mobile" hidden type="checkbox" data-default-val="@Model?.ShowMobile" data-toggle="toggle" data-width="120" data-onstyle="success" data-on="允许" data-off="关闭" />
+                    </div>
+                    <div class="form-group col-6">
+                        <label class="control-label" for="cardTitle">OAuth 认证</label>
+                        <input id="oauth" hidden type="checkbox" data-default-val="@Model?.ShowOAuth" data-toggle="toggle" data-width="120" data-onstyle="success" data-on="允许" data-off="关闭" />
+                    </div>
+                </div>
+            </div>
+            <ConditionComponent Inverse="true">
+                <div class="modal-footer text-right">
+                    <button class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
+                </div>
+            </ConditionComponent>
+        </div>
+    </div>
+</ConditionComponent>
+<ConditionComponent AuthKey="lockScreen">
+    <div class="card">
+        <div class="card-header">自动锁屏设置</div>
+        <div class="card-body">
+            <div class="form-inline">
+                <div class="row">
+                    <div class="form-group col-6">
+                        <label class="control-label" for="lockScreen">自动锁屏</label>
+                        <input id="lockScreen" hidden type="checkbox" data-default-val="@Model?.AutoLockScreen" data-toggle="toggle" data-width="120" data-onstyle="success" data-on="开启" data-off="关闭" />
+                    </div>
+                    <div class="form-group col-6">
+                        <label class="control-label" for="lockPeriod">时长间隔(秒)</label>
+                        <input id="lockPeriod" type="number" class="form-control" min="30" value="@Model?.LockScreenPeriod" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer text-right">
+                <button class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
+            </div>
+        </div>
+    </div>
+</ConditionComponent> 
+<ConditionComponent AuthKey="lockScreen">
+<div class="card" asp-auth="defaultApp">
+    <div class="card-header">默认应用设置</div>
+    <div class="card-body">
+        <div class="alert alert-info" role="alert">
+            <span>开启此功能后用户登录时默认导航到第一个已授权的前台应用</span>
+        </div>
+        <div class="form-inline">
+            <div class="row">
+                <div class="form-group col-6">
+                    <label class="control-label" for="defaultApp">默认应用</label>
+                    <input id="defaultApp" hidden type="checkbox" data-default-val="@Model?.DefaultApp" data-toggle="toggle" data-width="120" data-onstyle="success" data-on="开启" data-off="关闭" />
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer text-right">
+            <button class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
+        </div>
+    </div>
+</div>
+</ConditionComponent> 
+<ConditionComponent AuthKey="blazor">
+<div class="card">
+    <div class="card-header">网站设置</div>
+    <div class="card-body">
+        <div class="alert alert-info" role="alert">
+            <span>开启此功能后后台应用使用 Blazor 多标签形式</span>
+        </div>
+        <div class="form-inline">
+            <div class="row">
+                <div class="form-group col-6">
+                    <label class="control-label" for="blazor">Blazor</label>
+                    <input id="blazor" hidden type="checkbox" data-default-val="@Model?.EnableBlazor" data-toggle="toggle" data-width="120" data-onstyle="success" data-on="开启" data-off="关闭" />
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer text-right">
+            <button class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
+        </div>
+    </div>
+</div>
+</ConditionComponent> 
+<div class="card">
+    <div class="card-header">
+        <div class="d-flex align-items-center">
+            <span class="flex-fill">网站缓存</span>
+            <ConditionComponent AuthKey="clearAllCache">
+                <a href="#" class="fa fa-times-circle-o" title="全部清除" data-toggle="tooltip" data-placement="left" asp-auth=""></a>
+            </ConditionComponent>    
+            <a href="#" class="fa fa-refresh ml-3" title="点击刷新" data-toggle="tooltip"></a>
+        </div>
+    </div>
+    <div class="card-body">
+    </div>
+</div>
