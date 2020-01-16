@@ -435,7 +435,7 @@ footer {
         outline: none;
     }
 
-.dropdown-select + .dropdown-menu a:hover {
+.dropdown-select + .dropdown-menu a:hover, .dropdown-select + .dropdown-menu .dropdown-item:hover {
     background: #007AC0;
     color: #fff;
 }
@@ -444,10 +444,11 @@ footer {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.176);
 }
 
-    .dropdown-menu a {
+    .dropdown-menu a, .dropdown-menu .dropdown-item {
         transition: all .25s linear;
         padding: 6px 20px;
         display: block;
+        color: #007bff;
     }
 
 .dropdown-divider {

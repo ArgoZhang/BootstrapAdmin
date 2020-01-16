@@ -29,90 +29,86 @@
         </ConditionComponent>
     </div>
 </AuthorizateComponent>
-<div class="card" asp-auth="savePassword" asp-condition="!@Model?.External">
-    <div class="card-header">修改密码</div>
-    <div class="card-body">
-        <ConditionComponent>
-            <div class="alert alert-danger" role="alert">
-                <span>演示系统禁止更改管理员密码</span>
+<ConditionComponent Condition="@(Model?.External ?? false)" Inverse="true">
+    <ConditionComponent AuthKey="savePassword">
+        <div class="card">
+            <div class="card-header">修改密码</div>
+            <div class="card-body">
+                <ConditionComponent>
+                    <div class="alert alert-danger" role="alert">
+                        <span>演示系统禁止更改管理员密码</span>
+                    </div>
+                </ConditionComponent>
+                <LgbEditForm class="form-inline" Id="Profile" Model="Password" OnValidSubmit="SavePassword">
+                    <div class="row">
+                        <LgbInputText InputType="password" ColumnClass="col-sm-6 col-md-auto" @bind-Value="@Password.Password" autocomplete="off" placeholder="原密码" maxlength="16">
+                            <RequiredValidator />
+                            <StringLengthValidator Length="16" />
+                        </LgbInputText>
+                    </div>
+                    <div class="row">
+                        <LgbInputText InputType="password" ColumnClass="col-sm-6 col-md-auto" @bind-Value="@Password.NewPassword" autocomplete="off" placeholder="新密码" maxlength="16">
+                            <RequiredValidator />
+                            <StringLengthValidator Length="16" />
+                        </LgbInputText>
+                        <LgbInputText InputType="password" ColumnClass="col-sm-6 col-md-auto" @bind-Value="@Password.ConfirmPassword" autocomplete="off" placeholder="与新密码一致" maxlength="16">
+                            <RequiredValidator />
+                            <StringLengthValidator Length="16" />
+                            <EqualToValidator @bind-Value="@Password.NewPassword" />
+                        </LgbInputText>
+                    </div>
+                </LgbEditForm>
             </div>
-        </ConditionComponent>
-        <LgbEditForm class="form-inline" Id="Profile" Model="Password" OnValidSubmit="SavePassword">
-            <div class="row">
-                <LgbInputText InputType="password" ColumnClass="col-sm-6 col-md-auto" @bind-Value="@Password.Password" autocomplete="off" placeholder="原密码" maxlength="16">
-                    <RequiredValidator />
-                    <StringLengthValidator Length="16" />
-                </LgbInputText>
-            </div>
-            <div class="row">
-                <LgbInputText InputType="password" ColumnClass="col-sm-6 col-md-auto" @bind-Value="@Password.NewPassword" autocomplete="off" placeholder="新密码" maxlength="16">
-                    <RequiredValidator />
-                    <StringLengthValidator Length="16" />
-                </LgbInputText>
-                <LgbInputText InputType="password" ColumnClass="col-sm-6 col-md-auto" @bind-Value="@Password.ConfirmPassword" autocomplete="off" placeholder="与新密码一致" maxlength="16">
-                    <RequiredValidator />
-                    <StringLengthValidator Length="16" />
-                    <EqualToValidator @bind-Value="@Password.NewPassword" />
-                </LgbInputText>
-            </div>
-        </LgbEditForm>
-    </div>
-    <ConditionComponent Inverse="true">
-        <div class="card-footer">
-            <button class="btn btn-secondary" type="button" onclick="$.submitForm(this)"><i class="fa fa-save"></i><span>保存</span></button>
+            <ConditionComponent Inverse="true">
+                <div class="card-footer">
+                    <button class="btn btn-secondary" type="button" onclick="$.submitForm(this)"><i class="fa fa-save"></i><span>保存</span></button>
+                </div>
+            </ConditionComponent>
         </div>
     </ConditionComponent>
-</div>
-<div class="card" asp-auth="saveApp">
-    <div class="card-header">默认应用</div>
-    <div class="card-body">
-        <div class="form-group">
-            <div class="btn-group" role="group">
-                <button id="app" class="btn btn-success dropdown-select dropdown-toggle" data-toggle="dropdown" value="@Model?.AppId">@Model?.AppName</button>
-                <div class="dropdown-menu">
-                    @foreach (var app in Model?.Applications ?? new KeyValuePair<string, string>[0])
-                    {
-                        <a href="#" data-val="@app.Key">@app.Value</a>
-                    }
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="card-footer">
-        <button id="btnSaveApp" data-method="app" class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
-    </div>
-</div>
-<div class="card" asp-auth="saveTheme">
-    <div class="card-header">网站样式</div>
-    <div class="card-body">
-        <div class="alert alert-info" role="alert">
-            <span>注意：本设置将覆盖<b><a class="badge-pill" href="./Settings">网站设置</a></b>中设置的网站样式</span>
-        </div>
-        <div class="form-group">
-            <div class="btn-group" role="group">
-                <button id="css" class="btn btn-success dropdown-select dropdown-toggle" data-toggle="dropdown" data-default-val="" value="@Model?.Css">默认样式</button>
-                <div class="dropdown-menu">
-                    <a href="#" data-val="">默认样式</a>
-                    @foreach (var css in Model?.Themes ?? new Bootstrap.Security.BootstrapDict[0])
-                    {
-                        <a href="#" data-val="@css.Code">@css.Name</a>
-                    }
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="card-footer">
-        <button id="btnSaveCss" data-method="profileCss" class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
-    </div>
-</div>
-<div class="card" asp-auth="saveIcon">
-    <div class="card-header">修改头像</div>
-    <div class="card-body">
-        <form enctype="multipart/form-data">
+</ConditionComponent>
+<ConditionComponent AuthKey="saveApp">
+    <div class="card">
+        <div class="card-header">默认应用</div>
+        <div class="card-body">
             <div class="form-group">
-                <input id="fileIcon" type="file" data-init="@Model?.Size" data-file="@Model?.FileName">
+                <div class="btn-group" role="group">
+                    <Dropdown @bind-Value="@SelectedApp" Items="@Apps"></Dropdown>
+                </div>
             </div>
-        </form>
-        <img class="card-img d-none" src="@Model?.Icon.ToBlazorLink()" />
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-secondary" type="button" @onclick="SaveApp"><i class="fa fa-save"></i><span>保存</span></button>
+        </div>
     </div>
-</div>
+</ConditionComponent>
+<ConditionComponent AuthKey="saveTheme">
+    <div class="card">
+        <div class="card-header">网站样式</div>
+        <div class="card-body">
+            <div class="alert alert-info" role="alert">
+                <span>注意：本设置将覆盖<b><a class="badge-pill" href="@("~/Admin/Settings".ToBlazorMenuUrl())">网站设置</a></b>中设置的网站样式</span>
+            </div>
+            <div class="form-group">
+                <Dropdown @bind-Value="@SelectedTheme" Items="@Themes"></Dropdown>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-secondary" type="button" @onclick="SaveTheme"><i class="fa fa-save"></i><span>保存</span></button>
+        </div>
+    </div>
+</ConditionComponent>
+<ConditionComponent AuthKey="saveIcon">
+    <div class="card">
+        <div class="card-header">修改头像</div>
+        <div class="card-body">
+            <form enctype="multipart/form-data">
+                <div class="form-group">
+                    <input id="fileIcon" type="file" data-init="@Model?.Size" data-file="@Model?.FileName">
+                </div>
+            </form>
+            <img class="card-img d-none" src="@Model?.Icon.ToBlazorLink()" />
+        </div>
+    </div>
+</ConditionComponent>
+<Toast @ref="Toast" Id="toast_profile"></Toast>
