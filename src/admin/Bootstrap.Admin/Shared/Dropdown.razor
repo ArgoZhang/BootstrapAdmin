@@ -1,0 +1,11 @@
+﻿@inherits DropdownBase
+
+<div class="btn-group" role="group">
+    <button class="btn btn-success dropdown-select dropdown-toggle" data-toggle="dropdown">@Value.Text</button>
+    <div class="dropdown-menu">
+        @foreach (var item in Items)
+        {
+            <div class="dropdown-item" @onclick="e => Value = item">@item.Text</div>
+        }
+    </div>
+</div>

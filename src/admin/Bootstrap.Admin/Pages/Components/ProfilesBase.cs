@@ -1,9 +1,13 @@
-﻿using System.ComponentModel;
+﻿using Bootstrap.Admin.Components;
 using Bootstrap.Admin.Models;
 using Bootstrap.Admin.Shared;
+using Bootstrap.DataAccess;
 using Bootstrap.Security;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 
 namespace Bootstrap.Pages.Admin.Components
 {
@@ -45,12 +49,50 @@ namespace Bootstrap.Pages.Admin.Components
         public string DisplayName { get; set; } = "";
 
         /// <summary>
+        /// Toast 组件实例
+        /// </summary>
+        protected Toast? Toast { get; set; }
+
+        /// <summary>
+        /// 获得/设置 选中的样式项
+        /// </summary>
+        protected SelectedItem SelectedTheme { get; set; } = new SelectedItem();
+
+        /// <summary>
+        /// 获得/设置 选中的应用程序
+        /// </summary>
+        protected SelectedItem SelectedApp { get; set; } = new SelectedItem();
+
+        /// <summary>
+        /// 获得/设置 应用程序集合
+        /// </summary>
+        protected IEnumerable<SelectedItem> Apps { get; set; } = new SelectedItem[0];
+
+        /// <summary>
+        /// 获得/设置 网站样式集合
+        /// </summary>
+        protected IEnumerable<SelectedItem> Themes { get; set; } = new SelectedItem[0];
+
+        /// <summary>
+        /// 显示提示信息
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="ret"></param>
+        protected void ShowMessage(string text, bool ret = true) => Toast?.ShowMessage("个人中心", text, ret ? ToastCategory.Success : ToastCategory.Error);
+
+        /// <summary>
         /// 组件初始化方法
         /// </summary>
         protected override void OnInitialized()
         {
             Model = new ProfilesModel(RootLayout?.UserName);
-            var user = DataAccess.UserHelper.RetrieveUserByUserName(Model?.UserName);
+            Themes = new SelectedItem[] { new SelectedItem() { Text = "默认样式" } }.Union(Model.Themes.Select(t => new SelectedItem() { Text = t.Name, Value = t.Code }));
+            Apps = Model.Applications.Select(t => new SelectedItem() { Text = t.Value, Value = t.Key });
+
+            SelectedTheme = Themes.First();
+            SelectedApp = Apps.First();
+
+            var user = UserHelper.RetrieveUserByUserName(Model?.UserName);
             if (user != null) User = user;
 
             // 直接绑定 User.DisplayName 导致未保存时 UI 的显示名称也会变化
@@ -62,10 +104,18 @@ namespace Bootstrap.Pages.Admin.Components
         /// </summary>
         protected void SaveDisplayName(EditContext context)
         {
-            if (!string.IsNullOrEmpty(User.UserName) && Bootstrap.DataAccess.UserHelper.SaveDisplayName(User.UserName, DisplayName))
+            if (!string.IsNullOrEmpty(User.UserName))
             {
-                User.DisplayName = DisplayName;
-                RootLayout?.OnDisplayNameChanged(DisplayName);
+                var ret = UserHelper.SaveDisplayName(User.UserName, DisplayName);
+                if (ret)
+                {
+                    User.DisplayName = DisplayName;
+                    RootLayout?.OnDisplayNameChanged(DisplayName);
+                }
+
+                // 弹窗提示是否保存成功
+                var result = ret ? "成功" : "失败";
+                ShowMessage($"保存显示名称{result}", ret);
             }
         }
 
@@ -74,7 +124,35 @@ namespace Bootstrap.Pages.Admin.Components
         /// </summary>
         protected void SavePassword(EditContext context)
         {
-            Bootstrap.DataAccess.UserHelper.ChangePassword(User.UserName, Password.Password, Password.NewPassword);
+            var ret = UserHelper.ChangePassword(User.UserName, Password.Password, Password.NewPassword);
+
+            // 弹窗提示是否保存成功
+            var result = ret ? "成功" : "失败";
+            ShowMessage($"更新密码{result}", ret);
+        }
+
+        /// <summary>
+        /// 保存默认应用方法
+        /// </summary>
+        protected void SaveApp()
+        {
+            var ret = UserHelper.SaveApp(User.UserName, SelectedApp.Value);
+
+            // 弹窗提示是否保存成功
+            var result = ret ? "成功" : "失败";
+            ShowMessage($"保存默认应用{result}", ret);
+        }
+
+        /// <summary>
+        /// 保存网站样式方法
+        /// </summary>
+        protected void SaveTheme()
+        {
+            var ret = UserHelper.SaveUserCssByName(User.UserName, SelectedTheme.Value);
+
+            // 弹窗提示是否保存成功
+            var result = ret ? "成功" : "失败";
+            ShowMessage($"保存网站样式{result}", ret);
         }
 
         /// <summary>

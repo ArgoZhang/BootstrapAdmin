@@ -31,6 +31,12 @@ namespace Bootstrap.Admin.Components
         public string AuthKey { get; set; } = "";
 
         /// <summary>
+        /// 获得/设置 是否显示
+        /// </summary>
+        [Parameter]
+        public bool? Condition { get; set; }
+
+        /// <summary>
         /// 获得/设置 子控件
         /// </summary>
         [Parameter]
@@ -61,6 +67,7 @@ namespace Bootstrap.Admin.Components
                     render = ComponentAuthorization?.Authorizate(user, url.ToMvcMenuUrl(), AuthKey) ?? false;
                 }
             }
+            else if (Condition.HasValue) render = Condition.Value;
             else render = RootLayout?.Model.IsDemo ?? false;
             if (Inverse) render = !render;
             if (render) builder.AddContent(0, ChildContent);
