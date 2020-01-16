@@ -1,0 +1,9 @@
+﻿@inherits ToggleBase
+
+<div class="@(Value ? "toggle btn btn-success" : "toggle btn btn-default off")" data-toggle="toggle" style="@($"width: {Width}px;")">
+    <div class="toggle-group" @onclick="@( _ => Value = !Value)">
+        <label class="btn btn-success toggle-on">@OnText</label>
+        <label class="btn btn-default active toggle-off">@OffText</label>
+        <span class="toggle-handle btn btn-default"></span>
+    </div>
+</div>

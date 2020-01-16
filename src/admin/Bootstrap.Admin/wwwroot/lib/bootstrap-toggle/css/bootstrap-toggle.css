@@ -81,3 +81,4 @@
 .toggle-on.btn-xs { padding-right: 12px; }
 .toggle-off.btn-xs { padding-left: 12px; }
 
+.toggle-group label, .toggle-group span {cursor: pointer;}

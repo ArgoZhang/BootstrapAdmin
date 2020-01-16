@@ -11,7 +11,7 @@
             </ConditionComponent>
             <div class="form-group">
                 <div class="input-group">
-                    <input type="text" class="form-control" id="sysName" placeholder="请输入网站标题，50字以内" value="@Model?.Title" />
+                    <input type="text" class="form-control" id="sysName" placeholder="请输入网站标题，50字以内" value="@Model.Title" />
                     <ConditionComponent Inverse="true">
                         <div class="input-group-append">
                             <button class="btn btn-secondary" type="button">保存</button>
@@ -33,7 +33,7 @@
             </ConditionComponent>
             <div class="form-group">
                 <div class="input-group">
-                    <input type="text" class="form-control" id="sysFoot" placeholder="请输入网站页脚，50字以内" value="@Model?.Footer" />
+                    <input type="text" class="form-control" id="sysFoot" placeholder="请输入网站页脚，50字以内" value="@Model.Footer" />
                     <ConditionComponent Inverse="true">
                         <div class="input-group-append">
                             <button class="btn btn-secondary" type="button">保存</button>
@@ -54,10 +54,10 @@
             <div class="form-group text-right">
                 <div class="btn-group" role="group">
                     <div class="btn-group" role="group">
-                        <button id="dictCssDefine" class="btn btn-success dropdown-select dropdown-toggle" data-toggle="dropdown" data-default-val="" value="@Model?.Theme">默认样式</button>
+                        <button id="dictCssDefine" class="btn btn-success dropdown-select dropdown-toggle" data-toggle="dropdown" data-default-val="" value="@Model.Theme">默认样式</button>
                         <div class="dropdown-menu">
                             <a href="#" data-val="">默认样式</a>
-                            @foreach (var css in Model?.Themes)
+                            @foreach (var css in Model.Themes)
                             {
                                 <a href="#" data-val="@css.Code">@css.Name</a>
                             }
@@ -77,11 +77,11 @@
                 <div class="row">
                     <div class="form-group col-6">
                         <label class="control-label" for="sider">侧边栏设置</label>
-                        <input id="sider" hidden type="checkbox" data-default-val="@Model?.ShowSideBar" data-toggle="toggle" data-width="120" data-onstyle="success" data-on="展开" data-off="收缩" />
+                        <Toggle @bind-Value="@Model.ShowSideBar"></Toggle>
                     </div>
                     <div class="form-group col-6">
                         <label class="control-label" for="cardTitle">标题设置</label>
-                        <input id="cardTitle" hidden type="checkbox" data-default-val="@Model?.ShowCardTitle" data-toggle="toggle" data-width="120" data-onstyle="success" data-on="显示" data-off="关闭" />
+                        <Toggle @bind-Value="@Model.ShowCardTitle" OnText="显示" OffText="关闭"></Toggle>
                     </div>
                 </div>
             </div>
@@ -104,11 +104,11 @@
                 <div class="row">
                     <div class="form-group col-6">
                         <label class="control-label" for="mobile">手机登录</label>
-                        <input id="mobile" hidden type="checkbox" data-default-val="@Model?.ShowMobile" data-toggle="toggle" data-width="120" data-onstyle="success" data-on="允许" data-off="关闭" />
+                        <Toggle @bind-Value="@Model.ShowMobile" OnText="允许" OffText="关闭"></Toggle>
                     </div>
                     <div class="form-group col-6">
                         <label class="control-label" for="cardTitle">OAuth 认证</label>
-                        <input id="oauth" hidden type="checkbox" data-default-val="@Model?.ShowOAuth" data-toggle="toggle" data-width="120" data-onstyle="success" data-on="允许" data-off="关闭" />
+                        <Toggle @bind-Value="@Model.ShowOAuth" OnText="允许" OffText="关闭"></Toggle>
                     </div>
                 </div>
             </div>
@@ -128,11 +128,11 @@
                 <div class="row">
                     <div class="form-group col-6">
                         <label class="control-label" for="lockScreen">自动锁屏</label>
-                        <input id="lockScreen" hidden type="checkbox" data-default-val="@Model?.AutoLockScreen" data-toggle="toggle" data-width="120" data-onstyle="success" data-on="开启" data-off="关闭" />
+                        <Toggle @bind-Value="@Model.AutoLockScreen" OnText="开启" OffText="关闭"></Toggle>
                     </div>
                     <div class="form-group col-6">
                         <label class="control-label" for="lockPeriod">时长间隔(秒)</label>
-                        <input id="lockPeriod" type="number" class="form-control" min="30" value="@Model?.LockScreenPeriod" />
+                        <input id="lockPeriod" type="number" class="form-control" value="@Model.LockScreenPeriod" />
                     </div>
                 </div>
             </div>
@@ -141,56 +141,56 @@
             </div>
         </div>
     </div>
-</ConditionComponent> 
+</ConditionComponent>
 <ConditionComponent AuthKey="lockScreen">
-<div class="card" asp-auth="defaultApp">
-    <div class="card-header">默认应用设置</div>
-    <div class="card-body">
-        <div class="alert alert-info" role="alert">
-            <span>开启此功能后用户登录时默认导航到第一个已授权的前台应用</span>
-        </div>
-        <div class="form-inline">
-            <div class="row">
-                <div class="form-group col-6">
-                    <label class="control-label" for="defaultApp">默认应用</label>
-                    <input id="defaultApp" hidden type="checkbox" data-default-val="@Model?.DefaultApp" data-toggle="toggle" data-width="120" data-onstyle="success" data-on="开启" data-off="关闭" />
+    <div class="card" asp-auth="defaultApp">
+        <div class="card-header">默认应用设置</div>
+        <div class="card-body">
+            <div class="alert alert-info" role="alert">
+                <span>开启此功能后用户登录时默认导航到第一个已授权的前台应用</span>
+            </div>
+            <div class="form-inline">
+                <div class="row">
+                    <div class="form-group col-6">
+                        <label class="control-label" for="defaultApp">默认应用</label>
+                        <Toggle @bind-Value="@Model.DefaultApp" OnText="开启" OffText="关闭"></Toggle>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="modal-footer text-right">
-            <button class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
+            <div class="modal-footer text-right">
+                <button class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
+            </div>
         </div>
     </div>
-</div>
-</ConditionComponent> 
+</ConditionComponent>
 <ConditionComponent AuthKey="blazor">
-<div class="card">
-    <div class="card-header">网站设置</div>
-    <div class="card-body">
-        <div class="alert alert-info" role="alert">
-            <span>开启此功能后后台应用使用 Blazor 多标签形式</span>
-        </div>
-        <div class="form-inline">
-            <div class="row">
-                <div class="form-group col-6">
-                    <label class="control-label" for="blazor">Blazor</label>
-                    <input id="blazor" hidden type="checkbox" data-default-val="@Model?.EnableBlazor" data-toggle="toggle" data-width="120" data-onstyle="success" data-on="开启" data-off="关闭" />
+    <div class="card">
+        <div class="card-header">网站设置</div>
+        <div class="card-body">
+            <div class="alert alert-info" role="alert">
+                <span>开启此功能后后台应用使用 Blazor 多标签形式</span>
+            </div>
+            <div class="form-inline">
+                <div class="row">
+                    <div class="form-group col-6">
+                        <label class="control-label" for="blazor">Blazor</label>
+                        <Toggle @bind-Value="@Model.EnableBlazor" OnText="开启" OffText="关闭"></Toggle>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="modal-footer text-right">
-            <button class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
+            <div class="modal-footer text-right">
+                <button class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
+            </div>
         </div>
     </div>
-</div>
-</ConditionComponent> 
+</ConditionComponent>
 <div class="card">
     <div class="card-header">
         <div class="d-flex align-items-center">
             <span class="flex-fill">网站缓存</span>
             <ConditionComponent AuthKey="clearAllCache">
                 <a href="#" class="fa fa-times-circle-o" title="全部清除" data-toggle="tooltip" data-placement="left" asp-auth=""></a>
-            </ConditionComponent>    
+            </ConditionComponent>
             <a href="#" class="fa fa-refresh ml-3" title="点击刷新" data-toggle="tooltip"></a>
         </div>
     </div>
