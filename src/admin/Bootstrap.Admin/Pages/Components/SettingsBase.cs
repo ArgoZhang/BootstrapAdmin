@@ -38,6 +38,7 @@ namespace Bootstrap.Pages.Admin.Components
             Model.LockScreenPeriod = DictHelper.RetrieveAutoLockScreenPeriod();
             Model.DefaultApp = DictHelper.RetrieveDefaultApp();
             Model.EnableBlazor = DictHelper.RetrieveEnableBlazor();
+            Model.Themes = DictHelper.RetrieveThemes();
         }
 
         /// <summary>
