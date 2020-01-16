@@ -35,5 +35,38 @@ namespace Bootstrap.Pages.Admin.Components
         /// 删除方法
         /// </summary>
         protected override bool Delete(IEnumerable<Role> items) => RoleHelper.Delete(items.Select(item => item.Id ?? ""));
+
+        /// <summary>
+        /// 分配用户方法
+        /// </summary>
+        protected void AssignUsers()
+        {
+
+        }
+
+        /// <summary>
+        /// 分配部门方法
+        /// </summary>
+        protected void AssignGroups()
+        {
+
+        }
+
+        /// <summary>
+        /// 分配菜单方法
+        /// </summary>
+        protected void AssignMenus()
+        {
+
+        }
+
+        /// <summary>
+        /// 分配应用方法
+        /// </summary>
+        protected void AssignApps()
+        {
+
+        }
+
     }
 }

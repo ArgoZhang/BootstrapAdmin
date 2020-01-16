@@ -5,6 +5,12 @@
         <LgbInputText ColumnClass="col-sm-auto" @bind-Value="@context.RoleName" maxlength="50" />
         <LgbInputText ColumnClass="col-sm-auto" @bind-Value="@context.Description" maxlength="50" />
     </QueryBody>
+    <TableToolbarTemplate>
+        <TableToolbarButton class="btn btn-info" Icon="fa fa-user" Title="分配用户" OnClick="AssignUsers" />
+        <TableToolbarButton class="btn btn-warning" Icon="fa fa-bank" Title="分配部门" OnClick="AssignGroups" />
+        <TableToolbarButton class="btn btn-secondary" Icon="fa fa-dashboard" Title="分配菜单" OnClick="AssignMenus" />
+        <TableToolbarButton class="btn btn-success" Icon="fa fa-cubes" Title="分配应用" OnClick="AssignApps" />
+    </TableToolbarTemplate>
     <TableInfoTemplate>
         <div class="alert alert-info" role="alert">
             <span>禁止修改系统内置 Administrators Default 两个角色</span>
