@@ -36,5 +36,14 @@ namespace Bootstrap.Admin.Components
         /// </summary>
         [Parameter]
         public EventCallback<bool> ValueChanged { get; set; }
+
+        /// <summary>
+        /// 获得/设置 Value 值改变时回调事件
+        /// </summary>
+        protected void ToggleClick()
+        {
+            Value = !Value;
+            ValueChanged.InvokeAsync(Value);
+        }
     }
 }

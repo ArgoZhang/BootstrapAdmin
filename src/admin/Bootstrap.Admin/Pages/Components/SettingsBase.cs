@@ -1,8 +1,9 @@
-﻿using Bootstrap.Admin.Shared;
+﻿using Bootstrap.Admin.Components;
+using Bootstrap.Admin.Shared;
 using Bootstrap.DataAccess;
-using System.Collections.Generic;
 using Bootstrap.Security;
 using Microsoft.AspNetCore.Components;
+using System.Collections.Generic;
 
 namespace Bootstrap.Pages.Admin.Components
 {
@@ -23,6 +24,18 @@ namespace Bootstrap.Pages.Admin.Components
         public DefaultLayout? RootLayout { get; protected set; }
 
         /// <summary>
+        /// Toast 组件实例
+        /// </summary>
+        protected Toast? Toast { get; set; }
+
+        /// <summary>
+        /// 显示提示信息
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="ret"></param>
+        protected void ShowMessage(string text, bool ret = true) => Toast?.ShowMessage("网站设置", text, ret ? ToastCategory.Success : ToastCategory.Error);
+
+        /// <summary>
         /// 设置参数方法
         /// </summary>
         protected override void OnInitialized()
@@ -41,6 +54,19 @@ namespace Bootstrap.Pages.Admin.Components
             Model.Themes = DictHelper.RetrieveThemes();
         }
 
+        /// <summary>
+        /// 保存 Balzor 方法
+        /// </summary>
+        protected void SaveBlazor()
+        {
+            var ret = DictHelper.SaveSettings(new BootstrapDict() { Category = "网站设置", Name = "Blazor", Code = Model.EnableBlazor ? "1" : "0" });
+            if (Model.EnableBlazor) ShowMessage("Blazor 设置保存", ret);
+            else
+            {
+                var url = RootLayout?.NavigationManager?.Uri.Replace("/Pages", "");
+                RootLayout?.NavigationManager?.NavigateTo(url, true);
+            }
+        }
         /// <summary>
         /// 网站设置编辑模型实体类
         /// </summary>

@@ -179,7 +179,7 @@
                 </div>
             </div>
             <div class="modal-footer text-right">
-                <button class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
+                <button class="btn btn-secondary" type="button" @onclick="SaveBlazor"><i class="fa fa-save"></i><span>保存</span></button>
             </div>
         </div>
     </div>
@@ -197,3 +197,4 @@
     <div class="card-body">
     </div>
 </div>
+<Toast @ref="Toast" Id="toast_settings"></Toast>
