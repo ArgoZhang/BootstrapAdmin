@@ -136,6 +136,11 @@ INSERT INTO Navigations (ParentId, Name, `Order`, Icon, Url, Category) VALUES (@
 INSERT INTO Navigations (ParentId, Name, `Order`, Icon, Url, Category) VALUES (@@identity - 1, 'API文档', 10, 'fa fa-wrench', '~/swagger', '0');
 INSERT INTO Navigations (ParentId, Name, `Order`, Icon, Url, Category) VALUES (@@identity - 2, '图标集', 10, 'fa fa-dashboard', '~/Admin/FAIcon', '0');
 
+-- 控件集合菜单
+INSERT INTO Navigations (ParentId, Name, `Order`, Icon, Url, Category) VALUES (0, '控件集合', 170, 'fa fa-stethoscope', '#', '0');
+INSERT INTO Navigations (ParentId, Name, `Order`, Icon, Url, Category) VALUES (@@identity, '行为式验证码', 10, 'fa fa-wrench', 'https://gitee.com/LongbowEnterprise/SliderCaptcha', '0');
+INSERT INTO Navigations (ParentId, Name, `Order`, Icon, Url, Category) VALUES (@@identity - 1, '下拉框', 20, 'fa fa-bars', 'http://longbowenterprise.gitee.io/longbow-select/', '0');
+
 DELETE FROM `Groups` WHERE GroupName = 'Admin';
 INSERT INTO `Groups` (GroupCode, GroupName, Description) VALUES ('001', 'Admin', '系统默认组');
 
