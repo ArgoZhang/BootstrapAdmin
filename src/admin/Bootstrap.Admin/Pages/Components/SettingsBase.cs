@@ -67,6 +67,16 @@ namespace Bootstrap.Pages.Admin.Components
                 RootLayout?.NavigationManager?.NavigateTo(url, true);
             }
         }
+
+        /// <summary>
+        /// 保存 网站调整 方法
+        /// </summary>
+        protected void SaveSidebar()
+        {
+            var ret = DictHelper.SaveSettings(new BootstrapDict() { Category = "网站调整", Name = "侧边栏状态", Code = Model.ShowSideBar ? "1" : "0" }) &&
+                DictHelper.SaveSettings(new BootstrapDict() { Category = "网站调整", Name = "卡片标题状态", Code = Model.ShowCardTitle ? "1" : "0" });
+            ShowMessage("网站调整 设置保存", ret);
+        }
         /// <summary>
         /// 网站设置编辑模型实体类
         /// </summary>
