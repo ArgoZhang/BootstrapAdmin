@@ -236,6 +236,14 @@ nav .dropdown .nav-link-close.dropdown-toggle:after {
     padding: 0.5rem 1rem;
 }
 
+.dropdown-mvc {
+    padding: 0 !important;
+}
+
+    .dropdown-mvc img {
+        width: 34px;
+    }
+
 @media (min-width: 568px) {
     .toast {
         max-width: 360px;
