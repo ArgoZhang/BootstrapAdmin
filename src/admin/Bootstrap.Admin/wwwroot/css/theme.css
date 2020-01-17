@@ -124,6 +124,10 @@ aside .bg, aside .nav-brand, aside .nav-header, .header .nav, .userinfo .dropdow
             flex: 1 1 33.333%;
         }
 
+            .userinfo .dropdown-item a:hover {
+                color: #333;
+            }
+
             .userinfo .dropdown-item a i {
                 font-size: 1.025rem;
                 display: block;
