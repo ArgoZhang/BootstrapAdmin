@@ -448,8 +448,11 @@ footer {
         transition: all .25s linear;
         padding: 6px 20px;
         display: block;
-        color: #007bff;
     }
+
+.dropdown-select + .dropdown-menu .dropdown-item {
+    color: #007bff;
+}
 
 .dropdown-divider {
     margin: 0.125rem 0;
