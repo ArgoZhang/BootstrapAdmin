@@ -632,7 +632,7 @@
                     return '<span>隐藏分页</span>';
                 },
                 formatRefresh: function formatRefresh() {
-                    return '<span>查询</span>';
+                    return '<span>刷新</span>';
                 },
                 formatToggle: function formatToggle() {
                     return '<span>切换</span>';
