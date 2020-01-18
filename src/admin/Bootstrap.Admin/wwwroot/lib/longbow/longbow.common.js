@@ -438,16 +438,31 @@
             // 判断是否固定表头
             var fixHeader = this.attr('data-fixedHeader') === '';
             var $tabContainer = $(settings.tableContainer);
+            var $table = this;
             if (fixHeader && settings.height === undefined) {
                 if (settings.calcHeight === undefined) {
                     settings.calcHeight = function () {
                         var marginHeight = 0;
                         if ($tabContainer.length === 1) {
-                            marginHeight = $tabContainer.outerHeight() - $tabContainer.height();
-                        }
+                            marginHeight = ($tabContainer.outerHeight() - $tabContainer.height()) * 2;
 
-                        // 38: card-header 
-                        return Math.max(settings.minHeight, $(window).height() - $('header').height() - $('footer').height() - (marginHeight * 2) - 38 - 32 - 10);
+                            // 计算 table 控件前组件高度
+                            var $prev = $table.prev();
+                            while ($prev.length == 1) {
+                                marginHeight += $prev.outerHeight(true);
+                                $prev = $prev.prev();
+                            }
+
+                            // 计算 Card Header 高度
+                            if ($table.parent().hasClass('card-body')) {
+                                // 判断 card-header 是否显示并计算高度
+                                var $cardHader = $table.parent().prev();
+                                if ($cardHader.is(":visible")) {
+                                    marginHeight += $cardHader.outerHeight(true);
+                                }
+                            }
+                        }
+                        return Math.max(settings.minHeight, $(window).height() - $('header').outerHeight(true) - $('footer').outerHeight(true) - marginHeight - 15 - 10);
                     };
                 }
 
