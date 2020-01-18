@@ -123,8 +123,33 @@
         modal: '#dialogNew',
         click: {
             '#btn_query': function (element) {
-                if (this.options.bootstrapTable !== null) this.options.bootstrapTable.bootstrapTable('refresh');
+                if (this.options.bootstrapTable !== null) {
+                    var options = this.options.bootstrapTable.bootstrapTable('getOptions');
+                    if (options.advancedSearchModal) {
+                        $(options.advancedSearchModal).modal('hide');
+                    }
+                    this.options.bootstrapTable.bootstrapTable('refresh');
+                }
                 handlerCallback.call(this, null, element, { oper: 'query' });
+            },
+            '#btn_reset': function () {
+                if (this.options.bootstrapTable !== null) {
+                    var options = this.options.bootstrapTable.bootstrapTable('getOptions');
+                    if (options.advancedSearchModal) {
+                        $(options.advancedSearchModal).find('[data-default-val]').each(function (index, element) {
+                            var $ele = $(element);
+                            var val = $ele.attr('data-default-val');
+                            if ($ele.prop('nodeName') === 'INPUT') {
+                                if ($ele.hasClass('form-select-input')) {
+                                    $ele.prev().lgbSelect('val', val);
+                                }
+                                else {
+                                    $ele.val(val);
+                                }
+                            }
+                        });
+                    }
+                }
             },
             '#btn_add': function (element) {
                 this.dataEntity.reset();

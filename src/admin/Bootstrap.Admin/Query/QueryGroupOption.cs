@@ -1,5 +1,6 @@
 ﻿using Bootstrap.DataAccess;
 using Longbow.Web.Mvc;
+using System;
 using System.Linq;
 
 namespace Bootstrap.Admin.Query
@@ -29,11 +30,15 @@ namespace Bootstrap.Admin.Query
             var data = GroupHelper.Retrieves();
             if (!string.IsNullOrEmpty(GroupName))
             {
-                data = data.Where(t => t.GroupName?.Contains(GroupName) ?? false);
+                data = data.Where(t => t.GroupName.Contains(GroupName, StringComparison.OrdinalIgnoreCase));
             }
             if (!string.IsNullOrEmpty(Description))
             {
-                data = data.Where(t => t.Description?.Contains(Description) ?? false);
+                data = data.Where(t => t.Description?.Contains(Description, StringComparison.OrdinalIgnoreCase) ?? false);
+            }
+            if (!string.IsNullOrEmpty(Search))
+            {
+                data = data.Where(t => t.GroupName.Contains(Search, StringComparison.OrdinalIgnoreCase) || (t.Description?.Contains(Search, StringComparison.OrdinalIgnoreCase) ?? false));
             }
             var ret = new QueryData<object>();
             ret.total = data.Count();

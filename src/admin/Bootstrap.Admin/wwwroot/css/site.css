@@ -531,3 +531,7 @@ pre {
         outline: none;
         color: #371ed4;
     }
+
+    .modal-query .form-group input.form-control {
+        flex: 1 1 auto;
+    }
