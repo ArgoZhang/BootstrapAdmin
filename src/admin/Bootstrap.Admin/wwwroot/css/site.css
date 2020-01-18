@@ -535,3 +535,10 @@ pre {
     .modal-query .form-group input.form-control {
         flex: 1 1 auto;
     }
+
+.tooltip-inner kbd {
+    margin-bottom: 2px;
+    display: inline-block;
+    background: #17a2b8;
+    padding: 3px 6px;
+}    
