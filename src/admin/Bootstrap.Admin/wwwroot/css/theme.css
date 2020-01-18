@@ -774,6 +774,10 @@ input.pending {
         padding: 6px 20px;
     }
 
+.bootstrap-table .fixed-table-toolbar .columns button i + span, .bootstrap-table .fixed-table-toolbar .search button i + span {
+    display: none;
+}
+
 .fixed-table-toolbar .dropdown-menu {
     min-width: unset;
 }

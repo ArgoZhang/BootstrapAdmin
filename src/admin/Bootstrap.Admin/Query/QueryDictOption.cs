@@ -1,6 +1,7 @@
 ﻿using Bootstrap.DataAccess;
 using Bootstrap.Security;
 using Longbow.Web.Mvc;
+using System;
 using System.Linq;
 
 namespace Bootstrap.Admin.Query
@@ -37,15 +38,19 @@ namespace Bootstrap.Admin.Query
             var data = DictHelper.RetrieveDicts();
             if (!string.IsNullOrEmpty(Category))
             {
-                data = data.Where(t => t.Category?.Contains(Category) ?? false);
+                data = data.Where(t => t.Category.Contains(Category, StringComparison.OrdinalIgnoreCase));
             }
             if (!string.IsNullOrEmpty(Name))
             {
-                data = data.Where(t => t.Name?.Contains(Name) ?? false);
+                data = data.Where(t => t.Name.Contains(Name, StringComparison.OrdinalIgnoreCase));
             }
             if (!string.IsNullOrEmpty(Define))
             {
-                data = data.Where(t => t.Define.ToString() == (Define ?? ""));
+                data = data.Where(t => t.Define.ToString() == Define);
+            }
+            if (!string.IsNullOrEmpty(Search))
+            {
+                data = data.Where(t => t.Category.Contains(Search, StringComparison.OrdinalIgnoreCase) || t.Name.Contains(Search, StringComparison.OrdinalIgnoreCase) || t.Code.Contains(Search, StringComparison.OrdinalIgnoreCase));
             }
             var ret = new QueryData<BootstrapDict>();
             ret.total = data.Count();

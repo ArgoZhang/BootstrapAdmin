@@ -6,37 +6,37 @@ using System.Linq;
 namespace Bootstrap.Admin.Query
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class QueryMenuOption : PaginationOption
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public string? Name { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public string? ParentName { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public string? Category { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public string? IsResource { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public string? AppId { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
@@ -45,15 +45,15 @@ namespace Bootstrap.Admin.Query
             var data = MenuHelper.RetrieveMenusByUserName(userName);
             if (!string.IsNullOrEmpty(ParentName))
             {
-                data = data.Where(t => t.Name.Contains(ParentName) || (t.ParentName != null && t.ParentName.Contains(ParentName)));
+                data = data.Where(t => t.Name.Contains(ParentName, StringComparison.OrdinalIgnoreCase) || (t.ParentName != null && t.ParentName.Contains(ParentName, StringComparison.OrdinalIgnoreCase)));
             }
             if (!string.IsNullOrEmpty(Name))
             {
-                data = data.Where(t => t.Name.Contains(Name));
+                data = data.Where(t => t.Name.Contains(Name, StringComparison.OrdinalIgnoreCase));
             }
             if (!string.IsNullOrEmpty(Category))
             {
-                data = data.Where(t => t.Category.Contains(Category));
+                data = data.Where(t => t.Category.Contains(Category, StringComparison.OrdinalIgnoreCase));
             }
             if (!string.IsNullOrEmpty(IsResource))
             {
@@ -62,6 +62,10 @@ namespace Bootstrap.Admin.Query
             if (!string.IsNullOrEmpty(AppId))
             {
                 data = data.Where(t => t.Application.Equals(AppId, StringComparison.OrdinalIgnoreCase));
+            }
+            if (!string.IsNullOrEmpty(Search))
+            {
+                data = data.Where(t => t.Name.Contains(Search, StringComparison.OrdinalIgnoreCase) || t.ParentName.Contains(Search, StringComparison.OrdinalIgnoreCase));
             }
             var ret = new QueryData<object>();
             ret.total = data.Count();

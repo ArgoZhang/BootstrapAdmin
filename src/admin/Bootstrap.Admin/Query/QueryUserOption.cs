@@ -1,5 +1,6 @@
 ﻿using Bootstrap.DataAccess;
 using Longbow.Web.Mvc;
+using System;
 using System.Linq;
 
 namespace Bootstrap.Admin.Query
@@ -29,11 +30,15 @@ namespace Bootstrap.Admin.Query
             var data = UserHelper.Retrieves();
             if (!string.IsNullOrEmpty(Name))
             {
-                data = data.Where(t => t.UserName.Contains(Name));
+                data = data.Where(t => t.UserName.Contains(Name, StringComparison.OrdinalIgnoreCase));
             }
             if (!string.IsNullOrEmpty(DisplayName))
             {
-                data = data.Where(t => t.DisplayName.Contains(DisplayName));
+                data = data.Where(t => t.DisplayName.Contains(DisplayName, StringComparison.OrdinalIgnoreCase));
+            }
+            if (!string.IsNullOrEmpty(Search))
+            {
+                data = data.Where(t => t.DisplayName.Contains(Search, StringComparison.OrdinalIgnoreCase) || t.Description.Contains(Search, StringComparison.OrdinalIgnoreCase) || t.UserName.Contains(Search, StringComparison.OrdinalIgnoreCase));
             }
             var ret = new QueryData<object>();
             ret.total = data.Count();

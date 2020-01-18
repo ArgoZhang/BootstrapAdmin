@@ -353,6 +353,14 @@
                 pageList: [20, 40, 80, 120],        //可供选择的每页的行数（*）
                 showExport: true,
                 exportTypes: ['csv', 'txt', 'excel'],
+                advancedSearchModal: '#dialogAdvancedSearch',
+                search: true,
+                searchOnEnterKey: false,
+                searchTimeOut: 0,
+                showSearchClearButton: true,
+                showAdvancedSearchButton: true,
+                showButtonText: true,
+                showSearchButton: true,             //是否显示搜索按钮
                 showColumns: true,                  //是否显示所有的列
                 showRefresh: true,                  //是否显示刷新按钮
                 showToggle: true,                   //是否显示详细视图和列表视图的切换按钮
@@ -383,6 +391,35 @@
                     }
                 }
             });
+
+            if (settings.search) {
+                // 自动收集 SearchText
+                var queryParams = settings.queryParams;
+
+                settings.queryParams = function (params) {
+                    return $.extend({}, queryParams(params), { search: $('.bootstrap-table .fixed-table-toolbar .search-input').val() });
+                }
+
+                // 支持键盘回车搜索
+                $(document).on('keyup', '.bootstrap-table .fixed-table-toolbar .search-input', this, function (event) {
+                    if (event.keyCode === 13) {
+                        // ENTER
+                        var $buttons = $(this).next();
+                        var $search = $buttons.find('[name="search"]');
+                        if ($search.length === 1) {
+                            $search.trigger('click');
+                        }
+                        else {
+                            // 无搜索按钮是使用 refresh 方法
+                            event.data.bootstrapTable('refresh');
+                        }
+                    }
+                    else if (event.keyCode === 27) {
+                        // ESC
+                        event.data.bootstrapTable('resetSearch');
+                    }
+                });
+            }
             this.bootstrapTable(settings);
             $('.bootstrap-table .fixed-table-toolbar .columns .export .dropdown-menu').addClass("dropdown-menu-right");
             var $gear = $(settings.toolbar).removeClass('d-none').find('.gear');
@@ -396,6 +433,52 @@
                     e.data.bootstrapTable('refresh');
                 });
             }
+
+            // 增加 Tooltip
+            if (settings.search) {
+                $('.bootstrap-table .fixed-table-toolbar .search-input').tooltip({
+                    sanitize: false,
+                    title: "输入任意字符串全局搜索 </br> Enter 搜索 ESC 清除搜索",
+                    html: true
+                });
+            }
+
+            // 生成高级查询按钮
+            if (settings.showAdvancedSearchButton) {
+                // template
+                var $advancedSearchButtonHtml = $('<button class="btn btn-secondary" type="button" name="advancedSearch" title="高级搜索"><i class="fa fa-search-plus"></i><span>高级搜索</span></button>');
+                $advancedSearchButtonHtml.insertAfter($('.bootstrap-table .fixed-table-toolbar .search [name="clearSearch"]')).on('click', function () {
+                    // 弹出高级查询对话框
+                    $(settings.advancedSearchModal).modal('show');
+                });
+
+                // 高级搜索有值时颜色为红色
+                $(settings.advancedSearchModal).on('hide.bs.modal', function () {
+                    var $modal = $(this)
+                    var hasValue = false;
+                    $modal.find('[data-default-val]').each(function (index, element) {
+                        var $ele = $(element);
+                        var val = $ele.attr('data-default-val');
+                        if ($ele.prop('nodeName') === 'INPUT') {
+                            if ($ele.hasClass('form-select-input')) {
+                                hasValue = $ele.prev().val() !== val;
+                            }
+                            else {
+                                hasValue = $ele.val() !== val;
+                            }
+                        }
+                        if (hasValue) return false;
+                    });
+
+                    if (hasValue) $advancedSearchButtonHtml.removeClass('btn-secondary').addClass('btn-primary');
+                    else $advancedSearchButtonHtml.removeClass('btn-primary').addClass('btn-secondary');
+                });
+            }
+
+            // fix bug 移除 Toolbar 按钮 Title 中的 Html
+            $('.bootstrap-table .fixed-table-toolbar button[title]').each(function (index, element) {
+                element.title = element.title.replace('<span>', '').replace('</span>', '');
+            });
             return this;
         },
         lgbPopover: function (options) {
@@ -526,6 +609,68 @@
             $.extend($.fn.bootstrapTable.defaults.icons, {
                 refresh: 'fa-refresh'
             });
+
+            // fix bug bootstrap-table showButtonText support mobile 
+            // argo at 2020-01-18
+            $.extend($.fn.bootstrapTable.defaults, {
+                formatClearSearch: function formatClearSearch() {
+                    return '<span>清空过滤</span>';
+                },
+                formatSearch: function formatSearch() {
+                    return '搜索';
+                },
+                formatNoMatches: function formatNoMatches() {
+                    return '<span>没有找到匹配的记录</span>';
+                },
+                formatPaginationSwitch: function formatPaginationSwitch() {
+                    return '<span>隐藏/显示分页</span>';
+                },
+                formatPaginationSwitchDown: function formatPaginationSwitchDown() {
+                    return '<span>显示分页</span>';
+                },
+                formatPaginationSwitchUp: function formatPaginationSwitchUp() {
+                    return '<span>隐藏分页</span>';
+                },
+                formatRefresh: function formatRefresh() {
+                    return '<span>查询</span>';
+                },
+                formatToggle: function formatToggle() {
+                    return '<span>切换</span>';
+                },
+                formatToggleOn: function formatToggleOn() {
+                    return '<span>显示卡片视图</span>';
+                },
+                formatToggleOff: function formatToggleOff() {
+                    return '<span>隐藏卡片视图</span>';
+                },
+                formatColumns: function formatColumns() {
+                    return '<span>列</span>';
+                },
+                formatColumnsToggleAll: function formatColumnsToggleAll() {
+                    return '<span>切换所有</span>';
+                },
+                formatFullscreen: function formatFullscreen() {
+                    return '<span>全屏</span>';
+                },
+                formatAllRows: function formatAllRows() {
+                    return '<span>所有</span>';
+                },
+                formatAutoRefresh: function formatAutoRefresh() {
+                    return '<span>自动刷新</span>';
+                },
+                formatExport: function formatExport() {
+                    return '<span>导出数据</span>';
+                },
+                formatJumpTo: function formatJumpTo() {
+                    return '<span>跳转</span>';
+                },
+                formatAdvancedSearch: function formatAdvancedSearch() {
+                    return '<span>高级搜索</span>';
+                },
+                formatAdvancedCloseButton: function formatAdvancedCloseButton() {
+                    return '<span>关闭</span>';
+                }
+            });
         }
 
         // extend bootstrap-toggle
@@ -540,7 +685,7 @@
                     $(this).trigger('click.bs.toggle');
                     e.preventDefault();
                 });
-            }
+            };
         }
 
         if (window.NProgress) {
