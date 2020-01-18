@@ -435,8 +435,8 @@
                 });
             }
 
-            // 判断是否固定表头
-            var fixHeader = this.attr('data-fixedHeader') === '';
+            // 判断是否固定表头 小屏幕禁止固定表头功能
+            var fixHeader = this.attr('data-fixedHeader') === '' && $(window).width() >= 768;
             var $tabContainer = $(settings.tableContainer);
             if (fixHeader && settings.height === undefined) {
                 var calcPrevHeight = function (element) {
