@@ -544,9 +544,12 @@ pre {
         margin-bottom: 0; 
     }
 
-.tooltip-inner kbd {
-    margin-bottom: 2px;
-    display: inline-block;
-    background: #17a2b8;
-    padding: 3px 6px;
+.tooltip-inner .search-input-tooltip {
+    font-size: 0.75rem;    
 }
+
+    .tooltip-inner .search-input-tooltip kbd {
+        display: inline-block;
+        background: #17a2b8;
+        padding: 1px 6px;
+    }

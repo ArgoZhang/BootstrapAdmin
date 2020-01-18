@@ -513,7 +513,7 @@
             if (settings.search) {
                 $('.bootstrap-table .fixed-table-toolbar .search-input').tooltip({
                     sanitize: false,
-                    title: "输入任意字符串全局搜索 </br> <kbd>Enter</kbd> 搜索 <kbd>ESC</kbd> 清除搜索",
+                    title: '<div class="search-input-tooltip">输入任意字符串全局搜索 </br> <kbd>Enter</kbd> 搜索 <kbd>ESC</kbd> 清除搜索</div>',
                     html: true
                 });
             }
