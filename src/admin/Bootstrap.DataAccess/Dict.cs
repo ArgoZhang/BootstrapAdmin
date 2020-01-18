@@ -48,12 +48,12 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 保存网站个性化设置
         /// </summary>
-        /// <param name="dict"></param>
+        /// <param name="dicts"></param>
         /// <returns></returns>
-        public virtual bool SaveSettings(BootstrapDict dict)
+        public virtual bool SaveSettings(IEnumerable<BootstrapDict> dicts)
         {
             using var db = DbManager.Create();
-            db.Update<BootstrapDict>("set Code = @Code where Category = @Category and Name = @Name", dict);
+            dicts.ToList().ForEach(dict => db.Update<BootstrapDict>("set Code = @Code where Category = @Category and Name = @Name", dict));
             return true;
         }
 
@@ -290,5 +290,11 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <returns></returns>
         public bool RetrieveEnableBlazor() => (DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "Blazor" && d.Define == 0)?.Code ?? "0") == "1";
+
+        /// <summary>
+        /// 获得是否开启 固定表头 功能 默认开启
+        /// </summary>
+        /// <returns></returns>
+        public bool RetrieveFixedTableHeader() => (DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "固定表头" && d.Define == 0)?.Code ?? "1") == "1";
     }
 }

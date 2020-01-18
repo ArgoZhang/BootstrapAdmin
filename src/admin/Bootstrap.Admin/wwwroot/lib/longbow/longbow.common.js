@@ -90,7 +90,7 @@
     };
 
     $.extend({
-        "format": function (source, params) {
+        format: function (source, params) {
             if (params === undefined || params === null) {
                 return null;
             }
@@ -354,7 +354,11 @@
                 showExport: true,
                 exportTypes: ['csv', 'txt', 'excel'],
                 advancedSearchModal: '#dialogAdvancedSearch',
+                minHeight: 400,
+                height: undefined,
+                calcHeight: undefined,
                 search: true,
+                tableContainer: '.main-content',
                 searchOnEnterKey: false,
                 searchTimeOut: 0,
                 showSearchClearButton: true,
@@ -367,6 +371,16 @@
                 cardView: $(window).width() < 768,  //是否显示详细视图
                 queryButton: '#btn_query',
                 onLoadSuccess: function (data) {
+                    // 设置 数据库 滚动条
+                    if (settings.height !== undefined) {
+                        $('.bootstrap-table .fixed-table-body').overlayScrollbars({
+                            className: 'os-theme-dark',
+                            scrollbars: {
+                                autoHide: 'leave',
+                                autoHideDelay: 100
+                            }
+                        });
+                    }
                     $.footer();
                     if (data.IsSuccess === false) {
                         toastr.error(data.HttpResult.Message, data.HttpResult.Name);
@@ -420,7 +434,41 @@
                     }
                 });
             }
+
+            // 判断是否固定表头
+            var fixHeader = this.attr('data-fixedHeader') === '';
+            var $tabContainer = $(settings.tableContainer);
+            if (fixHeader && settings.height === undefined) {
+                if (settings.calcHeight === undefined) {
+                    settings.calcHeight = function () {
+                        var marginHeight = 0;
+                        if ($tabContainer.length === 1) {
+                            marginHeight = $tabContainer.outerHeight() - $tabContainer.height();
+                        }
+
+                        // 38: card-header 
+                        return Math.max(settings.minHeight, $(window).height() - $('header').height() - $('footer').height() - (marginHeight * 2) - 38 - 32 - 10);
+                    };
+                }
+
+                // 设置最小高度为
+                settings.height = settings.calcHeight();
+
+                // 设置 onresize 事件
+                $(window).on('resize', this, function (event) {
+                    event.data.bootstrapTable('resetView', { height: settings.calcHeight() });
+                });
+            }
+
+            // 加载数据
             this.bootstrapTable(settings);
+
+            // 如果固定表头 禁止容器滚动条出现
+            if (fixHeader && $tabContainer.length > 0) {
+                $tabContainer.addClass('overflow-hidden');
+            }
+
+            // 格式化工具栏
             $('.bootstrap-table .fixed-table-toolbar .columns .export .dropdown-menu').addClass("dropdown-menu-right");
             var $gear = $(settings.toolbar).removeClass('d-none').find('.gear');
             if ($gear.find('.dropdown-menu > a').length === 0) $gear.addClass('d-none');

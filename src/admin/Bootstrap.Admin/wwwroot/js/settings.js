@@ -11,7 +11,7 @@ $(function () {
             case 'footer':
                 data = dataBinder.get();
                 $.bc({
-                    url: Settings.url, data: { name: '网站页脚', code: data.Footer, category: '网站设置' }, title: '保存网站页脚', method: "post",
+                    url: Settings.url, data: [{ name: '网站页脚', code: data.Footer, category: '网站设置' }], title: '保存网站页脚', method: "post",
                     callback: function (result) {
                         if (result) $('#websiteFooter').text(data.Footer);
                     }
@@ -20,7 +20,7 @@ $(function () {
             case 'title':
                 data = dataBinder.get();
                 $.bc({
-                    url: Settings.url, data: { name: '网站标题', code: data.Title, category: '网站设置' }, title: '保存网站标题', method: "post",
+                    url: Settings.url, data: [{ name: '网站标题', code: data.Title, category: '网站设置' }], title: '保存网站标题', method: "post",
                     callback: function (result) {
                         if (result) $('#websiteTitle').text(data.Title);
                     }
@@ -29,7 +29,7 @@ $(function () {
             case 'css':
                 var cssDefine = $css.val();
                 $.bc({
-                    url: Settings.url, data: { name: '使用样式', code: cssDefine, category: '当前样式' }, title: '保存网站样式', method: "post",
+                    url: Settings.url, data: [{ name: '使用样式', code: cssDefine, category: '当前样式' }], title: '保存网站样式', method: "post",
                     callback: function (result) {
                         if (result) {
                             window.setTimeout(function () { window.location.reload(true); }, 1000);
@@ -39,12 +39,14 @@ $(function () {
                 break;
             case 'UISettings':
                 var uiSettings = $('#sider').prop('checked') ? "1" : "0";
-                $.bc({
-                    url: Settings.url, data: { name: '侧边栏状态', code: uiSettings, category: '网站设置' }, method: "post"
-                });
                 var cardTitle = $('#cardTitle').prop('checked') ? "1" : "0";
+                var fixedTableHeader = $('#tableHeader').prop('checked') ? "1" : "0";
                 $.bc({
-                    url: Settings.url, data: { name: '卡片标题状态', code: cardTitle, category: '网站设置' }, title: '保存网站设置', method: "post",
+                    url: Settings.url, data: [
+                        { name: '卡片标题状态', code: cardTitle, category: '网站设置' },
+                        { name: '侧边栏状态', code: uiSettings, category: '网站设置' },
+                        { name: '固定表头', code: fixedTableHeader, category: '网站设置' }
+                    ], title: '保存网站设置', method: "post",
                     callback: function (result) {
                         if (result) {
                             window.setTimeout(function () { window.location.reload(true); }, 1000);
@@ -54,21 +56,15 @@ $(function () {
                 break;
             case 'loginSettings':
                 var mobile = $('#mobile').prop('checked') ? "1" : "0";
-                $.bc({
-                    url: Settings.url, data: { name: '短信验证码登录', code: mobile, category: '网站设置' }, method: "post"
-                });
                 var oauth = $('#oauth').prop('checked') ? "1" : "0";
                 $.bc({
-                    url: Settings.url, data: { name: 'OAuth 认证登录', code: oauth, category: '网站设置' }, title: '登录设置', method: "post"
+                    url: Settings.url, data: [{ name: 'OAuth 认证登录', code: oauth, category: '网站设置' }, { name: '短信验证码登录', code: mobile, category: '网站设置' }], title: '登录设置', method: "post"
                 });
                 break;
             case 'saveAutoLock':
                 var autoLock = $('#lockScreen').prop('checked') ? "1" : "0";
                 $.bc({
-                    url: Settings.url, data: { name: '自动锁屏', code: autoLock, category: '网站设置' }, method: "post"
-                });
-                $.bc({
-                    url: Settings.url, data: { name: '自动锁屏时长', code: $('#lockPeriod').val(), category: '网站设置' }, title: '保存自动锁屏设置', method: "post",
+                    url: Settings.url, data: [{ name: '自动锁屏', code: autoLock, category: '网站设置' }, { name: '自动锁屏时长', code: $('#lockPeriod').val(), category: '网站设置' }], title: '保存自动锁屏设置', method: "post",
                     callback: function (result) {
                         if (result) {
                             window.setTimeout(function () { window.location.reload(true); }, 1000);
@@ -79,13 +75,13 @@ $(function () {
             case 'saveDefaultApp':
                 var defaultApp = $('#defaultApp').prop('checked') ? "1" : "0";
                 $.bc({
-                    url: Settings.url, data: { name: '默认应用程序', code: defaultApp, category: '网站设置' }, title: '保存默认应用程序设置', method: "post"
+                    url: Settings.url, data: [{ name: '默认应用程序', code: defaultApp, category: '网站设置' }], title: '保存默认应用程序设置', method: "post"
                 });
                 break;
             case 'saveBlazor':
                 var blazor = $('#blazor').prop('checked') ? "1" : "0";
                 $.bc({
-                    url: Settings.url, data: { name: 'Blazor', code: blazor, category: '网站设置' }, title: 'Blazor 设置', method: "post",
+                    url: Settings.url, data: [{ name: 'Blazor', code: blazor, category: '网站设置' }], title: 'Blazor 设置', method: "post",
                     callback: function (result) {
                         if (result) {
                             // 导航到 Blazor 页面

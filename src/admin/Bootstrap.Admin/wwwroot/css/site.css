@@ -535,3 +535,7 @@ pre {
     .modal-query .form-group input.form-control {
         flex: 1 1 auto;
     }
+
+ .bootstrap-table .fixed-table-toolbar .bs-bars, .bootstrap-table .fixed-table-toolbar .columns {
+    margin-bottom: 0; 
+}
