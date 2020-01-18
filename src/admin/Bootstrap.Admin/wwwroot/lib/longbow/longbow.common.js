@@ -438,53 +438,52 @@
             // 判断是否固定表头
             var fixHeader = this.attr('data-fixedHeader') === '';
             var $tabContainer = $(settings.tableContainer);
-            var $table = this;
             if (fixHeader && settings.height === undefined) {
+                var calcPrevHeight = function (element) {
+                    var height = 0;
+                    while (element.length === 1) {
+                        if (element.is(":visible")) height += element.outerHeight(true);
+                        element = element.prev();
+                    }
+                    return height;
+                }
+
+                var calcParentHeight = function (element) {
+                    var height = 0;
+                    while (element.length === 1) {
+                        // 跳过 tableContainer
+                        if (['SELECTION', 'BODY', settings.tableContainer].filter(function (v) {
+                            return v === element.attr('nodeName') || element.hasClass(v) || element.attr('id');
+                        }).length > 0) {
+                            break;
+                        }
+                        height += calcPrevHeight(element.prev());
+                        element = element.parent();
+                    }
+                    return height;
+                }
+
                 if (settings.calcHeight === undefined) {
-                    settings.calcHeight = function () {
-                        var calcPrevHeight = function (element) {
-                            var height = 0;
-                            while (element.length === 1) {
-                                if (element.is(":visible")) height += element.outerHeight(true);
-                                element = element.prev();
-                            }
-                            return height;
-                        }
-
-                        var calcParentHeight = function (element) {
-                            var height = 0;
-                            while (element.length === 1) {
-                                // 跳过 tableContainer
-                                if (['SELECTION', 'BODY', settings.tableContainer].filter(function (v) {
-                                    return v === element.attr('nodeName') || element.hasClass(v) || element.attr('id');
-                                }).length > 0) {
-                                    break;
-                                }
-                                height += calcPrevHeight(element.prev());
-                                element = element.parent();
-                            }
-                            return height;
-                        }
-
+                    settings.calcHeight = function (element) {
                         var marginHeight = 0;
                         if ($tabContainer.length === 1) {
                             marginHeight = ($tabContainer.outerHeight() - $tabContainer.height()) * 2;
 
                             // 计算 table 控件前元素高度
-                            var $prev = $table.prev();
+                            var $prev = element.prev();
                             marginHeight += calcPrevHeight($prev);
-                            marginHeight += calcParentHeight($table.parent());
+                            marginHeight += calcParentHeight(element.parent());
                         }
                         return Math.max(settings.minHeight, $(window).height() - $('header').outerHeight(true) - $('footer').outerHeight(true) - marginHeight - 15 - 10);
                     };
                 }
 
                 // 设置最小高度为
-                settings.height = settings.calcHeight();
+                settings.height = settings.calcHeight(this);
 
                 // 设置 onresize 事件
                 $(window).on('resize', this, function (event) {
-                    event.data.bootstrapTable('resetView', { height: settings.calcHeight() });
+                    event.data.bootstrapTable('resetView', { height: settings.calcHeight(event.data.parents('.bootstrap-table')) });
                 });
             }
 
