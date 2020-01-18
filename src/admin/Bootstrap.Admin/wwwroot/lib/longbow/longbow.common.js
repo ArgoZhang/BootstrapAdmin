@@ -442,25 +442,38 @@
             if (fixHeader && settings.height === undefined) {
                 if (settings.calcHeight === undefined) {
                     settings.calcHeight = function () {
+                        var calcPrevHeight = function (element) {
+                            var height = 0;
+                            while (element.length === 1) {
+                                if (element.is(":visible")) height += element.outerHeight(true);
+                                element = element.prev();
+                            }
+                            return height;
+                        }
+
+                        var calcParentHeight = function (element) {
+                            var height = 0;
+                            while (element.length === 1) {
+                                // 跳过 tableContainer
+                                if (['SELECTION', 'BODY', settings.tableContainer].filter(function (v) {
+                                    return v === element.attr('nodeName') || element.hasClass(v) || element.attr('id');
+                                }).length > 0) {
+                                    break;
+                                }
+                                height += calcPrevHeight(element.prev());
+                                element = element.parent();
+                            }
+                            return height;
+                        }
+
                         var marginHeight = 0;
                         if ($tabContainer.length === 1) {
                             marginHeight = ($tabContainer.outerHeight() - $tabContainer.height()) * 2;
 
-                            // 计算 table 控件前组件高度
+                            // 计算 table 控件前元素高度
                             var $prev = $table.prev();
-                            while ($prev.length == 1) {
-                                marginHeight += $prev.outerHeight(true);
-                                $prev = $prev.prev();
-                            }
-
-                            // 计算 Card Header 高度
-                            if ($table.parent().hasClass('card-body')) {
-                                // 判断 card-header 是否显示并计算高度
-                                var $cardHader = $table.parent().prev();
-                                if ($cardHader.is(":visible")) {
-                                    marginHeight += $cardHader.outerHeight(true);
-                                }
-                            }
+                            marginHeight += calcPrevHeight($prev);
+                            marginHeight += calcParentHeight($table.parent());
                         }
                         return Math.max(settings.minHeight, $(window).height() - $('header').outerHeight(true) - $('footer').outerHeight(true) - marginHeight - 15 - 10);
                     };
