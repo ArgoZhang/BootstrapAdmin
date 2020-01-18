@@ -536,9 +536,13 @@ pre {
         flex: 1 1 auto;
     }
 
-.bootstrap-table .fixed-table-toolbar .bs-bars, .bootstrap-table .fixed-table-toolbar .columns {
-    margin-bottom: 0; 
+.bootstrap-table .fixed-table-toolbar {
+    margin-bottom: 10px;
 }
+
+    .bootstrap-table .fixed-table-toolbar .bs-bars,  .bootstrap-table .fixed-table-toolbar .search, .bootstrap-table .fixed-table-toolbar .columns {
+        margin-bottom: 0; 
+    }
 
 .tooltip-inner kbd {
     margin-bottom: 2px;
