@@ -516,38 +516,38 @@
                     title: '<div class="search-input-tooltip">输入任意字符串全局搜索 </br> <kbd>Enter</kbd> 搜索 <kbd>ESC</kbd> 清除搜索</div>',
                     html: true
                 });
-            }
 
-            // 生成高级查询按钮
-            if (settings.showAdvancedSearchButton) {
-                // template
-                var $advancedSearchButtonHtml = $('<button class="btn btn-secondary" type="button" name="advancedSearch" title="高级搜索"><i class="fa fa-search-plus"></i><span>高级搜索</span></button>');
-                $advancedSearchButtonHtml.insertAfter($('.bootstrap-table .fixed-table-toolbar .search [name="clearSearch"]')).on('click', function () {
-                    // 弹出高级查询对话框
-                    $(settings.advancedSearchModal).modal('show');
-                });
-
-                // 高级搜索有值时颜色为红色
-                $(settings.advancedSearchModal).on('hide.bs.modal', function () {
-                    var $modal = $(this)
-                    var hasValue = false;
-                    $modal.find('[data-default-val]').each(function (index, element) {
-                        var $ele = $(element);
-                        var val = $ele.attr('data-default-val');
-                        if ($ele.prop('nodeName') === 'INPUT') {
-                            if ($ele.hasClass('form-select-input')) {
-                                hasValue = $ele.prev().val() !== val;
-                            }
-                            else {
-                                hasValue = $ele.val() !== val;
-                            }
-                        }
-                        if (hasValue) return false;
+                // 生成高级查询按钮
+                if (settings.showAdvancedSearchButton) {
+                    // template
+                    var $advancedSearchButtonHtml = $('<button class="btn btn-secondary" type="button" name="advancedSearch" title="高级搜索"><i class="fa fa-search-plus"></i><span>高级搜索</span></button>');
+                    $advancedSearchButtonHtml.insertAfter($('.bootstrap-table .fixed-table-toolbar .search [name="clearSearch"]')).on('click', function () {
+                        // 弹出高级查询对话框
+                        $(settings.advancedSearchModal).modal('show');
                     });
 
-                    if (hasValue) $advancedSearchButtonHtml.removeClass('btn-secondary').addClass('btn-primary');
-                    else $advancedSearchButtonHtml.removeClass('btn-primary').addClass('btn-secondary');
-                });
+                    // 高级搜索有值时颜色为红色
+                    $(settings.advancedSearchModal).on('hide.bs.modal', function () {
+                        var $modal = $(this)
+                        var hasValue = false;
+                        $modal.find('[data-default-val]').each(function (index, element) {
+                            var $ele = $(element);
+                            var val = $ele.attr('data-default-val');
+                            if ($ele.prop('nodeName') === 'INPUT') {
+                                if ($ele.hasClass('form-select-input')) {
+                                    hasValue = $ele.prev().val() !== val;
+                                }
+                                else {
+                                    hasValue = $ele.val() !== val;
+                                }
+                            }
+                            if (hasValue) return false;
+                        });
+
+                        if (hasValue) $advancedSearchButtonHtml.removeClass('btn-secondary').addClass('btn-primary');
+                        else $advancedSearchButtonHtml.removeClass('btn-primary').addClass('btn-secondary');
+                    });
+                }
             }
 
             // fix bug 移除 Toolbar 按钮 Title 中的 Html
