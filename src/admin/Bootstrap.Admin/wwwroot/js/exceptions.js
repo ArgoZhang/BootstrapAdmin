@@ -10,6 +10,7 @@
         url: Exceptions.url,
         sortName: 'LogTime',
         sortOrder: 'desc',
+        search: false,
         queryParams: function (params) { return $.extend(params, { StartTime: $("#txt_operate_start").val(), EndTime: $("#txt_operate_end").val() }); },
         columns: [
             { title: "记录时间", field: "LogTime", sortable: true },
