@@ -32,6 +32,7 @@ INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('网站设置', '前台
 -- 网站UI设置
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('网站设置', '侧边栏状态', '1', 0);
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('网站设置', '卡片标题状态', '1', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('网站设置', '固定表头', '1', 0);
 
 -- 登录配置
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('网站设置', '短信验证码登录', '1', 0);
