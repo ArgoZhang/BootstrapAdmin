@@ -6,6 +6,7 @@
         showToggle: false,
         showRefresh: false,
         showColumns: false,
+        showAdvancedSearchButton: false,
         columns: [
             { title: "登录名称", field: "UserName" },
             { title: "显示名称", field: "DisplayName" },

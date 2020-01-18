@@ -7,6 +7,7 @@ $(function () {
         showToggle: false,
         showRefresh: false,
         showColumns: false,
+        showAdvancedSearchButton: false,
         columns: [
             {
                 title: "序号", formatter: function (value, row, index) {

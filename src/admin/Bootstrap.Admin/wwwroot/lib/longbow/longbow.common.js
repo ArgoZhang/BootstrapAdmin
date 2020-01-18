@@ -408,7 +408,7 @@
 
             if (settings.search) {
                 // 自动收集 SearchText
-                var queryParams = settings.queryParams;
+                var queryParams = settings.queryParams || function (params) { };
 
                 settings.queryParams = function (params) {
                     return $.extend({}, queryParams(params), { search: $('.bootstrap-table .fixed-table-toolbar .search-input').val() });
