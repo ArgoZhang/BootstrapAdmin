@@ -19,11 +19,11 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <summary>
         /// 保存网站设置方法
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="values"></param>
         /// <returns></returns>
         [HttpPost]
         [ButtonAuthorize(Url = "~/Admin/Settings", Auth = "saveTitle,saveFooter,saveTheme,saveUISettings,clearCache,clearAllCache,loginSettings,lockScreen,defaultApp,blazor")]
-        public bool Post([FromBody]BootstrapDict value) => DictHelper.SaveSettings(value);
+        public bool Post([FromBody]IEnumerable<BootstrapDict> values) => DictHelper.SaveSettings(values);
 
         /// <summary>
         /// 获取网站缓存站点集合

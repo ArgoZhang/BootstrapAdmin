@@ -28,6 +28,7 @@ namespace Bootstrap.Admin.Models
             ShowOAuth = AllowOAuth ? "" : "oauth";
             LockScreenPeriod = DictHelper.RetrieveAutoLockScreenPeriod();
             EnableAutoLockScreen = DictHelper.RetrieveAutoLockScreen();
+            FixedTableHeader = DictHelper.RetrieveFixedTableHeader() ? "" : "scroll";
         }
 
         /// <summary>
@@ -89,5 +90,10 @@ namespace Bootstrap.Admin.Models
         /// 获得 自动锁屏功能是否自动开启 默认关闭
         /// </summary>
         public bool EnableAutoLockScreen { get; }
+
+        /// <summary>
+        /// 获得 是否固定表头
+        /// </summary>
+        public string FixedTableHeader { get; }
     }
 }

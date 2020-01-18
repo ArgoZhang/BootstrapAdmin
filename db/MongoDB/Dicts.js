@@ -272,6 +272,12 @@
     },
     {
         "Category": "网站设置",
+        "Name": "固定表头",
+        "Code": "1",
+        "Define": NumberInt(0)
+    },
+    {
+        "Category": "网站设置",
         "Name": "OAuth 认证登录",
         "Code": "1",
         "Define": NumberInt(0)

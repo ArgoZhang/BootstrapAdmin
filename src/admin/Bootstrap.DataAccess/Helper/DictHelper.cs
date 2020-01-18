@@ -106,11 +106,11 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 保存网站个性化设置
         /// </summary>
-        /// <param name="dict"></param>
+        /// <param name="dicts"></param>
         /// <returns></returns>
-        public static bool SaveSettings(BootstrapDict dict)
+        public static bool SaveSettings(IEnumerable<BootstrapDict> dicts)
         {
-            var ret = DbContextManager.Create<Dict>()?.SaveSettings(dict) ?? false;
+            var ret = DbContextManager.Create<Dict>()?.SaveSettings(dicts) ?? false;
             if (ret) CacheCleanUtility.ClearCache(dictIds: new List<string>());
             return ret;
         }
@@ -275,5 +275,11 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <returns></returns>
         public static bool RetrieveEnableBlazor() => DbContextManager.Create<Dict>()?.RetrieveEnableBlazor() ?? false;
+
+        /// <summary>
+        /// 获得是否开启 固定表头 默认开启
+        /// </summary>
+        /// <returns></returns>
+        public static bool RetrieveFixedTableHeader() => DbContextManager.Create<Dict>()?.RetrieveFixedTableHeader() ?? false;
     }
 }

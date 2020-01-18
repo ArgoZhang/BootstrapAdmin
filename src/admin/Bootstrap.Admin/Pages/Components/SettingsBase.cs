@@ -51,6 +51,7 @@ namespace Bootstrap.Pages.Admin.Components
             Model.LockScreenPeriod = DictHelper.RetrieveAutoLockScreenPeriod();
             Model.DefaultApp = DictHelper.RetrieveDefaultApp();
             Model.EnableBlazor = DictHelper.RetrieveEnableBlazor();
+            Model.FixedTableHeader = DictHelper.RetrieveFixedTableHeader();
             Model.Themes = DictHelper.RetrieveThemes();
         }
 
@@ -59,7 +60,7 @@ namespace Bootstrap.Pages.Admin.Components
         /// </summary>
         protected void SaveBlazor()
         {
-            var ret = DictHelper.SaveSettings(new BootstrapDict() { Category = "网站设置", Name = "Blazor", Code = Model.EnableBlazor ? "1" : "0" });
+            var ret = DictHelper.SaveSettings(new BootstrapDict[] { new BootstrapDict() { Category = "网站设置", Name = "Blazor", Code = Model.EnableBlazor ? "1" : "0" } });
             if (Model.EnableBlazor) ShowMessage("Blazor 设置保存", ret);
             else
             {
@@ -73,8 +74,11 @@ namespace Bootstrap.Pages.Admin.Components
         /// </summary>
         protected void SaveSidebar()
         {
-            var ret = DictHelper.SaveSettings(new BootstrapDict() { Category = "网站调整", Name = "侧边栏状态", Code = Model.ShowSideBar ? "1" : "0" }) &&
-                DictHelper.SaveSettings(new BootstrapDict() { Category = "网站调整", Name = "卡片标题状态", Code = Model.ShowCardTitle ? "1" : "0" });
+            var ret = DictHelper.SaveSettings(new BootstrapDict[]{
+                 new BootstrapDict() { Category = "网站调整", Name = "侧边栏状态", Code = Model.ShowSideBar ? "1" : "0" },
+                 new BootstrapDict() { Category = "网站调整", Name = "卡片标题状态", Code = Model.ShowCardTitle ? "1" : "0" },
+                 new BootstrapDict() { Category = "网站调整", Name = "固定表头", Code = Model.FixedTableHeader ? "1" : "0" }
+            });
             ShowMessage("网站调整 设置保存", ret);
         }
         /// <summary>
@@ -136,6 +140,11 @@ namespace Bootstrap.Pages.Admin.Components
             /// 获得/设置
             /// </summary>
             public bool EnableBlazor { get; set; }
+
+            /// <summary>
+            /// 获得/设置 是否固定表头
+            /// </summary>
+            public bool FixedTableHeader { get; set; }
 
             /// <summary>
             /// 获得/设置 系统样式集合

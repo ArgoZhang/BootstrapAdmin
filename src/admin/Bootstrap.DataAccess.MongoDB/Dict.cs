@@ -56,13 +56,13 @@ namespace Bootstrap.DataAccess.MongoDB
         }
 
         /// <summary>
-        /// 
+        /// 保存网站设置方法
         /// </summary>
-        /// <param name="dict"></param>
+        /// <param name="dicts"></param>
         /// <returns></returns>
-        public override bool SaveSettings(BootstrapDict dict)
+        public override bool SaveSettings(IEnumerable<BootstrapDict> dicts)
         {
-            DbManager.Dicts.FindOneAndUpdate(md => md.Category == dict.Category && md.Name == dict.Name, Builders<BootstrapDict>.Update.Set(md => md.Code, dict.Code));
+            dicts.ToList().ForEach(dict => DbManager.Dicts.FindOneAndUpdate(md => md.Category == dict.Category && md.Name == dict.Name, Builders<BootstrapDict>.Update.Set(md => md.Code, dict.Code)));
             return true;
         }
 
