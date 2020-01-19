@@ -33,7 +33,7 @@ namespace Bootstrap.DataAccess.SqlServer
         [Fact]
         public void SaveSettings_Ok()
         {
-            var dict = new Dict()
+            var dict = new BootstrapDict()
             {
                 Category = "UnitTest",
                 Name = "SaveSettings",
@@ -41,10 +41,10 @@ namespace Bootstrap.DataAccess.SqlServer
                 Define = 1
             };
 
-            // insert 
+            // insert
             Assert.True(DictHelper.Save(dict));
             // update
-            Assert.True(DictHelper.SaveSettings(dict));
+            Assert.True(DictHelper.SaveSettings(new BootstrapDict[] { dict }));
             // delete
             Assert.True(DictHelper.Delete(new string[] { dict.Id }));
         }
@@ -191,7 +191,7 @@ namespace Bootstrap.DataAccess.SqlServer
 
         #region Private Class For Test
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private class BaiDuIPLocator
         {
@@ -206,7 +206,7 @@ namespace Bootstrap.DataAccess.SqlServer
             public int Status { get; set; }
 
             /// <summary>
-            /// 
+            ///
             /// </summary>
             /// <returns></returns>
             public override string ToString()
@@ -218,28 +218,28 @@ namespace Bootstrap.DataAccess.SqlServer
         private class JuheIPLocator
         {
             /// <summary>
-            /// 
+            ///
             /// </summary>
             public string ResultCode { get; set; }
 
             /// <summary>
-            /// 
+            ///
             /// </summary>
             public string Reason { get; set; }
 
             /// <summary>
-            /// 
+            ///
             /// </summary>
             public JuheIPLocatorResult Result { get; set; }
 
             /// <summary>
-            /// 
+            ///
             /// </summary>
             /// <value></value>
             public int Error_Code { get; set; }
 
             /// <summary>
-            /// 
+            ///
             /// </summary>
             /// <returns></returns>
             public override string ToString()
@@ -251,27 +251,27 @@ namespace Bootstrap.DataAccess.SqlServer
         private class JuheIPLocatorResult
         {
             /// <summary>
-            /// 
+            ///
             /// </summary>
             public string Country { get; set; }
 
             /// <summary>
-            /// 
+            ///
             /// </summary>
             public string Province { get; set; }
 
             /// <summary>
-            /// 
+            ///
             /// </summary>
             public string City { get; set; }
 
             /// <summary>
-            /// 
+            ///
             /// </summary>
             public string Isp { get; set; }
 
             /// <summary>
-            /// 
+            ///
             /// </summary>
             /// <returns></returns>
             public override string ToString()
