@@ -9,6 +9,7 @@ $(function () {
         showColumns: false,
         sortName: 'LoginTime',
         sortOrder: "desc",
+        search: false,
         queryParams: function (params) { return $.extend(params, { startTime: $("#txt_operate_start").val(), endTime: $("#txt_operate_end").val(), loginIp: $('#txt_ip').val() }); },
         columns: [
             {
