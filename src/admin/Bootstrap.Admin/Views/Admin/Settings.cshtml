@@ -169,13 +169,10 @@
 <div class="card" asp-auth="blazor">
     <div class="card-header">网站设置</div>
     <div class="card-body">
-        <div class="alert alert-info" role="alert">
-            <span>开启此功能网站增加 Blazor 与 MVC 切换挂件</span>
-        </div>
         <div class="form-inline">
             <div class="row">
                 <div class="form-group col-6">
-                    <label class="control-label" for="blazor">Blazor</label>
+                    <label class="control-label" data-toggle="lgbinfo" data-content="开启此功能网站增加 Blazor 与 MVC 切换挂件" for="blazor">Blazor 切换</label>
                     <input id="blazor" hidden type="checkbox" data-default-val="@Model.EnableBlazor" data-toggle="toggle" data-width="120" data-onstyle="success" data-on="开启" data-off="关闭" />
                 </div>
             </div>

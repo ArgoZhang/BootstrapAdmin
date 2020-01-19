@@ -622,15 +622,21 @@
         lgbInfo: function (option) {
             this.each(function () {
                 var $element = $(this);
-                $element.append($.format('<a href="#" tabindex="-1" role="button" data-toggle="popover"><i class="fa fa-question-circle"></i></a>'));
+                $element.append($('<a href="#" tabindex="-1" role="button" data-toggle="popover"><i class="fa fa-question-circle"></i></a>'));
             });
-            var container = this.attr('data-container') || '#dialogNew';
+            var container = this.attr('data-container') || 'body';
             this.find('[data-toggle="popover"]').popover($.extend({
                 title: function () {
                     return $(this).parent().text();
-                }, content: function () {
+                },
+                content: function () {
                     return $(this).parent().attr('data-content');
-                }, trigger: 'focus', html: true, container: container, placement: function () {
+                },
+                trigger: 'focus',
+                html: false,
+                sanitize: true,
+                container: container,
+                placement: function () {
                     return $(this.element).parent().attr('data-placement') || 'auto';
                 }
             }, option));
