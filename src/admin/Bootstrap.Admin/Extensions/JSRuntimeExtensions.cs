@@ -79,5 +79,21 @@ namespace Bootstrap.Admin.Extensions
         /// <param name="id"></param>
         /// <param name="method"></param>
         public static void Tooltip(this IJSRuntime? jSRuntime, string id, string method) => jSRuntime.InvokeVoidAsync("$.tooltip", $"#{id}", method);
+
+        /// <summary>
+        /// 显示或者隐藏 网站 Blazor 挂件图标
+        /// </summary>
+        /// <param name="jSRuntime"></param>
+        /// <param name="show"></param>
+        public static void ToggleBlazor(this IJSRuntime? jSRuntime, bool show) => jSRuntime.InvokeVoidAsync("$.toggleBlazor", show);
+
+        /// <summary>
+        /// 显示或者隐藏 网站 Blazor 挂件图标
+        /// </summary>
+        /// <param name="jSRuntime"></param>
+        /// <param name="showSidebar"></param>
+        /// <param name="showCardTitle"></param>
+        /// <param name="fixedTableHeader"></param>
+        public static void SetWebSettings(this IJSRuntime? jSRuntime, bool showSidebar, bool showCardTitle, bool fixedTableHeader) => jSRuntime.InvokeVoidAsync("$.setWebSettings", showSidebar, showCardTitle, fixedTableHeader);
     }
 }

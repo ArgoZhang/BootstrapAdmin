@@ -84,8 +84,10 @@ $(function () {
                     url: Settings.url, data: [{ name: 'Blazor', code: blazor, category: '网站设置' }], title: 'Blazor 设置', method: "post",
                     callback: function (result) {
                         if (result) {
-                            // 导航到 Blazor 页面
-                            window.location.href = $.formatUrl("Pages/Admin/Settings");
+                            // 通过值设置是否显示 Blazor 挂件
+                            var $blazor = $('header .nav .dropdown-blazor').parent();
+                            if (blazor === "1") $blazor.removeClass('d-none');
+                            else $blazor.addClass('d-none');
                         }
                     }
                 });

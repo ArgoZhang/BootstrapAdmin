@@ -94,7 +94,7 @@
     </div>
     <div class="card-body">
         @await RenderSectionAsync("cardbody", false)
-        <table data-fixedHeader="@Model.FixedTableHeader"></table>
+        <table data-Header="@(Model.FixedTableHeader ? "fixed" : "scroll")"></table>
     </div>
 </div>
 <div id="tableButtons" class="d-none">

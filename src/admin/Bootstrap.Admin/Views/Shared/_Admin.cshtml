@@ -36,7 +36,7 @@
     <script src="~/js/log.js" asp-append-version="true"></script>
 }
 @await Html.PartialAsync("Navigator")
-<section id="main-content" class="main-content @Model.ShowCardTitle">
+<section id="main-content" class="main-content @(Model.ShowCardTitle ? "" : "no-card-header")">
     <input id="lockScreenPeriod" type="hidden" asp-condition="@Model.EnableAutoLockScreen" value="@Model.LockScreenPeriod" />
     <div class="main-header">
         <ol class="breadcrumb">

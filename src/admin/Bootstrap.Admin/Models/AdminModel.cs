@@ -20,15 +20,15 @@ namespace Bootstrap.Admin.Models
             Footer = DictHelper.RetrieveWebFooter(appId);
             Theme = DictHelper.RetrieveActiveTheme();
             IsDemo = DictHelper.RetrieveSystemModel();
-            ShowCardTitle = DictHelper.RetrieveCardTitleStatus() ? "" : "no-card-header";
-            ShowSideBar = DictHelper.RetrieveSidebarStatus() ? "" : "collapsed";
+            ShowCardTitle = DictHelper.RetrieveCardTitleStatus();
+            ShowSideBar = DictHelper.RetrieveSidebarStatus();
             AllowMobile = DictHelper.RetrieveMobileLogin();
             AllowOAuth = DictHelper.RetrieveOAuthLogin();
-            ShowMobile = AllowMobile ? "" : "mobile";
-            ShowOAuth = AllowOAuth ? "" : "oauth";
+            ShowMobile = AllowMobile;
+            ShowOAuth = AllowOAuth;
             LockScreenPeriod = DictHelper.RetrieveAutoLockScreenPeriod();
             EnableAutoLockScreen = DictHelper.RetrieveAutoLockScreen();
-            FixedTableHeader = DictHelper.RetrieveFixedTableHeader() ? "" : "scroll";
+            FixedTableHeader = DictHelper.RetrieveFixedTableHeader();
         }
 
         /// <summary>
@@ -54,12 +54,12 @@ namespace Bootstrap.Admin.Models
         /// <summary>
         /// 是否显示卡片标题
         /// </summary>
-        public string ShowCardTitle { get; protected set; }
+        public bool ShowCardTitle { get; protected set; }
 
         /// <summary>
         /// 是否收缩侧边栏
         /// </summary>
-        public string ShowSideBar { get; protected set; }
+        public bool ShowSideBar { get; protected set; }
 
         /// <summary>
         /// 获得 是否允许短信验证码登录
@@ -74,12 +74,12 @@ namespace Bootstrap.Admin.Models
         /// <summary>
         /// 获得 是否允许短信验证码登录
         /// </summary>
-        public string ShowMobile { get; }
+        public bool ShowMobile { get; }
 
         /// <summary>
         /// 获得 是否允许第三方 OAuth 认证登录
         /// </summary>
-        public string ShowOAuth { get; }
+        public bool ShowOAuth { get; }
 
         /// <summary>
         /// 获得 自动锁屏时长 默认 1 分钟 字典表中配置
@@ -94,6 +94,6 @@ namespace Bootstrap.Admin.Models
         /// <summary>
         /// 获得 是否固定表头
         /// </summary>
-        public string FixedTableHeader { get; }
+        public bool FixedTableHeader { get; }
     }
 }

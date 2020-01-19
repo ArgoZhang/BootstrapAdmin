@@ -17,9 +17,8 @@ namespace Bootstrap.Admin.Models
         public SettingsModel(ControllerBase controller) : base(controller)
         {
             Themes = DictHelper.RetrieveThemes();
-            AutoLockScreen = EnableAutoLockScreen ? "" : "lockScreen";
-            DefaultApp = DictHelper.RetrieveDefaultApp() ? "" : "defaultApp";
-            EnableBlazor = DictHelper.RetrieveEnableBlazor() ? "" : "blazor";
+            AutoLockScreen = EnableAutoLockScreen;
+            DefaultApp = DictHelper.RetrieveDefaultApp();
         }
 
         /// <summary>
@@ -28,9 +27,8 @@ namespace Bootstrap.Admin.Models
         public SettingsModel(string? userName) : base(userName)
         {
             Themes = DictHelper.RetrieveThemes();
-            AutoLockScreen = EnableAutoLockScreen ? "" : "lockScreen";
-            DefaultApp = DictHelper.RetrieveDefaultApp() ? "" : "defaultApp";
-            EnableBlazor = DictHelper.RetrieveEnableBlazor() ? "" : "blazor";
+            AutoLockScreen = EnableAutoLockScreen;
+            DefaultApp = DictHelper.RetrieveDefaultApp();
         }
 
         /// <summary>
@@ -41,16 +39,11 @@ namespace Bootstrap.Admin.Models
         /// <summary>
         /// 获得 是否开启自动锁屏
         /// </summary>
-        public string AutoLockScreen { get; }
+        public bool AutoLockScreen { get; }
 
         /// <summary>
         /// 获得 是否开启自动锁屏
         /// </summary>
-        public string DefaultApp { get; }
-
-        /// <summary>
-        /// 获得 是否开启 Blazor
-        /// </summary>
-        public string EnableBlazor { get; }
+        public bool DefaultApp { get; }
     }
 }

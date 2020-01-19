@@ -23,7 +23,7 @@ namespace Bootstrap.Admin.Components
         /// 
         /// </summary>
         [Parameter]
-        public string ShowCardTitle { get; set; } = "";
+        public bool ShowCardTitle { get; set; } = true;
 
         /// <summary>
         /// 

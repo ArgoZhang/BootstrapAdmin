@@ -37,6 +37,7 @@ namespace Bootstrap.Admin.Models
                 WebSiteIcon = DictHelper.RetrieveWebIcon(AppId);
                 WebSiteLogo = DictHelper.RetrieveWebLogo(AppId);
             }
+            EnableBlazor = DictHelper.RetrieveEnableBlazor();
         }
 
         /// <summary>
@@ -68,5 +69,10 @@ namespace Bootstrap.Admin.Models
         /// 获得 当前样式
         /// </summary>
         public string ActiveCss { get; } = "";
+
+        /// <summary>
+        /// 获得 是否开启 Blazor
+        /// </summary>
+        public bool EnableBlazor { get; }
     }
 }

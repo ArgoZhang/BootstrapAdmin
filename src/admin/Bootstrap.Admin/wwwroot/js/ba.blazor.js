@@ -130,6 +130,20 @@
         },
         submitForm: function (btn) {
             $(btn).parent().prev().find('form :submit').click();
+        },
+        toggleBlazor: function (show) {
+            var $blazor = $('header .nav .dropdown-mvc').parent();
+            if (show) $blazor.removeClass('d-none');
+            else $blazor.addClass('d-none');
+        },
+        setWebSettings: function (showSidebar, showCardTitle, fixedTableHeader) {
+            var $tabContent = $('section .tab-content');
+            if (showCardTitle) $tabContent.removeClass('no-card-header');
+            else $tabContent.addClass('no-card-header');
+
+            var $table = $(".bootstrap-table");
+            if (fixedTableHeader) $table.attr('data-header', 'fixed');
+            else $table.attr('data-header', 'scroll');
         }
     });
 

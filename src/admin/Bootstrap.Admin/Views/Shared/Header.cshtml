@@ -90,7 +90,7 @@
                     </a>
                 </div>
             }
-            <div class="dropdown">
+            <div class="@(Model.EnableBlazor ? "dropdown" : "dropdown d-none")">
                 <a class="shadow-success dropdown-blazor" href="/Pages" data-toggle="tooltip" title="Blazor 多 Tabs 模式">
                     <img src="~/images/blazor.svg" />
                 </a>

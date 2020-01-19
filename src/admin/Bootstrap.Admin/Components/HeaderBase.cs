@@ -1,4 +1,5 @@
 ﻿using Bootstrap.Admin.Shared;
+using Bootstrap.DataAccess;
 using Microsoft.AspNetCore.Components;
 
 namespace Bootstrap.Admin.Components
@@ -18,7 +19,7 @@ namespace Bootstrap.Admin.Components
         /// 获得 根模板页实例
         /// </summary>
         [CascadingParameter(Name = "Default")]
-        public DefaultLayout RootLayout { get; protected set; } = new DefaultLayout();
+        protected DefaultLayout? RootLayout { get; set; }
 
         /// <summary>
         /// 获得/设置 用户图标
@@ -37,5 +38,18 @@ namespace Bootstrap.Admin.Components
         /// </summary>
         [Parameter]
         public EventCallback<string> DisplayNameChanged { get; set; }
+
+        /// <summary>
+        /// 获得/设置 是否显示 Blazor MVC 切换图标
+        /// </summary>
+        protected bool EnableBlazor { get; set; }
+
+        /// <summary>
+        /// 参数赋值方法
+        /// </summary>
+        protected override void OnParametersSet()
+        {
+            EnableBlazor = DictHelper.RetrieveEnableBlazor();
+        }
     }
 }

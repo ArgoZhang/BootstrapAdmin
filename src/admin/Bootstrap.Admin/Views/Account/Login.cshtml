@@ -141,7 +141,7 @@
                     </div>
                 </div>
             </div>
-            <div class="slidercaptcha card @Model.ShowOAuth">
+            <div class="slidercaptcha @(Model.ShowOAuth ? "card oauth" : "card")">
                 <div class="card-header">
                     <span>请完成安全验证</span>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>

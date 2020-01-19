@@ -1,5 +1,5 @@
 ﻿@model NavigatorBarModel
-<aside class="@Model.ShowSideBar">
+<aside class="@(Model.ShowSideBar ? "" : "collapsed")">
     <div class="bg"></div>
     <div class="nav-brand justify-content-center">
         <a href="#">

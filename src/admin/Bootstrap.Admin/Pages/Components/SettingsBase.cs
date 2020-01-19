@@ -1,4 +1,5 @@
 ﻿using Bootstrap.Admin.Components;
+using Bootstrap.Admin.Extensions;
 using Bootstrap.Admin.Shared;
 using Bootstrap.DataAccess;
 using Bootstrap.Security;
@@ -62,25 +63,39 @@ namespace Bootstrap.Pages.Admin.Components
         {
             var ret = DictHelper.SaveSettings(new BootstrapDict[] { new BootstrapDict() { Category = "网站设置", Name = "Blazor", Code = Model.EnableBlazor ? "1" : "0" } });
             if (Model.EnableBlazor) ShowMessage("Blazor 设置保存", ret);
-            else
-            {
-                var url = RootLayout?.NavigationManager?.Uri.Replace("/Pages", "");
-                RootLayout?.NavigationManager?.NavigateTo(url, true);
-            }
+
+            // 根据保存结果隐藏 Header 挂件
+            if (ret) RootLayout?.JSRuntime?.ToggleBlazor(Model.EnableBlazor);
         }
 
         /// <summary>
         /// 保存 网站调整 方法
         /// </summary>
-        protected void SaveSidebar()
+        protected void SaveWebSettings()
         {
             var ret = DictHelper.SaveSettings(new BootstrapDict[]{
-                 new BootstrapDict() { Category = "网站调整", Name = "侧边栏状态", Code = Model.ShowSideBar ? "1" : "0" },
-                 new BootstrapDict() { Category = "网站调整", Name = "卡片标题状态", Code = Model.ShowCardTitle ? "1" : "0" },
-                 new BootstrapDict() { Category = "网站调整", Name = "固定表头", Code = Model.FixedTableHeader ? "1" : "0" }
+                 new BootstrapDict() { Category = "网站设置", Name = "侧边栏状态", Code = Model.ShowSideBar ? "1" : "0" },
+                 new BootstrapDict() { Category = "网站设置", Name = "卡片标题状态", Code = Model.ShowCardTitle ? "1" : "0" },
+                 new BootstrapDict() { Category = "网站设置", Name = "固定表头", Code = Model.FixedTableHeader ? "1" : "0" }
             });
-            ShowMessage("网站调整 设置保存", ret);
+            ShowMessage("网站调整保存", ret);
+
+            // 根据保存结果设置网站样式
+            if (ret) RootLayout?.JSRuntime?.SetWebSettings(Model.ShowSideBar, Model.ShowCardTitle, Model.FixedTableHeader);
         }
+
+        /// <summary>
+        /// 保存 登陆设置
+        /// </summary>
+        protected void SaveLogin()
+        {
+            var ret = DictHelper.SaveSettings(new BootstrapDict[]{
+                 new BootstrapDict() { Category = "网站设置", Name = "OAuth 认证登录", Code = Model.ShowOAuth ? "1" : "0" },
+                 new BootstrapDict() { Category = "网站设置", Name = "短信验证码登录", Code = Model.ShowMobile ? "1" : "0" }
+            });
+            ShowMessage("登录设置保存", ret);
+        }
+
         /// <summary>
         /// 网站设置编辑模型实体类
         /// </summary>

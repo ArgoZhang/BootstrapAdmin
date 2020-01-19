@@ -436,7 +436,7 @@
             }
 
             // 判断是否固定表头 小屏幕禁止固定表头功能
-            var fixHeader = this.attr('data-fixedHeader') === '' && $(window).width() >= 768;
+            var fixHeader = this.attr('data-header') === 'fixed' && $(window).width() >= 768;
             var $tabContainer = $(settings.tableContainer);
             if (fixHeader && settings.height === undefined) {
                 var calcPrevHeight = function (element) {
@@ -754,7 +754,7 @@
             var oldFunc = toggle.prototype.render;
             toggle.prototype.render = function () {
                 var defaultVal = this.$element.attr('data-default-val') || '';
-                if (defaultVal === '') this.$element.prop('checked', true);
+                if (defaultVal === "True") this.$element.prop('checked', true);
                 oldFunc.call(this);
                 this.$toggle.on('touchend', function (e) {
                     $(this).trigger('click.bs.toggle');

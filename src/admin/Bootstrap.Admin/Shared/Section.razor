@@ -1,6 +1,6 @@
 ﻿@inherits SectionBase
 
-<section class="main-content @ShowCardTitle @(ShowBackground ? @"welcome-bg" : @"")">
+<section class="main-content @(ShowCardTitle ? "" : "no-card-header") @(ShowBackground ? "welcome-bg" : "")">
     @if (LockScreenPeriod > 0)
     {
         <input id="lockScreenPeriod" type="hidden" value="@LockScreenPeriod" />
