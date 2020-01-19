@@ -32,6 +32,12 @@ namespace Bootstrap.Admin.Components
                     builder.OpenComponent(0, t);
                     builder.CloseComponent();
                 }
+                else
+                {
+                    builder.OpenElement(0, "h6");
+                    builder.AddContent(1, "正在玩命开发中... 敬请期待");
+                    builder.CloseElement();
+                }
             }
         }
     }
