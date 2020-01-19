@@ -1,7 +1,7 @@
 ﻿namespace Bootstrap.Admin.Components
 {
     /// <summary>
-    ///
+    /// PageContentAttributes 实体类
     /// </summary>
     public class PageContentAttributes
     {

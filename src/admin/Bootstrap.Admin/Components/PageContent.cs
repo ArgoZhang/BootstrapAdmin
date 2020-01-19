@@ -6,18 +6,18 @@ using System.Linq;
 namespace Bootstrap.Admin.Components
 {
     /// <summary>
-    /// 
+    /// PageContent 网页组件
     /// </summary>
     public class PageContent : ComponentBase
     {
         /// <summary>
-        /// 
+        /// 获得/设置 组件名字
         /// </summary>
         [Parameter]
         public string Name { get; set; } = "";
 
         /// <summary>
-        /// 
+        /// 渲染组件方法
         /// </summary>
         /// <param name="builder"></param>
         protected override void BuildRenderTree(RenderTreeBuilder builder)
@@ -25,6 +25,7 @@ namespace Bootstrap.Admin.Components
             var name = Name.SpanSplit("/").LastOrDefault();
             if (!string.IsNullOrEmpty(name))
             {
+                // TODO: 稍后重构使用标签动态加载组件
                 var t = Type.GetType($"Bootstrap.Admin.Pages.Admin.{name}");
                 if (t != null)
                 {
