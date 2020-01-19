@@ -1,0 +1,146 @@
+using Bootstrap.Admin.Components;
+using Bootstrap.DataAccess;
+using Bootstrap.Security;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Bootstrap.Pages.Admin.Components
+{
+    /// <summary>
+    /// 菜单维护组件
+    /// </summary>
+    public class MenusBase : QueryPageBase<BootstrapMenu>
+    {
+        /// <summary>
+        /// 获得 授权服务
+        /// </summary>
+        [Inject]
+        protected AuthenticationStateProvider? AuthenticationStateProvider { get; set; }
+
+        /// <summary>
+        /// 获得/设置 菜单类别
+        /// </summary>
+        protected List<SelectedItem> QueryCategory { get; set; } = new List<SelectedItem>(new SelectedItem[] {
+            new SelectedItem() { Text = "全部", Value = "-1", Active = true },
+            new SelectedItem() { Text = "系统菜单", Value = "0" },
+            new SelectedItem() { Text = "外部菜单", Value = "1" }
+        });
+
+        /// <summary>
+        /// 获得/设置 菜单类型
+        /// </summary>
+        protected List<SelectedItem> QueryResource { get; set; } = new List<SelectedItem>(new SelectedItem[] {
+            new SelectedItem() { Text = "全部", Value = "-1", Active = true },
+            new SelectedItem() { Text = "菜单", Value = "0" },
+            new SelectedItem() { Text = "资源", Value = "1" },
+            new SelectedItem() { Text = "按钮", Value = "2" }
+        });
+
+        /// <summary>
+        /// 获得/设置 所属应用
+        /// </summary>
+        protected List<SelectedItem> QueryApp { get; set; } = new List<SelectedItem>(new SelectedItem[] {
+            new SelectedItem() { Text = "全部", Value = "-1", Active = true }
+        });
+
+
+        /// <summary>
+        /// 获得/设置 菜单类别
+        /// </summary>
+        protected List<SelectedItem> DefineCategory { get; set; } = new List<SelectedItem>(new SelectedItem[] {
+            new SelectedItem() { Text = "系统菜单", Value = "0" },
+            new SelectedItem() { Text = "外部菜单", Value = "1" }
+        });
+
+        /// <summary>
+        /// 获得/设置 菜单类型
+        /// </summary>
+        protected List<SelectedItem> DefineResource { get; set; } = new List<SelectedItem>(new SelectedItem[] {
+            new SelectedItem() { Text = "菜单", Value = "0" },
+            new SelectedItem() { Text = "资源", Value = "1" },
+            new SelectedItem() { Text = "按钮", Value = "2" }
+        });
+
+        /// <summary>
+        /// 获得/设置 所属应用
+        /// </summary>
+        protected List<SelectedItem> DefineApp { get; set; } = new List<SelectedItem>();
+
+        /// <summary>
+        /// 获得/设置 所属应用
+        /// </summary>
+        protected List<SelectedItem> DefineTarget { get; set; } = new List<SelectedItem>() {
+            new SelectedItem() { Text = "本窗口", Value = "_self" },
+            new SelectedItem() { Text = "新窗口", Value = "_blank" },
+            new SelectedItem() { Text = "父级窗口", Value = "_parent" },
+            new SelectedItem() { Text = "顶级窗口", Value = "_top" }
+        };
+
+        /// <summary>
+        /// 获得/设置 用户登录名
+        /// </summary>
+        protected string? UserName { get; set; }
+
+        /// <summary>
+        /// OnInitializedAsync 方法
+        /// </summary>
+        /// <returns></returns>
+        protected override async System.Threading.Tasks.Task OnInitializedAsync()
+        {
+            if (AuthenticationStateProvider != null)
+            {
+                var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+                UserName = state?.User.Identity.Name;
+            }
+        }
+
+        /// <summary>
+        /// OnParametersSet 方法
+        /// </summary>
+        /// <returns></returns>
+        protected override void OnParametersSet()
+        {
+            QueryApp.AddRange(DictHelper.RetrieveApps().Select(app => new SelectedItem() { Text = app.Value, Value = app.Key }));
+            DefineApp.AddRange(DictHelper.RetrieveApps().Select(app => new SelectedItem() { Text = app.Value, Value = app.Key }));
+        }
+
+        /// <summary>
+        /// 查询方法
+        /// </summary>
+        /// <param name="pageIndex">页码</param>
+        /// <param name="pageItems">每页显示数据条目数量</param>
+        protected override QueryData<BootstrapMenu> Query(int pageIndex, int pageItems)
+        {
+            var data = MenuHelper.RetrieveMenusByUserName(UserName);
+            if (!string.IsNullOrEmpty(QueryModel.Name)) data = data.Where(d => d.Name.Contains(QueryModel.Name, StringComparison.OrdinalIgnoreCase));
+            if (!string.IsNullOrEmpty(QueryModel.ParentName)) data = data.Where(d => d.ParentName.Contains(QueryModel.ParentName, StringComparison.OrdinalIgnoreCase));
+            if (!string.IsNullOrEmpty(QueryModel.Category)) data = data.Where(d => d.Category == QueryModel.Category);
+            if (QueryModel.IsResource != -1) data = data.Where(d => d.IsResource == QueryModel.IsResource);
+            if (!string.IsNullOrEmpty(QueryModel.Application)) data = data.Where(d => d.Application.Equals(QueryModel.Application, StringComparison.OrdinalIgnoreCase));
+            var totalCount = data.Count();
+            var items = data.Skip((pageIndex - 1) * pageItems).Take(pageItems);
+            return new QueryData<BootstrapMenu>() { Items = items, TotalCount = totalCount, PageIndex = pageIndex, PageItems = pageItems };
+        }
+
+        /// <summary>
+        /// 保存方法
+        /// </summary>
+        protected override bool Save(BootstrapMenu item) => MenuHelper.Save(item);
+
+        /// <summary>
+        /// 删除方法
+        /// </summary>
+        protected override bool Delete(IEnumerable<BootstrapMenu> items) => MenuHelper.Delete(items.Select(item => item.Id ?? ""));
+
+        /// <summary>
+        /// 分配角色方法
+        /// </summary>
+        protected void AssignRoles()
+        {
+
+        }
+    }
+}
