@@ -16,42 +16,42 @@ namespace Bootstrap.Admin.Components
     public class TabSetBase : ComponentBase
     {
         /// <summary>
-        /// 
+        /// 获得 NavigationManager 实例
         /// </summary>
         [Inject]
-        public NavigationManager? NavigationManager { get; set; }
+        protected NavigationManager? NavigationManager { get; set; }
 
         /// <summary>
-        /// 
+        /// 获得 IJSRuntime 实例
         /// </summary>
         [Inject]
         protected IJSRuntime? JSRuntime { get; set; }
 
         /// <summary>
-        /// 
+        /// 获得 DefaultLayout 实例
         /// </summary>
         [CascadingParameter(Name = "Default")]
-        public DefaultLayout RootLayout { get; protected set; } = new DefaultLayout();
+        protected DefaultLayout? RootLayout { get; set; }
 
         /// <summary>
-        /// 页面集合
+        /// 获得 页面集合
         /// </summary>
         protected List<PageContentAttributes> Pages { get; set; } = new List<PageContentAttributes>();
 
         /// <summary>
-        /// Tab 集合
+        /// T获得 ab 集合
         /// </summary>
         protected List<Tab> Tabs { get; set; } = new List<Tab>();
         private string? curId;
 
         /// <summary>
-        /// 
+        /// OnParametersSet 方法
         /// </summary>
         protected override void OnParametersSet()
         {
             var requestUrl = NavigationManager?.Uri ?? "";
             var path = new Uri(requestUrl).PathAndQuery;
-            var menus = DataAccess.MenuHelper.RetrieveAllMenus(RootLayout.UserName);
+            var menus = DataAccess.MenuHelper.RetrieveAllMenus(RootLayout?.UserName);
             var menu = menus.FirstOrDefault(menu => path.Contains(menu.Url.ToBlazorMenuUrl()));
             if (menu != null) AddTab(menu);
         }
@@ -84,7 +84,7 @@ namespace Bootstrap.Admin.Components
                 Tabs.ForEach(t => t.SetActive(false));
                 Tabs.Add(tab);
                 Pages.ForEach(p => p.Active = false);
-                Pages.Add(new PageContentAttributes() { Id = menu.Id, Name = menu.Url, Active = true });
+                Pages.Add(new PageContentAttributes() { Id = menu.Id, Name = menu.Url.ToBlazorMenuUrl(), Active = true });
             }
             else
             {
@@ -134,7 +134,7 @@ namespace Bootstrap.Admin.Components
         /// </summary>
         protected void CloseAllTab()
         {
-            NavigationManager?.NavigateTo(RootLayout.HomeUrl);
+            if (RootLayout != null) NavigationManager?.NavigateTo(RootLayout.HomeUrl);
         }
 
         /// <summary>
