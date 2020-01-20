@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Rendering;
 using System;
-using System.Linq;
 
 namespace Bootstrap.Admin.Components
 {
@@ -22,11 +21,10 @@ namespace Bootstrap.Admin.Components
         /// <param name="builder"></param>
         protected override void BuildRenderTree(RenderTreeBuilder builder)
         {
-            var name = Name.SpanSplit("/").LastOrDefault();
+            var name = Name.Replace("/", ".");
             if (!string.IsNullOrEmpty(name))
             {
-                // TODO: 稍后重构使用标签动态加载组件
-                var t = Type.GetType($"Bootstrap.Admin.Pages.Admin.{name}");
+                var t = Type.GetType($"Bootstrap.Admin{name}");
                 if (t != null)
                 {
                     builder.OpenComponent(0, t);
