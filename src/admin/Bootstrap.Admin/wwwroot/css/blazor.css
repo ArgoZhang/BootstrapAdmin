@@ -130,6 +130,16 @@ nav .dropdown .nav-link-close.dropdown-toggle:after {
     margin-bottom: 0;
 }
 
+    .bootstrap-table .fixed-table-body {
+        overflow: auto;
+        border-radius: 4px;
+        height: 300px;
+    }
+
+        .bootstrap-table .fixed-table-body thead th, .bootstrap-table .fixed-table-header thead th {
+            border-bottom: 1px solid #dee2e6;
+        }
+
 .table-wrapper {
     border-radius: 4px;
     overflow: auto;

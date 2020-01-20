@@ -61,6 +61,24 @@ namespace Bootstrap.Admin.Components
         public RenderFragment? TableFooter { get; set; }
 
         /// <summary>
+        /// 获得/设置 是否固定表头 默认为 false 不固定表头
+        /// </summary>
+        [Parameter]
+        public bool FixedHeader { get; set; }
+
+        /// <summary>
+        /// 获得/设置 是否自适应高度 默认为 false 不自适应高度
+        /// </summary>
+        [Parameter]
+        public bool AutoHeight { get; set; }
+
+        /// <summary>
+        /// 获得/设置 是否显示搜索框 默认为 false 不显示搜索框
+        /// </summary>
+        [Parameter]
+        public bool ShowSearch { get; set; }
+
+        /// <summary>
         /// 获得/设置 数据集合
         /// </summary>
         protected IEnumerable<TItem> Items { get; set; } = new TItem[0];

@@ -13,48 +13,119 @@
     </div>
 
     <div class="table-wrapper">
-        <table class="table table-striped table-bordered table-hover table-selected" id="@($"{Id}_table")">
-            <thead>
-                <tr>
-                    @if (ShowCheckbox)
-                    {
-                        <th class="table-col-checkbox"><Checkbox TItem="TItem" SetCheckCallback="CheckState" ToggleCallback="ToggleCheck"></Checkbox></th>
-                    }
-                    @if (ShowLineNo)
-                    {
-                        <th class="table-col-lineno">行号</th>
-                    }
-                    @TableHeader?.Invoke(EditModel)
-                    @if (ShowButtons)
-                    {
-                        <th>@ButtonTemplateHeaderText</th>
-                    }
-                </tr>
-            </thead>
-            <tbody>
-                @for (int index = 0; index < Items.Count(); index++)
-                {
+        @if(FixedHeader)
+        {
+            <div class="fixed-table-header">
+                <table class="table table-bordered table-hover table-selected">
+                    <thead>
+                        <tr>
+                            @if (ShowCheckbox)
+                            {
+                                <th class="table-col-checkbox"><Checkbox TItem="TItem" SetCheckCallback="CheckState" ToggleCallback="ToggleCheck"></Checkbox></th>
+                            }
+                            @if (ShowLineNo)
+                            {
+                                <th class="table-col-lineno">行号</th>
+                            }
+                            @TableHeader?.Invoke(EditModel)
+                            @if (ShowButtons)
+                            {
+                                <th>@ButtonTemplateHeaderText</th>
+                            }
+                        </tr>
+                    </thead>
+                </table>
+            </div>   
+            <div class="fixed-table-body">                
+                <table class="table table-bordered table-hover table-selected" style="margin-top: -38px;">
+                    <thead>
+                        <tr>
+                            @if (ShowCheckbox)
+                            {
+                                <th class="table-col-checkbox"><Checkbox TItem="TItem" SetCheckCallback="CheckState" ToggleCallback="ToggleCheck"></Checkbox></th>
+                            }
+                            @if (ShowLineNo)
+                            {
+                                <th class="table-col-lineno">行号</th>
+                            }
+                            @TableHeader?.Invoke(EditModel)
+                            @if (ShowButtons)
+                            {
+                                <th>@ButtonTemplateHeaderText</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int index = 0; index < Items.Count(); index++)
+                        {
+                            <tr>
+                                @if (ShowCheckbox)
+                                {
+                                    <td class="table-col-checkbox"><Checkbox TItem="TItem" Item="Items.ElementAt(index)" SetCheckCallback="item => SelectedItems.Contains(item) ? CheckBoxState.Checked : CheckBoxState.UnChecked" ToggleCallback="ToggleCheck"></Checkbox></td>
+                                }
+                                @if (ShowLineNo)
+                                {
+                                    <td class="table-col-lineno">@(index + 1 + (PageIndex - 1) * PageItems)</td>
+                                }
+                                @RowTemplate?.Invoke(Items.ElementAt(index))
+                                @if (ShowButtons)
+                                {
+                                    <td>@ButtonTemplate?.Invoke(Items.ElementAt(index))</td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>@TableFooter</tr>
+                    </tfoot>
+                </table>
+            </div>        
+        }
+        else
+        {
+            <table class="table table-striped table-bordered table-hover table-selected" id="@($"{Id}_table")">
+                <thead>
                     <tr>
                         @if (ShowCheckbox)
                         {
-                            <td class="table-col-checkbox"><Checkbox TItem="TItem" Item="Items.ElementAt(index)" SetCheckCallback="item => SelectedItems.Contains(item) ? CheckBoxState.Checked : CheckBoxState.UnChecked" ToggleCallback="ToggleCheck"></Checkbox></td>
+                            <th class="table-col-checkbox"><Checkbox TItem="TItem" SetCheckCallback="CheckState" ToggleCallback="ToggleCheck"></Checkbox></th>
                         }
                         @if (ShowLineNo)
                         {
-                            <td class="table-col-lineno">@(index + 1 + (PageIndex - 1) * PageItems)</td>
+                            <th class="table-col-lineno">行号</th>
                         }
-                        @RowTemplate?.Invoke(Items.ElementAt(index))
+                        @TableHeader?.Invoke(EditModel)
                         @if (ShowButtons)
                         {
-                            <td>@ButtonTemplate?.Invoke(Items.ElementAt(index))</td>
+                            <th>@ButtonTemplateHeaderText</th>
                         }
                     </tr>
-                }
-            </tbody>
-            <tfoot>
-                <tr>@TableFooter</tr>
-            </tfoot>
-        </table>
+                </thead>
+                <tbody>
+                    @for (int index = 0; index < Items.Count(); index++)
+                    {
+                        <tr>
+                            @if (ShowCheckbox)
+                            {
+                                <td class="table-col-checkbox"><Checkbox TItem="TItem" Item="Items.ElementAt(index)" SetCheckCallback="item => SelectedItems.Contains(item) ? CheckBoxState.Checked : CheckBoxState.UnChecked" ToggleCallback="ToggleCheck"></Checkbox></td>
+                            }
+                            @if (ShowLineNo)
+                            {
+                                <td class="table-col-lineno">@(index + 1 + (PageIndex - 1) * PageItems)</td>
+                            }
+                            @RowTemplate?.Invoke(Items.ElementAt(index))
+                            @if (ShowButtons)
+                            {
+                                <td>@ButtonTemplate?.Invoke(Items.ElementAt(index))</td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>@TableFooter</tr>
+                </tfoot>
+            </table>
+        }
     </div>
     <Pagination PageItems="PageItems" TotalCount="TotalCount" PageIndex="PageIndex" OnPageClick="PageClick" OnPageItemsChange="PageItemsChange"></Pagination>
 </div>

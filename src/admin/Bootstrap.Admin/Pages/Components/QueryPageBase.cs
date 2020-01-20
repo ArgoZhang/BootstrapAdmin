@@ -1,5 +1,7 @@
-using System.Collections.Generic;
 using Bootstrap.Admin.Components;
+using Bootstrap.DataAccess;
+using Microsoft.AspNetCore.Components;
+using System.Collections.Generic;
 
 namespace Bootstrap.Pages.Admin.Components
 {
@@ -8,6 +10,12 @@ namespace Bootstrap.Pages.Admin.Components
     /// </summary>
     public abstract class QueryPageBase<TItem> : PageBase where TItem : class, new()
     {
+        /// <summary>
+        /// 获得/设置 是否固定表头 默认为 false 不固定表头
+        /// </summary>
+        [Parameter]
+        public bool FixedHeader { get; set; }
+
         /// <summary>
         /// 获得/设置 TItem 实例
         /// </summary>
@@ -19,6 +27,14 @@ namespace Bootstrap.Pages.Admin.Components
         /// <param name="pageIndex">页码</param>
         /// <param name="pageItems">每页显示数据条目数量</param>
         protected abstract QueryData<TItem> Query(int pageIndex, int pageItems);
+
+        /// <summary>
+        /// OnParametersSet 方法
+        /// </summary>
+        protected override void OnParametersSet()
+        {
+            FixedHeader = DictHelper.RetrieveFixedTableHeader();
+        }
 
         /// <summary>
         /// 新建方法
