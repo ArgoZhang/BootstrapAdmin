@@ -1,6 +1,56 @@
-﻿
-<h3>Menus</h3>
+﻿@inherits MenusBase
 
-@code {
-
-}
+<EditPage Id="role" TItem="Bootstrap.Security.BootstrapMenu" SubmitModalTitle="菜单编辑窗口" QueryModel="QueryModel" OnQuery="Query" OnAdd="Add" OnDelete="Delete" OnSave="Save">
+    <QueryBody>
+        <LgbInputText ColumnClass="col-sm-auto" @bind-Value="@context.Name" maxlength="50" />
+        <LgbInputText ColumnClass="col-sm-auto" @bind-Value="@context.ParentName" maxlength="50" />
+        <Select ColumnClass="col-sm-auto" Items="QueryCategory" TItem="string" @bind-Value="@context.Category" />
+        <Select ColumnClass="col-sm-auto" Items="QueryResource" TItem="int" @bind-Value="@context.IsResource" />
+        <Select ColumnClass="col-sm-auto" Items="QueryApp" TItem="string" @bind-Value="@context.Application" />
+    </QueryBody>
+    <TableToolbarTemplate>
+        <TableToolbarButton class="btn btn-info" Icon="fa fa-sitemap" Title="分配角色" OnClick="AssignRoles" />
+    </TableToolbarTemplate>
+    <TableInfoTemplate>
+        <div class="alert alert-info" role="alert">
+            <span>演示系统禁止修改系统菜单，可修改外部菜单</span>
+        </div>
+    </TableInfoTemplate>
+    <TableHeader>
+        <LgbTableHeader TItem="string" @bind-Value="@context.Name"></LgbTableHeader>
+        <LgbTableHeader TItem="int" @bind-Value="@context.Order"></LgbTableHeader>
+        <LgbTableHeader TItem="string" @bind-Value="@context.Icon"></LgbTableHeader>
+        <LgbTableHeader TItem="string" @bind-Value="@context.Url"></LgbTableHeader>
+        <LgbTableHeader TItem="string" @bind-Value="@context.CategoryName"></LgbTableHeader>
+        <LgbTableHeader TItem="string" @bind-Value="@context.Target"></LgbTableHeader>
+        <LgbTableHeader TItem="string" @bind-Value="@context.Application"></LgbTableHeader>
+    </TableHeader>
+    <RowTemplate>
+        <td>@context.Name</td>
+        <td>@context.Order</td>
+        <td>@context.Icon</td>
+        <td>@context.Url</td>
+        <td>@context.CategoryName</td>
+        <td>@(DefineTarget.FirstOrDefault(d => d.Value == context.Target)?.Text ?? "-")</td>
+        <td>@(DefineApp.FirstOrDefault(d => d.Value == context.Application)?.Text ?? "-")</td>
+    </RowTemplate>
+    <EditTemplate>
+        <div class="row">
+            <LgbInputText @bind-Value="@context.Name" placeholder="不可为空，50字以内" maxlength="50">
+                <RequiredValidator />
+                <StringLengthValidator Length="50" />
+            </LgbInputText>
+            <LgbInputText @bind-Value="@context.ParentName" placeholder="请选择...(可为空)，50字以内" maxlength="50" />
+            <LgbInput TItem="int" @bind-Value="@context.Order" placeholder="可为空，默认为10" InputType="number" maxlength="6" />
+            <LgbInputText @bind-Value="@context.Icon" placeholder="请选择...(可为空)，50字以内" maxlength="50" />
+            <LgbInputText @bind-Value="@context.Url" placeholder="不可为空，2000字以内" maxlength="2000" ColumnClass="col-12" class="flex-sm-fill">
+                <RequiredValidator />
+                <StringLengthValidator Length="2000" />
+            </LgbInputText>
+            <Select Items="DefineResource" TItem="int" @bind-Value="@context.IsResource"></Select>
+            <Select Items="DefineTarget" TItem="string" @bind-Value="@context.Target"></Select>
+            <Select Items="DefineApp" TItem="string" @bind-Value="@context.Application"></Select>
+            <Select Items="DefineCategory" TItem="string" @bind-Value="@context.Category" Disabled="true"></Select>
+        </div>
+    </EditTemplate>
+</EditPage>

@@ -11,7 +11,7 @@ namespace Bootstrap.Admin.Components
     public class SelectBase<TItem> : ValidateInputBase<TItem>
     {
         /// <summary>
-        ///
+        /// 获得/设置 Select 组件 列样式 默认 col-sm-6
         /// </summary>
         [Parameter]
         public string ColumnClass { get; set; } = "col-sm-6";
@@ -28,7 +28,13 @@ namespace Bootstrap.Admin.Components
         public List<SelectedItem> Items { get; set; } = new List<SelectedItem>();
 
         /// <summary>
-        /// 
+        /// 获得/设置 是否禁用
+        /// </summary>
+        [Parameter]
+        public bool Disabled { get; set; }
+
+        /// <summary>
+        /// OnParametersSet 方法
         /// </summary>
         protected override void OnParametersSet()
         {
@@ -40,7 +46,7 @@ namespace Bootstrap.Admin.Components
         }
 
         /// <summary>
-        /// 
+        /// OnInitialized 方法
         /// </summary>
         protected override void OnInitialized()
         {
@@ -52,13 +58,13 @@ namespace Bootstrap.Admin.Components
         }
 
         /// <summary>
-        /// 
+        /// SelectedItemChanged 方法
         /// </summary>
         [Parameter]
         public Action<SelectedItem>? SelectedItemChanged { get; set; }
 
         /// <summary>
-        /// 
+        /// 下拉框项被选中时调用此方法
         /// </summary>
         public void ItemClickCallback(SelectedItem item)
         {

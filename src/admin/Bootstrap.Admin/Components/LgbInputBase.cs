@@ -7,36 +7,22 @@ namespace Bootstrap.Admin.Components
     /// <summary>
     /// LgbInputText 组件
     /// </summary>
-    public class LgbInputTextBase : ValidateInputBase<string>
+    public class LgbInputBase<TItem> : ValidateInputBase<TItem>
     {
         /// <summary>
-        /// 
+        /// 获得/设置 控件样式 默认为 col-sm-6
         /// </summary>
         [Parameter]
         public string ColumnClass { get; set; } = "col-sm-6";
 
         /// <summary>
-        /// 
+        /// 获得/设置 控件 type 属性 默认为 text
         /// </summary>
         [Parameter]
         public string InputType { get; set; } = "text";
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="value"></param>
-        /// <param name="result"></param>
-        /// <param name="validationErrorMessage"></param>
-        /// <returns></returns>
-        protected override bool TryParseValueFromString(string value, out string result, out string validationErrorMessage)
-        {
-            result = value;
-            validationErrorMessage = "";
-            return true;
-        }
-
-        /// <summary>
-        /// 
+        /// 获取 最大长度属性
         /// </summary>
         protected int? MaxLength
         {

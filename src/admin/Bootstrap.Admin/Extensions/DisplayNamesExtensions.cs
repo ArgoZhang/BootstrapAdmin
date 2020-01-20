@@ -32,6 +32,17 @@ namespace Microsoft.AspNetCore.Builder
             _displayNameCache.TryAdd((typeof(Group), nameof(Group.GroupCode)), "部门编码");
             _displayNameCache.TryAdd((typeof(Group), nameof(Group.GroupName)), "部门名称");
             _displayNameCache.TryAdd((typeof(Group), nameof(Group.Description)), "部门描述");
+
+            _displayNameCache.TryAdd((typeof(BootstrapMenu), nameof(BootstrapMenu.Name)), "菜单名称");
+            _displayNameCache.TryAdd((typeof(BootstrapMenu), nameof(BootstrapMenu.ParentName)), "父级菜单");
+            _displayNameCache.TryAdd((typeof(BootstrapMenu), nameof(BootstrapMenu.Order)), "菜单序号");
+            _displayNameCache.TryAdd((typeof(BootstrapMenu), nameof(BootstrapMenu.Icon)), "菜单图标");
+            _displayNameCache.TryAdd((typeof(BootstrapMenu), nameof(BootstrapMenu.Url)), "菜单路径");
+            _displayNameCache.TryAdd((typeof(BootstrapMenu), nameof(BootstrapMenu.Category)), "菜单类别");
+            _displayNameCache.TryAdd((typeof(BootstrapMenu), nameof(BootstrapMenu.Target)), "目标");
+            _displayNameCache.TryAdd((typeof(BootstrapMenu), nameof(BootstrapMenu.IsResource)), "菜单类型");
+            _displayNameCache.TryAdd((typeof(BootstrapMenu), nameof(BootstrapMenu.Application)), "所属应用");
+
             return services;
         }
 

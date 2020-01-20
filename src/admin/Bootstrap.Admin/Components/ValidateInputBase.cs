@@ -11,24 +11,24 @@ using System.Linq;
 namespace Bootstrap.Admin.Components
 {
     /// <summary>
-    /// 
+    /// 内置验证组件基类
     /// </summary>
-    public abstract class ValidateInputBase<TItem> : InputBase<TItem>, IValidateComponent
+    public abstract class ValidateInputBase<TItem> : InputBase<TItem>, IValidateComponent, IRules
     {
         /// <summary>
-        /// 
+        /// 获得 IJSRuntime 实例
         /// </summary>
         [Inject]
         protected IJSRuntime? JSRuntime { get; set; }
 
         /// <summary>
-        /// 
+        /// 获得 LgbEditFormBase 实例
         /// </summary>
         [CascadingParameter]
         public LgbEditFormBase? EditForm { get; set; }
 
         /// <summary>
-        /// 
+        /// 获得 当前组件 Id
         /// </summary>
         public string Id
         {
@@ -36,13 +36,13 @@ namespace Bootstrap.Admin.Components
         }
 
         /// <summary>
-        /// 
+        /// 获得 子组件 RenderFragment 实例
         /// </summary>
         [Parameter]
         public RenderFragment? ChildContent { get; set; }
 
         /// <summary>
-        /// 
+        /// 获得 PlaceHolder 属性
         /// </summary>
         protected string? PlaceHolder
         {
@@ -59,22 +59,22 @@ namespace Bootstrap.Admin.Components
         }
 
         /// <summary>
-        /// 
+        /// 获得/设置 错误描述信息
         /// </summary>
         protected string ErrorMessage { get; set; } = "";
 
         /// <summary>
-        /// 
+        /// 获得/设置 数据合规样式
         /// </summary>
         protected string ValidCss { get; set; } = "";
 
         /// <summary>
-        /// 
+        /// 获得/设置 显示名称 默认为 -
         /// </summary>
         protected string DisplayName { get; set; } = "-";
 
         /// <summary>
-        /// 
+        /// OnInitialized 方法
         /// </summary>
         protected override void OnInitialized()
         {
@@ -83,7 +83,7 @@ namespace Bootstrap.Admin.Components
         }
 
         /// <summary>
-        /// 
+        /// OnAfterRender 方法
         /// </summary>
         /// <param name="firstRender"></param>
         protected override void OnAfterRender(bool firstRender)
@@ -96,13 +96,13 @@ namespace Bootstrap.Admin.Components
         }
 
         /// <summary>
-        /// 
+        /// 获得 数据验证方法集合
         /// </summary>
         public ICollection<ValidatorComponentBase> Rules { get; } = new HashSet<ValidatorComponentBase>();
 
         private string _tooltipMethod = "";
         /// <summary>
-        /// 
+        /// 属性验证方法
         /// </summary>
         /// <param name="propertyValue"></param>
         /// <param name="context"></param>
@@ -142,7 +142,7 @@ namespace Bootstrap.Admin.Components
         }
 
         /// <summary>
-        /// 
+        /// 将 字符串 Value 属性转化为 泛型 Value 方法
         /// </summary>
         /// <param name="value"></param>
         /// <param name="result"></param>

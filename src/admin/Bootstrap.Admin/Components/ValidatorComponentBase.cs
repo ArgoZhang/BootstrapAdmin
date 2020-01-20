@@ -6,21 +6,21 @@ using System.ComponentModel.DataAnnotations;
 namespace Bootstrap.Admin.Components
 {
     /// <summary>
-    /// 
+    /// 验证组件基类
     /// </summary>
     public abstract class ValidatorComponentBase : ComponentBase
     {
         /// <summary>
-        /// 
+        /// 获得/设置 错误描述信息
         /// </summary>
         [Parameter]
         public string ErrorMessage { get; set; } = "";
 
         /// <summary>
-        /// 
+        /// 获得/设置 IRules 实例
         /// </summary>
         [CascadingParameter]
-        public LgbInputTextBase? Input { get; set; }
+        public IRules? Input { get; set; }
 
         /// <summary>
         /// 初始化方法
@@ -30,7 +30,7 @@ namespace Bootstrap.Admin.Components
             if (Input == null)
             {
                 throw new InvalidOperationException($"{nameof(ValidatorComponentBase)} requires a cascading " +
-                    $"parameter of type {nameof(LgbInputTextBase)}. For example, you can use {nameof(ValidatorComponentBase)} " +
+                    $"parameter of type {nameof(IRules)}. For example, you can use {nameof(ValidatorComponentBase)} " +
                     $"inside an LgbInputText.");
             }
 
@@ -38,7 +38,7 @@ namespace Bootstrap.Admin.Components
         }
 
         /// <summary>
-        /// 
+        /// 验证方法
         /// </summary>
         /// <param name="propertyValue"></param>
         /// <param name="context"></param>
