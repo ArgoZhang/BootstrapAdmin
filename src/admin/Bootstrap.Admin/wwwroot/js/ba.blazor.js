@@ -111,14 +111,14 @@
         initModal: function () {
             $('.modal').appendTo($('body'));
         },
-        initToast: function () {
-            $('.toast').appendTo($('body'));
+        initToast: function (id) {
+            $('#' + id).appendTo($('body'));
         },
         toggleModal: function (modalId) {
             $(modalId).modal('toggle');
         },
-        showToast: function () {
-            $('.toast').toast('show');
+        showToast: function (id) {
+            $('#' + id).toast('show');
         },
         tooltip: function (id, method) {
             var $ele = $(id);

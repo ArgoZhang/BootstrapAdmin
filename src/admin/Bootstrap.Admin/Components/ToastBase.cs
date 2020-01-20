@@ -1,6 +1,7 @@
 ﻿using Bootstrap.Admin.Extensions;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using System;
 
 namespace Bootstrap.Admin.Components
 {
@@ -65,7 +66,7 @@ namespace Bootstrap.Admin.Components
         {
             if (firstRender)
             {
-                JSRuntime.InitToast();
+                JSRuntime.InitToast(Id);
             }
             if (_show)
             {
@@ -75,16 +76,24 @@ namespace Bootstrap.Admin.Components
         }
 
         /// <summary>
-        /// 
+        /// OnParametersSet 方法
+        /// </summary>
+        protected override void OnParametersSet()
+        {
+            if (string.IsNullOrEmpty(Id)) throw new InvalidOperationException("Toast component must have Id property");
+        }
+
+        /// <summary>
+        /// 显示 Toast 提示框方法
         /// </summary>
         protected void Show()
         {
-            JSRuntime.ShowToast();
+            JSRuntime.ShowToast(Id);
         }
 
         private bool _show;
         /// <summary>
-        /// 
+        /// 显示 Toast 提示框方法
         /// </summary>
         public void ShowMessage(string title, string text, ToastCategory category = ToastCategory.Success)
         {
@@ -96,7 +105,7 @@ namespace Bootstrap.Admin.Components
         }
 
         /// <summary>
-        /// 
+        /// 呈现不同类别方法
         /// </summary>
         /// <returns></returns>
         protected string RenderCategory()
@@ -118,7 +127,7 @@ namespace Bootstrap.Admin.Components
         }
 
         /// <summary>
-        /// 
+        /// 呈现动画方法
         /// </summary>
         /// <returns></returns>
         protected string RenderAnimation()

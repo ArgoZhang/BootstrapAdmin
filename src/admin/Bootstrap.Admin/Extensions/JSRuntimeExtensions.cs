@@ -57,7 +57,8 @@ namespace Bootstrap.Admin.Extensions
         /// 修复 Modal 组件
         /// </summary>
         /// <param name="jSRuntime"></param>
-        public static void InitToast(this IJSRuntime? jSRuntime) => jSRuntime.InvokeVoidAsync("$.initToast");
+        /// <param name="id"></param>
+        public static void InitToast(this IJSRuntime? jSRuntime, string id) => jSRuntime.InvokeVoidAsync("$.initToast", id);
 
         /// <summary>
         /// 弹出 Modal 组件
@@ -70,7 +71,8 @@ namespace Bootstrap.Admin.Extensions
         /// 弹出 Toast 组件
         /// </summary>
         /// <param name="jSRuntime"></param>
-        public static void ShowToast(this IJSRuntime? jSRuntime) => jSRuntime.InvokeVoidAsync("$.showToast");
+        /// <param name="id"></param>
+        public static void ShowToast(this IJSRuntime? jSRuntime, string id) => jSRuntime.InvokeVoidAsync("$.showToast", id);
 
         /// <summary>
         /// 弹出 Tooltip 组件
