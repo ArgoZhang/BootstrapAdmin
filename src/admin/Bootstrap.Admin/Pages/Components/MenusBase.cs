@@ -24,7 +24,7 @@ namespace Bootstrap.Pages.Admin.Components
         /// 获得/设置 菜单类别
         /// </summary>
         protected List<SelectedItem> QueryCategory { get; set; } = new List<SelectedItem>(new SelectedItem[] {
-            new SelectedItem() { Text = "全部", Value = "-1", Active = true },
+            new SelectedItem() { Text = "全部", Value = "", Active = true },
             new SelectedItem() { Text = "系统菜单", Value = "0" },
             new SelectedItem() { Text = "外部菜单", Value = "1" }
         });
@@ -43,7 +43,7 @@ namespace Bootstrap.Pages.Admin.Components
         /// 获得/设置 所属应用
         /// </summary>
         protected List<SelectedItem> QueryApp { get; set; } = new List<SelectedItem>(new SelectedItem[] {
-            new SelectedItem() { Text = "全部", Value = "-1", Active = true }
+            new SelectedItem() { Text = "全部", Value = "", Active = true }
         });
 
 
@@ -103,6 +103,8 @@ namespace Bootstrap.Pages.Admin.Components
         /// <returns></returns>
         protected override void OnParametersSet()
         {
+            QueryModel.Category = "";
+            QueryModel.IsResource = -1;
             QueryApp.AddRange(DictHelper.RetrieveApps().Select(app => new SelectedItem() { Text = app.Value, Value = app.Key }));
             DefineApp.AddRange(DictHelper.RetrieveApps().Select(app => new SelectedItem() { Text = app.Value, Value = app.Key }));
         }
@@ -123,6 +125,22 @@ namespace Bootstrap.Pages.Admin.Components
             var totalCount = data.Count();
             var items = data.Skip((pageIndex - 1) * pageItems).Take(pageItems);
             return new QueryData<BootstrapMenu>() { Items = items, TotalCount = totalCount, PageIndex = pageIndex, PageItems = pageItems };
+        }
+
+        /// <summary>
+        /// 新建方法
+        /// </summary>
+        protected override BootstrapMenu Add()
+        {
+            return new BootstrapMenu()
+            {
+                Order = 10,
+                Icon = "fa fa-fa",
+                Target = "_self",
+                Category = "0",
+                IsResource = 0,
+                Application = DefineApp.First().Value
+            };
         }
 
         /// <summary>

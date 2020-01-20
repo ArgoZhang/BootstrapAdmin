@@ -1,4 +1,5 @@
-﻿@inherits LgbInputTextBase
+@typeparam TItem
+@inherits LgbInputBase<TItem>
 
 <div class="@($"form-group {ColumnClass}")">
     <label class="control-label" for="@Id">@DisplayName</label>

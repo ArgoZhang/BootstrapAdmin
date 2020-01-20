@@ -40,17 +40,17 @@
                 <RequiredValidator />
                 <StringLengthValidator Length="50" />
             </LgbInputText>
-            <LgbInputText @bind-Value="@context.ParentName" placeholder="可为空，50字以内" maxlength="50" />
-            <LgbInputText @bind-Value="@context.Icon" placeholder="不可为空，50字以内" maxlength="50" />
-            <LgbInputText @bind-Value="@context.Icon" placeholder="不可为空，50字以内" maxlength="50" />
-            <LgbInputText @bind-Value="@context.Url" placeholder="不可为空，50字以内" maxlength="2000" ColumnClass="col-12" class="flex-sm-fill">
+            <LgbInputText @bind-Value="@context.ParentName" placeholder="请选择...(可为空)，50字以内" maxlength="50" />
+            <LgbInput TItem="int" @bind-Value="@context.Order" placeholder="可为空，默认为10" InputType="number" maxlength="6" />
+            <LgbInputText @bind-Value="@context.Icon" placeholder="请选择...(可为空)，50字以内" maxlength="50" />
+            <LgbInputText @bind-Value="@context.Url" placeholder="不可为空，2000字以内" maxlength="2000" ColumnClass="col-12" class="flex-sm-fill">
                 <RequiredValidator />
                 <StringLengthValidator Length="2000" />
             </LgbInputText>
             <Select Items="DefineResource" TItem="int" @bind-Value="@context.IsResource"></Select>
             <Select Items="DefineTarget" TItem="string" @bind-Value="@context.Target"></Select>
             <Select Items="DefineApp" TItem="string" @bind-Value="@context.Application"></Select>
-            <Select Items="DefineCategory" TItem="string" @bind-Value="@context.Category"></Select>
+            <Select Items="DefineCategory" TItem="string" @bind-Value="@context.Category" Disabled="true"></Select>
         </div>
     </EditTemplate>
 </EditPage>
