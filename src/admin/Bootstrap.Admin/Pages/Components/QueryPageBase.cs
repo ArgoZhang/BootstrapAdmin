@@ -24,7 +24,7 @@ namespace Bootstrap.Pages.Admin.Components
         /// 新建方法
         /// </summary>
         /// <returns></returns>
-        protected TItem Add() => new TItem();
+        protected virtual TItem Add() => new TItem();
 
         /// <summary>
         /// 保存方法
