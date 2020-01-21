@@ -136,6 +136,10 @@ nav .dropdown .nav-link-close.dropdown-toggle:after {
         height: 300px;
     }
 
+        .bootstrap-table .fixed-table-body table {
+            margin-top: -38px;
+        }
+
         .bootstrap-table .fixed-table-body thead th, .bootstrap-table .fixed-table-header thead th {
             border-bottom: 1px solid #dee2e6;
         }

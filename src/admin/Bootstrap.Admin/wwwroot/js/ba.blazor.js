@@ -140,10 +140,34 @@
             var $tabContent = $('section .tab-content');
             if (showCardTitle) $tabContent.removeClass('no-card-header');
             else $tabContent.addClass('no-card-header');
+        },
+        initTable: function (id) {
+            var $table = $('#' + id);
+            var $tableContainer = $table.parents('.table-wrapper');
+            var $tableHeader = $tableContainer.find('.fixed-table-header table');
 
-            var $table = $(".bootstrap-table");
-            if (fixedTableHeader) $table.attr('data-header', 'fixed');
-            else $table.attr('data-header', 'scroll');
+            // resetWidth()
+            var $heads = $tableHeader.find('th');
+            var resetWidth = function () {
+                $table.find('th').each(function (index, element) {
+                    var header = $heads.get(index);
+                    $(header).width($(element).width());
+                });
+            }
+            resetWidth();
+
+            // modify scroll
+            $table.parent().overlayScrollbars({
+                className: 'os-theme-dark',
+                scrollbars: {
+                    autoHide: 'leave',
+                    autoHideDelay: 100
+                }
+            }).removeClass('d-none');
+
+            $(window).on('resize', function () {
+                resetWidth();
+            });
         }
     });
 

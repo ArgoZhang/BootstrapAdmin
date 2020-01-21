@@ -97,5 +97,10 @@ namespace Bootstrap.Admin.Extensions
         /// <param name="showCardTitle"></param>
         /// <param name="fixedTableHeader"></param>
         public static void SetWebSettings(this IJSRuntime? jSRuntime, bool showSidebar, bool showCardTitle, bool fixedTableHeader) => jSRuntime.InvokeVoidAsync("$.setWebSettings", showSidebar, showCardTitle, fixedTableHeader);
+
+        /// <summary>
+        /// 初始化 Table 组件
+        /// </summary>
+        public static ValueTask InitTableAsync(this IJSRuntime? jSRuntime, string id) => jSRuntime.InvokeVoidAsync("$.initTable", id);
     }
 }
