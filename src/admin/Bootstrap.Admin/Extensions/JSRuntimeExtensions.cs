@@ -101,6 +101,9 @@ namespace Bootstrap.Admin.Extensions
         /// <summary>
         /// 初始化 Table 组件
         /// </summary>
-        public static ValueTask InitTableAsync(this IJSRuntime? jSRuntime, string id) => jSRuntime.InvokeVoidAsync("$.initTable", id);
+        /// <param name="jSRuntime"></param>
+        /// <param name="id"></param>
+        /// <param name="firstRender"></param>
+        public static ValueTask InitTableAsync(this IJSRuntime? jSRuntime, string id, bool firstRender) => jSRuntime.InvokeVoidAsync("$.initTable", id, firstRender);
     }
 }

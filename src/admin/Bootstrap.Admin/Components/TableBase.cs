@@ -218,7 +218,7 @@ namespace Bootstrap.Admin.Components
             if (FixedHeader)
             {
                 // 调用客户端脚本 resetWith
-                await JSRuntime.InitTableAsync(RetrieveId());
+                await JSRuntime.InitTableAsync(RetrieveId(), firstRender);
             }
         }
 
