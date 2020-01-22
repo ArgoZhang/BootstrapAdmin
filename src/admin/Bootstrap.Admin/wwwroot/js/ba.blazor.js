@@ -161,7 +161,7 @@
                 if (source.hasClass('tab-content')) break;
             }
             while (source.length === 1);
-            height = $(window).height() - height - 15;
+            height = $(window).height() - height - 15 - 38;
             table.height(height);
         },
         initTable: function (id, firstRender) {
