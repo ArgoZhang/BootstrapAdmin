@@ -135,7 +135,7 @@ nav .dropdown .nav-link-close.dropdown-toggle:after {
     }
 
     .bootstrap-table .fixed-table-body {
-        height: 300px;
+        min-height: 400px;
     }
 
         .bootstrap-table .fixed-table-body table {

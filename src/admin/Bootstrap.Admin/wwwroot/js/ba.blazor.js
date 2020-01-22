@@ -152,10 +152,26 @@
                 $(header).width($(element).width());
             });
         },
+        resetTableHeight(source) {
+            var table = source;
+            var height = 0;
+            do {
+                height += source.position().top;
+                source = source.parent();
+                if (source.hasClass('tab-content')) break;
+            }
+            while (source.length === 1);
+            height = $(window).height() - height - 15;
+            table.height(height);
+        },
         initTable: function (id, firstRender) {
             var $table = $('#' + id);
+            var $fixedBody = $table.parents('.fixed-table-body');
 
             if (firstRender) {
+                // calc height
+                $.resetTableHeight($fixedBody);
+
                 // modify scroll
                 $table.parent().overlayScrollbars({
                     className: 'os-theme-dark',
@@ -175,6 +191,7 @@
 
                 $(window).on('resize', function () {
                     $.resetTableWidth($table, $tableHeader);
+                    $.resetTableHeight($fixedBody);
                 });
             }
         }
