@@ -130,15 +130,46 @@ nav .dropdown .nav-link-close.dropdown-toggle:after {
     margin-bottom: 0;
 }
 
+    .bootstrap-table .fixed-table-header {
+        overflow: hidden;
+    }
+
+    .bootstrap-table .fixed-table-body {
+        min-height: 400px;
+    }
+
+        .bootstrap-table .fixed-table-body table {
+            margin-top: -38px;
+        }
+
+        .bootstrap-table .fixed-table-body thead th, .bootstrap-table .fixed-table-header thead th {
+            border-bottom: 1px solid #dee2e6;
+        }
+
 .table-wrapper {
     border-radius: 4px;
-    overflow: auto;
     margin-bottom: 1rem;
 }
 
     .table-wrapper .table {
-        margin-bottom: 1px;
+        margin-bottom: 0;
     }
+
+.table-fixed-header {
+    border: solid 1px #dee2e6;
+}
+
+    .table-fixed-header .table {
+        border: none;
+    }
+
+        .table-fixed-header .table th:last-child {
+            border-right-width: 0;
+        }
+
+        .table-fixed-header .table th:first-child, .table-fixed-header .table td:first-child {
+            border-left-width: 0;
+        }
 
 .pagination-bar {
     flex: 1 1 auto;

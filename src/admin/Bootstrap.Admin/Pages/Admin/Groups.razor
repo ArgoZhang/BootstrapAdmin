@@ -1,6 +1,6 @@
 ﻿@inherits GroupsBase
 
-<EditPage Id="group" TItem="Bootstrap.DataAccess.Group" SubmitModalTitle="部门编辑窗口" QueryModel="QueryModel" OnQuery="Query" OnAdd="Add" OnDelete="Delete" OnSave="Save">
+<EditPage Id="group" FixedHeader="@FixedHeader" TItem="Bootstrap.DataAccess.Group" SubmitModalTitle="部门编辑窗口" QueryModel="QueryModel" OnQuery="Query" OnAdd="Add" OnDelete="Delete" OnSave="Save">
     <QueryBody>
         <LgbInputText ColumnClass="col-sm-auto" @bind-Value="@context.GroupName" maxlength="50" />
         <LgbInputText ColumnClass="col-sm-auto" @bind-Value="@context.Description" maxlength="50" />

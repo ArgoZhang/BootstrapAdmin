@@ -103,6 +103,7 @@ namespace Bootstrap.Pages.Admin.Components
         /// <returns></returns>
         protected override void OnParametersSet()
         {
+            base.OnParametersSet();
             QueryModel.Category = "";
             QueryModel.IsResource = -1;
             QueryApp.AddRange(DictHelper.RetrieveApps().Select(app => new SelectedItem() { Text = app.Value, Value = app.Key }));

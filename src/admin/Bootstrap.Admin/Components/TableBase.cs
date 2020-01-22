@@ -2,6 +2,7 @@
 using Bootstrap.Admin.Shared;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,6 +60,30 @@ namespace Bootstrap.Admin.Components
         /// </summary>
         [Parameter]
         public RenderFragment? TableFooter { get; set; }
+
+        /// <summary>
+        /// 获得/设置 是否固定表头 默认为 false 不固定表头
+        /// </summary>
+        [Parameter]
+        public bool FixedHeader { get; set; }
+
+        /// <summary>
+        /// 获得 IJSRuntime 实例
+        /// </summary>
+        [Inject]
+        protected IJSRuntime? JSRuntime { get; set; }
+
+        /// <summary>
+        /// 获得/设置 是否自适应高度 默认为 false 不自适应高度
+        /// </summary>
+        [Parameter]
+        public bool AutoHeight { get; set; }
+
+        /// <summary>
+        /// 获得/设置 是否显示搜索框 默认为 false 不显示搜索框
+        /// </summary>
+        [Parameter]
+        public bool ShowSearch { get; set; }
 
         /// <summary>
         /// 获得/设置 数据集合
@@ -182,6 +207,18 @@ namespace Bootstrap.Admin.Components
                 var queryData = OnQuery.Invoke(1, DefaultPageItems);
                 Items = queryData.Items;
                 TotalCount = queryData.TotalCount;
+            }
+        }
+
+        /// <summary>
+        /// OnInitialized 方法
+        /// </summary>
+        protected override async System.Threading.Tasks.Task OnAfterRenderAsync(bool firstRender)
+        {
+            if (FixedHeader)
+            {
+                // 调用客户端脚本 resetWith
+                await JSRuntime.InitTableAsync(RetrieveId(), firstRender);
             }
         }
 
@@ -347,5 +384,10 @@ namespace Bootstrap.Admin.Components
             }
             ShowMessage("删除数据", "删除数据" + (result ? "成功" : "失败"), result ? ToastCategory.Success : ToastCategory.Error);
         }
+
+        /// <summary>
+        /// 获取 Id 字符串
+        /// </summary>
+        public string RetrieveId() => $"{Id}_table";
     }
 }
