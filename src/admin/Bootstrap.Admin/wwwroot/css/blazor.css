@@ -135,8 +135,6 @@ nav .dropdown .nav-link-close.dropdown-toggle:after {
     }
 
     .bootstrap-table .fixed-table-body {
-        overflow: auto;
-        border-radius: 4px;
         height: 300px;
     }
 
@@ -150,13 +148,28 @@ nav .dropdown .nav-link-close.dropdown-toggle:after {
 
 .table-wrapper {
     border-radius: 4px;
-    overflow: auto;
     margin-bottom: 1rem;
 }
 
     .table-wrapper .table {
         margin-bottom: 0;
     }
+
+.table-fixed-header {
+    border: solid 1px #dee2e6;
+}
+
+    .table-fixed-header .table {
+        border: none;
+    }
+
+        .table-fixed-header .table th:last-child {
+            border-right-width: 0;
+        }
+
+        .table-fixed-header .table th:first-child, .table-fixed-header .table td:first-child {
+            border-left-width: 0;
+        }
 
 .pagination-bar {
     flex: 1 1 auto;

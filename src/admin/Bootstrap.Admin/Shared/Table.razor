@@ -12,7 +12,7 @@
         </TableToolbar>
     </div>
 
-    <div class="table-wrapper">
+    <div class="@(FixedHeader ? "table-wrapper table-fixed-header" : "table-wrapper")">
         @if(FixedHeader)
         {
             <div class="fixed-table-header">
