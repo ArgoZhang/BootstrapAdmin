@@ -2,14 +2,31 @@
 @inherits TableBase<TItem>
 
 <div class="bootstrap-table">
-    <div class="@(ShowToolBar ? "bs-bars" : "bs-bars d-none")">
-        <TableToolbar>
-            <TableToolbarContent />
-            <TableToolbarButton class="btn btn-success" Icon="fa fa-plus" Title="新增" OnClick="Add" />
-            <TableToolbarButton class="btn btn-danger" Icon="fa fa-remove" Title="删除" OnClick="Delete" />
-            <TableToolbarButton class="btn btn-primary" Icon="fa fa-pencil" Title="编辑" OnClick="Edit" />
-            @TableToolbarTemplate
-        </TableToolbar>
+    <div class="fixed-table-toolbar">
+        <div class="float-left @(ShowToolBar ? "bs-bars" : "bs-bars d-none")">
+            <TableToolbar>
+                <TableToolbarContent />
+                <TableToolbarButton class="btn btn-success" Icon="fa fa-plus" Title="新增" OnClick="Add" />
+                <TableToolbarButton class="btn btn-danger" Icon="fa fa-remove" Title="删除" OnClick="Delete" />
+                <TableToolbarButton class="btn btn-primary" Icon="fa fa-pencil" Title="编辑" OnClick="Edit" />
+                @TableToolbarTemplate
+            </TableToolbar>
+        </div>
+        <div class="float-right @(ShowSearch ? "search btn-group" : "search btn-group d-none")">
+            <div class="input-group">
+                <input class="form-control search-input" type="text" placeholder="搜索" data-original-title="" title="">
+                <div class="input-group-append">
+                    <button class="btn btn-secondary" type="button" name="search" title="搜索">
+                        <i class="fa fa-search"></i><span>搜索</span>
+                    </button>
+                    <button class="btn btn-secondary" type="button" name="clearSearch" title="清空过滤">
+                        <i class="fa fa-trash"></i> <span>清空过滤</span>
+                    </button><button class="btn btn-secondary" type="button" name="advancedSearch" title="高级搜索">
+                        <i class="fa fa-search-plus"></i><span>高级搜索</span>
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="@(FixedHeader ? "table-wrapper table-fixed-header" : "table-wrapper")">
@@ -36,7 +53,7 @@
                     </thead>
                 </table>
             </div>   
-            <div class="fixed-table-body invisible">                
+            <div class="fixed-table-body visible">                
                 <table class="table table-bordered table-hover table-selected" id="@RetrieveId()">
                     <thead>
                         <tr>

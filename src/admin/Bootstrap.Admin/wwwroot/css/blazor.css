@@ -105,10 +105,6 @@ nav .dropdown .nav-link-close.dropdown-toggle:after {
     vertical-align: text-bottom;
 }
 
-.card-body .bootstrap-table {
-    margin-top: 0rem;
-}
-
 .bs-bars {
     margin-bottom: 0.625rem;
 }
@@ -129,6 +125,18 @@ nav .dropdown .nav-link-close.dropdown-toggle:after {
 .bootstrap-table {
     margin-bottom: 0;
 }
+
+    .bootstrap-table .fixed-table-toolbar:after {
+        display: block;
+        content: "";
+        clear: both;
+    }
+
+        .bootstrap-table .fixed-table-toolbar .bs-bars, 
+        .bootstrap-table .fixed-table-toolbar .search, 
+        .bootstrap-table .fixed-table-toolbar .columns {
+            margin-top: 10px;
+        }
 
     .bootstrap-table .fixed-table-header {
         overflow: hidden;
