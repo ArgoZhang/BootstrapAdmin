@@ -130,6 +130,10 @@ nav .dropdown .nav-link-close.dropdown-toggle:after {
     margin-bottom: 0;
 }
 
+    .bootstrap-table .fixed-table-header {
+        overflow: hidden;
+    }
+
     .bootstrap-table .fixed-table-body {
         overflow: auto;
         border-radius: 4px;
@@ -151,7 +155,7 @@ nav .dropdown .nav-link-close.dropdown-toggle:after {
 }
 
     .table-wrapper .table {
-        margin-bottom: 1px;
+        margin-bottom: 0;
     }
 
 .pagination-bar {

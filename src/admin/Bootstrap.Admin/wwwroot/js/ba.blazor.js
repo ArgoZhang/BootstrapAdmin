@@ -141,33 +141,42 @@
             if (showCardTitle) $tabContent.removeClass('no-card-header');
             else $tabContent.addClass('no-card-header');
         },
-        initTable: function (id) {
-            var $table = $('#' + id);
-            var $tableContainer = $table.parents('.table-wrapper');
-            var $tableHeader = $tableContainer.find('.fixed-table-header table');
+        resetTableWidth: function (source, target) {
+            // 设置表格宽度
+            target.width(source.width());
 
-            // resetWidth()
-            var $heads = $tableHeader.find('th');
-            var resetWidth = function () {
-                $table.find('th').each(function (index, element) {
-                    var header = $heads.get(index);
-                    $(header).width($(element).width());
+            // 设置各列宽度
+            var $heads = target.find('th');
+            source.find('th').each(function (index, element) {
+                var header = $heads.get(index);
+                $(header).width($(element).width());
+            });
+        },
+        initTable: function (id, firstRender) {
+            var $table = $('#' + id);
+
+            if (firstRender) {
+                // modify scroll
+                $table.parent().overlayScrollbars({
+                    className: 'os-theme-dark',
+                    scrollbars: {
+                        autoHide: 'leave',
+                        autoHideDelay: 100
+                    }
                 });
             }
-            resetWidth();
 
-            // modify scroll
-            $table.parent().overlayScrollbars({
-                className: 'os-theme-dark',
-                scrollbars: {
-                    autoHide: 'leave',
-                    autoHideDelay: 100
-                }
-            }).removeClass('d-none');
+            var $tableContainer = $table.parents('.table-wrapper');
+            var $tableHeader = $tableContainer.find('.fixed-table-header table');
+            $.resetTableWidth($table, $tableHeader);
 
-            $(window).on('resize', function () {
-                resetWidth();
-            });
+            if (firstRender) {
+                $tableContainer.find('.fixed-table-body').removeClass('invisible');
+
+                $(window).on('resize', function () {
+                    $.resetTableWidth($table, $tableHeader);
+                });
+            }
         }
     });
 
