@@ -1,6 +1,6 @@
 ﻿@inherits DictsBase
 
-<EditPage Id="dict" FixedHeader="@FixedHeader" TItem="Bootstrap.Security.BootstrapDict" SubmitModalTitle="字典编辑窗口" QueryModel="QueryModel" OnQuery="Query" OnAdd="Add" OnDelete="Delete" OnSave="Save">
+<EditPage Id="dict" FixedHeader="@FixedHeader" ShowSearch="true" TItem="Bootstrap.Security.BootstrapDict" SubmitModalTitle="字典编辑窗口" QueryModel="QueryModel" OnQuery="Query" OnAdd="Add" OnDelete="Delete" OnSave="Save">
     <QueryBody>
         <LgbInputText ColumnClass="col-sm-auto" @bind-Value="@context.Category" maxlength="50" />
         <Select ColumnClass="col-sm-auto" Items="QueryDefine" TItem="int" @bind-Value="@context.Define" />

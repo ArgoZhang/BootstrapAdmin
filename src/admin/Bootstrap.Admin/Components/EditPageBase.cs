@@ -85,6 +85,12 @@ namespace Bootstrap.Admin.Components
         public bool FixedHeader { get; set; }
 
         /// <summary>
+        /// 获得/设置 是否显示搜索框 默认为 false 不显示搜索框
+        /// </summary>
+        [Parameter]
+        public bool ShowSearch { get; set; }
+
+        /// <summary>
         /// 获得/设置 Table 实例
         /// </summary>
         protected Table<TItem>? Table { get; set; }

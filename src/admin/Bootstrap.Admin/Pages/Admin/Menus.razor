@@ -1,6 +1,6 @@
 ﻿@inherits MenusBase
 
-<EditPage Id="role" FixedHeader="@FixedHeader" TItem="Bootstrap.Security.BootstrapMenu" SubmitModalTitle="菜单编辑窗口" QueryModel="QueryModel" OnQuery="Query" OnAdd="Add" OnDelete="Delete" OnSave="Save">
+<EditPage Id="role" FixedHeader="@FixedHeader" ShowSearch="true" TItem="Bootstrap.Security.BootstrapMenu" SubmitModalTitle="菜单编辑窗口" QueryModel="QueryModel" OnQuery="Query" OnAdd="Add" OnDelete="Delete" OnSave="Save">
     <QueryBody>
         <LgbInputText ColumnClass="col-sm-auto" @bind-Value="@context.Name" maxlength="50" />
         <LgbInputText ColumnClass="col-sm-auto" @bind-Value="@context.ParentName" maxlength="50" />
