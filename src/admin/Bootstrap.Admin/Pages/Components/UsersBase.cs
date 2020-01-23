@@ -22,6 +22,7 @@ namespace Bootstrap.Pages.Admin.Components
             var data = UserHelper.Retrieves();
             if (!string.IsNullOrEmpty(QueryModel.UserName)) data = data.Where(d => d.UserName.Contains(QueryModel.UserName, StringComparison.OrdinalIgnoreCase));
             if (!string.IsNullOrEmpty(QueryModel.DisplayName)) data = data.Where(d => d.DisplayName.Contains(QueryModel.DisplayName, StringComparison.OrdinalIgnoreCase));
+            if (!string.IsNullOrEmpty(searchText)) data = data.Where(d => d.UserName.Contains(searchText, StringComparison.OrdinalIgnoreCase) || d.DisplayName.Contains(searchText, StringComparison.OrdinalIgnoreCase));    
             var totalCount = data.Count();
             var items = data.Skip((pageIndex - 1) * pageItems).Take(pageItems);
             return new QueryData<User>() { Items = items, TotalCount = totalCount, PageIndex = pageIndex, PageItems = pageItems };
@@ -36,6 +37,15 @@ namespace Bootstrap.Pages.Admin.Components
         /// 删除方法
         /// </summary>
         protected override bool Delete(IEnumerable<User> users) => UserHelper.Delete(users.Select(item => item.Id ?? ""));
+        
+        /// <summary>
+        /// 重置搜索方法
+        /// </summary>
+        protected void ResetSearch()
+        {
+            QueryModel.UserName = "";
+            QueryModel.DisplayName = "";
+        }
 
         /// <summary>
         /// 分配部门方法

@@ -22,6 +22,7 @@ namespace Bootstrap.Pages.Admin.Components
             var data = RoleHelper.Retrieves();
             if (!string.IsNullOrEmpty(QueryModel.RoleName)) data = data.Where(d => d.RoleName.Contains(QueryModel.RoleName, StringComparison.OrdinalIgnoreCase));
             if (!string.IsNullOrEmpty(QueryModel.Description)) data = data.Where(d => d.Description != null && d.Description.Contains(QueryModel.Description, StringComparison.OrdinalIgnoreCase));
+            if (!string.IsNullOrEmpty(searchText)) data = data.Where(d => d.RoleName.Contains(searchText, StringComparison.OrdinalIgnoreCase) || d.Description.Contains(searchText, StringComparison.OrdinalIgnoreCase));    
             var totalCount = data.Count();
             var items = data.Skip((pageIndex - 1) * pageItems).Take(pageItems);
             return new QueryData<Role>() { Items = items, TotalCount = totalCount, PageIndex = pageIndex, PageItems = pageItems };
@@ -36,6 +37,15 @@ namespace Bootstrap.Pages.Admin.Components
         /// 删除方法
         /// </summary>
         protected override bool Delete(IEnumerable<Role> items) => RoleHelper.Delete(items.Select(item => item.Id ?? ""));
+        
+        /// <summary>
+        /// 重置搜索方法
+        /// </summary>
+        protected void ResetSearch()
+        {
+            QueryModel.RoleName = "";
+            QueryModel.Description = "";
+        }
 
         /// <summary>
         /// 分配用户方法

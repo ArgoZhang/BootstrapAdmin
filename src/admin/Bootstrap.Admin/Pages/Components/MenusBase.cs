@@ -124,6 +124,7 @@ namespace Bootstrap.Pages.Admin.Components
             if (!string.IsNullOrEmpty(QueryModel.Category)) data = data.Where(d => d.Category == QueryModel.Category);
             if (QueryModel.IsResource != -1) data = data.Where(d => d.IsResource == QueryModel.IsResource);
             if (!string.IsNullOrEmpty(QueryModel.Application)) data = data.Where(d => d.Application.Equals(QueryModel.Application, StringComparison.OrdinalIgnoreCase));
+            if (!string.IsNullOrEmpty(searchText)) data = data.Where(d => d.Name.Contains(searchText, StringComparison.OrdinalIgnoreCase) || d.ParentName.Contains(searchText, StringComparison.OrdinalIgnoreCase) || d.Category.Contains(searchText, StringComparison.OrdinalIgnoreCase) || d.Application.Contains(searchText, StringComparison.OrdinalIgnoreCase));
             var totalCount = data.Count();
             var items = data.Skip((pageIndex - 1) * pageItems).Take(pageItems);
             return new QueryData<BootstrapMenu>() { Items = items, TotalCount = totalCount, PageIndex = pageIndex, PageItems = pageItems };
@@ -154,6 +155,18 @@ namespace Bootstrap.Pages.Admin.Components
         /// 删除方法
         /// </summary>
         protected override bool Delete(IEnumerable<BootstrapMenu> items) => MenuHelper.Delete(items.Select(item => item.Id ?? ""));
+        
+        /// <summary>
+        /// 重置搜索方法
+        /// </summary>
+        protected void ResetSearch()
+        {
+            QueryModel.Name = "";
+            QueryModel.ParentName = "";
+            QueryModel.Category = "";
+            QueryModel.IsResource = -1;
+            QueryModel.Application = "";
+        }
 
         /// <summary>
         /// 分配角色方法

@@ -22,6 +22,7 @@ namespace Bootstrap.Pages.Admin.Components
             var data = GroupHelper.Retrieves();
             if (!string.IsNullOrEmpty(QueryModel.GroupName)) data = data.Where(d => d.GroupName.Contains(QueryModel.GroupName, StringComparison.OrdinalIgnoreCase));
             if (!string.IsNullOrEmpty(QueryModel.Description)) data = data.Where(d => d.Description != null && d.Description.Contains(QueryModel.Description, StringComparison.OrdinalIgnoreCase));
+            if (!string.IsNullOrEmpty(searchText)) data = data.Where(d => d.GroupName.Contains(searchText, StringComparison.OrdinalIgnoreCase) || d.Description.Contains(searchText, StringComparison.OrdinalIgnoreCase));
             var totalCount = data.Count();
             var items = data.Skip((pageIndex - 1) * pageItems).Take(pageItems);
             return new QueryData<Group>() { Items = items, TotalCount = totalCount, PageIndex = pageIndex, PageItems = pageItems };
@@ -36,6 +37,15 @@ namespace Bootstrap.Pages.Admin.Components
         /// 删除方法
         /// </summary>
         protected override bool Delete(IEnumerable<Group> groups) => GroupHelper.Delete(groups.Select(item => item.Id ?? ""));
+
+        /// <summary>
+        /// 重置搜索方法
+        /// </summary>
+        protected void ResetSearch()
+        {
+            QueryModel.GroupName = "";
+            QueryModel.Description = "";
+        }
 
         /// <summary>
         /// 分配用户方法
