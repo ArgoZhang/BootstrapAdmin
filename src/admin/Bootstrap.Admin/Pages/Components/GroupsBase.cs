@@ -16,7 +16,8 @@ namespace Bootstrap.Pages.Admin.Components
         /// </summary>
         /// <param name="pageIndex">页码</param>
         /// <param name="pageItems">每页显示数据条目数量</param>
-        protected override QueryData<Group> Query(int pageIndex, int pageItems)
+        /// <param name="searchText"></param>
+        protected override QueryData<Group> Query(int pageIndex, int pageItems, string searchText)
         {
             var data = GroupHelper.Retrieves();
             if (!string.IsNullOrEmpty(QueryModel.GroupName)) data = data.Where(d => d.GroupName.Contains(QueryModel.GroupName, StringComparison.OrdinalIgnoreCase));

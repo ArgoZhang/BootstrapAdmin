@@ -16,7 +16,8 @@ namespace Bootstrap.Pages.Admin.Components
         /// </summary>
         /// <param name="pageIndex">页码</param>
         /// <param name="pageItems">每页显示数据条目数量</param>
-        protected override QueryData<Role> Query(int pageIndex, int pageItems)
+        /// <param name="searchText"></param>
+        protected override QueryData<Role> Query(int pageIndex, int pageItems, string searchText)
         {
             var data = RoleHelper.Retrieves();
             if (!string.IsNullOrEmpty(QueryModel.RoleName)) data = data.Where(d => d.RoleName.Contains(QueryModel.RoleName, StringComparison.OrdinalIgnoreCase));

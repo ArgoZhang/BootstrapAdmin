@@ -19,12 +19,12 @@
         </div>
         <div class="float-right @(ShowSearch ? "search btn-group" : "search btn-group d-none")">
             <div class="input-group">
-                <input class="form-control search-input" type="text" placeholder="搜索" />
+                <input class="form-control search-input" type="text" placeholder="搜索" @bind="SearchText" />
                 <div class="input-group-append">
-                    <button class="btn btn-secondary" type="button" title="搜索">
+                    <button class="btn btn-secondary" type="button" title="搜索" @onclick="SearchClick">
                         <i class="fa fa-search"></i><span>搜索</span>
                     </button>
-                    <button class="btn btn-secondary" type="button" title="清空过滤">
+                    <button class="btn btn-secondary" type="button" title="清空过滤" @onclick="ClearSearchClick">
                         <i class="fa fa-trash"></i> <span>清空过滤</span>
                     </button>
                     <button class="btn btn-secondary" type="button" title="高级搜索" @onclick="AdvancedSearchClick">
@@ -59,7 +59,7 @@
                     </thead>
                 </table>
             </div>   
-            <div class="fixed-table-body visible">                
+            <div class="fixed-table-body invisible">                
                 <table class="table table-bordered table-hover table-selected" id="@RetrieveId()">
                     <thead>
                         <tr>

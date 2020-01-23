@@ -34,7 +34,7 @@ namespace Bootstrap.Admin.Components
         /// 查询按钮回调方法
         /// </summary>
         [Parameter]
-        public Func<int, int, QueryData<TItem>>? OnQuery { get; set; }
+        public Func<int, int, string, QueryData<TItem>>? OnQuery { get; set; }
 
         /// <summary>
         /// 获得/设置 TableHeader 实例
@@ -171,7 +171,8 @@ namespace Bootstrap.Admin.Components
         /// </summary>
         /// <param name="pageIndex"></param>
         /// <param name="pageItems"></param>
+        /// <param name="searchText"></param>
         /// <returns></returns>
-        protected QueryData<TItem> QueryData(int pageIndex, int pageItems) => OnQuery?.Invoke(pageIndex, pageItems) ?? new QueryData<TItem>();
+        protected QueryData<TItem> QueryData(int pageIndex, int pageItems, string searchText) => OnQuery?.Invoke(pageIndex, pageItems, searchText) ?? new QueryData<TItem>();
     }
 }

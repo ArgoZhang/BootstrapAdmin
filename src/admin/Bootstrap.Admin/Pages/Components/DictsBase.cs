@@ -34,12 +34,14 @@ namespace Bootstrap.Pages.Admin.Components
         /// </summary>
         /// <param name="pageIndex">页码</param>
         /// <param name="pageItems">每页显示数据条目数量</param>
-        protected override QueryData<BootstrapDict> Query(int pageIndex, int pageItems)
+        /// <param name="searchText"></param>
+        protected override QueryData<BootstrapDict> Query(int pageIndex, int pageItems, string searchText)
         {
             var data = DataAccess.DictHelper.RetrieveDicts();
             if (QueryModel.Define != -1) data = data.Where(d => d.Define == QueryModel.Define);
             if (!string.IsNullOrEmpty(QueryModel.Name)) data = data.Where(d => d.Name.Contains(QueryModel.Name, StringComparison.OrdinalIgnoreCase));
             if (!string.IsNullOrEmpty(QueryModel.Category)) data = data.Where(d => d.Category.Contains(QueryModel.Category, StringComparison.OrdinalIgnoreCase));
+            if (!string.IsNullOrEmpty(searchText)) data = data.Where(d => d.Category.Contains(searchText, StringComparison.OrdinalIgnoreCase) || d.Name.Contains(searchText, StringComparison.OrdinalIgnoreCase) || d.Code.Contains(searchText, StringComparison.OrdinalIgnoreCase));
             var totalCount = data.Count();
             var items = data.Skip((pageIndex - 1) * pageItems).Take(pageItems);
             return new QueryData<BootstrapDict>() { Items = items, TotalCount = totalCount, PageIndex = pageIndex, PageItems = pageItems };
@@ -54,11 +56,11 @@ namespace Bootstrap.Pages.Admin.Components
         /// 删除方法
         /// </summary>
         protected override bool Delete(IEnumerable<BootstrapDict> items) => DataAccess.DictHelper.Delete(items.Select(item => item.Id ?? ""));
-    
+
         /// <summary>
         /// 重置搜索方法
         /// </summary>
-        protected void ResetSearch() 
+        protected void ResetSearch()
         {
             QueryModel.Define = -1;
             QueryModel.Category = "";
