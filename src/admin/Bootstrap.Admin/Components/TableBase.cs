@@ -223,12 +223,6 @@ namespace Bootstrap.Admin.Components
         public string SubmitModalTitle { get; set; } = "";
 
         /// <summary>
-        /// 查询组件模板
-        /// </summary>
-        [Parameter]
-        public RenderFragment<TItem>? SearchContent { get; set; }
-
-        /// <summary>
         /// OnInitialized 方法
         /// </summary>
         protected override void OnInitialized()
@@ -368,7 +362,10 @@ namespace Bootstrap.Admin.Components
             StateHasChanged();
         }
 
-        private void Query()
+        /// <summary>
+        /// 查询按钮调用此方法
+        /// </summary>
+        protected void Query()
         {
             if (OnQuery != null) Query(OnQuery.Invoke(PageIndex, PageItems));
         }
@@ -422,14 +419,29 @@ namespace Bootstrap.Admin.Components
         /// </summary>
         public string RetrieveId() => $"{Id}_table";
 
-        protected void OnSearch()
-        {
+        /// <summary>
+        /// 重置搜索按钮回调方法
+        /// </summary>
+        [Parameter]
+        public Action? OnResetSearch { get; set; }
 
-        }
-
+        /// <summary>
+        /// 重置查询方法
+        /// </summary>
         protected void ResetSearchClick()
         {
+            OnResetSearch?.Invoke();
+            SearchClick();
+        }
 
+        /// <summary>
+        /// 查询方法
+        /// </summary>
+        protected void SearchClick()
+        {
+            // 查询控件按钮触发此事件
+            PageIndex = 1;
+            Query();
         }
     }
 }

@@ -12,6 +12,11 @@
                 @TableToolbarTemplate
             </TableToolbar>
         </div>
+        <div class="float-right columns columns-right">
+            <button class="btn btn-secondary" type="button" title="刷新" @onclick="Query">
+                <i class="fa fa-refresh"></i><span>刷新</span>
+            </button>
+        </div>
         <div class="float-right @(ShowSearch ? "search btn-group" : "search btn-group d-none")">
             <div class="input-group">
                 <input class="form-control search-input" type="text" placeholder="搜索" />
@@ -21,7 +26,8 @@
                     </button>
                     <button class="btn btn-secondary" type="button" title="清空过滤">
                         <i class="fa fa-trash"></i> <span>清空过滤</span>
-                    </button><button class="btn btn-secondary" type="button" title="高级搜索" @onclick="AdvancedSearchClick">
+                    </button>
+                    <button class="btn btn-secondary" type="button" title="高级搜索" @onclick="AdvancedSearchClick">
                         <i class="fa fa-search-plus"></i><span>高级搜索</span>
                     </button>
                 </div>
@@ -173,16 +179,16 @@
     <ModalBody>
         <LgbEditForm class="form-inline" Id="@Id" Model="QueryModel">
             <div class="row">
-                @SearchContent?.Invoke(QueryModel)
+                @SearchTemplate?.Invoke(QueryModel)
             </div>
         </LgbEditForm>
     </ModalBody>
     <ModalFooter>
-        <button type="button" class="btn btn-info" @onclick="ResetSearchClick">
+        <button type="button" class="btn btn-info" data-dismiss="modal" @onclick="ResetSearchClick">
             <i class="fa fa-trash-o"></i>
             <span>重置</span>
         </button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" @onclick="SearchClick">
             <i class="fa fa-search"></i>
             <span>查询</span>
         </button>

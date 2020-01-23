@@ -138,6 +138,10 @@ nav .dropdown .nav-link-close.dropdown-toggle:after {
             margin-top: 10px;
         }
 
+        .bootstrap-table .fixed-table-toolbar .columns-right {
+            margin-left: 5px;
+        }
+
     .bootstrap-table .fixed-table-header {
         overflow: hidden;
     }

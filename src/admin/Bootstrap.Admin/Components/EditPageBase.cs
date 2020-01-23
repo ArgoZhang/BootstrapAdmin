@@ -120,6 +120,12 @@ namespace Bootstrap.Admin.Components
         public Func<TItem, bool> OnSave { get; set; } = item => false;
 
         /// <summary>
+        /// 重置搜索条件回调方法
+        /// </summary>
+        [Parameter]
+        public Action OnResetSearch { get; set; } = () => { };
+
+        /// <summary>
         /// 删除按钮回调方法
         /// </summary>
         [Parameter]
@@ -157,18 +163,6 @@ namespace Bootstrap.Admin.Components
                 Table.SelectedItems.Clear();
                 Table.SelectedItems.Add(item);
                 Table.Edit();
-            }
-        }
-
-        /// <summary>
-        /// 查询方法
-        /// </summary>
-        protected void Query()
-        {
-            // 查询控件按钮触发此事件
-            if (OnQuery != null && Table != null)
-            {
-                Table.Query(OnQuery.Invoke(1, Table.PageItems));
             }
         }
 

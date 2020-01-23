@@ -54,5 +54,15 @@ namespace Bootstrap.Pages.Admin.Components
         /// 删除方法
         /// </summary>
         protected override bool Delete(IEnumerable<BootstrapDict> items) => DataAccess.DictHelper.Delete(items.Select(item => item.Id ?? ""));
+    
+        /// <summary>
+        /// 重置搜索方法
+        /// </summary>
+        protected void ResetSearch() 
+        {
+            QueryModel.Define = -1;
+            QueryModel.Category = "";
+            QueryModel.Name = "";
+        }
     }
 }

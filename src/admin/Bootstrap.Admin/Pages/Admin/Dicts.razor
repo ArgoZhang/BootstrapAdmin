@@ -1,10 +1,10 @@
 ﻿@inherits DictsBase
 
-<EditPage Id="dict" FixedHeader="@FixedHeader" ShowSearch="true" TItem="Bootstrap.Security.BootstrapDict" SubmitModalTitle="字典编辑窗口" QueryModel="QueryModel" OnQuery="Query" OnAdd="Add" OnDelete="Delete" OnSave="Save">
+<EditPage Id="dict" FixedHeader="@FixedHeader" ShowSearch="true" TItem="Bootstrap.Security.BootstrapDict" SubmitModalTitle="字典编辑窗口" QueryModel="QueryModel" OnQuery="Query" OnAdd="Add" OnDelete="Delete" OnSave="Save" OnResetSearch="ResetSearch">
     <QueryBody>
-        <LgbInputText ColumnClass="col-sm-auto" @bind-Value="@context.Category" maxlength="50" />
-        <Select ColumnClass="col-sm-auto" Items="QueryDefine" TItem="int" @bind-Value="@context.Define" />
-        <LgbInputText ColumnClass="col-sm-auto" @bind-Value="@context.Name" maxlength="50" />
+        <LgbInputText ColumnClass="col-12" @bind-Value="@context.Category" maxlength="50" />
+        <Select ColumnClass="col-12" Items="QueryDefine" TItem="int" @bind-Value="@context.Define" />
+        <LgbInputText ColumnClass="col-12" @bind-Value="@context.Name" maxlength="50" />
     </QueryBody>
     <TableInfoTemplate>
         <ConditionComponent>
