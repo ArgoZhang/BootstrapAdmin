@@ -1,6 +1,7 @@
 ﻿using Bootstrap.Admin.Extensions;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using System;
 
 namespace Bootstrap.Admin.Components
 {
@@ -71,8 +72,16 @@ namespace Bootstrap.Admin.Components
         {
             if (firstRender)
             {
-                JSRuntime.InitModal();
+                JSRuntime.InitModal(Id);
             }
+        }
+
+        /// <summary>
+        /// OnParametersSet 方法
+        /// </summary>
+        protected override void OnParametersSet()
+        {
+            if (string.IsNullOrEmpty(Id)) throw new InvalidOperationException("Modal Component Id property must be set");
         }
 
         /// <summary>

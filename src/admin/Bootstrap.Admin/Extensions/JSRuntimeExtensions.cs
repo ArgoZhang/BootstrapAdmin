@@ -51,7 +51,8 @@ namespace Bootstrap.Admin.Extensions
         /// 修复 Modal 组件
         /// </summary>
         /// <param name="jSRuntime"></param>
-        public static void InitModal(this IJSRuntime? jSRuntime) => jSRuntime.InvokeVoidAsync("$.initModal");
+        /// <param name="id"></param>
+        public static void InitModal(this IJSRuntime? jSRuntime, string id) => jSRuntime.InvokeVoidAsync("$.initModal", id);
 
         /// <summary>
         /// 修复 Modal 组件

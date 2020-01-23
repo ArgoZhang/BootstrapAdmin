@@ -108,8 +108,8 @@
             $('[data-toggle="tooltip"]').tooltip();
             $('.sidebar').addNiceScroll().autoScrollSidebar();
         },
-        initModal: function () {
-            $('.modal').appendTo($('body'));
+        initModal: function (id) {
+            $('#' + id).appendTo($('body'));
         },
         initToast: function (id) {
             $('#' + id).appendTo($('body'));
@@ -168,31 +168,61 @@
             var $table = $('#' + id);
             var $fixedBody = $table.parents('.fixed-table-body');
 
-            if (firstRender) {
-                // calc height
-                $.resetTableHeight($fixedBody);
+            // 固定表头设置
+            if ($fixedBody.length === 1) {
+                if (firstRender) {
+                    // calc height
+                    $.resetTableHeight($fixedBody);
 
-                // modify scroll
-                $table.parent().overlayScrollbars({
-                    className: 'os-theme-dark',
-                    scrollbars: {
-                        autoHide: 'leave',
-                        autoHideDelay: 100
-                    }
-                });
+                    // modify scroll
+                    $table.parent().overlayScrollbars({
+                        className: 'os-theme-dark',
+                        scrollbars: {
+                            autoHide: 'leave',
+                            autoHideDelay: 100
+                        }
+                    });
+                }
+
+                var $tableContainer = $table.parents('.table-wrapper');
+                var $tableHeader = $tableContainer.find('.fixed-table-header table');
+                $.resetTableWidth($table, $tableHeader);
+
+                if (firstRender) {
+                    $tableContainer.find('.fixed-table-body').removeClass('invisible');
+
+                    $(window).on('resize', function () {
+                        $.resetTableWidth($table, $tableHeader);
+                        $.resetTableHeight($fixedBody);
+                    });
+                }
             }
 
-            var $tableContainer = $table.parents('.table-wrapper');
-            var $tableHeader = $tableContainer.find('.fixed-table-header table');
-            $.resetTableWidth($table, $tableHeader);
-
+            // set search toolbar
             if (firstRender) {
-                $tableContainer.find('.fixed-table-body').removeClass('invisible');
+                var $search = $table.parents('.bootstrap-table').find('.fixed-table-toolbar').find('.search');
+                if ($search.length === 1) {
+                    $searchInput = $search.find('.search-input').tooltip({
+                        sanitize: false,
+                        title: '<div class="search-input-tooltip">输入任意字符串全局搜索 </br> <kbd>Enter</kbd> 搜索 <kbd>ESC</kbd> 清除搜索</div>',
+                        html: true
+                    });
 
-                $(window).on('resize', function () {
-                    $.resetTableWidth($table, $tableHeader);
-                    $.resetTableHeight($fixedBody);
-                });
+                    // 支持键盘回车搜索
+                    $searchInput.on('keyup', function (event) {
+                        if (event.keyCode === 13 || event.keyCode === 27) {
+                            // ENTER
+                            var $buttons = $(this).next();
+                            var $search = $buttons.find(':first');
+                            if ($search.length === 1) {
+                                if (event.keyCode === 13) {
+                                    $search.trigger('click');
+                                }
+                                else $search.next().trigger('click');
+                            }
+                        }
+                    });
+                }
             }
         }
     });

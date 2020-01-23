@@ -50,6 +50,12 @@ namespace Bootstrap.Admin.Components
         public RenderFragment<TItem>? EditTemplate { get; set; }
 
         /// <summary>
+        /// 获得/设置 SearchTemplate 实例
+        /// </summary>
+        [Parameter]
+        public RenderFragment<TItem>? SearchTemplate { get; set; }
+
+        /// <summary>
         /// 获得/设置 表格 Toolbar 按钮模板
         /// </summary>
         [Parameter]
@@ -129,7 +135,7 @@ namespace Bootstrap.Admin.Components
         /// 点击翻页回调方法
         /// </summary>
         [Parameter]
-        public Func<int, int, QueryData<TItem>>? OnQuery { get; set; }
+        public Func<int, int, string, QueryData<TItem>>? OnQuery { get; set; }
 
         /// <summary>
         /// 新建按钮回调方法
@@ -142,6 +148,15 @@ namespace Bootstrap.Admin.Components
         /// </summary>
         [Parameter]
         public Action<TItem>? OnEdit { get; set; }
+
+        /// <summary>
+        /// 高级查询按钮点击时调用此方法
+        /// </summary>
+        protected void AdvancedSearchClick()
+        {
+            // 弹出高级查询弹窗
+            SearchModal?.Toggle();
+        }
 
         /// <summary>
         /// 保存按钮回调方法
@@ -178,11 +193,22 @@ namespace Bootstrap.Admin.Components
         /// </summary>
         protected Modal? ConfirmModal { get; set; }
 
+        /// <summary>
+        /// 高级查询弹窗
+        /// </summary>
+        protected Modal? SearchModal { get; set; }
+
 #nullable disable
         /// <summary>
         /// 获得/设置 EditModel 实例
         /// </summary>
         protected TItem EditModel { get; set; }
+
+        /// <summary>
+        /// 获得/设置 QueryModel 实例
+        /// </summary>
+        [Parameter]
+        public TItem QueryModel { get; set; }
 #nullable restore
 
         /// <summary>
@@ -204,7 +230,7 @@ namespace Bootstrap.Admin.Components
             if (OnAdd != null) EditModel = OnAdd.Invoke();
             if (OnQuery != null)
             {
-                var queryData = OnQuery.Invoke(1, DefaultPageItems);
+                var queryData = OnQuery.Invoke(1, DefaultPageItems, SearchText);
                 Items = queryData.Items;
                 TotalCount = queryData.TotalCount;
             }
@@ -215,11 +241,8 @@ namespace Bootstrap.Admin.Components
         /// </summary>
         protected override async System.Threading.Tasks.Task OnAfterRenderAsync(bool firstRender)
         {
-            if (FixedHeader)
-            {
-                // 调用客户端脚本 resetWith
-                await JSRuntime.InitTableAsync(RetrieveId(), firstRender);
-            }
+            // 调用客户端脚本
+            await JSRuntime.InitTableAsync(RetrieveId(), firstRender);
         }
 
         /// <summary>
@@ -336,9 +359,12 @@ namespace Bootstrap.Admin.Components
             StateHasChanged();
         }
 
-        private void Query()
+        /// <summary>
+        /// 查询按钮调用此方法
+        /// </summary>
+        protected void Query()
         {
-            if (OnQuery != null) Query(OnQuery.Invoke(PageIndex, PageItems));
+            if (OnQuery != null) Query(OnQuery.Invoke(PageIndex, PageItems, SearchText));
         }
 
         /// <summary>
@@ -389,5 +415,51 @@ namespace Bootstrap.Admin.Components
         /// 获取 Id 字符串
         /// </summary>
         public string RetrieveId() => $"{Id}_table";
+
+        /// <summary>
+        /// 重置搜索按钮回调方法
+        /// </summary>
+        [Parameter]
+        public Action? OnResetSearch { get; set; }
+
+        /// <summary>
+        /// 重置查询方法
+        /// </summary>
+        protected void ResetSearchClick()
+        {
+            OnResetSearch?.Invoke();
+            SearchClick();
+        }
+
+        /// <summary>
+        /// 查询方法
+        /// </summary>
+        protected void SearchClick()
+        {
+            // 查询控件按钮触发此事件
+            PageIndex = 1;
+            Query();
+        }
+
+        /// <summary>
+        /// 获得/设置 搜索关键字
+        /// </summary>
+        [Parameter]
+        public string SearchText { get; set; } = "";
+
+        /// <summary>
+        /// 获得/设置 搜索关键字改变事件
+        /// </summary>
+        [Parameter]
+        public EventCallback<string> SearchTextChanged { get; set; }
+
+        /// <summary>
+        /// 重置搜索按钮调用此方法
+        /// </summary>
+        protected void ClearSearchClick()
+        {
+            SearchText = "";
+            Query();
+        }
     }
 }

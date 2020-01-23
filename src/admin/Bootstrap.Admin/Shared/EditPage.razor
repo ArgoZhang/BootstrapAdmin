@@ -1,15 +1,12 @@
 ﻿@typeparam TItem
 @inherits EditPageBase<TItem>
 
-<Query Id="@($"{Id}_query")" OnQuery="Query" TItem="TItem" QueryModel="QueryModel">
-    @QueryBody?.Invoke(context)
-</Query>
 <div class="card">
     <div class="card-header">
         查询结果
     </div>
     <div class="card-body">
-        <Table @ref="Table" Id="@Id" FixedHeader="@FixedHeader" TItem="TItem" SubmitModalTitle="@SubmitModalTitle" OnQuery="QueryData" OnAdd="OnAdd" OnDelete="OnDelete" OnSave="OnSave">
+        <Table @ref="Table" Id="@Id" FixedHeader="@FixedHeader" ShowSearch="@ShowSearch" QueryModel="QueryModel" TItem="TItem" SubmitModalTitle="@SubmitModalTitle" OnQuery="QueryData" OnAdd="OnAdd" OnDelete="OnDelete" OnSave="OnSave" OnResetSearch="OnResetSearch">
             <TableToolbarTemplate>
                 @TableToolbarTemplate
             </TableToolbarTemplate>
@@ -29,6 +26,9 @@
             <EditTemplate>
                 @EditTemplate?.Invoke(context)
             </EditTemplate>
+            <SearchTemplate>
+                @QueryBody?.Invoke(context)
+            </SearchTemplate>
         </Table>
     </div>
 </div>

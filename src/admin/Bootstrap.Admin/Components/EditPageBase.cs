@@ -34,7 +34,7 @@ namespace Bootstrap.Admin.Components
         /// 查询按钮回调方法
         /// </summary>
         [Parameter]
-        public Func<int, int, QueryData<TItem>>? OnQuery { get; set; }
+        public Func<int, int, string, QueryData<TItem>>? OnQuery { get; set; }
 
         /// <summary>
         /// 获得/设置 TableHeader 实例
@@ -79,10 +79,22 @@ namespace Bootstrap.Admin.Components
         public RenderFragment<TItem>? EditTemplate { get; set; }
 
         /// <summary>
+        /// 获得/设置 SearchTemplate 实例
+        /// </summary>
+        [Parameter]
+        public RenderFragment<TItem>? SearchTemplate { get; set; }
+
+        /// <summary>
         /// 获得/设置 是否固定表头 默认为 false 不固定表头
         /// </summary>
         [Parameter]
         public bool FixedHeader { get; set; }
+
+        /// <summary>
+        /// 获得/设置 是否显示搜索框 默认为 false 不显示搜索框
+        /// </summary>
+        [Parameter]
+        public bool ShowSearch { get; set; }
 
         /// <summary>
         /// 获得/设置 Table 实例
@@ -106,6 +118,12 @@ namespace Bootstrap.Admin.Components
         /// </summary>
         [Parameter]
         public Func<TItem, bool> OnSave { get; set; } = item => false;
+
+        /// <summary>
+        /// 重置搜索条件回调方法
+        /// </summary>
+        [Parameter]
+        public Action OnResetSearch { get; set; } = () => { };
 
         /// <summary>
         /// 删除按钮回调方法
@@ -149,23 +167,12 @@ namespace Bootstrap.Admin.Components
         }
 
         /// <summary>
-        /// 查询方法
-        /// </summary>
-        protected void Query()
-        {
-            // 查询控件按钮触发此事件
-            if (OnQuery != null && Table != null)
-            {
-                Table.Query(OnQuery.Invoke(1, Table.PageItems));
-            }
-        }
-
-        /// <summary>
         /// 分页查询方法
         /// </summary>
         /// <param name="pageIndex"></param>
         /// <param name="pageItems"></param>
+        /// <param name="searchText"></param>
         /// <returns></returns>
-        protected QueryData<TItem> QueryData(int pageIndex, int pageItems) => OnQuery?.Invoke(pageIndex, pageItems) ?? new QueryData<TItem>();
+        protected QueryData<TItem> QueryData(int pageIndex, int pageItems, string searchText) => OnQuery?.Invoke(pageIndex, pageItems, searchText) ?? new QueryData<TItem>();
     }
 }
