@@ -207,6 +207,21 @@
                         title: '<div class="search-input-tooltip">输入任意字符串全局搜索 </br> <kbd>Enter</kbd> 搜索 <kbd>ESC</kbd> 清除搜索</div>',
                         html: true
                     });
+
+                    // 支持键盘回车搜索
+                    $searchInput.on('keyup', function (event) {
+                        if (event.keyCode === 13 || event.keyCode === 27) {
+                            // ENTER
+                            var $buttons = $(this).next();
+                            var $search = $buttons.find(':first');
+                            if ($search.length === 1) {
+                                if (event.keyCode === 13) {
+                                    $search.trigger('click');
+                                }
+                                else $search.next().trigger('click');
+                            }
+                        }
+                    });
                 }
             }
         }
