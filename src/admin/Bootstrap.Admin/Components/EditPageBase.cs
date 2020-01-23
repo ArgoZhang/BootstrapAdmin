@@ -79,6 +79,12 @@ namespace Bootstrap.Admin.Components
         public RenderFragment<TItem>? EditTemplate { get; set; }
 
         /// <summary>
+        /// 获得/设置 SearchTemplate 实例
+        /// </summary>
+        [Parameter]
+        public RenderFragment<TItem>? SearchTemplate { get; set; }
+
+        /// <summary>
         /// 获得/设置 是否固定表头 默认为 false 不固定表头
         /// </summary>
         [Parameter]

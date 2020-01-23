@@ -14,14 +14,14 @@
         </div>
         <div class="float-right @(ShowSearch ? "search btn-group" : "search btn-group d-none")">
             <div class="input-group">
-                <input class="form-control search-input" type="text" placeholder="搜索" data-original-title="" title="">
+                <input class="form-control search-input" type="text" placeholder="搜索" />
                 <div class="input-group-append">
-                    <button class="btn btn-secondary" type="button" name="search" title="搜索">
+                    <button class="btn btn-secondary" type="button" title="搜索">
                         <i class="fa fa-search"></i><span>搜索</span>
                     </button>
-                    <button class="btn btn-secondary" type="button" name="clearSearch" title="清空过滤">
+                    <button class="btn btn-secondary" type="button" title="清空过滤">
                         <i class="fa fa-trash"></i> <span>清空过滤</span>
-                    </button><button class="btn btn-secondary" type="button" name="advancedSearch" title="高级搜索">
+                    </button><button class="btn btn-secondary" type="button" title="高级搜索" @onclick="AdvancedSearchClick">
                         <i class="fa fa-search-plus"></i><span>高级搜索</span>
                     </button>
                 </div>
@@ -168,5 +168,25 @@
         @EditTemplate?.Invoke(EditModel)
     </ModalBody>
 </SubmitModal>
+
+<Modal @ref="SearchModal" Id="@($"{Id}_search")" Title="查询条件">
+    <ModalBody>
+        <LgbEditForm class="form-inline" Id="@Id" Model="QueryModel">
+            <div class="row">
+                @SearchContent?.Invoke(QueryModel)
+            </div>
+        </LgbEditForm>
+    </ModalBody>
+    <ModalFooter>
+        <button type="button" class="btn btn-info" @onclick="ResetSearchClick">
+            <i class="fa fa-trash-o"></i>
+            <span>重置</span>
+        </button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">
+            <i class="fa fa-search"></i>
+            <span>查询</span>
+        </button>
+    </ModalFooter>
+</Modal>
 
 <Toast @ref="Toast" Id="@($"{Id}_toast")"></Toast>

@@ -50,6 +50,12 @@ namespace Bootstrap.Admin.Components
         public RenderFragment<TItem>? EditTemplate { get; set; }
 
         /// <summary>
+        /// 获得/设置 SearchTemplate 实例
+        /// </summary>
+        [Parameter]
+        public RenderFragment<TItem>? SearchTemplate { get; set; }
+
+        /// <summary>
         /// 获得/设置 表格 Toolbar 按钮模板
         /// </summary>
         [Parameter]
@@ -144,6 +150,15 @@ namespace Bootstrap.Admin.Components
         public Action<TItem>? OnEdit { get; set; }
 
         /// <summary>
+        /// 高级查询按钮点击时调用此方法
+        /// </summary>
+        protected void AdvancedSearchClick()
+        {
+            // 弹出高级查询弹窗
+            SearchModal?.Toggle();
+        }
+
+        /// <summary>
         /// 保存按钮回调方法
         /// </summary>
         [Parameter]
@@ -178,11 +193,22 @@ namespace Bootstrap.Admin.Components
         /// </summary>
         protected Modal? ConfirmModal { get; set; }
 
+        /// <summary>
+        /// 高级查询弹窗
+        /// </summary>
+        protected Modal? SearchModal { get; set; }
+
 #nullable disable
         /// <summary>
         /// 获得/设置 EditModel 实例
         /// </summary>
         protected TItem EditModel { get; set; }
+
+        /// <summary>
+        /// 获得/设置 QueryModel 实例
+        /// </summary>
+        [Parameter]
+        public TItem QueryModel { get; set; }
 #nullable restore
 
         /// <summary>
@@ -195,6 +221,12 @@ namespace Bootstrap.Admin.Components
         /// </summary>
         [Parameter]
         public string SubmitModalTitle { get; set; } = "";
+
+        /// <summary>
+        /// 查询组件模板
+        /// </summary>
+        [Parameter]
+        public RenderFragment<TItem>? SearchContent { get; set; }
 
         /// <summary>
         /// OnInitialized 方法
@@ -389,5 +421,15 @@ namespace Bootstrap.Admin.Components
         /// 获取 Id 字符串
         /// </summary>
         public string RetrieveId() => $"{Id}_table";
+
+        protected void OnSearch()
+        {
+
+        }
+
+        protected void ResetSearchClick()
+        {
+
+        }
     }
 }

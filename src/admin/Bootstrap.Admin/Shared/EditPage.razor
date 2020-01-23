@@ -9,7 +9,7 @@
         查询结果
     </div>
     <div class="card-body">
-        <Table @ref="Table" Id="@Id" FixedHeader="@FixedHeader" ShowSearch="@ShowSearch" TItem="TItem" SubmitModalTitle="@SubmitModalTitle" OnQuery="QueryData" OnAdd="OnAdd" OnDelete="OnDelete" OnSave="OnSave">
+        <Table @ref="Table" Id="@Id" FixedHeader="@FixedHeader" ShowSearch="@ShowSearch" QueryModel="QueryModel" TItem="TItem" SubmitModalTitle="@SubmitModalTitle" OnQuery="QueryData" OnAdd="OnAdd" OnDelete="OnDelete" OnSave="OnSave">
             <TableToolbarTemplate>
                 @TableToolbarTemplate
             </TableToolbarTemplate>
@@ -29,6 +29,9 @@
             <EditTemplate>
                 @EditTemplate?.Invoke(context)
             </EditTemplate>
+            <SearchTemplate>
+                @SearchTemplate?.Invoke(context)
+            </SearchTemplate>
         </Table>
     </div>
 </div>
