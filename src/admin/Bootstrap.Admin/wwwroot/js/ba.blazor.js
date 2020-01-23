@@ -108,8 +108,8 @@
             $('[data-toggle="tooltip"]').tooltip();
             $('.sidebar').addNiceScroll().autoScrollSidebar();
         },
-        initModal: function () {
-            $('.modal').appendTo($('body'));
+        initModal: function (id) {
+            $('#' + id).appendTo($('body'));
         },
         initToast: function (id) {
             $('#' + id).appendTo($('body'));
