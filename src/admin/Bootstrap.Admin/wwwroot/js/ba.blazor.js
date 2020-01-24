@@ -189,7 +189,7 @@
                 $.resetTableWidth($table, $tableHeader);
 
                 if (firstRender) {
-                    $tableContainer.find('.fixed-table-body').removeClass('invisible');
+                    $tableContainer.removeClass('table-fixed').find('.fixed-table-body').removeClass('invisible');
 
                     $(window).on('resize', function () {
                         $.resetTableWidth($table, $tableHeader);

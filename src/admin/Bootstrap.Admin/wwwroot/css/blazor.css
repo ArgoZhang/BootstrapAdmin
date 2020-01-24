@@ -142,12 +142,17 @@ nav .dropdown .nav-link-close.dropdown-toggle:after {
             margin-left: 5px;
         }
 
-    .bootstrap-table .fixed-table-header {
+    .bootstrap-table .table-fixed {
+        max-height: 388px;
+        overflow: hidden;
+    }    
+
+    .bootstrap-table .table-fixed-header {
         overflow: hidden;
     }
 
     .bootstrap-table .fixed-table-body {
-        min-height: 300px;
+        min-height: 348px;
     }
 
         .bootstrap-table .fixed-table-body table {
