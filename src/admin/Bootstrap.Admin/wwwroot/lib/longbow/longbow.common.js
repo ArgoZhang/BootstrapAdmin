@@ -625,7 +625,7 @@
                 $element.append($('<a href="#" tabindex="-1" role="button" data-toggle="popover"><i class="fa fa-question-circle"></i></a>'));
             });
             var container = this.attr('data-container') || 'body';
-            this.find('[data-toggle="popover"]').popover($.extend({
+            this.find('[data-toggle="popover"]').on('click', function (event) { event.preventDefault(); }).popover($.extend({
                 title: function () {
                     return $(this).parent().text();
                 },
