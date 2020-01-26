@@ -1,7 +1,7 @@
 ﻿@inherits PaginationBase
 
 <CascadingValue Value="this">
-    <nav class="d-flex align-items-center" aria-label="分页组件">
+    <nav class="nav align-items-center" aria-label="分页组件">
         <div class="pagination-bar">
             显示第 <span>@((PageIndex - 1) * PageItems + 1)</span> 到第 <span>@(Math.Min(PageIndex * PageItems, TotalCount))</span> 条记录，总共 <span>@TotalCount</span> 条记录 每页显示
             <div class="btn-group dropup">
