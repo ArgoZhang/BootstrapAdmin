@@ -1,6 +1,6 @@
 ﻿@inherits RolesBase
 
-<EditPage Id="role" FixedHeader="@FixedHeader" ShowSearch="true" TItem="Bootstrap.DataAccess.Role" SubmitModalTitle="角色编辑窗口" QueryModel="QueryModel" OnQuery="Query" OnAdd="Add" OnDelete="Delete" OnSave="Save" OnResetSearch="ResetSearch">
+<EditPage Id="role" FixedHeader="@FixedHeader" TItem="Bootstrap.DataAccess.Role" SubmitModalTitle="角色编辑窗口" QueryModel="QueryModel" OnQuery="Query" OnAdd="Add" OnDelete="Delete" OnSave="Save" OnResetSearch="ResetSearch">
     <QueryBody>
         <LgbInputText ColumnClass="col-sm-auto" @bind-Value="@context.RoleName" maxlength="50" />
         <LgbInputText ColumnClass="col-sm-auto" @bind-Value="@context.Description" maxlength="50" />

@@ -105,19 +105,43 @@ namespace Bootstrap.Admin.Components
         /// 获得/设置 是否显示行号
         /// </summary>
         [Parameter]
-        public bool ShowLineNo { get; set; } = true;
+        public bool ShowLineNo { get; set; }
 
         /// <summary>
-        /// 获得/设置 是否显示选择列 默认为 true
+        /// 获得/设置 是否显示选择列 默认为 false
         /// </summary>
         [Parameter]
-        public bool ShowCheckbox { get; set; } = true;
+        public bool ShowCheckbox { get; set; }
 
         /// <summary>
-        /// 获得/设置 是否显示按钮列 默认为 true
+        /// 获得/设置 是否显示按钮列 默认为 false
         /// </summary>
         [Parameter]
-        public bool ShowButtons { get; set; } = true;
+        public bool ShowDefaultButtons { get; set; }
+
+        /// <summary>
+        /// 获得/设置 是否显示表脚 默认为 false
+        /// </summary>
+        [Parameter]
+        public bool ShowFooter { get; set; }
+
+        /// <summary>
+        /// 获得/设置 是否显示扩展按钮 默认为 true
+        /// </summary>
+        [Parameter]
+        public bool ShowExtendButtons { get; set; } = true;
+
+        /// <summary>
+        /// 获得/设置 是否显示刷新按钮 默认为 true
+        /// </summary>
+        [Parameter]
+        public bool ShowRefresh { get; set; } = true;
+
+        /// <summary>
+        /// 获得/设置 是否分页组件 默认为 false
+        /// </summary>
+        [Parameter]
+        public bool ShowPagination { get; set; }
 
         /// <summary>
         /// 获得/设置 是否显示工具栏 默认为 true
