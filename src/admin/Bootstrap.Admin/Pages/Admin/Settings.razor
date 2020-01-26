@@ -192,13 +192,31 @@
     <div class="card-header">
         <div class="d-flex align-items-center">
             <span class="flex-fill">网站缓存</span>
-            <ConditionComponent AuthKey="clearAllCache">
-                <a href="#" class="fa fa-times-circle-o" title="全部清除" data-toggle="tooltip" data-placement="left" asp-auth=""></a>
-            </ConditionComponent>
-            <a href="#" class="fa fa-refresh ml-3" title="点击刷新" data-toggle="tooltip"></a>
         </div>
     </div>
     <div class="card-body">
+        <Table @ref="Table" Id="settings-cache" TItem="Longbow.Cache.ICacheItem" EditModel="ConsoleCaCheModel" OnDataSourceQuery="QueryData">
+            <TableHeader>
+                <LgbTableHeader TItem="string" @bind-Value="@context.Desc"></LgbTableHeader>
+                <LgbTableHeader TItem="int" @bind-Value="@context.Interval"></LgbTableHeader>
+                <LgbTableHeader TItem="string" @bind-Value="@context.Key"></LgbTableHeader>
+                <LgbTableHeader TItem="string" @bind-Value="@context.Value"></LgbTableHeader>
+                <LgbTableHeader TItem="int" @bind-Value="@context.ElapsedSeconds"></LgbTableHeader>
+            </TableHeader>
+            <RowTemplate>
+                <td>@context.Desc</td>
+                <td>@(context.Interval / 1000)</td>
+                <td>@context.Key</td>
+                <td>@context.Value</td>
+                <td>@context.ElapsedSeconds</td>
+            </RowTemplate>
+            <TableToolbarTemplate>
+                <TableToolbarButton class="btn btn-danger" Icon="fa fa-trash-o" Title="一键清除" OnClick="ClearCache" />
+            </TableToolbarTemplate>
+            <ButtonTemplate>
+                <button class='btn btn-sm btn-danger' asp-auth="del" @onclick="e => DeleteCache(context.Key)"><i class='fa fa-remove'></i><span>删除</span></button>
+            </ButtonTemplate>
+        </Table>
     </div>
 </div>
 <Toast @ref="Toast" Id="toast_settings"></Toast>

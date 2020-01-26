@@ -3,7 +3,9 @@ using Bootstrap.Admin.Extensions;
 using Bootstrap.Admin.Shared;
 using Bootstrap.DataAccess;
 using Bootstrap.Security;
+using Longbow.Cache;
 using Microsoft.AspNetCore.Components;
+using System;
 using System.Collections.Generic;
 
 namespace Bootstrap.Pages.Admin.Components
@@ -19,10 +21,25 @@ namespace Bootstrap.Pages.Admin.Components
         protected EditModel Model { get; set; } = new EditModel();
 
         /// <summary>
+        /// 获得 CacheItem 实例
+        /// </summary>
+        protected ICacheItem ConsoleCaCheModel { get; set; } = new CacheItem("");
+
+        /// <summary>
+        /// 获得 CacheItem 实例
+        /// </summary>
+        protected ICacheItem ClientCaCheModel { get; set; } = new CacheItem("");
+
+        /// <summary>
         /// 获得/设置 默认母版页实例
         /// </summary>
         [CascadingParameter(Name = "Default")]
         public DefaultLayout? RootLayout { get; protected set; }
+
+        /// <summary>
+        /// 获得/设置 Table 实例
+        /// </summary>
+        protected Table<ICacheItem>? Table { get; set; }
 
         /// <summary>
         /// Toast 组件实例
@@ -55,6 +72,21 @@ namespace Bootstrap.Pages.Admin.Components
             Model.FixedTableHeader = DictHelper.RetrieveFixedTableHeader();
             Model.Themes = DictHelper.RetrieveThemes();
         }
+
+        /// <summary>
+        /// QueryData 方法
+        /// </summary>
+        protected IEnumerable<ICacheItem> QueryData() => CacheManager.ToList();
+
+        /// <summary>
+        /// 清除指定键值的方法
+        /// </summary>
+        protected void DeleteCache(string key) => CacheManager.Clear(key);
+
+        /// <summary>
+        /// 清除所有缓存方法
+        /// </summary>
+        protected void ClearCache() => CacheManager.Clear();
 
         /// <summary>
         /// 保存 Balzor 方法

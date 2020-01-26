@@ -2,10 +2,10 @@
 @inherits TableBase<TItem>
 
 <div class="bootstrap-table">
-    <div class="fixed-table-toolbar">
-        <div class="float-left bs-bars">
-            @if(ShowToolBar)
-            {
+    @if(ShowToolBar)
+    {
+        <div class="fixed-table-toolbar">
+            <div class="float-left bs-bars">
                 <TableToolbar>
                     <TableToolbarContent />
                     @if(ShowDefaultButtons)
@@ -16,40 +16,36 @@
                     }
                     @TableToolbarTemplate
                 </TableToolbar>
-            }
-        </div>
-        <div class="float-right columns columns-right">
-            @if(ShowToolBar)
-            {
+            </div>
+            <div class="float-right columns columns-right">
                 @if(ShowRefresh)
                 {
                     <button class="btn btn-secondary" type="button" title="刷新" @onclick="Query">
                         <i class="fa fa-refresh"></i><span>刷新</span>
                     </button>
                 }
-            }
-        </div>
-        @if(ShowSearch)
-        {
-            <div class="float-right search btn-group">
-                <div class="input-group">
-                    <input class="form-control search-input" type="text" placeholder="搜索" @bind="SearchText" />
-                    <div class="input-group-append">
-                        <button class="btn btn-secondary" type="button" title="搜索" @onclick="SearchClick">
-                            <i class="fa fa-search"></i><span>搜索</span>
-                        </button>
-                        <button class="btn btn-secondary" type="button" title="清空过滤" @onclick="ClearSearchClick">
-                            <i class="fa fa-trash"></i> <span>清空过滤</span>
-                        </button>
-                        <button class="btn btn-secondary" type="button" title="高级搜索" @onclick="AdvancedSearchClick">
-                            <i class="fa fa-search-plus"></i><span>高级搜索</span>
-                        </button>
+            </div>
+            @if(ShowSearch)
+            {
+                <div class="float-right search btn-group">
+                    <div class="input-group">
+                        <input class="form-control search-input" type="text" placeholder="搜索" @bind="SearchText" />
+                        <div class="input-group-append">
+                            <button class="btn btn-secondary" type="button" title="搜索" @onclick="SearchClick">
+                                <i class="fa fa-search"></i><span>搜索</span>
+                            </button>
+                            <button class="btn btn-secondary" type="button" title="清空过滤" @onclick="ClearSearchClick">
+                                <i class="fa fa-trash"></i> <span>清空过滤</span>
+                            </button>
+                            <button class="btn btn-secondary" type="button" title="高级搜索" @onclick="AdvancedSearchClick">
+                                <i class="fa fa-search-plus"></i><span>高级搜索</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        }
-    </div>
-
+            }
+        </div>
+    }
     <div class="@(FixedHeader ? "table-wrapper table-fixed-header table-fixed" : "table-wrapper")">
         @if(FixedHeader)
         {

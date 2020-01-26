@@ -1,5 +1,6 @@
 ﻿using Bootstrap.DataAccess;
 using Bootstrap.Security;
+using Longbow.Cache;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Concurrent;
@@ -43,6 +44,12 @@ namespace Microsoft.AspNetCore.Builder
             _displayNameCache.TryAdd((typeof(BootstrapMenu), nameof(BootstrapMenu.IsResource)), "菜单类型");
             _displayNameCache.TryAdd((typeof(BootstrapMenu), nameof(BootstrapMenu.Application)), "所属应用");
 
+            // 缓存显示名称
+            _displayNameCache.TryAdd((typeof(CacheItem), nameof(CacheItem.Key)), "缓存 Key");
+            _displayNameCache.TryAdd((typeof(CacheItem), nameof(CacheItem.Value)), "缓存值");
+            _displayNameCache.TryAdd((typeof(CacheItem), nameof(CacheItem.Interval)), "缓存时长（秒）");
+            _displayNameCache.TryAdd((typeof(CacheItem), nameof(CacheItem.ElapsedSeconds)), "已过时长（秒）");
+            _displayNameCache.TryAdd((typeof(CacheItem), nameof(CacheItem.Desc)), "缓存说明");
             return services;
         }
 

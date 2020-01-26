@@ -162,6 +162,12 @@ namespace Bootstrap.Admin.Components
         public Func<int, int, string, QueryData<TItem>>? OnQuery { get; set; }
 
         /// <summary>
+        /// 点击翻页回调方法
+        /// </summary>
+        [Parameter]
+        public Func<IEnumerable<TItem>>? OnDataSourceQuery { get; set; }
+
+        /// <summary>
         /// 新建按钮回调方法
         /// </summary>
         [Parameter]
@@ -226,7 +232,8 @@ namespace Bootstrap.Admin.Components
         /// <summary>
         /// 获得/设置 EditModel 实例
         /// </summary>
-        protected TItem EditModel { get; set; }
+        [Parameter]
+        public TItem EditModel { get; set; }
 
         /// <summary>
         /// 获得/设置 QueryModel 实例
@@ -251,10 +258,14 @@ namespace Bootstrap.Admin.Components
         /// </summary>
         protected override void OnInitialized()
         {
-            if (OnAdd != null) EditModel = OnAdd.Invoke();
+            if (EditModel == null && OnAdd != null) EditModel = OnAdd.Invoke();
+            if (OnDataSourceQuery != null)
+            {
+                Items = OnDataSourceQuery();
+            }
             if (OnQuery != null)
             {
-                var queryData = OnQuery.Invoke(1, DefaultPageItems, SearchText);
+                var queryData = OnQuery(1, DefaultPageItems, SearchText);
                 Items = queryData.Items;
                 TotalCount = queryData.TotalCount;
             }
@@ -388,7 +399,7 @@ namespace Bootstrap.Admin.Components
         /// </summary>
         protected void Query()
         {
-            if (OnQuery != null) Query(OnQuery.Invoke(PageIndex, PageItems, SearchText));
+            if (OnQuery != null) Query(OnQuery(PageIndex, PageItems, SearchText));
         }
 
         /// <summary>

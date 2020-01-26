@@ -8,7 +8,7 @@
     <PackageReference Include="Bootstrap.Security.DataAccess" Version="3.1.1" />
     <PackageReference Include="Bootstrap.Security.Mvc" Version="3.1.1" />
     <PackageReference Include="Longbow" Version="3.1.0" />
-    <PackageReference Include="Longbow.Cache" Version="3.1.1" />
+    <PackageReference Include="Longbow.Cache" Version="3.1.2-beta-01" />
     <PackageReference Include="Longbow.Data" Version="3.1.0" />
     <PackageReference Include="Longbow.GiteeAuth" Version="3.1.0" />
     <PackageReference Include="Longbow.GitHubAuth" Version="3.1.0" />
