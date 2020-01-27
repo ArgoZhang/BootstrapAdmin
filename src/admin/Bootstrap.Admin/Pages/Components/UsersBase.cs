@@ -21,6 +21,19 @@ namespace Bootstrap.Pages.Admin.Components
             if (!string.IsNullOrEmpty(QueryModel.UserName)) data = data.Where(d => d.UserName.Contains(QueryModel.UserName, StringComparison.OrdinalIgnoreCase));
             if (!string.IsNullOrEmpty(QueryModel.DisplayName)) data = data.Where(d => d.DisplayName.Contains(QueryModel.DisplayName, StringComparison.OrdinalIgnoreCase));
             if (!string.IsNullOrEmpty(options.SearchText)) data = data.Where(d => d.UserName.Contains(options.SearchText, StringComparison.OrdinalIgnoreCase) || d.DisplayName.Contains(options.SearchText, StringComparison.OrdinalIgnoreCase));
+            
+            // sort
+            data = options.SortName switch
+            {
+                nameof(User.UserName) => options.SortOrder == SortOrder.Asc ? data.OrderBy(d => d.UserName) : data.OrderByDescending(d => d.UserName),
+                nameof(User.DisplayName) => options.SortOrder == SortOrder.Asc ? data.OrderBy(d => d.DisplayName) : data.OrderByDescending(d => d.DisplayName),
+                nameof(User.Description) => options.SortOrder == SortOrder.Asc ? data.OrderBy(d => d.Description) : data.OrderByDescending(d => d.Description),
+                nameof(User.ApprovedBy) => options.SortOrder == SortOrder.Asc ? data.OrderBy(d => d.ApprovedBy) : data.OrderByDescending(d => d.ApprovedBy),
+                nameof(User.ApprovedTime) => options.SortOrder == SortOrder.Asc ? data.OrderBy(d => d.ApprovedTime) : data.OrderByDescending(d => d.ApprovedTime),
+                nameof(User.RegisterTime) => options.SortOrder == SortOrder.Asc ? data.OrderBy(d => d.RegisterTime) : data.OrderByDescending(d => d.RegisterTime),
+                _ => data
+            };
+
             var totalCount = data.Count();
             var items = data.Skip((options.PageIndex - 1) * options.PageItems).Take(options.PageItems);
             return new QueryData<User>() { Items = items, TotalCount = totalCount, PageIndex = options.PageIndex, PageItems = options.PageItems };

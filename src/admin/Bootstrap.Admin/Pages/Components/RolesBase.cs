@@ -21,6 +21,15 @@ namespace Bootstrap.Pages.Admin.Components
             if (!string.IsNullOrEmpty(QueryModel.RoleName)) data = data.Where(d => d.RoleName.Contains(QueryModel.RoleName, StringComparison.OrdinalIgnoreCase));
             if (!string.IsNullOrEmpty(QueryModel.Description)) data = data.Where(d => d.Description != null && d.Description.Contains(QueryModel.Description, StringComparison.OrdinalIgnoreCase));
             if (!string.IsNullOrEmpty(options.SearchText)) data = data.Where(d => d.RoleName.Contains(options.SearchText, StringComparison.OrdinalIgnoreCase) || d.Description.Contains(options.SearchText, StringComparison.OrdinalIgnoreCase));
+            
+            // sort
+            data = options.SortName switch
+            {
+                nameof(Role.RoleName) => options.SortOrder == SortOrder.Asc ? data.OrderBy(d => d.RoleName) : data.OrderByDescending(d => d.RoleName),
+                nameof(Role.Description) => options.SortOrder == SortOrder.Asc ? data.OrderBy(d => d.Description) : data.OrderByDescending(d => d.Description),
+                _ => data
+            };
+
             var totalCount = data.Count();
             var items = data.Skip((options.PageIndex - 1) * options.PageItems).Take(options.PageItems);
             return new QueryData<Role>() { Items = items, TotalCount = totalCount, PageIndex = options.PageIndex, PageItems = options.PageItems };
