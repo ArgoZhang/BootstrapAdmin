@@ -10,9 +10,9 @@
         <TableToolbarButton class="btn btn-warning" Icon="fa fa-sitemap" Title="分配角色" OnClick="AssignRoles" />
     </TableToolbarTemplate>
     <TableHeader>
-        <LgbTableHeader TItem="string" @bind-Value="@context.GroupCode"></LgbTableHeader>
-        <LgbTableHeader TItem="string" @bind-Value="@context.GroupName"></LgbTableHeader>
-        <LgbTableHeader TItem="string" @bind-Value="@context.Description"></LgbTableHeader>
+        <LgbTableHeader TItem="string" @bind-Value="@context.GroupCode" Sort="true"></LgbTableHeader>
+        <LgbTableHeader TItem="string" @bind-Value="@context.GroupName" Sort="true"></LgbTableHeader>
+        <LgbTableHeader TItem="string" @bind-Value="@context.Description" Sort="true"></LgbTableHeader>
     </TableHeader>
     <RowTemplate>
         <td>@context.GroupCode</td>

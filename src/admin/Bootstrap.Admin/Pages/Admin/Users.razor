@@ -10,12 +10,12 @@
         <TableToolbarButton class="btn btn-warning" Icon="fa fa-sitemap" Title="分配角色" OnClick="AssignRoles" />
     </TableToolbarTemplate>
     <TableHeader>
-        <LgbTableHeader TItem="string" @bind-Value="@context.UserName"></LgbTableHeader>
-        <LgbTableHeader TItem="string" @bind-Value="@context.DisplayName"></LgbTableHeader>
-        <LgbTableHeader TItem="DateTime" @bind-Value="@context.RegisterTime"></LgbTableHeader>
-        <LgbTableHeader TItem="DateTime?" @bind-Value="@context.ApprovedTime"></LgbTableHeader>
-        <LgbTableHeader TItem="string" @bind-Value="@context.ApprovedBy"></LgbTableHeader>
-        <LgbTableHeader TItem="string" @bind-Value="@context.Description"></LgbTableHeader>
+        <LgbTableHeader TItem="string" @bind-Value="@context.UserName" Sort="true"></LgbTableHeader>
+        <LgbTableHeader TItem="string" @bind-Value="@context.DisplayName" Sort="true"></LgbTableHeader>
+        <LgbTableHeader TItem="DateTime" @bind-Value="@context.RegisterTime" Sort="true"></LgbTableHeader>
+        <LgbTableHeader TItem="DateTime?" @bind-Value="@context.ApprovedTime" Sort="true"></LgbTableHeader>
+        <LgbTableHeader TItem="string" @bind-Value="@context.ApprovedBy" Sort="true"></LgbTableHeader>
+        <LgbTableHeader TItem="string" @bind-Value="@context.Description" Sort="true"></LgbTableHeader>
     </TableHeader>
     <RowTemplate>
         <td>@context.UserName</td>

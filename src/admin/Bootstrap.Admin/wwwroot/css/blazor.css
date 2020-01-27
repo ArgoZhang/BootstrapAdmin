@@ -163,6 +163,24 @@ nav .dropdown .nav-link-close.dropdown-toggle:after {
             border-bottom: 1px solid #dee2e6;
         }
 
+.bootstrap-table .sortable {
+    padding-right: 30px;
+    cursor: pointer;
+}
+
+    .bootstrap-table .sortable span {
+        display: inline-block;
+        width: 100%;
+    }
+
+    .bootstrap-table .sortable i {
+        margin-left: 8px;
+    }
+
+    .bootstrap-table .sortable .fa-sort {
+        color: #dee2e6;
+    }
+
 .table-wrapper {
     border-radius: 4px;
     margin-bottom: 1rem;

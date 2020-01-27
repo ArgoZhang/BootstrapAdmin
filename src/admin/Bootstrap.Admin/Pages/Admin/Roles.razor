@@ -17,8 +17,8 @@
         </div>
     </TableInfoTemplate>
     <TableHeader>
-        <LgbTableHeader TItem="string" @bind-Value="@context.RoleName"></LgbTableHeader>
-        <LgbTableHeader TItem="string" @bind-Value="@context.Description"></LgbTableHeader>
+        <LgbTableHeader TItem="string" @bind-Value="@context.RoleName" Sort="true"></LgbTableHeader>
+        <LgbTableHeader TItem="string" @bind-Value="@context.Description" Sort="true"></LgbTableHeader>
     </TableHeader>
     <RowTemplate>
         <td>@context.RoleName</td>

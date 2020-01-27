@@ -14,18 +14,29 @@ namespace Bootstrap.Pages.Admin.Components
         /// <summary>
         /// 查询方法
         /// </summary>
-        /// <param name="pageIndex">页码</param>
-        /// <param name="pageItems">每页显示数据条目数量</param>
-        /// <param name="searchText"></param>
-        protected override QueryData<User> Query(int pageIndex, int pageItems, string searchText)
+        /// <param name="options"></param>
+        protected override QueryData<User> Query(QueryPageOptions options)
         {
             var data = UserHelper.Retrieves();
             if (!string.IsNullOrEmpty(QueryModel.UserName)) data = data.Where(d => d.UserName.Contains(QueryModel.UserName, StringComparison.OrdinalIgnoreCase));
             if (!string.IsNullOrEmpty(QueryModel.DisplayName)) data = data.Where(d => d.DisplayName.Contains(QueryModel.DisplayName, StringComparison.OrdinalIgnoreCase));
-            if (!string.IsNullOrEmpty(searchText)) data = data.Where(d => d.UserName.Contains(searchText, StringComparison.OrdinalIgnoreCase) || d.DisplayName.Contains(searchText, StringComparison.OrdinalIgnoreCase));    
+            if (!string.IsNullOrEmpty(options.SearchText)) data = data.Where(d => d.UserName.Contains(options.SearchText, StringComparison.OrdinalIgnoreCase) || d.DisplayName.Contains(options.SearchText, StringComparison.OrdinalIgnoreCase));
+            
+            // sort
+            data = options.SortName switch
+            {
+                nameof(User.UserName) => options.SortOrder == SortOrder.Asc ? data.OrderBy(d => d.UserName) : data.OrderByDescending(d => d.UserName),
+                nameof(User.DisplayName) => options.SortOrder == SortOrder.Asc ? data.OrderBy(d => d.DisplayName) : data.OrderByDescending(d => d.DisplayName),
+                nameof(User.Description) => options.SortOrder == SortOrder.Asc ? data.OrderBy(d => d.Description) : data.OrderByDescending(d => d.Description),
+                nameof(User.ApprovedBy) => options.SortOrder == SortOrder.Asc ? data.OrderBy(d => d.ApprovedBy) : data.OrderByDescending(d => d.ApprovedBy),
+                nameof(User.ApprovedTime) => options.SortOrder == SortOrder.Asc ? data.OrderBy(d => d.ApprovedTime) : data.OrderByDescending(d => d.ApprovedTime),
+                nameof(User.RegisterTime) => options.SortOrder == SortOrder.Asc ? data.OrderBy(d => d.RegisterTime) : data.OrderByDescending(d => d.RegisterTime),
+                _ => data
+            };
+
             var totalCount = data.Count();
-            var items = data.Skip((pageIndex - 1) * pageItems).Take(pageItems);
-            return new QueryData<User>() { Items = items, TotalCount = totalCount, PageIndex = pageIndex, PageItems = pageItems };
+            var items = data.Skip((options.PageIndex - 1) * options.PageItems).Take(options.PageItems);
+            return new QueryData<User>() { Items = items, TotalCount = totalCount, PageIndex = options.PageIndex, PageItems = options.PageItems };
         }
 
         /// <summary>
@@ -37,7 +48,7 @@ namespace Bootstrap.Pages.Admin.Components
         /// 删除方法
         /// </summary>
         protected override bool Delete(IEnumerable<User> users) => UserHelper.Delete(users.Select(item => item.Id ?? ""));
-        
+
         /// <summary>
         /// 重置搜索方法
         /// </summary>
