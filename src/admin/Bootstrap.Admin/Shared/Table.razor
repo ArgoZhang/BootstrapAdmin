@@ -61,7 +61,10 @@
                             {
                                 <th class="table-col-lineno">行号</th>
                             }
-                            @TableHeader?.Invoke(EditModel)
+                            <TableHeader OnSort="OnSort">
+                                <TableHeaderContent />
+                                @TableHeader?.Invoke(EditModel)
+                            </TableHeader>
                             @if (ShowExtendButtons)
                             {
                                 <th>@ButtonTemplateHeaderText</th>
@@ -82,7 +85,10 @@
                             {
                                 <th class="table-col-lineno">行号</th>
                             }
-                            @TableHeader?.Invoke(EditModel)
+                            <TableHeader OnSort="OnSort">
+                                <TableHeaderContent />
+                                @TableHeader?.Invoke(EditModel)
+                            </TableHeader>
                             @if (ShowExtendButtons)
                             {
                                 <th>@ButtonTemplateHeaderText</th>

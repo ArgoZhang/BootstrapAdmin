@@ -14,18 +14,16 @@ namespace Bootstrap.Pages.Admin.Components
         /// <summary>
         /// 查询方法
         /// </summary>
-        /// <param name="pageIndex">页码</param>
-        /// <param name="pageItems">每页显示数据条目数量</param>
-        /// <param name="searchText"></param>
-        protected override QueryData<Role> Query(int pageIndex, int pageItems, string searchText)
+        /// <param name="options"></param>
+        protected override QueryData<Role> Query(QueryPageOptions options)
         {
             var data = RoleHelper.Retrieves();
             if (!string.IsNullOrEmpty(QueryModel.RoleName)) data = data.Where(d => d.RoleName.Contains(QueryModel.RoleName, StringComparison.OrdinalIgnoreCase));
             if (!string.IsNullOrEmpty(QueryModel.Description)) data = data.Where(d => d.Description != null && d.Description.Contains(QueryModel.Description, StringComparison.OrdinalIgnoreCase));
-            if (!string.IsNullOrEmpty(searchText)) data = data.Where(d => d.RoleName.Contains(searchText, StringComparison.OrdinalIgnoreCase) || d.Description.Contains(searchText, StringComparison.OrdinalIgnoreCase));    
+            if (!string.IsNullOrEmpty(options.SearchText)) data = data.Where(d => d.RoleName.Contains(options.SearchText, StringComparison.OrdinalIgnoreCase) || d.Description.Contains(options.SearchText, StringComparison.OrdinalIgnoreCase));
             var totalCount = data.Count();
-            var items = data.Skip((pageIndex - 1) * pageItems).Take(pageItems);
-            return new QueryData<Role>() { Items = items, TotalCount = totalCount, PageIndex = pageIndex, PageItems = pageItems };
+            var items = data.Skip((options.PageIndex - 1) * options.PageItems).Take(options.PageItems);
+            return new QueryData<Role>() { Items = items, TotalCount = totalCount, PageIndex = options.PageIndex, PageItems = options.PageItems };
         }
 
         /// <summary>
@@ -37,7 +35,7 @@ namespace Bootstrap.Pages.Admin.Components
         /// 删除方法
         /// </summary>
         protected override bool Delete(IEnumerable<Role> items) => RoleHelper.Delete(items.Select(item => item.Id ?? ""));
-        
+
         /// <summary>
         /// 重置搜索方法
         /// </summary>
@@ -78,6 +76,5 @@ namespace Bootstrap.Pages.Admin.Components
         {
 
         }
-
     }
 }

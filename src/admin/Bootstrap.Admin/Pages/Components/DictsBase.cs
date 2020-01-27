@@ -32,19 +32,28 @@ namespace Bootstrap.Pages.Admin.Components
         /// <summary>
         /// 查询方法
         /// </summary>
-        /// <param name="pageIndex">页码</param>
-        /// <param name="pageItems">每页显示数据条目数量</param>
-        /// <param name="searchText"></param>
-        protected override QueryData<BootstrapDict> Query(int pageIndex, int pageItems, string searchText)
+        /// <param name="options"></param>
+        protected override QueryData<BootstrapDict> Query(QueryPageOptions options)
         {
             var data = DataAccess.DictHelper.RetrieveDicts();
+            // filter
             if (QueryModel.Define != -1) data = data.Where(d => d.Define == QueryModel.Define);
             if (!string.IsNullOrEmpty(QueryModel.Name)) data = data.Where(d => d.Name.Contains(QueryModel.Name, StringComparison.OrdinalIgnoreCase));
             if (!string.IsNullOrEmpty(QueryModel.Category)) data = data.Where(d => d.Category.Contains(QueryModel.Category, StringComparison.OrdinalIgnoreCase));
-            if (!string.IsNullOrEmpty(searchText)) data = data.Where(d => d.Category.Contains(searchText, StringComparison.OrdinalIgnoreCase) || d.Name.Contains(searchText, StringComparison.OrdinalIgnoreCase) || d.Code.Contains(searchText, StringComparison.OrdinalIgnoreCase));
+            if (!string.IsNullOrEmpty(options.SearchText)) data = data.Where(d => d.Category.Contains(options.SearchText, StringComparison.OrdinalIgnoreCase) || d.Name.Contains(options.SearchText, StringComparison.OrdinalIgnoreCase) || d.Code.Contains(options.SearchText, StringComparison.OrdinalIgnoreCase));
+
+            // sort
+            data = options.SortName switch
+            {
+                nameof(BootstrapDict.Category) => options.SortOrder == SortOrder.Asc ? data.OrderBy(d => d.Category) : data.OrderByDescending(d => d.Category),
+                nameof(BootstrapDict.Name) => options.SortOrder == SortOrder.Asc ? data.OrderBy(d => d.Name) : data.OrderByDescending(d => d.Name),
+                nameof(BootstrapDict.Code) => options.SortOrder == SortOrder.Asc ? data.OrderBy(d => d.Code) : data.OrderByDescending(d => d.Code),
+                nameof(BootstrapDict.Define) => options.SortOrder == SortOrder.Asc ? data.OrderBy(d => d.Define) : data.OrderByDescending(d => d.Define),
+                _ => data
+            };
             var totalCount = data.Count();
-            var items = data.Skip((pageIndex - 1) * pageItems).Take(pageItems);
-            return new QueryData<BootstrapDict>() { Items = items, TotalCount = totalCount, PageIndex = pageIndex, PageItems = pageItems };
+            var items = data.Skip((options.PageIndex - 1) * options.PageItems).Take(options.PageItems);
+            return new QueryData<BootstrapDict>() { Items = items, TotalCount = totalCount, PageIndex = options.PageIndex, PageItems = options.PageItems };
         }
 
         /// <summary>

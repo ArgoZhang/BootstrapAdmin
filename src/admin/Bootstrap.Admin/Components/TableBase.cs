@@ -159,7 +159,7 @@ namespace Bootstrap.Admin.Components
         /// 点击翻页回调方法
         /// </summary>
         [Parameter]
-        public Func<int, int, string, QueryData<TItem>>? OnQuery { get; set; }
+        public Func<QueryPageOptions, QueryData<TItem>>? OnQuery { get; set; }
 
         /// <summary>
         /// 点击翻页回调方法
@@ -193,6 +193,12 @@ namespace Bootstrap.Admin.Components
         /// </summary>
         [Parameter]
         public Func<TItem, bool>? OnSave { get; set; }
+
+        /// <summary>
+        /// 表头排序时回调方法
+        /// </summary>
+        [Parameter]
+        public Action<string, SortOrder> OnSort { get; set; } = new Action<string, SortOrder>((name, order) => { });
 
         /// <summary>
         /// 删除按钮回调方法
@@ -254,10 +260,25 @@ namespace Bootstrap.Admin.Components
         public string SubmitModalTitle { get; set; } = "";
 
         /// <summary>
+        /// 获得/设置 当前排序字段名称
+        /// </summary>
+        protected string SortName { get; set; } = "";
+
+        /// <summary>
+        /// 获得/设置 当前排序规则
+        /// </summary>
+        protected SortOrder SortOrder { get; set; }
+
+        /// <summary>
         /// OnInitialized 方法
         /// </summary>
         protected override void OnInitialized()
         {
+            OnSort = new Action<string, SortOrder>((sortName, sortOrder) =>
+            {
+                (SortName, SortOrder) = (sortName, sortOrder);
+                Query();
+            });
             if (EditModel == null && OnAdd != null) EditModel = OnAdd.Invoke();
             if (OnDataSourceQuery != null)
             {
@@ -265,7 +286,7 @@ namespace Bootstrap.Admin.Components
             }
             if (OnQuery != null)
             {
-                var queryData = OnQuery(1, DefaultPageItems, SearchText);
+                var queryData = OnQuery(new QueryPageOptions() { PageItems = DefaultPageItems, SearchText = SearchText, SortName = SortName, SortOrder = SortOrder });
                 Items = queryData.Items;
                 TotalCount = queryData.TotalCount;
             }
@@ -399,7 +420,7 @@ namespace Bootstrap.Admin.Components
         /// </summary>
         protected void Query()
         {
-            if (OnQuery != null) Query(OnQuery(PageIndex, PageItems, SearchText));
+            if (OnQuery != null) Query(OnQuery(new QueryPageOptions() { PageIndex = PageIndex, PageItems = PageItems, SearchText = SearchText, SortOrder = SortOrder, SortName = SortName }));
         }
 
         /// <summary>

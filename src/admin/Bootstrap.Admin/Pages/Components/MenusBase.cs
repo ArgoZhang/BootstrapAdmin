@@ -113,10 +113,8 @@ namespace Bootstrap.Pages.Admin.Components
         /// <summary>
         /// 查询方法
         /// </summary>
-        /// <param name="pageIndex">页码</param>
-        /// <param name="pageItems">每页显示数据条目数量</param>
-        /// <param name="searchText"></param>
-        protected override QueryData<BootstrapMenu> Query(int pageIndex, int pageItems, string searchText)
+        /// <param name="options"></param>
+        protected override QueryData<BootstrapMenu> Query(QueryPageOptions options)
         {
             var data = MenuHelper.RetrieveMenusByUserName(UserName);
             if (!string.IsNullOrEmpty(QueryModel.Name)) data = data.Where(d => d.Name.Contains(QueryModel.Name, StringComparison.OrdinalIgnoreCase));
@@ -124,10 +122,10 @@ namespace Bootstrap.Pages.Admin.Components
             if (!string.IsNullOrEmpty(QueryModel.Category)) data = data.Where(d => d.Category == QueryModel.Category);
             if (QueryModel.IsResource != -1) data = data.Where(d => d.IsResource == QueryModel.IsResource);
             if (!string.IsNullOrEmpty(QueryModel.Application)) data = data.Where(d => d.Application.Equals(QueryModel.Application, StringComparison.OrdinalIgnoreCase));
-            if (!string.IsNullOrEmpty(searchText)) data = data.Where(d => d.Name.Contains(searchText, StringComparison.OrdinalIgnoreCase) || d.ParentName.Contains(searchText, StringComparison.OrdinalIgnoreCase) || d.Category.Contains(searchText, StringComparison.OrdinalIgnoreCase) || d.Application.Contains(searchText, StringComparison.OrdinalIgnoreCase));
+            if (!string.IsNullOrEmpty(options.SearchText)) data = data.Where(d => d.Name.Contains(options.SearchText, StringComparison.OrdinalIgnoreCase) || d.ParentName.Contains(options.SearchText, StringComparison.OrdinalIgnoreCase) || d.Category.Contains(options.SearchText, StringComparison.OrdinalIgnoreCase) || d.Application.Contains(options.SearchText, StringComparison.OrdinalIgnoreCase));
             var totalCount = data.Count();
-            var items = data.Skip((pageIndex - 1) * pageItems).Take(pageItems);
-            return new QueryData<BootstrapMenu>() { Items = items, TotalCount = totalCount, PageIndex = pageIndex, PageItems = pageItems };
+            var items = data.Skip((options.PageIndex - 1) * options.PageItems).Take(options.PageItems);
+            return new QueryData<BootstrapMenu>() { Items = items, TotalCount = totalCount, PageIndex = options.PageIndex, PageItems = options.PageItems };
         }
 
         /// <summary>
@@ -155,7 +153,7 @@ namespace Bootstrap.Pages.Admin.Components
         /// 删除方法
         /// </summary>
         protected override bool Delete(IEnumerable<BootstrapMenu> items) => MenuHelper.Delete(items.Select(item => item.Id ?? ""));
-        
+
         /// <summary>
         /// 重置搜索方法
         /// </summary>

@@ -14,10 +14,10 @@
         </ConditionComponent>
     </TableInfoTemplate>
     <TableHeader>
-        <LgbTableHeader TItem="string" @bind-Value="@context.Category"></LgbTableHeader>
-        <LgbTableHeader TItem="string" @bind-Value="@context.Name"></LgbTableHeader>
-        <LgbTableHeader TItem="string" @bind-Value="@context.Code"></LgbTableHeader>
-        <LgbTableHeader TItem="int" @bind-Value="@context.Define"></LgbTableHeader>
+        <LgbTableHeader TItem="string" @bind-Value="@context.Category" Sort="true"></LgbTableHeader>
+        <LgbTableHeader TItem="string" @bind-Value="@context.Name" Sort="true"></LgbTableHeader>
+        <LgbTableHeader TItem="string" @bind-Value="@context.Code" Sort="true"></LgbTableHeader>
+        <LgbTableHeader TItem="int" @bind-Value="@context.Define" Sort="true"></LgbTableHeader>
     </TableHeader>
     <RowTemplate>
         <td>@context.Category</td>

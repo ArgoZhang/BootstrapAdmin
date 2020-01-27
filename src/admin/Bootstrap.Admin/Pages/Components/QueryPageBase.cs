@@ -24,10 +24,8 @@ namespace Bootstrap.Pages.Admin.Components
         /// <summary>
         /// 查询方法
         /// </summary>
-        /// <param name="pageIndex">页码</param>
-        /// <param name="pageItems">每页显示数据条目数量</param>
-        /// <param name="searchText"></param>
-        protected abstract QueryData<TItem> Query(int pageIndex, int pageItems, string searchText);
+        /// <param name="options"></param>
+        protected abstract QueryData<TItem> Query(QueryPageOptions options);
 
         /// <summary>
         /// OnParametersSet 方法
@@ -46,11 +44,13 @@ namespace Bootstrap.Pages.Admin.Components
         /// <summary>
         /// 保存方法
         /// </summary>
-        protected abstract bool Save(TItem dict);
+        /// <param name="item"></param>
+        protected abstract bool Save(TItem item);
 
         /// <summary>
         /// 删除方法
         /// </summary>
+        /// <param name="items"></param>
         protected abstract bool Delete(IEnumerable<TItem> items);
     }
 }
