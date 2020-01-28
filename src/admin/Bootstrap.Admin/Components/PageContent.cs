@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Rendering;
+using Microsoft.AspNetCore.Http;
 using System;
 
 namespace Bootstrap.Admin.Components
@@ -9,6 +10,12 @@ namespace Bootstrap.Admin.Components
     /// </summary>
     public class PageContent : ComponentBase
     {
+        /// <summary>
+        /// 获得/设置 组件名字
+        /// </summary>
+        [Inject]
+        protected IHttpContextAccessor? HttpContextAccessor { get; set; }
+
         /// <summary>
         /// 获得/设置 组件名字
         /// </summary>
@@ -27,6 +34,9 @@ namespace Bootstrap.Admin.Components
                 var t = Type.GetType($"Bootstrap.Admin{name}");
                 if (t != null)
                 {
+                    // 访问日志
+                    if (HttpContextAccessor != null) HttpContextAccessor.HttpContext.SaveOnlineUser(Name);
+
                     builder.OpenComponent(0, t);
                     builder.CloseComponent();
                 }
