@@ -31,7 +31,7 @@ namespace Bootstrap.Admin.Pages.Components
             var name = Name.Replace("/", ".");
             if (!string.IsNullOrEmpty(name))
             {
-                var t = Type.GetType($"Bootstrap.Admin{name}");
+                var t = Type.GetType($"Bootstrap.Admin.Pages.Views.{name}");
                 if (t != null)
                 {
                     // 访问日志

@@ -84,7 +84,7 @@ namespace Bootstrap.Admin.Pages.Components
                 Tabs.ForEach(t => t.SetActive(false));
                 Tabs.Add(tab);
                 Pages.ForEach(p => p.Active = false);
-                Pages.Add(new PageContentAttributes() { Id = menu.Id, Name = menu.Url.ToBlazorMenuUrl(), Active = true });
+                Pages.Add(new PageContentAttributes() { Id = menu.Id, Name = menu.Url.Replace("~/", ""), Active = true });
             }
             else
             {
