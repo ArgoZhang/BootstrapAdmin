@@ -1,4 +1,5 @@
-﻿using Bootstrap.DataAccess;
+﻿using Bootstrap.Admin.Tasks;
+using Bootstrap.DataAccess;
 using Longbow.Web.SignalR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;

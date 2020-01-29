@@ -1,6 +1,6 @@
 ﻿using Longbow.Web.SignalR;
 
-namespace Bootstrap.Admin
+namespace Bootstrap.Admin.Tasks
 {
     /// <summary>
     /// 后台任务消息Hub
