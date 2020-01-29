@@ -1,6 +1,6 @@
 ﻿using Longbow.Web.SignalR;
 
-namespace Bootstrap.Admin.Tasks
+namespace Microsoft.AspNetCore.SignalR
 {
     /// <summary>
     /// 后台任务消息Hub
