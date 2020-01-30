@@ -35,7 +35,7 @@ namespace Bootstrap.Admin.Pages.Components
                 if (t != null)
                 {
                     // 访问日志
-                    if (HttpContextAccessor != null) HttpContextAccessor.HttpContext.SaveOnlineUser(Name);
+                    if (HttpContextAccessor != null) HttpContextAccessor.HttpContext?.SaveOnlineUser($"/Pages/{Name}");
 
                     builder.OpenComponent(0, t);
                     builder.CloseComponent();
