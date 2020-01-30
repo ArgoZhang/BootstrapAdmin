@@ -1,9 +1,11 @@
-﻿using Bootstrap.Admin.Pages.Extensions;
-using Bootstrap.Admin.Models;
+﻿using Bootstrap.Admin.Models;
+using Bootstrap.Admin.Pages.Extensions;
 using Bootstrap.Admin.Pages.Shared;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components.Routing;
 using Microsoft.AspNetCore.Components.Server;
+using Microsoft.AspNetCore.Http;
 using Microsoft.JSInterop;
 using System;
 using System.Net;
@@ -27,6 +29,12 @@ namespace Bootstrap.Admin.Pages.Components
         /// </summary>
         [Inject]
         public NavigationManager? NavigationManager { get; set; }
+
+        /// <summary>
+        /// 获得/设置 组件名字
+        /// </summary>
+        [Inject]
+        protected IHttpContextAccessor? HttpContextAccessor { get; set; }
 
         /// <summary>
         ///
@@ -80,6 +88,12 @@ namespace Bootstrap.Admin.Pages.Components
         /// <returns></returns>
         protected override async Task OnInitializedAsync()
         {
+            // 网页跳转监控
+            if (NavigationManager != null)
+            {
+                NavigationManager.LocationChanged += NavigationManager_LocationChanged;
+            }
+
             var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
             if (!state.User.Identity.IsAuthenticated)
             {
@@ -90,6 +104,12 @@ namespace Bootstrap.Admin.Pages.Components
                 IsAdmin = state.User.IsInRole("Administrators");
                 UserName = state.User.Identity.Name ?? "";
             }
+        }
+
+        private void NavigationManager_LocationChanged(object? sender, LocationChangedEventArgs e)
+        {
+            var name = $"/{NavigationManager?.ToBaseRelativePath(e.Location)}";
+            if (HttpContextAccessor != null) HttpContextAccessor.HttpContext?.SaveOnlineUser(name);
         }
 
         /// <summary>

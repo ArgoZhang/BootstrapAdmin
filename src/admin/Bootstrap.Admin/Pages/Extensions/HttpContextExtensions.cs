@@ -1,9 +1,9 @@
-using System;
-using System.Net;
 using Bootstrap.DataAccess;
 using Longbow.Cache;
 using Longbow.Web;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Net;
 
 namespace Microsoft.AspNetCore.Http
 {
