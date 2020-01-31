@@ -4,6 +4,7 @@ $(function () {
         url: apiUrl,
         method: "get",
         sidePagination: "client",
+        search: false,
         showToggle: false,
         showRefresh: false,
         showColumns: false,

@@ -539,10 +539,6 @@ input.pending {
     white-space: nowrap;
 }
 
-.modal-body, .card-body {
-    padding: 15px 15px 0 15px;
-}
-
 .modal-body-fixed {
     max-height: calc(54vh);
     overflow-y: auto;
@@ -598,10 +594,6 @@ input.pending {
 
 .card .card-header i + span {
     margin-left: 6px;
-}
-
-.card-body .bootstrap-table {
-    margin-top: -10px;
 }
 
 .card .modal-footer {
@@ -739,22 +731,18 @@ input.pending {
         background-color: rgba(0,0,0,.05);
     }
 
-    .bootstrap-table .fixed-table-container .fixed-table-body {
-        border-radius: 4px;
+    .bootstrap-table .fixed-table-container .fixed-table-body .table .bs-checkbox label {
+        margin-bottom: 0;
     }
 
-        .bootstrap-table .fixed-table-container .fixed-table-body .table .bs-checkbox label {
-            margin-bottom: 0;
+        .bootstrap-table .fixed-table-container .fixed-table-body .table .bs-checkbox label input[type='checkbox'] {
+            cursor: pointer;
         }
 
-            .bootstrap-table .fixed-table-container .fixed-table-body .table .bs-checkbox label input[type='checkbox'] {
-                cursor: pointer;
-            }
-
-        .bootstrap-table .fixed-table-container .fixed-table-body .table td .btn:not(.btn-lg) {
-            font-size: 0.75rem;
-            padding: 1px 5px;
-        }
+    .bootstrap-table .fixed-table-container .fixed-table-body .table td .btn:not(.btn-lg) {
+        font-size: 0.75rem;
+        padding: 1px 5px;
+    }
 
     .bootstrap-table .fixed-table-container .table tbody tr.selected td {
         background-color: rgba(0, 0, 0, 0.03);

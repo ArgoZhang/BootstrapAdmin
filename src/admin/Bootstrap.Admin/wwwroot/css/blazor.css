@@ -132,12 +132,6 @@ nav .dropdown .nav-link-close.dropdown-toggle:after {
         clear: both;
     }
 
-        .bootstrap-table .fixed-table-toolbar .bs-bars, 
-        .bootstrap-table .fixed-table-toolbar .search, 
-        .bootstrap-table .fixed-table-toolbar .columns {
-            margin-top: 10px;
-        }
-
         .bootstrap-table .fixed-table-toolbar .columns-right {
             margin-left: 5px;
         }
