@@ -2,13 +2,13 @@
 @inherits TableBase<TItem>
 
 <div class="bootstrap-table">
-    @if(ShowToolBar)
+    @if (ShowToolBar)
     {
         <div class="fixed-table-toolbar">
             <div class="float-left bs-bars">
                 <TableToolbar>
                     <TableToolbarContent />
-                    @if(ShowDefaultButtons)
+                    @if (ShowDefaultButtons)
                     {
                         <TableToolbarButton class="btn btn-success" Icon="fa fa-plus" Title="新增" OnClick="Add" />
                         <TableToolbarButton class="btn btn-danger" Icon="fa fa-remove" Title="删除" OnClick="Delete" />
@@ -18,14 +18,14 @@
                 </TableToolbar>
             </div>
             <div class="float-right columns columns-right">
-                @if(ShowRefresh)
+                @if (ShowRefresh)
                 {
                     <button class="btn btn-secondary" type="button" title="刷新" @onclick="Query">
                         <i class="fa fa-refresh"></i><span>刷新</span>
                     </button>
                 }
             </div>
-            @if(ShowSearch)
+            @if (ShowSearch)
             {
                 <div class="float-right search btn-group">
                     <div class="input-group">
@@ -47,7 +47,7 @@
         </div>
     }
     <div class="@(FixedHeader ? "table-wrapper table-fixed-header table-fixed" : "table-wrapper")">
-        @if(FixedHeader)
+        @if (FixedHeader)
         {
             <div class="fixed-table-header">
                 <table class="table table-bordered table-hover table-selected">
@@ -62,7 +62,6 @@
                                 <th class="table-col-lineno">行号</th>
                             }
                             <TableHeader OnSort="OnSort">
-                                <TableHeaderContent />
                                 @TableHeader?.Invoke(EditModel)
                             </TableHeader>
                             @if (ShowExtendButtons)
@@ -72,8 +71,8 @@
                         </tr>
                     </thead>
                 </table>
-            </div>   
-            <div class="fixed-table-body invisible">                
+            </div>
+            <div class="fixed-table-body invisible">
                 <table class="table table-bordered table-hover table-selected" id="@RetrieveId()">
                     <thead>
                         <tr>
@@ -86,7 +85,6 @@
                                 <th class="table-col-lineno">行号</th>
                             }
                             <TableHeader OnSort="OnSort">
-                                <TableHeaderContent />
                                 @TableHeader?.Invoke(EditModel)
                             </TableHeader>
                             @if (ShowExtendButtons)
@@ -119,7 +117,7 @@
                         <tr>@TableFooter</tr>
                     </tfoot>
                 </table>
-            </div>        
+            </div>
         }
         else
         {
@@ -134,7 +132,9 @@
                         {
                             <th class="table-col-lineno">行号</th>
                         }
-                        @TableHeader?.Invoke(EditModel)
+                        <TableHeader OnSort="OnSort">
+                            @TableHeader?.Invoke(EditModel)
+                        </TableHeader>
                         @if (ShowExtendButtons)
                         {
                             <th>@ButtonTemplateHeaderText</th>
@@ -161,7 +161,7 @@
                         </tr>
                     }
                 </tbody>
-                @if(ShowFooter)
+                @if (ShowFooter)
                 {
                     <tfoot>
                         <tr>@TableFooter</tr>
@@ -170,13 +170,13 @@
             </table>
         }
     </div>
-    @if(ShowPagination)
+    @if (ShowPagination)
     {
         <Pagination PageItems="PageItems" TotalCount="TotalCount" PageIndex="PageIndex" OnPageClick="PageClick" OnPageItemsChange="PageItemsChange"></Pagination>
     }
 </div>
 
-@if(OnDelete != null)
+@if (OnDelete != null)
 {
     <Modal @ref="ConfirmModal" Id="@($"{Id}_confirm")" Title="数据删除">
         <ModalBody>
@@ -195,7 +195,7 @@
     </Modal>
 }
 
-@if(OnSave != null)
+@if (OnSave != null)
 {
     <SubmitModal @ref="EditModal" Id="@($"{Id}_edit")" TItem="TItem" Title="@SubmitModalTitle" Size="ModalSize.ExtraLarge" @bind-Model="EditModel" OnValidSubmit="Save">
         <ModalBody>
@@ -204,7 +204,7 @@
     </SubmitModal>
 }
 
-@if(ShowSearch)
+@if (ShowSearch)
 {
     <Modal @ref="SearchModal" Id="@($"{Id}_search")" Title="查询条件">
         <ModalBody>
