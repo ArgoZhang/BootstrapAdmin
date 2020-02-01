@@ -23,6 +23,8 @@
         showToggle: false,
         showRefresh: false,
         showColumns: false,
+        toolbar: false,
+        search: false,
         columns: [
             { title: "分类", field: "Name", formatter: CategoryFormatter },
             { title: "描述", field: "Description" },

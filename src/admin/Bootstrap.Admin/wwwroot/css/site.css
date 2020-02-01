@@ -556,10 +556,6 @@ pre {
     padding: 15px 15px 0 15px;
 }
 
-.no-toolbar .bootstrap-table {
-    margin-top: -10px;
-}
-
 .bootstrap-table .fixed-table-container:not(.fixed-height) .fixed-table-body {
     border-radius: 4px;
     border: 1px solid #dee2e6;

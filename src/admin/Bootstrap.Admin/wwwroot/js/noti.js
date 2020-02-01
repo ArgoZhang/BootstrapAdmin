@@ -3,6 +3,9 @@
     var $table = $('table').smartTable({
         url: apiUrl,
         sidePagination: "client",
+        toolbar: false,
+        search: false,
+        toolbar: false,
         showToggle: false,
         showRefresh: false,
         showColumns: false,
@@ -32,7 +35,8 @@
         });
     });
 
-    $('#refreshUsers').tooltip().on('click', function () {
+    $('#refreshUsers').tooltip().on('click', function (e) {
+        e.preventDefault();
         $table.bootstrapTable('refresh');
     });
 });

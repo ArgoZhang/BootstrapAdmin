@@ -5,6 +5,7 @@
         url: url,
         sortName: 'LogTime',
         sortOrder: 'desc',
+        toolbar: false,
         search: false,
         queryParams: function (params) { return $.extend(params, { UserName: $("#txt_username").val(), OperateTimeStart: $("#txt_operate_start").val(), OperateTimeEnd: $("#txt_operate_end").val() }); },
         columns: [
