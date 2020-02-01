@@ -189,7 +189,7 @@ nav .dropdown .nav-link-close.dropdown-toggle:after {
         border: none;
     }
 
-        .table-wrapper .table th:last-child {
+        .table-wrapper .table th:last-child, .table-wrapper .table td:last-child {
             border-right-width: 0;
         }
 
