@@ -73,7 +73,6 @@ nav .dropdown .nav-link-close.dropdown-toggle:after {
 
 .table th, .table td {
     padding: 0.5rem;
-    white-space: nowrap;
 }
 
 .table .btn.btn-sm {
