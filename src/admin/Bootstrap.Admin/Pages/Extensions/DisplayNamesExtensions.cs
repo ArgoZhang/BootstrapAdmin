@@ -1,6 +1,7 @@
 ﻿using Bootstrap.DataAccess;
 using Bootstrap.Security;
 using Longbow.Cache;
+using Longbow.Web;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Concurrent;
@@ -50,6 +51,19 @@ namespace Microsoft.AspNetCore.Builder
             _displayNameCache.TryAdd((typeof(CacheItem), nameof(CacheItem.Interval)), "缓存时长（秒）");
             _displayNameCache.TryAdd((typeof(CacheItem), nameof(CacheItem.ElapsedSeconds)), "已过时长（秒）");
             _displayNameCache.TryAdd((typeof(CacheItem), nameof(CacheItem.Desc)), "缓存说明");
+
+            _displayNameCache.TryAdd((typeof(OnlineUser), nameof(OnlineUser.ConnectionId)), "会话Id");
+            _displayNameCache.TryAdd((typeof(OnlineUser), nameof(OnlineUser.UserName)), "登录名称");
+            _displayNameCache.TryAdd((typeof(OnlineUser), nameof(OnlineUser.DisplayName)), "显示名称");
+            _displayNameCache.TryAdd((typeof(OnlineUser), nameof(OnlineUser.FirstAccessTime)), "登录时间");
+            _displayNameCache.TryAdd((typeof(OnlineUser), nameof(OnlineUser.LastAccessTime)), "访问时间");
+            _displayNameCache.TryAdd((typeof(OnlineUser), nameof(OnlineUser.Method)), "请求方式");
+            _displayNameCache.TryAdd((typeof(OnlineUser), nameof(OnlineUser.Ip)), "主机");
+            _displayNameCache.TryAdd((typeof(OnlineUser), nameof(OnlineUser.Location)), "登录地点");
+            _displayNameCache.TryAdd((typeof(OnlineUser), nameof(OnlineUser.Browser)), "浏览器");
+            _displayNameCache.TryAdd((typeof(OnlineUser), nameof(OnlineUser.OS)), "操作系统");
+            _displayNameCache.TryAdd((typeof(OnlineUser), nameof(OnlineUser.RequestUrl)), "访问地址");
+
             return services;
         }
 

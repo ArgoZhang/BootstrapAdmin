@@ -1,0 +1,37 @@
+﻿@inherits OnlineBase
+
+<div class="card">
+    <div class="card-header">
+        <div class="d-flex align-items-center">
+            <span class="flex-fill">在线用户</span>
+        </div>
+    </div>
+    <div class="card-body">
+        <Table Id="online" EditModel="EditModel" ShowToolBar="true" ShowRefresh="true" TItem="Longbow.Web.OnlineUser" OnDataSourceQuery="QueryData">
+            <TableHeader>
+                <LgbTableHeader TItem="string" @bind-Value="@context.ConnectionId"></LgbTableHeader>
+                <LgbTableHeader TItem="string" @bind-Value="@context.UserName"></LgbTableHeader>
+                <LgbTableHeader TItem="string" @bind-Value="@context.DisplayName"></LgbTableHeader>
+                <LgbTableHeader TItem="DateTime" @bind-Value="@context.FirstAccessTime"></LgbTableHeader>
+                <LgbTableHeader TItem="DateTime" @bind-Value="@context.LastAccessTime"></LgbTableHeader>
+                <LgbTableHeader TItem="string" @bind-Value="@context.Method"></LgbTableHeader>
+                <LgbTableHeader TItem="string" @bind-Value="@context.Ip"></LgbTableHeader>
+                <LgbTableHeader TItem="string" @bind-Value="@context.Location"></LgbTableHeader>
+                <LgbTableHeader TItem="string" @bind-Value="@context.Browser"></LgbTableHeader>
+                <LgbTableHeader TItem="string" @bind-Value="@context.OS"></LgbTableHeader>
+            </TableHeader>
+            <RowTemplate>
+                <td>@context.ConnectionId</td>
+                <td>@context.UserName</td>
+                <td>@context.DisplayName</td>
+                <td>@context.FirstAccessTime</td>
+                <td>@context.LastAccessTime</td>
+                <td>@context.Method</td>
+                <td>@context.Ip</td>
+                <td>@context.Location</td>
+                <td>@context.Browser</td>
+                <td>@context.OS</td>
+            </RowTemplate>
+        </Table>
+    </div>
+</div>
