@@ -195,7 +195,7 @@
         </div>
     </div>
     <div class="card-body">
-        <Table @ref="Table" Id="settings-cache" TItem="Longbow.Cache.ICacheItem" EditModel="ConsoleCaCheModel" OnDataSourceQuery="QueryData">
+        <Table Id="settings-cache" TItem="Longbow.Cache.ICacheItem" EditModel="ConsoleCaCheModel" OnDataSourceQuery="QueryData">
             <TableHeader>
                 <LgbTableHeader TItem="string" @bind-Value="@context.Desc"></LgbTableHeader>
                 <LgbTableHeader TItem="int" @bind-Value="@context.Interval"></LgbTableHeader>

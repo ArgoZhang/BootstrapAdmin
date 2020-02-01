@@ -38,11 +38,6 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
         public DefaultLayout? RootLayout { get; protected set; }
 
         /// <summary>
-        /// 获得/设置 Table 实例
-        /// </summary>
-        protected Table<ICacheItem>? Table { get; set; }
-
-        /// <summary>
         /// Toast 组件实例
         /// </summary>
         protected Toast? Toast { get; set; }
