@@ -129,13 +129,13 @@ namespace Bootstrap.Admin.Pages.Components
         /// 获得/设置 是否显示扩展按钮 默认为 true
         /// </summary>
         [Parameter]
-        public bool ShowExtendButtons { get; set; } = true;
+        public bool ShowExtendButtons { get; set; }
 
         /// <summary>
         /// 获得/设置 是否显示刷新按钮 默认为 true
         /// </summary>
         [Parameter]
-        public bool ShowRefresh { get; set; } = true;
+        public bool ShowRefresh { get; set; }
 
         /// <summary>
         /// 获得/设置 是否分页组件 默认为 false
@@ -147,7 +147,7 @@ namespace Bootstrap.Admin.Pages.Components
         /// 获得/设置 是否显示工具栏 默认为 true
         /// </summary>
         [Parameter]
-        public bool ShowToolBar { get; set; } = true;
+        public bool ShowToolBar { get; set; }
 
         /// <summary>
         /// 获得/设置 按钮列 Header 文本 默认为 操作
