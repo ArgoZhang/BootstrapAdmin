@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Rendering;
+using System.Linq;
 
 namespace Bootstrap.Admin.Pages.Components
 {
@@ -20,7 +21,7 @@ namespace Bootstrap.Admin.Pages.Components
         protected override void BuildRenderTree(RenderTreeBuilder builder)
         {
             // 渲染正常按钮
-            if (Toolbar != null)
+            if (Toolbar != null && Toolbar.Buttons.Any())
             {
                 // 渲染 Toolbar 按钮
                 //<div class="toolbar btn-group">
