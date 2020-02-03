@@ -1,0 +1,34 @@
+@inherits TracesBase
+
+<div class="card">
+    <div class="card-header">
+        <span>查询结果</span>
+    </div>
+    <div class="card-body">
+        <Table Id="logs" TItem="Bootstrap.DataAccess.Trace" ShowToolBar="true" ShowSearch="true" ShowRefresh="true" QueryModel="QueryModel" EditModel="DataContext" OnQuery="Query" OnResetSearch="ResetSearch">
+            <TableHeader>
+                <LgbTableHeader TItem="string" @bind-Value="@context.UserName"></LgbTableHeader>
+                <LgbTableHeader TItem="DateTime" @bind-Value="@context.LogTime"></LgbTableHeader>
+                <LgbTableHeader TItem="string" @bind-Value="@context.Ip"></LgbTableHeader>
+                <LgbTableHeader TItem="string" @bind-Value="@context.City"></LgbTableHeader>
+                <LgbTableHeader TItem="string" @bind-Value="@context.Browser"></LgbTableHeader>
+                <LgbTableHeader TItem="string" @bind-Value="@context.OS"></LgbTableHeader>
+                <LgbTableHeader TItem="string" @bind-Value="@context.RequestUrl"></LgbTableHeader>
+                <LgbTableHeader TItem="string" @bind-Value="@context.Referer"></LgbTableHeader>
+            </TableHeader>
+            <RowTemplate>
+                <td>@context.UserName</td>
+                <td>@context.LogTime</td>
+                <td>@context.Ip</td>
+                <td>@context.City</td>
+                <td>@context.Browser</td>
+                <td>@context.OS</td>
+                <td>@context.RequestUrl</td>
+                <td>@context.Referer</td>
+            </RowTemplate>
+            <SearchTemplate>
+                <LgbInputText ColumnClass="col-12" @bind-Value="@context.Ip" maxlength="50" />
+            </SearchTemplate>
+        </Table>
+    </div>
+</div>
