@@ -50,6 +50,7 @@ namespace Bootstrap.Admin.Pages.Components
                     var fieldName = header.GetFieldName();
                     var displayName = header.GetDisplayName();
                     builder.OpenElement(index++, "th");
+                    builder.AddMultipleAttributes(index++, header.AdditionalAttributes);
 
                     // 如果允许排序
                     if (header.Sort)

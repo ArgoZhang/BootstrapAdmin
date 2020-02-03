@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Components.Forms;
 
 namespace Bootstrap.Admin.Pages.Components
@@ -7,6 +8,11 @@ namespace Bootstrap.Admin.Pages.Components
     /// </summary>
     public interface ITableHeader
     {
+        /// <summary>
+        /// 获取绑定字段显示名称方法
+        /// </summary>
+        IReadOnlyDictionary<string, object> AdditionalAttributes { get; set; }
+
         /// <summary>
         /// 获取绑定字段显示名称方法
         /// </summary>

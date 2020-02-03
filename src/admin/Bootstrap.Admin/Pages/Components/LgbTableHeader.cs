@@ -1,7 +1,7 @@
-﻿using Bootstrap.Admin.Pages.Extensions;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace Bootstrap.Admin.Pages.Components
@@ -12,6 +12,12 @@ namespace Bootstrap.Admin.Pages.Components
     public class LgbTableHeader<TItem> : ComponentBase, ITableHeader
     {
 #nullable disable
+        /// <summary>
+        /// 获得/设置 数据绑定 Value
+        /// </summary>
+        [Parameter(CaptureUnmatchedValues = true)]
+        public IReadOnlyDictionary<string, object> AdditionalAttributes { get; set; }
+
         /// <summary>
         /// 获得/设置 数据绑定 Value
         /// </summary>
