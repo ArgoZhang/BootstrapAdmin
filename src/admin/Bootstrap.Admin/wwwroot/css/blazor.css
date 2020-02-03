@@ -156,6 +156,10 @@ nav .dropdown .nav-link-close.dropdown-toggle:after {
             border-bottom: 1px solid #dee2e6;
         }
 
+.bootstrap-table .datetime {
+    min-width: 154px;
+}        
+
 .bootstrap-table .sortable {
     padding-right: 30px;
     cursor: pointer;
