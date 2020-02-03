@@ -2,6 +2,7 @@
 using PetaPoco;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Bootstrap.DataAccess
 {
@@ -14,6 +15,7 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获得/设置 操作类型
         /// </summary>
+        [DisplayName("操作类型")]
         public string CRUD { get; set; } = "";
 
         /// <summary>

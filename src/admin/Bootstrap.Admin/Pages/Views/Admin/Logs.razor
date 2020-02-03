@@ -1,0 +1,37 @@
+﻿@inherits LogsBase
+
+<div class="card">
+    <div class="card-header">
+        <span>查询结果</span>
+    </div>
+    <div class="card-body">
+        <Table Id="logs" TItem="Bootstrap.DataAccess.Log" ShowToolBar="true" ShowSearch="true" ShowRefresh="true" QueryModel="QueryModel" EditModel="DataContext" OnQuery="Query" OnResetSearch="ResetSearch">
+            <TableHeader>
+                <LgbTableHeader TItem="string" @bind-Value="@context.CRUD"></LgbTableHeader>
+                <LgbTableHeader TItem="string" @bind-Value="@context.UserName"></LgbTableHeader>
+                <LgbTableHeader TItem="DateTime" @bind-Value="@context.LogTime"></LgbTableHeader>
+                <LgbTableHeader TItem="string" @bind-Value="@context.Ip"></LgbTableHeader>
+                <LgbTableHeader TItem="string" @bind-Value="@context.City"></LgbTableHeader>
+                <LgbTableHeader TItem="string" @bind-Value="@context.Browser"></LgbTableHeader>
+                <LgbTableHeader TItem="string" @bind-Value="@context.OS"></LgbTableHeader>
+                <LgbTableHeader TItem="string" @bind-Value="@context.RequestUrl"></LgbTableHeader>
+            </TableHeader>
+            <RowTemplate>
+                <td>@context.CRUD</td>
+                <td>@context.UserName</td>
+                <td>@context.LogTime</td>
+                <td>@context.Ip</td>
+                <td>@context.City</td>
+                <td>@context.Browser</td>
+                <td>@context.OS</td>
+                <td>@context.RequestUrl</td>
+            </RowTemplate>
+            <ButtonTemplate>
+                <button class='btn btn-sm btn-info'><i class='fa fa-info'></i><span>明细</span></button>
+            </ButtonTemplate>
+            <SearchTemplate>
+                <LgbInputText ColumnClass="col-12" @bind-Value="@context.CRUD" maxlength="50" />
+            </SearchTemplate>
+        </Table>
+    </div>
+</div>

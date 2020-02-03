@@ -2,6 +2,7 @@
 using PetaPoco;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Bootstrap.DataAccess
 {
@@ -19,46 +20,55 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获得/设置 用户名称
         /// </summary>
+        [DisplayName("用户名称")]
         public string UserName { get; set; } = "";
 
         /// <summary>
         /// 获得/设置 操作时间
         /// </summary>
+        [DisplayName("操作时间")]
         public DateTime LogTime { get; set; }
 
         /// <summary>
         /// 获得/设置 客户端IP
         /// </summary>
+        [DisplayName("登录主机")]
         public string Ip { get; set; } = "";
 
         /// <summary>
         /// 获得/设置 客户端地点
         /// </summary>
+        [DisplayName("操作地点")]
         public string City { get; set; } = "";
 
         /// <summary>
         /// 获得/设置 客户端浏览器
         /// </summary>
+        [DisplayName("浏览器")]
         public string Browser { get; set; } = "";
 
         /// <summary>
         /// 获得/设置 客户端操作系统
         /// </summary>
+        [DisplayName("操作系统")]
         public string OS { get; set; } = "";
 
         /// <summary>
         /// 获取/设置 请求网址
         /// </summary>
+        [DisplayName("操作页面")]
         public string RequestUrl { get; set; } = "";
 
         /// <summary>
         /// 获得/设置 客户端 UserAgent
         /// </summary>
+        [DisplayName("UserAgent")]
         public string UserAgent { get; set; } = "";
 
         /// <summary>
         /// 获得/设置 客户端 Referer
         /// </summary>
+        [DisplayName("Referer")]
         public string Referer { get; set; } = "";
 
         /// <summary>
