@@ -43,6 +43,16 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
         }
 
         /// <summary>
+        /// 格式化登录结果方法
+        /// </summary>
+        protected MarkupString FormatResult(string result)
+        {
+            var css = result == "登录成功" ? "success" : "danger";
+            var icon = css == "success" ? "check" : "remove";
+            return new MarkupString($"<span class=\"badge badge-md badge-{css}\"><i class=\"fa fa-{icon}\"></i>{result}</span>");
+        }
+
+        /// <summary>
         /// 重置搜索方法
         /// </summary>
         protected void ResetSearch()

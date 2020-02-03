@@ -22,7 +22,7 @@
                 <td>@context.City</td>
                 <td>@context.Browser</td>
                 <td>@context.OS</td>
-                <td>@context.Result</td>
+                <td>@FormatResult(context.Result)</td>
             </RowTemplate>
             <SearchTemplate>
                 <LgbInputText ColumnClass="col-12" @bind-Value="@context.Ip" maxlength="50" />
