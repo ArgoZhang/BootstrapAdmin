@@ -1,0 +1,32 @@
+@inherits LoginsBase
+
+<div class="card">
+    <div class="card-header">
+        <span>查询结果</span>
+    </div>
+    <div class="card-body">
+        <Table Id="logs" TItem="Bootstrap.DataAccess.LoginUser" ShowToolBar="true" ShowSearch="true" ShowRefresh="true" QueryModel="QueryModel" EditModel="DataContext" OnQuery="Query" OnResetSearch="ResetSearch">
+            <TableHeader>
+                <LgbTableHeader TItem="string" @bind-Value="@context.UserName"></LgbTableHeader>
+                <LgbTableHeader TItem="DateTime" @bind-Value="@context.LoginTime"></LgbTableHeader>
+                <LgbTableHeader TItem="string" @bind-Value="@context.Ip"></LgbTableHeader>
+                <LgbTableHeader TItem="string" @bind-Value="@context.City"></LgbTableHeader>
+                <LgbTableHeader TItem="string" @bind-Value="@context.Browser"></LgbTableHeader>
+                <LgbTableHeader TItem="string" @bind-Value="@context.OS"></LgbTableHeader>
+                <LgbTableHeader TItem="string" @bind-Value="@context.Result"></LgbTableHeader>
+            </TableHeader>
+            <RowTemplate>
+                <td>@context.UserName</td>
+                <td>@context.LoginTime</td>
+                <td>@context.Ip</td>
+                <td>@context.City</td>
+                <td>@context.Browser</td>
+                <td>@context.OS</td>
+                <td>@context.Result</td>
+            </RowTemplate>
+            <SearchTemplate>
+                <LgbInputText ColumnClass="col-12" @bind-Value="@context.Ip" maxlength="50" />
+            </SearchTemplate>
+        </Table>
+    </div>
+</div>
