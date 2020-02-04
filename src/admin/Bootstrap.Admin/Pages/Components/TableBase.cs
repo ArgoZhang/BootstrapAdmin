@@ -141,7 +141,7 @@ namespace Bootstrap.Admin.Pages.Components
         /// 获得/设置 是否分页组件 默认为 false
         /// </summary>
         [Parameter]
-        public bool ShowPagination { get; set; }
+        public bool ShowPagination { get; set; } = true;
 
         /// <summary>
         /// 获得/设置 是否显示工具栏 默认为 true
