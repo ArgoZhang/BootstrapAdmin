@@ -16,7 +16,7 @@ namespace Microsoft.AspNetCore.Components.Forms
         /// <returns></returns>
         public static string GetDisplayName(this FieldIdentifier fieldIdentifier)
         {
-            var cacheKey = (fieldIdentifier.Model.GetType(), fieldIdentifier.FieldName);
+            var cacheKey = (Type: fieldIdentifier.Model.GetType(), FieldName: fieldIdentifier.FieldName);
             if (!DisplayNamesExtensions.TryGetValue(cacheKey, out var dn))
             {
                 if (BootstrapAdminEditContextDataAnnotationsExtensions.TryGetValidatableProperty(fieldIdentifier, out var propertyInfo))
@@ -31,7 +31,7 @@ namespace Microsoft.AspNetCore.Components.Forms
                     }
                 }
             }
-            return dn ?? "未设置";
+            return dn ?? cacheKey.FieldName;
         }
     }
 }
