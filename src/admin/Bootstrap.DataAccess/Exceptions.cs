@@ -1,6 +1,7 @@
 ﻿using Longbow.Web.Mvc;
 using PetaPoco;
 using System;
+using System.ComponentModel;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Data.Common;
@@ -26,26 +27,31 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获得/设置 用户请求页面地址
         /// </summary>
+        [DisplayName("请求网址")]
         public string ErrorPage { get; set; } = "";
 
         /// <summary>
         /// 获得/设置 用户 ID
         /// </summary>
+        [DisplayName("用户名")]
         public string? UserId { get; set; }
 
         /// <summary>
         /// 获得/设置 用户 IP
         /// </summary>
+        [DisplayName("登录主机")]
         public string? UserIp { get; set; }
 
         /// <summary>
         /// 获得/设置 异常类型
         /// </summary>
+        [DisplayName("异常类型")]
         public string? ExceptionType { get; set; }
 
         /// <summary>
         /// 获得/设置 异常错误描述信息
         /// </summary>
+        [DisplayName("异常描述")]
         public string Message { get; set; } = "";
 
         /// <summary>
@@ -56,6 +62,7 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 获得/设置 日志时间戳
         /// </summary>
+        [DisplayName("记录时间")]
         public DateTime LogTime { get; set; }
 
         /// <summary>

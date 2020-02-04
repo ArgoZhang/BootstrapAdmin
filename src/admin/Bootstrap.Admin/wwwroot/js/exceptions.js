@@ -16,7 +16,7 @@
             { title: "记录时间", field: "LogTime", sortable: true },
             { title: "请求网址", field: "ErrorPage", sortable: true },
             { title: "用户名", field: "UserId", sortable: true },
-            { title: "IP", field: "UserIp", sortable: true },
+            { title: "登录主机", field: "UserIp", sortable: true },
             { title: "异常类型", field: "ExceptionType", sortable: false },
             { title: "异常描述", field: "Message", sortable: false }
         ],

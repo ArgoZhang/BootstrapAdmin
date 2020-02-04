@@ -1,0 +1,32 @@
+@inherits ExceptionsBase
+
+<div class="card">
+    <div class="card-header">
+        <span>查询结果</span>
+    </div>
+    <div class="card-body">
+        <Table Id="exception" TItem="Bootstrap.DataAccess.Exceptions" ShowToolBar="true" ShowSearch="true" ShowRefresh="true" QueryModel="QueryModel" EditModel="DataContext" OnQuery="Query" OnResetSearch="ResetSearch">
+            <TableHeader>
+                <LgbTableHeader TItem="DateTime" @bind-Value="@context.LogTime" class="text-nowrap datetime"></LgbTableHeader>
+                <LgbTableHeader TItem="string" @bind-Value="@context.ErrorPage" class="text-nowrap"></LgbTableHeader>
+                <LgbTableHeader TItem="string" @bind-Value="@context.UserId" class="text-nowrap"></LgbTableHeader>
+                <LgbTableHeader TItem="string" @bind-Value="@context.UserIp" class="text-nowrap"></LgbTableHeader>
+                <LgbTableHeader TItem="string" @bind-Value="@context.ExceptionType"></LgbTableHeader>
+                <LgbTableHeader TItem="string" @bind-Value="@context.Message"></LgbTableHeader>
+            </TableHeader>
+            <RowTemplate>
+                <td>@context.LogTime</td>
+                <td>@context.ErrorPage</td>
+                <td>@context.UserId</td>
+                <td>@context.UserIp</td>
+                <td>@context.ExceptionType</td>
+                <td>@context.Message</td>
+            </RowTemplate>
+            <TableToolbarTemplate>
+                <TableToolbarButton class="btn btn-danger" Icon="fa fa-file-text-o" Title="服务器日志" OnClick="ShowDetail" />
+            </TableToolbarTemplate>
+            <SearchTemplate>
+            </SearchTemplate>
+        </Table>
+    </div>
+</div>
