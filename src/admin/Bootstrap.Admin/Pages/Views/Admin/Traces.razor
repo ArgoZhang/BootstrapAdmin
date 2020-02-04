@@ -7,10 +7,10 @@
     <div class="card-body">
         <Table Id="trace" TItem="Bootstrap.DataAccess.Trace" ShowToolBar="true" ShowSearch="true" ShowRefresh="true" QueryModel="QueryModel" EditModel="DataContext" OnQuery="Query" OnResetSearch="ResetSearch">
             <TableHeader>
-                <LgbTableHeader TItem="string" @bind-Value="@context.UserName"></LgbTableHeader>
-                <LgbTableHeader TItem="DateTime" @bind-Value="@context.LogTime"></LgbTableHeader>
-                <LgbTableHeader TItem="string" @bind-Value="@context.Ip"></LgbTableHeader>
-                <LgbTableHeader TItem="string" @bind-Value="@context.City"></LgbTableHeader>
+                <LgbTableHeader TItem="string" @bind-Value="@context.UserName" class="text-nowrap"></LgbTableHeader>
+                <LgbTableHeader TItem="DateTime" @bind-Value="@context.LogTime" class="text-nowrap datetime"></LgbTableHeader>
+                <LgbTableHeader TItem="string" @bind-Value="@context.Ip" class="text-nowrap"></LgbTableHeader>
+                <LgbTableHeader TItem="string" @bind-Value="@context.City" class="text-nowrap"></LgbTableHeader>
                 <LgbTableHeader TItem="string" @bind-Value="@context.Browser"></LgbTableHeader>
                 <LgbTableHeader TItem="string" @bind-Value="@context.OS"></LgbTableHeader>
                 <LgbTableHeader TItem="string" @bind-Value="@context.RequestUrl"></LgbTableHeader>

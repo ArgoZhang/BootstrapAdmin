@@ -42,15 +42,15 @@
         <Table Id="task" TItem="DefaultScheduler" ShowToolBar="true" ShowRefresh="true" ShowExtendButtons="true" EditModel="DataContext" OnQuery="Query">
             <TableHeader>
                 <LgbTableHeader TItem="string" @bind-Value="@context.Name"></LgbTableHeader>
-                <LgbTableHeader TItem="DateTimeOffset" @bind-Value="@context.CreatedTime"></LgbTableHeader>
-                <LgbTableHeader TItem="DateTimeOffset?" @bind-Value="@context.LastRuntime"></LgbTableHeader>
-                <LgbTableHeader TItem="DateTimeOffset?" @bind-Value="@context.NextRuntime"></LgbTableHeader>
+                <LgbTableHeader TItem="DateTimeOffset" @bind-Value="@context.CreatedTime" class="text-nowrap datetime"></LgbTableHeader>
+                <LgbTableHeader TItem="DateTimeOffset?" @bind-Value="@context.LastRuntime" class="text-nowrap datetime"></LgbTableHeader>
+                <LgbTableHeader TItem="DateTimeOffset?" @bind-Value="@context.NextRuntime" class="text-nowrap datetime"></LgbTableHeader>
                 <LgbTableHeader TItem="string" @bind-Value="@context.TriggerExpression"></LgbTableHeader>
-                <LgbTableHeader TItem="Longbow.Tasks.TriggerResult" @bind-Value="@context.LastRunResult"></LgbTableHeader>
+                <LgbTableHeader TItem="Longbow.Tasks.TriggerResult" @bind-Value="@context.LastRunResult" class="text-nowrap"></LgbTableHeader>
                 <LgbTableHeader TItem="Longbow.Tasks.SchedulerStatus" @bind-Value="@context.Status"></LgbTableHeader>
             </TableHeader>
             <RowTemplate>
-                <td>@context.Name</td>
+                <td class="text-nowrap">@context.Name</td>
                 <td>@context.CreatedTime.DateTime</td>
                 <td>@context.LastRuntime?.DateTime</td>
                 <td>@context.NextRuntime?.DateTime</td>

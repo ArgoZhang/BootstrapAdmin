@@ -8,7 +8,7 @@
         <Table Id="exception" TItem="Bootstrap.DataAccess.Exceptions" ShowToolBar="true" ShowSearch="true" ShowRefresh="true" QueryModel="QueryModel" EditModel="DataContext" OnQuery="Query" OnResetSearch="ResetSearch">
             <TableHeader>
                 <LgbTableHeader TItem="DateTime" @bind-Value="@context.LogTime" class="text-nowrap datetime"></LgbTableHeader>
-                <LgbTableHeader TItem="string" @bind-Value="@context.ErrorPage" class="text-nowrap"></LgbTableHeader>
+                <LgbTableHeader TItem="string" @bind-Value="@context.ErrorPage"></LgbTableHeader>
                 <LgbTableHeader TItem="string" @bind-Value="@context.UserId" class="text-nowrap"></LgbTableHeader>
                 <LgbTableHeader TItem="string" @bind-Value="@context.UserIp" class="text-nowrap"></LgbTableHeader>
                 <LgbTableHeader TItem="string" @bind-Value="@context.ExceptionType"></LgbTableHeader>
@@ -16,10 +16,10 @@
             </TableHeader>
             <RowTemplate>
                 <td>@context.LogTime</td>
-                <td>@context.ErrorPage</td>
+                <td class="text-nowrap">@context.ErrorPage</td>
                 <td>@context.UserId</td>
                 <td>@context.UserIp</td>
-                <td>@context.ExceptionType</td>
+                <td class="text-nowrap">@context.ExceptionType</td>
                 <td>@context.Message</td>
             </RowTemplate>
             <TableToolbarTemplate>
