@@ -5,7 +5,7 @@
         <span>查询结果</span>
     </div>
     <div class="card-body">
-        <Table Id="logs" TItem="Bootstrap.DataAccess.DBLog" ShowToolBar="true" ShowSearch="true" ShowRefresh="true" QueryModel="QueryModel" EditModel="DataContext" OnQuery="Query" OnResetSearch="ResetSearch">
+        <Table Id="sql" TItem="Bootstrap.DataAccess.DBLog" ShowToolBar="true" ShowSearch="true" ShowRefresh="true" QueryModel="QueryModel" EditModel="DataContext" OnQuery="Query" OnResetSearch="ResetSearch">
             <TableHeader>
                 <LgbTableHeader TItem="string" @bind-Value="@context.UserName" class="text-nowrap"></LgbTableHeader>
                 <LgbTableHeader TItem="DateTime" @bind-Value="@context.LogTime" class="text-nowrap datetime"></LgbTableHeader>

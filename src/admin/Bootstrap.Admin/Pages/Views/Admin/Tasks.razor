@@ -39,7 +39,7 @@
                 <span>演示系统禁止修改定时后台任务</span>
             </div>
         </ConditionComponent>
-        <Table Id="logs" TItem="DefaultScheduler" ShowToolBar="true" ShowRefresh="true" ShowExtendButtons="true" EditModel="DataContext" OnQuery="Query">
+        <Table Id="task" TItem="DefaultScheduler" ShowToolBar="true" ShowRefresh="true" ShowExtendButtons="true" EditModel="DataContext" OnQuery="Query">
             <TableHeader>
                 <LgbTableHeader TItem="string" @bind-Value="@context.Name"></LgbTableHeader>
                 <LgbTableHeader TItem="DateTimeOffset" @bind-Value="@context.CreatedTime"></LgbTableHeader>

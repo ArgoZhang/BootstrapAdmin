@@ -5,7 +5,7 @@
         <span>查询结果</span>
     </div>
     <div class="card-body">
-        <Table Id="logs" TItem="Bootstrap.DataAccess.Log" ShowToolBar="true" ShowSearch="true" ShowRefresh="true" QueryModel="QueryModel" EditModel="DataContext" OnQuery="Query" OnResetSearch="ResetSearch">
+        <Table Id="log" TItem="Bootstrap.DataAccess.Log" ShowToolBar="true" ShowSearch="true" ShowRefresh="true" QueryModel="QueryModel" EditModel="DataContext" OnQuery="Query" OnResetSearch="ResetSearch">
             <TableHeader>
                 <LgbTableHeader TItem="string" @bind-Value="@context.CRUD"></LgbTableHeader>
                 <LgbTableHeader TItem="string" @bind-Value="@context.UserName"></LgbTableHeader>
