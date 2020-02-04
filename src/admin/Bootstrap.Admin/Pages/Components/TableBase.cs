@@ -15,6 +15,12 @@ namespace Bootstrap.Admin.Pages.Components
     public class TableBase<TItem> : ComponentBase
     {
         /// <summary>
+        /// 获得 IJSRuntime 实例
+        /// </summary>
+        [Inject]
+        protected IJSRuntime? JSRuntime { get; set; }
+
+        /// <summary>
         /// 每页数据数量 默认 20 行
         /// </summary>
         protected const int DefaultPageItems = 20;
@@ -72,12 +78,6 @@ namespace Bootstrap.Admin.Pages.Components
         /// </summary>
         [Parameter]
         public bool FixedHeader { get; set; }
-
-        /// <summary>
-        /// 获得 IJSRuntime 实例
-        /// </summary>
-        [Inject]
-        protected IJSRuntime? JSRuntime { get; set; }
 
         /// <summary>
         /// 获得/设置 是否自适应高度 默认为 false 不自适应高度
@@ -174,15 +174,6 @@ namespace Bootstrap.Admin.Pages.Components
         public Action<TItem>? OnEdit { get; set; }
 
         /// <summary>
-        /// 高级查询按钮点击时调用此方法
-        /// </summary>
-        protected void AdvancedSearchClick()
-        {
-            // 弹出高级查询弹窗
-            SearchModal?.Toggle();
-        }
-
-        /// <summary>
         /// 保存按钮回调方法
         /// </summary>
         [Parameter]
@@ -201,32 +192,10 @@ namespace Bootstrap.Admin.Pages.Components
         public Func<IEnumerable<TItem>, bool>? OnDelete { get; set; }
 
         /// <summary>
-        /// 获得/设置 数据总条目
-        /// </summary>
-        [Parameter]
-        public int TotalCount { get; set; }
-
-        /// <summary>
-        /// 获得/设置 当前页码
-        /// </summary>
-        [Parameter]
-        public int PageIndex { get; set; } = 1;
-
-        /// <summary>
         /// 获得/设置 每页数据数量
         /// </summary>
         [Parameter]
         public int PageItems { get; set; } = DefaultPageItems;
-
-        /// <summary>
-        /// 确认删除弹窗
-        /// </summary>
-        protected Modal? ConfirmModal { get; set; }
-
-        /// <summary>
-        /// 高级查询弹窗
-        /// </summary>
-        protected Modal? SearchModal { get; set; }
 
 #nullable disable
         /// <summary>
@@ -243,15 +212,35 @@ namespace Bootstrap.Admin.Pages.Components
 #nullable restore
 
         /// <summary>
+        /// 编辑数据弹窗 Title
+        /// </summary>
+        [Parameter]
+        public string SubmitModalTitle { get; set; } = "";
+
+        /// <summary>
         /// 编辑数据弹窗
         /// </summary>
         protected SubmitModal<TItem>? EditModal { get; set; }
 
         /// <summary>
-        /// 编辑数据弹窗 Title
+        /// 确认删除弹窗
         /// </summary>
-        [Parameter]
-        public string SubmitModalTitle { get; set; } = "";
+        protected Modal? ConfirmModal { get; set; }
+
+        /// <summary>
+        /// 高级查询弹窗
+        /// </summary>
+        protected Modal? SearchModal { get; set; }
+
+        /// <summary>
+        /// 获得/设置 数据总条目
+        /// </summary>
+        protected int TotalCount { get; set; }
+
+        /// <summary>
+        /// 获得/设置 当前页码
+        /// </summary>
+        protected int PageIndex { get; set; } = 1;
 
         /// <summary>
         /// 获得/设置 当前排序字段名称
@@ -283,7 +272,7 @@ namespace Bootstrap.Admin.Pages.Components
         }
 
         /// <summary>
-        /// OnInitialized 方法
+        /// OnAfterRenderAsync 方法
         /// </summary>
         protected override async System.Threading.Tasks.Task OnAfterRenderAsync(bool firstRender)
         {
@@ -487,6 +476,15 @@ namespace Bootstrap.Admin.Pages.Components
             // 查询控件按钮触发此事件
             PageIndex = 1;
             Query();
+        }
+
+        /// <summary>
+        /// 高级查询按钮点击时调用此方法
+        /// </summary>
+        protected void AdvancedSearchClick()
+        {
+            // 弹出高级查询弹窗
+            SearchModal?.Toggle();
         }
 
         /// <summary>
