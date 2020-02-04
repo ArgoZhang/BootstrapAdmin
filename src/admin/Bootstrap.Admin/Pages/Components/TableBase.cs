@@ -4,8 +4,10 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Bootstrap.Admin.Pages.Components
 {
@@ -384,24 +386,26 @@ namespace Bootstrap.Admin.Pages.Components
         }
 
         /// <summary>
-        /// 更新查询数据
-        /// </summary>
-        /// <param name="queryData"></param>
-        public void Query(QueryData<TItem> queryData)
-        {
-            SelectedItems.Clear();
-            PageIndex = queryData.PageIndex;
-            Items = queryData.Items;
-            TotalCount = queryData.TotalCount;
-            StateHasChanged();
-        }
-
-        /// <summary>
         /// 查询按钮调用此方法
         /// </summary>
         protected void Query()
         {
-            if (OnQuery != null) Query(OnQuery(new QueryPageOptions() { PageIndex = PageIndex, PageItems = PageItems, SearchText = SearchText, SortOrder = SortOrder, SortName = SortName }));
+            if (OnQuery != null)
+            {
+                SelectedItems.Clear();
+                var queryData = OnQuery(new QueryPageOptions()
+                {
+                    PageIndex = PageIndex,
+                    PageItems = PageItems,
+                    SearchText = SearchText,
+                    SortOrder = SortOrder,
+                    SortName = SortName
+                });
+                Items = queryData.Items;
+                PageIndex = queryData.PageIndex;
+                TotalCount = queryData.TotalCount;
+                StateHasChanged();
+            }
         }
 
         /// <summary>
@@ -451,7 +455,7 @@ namespace Bootstrap.Admin.Pages.Components
         /// <summary>
         /// 获取 Id 字符串
         /// </summary>
-        public string RetrieveId() => $"{Id}_table";
+        protected string RetrieveId() => $"{Id}_table";
 
         /// <summary>
         /// 重置搜索按钮回调方法
