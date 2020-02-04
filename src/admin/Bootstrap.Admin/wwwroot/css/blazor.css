@@ -205,6 +205,25 @@ nav .dropdown .nav-link-close.dropdown-toggle:after {
     margin-bottom: 1rem;
 }
 
+.nav .pagination-bar .dropdown-menu {
+    width: 160px;
+}
+
+    .nav .pagination-bar .dropdown-menu .dropdown-item {
+        background-color: unset;
+        border-bottom: none;
+        font-size: 0.875rem;
+        padding: 6px 20px;
+    }
+
+        .nav .pagination-bar .dropdown-menu .dropdown-item.active, .nav .pagination-bar .dropdown-menu .dropdown-item:hover {
+            background-color: #77afd5;
+        }
+
+.nav .pagination-bar [data-toggle="dropdown"]:hover {
+    color: #fff;
+}
+
 .toast {
     position: absolute;
     z-index: -1;
