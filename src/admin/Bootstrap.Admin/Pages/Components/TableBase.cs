@@ -105,7 +105,7 @@ namespace Bootstrap.Admin.Pages.Components
         /// 获得/设置 是否显示行号
         /// </summary>
         [Parameter]
-        public bool ShowLineNo { get; set; }
+        public bool ShowLineNo { get; set; } = true;
 
         /// <summary>
         /// 获得/设置 是否显示选择列 默认为 false
