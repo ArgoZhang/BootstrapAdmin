@@ -7,7 +7,7 @@
         </div>
     </div>
     <div class="card-body">
-        <Table Id="online" EditModel="EditModel" ShowToolBar="true" ShowRefresh="true" TItem="Longbow.Web.OnlineUser" OnDataSourceQuery="QueryData">
+        <Table Id="online" EditModel="EditModel" ShowToolBar="true" ShowRefresh="true" TItem="Longbow.Web.OnlineUser" OnQuery="QueryData">
             <TableHeader>
                 <LgbTableHeader TItem="string" @bind-Value="@context.ConnectionId"></LgbTableHeader>
                 <LgbTableHeader TItem="string" @bind-Value="@context.UserName"></LgbTableHeader>

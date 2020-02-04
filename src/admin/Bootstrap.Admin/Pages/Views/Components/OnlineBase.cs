@@ -1,6 +1,6 @@
-﻿using Longbow.Web;
+﻿using Bootstrap.Admin.Pages.Components;
+using Longbow.Web;
 using Microsoft.AspNetCore.Components;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Bootstrap.Admin.Pages.Views.Admin.Components
@@ -24,6 +24,14 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
         /// <summary>
         /// QueryData 方法
         /// </summary>
-        protected IEnumerable<OnlineUser> QueryData() => (OnlineUSers?.OnlineUsers ?? new OnlineUser[0]).OrderByDescending(u => u.LastAccessTime);
+        protected QueryData<OnlineUser> QueryData(QueryPageOptions options)
+        {
+            var data = OnlineUSers?.OnlineUsers ?? new OnlineUser[0];
+            return new QueryData<OnlineUser>()
+            {
+                Items = data,
+                TotalCount = data.Count()
+            };
+        }
     }
 }

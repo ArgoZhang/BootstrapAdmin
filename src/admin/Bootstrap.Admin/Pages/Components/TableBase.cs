@@ -162,12 +162,6 @@ namespace Bootstrap.Admin.Pages.Components
         public Func<QueryPageOptions, QueryData<TItem>>? OnQuery { get; set; }
 
         /// <summary>
-        /// 点击翻页回调方法
-        /// </summary>
-        [Parameter]
-        public Func<IEnumerable<TItem>>? OnDataSourceQuery { get; set; }
-
-        /// <summary>
         /// 新建按钮回调方法
         /// </summary>
         [Parameter]
@@ -280,10 +274,6 @@ namespace Bootstrap.Admin.Pages.Components
                 Query();
             });
             if (EditModel == null && OnAdd != null) EditModel = OnAdd.Invoke();
-            if (OnDataSourceQuery != null)
-            {
-                Items = OnDataSourceQuery();
-            }
             if (OnQuery != null)
             {
                 var queryData = OnQuery(new QueryPageOptions() { PageItems = DefaultPageItems, SearchText = SearchText, SortName = SortName, SortOrder = SortOrder });

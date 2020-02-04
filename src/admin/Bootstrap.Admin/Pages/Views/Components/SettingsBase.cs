@@ -1,13 +1,12 @@
 ﻿using Bootstrap.Admin.Pages.Components;
-using Bootstrap.Admin.Pages.Extensions;
 using Bootstrap.Admin.Pages.Shared;
 using Bootstrap.DataAccess;
 using Bootstrap.Security;
 using Longbow.Cache;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Bootstrap.Admin.Pages.Views.Admin.Components
 {
@@ -72,7 +71,15 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
         /// <summary>
         /// QueryData 方法
         /// </summary>
-        protected IEnumerable<ICacheItem> QueryData() => CacheManager.ToList();
+        protected QueryData<ICacheItem> QueryData(QueryPageOptions options)
+        {
+            var data = CacheManager.ToList();
+            return new QueryData<ICacheItem>()
+            {
+                Items = data,
+                TotalCount = data.Count()
+            };
+        }
 
         /// <summary>
         /// 清除指定键值的方法
