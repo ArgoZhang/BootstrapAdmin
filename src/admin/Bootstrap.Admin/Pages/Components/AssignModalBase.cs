@@ -1,4 +1,3 @@
-using Bootstrap.Admin.Pages.Shared;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
@@ -49,23 +48,10 @@ namespace Bootstrap.Admin.Pages.Components
         public IEnumerable<TItem> Items { get; set; } = new TItem[0];
 
         /// <summary>
-        /// Toast 组件实例
-        /// </summary>
-        protected Toast? Toast { get; set; }
-
-        /// <summary>
-        /// 显示提示信息
-        /// </summary>
-        /// <param name="title"></param>
-        /// <param name="text"></param>
-        /// <param name="cate"></param>
-        protected void ShowMessage(string title, string text, ToastCategory cate = ToastCategory.Success) => Toast?.ShowMessage(title, text, cate);
-
-        /// <summary>
         /// 获得/设置 保存回调事件
         /// </summary>
         [Parameter]
-        public Func<IEnumerable<TItem>, bool>? OnSave { get; set; }
+        public Action<IEnumerable<TItem>>? OnSave { get; set; }
 
         /// <summary>
         /// OnAfterRender 方法
@@ -95,9 +81,8 @@ namespace Bootstrap.Admin.Pages.Components
         /// </summary>
         protected void Save()
         {
-            bool ret = OnSave?.Invoke(Items) ?? false;
+            OnSave?.Invoke(Items);
             Modal?.Toggle();
-            ShowMessage(Title, ret ? "保存成功" : "保存失败", ret ? ToastCategory.Success : ToastCategory.Error);
         }
 
         private bool show;

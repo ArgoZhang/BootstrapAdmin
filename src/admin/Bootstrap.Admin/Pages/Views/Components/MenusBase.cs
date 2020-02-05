@@ -1,4 +1,5 @@
 ﻿using Bootstrap.Admin.Pages.Components;
+using Bootstrap.Admin.Pages.Shared;
 using Bootstrap.DataAccess;
 using Bootstrap.Security;
 using Microsoft.AspNetCore.Components;
@@ -178,13 +179,20 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
         protected void AssignRoles()
         {
             // 菜单对角色授权操作
-            if (EditPage != null && EditPage.SelectedItems.Any())
+            if (EditPage != null)
             {
-                var menuId = EditPage.SelectedItems.First().Id;
-                if (!string.IsNullOrEmpty(menuId))
+                if (EditPage.SelectedItems.Count() != 1)
                 {
-                    var roles = RoleHelper.RetrievesByMenuId(menuId);
-                    AssignRoleModal?.Update(roles);
+                    ShowMessage("角色授权", "请选择一个菜单", ToastCategory.Information);
+                }
+                else
+                {
+                    var menuId = EditPage.SelectedItems.First().Id;
+                    if (!string.IsNullOrEmpty(menuId))
+                    {
+                        var roles = RoleHelper.RetrievesByMenuId(menuId);
+                        AssignRoleModal?.Update(roles);
+                    }
                 }
             }
         }
@@ -192,7 +200,7 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
         /// <summary>
         /// 保存授权角色方法
         /// </summary>
-        protected bool SaveRoles(IEnumerable<Role> roles)
+        protected void SaveRoles(IEnumerable<Role> roles)
         {
             bool ret = false;
             if (EditPage != null && EditPage.SelectedItems.Any())
@@ -201,7 +209,7 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
                 var roleIds = roles.Where(r => r.Checked == "checked").Select(r => r.Id ?? "");
                 if (!string.IsNullOrEmpty(menuId)) ret = RoleHelper.SavaByMenuId(menuId, roleIds);
             }
-            return ret;
+            ShowMessage("角色授权", ret ? "保存成功" : "保存失败", ret ? ToastCategory.Success : ToastCategory.Error);
         }
 
         /// <summary>
@@ -218,5 +226,18 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
         /// 设置初始化值
         /// </summary>
         protected CheckBoxState SetCheck(Role item) => item.Checked == "checked" ? CheckBoxState.Checked : CheckBoxState.UnChecked;
+
+        /// <summary>
+        /// Toast 组件实例
+        /// </summary>
+        protected Toast? Toast { get; set; }
+
+        /// <summary>
+        /// 显示提示信息
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="text"></param>
+        /// <param name="cate"></param>
+        protected void ShowMessage(string title, string text, ToastCategory cate = ToastCategory.Success) => Toast?.ShowMessage(title, text, cate);
     }
 }
