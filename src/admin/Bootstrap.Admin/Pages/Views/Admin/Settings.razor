@@ -193,7 +193,7 @@
         <span>网站缓存</span>
     </div>
     <div class="card-body">
-        <Table Id="settings-cache" TItem="Longbow.Cache.ICacheItem" EditModel="ConsoleCaCheModel" OnQuery="QueryData">
+        <Table Id="settings-cache" TItem="Longbow.Cache.ICacheItem" ShowToolBar="true" ShowRefresh="true" ShowExtendButtons="true" EditModel="ConsoleCaCheModel" OnQuery="QueryData">
             <TableHeader>
                 <LgbTableHeader TItem="string" @bind-Value="@context.Desc"></LgbTableHeader>
                 <LgbTableHeader TItem="int" @bind-Value="@context.Interval"></LgbTableHeader>
