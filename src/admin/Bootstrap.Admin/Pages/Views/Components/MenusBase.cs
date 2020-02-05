@@ -21,6 +21,11 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
         protected AuthenticationStateProvider? AuthenticationStateProvider { get; set; }
 
         /// <summary>
+        /// 获得/设置 Modal 实例
+        /// </summary>
+        protected AssignModalBase<Role>? AssignRoleModal { get; set; }
+
+        /// <summary>
         /// 获得/设置 菜单类别
         /// </summary>
         protected List<SelectedItem> QueryCategory { get; set; } = new List<SelectedItem>(new SelectedItem[] {
@@ -168,11 +173,50 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
         }
 
         /// <summary>
-        /// 分配角色方法
+        /// 弹窗分配角色方法
         /// </summary>
         protected void AssignRoles()
         {
-
+            // 菜单对角色授权操作
+            if (EditPage != null && EditPage.SelectedItems.Any())
+            {
+                var menuId = EditPage.SelectedItems.First().Id;
+                if (!string.IsNullOrEmpty(menuId))
+                {
+                    var roles = RoleHelper.RetrievesByMenuId(menuId);
+                    AssignRoleModal?.Update(roles);
+                }
+            }
         }
+
+        /// <summary>
+        /// 保存授权角色方法
+        /// </summary>
+        protected bool SaveRoles(IEnumerable<Role> roles)
+        {
+            bool ret = false;
+            if (EditPage != null && EditPage.SelectedItems.Any())
+            {
+                var menuId = EditPage.SelectedItems.First().Id;
+                var roleIds = roles.Where(r => r.Checked == "checked").Select(r => r.Id ?? "");
+                if (!string.IsNullOrEmpty(menuId)) ret = RoleHelper.SavaByMenuId(menuId, roleIds);
+            }
+            return ret;
+        }
+
+        /// <summary>
+        /// 选择框点击时调用此方法
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="check"></param>
+        protected void OnClick(Role item, bool check)
+        {
+            item.Checked = check ? "checked" : "";
+        }
+
+        /// <summary>
+        /// 设置初始化值
+        /// </summary>
+        protected CheckBoxState SetCheck(Role item) => item.Checked == "checked" ? CheckBoxState.Checked : CheckBoxState.UnChecked;
     }
 }

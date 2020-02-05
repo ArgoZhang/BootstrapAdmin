@@ -161,6 +161,11 @@ namespace Bootstrap.Admin.Pages.Components
         }
 
         /// <summary>
+        /// 获得 Table 组件选择项目集合
+        /// </summary>
+        public IEnumerable<TItem> SelectedItems { get { return Table?.SelectedItems ?? new List<TItem>(); } }
+
+        /// <summary>
         /// 分页查询方法
         /// </summary>
         /// <param name="options"></param>

@@ -32,31 +32,31 @@ namespace Bootstrap.Admin.Pages.Components
         /// 勾选回调方法
         /// </summary>
         [Parameter]
-        public Action<TItem, bool> ToggleCallback { get; set; } = new Action<TItem, bool>((v, c) => { });
+        public Action<TItem, bool>? OnClick { get; set; }
 
         /// <summary>
-        /// 
+        /// 组件状态改变回调方法
         /// </summary>
         [Parameter]
-        public Func<TItem, CheckBoxState> SetCheckCallback { get; set; } = new Func<TItem, CheckBoxState>(item => CheckBoxState.UnChecked);
+        public Func<TItem, CheckBoxState>? SetCheckCallback { get; set; }
 
         /// <summary>
-        /// 
+        /// OnParametersSet 方法
         /// </summary>
         protected override void OnParametersSet()
         {
-            State = SetCheckCallback(Item);
+            State = SetCheckCallback?.Invoke(Item) ?? CheckBoxState.UnChecked;
             Checked = State == CheckBoxState.Checked;
         }
 
         /// <summary>
-        /// 
+        /// 获得/设置 选择框状态
         /// </summary>
         [Parameter]
         public CheckBoxState State { get; set; }
 
         /// <summary>
-        /// 
+        /// RenderStateCss 方法
         /// </summary>
         /// <returns></returns>
         protected string RenderStateCss()
@@ -74,6 +74,16 @@ namespace Bootstrap.Admin.Pages.Components
                     break;
             }
             return ret;
+        }
+
+        /// <summary>
+        /// 点击选择框方法
+        /// </summary>
+        protected void ToggleClick()
+        {
+            Checked = !Checked;
+            State = Checked ? CheckBoxState.Checked : CheckBoxState.UnChecked;
+            OnClick?.Invoke(Item, Checked);
         }
     }
 }

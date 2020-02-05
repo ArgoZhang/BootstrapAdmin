@@ -17,6 +17,11 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
         public bool FixedHeader { get; set; }
 
         /// <summary>
+        /// 获得/设置 EditPage 实例
+        /// </summary>
+        protected EditPageBase<TItem>? EditPage { get; set; }
+
+        /// <summary>
         /// 获得/设置 TItem 实例
         /// </summary>
         protected TItem QueryModel { get; set; } = new TItem();

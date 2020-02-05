@@ -1,7 +1,7 @@
-﻿using Bootstrap.Admin.Pages.Extensions;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System;
+using System.Threading.Tasks;
 
 namespace Bootstrap.Admin.Pages.Components
 {
@@ -11,13 +11,13 @@ namespace Bootstrap.Admin.Pages.Components
     public class ModalBase : ComponentBase
     {
         /// <summary>
-        /// 
+        /// 获得/设置 IJSRuntime 实例
         /// </summary>
         [Inject]
         protected IJSRuntime? JSRuntime { get; set; }
 
         /// <summary>
-        ///
+        /// 获得/设置 ModalBody 代码块
         /// </summary>
         [Parameter]
         public RenderFragment? ModalBody { get; set; }
@@ -29,13 +29,13 @@ namespace Bootstrap.Admin.Pages.Components
         public RenderFragment? ModalFooter { get; set; }
 
         /// <summary>
-        ///
+        /// 获得/设置 Id
         /// </summary>
         [Parameter]
         public string Id { get; set; } = "";
 
         /// <summary>
-        ///
+        /// 获得/设置 弹窗标题
         /// </summary>
         [Parameter]
         public string Title { get; set; } = "未设置";
@@ -65,7 +65,7 @@ namespace Bootstrap.Admin.Pages.Components
         public bool ShowFooter { get; set; } = true;
 
         /// <summary>
-        /// 
+        /// OnAfterRender 方法
         /// </summary>
         /// <param name="firstRender"></param>
         protected override void OnAfterRender(bool firstRender)
@@ -111,7 +111,7 @@ namespace Bootstrap.Admin.Pages.Components
         }
 
         /// <summary>
-        /// 
+        /// Toggle 弹窗方法
         /// </summary>
         public void Toggle()
         {
@@ -125,19 +125,19 @@ namespace Bootstrap.Admin.Pages.Components
     public enum ModalSize
     {
         /// <summary>
-        /// 
+        /// 默认大小
         /// </summary>
         Default,
         /// <summary>
-        /// 
+        /// 小窗口
         /// </summary>
         Small,
         /// <summary>
-        /// 
+        /// 大窗口
         /// </summary>
         Large,
         /// <summary>
-        /// 
+        /// 超大窗口
         /// </summary>
         ExtraLarge,
     }
