@@ -144,6 +144,10 @@ nav .dropdown .nav-link-close.dropdown-toggle:after {
         overflow: hidden;
     }
 
+        .bootstrap-table .table-fixed-header table th {
+            white-space: nowrap;
+        }
+
     .bootstrap-table .fixed-table-body {
         min-height: 348px;
     }
