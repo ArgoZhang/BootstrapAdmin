@@ -30,9 +30,11 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
         /// <summary>
         /// OnParametersSet 方法
         /// </summary>
-        protected override void OnParametersSet()
+        public override System.Threading.Tasks.Task SetParametersAsync(ParameterView parameters)
         {
+            parameters.SetParameterProperties(this);
             FixedHeader = DictHelper.RetrieveFixedTableHeader();
+            return base.SetParametersAsync(ParameterView.Empty);
         }
 
         /// <summary>

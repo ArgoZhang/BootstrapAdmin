@@ -98,16 +98,17 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
         }
 
         /// <summary>
-        /// OnParametersSet 方法
+        /// SetParametersAsync 方法
         /// </summary>
         /// <returns></returns>
-        protected override void OnParametersSet()
+        public override System.Threading.Tasks.Task SetParametersAsync(ParameterView parameters)
         {
-            base.OnParametersSet();
+            parameters.SetParameterProperties(this);
             QueryModel.Category = "";
             QueryModel.IsResource = -1;
             QueryApp.AddRange(DictHelper.RetrieveApps().Select(app => new SelectedItem() { Text = app.Value, Value = app.Key }));
             DefineApp.AddRange(DictHelper.RetrieveApps().Select(app => new SelectedItem() { Text = app.Value, Value = app.Key }));
+            return base.SetParametersAsync(ParameterView.Empty);
         }
 
         /// <summary>

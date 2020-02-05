@@ -77,11 +77,13 @@ namespace Bootstrap.Admin.Pages.Components
         }
 
         /// <summary>
-        /// OnParametersSet 方法
+        /// SetParametersAsync 方法
         /// </summary>
-        protected override void OnParametersSet()
+        public override Task SetParametersAsync(ParameterView parameters)
         {
+            parameters.SetParameterProperties(this);
             if (string.IsNullOrEmpty(Id)) throw new InvalidOperationException("Modal Component Id property must be set");
+            return base.SetParametersAsync(ParameterView.Empty);
         }
 
         /// <summary>
