@@ -61,6 +61,16 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
         protected AssignModalBase<User>? AssignUserModal { get; set; }
 
         /// <summary>
+        /// 获得/设置 Modal 实例
+        /// </summary>
+        protected string FormatDisplayName(User item)
+        {
+            var displayName = item.DisplayName;
+            if (string.IsNullOrEmpty(displayName)) displayName = item.UserName;
+            return displayName;
+        }
+
+        /// <summary>
         /// 弹窗分配角色方法
         /// </summary>
         protected void AssignUsers()
