@@ -1,6 +1,6 @@
 ﻿@inherits GroupsBase
 
-<EditPage Id="group" FixedHeader="@FixedHeader" TItem="Bootstrap.DataAccess.Group" SubmitModalTitle="部门编辑窗口" QueryModel="QueryModel" OnQuery="Query" OnAdd="Add" OnDelete="Delete" OnSave="Save" OnResetSearch="ResetSearch">
+<EditPage @ref="EditPage" Id="group" FixedHeader="@FixedHeader" TItem="Bootstrap.DataAccess.Group" SubmitModalTitle="部门编辑窗口" QueryModel="QueryModel" OnQuery="Query" OnAdd="Add" OnDelete="Delete" OnSave="Save" OnResetSearch="ResetSearch">
     <QueryBody>
         <LgbInputText ColumnClass="col-sm-auto" @bind-Value="@context.GroupName" maxlength="50" />
         <LgbInputText ColumnClass="col-sm-auto" @bind-Value="@context.Description" maxlength="50" />
@@ -36,3 +36,17 @@
         </div>
     </EditTemplate>
 </EditPage>
+
+<AssignModal @ref="AssignUserModal" TItem="Bootstrap.DataAccess.User" Id="group-user" Title="用户授权窗口" OnSave="SaveUsers">
+    <ItemTemplate>
+        <Checkbox TItem="Bootstrap.DataAccess.User" Item="@context" Text="@context.DisplayName" SetCheckCallback="SetUserCheck" OnClick="OnUserClick" />
+    </ItemTemplate>
+</AssignModal>
+
+<AssignModal @ref="AssignRoleModal" TItem="Bootstrap.DataAccess.Role" Id="group-role" Title="角色授权窗口" OnSave="SaveRoles">
+    <ItemTemplate>
+        <Checkbox TItem="Bootstrap.DataAccess.Role" Item="@context" Text="@context.RoleName" SetCheckCallback="SetCheck" OnClick="OnClick" />
+    </ItemTemplate>
+</AssignModal>
+
+<Toast @ref="Toast" Id="group_assign_toast"></Toast>
