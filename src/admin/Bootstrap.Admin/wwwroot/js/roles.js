@@ -30,7 +30,9 @@ $(function () {
                         callback: function (result) {
                             var htmlTemplate = this.htmlTemplate;
                             var html = $.map(result, function (element, index) {
-                                return $.format(htmlTemplate, element.Id, element.DisplayName, element.Checked, element.UserName);
+                                var displayName = element.DisplayName;
+                                if (displayName === "") displayName = element.UserName;
+                                return $.format(htmlTemplate, element.Id, displayName, element.Checked, element.UserName);
                             }).join('');
                             $dialogUserHeader.text($.format('{0}-用户授权窗口', row.RoleName));
                             $dialogUserForm.html(html).find('[data-toggle="tooltip"]').each(function (index, label) {
