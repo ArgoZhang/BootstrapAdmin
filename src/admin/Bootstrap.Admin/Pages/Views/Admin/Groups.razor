@@ -39,7 +39,7 @@
 
 <AssignModal @ref="AssignUserModal" TItem="Bootstrap.DataAccess.User" Id="group-user" Title="用户授权窗口" OnSave="SaveUsers">
     <ItemTemplate>
-        <Checkbox TItem="Bootstrap.DataAccess.User" Item="@context" Text="@context.DisplayName" SetCheckCallback="SetUserCheck" OnClick="OnUserClick" />
+        <Checkbox TItem="Bootstrap.DataAccess.User" Item="@context" Text="@context.FormatDisplayName()" SetCheckCallback="SetUserCheck" OnClick="OnUserClick" />
     </ItemTemplate>
 </AssignModal>
 
