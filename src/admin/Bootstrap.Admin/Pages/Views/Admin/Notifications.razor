@@ -1,0 +1,29 @@
+@inherits NotificationsBase
+
+<div class="card">
+    <div class="card-header">
+        <span>查询结果</span>
+    </div>
+    <div class="card-body">
+        <Table @ref="Table" Id="noti" TItem="Bootstrap.DataAccess.User" ShowToolBar="true" ShowRefresh="true" ShowExtendButtons="true" EditModel="DataContext" OnQuery="Query">
+            <TableHeader>
+                <LgbTableHeader TItem="string" @bind-Value="@context.UserName" class="text-nowrap"></LgbTableHeader>
+                <LgbTableHeader TItem="string" @bind-Value="@context.DisplayName" class="text-nowrap"></LgbTableHeader>
+                <LgbTableHeader TItem="string" @bind-Value="@context.Description"></LgbTableHeader>
+                <LgbTableHeader TItem="DateTime" @bind-Value="@context.RegisterTime"></LgbTableHeader>
+            </TableHeader>
+            <RowTemplate>
+                <td>@context.UserName</td>
+                <td>@context.DisplayName</td>
+                <td>@context.Description</td>
+                <td>@context.RegisterTime</td>
+            </RowTemplate>
+            <ButtonTemplate>
+                <div class="btn-group"
+                    <button class="btn btn-success btn-sm" data-toggle="tooltip" title="同意授权" @onclick="e => Approve(context.Id)"><i class="fa fa-check"></i><span>同意</span></button>
+                    <button class="btn btn-danger btn-sm" data-toggle="tooltip" title="拒绝授权" @onclick="e => Reject(context.Id)"><i class="fa fa-remove"></i><span>拒绝</span></button>
+                </div>           
+            </ButtonTemplate>
+        </Table>
+    </div>
+</div>

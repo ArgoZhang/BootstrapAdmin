@@ -386,7 +386,7 @@ namespace Bootstrap.Admin.Pages.Components
         /// <summary>
         /// 查询按钮调用此方法
         /// </summary>
-        protected void Query()
+        public void Query()
         {
             if (OnQuery != null)
             {
