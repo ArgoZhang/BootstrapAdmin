@@ -1,4 +1,5 @@
 ﻿using Bootstrap.Admin.Query;
+using Bootstrap.DataAccess;
 using Longbow.Web.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -6,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 
 namespace Bootstrap.Admin.Controllers.Api
@@ -36,15 +36,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <returns></returns>
         [HttpPost]
         [ButtonAuthorize(Url = "~/Admin/Exceptions", Auth = "log")]
-        public IEnumerable<string> Post()
-        {
-            var filePath = Path.Combine(AppContext.BaseDirectory, "Error");
-            return Directory.Exists(filePath)
-                ? Directory.GetFiles(filePath)
-                .Where(f => Path.GetExtension(f).Equals(".log", StringComparison.OrdinalIgnoreCase))
-                .Select(f => Path.GetFileNameWithoutExtension(f)).OrderByDescending(s => s)
-                : Enumerable.Empty<string>();
-        }
+        public IEnumerable<string> Post() => ExceptionsHelper.RetrieveLogFiles();
 
         /// <summary>
         /// 选中指定文件查看其内容方法
