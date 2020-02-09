@@ -30,3 +30,24 @@
         </Table>
     </div>
 </div>
+
+<Modal @ref="Modal" Id="exception-detail" Title="程序异常日志窗口" Size="ModalSize.Large">
+    <ModalBody>
+        <form class="form-inline">
+            <div class="row">
+                @foreach(var item in Items)
+                {
+                    <div class="form-group col-md-3 col-sm-4 col-6">
+                        <a href="#" @onclick:preventDefault OnClick="e => ShowLog(item)">@item</a>
+                    </div>
+                }
+            </div>
+        </form>
+    </ModalBody>
+    <ModalFooter>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            <i class="fa fa-times"></i>
+            <span>关闭</span>
+        </button>
+    </ModalFooter>
+</Modal>
