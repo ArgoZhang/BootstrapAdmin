@@ -126,8 +126,9 @@
 1. SQLite
 2. SqlServer
 3. MySql
-4. PostgresSql
-5. MongoDB   
+4. Oracle
+5. PostgresSql
+6. MongoDB   
 
 数据库配置 [详细说明](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/数据库连接配置?sort_id=1333482)   
 
