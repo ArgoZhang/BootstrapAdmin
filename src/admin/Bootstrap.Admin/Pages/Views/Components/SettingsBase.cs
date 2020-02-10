@@ -74,10 +74,12 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
         protected QueryData<ICacheItem> QueryData(QueryPageOptions options)
         {
             var data = CacheManager.ToList();
+            var pageItems = data.Count();
             return new QueryData<ICacheItem>()
             {
                 Items = data,
-                TotalCount = data.Count()
+                PageItems = pageItems,
+                TotalCount = pageItems
             };
         }
 
