@@ -47,9 +47,11 @@ namespace Bootstrap.Admin.Pages.Components
         /// <summary>
         /// 参数赋值方法
         /// </summary>
-        protected override void OnParametersSet()
+        public override System.Threading.Tasks.Task SetParametersAsync(ParameterView parameters)
         {
+            parameters.SetParameterProperties(this);
             EnableBlazor = DictHelper.RetrieveEnableBlazor();
+            return base.SetParametersAsync(ParameterView.Empty);
         }
     }
 }
