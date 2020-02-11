@@ -3,14 +3,14 @@
 <aside class="@Model.ShowSideBar">
     <div class="bg"></div>
     <div class="nav-brand justify-content-center">
-        <a href="@RootLayout.HomeUrl">
+        <a href="@NavigationManager.ToBlazorLink(RootLayout.HomeUrl)">
             <img src="@Model.WebSiteLogo.ToBlazorLink()" />
             <span>@Model.Title</span>
         </a>
     </div>
     <div class="nav-header flex-fill align-items-center">
-        <a href="/Pages/Admin/Profiles">
-            <img src="@Model.Icon.ToBlazorLink()" />
+        <a href="@NavigationManager.ToBlazorLink("/Pages/Admin/Profiles")">
+            <img src="@NavigationManager.ToBlazorLink(Model.Icon.ToBlazorLink())" />
             <span class="username d-inline-block text-truncate flex-fill">@DisplayName</span>
         </a>
     </div>
