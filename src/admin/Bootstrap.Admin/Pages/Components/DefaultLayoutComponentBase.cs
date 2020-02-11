@@ -115,11 +115,17 @@ namespace Bootstrap.Admin.Pages.Components
         /// <summary>
         /// 设置参数方法
         /// </summary>
-        protected override void OnParametersSet()
+        public override Task SetParametersAsync(ParameterView parameters)
         {
-            RequestUrl = new UriBuilder(NavigationManager?.Uri ?? "").Path;
-            Model = new NavigatorBarModel(UserName, RequestUrl.ToMvcMenuUrl());
-            DisplayName = Model.DisplayName;
+            parameters.SetParameterProperties(this);
+            if (NavigationManager != null)
+            {
+                RequestUrl = new UriBuilder(NavigationManager.Uri).Path;
+                Model = new NavigatorBarModel(UserName, RequestUrl.ToMvcMenuUrl());
+                DisplayName = Model.DisplayName;
+                HomeUrl = NavigationManager.ToBlazorLink(HomeUrl);
+            }
+            return base.SetParametersAsync(ParameterView.Empty);
         }
 
         /// <summary>

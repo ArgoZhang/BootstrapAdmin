@@ -25,7 +25,7 @@ namespace Bootstrap.Admin.Pages.Components
         /// 获得 根模板页实例
         /// </summary>
         [CascadingParameter(Name = "Default")]
-        public DefaultLayout RootLayout { get; protected set; } = new DefaultLayout();
+        public DefaultLayout? RootLayout { get; protected set; }
 
         /// <summary>
         /// 获得/设置 用户显示名称
