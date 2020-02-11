@@ -1,4 +1,5 @@
-﻿using Bootstrap.Admin.Pages.Shared;
+﻿using Bootstrap.Admin.Pages.Extensions;
+using Bootstrap.Admin.Pages.Shared;
 using Bootstrap.DataAccess;
 using Microsoft.AspNetCore.Components;
 
@@ -40,6 +41,12 @@ namespace Bootstrap.Admin.Pages.Components
         public EventCallback<string> DisplayNameChanged { get; set; }
 
         /// <summary>
+        /// 获得 NavigationManager 实例
+        /// </summary>
+        [Inject]
+        public NavigationManager? NavigationManager { get; set; }
+
+        /// <summary>
         /// 获得/设置 是否显示 Blazor MVC 切换图标
         /// </summary>
         protected bool EnableBlazor { get; set; }
@@ -53,5 +60,12 @@ namespace Bootstrap.Admin.Pages.Components
             EnableBlazor = DictHelper.RetrieveEnableBlazor();
             return base.SetParametersAsync(ParameterView.Empty);
         }
+
+        /// <summary>
+        /// 返回带 PathBase 的完整路径
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        protected string ToBlazorLink(string url) => NavigationManager.ToBlazorLink(url);
     }
 }
