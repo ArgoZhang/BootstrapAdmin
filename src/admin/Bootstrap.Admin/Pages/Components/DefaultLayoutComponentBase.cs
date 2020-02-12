@@ -122,7 +122,7 @@ namespace Bootstrap.Admin.Pages.Components
                 RequestUrl = new UriBuilder(NavigationManager.Uri).Path;
                 Model = new NavigatorBarModel(UserName, RequestUrl.ToMvcMenuUrl());
                 DisplayName = Model.DisplayName;
-                HomeUrl = NavigationManager.ToBlazorLink(HomeUrl);
+                if (HomeUrl.StartsWith("/")) HomeUrl = NavigationManager.ToBlazorLink(HomeUrl);
             }
         }
 
