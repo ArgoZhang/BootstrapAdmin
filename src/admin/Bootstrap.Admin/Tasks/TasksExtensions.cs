@@ -51,7 +51,7 @@ namespace Microsoft.Extensions.DependencyInjection
             TaskServicesManager.GetOrAdd("禁用任务", token => Task.Delay(1000)).Status = SchedulerStatus.Disabled;
 
             // 真实任务负责批次写入数据执行脚本到日志中
-            TaskServicesManager.GetOrAdd<LogHelper.DbLogTask>("SQL日志", TriggerBuilder.Build(Cron.Minutely()));
+            TaskServicesManager.GetOrAdd<DBLogTask>("SQL日志", TriggerBuilder.Build(Cron.Minutely()));
         });
     }
 }

@@ -3,7 +3,7 @@
 namespace Bootstrap.DataAccess.MySql
 {
     [Collection("MySqlContext")]
-    public class MenusTest : SqlServer.MenusTest
+    public class MenusTest : DataAccess.MenusTest
     {
 
     }

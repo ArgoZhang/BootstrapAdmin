@@ -2,8 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using System.Net;
-using System.Net.Mail;
 using System.Threading.Tasks;
 
 namespace Bootstrap.Client.Controllers.Api

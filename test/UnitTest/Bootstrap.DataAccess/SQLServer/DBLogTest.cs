@@ -1,28 +1,10 @@
-﻿using System;
-using Xunit;
+﻿using Xunit;
 
-namespace Bootstrap.DataAccess.SqlServer
+namespace Bootstrap.DataAccess.SQLServer
 {
-    [Collection("SQLServerContext")]
-    public class DBLogTest
+    [CollectionDefinition("SQLServerContext")]
+    public class DBLogTest : DataAccess.DBLogTest
     {
-        [Fact]
-        public virtual void Save_Ok()
-        {
-            var log = new DBLog()
-            {
-                Id = "",
-                LogTime = DateTime.Now,
-                SQL = "UnitTest",
-                UserName = "UniTest"
-            };
-            Assert.True(log.Save(log));
-        }
 
-        [Fact]
-        public void Save_Exception()
-        {
-            Assert.Throws<ArgumentNullException>(() => new DBLog().Save(null));
-        }
     }
 }

@@ -3,7 +3,7 @@
 namespace Bootstrap.DataAccess.MySql
 {
     [Collection("MySqlContext")]
-    public class MessagesTest : SqlServer.MessagesTest
+    public class MessagesTest : DataAccess.MessagesTest
     {
 
     }

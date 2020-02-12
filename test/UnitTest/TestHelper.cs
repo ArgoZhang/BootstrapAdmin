@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace UnitTest
+namespace Bootstrap.Admin
 {
     public static class TestHelper
     {
@@ -31,36 +31,6 @@ namespace UnitTest
         {
             var soluFolder = RetrieveSolutionPath();
             return Path.Combine(soluFolder, folder);
-        }
-
-        public static void ConfigureWebHost(IWebHostBuilder builder, DatabaseProviderType providerName = DatabaseProviderType.SqlServer)
-        {
-            if (providerName == DatabaseProviderType.SQLite)
-            {
-                builder.ConfigureAppConfiguration(app => app.AddInMemoryCollection(new KeyValuePair<string, string>[] {
-                    new KeyValuePair<string, string>("DB:0:Enabled", "false"),
-                    new KeyValuePair<string, string>("DB:1:Enabled", "true")
-                }));
-            }
-
-            if (providerName == DatabaseProviderType.MySql)
-            {
-                builder.ConfigureAppConfiguration(app => app.AddInMemoryCollection(new KeyValuePair<string, string>[] {
-                    new KeyValuePair<string, string>("DB:0:Enabled", "false"),
-                    new KeyValuePair<string, string>("DB:1:Enabled", "false"),
-                    new KeyValuePair<string, string>("DB:2:Enabled", "true")
-                }));
-            }
-
-            if (providerName == DatabaseProviderType.Npgsql)
-            {
-                builder.ConfigureAppConfiguration(app => app.AddInMemoryCollection(new KeyValuePair<string, string>[] {
-                    new KeyValuePair<string, string>("DB:0:Enabled", "false"),
-                    new KeyValuePair<string, string>("DB:1:Enabled", "false"),
-                    new KeyValuePair<string, string>("DB:2:Enabled", "false"),
-                    new KeyValuePair<string, string>("DB:3:Enabled", "true")
-                }));
-            }
         }
 
         /// <summary>
@@ -93,6 +63,41 @@ namespace UnitTest
             finally
             {
                 Mappers.Revoke(foo);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="providerName"></param>
+        public static void ConfigureDatabase(this IWebHostBuilder builder, DatabaseProviderType providerName = DatabaseProviderType.SQLite)
+        {
+            if (providerName == DatabaseProviderType.SqlServer)
+            {
+                builder.ConfigureAppConfiguration(app => app.AddInMemoryCollection(new KeyValuePair<string, string>[] {
+                    new KeyValuePair<string, string>("DB:0:Enabled", "false"),
+                    new KeyValuePair<string, string>("DB:1:Enabled", "true")
+                }));
+            }
+
+            if (providerName == DatabaseProviderType.MySql)
+            {
+                builder.ConfigureAppConfiguration(app => app.AddInMemoryCollection(new KeyValuePair<string, string>[] {
+                    new KeyValuePair<string, string>("DB:0:Enabled", "false"),
+                    new KeyValuePair<string, string>("DB:1:Enabled", "false"),
+                    new KeyValuePair<string, string>("DB:2:Enabled", "true")
+                }));
+            }
+
+            if (providerName == DatabaseProviderType.Npgsql)
+            {
+                builder.ConfigureAppConfiguration(app => app.AddInMemoryCollection(new KeyValuePair<string, string>[] {
+                    new KeyValuePair<string, string>("DB:0:Enabled", "false"),
+                    new KeyValuePair<string, string>("DB:1:Enabled", "false"),
+                    new KeyValuePair<string, string>("DB:2:Enabled", "false"),
+                    new KeyValuePair<string, string>("DB:3:Enabled", "true")
+                }));
             }
         }
 

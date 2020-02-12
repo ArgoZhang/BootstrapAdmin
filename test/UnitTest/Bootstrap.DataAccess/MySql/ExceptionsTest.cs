@@ -1,9 +1,9 @@
-using Xunit;
+﻿using Xunit;
 
 namespace Bootstrap.DataAccess.MySql
 {
     [Collection("MySqlContext")]
-    public class ExceptionsTest : SqlServer.ExceptionsTest
+    public class ExceptionsTest : DataAccess.ExceptionsTest
     {
 
     }

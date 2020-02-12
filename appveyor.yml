@@ -34,7 +34,7 @@ build_script:
     .\appveyor.build.ps1
 test_script:
 - ps: >-
-    #.\appveyor.test.ps1
+    .\appveyor.test.ps1
 artifacts:
 - path: src\admin\Bootstrap.Admin\bin\release\netcoreapp3.1\publish\
   name: BootstrapAdmin

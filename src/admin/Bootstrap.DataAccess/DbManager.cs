@@ -37,7 +37,7 @@ namespace Bootstrap.DataAccess
                         SQL = db.LastCommand,
                         UserName = userName
                     };
-                    await LogHelper.AddDBLog(log).ConfigureAwait(false);
+                    await DBLogTask.AddDBLog(log).ConfigureAwait(false);
                 });
             }
             return db;

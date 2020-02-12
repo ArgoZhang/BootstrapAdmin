@@ -1,10 +1,10 @@
-﻿using System;
-using UnitTest;
+﻿using Bootstrap.Admin;
+using System;
 using Xunit;
 
-namespace Bootstrap.DataAccess.SqlServer
+namespace Bootstrap.DataAccess
 {
-    [Collection("SQLServerContext")]
+    [Collection("Login")]
     public class RollbackTest
     {
         [Fact]

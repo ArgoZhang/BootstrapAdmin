@@ -3,7 +3,7 @@
 namespace Bootstrap.DataAccess.MongoDB
 {
     [Collection("MongoContext")]
-    public class UsersTest : SqlServer.UsersTest
+    public class UsersTest : DataAccess.UsersTest
     {
         [Fact]
         public void RejectUser_Ok()

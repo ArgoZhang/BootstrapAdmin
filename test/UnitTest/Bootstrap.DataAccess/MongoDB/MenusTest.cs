@@ -4,7 +4,7 @@ using Xunit;
 namespace Bootstrap.DataAccess.MongoDB
 {
     [Collection("MongoContext")]
-    public class MenusTest : SqlServer.MenusTest
+    public class MenusTest : DataAccess.MenusTest
     {
         [Fact]
         public void Save_EmptyId()

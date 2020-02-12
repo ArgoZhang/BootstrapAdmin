@@ -57,7 +57,7 @@ namespace Bootstrap.Admin.HealthChecks
                 };
 
             // 检查 当前用户 账户权限
-            var loginUser = _httpContextAccessor.HttpContext.User.Identity.Name;
+            var loginUser = _httpContextAccessor.HttpContext?.User.Identity.Name;
             var userName = loginUser ?? "Admin";
             var dictsCount = 0;
             var menusCount = 0;

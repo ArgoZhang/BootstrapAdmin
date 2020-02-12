@@ -39,8 +39,8 @@ namespace Bootstrap.Admin.Controllers.Api
             // SQL 日志任务特殊处理
             if (scheName == "SQL日志")
             {
-                if (operType == "pause") LogHelper.Pause();
-                else LogHelper.Run();
+                if (operType == "pause") DBLogTask.Pause();
+                else DBLogTask.Run();
             }
             return true;
         }

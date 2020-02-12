@@ -3,7 +3,7 @@ using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
 [assembly: CollectionBehavior(DisableTestParallelization = true)]
-[assembly: TestCollectionOrderer("UnitTest.CollectionOrder.DisplayNameOrderer", "UnitTest")]
+[assembly: TestCollectionOrderer("UnitTest.CollectionOrder.DisplayNameOrderer", "UnitTest.SQLite")]
 
 namespace UnitTest.CollectionOrder
 {

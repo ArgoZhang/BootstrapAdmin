@@ -1,79 +1,24 @@
-﻿using Longbow.Data;
-using Longbow.Web.SMS;
+﻿using Longbow.Web.SMS;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.Mvc.Testing.Handlers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Http;
-using System.Threading.Tasks;
-using UnitTest;
 using Xunit;
 
 namespace Bootstrap.Admin
 {
-    [CollectionDefinition("SQLServerContext")]
-    public class BootstrapAdminTestContext : ICollectionFixture<BAWebHost>
+    /// <summary>
+    /// 未登录
+    /// </summary>
+    [CollectionDefinition("BA-Logout")]
+    public class BootstrapAdminLogoutContext : ICollectionFixture<BAWebHost>
     {
 
-    }
-
-    [CollectionDefinition("SQLiteContext")]
-    public class SQLiteContext : ICollectionFixture<SQLiteBAWebHost>
-    {
-
-    }
-
-    [CollectionDefinition("MySqlContext")]
-    public class MySqlContext : ICollectionFixture<MySqlBAWebHost>
-    {
-
-    }
-
-    [CollectionDefinition("MongoContext")]
-    public class MongoContext : ICollectionFixture<MongoBAWebHost>
-    {
-
-    }
-
-    public class MySqlBAWebHost : BAWebHost
-    {
-        protected override void ConfigureWebHost(IWebHostBuilder builder)
-        {
-            base.ConfigureWebHost(builder);
-
-            TestHelper.ConfigureWebHost(builder, DatabaseProviderType.MySql);
-        }
-    }
-
-    public class SQLiteBAWebHost : BAWebHost
-    {
-        protected override void ConfigureWebHost(IWebHostBuilder builder)
-        {
-            base.ConfigureWebHost(builder);
-
-            TestHelper.ConfigureWebHost(builder, DatabaseProviderType.SQLite);
-        }
-    }
-
-    public class MongoBAWebHost : BAWebHost
-    {
-        protected override void ConfigureWebHost(IWebHostBuilder builder)
-        {
-            base.ConfigureWebHost(builder);
-
-            builder.ConfigureAppConfiguration(app => app.AddInMemoryCollection(new KeyValuePair<string, string>[] {
-                new KeyValuePair<string, string>("DB:0:Enabled", "false"),
-                new KeyValuePair<string, string>("DB:1:Enabled", "false"),
-                new KeyValuePair<string, string>("DB:2:Enabled", "false"),
-                new KeyValuePair<string, string>("DB:3:Enabled", "false"),
-                new KeyValuePair<string, string>("DB:4:Enabled", "true")
-            }));
-        }
     }
 
     /// <summary>
@@ -81,13 +26,6 @@ namespace Bootstrap.Admin
     /// </summary>
     public class BAWebHost : WebApplicationFactory<Startup>
     {
-        public BAWebHost()
-        {
-            var client = CreateClient("Account/Login");
-            var login = client.LoginAsync();
-            login.Wait();
-        }
-
         /// <summary>
         /// 获得已经登录的HttpClient
         /// </summary>
@@ -121,47 +59,12 @@ namespace Bootstrap.Admin
             {
                 builder.ConfigureAppConfiguration(app => app.AddJsonFile(TestHelper.RetrievePath($"UnitTest{Path.DirectorySeparatorChar}appsettings.appveyor.json"), false, true));
             }
-            TestHelper.ConfigureWebHost(builder);
 
             // 替换 SMS 服务
             builder.ConfigureServices(services =>
             {
                 services.AddTransient<ISMSProvider, DefaultSMSProvider>();
             });
-        }
-
-
-        /// <summary>
-        /// 手机号登陆帮助类
-        /// </summary>
-        class DefaultSMSProvider : ISMSProvider
-        {
-            public DefaultSMSProvider()
-            {
-                Options = new SMSOptions();
-                Options.Roles.Add("Administrators");
-                Options.Roles.Add("Default");
-            }
-
-            /// <summary>
-            /// 获得 短信配置信息
-            /// </summary>
-            public SMSOptions Options { get; protected set; }
-
-            /// <summary>
-            /// 下发验证码方法
-            /// </summary>
-            /// <param name="phoneNumber"></param>
-            /// <returns></returns>
-            public Task<SMSResult> SendCodeAsync(string phoneNumber) => Task.FromResult(new SMSResult() { Result = true });
-
-            /// <summary>
-            /// 验证验证码方法
-            /// </summary>
-            /// <param name="phone">手机号</param>
-            /// <param name="code">验证码</param>
-            /// <returns></returns>
-            public bool Validate(string phone, string code) => code == "1234";
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Linq;
 namespace Bootstrap.Admin.Models
 {
     /// <summary>
-    /// 
+    /// 个人中心模型
     /// </summary>
     public class ProfilesModel : SettingsModel
     {
@@ -54,15 +54,6 @@ namespace Bootstrap.Admin.Models
 
             if (controller.User.Identity.AuthenticationType != CookieAuthenticationDefaults.AuthenticationScheme) External = true;
 
-            // 设置 当前用户默认应用名称
-            AppName = Applications.FirstOrDefault(app => app.Key == AppId).Value;
-        }
-
-        /// <summary>
-        /// 构造函数 Blazor 页面调用
-        /// </summary>
-        public ProfilesModel(string? userName) :base(userName)
-        {
             // 设置 当前用户默认应用名称
             AppName = Applications.FirstOrDefault(app => app.Key == AppId).Value;
         }

@@ -3,7 +3,7 @@
 namespace Bootstrap.DataAccess.MongoDB
 {
     [Collection("MongoContext")]
-    public class DBLogTest : SqlServer.DBLogTest
+    public class DBLogTest : DataAccess.DBLogTest
     {
         [Fact]
         public override void Save_Ok()

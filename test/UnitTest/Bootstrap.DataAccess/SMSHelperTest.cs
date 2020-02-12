@@ -3,6 +3,7 @@ using Xunit;
 
 namespace Bootstrap.DataAccess
 {
+    [Collection("Login")]
     public class SMSHelperTest
     {
         [Fact]

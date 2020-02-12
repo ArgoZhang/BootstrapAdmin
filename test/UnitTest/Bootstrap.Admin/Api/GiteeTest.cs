@@ -9,7 +9,7 @@ namespace Bootstrap.Admin.Api
 {
     public class GiteeTest : ControllerTest
     {
-        public GiteeTest(BAWebHost factory) : base(factory, "api/Gitee") { }
+        public GiteeTest(BALoginWebHost factory) : base(factory, "api/Gitee") { }
 
         [Fact]
         public async void Issues_Ok()

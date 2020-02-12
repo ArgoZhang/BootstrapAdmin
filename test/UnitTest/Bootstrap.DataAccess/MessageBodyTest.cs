@@ -2,6 +2,7 @@
 
 namespace Bootstrap.DataAccess
 {
+    [Collection("Login")]
     public class MessageBodyTest
     {
         [Fact]

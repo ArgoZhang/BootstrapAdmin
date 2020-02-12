@@ -3,8 +3,8 @@
 namespace Bootstrap.DataAccess.MongoDB
 {
     [Collection("MongoContext")]
-    public class DictsTest : SqlServer.DictsTest
+    public class DictsTest : DataAccess.DictsTest
     {
-        protected override string DatabaseName { get; set; } = "MongoDB";
+
     }
 }

@@ -3,7 +3,7 @@
 namespace Bootstrap.DataAccess.MongoDB
 {
     [Collection("MongoContext")]
-    public class ResetUserTest : SqlServer.ResetUserTest
+    public class ResetUserTest : DataAccess.ResetUserTest
     {
 
     }
