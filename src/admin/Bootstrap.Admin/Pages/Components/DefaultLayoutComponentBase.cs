@@ -113,11 +113,10 @@ namespace Bootstrap.Admin.Pages.Components
         }
 
         /// <summary>
-        /// 设置参数方法
+        /// OnParametersSetAsync 方法
         /// </summary>
-        public override Task SetParametersAsync(ParameterView parameters)
+        protected override void OnParametersSet()
         {
-            parameters.SetParameterProperties(this);
             if (NavigationManager != null)
             {
                 RequestUrl = new UriBuilder(NavigationManager.Uri).Path;
@@ -125,11 +124,10 @@ namespace Bootstrap.Admin.Pages.Components
                 DisplayName = Model.DisplayName;
                 HomeUrl = NavigationManager.ToBlazorLink(HomeUrl);
             }
-            return base.SetParametersAsync(ParameterView.Empty);
         }
 
         /// <summary>
-        ///
+        /// 显示名称变化时方法
         /// </summary>
         public void OnDisplayNameChanged(string displayName)
         {
@@ -139,7 +137,7 @@ namespace Bootstrap.Admin.Pages.Components
         }
 
         /// <summary>
-        ///
+        /// OnAfterRender 方法
         /// </summary>
         /// <param name="firstRender"></param>
         protected override void OnAfterRender(bool firstRender)
