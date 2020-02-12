@@ -9,6 +9,7 @@ clone_depth: 1
 init:
 - ps: git version
 environment:
+  CI: true
   Appveyor: true
   COVERALLS_REPO_TOKEN: 
     secure: 5L1b6XqSNTOfU1iZrARo5eUOi1HOleVO3VDCW0pr6yaspgkC5jxL+gBDK0OEY8EI
@@ -18,7 +19,6 @@ environment:
     secure: 6rKKLXCmy3HZBxW5SjoO4Ox7G09FC0NJgGnvukWkYyJ2rx1GCzu4JvmLin69SHRz
   CODECOV_TOKEN_GITLAB:
     secure: +22PuAn5seq4bbCVCly8zDFuyEV3m2NjW3QuM0+2gm4c8akwicNFmv2T/ZGd0Jpd
-cache: C:\ProgramData\chocolatey\lib\codecov\tools
 services:
 - mssql2017
 - mongodb
