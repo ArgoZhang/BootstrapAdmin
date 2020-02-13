@@ -70,6 +70,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{D8F90830-15D0-4031-94EE-6E5D93CB734A}"
 	ProjectSection(SolutionItems) = preProject
 		appveyor.build.ps1 = appveyor.build.ps1
+		appveyor.install.ps1 = appveyor.install.ps1
 		appveyor.test.ps1 = appveyor.test.ps1
 		appveyor.yml = appveyor.yml
 	EndProjectSection
@@ -110,6 +111,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ci", "ci", "{5F732D4E-133B-4DA6-811B-C369CDC3FB89}"
 	ProjectSection(SolutionItems) = preProject
 		appveyor.build.ps1 = appveyor.build.ps1
+		appveyor.install.ps1 = appveyor.install.ps1
 		appveyor.test.ps1 = appveyor.test.ps1
 		appveyor.yml = appveyor.yml
 	EndProjectSection
