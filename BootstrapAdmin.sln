@@ -67,14 +67,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{41B6D37A-5E5
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "admin", "admin", "{E03B7391-B52F-4449-B400-5CD9DE01F085}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{D8F90830-15D0-4031-94EE-6E5D93CB734A}"
-	ProjectSection(SolutionItems) = preProject
-		appveyor.build.ps1 = appveyor.build.ps1
-		appveyor.install.ps1 = appveyor.install.ps1
-		appveyor.test.ps1 = appveyor.test.ps1
-		appveyor.yml = appveyor.yml
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{E057452E-00EB-4C46-9F8D-14096AAE8148}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
@@ -91,36 +83,36 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "srcipts", "srcipts", "{72C1
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "win", "win", "{C6F2DCA0-7941-4C28-9328-2D495F5DCB00}"
 	ProjectSection(SolutionItems) = preProject
-		publish-admin.cmd = publish-admin.cmd
-		publish-client.cmd = publish-client.cmd
-		watch-run-admin.cmd = watch-run-admin.cmd
-		watch-run-client.cmd = watch-run-client.cmd
+		scripts\windows\publish-admin.cmd = scripts\windows\publish-admin.cmd
+		scripts\windows\publish-client.cmd = scripts\windows\publish-client.cmd
+		scripts\windows\watch-run-admin.cmd = scripts\windows\watch-run-admin.cmd
+		scripts\windows\watch-run-client.cmd = scripts\windows\watch-run-client.cmd
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "linux", "linux", "{FDCFC3E3-14CF-40B2-9FE5-5BC239AAC110}"
 	ProjectSection(SolutionItems) = preProject
-		deploy-admin.sh = deploy-admin.sh
-		deploy-client.sh = deploy-client.sh
-		init.sh = init.sh
-		publish-admin.sh = publish-admin.sh
-		publish-client.sh = publish-client.sh
-		watch-run-admin.sh = watch-run-admin.sh
-		watch-run-client.sh = watch-run-client.sh
+		scripts\linux\deploy-admin.sh = scripts\linux\deploy-admin.sh
+		scripts\linux\deploy-client.sh = scripts\linux\deploy-client.sh
+		scripts\linux\init.sh = scripts\linux\init.sh
+		scripts\linux\publish-admin.sh = scripts\linux\publish-admin.sh
+		scripts\linux\publish-client.sh = scripts\linux\publish-client.sh
+		scripts\linux\watch-run-admin.sh = scripts\linux\watch-run-admin.sh
+		scripts\linux\watch-run-client.sh = scripts\linux\watch-run-client.sh
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ci", "ci", "{5F732D4E-133B-4DA6-811B-C369CDC3FB89}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "appveyor", "appveyor", "{5F732D4E-133B-4DA6-811B-C369CDC3FB89}"
 	ProjectSection(SolutionItems) = preProject
-		appveyor.build.ps1 = appveyor.build.ps1
-		appveyor.install.ps1 = appveyor.install.ps1
-		appveyor.test.ps1 = appveyor.test.ps1
+		scripts\appveyor\appveyor.build.ps1 = scripts\appveyor\appveyor.build.ps1
+		scripts\appveyor\appveyor.install.ps1 = scripts\appveyor\appveyor.install.ps1
+		scripts\appveyor\appveyor.test.ps1 = scripts\appveyor\appveyor.test.ps1
 		appveyor.yml = appveyor.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{68F7C160-3FB2-4129-8F89-96F78B2DA0A9}"
 	ProjectSection(SolutionItems) = preProject
-		services\ba.admin.service = services\ba.admin.service
-		services\ba.client.service = services\ba.client.service
-		services\nginx.service = services\nginx.service
+		scripts\linux\services\ba.admin.service = scripts\linux\services\ba.admin.service
+		scripts\linux\services\ba.client.service = scripts\linux\services\ba.client.service
+		scripts\linux\services\nginx.service = scripts\linux\services\nginx.service
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Oracle", "Oracle", "{41E078CA-F005-4B66-B440-FD7EB731AD61}"

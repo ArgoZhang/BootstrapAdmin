@@ -54,7 +54,7 @@ function reportCoveralls() {
 }
 
 function installCodecov {
-    write-host "install Codecov.Tool tools" -ForegroundColor Cyan
+    write-host "install codecov.tool tools" -ForegroundColor Cyan
     dotnet tool install Codecov.Tool --tool-path ".\tools"
 }
 

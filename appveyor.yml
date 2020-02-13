@@ -25,13 +25,13 @@ services:
 - mongodb
 install:
 - ps: >-
-    .\appveyor.install.ps1
+    .\scripts\appveyor\appveyor.install.ps1
 build_script:
 - ps: >-
-    .\appveyor.build.ps1
+    .\scripts\appveyor\appveyor.build.ps1
 test_script:
 - ps: >-
-    .\appveyor.test.ps1
+    .\scripts\appveyor\appveyor.test.ps1
 artifacts:
 - path: src\admin\Bootstrap.Admin\bin\release\netcoreapp3.1\publish\
   name: BootstrapAdmin
