@@ -59,6 +59,10 @@ INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'网站设�
 
 -- 地理位置接口
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'网站设置', N'IP地理位置接口', 'None', 0)
+INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'地理位置服务', N'百度地图开放平台', 'BaiDuIPSvr', 0);
+INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'地理位置服务', N'聚合地理位置', 'JuheIPSvr', 0);
+INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'地理位置服务', N'百度138地理位置', 'BaiDuIP138Svr', 0);
+
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'地理位置', N'BaiDuIPSvr', 'http://api.map.baidu.com/location/ip?ak=6lvVPMDlm2gjLpU0aiqPsHXi2OiwGQRj&ip=', 0)
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'地理位置', N'JuheIPSvr', 'http://apis.juhe.cn/ip/ipNew?key=f57102d1b9fadd3f4a1c29072d0c0206&ip=', 0)
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'地理位置', N'BaiDuIP138Svr', 'https://sp0.baidu.com/8aQDcjqpAAV3otqbppnN2DJv/api.php?resource_id=6006&query=', 0)

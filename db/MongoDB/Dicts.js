@@ -211,6 +211,24 @@
         "Define": NumberInt(0)
     },
     {
+        "Category": "地理位置服务",
+        "Name": "百度地图开放平台",
+        "Code": "BaiDuIPSvr",
+        "Define": NumberInt(0)
+    },
+    {
+        "Category": "地理位置服务",
+        "Name": "聚合地理位置",
+        "Code": "百度138地理位置",
+        "Define": NumberInt(0)
+    },
+    {
+        "Category": "地理位置服务",
+        "Name": "https://sp0.baidu.com/8aQDcjqpAAV3otqbppnN2DJv/api.php?resource_id=6006&query=",
+        "Code": "BaiDuIP138Svr",
+        "Define": NumberInt(0)
+    },
+    {
         "Category": "地理位置",
         "Name": "BaiDuIPSvr",
         "Code": "http://api.map.baidu.com/location/ip?ak=6lvVPMDlm2gjLpU0aiqPsHXi2OiwGQRj&ip=",
