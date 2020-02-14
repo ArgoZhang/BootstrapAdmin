@@ -92,6 +92,12 @@ $(function () {
                     }
                 });
                 break;
+            case 'saveIpLocator':
+                var iplocator = $iplocator.val();
+                $.bc({
+                    url: Settings.url, data: [{ name: 'IP地理位置接口', code: iplocator, category: '网站设置' }], title: '保存地理位置服务设置', method: "post"
+                });
+                break;
         }
     });
 
@@ -158,4 +164,5 @@ $(function () {
     });
 
     var $css = $('#dictCssDefine').dropdown('val');
+    var $iplocator = $('#iplocator').dropdown('val');
 });

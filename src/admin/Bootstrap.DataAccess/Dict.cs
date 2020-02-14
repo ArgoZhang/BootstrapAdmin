@@ -296,5 +296,11 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <returns></returns>
         public bool RetrieveFixedTableHeader() => (DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "固定表头" && d.Define == 0)?.Code ?? "1") == "1";
+
+        /// <summary>
+        /// 获得字典表地理位置配置信息集合
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<BootstrapDict> RetireveLocators() => DictHelper.RetrieveDicts().Where(d => d.Category == "地理位置");
     }
 }
