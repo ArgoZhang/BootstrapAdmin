@@ -189,10 +189,10 @@
             <div class="btn-group" role="group">
                 <button id="iplocator" class="btn btn-success dropdown-select dropdown-toggle" data-toggle="dropdown" data-default-val="None" value="@Model.IPLocatorSvr">@Model.IPLocatorSvr</button>
                 <div class="dropdown-menu">
-                    <a href="#" data-val="None">None</a>
+                    <a href="#" data-val="None">未设置</a>
                     @foreach (var ip in Model.IPLocators)
                     {
-                        <a href="#" data-val="@ip.Name">@ip.Name</a>
+                        <a href="#" data-val="@ip.Code">@ip.Name</a>
                     }
                 </div>
             </div>

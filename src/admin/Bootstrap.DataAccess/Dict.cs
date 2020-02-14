@@ -301,6 +301,6 @@ namespace Bootstrap.DataAccess
         /// 获得字典表地理位置配置信息集合
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<BootstrapDict> RetireveLocators() => DictHelper.RetrieveDicts().Where(d => d.Category == "地理位置");
+        public IEnumerable<BootstrapDict> RetireveLocators() => DictHelper.RetrieveDicts().Where(d => d.Category == "地理位置服务");
     }
 }
