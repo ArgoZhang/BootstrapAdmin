@@ -281,5 +281,11 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <returns></returns>
         public static bool RetrieveFixedTableHeader() => DbContextManager.Create<Dict>()?.RetrieveFixedTableHeader() ?? false;
+
+        /// <summary>
+        /// 获得字典表地理位置配置信息集合
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<BootstrapDict> RetireveLocators() => DbContextManager.Create<Dict>()?.RetireveLocators() ?? new BootstrapDict[0];
     }
 }

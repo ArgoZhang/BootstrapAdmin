@@ -179,6 +179,29 @@
         </div>
     </div>
 </div>
+<div class="card" asp-auth="iplocate">
+    <div class="card-header">地址位置信息</div>
+    <div class="card-body">
+        <div class="alert alert-danger" role="alert" asp-condition="@Model.IsDemo">
+            <span>演示系统禁止更改地理信息配置</span>
+        </div>
+        <div class="form-group">
+            <div class="btn-group" role="group">
+                <button id="iplocator" class="btn btn-success dropdown-select dropdown-toggle" data-toggle="dropdown" data-default-val="None" value="@Model.IPLocatorSvr">@Model.IPLocatorSvr</button>
+                <div class="dropdown-menu">
+                    <a href="#" data-val="None">None</a>
+                    @foreach (var ip in Model.IPLocators)
+                    {
+                        <a href="#" data-val="@ip.Name">@ip.Name</a>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer text-right" asp-condition="@(!Model.IsDemo)">
+            <button data-method="saveIpLocator" class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
+        </div>
+    </div>
+</div>
 <div class="card">
     <div class="card-header">
         <div class="d-flex align-items-center">
