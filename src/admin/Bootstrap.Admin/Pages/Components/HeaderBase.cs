@@ -14,7 +14,13 @@ namespace Bootstrap.Admin.Pages.Components
         /// 获得 网站标题
         /// </summary>
         [Parameter]
-        public string Title { get; set; } = "";
+        public string WebTitle { get; set; } = "";
+
+        /// <summary>
+        /// 获得/设置 网站标题改变事件回调方法
+        /// </summary>
+        [Parameter]
+        public EventCallback<string> WebTitleChanged { get; set; }
 
         /// <summary>
         /// 获得 根模板页实例

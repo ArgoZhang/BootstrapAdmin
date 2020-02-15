@@ -11,10 +11,10 @@
             </ConditionComponent>
             <div class="form-group">
                 <div class="input-group">
-                    <input type="text" class="form-control" id="sysName" placeholder="请输入网站标题，50字以内" value="@Model.Title" />
+                    <input type="text" class="form-control" placeholder="请输入网站标题，50字以内" @bind-value="@Model.Title" />
                     <ConditionComponent Inverse="true">
                         <div class="input-group-append">
-                            <button class="btn btn-secondary" type="button">保存</button>
+                            <button class="btn btn-secondary" type="button" @onclick="SaveWebTitle">保存</button>
                         </div>
                     </ConditionComponent>
                 </div>

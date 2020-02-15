@@ -38,5 +38,17 @@ namespace Bootstrap.Admin.Pages.Components
         /// </summary>
         [Parameter]
         public EventCallback<string> DisplayNameChanged { get; set; }
+
+        /// <summary>
+        /// 获得/设置 网站标题
+        /// </summary>
+        [Parameter]
+        public string WebTitle { get; set; } = "";
+
+        /// <summary>
+        /// 获得/设置 网站标题改变事件回调方法
+        /// </summary>
+        [Parameter]
+        public EventCallback<string> WebTitleChanged { get; set; }
     }
 }

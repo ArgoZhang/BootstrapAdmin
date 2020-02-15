@@ -116,6 +116,20 @@ namespace Bootstrap.DataAccess
         }
 
         /// <summary>
+        /// 保存网站标题
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        public static bool SaveWebTitle(string code)
+        {
+            var ret = DictHelper.SaveSettings(new BootstrapDict[]
+            {
+                new BootstrapDict() { Category = "网站设置", Name = "网站标题", Code = code }
+            });
+            return ret;
+        }
+
+        /// <summary>
         /// 获取字典分类名称
         /// </summary>
         /// <returns></returns>

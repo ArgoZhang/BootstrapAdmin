@@ -161,6 +161,16 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
         }
 
         /// <summary>
+        /// 保存网站标题
+        /// </summary>
+        protected void SaveWebTitle()
+        {
+            var ret = DictHelper.SaveWebTitle(Model.Title);
+            RootLayout?.OnWebTitleChanged(Model.Title);
+            ShowMessage("保存网站标题", ret);
+        }
+
+        /// <summary>
         /// 网站设置编辑模型实体类
         /// </summary>
         protected class EditModel

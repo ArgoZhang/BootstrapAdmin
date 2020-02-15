@@ -60,6 +60,11 @@ namespace Bootstrap.Admin.Pages.Components
         /// <summary>
         ///
         /// </summary>
+        public string WebTitle { get; set; } = "";
+
+        /// <summary>
+        ///
+        /// </summary>
         public bool IsAdmin { get; set; }
 
         /// <summary>
@@ -122,6 +127,7 @@ namespace Bootstrap.Admin.Pages.Components
                 RequestUrl = new UriBuilder(NavigationManager.Uri).Path;
                 Model = new NavigatorBarModel(UserName, RequestUrl.ToMvcMenuUrl());
                 DisplayName = Model.DisplayName;
+                WebTitle = Model.Title;
                 if (HomeUrl.StartsWith("/")) HomeUrl = NavigationManager.ToBlazorLink(HomeUrl);
             }
         }
@@ -134,6 +140,16 @@ namespace Bootstrap.Admin.Pages.Components
             DisplayName = displayName;
             Header?.DisplayNameChanged.InvokeAsync(DisplayName);
             SideBar?.DisplayNameChanged.InvokeAsync(DisplayName);
+        }
+
+        /// <summary>
+        /// 网站标题变化时触发此方法
+        /// </summary>
+        /// <param name="title"></param>
+        public void OnWebTitleChanged(string title)
+        {
+            Header?.WebTitleChanged.InvokeAsync(title);
+            SideBar?.WebTitleChanged.InvokeAsync(title);
         }
 
         /// <summary>
