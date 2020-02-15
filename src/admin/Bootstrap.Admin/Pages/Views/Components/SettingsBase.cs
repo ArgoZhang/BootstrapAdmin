@@ -171,6 +171,16 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
         }
 
         /// <summary>
+        /// 保存网站页脚
+        /// </summary>
+        protected void SaveWebFooter()
+        {
+            var ret = DictHelper.SaveWebFooter(Model.Footer);
+            RootLayout?.OnWebFooterChanged(Model.Footer);
+            ShowMessage("保存网站页脚", ret);
+        }
+
+        /// <summary>
         /// 网站设置编辑模型实体类
         /// </summary>
         protected class EditModel

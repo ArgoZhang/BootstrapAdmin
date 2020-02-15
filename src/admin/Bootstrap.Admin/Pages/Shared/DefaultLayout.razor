@@ -4,5 +4,5 @@
     <Header @ref="Header" Icon="@Model.Icon" @bind-DisplayName="DisplayName" @bind-WebTitle="WebTitle"/>
     <SideBar @ref="SideBar" Model=@Model @bind-DisplayName="DisplayName" @bind-WebTitle="WebTitle" />
     @Body
-    <Footer Text="@Model.Footer" IsDemo=@Model.IsDemo></Footer>
+    <Footer @ref="Footer" IsDemo=@Model.IsDemo @bind-Text="WebFooter"></Footer>
 </CascadingValue>

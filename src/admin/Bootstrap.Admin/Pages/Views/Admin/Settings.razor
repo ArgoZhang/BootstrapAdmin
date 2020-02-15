@@ -33,10 +33,10 @@
             </ConditionComponent>
             <div class="form-group">
                 <div class="input-group">
-                    <input type="text" class="form-control" id="sysFoot" placeholder="请输入网站页脚，50字以内" value="@Model.Footer" />
+                    <input type="text" class="form-control" id="sysFoot" placeholder="请输入网站页脚，50字以内" @bind-value="@Model.Footer" />
                     <ConditionComponent Inverse="true">
                         <div class="input-group-append">
-                            <button class="btn btn-secondary" type="button">保存</button>
+                            <button class="btn btn-secondary" type="button" @onclick="SaveWebFooter">保存</button>
                         </div>
                     </ConditionComponent>
                 </div>

@@ -16,5 +16,8 @@
     public string Text { get; set; } = "未设置";
 
     [Parameter]
+    public EventCallback<string> TextChanged { get; set; }
+
+    [Parameter]
     public bool IsDemo { get; set; }
 }

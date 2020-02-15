@@ -88,6 +88,11 @@ namespace Bootstrap.Admin.Pages.Components
         protected SideBar? SideBar { get; set; }
 
         /// <summary>
+        /// Footer 组件引用实例
+        /// </summary>
+        protected Footer? Footer { get; set; }
+
+        /// <summary>
         /// OnInitializedAsync 方法
         /// </summary>
         /// <returns></returns>
@@ -128,6 +133,7 @@ namespace Bootstrap.Admin.Pages.Components
                 Model = new NavigatorBarModel(UserName, RequestUrl.ToMvcMenuUrl());
                 DisplayName = Model.DisplayName;
                 WebTitle = Model.Title;
+                WebFooter = Model.Footer;
                 if (HomeUrl.StartsWith("/")) HomeUrl = NavigationManager.ToBlazorLink(HomeUrl);
             }
         }
@@ -151,6 +157,18 @@ namespace Bootstrap.Admin.Pages.Components
             Header?.WebTitleChanged.InvokeAsync(title);
             SideBar?.WebTitleChanged.InvokeAsync(title);
         }
+
+        /// <summary>
+        /// 获得/设置 网站页脚文字
+        /// </summary>
+        /// <value></value>
+        public string WebFooter { get; set; } = "";
+
+        /// <summary>
+        /// 网站页脚文字变化是触发此方法
+        /// </summary>
+        /// <param name="text"></param>
+        public void OnWebFooterChanged(string text) => Footer?.TextChanged.InvokeAsync(text);
 
         /// <summary>
         /// OnAfterRender 方法
