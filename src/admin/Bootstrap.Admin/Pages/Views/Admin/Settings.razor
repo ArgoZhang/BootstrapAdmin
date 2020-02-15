@@ -188,6 +188,26 @@
         </div>
     </div>
 </ConditionComponent>
+<ConditionComponent AuthKey="iplocate">
+    <div class="card">
+        <div class="card-header">地址位置信息</div>
+        <div class="card-body">
+            <ConditionComponent>
+                <div class="alert alert-danger" role="alert">
+                    <span>演示系统禁止更改地理信息配置</span>
+                </div>
+            </ConditionComponent>
+            <div class="form-group">
+                <Dropdown @bind-Value="@Model.SelectedIPLocator" Items="@Model.IPLocators"></Dropdown>
+            </div>
+            <ConditionComponent Inverse="true">
+                <div class="modal-footer text-right">
+                    <button class="btn btn-secondary" type="button" @onclick="SaveIPLocator"><i class="fa fa-save"></i><span>保存</span></button>
+                </div>
+            </ConditionComponent>
+        </div>
+    </div>
+</ConditionComponent>
 <div class="card">
     <div class="card-header">
         <span>网站缓存</span>

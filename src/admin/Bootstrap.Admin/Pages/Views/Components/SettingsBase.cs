@@ -46,7 +46,7 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
         /// </summary>
         /// <param name="text"></param>
         /// <param name="ret"></param>
-        protected void ShowMessage(string text, bool ret = true) => Toast?.ShowMessage("网站设置", text, ret ? ToastCategory.Success : ToastCategory.Error);
+        protected void ShowMessage(string text, bool ret = true) => Toast?.ShowMessage("网站设置", ret ? $"{text}成功" : $"{text}失败", ret ? ToastCategory.Success : ToastCategory.Error);
 
         /// <summary>
         /// 设置参数方法
@@ -66,6 +66,21 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
             Model.EnableBlazor = DictHelper.RetrieveEnableBlazor();
             Model.FixedTableHeader = DictHelper.RetrieveFixedTableHeader();
             Model.Themes = DictHelper.RetrieveThemes();
+
+            Model.IPLocators = new SelectedItem[] { new SelectedItem() { Text = "未设置", Value = "None" } }.Union(DictHelper.RetireveLocators().Select(d => new SelectedItem()
+            {
+                Text = d.Name,
+                Value = d.Code
+            }));
+
+            var ipSvr = DictHelper.RetrieveLocaleIPSvr();
+            var ipSvrText = Model.IPLocators.FirstOrDefault(i => i.Value == ipSvr)?.Text ?? "未设置";
+            var ipSvrValue = ipSvrText == "未设置" ? "None" : ipSvr;
+            Model.SelectedIPLocator = new SelectedItem()
+            {
+                Text = ipSvrText,
+                Value = ipSvrValue
+            };
         }
 
         /// <summary>
@@ -115,7 +130,7 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
                  new BootstrapDict() { Category = "网站设置", Name = "卡片标题状态", Code = Model.ShowCardTitle ? "1" : "0" },
                  new BootstrapDict() { Category = "网站设置", Name = "固定表头", Code = Model.FixedTableHeader ? "1" : "0" }
             });
-            ShowMessage("网站调整保存", ret);
+            ShowMessage("保存网站调整", ret);
 
             // 根据保存结果设置网站样式
             if (ret) RootLayout?.JSRuntime?.SetWebSettings(Model.ShowSideBar, Model.ShowCardTitle, Model.FixedTableHeader);
@@ -130,7 +145,19 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
                  new BootstrapDict() { Category = "网站设置", Name = "OAuth 认证登录", Code = Model.ShowOAuth ? "1" : "0" },
                  new BootstrapDict() { Category = "网站设置", Name = "短信验证码登录", Code = Model.ShowMobile ? "1" : "0" }
             });
-            ShowMessage("登录设置保存", ret);
+            ShowMessage("保存登录设置", ret);
+        }
+
+        /// <summary>
+        /// 保存地理位置信息
+        /// </summary>
+        protected void SaveIPLocator()
+        {
+            var ret = DictHelper.SaveSettings(new BootstrapDict[]
+            {
+                new BootstrapDict() { Category = "网站设置", Name = "IP地理位置接口", Code = Model.SelectedIPLocator.Value }
+            });
+            ShowMessage("保存 IP 地理位置", ret);
         }
 
         /// <summary>
@@ -202,6 +229,16 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
             /// 获得/设置 系统样式集合
             /// </summary>
             public IEnumerable<BootstrapDict> Themes { get; set; } = new HashSet<BootstrapDict>();
+
+            /// <summary>
+            /// 获得/设置 地理位置配置信息集合
+            /// </summary>
+            public IEnumerable<SelectedItem> IPLocators { get; set; } = new SelectedItem[0];
+
+            /// <summary>
+            /// 获得/设置 选中的地理位置配置信息
+            /// </summary>
+            public SelectedItem SelectedIPLocator { get; set; } = new SelectedItem();
         }
     }
 }

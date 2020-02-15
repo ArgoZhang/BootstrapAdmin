@@ -25,5 +25,14 @@ namespace Bootstrap.Admin.Pages.Components
         /// </summary>
         [Parameter]
         public EventCallback<SelectedItem> ValueChanged { get; set; }
+
+        /// <summary>
+        ///
+        /// </summary>
+        protected void OnClick(SelectedItem item)
+        {
+            Value = item;
+            if (ValueChanged.HasDelegate) ValueChanged.InvokeAsync(Value);
+        }
     }
 }

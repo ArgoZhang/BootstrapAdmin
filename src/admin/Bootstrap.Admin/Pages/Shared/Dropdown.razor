@@ -5,7 +5,7 @@
     <div class="dropdown-menu">
         @foreach (var item in Items)
         {
-            <div class="dropdown-item" @onclick="e => Value = item">@item.Text</div>
+            <div class="dropdown-item" @onclick="e => OnClick(item)">@item.Text</div>
         }
     </div>
 </div>
