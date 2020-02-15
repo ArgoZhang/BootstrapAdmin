@@ -3,6 +3,7 @@ using Bootstrap.Security.Mvc;
 using Longbow.Web;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
@@ -193,6 +194,21 @@ namespace Bootstrap.DataAccess
         }
 
         [Fact]
+        public async void BaiDu138Svr_Ok()
+        {
+            var ipUri = DictHelper.RetrieveLocaleIPSvrUrl("BaiDuIP138Svr");
+
+            // 日本东京
+            using var client = new HttpClient();
+            var locator = await client.GetAsJsonAsync<BaiduIP138Locator>($"{ipUri}207.148.111.94");
+            Assert.Equal("0", locator.Status);
+
+            // 四川成都
+            locator = await client.GetAsJsonAsync<BaiduIP138Locator>($"{ipUri}182.148.123.196");
+            Assert.Equal("0", locator.Status);
+        }
+
+        [Fact]
         public void RetrieveAccessLogPeriod_Ok()
         {
             Assert.Equal(1, DictHelper.RetrieveAccessLogPeriod());
@@ -333,6 +349,37 @@ namespace Bootstrap.DataAccess
                 return Country != "中国" ? $"{Country} {Province} {Isp}" : $"{Province} {City} {Isp}";
             }
         }
+
+        private class BaiduIP138Locator
+        {
+            /// <summary>
+            /// 
+            /// </summary>
+            public string Status { get; set; } = "";
+
+            /// <summary>
+            /// 获得/设置 地理位置结果 
+            /// </summary>
+            public IEnumerable<BaiDuIp138LocatorResult> Data { get; set; } = new BaiDuIp138LocatorResult[0];
+        }
+
+        /// <summary>
+        /// Ip138 地理位置结果实体类
+        /// </summary>
+        private class BaiDuIp138LocatorResult
+        {
+            /// <summary>
+            /// 获得/设置 地理位置信息
+            /// </summary>
+            public string Location { get; set; } = "";
+
+            /// <summary>
+            /// ToString 方法
+            /// </summary>
+            /// <returns></returns>
+            public override string ToString() => Location;
+        }
+
         #endregion
     }
 }
