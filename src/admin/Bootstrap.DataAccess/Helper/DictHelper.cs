@@ -116,30 +116,34 @@ namespace Bootstrap.DataAccess
         }
 
         /// <summary>
-        /// 保存网站标题
+        /// 保存网站UI设置
         /// </summary>
-        /// <param name="code"></param>
+        /// <param name="items"></param>
         /// <returns></returns>
-        public static bool SaveWebTitle(string code)
+        public static bool SaveUISettings(IEnumerable<BootstrapDict> items)
         {
-            var ret = DictHelper.SaveSettings(new BootstrapDict[]
+            var cache = new Dictionary<string, string>()
             {
-                new BootstrapDict() { Category = "网站设置", Name = "网站标题", Code = code }
-            });
-            return ret;
-        }
-
-        /// <summary>
-        /// 保存网站页脚
-        /// </summary>
-        /// <param name="code"></param>
-        /// <returns></returns>
-        public static bool SaveWebFooter(string code)
-        {
-            var ret = DictHelper.SaveSettings(new BootstrapDict[]
+                ["SaveWebTitle"] = "网站标题",
+                ["SaveWebFooter"] = "网站页脚",
+                ["SaveTheme"] = "使用样式",
+                ["ShowCardTitle"] = "卡片标题状态",
+                ["ShowSideBar"] = "侧边栏状态",
+                ["FixedTableHeader"] = "固定表头",
+                ["OAuth"] = "OAuth 认证登录",
+                ["SMS"] = "短信验证码登录",
+                ["AutoLock"] = "自动锁屏",
+                ["AutoLockPeriod"] = "自动锁屏时长",
+                ["DefaultApp"] = "默认应用程序",
+                ["Blazor"] = "Blazor",
+                ["IPLocator"] = "IP地理位置接口"
+            };
+            var ret = DictHelper.SaveSettings(items.Where(i => cache.Any(c => c.Key == i.Name)).Select(i => new BootstrapDict()
             {
-                new BootstrapDict() { Category = "网站设置", Name = "网站页脚", Code = code }
-            });
+                Category = "网站设置",
+                Name = cache[i.Name],
+                Code = i.Code
+            }));
             return ret;
         }
 

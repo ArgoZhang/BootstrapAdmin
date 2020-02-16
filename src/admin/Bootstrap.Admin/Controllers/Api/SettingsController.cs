@@ -22,8 +22,8 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="values"></param>
         /// <returns></returns>
         [HttpPost]
-        [ButtonAuthorize(Url = "~/Admin/Settings", Auth = "saveTitle,saveFooter,saveTheme,saveUISettings,clearCache,clearAllCache,loginSettings,lockScreen,defaultApp,blazor")]
-        public bool Post([FromBody]IEnumerable<BootstrapDict> values) => DictHelper.SaveSettings(values);
+        [ButtonAuthorize(Url = "~/Admin/Settings", Auth = "saveTitle,saveFooter,saveTheme,saveUISettings,loginSettings,lockScreen,defaultApp,blazor,iplocate")]
+        public bool Post([FromBody]IEnumerable<BootstrapDict> values) => DictHelper.SaveUISettings(values);
 
         /// <summary>
         /// 获取网站缓存站点集合

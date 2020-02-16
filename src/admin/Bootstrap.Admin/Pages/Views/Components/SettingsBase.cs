@@ -165,7 +165,13 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
         /// </summary>
         protected void SaveWebTitle()
         {
-            var ret = DictHelper.SaveWebTitle(Model.Title);
+            var ret = DictHelper.SaveSettings(new BootstrapDict[]{
+                new BootstrapDict() {
+                    Category = "网站设置",
+                    Name = "网站标题",
+                    Code = Model.Title
+                }
+            });
             RootLayout?.OnWebTitleChanged(Model.Title);
             ShowMessage("保存网站标题", ret);
         }
@@ -175,7 +181,13 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
         /// </summary>
         protected void SaveWebFooter()
         {
-            var ret = DictHelper.SaveWebFooter(Model.Footer);
+            var ret = DictHelper.SaveSettings(new BootstrapDict[]{
+                new BootstrapDict() {
+                    Category = "网站设置",
+                    Name = "网站页脚",
+                    Code = Model.Footer
+                }
+            });
             RootLayout?.OnWebFooterChanged(Model.Footer);
             ShowMessage("保存网站页脚", ret);
         }

@@ -11,7 +11,9 @@ $(function () {
             case 'footer':
                 data = dataBinder.get();
                 $.bc({
-                    url: Settings.url, data: [{ name: '网站页脚', code: data.Footer, category: '网站设置' }], title: '保存网站页脚', method: "post",
+                    url: Settings.url, data: [
+                        { name: 'SaveWebFooter', code: data.Footer }
+                    ], title: '保存网站页脚', method: "post",
                     callback: function (result) {
                         if (result) $('#websiteFooter').text(data.Footer);
                     }
@@ -20,16 +22,20 @@ $(function () {
             case 'title':
                 data = dataBinder.get();
                 $.bc({
-                    url: Settings.url, data: [{ name: '网站标题', code: data.Title, category: '网站设置' }], title: '保存网站标题', method: "post",
+                    url: Settings.url, data: [
+                        { name: 'SaveWebTitle', code: data.Title }
+                    ], title: '保存网站标题', method: "post",
                     callback: function (result) {
-                        if (result) $('#websiteTitle').text(data.Title);
+                        if (result) $('#websiteTitle, aside .nav-brand a span').text(data.Title);
                     }
                 });
                 break;
             case 'css':
                 var cssDefine = $css.val();
                 $.bc({
-                    url: Settings.url, data: [{ name: '使用样式', code: cssDefine, category: '当前样式' }], title: '保存网站样式', method: "post",
+                    url: Settings.url, data: [
+                        { name: 'SaveTheme', code: cssDefine }
+                    ], title: '保存网站样式', method: "post",
                     callback: function (result) {
                         if (result) {
                             window.setTimeout(function () { window.location.reload(true); }, 1000);
@@ -43,9 +49,9 @@ $(function () {
                 var fixedTableHeader = $('#tableHeader').prop('checked') ? "1" : "0";
                 $.bc({
                     url: Settings.url, data: [
-                        { name: '卡片标题状态', code: cardTitle, category: '网站设置' },
-                        { name: '侧边栏状态', code: uiSettings, category: '网站设置' },
-                        { name: '固定表头', code: fixedTableHeader, category: '网站设置' }
+                        { name: 'ShowCardTitle', code: cardTitle },
+                        { name: 'ShowSideBar', code: uiSettings },
+                        { name: 'FixedTableHeader', code: fixedTableHeader }
                     ], title: '保存网站设置', method: "post",
                     callback: function (result) {
                         if (result) {
@@ -58,13 +64,19 @@ $(function () {
                 var mobile = $('#mobile').prop('checked') ? "1" : "0";
                 var oauth = $('#oauth').prop('checked') ? "1" : "0";
                 $.bc({
-                    url: Settings.url, data: [{ name: 'OAuth 认证登录', code: oauth, category: '网站设置' }, { name: '短信验证码登录', code: mobile, category: '网站设置' }], title: '登录设置', method: "post"
+                    url: Settings.url, data: [
+                        { name: 'OAuth', code: oauth },
+                        { name: 'SMS', code: mobile }
+                    ], title: '登录设置', method: "post"
                 });
                 break;
             case 'saveAutoLock':
                 var autoLock = $('#lockScreen').prop('checked') ? "1" : "0";
                 $.bc({
-                    url: Settings.url, data: [{ name: '自动锁屏', code: autoLock, category: '网站设置' }, { name: '自动锁屏时长', code: $('#lockPeriod').val(), category: '网站设置' }], title: '保存自动锁屏设置', method: "post",
+                    url: Settings.url, data: [
+                        { name: 'AutoLock', code: autoLock },
+                        { name: 'AutoLockPeriod', code: $('#lockPeriod').val() }
+                    ], title: '保存自动锁屏设置', method: "post",
                     callback: function (result) {
                         if (result) {
                             window.setTimeout(function () { window.location.reload(true); }, 1000);
@@ -75,13 +87,13 @@ $(function () {
             case 'saveDefaultApp':
                 var defaultApp = $('#defaultApp').prop('checked') ? "1" : "0";
                 $.bc({
-                    url: Settings.url, data: [{ name: '默认应用程序', code: defaultApp, category: '网站设置' }], title: '保存默认应用程序设置', method: "post"
+                    url: Settings.url, data: [{ name: 'DefaultApp', code: defaultApp }], title: '保存默认应用程序设置', method: "post"
                 });
                 break;
             case 'saveBlazor':
                 var blazor = $('#blazor').prop('checked') ? "1" : "0";
                 $.bc({
-                    url: Settings.url, data: [{ name: 'Blazor', code: blazor, category: '网站设置' }], title: 'Blazor 设置', method: "post",
+                    url: Settings.url, data: [{ name: 'Blazor', code: blazor }], title: 'Blazor 设置', method: "post",
                     callback: function (result) {
                         if (result) {
                             // 通过值设置是否显示 Blazor 挂件
@@ -95,7 +107,7 @@ $(function () {
             case 'saveIpLocator':
                 var iplocator = $iplocator.val();
                 $.bc({
-                    url: Settings.url, data: [{ name: 'IP地理位置接口', code: iplocator, category: '网站设置' }], title: '保存地理位置服务设置', method: "post"
+                    url: Settings.url, data: [{ name: 'IPLocator', code: iplocator }], title: '保存地理位置服务设置', method: "post"
                 });
                 break;
         }

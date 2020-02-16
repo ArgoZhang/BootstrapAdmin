@@ -101,7 +101,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual string RetrieveActiveTheme()
         {
-            var theme = DictHelper.RetrieveDicts().FirstOrDefault(d => d.Name == "使用样式" && d.Category == "当前样式" && d.Define == 0);
+            var theme = DictHelper.RetrieveDicts().FirstOrDefault(d => d.Name == "使用样式" && d.Category == "网站设置" && d.Define == 0);
             return theme == null ? string.Empty : (theme.Code.Equals("site.css", StringComparison.OrdinalIgnoreCase) ? string.Empty : theme.Code);
         }
 
