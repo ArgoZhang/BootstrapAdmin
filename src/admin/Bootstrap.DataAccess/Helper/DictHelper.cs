@@ -136,7 +136,13 @@ namespace Bootstrap.DataAccess
                 ["AutoLockPeriod"] = "自动锁屏时长",
                 ["DefaultApp"] = "默认应用程序",
                 ["Blazor"] = "Blazor",
-                ["IPLocator"] = "IP地理位置接口"
+                ["IPLocator"] = "IP地理位置接口",
+                ["ErrLog"] = "程序异常保留时长",
+                ["OpLog"] = "操作日志保留时长",
+                ["LogLog"] = "登录日志保留时长",
+                ["TraceLog"] = "访问日志保留时长",
+                ["CookiePeriod"] = "Cookie保留时长",
+                ["IPCachePeriod"] = "IP请求缓存时长"
             };
             var ret = DictHelper.SaveSettings(items.Where(i => cache.Any(c => c.Key == i.Name)).Select(i => new BootstrapDict()
             {

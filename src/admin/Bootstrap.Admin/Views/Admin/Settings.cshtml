@@ -202,6 +202,45 @@
         </div>
     </div>
 </div>
+<div class="card" asp-auth="logSettings">
+    <div class="card-header">日志缓存设置</div>
+    <div class="card-body">
+        <div class="alert alert-danger" role="alert" asp-condition="@Model.IsDemo">
+            <span>演示系统禁止更改日志缓存设置</span>
+        </div>
+        <div class="form-inline">
+            <div class="row">
+                <div class="form-group col-6">
+                    <label class="control-label" for="appErrorLog">异常日志(月)</label>
+                    <input id="appErrorLog" type="number" class="form-control" min="1" value="@Model.ErrorLogPeriod" />
+                </div>
+                <div class="form-group col-6">
+                    <label class="control-label" for="opLog">操作日志(月)</label>
+                    <input id="opLog" type="number" class="form-control" min="1" value="@Model.OpLog" />
+                </div>
+                <div class="form-group col-6">
+                    <label class="control-label" for="logLog">登录日志(月)</label>
+                    <input id="logLog" type="number" class="form-control" min="1" value="@Model.LogLog" />
+                </div>
+                <div class="form-group col-6">
+                    <label class="control-label" for="traceLog">访问日志(月)</label>
+                    <input id="traceLog" type="number" class="form-control" min="1" value="@Model.TraceLog" />
+                </div>
+                <div class="form-group col-6">
+                    <label class="control-label" for="cookiePeriod">Cookie(天)</label>
+                    <input id="cookiePeriod" type="number" class="form-control" min="1" value="@Model.CookiePeriod" />
+                </div>
+                <div class="form-group col-6">
+                    <label class="control-label" for="ipCachePeriod">IP 缓存(分)</label>
+                    <input id="ipCachePeriod" type="number" class="form-control" min="1" value="@Model.IPCachePeriod" />
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer text-right" asp-condition="@(!Model.IsDemo)">
+            <button data-method="saveLogPeriod" class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
+        </div>
+    </div>
+</div>
 <div class="card">
     <div class="card-header">
         <div class="d-flex align-items-center">

@@ -110,6 +110,28 @@ $(function () {
                     url: Settings.url, data: [{ name: 'IPLocator', code: iplocator }], title: '保存地理位置服务设置', method: "post"
                 });
                 break;
+            case 'saveLogPeriod':
+                var errLog = $('#appErrorLog').val();
+                var opLog = $('#opLog').val();
+                var logLog = $('#logLog').val();
+                var traceLog = $('#traceLog').val();
+                var cookiePeriod = $('#cookiePeriod').val();
+                var ipCachePeriod = $('#ipCachePeriod').val();
+                $.bc({
+                    url: Settings.url, data: [
+                        { name: 'ErrLog', code: errLog },
+                        { name: 'OpLog', code: opLog },
+                        { name: 'LogLog', code: logLog },
+                        { name: 'TraceLog', code: traceLog },
+                        { name: 'CookiePeriod', code: cookiePeriod },
+                        { name: 'IPCachePeriod', code: ipCachePeriod }
+                    ], title: '保存日志缓存设置', method: "post",
+                    callback: function (result) {
+                        if (result) {
+                            window.setTimeout(function () { window.location.reload(true); }, 1000);
+                        }
+                    }
+                });
         }
     });
 

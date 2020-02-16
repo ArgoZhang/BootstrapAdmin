@@ -21,6 +21,12 @@ namespace Bootstrap.Admin.Models
             DefaultApp = DictHelper.RetrieveDefaultApp();
             IPLocators = DictHelper.RetireveLocators();
             IPLocatorSvr = DictHelper.RetrieveLocaleIPSvr();
+            ErrorLogPeriod = DictHelper.RetrieveExceptionsLogPeriod();
+            OpLog = DictHelper.RetrieveLogsPeriod();
+            LogLog = DictHelper.RetrieveLoginLogsPeriod();
+            TraceLog = DictHelper.RetrieveAccessLogPeriod();
+            CookiePeriod = DictHelper.RetrieveCookieExpiresPeriod();
+            IPCachePeriod = DictHelper.RetrieveLocaleIPSvrCachePeriod();
         }
 
         /// <summary>
@@ -31,13 +37,11 @@ namespace Bootstrap.Admin.Models
         /// <summary>
         /// 获得 地理位置信息集合
         /// </summary>
-        /// <value></value>
         public IEnumerable<BootstrapDict> IPLocators { get; }
 
         /// <summary>
         /// 获得 数据库中配置的地理位置信息接口
         /// </summary>
-        /// <value></value>
         public string IPLocatorSvr { get; }
 
         /// <summary>
@@ -49,5 +53,35 @@ namespace Bootstrap.Admin.Models
         /// 获得 是否开启自动锁屏
         /// </summary>
         public bool DefaultApp { get; }
+
+        /// <summary>
+        /// 程序异常日志保留时长
+        /// </summary>
+        public int ErrorLogPeriod { get; }
+
+        /// <summary>
+        /// 操作日志保留时长
+        /// </summary>
+        public int OpLog { get; }
+
+        /// <summary>
+        /// 登录日志保留时长
+        /// </summary>
+        public int LogLog { get; }
+
+        /// <summary>
+        /// 访问日志保留时长
+        /// </summary>
+        public int TraceLog { get; }
+
+        /// <summary>
+        /// Cookie保留时长
+        /// </summary>
+        public int CookiePeriod { get; }
+
+        /// <summary>
+        /// IP请求缓存时长
+        /// </summary>
+        public int IPCachePeriod { get; }
     }
 }
