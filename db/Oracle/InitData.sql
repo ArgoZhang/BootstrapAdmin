@@ -26,7 +26,7 @@ INSERT INTO Dicts (Id, Category, Name, Code, Define) Values (SEQ_DICTS_ID.NEXTVA
 INSERT INTO Dicts (Id, Category, Name, Code, Define) Values (SEQ_DICTS_ID.NEXTVAL, '网站样式', '蓝色样式', 'blue.css', 0);
 INSERT INTO Dicts (Id, Category, Name, Code, Define) Values (SEQ_DICTS_ID.NEXTVAL, '网站样式', '黑色样式', 'black.css', 0);
 INSERT INTO Dicts (Id, Category, Name, Code, Define) Values (SEQ_DICTS_ID.NEXTVAL, '网站样式', 'AdminLTE', 'lte.css', 0);
-INSERT INTO Dicts (Id, Category, Name, Code, Define) Values (SEQ_DICTS_ID.NEXTVAL, '当前样式', '使用样式', 'blue.css', 0);
+INSERT INTO Dicts (Id, Category, Name, Code, Define) Values (SEQ_DICTS_ID.NEXTVAL, '网站设置', '使用样式', 'blue.css', 0);
 INSERT INTO Dicts (Id, Category, Name, Code, Define) Values (SEQ_DICTS_ID.NEXTVAL, '网站设置', '前台首页', '~/Home/Index', 0);
 
 -- 网站UI设置

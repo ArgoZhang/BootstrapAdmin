@@ -108,7 +108,7 @@
         "Define": NumberInt(0)
     },
     {
-        "Category": "当前样式",
+        "Category": "网站设置",
         "Name": "使用样式",
         "Code": "blue.css",
         "Define": NumberInt(0)
