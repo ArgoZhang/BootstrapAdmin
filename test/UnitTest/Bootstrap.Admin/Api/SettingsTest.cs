@@ -29,14 +29,15 @@ namespace Bootstrap.Admin.Api
 
             Assert.True(DictHelper.Save(new BootstrapDict() { Category = "UnitTest-Settings", Name = "UnitTest", Code = "0", Define = 0 }));
 
-            // 获得原来值
+            // 调用 Settings webapi
             var resp = await Client.PostAsJsonAsync<IEnumerable<BootstrapDict>, bool>("", new BootstrapDict[]{
                 new BootstrapDict() { Category = "UnitTest-Settings", Name = "UnitTest", Code = "UnitTest" }
             });
             Assert.True(resp);
 
+            // 由于 SaveUISettings 函数保护功能，上一步保存成功，但是未更改 Code 值
             var code = DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "UnitTest-Settings").Code;
-            Assert.Equal("UnitTest", code);
+            Assert.Equal("0", code);
 
             // Delete 
             ids = DictHelper.RetrieveDicts().Where(d => d.Category == "UnitTest-Settings").Select(d => d.Id);

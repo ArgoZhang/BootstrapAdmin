@@ -144,7 +144,7 @@ namespace Bootstrap.DataAccess
                 ["CookiePeriod"] = "Cookie保留时长",
                 ["IPCachePeriod"] = "IP请求缓存时长"
             };
-            var ret = DictHelper.SaveSettings(items.Where(i => cache.Any(c => c.Key == i.Name)).Select(i => new BootstrapDict()
+            var ret = SaveSettings(items.Where(i => cache.Any(c => c.Key == i.Name)).Select(i => new BootstrapDict()
             {
                 Category = "网站设置",
                 Name = cache[i.Name],
