@@ -59,7 +59,7 @@ namespace Bootstrap.Admin
             services.AddOnlineUsers();
             services.AddSignalR().AddJsonProtocol(op => op.PayloadSerializerOptions.AddDefaultConverters());
             services.AddSignalRExceptionFilterHandler<SignalRHub>(async (client, ex) => await client.SendMessageBody(ex).ConfigureAwait(false));
-            services.AddBootstrapAdminAuthentication(Configuration).AddGitee(OAuthHelper.Configure).AddGitHub(OAuthHelper.Configure);
+            services.AddBootstrapAdminAuthentication(Configuration).AddGitee(OAuthHelper.Configure).AddGitHub(OAuthHelper.Configure).AddTencent(OAuthHelper.Configure);
             services.AddAuthorization(options => options.DefaultPolicy = new AuthorizationPolicyBuilder().RequireBootstrapAdminAuthorizate().Build());
             services.AddButtonAuthorization(MenuHelper.AuthorizateButtons);
             services.AddBootstrapAdminBackgroundTask();

@@ -3,6 +3,7 @@ using Bootstrap.DataAccess;
 using Bootstrap.Security.Mvc;
 using Longbow.GiteeAuth;
 using Longbow.GitHubAuth;
+using Longbow.TencentAuth;
 using Longbow.Web.SMS;
 using Longbow.WeChatAuth;
 using Microsoft.AspNetCore.Authentication;
@@ -205,6 +206,17 @@ namespace Bootstrap.Admin.Controllers
         {
             var enabled = config.GetValue($"{nameof(GitHubOptions)}:Enabled", false);
             return Challenge(enabled ? GitHubDefaults.AuthenticationScheme : CookieAuthenticationDefaults.AuthenticationScheme);
+        }
+
+        /// <summary>
+        /// Tencent 认证
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public IActionResult Tencent([FromServices]IConfiguration config)
+        {
+            var enabled = config.GetValue($"{nameof(TencentOptions)}:Enabled", false);
+            return Challenge(enabled ? TencentDefaults.AuthenticationScheme : CookieAuthenticationDefaults.AuthenticationScheme);
         }
 
         /// <summary>
