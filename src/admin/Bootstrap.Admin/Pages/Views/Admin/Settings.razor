@@ -136,7 +136,7 @@
                     </div>
                     <div class="form-group col-6">
                         <label class="control-label" for="lockPeriod">时长间隔(秒)</label>
-                        <input id="lockPeriod" type="number" class="form-control" value="@Model.LockScreenPeriod" />
+                        <input id="lockPeriod" type="number" class="form-control" @bind-value="@Model.LockScreenPeriod" />
                     </div>
                 </div>
             </div>
@@ -203,6 +203,51 @@
             <ConditionComponent Inverse="true">
                 <div class="modal-footer text-right">
                     <button class="btn btn-secondary" type="button" @onclick="SaveIPLocator"><i class="fa fa-save"></i><span>保存</span></button>
+                </div>
+            </ConditionComponent>
+        </div>
+    </div>
+</ConditionComponent>
+<ConditionComponent AuthKey="logSettings">
+    <div class="card">
+        <div class="card-header">地址位置信息</div>
+        <div class="card-body">
+            <ConditionComponent>
+                <div class="alert alert-danger" role="alert">
+                    <span>演示系统禁止更改日志缓存设置</span>
+                </div>
+            </ConditionComponent>
+            <div class="form-inline">
+                <div class="row">
+                    <div class="form-group col-6">
+                        <label class="control-label" for="appErrorLog">异常日志(月)</label>
+                        <input id="appErrorLog" type="number" class="form-control" min="1" @bind-value="@Model.ErrorLogPeriod" />
+                    </div>
+                    <div class="form-group col-6">
+                        <label class="control-label" for="opLog">操作日志(月)</label>
+                        <input id="opLog" type="number" class="form-control" min="1" @bind-value="@Model.OpLog" />
+                    </div>
+                    <div class="form-group col-6">
+                        <label class="control-label" for="logLog">登录日志(月)</label>
+                        <input id="logLog" type="number" class="form-control" min="1" @bind-value="@Model.LogLog" />
+                    </div>
+                    <div class="form-group col-6">
+                        <label class="control-label" for="traceLog">访问日志(月)</label>
+                        <input id="traceLog" type="number" class="form-control" min="1" @bind-value="@Model.TraceLog" />
+                    </div>
+                    <div class="form-group col-6">
+                        <label class="control-label" for="cookiePeriod">Cookie(天)</label>
+                        <input id="cookiePeriod" type="number" class="form-control" min="1" @bind-value="@Model.CookiePeriod" />
+                    </div>
+                    <div class="form-group col-6">
+                        <label class="control-label" for="ipCachePeriod">IP 缓存(分)</label>
+                        <input id="ipCachePeriod" type="number" class="form-control" min="1" @bind-value="@Model.IPCachePeriod" />
+                    </div>
+                </div>
+            </div>
+            <ConditionComponent Inverse="true">
+                <div class="modal-footer text-right">
+                    <button class="btn btn-secondary" type="button" @onclick="SaveLogSettings"><i class="fa fa-save"></i><span>保存</span></button>
                 </div>
             </ConditionComponent>
         </div>

@@ -81,6 +81,13 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
                 Text = ipSvrText,
                 Value = ipSvrValue
             };
+
+            Model.ErrorLogPeriod = DictHelper.RetrieveExceptionsLogPeriod();
+            Model.OpLog = DictHelper.RetrieveLogsPeriod();
+            Model.LogLog = DictHelper.RetrieveLoginLogsPeriod();
+            Model.TraceLog = DictHelper.RetrieveAccessLogPeriod();
+            Model.CookiePeriod = DictHelper.RetrieveCookieExpiresPeriod();
+            Model.IPCachePeriod = DictHelper.RetrieveLocaleIPSvrCachePeriod();
         }
 
         /// <summary>
@@ -193,6 +200,23 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
         }
 
         /// <summary>
+        /// 保存网站日志保留时长配置信息
+        /// </summary>
+        protected void SaveLogSettings()
+        {
+            var items = new BootstrapDict[]{
+                new BootstrapDict() { Category = "网站设置", Name="程序异常保留时长", Code = Model.ErrorLogPeriod.ToString(), Define = 0 },
+                new BootstrapDict() { Category = "网站设置", Name="操作日志保留时长", Code = Model.OpLog.ToString(), Define = 0 },
+                new BootstrapDict() { Category = "网站设置", Name="登录日志保留时长", Code = Model.LogLog.ToString(), Define = 0 },
+                new BootstrapDict() { Category = "网站设置", Name="访问日志保留时长", Code = Model.TraceLog.ToString(), Define = 0 },
+                new BootstrapDict() { Category = "网站设置", Name="Cookie保留时长", Code = Model.CookiePeriod.ToString(), Define = 0 },
+                new BootstrapDict() { Category = "网站设置", Name="IP请求缓存时长", Code = Model.IPCachePeriod.ToString(), Define = 0 }
+            };
+            var ret = DictHelper.SaveSettings(items);
+            ShowMessage("保存日志缓存设置", ret);
+        }
+
+        /// <summary>
         /// 网站设置编辑模型实体类
         /// </summary>
         protected class EditModel
@@ -271,6 +295,36 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
             /// 获得/设置 选中的地理位置配置信息
             /// </summary>
             public SelectedItem SelectedIPLocator { get; set; } = new SelectedItem();
+
+            /// <summary>
+            /// 程序异常日志保留时长
+            /// </summary>
+            public int ErrorLogPeriod { get; set; }
+
+            /// <summary>
+            /// 操作日志保留时长
+            /// </summary>
+            public int OpLog { get; set; }
+
+            /// <summary>
+            /// 登录日志保留时长
+            /// </summary>
+            public int LogLog { get; set; }
+
+            /// <summary>
+            /// 访问日志保留时长
+            /// </summary>
+            public int TraceLog { get; set; }
+
+            /// <summary>
+            /// Cookie保留时长
+            /// </summary>
+            public int CookiePeriod { get; set; }
+
+            /// <summary>
+            /// IP请求缓存时长
+            /// </summary>
+            public int IPCachePeriod { get; set; }
         }
     }
 }
