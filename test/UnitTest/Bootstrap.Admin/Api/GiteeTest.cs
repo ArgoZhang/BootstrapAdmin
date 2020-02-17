@@ -46,7 +46,8 @@ namespace Bootstrap.Admin.Api
             t = t.MakeGenericMethod(new Type[] { typeof(string) });
 
             t.Invoke(null, new object[] {
-                new Func<Task<string>>(() =>
+                "",
+                new Func<string, Task<string>>(url =>
                 {
                     throw new TaskCanceledException();
                 }),
@@ -56,7 +57,8 @@ namespace Bootstrap.Admin.Api
             });
 
             t.Invoke(null, new object[] {
-                new Func<Task<string>>(()=> {
+                "",
+                new Func<string, Task<string>>(url => {
                     throw new Exception();
                 }),
                 new Func<string, string>(content => {

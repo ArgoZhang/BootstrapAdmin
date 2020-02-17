@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Net.Http;
 using System.Text.RegularExpressions;
@@ -29,7 +30,7 @@ namespace Bootstrap.Admin.Controllers.Api
         [HttpGet]
         public async Task<ActionResult> Issues([FromServices]GiteeHttpClient client, [FromQuery]string? userName = "LongbowEnterprise", [FromQuery]string? repoName = "BootstrapAdmin", [FromQuery]string? label = "custom badge", [FromQuery]string? color = "orange")
         {
-            var ret = await GetJsonAsync(() => client.HttpClient.GetStringAsync($"https://gitee.com/{userName}/{repoName}/issues"), content =>
+            var ret = await GetJsonAsync($"https://gitee.com/{userName}/{repoName}/issues", url => client.HttpClient.GetStringAsync(url), content =>
             {
                 var regex = Regex.Matches(content, "<div class='ui mini circular label'>([\\d]+)</div>", RegexOptions.IgnoreCase);
                 var labels = new string[] { "open", "progressing", "closed", "rejected" };
@@ -52,7 +53,7 @@ namespace Bootstrap.Admin.Controllers.Api
         [HttpGet]
         public async Task<ActionResult> Pulls([FromServices]GiteeHttpClient client, [FromQuery]string? userName = "LongbowEnterprise", [FromQuery]string? repoName = "BootstrapAdmin", [FromQuery]string? label = "custom badge", [FromQuery]string? color = "orange")
         {
-            var ret = await GetJsonAsync(() => client.HttpClient.GetStringAsync($"https://gitee.com/{userName}/{repoName}/pulls"), content =>
+            var ret = await GetJsonAsync($"https://gitee.com/{userName}/{repoName}/pulls", url => client.HttpClient.GetStringAsync(url), content =>
             {
                 var regex = Regex.Matches(content, "<div class='ui mini circular label'>([\\d]+)</div>", RegexOptions.IgnoreCase);
                 var labels = new string[] { "open", "merged", "closed" };
@@ -74,7 +75,7 @@ namespace Bootstrap.Admin.Controllers.Api
         [HttpGet]
         public async Task<ActionResult> Releases([FromServices]GiteeHttpClient client, [FromQuery]string? userName = "LongbowEnterprise", [FromQuery]string? repoName = "BootstrapAdmin", [FromQuery]string? label = "custom badge", [FromQuery]string? color = "orange")
         {
-            var ret = await GetJsonAsync(() => client.HttpClient.GetStringAsync($"https://gitee.com/{userName}/{repoName}/releases"), content =>
+            var ret = await GetJsonAsync($"https://gitee.com/{userName}/{repoName}/releases", url => client.HttpClient.GetStringAsync(url), content =>
             {
                 var regex = Regex.Match(content, $"<a href=\"/{userName}/{repoName}/releases/([^\\s]+)\" target=\"_blank\">", RegexOptions.IgnoreCase);
                 return string.IsNullOrEmpty(content) ? "unknown" : regex.Groups[1].Value;
@@ -95,19 +96,19 @@ namespace Bootstrap.Admin.Controllers.Api
         [HttpGet]
         public async Task<ActionResult> Builds([FromServices]GiteeHttpClient client, [FromQuery]string? userName = "ArgoZhang", [FromQuery]string? projName = "bootstrapadmin", [FromQuery]string? branchName = "master", [FromQuery]string? label = "custom badge", [FromQuery]string? color = "orange")
         {
-            var ret = await GetJsonAsync(() => client.HttpClient.GetAsJsonAsync<AppveyorBuildResult>($"https://ci.appveyor.com/api/projects/{userName}/{projName}/branch/{branchName}", null, new CancellationTokenSource(10000).Token), content =>
+            var ret = await GetJsonAsync($"https://ci.appveyor.com/api/projects/{userName}/{projName}/branch/{branchName}", url => client.HttpClient.GetAsJsonAsync<AppveyorBuildResult>(url, null, new CancellationTokenSource(10000).Token), content =>
             {
                 return content == null ? "unknown" : content.Build.Version;
             });
             return new JsonResult(new { schemaVersion = 1, label, message = ret, color });
         }
 
-        private async static Task<string> GetJsonAsync<T>(Func<Task<T>> requestUrl, Func<T, string> callback)
+        private async static Task<string> GetJsonAsync<T>(string url, Func<string, Task<T>> requestUrl, Func<T, string> callback)
         {
             var ret = "unresponsive";
             try
             {
-                var resq = await requestUrl();
+                var resq = await requestUrl(url);
                 ret = callback(resq);
             }
             catch (OperationCanceledException)
@@ -116,7 +117,10 @@ namespace Bootstrap.Admin.Controllers.Api
             }
             catch (Exception ex)
             {
-                ex.Log();
+                ex.Log(new NameValueCollection()
+                {
+                    ["Url"] = url
+                });
             }
             return ret;
         }
