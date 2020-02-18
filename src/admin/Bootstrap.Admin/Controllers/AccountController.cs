@@ -226,7 +226,7 @@ namespace Bootstrap.Admin.Controllers
         [HttpGet]
         public IActionResult WeChat([FromServices]IConfiguration config)
         {
-            var enabled = config.GetValue($"{nameof(GitHubOptions)}:Enabled", false);
+            var enabled = config.GetValue($"{nameof(WeChatOptions)}:Enabled", false);
             return Challenge(enabled ? WeChatDefaults.AuthenticationScheme : CookieAuthenticationDefaults.AuthenticationScheme);
         }
     }
