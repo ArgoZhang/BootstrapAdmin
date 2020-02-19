@@ -1,86 +1,52 @@
 ﻿@model TaskModel
 @{
     ViewBag.Title = "任务管理";
-    Layout = "_Admin";
+    Layout = "_Default";
 }
 @section css {
-    <environment include="Development">
-        <link href="~/lib/bootstrap-table/bootstrap-table.css" rel="stylesheet" />
-    </environment>
-    <environment exclude="Development">
-        <link href="~/lib/bootstrap-table/bootstrap-table.min.css" rel="stylesheet" />
-    </environment>
     <link href="~/lib/longbow-select/longbow-select.css" rel="stylesheet" />
     <link href="~/css/tasks.css" rel="stylesheet" asp-append-version="true" />
 }
 @section javascript {
-    <environment include="Development">
-        <script src="~/lib/bootstrap-table/bootstrap-table.js"></script>
-        <script src="~/lib/bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
-        <script src="~/lib/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
-        <script src="~/lib/tablexport/tableExport.js"></script>
-        <script src="~/lib/validate/jquery.validate.js"></script>
-        <script src="~/lib/validate/localization/messages_zh.js"></script>
-    </environment>
-    <environment exclude="Development">
-        <script src="~/lib/bootstrap-table/bootstrap-table.min.js"></script>
-        <script src="~/lib/bootstrap-table/extensions/export/bootstrap-table-export.min.js"></script>
-        <script src="~/lib/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
-        <script src="~/lib/tablexport/tableExport.min.js"></script>
-        <script src="~/lib/validate/jquery.validate.min.js"></script>
-        <script src="~/lib/validate/localization/messages_zh.min.js"></script>
-    </environment>
-    <script src="~/lib/longbow-checkbox/longbow-checkbox.js"></script>
     <script src="~/lib/longbow-select/longbow-select.js"></script>
-    <script src="~/lib/longbow/longbow.dataentity.js" asp-append-version="true"></script>
-    <script src="~/lib/longbow/longbow.validate.js" asp-append-version="true"></script>
     <script src="~/js/tasks.js" asp-append-version="true"></script>
 }
+@section tableButtons {
+    <button class='pause btn btn-sm btn-warning' asp-auth="pause"><i class='fa fa-pause-circle'></i><span>暂停</span></button>
+    <button class='run btn btn-sm btn-success' asp-auth="pause"><i class='fa fa-play-circle'></i><span>运行</span></button>
+    <button class='info btn btn-sm btn-info' asp-auth="info"><i class='fa fa-info-circle'></i><span>日志</span></button>
+}
 @section modal {
-    <div class="modal fade" id="dialogNew" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content" data-toggle="LgbValidate" data-valid-button="#btnSubmit" data-valid-modal="#dialogNew">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="myModalLabel">任务编辑窗口</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel">任务编辑窗口</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    </div>
+    <div class="modal-body">
+        <form class="form-inline">
+            <div class="row">
+                <div class="form-group col-12">
+                    <label class="control-label" for="taskName">任务名称</label>
+                    <input type="text" class="form-control flex-sm-fill" id="taskName" placeholder="不可为空，50字以内" maxlength="50" data-valid="true" />
                 </div>
-                <div class="modal-body">
-                    <form class="form-inline">
-                        <div class="row">
-                            <input type="hidden" id="taskID" />
-                            <div class="form-group col-12">
-                                <label class="control-label" for="taskName">任务名称</label>
-                                <input type="text" class="form-control flex-sm-fill" id="taskName" placeholder="不可为空，50字以内" maxlength="50" data-valid="true" />
-                            </div>
-                            <div class="form-group col-12">
-                                <label class="control-label" for="taskCron">Cron表达式</label>
-                                <input type="text" class="form-control flex-sm-fill" id="taskCron" placeholder="不可为空，2000字以内" maxlength="2000" data-valid="true" />
-                            </div>
-                            <div class="form-group col-12">
-                                <label class="control-label" for="taskContent">内置任务</label>
-                                <select id="taskList" data-toggle="lgbSelect">
-                                    @foreach (var name in Model.Tasks)
-                                    {
-                                        <option value="@name">@name</option>
-                                    }
-                                </select>
-                            </div>
-                        </div>
-                    </form>
+                <div class="form-group col-12">
+                    <label class="control-label" for="taskCron">Cron表达式</label>
+                    <input type="text" class="form-control flex-sm-fill" id="taskCron" placeholder="不可为空，2000字以内" maxlength="2000" data-valid="true" />
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                        <i class="fa fa-times"></i>
-                        <span>关闭</span>
-                    </button>
-                    <button type="button" class="btn btn-primary" id="btnSubmit">
-                        <i class="fa fa-save"></i>
-                        <span>保存</span>
-                    </button>
+                <div class="form-group col-12">
+                    <label class="control-label" for="taskContent">内置任务</label>
+                    <input class="form-control" data-toggle="lgbSelect" data-default-val="Bootstrap.Admin.DefaultTaskExecutor" />
+                    <select data-toggle="lgbSelect" class="d-none" id="taskExecutor">
+                        @foreach (var task in Model.Tasks)
+                        {
+                            <option value="@task.Value">@task.Key</option>
+                        }
+                    </select>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
+}
+@section customModal {
     <div class="modal fade" id="dialogLog" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="taskModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
@@ -141,12 +107,5 @@
             <span>演示系统禁止修改定时后台任务</span>
         </div>
         <table></table>
-    </div>
-</div>
-<div id="tableButtons" class="d-none">
-    <div class='btn-group'>
-        <button class='pause btn btn-sm btn-danger' asp-auth="pause"><i class='fa fa-pause-circle'></i><span>暂停</span></button>
-        <button class='run btn btn-sm btn-success' asp-auth="pause"><i class='fa fa-play-circle'></i><span>运行</span></button>
-        <button class='info btn btn-sm btn-info' asp-auth="info"><i class='fa fa-info-circle'></i><span>日志</span></button>
     </div>
 </div>

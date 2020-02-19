@@ -37,8 +37,9 @@
         url: Tasks.url,
         dataBinder: {
             map: {
-                Id: "#taskID",
-                Name: "#taskName"
+                CronExpression: "#taskCron",
+                Name: "#taskName",
+                TaskExecutorName: "#taskExecutor"
             }
         },
         smartTable: {
