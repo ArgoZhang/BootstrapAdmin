@@ -16,15 +16,27 @@ namespace Bootstrap.Admin.Models
         {
             // 此处为演示代码，具体生产环境可以从数据库配置获得
             // Key 为任务名称 Value 为任务执行体 FullName
-            Tasks = new Dictionary<string, string>
+            TaskExecutors = new Dictionary<string, string>
             {
-                {"测试任务", "Bootstrap.Admin.DefaultTaskExecutor"}
+                { "测试任务", "Bootstrap.Admin.DefaultTaskExecutor" }
+            };
+
+            TaskTriggers = new Dictionary<string, string>
+            {
+                { "每 5 秒钟执行一次", Longbow.Tasks.Cron.Secondly(5) },
+                { "每 1 分钟执行一次", Longbow.Tasks.Cron.Minutely(1) }
             };
         }
 
         /// <summary>
         /// 获得 系统内置的所有任务
         /// </summary>
-        public IDictionary<string, string> Tasks { get; }
+        public IDictionary<string, string> TaskExecutors { get; }
+
+        /// <summary>
+        /// 获得 系统内置触发器集合
+        /// </summary>
+        /// <value></value>
+        public IDictionary<string, string> TaskTriggers { get; }
     }
 }

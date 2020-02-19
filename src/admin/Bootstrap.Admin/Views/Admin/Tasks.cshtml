@@ -22,6 +22,9 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     </div>
     <div class="modal-body">
+        <div class="alert alert-danger" role="alert" asp-condition="@Model.IsDemo">
+            <span>演示系统禁止修改内置后台任务</span>
+        </div>
         <form class="form-inline">
             <div class="row">
                 <div class="form-group col-12">
@@ -30,13 +33,19 @@
                 </div>
                 <div class="form-group col-12">
                     <label class="control-label" for="taskCron">Cron表达式</label>
-                    <input type="text" class="form-control flex-sm-fill" id="taskCron" placeholder="不可为空，2000字以内" maxlength="2000" data-valid="true" />
+                    <input class="form-control" data-toggle="lgbSelect" />
+                    <select data-toggle="lgbSelect" class="d-none" id="taskCron" data-default-val="*/5 * * * * *">
+                        @foreach (var task in Model.TaskTriggers)
+                        {
+                            <option value="@task.Value">@task.Key</option>
+                        }
+                    </select>
                 </div>
                 <div class="form-group col-12">
                     <label class="control-label" for="taskContent">内置任务</label>
-                    <input class="form-control" data-toggle="lgbSelect" data-default-val="Bootstrap.Admin.DefaultTaskExecutor" />
-                    <select data-toggle="lgbSelect" class="d-none" id="taskExecutor">
-                        @foreach (var task in Model.Tasks)
+                    <input class="form-control" data-toggle="lgbSelect" />
+                    <select data-toggle="lgbSelect" class="d-none" id="taskExecutor" data-default-val="Bootstrap.Admin.DefaultTaskExecutor">
+                        @foreach (var task in Model.TaskExecutors)
                         {
                             <option value="@task.Value">@task.Key</option>
                         }

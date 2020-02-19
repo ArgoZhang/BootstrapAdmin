@@ -3,6 +3,7 @@ using Longbow;
 using Longbow.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -55,8 +56,6 @@ namespace Bootstrap.Admin.Controllers.Api
         {
             // 判断 Cron 表达式
             if (string.IsNullOrEmpty(widget.CronExpression)) return false;
-            // 判断 任务是否已经存在
-            if (TaskServicesManager.Get(widget.Name) != null) return false;
 
             // 加载任务执行体
             // 此处可以扩展为任意 DLL 中的任意继承 ITask 接口的实体类
@@ -64,8 +63,34 @@ namespace Bootstrap.Admin.Controllers.Api
             if (taskExecutor == null) return false;
 
             // 此处未存储到数据库中，直接送入任务中心
+            TaskServicesManager.Remove(widget.Name);
             var expression = Longbow.Tasks.Cron.ParseCronExpression(widget.CronExpression);
             TaskServicesManager.GetOrAdd(widget.Name, token => taskExecutor.Execute(token), TriggerBuilder.Build(widget.CronExpression));
+            return true;
+        }
+
+        private static IEnumerable<string> _tasks = new string[] {
+            "单次任务",
+            "周期任务",
+            "Cron 任务",
+            "超时任务",
+            "取消任务",
+            "禁用任务",
+            "SQL日志"
+        };
+        /// <summary>
+        /// 删除任务方法
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <returns></returns>
+        [HttpDelete]
+        public bool Delete([FromBody]IEnumerable<string> ids)
+        {
+            // 演示模式下禁止删除内置任务
+            if (DictHelper.RetrieveSystemModel() && _tasks.Any(t => ids.Any(id => id.Equals(t, StringComparison.OrdinalIgnoreCase)))) return false;
+
+            // 循环删除任务
+            ids.ToList().ForEach(id => TaskServicesManager.Remove(id));
             return true;
         }
     }

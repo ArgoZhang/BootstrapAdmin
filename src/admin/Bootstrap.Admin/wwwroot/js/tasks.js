@@ -43,6 +43,7 @@
             }
         },
         smartTable: {
+            idField: 'Name',
             sidePagination: "client",
             sortName: 'Name',
             sortOrder: 'asc',
