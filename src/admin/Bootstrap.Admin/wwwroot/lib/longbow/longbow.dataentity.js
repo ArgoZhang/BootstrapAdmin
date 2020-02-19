@@ -250,14 +250,16 @@
                     var idField = findIdField(op.table);
                     var idValue = row[idField];
 
-                    var nodes = op.table.bootstrapTable('getData').filter(function (row, index, data) {
-                        return idValue == row[op.treegridParentId];
-                    });
-                    if ($.isArray(nodes) && nodes.length > 0) {
-                        $.each(nodes, function (index, element) {
-                            data.push($.extend({}, element));
+                    if (idValue != undefined) {
+                        var nodes = op.table.bootstrapTable('getData').filter(function (row, index, data) {
+                            return idValue == row[op.treegridParentId];
                         });
-                        text = "本删除项含有级联子项目</br>您确定要删除 <span class='text-danger font-weight-bold'>" + row.Name + "</span> 以及子项目吗？";
+                        if ($.isArray(nodes) && nodes.length > 0) {
+                            $.each(nodes, function (index, element) {
+                                data.push($.extend({}, element));
+                            });
+                            text = "本删除项含有级联子项目</br>您确定要删除 <span class='text-danger font-weight-bold'>" + row.Name + "</span> 以及子项目吗？";
+                        }
                     }
                     swal($.extend({}, swalDeleteOptions, { html: text })).then(function (result) {
                         if (result.value) {
