@@ -1,6 +1,7 @@
 ﻿using Bootstrap.Admin.Models;
 using Bootstrap.DataAccess;
 using Bootstrap.Security.Mvc;
+using Longbow.AlipayAuth;
 using Longbow.GiteeAuth;
 using Longbow.GitHubAuth;
 using Longbow.TencentAuth;
@@ -217,6 +218,17 @@ namespace Bootstrap.Admin.Controllers
         {
             var enabled = config.GetValue($"{nameof(TencentOptions)}:Enabled", false);
             return Challenge(enabled ? TencentDefaults.AuthenticationScheme : CookieAuthenticationDefaults.AuthenticationScheme);
+        }
+
+        /// <summary>
+        /// Alipay 认证
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public IActionResult Alipay([FromServices]IConfiguration config)
+        {
+            var enabled = config.GetValue($"{nameof(AlipayOptions)}:Enabled", false);
+            return Challenge(enabled ? AlipayDefaults.AuthenticationScheme : CookieAuthenticationDefaults.AuthenticationScheme);
         }
 
         /// <summary>

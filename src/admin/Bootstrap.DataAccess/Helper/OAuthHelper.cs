@@ -1,6 +1,8 @@
-﻿using Longbow.OAuth;
+﻿using Longbow.AlipayAuth;
+using Longbow.OAuth;
 using Longbow.Security.Cryptography;
 using Longbow.TencentAuth;
+using Longbow.WeChatAuth;
 using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
@@ -51,43 +53,6 @@ namespace Bootstrap.DataAccess
             };
         }
 
-        private static T? ToObject<T>(this System.Text.Json.JsonElement element) where T : OAuthUser
-        {
-            var user = new OAuthUser();
-            var target = element.EnumerateObject();
-            user.Id = target.TryGetValue("Id");
-            user.Login = target.TryGetValue("Login");
-            user.Name = target.TryGetValue("Name");
-            user.Avatar_Url = target.TryGetValue("Avatar_Url");
-            return user as T;
-        }
-
-        private static OAuthUser? ToTencentUser(this System.Text.Json.JsonElement element)
-        {
-            var target = element.EnumerateObject();
-            var ret = target.TryGetValue("ret");
-            OAuthUser? user = null;
-            if (ret == "0")
-            {
-                user = new OAuthUser
-                {
-                    Id = target.TryGetValue("Id"),
-                    Login = target.TryGetValue("nickname"),
-                    Name = target.TryGetValue("nickname"),
-                    Avatar_Url = target.TryGetValue("figureurl_qq_2")
-                };
-            }
-            return user;
-        }
-
-        private static string TryGetValue(this System.Text.Json.JsonElement.ObjectEnumerator target, string propertyName)
-        {
-            var ret = string.Empty;
-            var property = target.FirstOrDefault(t => t.Name.Equals(propertyName, StringComparison.OrdinalIgnoreCase));
-            ret = property.Value.ToString();
-            return ret;
-        }
-
         /// <summary>
         /// 插入 Gitee 授权用户到数据库中
         /// </summary>
@@ -95,7 +60,13 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         private static User ParseUser(OAuthCreatingTicketContext context)
         {
-            var user = context.Scheme.DisplayName == TencentDefaults.DisplayName ? context.User.ToTencentUser() : context.User.ToObject<OAuthUser>();
+            var user = context.Scheme.DisplayName switch
+            {
+                WeChatDefaults.DisplayName => context.User.ToWeChatUser(),
+                TencentDefaults.DisplayName => context.User.ToTencentUser(),
+                AlipayDefaults.DisplayName => context.User.ToAlipayUser(),
+                _ => context.User.ToAuthUser()
+            };
             return new User()
             {
                 ApprovedBy = "OAuth",
