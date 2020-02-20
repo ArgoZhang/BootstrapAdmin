@@ -44,14 +44,6 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
         }
 
         /// <summary>
-        /// 重置搜索方法
-        /// </summary>
-        protected void ResetSearch()
-        {
-
-        }
-
-        /// <summary>
         /// 获得 错误日志文件集合
         /// </summary>
         protected IEnumerable<string> Items { get; set; } = new string[0];

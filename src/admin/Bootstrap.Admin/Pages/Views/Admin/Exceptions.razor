@@ -1,11 +1,11 @@
-@inherits ExceptionsBase
+﻿@inherits ExceptionsBase
 
 <div class="card">
     <div class="card-header">
         <span>查询结果</span>
     </div>
     <div class="card-body">
-        <Table Id="exception" TItem="Bootstrap.DataAccess.Exceptions" ShowToolBar="true" ShowSearch="true" ShowRefresh="true" QueryModel="QueryModel" EditModel="DataContext" OnQuery="Query" OnResetSearch="ResetSearch">
+        <Table Id="exception" TItem="Bootstrap.DataAccess.Exceptions" ShowToolBar="true" ShowSearch="true" ShowAdvancedSearch="false" ShowRefresh="true" QueryModel="QueryModel" EditModel="DataContext" OnQuery="Query">
             <TableHeader>
                 <LgbTableHeader TItem="DateTime" @bind-Value="@context.LogTime" class="text-nowrap datetime"></LgbTableHeader>
                 <LgbTableHeader TItem="string" @bind-Value="@context.ErrorPage"></LgbTableHeader>
@@ -25,8 +25,6 @@
             <TableToolbarTemplate>
                 <TableToolbarButton class="btn btn-danger" Icon="fa fa-file-text-o" Title="服务器日志" OnClick="ShowDetail" />
             </TableToolbarTemplate>
-            <SearchTemplate>
-            </SearchTemplate>
         </Table>
     </div>
 </div>
@@ -35,7 +33,7 @@
     <ModalBody>
         <form class="form-inline">
             <div class="row">
-                @foreach(var item in Items)
+                @foreach (var item in Items)
                 {
                     <div class="form-group col-md-3 col-sm-4 col-6">
                         <a href="#" @onclick:preventDefault OnClick="e => ShowLog(item)">@item</a>

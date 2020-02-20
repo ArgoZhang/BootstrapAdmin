@@ -26,7 +26,7 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
         /// <returns></returns>
         protected QueryData<DefaultScheduler> Query(QueryPageOptions options)
         {
-            var data = TaskServicesManager.ToList().OrderBy(s => s.Name).Select(s => new DefaultScheduler()
+            var data = (string.IsNullOrEmpty(options.SearchText) ? TaskServicesManager.ToList() : TaskServicesManager.ToList().Where(t => t.Name.Contains(options.SearchText, StringComparison.OrdinalIgnoreCase))).OrderBy(s => s.Name).Select(s => new DefaultScheduler()
             {
                 Name = s.Name,
                 Status = s.Status,

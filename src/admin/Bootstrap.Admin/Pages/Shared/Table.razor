@@ -36,9 +36,12 @@
                             <button class="btn btn-secondary" type="button" title="清空过滤" @onclick="ClearSearchClick">
                                 <i class="fa fa-trash"></i> <span>清空过滤</span>
                             </button>
-                            <button class="btn btn-secondary" type="button" title="高级搜索" @onclick="AdvancedSearchClick">
-                                <i class="fa fa-search-plus"></i><span>高级搜索</span>
-                            </button>
+                            @if (ShowAdvancedSearch)
+                            {
+                                <button class="btn btn-secondary" type="button" title="高级搜索" @onclick="AdvancedSearchClick">
+                                    <i class="fa fa-search-plus"></i><span>高级搜索</span>
+                                </button>
+                            }
                         </div>
                     </div>
                 </div>
@@ -194,7 +197,7 @@
     </Modal>
 }
 
-@if (OnSave != null)
+@if (OnSave != null || OnAdd != null)
 {
     <SubmitModal @ref="EditModal" Id="@($"{Id}_edit")" TItem="TItem" Title="@SubmitModalTitle" Size="ModalSize.ExtraLarge" @bind-Model="EditModel" OnValidSubmit="Save">
         <ModalBody>
@@ -203,7 +206,7 @@
     </SubmitModal>
 }
 
-@if (ShowSearch)
+@if (ShowSearch && ShowAdvancedSearch)
 {
     <Modal @ref="SearchModal" Id="@($"{Id}_search")" Title="查询条件">
         <ModalBody>

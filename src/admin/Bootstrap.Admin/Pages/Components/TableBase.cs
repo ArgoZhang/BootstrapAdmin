@@ -92,6 +92,12 @@ namespace Bootstrap.Admin.Pages.Components
         public bool ShowSearch { get; set; }
 
         /// <summary>
+        /// 获得/设置 是否显示高级搜索按钮 默认显示
+        /// </summary>
+        [Parameter]
+        public bool ShowAdvancedSearch { get; set; } = true;
+
+        /// <summary>
         /// 获得/设置 数据集合
         /// </summary>
         protected IEnumerable<TItem> Items { get; set; } = new TItem[0];
