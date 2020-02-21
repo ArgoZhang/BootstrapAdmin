@@ -12,7 +12,7 @@ namespace Bootstrap.Admin.Controllers
         protected HttpClient client { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="factory"></param>
         /// <param name="baseAddress"></param>
@@ -111,6 +111,8 @@ namespace Bootstrap.Admin.Controllers
         [InlineData("Gitee")]
         [InlineData("GitHub")]
         [InlineData("WeChat")]
+        [InlineData("Alipay")]
+        [InlineData("Tencent")]
         public async void OAuth_Ok(string url)
         {
             var r = await client.GetAsync($"/Account/{url}");
