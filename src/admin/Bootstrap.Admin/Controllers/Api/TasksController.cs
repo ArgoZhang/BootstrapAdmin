@@ -56,7 +56,10 @@ namespace Bootstrap.Admin.Controllers.Api
         {
             // 判断 Cron 表达式
             if (string.IsNullOrEmpty(widget.CronExpression)) return false;
-            if (_tasks.Any(t => t.Equals(widget.Name, StringComparison.OrdinalIgnoreCase))) return false;
+
+            // 系统内置任务禁止更改
+            // 演示模式下禁止删除内置任务
+            if (DictHelper.RetrieveSystemModel() && _tasks.Any(t => t.Equals(widget.Name, StringComparison.OrdinalIgnoreCase))) return false;
 
             // 加载任务执行体
             // 此处可以扩展为任意 DLL 中的任意继承 ITask 接口的实体类

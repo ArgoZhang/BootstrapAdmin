@@ -33,5 +33,64 @@ namespace Bootstrap.Admin.Api
             var recv = await Client.PutAsJsonAsync<string, bool>("/api/Tasks/SQL日志?operType=run", "");
             Assert.True(recv);
         }
+
+        [Fact]
+        public async void Post_Ok()
+        {
+            var widget = new TaskWidget();
+
+            // widget Cron 表达式为 ”“
+            var resp = await Client.PostAsJsonAsync<TaskWidget, bool>("/api/Tasks", widget);
+            Assert.False(resp);
+
+            // task executor 不合法
+            widget.CronExpression = Longbow.Tasks.Cron.Secondly(5);
+            widget.TaskExecutorName = "UnitTest-Widget";
+            resp = await Client.PostAsJsonAsync<TaskWidget, bool>("/api/Tasks", widget);
+            Assert.False(resp);
+
+            widget.TaskExecutorName = "Bootstrap.Admin.DefaultTaskExecutor";
+            widget.Name = "UnitTest-Task";
+            resp = await Client.PostAsJsonAsync<TaskWidget, bool>("/api/Tasks", widget);
+            Assert.True(resp);
+
+            // Delete
+            resp = await Client.DeleteAsJsonAsync<IEnumerable<string>, bool>("/api/Tasks", new string[] { widget.Name });
+            Assert.True(resp);
+        }
+    }
+
+    [Collection("SystemModel")]
+    public class TasksSystemModelTest
+    {
+        private HttpClient client;
+
+        public TasksSystemModelTest(BASystemModelWebHost factory)
+        {
+            client = factory.CreateClient("/api/Tasks");
+        }
+
+        [Fact]
+        public async void Post_Ok()
+        {
+            var widget = new TaskWidget();
+            widget.CronExpression = Longbow.Tasks.Cron.Secondly(5);
+            widget.Name = "单次任务";
+            widget.TaskExecutorName = "Bootstrap.Admin.DefaultTaskExecutor";
+
+            // 演示模式下禁止移除系统内置任务
+            var resp = await client.PostAsJsonAsync<TaskWidget, bool>("/api/Tasks", widget);
+            Assert.False(resp);
+
+            resp = await client.DeleteAsJsonAsync<IEnumerable<string>, bool>("/api/Tasks", new string[] { widget.Name });
+            Assert.False(resp);
+
+            widget.Name = "Test-Widget";
+            resp = await client.PostAsJsonAsync<TaskWidget, bool>("/api/Tasks", widget);
+            Assert.True(resp);
+
+            resp = await client.DeleteAsJsonAsync<IEnumerable<string>, bool>("/api/Tasks", new string[] { widget.Name });
+            Assert.True(resp);
+        }
     }
 }
