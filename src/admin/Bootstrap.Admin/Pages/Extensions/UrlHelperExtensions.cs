@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Components;
 
@@ -40,6 +41,6 @@ namespace Bootstrap.Admin.Pages.Extensions
         /// <param name="nav"></param>
         /// <param name="url"></param>
         /// <returns></returns>
-        public static string ToBlazorLink(this NavigationManager? nav, string url) => $"{nav?.BaseUri}{url.TrimStart('/')}";
+        public static string ToBlazorLink(this NavigationManager? nav, string url) => (url.StartsWith("http://", StringComparison.OrdinalIgnoreCase) || url.StartsWith("https://", StringComparison.OrdinalIgnoreCase)) ? url : $"{nav?.BaseUri}{url.TrimStart('/')}";
     }
 }
