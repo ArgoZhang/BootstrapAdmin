@@ -26,6 +26,13 @@ namespace Bootstrap.Admin.Controllers.Api
         public bool Post([FromBody]IEnumerable<BootstrapDict> values) => DictHelper.SaveUISettings(values);
 
         /// <summary>
+        /// 保存网站是否为演示系统时调用
+        /// </summary>
+        /// <returns></returns>
+        [HttpPut("{id}")]
+        public bool Put(string id, [FromBody]BootstrapDict dict) => DictHelper.UpdateSystemModel(dict.Code == "1", dict.Name);
+
+        /// <summary>
         /// 获取网站缓存站点集合
         /// </summary>
         [HttpGet]

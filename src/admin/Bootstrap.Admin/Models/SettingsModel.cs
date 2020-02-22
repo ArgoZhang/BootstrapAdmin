@@ -27,6 +27,7 @@ namespace Bootstrap.Admin.Models
             TraceLog = DictHelper.RetrieveAccessLogPeriod();
             CookiePeriod = DictHelper.RetrieveCookieExpiresPeriod();
             IPCachePeriod = DictHelper.RetrieveLocaleIPSvrCachePeriod();
+            EnableDemo = DictHelper.RetrieveSystemModel();
         }
 
         /// <summary>
@@ -83,5 +84,10 @@ namespace Bootstrap.Admin.Models
         /// IP请求缓存时长
         /// </summary>
         public int IPCachePeriod { get; }
+
+        /// <summary>
+        /// 获得/设置 是否为演示系统
+        /// </summary>
+        public bool EnableDemo { get; set; }
     }
 }

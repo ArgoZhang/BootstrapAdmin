@@ -125,13 +125,21 @@ $(function () {
                         { name: 'TraceLog', code: traceLog },
                         { name: 'CookiePeriod', code: cookiePeriod },
                         { name: 'IPCachePeriod', code: ipCachePeriod }
-                    ], title: '保存日志缓存设置', method: "post",
+                    ], title: '保存日志缓存设置', method: "post"
+                });
+                break;
+            case 'saveDemo':
+                var demo = $('#demo').prop('checked') ? "1" : "0";
+                var authKey = $('#authKey').val();
+                $.bc({
+                    url: Settings.url + '/Demo', data: { name: authKey, code: demo }, title: '演示系统设置', method: "put",
                     callback: function (result) {
                         if (result) {
                             window.setTimeout(function () { window.location.reload(true); }, 1000);
                         }
                     }
                 });
+                break;
         }
     });
 

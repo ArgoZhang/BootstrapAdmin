@@ -261,6 +261,21 @@ namespace Bootstrap.DataAccess
         public static bool RetrieveSystemModel() => DbContextManager.Create<Dict>()?.RetrieveSystemModel() ?? true;
 
         /// <summary>
+        /// 设置 系统是否为演示系统 默认为 false 不是演示系统
+        /// </summary>
+        /// <returns></returns>
+        public static bool UpdateSystemModel(bool isDemo, string authKey)
+        {
+            var ret = false;
+            // 检查授权码
+            if (Longbow.Security.Cryptography.LgbCryptography.ComputeHash(authKey, "l9w+7loytBzNHYkKjGzpWzbhYpU7kWZenT1OeZxkor28wQJQ") == "/oEQLKLccvHA+MsDwCwmgaKddR0IEcOy9KgBmFsHXRs=")
+            {
+                ret = DbContextManager.Create<Dict>()?.UpdateSystemModel(isDemo) ?? false;
+            }
+            return ret;
+        }
+
+        /// <summary>
         /// 获得验证码图床地址
         /// </summary>
         /// <returns></returns>
