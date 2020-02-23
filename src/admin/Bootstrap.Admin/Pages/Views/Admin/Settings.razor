@@ -253,6 +253,26 @@
         </div>
     </div>
 </ConditionComponent>
+<div class="card" asp-auth="demo">
+    <div class="card-header">演示系统设置</div>
+    <div class="card-body">
+        <div class="form-inline">
+            <div class="row">
+                <div class="form-group col-6">
+                    <label class="control-label" data-toggle="lgbinfo" data-content="开启此功能网站切换至演示系统">演示系统</label>
+                    <Toggle @bind-Value="@Model.EnableDemo" OnText="开启" OffText="关闭"></Toggle>
+                </div>
+                <div class="form-group col-6">
+                    <label class="control-label" for="authKey">授权码</label>
+                    <input type="password" autocomplete="off" class="form-control" @bind-value="@Model.AuthKey" />
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer text-right">
+            <button class="btn btn-secondary" type="button" @onclick="SaveSystemModel"><i class="fa fa-save"></i><span>保存</span></button>
+        </div>
+    </div>
+</div>
 <div class="card">
     <div class="card-header">
         <span>网站缓存</span>

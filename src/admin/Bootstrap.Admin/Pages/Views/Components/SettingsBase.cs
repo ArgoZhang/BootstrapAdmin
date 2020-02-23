@@ -42,6 +42,12 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
         protected Toast? Toast { get; set; }
 
         /// <summary>
+        /// NavigationManager 实例
+        /// </summary>
+        [Inject]
+        public NavigationManager? NavigationManager { get; set; }
+
+        /// <summary>
         /// 显示提示信息
         /// </summary>
         /// <param name="text"></param>
@@ -88,6 +94,7 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
             Model.TraceLog = DictHelper.RetrieveAccessLogPeriod();
             Model.CookiePeriod = DictHelper.RetrieveCookieExpiresPeriod();
             Model.IPCachePeriod = DictHelper.RetrieveLocaleIPSvrCachePeriod();
+            Model.EnableDemo = DictHelper.RetrieveSystemModel();
         }
 
         /// <summary>
@@ -217,6 +224,20 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
         }
 
         /// <summary>
+        /// 保存网站是否为演示模式
+        /// </summary>
+        protected async System.Threading.Tasks.Task SaveSystemModel()
+        {
+            var ret = DictHelper.UpdateSystemModel(Model.EnableDemo, Model.AuthKey);
+            ShowMessage("保存演示系统设置", ret);
+            if (ret)
+            {
+                await System.Threading.Tasks.Task.Delay(500);
+                NavigationManager?.NavigateTo($"{RootLayout?.HomeUrl}/Admin/Settings", true);
+            }
+        }
+
+        /// <summary>
         /// 网站设置编辑模型实体类
         /// </summary>
         protected class EditModel
@@ -325,6 +346,16 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
             /// IP请求缓存时长
             /// </summary>
             public int IPCachePeriod { get; set; }
+
+            /// <summary>
+            /// 获得/设置 授权码
+            /// </summary>
+            public string AuthKey { get; set; } = "";
+
+            /// <summary>
+            /// 获得 系统是否为演示模式
+            /// </summary>
+            public bool EnableDemo { get; set; }
         }
     }
 }
