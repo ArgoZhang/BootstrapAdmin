@@ -224,6 +224,22 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
         }
 
         /// <summary>
+        /// 保存是否开启默认应用设置
+        /// </summary>
+        protected void SaveDefaultApp()
+        {
+            var ret = DictHelper.SaveSettings(new BootstrapDict[]{
+                new BootstrapDict() {
+                    Category = "网站设置",
+                    Name = "默认应用程序",
+                    Code = Model.DefaultApp ? "1" : "0"
+                }
+            });
+            RootLayout?.OnWebFooterChanged(Model.Footer);
+            ShowMessage("保存默认应用程序", ret);
+        }
+
+        /// <summary>
         /// 保存网站是否为演示模式
         /// </summary>
         protected async System.Threading.Tasks.Task SaveSystemModel()
