@@ -1,7 +1,12 @@
 ﻿using Bootstrap.Client.Extensions;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using System;
+using System.IO;
+using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Bootstrap.Client.Controllers.Api
@@ -30,12 +35,13 @@ namespace Bootstrap.Client.Controllers.Api
         /// 邮件发送健康检查方法
         /// </summary>
         /// <param name="config"></param>
+        /// <param name="env"></param>
         /// <param name="message"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<bool> Healths([FromServices]IConfiguration config, [FromBody]string message)
+        public async Task<bool> Healths([FromServices]IConfiguration config, [FromServices]IWebHostEnvironment env, [FromBody]string message)
         {
-            return await SendMailAsync(config, "Healths Report", message);
+            return await SendMailAsync(config, "Healths Report", message.FormatHealths(env.WebRootPath));
         }
 
         /// <summary>

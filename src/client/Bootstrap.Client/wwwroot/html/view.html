@@ -1,0 +1,68 @@
+﻿<style>
+    .header {
+        display: flex;
+        font-weight: 700;
+    }
+
+    .header span:first-child {
+        flex: 1 1 auto;
+    }
+
+    .header span:nth-child(2) {
+        min-width: 200px;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        background-color: #fff;
+        font-size: 14px;
+        margin-bottom: 45px;
+        line-height: 1.5em;
+    }
+
+    th {
+        text-align: left;
+        white-space: nowrap;
+        font-weight: 700;
+        border-bottom: 1px solid #dcdfe6;
+        padding: 15px;
+        max-width: 250px;
+    }
+
+    td {
+        color: #606266;
+    }
+
+    td,
+    td {
+        border-bottom: 1px solid #dcdfe6;
+        padding: 15px;
+        max-width: 250px;
+    }
+
+    td:first-child,
+    th:first-child {
+        padding-left: 10px;
+    }
+</style>
+<h2>健康检查结果</h2>
+<div class="header">
+    <span>数据库</span>
+    <span>耗时: 00:00:00.0068991</span>
+    <span>状态: 健康</span>
+</div>
+<table>
+    <thead>
+        <tr>
+            <th>检查项</th>
+            <th>检查值</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>ConnectionString</td>
+            <td>"Data Source=BootstrapAdmin.db;"</td>
+        </tr>
+    </tbody>
+</table>
