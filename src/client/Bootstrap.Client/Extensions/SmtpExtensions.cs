@@ -67,7 +67,7 @@ namespace Bootstrap.Client.Extensions
                 var rowData = new StringBuilder();
                 foreach (var row in data.GetProperty("Data").EnumerateObject())
                 {
-                    rowData.AppendFormat(trTemplate, row.Name, row.Value.GetRawText().Replace("\\r\\n", "<br>").Replace("\\n", "<br>"));
+                    rowData.AppendFormat(trTemplate, row.Name, row.Value.GetRawText());
                 }
                 sb.Append(string.Format(itemTemplate, cate[itemName], data.GetProperty("Duration").GetString(), state[data.GetProperty("Status").GetRawText()], rowData.ToString()));
             }
@@ -209,7 +209,7 @@ namespace Bootstrap.Client.Extensions
                     }
 
                     // 合并消息
-                    content.AppendLine(msg.Message);
+                    content.AppendLine(msg.Message.Replace("\\r\\n", "<br>").Replace("\\n", "<br>"));
                 }
                 if (sender != null && mail != null)
                 {
