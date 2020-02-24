@@ -192,7 +192,7 @@ namespace Bootstrap.Client.Extensions
                 {
                     if (mail == null)
                     {
-                        mail = new MailMessage(msg.From, msg.To)
+                        mail = new MailMessage(new MailAddress(msg.From, "Bootstrap Admin"), new MailAddress(msg.To))
                         {
                             Subject = msg.Title,
                             IsBodyHtml = true
