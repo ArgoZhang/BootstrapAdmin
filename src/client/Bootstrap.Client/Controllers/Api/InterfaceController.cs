@@ -3,10 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.IO;
-using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Bootstrap.Client.Controllers.Api

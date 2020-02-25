@@ -9,8 +9,8 @@
         </a>
     </div>
     <div class="nav-header flex-fill align-items-center">
-        <a href="@NavigationManager.ToBlazorLink("/Pages/Admin/Profiles")">
-            <img src="@NavigationManager.ToBlazorLink(Model.Icon.ToBlazorLink())" />
+        <a href="@("~/Admin/Profiles".ToBlazorMenuUrl())">
+            <img src="@Model.Icon.ToBlazorLink()" />
             <span class="username d-inline-block text-truncate flex-fill">@DisplayName</span>
         </a>
     </div>

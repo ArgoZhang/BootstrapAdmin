@@ -10,12 +10,6 @@ namespace Bootstrap.Admin.Pages.Components
     public class SideBarBase : ComponentBase
     {
         /// <summary>
-        /// 获得 NavigationManager 实例
-        /// </summary>
-        [Inject]
-        public NavigationManager? NavigationManager { get; set; }
-
-        /// <summary>
         /// 获得/设置 侧边栏绑定 Model 实例
         /// </summary>
         [Parameter]

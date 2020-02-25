@@ -70,7 +70,7 @@ namespace Bootstrap.Admin.Pages.Components
         /// <summary>
         /// 获得/设置 系统首页
         /// </summary>
-        public string HomeUrl { get; protected set; } = "/Pages";
+        public string HomeUrl { get; protected set; } = "Pages";
 
         /// <summary>
         /// 获得/设置 当前请求路径
@@ -134,7 +134,6 @@ namespace Bootstrap.Admin.Pages.Components
                 DisplayName = Model.DisplayName;
                 WebTitle = Model.Title;
                 WebFooter = Model.Footer;
-                if (HomeUrl.StartsWith("/")) HomeUrl = NavigationManager.ToBlazorLink(HomeUrl);
             }
         }
 

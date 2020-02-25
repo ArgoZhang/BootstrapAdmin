@@ -66,12 +66,5 @@ namespace Bootstrap.Admin.Pages.Components
             EnableBlazor = DictHelper.RetrieveEnableBlazor();
             return base.SetParametersAsync(ParameterView.Empty);
         }
-
-        /// <summary>
-        /// 返回带 PathBase 的完整路径
-        /// </summary>
-        /// <param name="url"></param>
-        /// <returns></returns>
-        protected string ToBlazorLink(string url) => NavigationManager.ToBlazorLink(url);
     }
 }

@@ -475,6 +475,10 @@ pre {
     right: 26px;
 }
 
+.userinfo {
+    margin-top: 2px;
+}
+
 .userinfo .dropdown-toggle, .header .nav .dropdown > a {
     color: #777;
 }
