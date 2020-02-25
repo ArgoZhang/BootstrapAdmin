@@ -18,6 +18,7 @@
     <link href="../css/site-responsive.css" rel="stylesheet" asp-append-version="true" />
     <style>
         @media (min-width: 768px) {
+
             .card-body .bootstrap-table tr td:nth-child(5),
             .card-body .bootstrap-table tr th:nth-child(5),
             .card-body .bootstrap-table tr td:last-child,
@@ -28,6 +29,10 @@
 
             .modal-body .bootstrap-table tr td:first-child {
                 word-break: keep-all;
+                white-space: nowrap;
+            }
+
+            td:not(:nth-child(3)) {
                 white-space: nowrap;
             }
         }
@@ -57,7 +62,7 @@
     </div>
     <a id="pathBase" href="../" hidden></a>
     <div class="modal fade" id="dialogNew" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-         aria-hidden="true">
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
