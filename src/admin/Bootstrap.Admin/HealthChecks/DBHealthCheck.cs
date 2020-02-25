@@ -102,6 +102,8 @@ namespace Bootstrap.Admin.HealthChecks
             {
                 data.Add("Exception", error.Message);
 
+                if (error.Message.Contains("Could not load", StringComparison.OrdinalIgnoreCase)) data.Add("解决办法", "Nuget 引用相对应 dll");
+
                 // UNDONE: Json 序列化循环引用导致异常 NET 5.0 修复此问题
                 // 目前使用 new Exception() 临时解决
                 return Task.FromResult(HealthCheckResult.Unhealthy("Error", new Exception(error.Message), data));
