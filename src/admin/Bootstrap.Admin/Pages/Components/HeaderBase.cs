@@ -47,12 +47,6 @@ namespace Bootstrap.Admin.Pages.Components
         public EventCallback<string> DisplayNameChanged { get; set; }
 
         /// <summary>
-        /// 获得 NavigationManager 实例
-        /// </summary>
-        [Inject]
-        public NavigationManager? NavigationManager { get; set; }
-
-        /// <summary>
         /// 获得/设置 是否显示 Blazor MVC 切换图标
         /// </summary>
         protected bool EnableBlazor { get; set; }
