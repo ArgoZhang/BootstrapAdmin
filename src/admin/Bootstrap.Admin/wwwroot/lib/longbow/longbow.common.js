@@ -505,6 +505,10 @@
             });
             if (settings.queryButton) {
                 $(settings.queryButton).on('click', this, function (e) {
+                    // fix bug: 翻页后再更改查询条件导致页码未更改数据为空
+                    // 更改页码为 1 即可
+                    var options = e.data.data('bootstrap.table').options;
+                    options.pageNumber = 1;
                     e.data.bootstrapTable('refresh');
                 });
             }

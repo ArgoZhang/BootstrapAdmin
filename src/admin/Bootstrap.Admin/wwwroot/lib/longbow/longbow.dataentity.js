@@ -128,6 +128,10 @@
                     if (options.advancedSearchModal) {
                         $(options.advancedSearchModal).modal('hide');
                     }
+                    // fix bug: 翻页后再更改查询条件导致页码未更改数据为空
+                    // 更改页码为 1 即可
+                    var options = this.options.bootstrapTable.data('bootstrap.table').options;
+                    options.pageNumber = 1;
                     this.options.bootstrapTable.bootstrapTable('refresh');
                 }
                 handlerCallback.call(this, null, element, { oper: 'query' });
