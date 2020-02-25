@@ -209,7 +209,7 @@ namespace Bootstrap.Client.Extensions
                     }
 
                     // 合并消息
-                    content.AppendLine(msg.Message.Replace("\\r\\n", "<br>").Replace("\\n", "<br>"));
+                    content.AppendLine(msg.Message.Replace("\\r\\n", "<br>").Replace("\\n", "<br>").Replace("\r\n", "<br>").Replace("\n", "<br>"));
                 }
                 if (sender != null && mail != null)
                 {
