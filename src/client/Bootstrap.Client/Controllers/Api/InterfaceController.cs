@@ -24,7 +24,7 @@ namespace Bootstrap.Client.Controllers.Api
         [HttpPost]
         public async Task<bool> Log([FromServices]IConfiguration config, [FromBody]string message)
         {
-            return await SendMailAsync(config, "BootstrapAdmin Exception", message);
+            return await SendMailAsync(config, "BootstrapAdmin Exception", message.Replace("\r\n", "<br>").Replace("\n", "<br>"));
         }
 
         /// <summary>
