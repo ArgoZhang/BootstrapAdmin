@@ -28,6 +28,7 @@ namespace Bootstrap.Admin.Models
             CookiePeriod = DictHelper.RetrieveCookieExpiresPeriod();
             IPCachePeriod = DictHelper.RetrieveLocaleIPSvrCachePeriod();
             EnableDemo = DictHelper.RetrieveSystemModel();
+            AdminPathBase = DictHelper.RetrievePathBase();
         }
 
         /// <summary>
@@ -89,5 +90,10 @@ namespace Bootstrap.Admin.Models
         /// 获得/设置 是否为演示系统
         /// </summary>
         public bool EnableDemo { get; set; }
+
+        /// <summary>
+        /// 获得/设置 后台管理网站地址
+        /// </summary>
+        public string AdminPathBase { get; set; } = "";
     }
 }

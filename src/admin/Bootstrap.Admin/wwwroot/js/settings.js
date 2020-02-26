@@ -140,6 +140,12 @@ $(function () {
                     }
                 });
                 break;
+            case 'appPath':
+                var appPath = $('#sysAppPath').val();
+                $.bc({
+                    url: Settings.url, data: [{ name: 'AppPath', code: appPath }], title: '后台管理地址设置', method: "post"
+                });
+                break;
         }
     });
 

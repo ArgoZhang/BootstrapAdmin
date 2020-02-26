@@ -26,10 +26,10 @@
     <script src="~/js/settings.js" asp-append-version="true"></script>
 }
 <div class="card" asp-auth="saveTitle">
-    <div class="card-header">系统名称设置</div>
-    <div class="card-body" data-toggle="LgbValidate" data-valid-button="#sysSave">
+    <div class="card-header">网站名称设置</div>
+    <div class="card-body" data-toggle="LgbValidate" data-valid-button="[data-method='title']">
         <div class="alert alert-danger" role="alert" asp-condition="@Model.IsDemo">
-            <span>演示系统禁止更改系统名称</span>
+            <span>演示系统禁止更改网站名称</span>
         </div>
         <div class="form-group">
             <div class="input-group">
@@ -42,16 +42,32 @@
     </div>
 </div>
 <div class="card" asp-auth="saveFooter">
-    <div class="card-header">页脚设置</div>
-    <div class="card-body" data-toggle="LgbValidate" data-valid-button="#footSave">
+    <div class="card-header">网站页脚设置</div>
+    <div class="card-body" data-toggle="LgbValidate" data-valid-button="[data-method='footer']">
         <div class="alert alert-danger" role="alert" asp-condition="@Model.IsDemo">
-            <span>演示系统禁止更改页脚</span>
+            <span>演示系统禁止更改网站页脚</span>
         </div>
         <div class="form-group">
             <div class="input-group">
                 <input type="text" class="form-control" id="sysFoot" placeholder="请输入网站页脚，50字以内" value="@Model.Footer" maxlength="50" data-valid="true" />
                 <div class="input-group-append" asp-condition="!@Model.IsDemo">
                     <button class="btn btn-secondary" type="button" data-method="footer">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-header">后台管理地址设置</div>
+    <div class="card-body" data-toggle="LgbValidate" data-valid-button="[data-method='appPath']">
+        <div class="alert alert-danger" role="alert" asp-condition="@Model.IsDemo">
+            <span>演示系统禁止更改后台管理地址</span>
+        </div>
+        <div class="form-group">
+            <div class="input-group">
+                <input type="text" class="form-control flex-fill" id="sysAppPath" placeholder="请输入后台管理地址，2000字以内" value="@Model.AdminPathBase" maxlength="2000" data-valid="true" />
+                <div class="input-group-append" asp-condition="!@Model.IsDemo">
+                    <button class="btn btn-secondary" type="button" data-method="appPath">保存</button>
                 </div>
             </div>
         </div>

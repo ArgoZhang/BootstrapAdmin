@@ -142,7 +142,8 @@ namespace Bootstrap.DataAccess
                 ["LogLog"] = "登录日志保留时长",
                 ["TraceLog"] = "访问日志保留时长",
                 ["CookiePeriod"] = "Cookie保留时长",
-                ["IPCachePeriod"] = "IP请求缓存时长"
+                ["IPCachePeriod"] = "IP请求缓存时长",
+                ["AppPath"] = "后台地址"
             };
             var ret = SaveSettings(items.Where(i => cache.Any(c => c.Key == i.Name)).Select(i => new BootstrapDict()
             {
@@ -340,5 +341,11 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <returns></returns>
         public static IEnumerable<BootstrapDict> RetireveLocators() => DbContextManager.Create<Dict>()?.RetireveLocators() ?? new BootstrapDict[0];
+
+        /// <summary>
+        /// 获得个人中心地址
+        /// </summary>
+        /// <returns></returns>
+        public static string RetrievePathBase() => DbContextManager.Create<Dict>()?.RetrievePathBase() ?? "";
     }
 }

@@ -313,5 +313,11 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <returns></returns>
         public IEnumerable<BootstrapDict> RetireveLocators() => DictHelper.RetrieveDicts().Where(d => d.Category == "地理位置服务");
+
+        /// <summary>
+        /// 获得个人中心地址
+        /// </summary>
+        /// <returns></returns>
+        public string RetrievePathBase() => DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "后台地址" && d.Define == 0)?.Code ?? "";
     }
 }
