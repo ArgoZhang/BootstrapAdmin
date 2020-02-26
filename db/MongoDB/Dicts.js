@@ -158,25 +158,25 @@
     {
         "Category": "测试平台",
         "Name": "个人中心地址",
-        "Code": "http://localhost:50852/Admin/Profiles",
+        "Code": "/Admin/Profiles",
         "Define": NumberInt(1)
     },
     {
         "Category": "测试平台",
         "Name": "系统设置地址",
-        "Code": "http://localhost:50852/Admin/Index",
+        "Code": "/Admin/Index",
         "Define": NumberInt(1)
     },
     {
         "Category": "测试平台",
         "Name": "系统通知地址",
-        "Code": "http://localhost:50852/Admin/Notifications",
+        "Code": "/Admin/Notifications",
         "Define": NumberInt(1)
     },
     {
         "Category": "应用首页",
         "Name": "Demo",
-        "Code": "http://localhost:49185/",
+        "Code": "http://localhost:49185",
         "Define": NumberInt(0)
     },
     {
@@ -325,15 +325,21 @@
         "Define": NumberInt(0)
     },
     {
+        "Category": "网站设置",
+        "Name": "后台地址",
+        "Code": "http://localhost:50852",
+        "Define": NumberInt(0)
+    },
+    {
         "Category": "测试平台",
         "Name": "favicon",
-        "Code": "http://localhost:49185/favicon.ico",
+        "Code": "/favicon.ico",
         "Define": NumberInt(1)
     },
     {
         "Category": "测试平台",
         "Name": "网站图标",
-        "Code": "http://localhost:49185/favicon.png",
+        "Code": "/favicon.png",
         "Define": NumberInt(1)
     }
 ];

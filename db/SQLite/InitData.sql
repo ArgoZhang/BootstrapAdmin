@@ -70,6 +70,8 @@ INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('网站设置
 
 INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('网站设置', '默认应用程序', '0', 0);
 
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('网站设置', '后台地址', 'http://localhost:50852', 0);
+
 DELETE FROM Navigations Where Category = '0';
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, '后台管理', 10, 'fa fa-gear', '~/Admin/Index', '0');
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, '个人中心', 20, 'fa fa-suitcase', '~/Admin/Profiles', '0');
@@ -171,16 +173,16 @@ INSERT INTO NavigationRole (NavigationID, RoleID) SELECT n.Id, r.Id FROM Navigat
 Delete From [Dicts] Where Category = '应用程序' and Code = 'Demo';
 INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('应用程序', '测试平台', 'Demo', 0);
 Delete From [Dicts] Where Category = '应用首页' and Name = 'Demo';
-INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('应用首页', 'Demo', 'http://localhost:49185/', 0);
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('应用首页', 'Demo', 'http://localhost:49185', 0);
 
 Delete From [Dicts] Where Category = '测试平台';
 Insert into Dicts (Category, [Name], Code, Define) values ('测试平台', '网站标题', '前台演示系统', 1);
 Insert into Dicts (Category, [Name], Code, Define) values ('测试平台', '网站页脚', '前台演示程序后台权限管理框架', 1);
-Insert into Dicts (Category, [Name], Code, Define) values ('测试平台', '个人中心地址', 'http://localhost:50852/Admin/Profiles', 1);
-Insert into Dicts (Category, [Name], Code, Define) values ('测试平台', '系统设置地址', 'http://localhost:50852/Admin/Index', 1);
-Insert into Dicts (Category, [Name], Code, Define) values ('测试平台', '系统通知地址', 'http://localhost:50852/Admin/Notifications', 1);
-INSERT INTO Dicts (Category, [Name], Code, Define) VALUES ('测试平台', 'favicon', 'http://localhost:49185/favicon.ico', 1);
-INSERT INTO Dicts (Category, [Name], Code, Define) VALUES ('测试平台', '网站图标', 'http://localhost:49185/favicon.png', 1);
+Insert into Dicts (Category, [Name], Code, Define) values ('测试平台', '个人中心地址', '/Admin/Profiles', 1);
+Insert into Dicts (Category, [Name], Code, Define) values ('测试平台', '系统设置地址', '/Admin/Index', 1);
+Insert into Dicts (Category, [Name], Code, Define) values ('测试平台', '系统通知地址', '/Admin/Notifications', 1);
+INSERT INTO Dicts (Category, [Name], Code, Define) VALUES ('测试平台', 'favicon', '/favicon.ico', 1);
+INSERT INTO Dicts (Category, [Name], Code, Define) VALUES ('测试平台', '网站图标', '/favicon.png', 1);
 
 Delete from [Navigations] where Application = 'Demo';
 INSERT into [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], [Application]) VALUES (0, '首页', 10, 'fa fa-fa', '~/Home/Index', '1', 'Demo');
