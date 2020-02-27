@@ -347,5 +347,61 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <returns></returns>
         public static string RetrievePathBase() => DbContextManager.Create<Dict>()?.RetrievePathBase() ?? "";
+
+        /// <summary>
+        /// 保存前台应用配置信息
+        /// </summary>
+        /// <param name="dict"></param>
+        /// <returns></returns>
+        public static bool SaveAppSettings(BootstrapDict dict)
+        {
+            // dict define == 1 时为新建前台应用
+            bool ret;
+            if (dict.Define == 0)
+            {
+                // Update
+                ret = SaveSettings(new BootstrapDict[] {
+                    new BootstrapDict()
+                    {
+                        Category = "应用首页",
+                        Name = dict.Name,
+                        Code = dict.Code,
+                        Define = 0
+                    }
+                });
+            }
+            else
+            {
+                ret = Save(new BootstrapDict()
+                {
+                    Category = "应用程序",
+                    Name = dict.Category,
+                    Code = dict.Name,
+                    Define = 0
+                });
+                if (ret) ret = Save(new BootstrapDict()
+                {
+                    Category = "应用首页",
+                    Name = dict.Name,
+                    Code = dict.Code,
+                    Define = 0
+                });
+            }
+            return ret;
+        }
+
+        /// <summary>
+        /// 删除指定前台应用
+        /// </summary>
+        /// <param name="dict"></param>
+        /// <returns></returns>
+        public static bool DeleteApp(BootstrapDict dict)
+        {
+            var ids = new List<string>();
+            ids.AddRange(RetrieveDicts().Where(d => d.Category == "应用程序" && d.Name == dict.Name && d.Code == dict.Code).Select(d => d.Id ?? ""));
+            ids.AddRange(RetrieveDicts().Where(d => d.Category == "应用首页" && d.Name == dict.Code).Select(d => d.Id ?? ""));
+
+            return Delete(ids);
+        }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using Bootstrap.DataAccess;
 using Bootstrap.Security;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Bootstrap.Admin.Models
 {
@@ -29,6 +31,13 @@ namespace Bootstrap.Admin.Models
             IPCachePeriod = DictHelper.RetrieveLocaleIPSvrCachePeriod();
             EnableDemo = DictHelper.RetrieveSystemModel();
             AdminPathBase = DictHelper.RetrievePathBase();
+
+            var dicts = DictHelper.RetrieveDicts();
+            Apps = DictHelper.RetrieveApps().Where(d => !d.Key.Equals("BA", StringComparison.OrdinalIgnoreCase)).Select(k =>
+            {
+                var url = dicts.FirstOrDefault(d => d.Category == "应用首页" && d.Name == k.Key && d.Define == 0)?.Code ?? "未设置";
+                return (k.Key, k.Value, url);
+            });
         }
 
         /// <summary>
@@ -94,6 +103,11 @@ namespace Bootstrap.Admin.Models
         /// <summary>
         /// 获得/设置 后台管理网站地址
         /// </summary>
-        public string AdminPathBase { get; set; } = "";
+        public string AdminPathBase { get; set; }
+
+        /// <summary>
+        /// 获得/设置 系统应用程序集合
+        /// </summary>
+        public IEnumerable<(string Key, string Name, string Url)> Apps { get; set; }
     }
 }

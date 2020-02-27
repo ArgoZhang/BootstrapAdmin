@@ -564,7 +564,7 @@ input.pending {
     padding: 0.5rem 1rem;
 }
 
-.card .card-header a {
+.card .card-header a:not([data-toggle="popover"]) {
     color: #797979;
 }
 
