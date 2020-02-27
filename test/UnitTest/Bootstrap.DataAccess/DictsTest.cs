@@ -230,7 +230,7 @@ namespace Bootstrap.DataAccess
         public void RetrieveHomeUrl_Ok()
         {
             Assert.Equal("~/Home/Index", DictHelper.RetrieveHomeUrl("Admin", ""));
-            Assert.Equal("http://localhost:49185/", DictHelper.RetrieveHomeUrl("Admin", "Demo"));
+            Assert.Equal("http://localhost:49185", DictHelper.RetrieveHomeUrl("Admin", "Demo"));
             Assert.Equal("~/Home/Index", DictHelper.RetrieveHomeUrl("Admin", "BA"));
 
             // 开启默认程序功能
