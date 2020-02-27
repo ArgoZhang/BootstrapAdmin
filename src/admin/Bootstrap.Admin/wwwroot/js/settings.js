@@ -1,10 +1,22 @@
 $(function () {
+    var swalDeleteOptions = {
+        title: "删除前台站点配置",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#dc3545',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: "我要删除",
+        cancelButtonText: "取消"
+    };
+
     var dataBinder = new DataEntity({
         Title: "#sysName",
         Footer: "#sysFoot"
     });
 
-    $('button[data-method]').on('click', function (e) {
+    var $dialog = $('#dialogNew');
+
+    $(document).on('click', 'button[data-method]', function (e) {
         var $this = $(this);
         var data = {};
         switch ($this.attr('data-method')) {
@@ -132,11 +144,66 @@ $(function () {
                 var demo = $('#demo').prop('checked') ? "1" : "0";
                 var authKey = $('#authKey').val();
                 $.bc({
-                    url: Settings.url + '/Demo', data: { name: authKey, code: demo }, title: '演示系统设置', method: "put",
+                    url: Settings.url + '/Demo', data: { name: authKey, code: demo }, title: '演示系统设置', method: "post",
                     callback: function (result) {
                         if (result) {
                             window.setTimeout(function () { window.location.reload(true); }, 1000);
                         }
+                    }
+                });
+                break;
+            case 'appPath':
+                var appPath = $('#sysAppPath').val();
+                $.bc({
+                    url: Settings.url, data: [{ name: 'AppPath', code: appPath }], title: '后台管理地址设置', method: "post"
+                });
+                break;
+            case 'addApp':
+                $('#appKey').val('');
+                $('#appName').val('');
+                $('#appUrl').val('');
+                $dialog.modal('show');
+                break;
+            case 'saveApp':
+                var appPath = $(this).parents('.input-group').find(':text').val();
+                var appKey = $(this).attr('data-key');
+                var appName = $(this).parents('.input-group').prev().text();
+                $.bc({
+                    url: Settings.url + '/AppPath', data: { category: appName, name: appKey, code: appPath, define: 0 }, title: "保存" + appName, method: "post"
+                });
+                break;
+            case 'saveNewApp':
+                var appPath = $('#appUrl').val();
+                var appKey = $('#appKey').val();
+                var appName = $('#appName').val();
+                $.bc({
+                    url: Settings.url + '/AppPath', data: { category: appName, name: appKey, code: appPath }, title: "保存" + appName, method: "post",
+                    callback: function (result) {
+                        if (result) {
+                            $dialog.modal('hide');
+
+                            // 保存成功创建新 dom
+                            var segment = $.format('<div class="form-group col-12" data-toggle="LgbValidate" data-valid-button="[data-method=\'saveApp\']"><label class="control-label" for="{0}">{1}</label>                                    <div class="input-group flex-fill"><input id="{0}" class="form-control" placeholder="请输入应用首页，2000字以内" value="{2}" maxlength="2000" data-valid="true" /><div class="input-group-append">                                            <button class="btn btn-danger" type="button" data-key="{0}" data-method="delApp"><i class="fa fa-trash-o"></i><span>删除</span></button><button class="btn btn-secondary" type="button" data-key="{0}" data-method="saveApp"><i class="fa fa-save"></i><span>保存</span></button></div></div></div>', appKey, appName, appPath);
+
+                            // append dom
+                            $('#appList').append($(segment));
+                        }
+                    }
+                });
+                break;
+            case 'delApp':
+                var appKey = $(this).attr('data-key');
+                var appName = $(this).parents('.input-group').prev().text();
+                var $this = $(this);
+                swal($.extend({}, swalDeleteOptions, { html: "您确定要删除" + appName + "前台站点配置吗" })).then(function (result) {
+                    if (result.value) {
+                        $.bc({
+                            url: Settings.url + '/AppPath', data: { name: appName, code: appKey }, title: "删除" + appName, method: "delete",
+                            callback: function (result) {
+                                // remove dom
+                                $this.parents('.form-group').remove();
+                            }
+                        });
                     }
                 });
                 break;

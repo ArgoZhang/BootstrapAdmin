@@ -10,7 +10,7 @@ namespace Bootstrap.Admin.Controllers.Api
     /// 健康检查控制器
     /// </summary>
     [Route("api/[controller]")]
-    [Authorize]
+    [AllowAnonymous]
     [ApiController]
     public class HealthsController : ControllerBase
     {

@@ -74,6 +74,8 @@ INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'网站设�
 
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'网站设置', N'默认应用程序', '0', 0)
 
+INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'网站设置', N'后台地址', 'http://localhost:50852', 0)
+
 DELETE FROM Navigations Where Category = N'0'
 INSERT [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, N'后台管理', 10, N'fa fa-gear', N'~/Admin/Index', N'0')
 INSERT [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, N'个人中心', 20, N'fa fa-suitcase', N'~/Admin/Profiles', N'0')
@@ -179,16 +181,16 @@ set @AppName = N'测试平台'
 Delete From [dbo].[Dicts] Where Category = N'应用程序' and Code = @AppId
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'应用程序', @AppName, @AppId, 0)
 Delete From [Dicts] Where Category = '应用首页' and Name = @AppId
-INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'应用首页', @AppId, 'http://localhost:49185/', 0)
+INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'应用首页', @AppId, 'http://localhost:49185', 0)
 
 Delete From [dbo].[Dicts] Where Category = @AppName
 Insert Dicts (Category, Name, Code, Define) values (@AppName, N'网站标题', N'前台演示程序', 1);
 Insert Dicts (Category, Name, Code, Define) values (@AppName, N'网站页脚', N'前台演示程序后台权限管理框架', 1);
-Insert Dicts (Category, Name, Code, Define) values (@AppName, N'个人中心地址', N'http://localhost:50852/Admin/Profiles', 1);
-Insert Dicts (Category, Name, Code, Define) values (@AppName, N'系统设置地址', N'http://localhost:50852/Admin/Index', 1);
-Insert Dicts (Category, Name, Code, Define) values (@AppName, N'系统通知地址', N'http://localhost:50852/Admin/Notifications', 1);
-INSERT Dicts (Category, Name, Code, Define) VALUES (@AppName, N'favicon', N'http://localhost:49185/favicon.ico', 1);
-INSERT Dicts (Category, Name, Code, Define) VALUES (@AppName, N'网站图标', 'http://localhost:49185/favicon.png', 1);
+Insert Dicts (Category, Name, Code, Define) values (@AppName, N'个人中心地址', N'/Admin/Profiles', 1);
+Insert Dicts (Category, Name, Code, Define) values (@AppName, N'系统设置地址', N'/Admin/Index', 1);
+Insert Dicts (Category, Name, Code, Define) values (@AppName, N'系统通知地址', N'/Admin/Notifications', 1);
+INSERT Dicts (Category, Name, Code, Define) VALUES (@AppName, N'favicon', N'/favicon.ico', 1);
+INSERT Dicts (Category, Name, Code, Define) VALUES (@AppName, N'网站图标', '/favicon.png', 1);
 
 -- 菜单
 DELETE FROM Navigations Where [Application] = @AppId

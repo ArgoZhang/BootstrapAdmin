@@ -91,22 +91,25 @@ namespace Bootstrap.Client.DataAccess
         /// <returns></returns>
         public virtual string RetrieveWebFooter(string appId) => DbHelper.RetrieveFooter(appId);
 
+
+        private string RetrieveAdminPath() => DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "后台地址" && d.Define == 0)?.Code ?? "";
+
         /// <summary>
         /// 获得系统设置地址
         /// </summary>
         /// <returns></returns>
-        public virtual string RetrieveSettingsUrl(string appId) => DbHelper.RetrieveSettingsUrl(appId);
+        public virtual string RetrieveSettingsUrl(string appId) => $"{RetrieveAdminPath()}{DbHelper.RetrieveSettingsUrl(appId)}";
 
         /// <summary>
         /// 获得系统个人中心地址
         /// </summary>
         /// <returns></returns>
-        public virtual string RetrieveProfilesUrl(string appId) => DbHelper.RetrieveProfilesUrl(appId);
+        public virtual string RetrieveProfilesUrl(string appId) => $"{RetrieveAdminPath()}{DbHelper.RetrieveProfilesUrl(appId)}";
 
         /// <summary>
         /// 获得系统通知地址地址
         /// </summary>
         /// <returns></returns>
-        public virtual string RetrieveNotisUrl(string appId) => DbHelper.RetrieveNotisUrl(appId);
+        public virtual string RetrieveNotisUrl(string appId) => $"{RetrieveAdminPath()}{DbHelper.RetrieveNotisUrl(appId)}";
     }
 }

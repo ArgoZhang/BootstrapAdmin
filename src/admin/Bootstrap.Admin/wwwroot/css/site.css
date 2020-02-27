@@ -76,6 +76,10 @@ body.trans-mute * {
     margin-bottom: 15px;
 }
 
+.card-header label.control-label {
+    margin-bottom: 0;
+}
+
 .modal-body .dd {
     margin-bottom: 15px;
 }
