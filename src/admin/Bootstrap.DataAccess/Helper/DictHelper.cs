@@ -39,9 +39,19 @@ namespace Bootstrap.DataAccess
         public static string RetrieveWebIcon(string appId)
         {
             // 获取应用程序 logo
+            var ret = "~/favicon.ico";
             var ditcs = RetrieveDicts();
             var platName = ditcs.FirstOrDefault(d => d.Category == "应用程序" && d.Code == appId)?.Name;
-            return ditcs.FirstOrDefault(d => d.Category == platName && d.Name == "favicon")?.Code ?? $"~/favicon.ico";
+            if (!string.IsNullOrEmpty(platName))
+            {
+                var pathBase = ditcs.FirstOrDefault(d => d.Category == "应用首页" && d.Name == appId)?.Code;
+                if (!string.IsNullOrEmpty(pathBase))
+                {
+                    var favIcon = ditcs.FirstOrDefault(d => d.Category == platName && d.Name == "favicon")?.Code;
+                    if (!string.IsNullOrEmpty(favIcon)) ret = $"{pathBase}{favIcon}";
+                }
+            }
+            return ret;
         }
 
         /// <summary>
@@ -52,9 +62,19 @@ namespace Bootstrap.DataAccess
         public static string RetrieveWebLogo(string appId)
         {
             // 获取应用程序 logo
+            var ret = "~/favicon.png";
             var ditcs = RetrieveDicts();
             var platName = ditcs.FirstOrDefault(d => d.Category == "应用程序" && d.Code == appId)?.Name;
-            return ditcs.FirstOrDefault(d => d.Category == platName && d.Name == "网站图标")?.Code ?? $"~/favicon.png";
+            if (!string.IsNullOrEmpty(platName))
+            {
+                var pathBase = ditcs.FirstOrDefault(d => d.Category == "应用首页" && d.Name == appId)?.Code;
+                if (!string.IsNullOrEmpty(pathBase))
+                {
+                    var favIcon = ditcs.FirstOrDefault(d => d.Category == platName && d.Name == "网站图标")?.Code;
+                    if (!string.IsNullOrEmpty(favIcon)) ret = $"{pathBase}{favIcon}";
+                }
+            }
+            return ret;
         }
 
         /// <summary>
