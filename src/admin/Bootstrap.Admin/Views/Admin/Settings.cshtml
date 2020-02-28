@@ -115,7 +115,7 @@
     </div>
 </div>
 <div class="card" asp-auth="saveTheme">
-    <div class="card-header">网站样式</div>
+    <div class="card-header">网站样式设置</div>
     <div class="card-body">
         <div class="alert alert-info" role="alert">
             <span>注意：<b><a class="badge-pill" href="./Profiles">个人中心</a></b>中设置的网站样式覆盖本设置</span>
@@ -138,7 +138,7 @@
     </div>
 </div>
 <div class="card" asp-auth="saveUISettings">
-    <div class="card-header">网站调整</div>
+    <div class="card-header">网站功能设置</div>
     <div class="card-body">
         <div class="form-inline">
             <div class="row">
@@ -162,10 +162,10 @@
     </div>
 </div>
 <div class="card" asp-auth="loginSettings">
-    <div class="card-header">登录设置</div>
+    <div class="card-header">网站登录设置</div>
     <div class="card-body">
         <div class="alert alert-danger" role="alert" asp-condition="@Model.IsDemo">
-            <span>演示系统禁止更改登录设置</span>
+            <span>演示系统禁止更改网站登录设置</span>
         </div>
         <div class="form-inline">
             <div class="row">
@@ -349,7 +349,7 @@
 <div class="card">
     <div class="card-header">
         <div class="d-flex align-items-center">
-            <span class="flex-fill">网站缓存</span>
+            <span class="flex-fill">网站缓存设置</span>
             <a data-method="clear" href="#" class="fa fa-times-circle-o" title="全部清除" data-toggle="tooltip" data-placement="left" asp-auth="clearAllCache"></a>
             <a data-method="refresh" href="#" class="fa fa-refresh ml-3" title="点击刷新" data-toggle="tooltip"></a>
         </div>

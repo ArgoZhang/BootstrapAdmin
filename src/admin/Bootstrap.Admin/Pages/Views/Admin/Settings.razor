@@ -24,11 +24,11 @@
 </ConditionComponent>
 <ConditionComponent AuthKey="saveFooter">
     <div class="card">
-        <div class="card-header">页脚设置</div>
+        <div class="card-header">网站页脚设置</div>
         <div class="card-body">
             <ConditionComponent>
                 <div class="alert alert-danger" role="alert">
-                    <span>演示系统禁止更改页脚</span>
+                    <span>演示系统禁止更改网站页脚</span>
                 </div>
             </ConditionComponent>
             <div class="form-group">
@@ -46,7 +46,7 @@
 </ConditionComponent>
 <ConditionComponent AuthKey="saveTheme">
     <div class="card">
-        <div class="card-header">网站样式</div>
+        <div class="card-header">网站样式设置</div>
         <div class="card-body">
             <div class="alert alert-info" role="alert">
                 <span>注意：<b><a class="badge-pill" href="./Profiles">个人中心</a></b>中设置的网站样式覆盖本设置</span>
@@ -71,7 +71,7 @@
 </ConditionComponent>
 <ConditionComponent AuthKey="saveUISettings">
     <div class="card">
-        <div class="card-header">网站调整</div>
+        <div class="card-header">网站功能设置</div>
         <div class="card-body">
             <div class="form-inline">
                 <div class="row">
@@ -97,11 +97,11 @@
 </ConditionComponent>
 <ConditionComponent AuthKey="loginSettings">
     <div class="card" asp-auth="loginSettings">
-        <div class="card-header">登录设置</div>
+        <div class="card-header">网站登录设置</div>
         <div class="card-body">
             <ConditionComponent>
                 <div class="alert alert-danger" role="alert">
-                    <span>演示系统禁止更改登录设置</span>
+                    <span>演示系统禁止更改网站登录设置</span>
                 </div>
             </ConditionComponent>
             <div class="form-inline">
@@ -275,7 +275,7 @@
 </div>
 <div class="card">
     <div class="card-header">
-        <span>网站缓存</span>
+        <span>网站缓存设置</span>
     </div>
     <div class="card-body">
         <Table Id="settings-cache" TItem="Longbow.Cache.ICacheItem" ShowToolBar="true" ShowRefresh="true" ShowExtendButtons="true" EditModel="ConsoleCaCheModel" OnQuery="QueryData">
