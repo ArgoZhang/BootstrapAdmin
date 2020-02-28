@@ -39,35 +39,68 @@ namespace Bootstrap.Admin.Api
             var code = DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "UnitTest-Settings").Code;
             Assert.Equal("0", code);
 
-            // Delete 
+            // Delete
             ids = DictHelper.RetrieveDicts().Where(d => d.Category == "UnitTest-Settings").Select(d => d.Id);
             DictHelper.Delete(ids);
+        }
+
+        [Fact]
+        public async void Post_Id_Ok()
+        {
+            // Demo
+            var resp = await Client.PostAsJsonAsync<BootstrapDict, bool>("Demo", new BootstrapDict() { Name = "1", Code = "UnitTest" });
+            Assert.False(resp);
+
+            // AppPath
+            var dict = new BootstrapDict() { Category = "UnitTest", Name = "UnitTest", Code = "http://localhost/AppPath/" };
+            resp = await Client.PostAsJsonAsync<BootstrapDict, bool>("AppPath", dict);
+            Assert.True(resp);
+
+            Assert.Equal(dict.Code.TrimEnd('/'), DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "应用首页" && d.Name == dict.Name)?.Code ?? "");
+
+            // update by set dict.Define = 0
+            dict.Define = 0;
+            dict.Code = "http://127.0.0.1/UnitTest";
+            resp = await Client.PostAsJsonAsync<BootstrapDict, bool>("AppPath", dict);
+            Assert.True(resp);
+
+            Assert.Equal(dict.Code.TrimEnd('/'), DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "应用首页" && d.Name == dict.Name)?.Code ?? "");
+
+            // del
+            dict.Name = "UnitTest";
+            dict.Code = "UnitTest";
+            resp = await Client.DeleteAsJsonAsync<BootstrapDict, bool>("AppPath", dict);
+            Assert.True(resp);
+
+            // Else
+            resp = await Client.PostAsJsonAsync<BootstrapDict, bool>("UnitTest", dict);
+            Assert.False(resp);
         }
 
         internal class CacheCorsItem : ICacheCorsItem
         {
             /// <summary>
-            /// 
+            ///
             /// </summary>
             public bool Enabled { get; set; }
 
             /// <summary>
-            /// 
+            ///
             /// </summary>
             public string Key { get; set; }
 
             /// <summary>
-            /// 
+            ///
             /// </summary>
             public string Url { get; set; }
 
             /// <summary>
-            /// 
+            ///
             /// </summary>
             public string Desc { get; set; }
 
             /// <summary>
-            /// 
+            ///
             /// </summary>
             public bool Self { get; set; }
         }

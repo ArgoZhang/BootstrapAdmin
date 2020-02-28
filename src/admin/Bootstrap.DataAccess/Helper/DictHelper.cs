@@ -169,7 +169,9 @@ namespace Bootstrap.DataAccess
             {
                 Category = "网站设置",
                 Name = cache[i.Name],
-                Code = i.Code
+
+                // 后台网站配置不能以 / 号结尾
+                Code = i.Name == "AppPath" ? i.Code.TrimEnd('/') : i.Code
             }));
             return ret;
         }
@@ -377,6 +379,9 @@ namespace Bootstrap.DataAccess
         {
             // dict define == 1 时为新建前台应用
             bool ret;
+
+            // 前台网站配置地址 不允许以 / 结尾
+            dict.Code = dict.Code.TrimEnd('/');
             if (dict.Define == 0)
             {
                 // Update
