@@ -81,7 +81,7 @@
                 color: #eee;
             }
 
-.control-label {
+.control-label:not([data-toggle='lgbinfo']) {
     color: #467fa7;
 }
 
