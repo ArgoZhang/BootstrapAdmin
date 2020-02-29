@@ -56,6 +56,20 @@ namespace Bootstrap.DataAccess
         }
 
         [Fact]
+        public void RetrieveWebIcon_Ok()
+        {
+            var url = DictHelper.RetrieveWebIcon("Demo");
+            Assert.Equal("http://localhost:49185/favicon.ico", url);
+        }
+
+        [Fact]
+        public void RetrieveWebLogo_Ok()
+        {
+            var url = DictHelper.RetrieveWebLogo("Demo");
+            Assert.Equal("http://localhost:49185/favicon.png", url);
+        }
+
+        [Fact]
         public void RetrieveWebTitle_Ok()
         {
             Assert.Equal("后台管理系统", DictHelper.RetrieveWebTitle(BootstrapAppContext.AppId));
@@ -353,12 +367,12 @@ namespace Bootstrap.DataAccess
         private class BaiduIP138Locator
         {
             /// <summary>
-            /// 
+            ///
             /// </summary>
             public string Status { get; set; } = "";
 
             /// <summary>
-            /// 获得/设置 地理位置结果 
+            /// 获得/设置 地理位置结果
             /// </summary>
             public IEnumerable<BaiDuIp138LocatorResult> Data { get; set; } = new BaiDuIp138LocatorResult[0];
         }

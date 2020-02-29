@@ -48,8 +48,11 @@ namespace Bootstrap.Admin.Api
         public async void Post_Id_Ok()
         {
             // Demo
-            var resp = await Client.PostAsJsonAsync<BootstrapDict, bool>("Demo", new BootstrapDict() { Name = "1", Code = "UnitTest" });
+            var resp = await Client.PostAsJsonAsync<BootstrapDict, bool>("Demo", new BootstrapDict() { Name = "UnitTest", Code = "0", Category = "/oEQLKLccvHA+MsDwCwmgaKddR0IEcOy9KgBmFsHXRs=" });
             Assert.False(resp);
+
+            resp = await Client.PostAsJsonAsync<BootstrapDict, bool>("Demo", new BootstrapDict() { Name = "123456", Code = "0", Category = "BPtCMhaFngsDb6NsbnnSgQUn4Ej6PnsvaUV3bChYei8=" });
+            Assert.True(resp);
 
             // AppPath
             var dict = new BootstrapDict() { Category = "UnitTest", Name = "UnitTest", Code = "http://localhost/AppPath/" };

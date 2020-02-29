@@ -287,11 +287,12 @@ namespace Bootstrap.DataAccess
         /// 设置 系统是否为演示系统 默认为 false 不是演示系统
         /// </summary>
         /// <returns></returns>
-        public static bool UpdateSystemModel(bool isDemo, string authKey)
+        public static bool UpdateSystemModel(bool isDemo, string authKey, string result)
         {
             var ret = false;
             // 检查授权码
-            if (Longbow.Security.Cryptography.LgbCryptography.ComputeHash(authKey, "l9w+7loytBzNHYkKjGzpWzbhYpU7kWZenT1OeZxkor28wQJQ") == "/oEQLKLccvHA+MsDwCwmgaKddR0IEcOy9KgBmFsHXRs=")
+            // 请求者提供 秘钥与结果 服务器端通过算法比对结果
+            if (Longbow.Security.Cryptography.LgbCryptography.ComputeHash(authKey, "l9w+7loytBzNHYkKjGzpWzbhYpU7kWZenT1OeZxkor28wQJQ") == result)
             {
                 ret = DbContextManager.Create<Dict>()?.UpdateSystemModel(isDemo) ?? false;
             }

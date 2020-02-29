@@ -58,6 +58,13 @@ namespace Bootstrap.Admin.Api
             resp = await Client.DeleteAsJsonAsync<IEnumerable<string>, bool>("/api/Tasks", new string[] { widget.Name });
             Assert.True(resp);
         }
+
+        [Fact]
+        public void DefaultTaskExecutor_Ok()
+        {
+            var executor = new DefaultTaskExecutor();
+            executor.Execute(new System.Threading.CancellationToken());
+        }
     }
 
     [Collection("SystemModel")]
