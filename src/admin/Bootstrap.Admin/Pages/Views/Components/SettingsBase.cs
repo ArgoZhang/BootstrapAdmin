@@ -244,7 +244,7 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
         /// </summary>
         protected async System.Threading.Tasks.Task SaveSystemModel()
         {
-            var ret = DictHelper.UpdateSystemModel(Model.EnableDemo, Model.AuthKey, "/oEQLKLccvHA+MsDwCwmgaKddR0IEcOy9KgBmFsHXRs=");
+            var ret = DictHelper.UpdateSystemModel(Model.EnableDemo, Model.AuthKey);
             ShowMessage("保存演示系统设置", ret);
             if (ret)
             {

@@ -1,6 +1,7 @@
 ﻿using Bootstrap.Security;
 using Bootstrap.Security.DataAccess;
 using Longbow.Cache;
+using Longbow.Security.Cryptography;
 using Longbow.Web;
 using System;
 using System.Collections.Generic;
@@ -287,17 +288,29 @@ namespace Bootstrap.DataAccess
         /// 设置 系统是否为演示系统 默认为 false 不是演示系统
         /// </summary>
         /// <returns></returns>
-        public static bool UpdateSystemModel(bool isDemo, string authKey, string result)
+        public static bool UpdateSystemModel(bool isDemo, string authKey)
         {
             var ret = false;
             // 检查授权码
             // 请求者提供 秘钥与结果 服务器端通过算法比对结果
-            if (Longbow.Security.Cryptography.LgbCryptography.ComputeHash(authKey, "l9w+7loytBzNHYkKjGzpWzbhYpU7kWZenT1OeZxkor28wQJQ") == result)
+            if (LgbCryptography.ComputeHash(authKey, RetrieveAuthorSalt()) == RetrieveAuthorHash())
             {
                 ret = DbContextManager.Create<Dict>()?.UpdateSystemModel(isDemo) ?? false;
             }
             return ret;
         }
+
+        /// <summary>
+        /// 获得 字典表中配置的授权盐值
+        /// </summary>
+        /// <returns></returns>
+        public static string RetrieveAuthorSalt() => RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "授权盐值")?.Code ?? "";
+
+        /// <summary>
+        /// 获得 字典表中配置的哈希值
+        /// </summary>
+        /// <returns></returns>
+        public static string RetrieveAuthorHash() => RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "哈希结果")?.Code ?? "";
 
         /// <summary>
         /// 获得验证码图床地址

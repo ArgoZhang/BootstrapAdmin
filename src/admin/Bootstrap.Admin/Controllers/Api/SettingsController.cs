@@ -33,7 +33,7 @@ namespace Bootstrap.Admin.Controllers.Api
         [HttpPost("{id}")]
         public bool Post(string id, [FromBody]BootstrapDict dict) => id switch
         {
-            "Demo" => DictHelper.UpdateSystemModel(dict.Code == "1", dict.Name, dict.Category),
+            "Demo" => DictHelper.UpdateSystemModel(dict.Code == "1", dict.Name),
             "AppPath" => DictHelper.SaveAppSettings(dict),
             _ => false
         };

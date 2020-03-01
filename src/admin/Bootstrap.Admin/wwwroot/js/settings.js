@@ -144,7 +144,7 @@ $(function () {
                 var demo = $('#demo').prop('checked') ? "1" : "0";
                 var authKey = $('#authKey').val();
                 $.bc({
-                    url: Settings.url + '/Demo', data: { category: "/oEQLKLccvHA+MsDwCwmgaKddR0IEcOy9KgBmFsHXRs=", name: authKey, code: demo }, title: '演示系统设置', method: "post",
+                    url: Settings.url + '/Demo', data: { name: authKey, code: demo }, title: '演示系统设置', method: "post",
                     callback: function (result) {
                         if (result) {
                             window.setTimeout(function () { window.location.reload(true); }, 1000);
