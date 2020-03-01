@@ -11,14 +11,13 @@ namespace Bootstrap.Client
     /// <summary>
     /// Tools 控制器
     /// </summary>
-    [Authorize]
+    [Authorize(Roles = "Administrators")]
     public class ToolsController : Controller
     {
         /// <summary>
         /// SQL 视图
         /// </summary>
         /// <returns></returns>
-        [Authorize(Roles = "Administrators")]
         [HttpGet]
         public IActionResult SQL()
         {
@@ -29,7 +28,6 @@ namespace Bootstrap.Client
         /// SQL 视图
         /// </summary>
         /// <returns></returns>
-        [Authorize(Roles = "Administrators")]
         [HttpGet]
         public IActionResult Mail()
         {
@@ -99,6 +97,16 @@ namespace Bootstrap.Client
             {
                 return db.Execute(sql);
             }
+        }
+
+        /// <summary>
+        /// 加密工具控制器
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public IActionResult Encrpty()
+        {
+            return View(new EncrptyModel(this));
         }
     }
 }
