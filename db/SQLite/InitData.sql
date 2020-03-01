@@ -65,7 +65,13 @@ INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('地理位置
 
 -- 时长单位 分钟
 INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('网站设置', 'IP请求缓存时长', '10', 0);
+
+-- 演示系统
 INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('网站设置', '演示系统', '0', 0);
+-- 授权密码默认为 123789
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('网站设置', '授权盐值', 'yjglE2eddCGcS7tTFTDd2DfvqXHgCnMhNhpmx9HJaC9l8GAZ', 0);
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('网站设置', '哈希结果', '6jTT50HGuk8V+AIsiE4IfqjcER71PBN1DY7gqOLZE7E=', 0);
+
 INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('网站设置', '验证码图床', 'http://imgs.sdgxgz.com/images/', 0);
 
 INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('网站设置', '默认应用程序', '0', 0);

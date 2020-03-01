@@ -64,11 +64,13 @@ INSERT INTO Dicts (Id, Category, Name, Code, Define) Values (SEQ_DICTS_ID.NEXTVA
 
 -- 时长单位 分钟
 INSERT INTO Dicts (Id, Category, Name, Code, Define) Values (SEQ_DICTS_ID.NEXTVAL, '网站设置', 'IP请求缓存时长', '10', 0);
+
 INSERT INTO Dicts (Id, Category, Name, Code, Define) Values (SEQ_DICTS_ID.NEXTVAL, '网站设置', '演示系统', '0', 0);
+INSERT INTO Dicts (Id, Category, Name, Code, Define) VALUES (SEQ_DICTS_ID.NEXTVAL, '网站设置', '授权盐值', 'yjglE2eddCGcS7tTFTDd2DfvqXHgCnMhNhpmx9HJaC9l8GAZ', 0);
+INSERT INTO Dicts (Id, Category, Name, Code, Define) VALUES (SEQ_DICTS_ID.NEXTVAL, '网站设置', '哈希结果', '6jTT50HGuk8V+AIsiE4IfqjcER71PBN1DY7gqOLZE7E=', 0);
+
 INSERT INTO Dicts (Id, Category, Name, Code, Define) Values (SEQ_DICTS_ID.NEXTVAL, '网站设置', '验证码图床', 'http://imgs.sdgxgz.com/images/', 0);
-
 INSERT INTO Dicts (Id, Category, Name, Code, Define) Values (SEQ_DICTS_ID.NEXTVAL, '网站设置', '默认应用程序', '0', 0);
-
 INSERT INTO Dicts (Id, Category, Name, Code, Define) Values (SEQ_DICTS_ID.NEXTVAL, '网站设置', '后台地址', 'http://localhost:50852', 0);
 
 DELETE FROM Navigations Where Category = '0';

@@ -266,6 +266,18 @@
     },
     {
         "Category": "网站设置",
+        "Name": "授权盐值",
+        "Code": "yjglE2eddCGcS7tTFTDd2DfvqXHgCnMhNhpmx9HJaC9l8GAZ",
+        "Define": NumberInt(0)
+    },
+    {
+        "Category": "网站设置",
+        "Name": "哈希结果",
+        "Code": "6jTT50HGuk8V+AIsiE4IfqjcER71PBN1DY7gqOLZE7E=",
+        "Define": NumberInt(0)
+    },
+    {
+        "Category": "网站设置",
         "Name": "验证码图床",
         "Code": "http://imgs.sdgxgz.com/images/",
         "Define": NumberInt(0)
