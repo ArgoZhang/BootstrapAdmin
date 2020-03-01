@@ -8,7 +8,7 @@ cp ~/BootstrapAdmin/src/admin/Bootstrap.Admin/appsettings.json /usr/local/ba/adm
 cp ~/BootstrapAdmin/src/admin/Bootstrap.Admin/BootstrapAdmin.db /usr/local/ba/admin
 cp ~/BootstrapAdmin/src/client/Bootstrap.Client/appsettings.json /usr/local/ba/client
 
-cp ~/BootstrapAdmin/services/* /usr/lib/systemd/system
+cp ~/BootstrapAdmin/scripts/linux/services/* /usr/lib/systemd/system
 systemctl enable ba.admin
 systemctl enable ba.client
 systemctl enable nginx
