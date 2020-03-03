@@ -37,27 +37,25 @@
     </environment>
     <script src="~/js/healths.js" asp-append-version="true"></script>
 }
-@section modal {
-    <div class="modal fade" id="dialogNew" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="myModalLabel">健康检查明细窗口</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                </div>
-                <div class="modal-body nobar">
-                    <table id="checkDetail"></table>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                        <i class="fa fa-times"></i>
-                        <span>关闭</span>
-                    </button>
-                </div>
+<div class="modal fade" id="dialogNew" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">健康检查明细窗口</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body nobar">
+                <table id="checkDetail"></table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    <i class="fa fa-times"></i>
+                    <span>关闭</span>
+                </button>
             </div>
         </div>
     </div>
-}
+</div>
 <div class="card">
     <div class="card-header">
         健康检查结果

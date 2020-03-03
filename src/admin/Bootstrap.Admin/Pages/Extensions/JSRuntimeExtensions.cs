@@ -47,20 +47,6 @@ namespace Microsoft.JSInterop
         public static void InitDocument(this IJSRuntime? jSRuntime) => jSRuntime.InvokeVoidAsync("$.initDocument");
 
         /// <summary>
-        /// 修复 Modal 组件
-        /// </summary>
-        /// <param name="jSRuntime"></param>
-        /// <param name="id"></param>
-        public static void InitModal(this IJSRuntime? jSRuntime, string id) => jSRuntime.InvokeVoidAsync("$.initModal", id);
-
-        /// <summary>
-        /// 修复 Modal 组件
-        /// </summary>
-        /// <param name="jSRuntime"></param>
-        /// <param name="id"></param>
-        public static void InitToast(this IJSRuntime? jSRuntime, string id) => jSRuntime.InvokeVoidAsync("$.initToast", id);
-
-        /// <summary>
         /// 弹出 Modal 组件
         /// </summary>
         /// <param name="jSRuntime"></param>

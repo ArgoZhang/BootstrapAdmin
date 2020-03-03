@@ -65,18 +65,6 @@ namespace Bootstrap.Admin.Pages.Components
         public bool ShowFooter { get; set; } = true;
 
         /// <summary>
-        /// OnAfterRender 方法
-        /// </summary>
-        /// <param name="firstRender"></param>
-        protected override void OnAfterRender(bool firstRender)
-        {
-            if (firstRender)
-            {
-                JSRuntime.InitModal(Id);
-            }
-        }
-
-        /// <summary>
         /// SetParametersAsync 方法
         /// </summary>
         public override Task SetParametersAsync(ParameterView parameters)

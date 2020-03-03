@@ -34,43 +34,6 @@
     <script src="~/lib/longbow/longbow.validate.js" asp-append-version="true"></script>
     @RenderSection("javascript", false)
 }
-@section modal {
-    <div class="modal fade" id="dialogNew" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content" data-toggle="LgbValidate" data-valid-button="#btnSubmit" data-valid-modal="#dialogNew">
-                @RenderSection("modal", false)
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                        <i class="fa fa-times"></i>
-                        <span>关闭</span>
-                    </button>
-                    <button type="button" class="btn btn-primary" id="btnSubmit">
-                        <i class="fa fa-save"></i>
-                        <span>保存</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="dialogAdvancedSearch" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="mySearchModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="mySearchModalLabel">查询条件</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                </div>
-                <div class="modal-body modal-query">
-                    @RenderSection("query", false)
-                </div>
-                <div class="modal-footer">
-                    <button type="button" id="btn_reset" class="btn btn-info btn-fill"><i class="fa fa-trash-o" aria-hidden="true"></i><span>重置</span></button>
-                    <button type="button" id="btn_query" class="btn btn-primary btn-fill"><i class="fa fa-search" aria-hidden="true"></i><span>查询</span></button>
-                </div>
-            </div>
-        </div>
-    </div>
-    @RenderSection("customModal", false)
-}
 <div id="toolbar" class="d-none">
     <div class="gear btn-group">
         <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" type="button"><i class="fa fa-gear"></i></button>
@@ -105,3 +68,38 @@
     </div>
 </div>
 @await RenderSectionAsync("body", false)
+<div class="modal fade" id="dialogNew" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content" data-toggle="LgbValidate" data-valid-button="#btnSubmit" data-valid-modal="#dialogNew">
+            @RenderSection("modal", false)
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    <i class="fa fa-times"></i>
+                    <span>关闭</span>
+                </button>
+                <button type="button" class="btn btn-primary" id="btnSubmit">
+                    <i class="fa fa-save"></i>
+                    <span>保存</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="dialogAdvancedSearch" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="mySearchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mySearchModalLabel">查询条件</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body modal-query">
+                @RenderSection("query", false)
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btn_reset" class="btn btn-info btn-fill"><i class="fa fa-trash-o" aria-hidden="true"></i><span>重置</span></button>
+                <button type="button" id="btn_query" class="btn btn-primary btn-fill"><i class="fa fa-search" aria-hidden="true"></i><span>查询</span></button>
+            </div>
+        </div>
+    </div>
+</div>
+@RenderSection("customModal", false)

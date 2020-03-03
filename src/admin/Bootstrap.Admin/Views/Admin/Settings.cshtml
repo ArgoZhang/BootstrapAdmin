@@ -25,47 +25,6 @@
     <script src="~/lib/longbow/longbow.validate.js"></script>
     <script src="~/js/settings.js" asp-append-version="true"></script>
 }
-@section modal {
-    <div class="modal fade" id="dialogNew" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content" data-toggle="LgbValidate" data-valid-button="[data-method='saveNewApp']" data-valid-modal="#dialogNew">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="myModalLabel">前台应用设置</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <form class="form-inline">
-                        <div class="row">
-                            <div class="form-group col-sm-6">
-                                <label class="control-label" for="appKey">应用ID</label>
-                                <input type="text" class="form-control" id="appKey" placeholder="不可为空，50字以内" maxlength="50" data-valid="true" />
-                            </div>
-                            <div class="form-group col-sm-6">
-                                <input type="hidden" id="roleID" />
-                                <label class="control-label" for="appName">应用名称</label>
-                                <input type="text" class="form-control" id="appName" placeholder="不可为空，50字以内" maxlength="50" data-valid="true" />
-                            </div>
-                            <div class="form-group col-sm-12">
-                                <label class="control-label" for="appUrl">应用首页</label>
-                                <input type="text" class="form-control flex-fill" id="appUrl" placeholder="不可为空，2000字以内" maxlength="2000" data-valid="true" />
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                        <i class="fa fa-times"></i>
-                        <span>关闭</span>
-                    </button>
-                    <button type="button" class="btn btn-primary" data-method="saveNewApp">
-                        <i class="fa fa-save"></i>
-                        <span>保存</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-}
 <div class="card" asp-auth="saveTitle">
     <div class="card-header">网站名称设置</div>
     <div class="card-body" data-toggle="LgbValidate" data-valid-button="[data-method='title']">
@@ -355,5 +314,44 @@
         </div>
     </div>
     <div class="card-body" id="sortable">
+    </div>
+</div>
+<div class="modal fade" id="dialogNew" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content" data-toggle="LgbValidate" data-valid-button="[data-method='saveNewApp']" data-valid-modal="#dialogNew">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">前台应用设置</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form class="form-inline">
+                    <div class="row">
+                        <div class="form-group col-sm-6">
+                            <label class="control-label" for="appKey">应用ID</label>
+                            <input type="text" class="form-control" id="appKey" placeholder="不可为空，50字以内" maxlength="50" data-valid="true" />
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <input type="hidden" id="roleID" />
+                            <label class="control-label" for="appName">应用名称</label>
+                            <input type="text" class="form-control" id="appName" placeholder="不可为空，50字以内" maxlength="50" data-valid="true" />
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label class="control-label" for="appUrl">应用首页</label>
+                            <input type="text" class="form-control flex-fill" id="appUrl" placeholder="不可为空，2000字以内" maxlength="2000" data-valid="true" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    <i class="fa fa-times"></i>
+                    <span>关闭</span>
+                </button>
+                <button type="button" class="btn btn-primary" data-method="saveNewApp">
+                    <i class="fa fa-save"></i>
+                    <span>保存</span>
+                </button>
+            </div>
+        </div>
     </div>
 </div>

@@ -108,12 +108,6 @@
             $('[data-toggle="tooltip"]').tooltip();
             $('.sidebar').addNiceScroll().autoScrollSidebar();
         },
-        initModal: function (id) {
-            $('#' + id).appendTo($('body'));
-        },
-        initToast: function (id) {
-            $('#' + id).appendTo($('body'));
-        },
         toggleModal: function (modalId) {
             $(modalId).modal('toggle');
         },

@@ -25,7 +25,7 @@
 
 @media (min-width: 768px) {
     .main-content {
-        position: fixed;
+        position: absolute;
         overflow: auto;
         -ms-overflow-style: auto;
     }
