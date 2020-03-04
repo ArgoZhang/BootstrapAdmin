@@ -68,7 +68,6 @@ namespace Bootstrap.Admin.Controllers.Api
 
             // 此处未存储到数据库中，直接送入任务中心
             TaskServicesManager.Remove(widget.Name);
-            var expression = Longbow.Tasks.Cron.ParseCronExpression(widget.CronExpression);
             TaskServicesManager.GetOrAdd(widget.Name, token => taskExecutor.Execute(token), TriggerBuilder.Build(widget.CronExpression));
             return true;
         }

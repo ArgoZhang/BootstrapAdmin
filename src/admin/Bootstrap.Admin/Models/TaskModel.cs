@@ -24,7 +24,8 @@ namespace Bootstrap.Admin.Models
             TaskTriggers = new Dictionary<string, string>
             {
                 { "每 5 秒钟执行一次", Longbow.Tasks.Cron.Secondly(5) },
-                { "每 1 分钟执行一次", Longbow.Tasks.Cron.Minutely(1) }
+                { "每 1 分钟执行一次", Longbow.Tasks.Cron.Minutely(1) },
+                { "每 5 分钟执行一次", Longbow.Tasks.Cron.Minutely(5) }
             };
         }
 
