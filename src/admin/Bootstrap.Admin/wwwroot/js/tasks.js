@@ -33,7 +33,7 @@
         return content;
     };
 
-    var $task = $('.card-body table').lgbTable({
+    var $task = $('#table').lgbTable({
         url: Tasks.url,
         dataBinder: {
             map: {
