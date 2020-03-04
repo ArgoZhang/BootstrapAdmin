@@ -63,10 +63,6 @@ namespace Bootstrap.Admin.Pages.Components
         /// <param name="firstRender"></param>
         protected override void OnAfterRender(bool firstRender)
         {
-            if (firstRender)
-            {
-                JSRuntime.InitToast(Id);
-            }
             if (_show)
             {
                 _show = false;
