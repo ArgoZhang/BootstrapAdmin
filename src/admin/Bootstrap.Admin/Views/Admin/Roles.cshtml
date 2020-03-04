@@ -81,9 +81,7 @@
         </form>
     </div>
 }
-@section customModal{
-    @await Html.PartialAsync("UserConfig")
-    @await Html.PartialAsync("GroupConfig")
-    @await Html.PartialAsync("NavigatorConfig")
-    @await Html.PartialAsync("AppConfig")
-}
+@await Html.PartialAsync("UserConfig")
+@await Html.PartialAsync("GroupConfig")
+@await Html.PartialAsync("NavigatorConfig")
+@await Html.PartialAsync("AppConfig")

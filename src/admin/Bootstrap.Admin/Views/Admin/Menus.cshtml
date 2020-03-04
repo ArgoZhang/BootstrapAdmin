@@ -180,27 +180,25 @@
         </form>
     </div>
 }
-@section customModal {
-    @await Html.PartialAsync("RoleConfig")
-    <div id="dialogIcon" class="modal-content icon-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="myIconModalLabel">请选择图标</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        </div>
-        <div class="modal-body">
-            <div class="loadIconView"><i class="fa fa-spinner fa-pulse"></i><span>正在加载图标...请稍等</span></div>
-        </div>
-        <div class="modal-footer">
-            <span>被选择的图标</span><i class="fa fa-fa" id="pickIcon"></i>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                <i class="fa fa-times"></i>
-                <span>关闭</span>
-            </button>
-            <button type="button" class="btn btn-primary" id="btnSubmitIcon">
-                <i class="fa fa-save"></i>
-                <span>确定</span>
-            </button>
-        </div>
+<div id="dialogIcon" class="modal-content icon-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="myIconModalLabel">请选择图标</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     </div>
-    @await Html.PartialAsync("NavigatorConfig")
-}
+    <div class="modal-body">
+        <div class="loadIconView"><i class="fa fa-spinner fa-pulse"></i><span>正在加载图标...请稍等</span></div>
+    </div>
+    <div class="modal-footer">
+        <span>被选择的图标</span><i class="fa fa-fa" id="pickIcon"></i>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            <i class="fa fa-times"></i>
+            <span>关闭</span>
+        </button>
+        <button type="button" class="btn btn-primary" id="btnSubmitIcon">
+            <i class="fa fa-save"></i>
+            <span>确定</span>
+        </button>
+    </div>
+</div>
+@await Html.PartialAsync("RoleConfig")
+@await Html.PartialAsync("NavigatorConfig")

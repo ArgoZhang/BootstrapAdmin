@@ -57,12 +57,10 @@
         </form>
     </div>
 }
-@section customModal {
-    @await Html.PartialAsync("RoleConfig")
-    @await Html.PartialAsync("UserConfig")
-}
 @section cardbody {
     <div class="alert alert-info" role="alert" asp-condition="@Model.IsDemo">
         <span>部门与组织结构中的带有层次关系的部门不同，用于资源权限的分配与管理 <a href="https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/%E6%95%B0%E6%8D%AE%E6%9D%83%E9%99%90?sort_id=1680495" target="_blank">参考文档</a></span>
     </div>
 }
+@await Html.PartialAsync("RoleConfig")
+@await Html.PartialAsync("UserConfig")

@@ -67,7 +67,6 @@
         @RenderSection("tableButtons", false)
     </div>
 </div>
-@await RenderSectionAsync("body", false)
 <div class="modal fade" id="dialogNew" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content" data-toggle="LgbValidate" data-valid-button="#btnSubmit" data-valid-modal="#dialogNew">
@@ -102,4 +101,4 @@
         </div>
     </div>
 </div>
-@RenderSection("customModal", false)
+@RenderBody()
