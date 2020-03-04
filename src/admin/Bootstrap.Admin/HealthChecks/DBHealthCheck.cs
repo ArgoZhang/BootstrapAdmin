@@ -1,4 +1,5 @@
 ﻿using Bootstrap.DataAccess;
+using Bootstrap.Security;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -73,6 +74,15 @@ namespace Bootstrap.Admin.HealthChecks
                 menusCount = MenuHelper.RetrieveMenusByUserName(userName)?.Count() ?? 0;
                 dictsCount = DictHelper.RetrieveDicts()?.Count() ?? 0;
                 healths = user != null && !string.IsNullOrEmpty(roles) && menusCount > 0 && dictsCount > 0;
+
+                // 检查数据库是否可写
+                var dict = new BootstrapDict()
+                {
+                    Category = "DB-Check",
+                    Name = "WriteTest",
+                    Code = "1"
+                };
+                if (DictHelper.Save(dict) && !string.IsNullOrEmpty(dict.Id)) DictHelper.Delete(new string[] { dict.Id });
             }
             catch (Exception ex)
             {
@@ -102,6 +112,7 @@ namespace Bootstrap.Admin.HealthChecks
             {
                 data.Add("Exception", error.Message);
 
+                if (error.Message.Contains("SQLite Error 8: 'attempt to write a readonly database'.")) data.Add("解决办法", "更改数据库文件为可读，并授予进程可写权限");
                 if (error.Message.Contains("Could not load", StringComparison.OrdinalIgnoreCase)) data.Add("解决办法", "Nuget 引用相对应的数据库驱动 dll");
 
                 // UNDONE: Json 序列化循环引用导致异常 NET 5.0 修复此问题
