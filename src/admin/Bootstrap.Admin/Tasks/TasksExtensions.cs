@@ -1,4 +1,5 @@
 ﻿using Bootstrap.DataAccess;
+using Bootstrap.Security;
 using Longbow.Tasks;
 using Microsoft.Extensions.Hosting;
 using System.Linq;
@@ -52,6 +53,16 @@ namespace Microsoft.Extensions.DependencyInjection
 
             // 真实任务负责批次写入数据执行脚本到日志中
             TaskServicesManager.GetOrAdd<DBLogTask>("SQL日志", TriggerBuilder.Build(Cron.Minutely()));
+
+            // 真实人物负责周期性设置健康检查结果开关为开启
+            TaskServicesManager.GetOrAdd("健康检查", token => Task.FromResult(DictHelper.SaveSettings(new BootstrapDict[] {
+                new BootstrapDict() {
+                    Category = "网站设置",
+                    Name = "健康检查",
+                    Code = "1",
+                    Define = 0
+                }
+            })), TriggerBuilder.Build(Cron.Minutely(10)));
         });
     }
 }

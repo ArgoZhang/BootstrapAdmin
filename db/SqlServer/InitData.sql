@@ -48,6 +48,9 @@ INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'网站设�
 -- 是否启用 Blazor 默认为 0 未启用
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'网站设置', N'Blazor', N'0', 0)
 
+-- 是否启用 健康检查 默认为 0 未启用 1 启用
+INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'网站设置', N'健康检查', N'1', 0);
+
 -- 时长单位 月
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'网站设置', N'程序异常保留时长', '1', 0)
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'网站设置', N'操作日志保留时长', '12', 0)

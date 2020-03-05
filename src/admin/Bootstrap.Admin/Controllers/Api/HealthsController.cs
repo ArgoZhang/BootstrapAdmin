@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Bootstrap.DataAccess;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Net.Http;
@@ -26,7 +27,7 @@ namespace Bootstrap.Admin.Controllers.Api
         {
             var ret = false;
             var url = config.GetValue("HealthsCloudUrl", "");
-            if (!string.IsNullOrEmpty(url))
+            if (!string.IsNullOrEmpty(url) && DictHelper.RetrieveHealth())
             {
                 await httpClient.HttpClient.PostAsJsonAsync(url, message);
                 ret = true;

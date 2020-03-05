@@ -59,11 +59,13 @@ $(function () {
                 var uiSettings = $('#sider').prop('checked') ? "1" : "0";
                 var cardTitle = $('#cardTitle').prop('checked') ? "1" : "0";
                 var fixedTableHeader = $('#tableHeader').prop('checked') ? "1" : "0";
+                var enableHealth = $('#health').prop('checked') ? "1" : "0";
                 $.bc({
                     url: Settings.url, data: [
                         { name: 'ShowCardTitle', code: cardTitle },
                         { name: 'ShowSideBar', code: uiSettings },
-                        { name: 'FixedTableHeader', code: fixedTableHeader }
+                        { name: 'FixedTableHeader', code: fixedTableHeader },
+                        { name: 'EnableHealth', code: enableHealth }
                     ], title: '保存网站设置', method: "post",
                     callback: function (result) {
                         if (result) {
