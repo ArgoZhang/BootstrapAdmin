@@ -164,7 +164,8 @@ namespace Bootstrap.DataAccess
                 ["TraceLog"] = "访问日志保留时长",
                 ["CookiePeriod"] = "Cookie保留时长",
                 ["IPCachePeriod"] = "IP请求缓存时长",
-                ["AppPath"] = "后台地址"
+                ["AppPath"] = "后台地址",
+                ["EnableHealth"] = "健康检查"
             };
             var ret = SaveSettings(items.Where(i => cache.Any(c => c.Key == i.Name)).Select(i => new BootstrapDict()
             {
@@ -383,6 +384,12 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <returns></returns>
         public static string RetrievePathBase() => DbContextManager.Create<Dict>()?.RetrievePathBase() ?? "";
+
+        /// <summary>
+        /// 获得字典表健康检查是否开启
+        /// </summary>
+        /// <returns></returns>
+        public static bool RetrieveHealth() => DbContextManager.Create<Dict>()?.RetrieveHealth() ?? true;
 
         /// <summary>
         /// 保存前台应用配置信息

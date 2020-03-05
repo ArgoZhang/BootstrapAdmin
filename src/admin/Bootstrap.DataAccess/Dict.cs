@@ -319,5 +319,11 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <returns></returns>
         public string RetrievePathBase() => DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "后台地址" && d.Define == 0)?.Code ?? "";
+
+        /// <summary>
+        /// 获得字典表健康检查是否开启
+        /// </summary>
+        /// <returns></returns>
+        public bool RetrieveHealth() => (DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "健康检查" && d.Define == 0)?.Code ?? "0") == "1";
     }
 }

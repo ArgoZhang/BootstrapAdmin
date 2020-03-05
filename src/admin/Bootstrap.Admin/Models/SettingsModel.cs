@@ -31,6 +31,7 @@ namespace Bootstrap.Admin.Models
             IPCachePeriod = DictHelper.RetrieveLocaleIPSvrCachePeriod();
             EnableDemo = DictHelper.RetrieveSystemModel();
             AdminPathBase = DictHelper.RetrievePathBase();
+            EnableHealth = DictHelper.RetrieveHealth();
 
             var dicts = DictHelper.RetrieveDicts();
             Apps = DictHelper.RetrieveApps().Where(d => !d.Key.Equals("BA", StringComparison.OrdinalIgnoreCase)).Select(k =>
@@ -109,5 +110,10 @@ namespace Bootstrap.Admin.Models
         /// 获得/设置 系统应用程序集合
         /// </summary>
         public IEnumerable<(string Key, string Name, string Url)> Apps { get; set; }
+
+        /// <summary>
+        /// 获得/设置 是否开启健康检查
+        /// </summary>
+        public bool EnableHealth { get; set; }
     }
 }

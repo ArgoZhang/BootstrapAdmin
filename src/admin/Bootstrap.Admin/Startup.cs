@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using System;
 
@@ -129,7 +130,10 @@ namespace Bootstrap.Admin
             {
                 endpoints.MapHub<SignalRHub>("/NotiHub");
                 endpoints.MapHub<TaskLogHub>("/TaskLogHub");
-                endpoints.MapBootstrapHealthChecks();
+                endpoints.MapBootstrapHealthChecks("/Healths", configure: op =>
+                {
+                    op.Predicate = new Func<HealthCheckRegistration, bool>(reg => DictHelper.RetrieveHealth());
+                });
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
                 endpoints.MapDefaultControllerRoute();
