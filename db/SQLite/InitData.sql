@@ -45,6 +45,9 @@ INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('网站设置
 -- 是否启用 Blazor 默认为 0 未启用
 INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('网站设置', 'Blazor', '0', 0);
 
+-- 是否启用 健康检查 默认为 0 未启用 1 启用
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('网站设置', '健康检查', '1', 0);
+
 -- 时长单位 月
 INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('网站设置', '程序异常保留时长', '1', 0);
 INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('网站设置', '操作日志保留时长', '12', 0);

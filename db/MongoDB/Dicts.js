@@ -332,6 +332,12 @@
     },
     {
         "Category": "网站设置",
+        "Name": "健康检查",
+        "Code": "0",
+        "Define": NumberInt(0)
+    },
+    {
+        "Category": "网站设置",
         "Name": "默认应用程序",
         "Code": "0",
         "Define": NumberInt(0)
