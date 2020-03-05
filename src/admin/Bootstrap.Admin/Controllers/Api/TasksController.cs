@@ -79,7 +79,8 @@ namespace Bootstrap.Admin.Controllers.Api
             "超时任务",
             "取消任务",
             "禁用任务",
-            "SQL日志"
+            "SQL日志",
+            "健康检查"
         };
         /// <summary>
         /// 删除任务方法
