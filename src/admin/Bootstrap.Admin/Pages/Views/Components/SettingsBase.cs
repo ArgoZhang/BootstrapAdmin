@@ -72,6 +72,7 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
             Model.EnableBlazor = DictHelper.RetrieveEnableBlazor();
             Model.FixedTableHeader = DictHelper.RetrieveFixedTableHeader();
             Model.Themes = DictHelper.RetrieveThemes();
+            Model.EnableHealth = DictHelper.RetrieveHealth();
 
             Model.IPLocators = new SelectedItem[] { new SelectedItem() { Text = "未设置", Value = "None" } }.Union(DictHelper.RetireveLocators().Select(d => new SelectedItem()
             {
@@ -372,6 +373,11 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
             /// 获得 系统是否为演示模式
             /// </summary>
             public bool EnableDemo { get; set; }
+
+            /// <summary>
+            /// 获得 系统是否允许健康检查
+            /// </summary>
+            public bool EnableHealth { get; set; }
         }
     }
 }
