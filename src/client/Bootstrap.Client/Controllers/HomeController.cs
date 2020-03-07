@@ -24,6 +24,12 @@ namespace Bootstrap.Client.Controllers
         }
 
         /// <summary>
+        /// 演示视图
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult Dummy() => View(new NavigatorBarModel(this));
+
+        /// <summary>
         /// About 视图
         /// </summary>
         /// <returns></returns>

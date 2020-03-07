@@ -1,0 +1,64 @@
+@model NavigatorBarModel
+@{
+    ViewData["Title"] = "演示视图";
+    Layout = "_Default";
+}
+@section css {
+    <link href="~/lib/longbow-select/longbow-select.css" rel="stylesheet" />
+}
+@section javascript {
+    <script src="~/lib/longbow-select/longbow-select.js"></script>
+    <script src="~/js/dummy.js"></script>
+}
+@section query {
+    <form class="form-inline">
+        <div class="row">
+            <div class="form-group col-12">
+                <label class="control-label" for="item_query_1">演示属性1</label>
+                <input type="text" class="form-control" id="item_query_1" data-provide="typeahead" data-default-val="" />
+            </div>
+            <div class="form-group col-12">
+                <label class="control-label" for="item_query_2">演示属性2</label>
+                <input type="text" class="form-control" id="item_query_2" data-default-val="" />
+            </div>
+            <div class="form-group col-12">
+                <label class="control-label" for="item_query_3">演示属性3</label>
+                <input class="form-control" data-toggle="lgbSelect" data-default-val="" />
+                <select data-toggle="lgbSelect" class="d-none" id="item_query_3">
+                    <option value="">全部</option>
+                    <option value="0">系统使用</option>
+                    <option value="1">自定义</option>
+                </select>
+            </div>
+        </div>
+    </form>
+}
+@section modal {
+    <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel">演示视图编辑窗口</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    </div>
+    <div class="modal-body">
+        <form class="form-inline">
+            <div class="row">
+                <input type="hidden" id="dummyID" />
+                <div class="form-group col-sm-6">
+                    <label class="control-label" for="item1">演示属性1</label>
+                    <input type="text" class="form-control" id="item1" placeholder="不可为空，50字以内" maxlength="50" data-valid="true" />
+                </div>
+                <div class="form-group col-sm-6">
+                    <label class="control-label" for="item2">演示属性2</label>
+                    <input type="text" class="form-control" id="item2" placeholder="不可为空，50字以内" maxlength="50" data-valid="true" />
+                </div>
+                <div class="form-group col-sm-6">
+                    <label class="control-label" for="item3">演示属性3</label>
+                    <input class="form-control" data-toggle="lgbSelect" />
+                    <select data-toggle="lgbSelect" class="d-none" data-default-val="1" id="item3">
+                        <option value="0">系统使用</option>
+                        <option value="1">自定义</option>
+                    </select>
+                </div>
+            </div>
+        </form>
+    </div>
+}
