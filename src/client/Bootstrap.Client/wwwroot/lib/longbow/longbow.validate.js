@@ -104,8 +104,31 @@
             }
         });
         if (this.options.modal) {
+            // 关闭 modal 时移除所有验证信息
             $(this.options.modal).on('show.bs.modal', function (e) {
                 that.reset();
+            });
+
+            // bs bug 弹窗内控件值更改后再次点击关闭按钮是 hide.bs.modal 事件不被触发
+            // 兼容 键盘事件 ESC
+            var dismissTooltip = function (e) {
+                // 移除残留 tooltip
+                var $modal = $(that.options.modal)
+                $modal.find('[aria-describedby]').each(function (index, ele) {
+                    var tooltipId = $(ele).attr('aria-describedby');
+                    var $tooltip = $('#' + tooltipId);
+                    if ($tooltip.length === 1) {
+                        $tooltip.tooltip('dispose');
+                    }
+                });
+            };
+            $(this.options.modal).on('click', '[data-dismiss="modal"]', dismissTooltip);
+            $(this.options.modal).on('keydown', function (event) {
+                // ESC
+                if (event.which === 27) {
+                    event.preventDefault();
+                    dismissTooltip(event);
+                }
             });
         }
     };
@@ -278,6 +301,17 @@
 
     $(function () {
         if ($.isFunction($.validator)) {
+            $.validator.addMethod("equalTo", function (value, element, param) {
+                var target = $(param);
+                if (this.settings.onfocusout && target.not(".validate-equalTo-blur").length) {
+                    target.addClass("validate-equalTo-blur").on("blur.validate-equalTo", function () {
+                        var validator = $(element).parents('[data-toggle="LgbValidate"]').data('lgb.Validate');
+                        validator.validElement(element);
+                    });
+                }
+                return value === target.val();
+            });
+
             $.validator.addMethod("ip", function (value, element) {
                 return this.optional(element) || /^(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])$/.test(value);
             }, "请填写正确的IP地址");
