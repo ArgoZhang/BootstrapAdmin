@@ -6,7 +6,6 @@
 body {
     color: #797979;
     background: #f1f2f7;
-    -webkit-font-smoothing: antialiased;
     -webkit-overflow-scrolling: touch;
 }
 
@@ -121,6 +120,10 @@ aside .bg, aside .nav-brand, aside .nav-header, .header .nav, .userinfo .dropdow
         flex: 1 1 33.333%;
     }
 
+        .userinfo .dropdown-item a:hover {
+            color: #333;
+        }
+
         .userinfo .dropdown-item a i {
             font-size: 1.025rem;
             display: block;
@@ -166,6 +169,15 @@ aside .bg, aside .nav-brand, aside .nav-header, .header .nav, .userinfo .dropdow
     padding: 6px 12px;
     transition: all .25s linear;
 }
+
+.header .nav .dropdown .dropdown-blazor {
+    padding: 2px 4px;
+}
+
+    .header .nav .dropdown-blazor img {
+        width: 28px;
+        margin-top: 1px;
+    }
 
 .nav .dropdown-menu {
     width: 235px;
@@ -432,7 +444,7 @@ footer {
         outline: none;
     }
 
-.dropdown-select + .dropdown-menu a:hover {
+.dropdown-select + .dropdown-menu a:hover, .dropdown-select + .dropdown-menu .dropdown-item:hover {
     background: #007AC0;
     color: #fff;
 }
@@ -441,11 +453,15 @@ footer {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.176);
 }
 
-    .dropdown-menu a {
+    .dropdown-menu a, .dropdown-select + .dropdown-menu .dropdown-item {
         transition: all .25s linear;
         padding: 6px 20px;
         display: block;
     }
+
+.dropdown-select + .dropdown-menu .dropdown-item {
+    color: #007bff;
+}
 
 .dropdown-divider {
     margin: 0.125rem 0;
@@ -519,10 +535,6 @@ input.pending {
     white-space: nowrap;
 }
 
-.modal-body, .card-body {
-    padding: 15px 15px 0 15px;
-}
-
 .modal-body-fixed {
     max-height: calc(54vh);
     overflow-y: auto;
@@ -552,7 +564,7 @@ input.pending {
     padding: 0.5rem 1rem;
 }
 
-.card .card-header a {
+.card .card-header a:not([data-toggle="popover"]) {
     color: #797979;
 }
 
@@ -580,8 +592,8 @@ input.pending {
     margin-left: 6px;
 }
 
-.card-body .bootstrap-table {
-    margin-top: -10px;
+.card .modal-footer {
+    padding: 0.5rem 0rem;
 }
 
 .no-card-header .card-header {
@@ -715,22 +727,18 @@ input.pending {
         background-color: rgba(0,0,0,.05);
     }
 
-    .bootstrap-table .fixed-table-container .fixed-table-body {
-        border-radius: 4px;
+    .bootstrap-table .fixed-table-container .fixed-table-body .table .bs-checkbox label {
+        margin-bottom: 0;
     }
 
-        .bootstrap-table .fixed-table-container .fixed-table-body .table .bs-checkbox label {
-            margin-bottom: 0;
+        .bootstrap-table .fixed-table-container .fixed-table-body .table .bs-checkbox label input[type='checkbox'] {
+            cursor: pointer;
         }
 
-            .bootstrap-table .fixed-table-container .fixed-table-body .table .bs-checkbox label input[type='checkbox'] {
-                cursor: pointer;
-            }
-
-        .bootstrap-table .fixed-table-container .fixed-table-body .table td .btn:not(.btn-lg) {
-            font-size: 0.75rem;
-            padding: 1px 5px;
-        }
+    .bootstrap-table .fixed-table-container .fixed-table-body .table td .btn:not(.btn-lg) {
+        font-size: 0.75rem;
+        padding: 1px 5px;
+    }
 
     .bootstrap-table .fixed-table-container .table tbody tr.selected td {
         background-color: rgba(0, 0, 0, 0.03);
@@ -749,6 +757,10 @@ input.pending {
         margin: 0;
         padding: 6px 20px;
     }
+
+.bootstrap-table .fixed-table-toolbar .columns button i + span, .bootstrap-table .fixed-table-toolbar .search button i + span {
+    display: none;
+}
 
 .fixed-table-toolbar .dropdown-menu {
     min-width: unset;
