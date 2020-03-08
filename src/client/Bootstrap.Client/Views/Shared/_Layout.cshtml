@@ -42,7 +42,7 @@
     @RenderSection("javascript", false)
 }
 @await Html.PartialAsync("Header")
-@await Html.PartialAsync("navigator")
+@await Html.PartialAsync("Navigator")
 <section class="container-fluid">
     <div class="main-header">
         <ol class="breadcrumb">
@@ -53,4 +53,3 @@
     @RenderBody()
 </section>
 @await Html.PartialAsync("Footer")
-@RenderSection("modal", false)
