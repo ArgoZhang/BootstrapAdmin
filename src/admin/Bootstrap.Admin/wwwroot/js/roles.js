@@ -142,18 +142,22 @@ $(function () {
     $nestMenu.nestMenu(function () {
         $nestMenuInput = $nestMenu.find('div.dd3-content');
         $nestMenuInput.on('click', ':checkbox', function () {
-            var val = $(this).prop('checked');
-            var child = $(this).parents('.dd3-content').next();
+            var $this = $(this);
+            var val = $this.prop('checked');
+            var child = $this.parents('.dd3-content').next();
             if (child.hasClass('dd-list')) {
                 child.find(':checkbox').prop('checked', val);
             }
 
             // 子节点全部取消时父级菜单也取消
-            $(this).parents('ol.dd-list').each(function (index, p) {
-                if (val === false) {
-                    val = $(p).prev().next().find(':checked').length > 0;
+            $this.parents('ol.dd-list').each(function (index, p) {
+                var $menuType = $this.parents('.dd3-item').attr('data-resource');
+                if ($menuType === "0") {
+                    if (val === false) {
+                        val = $(p).find(':checked').length > 0;
+                    }
+                    $(p).prev().find(':checkbox').prop('checked', val);
                 }
-                $(p).prev().find(':checkbox').prop('checked', val);
             });
         }).children('.radio').hide();
     });
