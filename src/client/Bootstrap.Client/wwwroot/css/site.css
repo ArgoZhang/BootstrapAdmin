@@ -61,3 +61,13 @@ aside {
         color: #fff;
         border: 1px solid #fff;
     }
+
+.tooltip-inner .search-input-tooltip {
+    font-size: 0.75rem;    
+}
+
+    .tooltip-inner .search-input-tooltip kbd {
+        display: inline-block;
+        background: #17a2b8;
+        padding: 1px 6px;
+    }

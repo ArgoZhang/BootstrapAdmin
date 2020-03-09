@@ -1,0 +1,116 @@
+@{
+    Layout = "_Layout";
+}
+@section css {
+    <environment include="Development">
+        <link href="~/lib/bootstrap-table/bootstrap-table.css" rel="stylesheet" />
+        <link href="~/lib/toastr.js/toastr.css" rel="stylesheet" />
+        <link href="~/lib/sweetalert/sweetalert2.css" rel="stylesheet" />
+        <link href="~/lib/overlayscrollbars/OverlayScrollbars.css" rel="stylesheet" />
+    </environment>
+    <environment exclude="Development">
+        <link href="~/lib/bootstrap-table/bootstrap-table.min.css" rel="stylesheet" />
+        <link href="~/lib/toastr.js/toastr.min.css" rel="stylesheet" />
+        <link href="~/lib/sweetalert/sweetalert2.min.css" rel="stylesheet" />
+        <link href="~/lib/overlayscrollbars/OverlayScrollbars.min.css" rel="stylesheet" />
+    </environment>
+    <link href="~/lib/longbow-checkbox/longbow-checkbox.css" rel="stylesheet" />
+    @RenderSection("css", false)
+}
+@section javascript {
+    <environment include="Development">
+        <script src="~/lib/overlayscrollbars/jquery.overlayScrollbars.js"></script>
+        <script src="~/lib/signalr/dist/browser/signalr.js"></script>
+        <script src="~/lib/sweetalert/sweetalert2.js"></script>
+        <script src="~/lib/bootstrap-table/bootstrap-table.js"></script>
+        <script src="~/lib/bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
+        <script src="~/lib/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+        <script src="~/lib/tablexport/tableExport.js"></script>
+        <script src="~/lib/validate/jquery.validate.js"></script>
+        <script src="~/lib/validate/localization/messages_zh.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/lib/overlayscrollbars/jquery.overlayScrollbars.min.js"></script>
+        <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
+        <script src="~/lib/sweetalert/sweetalert2.min.js"></script>
+        <script src="~/lib/bootstrap-table/bootstrap-table.min.js"></script>
+        <script src="~/lib/bootstrap-table/extensions/export/bootstrap-table-export.min.js"></script>
+        <script src="~/lib/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+        <script src="~/lib/tablexport/tableExport.min.js"></script>
+        <script src="~/lib/validate/jquery.validate.min.js"></script>
+        <script src="~/lib/validate/localization/messages_zh.min.js"></script>
+    </environment>
+    <script src="~/lib/toastr.js/toastr.min.js"></script>
+    <script src="~/lib/longbow-checkbox/longbow-checkbox.js"></script>
+    <script src="~/lib/longbow/longbow.dataentity.js" asp-append-version="true"></script>
+    <script src="~/lib/longbow/longbow.validate.js" asp-append-version="true"></script>
+    @RenderSection("javascript", false)
+}
+<div id="toolbar" class="d-none">
+    <div class="gear btn-group">
+        <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" type="button"><i class="fa fa-gear"></i></button>
+        <div class="dropdown-menu">
+            <a id="tb_add" href="#" title="新增" asp-auth="add"><i class="fa fa-plus"></i></a>
+            <a id="tb_delete" href="#" title="删除" asp-auth="del"><i class="fa fa-remove"></i></a>
+            <a id="tb_edit" href="#" title="编辑" asp-auth="edit"><i class="fa fa-pencil"></i></a>
+            @await RenderSectionAsync("gear", false)
+        </div>
+    </div>
+    <div class="toolbar btn-group">
+        <button id="btn_add" type="button" class="btn btn-success" asp-auth="add"><i class="fa fa-plus" aria-hidden="true"></i><span>新增</span></button>
+        <button id="btn_delete" type="button" class="btn btn-danger" asp-auth="del"><i class="fa fa-remove" aria-hidden="true"></i><span>删除</span></button>
+        <button id="btn_edit" type="button" class="btn btn-primary" asp-auth="edit"><i class="fa fa-pencil" aria-hidden="true"></i><span>编辑</span></button>
+        @RenderSection("toolbar", false)
+    </div>
+</div>
+<div class="card">
+    <div class="card-header">
+        查询结果
+    </div>
+    <div class="card-body">
+        @await RenderSectionAsync("cardbody", false)
+        <table data-Header="scroll"></table>
+    </div>
+</div>
+<div id="tableButtons" class="d-none">
+    <div class='btn-group'>
+        <button class='edit btn btn-sm btn-success' asp-auth="edit"><i class='fa fa-edit'></i><span>编辑</span></button>
+        <button class='del btn btn-sm btn-danger' asp-auth="del"><i class='fa fa-remove'></i><span>删除</span></button>
+        @RenderSection("tableButtons", false)
+    </div>
+</div>
+<div class="modal fade" id="dialogNew" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content" data-toggle="LgbValidate" data-valid-button="#btnSubmit" data-valid-modal="#dialogNew">
+            @RenderSection("modal", false)
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    <i class="fa fa-times"></i>
+                    <span>关闭</span>
+                </button>
+                <button type="button" class="btn btn-primary" id="btnSubmit">
+                    <i class="fa fa-save"></i>
+                    <span>保存</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="dialogAdvancedSearch" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="mySearchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mySearchModalLabel">查询条件</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body modal-query">
+                @RenderSection("query", false)
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btn_reset" class="btn btn-info btn-fill"><i class="fa fa-trash-o" aria-hidden="true"></i><span>重置</span></button>
+                <button type="button" id="btn_query" class="btn btn-primary btn-fill"><i class="fa fa-search" aria-hidden="true"></i><span>查询</span></button>
+            </div>
+        </div>
+    </div>
+</div>
+@RenderBody()

@@ -1,6 +1,6 @@
 ﻿(function ($) {
     var findIdField = function (tableName) {
-        var idField = $(tableName).bootstrapTable("getOptions").idField;
+        var idField = tableName.bootstrapTable("getOptions").idField;
         if (idField === undefined) idField = "Id";
         return idField;
     };
@@ -68,8 +68,12 @@
                 }
                 else if (dv !== undefined && ctl.val() === "") target[name] = dv;
                 else target[name] = ctl.val();
-                if (target[name] === "true" || target[name] === "True") target[name] = true;
-                if (target[name] === "false" || target[name] === "False") target[name] = false;
+
+                // check boolean value
+                if (ctl.attr('data-bool') === 'true') {
+                    if (target[name] === "true" || target[name] === "True") target[name] = true;
+                    if (target[name] === "false" || target[name] === "False") target[name] = false;
+                }
             }
             return target;
         }
@@ -93,8 +97,8 @@
             $(cId).on('click', { handler: this.options.events[cId] }, function (e) {
                 var options = that.options;
                 var row = {};
-                if (options.bootstrapTable && options.bootstrapTable.constructor === String) {
-                    var arrselections = $(options.bootstrapTable).bootstrapTable('getSelections');
+                if (options.bootstrapTable !== null) {
+                    var arrselections = options.bootstrapTable.bootstrapTable('getSelections');
                     if (arrselections.length === 0) {
                         lgbSwal({ title: '请选择要编辑的数据', type: "warning" });
                         return;
@@ -114,25 +118,55 @@
 
     DataTable.settings = {
         url: undefined,
-        bootstrapTable: 'table',
+        bootstrapTable: null,
         treegridParentId: 'ParentId',
         modal: '#dialogNew',
         click: {
             '#btn_query': function (element) {
-                if (this.options.bootstrapTable.constructor === String) $(this.options.bootstrapTable).bootstrapTable('refresh');
+                if (this.options.bootstrapTable !== null) {
+                    var options = this.options.bootstrapTable.bootstrapTable('getOptions');
+                    if (options.advancedSearchModal) {
+                        $(options.advancedSearchModal).modal('hide');
+                    }
+                    // fix bug: 翻页后再更改查询条件导致页码未更改数据为空
+                    // 更改页码为 1 即可
+                    // https://gitee.com/LongbowEnterprise/BootstrapAdmin/issues/I1A739
+                    var options = this.options.bootstrapTable.data('bootstrap.table').options;
+                    options.pageNumber = 1;
+                    this.options.bootstrapTable.bootstrapTable('refresh');
+                }
                 handlerCallback.call(this, null, element, { oper: 'query' });
+            },
+            '#btn_reset': function () {
+                if (this.options.bootstrapTable !== null) {
+                    var options = this.options.bootstrapTable.bootstrapTable('getOptions');
+                    if (options.advancedSearchModal) {
+                        $(options.advancedSearchModal).find('[data-default-val]').each(function (index, element) {
+                            var $ele = $(element);
+                            var val = $ele.attr('data-default-val');
+                            if ($ele.prop('nodeName') === 'INPUT') {
+                                if ($ele.hasClass('form-select-input')) {
+                                    $ele.prev().lgbSelect('val', val);
+                                }
+                                else {
+                                    $ele.val(val);
+                                }
+                            }
+                        });
+                    }
+                }
             },
             '#btn_add': function (element) {
                 this.dataEntity.reset();
                 if (this.options.modal.constructor === String) $(this.options.modal).modal("show");
-                if (this.options.bootstrapTable.constructor === String) $(this.options.bootstrapTable).bootstrapTable('uncheckAll');
+                if (this.options.bootstrapTable !== null) this.options.bootstrapTable.bootstrapTable('uncheckAll');
                 handlerCallback.call(this, null, element, { oper: 'create' });
             },
             '#btn_edit': function (element) {
                 var options = this.options;
                 var data = {};
-                if (options.bootstrapTable.constructor === String) {
-                    var arrselections = $(options.bootstrapTable).bootstrapTable('getSelections');
+                if (options.bootstrapTable !== null) {
+                    var arrselections = options.bootstrapTable.bootstrapTable('getSelections');
                     if (arrselections.length === 0) {
                         lgbSwal({ title: '请选择要编辑的数据', type: "warning" });
                         return;
@@ -152,8 +186,8 @@
             '#btn_delete': function (element) {
                 var that = this;
                 var options = this.options;
-                if (options.bootstrapTable.constructor === String) {
-                    var arrselections = $(options.bootstrapTable).bootstrapTable('getSelections');
+                if (options.bootstrapTable !== null) {
+                    var arrselections = options.bootstrapTable.bootstrapTable('getSelections');
                     if (arrselections.length === 0) {
                         lgbSwal({ title: '请选择要删除的数据', type: "warning" });
                         return;
@@ -166,7 +200,7 @@
                                 $.bc({
                                     url: options.url, data: iDs, method: 'delete', title: options.delTitle, logData: arrselections,
                                     callback: function (result) {
-                                        if (result) $(options.bootstrapTable).bootstrapTable('refresh');
+                                        if (result) options.bootstrapTable.bootstrapTable('refresh');
                                         handlerCallback.call(that, null, element, { oper: 'del', success: result, data: arrselections });
                                     }
                                 });
@@ -182,8 +216,8 @@
                     url: options.url, data: options.data, title: options.saveTitle, modal: options.modal, method: "post",
                     callback: function (result) {
                         if (result) {
-                            $(options.bootstrapTable).bootstrapTable('refresh');
-                            handlerCallback.call(that, null, element, { oper: 'save', success: result, data: options.data });
+                            options.bootstrapTable.bootstrapTable('refresh');
+                            handlerCallback.call(that, null, element, { oper: 'save', success: result, data: [options.data] });
                         }
                     }
                 });
@@ -205,8 +239,8 @@
             return {
                 'click .edit': function (e, value, row, index) {
                     op.dataEntity.load(row);
-                    $(op.table).bootstrapTable('uncheckAll');
-                    $(op.table).bootstrapTable('check', index);
+                    op.table.bootstrapTable('uncheckAll');
+                    op.table.bootstrapTable('check', index);
                     handlerCallback.call(op.src, null, e, { oper: 'edit', data: row });
                     $(op.modal).modal("show");
                 },
@@ -221,14 +255,16 @@
                     var idField = findIdField(op.table);
                     var idValue = row[idField];
 
-                    var nodes = $(op.table).bootstrapTable('getData').filter(function (row, index, data) {
-                        return idValue == row[op.treegridParentId];
-                    });
-                    if ($.isArray(nodes) && nodes.length > 0) {
-                        $.each(nodes, function (index, element) {
-                            data.push($.extend({}, element));
+                    if (idValue != undefined) {
+                        var nodes = op.table.bootstrapTable('getData').filter(function (row, index, data) {
+                            return idValue == row[op.treegridParentId];
                         });
-                        text = "本删除项含有级联子项目</br>您确定要删除 <span class='text-danger font-weight-bold'>" + row.Name + "</span> 以及子项目吗？";
+                        if ($.isArray(nodes) && nodes.length > 0) {
+                            $.each(nodes, function (index, element) {
+                                data.push($.extend({}, element));
+                            });
+                            text = "本删除项含有级联子项目</br>您确定要删除 <span class='text-danger font-weight-bold'>" + row.Name + "</span> 以及子项目吗？";
+                        }
                     }
                     swal($.extend({}, swalDeleteOptions, { html: text })).then(function (result) {
                         if (result.value) {
@@ -239,7 +275,7 @@
                             $.bc({
                                 url: op.url, data: iDs, method: 'delete', title: '删除数据', logData: data,
                                 callback: function (result) {
-                                    if (result) $(op.table).bootstrapTable('refresh');
+                                    if (result) op.table.bootstrapTable('refresh');
                                     handlerCallback.call(op.src, null, e, { oper: 'del', success: result, data: data });
                                 }
                             });
