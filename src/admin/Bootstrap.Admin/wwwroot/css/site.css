@@ -483,9 +483,9 @@ pre {
     margin-top: 2px;
 }
 
-.userinfo .dropdown-toggle, .header .nav .dropdown > a {
-    color: #777;
-}
+    .userinfo .dropdown-toggle, .header .nav .dropdown > a {
+        color: #777;
+    }
 
 .error-content {
     position: absolute;
@@ -540,17 +540,17 @@ pre {
         color: #371ed4;
     }
 
-    .modal-query .form-group input.form-control {
-        flex: 1 1 auto;
-    }
+.modal-query .form-group input.form-control {
+    flex: 1 1 auto;
+}
 
-.bootstrap-table .fixed-table-toolbar .bs-bars,  .bootstrap-table .fixed-table-toolbar .search, .bootstrap-table .fixed-table-toolbar .columns {
+.bootstrap-table .fixed-table-toolbar .bs-bars, .bootstrap-table .fixed-table-toolbar .search, .bootstrap-table .fixed-table-toolbar .columns {
     margin-bottom: 10px;
     margin-top: 0;
 }
 
 .tooltip-inner .search-input-tooltip {
-    font-size: 0.75rem;    
+    font-size: 0.75rem;
 }
 
     .tooltip-inner .search-input-tooltip kbd {
@@ -559,6 +559,9 @@ pre {
         padding: 1px 6px;
     }
 
+.card-footer {
+    padding: 0.5rem 15px;
+}
 
 .modal-body, .card-body {
     padding: 15px 15px 0 15px;
@@ -573,31 +576,31 @@ pre {
         border: none;
     }
 
-    .bootstrap-table .fixed-table-container:not(.fixed-height) .fixed-table-body table thead th,
-    .bootstrap-table .fixed-table-container:not(.fixed-height) .fixed-table-body table tbody td {
-        border-top: none;
-        border-left: none;
-    }
+        .bootstrap-table .fixed-table-container:not(.fixed-height) .fixed-table-body table thead th,
+        .bootstrap-table .fixed-table-container:not(.fixed-height) .fixed-table-body table tbody td {
+            border-top: none;
+            border-left: none;
+        }
 
-    .bootstrap-table .fixed-table-container:not(.fixed-height) .fixed-table-body table thead th:last-child,
-    .bootstrap-table .fixed-table-container:not(.fixed-height) .fixed-table-body table tbody tr td:last-child {
-        border-right: none;
-    }
+            .bootstrap-table .fixed-table-container:not(.fixed-height) .fixed-table-body table thead th:last-child,
+            .bootstrap-table .fixed-table-container:not(.fixed-height) .fixed-table-body table tbody tr td:last-child {
+                border-right: none;
+            }
 
-    .bootstrap-table .fixed-table-container:not(.fixed-height) .fixed-table-body table tbody tr:last-child td{
-        border-bottom: none;
-    }
+        .bootstrap-table .fixed-table-container:not(.fixed-height) .fixed-table-body table tbody tr:last-child td {
+            border-bottom: none;
+        }
 
     .bootstrap-table .fixed-table-container:not(.fixed-height) .fixed-table-body .fixed-table-loading {
         left: 0;
         right: 0;
     }
 
-    .bootstrap-table .fixed-table-container.fixed-height .fixed-table-header {
-        border-top-left-radius: 4px;
-        border-top-right-radius: 4px;
-    }
+.bootstrap-table .fixed-table-container.fixed-height .fixed-table-header {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
 
 .bootstrap-table td .btn, th.sortable {
     white-space: nowrap;
-}    
+}

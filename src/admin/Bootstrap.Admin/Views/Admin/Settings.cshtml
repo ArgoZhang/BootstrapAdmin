@@ -119,9 +119,9 @@
                 </div>
             </div>
         </div>
-        <div class="modal-footer text-right">
-            <button data-method="UISettings" class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
-        </div>
+    </div>
+    <div class="card-footer text-right">
+        <button data-method="UISettings" class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
     </div>
 </div>
 <div class="card" asp-auth="loginSettings">
@@ -142,9 +142,9 @@
                 </div>
             </div>
         </div>
-        <div class="modal-footer text-right" asp-condition="!@Model.IsDemo">
-            <button data-method="loginSettings" class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
-        </div>
+    </div>
+    <div class="card-footer text-right" asp-condition="!@Model.IsDemo">
+        <button data-method="loginSettings" class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
     </div>
 </div>
 <div class="card" asp-auth="lockScreen">
@@ -162,9 +162,9 @@
                 </div>
             </div>
         </div>
-        <div class="modal-footer text-right">
-            <button data-method="saveAutoLock" class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
-        </div>
+    </div>
+    <div class="card-footer text-right">
+        <button data-method="saveAutoLock" class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
     </div>
 </div>
 <div class="card" asp-auth="defaultApp">
@@ -178,9 +178,9 @@
                 </div>
             </div>
         </div>
-        <div class="modal-footer text-right">
-            <button data-method="saveDefaultApp" class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
-        </div>
+    </div>
+    <div class="card-footer text-right">
+        <button data-method="saveDefaultApp" class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
     </div>
 </div>
 <div class="card" asp-auth="app">
@@ -206,9 +206,9 @@
                 }
             </div>
         </div>
-        <div class="modal-footer text-right" asp-condition="@(!Model.IsDemo)">
-            <button class="btn btn-secondary" type="button" data-method="addApp"><i class="fa fa-plus"></i><span>新增</span></button>
-        </div>
+    </div>
+    <div class="card-footer text-right" asp-condition="@(!Model.IsDemo)">
+        <button class="btn btn-secondary" type="button" data-method="addApp"><i class="fa fa-plus"></i><span>新增</span></button>
     </div>
 </div>
 <div class="card" asp-auth="blazor">
@@ -222,9 +222,9 @@
                 </div>
             </div>
         </div>
-        <div class="modal-footer text-right">
-            <button data-method="saveBlazor" class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
-        </div>
+    </div>
+    <div class="card-footer text-right">
+        <button data-method="saveBlazor" class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
     </div>
 </div>
 <div class="card" asp-auth="iplocate">
@@ -245,9 +245,9 @@
                 </div>
             </div>
         </div>
-        <div class="modal-footer text-right" asp-condition="@(!Model.IsDemo)">
-            <button data-method="saveIpLocator" class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
-        </div>
+    </div>
+    <div class="card-footer text-right" asp-condition="@(!Model.IsDemo)">
+        <button data-method="saveIpLocator" class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
     </div>
 </div>
 <div class="card" asp-auth="logSettings">
@@ -284,9 +284,9 @@
                 </div>
             </div>
         </div>
-        <div class="modal-footer text-right" asp-condition="@(!Model.IsDemo)">
-            <button data-method="saveLogPeriod" class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
-        </div>
+    </div>
+    <div class="card-footer text-right" asp-condition="@(!Model.IsDemo)">
+        <button data-method="saveLogPeriod" class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
     </div>
 </div>
 <div class="card" asp-auth="demo">
@@ -304,9 +304,9 @@
                 </div>
             </div>
         </div>
-        <div class="modal-footer text-right">
-            <button data-method="saveDemo" class="btn btn-secondary" type="submit"><i class="fa fa-save"></i><span>保存</span></button>
-        </div>
+    </div>
+    <div class="card-footer text-right">
+        <button data-method="saveDemo" class="btn btn-secondary" type="submit"><i class="fa fa-save"></i><span>保存</span></button>
     </div>
 </div>
 <div class="card">

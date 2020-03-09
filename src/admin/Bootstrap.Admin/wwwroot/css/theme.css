@@ -174,10 +174,10 @@ aside .bg, aside .nav-brand, aside .nav-header, .header .nav, .userinfo .dropdow
     padding: 2px 4px;
 }
 
-    .header .nav .dropdown-blazor img {
-        width: 28px;
-        margin-top: 1px;
-    }
+.header .nav .dropdown-blazor img {
+    width: 28px;
+    margin-top: 1px;
+}
 
 .nav .dropdown-menu {
     width: 235px;
@@ -568,32 +568,28 @@ input.pending {
     color: #797979;
 }
 
-    .card .card-header a[data-toggle="collapse"] {
-        display: block;
+.card .card-header a[data-toggle="collapse"] {
+    display: block;
+}
+
+    .card .card-header a[data-toggle="collapse"] i {
+        transition: all .25s linear;
     }
 
-        .card .card-header a[data-toggle="collapse"] i {
-            transition: all .25s linear;
-        }
-
-        .card .card-header a[data-toggle="collapse"].collapsed i {
-            transform: rotate(-90deg);
-        }
-
-    .card .card-header a.fa {
-        transition: color .3s linear;
+    .card .card-header a[data-toggle="collapse"].collapsed i {
+        transform: rotate(-90deg);
     }
 
-        .card .card-header a.fa:hover {
-            color: #333;
-        }
+.card .card-header a.fa {
+    transition: color .3s linear;
+}
+
+    .card .card-header a.fa:hover {
+        color: #333;
+    }
 
 .card .card-header i + span {
     margin-left: 6px;
-}
-
-.card .modal-footer {
-    padding: 0.5rem 0rem;
 }
 
 .no-card-header .card-header {
@@ -758,9 +754,9 @@ input.pending {
         padding: 6px 20px;
     }
 
-.bootstrap-table .fixed-table-toolbar .columns button i + span, .bootstrap-table .fixed-table-toolbar .search button i + span {
-    display: none;
-}
+    .bootstrap-table .fixed-table-toolbar .columns button i + span, .bootstrap-table .fixed-table-toolbar .search button i + span {
+        display: none;
+    }
 
 .fixed-table-toolbar .dropdown-menu {
     min-width: unset;

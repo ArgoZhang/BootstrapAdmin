@@ -93,9 +93,9 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer text-right">
-                <button class="btn btn-secondary" type="button" @onclick="SaveWebSettings"><i class="fa fa-save"></i><span>保存</span></button>
-            </div>
+        </div>
+        <div class="card-footer text-right">
+            <button class="btn btn-secondary" type="button" @onclick="SaveWebSettings"><i class="fa fa-save"></i><span>保存</span></button>
         </div>
     </div>
 </ConditionComponent>
@@ -120,12 +120,12 @@
                     </div>
                 </div>
             </div>
-            <ConditionComponent Inverse="true">
-                <div class="modal-footer text-right">
-                    <button class="btn btn-secondary" type="button" @onclick="SaveLogin"><i class="fa fa-save"></i><span>保存</span></button>
-                </div>
-            </ConditionComponent>
         </div>
+        <ConditionComponent Inverse="true">
+            <div class="card-footer text-right">
+                <button class="btn btn-secondary" type="button" @onclick="SaveLogin"><i class="fa fa-save"></i><span>保存</span></button>
+            </div>
+        </ConditionComponent>
     </div>
 </ConditionComponent>
 <ConditionComponent AuthKey="lockScreen">
@@ -144,9 +144,9 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer text-right">
-                <button class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
-            </div>
+        </div>
+        <div class="card-footer text-right">
+            <button class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
         </div>
     </div>
 </ConditionComponent>
@@ -165,9 +165,9 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer text-right">
-                <button class="btn btn-secondary" type="button" @onclick="SaveDefaultApp"><i class="fa fa-save"></i><span>保存</span></button>
-            </div>
+        </div>
+        <div class="card-footer text-right">
+            <button class="btn btn-secondary" type="button" @onclick="SaveDefaultApp"><i class="fa fa-save"></i><span>保存</span></button>
         </div>
     </div>
 </ConditionComponent>
@@ -186,9 +186,9 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer text-right">
-                <button class="btn btn-secondary" type="button" @onclick="SaveBlazor"><i class="fa fa-save"></i><span>保存</span></button>
-            </div>
+        </div>
+        <div class="card-footer text-right">
+            <button class="btn btn-secondary" type="button" @onclick="SaveBlazor"><i class="fa fa-save"></i><span>保存</span></button>
         </div>
     </div>
 </ConditionComponent>
@@ -204,12 +204,12 @@
             <div class="form-group">
                 <Dropdown @bind-Value="@Model.SelectedIPLocator" Items="@Model.IPLocators"></Dropdown>
             </div>
-            <ConditionComponent Inverse="true">
-                <div class="modal-footer text-right">
-                    <button class="btn btn-secondary" type="button" @onclick="SaveIPLocator"><i class="fa fa-save"></i><span>保存</span></button>
-                </div>
-            </ConditionComponent>
         </div>
+        <ConditionComponent Inverse="true">
+            <div class="card-footer text-right">
+                <button class="btn btn-secondary" type="button" @onclick="SaveIPLocator"><i class="fa fa-save"></i><span>保存</span></button>
+            </div>
+        </ConditionComponent>
     </div>
 </ConditionComponent>
 <ConditionComponent AuthKey="logSettings">
@@ -249,12 +249,12 @@
                     </div>
                 </div>
             </div>
-            <ConditionComponent Inverse="true">
-                <div class="modal-footer text-right">
-                    <button class="btn btn-secondary" type="button" @onclick="SaveLogSettings"><i class="fa fa-save"></i><span>保存</span></button>
-                </div>
-            </ConditionComponent>
         </div>
+        <ConditionComponent Inverse="true">
+            <div class="card-footer text-right">
+                <button class="btn btn-secondary" type="button" @onclick="SaveLogSettings"><i class="fa fa-save"></i><span>保存</span></button>
+            </div>
+        </ConditionComponent>
     </div>
 </ConditionComponent>
 <div class="card" asp-auth="demo">
@@ -272,9 +272,9 @@
                 </div>
             </div>
         </div>
-        <div class="modal-footer text-right">
-            <button class="btn btn-secondary" type="button" @onclick="SaveSystemModel"><i class="fa fa-save"></i><span>保存</span></button>
-        </div>
+    </div>
+    <div class="card-footer text-right">
+        <button class="btn btn-secondary" type="button" @onclick="SaveSystemModel"><i class="fa fa-save"></i><span>保存</span></button>
     </div>
 </div>
 <div class="card">
