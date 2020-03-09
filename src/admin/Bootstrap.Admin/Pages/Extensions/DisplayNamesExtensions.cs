@@ -2,11 +2,10 @@
 using Bootstrap.Security;
 using Longbow.Cache;
 using Longbow.Web;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Concurrent;
 
-namespace Microsoft.AspNetCore.Builder
+namespace Microsoft.Extensions.DependencyInjection
 {
     /// <summary>
     /// 显示名称扩展方法类

@@ -37,9 +37,10 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
         public DefaultLayout? RootLayout { get; protected set; }
 
         /// <summary>
-        /// Toast 组件实例
+        /// IJSRuntime 接口实例
         /// </summary>
-        protected Toast? Toast { get; set; }
+        [Inject]
+        protected IJSRuntime? JSRuntime { get; set; }
 
         /// <summary>
         /// NavigationManager 实例
@@ -52,7 +53,7 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
         /// </summary>
         /// <param name="text"></param>
         /// <param name="ret"></param>
-        protected void ShowMessage(string text, bool ret = true) => Toast?.ShowMessage("网站设置", ret ? $"{text}成功" : $"{text}失败", ret ? ToastCategory.Success : ToastCategory.Error);
+        protected void ShowMessage(string text, bool ret = true) => JSRuntime?.ShowToast("网站设置", ret ? $"{text}成功" : $"{text}失败", ret ? ToastCategory.Success : ToastCategory.Error);
 
         /// <summary>
         /// 设置参数方法

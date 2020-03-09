@@ -5,6 +5,7 @@ using Bootstrap.DataAccess;
 using Bootstrap.Security;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.JSInterop;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -49,9 +50,10 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
         public string DisplayName { get; set; } = "";
 
         /// <summary>
-        /// Toast 组件实例
+        /// IJSRuntime 接口实例
         /// </summary>
-        protected Toast? Toast { get; set; }
+        [Inject]
+        protected IJSRuntime? JSRuntime { get; set; }
 
         /// <summary>
         /// 获得/设置 选中的样式项
@@ -78,7 +80,7 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
         /// </summary>
         /// <param name="text"></param>
         /// <param name="ret"></param>
-        protected void ShowMessage(string text, bool ret = true) => Toast?.ShowMessage("个人中心", text, ret ? ToastCategory.Success : ToastCategory.Error);
+        protected void ShowMessage(string text, bool ret = true) => JSRuntime?.ShowToast("个人中心", text, ret ? ToastCategory.Success : ToastCategory.Error);
 
         /// <summary>
         /// 组件初始化方法

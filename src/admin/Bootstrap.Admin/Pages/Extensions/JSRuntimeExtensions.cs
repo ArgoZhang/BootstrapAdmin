@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Bootstrap.Admin.Pages.Components;
 
 namespace Microsoft.JSInterop
 {
@@ -57,8 +58,10 @@ namespace Microsoft.JSInterop
         /// 弹出 Toast 组件
         /// </summary>
         /// <param name="jSRuntime"></param>
-        /// <param name="id"></param>
-        public static void ShowToast(this IJSRuntime? jSRuntime, string id) => jSRuntime.InvokeVoidAsync("$.showToast", id);
+        /// <param name="title"></param>
+        /// <param name="message"></param>
+        /// <param name="cate"></param>
+        public static void ShowToast(this IJSRuntime? jSRuntime, string title, string message, ToastCategory cate) => jSRuntime.InvokeVoidAsync("$.showToast", title, message, cate.ToString());
 
         /// <summary>
         /// 弹出 Tooltip 组件

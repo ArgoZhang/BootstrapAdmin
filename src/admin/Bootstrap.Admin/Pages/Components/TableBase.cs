@@ -359,17 +359,12 @@ namespace Bootstrap.Admin.Pages.Components
         }
 
         /// <summary>
-        /// Toast 组件实例
-        /// </summary>
-        protected Toast? Toast { get; set; }
-
-        /// <summary>
         /// 显示提示信息
         /// </summary>
         /// <param name="title"></param>
         /// <param name="text"></param>
         /// <param name="cate"></param>
-        protected void ShowMessage(string title, string text, ToastCategory cate = ToastCategory.Success) => Toast?.ShowMessage(title, text, cate);
+        protected void ShowMessage(string title, string text, ToastCategory cate = ToastCategory.Success) => JSRuntime?.ShowToast(title, text, cate);
 
         /// <summary>
         /// 编辑按钮方法

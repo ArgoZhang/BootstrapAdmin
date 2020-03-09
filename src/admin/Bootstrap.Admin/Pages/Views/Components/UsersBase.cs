@@ -1,6 +1,7 @@
 ﻿using Bootstrap.Admin.Pages.Components;
-using Bootstrap.Admin.Pages.Shared;
 using Bootstrap.DataAccess;
+using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -119,9 +120,10 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
         protected CheckBoxState SetGroupCheck(Group item) => item.Checked == "checked" ? CheckBoxState.Checked : CheckBoxState.UnChecked;
 
         /// <summary>
-        /// Toast 组件实例
+        /// IJSRuntime 接口实例
         /// </summary>
-        protected Toast? Toast { get; set; }
+        [Inject]
+        protected IJSRuntime? JSRuntime { get; set; }
 
         /// <summary>
         /// 显示提示信息
@@ -129,7 +131,7 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
         /// <param name="title"></param>
         /// <param name="text"></param>
         /// <param name="cate"></param>
-        protected void ShowMessage(string title, string text, ToastCategory cate = ToastCategory.Success) => Toast?.ShowMessage(title, text, cate);
+        protected void ShowMessage(string title, string text, ToastCategory cate = ToastCategory.Success) => JSRuntime?.ShowToast(title, text, cate);
 
         /// <summary>
         /// 获得/设置 Modal 实例

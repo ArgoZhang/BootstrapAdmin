@@ -1,5 +1,5 @@
 ﻿using Bootstrap.Admin.Pages.Components;
-using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 using System.ComponentModel;
 
 namespace Microsoft.AspNetCore.Components.Forms

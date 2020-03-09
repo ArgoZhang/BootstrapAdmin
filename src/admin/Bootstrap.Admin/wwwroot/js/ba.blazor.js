@@ -111,8 +111,49 @@
         toggleModal: function (modalId) {
             $(modalId).modal('toggle');
         },
-        showToast: function (id) {
-            $('#' + id).toast('show');
+        showToast: function (title, message, cate) {
+            var cateToCss = function (c) {
+                var ret = "";
+                switch (c) {
+                    case "Success":
+                        ret = "fa fa-check-circle text-success";
+                        break;
+                    case "Information":
+                        ret = "fa fa-exclamation-triangle text-info";
+                        break;
+                    case "Error":
+                    default:
+                        ret = "fa fa-times-circle text-danger";
+                        break;
+                }
+                return ret;
+            }
+            var toastTemplate = '<div class="toast fade toast-bottom-right" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="true" data-delay="4200">';
+            toastTemplate += '<div class="toast-header">';
+            toastTemplate += '<div class="toast-bar"><i class="' + cateToCss(cate) + '"></i></div>';
+            toastTemplate += '<strong class="mr-auto">' + title + '</strong>';
+            toastTemplate += '<button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">';
+            toastTemplate += '<span aria-hidden="true">&times;</span>';
+            toastTemplate += '</button>';
+            toastTemplate += '</div><div class="toast-body">';
+            toastTemplate += message;
+            toastTemplate += '</div>';
+            toastTemplate += '<div class="toast-progress"></div>';
+            toastTemplate += '</div>';
+
+            // 利用 js 生成一个临时 toast 弹窗后自我销毁
+            var $toast = $(toastTemplate).appendTo('body');
+            var handler = window.setTimeout(function () {
+                window.clearTimeout(handler);
+                $toast.toast('show');
+            }, 200);
+
+            var handlerDismiss = window.setTimeout(function () {
+                window.clearTimeout(handlerDismiss);
+                //$toast.remove();
+
+                // 回调重新排列方法
+            }, 4400);
         },
         tooltip: function (id, method) {
             var $ele = $(id);

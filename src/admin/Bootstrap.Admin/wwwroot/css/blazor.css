@@ -131,14 +131,14 @@ nav .dropdown .nav-link-close.dropdown-toggle:after {
         clear: both;
     }
 
-        .bootstrap-table .fixed-table-toolbar .columns-right {
-            margin-left: 5px;
-        }
+    .bootstrap-table .fixed-table-toolbar .columns-right {
+        margin-left: 5px;
+    }
 
     .bootstrap-table .table-fixed {
         height: 388px;
         overflow: hidden;
-    }    
+    }
 
     .bootstrap-table .table-fixed-header {
         overflow: hidden;
@@ -160,27 +160,27 @@ nav .dropdown .nav-link-close.dropdown-toggle:after {
             border-bottom: 1px solid #dee2e6;
         }
 
-.bootstrap-table .datetime {
-    min-width: 170px;
-}        
-
-.bootstrap-table .sortable {
-    padding-right: 30px;
-    cursor: pointer;
-}
-
-    .bootstrap-table .sortable span {
-        display: inline-block;
-        width: 100%;
+    .bootstrap-table .datetime {
+        min-width: 170px;
     }
 
-    .bootstrap-table .sortable i {
-        margin-left: 8px;
+    .bootstrap-table .sortable {
+        padding-right: 30px;
+        cursor: pointer;
     }
 
-    .bootstrap-table .sortable .fa-sort {
-        color: #dee2e6;
-    }
+        .bootstrap-table .sortable span {
+            display: inline-block;
+            width: 100%;
+        }
+
+        .bootstrap-table .sortable i {
+            margin-left: 8px;
+        }
+
+        .bootstrap-table .sortable .fa-sort {
+            color: #dee2e6;
+        }
 
 .table-wrapper {
     border-radius: 4px;
@@ -234,7 +234,11 @@ nav .dropdown .nav-link-close.dropdown-toggle:after {
 }
 
     .toast.show {
-        z-index: 1080;
+        z-index: 1030;
+    }
+
+    .toast:not(:last-child) {
+        margin-bottom: 0;
     }
 
 .toast-top {
@@ -303,6 +307,7 @@ nav .dropdown .nav-link-close.dropdown-toggle:after {
     -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=40);
     filter: alpha(opacity=40);
     width: 0;
+    transition: all 4s linear;
 }
 
 .showing .toast-progress, .show .toast-progress {
