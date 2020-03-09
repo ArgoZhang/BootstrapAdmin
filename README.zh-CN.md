@@ -195,6 +195,10 @@ docker pull reg.qiniu.com/argozhang/ba
 3. 提交代码
 4. 新建 Pull Request
 
+## 相关视频讲解
+
+[视频教材](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/%E8%AF%BE%E7%A8%8B%E5%88%97%E8%A1%A8?sort_id=1916635#%E8%AF%BE%E7%A8%8B%E5%88%97%E8%A1%A8)
+
 ## 捐助
 
 如果这个项目对您有所帮助，请扫下方二维码打赏一杯咖啡。    
