@@ -289,7 +289,7 @@
         <button data-method="saveLogPeriod" class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
     </div>
 </div>
-<div class="card" asp-auth="demo">
+<div class="card" asp-auth="demo" data-toggle="LgbValidate" data-valid-button="[data-method='saveDemo']">
     <div class="card-header">演示系统设置</div>
     <div class="card-body">
         <div class="form-inline">
@@ -300,7 +300,7 @@
                 </div>
                 <div class="form-group col-6">
                     <label class="control-label" for="authKey">授权码</label>
-                    <input id="authKey" type="password" autocomplete="off" class="form-control" />
+                    <input id="authKey" type="password" autocomplete="off" class="form-control" data-valid="true" />
                 </div>
             </div>
         </div>
