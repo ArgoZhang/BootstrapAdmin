@@ -136,7 +136,7 @@ nav .dropdown .nav-link-close.dropdown-toggle:after {
     }
 
     .bootstrap-table .table-fixed {
-        height: 388px;
+        height: 324px;
         overflow: hidden;
     }
 
@@ -149,7 +149,7 @@ nav .dropdown .nav-link-close.dropdown-toggle:after {
         }
 
     .bootstrap-table .fixed-table-body {
-        min-height: 348px;
+        min-height: 284px;
     }
 
         .bootstrap-table .fixed-table-body table {

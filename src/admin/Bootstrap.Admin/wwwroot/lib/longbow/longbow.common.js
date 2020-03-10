@@ -474,7 +474,7 @@
                             marginHeight += calcPrevHeight($prev);
                             marginHeight += calcParentHeight(element.parent());
                         }
-                        return Math.max(settings.minHeight, $(window).height() - $('header').outerHeight(true) - $('footer').outerHeight(true) - marginHeight - 15 - 10);
+                        return Math.max(settings.minHeight, $(window).height() - $('header').outerHeight(true) - $('footer').outerHeight(true) - marginHeight - 20 - 10);
                     };
                 }
 

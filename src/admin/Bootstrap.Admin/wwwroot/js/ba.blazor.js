@@ -187,16 +187,10 @@
                 $(header).width($(element).width());
             });
         },
-        resetTableHeight(source) {
+        resetTableHeight: function (source) {
             var table = source;
-            var height = 0;
-            do {
-                height += source.position().top;
-                source = source.parent();
-                if (source.hasClass('tab-content')) break;
-            }
-            while (source.length === 1);
-            height = $(window).height() - height - 15 - 38;
+            var height = source.parents('.bootstrap-table').position().top;
+            height = $(window).height() - height - 184 - 51 - 45 - 37;
             table.height(height);
         },
         initTable: function (id, firstRender) {
