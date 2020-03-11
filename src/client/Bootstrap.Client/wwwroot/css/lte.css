@@ -1,3 +1,15 @@
+.main-content {
+    position: absolute;
+    overflow: auto;
+    padding: 15px 15px 0 15px;
+    margin-left: 0;
+    left: 0;
+    bottom: 40px;
+    right: 0;
+    top: 89px;
+    transition: margin-left .3s ease-in-out;
+}
+
 #nprogress .spinner {
     display: none;
 }
