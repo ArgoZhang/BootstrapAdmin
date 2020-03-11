@@ -71,3 +71,7 @@ aside {
         background: #17a2b8;
         padding: 1px 6px;
     }
+
+.modal-body, .card-body {
+    padding: 15px 15px 0 15px;
+}
