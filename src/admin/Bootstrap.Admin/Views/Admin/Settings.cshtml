@@ -73,6 +73,34 @@
         </div>
     </div>
 </div>
+<div class="card" asp-auth="app">
+    <div class="card-header">前台应用设置</div>
+    <div class="card-body">
+        <div class="alert alert-danger" role="alert" asp-condition="@Model.IsDemo">
+            <span>演示系统禁止更改前台应用设置</span>
+        </div>
+        <div class="form-inline">
+            <div class="row" id="appList">
+                @foreach (var app in Model.Apps)
+                {
+                    <div class="form-group col-12" data-toggle="LgbValidate" data-valid-button="[data-method='saveApp']">
+                        <label class="control-label" for="@app.Key">@app.Name</label>
+                        <div class="input-group flex-fill">
+                            <input id="@app.Key" class="form-control" placeholder="请输入应用首页，2000字以内" value="@app.Url" maxlength="2000" data-valid="true" />
+                            <div class="input-group-append" asp-condition="@(!Model.IsDemo)">
+                                <button class="btn btn-danger" type="button" data-key="@app.Key" data-method="delApp"><i class="fa fa-trash-o"></i><span>删除</span></button>
+                                <button class="btn btn-secondary" type="button" data-key="@app.Key" data-method="saveApp"><i class="fa fa-save"></i><span>保存</span></button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="card-footer text-right" asp-condition="@(!Model.IsDemo)">
+        <button class="btn btn-secondary" type="button" data-method="addApp"><i class="fa fa-plus"></i><span>新增</span></button>
+    </div>
+</div>
 <div class="card" asp-auth="saveTheme">
     <div class="card-header">网站样式设置</div>
     <div class="card-body">
@@ -181,34 +209,6 @@
     </div>
     <div class="card-footer text-right">
         <button data-method="saveDefaultApp" class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
-    </div>
-</div>
-<div class="card" asp-auth="app">
-    <div class="card-header">前台应用设置</div>
-    <div class="card-body">
-        <div class="alert alert-danger" role="alert" asp-condition="@Model.IsDemo">
-            <span>演示系统禁止更改前台应用设置</span>
-        </div>
-        <div class="form-inline">
-            <div class="row" id="appList">
-                @foreach (var app in Model.Apps)
-                {
-                    <div class="form-group col-12" data-toggle="LgbValidate" data-valid-button="[data-method='saveApp']">
-                        <label class="control-label" for="@app.Key">@app.Name</label>
-                        <div class="input-group flex-fill">
-                            <input id="@app.Key" class="form-control" placeholder="请输入应用首页，2000字以内" value="@app.Url" maxlength="2000" data-valid="true" />
-                            <div class="input-group-append" asp-condition="@(!Model.IsDemo)">
-                                <button class="btn btn-danger" type="button" data-key="@app.Key" data-method="delApp"><i class="fa fa-trash-o"></i><span>删除</span></button>
-                                <button class="btn btn-secondary" type="button" data-key="@app.Key" data-method="saveApp"><i class="fa fa-save"></i><span>保存</span></button>
-                            </div>
-                        </div>
-                    </div>
-                }
-            </div>
-        </div>
-    </div>
-    <div class="card-footer text-right" asp-condition="@(!Model.IsDemo)">
-        <button class="btn btn-secondary" type="button" data-method="addApp"><i class="fa fa-plus"></i><span>新增</span></button>
     </div>
 </div>
 <div class="card" asp-auth="blazor">
