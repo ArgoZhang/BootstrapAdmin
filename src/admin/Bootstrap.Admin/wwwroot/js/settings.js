@@ -161,34 +161,57 @@ $(function () {
                 });
                 break;
             case 'addApp':
-                $('#appKey').val('');
-                $('#appName').val('');
+                $('#appKey').val('').removeAttr('readonly');
+                $('#appName').val('').removeAttr('readonly');
                 $('#appUrl').val('');
+                $('#appTitle').val('');
+                $('#appFooter').val('');
+                $('#appId').val('new');
                 $dialog.modal('show');
-                break;
-            case 'saveApp':
-                var appPath = $(this).parents('.input-group').find(':text').val();
-                var appKey = $(this).attr('data-key');
-                var appName = $(this).parents('.input-group').prev().text();
-                $.bc({
-                    url: Settings.url + '/AppPath', data: { category: appName, name: appKey, code: appPath, define: 0 }, title: "保存" + appName, method: "post"
-                });
                 break;
             case 'saveNewApp':
                 var appPath = $('#appUrl').val();
                 var appKey = $('#appKey').val();
                 var appName = $('#appName').val();
+                var appTitle = $('#appTitle').val();
+                var appFooter = $('#appFooter').val();
+                var appId = $('#appId').val();
                 $.bc({
-                    url: Settings.url + '/AppPath', data: { category: appName, name: appKey, code: appPath }, title: "保存" + appName, method: "post",
+                    url: Settings.url, data: { AppName: appName, AppCode: appKey, AppUrl: appPath, AppTitle: appTitle, AppFooter: appFooter, AppId: appId }, title: "保存" + appName, method: "put",
                     callback: function (result) {
                         if (result) {
                             $dialog.modal('hide');
 
-                            // 保存成功创建新 dom
-                            var segment = $.format('<div class="form-group col-12" data-toggle="LgbValidate" data-valid-button="[data-method=\'saveApp\']"><label class="control-label" for="{0}">{1}</label>                                    <div class="input-group flex-fill"><input id="{0}" class="form-control" placeholder="请输入应用首页，2000字以内" value="{2}" maxlength="2000" data-valid="true" /><div class="input-group-append">                                            <button class="btn btn-danger" type="button" data-key="{0}" data-method="delApp"><i class="fa fa-trash-o"></i><span>删除</span></button><button class="btn btn-secondary" type="button" data-key="{0}" data-method="saveApp"><i class="fa fa-save"></i><span>保存</span></button></div></div></div>', appKey, appName, appPath);
+                            if (appId === 'new') {
+                                // 保存成功创建新 dom
+                                var segment = $.format('<div class="form-group col-12 app" data-key="{0}"><label class="control-label" for="{0}">{1}</label><div class="input-group flex-fill"><input id="{0}" class="form-control" placeholder="请输入应用首页，2000字以内" value="{2}" maxlength="2000" data-valid="true" /><div class="input-group-append"><button class="btn btn-danger" type="button" data-key="{0}" data-method="delApp"><i class="fa fa-trash-o"></i><span>删除</span></button><button class="btn btn-primary" type="button" data-key="{0}" data-method="editApp"><i class="fa fa fa-pencil"></i><span>编辑</span></button></div></div></div>', appKey, appName, appPath);
 
-                            // append dom
-                            $('#appList').append($(segment));
+                                // append dom
+                                $('#appList').append($(segment));
+                            }
+                            else {
+                                // update
+                                $('#' + appKey).val(appPath);
+                            }
+                        }
+                    }
+                });
+                break;
+            case 'editApp':
+                $('#appId').val('edit');
+                $('#appKey').attr('readonly', true);
+                $('#appName').attr('readonly', true);
+                var appKey = $(this).parents('.app').attr('data-key');
+                $.bc({
+                    url: Settings.url, id: appKey, method: 'get',
+                    callback: function (result) {
+                        if (result) {
+                            $('#appUrl').val(result.AppUrl);
+                            $('#appKey').val(result.AppCode);
+                            $('#appName').val(result.AppName);
+                            $('#appTitle').val(result.AppTitle);
+                            $('#appFooter').val(result.AppFooter);
+                            $dialog.modal('show');
                         }
                     }
                 });

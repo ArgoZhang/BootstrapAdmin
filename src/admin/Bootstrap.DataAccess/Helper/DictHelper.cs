@@ -394,24 +394,43 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 保存前台应用配置信息
         /// </summary>
-        /// <param name="dict"></param>
+        /// <param name="appKey"></param>
+        /// <param name="appName"></param>
+        /// <param name="appUrl"></param>
+        /// <param name="appTitle"></param>
+        /// <param name="appFooter"></param>
+        /// <param name="update"></param>
         /// <returns></returns>
-        public static bool SaveAppSettings(BootstrapDict dict)
+        public static bool SaveAppSettings(string appKey, string appName, string appUrl, string appTitle, string appFooter, bool update)
         {
             // dict define == 1 时为新建前台应用
             bool ret;
 
             // 前台网站配置地址 不允许以 / 结尾
-            dict.Code = dict.Code.TrimEnd('/');
-            if (dict.Define == 0)
+            appUrl = appUrl.TrimEnd('/');
+            if (update)
             {
                 // Update
                 ret = SaveSettings(new BootstrapDict[] {
                     new BootstrapDict()
                     {
+                        Category = appName,
+                        Name = "网站标题",
+                        Code = appTitle,
+                        Define = 1
+                    },
+                    new BootstrapDict()
+                    {
+                        Category = appName,
+                        Name = "网站页脚",
+                        Code = appFooter,
+                        Define = 1
+                    },
+                    new BootstrapDict()
+                    {
                         Category = "应用首页",
-                        Name = dict.Name,
-                        Code = dict.Code,
+                        Name = appKey,
+                        Code = appUrl,
                         Define = 0
                     }
                 });
@@ -421,16 +440,51 @@ namespace Bootstrap.DataAccess
                 ret = Save(new BootstrapDict()
                 {
                     Category = "应用程序",
-                    Name = dict.Category,
-                    Code = dict.Name,
+                    Name = appName,
+                    Code = appKey,
                     Define = 0
                 });
                 if (ret) ret = Save(new BootstrapDict()
                 {
                     Category = "应用首页",
-                    Name = dict.Name,
-                    Code = dict.Code,
+                    Name = appKey,
+                    Code = appUrl,
                     Define = 0
+                });
+                if (ret) ret = Save(new BootstrapDict()
+                {
+                    Category = appName,
+                    Name = "网站标题",
+                    Code = appTitle,
+                    Define = 1
+                });
+                if (ret) ret = Save(new BootstrapDict()
+                {
+                    Category = appName,
+                    Name = "网站页脚",
+                    Code = appFooter,
+                    Define = 1
+                });
+                if (ret) ret = Save(new BootstrapDict()
+                {
+                    Category = appName,
+                    Name = "个人中心地址",
+                    Code = "/Admin/Profiles",
+                    Define = 1
+                });
+                if (ret) ret = Save(new BootstrapDict()
+                {
+                    Category = appName,
+                    Name = "系统设置地址",
+                    Code = "/Admin/Index",
+                    Define = 1
+                });
+                if (ret) ret = Save(new BootstrapDict()
+                {
+                    Category = appName,
+                    Name = "系统通知地址",
+                    Code = "/Admin/Notifications",
+                    Define = 1
                 });
             }
             return ret;
@@ -446,6 +500,7 @@ namespace Bootstrap.DataAccess
             var ids = new List<string>();
             ids.AddRange(RetrieveDicts().Where(d => d.Category == "应用程序" && d.Name == dict.Name && d.Code == dict.Code).Select(d => d.Id ?? ""));
             ids.AddRange(RetrieveDicts().Where(d => d.Category == "应用首页" && d.Name == dict.Code).Select(d => d.Id ?? ""));
+            ids.AddRange(RetrieveDicts().Where(d => d.Category == dict.Name).Select(d => d.Id ?? ""));
 
             return Delete(ids);
         }

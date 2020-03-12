@@ -1,4 +1,5 @@
-﻿using Bootstrap.DataAccess;
+﻿using Bootstrap.Admin.Query;
+using Bootstrap.DataAccess;
 using Bootstrap.Security;
 using Longbow.Cache;
 using Microsoft.AspNetCore.Authorization;
@@ -34,15 +35,28 @@ namespace Bootstrap.Admin.Controllers.Api
         public bool Post(string id, [FromBody]BootstrapDict dict) => id switch
         {
             "Demo" => DictHelper.UpdateSystemModel(dict.Code == "1", dict.Name),
-            "AppPath" => DictHelper.SaveAppSettings(dict),
             _ => false
         };
+
+        /// <summary>
+        /// 保存前台应用时调用
+        /// </summary>
+        /// <returns></returns>
+        [HttpPut()]
+        public bool Put([FromBody]QueryAppOption option) => option.Save();
 
         /// <summary>
         /// 获取网站缓存站点集合
         /// </summary>
         [HttpGet]
         public IEnumerable<ICacheCorsItem> Get() => CacheManager.CorsSites;
+
+        /// <summary>
+        /// 通过指定 AppKey 获取前台应用配置信息
+        /// </summary>
+        /// <param name="key"></param>
+        [HttpGet("{key}")]
+        public QueryAppOption Get(string key) => QueryAppOption.RetrieveByKey(key);
 
         /// <summary>
         /// 删除指定键值的前台应用配置信息
