@@ -17,7 +17,13 @@ namespace Bootstrap.Client.Models
             Title = DictHelper.RetrieveWebTitle(AppId);
             Footer = DictHelper.RetrieveWebFooter(AppId);
             Theme = DictHelper.RetrieveActiveTheme();
+            IsDemo = DictHelper.RetrieveSystemModel();
         }
+
+        /// <summary>
+        /// 是否为演示系统
+        /// </summary>
+        public bool IsDemo { get; protected set; }
 
         /// <summary>
         /// 获得 应用程序标识
