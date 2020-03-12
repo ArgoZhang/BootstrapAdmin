@@ -90,9 +90,11 @@ namespace Bootstrap.DataAccess
             }
             if (dictIds != null)
             {
-                cacheKeys.Add(DictHelper.RetrieveDictsDataKey + "*");
+                cacheKeys.Add(AppHelper.RetrieveAppsByUserNameDataKey + "*");
+                cacheKeys.Add(DictHelper.RetrieveDictsDataKey);
                 cacheKeys.Add(DictHelper.RetrieveCategoryDataKey);
-                corsKeys.Add(DictHelper.RetrieveDictsDataKey + "*");
+                corsKeys.Add(DictHelper.RetrieveDictsDataKey);
+                corsKeys.Add(AppHelper.RetrieveAppsByUserNameDataKey + "*");
             }
             if (cacheKey != null)
             {
