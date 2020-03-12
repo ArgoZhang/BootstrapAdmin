@@ -33,8 +33,8 @@ namespace Bootstrap.Admin.Api
             var data = new QueryAppOption()
             {
                 AppId = "new",
-                AppName = "UnitTest",
-                AppCode = "UnitTest",
+                AppName = "UnitTest_Put",
+                AppCode = "UnitTest_Put",
                 AppUrl = "http://localhost",
                 AppTitle = "网站标题",
                 AppFooter = "网站页脚"
@@ -44,15 +44,24 @@ namespace Bootstrap.Admin.Api
             Assert.True(resp);
 
             // Check
-            var op = await Client.GetAsJsonAsync<QueryAppOption>("UnitTest");
+            var op = await Client.GetAsJsonAsync<QueryAppOption>(data.AppCode);
             Assert.Equal(data.AppTitle, op.AppTitle);
+
+            // update
+            data.AppId = "edit";
+            data.AppUrl = "http://UnitTest";
+            resp = await Client.PutAsJsonAsync<QueryAppOption, bool>("", data);
+            Assert.True(resp);
+
+            op = await Client.GetAsJsonAsync<QueryAppOption>(data.AppCode);
+            Assert.Equal(data.AppUrl, op.AppUrl);
 
             // 删除
             resp = await Client.DeleteAsJsonAsync<BootstrapDict, bool>("AppPath", new BootstrapDict()
             {
-                Category = "UnitTest",
-                Name = "UnitTest",
-                Code = "UnitTest"
+                Category = data.AppName,
+                Name = data.AppName,
+                Code = data.AppCode
             });
             Assert.True(resp);
         }
@@ -91,31 +100,6 @@ namespace Bootstrap.Admin.Api
 
             resp = await Client.PostAsJsonAsync<BootstrapDict, bool>("Demo", new BootstrapDict() { Name = "123789", Code = "0" });
             Assert.True(resp);
-
-            // AppPath
-            var dict = new BootstrapDict() { Category = "UnitTest", Name = "UnitTest", Code = "http://localhost/AppPath/" };
-            resp = await Client.PostAsJsonAsync<BootstrapDict, bool>("AppPath", dict);
-            Assert.True(resp);
-
-            Assert.Equal(dict.Code.TrimEnd('/'), DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "应用首页" && d.Name == dict.Name)?.Code ?? "");
-
-            // update by set dict.Define = 0
-            dict.Define = 0;
-            dict.Code = "http://127.0.0.1/UnitTest";
-            resp = await Client.PostAsJsonAsync<BootstrapDict, bool>("AppPath", dict);
-            Assert.True(resp);
-
-            Assert.Equal(dict.Code.TrimEnd('/'), DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "应用首页" && d.Name == dict.Name)?.Code ?? "");
-
-            // del
-            dict.Name = "UnitTest";
-            dict.Code = "UnitTest";
-            resp = await Client.DeleteAsJsonAsync<BootstrapDict, bool>("AppPath", dict);
-            Assert.True(resp);
-
-            // Else
-            resp = await Client.PostAsJsonAsync<BootstrapDict, bool>("UnitTest", dict);
-            Assert.False(resp);
         }
 
         internal class CacheCorsItem : ICacheCorsItem
