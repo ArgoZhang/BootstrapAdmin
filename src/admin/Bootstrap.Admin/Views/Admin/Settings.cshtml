@@ -83,13 +83,13 @@
             <div class="row" id="appList">
                 @foreach (var app in Model.Apps)
                 {
-                    <div class="form-group col-12" data-toggle="LgbValidate" data-valid-button="[data-method='saveApp']">
+                    <div class="form-group col-12 app" data-key="@app.Key">
                         <label class="control-label" for="@app.Key">@app.Name</label>
                         <div class="input-group flex-fill">
-                            <input id="@app.Key" class="form-control" placeholder="请输入应用首页，2000字以内" value="@app.Url" maxlength="2000" data-valid="true" />
+                            <input id="@app.Key" class="form-control" value="@app.Url" readonly />
                             <div class="input-group-append" asp-condition="@(!Model.IsDemo)">
                                 <button class="btn btn-danger" type="button" data-key="@app.Key" data-method="delApp"><i class="fa fa-trash-o"></i><span>删除</span></button>
-                                <button class="btn btn-secondary" type="button" data-key="@app.Key" data-method="saveApp"><i class="fa fa-save"></i><span>保存</span></button>
+                                <button class="btn btn-primary" type="button" data-key="@app.Key" data-method="editApp"><i class="fa fa fa-pencil"></i><span>编辑</span></button>
                             </div>
                         </div>
                     </div>
@@ -331,6 +331,7 @@
                 <form class="form-inline">
                     <div class="row">
                         <div class="form-group col-sm-6">
+                            <input hidden id="appId" value />
                             <label class="control-label" for="appKey">应用ID</label>
                             <input type="text" class="form-control" id="appKey" placeholder="不可为空，50字以内" maxlength="50" data-valid="true" />
                         </div>
@@ -342,6 +343,14 @@
                         <div class="form-group col-sm-12">
                             <label class="control-label" for="appUrl">应用首页</label>
                             <input type="text" class="form-control flex-fill" id="appUrl" placeholder="不可为空，2000字以内" maxlength="2000" data-valid="true" />
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label class="control-label" for="appTitle">网站标题</label>
+                            <input type="text" class="form-control flex-fill" id="appTitle" placeholder="不可为空，50字以内" maxlength="50" data-valid="true" />
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label class="control-label" for="appFooter">网站页脚</label>
+                            <input type="text" class="form-control flex-fill" id="appFooter" placeholder="不可为空，50字以内" maxlength="50" data-valid="true" />
                         </div>
                     </div>
                 </form>

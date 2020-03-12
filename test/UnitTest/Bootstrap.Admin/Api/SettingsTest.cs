@@ -1,4 +1,5 @@
-﻿using Bootstrap.DataAccess;
+﻿using Bootstrap.Admin.Query;
+using Bootstrap.DataAccess;
 using Bootstrap.Security;
 using Longbow.Cache;
 using System.Collections.Generic;
@@ -17,6 +18,43 @@ namespace Bootstrap.Admin.Api
         {
             var resp = await Client.GetAsJsonAsync<IEnumerable<CacheCorsItem>>();
             Assert.NotNull(resp);
+        }
+
+        [Fact]
+        public async void GetByKey_Ok()
+        {
+            var resp = await Client.GetAsJsonAsync<QueryAppOption>("Demo");
+            Assert.NotNull(resp);
+        }
+
+        [Fact]
+        public async void Put_Ok()
+        {
+            var data = new QueryAppOption()
+            {
+                AppId = "new",
+                AppName = "UnitTest",
+                AppCode = "UnitTest",
+                AppUrl = "http://localhost",
+                AppTitle = "网站标题",
+                AppFooter = "网站页脚"
+            };
+
+            var resp = await Client.PutAsJsonAsync<QueryAppOption, bool>("", data);
+            Assert.True(resp);
+
+            // Check
+            var op = await Client.GetAsJsonAsync<QueryAppOption>("UnitTest");
+            Assert.Equal(data.AppTitle, op.AppTitle);
+
+            // 删除
+            resp = await Client.DeleteAsJsonAsync<BootstrapDict, bool>("AppPath", new BootstrapDict()
+            {
+                Category = "UnitTest",
+                Name = "UnitTest",
+                Code = "UnitTest"
+            });
+            Assert.True(resp);
         }
 
         [Fact]

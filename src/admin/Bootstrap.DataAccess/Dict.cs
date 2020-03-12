@@ -53,7 +53,7 @@ namespace Bootstrap.DataAccess
         public virtual bool SaveSettings(IEnumerable<BootstrapDict> dicts)
         {
             using var db = DbManager.Create();
-            dicts.ToList().ForEach(dict => db.Update<BootstrapDict>("set Code = @Code where Category = @Category and Name = @Name", dict));
+            dicts.ToList().ForEach(dict => db.Update<Dict>("set Code = @Code where Category = @Category and Name = @Name", dict));
             return true;
         }
 
