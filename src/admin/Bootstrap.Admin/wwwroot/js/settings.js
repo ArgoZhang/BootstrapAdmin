@@ -238,6 +238,12 @@ $(function () {
                     }
                 });
                 break;
+            case 'saveLoginView':
+                var logView = $('#loginView').val();
+                $.bc({
+                    url: Settings.url, data: [{ name: 'Login', code: logView }], title: '保存登录界面设置', method: "post"
+                });
+                break;
         }
     });
 

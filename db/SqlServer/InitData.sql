@@ -81,6 +81,12 @@ INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'网站设�
 
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'网站设置', N'后台地址', 'http://localhost:50852', 0)
 
+-- 系统登录首页设置
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES (N'系统首页', N'高仿码云', N'Login-Gitee', 1);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES (N'系统首页', N'系统默认', N'Login', 1);
+
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES (N'网站设置', N'登录界面', N'Login', 1);
+
 DELETE FROM Navigations Where Category = N'0'
 INSERT [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, N'后台管理', 10, N'fa fa-gear', N'~/Admin/Index', N'0')
 INSERT [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, N'个人中心', 20, N'fa fa-suitcase', N'~/Admin/Profiles', N'0')

@@ -29,7 +29,7 @@ namespace Bootstrap.Admin.Controllers
             var content = await r.Content.ReadAsStringAsync();
             Assert.Contains("登 录", content);
 
-            r = await client.GetAsync("/Account/Login");
+            r = await client.GetAsync("/Account/Login?AppId=BA&View=Login1");
             var view = await r.Content.ReadAsStringAsync();
             var tokenTag = "<input name=\"__RequestVerificationToken\" type=\"hidden\" value=\"";
             var index = view.IndexOf(tokenTag);
@@ -53,7 +53,7 @@ namespace Bootstrap.Admin.Controllers
         [Fact]
         public async void Login_Fail()
         {
-            var r = await client.GetAsync("/Account/Login");
+            var r = await client.GetAsync("/Account/Login?AppId=BA");
             Assert.True(r.IsSuccessStatusCode);
             var content = await r.Content.ReadAsStringAsync();
             Assert.Contains("登 录", content);

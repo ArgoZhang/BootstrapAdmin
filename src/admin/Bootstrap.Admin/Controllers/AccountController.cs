@@ -74,16 +74,27 @@ namespace Bootstrap.Admin.Controllers
         /// 系统登录方法
         /// </summary>
         /// <param name="appId"></param>
+        /// <param name="view"></param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult Login([FromQuery]string? appId = null)
+        public ActionResult Login([FromQuery]string? appId = null, [FromQuery]string view = "")
         {
             if (DictHelper.RetrieveSystemModel())
             {
                 ViewBag.UserName = "Admin";
                 ViewBag.Password = "123789";
             }
-            return User.Identity.IsAuthenticated ? (ActionResult)Redirect("~/Home/Index") : View("Login", new LoginModel(appId));
+            return User.Identity.IsAuthenticated ? (ActionResult)Redirect("~/Home/Index") : LoginView(view, new LoginModel(appId));
+        }
+
+        private ViewResult LoginView(string view, LoginModel model)
+        {
+            if (string.IsNullOrEmpty(view))
+            {
+                // retrieve login view from db
+                view = DictHelper.RetrieveLoginView();
+            }
+            return View(view, model);
         }
 
         /// <summary>

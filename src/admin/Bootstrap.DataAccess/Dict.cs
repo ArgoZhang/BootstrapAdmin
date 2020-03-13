@@ -325,5 +325,17 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <returns></returns>
         public bool RetrieveHealth() => (DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "健康检查" && d.Define == 0)?.Code ?? "0") == "1";
+
+        /// <summary>
+        /// 获得字典表登录界面数据
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<BootstrapDict> RetrieveLogins() => DictHelper.RetrieveDicts().Where(d => d.Category == "系统首页" && d.Define == 1);
+
+        /// <summary>
+        /// 获得使用中的登录视图名称
+        /// </summary>
+        /// <returns></returns>
+        public string? RetrieveLoginView() => DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "登录界面" && d.Define == 1)?.Code;
     }
 }

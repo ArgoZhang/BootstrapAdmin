@@ -58,6 +58,27 @@
     </div>
 </div>
 <div class="card">
+    <div class="card-header"><label class="control-label" data-toggle="lgbinfo" data-content="通过此功能进行整个网站的登录界面设置">后台管理登录地址设置</label></div>
+    <div class="card-body">
+        <div class="form-group">
+            <div class="form-group text-right">
+                <div class="btn-group" role="group">
+                    <div class="btn-group" role="group">
+                        <button id="loginView" class="btn btn-success dropdown-select dropdown-toggle" data-toggle="dropdown" value="@Model.LoginView.Key">@Model.LoginView.Value</button>
+                        <div class="dropdown-menu">
+                            @foreach (var d in Model.Logins)
+                            {
+                                <a href="#" data-val="@d.Code">@d.Name</a>
+                            }
+                        </div>
+                    </div>
+                    <button class="btn btn-secondary" type="button" data-method="saveLoginView">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card">
     <div class="card-header"><label class="control-label" data-toggle="lgbinfo" data-content="此功能给前台网站拼接后台功能菜单时使用">后台管理地址设置</label></div>
     <div class="card-body" data-toggle="LgbValidate" data-valid-button="[data-method='appPath']">
         <div class="alert alert-danger" role="alert" asp-condition="@Model.IsDemo">

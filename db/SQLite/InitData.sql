@@ -81,6 +81,12 @@ INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('网站设置
 
 INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('网站设置', '后台地址', 'http://localhost:50852', 0);
 
+-- 系统登录首页设置
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('系统首页', '高仿码云', 'Login-Gitee', 1);
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('系统首页', '系统默认', 'Login', 1);
+
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('网站设置', '登录界面', 'Login', 1);
+
 DELETE FROM Navigations Where Category = '0';
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, '后台管理', 10, 'fa fa-gear', '~/Admin/Index', '0');
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, '个人中心', 20, 'fa fa-suitcase', '~/Admin/Profiles', '0');
