@@ -47,38 +47,38 @@ body {
         color: #fff;
     }
 
-    .login-container .login-sidebox::before, .login-container .login-sidebox::after {
-        content: '';
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        position: absolute;
-    }
+        .login-container .login-sidebox::before, .login-container .login-sidebox::after {
+            content: '';
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            position: absolute;
+        }
 
-    .login-container .login-sidebox::before {
-        background: url(../images/left-1.png) no-repeat 0 0;
-    }
+        .login-container .login-sidebox::before {
+            background: url(../images/left-1.png) no-repeat 0 0;
+        }
 
-    .login-container .login-sidebox::after {
-        background: url(../images/left-2.png) no-repeat right bottom;
-    }
+        .login-container .login-sidebox::after {
+            background: url(../images/left-2.png) no-repeat right bottom;
+        }
 
-    .login-container .login-sidebox .login-sidebox-content {
-        padding: 80px 80px 48px;
-        position: relative;
-         z-index: 1;
-    }
+        .login-container .login-sidebox .login-sidebox-content {
+            padding: 80px 80px 48px;
+            position: relative;
+            z-index: 1;
+        }
 
-    .login-sidebox-header {
-        margin-bottom: 40px;
-    }
-    
-    .login-sidebox-logo {
-        display: flex;
-        align-items: center;
-        margin-bottom: 14px;
-    }
+.login-sidebox-header {
+    margin-bottom: 40px;
+}
+
+.login-sidebox-logo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 14px;
+}
 
     .login-sidebox-logo img {
         width: 48px;
@@ -93,28 +93,28 @@ body {
         font-weight: 700;
     }
 
-    .login-sidebox-subtitle {
-        font-size: 20pt;
-        font-weight: normal;
-    }
+.login-sidebox-subtitle {
+    font-size: 20pt;
+    font-weight: normal;
+}
 
-    .login-sidebox-footer {
-        margin-top: 40px;
-        border-top: solid 1px #ddd;
-        padding-top: 28px;
-        font-size: 0.875rem;
-        font-weight: 500;
-    }
+.login-sidebox-footer {
+    margin-top: 40px;
+    border-top: solid 1px #ddd;
+    padding-top: 28px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
 
     .login-sidebox-footer a {
         cursor: pointer;
         color: #fff;
     }
 
-    .login-form {
-        padding: 64px;
-        font-size: 0.875rem;
-    }
+.login-form {
+    padding: 64px;
+    font-size: 0.875rem;
+}
 
 .login-form-header {
     display: flex;
@@ -123,10 +123,10 @@ body {
     margin-bottom: 20px;
 }
 
-.login-form-header h2 {
-    margin-bottom: 0;
-    font-size: 1.714rem;
-}
+    .login-form-header h2 {
+        margin-bottom: 0;
+        font-size: 1.714rem;
+    }
 
 .login-other {
     display: table;
@@ -168,11 +168,30 @@ body {
     background: #fe7300;
 }
 
-.btn-login:hover {
-    background: #f38d30;
-    color: #fff;
-}
+    .btn-login:hover {
+        background: #f38d30;
+        color: #fff;
+    }
 
 .forget-password {
     padding: 16px 0;
 }
+
+.login-footer {
+    position: absolute;
+    bottom: 40px;
+}
+
+    .login-footer .login-footer-body {
+        display: flex;
+        width: 600px;
+        justify-content: space-around;
+    }
+
+        .login-footer .login-footer-body li {
+            list-style: none;
+        }
+
+            .login-footer .login-footer-body li a {
+                color: #7e8392;
+            }
