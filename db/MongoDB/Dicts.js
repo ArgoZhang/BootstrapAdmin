@@ -360,4 +360,22 @@
         "Code": "/favicon.png",
         "Define": NumberInt(1)
     }
+    {
+        "Category": "系统首页",
+        "Name": "高仿码云",
+        "Code": "Login-Gitee",
+        "Define": NumberInt(0)
+    },
+    {
+        "Category": "系统首页",
+        "Name": "系统默认",
+        "Code": "Login",
+        "Define": NumberInt(0)
+    },
+    {
+        "Category": "网站设置",
+        "Name": "登录界面",
+        "Code": "Login",
+        "Define": NumberInt(0)
+    }
 ];
