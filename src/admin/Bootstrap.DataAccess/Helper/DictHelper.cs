@@ -394,44 +394,55 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 保存前台应用配置信息
         /// </summary>
-        /// <param name="appKey"></param>
-        /// <param name="appName"></param>
-        /// <param name="appUrl"></param>
-        /// <param name="appTitle"></param>
-        /// <param name="appFooter"></param>
-        /// <param name="update"></param>
+        /// <param name="option"></param>
         /// <returns></returns>
-        public static bool SaveAppSettings(string appKey, string appName, string appUrl, string appTitle, string appFooter, bool update)
+        public static bool SaveAppSettings(QueryAppOption option)
         {
+            bool update = option.AppId == "edit";
+
             // dict define == 1 时为新建前台应用
             bool ret;
 
             // 前台网站配置地址 不允许以 / 结尾
-            appUrl = appUrl.TrimEnd('/');
+            option.AppUrl = option.AppUrl.TrimEnd('/');
             if (update)
             {
                 // Update
                 ret = SaveSettings(new BootstrapDict[] {
                     new BootstrapDict()
                     {
-                        Category = appName,
+                        Category = option.AppName,
                         Name = "网站标题",
-                        Code = appTitle,
+                        Code = option.AppTitle,
                         Define = 1
                     },
                     new BootstrapDict()
                     {
-                        Category = appName,
+                        Category = option.AppName,
                         Name = "网站页脚",
-                        Code = appFooter,
+                        Code = option.AppFooter,
                         Define = 1
                     },
                     new BootstrapDict()
                     {
                         Category = "应用首页",
-                        Name = appKey,
-                        Code = appUrl,
+                        Name = option.AppCode,
+                        Code = option.AppUrl,
                         Define = 0
+                    },
+                    new BootstrapDict()
+                    {
+                        Category = option.AppName,
+                        Name = "网站图标",
+                        Code = option.AppFavicon,
+                        Define = 1
+                    },
+                    new BootstrapDict()
+                    {
+                        Category = option.AppName,
+                        Name = "favicon",
+                        Code = option.AppIcon,
+                        Define = 1
                     }
                 });
             }
@@ -440,50 +451,64 @@ namespace Bootstrap.DataAccess
                 ret = Save(new BootstrapDict()
                 {
                     Category = "应用程序",
-                    Name = appName,
-                    Code = appKey,
+                    Name = option.AppName,
+                    Code = option.AppCode,
                     Define = 0
                 });
                 if (ret) ret = Save(new BootstrapDict()
                 {
                     Category = "应用首页",
-                    Name = appKey,
-                    Code = appUrl,
+                    Name = option.AppCode,
+                    Code = option.AppUrl,
                     Define = 0
                 });
                 if (ret) ret = Save(new BootstrapDict()
                 {
-                    Category = appName,
+                    Category = option.AppName,
                     Name = "网站标题",
-                    Code = appTitle,
+                    Code = option.AppTitle,
                     Define = 1
                 });
                 if (ret) ret = Save(new BootstrapDict()
                 {
-                    Category = appName,
+                    Category = option.AppName,
                     Name = "网站页脚",
-                    Code = appFooter,
+                    Code = option.AppFooter,
                     Define = 1
                 });
                 if (ret) ret = Save(new BootstrapDict()
                 {
-                    Category = appName,
+                    Category = option.AppName,
                     Name = "个人中心地址",
                     Code = "/Admin/Profiles",
                     Define = 1
                 });
                 if (ret) ret = Save(new BootstrapDict()
                 {
-                    Category = appName,
+                    Category = option.AppName,
                     Name = "系统设置地址",
                     Code = "/Admin/Index",
                     Define = 1
                 });
                 if (ret) ret = Save(new BootstrapDict()
                 {
-                    Category = appName,
+                    Category = option.AppName,
                     Name = "系统通知地址",
                     Code = "/Admin/Notifications",
+                    Define = 1
+                });
+                if (ret) ret = Save(new BootstrapDict()
+                {
+                    Category = option.AppName,
+                    Name = "网站图标",
+                    Code = option.AppFavicon,
+                    Define = 1
+                });
+                if (ret) ret = Save(new BootstrapDict()
+                {
+                    Category = option.AppName,
+                    Name = "favicon",
+                    Code = option.AppIcon,
                     Define = 1
                 });
             }

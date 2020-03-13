@@ -1,7 +1,6 @@
 ﻿using System.Linq;
-using Bootstrap.DataAccess;
 
-namespace Bootstrap.Admin.Query
+namespace Bootstrap.DataAccess
 {
     /// <summary>
     /// 前台应用查询类
@@ -11,7 +10,6 @@ namespace Bootstrap.Admin.Query
         /// <summary>
         /// 应用操作 new 为新建 edit 为保存
         /// </summary>
-        /// <value></value>
         public string AppId { get; set; } = "edit";
 
         /// <summary>
@@ -40,12 +38,22 @@ namespace Bootstrap.Admin.Query
         public string AppFooter { get; set; } = "未设置";
 
         /// <summary>
+        /// 前台应用图标
+        /// </summary>
+        public string AppIcon { get; set; } = "/favicon.ico";
+
+        /// <summary>
+        /// 前台应用收藏图标
+        /// </summary>
+        public string AppFavicon { get; set; } = "/favicon.png";
+
+        /// <summary>
         /// 保存前台应用方法
         /// </summary>
         /// <returns></returns>
         public bool Save()
         {
-            var ret = DictHelper.SaveAppSettings(AppCode, AppName, AppUrl, AppTitle, AppFooter, AppId == "edit");
+            var ret = DictHelper.SaveAppSettings(this);
             return true;
         }
 
@@ -62,6 +70,8 @@ namespace Bootstrap.Admin.Query
             ret.AppUrl = dicts.FirstOrDefault(d => d.Category == "应用首页" && d.Name == key).Code ?? "";
             ret.AppTitle = dicts.FirstOrDefault(d => d.Category == ret.AppName && d.Name == "网站标题").Code ?? "";
             ret.AppFooter = dicts.FirstOrDefault(d => d.Category == ret.AppName && d.Name == "网站页脚").Code ?? "";
+            ret.AppFavicon = dicts.FirstOrDefault(d => d.Category == ret.AppName && d.Name == "网站图标").Code ?? "";
+            ret.AppIcon = dicts.FirstOrDefault(d => d.Category == ret.AppName && d.Name == "favicon").Code ?? "";
             return ret;
         }
     }

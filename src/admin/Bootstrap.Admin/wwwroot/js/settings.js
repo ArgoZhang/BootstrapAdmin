@@ -166,6 +166,8 @@ $(function () {
                 $('#appUrl').val('');
                 $('#appTitle').val('');
                 $('#appFooter').val('');
+                $('#appIcon').val('');
+                $('#appFavicon').val('');
                 $('#appId').val('new');
                 $dialog.modal('show');
                 break;
@@ -176,8 +178,10 @@ $(function () {
                 var appTitle = $('#appTitle').val();
                 var appFooter = $('#appFooter').val();
                 var appId = $('#appId').val();
+                var appIcon = $('#appIcon').val();
+                var appFavicon = $('#appFavicon').val();
                 $.bc({
-                    url: Settings.url, data: { AppName: appName, AppCode: appKey, AppUrl: appPath, AppTitle: appTitle, AppFooter: appFooter, AppId: appId }, title: "保存" + appName, method: "put",
+                    url: Settings.url, data: { AppIcon: appIcon, AppFavicon: appFavicon, AppName: appName, AppCode: appKey, AppUrl: appPath, AppTitle: appTitle, AppFooter: appFooter, AppId: appId }, title: "保存" + appName, method: "put",
                     callback: function (result) {
                         if (result) {
                             $dialog.modal('hide');
@@ -211,6 +215,8 @@ $(function () {
                             $('#appName').val(result.AppName);
                             $('#appTitle').val(result.AppTitle);
                             $('#appFooter').val(result.AppFooter);
+                            $('#appIcon').val(result.AppIcon);
+                            $('#appFavicon').val(result.AppFavicon);
                             $dialog.modal('show');
                         }
                     }

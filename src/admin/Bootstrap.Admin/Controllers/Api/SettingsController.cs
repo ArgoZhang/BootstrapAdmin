@@ -1,12 +1,10 @@
-﻿using Bootstrap.Admin.Query;
-using Bootstrap.DataAccess;
+﻿using Bootstrap.DataAccess;
 using Bootstrap.Security;
 using Longbow.Cache;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Bootstrap.Admin.Controllers.Api
 {
