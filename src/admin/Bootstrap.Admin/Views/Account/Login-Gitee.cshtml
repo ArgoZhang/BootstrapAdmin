@@ -33,6 +33,7 @@
     <script src="~/js/login.js" asp-append-version="true"></script>
 }
 <div class="container-fluid">
+    <input id="imgUrl" type="hidden" value="@Model.ImageLibUrl" />
     <div class="login-container">
         <section class="login-sidebox">
             <div class="login-sidebox-content">
@@ -67,11 +68,11 @@
                     <div class="login-wrap" data-toggle="LgbValidate" data-valid-button="button[type='submit']">
                         <div id="loginUser" class="form-group">
                             <input type="text" name="userName" class="form-control" data-toggle="tooltip" placeholder="用户名"
-                                    maxlength="16" data-required-msg="请输入用户名" value="" autofocus data-valid="true" />
+                                   maxlength="16" data-required-msg="请输入用户名" value="" autofocus data-valid="true" />
                         </div>
                         <div id="loginPwd" class="form-group">
                             <input type="password" name="password" class="form-control" value="" data-toggle="tooltip"
-                                    placeholder="密码" maxlength="16" autocomplete="off" data-required-msg="请输入密码" data-valid="true" />
+                                   placeholder="密码" maxlength="16" autocomplete="off" data-required-msg="请输入密码" data-valid="true" />
                         </div>
                         <div>
                             <div id="loginMobile" class="form-group d-none">
@@ -82,8 +83,8 @@
                                         </div>
                                     </div>
                                     <input type="tel" id="phone" name="phone" class="form-control digits" data-toggle="tooltip"
-                                        placeholder="手机号码" minlength="11" maxlength="11" data-required-msg="请输入手机号码" value=""
-                                        data-valid="true" />
+                                           placeholder="手机号码" minlength="11" maxlength="11" data-required-msg="请输入手机号码" value=""
+                                           data-valid="true" />
                                 </div>
                             </div>
                             <div id="loginSMS" class="form-group d-none">
@@ -94,11 +95,13 @@
                                         </div>
                                     </div>
                                     <input type="number" id="code" name="code" class="form-control digits" data-toggle="tooltip"
-                                        disabled value="" placeholder="验证码" maxlength="4" data-required-msg="请输入验证码"
-                                        data-valid="true" />
+                                           disabled value="" placeholder="验证码" maxlength="4" data-required-msg="请输入验证码"
+                                           data-valid="true" />
                                     <div class="input-group-append">
                                         <button type="button" id="btnSendCode" class="btn btn-sms" data-toggle="tooltip"
-                                            title="点击发送验证码">发送验证码</button>
+                                                title="点击发送验证码">
+                                            发送验证码
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -114,7 +117,9 @@
                             </div>
                         </div>
                         <button class="btn btn-lg btn-login btn-block" data-oauth="@Model.AllowOAuth" data-toggle="tooltip"
-                            title="不填写密码默认使用 Gitee 认证" type="submit">登 录</button>
+                                title="不填写密码默认使用 Gitee 认证" type="submit">
+                            登 录
+                        </button>
                         <div class="d-flex justify-content-center">
                             <a class="forget-password" href="#">已有帐号，忘记密码？</a>
                         </div>

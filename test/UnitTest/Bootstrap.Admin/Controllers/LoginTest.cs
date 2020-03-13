@@ -53,7 +53,7 @@ namespace Bootstrap.Admin.Controllers
         [Fact]
         public async void Login_Fail()
         {
-            var r = await client.GetAsync("/Account/Login?AppId=BA&View=Login");
+            var r = await client.GetAsync("/Account/Login?AppId=BA");
             Assert.True(r.IsSuccessStatusCode);
             var content = await r.Content.ReadAsStringAsync();
             Assert.Contains("登 录", content);

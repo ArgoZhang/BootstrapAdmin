@@ -32,6 +32,10 @@ namespace Bootstrap.Admin.Models
             EnableDemo = DictHelper.RetrieveSystemModel();
             AdminPathBase = DictHelper.RetrievePathBase();
             EnableHealth = DictHelper.RetrieveHealth();
+            Logins = DictHelper.RetrieveLogins();
+            var view = DictHelper.RetrieveLoginView();
+            var viewName = Logins.FirstOrDefault(d => d.Code == view)?.Name ?? "系统默认";
+            LoginView = new KeyValuePair<string, string>(view, viewName);
 
             var dicts = DictHelper.RetrieveDicts();
             Apps = DictHelper.RetrieveApps().Where(d => !d.Key.Equals("BA", StringComparison.OrdinalIgnoreCase)).Select(k =>
@@ -115,5 +119,15 @@ namespace Bootstrap.Admin.Models
         /// 获得/设置 是否开启健康检查
         /// </summary>
         public bool EnableHealth { get; set; }
+
+        /// <summary>
+        /// 获得/设置 字典表中登录首页集合
+        /// </summary>
+        public IEnumerable<BootstrapDict> Logins { get; set; }
+
+        /// <summary>
+        /// 获得/设置 登录视图名称 默认是 Login
+        /// </summary>
+        public KeyValuePair<string, string> LoginView { get; set; }
     }
 }

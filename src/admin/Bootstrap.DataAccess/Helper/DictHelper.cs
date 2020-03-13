@@ -165,7 +165,8 @@ namespace Bootstrap.DataAccess
                 ["CookiePeriod"] = "Cookie保留时长",
                 ["IPCachePeriod"] = "IP请求缓存时长",
                 ["AppPath"] = "后台地址",
-                ["EnableHealth"] = "健康检查"
+                ["EnableHealth"] = "健康检查",
+                ["Login"] = "登录界面"
             };
             var ret = SaveSettings(items.Where(i => cache.Any(c => c.Key == i.Name)).Select(i => new BootstrapDict()
             {
@@ -390,6 +391,18 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <returns></returns>
         public static bool RetrieveHealth() => DbContextManager.Create<Dict>()?.RetrieveHealth() ?? true;
+
+        /// <summary>
+        /// 获得登录界面数据
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<BootstrapDict> RetrieveLogins() => DbContextManager.Create<Dict>()?.RetrieveLogins() ?? new BootstrapDict[0];
+
+        /// <summary>
+        /// 获得使用中的登录视图名称
+        /// </summary>
+        /// <returns></returns>
+        public static string RetrieveLoginView() => DbContextManager.Create<Dict>()?.RetrieveLoginView() ?? "Login";
 
         /// <summary>
         /// 保存前台应用配置信息
