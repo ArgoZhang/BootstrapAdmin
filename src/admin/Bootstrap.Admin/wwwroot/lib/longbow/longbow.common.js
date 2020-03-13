@@ -298,6 +298,7 @@
 
     $.fn.extend({
         autoCenter: function (options) {
+            if (this.length === 0) return;
             options = $.extend({ top: 0 }, options);
             var that = this;
             var defaultVal = parseFloat(that.css('marginTop').replace('px', ''));
