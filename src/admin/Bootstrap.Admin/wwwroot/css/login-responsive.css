@@ -48,4 +48,14 @@
             .slidercaptcha.card .card-body {
                 padding: 15px 15px 0 15px;
             }
+
+.login-footer {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+    .login-footer .login-footer-body li a {
+        color: #e0e0e0;
+    }            
 }
