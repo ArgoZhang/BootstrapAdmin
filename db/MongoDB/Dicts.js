@@ -359,7 +359,7 @@
         "Name": "网站图标",
         "Code": "/favicon.png",
         "Define": NumberInt(1)
-    }
+    },
     {
         "Category": "系统首页",
         "Name": "高仿码云",
