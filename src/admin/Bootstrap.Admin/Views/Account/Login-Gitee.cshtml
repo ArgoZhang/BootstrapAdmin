@@ -14,6 +14,7 @@
     </environment>
     <link href="~/lib/captcha/slidercaptcha.css" rel="stylesheet" />
     <link href="~/css/theme.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/login-footer.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/css/login-gitee.css" rel="stylesheet" asp-append-version="true" />
 }
 @section javascript {
@@ -162,14 +163,7 @@
             </div>
         </section>
     </div>
-    <div class="login-footer">
-        <ui class="login-footer-body">
-            <li><a href="https://ba.sdgxgz.com" target="_blank">@@Bootstrap Admin</a></li>
-            <li><a href="https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis" target="_blank">帮助文档</a></li>
-            <li><a href="./Login?View=Login">系统默认登录页</a></li>
-            <li><a href="./Login?View=Login-Gitee">高仿码云登录页</a></li>
-        </ui>
-    </div>
+    @await Html.PartialAsync("LoginFooter", Model)
 </div>
 <div class="modal fade" id="dialogNew" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">

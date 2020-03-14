@@ -1,4 +1,4 @@
-﻿body {
+body {
     color: #797979;
     background-color: #f1f2f7;
 }
@@ -139,3 +139,13 @@
 .login-wrap .btn-sms {
     width: 140px;
 }
+
+.login-footer {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+    .login-footer .login-footer-body li a {
+        color: #e0e0e0;
+    }

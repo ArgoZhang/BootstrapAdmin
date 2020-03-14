@@ -176,22 +176,3 @@ body {
 .forget-password {
     padding: 16px 0;
 }
-
-.login-footer {
-    position: absolute;
-    bottom: 40px;
-}
-
-    .login-footer .login-footer-body {
-        display: flex;
-        width: 600px;
-        justify-content: space-around;
-    }
-
-        .login-footer .login-footer-body li {
-            list-style: none;
-        }
-
-            .login-footer .login-footer-body li a {
-                color: #7e8392;
-            }

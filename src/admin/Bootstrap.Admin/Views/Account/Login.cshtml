@@ -16,12 +16,9 @@
     </environment>
     <link href="~/lib/captcha/slidercaptcha.css" rel="stylesheet" />
     <link href="~/css/theme.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/login-footer.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/css/login.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/css/login-responsive.css" rel="stylesheet" asp-append-version="true" />
-    @if (!string.IsNullOrEmpty(Model.Theme))
-    {
-        <link href="~/css/@Model.Theme" rel="stylesheet" asp-append-version="true" />
-    }
 }
 @section javascript {
     <environment include="Development">
@@ -151,6 +148,7 @@
         </div>
     </form>
 </div>
+@await Html.PartialAsync("LoginFooter", Model)
 <div class="modal fade" id="dialogNew" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content" data-toggle="LgbValidate" data-valid-button="#btnSubmit" data-valid-modal="#dialogNew">
