@@ -5,6 +5,7 @@ using Longbow.Web.Mvc;
 using Longbow.Web.SMS;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
 
 namespace Bootstrap.Admin.Controllers.Api
@@ -29,17 +30,25 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <summary>
         /// JWT 登陆认证接口
         /// </summary>
+        /// <param name="config"></param>
         /// <param name="user"></param>
         /// <returns></returns>
         [HttpPost]
-        public string? Post([FromBody]User user)
+        public string? Post([FromServices]IConfiguration config, [FromBody]User user)
         {
             var token = string.Empty;
             string userName = user.UserName;
             string password = user.Password;
             if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(password) && UserHelper.Authenticate(userName, password))
             {
-                token = BootstrapAdminJwtTokenHandler.CreateToken(userName);
+                token = BootstrapAdminJwtTokenHandler.CreateToken(userName, op =>
+                {
+                    var tokenOption = config.GetOption(() => new TokenValidateOption());
+                    op.Audience = tokenOption.Audience;
+                    op.Expires = tokenOption.Expires;
+                    op.Issuer = tokenOption.Issuer;
+                    op.SecurityKey = tokenOption.SecurityKey;
+                });
             }
             HttpContext.Log(userName, !string.IsNullOrEmpty(token));
             return token;
