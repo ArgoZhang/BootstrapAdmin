@@ -70,12 +70,9 @@ function reportCodecov() {
     }
 }
 
-$branch = $($env:APPVEYOR_REPO_BRANCH)
-if ($branch -ne "dev") {
-    installDB
-    installCoveralls
-    installCodecov
-    runUnitTest
-    reportCoveralls
-    reportCodecov
-}
+installDB
+installCoveralls
+installCodecov
+runUnitTest
+reportCoveralls
+reportCodecov
