@@ -21,6 +21,22 @@ namespace Bootstrap.Admin.Controllers
             client = factory.CreateClient(baseAddress);
         }
 
+        [InlineData("Login")]
+        [InlineData("Login-Gitee")]
+        [InlineData("Login-Blue")]
+        [InlineData("Login-Green")]
+        public async void Login_UI_Ok(string view)
+        {
+            var r = await client.GetAsync("/Account/Logout");
+            Assert.True(r.IsSuccessStatusCode);
+            var content = await r.Content.ReadAsStringAsync();
+            Assert.Contains("登 录", content);
+
+            r = await client.GetAsync($"/Account/Login?AppId=BA&View={view}");
+            content = await r.Content.ReadAsStringAsync();
+            Assert.Contains("登 录", content);
+        }
+
         [Fact]
         public async void Login_Empty()
         {

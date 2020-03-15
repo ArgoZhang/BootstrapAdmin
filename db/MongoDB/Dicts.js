@@ -368,8 +368,20 @@
     },
     {
         "Category": "系统首页",
+        "Name": "蓝色清新",
+        "Code": "Login-Blue",
+        "Define": NumberInt(0)
+    },
+    {
+        "Category": "系统首页",
         "Name": "系统默认",
         "Code": "Login",
+        "Define": NumberInt(0)
+    },
+    {
+        "Category": "系统首页",
+        "Name": "科技动感",
+        "Code": "Login-Tec",
         "Define": NumberInt(0)
     },
     {

@@ -15,7 +15,8 @@
     <link href="~/lib/captcha/slidercaptcha.css" rel="stylesheet" />
     <link href="~/css/theme.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/css/login-footer.css" rel="stylesheet" asp-append-version="true" />
-    <link href="~/css/login-gitee.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/login-blue.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/login-tec.css" rel="stylesheet" asp-append-version="true" />
 }
 @section javascript {
     <environment include="Development">
@@ -34,28 +35,7 @@
     <script src="~/js/login.js" asp-append-version="true"></script>
 }
 <div class="container-fluid">
-    <input id="imgUrl" type="hidden" value="@Model.ImageLibUrl" />
     <div class="login-container">
-        <section class="login-sidebox">
-            <div class="login-sidebox-content">
-                <div class="login-sidebox-header">
-                    <div class="login-sidebox-logo">
-                        <img alt="logo" src="../favicon.png"><span>Bootstrap Admin</span>
-                    </div>
-                    <h2 class="login-sidebox-subtitle">
-                        通用后台权限管理系统
-                    </h2>
-                </div>
-                <div class="login-sidebox-body">
-                    <p>
-                        基于 RBAC 的 NetCore 后台管理框架，权限管理，前后台分离，支持多站点单点登录，兼容所有主流浏览器，内置微信、支付宝、QQ等多种登录方式，内置多种样式，可切换至 Blazor 多 Tabs 模式，权限控制细化到网页内任意元素（按钮、表格、文本框等等）
-                    </p>
-                </div>
-                <div class="login-sidebox-footer">
-                    <div>开源文档：<a href="https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis">码云托管平台 - Wiki</a></div>
-                </div>
-            </div>
-        </section>
         <section class="login-form">
             <div class="login-form-header">
                 <h2>登录</h2>
@@ -69,11 +49,11 @@
                     <div class="login-wrap" data-toggle="LgbValidate" data-valid-button="button[type='submit']">
                         <div id="loginUser" class="form-group">
                             <input type="text" name="userName" class="form-control" data-toggle="tooltip" placeholder="用户名"
-                                   maxlength="16" data-required-msg="请输入用户名" value="" autofocus data-valid="true" />
+                                    maxlength="16" data-required-msg="请输入用户名" value="" autofocus data-valid="true" />
                         </div>
                         <div id="loginPwd" class="form-group">
                             <input type="password" name="password" class="form-control" value="" data-toggle="tooltip"
-                                   placeholder="密码" maxlength="16" autocomplete="off" data-required-msg="请输入密码" data-valid="true" />
+                                    placeholder="密码" maxlength="16" autocomplete="off" data-required-msg="请输入密码" data-valid="true" />
                         </div>
                         <div>
                             <div id="loginMobile" class="form-group d-none">
@@ -84,8 +64,8 @@
                                         </div>
                                     </div>
                                     <input type="tel" id="phone" name="phone" class="form-control digits" data-toggle="tooltip"
-                                           placeholder="手机号码" minlength="11" maxlength="11" data-required-msg="请输入手机号码" value=""
-                                           data-valid="true" />
+                                        placeholder="手机号码" minlength="11" maxlength="11" data-required-msg="请输入手机号码" value=""
+                                        data-valid="true" />
                                 </div>
                             </div>
                             <div id="loginSMS" class="form-group d-none">
@@ -96,13 +76,11 @@
                                         </div>
                                     </div>
                                     <input type="number" id="code" name="code" class="form-control digits" data-toggle="tooltip"
-                                           disabled value="" placeholder="验证码" maxlength="4" data-required-msg="请输入验证码"
-                                           data-valid="true" />
+                                        disabled value="" placeholder="验证码" maxlength="4" data-required-msg="请输入验证码"
+                                        data-valid="true" />
                                     <div class="input-group-append">
                                         <button type="button" id="btnSendCode" class="btn btn-sms" data-toggle="tooltip"
-                                                title="点击发送验证码">
-                                            发送验证码
-                                        </button>
+                                            title="点击发送验证码">发送验证码</button>
                                     </div>
                                 </div>
                             </div>
@@ -118,15 +96,13 @@
                             </div>
                         </div>
                         <button class="btn btn-lg btn-login btn-block" data-oauth="@Model.AllowOAuth" data-toggle="tooltip"
-                                title="不填写密码默认使用 Gitee 认证" type="submit">
-                            登 录
-                        </button>
+                            title="不填写密码默认使用 Gitee 认证" type="submit">登 录</button>
                         <div class="d-flex justify-content-center">
                             <a class="forget-password" href="#">已有帐号，忘记密码？</a>
                         </div>
                         <div asp-condition="@Model.AllowOAuth">
                             <div class="login-other">
-                                <span class="text-muted">
+                                <span class="text-white">
                                     其他方式登录
                                 </span>
                             </div>
@@ -148,12 +124,12 @@
                                 </div>
                                 <div class="item">
                                     <a href="~/Account/Tencent" data-toggle="tooltip" title="使用 QQ 账号登录">
-                                        <img class="item" src="~/images/qq.svg" />
+                                        <img class="item" src="~/images/qq-3.svg" />
                                     </a>
                                 </div>
                                 <div class="item">
                                     <a href="~/Account/Alipay" data-toggle="tooltip" title="使用支付宝账号登录">
-                                        <img class="item" src="~/images/zhifubao.svg" />
+                                        <img class="item" src="~/images/zhifubao-3.svg" />
                                     </a>
                                 </div>
                             </div>
