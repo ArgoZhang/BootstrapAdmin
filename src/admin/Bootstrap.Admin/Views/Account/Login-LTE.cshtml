@@ -1,0 +1,295 @@
+﻿@model LoginModel
+@{
+    ViewBag.Title = Model.Title;
+    Layout = "_Layout";
+}
+@section css {
+    <environment include="Development">
+        <link href="~/lib/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
+        <link href="~/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
+        <link href="~/lib/sweetalert/sweetalert2.css" rel="stylesheet" />
+    </environment>
+    <environment exclude="Development">
+        <link href="~/lib/twitter-bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="~/lib/sweetalert/sweetalert2.min.css" rel="stylesheet" />
+    </environment>
+    <link href="~/lib/captcha/slidercaptcha.css" rel="stylesheet" />
+    <link href="~/css/theme.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/login-lte.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/login-responsive-lte.css" rel="stylesheet" asp-append-version="true" />
+
+}
+@section javascript {
+    <environment include="Development">
+        <script src="~/lib/twitter-bootstrap/js/bootstrap.bundle.js"></script>
+        <script src="~/lib/validate/jquery.validate.js"></script>
+        <script src="~/lib/validate/localization/messages_zh.js"></script>
+        <script src="~/lib/sweetalert/sweetalert2.js" rel="stylesheet"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/lib/twitter-bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="~/lib/validate/jquery.validate.min.js"></script>
+        <script src="~/lib/validate/localization/messages_zh.min.js"></script>
+        <script src="~/lib/sweetalert/sweetalert2.min.js" rel="stylesheet"></script>
+    </environment>
+    <script src="~/lib/captcha/longbow.slidercaptcha.js"></script>
+    <script src="~/lib/longbow/longbow.common.js"></script>
+    <script src="~/lib/longbow/longbow.validate.js"></script>
+    <script src="~/js/login.js" asp-append-version="true"></script>
+}
+<div class="container">
+    <input id="imgUrl" type="hidden" value="@Model.ImageLibUrl" />
+    <div class="card">
+        <div class="card-body login-card-body p-0 pt-5 pb-3">
+            <h5 class="login-box-msg">XXXX集团有限公司</h5>
+            <div class="login-logo">@Model.Title</div>
+        </div>
+        <div class="card-body">
+            <form id="login" method="post" class="form-signin" data-demo="@Model.IsDemo">
+                <div class="" data-auth="@Model.AuthFailed" data-toggle="LgbValidate" data-valid-button="button[type='submit']">
+                    <div class="alert alert-danger d-none" asp-condition="@Model.AuthFailed">用户名或密码错误！</div>
+                    <div id="loginUser" class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend" data-toggle="tooltip" title="用户名">
+                                <div class="input-group-text">
+                                    <span class="fa fa-user"></span>
+                                </div>
+                            </div>
+                            <input type="text" name="userName" class="form-control" data-toggle="tooltip" placeholder="用户名" maxlength="16" data-required-msg="请输入用户名" value="" autofocus data-valid="true" />
+                        </div>
+                    </div>
+                    <div id="loginPwd" class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend" data-toggle="tooltip" title="密码">
+                                <div class="input-group-text">
+                                    <span class="fa fa-lock"></span>
+                                </div>
+                            </div>
+                            <input type="password" name="password" class="form-control" value="" data-toggle="tooltip" placeholder="密码" maxlength="16" autocomplete="off" data-required-msg="请输入密码" data-valid="true" />
+                        </div>
+                    </div>
+                    <div asp-condition="@Model.AllowMobile">
+                        <div id="loginMobile" class="form-group d-none">
+                            <div class="input-group">
+                                <div class="input-group-prepend" data-toggle="tooltip" title="手机号码">
+                                    <div class="input-group-text">
+                                        <span class="fa fa-phone"></span>
+                                    </div>
+                                </div>
+                                <input type="tel" id="phone" name="phone" class="form-control digits" data-toggle="tooltip" placeholder="手机号码" minlength="11" maxlength="11" data-required-msg="请输入手机号码" value="" data-valid="true" />
+                            </div>
+                        </div>
+                        <div id="loginSMS" class="form-group d-none">
+                            <div class="input-group">
+                                <div class="input-group-prepend" data-toggle="tooltip" title="验证码">
+                                    <div class="input-group-text">
+                                        <span class="fa fa-key"></span>
+                                    </div>
+                                </div>
+                                <input type="number" id="code" name="code" class="form-control digits" data-toggle="tooltip" disabled value="" placeholder="验证码" maxlength="4" data-required-msg="请输入验证码" data-valid="true" />
+                                <div class="input-group-append">
+                                    <button type="button" id="btnSendCode" class="btn btn-sms" data-toggle="tooltip" title="点击发送验证码">发送验证码</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <div class="rememberPwd" onselectstart="return false">
+                                <i class="fa fa-square-o"></i>
+                                <span>记住密码自动登录</span>
+                                <input id="remember" name="remember" type="hidden" value="false" />
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-login btn-block" data-oauth="@Model.AllowOAuth" type="submit">登 录</button>
+                    <div class="d-flex justify-content-between">
+                        <a href="#" data-method="register">申请账号</a>
+                        <a href="#" data-method="forgot">忘记密码</a>
+                    </div>
+                    <div asp-condition="@Model.AllowOAuth">
+                        <div class="login-other">
+                            <span class="text-muted">
+                                其他方式登录
+                            </span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <div asp-condition="@Model.AllowMobile">
+                                <a id="loginType" data-value="username" href="#" class="">短信验证登录</a>
+                            </div>
+                            <div class="login-list">
+                                <div class="item ml-1 mr-1">
+                                    <a href="~/Account/Gitee" data-toggle="tooltip" title="使用 Gitee 帐号登录">
+                                        <img class="item" src="~/images/gitee.svg" />
+                                    </a>
+                                </div>
+                                <div class="item ml-1 mr-1">
+                                    <a href="~/Account/GitHub" data-toggle="tooltip" title="使用 GitHub 帐号登录">
+                                        <img class="item" src="~/images/git.svg" />
+                                    </a>
+                                </div>
+                                <div class="item ml-1 mr-1">
+                                    <a href="#" data-toggle="tooltip" title="使用微信扫描登录">
+                                        <img class="item" src="~/images/weixin.svg" />
+                                    </a>
+                                </div>
+                                <div class="item ml-1 mr-1">
+                                    <a href="~/Account/Tencent" data-toggle="tooltip" title="使用 QQ 账号登录">
+                                        <img class="item" src="~/images/qq.svg" />
+                                    </a>
+                                </div>
+                                <div class="item ml-1 mr-1">
+                                    <a href="~/Account/Alipay" data-toggle="tooltip" title="使用支付宝账号登录">
+                                        <img class="item" src="~/images/zhifubao.svg" />
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="slidercaptcha @(Model.ShowOAuth ? "card oauth" : "card")">
+                        <div class="card-header">
+                            <span>请完成安全验证</span>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        </div>
+                        <div class="card-body"><div id="captcha"></div></div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+<div class="modal fade" id="dialogNew" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content" data-toggle="LgbValidate" data-valid-button="#btnSubmit" data-valid-modal="#dialogNew">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">新用户注册</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="userName">登录名称：</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <span class="fa fa-user-plus"></span>
+                            </div>
+                        </div>
+                        <input type="text" id="userName" autocomplete="off" class="form-control" placeholder="登录账号不可为空" userName="true" minlength="4" maxlength="16" remote="api/Register" data-remote-msg="此用户已存在" data-valid="true" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="displayName">显示名称：</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <span class="fa fa-user-circle-o"></span>
+                            </div>
+                        </div>
+                        <input type="text" id="displayName" class="form-control" value="" placeholder="显示名称不可为空" maxlength="20" data-valid="true" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">密码：</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <span class="fa fa-lock"></span>
+                            </div>
+                        </div>
+                        <input type="password" id="password" class="form-control" value="" placeholder="密码不可为空" maxlength="16" data-valid="true" autocomplete="off" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="assurePassword">确认密码：</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <span class="fa fa-lock"></span>
+                            </div>
+                        </div>
+                        <input type="password" id="assurePassword" class="form-control" value="" placeholder="确认密码" maxlength="16" equalTo="#password" data-valid="true" autocomplete="off" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="description">申请理由：</label>
+                    <textarea id="description" class="form-control" placeholder="申请理由，500字以内" rows="3" maxlength="500" data-valid="true"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    <i class="fa fa-times"></i>
+                    <span>关闭</span>
+                </button>
+                <button type="button" class="btn btn-primary" id="btnSubmit">
+                    <i class="fa fa-save"></i>
+                    <span>提交</span>
+                </button>
+                <div class="slidercaptcha forgot reg card">
+                    <div class="card-header">
+                        <span>请完成安全验证</span>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="card-body"><div id="regcap"></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="dialogForgot" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content" data-toggle="LgbValidate" data-valid-button="#btnForgot" data-valid-modal="#dialogForgot">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabelForgot">忘记密码</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="f_userName">登录账号：</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <span class="fa fa-user-plus"></span>
+                            </div>
+                        </div>
+                        <input type="text" id="f_userName" autocomplete="off" class="form-control" placeholder="登录账号不可为空" minlength="4" maxlength="16" data-valid="true" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="f_displayName">显示名称：</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <span class="fa fa-user-circle-o"></span>
+                            </div>
+                        </div>
+                        <input type="text" id="f_displayName" class="form-control" value="" placeholder="显示名称不可为空" maxlength="20" data-valid="true" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="f_desc">申请理由：</label>
+                    <textarea id="f_desc" class="form-control" placeholder="申请理由，500字以内" rows="3" maxlength="500" data-valid="true">我是用户XXX，我的手机号是XXXXXX，由于密码忘记，请将密码重置为123，登录后我自行更改，谢谢管理员</textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    <i class="fa fa-times"></i>
+                    <span>关闭</span>
+                </button>
+                <button type="button" class="btn btn-danger" id="btnForgot">
+                    <i class="fa fa-send-o"></i>
+                    <span>提交</span>
+                </button>
+                <div class="slidercaptcha forgot card">
+                    <div class="card-header">
+                        <span>请完成安全验证</span>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="card-body"><div id="forgotcap"></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
