@@ -21,10 +21,12 @@ namespace Bootstrap.Admin.Controllers
             client = factory.CreateClient(baseAddress);
         }
 
+        [Theory]
         [InlineData("Login")]
         [InlineData("Login-Gitee")]
         [InlineData("Login-Blue")]
-        [InlineData("Login-Green")]
+        [InlineData("Login-Tec")]
+        [InlineData("Login-LTE")]
         public async void Login_UI_Ok(string view)
         {
             var r = await client.GetAsync("/Account/Logout");
