@@ -179,3 +179,16 @@
 .login-wrap .btn-sms {
     width: 140px;
 }
+
+.login-footer-container {
+    position: absolute;
+    bottom: 40px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+    .login-footer-container .login-footer {
+        position: relative;
+        bottom: 0;
+    }
