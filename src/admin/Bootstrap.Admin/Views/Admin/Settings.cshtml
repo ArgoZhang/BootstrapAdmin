@@ -33,7 +33,7 @@
         </div>
         <div class="form-group">
             <div class="input-group">
-                <input type="text" class="form-control" id="sysName" placeholder="请输入网站标题，50字以内" value="@Model.Title" maxlength="50" data-valid="true" />
+                <input type="text" class="form-control" id="sysName" placeholder="请输入网站标题，50字以内" value="@Model.WebSiteTitle" maxlength="50" data-valid="true" />
                 <div class="input-group-append" asp-condition="!@Model.IsDemo">
                     <button class="btn btn-secondary" type="button" data-method="title">保存</button>
                 </div>
@@ -49,7 +49,7 @@
         </div>
         <div class="form-group">
             <div class="input-group">
-                <input type="text" class="form-control" id="sysFoot" placeholder="请输入网站页脚，50字以内" value="@Model.Footer" maxlength="50" data-valid="true" />
+                <input type="text" class="form-control" id="sysFoot" placeholder="请输入网站页脚，50字以内" value="@Model.WebSiteFooter" maxlength="50" data-valid="true" />
                 <div class="input-group-append" asp-condition="!@Model.IsDemo">
                     <button class="btn btn-secondary" type="button" data-method="footer">保存</button>
                 </div>

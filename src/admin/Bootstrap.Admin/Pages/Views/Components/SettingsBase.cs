@@ -2,6 +2,7 @@
 using Bootstrap.Admin.Pages.Shared;
 using Bootstrap.DataAccess;
 using Bootstrap.Security;
+using Bootstrap.Security.Mvc;
 using Longbow.Cache;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
@@ -60,8 +61,8 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
         /// </summary>
         protected override void OnInitialized()
         {
-            Model.Title = RootLayout?.Model.Title ?? "";
-            Model.Footer = RootLayout?.Model.Footer ?? "";
+            Model.Title = DictHelper.RetrieveWebTitle(BootstrapAppContext.AppId);
+            Model.Footer = DictHelper.RetrieveWebFooter(BootstrapAppContext.AppId);
             Model.Theme = RootLayout?.Model.Theme ?? "";
             Model.ShowSideBar = DictHelper.RetrieveSidebarStatus();
             Model.ShowCardTitle = DictHelper.RetrieveCardTitleStatus();

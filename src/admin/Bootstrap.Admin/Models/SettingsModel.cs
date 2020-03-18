@@ -1,5 +1,6 @@
 ﻿using Bootstrap.DataAccess;
 using Bootstrap.Security;
+using Bootstrap.Security.Mvc;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -43,6 +44,12 @@ namespace Bootstrap.Admin.Models
                 var url = dicts.FirstOrDefault(d => d.Category == "应用首页" && d.Name == k.Key && d.Define == 0)?.Code ?? "未设置";
                 return (k.Key, k.Value, url);
             });
+
+            // 实际后台网站名称
+            WebSiteTitle = DictHelper.RetrieveWebTitle(BootstrapAppContext.AppId);
+
+            // 实际后台网站页脚
+            WebSiteFooter = DictHelper.RetrieveWebFooter(BootstrapAppContext.AppId);
         }
 
         /// <summary>
@@ -129,5 +136,15 @@ namespace Bootstrap.Admin.Models
         /// 获得/设置 登录视图名称 默认是 Login
         /// </summary>
         public KeyValuePair<string, string> LoginView { get; set; }
+
+        /// <summary>
+        /// 获得/设置 实际 BA 后台网站名称
+        /// </summary>
+        public string WebSiteTitle { get; set; }
+
+        /// <summary>
+        /// 获得/设置 实际 BA 后台网站页脚
+        /// </summary>
+        public string WebSiteFooter { get; set; }
     }
 }
