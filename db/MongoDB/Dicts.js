@@ -385,6 +385,12 @@
         "Define": NumberInt(0)
     },
     {
+        "Category": "系统首页",
+        "Name": "Admin-LTE",
+        "Code": "Login-LTE",
+        "Define": NumberInt(0)
+    },
+    {
         "Category": "网站设置",
         "Name": "登录界面",
         "Code": "Login",

@@ -86,6 +86,7 @@ INSERT INTO Dicts (Category, Name, Code, Define) VALUES (N'系统首页', N'高�
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES (N'系统首页', N'蓝色清新', N'Login-Blue', 1);
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES (N'系统首页', N'系统默认', N'Login', 1);
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES (N'系统首页', N'科技动感', N'Login-Tec', 1);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES (N'系统首页', N'Admin-LTE', N'Login-LTE', 1);
 
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES (N'网站设置', N'登录界面', N'Login', 1);
 
