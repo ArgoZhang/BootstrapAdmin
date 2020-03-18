@@ -1,5 +1,4 @@
 ﻿using Bootstrap.Security;
-using Longbow.Cache;
 using Longbow.Web;
 using System.Linq;
 using Xunit;
@@ -25,7 +24,6 @@ namespace Bootstrap.DataAccess
             menu.Name = "UnitTest";
             Assert.True(MenuHelper.Save(menu));
 
-            CacheManager.Clear(MenuHelper.RetrieveMenusAll + "*");
             var menu2 = MenuHelper.RetrieveMenus("Admin").FirstOrDefault(m => m.Id == menu.Id);
             Assert.Equal(name, menu2.Name);
         }
