@@ -49,6 +49,7 @@ namespace Bootstrap.Client
             services.AddOnlineUsers();
             services.AddBootstrapAdminAuthentication(Configuration);
             services.AddAuthorization(options => options.DefaultPolicy = new AuthorizationPolicyBuilder().RequireBootstrapAdminAuthorizate().Build());
+            services.AddButtonAuthorization(MenuHelper.AuthorizateButtons);
 
             services.AddControllersWithViews(options =>
             {
