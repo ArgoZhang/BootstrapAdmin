@@ -6,6 +6,7 @@ using Bootstrap.Security.Mvc;
 using Longbow.Cache;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -98,6 +99,22 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
             Model.CookiePeriod = DictHelper.RetrieveCookieExpiresPeriod();
             Model.IPCachePeriod = DictHelper.RetrieveLocaleIPSvrCachePeriod();
             Model.EnableDemo = DictHelper.RetrieveSystemModel();
+
+            Model.Logins = DictHelper.RetrieveLogins().Select(d => new SelectedItem(){
+                Value = d.Code,
+                Text = d.Name
+            });
+            var view = DictHelper.RetrieveLoginView();
+            var viewName = Model.Logins.FirstOrDefault(d => d.Value == view)?.Text ?? "系统默认";
+            Model.SelectedLogin = new SelectedItem() {  Value = view, Text = viewName };
+            Model.AdminPathBase = DictHelper.RetrievePathBase();
+
+            var dicts = DictHelper.RetrieveDicts();
+            Model.Apps = DictHelper.RetrieveApps().Where(d => !d.Key.Equals("BA", StringComparison.OrdinalIgnoreCase)).Select(k =>
+            {
+                var url = dicts.FirstOrDefault(d => d.Category == "应用首页" && d.Name == k.Key && d.Define == 0)?.Code ?? "未设置";
+                return (k.Key, k.Value, url);
+            });
         }
 
         /// <summary>
@@ -380,6 +397,26 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
             /// 获得 系统是否允许健康检查
             /// </summary>
             public bool EnableHealth { get; set; }
+
+            /// <summary>
+            /// 获得/设置 字典表中登录首页集合
+            /// </summary>
+            public IEnumerable<SelectedItem> Logins { get; set; } = new SelectedItem[0];
+
+            /// <summary>
+            /// 获得/设置 登录视图名称 默认是 Login
+            /// </summary>
+            public SelectedItem SelectedLogin { get; set; } = new SelectedItem();
+
+            /// <summary>
+            /// 获得/设置 后台管理网站地址
+            /// </summary>
+            public string AdminPathBase { get; set; } = "";
+
+            /// <summary>
+            /// 获得/设置 系统应用程序集合
+            /// </summary>
+            public IEnumerable<(string Key, string Name, string Url)> Apps { get; set; } = new List<(string, string, string)>();
         }
     }
 }
