@@ -44,6 +44,73 @@
         </div>
     </div>
 </ConditionComponent>
+<div class="card">
+    <div class="card-header"><label class="control-label" data-toggle="lgbinfo" data-content="通过此功能进行整个网站的登录界面设置">后台管理登录地址设置</label></div>
+    <div class="card-body">
+        <div class="form-group">
+            <div class="form-group text-right">
+                <div class="btn-group" role="group">
+                    <Dropdown @bind-Value="@Model.SelectedLogin" Items="@Model.Logins"></Dropdown>
+                    <button class="btn btn-secondary" type="button">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-header"><label class="control-label" data-toggle="lgbinfo" data-content="此功能给前台网站拼接后台功能菜单时使用">后台管理地址设置</label></div>
+    <div class="card-body" data-toggle="LgbValidate" data-valid-button="[data-method='appPath']">
+        <ConditionComponent>
+            <div class="alert alert-danger" role="alert">
+                <span>演示系统禁止更改后台管理地址</span>
+            </div>
+        </ConditionComponent>
+        <div class="form-group">
+            <div class="input-group">
+                <input type="text" class="form-control flex-fill" placeholder="请输入后台管理地址，2000字以内" value="@Model.AdminPathBase" maxlength="2000" data-valid="true" />
+                <ConditionComponent Inverse="true">
+                    <div class="input-group-append">
+                        <button class="btn btn-secondary" type="button" data-method="appPath">保存</button>
+                    </div>
+                </ConditionComponent>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card" asp-auth="app">
+    <div class="card-header">前台应用设置</div>
+    <div class="card-body">
+        <ConditionComponent>
+            <div class="alert alert-danger" role="alert">
+                <span>演示系统禁止更改前台应用设置</span>
+            </div>
+        </ConditionComponent>
+        <div class="form-inline">
+            <div class="row" id="appList">
+                @foreach (var app in Model.Apps)
+                {
+                    <div class="form-group col-12 app" data-key="@app.Key">
+                        <label class="control-label" for="@app.Key">@app.Name</label>
+                        <div class="input-group flex-fill">
+                            <input id="@app.Key" class="form-control" value="@app.Url" readonly />
+                            <ConditionComponent Inverse="true">
+                                <div class="input-group-append">
+                                    <button class="btn btn-danger" type="button" data-key="@app.Key" data-method="delApp"><i class="fa fa-trash-o"></i><span>删除</span></button>
+                                    <button class="btn btn-primary" type="button" data-key="@app.Key" data-method="editApp"><i class="fa fa fa-pencil"></i><span>编辑</span></button>
+                                </div>
+                            </ConditionComponent> 
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <ConditionComponent Inverse="true">
+        <div class="card-footer text-right">
+            <button class="btn btn-secondary" type="button" data-method="addApp"><i class="fa fa-plus"></i><span>新增</span></button>
+        </div>
+    </ConditionComponent>
+</div>
 <ConditionComponent AuthKey="saveTheme">
     <div class="card">
         <div class="card-header">网站样式设置</div>
