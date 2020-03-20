@@ -263,6 +263,12 @@
             })
             .on('inserted.bs.tooltip', '.is-invalid', function () {
                 $('#' + $(this).attr('aria-describedby')).addClass('is-invalid');
+            })
+            .on('click', '[data-method="blazor"]', function (e) {
+                e.preventDefault();
+                var path = window.location.pathname.replace('/Pages', '');
+                var search = window.location.search;
+                window.location = path + search;
             });
     });
 })(jQuery);

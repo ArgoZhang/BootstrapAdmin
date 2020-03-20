@@ -165,6 +165,14 @@ $(function () {
     // enable animoation effect
     $('body').removeClass('trans-mute');
 
+    // blazor widget 切换功能
+    $('[data-method="blazor"]').on('click', function (e) { 
+        e.preventDefault();
+        var path = window.location.pathname;
+        var search = window.location.search;
+        window.location = $.formatUrl("Pages" + path + search);
+    });
+
     // 自动锁屏功能
     var mousePosition = { screenX: 0, screenY: 0 };
     var count = 1;
