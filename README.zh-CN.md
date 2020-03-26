@@ -203,4 +203,4 @@ docker pull reg.qiniu.com/argozhang/ba
 
 如果这个项目对您有所帮助，请扫下方二维码打赏一杯咖啡。    
 
-![WeChat](https://images.gitee.com/uploads/images/2020/0323/223954_3533f4ca_554725.png "微信扫码")
+![WeChat](https://images.gitee.com/uploads/images/2020/0326/184932_91b9baf4_554725.png "微信扫码")
