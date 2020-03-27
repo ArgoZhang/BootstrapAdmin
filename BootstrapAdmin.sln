@@ -121,6 +121,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Oracle", "Oracle", "{41E078
 		db\Oracle\Install.sql = db\Oracle\Install.sql
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "git", "git", "{64EACBD1-23DD-4168-BEED-55D47DB1A8BB}"
+	ProjectSection(SolutionItems) = preProject
+		scripts\git\commit_msg_template.txt = scripts\git\commit_msg_template.txt
+		scripts\git\readme.md = scripts\git\readme.md
+		scripts\git\run.cmd = scripts\git\run.cmd
+		scripts\git\run.sh = scripts\git\run.sh
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -179,6 +187,7 @@ Global
 		{5F732D4E-133B-4DA6-811B-C369CDC3FB89} = {72C103DB-E1D3-449F-97C2-DF12CA111FD4}
 		{68F7C160-3FB2-4129-8F89-96F78B2DA0A9} = {FDCFC3E3-14CF-40B2-9FE5-5BC239AAC110}
 		{41E078CA-F005-4B66-B440-FD7EB731AD61} = {586410F2-C1F0-47CD-AB28-2CF506DED2C8}
+		{64EACBD1-23DD-4168-BEED-55D47DB1A8BB} = {72C103DB-E1D3-449F-97C2-DF12CA111FD4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {221EAE38-5F75-4391-9A48-E462A9F3B8FC}
