@@ -1,4 +1,4 @@
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Bootstrap.Client.Extensions;
 using Bootstrap.Client.Models;
 using Longbow.Data;
@@ -51,7 +51,7 @@ namespace Bootstrap.Client
             }
             else
             {
-                var section = config.GetSection("MailClient");
+                var section = config.GetSection("SmtpClient");
                 var smtpHost = section.GetValue("Host", "smtp.163.com");
                 var password = section.GetValue("Password", "");
                 var from = section.GetValue("From", "");
