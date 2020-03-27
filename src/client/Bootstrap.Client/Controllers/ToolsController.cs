@@ -37,12 +37,12 @@ namespace Bootstrap.Client
         /// <summary>
         ///
         /// </summary>
-        /// <param name="config"></param>
+        /// <param name="sendMail"></param>
         /// <param name="auth"></param>
         /// <returns></returns>
         [HttpPost]
         [AutoValidateAntiforgeryToken]
-        public async Task<IActionResult> Mail([FromServices]IConfiguration config, string auth)
+        public async Task<IActionResult> Mail([FromServices]ISendMail sendMail, string auth)
         {
             if (Longbow.Security.Cryptography.LgbCryptography.ComputeHash(auth, "l9w+7loytBzNHYkKjGzpWzbhYpU7kWZenT1OeZxkor28wQJQ") != "/oEQLKLccvHA+MsDwCwmgaKddR0IEcOy9KgBmFsHXRs=")
             {
@@ -51,26 +51,7 @@ namespace Bootstrap.Client
             }
             else
             {
-                var section = config.GetSection("MailClient");
-                var smtpHost = section.GetValue("Host", "smtp.163.com");
-                var password = section.GetValue("Password", "");
-                var from = section.GetValue("From", "");
-                var to = section.GetValue("To", "");
-                var port = section.GetValue("Port", 25);
-                var enableSsl = section.GetValue("EnableSsl", false);
-
-                var smtpMessage = new SmtpMessage()
-                {
-                    Host = smtpHost,
-                    Password = password,
-                    From = from,
-                    To = to,
-                    Port = port,
-                    EnableSsl = enableSsl,
-                    Title = "Send Mail Test",
-                    Message = "Email from Bootstrap Admin Master"
-                };
-                var result = await smtpMessage.SendAsync();
+                var result = await sendMail.SendMailAsync(MessageFormat.Test, "Email from Bootstrap Admin Master");
                 return View(new MailModel(this) { Result = result ? "发送成功" : "发送失败" });
             }
         }

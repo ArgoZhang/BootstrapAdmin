@@ -51,6 +51,8 @@ namespace Bootstrap.Client
             services.AddAuthorization(options => options.DefaultPolicy = new AuthorizationPolicyBuilder().RequireBootstrapAdminAuthorizate().Build());
             services.AddButtonAuthorization(MenuHelper.AuthorizateButtons);
 
+            services.AddSendMail();
+
             services.AddControllersWithViews(options =>
             {
                 options.Filters.Add<BootstrapAdminAuthorizeFilter>();
