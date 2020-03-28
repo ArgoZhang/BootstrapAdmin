@@ -203,4 +203,4 @@ docker pull reg.qiniu.com/argozhang/ba
 
 如果这个项目对您有所帮助，请扫下方二维码打赏一杯咖啡。    
 
-![WeChat](https://gitee.com/LongbowEnterprise/Pictures/raw/master/WeChat/BarCode.png "BarCode")
+<img src="https://gitee.com/LongbowEnterprise/Pictures/raw/master/WeChat/BarCode@2x.png" width="382px;" />
