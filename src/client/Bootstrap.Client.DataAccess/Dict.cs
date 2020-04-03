@@ -98,18 +98,35 @@ namespace Bootstrap.Client.DataAccess
         /// 获得系统设置地址
         /// </summary>
         /// <returns></returns>
-        public virtual string RetrieveSettingsUrl(string appId) => $"{RetrieveAdminPath()}{DbHelper.RetrieveSettingsUrl(appId)}";
+        public virtual string RetrieveSettingsUrl(string appId) => RetrieveFullUrl(appId, DbHelper.RetrieveSettingsUrl);
 
         /// <summary>
         /// 获得系统个人中心地址
         /// </summary>
         /// <returns></returns>
-        public virtual string RetrieveProfilesUrl(string appId) => $"{RetrieveAdminPath()}{DbHelper.RetrieveProfilesUrl(appId)}";
+        public virtual string RetrieveProfilesUrl(string appId) => RetrieveFullUrl(appId, DbHelper.RetrieveProfilesUrl);
 
         /// <summary>
         /// 获得系统通知地址地址
         /// </summary>
         /// <returns></returns>
-        public virtual string RetrieveNotisUrl(string appId) => $"{RetrieveAdminPath()}{DbHelper.RetrieveNotisUrl(appId)}";
+        public virtual string RetrieveNotisUrl(string appId) => RetrieveFullUrl(appId, DbHelper.RetrieveNotisUrl);
+
+        /// <summary>
+        /// 支持绝对路径
+        /// </summary>
+        /// <param name="appId"></param>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        protected virtual string RetrieveFullUrl(string appId, Func<string, string> func)
+        {
+            // https://gitee.com/LongbowEnterprise/BootstrapAdmin/issues/I1DIKG
+            // 相对路径时拼接后台地址
+            // 绝对路径时直接使用
+
+            var url = func(appId);
+            if (!url.StartsWith("http", StringComparison.OrdinalIgnoreCase)) url = $"{RetrieveAdminPath()}{url}";
+            return url;
+        }
     }
 }
