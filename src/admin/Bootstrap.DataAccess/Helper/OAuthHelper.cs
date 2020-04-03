@@ -30,8 +30,8 @@ namespace Bootstrap.DataAccess
             {
                 // call webhook
                 var config = context.HttpContext.RequestServices.GetRequiredService<IConfiguration>();
-                var webhookUrl = config.GetSection<TOptions>().GetValue("StarredUrl", "");
-                if (!string.IsNullOrEmpty(webhookUrl))
+                var webhookUrls = config.GetSection<TOptions>().GetValue("StarredUrl", "").SpanSplit(";", StringSplitOptions.RemoveEmptyEntries);
+                foreach (var webhookUrl in webhookUrls)
                 {
                     var webhookParameters = new Dictionary<string, string>()
                     {
