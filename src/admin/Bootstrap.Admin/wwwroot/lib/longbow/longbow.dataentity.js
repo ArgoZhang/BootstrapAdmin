@@ -104,7 +104,7 @@
                         return;
                     }
                     else if (arrselections.length > 1) {
-                        lgbSwal({ title: '请选择一个要编辑的数据', type: "warning" });
+                        lgbSwal({ title: '只能选择一项要编辑的数据', type: "warning" });
                         return;
                     }
                     else {
@@ -172,7 +172,7 @@
                         return;
                     }
                     else if (arrselections.length > 1) {
-                        lgbSwal({ title: '请选择一个要编辑的数据', type: "warning" });
+                        lgbSwal({ title: '只能选择一项要编辑的数据', type: "warning" });
                         return;
                     }
                     else {
