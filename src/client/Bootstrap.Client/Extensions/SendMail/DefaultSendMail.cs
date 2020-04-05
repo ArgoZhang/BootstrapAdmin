@@ -37,8 +37,25 @@ namespace Bootstrap.Client.Extensions
         /// <returns></returns>
         public Task<bool> SendMailAsync(MessageFormat format, string mailBody)
         {
-            if (!string.IsNullOrEmpty(Option.Password) && !_messageQueue.IsAddingCompleted) _messageQueue.Add(new SmtpMessage() { Title = format.ToTitle(), Message = mailBody }, _cancellationTokenSource.Token);
+            if (!string.IsNullOrEmpty(Option.Password) && !_messageQueue.IsAddingCompleted && !FilterByBody(format, mailBody)) _messageQueue.Add(new SmtpMessage() { Title = format.ToTitle(), Message = mailBody }, _cancellationTokenSource.Token);
             return Task.FromResult(true);
+        }
+
+        private bool FilterByBody(MessageFormat format, string mailBody)
+        {
+            var ret = false;
+            if (format == MessageFormat.Exception)
+            {
+                // MachineName: 172_17_0_10
+                var findKey = "MachineName: ";
+                var first = mailBody.IndexOf(findKey) + findKey.Length;
+                var last = mailBody.IndexOf("<br>", first);
+                var machineName = mailBody[first..last];
+
+                // 通过 配置文件过滤
+                ret = Option.BlackList.Any(i => i.Equals(machineName, StringComparison.OrdinalIgnoreCase));
+            }
+            return ret;
         }
 
         private readonly BlockingCollection<SmtpMessage> _messageQueue = new BlockingCollection<SmtpMessage>(new ConcurrentQueue<SmtpMessage>());

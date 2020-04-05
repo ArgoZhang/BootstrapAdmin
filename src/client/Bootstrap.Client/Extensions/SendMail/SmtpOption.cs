@@ -1,4 +1,6 @@
-﻿namespace Bootstrap.Client.Extensions
+﻿using System.Collections.Generic;
+
+namespace Bootstrap.Client.Extensions
 {
     /// <summary>
     /// SmtpOption 配置类
@@ -44,5 +46,10 @@
         /// 获得/设置 邮件发送超时时间 默认 100000 毫秒
         /// </summary>
         public int Timeout { get; set; } = 100000;
+
+        /// <summary>
+        /// 获得/设置 邮件黑名单
+        /// </summary>
+        public ICollection<string> BlackList { get; set; } = new HashSet<string>();
     }
 }
