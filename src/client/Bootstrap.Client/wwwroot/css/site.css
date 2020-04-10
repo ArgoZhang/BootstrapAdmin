@@ -52,12 +52,12 @@ aside {
     top: 50px;
 }
 
-.userinfo .dropdown-toggle, .nav [data-toggle="dropdown"] {
+.userinfo .dropdown-toggle, .header .nav [data-toggle="dropdown"] {
     border: 1px solid rgba(204, 204, 204, 0.5);
     color: #eee;
 }
 
-    .userinfo .dropdown-toggle:hover, .userinfo.show .dropdown-toggle, .nav [data-toggle="dropdown"]:hover {
+    .userinfo .dropdown-toggle:hover, .userinfo.show .dropdown-toggle, .header .nav [data-toggle="dropdown"]:hover {
         color: #fff;
         border: 1px solid #fff;
     }
