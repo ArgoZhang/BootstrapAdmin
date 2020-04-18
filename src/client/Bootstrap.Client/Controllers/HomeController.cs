@@ -30,6 +30,12 @@ namespace Bootstrap.Client.Controllers
         public IActionResult Dummy() => View(new NavigatorBarModel(this));
 
         /// <summary>
+        /// 演示视图
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult Table() => View(new NavigatorBarModel(this));
+
+        /// <summary>
         /// About 视图
         /// </summary>
         /// <returns></returns>
