@@ -189,6 +189,6 @@ CREATE TABLE Traces(
 CREATE TABLE DBLogs (
     ID              INTEGER PRIMARY KEY	Auto_increment,
     UserName        VARCHAR (50)    NULL,
-    `SQL`           VARCHAR (2000)  NOT NULL,
+    `SQL`           Text  NOT NULL,
     LogTime         DATETIME        NOT NULL
 );
