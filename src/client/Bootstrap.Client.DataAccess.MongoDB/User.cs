@@ -53,7 +53,7 @@ namespace Bootstrap.Client.DataAccess.MongoDB
                 if (ret != null)
                 {
                     if (string.IsNullOrEmpty(ret.Icon)) ret.Icon = "default.jpg";
-                    if (string.IsNullOrEmpty(ret.App)) ret.App = "0";
+                    if (string.IsNullOrEmpty(ret.App)) ret.App = "BA";
                 }
             }
             return ret;
