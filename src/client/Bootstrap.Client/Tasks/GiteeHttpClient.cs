@@ -31,7 +31,7 @@ namespace Bootstrap.Client.Tasks
         /// <summary>
         /// 
         /// </summary>
-        public async Task<bool> Post(GiteeQueryBody query, GiteePushEventArgs payload)
+        public async Task<bool> Post(GiteeQueryBody query, GiteePushBody payload)
         {
             var ret = false;
             if (query.Id == "melhgtr0awltdhrh")

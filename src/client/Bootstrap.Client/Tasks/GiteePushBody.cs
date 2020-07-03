@@ -6,7 +6,7 @@ namespace Bootstrap.Client.Tasks
     /// <summary>
     /// Gitee 提交事件参数实体类
     /// </summary>
-    public class GiteePushEventArgs
+    public class GiteePushBody
     {
         /// <summary>
         /// 获得/设置 提交分支信息

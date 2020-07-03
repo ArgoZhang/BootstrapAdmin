@@ -23,7 +23,7 @@ namespace Bootstrap.Client.Controllers.Api
         /// <param name="payload"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Webhook([FromServices] GiteeHttpClient client, [FromQuery] GiteeQueryBody query, [FromBody] GiteePushEventArgs payload)
+        public async Task<ActionResult> Webhook([FromServices] GiteeHttpClient client, [FromQuery] GiteeQueryBody query, [FromBody] GiteePushBody payload)
         {
             var ret = await client.Post(query, payload);
             return ret ? (ActionResult)new OkResult() : new BadRequestResult();
