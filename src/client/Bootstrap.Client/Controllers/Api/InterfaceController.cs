@@ -21,7 +21,7 @@ namespace Bootstrap.Client.Controllers.Api
         /// <param name="message"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<bool> Log([FromServices]ISendMail sendMail, [FromBody]string message)
+        public async Task<bool> Log([FromServices] ISendMail sendMail, [FromBody] string message)
         {
             return await sendMail.SendMailAsync(MessageFormat.Exception, message.Replace("\r\n", "<br>").Replace("\n", "<br>"));
         }
@@ -34,7 +34,7 @@ namespace Bootstrap.Client.Controllers.Api
         /// <param name="message"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<bool> Healths([FromServices]ISendMail sendMail, [FromServices]IWebHostEnvironment env, [FromBody]string message)
+        public async Task<bool> Healths([FromServices] ISendMail sendMail, [FromServices] IWebHostEnvironment env, [FromBody] string message)
         {
             return await sendMail.SendMailAsync(MessageFormat.Healths, message.FormatHealths(env.WebRootPath));
         }

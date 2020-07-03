@@ -1,9 +1,11 @@
 ﻿using Bootstrap.Client.DataAccess;
+using Bootstrap.Client.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
+using System.Net.Http.Headers;
 
 namespace Microsoft.AspNetCore.Builder
 {
@@ -33,6 +35,18 @@ namespace Microsoft.AspNetCore.Builder
                 var authHost = config.GetBootstrapAdminAuthenticationOptions().AuthHost.TrimEnd(new char[] { '/' });
                 var url = $"{authHost}/api/Traces";
                 client.BaseAddress = new Uri(url);
+            });
+
+            services.AddHttpClient<GiteeHttpClient>((provider, client) =>
+            {
+                var config = provider.GetRequiredService<IConfiguration>();
+                var url = config["B4BIM:Api"];
+                var token = config["B4BIM:Token"];
+
+                client.BaseAddress = new Uri(url);
+                client.Timeout = TimeSpan.FromSeconds(5);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             });
             return services;
         }

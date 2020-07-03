@@ -85,4 +85,41 @@ namespace Bootstrap.Client.Tasks
         /// </summary>
         public string Url { get; set; } = "";
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class GiteeQueryBody
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Id { get; set; } = "";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string AllowBranchs { get; set; } = "master|dev";
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class AppveyorBuildPostBody
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        public string AccountName { get; set; } = "";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string ProjectSlug { get; set; } = "";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Branch { get; set; } = "";
+    }
 }
