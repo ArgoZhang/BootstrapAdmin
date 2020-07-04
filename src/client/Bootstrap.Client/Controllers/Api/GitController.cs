@@ -23,11 +23,7 @@ namespace Bootstrap.Client.Controllers.Api
         /// <param name="payload"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Webhook([FromServices] GiteeHttpClient client, [FromQuery] GiteeQueryBody query, [FromBody] GiteePushBody payload)
-        {
-            var ret = await client.Post(query, payload);
-            return ret ? (ActionResult)new OkResult() : new BadRequestResult();
-        }
+        public async Task<ActionResult> Webhook([FromServices] AppVeyorHttpClient client, [FromQuery] GiteeQueryBody query, [FromBody] WebhookPostBody payload) => new StatusCodeResult((int)await client.Post(query, payload));
 
         /// <summary>
         /// 跨域握手协议

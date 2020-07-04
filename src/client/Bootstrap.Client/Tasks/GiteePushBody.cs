@@ -4,15 +4,21 @@ using System.Collections.Generic;
 namespace Bootstrap.Client.Tasks
 {
     /// <summary>
-    /// Gitee 提交事件参数实体类
+    /// 
     /// </summary>
-    public class GiteePushBody
+    public class WebhookPostBody
     {
         /// <summary>
         /// 获得/设置 提交分支信息
         /// </summary>
         public string Ref { get; set; } = "";
+    }
 
+    /// <summary>
+    /// Gitee 提交事件参数实体类
+    /// </summary>
+    public class GiteePushBody : WebhookPostBody
+    {
         /// <summary>
         /// 获得/设置 提交信息集合
         /// </summary>

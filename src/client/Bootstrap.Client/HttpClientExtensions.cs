@@ -37,16 +37,10 @@ namespace Microsoft.AspNetCore.Builder
                 client.BaseAddress = new Uri(url);
             });
 
-            services.AddHttpClient<GiteeHttpClient>((provider, client) =>
+            services.AddHttpClient<AppVeyorHttpClient>((provider, client) =>
             {
-                var config = provider.GetRequiredService<IConfiguration>();
-                var url = config["B4BIM:Api"];
-                var token = config["B4BIM:Token"];
-
-                client.BaseAddress = new Uri(url);
                 client.Timeout = TimeSpan.FromSeconds(5);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             });
             return services;
         }
