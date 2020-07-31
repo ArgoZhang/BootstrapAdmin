@@ -101,9 +101,7 @@ namespace Bootstrap.DataAccess
                     category = "DB";
                     break;
                 }
-#pragma warning disable CS8600 // 将 null 文本或可能的 null 值转换为非 null 类型。
                 loopEx = loopEx.InnerException;
-#pragma warning restore CS8600 // 将 null 文本或可能的 null 值转换为非 null 类型。
             }
             try
             {
