@@ -164,7 +164,7 @@ namespace Bootstrap.Admin.Controllers
 
             var auth = UserHelper.Authenticate(userName, password);
             HttpContext.Log(userName, auth);
-            return auth ? await SignInAsync(userName, remember == "true") : View("Login", new LoginModel() { AuthFailed = true });
+            return auth ? await SignInAsync(userName, remember == "true") : LoginView("", new LoginModel() { AuthFailed = true });
         }
 
         private async Task<IActionResult> SignInAsync(string userName, bool persistent, string authenticationScheme = CookieAuthenticationDefaults.AuthenticationScheme)
