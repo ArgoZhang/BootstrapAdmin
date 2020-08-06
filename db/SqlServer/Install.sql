@@ -564,10 +564,10 @@ CREATE TABLE [dbo].[Traces](
 	[UserName] [varchar](50) NOT NULL,
 	[LogTime] [datetime] NOT NULL,
 	[Ip] [varchar](15) NOT NULL,
-	[Browser] [varchar](50) NULL,
-	[OS] [varchar](50) NULL,
+	[Browser] [varchar](2000) NULL,
+	[OS] [varchar](2000) NULL,
 	[City] [nvarchar](50) NULL,
-	[RequestUrl] [nvarchar](500) NOT NULL,
+	[RequestUrl] [nvarchar](2000) NOT NULL,
 	[UserAgent] [varchar](2000) NULL,
     [Referer] [nvarchar](2000) NULL,
  CONSTRAINT [PK_Traces] PRIMARY KEY CLUSTERED 

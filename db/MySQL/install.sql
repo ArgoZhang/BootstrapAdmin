@@ -178,10 +178,10 @@ CREATE TABLE Traces(
     UserName   		VARCHAR (50)  NOT NULL,
     LogTime    		DATETIME      NOT NULL,
     IP         		VARCHAR (15)  NOT NULL,
-    Browser    		VARCHAR (50),
-    OS         		VARCHAR (50),
+    Browser    		VARCHAR (2000),
+    OS         		VARCHAR (2000),
     City       		VARCHAR (50),
-    RequestUrl 		VARCHAR (500) NOT NULL,
+    RequestUrl 		VARCHAR (2000) NOT NULL,
 	UserAgent		VARCHAR (2000) NULL,
     Referer         VARCHAR (2000) 
 );
