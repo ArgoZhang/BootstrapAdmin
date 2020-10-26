@@ -156,7 +156,7 @@ namespace Bootstrap.DataAccess.MongoDB
                 var passSalt = LgbCryptography.GenerateSalt();
                 var newPassword = LgbCryptography.ComputeHash(newPass, passSalt);
                 var update = Builders<User>.Update.Set(u => u.Password, newPassword).Set(u => u.PassSalt, passSalt);
-                DbManager.Users.FindOneAndUpdate(u => u.UserName == UserName, update);
+                DbManager.Users.FindOneAndUpdate(u => u.UserName.ToUpperInvariant() == UserName.ToUpperInvariant(), update);
                 ret = true;
             }
             return ret;
@@ -275,7 +275,7 @@ namespace Bootstrap.DataAccess.MongoDB
             var passSalt = LgbCryptography.GenerateSalt();
             var newPassword = LgbCryptography.ComputeHash(password, passSalt);
             DbManager.Users.UpdateOne(User => User.UserName.ToLowerInvariant() == userName.ToLowerInvariant(), Builders<User>.Update.Set(md => md.Password, newPassword).Set(md => md.PassSalt, passSalt).Set(md => md.IsReset, 0));
-            DbManager.ResetUsers.DeleteMany(user => user.UserName.ToLowerInvariant() == userName.ToLowerInvariant());
+            DbManager.ResetUsers.DeleteMany(user => user.UserName.ToUpperInvariant() == userName.ToUpperInvariant());
             return true;
         }
 
