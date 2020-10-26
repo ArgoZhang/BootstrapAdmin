@@ -154,7 +154,7 @@ namespace Bootstrap.DataAccess.MongoDB
             if (Authenticate(userName, password))
             {
                 var passSalt = LgbCryptography.GenerateSalt();
-                var newPassword = LgbCryptography.ComputeHash(password, passSalt);
+                var newPassword = LgbCryptography.ComputeHash(newPass, passSalt);
                 var update = Builders<User>.Update.Set(u => u.Password, newPassword).Set(u => u.PassSalt, passSalt);
                 DbManager.Users.FindOneAndUpdate(u => u.UserName == UserName, update);
                 ret = true;
