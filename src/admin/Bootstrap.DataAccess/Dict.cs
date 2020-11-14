@@ -244,7 +244,7 @@ namespace Bootstrap.DataAccess
         public bool UpdateSystemModel(bool isDemo)
         {
             var dict = DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "演示系统" && d.Define == 0);
-            dict.Code = isDemo ? "1" : "0";
+            dict!.Code = isDemo ? "1" : "0";
             return Save(dict);
         }
 
