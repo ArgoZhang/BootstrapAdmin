@@ -16,7 +16,7 @@ namespace Bootstrap.Client.DataAccess
         /// <param name="user"></param>
         public static void Save(HttpContext context, OnlineUser user)
         {
-            if (context.User.Identity.IsAuthenticated)
+            if (context.User.Identity?.IsAuthenticated ?? false)
             {
                 var client = context.RequestServices.GetRequiredService<TraceHttpClient>();
                 client.Post(context, user);

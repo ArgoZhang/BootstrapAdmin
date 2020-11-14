@@ -28,7 +28,7 @@ namespace Microsoft.AspNetCore.Builder
 
                 // set auth
                 var context = provider.GetRequiredService<IHttpContextAccessor>();
-                var cookieValues = context.HttpContext.Request.Cookies.Select(cookie => $"{cookie.Key}={cookie.Value}");
+                var cookieValues = context.HttpContext!.Request.Cookies.Select(cookie => $"{cookie.Key}={cookie.Value}");
                 client.DefaultRequestHeaders.Add("Cookie", cookieValues);
 
                 var config = provider.GetRequiredService<IConfiguration>();

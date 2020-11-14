@@ -1,4 +1,5 @@
-using Longbow.Data;
+﻿using Longbow.Data;
+using System;
 using System.Collections.Generic;
 
 namespace Bootstrap.Client.DataAccess
@@ -15,7 +16,7 @@ namespace Bootstrap.Client.DataAccess
         public static IEnumerable<Dummy> Retrieves()
         {
             // 此处启用智能切换数据库功能
-            return DbContextManager.Create<Dummy>()?.Retrieves() ?? new Dummy[0];
+            return DbContextManager.Create<Dummy>()?.Retrieves() ?? Array.Empty<Dummy>();
         }
 
         /// <summary>

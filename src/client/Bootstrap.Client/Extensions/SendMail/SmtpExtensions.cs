@@ -48,13 +48,13 @@ namespace Bootstrap.Client.Extensions
                 var itemName = item.GetString();
 
                 // 通过 itemName 读取检查项明细内容
-                var data = root.GetProperty("Report").GetProperty("Entries").GetProperty(itemName);
+                var data = root.GetProperty("Report").GetProperty("Entries").GetProperty(itemName!);
                 var rowData = new StringBuilder();
                 foreach (var row in data.GetProperty("Data").EnumerateObject())
                 {
                     rowData.AppendFormat(trTemplate, row.Name, row.Value.GetRawText().Replace("\\r\\n", "<br>").Replace("\\n", "<br>"));
                 }
-                sb.Append(string.Format(itemTemplate, cate[itemName], data.GetProperty("Duration").GetString(), state[data.GetProperty("Status").GetRawText()], rowData.ToString()));
+                sb.Append(string.Format(itemTemplate, cate[itemName!], data.GetProperty("Duration").GetString(), state[data.GetProperty("Status").GetRawText()], rowData.ToString()));
             }
             return sb.ToString();
         }

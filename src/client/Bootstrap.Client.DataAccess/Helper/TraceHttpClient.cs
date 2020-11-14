@@ -37,7 +37,7 @@ namespace Bootstrap.Client.DataAccess
             }
             catch (Exception ex)
             {
-                ex.Log(new NameValueCollection() { ["RequestUrl"] = _client.BaseAddress.AbsoluteUri });
+                ex.Log(new NameValueCollection() { ["RequestUrl"] = _client.BaseAddress!.AbsoluteUri });
             }
         }
     }

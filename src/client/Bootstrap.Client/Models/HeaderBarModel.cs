@@ -18,7 +18,7 @@ namespace Bootstrap.Client.Models
         /// <param name="controller"></param>
         public HeaderBarModel(ControllerBase controller)
         {
-            var user = UserHelper.RetrieveUserByUserName(controller.User.Identity.Name);
+            var user = UserHelper.RetrieveUserByUserName(controller.User.Identity!.Name);
             if (user != null)
             {
                 DisplayName = user.DisplayName;
