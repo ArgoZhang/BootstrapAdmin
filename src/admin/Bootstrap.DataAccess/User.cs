@@ -172,10 +172,10 @@ namespace Bootstrap.DataAccess
                 db.CompleteTransaction();
                 ret = true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 db.AbortTransaction();
-                throw ex;
+                throw;
             }
             return ret;
         }
@@ -203,10 +203,10 @@ namespace Bootstrap.DataAccess
                 if (ret) db.Execute("delete from ResetUsers where UserName = @0", userName);
                 db.CompleteTransaction();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 db.AbortTransaction();
-                throw ex;
+                throw;
             }
             return ret;
         }
@@ -242,10 +242,10 @@ namespace Bootstrap.DataAccess
                 db.CompleteTransaction();
                 ret = true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 db.AbortTransaction();
-                throw ex;
+                throw;
             }
             return ret;
         }
@@ -297,10 +297,10 @@ namespace Bootstrap.DataAccess
                 db.CompleteTransaction();
                 ret = true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 db.AbortTransaction();
-                throw ex;
+                throw;
             }
             return ret;
         }
@@ -335,10 +335,10 @@ namespace Bootstrap.DataAccess
                 db.CompleteTransaction();
                 ret = true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 db.AbortTransaction();
-                throw ex;
+                throw;
             }
             return ret;
         }
@@ -373,10 +373,10 @@ namespace Bootstrap.DataAccess
                 db.CompleteTransaction();
                 ret = true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 db.AbortTransaction();
-                throw ex;
+                throw;
             }
             return ret;
         }

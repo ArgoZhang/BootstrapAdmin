@@ -24,7 +24,7 @@ namespace Bootstrap.DataAccess
         public static bool Log(this HttpContext context, string userName, bool auth)
         {
             var ipLocator = context.RequestServices.GetRequiredService<IIPLocatorProvider>();
-            var ip = context.Connection.RemoteIpAddress.ToIPv4String();
+            var ip = context.Connection.RemoteIpAddress?.ToIPv4String() ?? "";
             var userAgent = context.Request.Headers["User-Agent"];
             var agent = new UserAgent(userAgent);
 

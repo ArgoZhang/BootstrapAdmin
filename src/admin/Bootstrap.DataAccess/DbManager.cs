@@ -30,7 +30,7 @@ namespace Bootstrap.DataAccess
                 db.OnCommandExecuted(async provider =>
                 {
                     var context = provider.GetRequiredService<IHttpContextAccessor>();
-                    var userName = context.HttpContext?.User.Identity.Name;
+                    var userName = context.HttpContext?.User.Identity?.Name;
                     var log = new DBLog()
                     {
                         LogTime = DateTime.Now,

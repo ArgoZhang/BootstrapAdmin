@@ -20,7 +20,7 @@ namespace Bootstrap.DataAccess
         /// <param name="v"></param>
         public static void Save(HttpContext context, OnlineUser v)
         {
-            if (context.User.Identity.IsAuthenticated)
+            if (context.User.Identity!.IsAuthenticated)
             {
                 var user = UserHelper.RetrieveUserByUserName(context.User.Identity.Name);
 

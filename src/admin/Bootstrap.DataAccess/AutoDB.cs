@@ -78,7 +78,7 @@ namespace Bootstrap.DataAccess
             {
                 var psi = new ProcessStartInfo("powershell", $"{file} \"{folder}\"");
                 var p = Process.Start(psi);
-                p.WaitForExit();
+                p!.WaitForExit();
             }
         }
     }

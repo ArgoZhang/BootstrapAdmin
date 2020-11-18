@@ -33,7 +33,7 @@ namespace Bootstrap.DataAccess
                 var webhookUrls = config.GetSection<TOptions>().GetValue("StarredUrl", "").SpanSplit(";", StringSplitOptions.RemoveEmptyEntries);
                 foreach (var webhookUrl in webhookUrls)
                 {
-                    var webhookParameters = new Dictionary<string, string>()
+                    var webhookParameters = new Dictionary<string, string?>()
                     {
                         { "access_token", context.AccessToken }
                     };

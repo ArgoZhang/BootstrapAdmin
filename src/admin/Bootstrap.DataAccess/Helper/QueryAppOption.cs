@@ -66,12 +66,12 @@ namespace Bootstrap.DataAccess
         {
             var ret = new QueryAppOption() { AppCode = key };
             var dicts = DictHelper.RetrieveDicts();
-            ret.AppName = dicts.FirstOrDefault(d => d.Category == "应用程序" && d.Code == key).Name ?? "";
-            ret.AppUrl = dicts.FirstOrDefault(d => d.Category == "应用首页" && d.Name == key).Code ?? "";
-            ret.AppTitle = dicts.FirstOrDefault(d => d.Category == ret.AppName && d.Name == "网站标题").Code ?? "";
-            ret.AppFooter = dicts.FirstOrDefault(d => d.Category == ret.AppName && d.Name == "网站页脚").Code ?? "";
-            ret.AppFavicon = dicts.FirstOrDefault(d => d.Category == ret.AppName && d.Name == "网站图标").Code ?? "";
-            ret.AppIcon = dicts.FirstOrDefault(d => d.Category == ret.AppName && d.Name == "favicon").Code ?? "";
+            ret.AppName = dicts.FirstOrDefault(d => d.Category == "应用程序" && d.Code == key)?.Name ?? "";
+            ret.AppUrl = dicts.FirstOrDefault(d => d.Category == "应用首页" && d.Name == key)?.Code ?? "";
+            ret.AppTitle = dicts.FirstOrDefault(d => d.Category == ret.AppName && d.Name == "网站标题")?.Code ?? "";
+            ret.AppFooter = dicts.FirstOrDefault(d => d.Category == ret.AppName && d.Name == "网站页脚")?.Code ?? "";
+            ret.AppFavicon = dicts.FirstOrDefault(d => d.Category == ret.AppName && d.Name == "网站图标")?.Code ?? "";
+            ret.AppIcon = dicts.FirstOrDefault(d => d.Category == ret.AppName && d.Name == "favicon")?.Code ?? "";
             return ret;
         }
     }
