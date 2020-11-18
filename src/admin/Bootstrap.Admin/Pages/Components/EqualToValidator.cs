@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace Bootstrap.Admin.Pages.Components
 {
@@ -39,7 +40,7 @@ namespace Bootstrap.Admin.Pages.Components
         {
             var val = propertyValue?.ToString() ?? "";
             if (val != Value)
-                results.Add(new ValidationResult(ErrorMessage, new string[] { context.MemberName }));
+                results.Add(new ValidationResult(ErrorMessage, string.IsNullOrEmpty(context.MemberName) ? Enumerable.Empty<string>() : new string[] { context.MemberName }));
         }
     }
 }

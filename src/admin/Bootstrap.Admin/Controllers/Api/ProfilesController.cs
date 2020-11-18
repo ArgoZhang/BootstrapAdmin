@@ -27,10 +27,10 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <returns></returns>
         [HttpPost("{id}")]
         [ButtonAuthorize(Url = "~/Admin/Profiles", Auth = "saveIcon")]
-        public JsonResult Post(string id, [FromServices]IWebHostEnvironment env, [FromForm]DeleteFileCollection files)
+        public JsonResult Post(string id, [FromServices] IWebHostEnvironment env, [FromForm] DeleteFileCollection files)
         {
             if (!id.Equals("Delete", StringComparison.OrdinalIgnoreCase)) return new JsonResult(new object());
-            var userName = User.Identity.Name;
+            var userName = User.Identity!.Name;
             var fileName = files.Key;
 
             fileName = Path.Combine(env.WebRootPath, $"images{Path.DirectorySeparatorChar}uploader{Path.DirectorySeparatorChar}{fileName}");
@@ -40,7 +40,7 @@ namespace Bootstrap.Admin.Controllers.Api
             var filePath = Path.Combine(env.WebRootPath, webSiteUrl.Replace("~", string.Empty).Replace('/', Path.DirectorySeparatorChar).TrimStart(Path.DirectorySeparatorChar) + fileName);
             var fileSize = new FileInfo(filePath).Length;
             var iconName = $"{fileName}?v={DateTime.Now.Ticks}";
-            var previewUrl = Url.Content($"{webSiteUrl}{iconName}");
+            var previewUrl = Url.Content($"{webSiteUrl}{iconName}") ?? string.Empty;
             if (!string.IsNullOrEmpty(userName)) UserHelper.SaveUserIconByName(userName, iconName);
 
             return new JsonResult(new
@@ -72,11 +72,11 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <returns></returns>
         [HttpPost]
         [ButtonAuthorize(Url = "~/Admin/Profiles", Auth = "saveIcon")]
-        public async Task<JsonResult> Post([FromServices]IWebHostEnvironment env, IFormCollection files)
+        public async Task<JsonResult> Post([FromServices] IWebHostEnvironment env, IFormCollection files)
         {
-            var previewUrl = string.Empty;
+            string? previewUrl = null;
             long fileSize = 0;
-            var userName = User.Identity.Name;
+            var userName = User.Identity!.Name;
             var fileName = string.Empty;
             if (files.Files.Count > 0)
             {
@@ -95,7 +95,7 @@ namespace Bootstrap.Admin.Controllers.Api
             }
             return new JsonResult(new
             {
-                initialPreview = new string[] { previewUrl },
+                initialPreview = new string[] { previewUrl ?? string.Empty },
                 initialPreviewConfig = new object[] {
                     new { caption = "新头像", size = fileSize, showZoom = true, key = fileName }
                 },
@@ -109,10 +109,10 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <returns></returns>
         [HttpPut]
         [ButtonAuthorize(Url = "~/Admin/Profiles", Auth = "saveDisplayName,savePassword,saveApp,saveTheme")]
-        public bool Put([FromBody]User value)
+        public bool Put([FromBody] User value)
         {
             var ret = false;
-            if (value.UserName.Equals(User.Identity.Name, StringComparison.OrdinalIgnoreCase))
+            if (value.UserName.Equals(User.Identity!.Name, StringComparison.OrdinalIgnoreCase))
             {
                 ret = value.UserStatus switch
                 {

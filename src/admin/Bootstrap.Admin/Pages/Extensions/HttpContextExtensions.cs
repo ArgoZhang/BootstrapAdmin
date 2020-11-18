@@ -1,4 +1,4 @@
-using Bootstrap.DataAccess;
+﻿using Bootstrap.DataAccess;
 using Longbow.Cache;
 using Longbow.Web;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,7 +38,7 @@ namespace Microsoft.AspNetCore.Http
                 {
                     UserAgent = agent,
                     ConnectionId = key,
-                    Ip = context.Connection.RemoteIpAddress.ToIPv4String(),
+                    Ip = context.Connection.RemoteIpAddress?.ToIPv4String() ?? string.Empty,
                     Browser = userAgent == null ? "Unknown" : $"{userAgent.Browser?.Name} {userAgent.Browser?.Version}",
                     OS = userAgent == null ? "Unknown" : $"{userAgent.OS?.Name} {userAgent.OS?.Version}",
                     FirstAccessTime = DateTime.Now,

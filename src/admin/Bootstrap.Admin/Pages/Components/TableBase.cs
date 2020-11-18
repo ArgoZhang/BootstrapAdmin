@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Bootstrap.Admin.Pages.Components
@@ -18,6 +19,7 @@ namespace Bootstrap.Admin.Pages.Components
         /// 获得 IJSRuntime 实例
         /// </summary>
         [Inject]
+        [NotNull]
         protected IJSRuntime? JSRuntime { get; set; }
 
         /// <summary>
@@ -278,12 +280,12 @@ namespace Bootstrap.Admin.Pages.Components
         }
 
         /// <summary>
-        /// OnAfterRenderAsync 方法
+        /// OnAfterRender 方法
         /// </summary>
-        protected override async System.Threading.Tasks.Task OnAfterRenderAsync(bool firstRender)
+        protected override void OnAfterRender(bool firstRender)
         {
             // 调用客户端脚本
-            await JSRuntime.InitTableAsync(RetrieveId(), firstRender);
+            JSRuntime.InitTableAsync(RetrieveId(), firstRender);
         }
 
         /// <summary>

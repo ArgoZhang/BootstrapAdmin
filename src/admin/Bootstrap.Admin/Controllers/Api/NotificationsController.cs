@@ -43,11 +43,11 @@ namespace Bootstrap.Admin.Controllers.Api
             var tasksCount = task.Count();
 
             //Message
-            var message = MessageHelper.Retrieves(User.Identity.Name);
+            var message = MessageHelper.Retrieves(User.Identity!.Name);
             var messagesCount = message.Count();
 
             message = message.Take(6);
-            message.AsParallel().ForAll(m => m.FromIcon = Url.Content(m.FromIcon));
+            message.AsParallel().ForAll(m => m.FromIcon = Url.Content(m.FromIcon) ?? string.Empty);
 
             //Apps
             var apps = ExceptionsHelper.Retrieves().Where(n => n.Category != "DB");

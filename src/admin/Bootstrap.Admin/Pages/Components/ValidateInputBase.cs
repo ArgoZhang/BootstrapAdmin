@@ -4,6 +4,7 @@ using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 
@@ -68,11 +69,6 @@ namespace Bootstrap.Admin.Pages.Components
         protected string ValidCss { get; set; } = "";
 
         /// <summary>
-        /// 获得/设置 显示名称 默认为 -
-        /// </summary>
-        protected string DisplayName { get; set; } = "-";
-
-        /// <summary>
         /// OnInitialized 方法
         /// </summary>
         protected override void OnInitialized()
@@ -123,7 +119,7 @@ namespace Bootstrap.Admin.Pages.Components
                 var messages = results.Where(item => item.MemberNames.Any(m => m == FieldIdentifier.FieldName));
                 if (messages.Any())
                 {
-                    ErrorMessage = messages.First().ErrorMessage;
+                    ErrorMessage = messages.First().ErrorMessage ?? string.Empty;
                     ValidCss = "is-invalid";
 
                     // 控件自身数据验证时显示 tooltip
@@ -147,9 +143,9 @@ namespace Bootstrap.Admin.Pages.Components
         /// <param name="result"></param>
         /// <param name="validationErrorMessage"></param>
         /// <returns></returns>
-        protected override bool TryParseValueFromString(string value, out TItem result, out string? validationErrorMessage)
+        protected override bool TryParseValueFromString(string? value, [MaybeNullWhen(false)] out TItem result, [NotNullWhen(false)] out string? validationErrorMessage)
         {
-            if (typeof(TItem) == typeof(string))
+            if (!string.IsNullOrEmpty(value) && typeof(TItem) == typeof(string))
             {
                 result = (TItem)(object)value;
                 validationErrorMessage = null;
@@ -160,22 +156,20 @@ namespace Bootstrap.Admin.Pages.Components
                 var success = BindConverter.TryConvertTo<TItem>(value, CultureInfo.CurrentCulture, out var parsedValue);
                 if (success)
                 {
-                    result = parsedValue;
+                    result = parsedValue!;
                     validationErrorMessage = null;
                     return true;
                 }
                 else
                 {
-#nullable disable
                     result = default;
-#nullable restore
                     validationErrorMessage = $"The {FieldIdentifier.FieldName} field is not valid.";
                     return false;
                 }
             }
             else if (typeof(TItem).IsValueType)
             {
-                result = (TItem)Convert.ChangeType(value, typeof(TItem));
+                result = (TItem)Convert.ChangeType(value, typeof(TItem))!;
                 validationErrorMessage = null;
                 return true;
             }

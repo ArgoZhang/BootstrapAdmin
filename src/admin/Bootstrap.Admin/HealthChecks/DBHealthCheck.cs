@@ -58,7 +58,7 @@ namespace Bootstrap.Admin.HealthChecks
                 };
 
             // 检查 当前用户 账户权限
-            var loginUser = _httpContextAccessor.HttpContext?.User.Identity.Name;
+            var loginUser = _httpContextAccessor.HttpContext?.User.Identity?.Name;
             var userName = loginUser ?? "Admin";
             var dictsCount = 0;
             var menusCount = 0;
@@ -88,11 +88,11 @@ namespace Bootstrap.Admin.HealthChecks
             {
                 error = ex;
             }
-            var data = new Dictionary<string, object?>()
+            var data = new Dictionary<string, object>()
             {
-                { "ConnectionString", db.ConnectionString },
-                { "Reference", DbContextManager.Create<Dict>()?.GetType().Assembly.FullName ?? db.Widget },
-                { "DbType", db?.ProviderName },
+                { "ConnectionString", db.ConnectionString ?? string.Empty },
+                { "Reference", DbContextManager.Create<Dict>()?.GetType().Assembly.FullName ?? db.Widget ?? string.Empty },
+                { "DbType", db?.ProviderName ?? string.Empty },
                 { "Dicts", dictsCount },
                 { "LoginName", userName },
                 { "DisplayName", displayName },

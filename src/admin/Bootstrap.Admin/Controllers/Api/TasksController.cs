@@ -24,7 +24,7 @@ namespace Bootstrap.Admin.Controllers.Api
         [HttpGet]
         public IEnumerable<object> Get()
         {
-            return TaskServicesManager.ToList().Select(s => new { s.Name, Status = s.Status.ToString(), s.LastRuntime, s.CreatedTime, s.NextRuntime, LastRunResult = s.Triggers.First().LastResult.ToString(), TriggerExpression = s.Triggers.FirstOrDefault().ToString() }).OrderBy(s => s.Name);
+            return TaskServicesManager.ToList().Select(s => new { s.Name, Status = s.Status.ToString(), s.LastRuntime, s.CreatedTime, s.NextRuntime, LastRunResult = s.Triggers.First().LastResult.ToString(), TriggerExpression = s.Triggers.First().ToString() }).OrderBy(s => s.Name);
         }
 
         /// <summary>

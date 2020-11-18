@@ -38,7 +38,7 @@ namespace Bootstrap.Admin.Controllers
         public bool Put([FromBody]User value)
         {
             var ret = false;
-            var userName = User.Identity.Name;
+            var userName = User.Identity!.Name;
             if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(value.Id))
             {
                 if (value.UserStatus == UserStates.ApproveUser)

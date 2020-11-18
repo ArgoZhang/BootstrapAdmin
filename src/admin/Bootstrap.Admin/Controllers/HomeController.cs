@@ -19,7 +19,7 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         public IActionResult Index([FromServices]IConfiguration configuration)
         {
-            var model = new HeaderBarModel(User.Identity.Name);
+            var model = new HeaderBarModel(User.Identity!.Name);
             var homeUrl = DictHelper.RetrieveHomeUrl(User.Identity.Name, model.AppId);
             var useBlazor = DictHelper.RetrieveEnableBlazor();
             return homeUrl.Equals("~/Home/Index", System.StringComparison.OrdinalIgnoreCase) ? (useBlazor ? Redirect("~/Pages") : (IActionResult)View(model)) : Redirect(homeUrl);

@@ -16,7 +16,7 @@ namespace Bootstrap.Admin.Models
         /// 构造函数
         /// </summary>
         /// <param name="controller"></param>
-        public NavigatorBarModel(ControllerBase controller) : this(controller.User.Identity.Name, $"~{controller.Request.Path}")
+        public NavigatorBarModel(ControllerBase controller) : this(controller.User.Identity!.Name, $"~{controller.Request.Path}")
         {
 
         }

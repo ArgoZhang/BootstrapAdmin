@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using Microsoft.AspNetCore.Components;
 
 namespace Bootstrap.Admin.Pages.Components
@@ -33,7 +34,7 @@ namespace Bootstrap.Admin.Pages.Components
         public override void Validate(object? propertyValue, ValidationContext context, List<ValidationResult> results)
         {
             var val = propertyValue?.ToString() ?? "";
-            if (val.Length > Length) results.Add(new ValidationResult(ErrorMessage, new string[] { context.MemberName }));
+            if (val.Length > Length) results.Add(new ValidationResult(ErrorMessage, string.IsNullOrEmpty(context.MemberName) ? Enumerable.Empty<string>() : new string[] { context.MemberName }));
         }
     }
 }

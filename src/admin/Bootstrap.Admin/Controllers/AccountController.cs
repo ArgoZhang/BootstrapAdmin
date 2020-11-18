@@ -38,7 +38,7 @@ namespace Bootstrap.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> Lock()
         {
-            if (!User.Identity.IsAuthenticated) return Login();
+            if (!User.Identity!.IsAuthenticated) return Login();
 
             var authenticationType = User.Identity.AuthenticationType;
             await HttpContext.SignOutAsync();
@@ -61,7 +61,7 @@ namespace Bootstrap.Admin.Controllers
         /// <returns></returns>
         [HttpPost]
         [IgnoreAntiforgeryToken]
-        public Task<IActionResult> Lock([FromServices]ISMSProvider provider, string userName, string password, string authType)
+        public Task<IActionResult> Lock([FromServices] ISMSProvider provider, string userName, string password, string authType)
         {
             // 根据不同的登陆方式
             Task<IActionResult> ret;
@@ -77,14 +77,14 @@ namespace Bootstrap.Admin.Controllers
         /// <param name="view"></param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult Login([FromQuery]string? appId = null, [FromQuery]string view = "")
+        public ActionResult Login([FromQuery] string? appId = null, [FromQuery] string view = "")
         {
             if (DictHelper.RetrieveSystemModel())
             {
                 ViewBag.UserName = "Admin";
                 ViewBag.Password = "123789";
             }
-            return User.Identity.IsAuthenticated ? (ActionResult)Redirect("~/Home/Index") : LoginView(view, new LoginModel(appId));
+            return User.Identity!.IsAuthenticated ? (ActionResult)Redirect("~/Home/Index") : LoginView(view, new LoginModel(appId));
         }
 
         private ViewResult LoginView(string view, LoginModel model)
@@ -105,7 +105,7 @@ namespace Bootstrap.Admin.Controllers
         /// <param name="code"></param>
         /// <returns></returns>
         [HttpPost()]
-        public async Task<IActionResult> Mobile([FromServices]ISMSProvider provider, string phone, string code)
+        public async Task<IActionResult> Mobile([FromServices] ISMSProvider provider, string phone, string code)
         {
             if (string.IsNullOrEmpty(phone) || string.IsNullOrEmpty(code)) return RedirectLogin();
 
@@ -130,10 +130,8 @@ namespace Bootstrap.Admin.Controllers
                     if (UserHelper.Save(user) && !string.IsNullOrEmpty(user.Id))
                     {
                         // 根据配置文件设置默认角色
-                        var roles = RoleHelper.Retrieves().Where(r => provider.Options.Roles.Any(rl => rl.Equals(r.RoleName, StringComparison.OrdinalIgnoreCase))).Select(r => r.Id);
-#nullable disable
+                        var roles = RoleHelper.Retrieves().Where(r => provider.Options.Roles.Any(rl => rl.Equals(r.RoleName, StringComparison.OrdinalIgnoreCase))).Select(r => r.Id!);
                         RoleHelper.SaveByUserId(user.Id, roles);
-#nullable restore
                     }
                 }
             }
@@ -142,7 +140,7 @@ namespace Bootstrap.Admin.Controllers
 
         private IActionResult RedirectLogin()
         {
-            var query = Request.Query.Aggregate(new Dictionary<string, string>(), (d, v) =>
+            var query = Request.Query.Aggregate(new Dictionary<string, string?>(), (d, v) =>
             {
                 d.Add(v.Key, v.Value.ToString());
                 return d;
@@ -184,7 +182,7 @@ namespace Bootstrap.Admin.Controllers
         /// <param name="appId"></param>
         /// <returns>The logout.</returns>
         [HttpGet]
-        public async Task<IActionResult> Logout([FromQuery]string appId)
+        public async Task<IActionResult> Logout([FromQuery] string appId)
         {
             await HttpContext.SignOutAsync();
             return Redirect(QueryHelpers.AddQueryString(Request.PathBase + CookieAuthenticationDefaults.LoginPath, "AppId", appId ?? BootstrapAppContext.AppId));
@@ -203,7 +201,7 @@ namespace Bootstrap.Admin.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult Gitee([FromServices]IConfiguration config)
+        public IActionResult Gitee([FromServices] IConfiguration config)
         {
             var enabled = config.GetValue($"{nameof(GiteeOptions)}:Enabled", false);
             return Challenge(enabled ? GiteeDefaults.AuthenticationScheme : CookieAuthenticationDefaults.AuthenticationScheme);
@@ -214,7 +212,7 @@ namespace Bootstrap.Admin.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult GitHub([FromServices]IConfiguration config)
+        public IActionResult GitHub([FromServices] IConfiguration config)
         {
             var enabled = config.GetValue($"{nameof(GitHubOptions)}:Enabled", false);
             return Challenge(enabled ? GitHubDefaults.AuthenticationScheme : CookieAuthenticationDefaults.AuthenticationScheme);
@@ -225,7 +223,7 @@ namespace Bootstrap.Admin.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult Tencent([FromServices]IConfiguration config)
+        public IActionResult Tencent([FromServices] IConfiguration config)
         {
             var enabled = config.GetValue($"{nameof(TencentOptions)}:Enabled", false);
             return Challenge(enabled ? TencentDefaults.AuthenticationScheme : CookieAuthenticationDefaults.AuthenticationScheme);
@@ -236,7 +234,7 @@ namespace Bootstrap.Admin.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult Alipay([FromServices]IConfiguration config)
+        public IActionResult Alipay([FromServices] IConfiguration config)
         {
             var enabled = config.GetValue($"{nameof(AlipayOptions)}:Enabled", false);
             return Challenge(enabled ? AlipayDefaults.AuthenticationScheme : CookieAuthenticationDefaults.AuthenticationScheme);
@@ -247,7 +245,7 @@ namespace Bootstrap.Admin.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult WeChat([FromServices]IConfiguration config)
+        public IActionResult WeChat([FromServices] IConfiguration config)
         {
             var enabled = config.GetValue($"{nameof(WeChatOptions)}:Enabled", false);
             return Challenge(enabled ? WeChatDefaults.AuthenticationScheme : CookieAuthenticationDefaults.AuthenticationScheme);

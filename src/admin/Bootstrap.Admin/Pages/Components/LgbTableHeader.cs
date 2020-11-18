@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Components.Forms;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 
 namespace Bootstrap.Admin.Pages.Components
@@ -32,7 +33,9 @@ namespace Bootstrap.Admin.Pages.Components
         /// <summary>
         /// 获得/设置 ValueExpression 表达式
         /// </summary>
-        [Parameter] public Expression<Func<TItem>>? ValueExpression { get; set; }
+        [Parameter]
+        [NotNull]
+        public Expression<Func<TItem>>? ValueExpression { get; set; }
 
         /// <summary>
         /// 获得/设置 是否排序 默认 false

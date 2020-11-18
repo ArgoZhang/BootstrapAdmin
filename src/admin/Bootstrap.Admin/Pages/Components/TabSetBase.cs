@@ -120,11 +120,14 @@ namespace Bootstrap.Admin.Pages.Components
                     tabId = await JSRuntime.RemoveTabAsync(tab.Id);
                     Tabs.Remove(tab);
                     tab = Tabs.FirstOrDefault(t => t.Id == tabId);
-                    tab.SetActive(true);
+                    if (tab != null)
+                    {
+                        tab.SetActive(true);
 
-                    page = Pages.FirstOrDefault(p => p.Id == tabId);
-                    if (page != null) page.Active = true;
-                    StateHasChanged();
+                        page = Pages.FirstOrDefault(p => p.Id == tabId);
+                        if (page != null) page.Active = true;
+                        StateHasChanged();
+                    }
                 }
             }
         }

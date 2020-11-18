@@ -20,6 +20,6 @@
     {
         var menus = DataAccess.MenuHelper.RetrieveAllMenus(Layout.UserName);
         var menu = menus.FirstOrDefault(menu => "/Pages/Admin/Index".Contains(menu.Url.ToBlazorMenuUrl(), StringComparison.OrdinalIgnoreCase));
-        JSRuntime.ActiveMenu(menu.Id);
+        JSRuntime.ActiveMenu(menu!.Id);
     }
 }

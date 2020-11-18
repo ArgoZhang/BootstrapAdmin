@@ -25,7 +25,7 @@ namespace Bootstrap.Admin.Controllers.Api
         [HttpGet]
         public QueryData<object> Get([FromQuery]QueryMenuOption value)
         {
-            return value.RetrieveData(User.Identity.Name);
+            return value.RetrieveData(User.Identity!.Name);
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Bootstrap.Admin.Controllers.Api
                     ret = MenuHelper.RetrieveMenusByRoleId(id);
                     break;
                 case "user":
-                    ret = MenuHelper.RetrieveMenus(User.Identity.Name);
+                    ret = MenuHelper.RetrieveMenus(User.Identity!.Name);
                     break;
             }
             return ret;

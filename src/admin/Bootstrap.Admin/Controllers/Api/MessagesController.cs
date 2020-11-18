@@ -28,16 +28,16 @@ namespace Bootstrap.Admin.Controllers.Api
             switch (id)
             {
                 case "inbox":
-                    ret = MessageHelper.Inbox(User.Identity.Name).ToList();
+                    ret = MessageHelper.Inbox(User.Identity!.Name).ToList();
                     break;
                 case "sendmail":
-                    ret = MessageHelper.SendMail(User.Identity.Name).ToList();
+                    ret = MessageHelper.SendMail(User.Identity!.Name).ToList();
                     break;
                 case "mark":
-                    ret = MessageHelper.Mark(User.Identity.Name).ToList();
+                    ret = MessageHelper.Mark(User.Identity!.Name).ToList();
                     break;
                 case "trash":
-                    ret = MessageHelper.Trash(User.Identity.Name).ToList();
+                    ret = MessageHelper.Trash(User.Identity!.Name).ToList();
                     break;
             }
             return ret;
@@ -52,10 +52,10 @@ namespace Bootstrap.Admin.Controllers.Api
         {
             var mcm = new MessageCountModel
             {
-                InboxCount = MessageHelper.Inbox(User.Identity.Name).Count(),
-                SendmailCount = MessageHelper.SendMail(User.Identity.Name).Count(),
-                MarkCount = MessageHelper.Mark(User.Identity.Name).Count(),
-                TrashCount = MessageHelper.Trash(User.Identity.Name).Count()
+                InboxCount = MessageHelper.Inbox(User.Identity!.Name).Count(),
+                SendmailCount = MessageHelper.SendMail(User.Identity!.Name).Count(),
+                MarkCount = MessageHelper.Mark(User.Identity!.Name).Count(),
+                TrashCount = MessageHelper.Trash(User.Identity!.Name).Count()
             };
             return mcm;
         }

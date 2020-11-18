@@ -23,7 +23,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// </summary>
         /// <returns></returns>
         [HttpGet()]
-        public IEnumerable<OnlineUser> Get([FromServices]IOnlineUsers onlineUSers)
+        public IEnumerable<OnlineUser> Get([FromServices] IOnlineUsers onlineUSers)
         {
             return onlineUSers.OnlineUsers.OrderByDescending(u => u.LastAccessTime);
         }
@@ -35,7 +35,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="onlineUSers"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public IEnumerable<KeyValuePair<DateTime, string>> Get(string id, [FromServices]IOnlineUsers onlineUSers)
+        public IEnumerable<KeyValuePair<DateTime, string>> Get(string id, [FromServices] IOnlineUsers onlineUSers)
         {
             var user = onlineUSers.OnlineUsers.FirstOrDefault(u => u.ConnectionId == id);
             return user?.RequestUrls ?? new KeyValuePair<DateTime, string>[0];
@@ -49,7 +49,7 @@ namespace Bootstrap.Admin.Controllers.Api
         [AllowAnonymous]
         public bool Put()
         {
-            var ip = Request.HttpContext.Connection.RemoteIpAddress.ToIPv4String();
+            var ip = Request.HttpContext.Connection.RemoteIpAddress?.ToIPv4String() ?? "";
             if (_loginUsers.TryGetValue(ip, out var user))
             {
                 user.Reset();

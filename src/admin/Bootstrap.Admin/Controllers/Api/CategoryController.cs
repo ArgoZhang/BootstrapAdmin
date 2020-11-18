@@ -32,7 +32,7 @@ namespace Bootstrap.Admin.Controllers.Api
         [HttpGet]
         public IEnumerable<string> RetrieveMenus()
         {
-            return MenuHelper.RetrieveAllMenus(User.Identity.Name).OrderBy(m => m.Name).Select(m => m.Name);
+            return MenuHelper.RetrieveAllMenus(User.Identity!.Name).OrderBy(m => m.Name).Select(m => m.Name);
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace Bootstrap.Admin.Controllers.Api
         [HttpGet]
         public IEnumerable<string> RetrieveParentMenus()
         {
-            return MenuHelper.RetrieveMenus(User.Identity.Name).Where(m => m.Menus.Count() > 0).OrderBy(m => m.Name).Select(m => m.Name);
+            return MenuHelper.RetrieveMenus(User.Identity!.Name).Where(m => m.Menus.Count() > 0).OrderBy(m => m.Name).Select(m => m.Name);
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Bootstrap.Admin.Controllers.Api
         [HttpGet("{id}")]
         public bool ValidateMenuBySubMenu(string id)
         {
-            return !MenuHelper.RetrieveAllMenus(User.Identity.Name).Where(m => m.ParentId == id).Any();
+            return !MenuHelper.RetrieveAllMenus(User.Identity!.Name).Where(m => m.ParentId == id).Any();
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Bootstrap.Admin.Controllers.Api
         [HttpGet("{id}")]
         public bool ValidateParentMenuById(string id)
         {
-            return MenuHelper.RetrieveAllMenus(User.Identity.Name).FirstOrDefault(m => m.Id == id)?.IsResource == 0;
+            return MenuHelper.RetrieveAllMenus(User.Identity!.Name).FirstOrDefault(m => m.Id == id)?.IsResource == 0;
         }
     }
 }

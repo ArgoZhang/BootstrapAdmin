@@ -45,14 +45,14 @@ namespace Microsoft.JSInterop
         /// 启用动画
         /// </summary>
         /// <param name="jSRuntime"></param>
-        public static void InitDocument(this IJSRuntime? jSRuntime) => jSRuntime.InvokeVoidAsync("$.initDocument");
+        public static void InitDocument(this IJSRuntime? jSRuntime) => jSRuntime?.InvokeVoidAsync("$.initDocument");
 
         /// <summary>
         /// 弹出 Modal 组件
         /// </summary>
         /// <param name="jSRuntime"></param>
         /// <param name="modalId"></param>
-        public static void ToggleModal(this IJSRuntime? jSRuntime, string modalId) => jSRuntime.InvokeVoidAsync("$.toggleModal", modalId);
+        public static void ToggleModal(this IJSRuntime? jSRuntime, string modalId) => jSRuntime?.InvokeVoidAsync("$.toggleModal", modalId);
 
         /// <summary>
         /// 弹出 Toast 组件
@@ -61,7 +61,7 @@ namespace Microsoft.JSInterop
         /// <param name="title"></param>
         /// <param name="message"></param>
         /// <param name="cate"></param>
-        public static void ShowToast(this IJSRuntime? jSRuntime, string title, string message, ToastCategory cate) => jSRuntime.InvokeVoidAsync("$.showToast", title, message, cate.ToString());
+        public static void ShowToast(this IJSRuntime? jSRuntime, string title, string message, ToastCategory cate) => jSRuntime?.InvokeVoidAsync("$.showToast", title, message, cate.ToString());
 
         /// <summary>
         /// 弹出 Tooltip 组件
@@ -69,14 +69,14 @@ namespace Microsoft.JSInterop
         /// <param name="jSRuntime"></param>
         /// <param name="id"></param>
         /// <param name="method"></param>
-        public static void Tooltip(this IJSRuntime? jSRuntime, string id, string method) => jSRuntime.InvokeVoidAsync("$.tooltip", $"#{id}", method);
+        public static void Tooltip(this IJSRuntime? jSRuntime, string id, string method) => jSRuntime?.InvokeVoidAsync("$.tooltip", $"#{id}", method);
 
         /// <summary>
         /// 显示或者隐藏 网站 Blazor 挂件图标
         /// </summary>
         /// <param name="jSRuntime"></param>
         /// <param name="show"></param>
-        public static void ToggleBlazor(this IJSRuntime? jSRuntime, bool show) => jSRuntime.InvokeVoidAsync("$.toggleBlazor", show);
+        public static void ToggleBlazor(this IJSRuntime? jSRuntime, bool show) => jSRuntime?.InvokeVoidAsync("$.toggleBlazor", show);
 
         /// <summary>
         /// 显示或者隐藏 网站 Blazor 挂件图标
@@ -85,7 +85,7 @@ namespace Microsoft.JSInterop
         /// <param name="showSidebar"></param>
         /// <param name="showCardTitle"></param>
         /// <param name="fixedTableHeader"></param>
-        public static void SetWebSettings(this IJSRuntime? jSRuntime, bool showSidebar, bool showCardTitle, bool fixedTableHeader) => jSRuntime.InvokeVoidAsync("$.setWebSettings", showSidebar, showCardTitle, fixedTableHeader);
+        public static void SetWebSettings(this IJSRuntime? jSRuntime, bool showSidebar, bool showCardTitle, bool fixedTableHeader) => jSRuntime?.InvokeVoidAsync("$.setWebSettings", showSidebar, showCardTitle, fixedTableHeader);
 
         /// <summary>
         /// 初始化 Table 组件
@@ -93,6 +93,6 @@ namespace Microsoft.JSInterop
         /// <param name="jSRuntime"></param>
         /// <param name="id"></param>
         /// <param name="firstRender"></param>
-        public static ValueTask InitTableAsync(this IJSRuntime? jSRuntime, string id, bool firstRender) => jSRuntime.InvokeVoidAsync("$.initTable", id, firstRender);
+        public static void InitTableAsync(this IJSRuntime? jSRuntime, string id, bool firstRender) => jSRuntime?.InvokeVoidAsync("$.initTable", id, firstRender);
     }
 }

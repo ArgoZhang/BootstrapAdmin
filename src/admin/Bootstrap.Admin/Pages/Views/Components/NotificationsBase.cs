@@ -1,4 +1,4 @@
-using Bootstrap.Admin.Pages.Components;
+﻿using Bootstrap.Admin.Pages.Components;
 using Bootstrap.DataAccess;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -42,7 +42,7 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
             if (AuthenticationStateProvider != null)
             {
                 var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-                UserName = state?.User.Identity.Name;
+                UserName = state?.User.Identity!.Name;
             }
         }
 

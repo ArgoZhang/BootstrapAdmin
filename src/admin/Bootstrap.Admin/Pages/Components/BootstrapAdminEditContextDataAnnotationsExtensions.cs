@@ -3,6 +3,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 
@@ -53,13 +54,13 @@ namespace Bootstrap.Admin.Pages.Components
                 {
                     if (!validationResult.MemberNames.Any())
                     {
-                        messages.Add(new FieldIdentifier(editContext.Model, fieldName: string.Empty), validationResult.ErrorMessage);
+                        messages.Add(new FieldIdentifier(editContext.Model, fieldName: string.Empty), validationResult.ErrorMessage!);
                         continue;
                     }
 
                     foreach (var memberName in validationResult.MemberNames)
                     {
-                        messages.Add(editContext.Field(memberName), validationResult.ErrorMessage);
+                        messages.Add(editContext.Field(memberName), validationResult.ErrorMessage!);
                     }
                 }
                 editContext.NotifyValidationStateChanged();
@@ -81,14 +82,13 @@ namespace Bootstrap.Admin.Pages.Components
                 editForm.ValidateProperty(propertyValue, validationContext, results);
 
                 messages.Clear(fieldIdentifier);
-                messages.Add(fieldIdentifier, results.Select(result => result.ErrorMessage));
+                messages.Add(fieldIdentifier, results.Select(result => result.ErrorMessage!));
 
                 editContext.NotifyValidationStateChanged();
             }
         }
 
-#nullable disable
-        internal static bool TryGetValidatableProperty(in FieldIdentifier fieldIdentifier, out PropertyInfo propertyInfo)
+        internal static bool TryGetValidatableProperty(in FieldIdentifier fieldIdentifier, [MaybeNullWhen(false)] out PropertyInfo propertyInfo)
         {
             var cacheKey = (ModelType: fieldIdentifier.Model.GetType(), fieldIdentifier.FieldName);
             if (!_propertyInfoCache.TryGetValue(cacheKey, out propertyInfo))
@@ -96,11 +96,10 @@ namespace Bootstrap.Admin.Pages.Components
                 // Validator.TryValidateProperty 只能对 Public 属性生效
                 propertyInfo = cacheKey.ModelType.GetProperty(cacheKey.FieldName);
 
-                _propertyInfoCache[cacheKey] = propertyInfo;
+                if (propertyInfo != null) _propertyInfoCache[cacheKey] = propertyInfo;
             }
 
             return propertyInfo != null;
         }
-#nullable restore
     }
 }

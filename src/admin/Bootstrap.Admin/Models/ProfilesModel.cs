@@ -45,14 +45,14 @@ namespace Bootstrap.Admin.Models
 
                 // 数据库存储的个人图片有后缀 default.jpg?v=1234567
                 fileName = fileName.Split('?').FirstOrDefault();
-                if (File.Exists(fileName))
+                if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName))
                 {
                     Size = new FileInfo(fileName).Length;
                     FileName = Path.GetFileName(fileName);
                 }
             }
 
-            if (controller.User.Identity.AuthenticationType != CookieAuthenticationDefaults.AuthenticationScheme) External = true;
+            if (controller.User.Identity!.AuthenticationType != CookieAuthenticationDefaults.AuthenticationScheme) External = true;
 
             // 设置 当前用户默认应用名称
             AppName = Applications.FirstOrDefault(app => app.Key == AppId).Value;

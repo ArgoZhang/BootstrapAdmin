@@ -105,7 +105,7 @@ namespace Bootstrap.Admin.Pages.Components
             }
 
             var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-            if (!state.User.Identity.IsAuthenticated)
+            if (!state.User.Identity!.IsAuthenticated)
             {
                 NavigationManager?.NavigateTo("/Account/Login?returnUrl=" + WebUtility.UrlEncode(new Uri(NavigationManager.Uri).PathAndQuery));
             }

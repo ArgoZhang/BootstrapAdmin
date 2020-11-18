@@ -106,7 +106,7 @@ namespace Bootstrap.Admin.Pages.Components
         /// <param name="results"></param>
         public void ValidateProperty(object? propertyValue, ValidationContext context, List<ValidationResult> results)
         {
-            if (_validatorCache.TryGetValue((this, context.ObjectType, context.MemberName), out var validator))
+            if (_validatorCache.TryGetValue((this, context.ObjectType, context.MemberName ?? string.Empty), out var validator))
             {
                 validator.ValidateProperty(propertyValue, context, results);
                 validator.ToggleMessage(results, true);

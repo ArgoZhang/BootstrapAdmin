@@ -61,7 +61,7 @@ namespace Bootstrap.Admin.Controllers.Api
             bool ret;
             if (string.IsNullOrEmpty(value.Id))
             {
-                value.Description = string.Format("管理员{0}创建用户", User.Identity.Name);
+                value.Description = string.Format("管理员{0}创建用户", User.Identity!.Name);
                 value.ApprovedBy = User.Identity.Name;
                 value.ApprovedTime = DateTime.Now;
                 ret = UserHelper.Save(value);

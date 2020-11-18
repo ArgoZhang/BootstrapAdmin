@@ -24,7 +24,7 @@ namespace Bootstrap.Admin.HealthChecks
         public GiteeHttpHealthCheck(GiteeHttpClient client, IHttpContextAccessor accessor)
         {
             _client = client;
-            _client.HttpClient.BaseAddress = new Uri($"{accessor.HttpContext.Request.Scheme}://{accessor.HttpContext.Request.Host}{accessor.HttpContext.Request.PathBase}");
+            _client.HttpClient.BaseAddress = new Uri($"{accessor.HttpContext!.Request.Scheme}://{accessor.HttpContext?.Request.Host}{accessor.HttpContext?.Request.PathBase}");
         }
 
         /// <summary>

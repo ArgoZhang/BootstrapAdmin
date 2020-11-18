@@ -38,11 +38,11 @@ namespace Bootstrap.Admin.Controllers.Api
         {
             value.UserAgent = Request.Headers["User-Agent"];
             var agent = new UserAgent(value.UserAgent);
-            value.Ip = HttpContext.Connection.RemoteIpAddress.ToIPv4String();
+            value.Ip = HttpContext.Connection.RemoteIpAddress?.ToIPv4String() ?? "";
             value.Browser = $"{agent.Browser?.Name} {agent.Browser?.Version}";
             value.OS = $"{agent.OS?.Name} {agent.OS?.Version}";
             value.City = ipLocator.Locate(value.Ip);
-            value.UserName = User.Identity.Name ?? string.Empty;
+            value.UserName = User.Identity?.Name ?? string.Empty;
             return LogHelper.Save(value);
         }
     }
