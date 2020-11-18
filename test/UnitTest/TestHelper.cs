@@ -46,7 +46,7 @@ namespace Bootstrap.Admin
             var foo = new FooMapper();
             Mappers.Register(t.Assembly, foo);
             try { callback(); }
-            catch (Exception ex) { throw ex; }
+            catch (Exception) { throw; }
             finally
             {
                 Mappers.Revoke(foo);
@@ -59,7 +59,7 @@ namespace Bootstrap.Admin
             var foo = new FooMapper();
             Mappers.Register(typeof(T), foo);
             try { callback(); }
-            catch (Exception ex) { throw ex; }
+            catch (Exception) { throw; }
             finally
             {
                 Mappers.Revoke(foo);
