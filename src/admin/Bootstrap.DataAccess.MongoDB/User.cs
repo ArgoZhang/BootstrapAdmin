@@ -336,16 +336,19 @@ namespace Bootstrap.DataAccess.MongoDB
         public override bool Reject(string id, string rejectBy)
         {
             var user = UserHelper.RetrieveNewUsers().FirstOrDefault(u => u.Id == id);
-            DbManager.RejectUsers.InsertOne(new RejectUser()
+            if (user != null)
             {
-                DisplayName = user.DisplayName,
-                RegisterTime = user.RegisterTime,
-                RejectedBy = rejectBy,
-                RejectedReason = "",
-                RejectedTime = DateTime.Now,
-                UserName = user.UserName
-            });
-            DbManager.Users.DeleteOne(User => User.Id == id);
+                DbManager.RejectUsers.InsertOne(new RejectUser()
+                {
+                    DisplayName = user.DisplayName,
+                    RegisterTime = user.RegisterTime,
+                    RejectedBy = rejectBy,
+                    RejectedReason = "",
+                    RejectedTime = DateTime.Now,
+                    UserName = user.UserName
+                });
+                DbManager.Users.DeleteOne(User => User.Id == id);
+            }
             return true;
         }
     }

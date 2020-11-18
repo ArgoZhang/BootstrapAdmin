@@ -75,7 +75,8 @@ namespace Bootstrap.DataAccess.MongoDB
         {
             var groups = GroupHelper.Retrieves();
             var user = UserHelper.Retrieves().Cast<User>().FirstOrDefault(u => u.Id == userId);
-            groups.ToList().ForEach(g => g.Checked = user.Groups.Any(id => id == g.Id) ? "checked" : "");
+            if (user != null)
+                groups.ToList().ForEach(g => g.Checked = user.Groups.Any(id => id == g.Id) ? "checked" : "");
             return groups;
         }
 
@@ -140,10 +141,10 @@ namespace Bootstrap.DataAccess.MongoDB
         public override IEnumerable<BootstrapGroup> RetrievesByUserName(string userName)
         {
             var groups = new List<BootstrapGroup>();
-            var user = UserHelper.Retrieves().Cast<User>().FirstOrDefault(u => u.UserName == userName);
             var group = GroupHelper.Retrieves();
-
-            groups.AddRange(group.Where(g => user.Groups.Any(ug => ug == g.Id)));
+            var user = UserHelper.Retrieves().Cast<User>().FirstOrDefault(u => u.UserName == userName);
+            if (user != null)
+                groups.AddRange(group.Where(g => user.Groups.Any(ug => ug == g.Id)));
             return groups;
         }
     }

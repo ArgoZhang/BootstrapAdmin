@@ -104,7 +104,8 @@ namespace Bootstrap.DataAccess.MongoDB
         {
             var roles = RoleHelper.Retrieves();
             var user = UserHelper.Retrieves().Cast<User>().FirstOrDefault(u => u.Id == userId);
-            roles.ToList().ForEach(r => r.Checked = user.Roles.Any(id => id == r.Id) ? "checked" : "");
+            if (user != null)
+                roles.ToList().ForEach(r => r.Checked = user.Roles.Any(id => id == r.Id) ? "checked" : "");
             return roles;
         }
 
@@ -188,7 +189,8 @@ namespace Bootstrap.DataAccess.MongoDB
         {
             var roles = RoleHelper.Retrieves();
             var group = GroupHelper.Retrieves().Cast<Group>().FirstOrDefault(u => u.Id == groupId);
-            roles.ToList().ForEach(r => r.Checked = group.Roles.Any(id => id == r.Id) ? "checked" : "");
+            if (group != null)
+                roles.ToList().ForEach(r => r.Checked = group.Roles.Any(id => id == r.Id) ? "checked" : "");
             return roles;
         }
 
