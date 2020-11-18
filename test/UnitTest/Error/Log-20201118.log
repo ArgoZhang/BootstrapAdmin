@@ -1,0 +1,42 @@
+fail: Microsoft.AspNetCore.Mvc.Filters.ExceptionFilter[0]
+      => ConnectionId:0HM46N3IK67UG => RequestPath:/api/Traces RequestId:0HM46N3IK67UG:00000001, SpanId:|e5237c38-49b30b7883e0000f.1.ee2ab2d4_, TraceId:e5237c38-49b30b7883e0000f, ParentId:|e5237c38-49b30b7883e0000f.1. => Bootstrap.Admin.Controllers.Api.TracesController.Post (Bootstrap.Admin)
+General Information 
+*********************************************
+Additional Info
+TimeStamp: 11/12/2020 11:13:37 AM
+MachineName: hecs-x-large-2-linux-20200604094549
+AppDomainName: Bootstrap.Admin
+ErrorPage: /api/Traces
+UserIp: 114.116.229.47
+UserId: Admin
+OS: Linux 3.10.0-1127.19.1.el7.x86_64 #1 SMP Tue Aug 25 17:23:54 UTC 2020
+Framework: .NET Core 3.1.10
+EnvironmentName: Production
+
+1) Exception Information
+---------------------------------------------
+Exception Type: Microsoft.AspNetCore.Server.Kestrel.Core.BadHttpRequestException
+StatusCode: 400
+TargetSite: Void Throw(Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.RequestRejectionReason)
+Message: Unexpected end of request content.
+Data: System.Collections.ListDictionaryInternal
+HelpLink: 
+Source: Microsoft.AspNetCore.Server.Kestrel.Core
+HResult: -2146232800
+ErrorSql: select * from UnitTest
+Exception Type: Longbow.Data.DBAccessException
+
+StackTrace Information
+*********************************************
+   at Microsoft.AspNetCore.Server.Kestrel.Core.BadHttpRequestException.Throw(RequestRejectionReason reason)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.Http1ContentLengthMessageBody.ReadAsyncInternal(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpRequestStream.ReadAsyncInternal(Memory`1 buffer, CancellationToken cancellationToken)
+   at System.Text.Json.JsonSerializer.ReadAsync[TValue](Stream utf8Json, Type returnType, JsonSerializerOptions options, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonInputFormatter.ReadRequestBodyAsync(InputFormatterContext context, Encoding encoding)
+   at Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonInputFormatter.ReadRequestBodyAsync(InputFormatterContext context, Encoding encoding)
+   at Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinder.BindModelAsync(ModelBindingContext bindingContext)
+   at Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder.BindModelAsync(ActionContext actionContext, IModelBinder modelBinder, IValueProvider valueProvider, ParameterDescriptor parameter, ModelMetadata metadata, Object value)
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerBinderDelegateProvider.<>c__DisplayClass0_0.<<CreateBinderDelegate>g__Bind|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextExceptionFilterAsync>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
