@@ -8,6 +8,8 @@ using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
 using Xunit;
+using System.Net.Http.Json;
+using System.Text;
 
 namespace Bootstrap.DataAccess
 {
@@ -210,11 +212,13 @@ namespace Bootstrap.DataAccess
         [Fact]
         public async void BaiDu138Svr_Ok()
         {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
             var ipUri = DictHelper.RetrieveLocaleIPSvrUrl("BaiDuIP138Svr");
 
             // 日本东京
             using var client = new HttpClient();
-            var locator = await client.GetAsJsonAsync<BaiduIP138Locator>($"{ipUri}207.148.111.94");
+            var locator = await client.GetFromJsonAsync<BaiduIP138Locator>($"{ipUri}207.148.111.94");
             Assert.Equal("0", locator.Status);
 
             // 四川成都
@@ -374,7 +378,7 @@ namespace Bootstrap.DataAccess
             /// <summary>
             /// 获得/设置 地理位置结果
             /// </summary>
-            public IEnumerable<BaiDuIp138LocatorResult> Data { get; set; } = new BaiDuIp138LocatorResult[0];
+            public IEnumerable<BaiDuIp138LocatorResult> Data { get; set; } = Array.Empty<BaiDuIp138LocatorResult>();
         }
 
         /// <summary>
