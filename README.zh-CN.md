@@ -138,7 +138,7 @@
 
 ## 演示地址  
 [![website1](https://img.shields.io/badge/linux-http://ba.zylweb.cn-success.svg?logo=buzzfeed&logoColor=green)](http://ba.zylweb.cn)
-[![website2](https://img.shields.io/badge/linux-http://ba.sdgxgz.com-success.svg?logo=buzzfeed&logoColor=green)](http://ba.sdgxgz.com)  
+[![website2](https://img.shields.io/badge/linux-http://admin.blazor.zone-success.svg?logo=buzzfeed&logoColor=green)](http://admin.blazor.zone)  
 
 ### 登录用户名与密码  
 管理账号：Admin/123789  
