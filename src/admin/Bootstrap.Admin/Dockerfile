@@ -1,11 +1,11 @@
 ﻿#Depending on the operating system of the host machines(s) that will build or run the containers, the image specified in the FROM statement may need to be changed.
 #For more information, please see https://aka.ms/containercompat
 
-FROM microsoft/dotnet:3.1-aspnetcore-runtime-nanoserver-1903 AS base
+FROM mcr.microsoft.com/dotnet/runtime:5.0 AS base
 WORKDIR /app
 EXPOSE 80
 
-FROM microsoft/dotnet:3.1-sdk-nanoserver-1903 AS build
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
 COPY . .
 
