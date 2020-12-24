@@ -1,12 +1,12 @@
-﻿using Bootstrap.Admin.Pages.Shared;
+﻿using Bootstrap.Admin.Pages.Components;
 using Microsoft.AspNetCore.Components;
 
-namespace Bootstrap.Admin.Pages.Components
+namespace Bootstrap.Admin.Pages.Shared
 {
     /// <summary>
     /// AdminLayout 布局类
     /// </summary>
-    public class AdminLayoutComponentBase : LayoutComponentBase
+    public partial class AdminLayout
     {
         /// <summary>
         /// 

@@ -1,6 +1,6 @@
 ﻿using Bootstrap.Admin.Models;
+using Bootstrap.Admin.Pages.Components;
 using Bootstrap.Admin.Pages.Extensions;
-using Bootstrap.Admin.Pages.Shared;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Routing;
@@ -11,12 +11,12 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace Bootstrap.Admin.Pages.Components
+namespace Bootstrap.Admin.Pages.Shared
 {
     /// <summary>
     ///
     /// </summary>
-    public class DefaultLayoutComponentBase : LayoutComponentBase
+    public partial class DefaultLayout
     {
         /// <summary>
         ///
