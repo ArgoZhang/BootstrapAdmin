@@ -13,7 +13,7 @@ namespace Microsoft.Extensions.DependencyInjection
     public static class DisplayNamesExtensions
     {
 
-        private static ConcurrentDictionary<(Type ModelType, string FieldName), string> _displayNameCache = new ConcurrentDictionary<(Type, string), string>();
+        private static readonly ConcurrentDictionary<(Type ModelType, string FieldName), string> _displayNameCache = new ConcurrentDictionary<(Type, string), string>();
 
         /// <summary>
         /// 向系统中加入实体类显示名称字典
