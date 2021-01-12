@@ -116,7 +116,7 @@
 
 ## 开发环境搭建
 1. 安装 .net core sdk [官方网址](http://www.microsoft.com/net/download)
-2. 安装 Visual Studio 2019 以上 [官方网址](https://visualstudio.microsoft.com/vs/getting-started/)
+2. 安装 Visual Studio 2019 最新版 [官方网址](https://visualstudio.microsoft.com/vs/getting-started/)
 3. 获取本项目代码 [BootstrapAdmin](https://gitee.com/LongbowEnterprise/BootstrapAdmin)  
 
 环境搭建教程 [详细说明](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B?sort_id=1333477)   
@@ -128,8 +128,7 @@
 2. SqlServer
 3. MySql
 4. Oracle
-5. PostgresSql
-6. MongoDB   
+5. MongoDB   
 
 数据库配置 [详细说明](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/数据库连接配置?sort_id=1333482)   
 
@@ -170,7 +169,7 @@ docker pull reg.qiniu.com/argozhang/ba
 [![Gitee license](https://img.shields.io/github/license/argozhang/bootstrapadmin.svg?logo=git&logoColor=red)](https://gitee.com/LongbowEnterprise/BootstrapAdmin/blob/master/LICENSE)
 
 ## GVP 奖杯
-[查看照片](https://images.gitee.com/uploads/images/2019/0516/124055_96cc9f8d_554725.png "GiteeGVP.png")
+![项目奖杯](https://images.gitee.com/uploads/images/2021/0112/112021_9d570be1_554725.png "GVP.png")
 
 ## 项目截图
 

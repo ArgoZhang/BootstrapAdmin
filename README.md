@@ -60,7 +60,7 @@ Departments Authorize Users
 For more information, please click [wiki](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D)  
 
 ### Database 
-**MSSQL/Oracle/SQLite/MySql/MariaDB/Postgresql/Firebird/MongoDB**  
+**MSSQL/Oracle/SQLite/MySql/MariaDB/Firebird/MongoDB**  
 
 For more information, please click [wiki](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/数据库连接配置?sort_id=1333482)  
 
@@ -154,7 +154,7 @@ Please click [wikis](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/%E
 [![Gitee license](https://img.shields.io/github/license/argozhang/bootstrapadmin.svg?logo=git&logoColor=red)](https://gitee.com/LongbowEnterprise/BootstrapAdmin/blob/master/LICENSE)
 
 ## GVP award
-[View](https://images.gitee.com/uploads/images/2019/0516/124055_96cc9f8d_554725.png "GiteeGVP.png")
+[View](https://images.gitee.com/uploads/images/2021/0112/112021_9d570be1_554725.png "GiteeGVP.png")
 
 ## Screenshots
 
