@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -62,8 +63,17 @@ namespace Bootstrap.Admin.Pages.Components
         /// </summary>
         public string GetDisplayName()
         {
+            var ret = "";
             if (_fieldIdentifier == null) _fieldIdentifier = FieldIdentifier.Create(ValueExpression);
-            return _fieldIdentifier?.GetDisplayName() ?? "";
+            if (DisplayNamesExtensions.TryGetValue((_fieldIdentifier.Value.Model.GetType(), _fieldIdentifier.Value.FieldName), out var s))
+            {
+                ret = s;
+            }
+            if (string.IsNullOrEmpty(ret))
+            {
+                ret = _fieldIdentifier?.GetDisplayName() ?? "";
+            }
+            return ret;
         }
 
         /// <summary>
