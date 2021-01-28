@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BootstrapBlazor" Version="5.0.11" />
+    <PackageReference Include="BootstrapBlazor" Version="5.0.13" />
     <PackageReference Include="Longbow.Logging" Version="5.0.0" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="5.0.2" />
   </ItemGroup>
