@@ -10,11 +10,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BootstrapBlazor" Version="5.0.15" />
+    <PackageReference Include="BootstrapBlazor" Version="5.0.16" />
     <PackageReference Include="Longbow.Logging" Version="5.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
-    <PackageReference Include="Sentry.AspNetCore" Version="3.0.5" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.0.4" />
+    <PackageReference Include="Sentry.AspNetCore" Version="3.0.6" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.0.7" />
   </ItemGroup>
 
   <ItemGroup>
