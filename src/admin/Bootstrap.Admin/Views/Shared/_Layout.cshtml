@@ -7,12 +7,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" href="@Url.Content(Model.WebSiteIcon)" type="image/x-icon" />
     <link rel="shortcut icon" href="@Url.Content(Model.WebSiteIcon)" type="image/x-icon" />
-    <link rel="apple-touch-icon" href="~/favicon.png"/> 
+    <link rel="apple-touch-icon" href="~/favicon.png" />
     <title>@ViewBag.Title</title>
     @RenderSection("css", false)
     <!--[if lt IE 10 ]>
         <link href="../css/IE8.css" rel="stylesheet" />
     <![endif]-->
+    <environment include="Staging,Production">
+        <script>
+            var _hmt = _hmt || [];
+            (function () {
+                var hm = document.createElement("script");
+                hm.src = "https://hm.baidu.com/hm.js?ce3c9cfb729226f39dd330899489086d";
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(hm, s);
+            })();
+        </script>
+    </environment>
 </head>
 <body class="trans-mute">
     <!--[if lt IE 10 ]>
