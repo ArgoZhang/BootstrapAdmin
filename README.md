@@ -5,7 +5,7 @@
 ---
 
 ##### Version & Coverage
-[![Release](https://img.shields.io/endpoint.svg?logo=Groupon&logoColor=red&color=green&label=release&url=https://admin.blazor.zone/api/Gitee/Releases)](https://gitee.com/LongbowEnterprise/BootstrapAdmin/releases)
+[![Release](https://img.shields.io/endpoint.svg?logo=Groupon&logoColor=red&color=green&label=release&url=https://admin.blazor.zone/api/Gitee/Releases)](https://gitee.com/dotnetchina/BootstrapAdmin/releases)
 [![Coveralls](https://img.shields.io/coveralls/github/ArgoZhang/BootstrapAdmin/master.svg?logo=ReverbNation&logoColor=green&label=coveralls)](https://coveralls.io/github/ArgoZhang/BootstrapAdmin)
 [![Codecov](https://img.shields.io/codecov/c/gh/argozhang/bootstrapadmin/master.svg?logo=codecov&label=codecov)](https://codecov.io/gh/argozhang/bootstrapadmin/branch/master)
 
@@ -13,8 +13,8 @@
 [![Appveyor build](https://img.shields.io/endpoint.svg?logo=appveyor&label=build&color=blueviolet&url=https://admin.blazor.zone/api/Gitee/Builds?projName=bootstrapadmin-9m1jm)](https://ci.appveyor.com/project/ArgoZhang/bootstrapadmin-9m1jm)
 [![Build Status](https://img.shields.io/appveyor/ci/ArgoZhang/bootstrapadmin-9m1jm/master.svg?logo=appveyor&label=master)](https://ci.appveyor.com/project/ArgoZhang/bootstrapadmin-9m1jm/branch/master)
 [![Test](https://img.shields.io/appveyor/tests/ArgoZhang/bootstrapadmin-9m1jm/master.svg?logo=appveyor&)](https://ci.appveyor.com/project/ArgoZhang/bootstrapadmin-9m1jm/branch/master/tests)
-[![Issue Status](https://img.shields.io/endpoint.svg?logo=Groupon&logoColor=critical&label=issues&url=https://admin.blazor.zone/api/Gitee/Issues)](https://gitee.com/LongbowEnterprise/BootstrapAdmin/issues)
-[![Pull Status](https://img.shields.io/endpoint.svg?logo=Groupon&logoColor=green&color=success&label=pulls&url=https://admin.blazor.zone/api/Gitee/Pulls)](https://gitee.com/LongbowEnterprise/BootstrapAdmin/pulls)
+[![Issue Status](https://img.shields.io/endpoint.svg?logo=Groupon&logoColor=critical&label=issues&url=https://admin.blazor.zone/api/Gitee/Issues)](https://gitee.com/dotnetchina/BootstrapAdmin/issues)
+[![Pull Status](https://img.shields.io/endpoint.svg?logo=Groupon&logoColor=green&color=success&label=pulls&url=https://admin.blazor.zone/api/Gitee/Pulls)](https://gitee.com/dotnetchina/BootstrapAdmin/pulls)
 
 ##### GitHub
 [![Appveyor build](https://img.shields.io/endpoint.svg?logo=appveyor&label=build&color=blueviolet&url=https://admin.blazor.zone/api/Gitee/Builds?projName=bootstrapadmin)](https://ci.appveyor.com/project/ArgoZhang/bootstrapadmin)
@@ -29,7 +29,7 @@ Because the dependent on Bootstrap v4, so it is called **Bootstrap Admin**. This
 
 ### Notes
 Bootstrap Admin does not require secondary development, but only integration with the front-end system. The front-end system model project is **Bootstrap. Client**  
-The original starting point of the project is to separate the privilege system from the business system. The project development focuses on functions. For detailed configuration instructions, please click on [View Documents](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/%E7%B3%BB%E7%BB%9F%E9%89B%86%E6%88%90).  
+The original starting point of the project is to separate the privilege system from the business system. The project development focuses on functions. For detailed configuration instructions, please click on [View Documents](https://gitee.com/dotnetchina/BootstrapAdmin/wikis/%E7%B3%BB%E7%BB%9F%E9%89B%86%E6%88%90).  
 
 ### Features  
 1. Integration with Front-end Website through Configuration
@@ -49,7 +49,7 @@ Departments Authorize Users
 10. Built-in data memory caching mechanism, page fast response
 11. Built-in Data **Operation Log** and User **Log on**  
 
-[Update log](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/更新日志)
+[Update log](https://gitee.com/dotnetchina/BootstrapAdmin/wikis/更新日志)
 
 ### Advantage
 1. The front-end system does not need to write login, authorization and authentication modules; it is only responsible for writing business modules.
@@ -57,12 +57,12 @@ Departments Authorize Users
 3. Front-end and back-end systems are separated, which are different systems (domain name can be independent)
 4. Extensible to multi-tenant applications
 
-For more information, please click [wiki](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D)  
+For more information, please click [wiki](https://gitee.com/dotnetchina/BootstrapAdmin/wikis/%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D)  
 
 ### Database 
 **MSSQL/Oracle/SQLite/MySql/MariaDB/Firebird/MongoDB**  
 
-For more information, please click [wiki](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/数据库连接配置?sort_id=1333482)  
+For more information, please click [wiki](https://gitee.com/dotnetchina/BootstrapAdmin/wikis/数据库连接配置?sort_id=1333482)  
 
 ### Browser
 ![chrome](https://img.shields.io/badge/chrome->%3D4.5-success.svg?logo=google%20chrome&logoColor=red)
@@ -114,11 +114,11 @@ For more information, please click [wiki](https://gitee.com/LongbowEnterprise/Bo
 ## Installation
 1. Install .net core sdk [Offical website](http://www.microsoft.com/net/download)
 2. Install Visual Studio 2019 lastest [Offical website](https://visualstudio.microsoft.com/vs/getting-started/)
-3. Git clone `git clone https://gitee.com/LongbowEnterprise/BootstrapAdmin.git`
+3. Git clone `git clone https://gitee.com/dotnetchina/BootstrapAdmin.git`
 4. Login as Admin/123789  
 
 ## Branchs  
-[Details](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/分支说明)
+[Details](https://gitee.com/dotnetchina/BootstrapAdmin/wikis/分支说明)
 
 ## Online Demonstration   
 [![website1](https://img.shields.io/badge/linux-http://ba.zylweb.cn-success.svg?logo=buzzfeed&logoColor=green)](http://ba.zylweb.cn)
@@ -145,13 +145,13 @@ docker pull reg.qiniu.com/argozhang/ba
 ```
 
 ## Configurations
-Detailed configuration instructions please click [wikis](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis)
+Detailed configuration instructions please click [wikis](https://gitee.com/dotnetchina/BootstrapAdmin/wikis)
 
 ## Q&A
-Please click [wikis](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98Q&A)  
+Please click [wikis](https://gitee.com/dotnetchina/BootstrapAdmin/wikis/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98Q&A)  
 
 ## License
-[![Gitee license](https://img.shields.io/github/license/argozhang/bootstrapadmin.svg?logo=git&logoColor=red)](https://gitee.com/LongbowEnterprise/BootstrapAdmin/blob/master/LICENSE)
+[![Gitee license](https://img.shields.io/github/license/argozhang/bootstrapadmin.svg?logo=git&logoColor=red)](https://gitee.com/dotnetchina/BootstrapAdmin/blob/master/LICENSE)
 
 ## GVP award
 [View](https://images.gitee.com/uploads/images/2021/0112/112021_9d570be1_554725.png "GiteeGVP.png")
@@ -162,7 +162,7 @@ Home
 
 ![Home](https://gitee.com/LongbowEnterprise/Pictures/raw/master/BootstrapAdmin/BA02-01.png "BAHome-01.png")
 
-For more screenshots, Click [wiki](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis)
+For more screenshots, Click [wiki](https://gitee.com/dotnetchina/BootstrapAdmin/wikis)
 
 ## Contribution
 

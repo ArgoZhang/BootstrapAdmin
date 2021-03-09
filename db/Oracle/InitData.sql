@@ -203,7 +203,7 @@ INSERT into Navigations (Id, ParentId, Name, "ORDER", Icon, Url, Category, Appli
 INSERT into Navigations (Id, ParentId, Name, "ORDER", Icon, Url, Category, Application) VALUES (SEQ_NAVIGATIONS_ID.NEXTVAl, 0, '测试页面', 20, 'fa fa-fa', '#', '1', 'Demo');
 INSERT into Navigations (Id, ParentId, Name, "ORDER", Icon, Url, Category, Application) VALUES (SEQ_NAVIGATIONS_ID.NEXTVAl, SEQ_NAVIGATIONS_ID.CURRVAL, '关于', 10, 'fa fa-fa', '~/Home/About', '1', 'Demo');
 
-INSERT into Navigations (Id, ParentId, Name, "ORDER", Icon, Url, Category, Application) VALUES (SEQ_NAVIGATIONS_ID.NEXTVAl, 0, '返回码云', 20, 'fa fa-fa', 'https://gitee.com/LongbowEnterprise/BootstrapAdmin', '1', 'Demo');
+INSERT into Navigations (Id, ParentId, Name, "ORDER", Icon, Url, Category, Application) VALUES (SEQ_NAVIGATIONS_ID.NEXTVAl, 0, '返回码云', 20, 'fa fa-fa', 'https://gitee.com/dotnetchina/BootstrapAdmin', '1', 'Demo');
 
 -- 菜单授权
 INSERT INTO NavigationRole (Id, NavigationId, RoleId) SELECT SEQ_NAVIGATIONROLE_ID.NEXTVAL, n.ID, r.ID FROM Navigations n left join Roles r on 1=1 Where r.RoleName = 'Default' and Application = 'Demo';

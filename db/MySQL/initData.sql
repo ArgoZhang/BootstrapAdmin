@@ -204,7 +204,7 @@ INSERT into Navigations (ParentId, Name, `Order`, Icon, Url, Category, Applicati
 INSERT into Navigations (ParentId, Name, `Order`, Icon, Url, Category, Application) VALUES (0, '测试页面', 20, 'fa fa-fa', '#', '1', 'Demo');
 INSERT into Navigations (ParentId, Name, `Order`, Icon, Url, Category, Application) VALUES (@@identity, '关于', 10, 'fa fa-fa', '~/Home/About', '1', 'Demo');
 
-INSERT into Navigations (ParentId, Name, `Order`, Icon, Url, Category, Application) VALUES (0, '返回码云', 20, 'fa fa-fa', 'https://gitee.com/LongbowEnterprise/BootstrapAdmin', '1', 'Demo');
+INSERT into Navigations (ParentId, Name, `Order`, Icon, Url, Category, Application) VALUES (0, '返回码云', 20, 'fa fa-fa', 'https://gitee.com/dotnetchina/BootstrapAdmin', '1', 'Demo');
 
 -- 菜单授权
 INSERT INTO NavigationRole (NavigationId, RoleId) SELECT n.ID, r.ID FROM Navigations n left join Roles r on 1=1 Where r.RoleName = 'Default' and Application = 'Demo';

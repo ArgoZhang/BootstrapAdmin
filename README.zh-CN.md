@@ -5,7 +5,7 @@
 ---
 
 ##### Version & Coverage
-[![Release](https://img.shields.io/endpoint.svg?logo=Groupon&logoColor=red&color=green&label=release&url=https://admin.blazor.zone/api/Gitee/Releases)](https://gitee.com/LongbowEnterprise/BootstrapAdmin/releases)
+[![Release](https://img.shields.io/endpoint.svg?logo=Groupon&logoColor=red&color=green&label=release&url=https://admin.blazor.zone/api/Gitee/Releases)](https://gitee.com/dotnetchina/BootstrapAdmin/releases)
 [![Coveralls](https://img.shields.io/coveralls/github/ArgoZhang/BootstrapAdmin/master.svg?logo=ReverbNation&logoColor=green&label=coveralls)](https://coveralls.io/github/ArgoZhang/BootstrapAdmin?branch=master)
 [![Codecov](https://img.shields.io/codecov/c/gh/argozhang/bootstrapadmin/master.svg?logo=codecov&label=codecov)](https://codecov.io/gh/argozhang/bootstrapadmin/branch/master)
 
@@ -13,8 +13,8 @@
 [![Appveyor build](https://img.shields.io/endpoint.svg?logo=appveyor&label=build&color=blueviolet&url=https://admin.blazor.zone/api/Gitee/Builds?projName=bootstrapadmin-9m1jm)](https://ci.appveyor.com/project/ArgoZhang/bootstrapadmin-9m1jm)
 [![Build Status](https://img.shields.io/appveyor/ci/ArgoZhang/bootstrapadmin-9m1jm/master.svg?logo=appveyor&label=master)](https://ci.appveyor.com/project/ArgoZhang/bootstrapadmin-9m1jm/branch/master)
 [![Test](https://img.shields.io/appveyor/tests/ArgoZhang/bootstrapadmin-9m1jm/master.svg?logo=appveyor&)](https://ci.appveyor.com/project/ArgoZhang/bootstrapadmin-9m1jm/branch/master/tests)
-[![Issue Status](https://img.shields.io/endpoint.svg?logo=Groupon&logoColor=critical&label=issues&url=https://admin.blazor.zone/api/Gitee/Issues)](https://gitee.com/LongbowEnterprise/BootstrapAdmin/issues)
-[![Pull Status](https://img.shields.io/endpoint.svg?logo=Groupon&logoColor=green&color=success&label=pulls&url=https://admin.blazor.zone/api/Gitee/Pulls)](https://gitee.com/LongbowEnterprise/BootstrapAdmin/pulls)
+[![Issue Status](https://img.shields.io/endpoint.svg?logo=Groupon&logoColor=critical&label=issues&url=https://admin.blazor.zone/api/Gitee/Issues)](https://gitee.com/dotnetchina/BootstrapAdmin/issues)
+[![Pull Status](https://img.shields.io/endpoint.svg?logo=Groupon&logoColor=green&color=success&label=pulls&url=https://admin.blazor.zone/api/Gitee/Pulls)](https://gitee.com/dotnetchina/BootstrapAdmin/pulls)
 
 ##### GitHub
 [![Appveyor build](https://img.shields.io/endpoint.svg?logo=appveyor&label=build&color=blueviolet&url=https://admin.blazor.zone/api/Gitee/Builds?projName=bootstrapadmin)](https://ci.appveyor.com/project/ArgoZhang/bootstrapadmin)
@@ -31,7 +31,7 @@
 
 ### 特别说明
 **BootstrapAdmin** 无需二次开发，要做的仅仅是与前台系统集成，前台系统模板工程为 **Bootstrap.Client**   
-项目原始出发点是把权限系统从业务系统中剥离出来，项目开发专注于功能，详细配置说明请点击 [查看文档](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90)
+项目原始出发点是把权限系统从业务系统中剥离出来，项目开发专注于功能，详细配置说明请点击 [查看文档](https://gitee.com/dotnetchina/BootstrapAdmin/wikis/%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90)
 
 ### 主要功能  
 1. 通过配置与前台网站集成
@@ -52,7 +52,7 @@
 11. 内置数据 **操作日志** 与用户 **登录日志**   
 跟踪记录用户 **登录主机地点**  **浏览器**  **操作系统** 信息  
 
-更新日志：[传送门](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/更新日志)
+更新日志：[传送门](https://gitee.com/dotnetchina/BootstrapAdmin/wikis/更新日志)
 
 ### 优势
 1. 前台系统不用编写登录、授权、认证模块；只负责编写业务模块即可
@@ -60,7 +60,7 @@
 3. 前台与后台系统分离，分别为不同的系统（域名可独立）
 4. 可扩展为多租户应用
 
-详细资料请点击 [查看文档](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D)  
+详细资料请点击 [查看文档](https://gitee.com/dotnetchina/BootstrapAdmin/wikis/%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D)  
 
 ### 数据库
 数据库支持列表如下：  
@@ -117,9 +117,9 @@
 ## 开发环境搭建
 1. 安装 .net core sdk [官方网址](http://www.microsoft.com/net/download)
 2. 安装 Visual Studio 2019 最新版 [官方网址](https://visualstudio.microsoft.com/vs/getting-started/)
-3. 获取本项目代码 [BootstrapAdmin](https://gitee.com/LongbowEnterprise/BootstrapAdmin)  
+3. 获取本项目代码 [BootstrapAdmin](https://gitee.com/dotnetchina/BootstrapAdmin)  
 
-环境搭建教程 [详细说明](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B?sort_id=1333477)   
+环境搭建教程 [详细说明](https://gitee.com/dotnetchina/BootstrapAdmin/wikis/%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B?sort_id=1333477)   
 
 ### 安装数据库
 
@@ -130,10 +130,10 @@
 4. Oracle
 5. MongoDB   
 
-数据库配置 [详细说明](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/数据库连接配置?sort_id=1333482)   
+数据库配置 [详细说明](https://gitee.com/dotnetchina/BootstrapAdmin/wikis/数据库连接配置?sort_id=1333482)   
 
 ## 分支说明  
-分支说明 [详细说明](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/分支说明)
+分支说明 [详细说明](https://gitee.com/dotnetchina/BootstrapAdmin/wikis/分支说明)
 
 ## 演示地址  
 [![website1](https://img.shields.io/badge/linux-http://ba.zylweb.cn-success.svg?logo=buzzfeed&logoColor=green)](http://ba.zylweb.cn)
@@ -160,13 +160,13 @@ docker pull reg.qiniu.com/argozhang/ba
 ```
 
 ## 配置说明
-详细配置说明请点击 [查看文档](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis) 查看配置说明小节  
+详细配置说明请点击 [查看文档](https://gitee.com/dotnetchina/BootstrapAdmin/wikis) 查看配置说明小节  
 
 ## 常见问题Q&A
-请点击 [查看文档](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98Q&A) 查看常见问题小节  
+请点击 [查看文档](https://gitee.com/dotnetchina/BootstrapAdmin/wikis/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98Q&A) 查看常见问题小节  
 
 ## 开源协议
-[![Gitee license](https://img.shields.io/github/license/argozhang/bootstrapadmin.svg?logo=git&logoColor=red)](https://gitee.com/LongbowEnterprise/BootstrapAdmin/blob/master/LICENSE)
+[![Gitee license](https://img.shields.io/github/license/argozhang/bootstrapadmin.svg?logo=git&logoColor=red)](https://gitee.com/dotnetchina/BootstrapAdmin/blob/master/LICENSE)
 
 ## GVP 奖杯
 ![项目奖杯](https://images.gitee.com/uploads/images/2021/0112/112021_9d570be1_554725.png "GVP.png")
@@ -177,7 +177,7 @@ docker pull reg.qiniu.com/argozhang/ba
 
 ![后台首页](https://gitee.com/LongbowEnterprise/Pictures/raw/master/BootstrapAdmin/BA02-01.png "BAHome-01.png")
 
-更多截图请点击 [查看文档](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis) 查看项目截图小节  
+更多截图请点击 [查看文档](https://gitee.com/dotnetchina/BootstrapAdmin/wikis) 查看项目截图小节  
 
 ## 特别鸣谢
 
@@ -196,7 +196,7 @@ docker pull reg.qiniu.com/argozhang/ba
 
 ## 相关视频讲解
 
-[视频教材](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/%E8%AF%BE%E7%A8%8B%E5%88%97%E8%A1%A8?sort_id=1916635#%E8%AF%BE%E7%A8%8B%E5%88%97%E8%A1%A8)
+[视频教材](https://gitee.com/dotnetchina/BootstrapAdmin/wikis/%E8%AF%BE%E7%A8%8B%E5%88%97%E8%A1%A8?sort_id=1916635#%E8%AF%BE%E7%A8%8B%E5%88%97%E8%A1%A8)
 
 ## 捐助
 

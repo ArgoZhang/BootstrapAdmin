@@ -171,7 +171,7 @@ Delete from Navigations where Application = '2';
 INSERT into Navigations (ParentId, Name, "order", Icon, Url, Category, Application) VALUES (0, '首页', 10, 'fa fa-fa', '~/Home/Index', '1', 2);
 INSERT into Navigations (ParentId, Name, "order", Icon, Url, Category, Application) VALUES (0, '测试页面', 20, 'fa fa-fa', '#', '1', 2);
 INSERT into Navigations (ParentId, Name, "order", Icon, Url, Category, Application) VALUES (currval('navigations_id_seq') - 1, '关于', 10, 'fa fa-fa', '~/Home/About', '1', 2);
-INSERT into Navigations (ParentId, Name, "order", Icon, Url, Category, Application) VALUES (0, '返回码云', 20, 'fa fa-fa', 'https://gitee.com/LongbowEnterprise/BootstrapAdmin', '1', 2);
+INSERT into Navigations (ParentId, Name, "order", Icon, Url, Category, Application) VALUES (0, '返回码云', 20, 'fa fa-fa', 'https://gitee.com/dotnetchina/BootstrapAdmin', '1', 2);
 
 -- 菜单授权
 DELETE FROM NavigationRole Where NavigationID in (Select ID From Navigations Where Application = '2');
