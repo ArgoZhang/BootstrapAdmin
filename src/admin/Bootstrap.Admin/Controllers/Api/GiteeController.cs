@@ -28,7 +28,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="color"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> Issues([FromServices]GiteeHttpClient client, [FromQuery]string? userName = "LongbowEnterprise", [FromQuery]string? repoName = "BootstrapAdmin", [FromQuery]string? label = "custom badge", [FromQuery]string? color = "orange")
+        public async Task<ActionResult> Issues([FromServices] GiteeHttpClient client, [FromQuery] string? userName = "dotnetchina", [FromQuery] string? repoName = "BootstrapAdmin", [FromQuery] string? label = "custom badge", [FromQuery] string? color = "orange")
         {
             var ret = await GetJsonAsync($"https://gitee.com/{userName}/{repoName}/issues", url => client.HttpClient.GetStringAsync(url), content =>
             {
@@ -51,7 +51,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="color"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> Pulls([FromServices]GiteeHttpClient client, [FromQuery]string? userName = "LongbowEnterprise", [FromQuery]string? repoName = "BootstrapAdmin", [FromQuery]string? label = "custom badge", [FromQuery]string? color = "orange")
+        public async Task<ActionResult> Pulls([FromServices] GiteeHttpClient client, [FromQuery] string? userName = "dotnetchina", [FromQuery] string? repoName = "BootstrapAdmin", [FromQuery] string? label = "custom badge", [FromQuery] string? color = "orange")
         {
             var ret = await GetJsonAsync($"https://gitee.com/{userName}/{repoName}/pulls", url => client.HttpClient.GetStringAsync(url), content =>
             {
@@ -73,7 +73,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="color"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> Releases([FromServices]GiteeHttpClient client, [FromQuery]string? userName = "LongbowEnterprise", [FromQuery]string? repoName = "BootstrapAdmin", [FromQuery]string? label = "custom badge", [FromQuery]string? color = "orange")
+        public async Task<ActionResult> Releases([FromServices] GiteeHttpClient client, [FromQuery] string? userName = "dotnetchina", [FromQuery] string? repoName = "BootstrapAdmin", [FromQuery] string? label = "custom badge", [FromQuery] string? color = "orange")
         {
             var ret = await GetJsonAsync($"https://gitee.com/{userName}/{repoName}/releases", url => client.HttpClient.GetStringAsync(url), content =>
             {
@@ -94,7 +94,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="color"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> Builds([FromServices]GiteeHttpClient client, [FromQuery]string? userName = "ArgoZhang", [FromQuery]string? projName = "bootstrapadmin", [FromQuery]string? branchName = "master", [FromQuery]string? label = "custom badge", [FromQuery]string? color = "orange")
+        public async Task<ActionResult> Builds([FromServices] GiteeHttpClient client, [FromQuery] string? userName = "ArgoZhang", [FromQuery] string? projName = "bootstrapadmin", [FromQuery] string? branchName = "master", [FromQuery] string? label = "custom badge", [FromQuery] string? color = "orange")
         {
             var ret = await GetJsonAsync($"https://ci.appveyor.com/api/projects/{userName}/{projName}/branch/{branchName}", url => client.HttpClient.GetAsJsonAsync<AppveyorBuildResult>(url, null, new CancellationTokenSource(10000).Token), content =>
             {
@@ -103,7 +103,7 @@ namespace Bootstrap.Admin.Controllers.Api
             return new JsonResult(new { schemaVersion = 1, label, message = ret, color });
         }
 
-        private async static Task<string> GetJsonAsync<T>(string url, Func<string, Task<T>> requestUrl, Func<T, string> callback)
+        private static async Task<string> GetJsonAsync<T>(string url, Func<string, Task<T>> requestUrl, Func<T, string> callback)
         {
             var ret = "unresponsive";
             try
