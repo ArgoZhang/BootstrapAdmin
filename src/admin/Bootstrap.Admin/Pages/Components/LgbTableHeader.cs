@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using BootstrapBlazor.Components;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -64,14 +65,18 @@ namespace Bootstrap.Admin.Pages.Components
         public string GetDisplayName()
         {
             var ret = "";
-            if (_fieldIdentifier == null) _fieldIdentifier = FieldIdentifier.Create(ValueExpression);
+            if (_fieldIdentifier == null)
+            {
+                _fieldIdentifier = FieldIdentifier.Create(ValueExpression);
+            }
+
             if (DisplayNamesExtensions.TryGetValue((_fieldIdentifier.Value.Model.GetType(), _fieldIdentifier.Value.FieldName), out var s))
             {
                 ret = s;
             }
             if (string.IsNullOrEmpty(ret))
             {
-                ret = _fieldIdentifier?.GetDisplayName() ?? "";
+                ret = _fieldIdentifier.HasValue ? FieldIdentifierExtensions.GetDisplayName(_fieldIdentifier.Value) : "";
             }
             return ret;
         }
@@ -81,7 +86,11 @@ namespace Bootstrap.Admin.Pages.Components
         /// </summary>
         public string GetFieldName()
         {
-            if (_fieldIdentifier == null) _fieldIdentifier = FieldIdentifier.Create(ValueExpression);
+            if (_fieldIdentifier == null)
+            {
+                _fieldIdentifier = FieldIdentifier.Create(ValueExpression);
+            }
+
             return _fieldIdentifier?.FieldName ?? "";
         }
     }
