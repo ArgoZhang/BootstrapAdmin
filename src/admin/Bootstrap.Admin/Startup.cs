@@ -1,4 +1,5 @@
 ﻿using Bootstrap.DataAccess;
+using Exceptionless;
 using Longbow.Web.SignalR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -80,6 +81,7 @@ namespace Bootstrap.Admin
                 option.AssumeDefaultVersionWhenUnspecified = true;
                 option.ApiVersionReader = ApiVersionReader.Combine(new HeaderApiVersionReader("api-version"), new QueryStringApiVersionReader("api-version"));
             });
+            services.AddExceptionless();
             services.AddControllersWithViews(options =>
             {
                 options.Filters.Add<BootstrapAdminAuthorizeFilter>();
@@ -122,6 +124,7 @@ namespace Bootstrap.Admin
 
             app.UseRouting();
             app.UseCors(builder => builder.WithOrigins(Configuration["AllowOrigins"].Split(',', StringSplitOptions.RemoveEmptyEntries)).AllowAnyHeader().AllowAnyMethod().AllowCredentials());
+            app.UseExceptionless();
             app.UseBootstrapAdminAuthentication(RoleHelper.RetrievesByUserName, RoleHelper.RetrievesByUrl, AppHelper.RetrievesByUserName);
             app.UseAuthorization();
             app.UseSwagger(Configuration["SwaggerPathBase"].TrimEnd('/'));
