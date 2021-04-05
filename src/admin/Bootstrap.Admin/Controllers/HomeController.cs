@@ -17,7 +17,7 @@ namespace Bootstrap.Admin.Controllers
         /// Index View
         /// </summary>
         /// <returns></returns>
-        public IActionResult Index([FromServices]IConfiguration configuration)
+        public IActionResult Index()
         {
             var model = new HeaderBarModel(User.Identity!.Name);
             var homeUrl = DictHelper.RetrieveHomeUrl(User.Identity.Name, model.AppId);
