@@ -75,9 +75,7 @@ namespace Bootstrap.DataAccess
                 // 演示系统
                 var appMenus = BootstrapAppContext.Configuration.GetSection("AppMenus").Get<ICollection<string>>();
                 var appIds = RetrieveAllMenus("Admin").Where(m => appMenus.Any(app => m.Name.Equals(app, System.StringComparison.OrdinalIgnoreCase))).Select(m => m.Id);
-#pragma warning disable CS8602 // 取消引用可能出现的空引用。
-                value = value.Where(m => !appIds.Any(app => app.Equals(m, StringComparison.OrdinalIgnoreCase)));
-#pragma warning restore CS8602 // 取消引用可能出现的空引用。
+                value = value.Where(m => !appIds.Any(app => app!.Equals(m, StringComparison.OrdinalIgnoreCase)));
                 if (!value.Any()) return true;
             }
             var ret = DbContextManager.Create<Menu>()?.Delete(value) ?? false;
@@ -158,7 +156,9 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public static IEnumerable<BootstrapMenu> RetrieveAllMenus(string? userName) => string.IsNullOrEmpty(userName) ? new BootstrapMenu[0] : CacheManager.GetOrAdd($"{RetrieveMenusAll}-{userName}", key => DbContextManager.Create<Menu>()?.RetrieveAllMenus(userName), RetrieveMenusAll) ?? new BootstrapMenu[0];
+        public static IEnumerable<BootstrapMenu> RetrieveAllMenus(string? userName) => string.IsNullOrEmpty(userName)
+            ? Array.Empty<BootstrapMenu>()
+            : CacheManager.GetOrAdd($"{RetrieveMenusAll}-{userName}", key => DbContextManager.Create<Menu>()?.RetrieveAllMenus(userName), RetrieveMenusAll) ?? Array.Empty<BootstrapMenu>();
 
         /// <summary>
         /// 通过当前用户名与指定菜单路径获取此菜单下所有授权按钮集合 (userName, url, auths) => bool
