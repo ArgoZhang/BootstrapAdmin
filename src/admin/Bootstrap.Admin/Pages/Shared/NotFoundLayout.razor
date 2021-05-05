@@ -1,13 +1,12 @@
 ﻿@inherits LayoutComponentBase
-@using Bootstrap.Admin.Models
 
 <div class="error-content">
     <div class="error-wrapper text-center">
-        <img src="@model?.Image.ToBlazorLink()" />
-        <h1>@model?.Content</h1>
-        <h3>@model?.Detail</h3>
-        <p><a href="/Account/Logout">登录</a> <span>或者</span> <a href="@model?.ReturnUrl.ToBlazorLink()">返回首页</a> <span>或者</span> <a href="/healths-ui">系统自检</a></p>
-        @if (@model?.Id == 403)
+        <img src="@Model.Image.ToBlazorLink()" />
+        <h1>@Model.Content</h1>
+        <h3>@Model.Detail</h3>
+        <p><a href="/Account/Logout">登录</a> <span>或者</span> <a href="@Model.ReturnUrl.ToBlazorLink()">返回首页</a> <span>或者</span> <a href="/healths-ui">系统自检</a></p>
+        @if (Model.Id == 403)
         {
             <div>
                 <p>也可能是以下原因导致您没有权限</p>
@@ -18,13 +17,3 @@
     </div>
     @Body
 </div>
-
-@code {
-    protected ErrorModel? model;
-
-    protected override void OnInitialized()
-    {
-        var id = 404;
-        model = ErrorModel.CreateById(id);
-    }
-}
