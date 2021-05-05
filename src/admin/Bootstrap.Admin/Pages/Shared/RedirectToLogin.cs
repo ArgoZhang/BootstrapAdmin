@@ -1,9 +1,6 @@
-﻿using Microsoft.AspNetCore.Components;
-using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Components;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Bootstrap.Admin.Pages.Shared
 {
@@ -17,11 +14,11 @@ namespace Bootstrap.Admin.Pages.Shared
         private NavigationManager? Navigation { get; set; }
 
         /// <summary>
-        /// OnInitialized 方法
+        /// OnAfterRender 方法
         /// </summary>
-        protected override void OnInitialized()
+        protected override void OnAfterRender(bool firstRender)
         {
-            Navigation.NavigateTo("/Account/Login", true);
+            Navigation.NavigateTo(CookieAuthenticationDefaults.LoginPath, true);
         }
     }
 }
