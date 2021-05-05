@@ -5,9 +5,117 @@
     <IsWebProject>true</IsWebProject>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
-  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Pages\Components\AlertBase.cs" />
+    <Compile Remove="Pages\Components\AssignModalBase.cs" />
+    <Compile Remove="Pages\Components\AuthorizateComponent.cs" />
+    <Compile Remove="Pages\Components\BootstrapAdminDataAnnotationsValidator.cs" />
+    <Compile Remove="Pages\Components\BootstrapAdminEditContextDataAnnotationsExtensions.cs" />
+    <Compile Remove="Pages\Components\CheckboxBase.cs" />
+    <Compile Remove="Pages\Components\CheckBoxState.cs" />
+    <Compile Remove="Pages\Components\Color.cs" />
+    <Compile Remove="Pages\Components\ConditionComponent.cs" />
+    <Compile Remove="Pages\Components\DropdownBase.cs" />
+    <Compile Remove="Pages\Components\EditPageBase.cs" />
+    <Compile Remove="Pages\Components\EqualToValidator.cs" />
+    <Compile Remove="Pages\Components\HeaderBase.cs" />
+    <Compile Remove="Pages\Components\IRules.cs" />
+    <Compile Remove="Pages\Components\ITableHeader.cs" />
+    <Compile Remove="Pages\Components\IValidateComponent.cs" />
+    <Compile Remove="Pages\Components\LgbEditFormBase.cs" />
+    <Compile Remove="Pages\Components\LgbInputBase.cs" />
+    <Compile Remove="Pages\Components\LgbInputText.cs" />
+    <Compile Remove="Pages\Components\LgbTableHeader.cs" />
+    <Compile Remove="Pages\Components\ModalBase.cs" />
+    <Compile Remove="Pages\Components\NavItemBase.cs" />
+    <Compile Remove="Pages\Components\PageContent.cs" />
+    <Compile Remove="Pages\Components\PageContentAttributes.cs" />
+    <Compile Remove="Pages\Components\PaginationBase.cs" />
+    <Compile Remove="Pages\Components\Placement.cs" />
+    <Compile Remove="Pages\Components\QueryBase.cs" />
+    <Compile Remove="Pages\Components\QueryData.cs" />
+    <Compile Remove="Pages\Components\QueryPageOptions.cs" />
+    <Compile Remove="Pages\Components\RequiredValidator.cs" />
+    <Compile Remove="Pages\Components\SectionBase.cs" />
+    <Compile Remove="Pages\Components\SelectBase.cs" />
+    <Compile Remove="Pages\Components\SelectedItem.cs" />
+    <Compile Remove="Pages\Components\SelectItemBase.cs" />
+    <Compile Remove="Pages\Components\SideBarBase.cs" />
+    <Compile Remove="Pages\Components\StringLengthValidator.cs" />
+    <Compile Remove="Pages\Components\SubmitModalBase.cs" />
+    <Compile Remove="Pages\Components\TabBase.cs" />
+    <Compile Remove="Pages\Components\TableBase.cs" />
+    <Compile Remove="Pages\Components\TableHeaderBase.cs" />
+    <Compile Remove="Pages\Components\TableHeaderContent.cs" />
+    <Compile Remove="Pages\Components\TableToolbarBase.cs" />
+    <Compile Remove="Pages\Components\TableToolbarButton.cs" />
+    <Compile Remove="Pages\Components\TableToolbarContent.cs" />
+    <Compile Remove="Pages\Components\TabSetBase.cs" />
+    <Compile Remove="Pages\Components\ToastCategory.cs" />
+    <Compile Remove="Pages\Components\ToggleBase.cs" />
+    <Compile Remove="Pages\Components\ValidateInputBase.cs" />
+    <Compile Remove="Pages\Components\ValidatorComponentBase.cs" />
+    <Compile Remove="Pages\Extensions\JSRuntimeExtensions.cs" />
+    <Compile Remove="Pages\Views\Admin\ExceptionsBase.cs" />
+    <Compile Remove="Pages\Views\Admin\GroupsBase.cs" />
+    <Compile Remove="Pages\Views\Admin\LoginsBase.cs" />
+    <Compile Remove="Pages\Views\Admin\LogsBase.cs" />
+    <Compile Remove="Pages\Views\Admin\MenusBase.cs" />
+    <Compile Remove="Pages\Views\Admin\NotificationsBase.cs" />
+    <Compile Remove="Pages\Views\Admin\OnlineBase.cs" />
+    <Compile Remove="Pages\Views\Admin\PageBase.cs" />
+    <Compile Remove="Pages\Views\Admin\ProfilesBase.cs" />
+    <Compile Remove="Pages\Views\Admin\QueryPageBase.cs" />
+    <Compile Remove="Pages\Views\Admin\RolesBase.cs" />
+    <Compile Remove="Pages\Views\Admin\SettingsBase.cs" />
+    <Compile Remove="Pages\Views\Admin\SQL.cs" />
+    <Compile Remove="Pages\Views\Admin\TasksBase.cs" />
+    <Compile Remove="Pages\Views\Admin\TracesBase.cs" />
+    <Compile Remove="Pages\Views\Admin\UsersBase.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Pages\Components\Alert.razor" />
+    <Content Remove="Pages\Components\AssignModal.razor" />
+    <Content Remove="Pages\Components\Checkbox.razor" />
+    <Content Remove="Pages\Components\Dropdown.razor" />
+    <Content Remove="Pages\Components\EditPage.razor" />
+    <Content Remove="Pages\Components\Footer.razor" />
+    <Content Remove="Pages\Components\Header.razor" />
+    <Content Remove="Pages\Components\LgbEditForm.razor" />
+    <Content Remove="Pages\Components\LgbInput.razor" />
+    <Content Remove="Pages\Components\Modal.razor" />
+    <Content Remove="Pages\Components\NavItem.razor" />
+    <Content Remove="Pages\Components\NavItems.razor" />
+    <Content Remove="Pages\Components\Pagination.razor" />
+    <Content Remove="Pages\Components\PaginationItem.razor" />
+    <Content Remove="Pages\Components\Query.razor" />
+    <Content Remove="Pages\Components\Select.razor" />
+    <Content Remove="Pages\Components\SelectItem.razor" />
+    <Content Remove="Pages\Components\SideBar.razor" />
+    <Content Remove="Pages\Components\SubmitModal.razor" />
+    <Content Remove="Pages\Components\Tab.razor" />
+    <Content Remove="Pages\Components\Table.razor" />
+    <Content Remove="Pages\Components\TableHeader.razor" />
+    <Content Remove="Pages\Components\TableToolbar.razor" />
+    <Content Remove="Pages\Components\TabSet.razor" />
+    <Content Remove="Pages\Components\Toggle.razor" />
+    <Content Remove="Pages\Views\Admin\Exceptions.razor" />
+    <Content Remove="Pages\Views\Admin\Groups.razor" />
+    <Content Remove="Pages\Views\Admin\Home.razor" />
+    <Content Remove="Pages\Views\Admin\Logins.razor" />
+    <Content Remove="Pages\Views\Admin\Logs.razor" />
+    <Content Remove="Pages\Views\Admin\Menus.razor" />
+    <Content Remove="Pages\Views\Admin\Notifications.razor" />
+    <Content Remove="Pages\Views\Admin\Online.razor" />
+    <Content Remove="Pages\Views\Admin\Profiles.razor" />
+    <Content Remove="Pages\Views\Admin\Roles.razor" />
+    <Content Remove="Pages\Views\Admin\Settings.razor" />
+    <Content Remove="Pages\Views\Admin\SQL.razor" />
+    <Content Remove="Pages\Views\Admin\Tasks.razor" />
+    <Content Remove="Pages\Views\Admin\Traces.razor" />
+    <Content Remove="Pages\Views\Admin\Users.razor" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="BootstrapBlazor" Version="5.0.29-beta05" />
