@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Components.Server;
 using Microsoft.AspNetCore.Http;
 using Microsoft.JSInterop;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -22,7 +23,8 @@ namespace Bootstrap.Admin.Pages.Shared
         ///
         /// </summary>
         [Inject]
-        public AuthenticationStateProvider AuthenticationStateProvider { get; set; } = new ServerAuthenticationStateProvider();
+        [NotNull]
+        public AuthenticationStateProvider? AuthenticationStateProvider { get; set; }
 
         /// <summary>
         ///
@@ -119,7 +121,10 @@ namespace Bootstrap.Admin.Pages.Shared
         private void NavigationManager_LocationChanged(object? sender, LocationChangedEventArgs e)
         {
             var name = $"/{NavigationManager?.ToBaseRelativePath(e.Location)}";
-            if (HttpContextAccessor != null) HttpContextAccessor.HttpContext?.SaveOnlineUser(name);
+            if (HttpContextAccessor != null)
+            {
+                HttpContextAccessor.HttpContext?.SaveOnlineUser(name);
+            }
         }
 
         /// <summary>
@@ -175,7 +180,10 @@ namespace Bootstrap.Admin.Pages.Shared
         /// <param name="firstRender"></param>
         protected override void OnAfterRender(bool firstRender)
         {
-            if (firstRender) JSRuntime.InitDocument();
+            if (firstRender)
+            {
+                JSRuntime.InitDocument();
+            }
         }
     }
 }
