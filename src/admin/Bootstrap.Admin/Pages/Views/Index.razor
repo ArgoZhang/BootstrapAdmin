@@ -4,9 +4,9 @@
 @layout DefaultLayout
 @attribute [Authorize]
 
-<Section ShowCardTitle="@Layout.Model.ShowCardTitle" LockScreenPeriod="@Layout.Model.LockScreenPeriod" ShowBackground="true">
-    <h4 style="color: #fff; padding: 1rem 0 0 1rem;">欢迎使用后台管理</h4>
-</Section>
+<h4 style="color: #fff; padding: 1rem 0 0 1rem;">欢迎使用后台管理</h4>
+@*<Section ShowCardTitle="@Layout.Model.ShowCardTitle" LockScreenPeriod="@Layout.Model.LockScreenPeriod" ShowBackground="true">
+</Section>*@
 
 @code {
     [CascadingParameter(Name = "Default")]

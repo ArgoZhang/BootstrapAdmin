@@ -18,7 +18,6 @@
     <Compile Remove="Pages\Components\DropdownBase.cs" />
     <Compile Remove="Pages\Components\EditPageBase.cs" />
     <Compile Remove="Pages\Components\EqualToValidator.cs" />
-    <Compile Remove="Pages\Components\HeaderBase.cs" />
     <Compile Remove="Pages\Components\IRules.cs" />
     <Compile Remove="Pages\Components\ITableHeader.cs" />
     <Compile Remove="Pages\Components\IValidateComponent.cs" />
@@ -55,7 +54,13 @@
     <Compile Remove="Pages\Components\ToggleBase.cs" />
     <Compile Remove="Pages\Components\ValidateInputBase.cs" />
     <Compile Remove="Pages\Components\ValidatorComponentBase.cs" />
+    <Compile Remove="Pages\Extensions\HttpContextExtensions.cs" />
     <Compile Remove="Pages\Extensions\JSRuntimeExtensions.cs" />
+    <Compile Remove="Pages\Extensions\ObjectExtensions.cs" />
+    <Compile Remove="Pages\Extensions\PagesExtensions.cs" />
+    <Compile Remove="Pages\Extensions\QueryPageOptionsExtensions.cs" />
+    <Compile Remove="Pages\Extensions\UserExtensions.cs" />
+    <Compile Remove="Pages\Views\Admin\DictsBase.cs" />
     <Compile Remove="Pages\Views\Admin\ExceptionsBase.cs" />
     <Compile Remove="Pages\Views\Admin\GroupsBase.cs" />
     <Compile Remove="Pages\Views\Admin\LoginsBase.cs" />
@@ -80,8 +85,6 @@
     <Content Remove="Pages\Components\Checkbox.razor" />
     <Content Remove="Pages\Components\Dropdown.razor" />
     <Content Remove="Pages\Components\EditPage.razor" />
-    <Content Remove="Pages\Components\Footer.razor" />
-    <Content Remove="Pages\Components\Header.razor" />
     <Content Remove="Pages\Components\LgbEditForm.razor" />
     <Content Remove="Pages\Components\LgbInput.razor" />
     <Content Remove="Pages\Components\Modal.razor" />
@@ -128,6 +131,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Bootstrap.DataAccess\Bootstrap.DataAccess.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Pages\Components\" />
+    <Folder Include="Pages\Extensions\" />
   </ItemGroup>
 
 </Project>

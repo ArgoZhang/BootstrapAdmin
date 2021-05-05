@@ -1,8 +1,36 @@
 ﻿@inherits LayoutComponentBase
 
-<CascadingValue Value=this Name="Default">
-    <Header @ref="Header" Icon="@Model.Icon" @bind-DisplayName="DisplayName" @bind-WebTitle="WebTitle"/>
-    <SideBar @ref="SideBar" Model=@Model @bind-DisplayName="DisplayName" @bind-WebTitle="WebTitle" />
-    @Body
-    <Footer @ref="Footer" IsDemo=@Model.IsDemo @bind-Text="WebFooter"></Footer>
+<CascadingValue Value="this" IsFixed="true">
+    <Layout SideWidth="0" IsPage="true" IsFullSide="true" IsFixedHeader="true" IsFixedFooter="true"
+            ShowFooter="true" ShowGotoTop="true" ShowCollapseBar="true" Menus="@Menus"
+            UseTabSet="true" AdditionalAssemblies="new[] { GetType().Assembly }">
+        <Header>
+            <span class="ml-3 flex-fill">Bootstrap of Blazor</span>
+            <img src="_content/BootstrapBlazor.Shared/images/Argo.png" class="layout-avatar-right" />
+            <span class="mx-3 d-none d-sm-block">超级管理员</span>
+        </Header>
+        <Side>
+            <div class="layout-banner">
+                <img class="layout-logo" src="_content/BootstrapBlazor.Shared/images/brand.png" />
+                <div class="layout-title">
+                    <span>后台管理</span>
+                </div>
+            </div>
+            <div class="layout-user">
+                <img class="layout-avatar" src="_content/BootstrapBlazor.Shared/images/Argo-C.png">
+                <div class="layout-title">
+                    <span>管理员</span>
+                </div>
+                <div class="layout-user-state"></div>
+            </div>
+        </Side>
+        <Main>
+            @Body
+        </Main>
+        <Footer>
+            <div class="text-center flex-fill">
+                <span class="page-layout-demo-footer-link">@WebFooter</span>
+            </div>
+        </Footer>
+    </Layout>
 </CascadingValue>

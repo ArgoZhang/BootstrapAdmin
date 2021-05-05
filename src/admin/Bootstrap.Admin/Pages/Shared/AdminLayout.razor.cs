@@ -1,5 +1,4 @@
-﻿using Bootstrap.Admin.Pages.Components;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 
 namespace Bootstrap.Admin.Pages.Shared
 {
@@ -8,10 +7,10 @@ namespace Bootstrap.Admin.Pages.Shared
     /// </summary>
     public partial class AdminLayout
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        public TabSet? TabSet { get; set; }
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        //public TabSet? TabSet { get; set; }
 
         /// <summary>
         /// 
