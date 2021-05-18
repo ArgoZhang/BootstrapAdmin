@@ -1,9 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-  </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Bootstrap.Security" Version="5.0.0" />
     <PackageReference Include="MongoDB.Driver" Version="2.12.1" />

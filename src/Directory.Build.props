@@ -10,4 +10,8 @@
     <DocumentationFile>$(MSBuildProjectName).xml</DocumentationFile>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
 </Project>

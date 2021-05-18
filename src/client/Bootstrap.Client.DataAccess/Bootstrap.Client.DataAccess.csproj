@@ -1,9 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-  </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Bootstrap.Security.DataAccess" Version="5.0.0" />
     <PackageReference Include="Bootstrap.Security.Mvc" Version="5.0.1" />
