@@ -2,7 +2,6 @@
 using BootstrapBlazor.Components;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Components.Routing;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -29,6 +28,8 @@ namespace Bootstrap.Client.Blazor.Shared.Shared
         private bool IsFullSide { get; set; } = true;
 
         private bool ShowFooter { get; set; } = true;
+
+        private bool IsAuthenticated { get; set; }
 
         [NotNull]
         private List<MenuItem>? Menus { get; set; }
@@ -82,17 +83,19 @@ namespace Bootstrap.Client.Blazor.Shared.Shared
             {
                 UserName = state.User.Identity.Name;
                 DisplayName = UserHelper.RetrieveUserByUserName(UserName)?.DisplayName;
+
+                // 模拟异步线程切换，正式代码中删除此行代码
+                await Task.Yield();
+
+                // 菜单获取可以通过数据库获取，此处为示例直接拼装的菜单集合
+                TabItemTextDictionary = new()
+                {
+                    [""] = "Index"
+                };
+
+                // 获取登录用户菜单
+                Menus = GetMenus();
             }
-
-            // 模拟异步线程切换，正式代码中删除此行代码
-            await Task.Yield();
-
-            // 菜单获取可以通过数据库获取，此处为示例直接拼装的菜单集合
-            TabItemTextDictionary = new()
-            {
-                [""] = "Index"
-            };
-            Menus = GetMenus();
         }
 
         private List<MenuItem> GetMenus()
