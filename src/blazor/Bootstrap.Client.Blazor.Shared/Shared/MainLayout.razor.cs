@@ -49,26 +49,9 @@ namespace Bootstrap.Client.Blazor.Shared.Shared
         [NotNull]
         public string? UserName { get; private set; }
 
-        [NotNull]
-        private RenderFragment? NotAuthorized { get; set; }
-
         [Inject]
         [NotNull]
         private AuthenticationStateProvider? AuthenticationStateProvider { get; set; }
-
-        /// <summary>
-        /// OnInitialized 方法
-        /// </summary>
-        protected override void OnInitialized()
-        {
-            base.OnInitialized();
-
-            NotAuthorized = builder =>
-            {
-                builder.OpenComponent<RedirectToLogin>(0);
-                builder.CloseComponent();
-            };
-        }
 
         /// <summary>
         /// OnInitialized 方法

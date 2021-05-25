@@ -2,7 +2,7 @@
 
 <Layout SideWidth="0" IsPage="true" ShowGotoTop="true" ShowCollapseBar="true"
         IsFullSide="@IsFullSide" IsFixedHeader="@IsFixedHeader" IsFixedFooter="@IsFixedFooter" ShowFooter="@ShowFooter"
-        Menus="@Menus" UseTabSet="@UseTabSet" NotAuthorized="@NotAuthorized" TabItemTextDictionary="@TabItemTextDictionary" AdditionalAssemblies="new[] { GetType().Assembly }" class="@Theme">
+        Menus="@Menus" UseTabSet="@UseTabSet" TabItemTextDictionary="@TabItemTextDictionary" AdditionalAssemblies="new[] { GetType().Assembly }" class="@Theme">
     <Header>
         <span class="ml-3 flex-sm-fill d-none d-sm-block">Bootstrap of Blazor</span>
         <Widget></Widget>
@@ -35,6 +35,9 @@
             <a class="page-layout-demo-footer-link" href="https://gitee.com/LongbowEnterprise/BootstrapAdmin" target="_blank">Bootstrap Admin</a>
         </div>
     </Footer>
+    <NotAuthorized>
+        <RedirectToLogin />
+    </NotAuthorized>
 </Layout>
 
 <Drawer Placement="Placement.Right" @bind-IsOpen="@IsOpen" IsBackdrop="true">
