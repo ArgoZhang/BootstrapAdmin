@@ -1,4 +1,6 @@
 ﻿using Bootstrap.Client.DataAccess;
+using Bootstrap.Security;
+using Bootstrap.Security.Mvc;
 using BootstrapBlazor.Components;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -87,17 +89,35 @@ namespace Bootstrap.Client.Blazor.Shared.Shared
 
             if (OperatingSystem.IsBrowser())
             {
-
+                // 需要调用 webapi 获取菜单数据 暂未实现
             }
             else
             {
-                menus = MenuHelper.RetrieveAppMenus(UserName, "").Select(m => new MenuItem()
+                var appId = BootstrapAppContext.AppId;
+                var data = MenuHelper.RetrieveAppMenus(UserName, "");
+                menus = CascadeMenu(data);
+            }
+            return menus;
+        }
+
+        private List<MenuItem> CascadeMenu(IEnumerable<BootstrapMenu> datasource)
+        {
+            var menus = new List<MenuItem>();
+            foreach (var m in datasource)
+            {
+                var item = new MenuItem()
                 {
                     Text = m.Name,
                     Url = m.Url.TrimStart('~'),
                     Target = m.Target,
                     Icon = m.Icon
-                }).ToList();
+                };
+                menus.Add(item);
+
+                if (m.Menus.Any())
+                {
+                    item.Items = CascadeMenu(m.Menus);
+                }
             }
             return menus;
         }
