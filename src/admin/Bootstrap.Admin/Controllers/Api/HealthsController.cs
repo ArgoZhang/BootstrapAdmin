@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 namespace Bootstrap.Admin.Controllers.Api
@@ -23,7 +23,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="message"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<bool> Healths([FromServices]GiteeHttpClient httpClient, [FromServices]IConfiguration config, [FromBody]string message)
+        public async Task<bool> Healths([FromServices] GiteeHttpClient httpClient, [FromServices] IConfiguration config, [FromBody] string message)
         {
             var ret = false;
             var url = config.GetValue("HealthsCloudUrl", "");

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -42,7 +42,7 @@ namespace Bootstrap.Admin.HealthChecks
             {
                 var sw = Stopwatch.StartNew();
                 Exception? error = null;
-                var result = await _client.HttpClient.GetAsJsonAsync<object>($"/api/Gitee/{url}", ex => error = ex, cancellationToken);
+                var result = await _client.HttpClient.GetFromJsonAsync<object>($"/api/Gitee/{url}", cancellationToken);
                 sw.Stop();
                 data.Add(url, error == null ? $"{result} Elapsed: {sw.Elapsed}" : $"{result} Elapsed: {sw.Elapsed} Exception: {error}");
             })).ToArray());
