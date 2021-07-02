@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using System.Net.Http.Json;
 using Xunit;
 
 namespace Bootstrap.Admin.Api
@@ -10,7 +11,7 @@ namespace Bootstrap.Admin.Api
         [Fact]
         public async void Get_Ok()
         {
-            var resp = await Client.GetAsJsonAsync<object>();
+            var resp = await Client.GetFromJsonAsync<object>("");
             Assert.NotNull(resp);
         }
     }

@@ -9,15 +9,15 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text.Json;
-using UnitTest;
 using Xunit;
 
 namespace Bootstrap.Admin.Api
 {
     public class HealthCheckTest : IClassFixture<HealthCheckWebHost<HealthCheckStartup>>
     {
-        private HttpClient client;
+        private readonly HttpClient client;
 
         public HealthCheckTest(HealthCheckWebHost<HealthCheckStartup> factory)
         {
@@ -27,7 +27,7 @@ namespace Bootstrap.Admin.Api
         [Fact]
         public async void Get_Ok()
         {
-            var cates = await client.GetAsJsonAsync<object>("/Healths");
+            var cates = await client.GetFromJsonAsync<object>("/Healths");
             Assert.NotNull(cates);
         }
 

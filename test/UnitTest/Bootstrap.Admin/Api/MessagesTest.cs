@@ -2,6 +2,7 @@
 using Bootstrap.DataAccess;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Json;
 using Xunit;
 
 namespace Bootstrap.Admin.Api
@@ -17,14 +18,14 @@ namespace Bootstrap.Admin.Api
         [InlineData("trash")]
         public async void Get_Ok(string action)
         {
-            var resp = await Client.GetAsJsonAsync<IEnumerable<Message>>(action);
+            var resp = await Client.GetFromJsonAsync<IEnumerable<Message>>(action);
             Assert.NotNull(resp);
         }
 
         [Fact]
         public async void GetCount_Ok()
         {
-            var resp = await Client.GetAsJsonAsync<MessageCountModel>();
+            var resp = await Client.GetFromJsonAsync<MessageCountModel>("");
             Assert.NotNull(resp);
         }
     }

@@ -1,7 +1,7 @@
 ﻿using Bootstrap.DataAccess;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
+using System.Net.Http.Json;
 using Xunit;
 
 namespace Bootstrap.Admin.Api
@@ -13,9 +13,9 @@ namespace Bootstrap.Admin.Api
         [Fact]
         public async void Get_Ok()
         {
-            var nusr = InsertNewUser();
+            InsertNewUser();
 
-            var resp = await Client.GetAsJsonAsync<IEnumerable<object>>();
+            var resp = await Client.GetFromJsonAsync<IEnumerable<object>>("");
             Assert.NotEmpty(resp);
 
             // 删除新用户
@@ -30,8 +30,9 @@ namespace Bootstrap.Admin.Api
 
             // Approve
             nusr.UserStatus = UserStates.ApproveUser;
-            var resp = await Client.PutAsJsonAsync<User, bool>("", nusr);
-            Assert.True(resp);
+            var resp = await Client.PutAsJsonAsync<User>("", nusr);
+            var ret = await resp.Content.ReadFromJsonAsync<bool>();
+            Assert.True(ret);
 
             // 删除新用户
             UserHelper.Delete(new string[] { nusr.Id });
@@ -39,14 +40,15 @@ namespace Bootstrap.Admin.Api
             // Reject
             nusr = InsertNewUser();
             nusr.UserStatus = UserStates.RejectUser;
-            resp = await Client.PutAsJsonAsync<User, bool>("", nusr);
-            Assert.True(resp);
+            resp = await Client.PutAsJsonAsync<User>("", nusr);
+            ret = await resp.Content.ReadFromJsonAsync<bool>();
+            Assert.True(ret);
 
             // 删除新用户
             DeleteUnitTestUser();
         }
 
-        private User InsertNewUser()
+        private static User InsertNewUser()
         {
             // 插入新用户
             var nusr = new User() { UserName = "UnitTest_New", DisplayName = "UnitTest", Password = "1", Description = "UnitTest" };
@@ -54,7 +56,7 @@ namespace Bootstrap.Admin.Api
             return nusr;
         }
 
-        private void DeleteUnitTestUser()
+        private static void DeleteUnitTestUser()
         {
             var ids = UserHelper.RetrieveNewUsers().Where(u => u.UserName == "UnitTest_New").Select(u => u.Id);
             UserHelper.Delete(ids);

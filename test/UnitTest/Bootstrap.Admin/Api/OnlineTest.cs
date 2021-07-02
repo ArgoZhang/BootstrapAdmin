@@ -1,7 +1,7 @@
 ﻿using Longbow.Web;
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
+using System.Net.Http.Json;
 using Xunit;
 
 namespace Bootstrap.Admin.Api
@@ -13,14 +13,14 @@ namespace Bootstrap.Admin.Api
         [Fact]
         public async void Get_Ok()
         {
-            var users = await Client.GetAsJsonAsync<IEnumerable<OnlineUser>>();
+            var users = await Client.GetFromJsonAsync<IEnumerable<OnlineUser>>("");
             Assert.Single(users);
         }
 
         [Fact]
         public async void GetById_Ok()
         {
-            var urls = await Client.GetAsJsonAsync<IEnumerable<KeyValuePair<DateTime, string>>>("UnitTest");
+            var urls = await Client.GetFromJsonAsync<IEnumerable<KeyValuePair<DateTime, string>>>("UnitTest");
             Assert.Empty(urls);
         }
 
@@ -28,11 +28,12 @@ namespace Bootstrap.Admin.Api
         public async void Put_Ok()
         {
             // 三次 Put 请求后返回真
-            var ret = await Client.PutAsJsonAsync<string, bool>("", "");
-            ret = await Client.PutAsJsonAsync<string, bool>("", "");
-            ret = await Client.PutAsJsonAsync<string, bool>("", "");
-            ret = await Client.PutAsJsonAsync<string, bool>("", "");
-            Assert.True(ret);
+            await Client.PutAsJsonAsync<string>("", "");
+            await Client.PutAsJsonAsync<string>("", "");
+            await Client.PutAsJsonAsync<string>("", "");
+            var ret = await Client.PutAsJsonAsync<string>("", "");
+            var req = await ret.Content.ReadFromJsonAsync<bool>();
+            Assert.True(req);
         }
     }
 }

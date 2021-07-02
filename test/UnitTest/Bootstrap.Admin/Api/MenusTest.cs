@@ -4,6 +4,7 @@ using Longbow.Web.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Json;
 using Xunit;
 
 namespace Bootstrap.Admin.Api
@@ -29,7 +30,7 @@ namespace Bootstrap.Admin.Api
         [InlineData("Application", "desc")]
         public async void Get_Ok(string query, string order)
         {
-            var qd = await Client.GetAsJsonAsync<QueryData<object>>($"?sort={query}&order={order}&offset=0&limit=100&parentName=%E6%B5%8B%E8%AF%95%E9%A1%B5%E9%9D%A2&name=%E5%85%B3%E4%BA%8E&category=1&isresource=0&appId=Demo&_=1558235377255");
+            var qd = await Client.GetFromJsonAsync<QueryData<object>>($"?sort={query}&order={order}&offset=0&limit=100&parentName=%E6%B5%8B%E8%AF%95%E9%A1%B5%E9%9D%A2&name=%E5%85%B3%E4%BA%8E&category=1&isresource=0&appId=Demo&_=1558235377255");
             Assert.Single(qd.rows);
         }
 
@@ -39,18 +40,21 @@ namespace Bootstrap.Admin.Api
         public async void Search_Ok(string search)
         {
             // 菜单 系统菜单 系统使用条件
-            var qd = await Client.GetAsJsonAsync<QueryData<object>>($"?search={search}&sort=&order=&offset=0&limit=20&category=&name=&define=0&_=1547608210979");
+            var qd = await Client.GetFromJsonAsync<QueryData<object>>($"?search={search}&sort=&order=&offset=0&limit=20&category=&name=&define=0&_=1547608210979");
             Assert.NotEmpty(qd.rows);
         }
 
         [Fact]
         public async void PostAndDelete_Ok()
         {
-            var ret = await Client.PostAsJsonAsync<BootstrapMenu, bool>("", new BootstrapMenu() { Name = "UnitTest-Menu", Application = "0", Category = "0", ParentId = "0", Url = "#", Target = "_self", IsResource = 0 });
+            var req = await Client.PostAsJsonAsync<BootstrapMenu>("", new BootstrapMenu() { Name = "UnitTest-Menu", Application = "0", Category = "0", ParentId = "0", Url = "#", Target = "_self", IsResource = 0 });
+            var ret = await req.Content.ReadFromJsonAsync<bool>();
             Assert.True(ret);
 
             var ids = MenuHelper.RetrieveAllMenus("Admin").Where(d => d.Name == "UnitTest-Menu").Select(d => d.Id);
-            Assert.True(await Client.DeleteAsJsonAsync<IEnumerable<string>, bool>("", ids));
+            var resp = await Client.DeleteAsJsonAsync<IEnumerable<string>>("", ids);
+            var ret1 = await resp.Content.ReadFromJsonAsync<bool>();
+            Assert.True(ret1);
         }
 
 
@@ -58,11 +62,13 @@ namespace Bootstrap.Admin.Api
         public async void PostById_Ok()
         {
             var uid = UserHelper.Retrieves().Where(u => u.UserName == "Admin").First().Id;
-            var ret = await Client.PostAsJsonAsync<string, IEnumerable<object>>($"{uid}?type=user", string.Empty);
+            var req = await Client.PostAsJsonAsync<string>($"{uid}?type=user", string.Empty);
+            var ret = await req.Content.ReadFromJsonAsync<IEnumerable<object>>();
             Assert.NotEmpty(ret);
 
             var rid = RoleHelper.Retrieves().Where(r => r.RoleName == "Administrators").First().Id;
-            ret = await Client.PostAsJsonAsync<string, IEnumerable<object>>($"{rid}?type=role", string.Empty);
+            req = await Client.PostAsJsonAsync<string>($"{rid}?type=role", string.Empty);
+            ret = await req.Content.ReadFromJsonAsync<IEnumerable<object>>();
             Assert.NotEmpty(ret);
         }
 
@@ -71,7 +77,8 @@ namespace Bootstrap.Admin.Api
         {
             var ids = MenuHelper.RetrieveAllMenus("Admin").Select(g => g.Id);
             var rid = RoleHelper.Retrieves().Where(r => r.RoleName == "Administrators").First().Id;
-            var ret = await Client.PutAsJsonAsync<IEnumerable<string>, bool>($"{rid}", ids);
+            var req = await Client.PutAsJsonAsync<IEnumerable<string>>($"{rid}", ids);
+            var ret = await req.Content.ReadFromJsonAsync<bool>();
             Assert.True(ret);
         }
 

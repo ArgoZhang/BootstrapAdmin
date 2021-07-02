@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Json;
 using Xunit;
 
 namespace Bootstrap.Admin.Api
@@ -14,7 +15,7 @@ namespace Bootstrap.Admin.Api
         public async void Get_Ok()
         {
             var rid = RoleHelper.Retrieves().Where(r => r.RoleName == "Administrators").First().Id;
-            var cates = await Client.GetAsJsonAsync<IEnumerable<App>>(rid);
+            var cates = await Client.GetFromJsonAsync<IEnumerable<App>>(rid);
             Assert.NotEmpty(cates);
         }
     }

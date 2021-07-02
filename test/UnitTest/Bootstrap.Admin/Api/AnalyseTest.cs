@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using System.Net.Http.Json;
 using Xunit;
 using static Bootstrap.Admin.Controllers.Api.AnalyseController;
 
@@ -11,11 +12,11 @@ namespace Bootstrap.Admin.Api
         [Fact]
         public async void Get_Ok()
         {
-            var cates = await Client.GetAsJsonAsync<AnalyseData>("?logType=LoginUsers");
+            var cates = await Client.GetFromJsonAsync<AnalyseData>("?logType=LoginUsers");
             Assert.NotNull(cates);
-            cates = await Client.GetAsJsonAsync<AnalyseData>("?logType=log");
+            cates = await Client.GetFromJsonAsync<AnalyseData>("?logType=log");
             Assert.NotNull(cates);
-            cates = await Client.GetAsJsonAsync<AnalyseData>("?logType=trace");
+            cates = await Client.GetFromJsonAsync<AnalyseData>("?logType=trace");
             Assert.NotNull(cates);
         }
     }
