@@ -51,8 +51,7 @@ namespace Bootstrap.Admin.Api
             widget.CronExpression = Longbow.Tasks.Cron.Secondly(5);
             widget.TaskExecutorName = "UnitTest-Widget";
             resp = await Client.PostAsJsonAsync<TaskWidget>("/api/Tasks", widget);
-            ret = await resp.Content.ReadFromJsonAsync<bool>();
-            Assert.False(ret);
+            Assert.False(resp.IsSuccessStatusCode);
 
             widget.TaskExecutorName = "Bootstrap.Admin.DefaultTaskExecutor";
             widget.Name = "UnitTest-Task";

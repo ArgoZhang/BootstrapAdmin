@@ -1,8 +1,10 @@
 ﻿using Bootstrap.DataAccess;
 using Longbow.Web.Mvc;
 using Longbow.Web.SMS;
+using Microsoft.Extensions.DependencyInjection;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Text.Json;
 using Xunit;
 
 namespace Bootstrap.Admin.Api
@@ -14,7 +16,7 @@ namespace Bootstrap.Admin.Api
         [Fact]
         public async void Login_Get()
         {
-            var users = await Client.GetFromJsonAsync<QueryData<LoginUser>>("?sort=LoginTime&order=&offset=0&limit=20&startTime=&endTime=&loginIp=&_=1560933256621");
+            var users = await Client.GetFromJsonAsync<QueryData<LoginUser>>("?sort=LoginTime&order=&offset=0&limit=20&startTime=&endTime=&loginIp=&_=1560933256621", new JsonSerializerOptions().AddDefaultConverters());
             Assert.NotEmpty(users.rows);
         }
 
