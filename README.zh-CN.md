@@ -66,6 +66,10 @@
 数据库支持列表如下：  
 **MSSQL/Oracle/SQLite/MySql/MariaDB/Postgresql/Firebird/MongoDB**  
 
+### 工作流
+
+未来将与 **驰骋工作流** 进行深度集成，欢迎访问其主页 [传送门](http://ccflow.org/)  
+
 ### 浏览器支持
 
 ![chrome](https://img.shields.io/badge/chrome->%3D4.5-success.svg?logo=google%20chrome&logoColor=red)
