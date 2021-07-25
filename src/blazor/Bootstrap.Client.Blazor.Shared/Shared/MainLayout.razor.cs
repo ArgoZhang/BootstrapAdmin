@@ -31,8 +31,6 @@ namespace Bootstrap.Client.Blazor.Shared.Shared
 
         private bool ShowFooter { get; set; } = true;
 
-        private bool IsAuthenticated { get; set; }
-
         [NotNull]
         private List<MenuItem>? Menus { get; set; }
 
@@ -93,7 +91,6 @@ namespace Bootstrap.Client.Blazor.Shared.Shared
             }
             else
             {
-                var appId = BootstrapAppContext.AppId;
                 var data = MenuHelper.RetrieveAppMenus(UserName, "");
                 menus = CascadeMenu(data);
             }
