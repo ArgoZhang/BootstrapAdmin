@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Specialized;
 using System.Net.Http;
+using System.Net.Http.Json;
 
 namespace Bootstrap.Client.DataAccess
 {

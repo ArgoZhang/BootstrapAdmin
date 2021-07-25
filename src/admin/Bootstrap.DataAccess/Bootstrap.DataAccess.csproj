@@ -14,7 +14,7 @@
     <PackageReference Include="Longbow.Security.Cryptography" Version="5.0.0" />
     <PackageReference Include="Longbow.Tasks" Version="5.0.1" />
     <PackageReference Include="Longbow.TencentAuth" Version="5.0.0" />
-    <PackageReference Include="Longbow.Web" Version="5.0.0" />
+    <PackageReference Include="Longbow.Web" Version="5.0.1" />
     <PackageReference Include="Longbow.WeChatAuth" Version="5.0.0" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="5.0.6" />
     <PackageReference Include="PetaPoco.Extensions" Version="5.0.1" />
