@@ -39,33 +39,5 @@ namespace Bootstrap.Admin.Api
             var cates = await Client.GetFromJsonAsync<object>("Builds");
             Assert.NotNull(cates);
         }
-
-        [Fact]
-        public void GetJsonAsync_Exception()
-        {
-            var t = typeof(GiteeController).GetMethod("GetJsonAsync", BindingFlags.NonPublic | BindingFlags.Static);
-            t = t.MakeGenericMethod(new Type[] { typeof(string) });
-
-            t.Invoke(null, new object[] {
-                "",
-                new Func<string, Task<string>>(url =>
-                {
-                    throw new TaskCanceledException();
-                }),
-                new Func<string, string>(content => {
-                    return "";
-                })
-            });
-
-            t.Invoke(null, new object[] {
-                "",
-                new Func<string, Task<string>>(url => {
-                    throw new Exception();
-                }),
-                new Func<string, string>(content => {
-                    return "";
-                })
-            });
-        }
     }
 }

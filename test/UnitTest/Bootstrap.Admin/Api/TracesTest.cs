@@ -1,8 +1,8 @@
 ﻿using Bootstrap.DataAccess;
 using Longbow.Web;
 using Longbow.Web.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Net.Http;
 using System.Net.Http.Json;
 using Xunit;
 
@@ -20,7 +20,7 @@ namespace Bootstrap.Admin.Api
 
             // 菜单 系统菜单 系统使用条件
             var query = "?sort=LogTime&order=desc&offset=0&limit=20&operateType=&OperateTimeStart=&OperateTimeEnd=&AccessIP=&_=1547617573596";
-            var qd = await Client.GetFromJsonAsync<QueryData<Trace>>(query);
+            var qd = await Client.GetFromJsonAsync<QueryData<Trace>>(query, new System.Text.Json.JsonSerializerOptions().AddDefaultConverters());
             Assert.NotEmpty(qd.rows);
 
             // clean

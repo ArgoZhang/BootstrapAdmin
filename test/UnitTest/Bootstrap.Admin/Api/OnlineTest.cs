@@ -1,4 +1,5 @@
 ﻿using Longbow.Web;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Net.Http.Json;
@@ -13,7 +14,7 @@ namespace Bootstrap.Admin.Api
         [Fact]
         public async void Get_Ok()
         {
-            var users = await Client.GetFromJsonAsync<IEnumerable<OnlineUser>>("");
+            var users = await Client.GetFromJsonAsync<IEnumerable<OnlineUser>>("", new System.Text.Json.JsonSerializerOptions().AddDefaultConverters());
             Assert.Single(users);
         }
 

@@ -1,7 +1,9 @@
 ﻿using Bootstrap.Security;
+using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Text.Json;
 using Xunit;
 
 namespace Bootstrap.Admin.Api
@@ -54,8 +56,7 @@ namespace Bootstrap.Admin.Api
         public async void Healths_Ok()
         {
             var req = await Client.PostAsJsonAsync<string>("Healths", "UnitTest");
-            var ret = await req.Content.ReadFromJsonAsync<bool>();
-            Assert.False(ret);
+            Assert.False(req.IsSuccessStatusCode);
         }
     }
 }
