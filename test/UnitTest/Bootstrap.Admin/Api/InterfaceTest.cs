@@ -1,6 +1,7 @@
 ﻿using Bootstrap.Security;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Json;
 using Xunit;
 
 namespace Bootstrap.Admin.Api
@@ -12,42 +13,48 @@ namespace Bootstrap.Admin.Api
         [Fact]
         public async void RetrieveDicts_Ok()
         {
-            var ret = await Client.PostAsJsonAsync<string, IEnumerable<BootstrapDict>>("RetrieveDicts", "");
+            var req = await Client.PostAsJsonAsync<string>("RetrieveDicts", "");
+            var ret = await req.Content.ReadFromJsonAsync<IEnumerable<BootstrapDict>>();
             Assert.NotEmpty(ret);
         }
 
         [Fact]
         public async void RetrieveRolesByUrl_Ok()
         {
-            var ret = await Client.PostAsJsonAsync<string, IEnumerable<string>>("RetrieveRolesByUrl", "~/Admin/Index");
+            var req = await Client.PostAsJsonAsync<string>("RetrieveRolesByUrl", "~/Admin/Index");
+            var ret = await req.Content.ReadFromJsonAsync<IEnumerable<string>>();
             Assert.NotEmpty(ret);
         }
 
         [Fact]
         public async void RetrieveRolesByUserName_Ok()
         {
-            var ret = await Client.PostAsJsonAsync<string, IEnumerable<string>>("RetrieveRolesByUserName", "Admin");
+            var req = await Client.PostAsJsonAsync<string>("RetrieveRolesByUserName", "Admin");
+            var ret = await req.Content.ReadFromJsonAsync<IEnumerable<string>>();
             Assert.NotEmpty(ret);
         }
 
         [Fact]
         public async void RetrieveUserByUserName_Ok()
         {
-            var ret = await Client.PostAsJsonAsync<string, BootstrapUser>("RetrieveUserByUserName", "Admin");
+            var req = await Client.PostAsJsonAsync<string>("RetrieveUserByUserName", "Admin");
+            var ret = await req.Content.ReadFromJsonAsync<BootstrapUser>();
             Assert.Equal("Admin", ret.UserName);
         }
 
         [Fact]
         public async void RetrieveAppMenus_Ok()
         {
-            var ret = await Client.PostAsJsonAsync<AppMenuOption, IEnumerable<BootstrapMenu>>("RetrieveAppMenus", new AppMenuOption() { AppId = "Demo", UserName = "Admin", Url = "~/Admin/Index" });
+            var req = await Client.PostAsJsonAsync<AppMenuOption>("RetrieveAppMenus", new AppMenuOption() { AppId = "Demo", UserName = "Admin", Url = "~/Admin/Index" });
+            var ret = await req.Content.ReadFromJsonAsync<IEnumerable<BootstrapMenu>>();
             Assert.NotEmpty(ret);
         }
 
         [Fact]
         public async void Healths_Ok()
         {
-            var ret = await Client.PostAsJsonAsync<string, bool>("Healths", "UnitTest");
+            var req = await Client.PostAsJsonAsync<string>("Healths", "UnitTest");
+            var ret = await req.Content.ReadFromJsonAsync<bool>();
             Assert.False(ret);
         }
     }

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Json;
 using Xunit;
 using static Bootstrap.Admin.Controllers.Api.ExceptionsController;
 
@@ -22,7 +23,7 @@ namespace Bootstrap.Admin.Api
 
             // 菜单 系统菜单 系统使用条件
             var query = "?sort=LogTime&order=desc&offset=0&limit=20&StartTime=&EndTime=&_=1547610349796";
-            var qd = await Client.GetAsJsonAsync<QueryData<Exceptions>>(query);
+            var qd = await Client.GetFromJsonAsync<QueryData<Exceptions>>(query);
             Assert.NotEmpty(qd.rows);
 
             // clean
@@ -32,13 +33,15 @@ namespace Bootstrap.Admin.Api
         [Fact]
         public async void Post_Ok()
         {
-            var files = await Client.PostAsJsonAsync<string, IEnumerable<string>>(string.Empty, "");
+            var ret = await Client.PostAsJsonAsync<string>(string.Empty, "");
+            var files = await ret.Content.ReadFromJsonAsync<IEnumerable<string>>();
             Assert.NotNull(files);
 
             var fileName = files.FirstOrDefault();
             if (!string.IsNullOrEmpty(fileName))
             {
-                var resp = await Client.PutAsJsonAsync<ExceptionFileQuery, string>("", new ExceptionFileQuery() { FileName = fileName });
+                ret = await Client.PutAsJsonAsync<ExceptionFileQuery>("", new ExceptionFileQuery() { FileName = fileName });
+                var resp = await ret.Content.ReadAsStringAsync();
                 Assert.NotNull(resp);
             }
 

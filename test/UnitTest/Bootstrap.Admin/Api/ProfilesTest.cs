@@ -3,7 +3,7 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using UnitTest;
+using System.Net.Http.Json;
 using Xunit;
 
 namespace Bootstrap.Admin.Api
@@ -19,8 +19,9 @@ namespace Bootstrap.Admin.Api
             // change theme
             usr.Css = "blue.css";
             usr.UserStatus = UserStates.ChangeTheme;
-            var resp = await Client.PutAsJsonAsync<User, bool>("", usr);
-            Assert.True(resp);
+            var resp = await Client.PutAsJsonAsync<User>("", usr);
+            var ret = await resp.Content.ReadFromJsonAsync<bool>();
+            Assert.True(ret);
         }
 
         [Fact]
@@ -31,8 +32,9 @@ namespace Bootstrap.Admin.Api
             usr.UserStatus = UserStates.ChangePassword;
             usr.NewPassword = "123789";
             usr.Password = "123789";
-            var resp = await Client.PutAsJsonAsync<User, bool>("", usr);
-            Assert.True(resp);
+            var resp = await Client.PutAsJsonAsync<User>("", usr);
+            var ret = await resp.Content.ReadFromJsonAsync<bool>();
+            Assert.True(ret);
         }
 
         [Fact]
@@ -42,8 +44,9 @@ namespace Bootstrap.Admin.Api
             // change displayname
             usr.UserStatus = UserStates.ChangeDisplayName;
             usr.DisplayName = "Administrator";
-            var resp = await Client.PutAsJsonAsync<User, bool>("", usr);
-            Assert.True(resp);
+            var resp = await Client.PutAsJsonAsync<User>("", usr);
+            var ret = await resp.Content.ReadFromJsonAsync<bool>();
+            Assert.True(ret);
         }
 
         [Fact]
@@ -53,8 +56,9 @@ namespace Bootstrap.Admin.Api
             // change app
             usr.App = "UnitTest";
             usr.UserStatus = UserStates.SaveApp;
-            var resp = await Client.PutAsJsonAsync<User, bool>("", usr);
-            Assert.True(resp);
+            var resp = await Client.PutAsJsonAsync<User>("", usr);
+            var ret = await resp.Content.ReadFromJsonAsync<bool>();
+            Assert.True(ret);
         }
 
         [Fact]
@@ -63,8 +67,8 @@ namespace Bootstrap.Admin.Api
             var iconFile = TestHelper.RetrievePath(string.Format("..{0}src{0}admin{0}Bootstrap.Admin{0}wwwroot{0}images{0}logo.jpg", Path.DirectorySeparatorChar));
             var adminFile = TestHelper.RetrievePath(string.Format("..{0}src{0}admin{0}Bootstrap.Admin{0}wwwroot{0}images{0}uploader{0}Admin.jpg", Path.DirectorySeparatorChar));
             var fi = new FileInfo(iconFile);
-            string fileName = fi.Name;
-            byte[] fileContents = File.ReadAllBytes(fi.FullName);
+            var fileName = fi.Name;
+            var fileContents = File.ReadAllBytes(fi.FullName);
 
             var loginContent = new MultipartFormDataContent();
             var byteArrayContent = new ByteArrayContent(fileContents);
@@ -78,8 +82,8 @@ namespace Bootstrap.Admin.Api
             // delete file
             var delContent = new StringContent("key=Admin.jpg");
             delContent.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
-            req = await Client.PostAsync("del", delContent);
-            req = await Client.PostAsync("Delete", delContent);
+            await Client.PostAsync("del", delContent);
+            await Client.PostAsync("Delete", delContent);
             Assert.False(File.Exists(adminFile));
         }
     }

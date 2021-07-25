@@ -5,6 +5,7 @@ using Longbow.Cache;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Json;
 using Xunit;
 
 namespace Bootstrap.Admin.Api
@@ -16,14 +17,14 @@ namespace Bootstrap.Admin.Api
         [Fact]
         public async void Get_Ok()
         {
-            var resp = await Client.GetAsJsonAsync<IEnumerable<CacheCorsItem>>();
+            var resp = await Client.GetFromJsonAsync<IEnumerable<CacheCorsItem>>("");
             Assert.NotNull(resp);
         }
 
         [Fact]
         public async void GetByKey_Ok()
         {
-            var resp = await Client.GetAsJsonAsync<QueryAppOption>("Demo");
+            var resp = await Client.GetFromJsonAsync<QueryAppOption>("Demo");
             Assert.NotNull(resp);
         }
 
@@ -40,30 +41,33 @@ namespace Bootstrap.Admin.Api
                 AppFooter = "网站页脚"
             };
 
-            var resp = await Client.PutAsJsonAsync<QueryAppOption, bool>("", data);
-            Assert.True(resp);
+            var resp = await Client.PutAsJsonAsync<QueryAppOption>("", data);
+            var ret = await resp.Content.ReadFromJsonAsync<bool>();
+            Assert.True(ret);
 
             // Check
-            var op = await Client.GetAsJsonAsync<QueryAppOption>(data.AppCode);
+            var op = await Client.GetFromJsonAsync<QueryAppOption>(data.AppCode);
             Assert.Equal(data.AppTitle, op.AppTitle);
 
             // update
             data.AppId = "edit";
             data.AppUrl = "http://UnitTest";
-            resp = await Client.PutAsJsonAsync<QueryAppOption, bool>("", data);
-            Assert.True(resp);
+            resp = await Client.PutAsJsonAsync<QueryAppOption>("", data);
+            ret = await resp.Content.ReadFromJsonAsync<bool>();
+            Assert.True(ret);
 
-            op = await Client.GetAsJsonAsync<QueryAppOption>(data.AppCode);
+            op = await Client.GetFromJsonAsync<QueryAppOption>(data.AppCode);
             Assert.Equal(data.AppUrl, op.AppUrl);
 
             // 删除
-            resp = await Client.DeleteAsJsonAsync<BootstrapDict, bool>("AppPath", new BootstrapDict()
+            resp = await Client.DeleteAsJsonAsync<BootstrapDict>("AppPath", new BootstrapDict()
             {
                 Category = data.AppName,
                 Name = data.AppName,
                 Code = data.AppCode
             });
-            Assert.True(resp);
+            var ret1 = await resp.Content.ReadFromJsonAsync<bool>();
+            Assert.True(ret1);
         }
 
         [Fact]
@@ -77,10 +81,11 @@ namespace Bootstrap.Admin.Api
             Assert.True(DictHelper.Save(new BootstrapDict() { Category = "UnitTest-Settings", Name = "UnitTest", Code = "0", Define = 0 }));
 
             // 调用 Settings webapi
-            var resp = await Client.PostAsJsonAsync<IEnumerable<BootstrapDict>, bool>("", new BootstrapDict[]{
+            var resp = await Client.PostAsJsonAsync<IEnumerable<BootstrapDict>>("", new BootstrapDict[]{
                 new BootstrapDict() { Category = "UnitTest-Settings", Name = "UnitTest", Code = "UnitTest" }
             });
-            Assert.True(resp);
+            var ret = await resp.Content.ReadFromJsonAsync<bool>();
+            Assert.True(ret);
 
             // 由于 SaveUISettings 函数保护功能，上一步保存成功，但是未更改 Code 值
             var code = DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "UnitTest-Settings").Code;
@@ -95,11 +100,13 @@ namespace Bootstrap.Admin.Api
         public async void Post_Id_Ok()
         {
             // Demo
-            var resp = await Client.PostAsJsonAsync<BootstrapDict, bool>("Demo", new BootstrapDict() { Name = "UnitTest", Code = "0" });
-            Assert.False(resp);
+            var resp = await Client.PostAsJsonAsync<BootstrapDict>("Demo", new BootstrapDict() { Name = "UnitTest", Code = "0" });
+            var ret = await resp.Content.ReadFromJsonAsync<bool>();
+            Assert.False(ret);
 
-            resp = await Client.PostAsJsonAsync<BootstrapDict, bool>("Demo", new BootstrapDict() { Name = "123789", Code = "0" });
-            Assert.True(resp);
+            resp = await Client.PostAsJsonAsync<BootstrapDict>("Demo", new BootstrapDict() { Name = "123789", Code = "0" });
+            ret = await resp.Content.ReadFromJsonAsync<bool>();
+            Assert.True(ret);
         }
 
         internal class CacheCorsItem : ICacheCorsItem

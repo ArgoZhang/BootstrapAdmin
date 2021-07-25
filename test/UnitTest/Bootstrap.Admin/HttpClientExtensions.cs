@@ -1,4 +1,7 @@
-﻿using System.Net.Http;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Bootstrap.Admin
@@ -33,6 +36,26 @@ namespace Bootstrap.Admin
                 { new StringContent(antiToken), "__RequestVerificationToken" }
             };
             await client.PostAsync("/Account/Login", content);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TValue"></typeparam>
+        /// <param name="client"></param>
+        /// <param name="requestUri"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static async Task<HttpResponseMessage> DeleteAsJsonAsync<TValue>(this HttpClient client, string requestUri, TValue value)
+        {
+            var options = new JsonSerializerOptions().AddDefaultConverters();
+            var req = new HttpRequestMessage(HttpMethod.Delete, requestUri)
+            {
+                Content = new StringContent(JsonSerializer.Serialize(value, options))
+            };
+            req.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            return await client.SendAsync(req);
         }
     }
 }

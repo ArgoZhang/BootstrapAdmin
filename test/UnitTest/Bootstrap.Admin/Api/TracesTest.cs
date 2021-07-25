@@ -3,6 +3,7 @@ using Longbow.Web;
 using Longbow.Web.Mvc;
 using System;
 using System.Net.Http;
+using System.Net.Http.Json;
 using Xunit;
 
 namespace Bootstrap.Admin.Api
@@ -19,7 +20,7 @@ namespace Bootstrap.Admin.Api
 
             // 菜单 系统菜单 系统使用条件
             var query = "?sort=LogTime&order=desc&offset=0&limit=20&operateType=&OperateTimeStart=&OperateTimeEnd=&AccessIP=&_=1547617573596";
-            var qd = await Client.GetAsJsonAsync<QueryData<Trace>>(query);
+            var qd = await Client.GetFromJsonAsync<QueryData<Trace>>(query);
             Assert.NotEmpty(qd.rows);
 
             // clean
@@ -39,8 +40,9 @@ namespace Bootstrap.Admin.Api
                 OS = "UniTest",
                 UserAgent = "UniTest"
             };
-            var result = await Client.PostAsJsonAsync<OnlineUser, bool>("", onlineUser);
-            Assert.True(result);
+            var result = await Client.PostAsJsonAsync<OnlineUser>("", onlineUser);
+            var ret = await result.Content.ReadFromJsonAsync<bool>();
+            Assert.True(ret);
         }
     }
 }

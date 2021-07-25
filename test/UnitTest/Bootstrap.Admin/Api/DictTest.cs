@@ -3,7 +3,7 @@ using Bootstrap.Security;
 using Longbow.Web.Mvc;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
+using System.Net.Http.Json;
 using Xunit;
 
 namespace Bootstrap.Admin.Api
@@ -25,7 +25,7 @@ namespace Bootstrap.Admin.Api
         public async void Get_Ok(string query, string order)
         {
             // 菜单 系统菜单 系统使用条件
-            var qd = await Client.GetAsJsonAsync<QueryData<BootstrapDict>>($"?sort={query}&order={order}&offset=0&limit=20&category=%E8%8F%9C%E5%8D%95&name=%E7%B3%BB%E7%BB%9F%E8%8F%9C%E5%8D%95&define=0&_=1547608210979");
+            var qd = await Client.GetFromJsonAsync<QueryData<BootstrapDict>>($"?sort={query}&order={order}&offset=0&limit=20&category=%E8%8F%9C%E5%8D%95&name=%E7%B3%BB%E7%BB%9F%E8%8F%9C%E5%8D%95&define=0&_=1547608210979");
             Assert.Single(qd.rows);
         }
 
@@ -36,18 +36,20 @@ namespace Bootstrap.Admin.Api
         public async void Search_Ok(string search)
         {
             // 菜单 系统菜单 系统使用条件
-            var qd = await Client.GetAsJsonAsync<QueryData<BootstrapDict>>($"?search={search}&sort=&order=&offset=0&limit=20&category=&name=&define=0&_=1547608210979");
+            var qd = await Client.GetFromJsonAsync<QueryData<BootstrapDict>>($"?search={search}&sort=&order=&offset=0&limit=20&category=&name=&define=0&_=1547608210979");
             Assert.NotEmpty(qd.rows);
         }
 
         [Fact]
         public async void PostAndDelete_Ok()
         {
-            var ret = await Client.PostAsJsonAsync<BootstrapDict, bool>("", new BootstrapDict() { Name = "UnitTest-Dict", Category = "UnitTest-Category", Code = "0", Define = 0 });
-            Assert.True(ret);
+            var ret = await Client.PostAsJsonAsync<BootstrapDict>("", new BootstrapDict() { Name = "UnitTest-Dict", Category = "UnitTest-Category", Code = "0", Define = 0 });
+            Assert.True(ret.IsSuccessStatusCode);
 
             var ids = DictHelper.RetrieveDicts().Where(d => d.Name == "UnitTest-Dict").Select(d => d.Id);
-            Assert.True(await Client.DeleteAsJsonAsync<IEnumerable<string>, bool>("", ids));
+            var resp = await Client.DeleteAsJsonAsync<IEnumerable<string>>("", ids);
+            var ret1 = await resp.Content.ReadFromJsonAsync<bool>();
+            Assert.True(ret1);
         }
     }
 }

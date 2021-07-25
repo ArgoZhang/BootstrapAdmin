@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Json;
 using Xunit;
 
 namespace Bootstrap.Admin.Api
@@ -35,7 +36,7 @@ namespace Bootstrap.Admin.Api
         public async void Get_Ok(string query, string order)
         {
             // 菜单 系统菜单 系统使用条件
-            var qd = await Client.GetAsJsonAsync<QueryData<object>>($"?sort={query}&order={order}&offset=0&limit=20&name=Admin&displayName=Administrator&_=1547628247338");
+            var qd = await Client.GetFromJsonAsync<QueryData<object>>($"?sort={query}&order={order}&offset=0&limit=20&name=Admin&displayName=Administrator&_=1547628247338");
             Assert.Single(qd.rows);
         }
 
@@ -46,7 +47,7 @@ namespace Bootstrap.Admin.Api
         public async void Search_Ok(string search)
         {
             // 菜单 系统菜单 系统使用条件
-            var qd = await Client.GetAsJsonAsync<QueryData<object>>($"?search={search}&sort=&order=&offset=0&limit=20&category=&name=&define=0&_=1547608210979");
+            var qd = await Client.GetFromJsonAsync<QueryData<object>>($"?search={search}&sort=&order=&offset=0&limit=20&category=&name=&define=0&_=1547608210979");
             Assert.NotEmpty(qd.rows);
         }
 
@@ -56,15 +57,19 @@ namespace Bootstrap.Admin.Api
             UserHelper.Delete(UserHelper.Retrieves().Where(usr => usr.UserName == "UnitTest_Delete").Select(usr => usr.Id));
 
             var nusr = new User { UserName = "UnitTest_Delete", Password = "1", DisplayName = "DisplayName", ApprovedBy = "System", ApprovedTime = DateTime.Now, Description = "Desc", Icon = "default.jpg" };
-            var resp = await Client.PostAsJsonAsync<User, bool>("", nusr);
-            Assert.True(resp);
+            var resp = await Client.PostAsJsonAsync<User>("", nusr);
+            var ret = await resp.Content.ReadFromJsonAsync<bool>();
+            Assert.True(ret);
 
             nusr.Id = UserHelper.Retrieves().First(u => u.UserName == nusr.UserName).Id;
-            resp = await Client.PostAsJsonAsync<User, bool>("", nusr);
-            Assert.True(resp);
+            resp = await Client.PostAsJsonAsync<User>("", nusr);
+            ret = await resp.Content.ReadFromJsonAsync<bool>();
+            Assert.True(ret);
 
             var ids = UserHelper.Retrieves().Where(d => d.UserName == nusr.UserName).Select(d => d.Id);
-            Assert.True(await Client.DeleteAsJsonAsync<IEnumerable<string>, bool>("", ids));
+            var resp1 = await Client.DeleteAsJsonAsync<IEnumerable<string>>("", ids);
+            var ret1 = await resp1.Content.ReadFromJsonAsync<bool>();
+            Assert.True(ret1);
         }
 
         [Fact]
@@ -72,11 +77,13 @@ namespace Bootstrap.Admin.Api
         {
             var rid = RoleHelper.Retrieves().Where(r => r.RoleName == "Administrators").First().Id;
 
-            var ret = await Client.PostAsJsonAsync<string, IEnumerable<object>>($"{rid}?type=role", string.Empty);
+            var resp = await Client.PostAsJsonAsync<string>($"{rid}?type=role", string.Empty);
+            var ret = await resp.Content.ReadFromJsonAsync<IEnumerable<object>>();
             Assert.NotNull(ret);
 
             var gid = GroupHelper.Retrieves().Where(r => r.GroupName == "Admin").First().Id;
-            ret = await Client.PostAsJsonAsync<string, IEnumerable<object>>($"{gid}?type=group", string.Empty);
+            resp = await Client.PostAsJsonAsync<string>($"{gid}?type=group", string.Empty);
+            ret = await resp.Content.ReadFromJsonAsync<IEnumerable<object>>();
             Assert.NotNull(ret);
 
             // 创建用户
@@ -87,7 +94,8 @@ namespace Bootstrap.Admin.Api
             UserHelper.ForgotPassword(new ResetUser() { DisplayName = nusr.DisplayName, Reason = "UnitTest", ResetTime = DateTime.Now, UserName = nusr.UserName });
 
             // 重置操作
-            ret = await Client.PostAsJsonAsync<string, IEnumerable<object>>($"{nusr.UserName}?type=reset", string.Empty);
+            resp = await Client.PostAsJsonAsync<string>($"{nusr.UserName}?type=reset", string.Empty);
+            ret = await resp.Content.ReadFromJsonAsync<IEnumerable<object>>();
             Assert.NotNull(ret);
 
             UserHelper.Delete(UserHelper.Retrieves().Where(usr => usr.UserName == nusr.UserName).Select(usr => usr.Id));
@@ -98,11 +106,13 @@ namespace Bootstrap.Admin.Api
         {
             var ids = UserHelper.Retrieves().Where(u => u.UserName == "Admin").Select(u => u.Id);
             var gid = GroupHelper.Retrieves().Where(r => r.GroupName == "Admin").First().Id;
-            var ret = await Client.PutAsJsonAsync<IEnumerable<string>, bool>($"{gid}?type=group", ids);
+            var resp = await Client.PutAsJsonAsync<IEnumerable<string>>($"{gid}?type=group", ids);
+            var ret = await resp.Content.ReadFromJsonAsync<bool>();
             Assert.True(ret);
 
             var rid = RoleHelper.Retrieves().Where(r => r.RoleName == "Administrators").First().Id;
-            ret = await Client.PutAsJsonAsync<IEnumerable<string>, bool>($"{rid}?type=role", ids);
+            resp = await Client.PutAsJsonAsync<IEnumerable<string>>($"{rid}?type=role", ids);
+            ret = await resp.Content.ReadFromJsonAsync<bool>();
             Assert.True(ret);
         }
     }

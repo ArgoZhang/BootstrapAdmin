@@ -2,6 +2,7 @@
 using Longbow.Web.Mvc;
 using System;
 using System.Net.Http;
+using System.Net.Http.Json;
 using Xunit;
 
 namespace Bootstrap.Admin.Api
@@ -18,7 +19,7 @@ namespace Bootstrap.Admin.Api
 
             // 菜单 系统菜单 系统使用条件
             var query = "?sort=LogTime&order=desc&offset=0&limit=20&operateType=&OperateTimeStart=&OperateTimeEnd=&_=1547617573596";
-            var qd = await Client.GetAsJsonAsync<QueryData<Log>>(query);
+            var qd = await Client.GetFromJsonAsync<QueryData<Log>>(query);
             Assert.NotEmpty(qd.rows);
 
             // clean
@@ -29,8 +30,9 @@ namespace Bootstrap.Admin.Api
         public async void Post_Ok()
         {
             Client.DefaultRequestHeaders.Add("user-agent", "UnitTest");
-            var resp = await Client.PostAsJsonAsync<Log, bool>("", new Log() { CRUD = "UnitTest", RequestUrl = "~/UnitTest" });
-            Assert.True(resp);
+            var resp = await Client.PostAsJsonAsync<Log>("", new Log() { CRUD = "UnitTest", RequestUrl = "~/UnitTest" });
+            var ret = await resp.Content.ReadFromJsonAsync<bool>();
+            Assert.True(ret);
 
             // clean
             DbManager.Create().Execute("delete from Logs where CRUD = @0", "UnitTest");

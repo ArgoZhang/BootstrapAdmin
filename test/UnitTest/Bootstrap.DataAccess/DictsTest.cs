@@ -186,11 +186,11 @@ namespace Bootstrap.DataAccess
 
             using var client = new HttpClient();
             // 日本东京
-            var locator = await client.GetAsJsonAsync<BaiDuIPLocator>($"{ipUri}207.148.111.94");
+            var locator = await client.GetFromJsonAsync<BaiDuIPLocator>($"{ipUri}207.148.111.94");
             Assert.NotEqual(0, locator.Status);
 
             // 四川成都
-            locator = await client.GetAsJsonAsync<BaiDuIPLocator>($"{ipUri}182.148.123.196");
+            locator = await client.GetFromJsonAsync<BaiDuIPLocator>($"{ipUri}182.148.123.196");
             Assert.Equal(0, locator.Status);
         }
 
@@ -201,11 +201,11 @@ namespace Bootstrap.DataAccess
 
             // 日本东京
             using var client = new HttpClient();
-            var locator = await client.GetAsJsonAsync<JuheIPLocator>($"{ipUri}207.148.111.94");
+            var locator = await client.GetFromJsonAsync<JuheIPLocator>($"{ipUri}207.148.111.94");
             Assert.Contains(new int[] { 0, 10012 }, c => c == locator.Error_Code);
 
             // 四川成都
-            locator = await client.GetAsJsonAsync<JuheIPLocator>($"{ipUri}182.148.123.196");
+            locator = await client.GetFromJsonAsync<JuheIPLocator>($"{ipUri}182.148.123.196");
             Assert.Contains(new int[] { 0, 10012 }, c => c == locator.Error_Code);
         }
 
@@ -222,7 +222,7 @@ namespace Bootstrap.DataAccess
             Assert.Equal("0", locator.Status);
 
             // 四川成都
-            locator = await client.GetAsJsonAsync<BaiduIP138Locator>($"{ipUri}182.148.123.196");
+            locator = await client.GetFromJsonAsync<BaiduIP138Locator>($"{ipUri}182.148.123.196");
             Assert.Equal("0", locator.Status);
         }
 
