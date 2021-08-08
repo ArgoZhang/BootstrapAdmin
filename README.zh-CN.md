@@ -202,11 +202,6 @@ docker pull reg.qiniu.com/argozhang/ba
 
 [视频教材](https://gitee.com/dotnetchina/BootstrapAdmin/wikis/%E8%AF%BE%E7%A8%8B%E5%88%97%E8%A1%A8?sort_id=1916635#%E8%AF%BE%E7%A8%8B%E5%88%97%E8%A1%A8)
 
-## 赞助商
-
-[驰骋工作流](http://ccflow.org/?from=blazor)
-
-
 ## 捐助
 
 如果这个项目对您有所帮助，请扫下方二维码打赏一杯咖啡。    
