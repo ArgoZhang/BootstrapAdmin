@@ -6,12 +6,13 @@
     <PackageReference Include="Longbow" Version="5.0.0" />
     <PackageReference Include="Longbow.AlipayAuth" Version="5.0.0" />
     <PackageReference Include="Longbow.Cache" Version="5.0.0" />
+    <PackageReference Include="Longbow.ComponentModel" Version="5.1.0" />
     <PackageReference Include="Longbow.Data" Version="5.0.1" />
     <PackageReference Include="Longbow.GiteeAuth" Version="5.0.0" />
     <PackageReference Include="Longbow.GitHubAuth" Version="5.0.0" />
     <PackageReference Include="Longbow.OAuth" Version="5.0.0" />
     <PackageReference Include="Longbow.PetaPoco" Version="5.0.1" />
-    <PackageReference Include="Longbow.Security.Cryptography" Version="5.0.0" />
+    <PackageReference Include="Longbow.Security.Cryptography" Version="5.1.0" />
     <PackageReference Include="Longbow.Tasks" Version="5.0.1" />
     <PackageReference Include="Longbow.TencentAuth" Version="5.0.0" />
     <PackageReference Include="Longbow.Web" Version="5.0.1" />
