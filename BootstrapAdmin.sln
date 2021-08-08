@@ -76,7 +76,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{85574E7C-7D58-4135-AB4B-76678552D271}"
 	ProjectSection(SolutionItems) = preProject
 		src\admin\Bootstrap.Admin\Dockerfile = src\admin\Bootstrap.Admin\Dockerfile
-		src\admin\Bootstrap.Admin\Linux.Dockerfile = src\admin\Bootstrap.Admin\Linux.Dockerfile
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "srcipts", "srcipts", "{72C103DB-E1D3-449F-97C2-DF12CA111FD4}"
