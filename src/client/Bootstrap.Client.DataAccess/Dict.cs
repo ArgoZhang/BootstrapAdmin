@@ -51,13 +51,13 @@ namespace Bootstrap.Client.DataAccess
         /// 获得 是否为演示系统 默认为 false 不是演示系统
         /// </summary>
         /// <returns></returns>
-        public bool RetrieveSystemModel() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "演示系统" && d.Define == 0)?.Code, "0") == "1";
+        public bool RetrieveSystemModel() => DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "演示系统" && d.Define == 0)?.Code == "1";
 
         /// <summary>
         /// 获得 验证码图床地址
         /// </summary>
         /// <returns></returns>
-        public string RetrieveImagesLibUrl() => DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "验证码图床" && d.Define == 0)?.Code ?? "http://images.sdgxgz.com/";
+        public string RetrieveImagesLibUrl() => DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "验证码图床" && d.Define == 0)?.Code ?? "http://images.blazor.zone/";
 
         /// <summary>
         /// 获得 数据库标题是否显示
