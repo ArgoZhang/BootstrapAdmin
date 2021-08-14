@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <PackageReference Include="Bootstrap.Security" Version="5.0.0" />
-    <PackageReference Include="MongoDB.Driver" Version="2.12.3" />
+    <PackageReference Include="Bootstrap.Security" Version="5.2.0" />
+    <PackageReference Include="MongoDB.Driver" Version="2.13.1" />
   </ItemGroup>
 
   <ItemGroup>

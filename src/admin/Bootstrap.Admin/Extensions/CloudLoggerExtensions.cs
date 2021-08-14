@@ -4,7 +4,6 @@ using Microsoft.Extensions.Logging.Configuration;
 using Microsoft.Extensions.Options;
 using System;
 using System.Net.Http;
-using System.Net.Http.Json;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -55,7 +54,7 @@ namespace Microsoft.Extensions.DependencyInjection
             {
                 if (!string.IsNullOrEmpty(option.Url))
                 {
-                    try { await httpClient.PostAsJsonAsync(option.Url, message).ConfigureAwait(false); }
+                    try { await httpClient.PostAsJsonAsync(option.Url, message); }
                     catch { }
                 }
             });
