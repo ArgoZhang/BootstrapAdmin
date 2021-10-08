@@ -120,7 +120,7 @@ namespace Bootstrap.Client.DataAccess
         /// <returns></returns>
         protected virtual string RetrieveFullUrl(string appId, Func<string, string> func)
         {
-            // https://gitee.com/dotnetchina/BootstrapAdmin/issues/I1DIKG
+            // https://gitee.com/LongbowEnterprise/BootstrapAdmin/issues/I1DIKG
             // 相对路径时拼接后台地址
             // 绝对路径时直接使用
 

@@ -25,7 +25,7 @@ namespace Bootstrap.DataAccess
                 var user = UserHelper.RetrieveUserByUserName(context.User.Identity.Name);
 
                 // user == null 以前登录过客户端保留了 Cookie 但是用户名可能被系统删除
-                // link bug: https://gitee.com/dotnetchina/BootstrapAdmin/issues/I123MH
+                // link bug: https://gitee.com/LongbowEnterprise/BootstrapAdmin/issues/I123MH
                 if (user != null)
                 {
                     v.UserName = user.UserName;

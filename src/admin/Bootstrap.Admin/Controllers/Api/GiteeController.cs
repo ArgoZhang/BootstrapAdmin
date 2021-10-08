@@ -27,7 +27,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="color"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> Issues([FromServices] GiteeHttpClient client, [FromQuery] string? userName = "dotnetchina", [FromQuery] string? repoName = "BootstrapAdmin", [FromQuery] string? label = "custom badge", [FromQuery] string? color = "orange")
+        public async Task<ActionResult> Issues([FromServices] GiteeHttpClient client, [FromQuery] string? userName = "LongbowEnterprise", [FromQuery] string? repoName = "BootstrapAdmin", [FromQuery] string? label = "custom badge", [FromQuery] string? color = "orange")
         {
             var content = await client.HttpClient.GetStringAsync($"https://gitee.com/{userName}/{repoName}/issues");
             var regex = Regex.Matches(content, "<div class='ui mini circular label'>([\\d]+)</div>", RegexOptions.IgnoreCase);
@@ -48,7 +48,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="color"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> Pulls([FromServices] GiteeHttpClient client, [FromQuery] string? userName = "dotnetchina", [FromQuery] string? repoName = "BootstrapAdmin", [FromQuery] string? label = "custom badge", [FromQuery] string? color = "orange")
+        public async Task<ActionResult> Pulls([FromServices] GiteeHttpClient client, [FromQuery] string? userName = "LongbowEnterprise", [FromQuery] string? repoName = "BootstrapAdmin", [FromQuery] string? label = "custom badge", [FromQuery] string? color = "orange")
         {
             var content = await client.HttpClient.GetStringAsync($"https://gitee.com/{userName}/{repoName}/pulls") ?? "";
             var regex = Regex.Matches(content, "<div class='ui mini circular label'>([\\d]+)</div>", RegexOptions.IgnoreCase);
@@ -68,7 +68,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="color"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> Releases([FromServices] GiteeHttpClient client, [FromQuery] string? userName = "dotnetchina", [FromQuery] string? repoName = "BootstrapAdmin", [FromQuery] string? label = "custom badge", [FromQuery] string? color = "orange")
+        public async Task<ActionResult> Releases([FromServices] GiteeHttpClient client, [FromQuery] string? userName = "LongbowEnterprise", [FromQuery] string? repoName = "BootstrapAdmin", [FromQuery] string? label = "custom badge", [FromQuery] string? color = "orange")
         {
             var content = await client.HttpClient.GetStringAsync($"https://gitee.com/{userName}/{repoName}/releases") ?? "";
             var regex = Regex.Match(content, $"<a href=\"/{userName}/{repoName}/releases/([^\\s]+)\" target=\"_blank\">", RegexOptions.IgnoreCase);
