@@ -25,7 +25,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <returns></returns>
         [Authorize]
         [HttpGet]
-        public QueryData<LoginUser> Get([FromQuery]QueryLoginOption value) => value.RetrieveData();
+        public QueryData<LoginUser> Get([FromQuery] QueryLoginOption value) => value.RetrieveData();
 
         /// <summary>
         /// JWT 登陆认证接口
@@ -34,9 +34,9 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="user"></param>
         /// <returns></returns>
         [HttpPost]
-        public string? Post([FromServices]IConfiguration config, [FromBody]User user)
+        public async Task<string?> Post([FromServices] IConfiguration config, [FromBody] User user)
         {
-            var token = string.Empty;
+            string? token = null;
             string userName = user.UserName;
             string password = user.Password;
             if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(password) && UserHelper.Authenticate(userName, password))
@@ -50,7 +50,7 @@ namespace Bootstrap.Admin.Controllers.Api
                     op.SecurityKey = tokenOption.SecurityKey;
                 });
             }
-            HttpContext.Log(userName, !string.IsNullOrEmpty(token));
+            await HttpContext.Log(userName, !string.IsNullOrEmpty(token));
             return token;
         }
 
@@ -61,7 +61,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="phone"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<SMSResult> Put([FromServices]ISMSProvider provider, [FromQuery]string phone) => string.IsNullOrEmpty(phone) ? new SMSResult() { Result = false, Msg = "手机号不可为空" } : await provider.SendCodeAsync(phone);
+        public async Task<SMSResult> Put([FromServices] ISMSProvider provider, [FromQuery] string phone) => string.IsNullOrEmpty(phone) ? new SMSResult() { Result = false, Msg = "手机号不可为空" } : await provider.SendCodeAsync(phone);
 
         /// <summary>
         /// 跨域握手协议

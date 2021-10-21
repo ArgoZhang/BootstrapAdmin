@@ -5,6 +5,7 @@ using Longbow.Web.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace Bootstrap.Admin.Controllers.Api
 {
@@ -22,7 +23,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="value"></param>
         /// <returns></returns>
         [HttpGet]
-        public QueryData<Log> Get([FromQuery]QueryLogOption value)
+        public QueryData<Log> Get([FromQuery] QueryLogOption value)
         {
             return value.RetrieveData();
         }
@@ -34,14 +35,14 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="value"></param>
         /// <returns></returns>
         [HttpPost]
-        public bool Post([FromServices]IIPLocatorProvider ipLocator, [FromBody]Log value)
+        public async Task<bool> Post([FromServices] IIPLocatorProvider ipLocator, [FromBody] Log value)
         {
             value.UserAgent = Request.Headers["User-Agent"];
             var agent = new UserAgent(value.UserAgent);
             value.Ip = HttpContext.Connection.RemoteIpAddress?.ToIPv4String() ?? "";
             value.Browser = $"{agent.Browser?.Name} {agent.Browser?.Version}";
             value.OS = $"{agent.OS?.Name} {agent.OS?.Version}";
-            value.City = ipLocator.Locate(value.Ip);
+            value.City = await ipLocator.Locate(value.Ip);
             value.UserName = User.Identity?.Name ?? string.Empty;
             return LogHelper.Save(value);
         }

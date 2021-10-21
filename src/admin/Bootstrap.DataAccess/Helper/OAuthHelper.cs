@@ -49,7 +49,7 @@ namespace Bootstrap.DataAccess
                 SaveUser(user, option.Roles);
 
                 // 记录登陆日志
-                context.HttpContext.Log(user.UserName, true);
+                await context.HttpContext.Log(user.UserName, true);
             };
         }
 

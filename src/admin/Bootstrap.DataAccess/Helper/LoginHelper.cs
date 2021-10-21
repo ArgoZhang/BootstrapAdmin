@@ -6,6 +6,7 @@ using PetaPoco;
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace Bootstrap.DataAccess
 {
@@ -21,7 +22,7 @@ namespace Bootstrap.DataAccess
         /// <param name="userName">登录用户名</param>
         /// <param name="auth">是否登录成功</param>
         /// <returns></returns>
-        public static bool Log(this HttpContext context, string userName, bool auth)
+        public static async Task<bool> Log(this HttpContext context, string userName, bool auth)
         {
             var ipLocator = context.RequestServices.GetRequiredService<IIPLocatorProvider>();
             var ip = context.Connection.RemoteIpAddress?.ToIPv4String() ?? "";
@@ -35,11 +36,11 @@ namespace Bootstrap.DataAccess
                 LoginTime = DateTime.Now,
                 UserAgent = userAgent,
                 Ip = ip,
-                City = ipLocator.Locate(ip),
                 Browser = $"{agent.Browser?.Name} {agent.Browser?.Version}",
                 OS = $"{agent.OS?.Name} {agent.OS?.Version}",
                 Result = auth ? "登录成功" : "登录失败"
             };
+            loginUser.City = await ipLocator.Locate(ip);
             return DbContextManager.Create<LoginUser>()?.Log(loginUser) ?? false;
         }
 

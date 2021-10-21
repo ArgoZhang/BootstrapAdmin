@@ -1,9 +1,6 @@
 ﻿using Bootstrap.Security;
-using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Net.Http.Json;
-using System.Text.Json;
 using Xunit;
 
 namespace Bootstrap.Admin.Api

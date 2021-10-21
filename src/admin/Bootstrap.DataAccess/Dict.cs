@@ -180,25 +180,25 @@ namespace Bootstrap.DataAccess
         /// 程序异常时长 默认1月
         /// </summary>
         /// <returns></returns>
-        public int RetrieveExceptionsLogPeriod() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "程序异常保留时长" && d.Define == 0)?.Code, 1);
+        public int RetrieveExceptionsLogPeriod() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "程序异常保留时长" && d.Define == 0)?.Code ?? "1", 1);
 
         /// <summary>
         /// 操作日志时长 默认12月
         /// </summary>
         /// <returns></returns>
-        public int RetrieveLogsPeriod() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "操作日志保留时长" && d.Define == 0)?.Code, 12);
+        public int RetrieveLogsPeriod() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "操作日志保留时长" && d.Define == 0)?.Code ?? "12", 12);
 
         /// <summary>
         /// 登录日志时长 默认12月
         /// </summary>
         /// <returns></returns>
-        public int RetrieveLoginLogsPeriod() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "登录日志保留时长" && d.Define == 0)?.Code, 12);
+        public int RetrieveLoginLogsPeriod() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "登录日志保留时长" && d.Define == 0)?.Code ?? "12", 12);
 
         /// <summary>
         /// Cookie保存时长 默认7天
         /// </summary>
         /// <returns></returns>
-        public int RetrieveCookieExpiresPeriod() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "Cookie保留时长" && d.Define == 0)?.Code, 7);
+        public int RetrieveCookieExpiresPeriod() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "Cookie保留时长" && d.Define == 0)?.Code ?? "7", 7);
 
         /// <summary>
         /// 获得 IP地理位置
@@ -229,13 +229,13 @@ namespace Bootstrap.DataAccess
         /// 获得 访问日志保留时长 默认为1个月
         /// </summary>
         /// <returns></returns>
-        public int RetrieveAccessLogPeriod() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "访问日志保留时长" && d.Define == 0)?.Code, 1);
+        public int RetrieveAccessLogPeriod() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "访问日志保留时长" && d.Define == 0)?.Code ?? "1", 1);
 
         /// <summary>
         /// 获得 是否为演示系统 默认为 false 不是演示系统
         /// </summary>
         /// <returns></returns>
-        public bool RetrieveSystemModel() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "演示系统" && d.Define == 0)?.Code, "0") == "1";
+        public bool RetrieveSystemModel() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "演示系统" && d.Define == 0)?.Code ?? "0", "0") == "1";
 
         /// <summary>
         /// 获得 是否为演示系统 默认为 false 不是演示系统
@@ -282,7 +282,7 @@ namespace Bootstrap.DataAccess
         /// 获得自动锁屏时长 默认 30 秒
         /// </summary>
         /// <returns></returns>
-        public int RetrieveAutoLockScreenPeriod() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "自动锁屏时长" && d.Define == 0)?.Code, 30);
+        public int RetrieveAutoLockScreenPeriod() => LgbConvert.ReadValue(DictHelper.RetrieveDicts().FirstOrDefault(d => d.Category == "网站设置" && d.Name == "自动锁屏时长" && d.Define == 0)?.Code ?? "30", 30);
 
         /// <summary>
         /// 获得自动锁屏是否开启 默认关闭

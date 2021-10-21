@@ -110,7 +110,7 @@ namespace Bootstrap.Admin.Controllers
             if (string.IsNullOrEmpty(phone) || string.IsNullOrEmpty(code)) return RedirectLogin();
 
             var auth = provider.Validate(phone, code);
-            HttpContext.Log(phone, auth);
+            await HttpContext.Log(phone, auth);
             if (auth)
             {
                 var user = UserHelper.Retrieves().FirstOrDefault(u => u.UserName == phone);
@@ -161,7 +161,7 @@ namespace Bootstrap.Admin.Controllers
             if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password)) return RedirectLogin();
 
             var auth = UserHelper.Authenticate(userName, password);
-            HttpContext.Log(userName, auth);
+            await HttpContext.Log(userName, auth);
             return auth ? await SignInAsync(userName, remember == "true") : LoginView("", new LoginModel() { AuthFailed = true });
         }
 

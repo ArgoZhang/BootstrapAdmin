@@ -44,7 +44,11 @@ namespace Microsoft.AspNetCore.Http
                     FirstAccessTime = DateTime.Now,
                     Referer = context.Request.Headers["Referer"]
                 };
-                v.Location = locator?.Locate(v.Ip) ?? "";
+                var t = locator.Locate(v.Ip);
+                if (t.IsCompletedSuccessfully)
+                {
+                    v.Location = t.Result;
+                }
                 return proxy(new AutoExpireCacheEntry<OnlineUser>(v, 1000 * 60, __ => onlineUserSvr.TryRemove(key, out _)), null);
             }, (key, v) => proxy(v, () => v.Reset()));
         }
