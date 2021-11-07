@@ -42,10 +42,17 @@ namespace Bootstrap.Admin.HealthChecks
             {
                 var sw = Stopwatch.StartNew();
                 Exception? error = null;
-                var result = await _client.HttpClient.GetFromJsonAsync<object>($"/api/Gitee/{url}", cancellationToken);
+                object? result = null;
+                try
+                {
+                    result = await _client.HttpClient.GetFromJsonAsync<object>($"/api/Gitee/{url}", cancellationToken);
+                }
+                catch (Exception ex) { error = ex; }
                 sw.Stop();
-                data.Add(url, error == null ? $"{result} Elapsed: {sw.Elapsed}" : $"{result} Elapsed: {sw.Elapsed} Exception: {error}");
-            })).ToArray());
+                data.Add(url, error == null
+                    ? $"{result} Elapsed: {sw.Elapsed}"
+                    : $"Elapsed: {sw.Elapsed} Exception: {error}");
+            })).ToArray(), cancellationToken);
             return Task.FromResult(HealthCheckResult.Healthy("Ok", data));
         }
     }
