@@ -134,6 +134,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.Client.Blazor", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.Client.Blazor.Shared", "src\blazor\Bootstrap.Client.Blazor.Shared\Bootstrap.Client.Blazor.Shared.csproj", "{B306BD58-1C73-40F2-86F7-E1763344007B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "github", "github", "{C07631B9-5E5E-417A-9A16-3C88956D574E}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\build.yml = .github\workflows\build.yml
+		.github\workflows\docker.yml = .github\workflows\docker.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
