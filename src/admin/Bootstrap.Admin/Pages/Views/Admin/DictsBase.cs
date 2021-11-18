@@ -3,6 +3,7 @@ using Bootstrap.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Bootstrap.Admin.Pages.Views.Admin.Components
 {
@@ -11,6 +12,11 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
     /// </summary>
     public class DictsBase : QueryPageBase<BootstrapDict>
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        public static IEnumerable<int> PageItemsSource => new int[] { 4, 10, 20 };
+
         /// <summary>
         /// 获得/设置 字典类别集合
         /// </summary>
@@ -54,6 +60,25 @@ namespace Bootstrap.Admin.Pages.Views.Admin.Components
             var totalCount = data.Count();
             var items = data.Skip((options.PageIndex - 1) * options.PageItems).Take(options.PageItems);
             return new QueryData<BootstrapDict>() { Items = items, TotalCount = totalCount, PageIndex = options.PageIndex, PageItems = options.PageItems };
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        public Task<BootstrapBlazor.Components.QueryData<BootstrapDict>> OnQueryAsync(BootstrapBlazor.Components.QueryPageOptions options)
+        {
+            var data = DataAccess.DictHelper.RetrieveDicts();
+
+            if (QueryModel.Define != -1) data = data.Where(d => d.Define == QueryModel.Define);
+            if (!string.IsNullOrEmpty(QueryModel.Name)) data = data.Where(d => d.Name.Contains(QueryModel.Name, StringComparison.OrdinalIgnoreCase));
+            if (!string.IsNullOrEmpty(QueryModel.Category)) data = data.Where(d => d.Category.Contains(QueryModel.Category, StringComparison.OrdinalIgnoreCase));
+            if (!string.IsNullOrEmpty(options.SearchText)) data = data.Where(d => d.Category.Contains(options.SearchText, StringComparison.OrdinalIgnoreCase) || d.Name.Contains(options.SearchText, StringComparison.OrdinalIgnoreCase) || d.Code.Contains(options.SearchText, StringComparison.OrdinalIgnoreCase));
+
+            var totalCount = data.Count();
+            var items = data.Skip((options.PageIndex - 1) * options.PageItems).Take(options.PageItems);
+            return Task.FromResult(new BootstrapBlazor.Components.QueryData<BootstrapDict> { Items = items, TotalCount = totalCount });
         }
 
         /// <summary>
