@@ -1,0 +1,23 @@
+﻿<footer class="position-fixed">
+    <div>
+        <span id="websiteFooter">@Text</span>
+        @if (IsDemo)
+        {
+            <span>（演示系统）</span>
+        }
+    </div>
+    <a id="gotoTop" href="#" class="go-top" title="返回顶部" data-toggle="tooltip" data-placement="left">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</footer>
+
+@code {
+    [Parameter]
+    public string Text { get; set; } = "未设置";
+
+    [Parameter]
+    public EventCallback<string> TextChanged { get; set; }
+
+    [Parameter]
+    public bool IsDemo { get; set; }
+}

@@ -1,0 +1,44 @@
+﻿@media (max-width: 767px) {
+    .form-signin {
+        margin: 0 auto;
+        max-width: 320px;
+    }
+}
+
+@media (min-width: 768px) {
+    /*body {
+        background-color: #5bc0de;
+        background: url('../images/bg2.jpg') fixed no-repeat;
+        background-size: 100% 100%;
+    }*/
+
+    .container {
+        width: 500px;
+        margin: 0 auto;
+    }
+
+    .form-signin-heading {
+        padding: 28px 0;
+        background-color: transparent;
+    }
+
+    .login-wrap {
+        width: 300px;
+        height: 274px;
+        position: relative;
+        left: 346px;
+        justify-content: center;
+    }
+
+    .slidercaptcha {
+        width: 300px;
+    }
+
+        .slidercaptcha, .slidercaptcha.oauth {
+            height: 280px;
+        }
+
+            .slidercaptcha.card .card-body {
+                padding: 15px 15px 0 15px;
+            }
+}

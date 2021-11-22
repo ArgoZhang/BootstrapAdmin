@@ -1,0 +1,143 @@
+body {
+    background: #02bac6 url("../images/lock-bg.jpg");
+    background-size: cover;
+    background-repeat: repeat;
+}
+
+.lock-wrapper {
+    margin: 6% auto;
+    max-width: 330px;
+}
+
+.lock-box {
+    background: rgba(255,255,255,.3);
+    padding: 20px;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    position: relative;
+}
+
+.lock-wrapper img {
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border: 5px solid #28a745;
+    width: 250px;
+    height: 250px;
+}
+
+.lock-wrapper h1 {
+    text-align: center;
+    color: #fff;
+    font-size: 18px;
+    text-transform: uppercase;
+    padding: 20px 0 0 0;
+}
+
+.lock-wrapper .locked {
+    margin-bottom: 20px;
+    display: inline-block;
+    color: #026f7a;
+}
+
+.btn-lock, .btn-lock:hover {
+    background: #02b5c2;
+    color: #fff;
+}
+
+.lock-input {
+    width: 83%;
+    border: none;
+    float: left;
+    margin-right: 3px;
+}
+
+#time {
+    width: 100%;
+    color: #fff;
+    font-size: 60px;
+    display: inline-block;
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+}
+
+.btn-login {
+    width: 140px;
+}
+
+.btn-lock, .btn-login {
+    background: #02b5c2;
+    color: #fff;
+    outline: none !important;
+}
+
+    .btn-lock, .btn-lock:hover {
+        border-left: none;
+    }
+
+.has-error .btn-lock {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #a94442;
+}
+
+.has-success .btn-lock {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #3c763d;
+}
+
+.form-inline .input-group input:focus {
+    z-index: auto;
+}
+
+.form-inline .form-group {
+    display: none;
+}
+
+.form-inline.Cookies .form-group.Cookies,
+.form-inline.Mobile .form-group.Mobile,
+.form-inline.Gitee .form-group.OAuth,
+.form-inline.GitHub .form-group.OAuth {
+    display: flex;
+}
+
+div.input-group span {
+    color: #fff;
+}
+
+div.input-group input, div.input-group input:hover, .btn-lock, div.input-group .input-group-text, .btn-login {
+    border-color: #1d9238;
+}
+
+    div.input-group input:focus {
+        box-shadow: none;
+    }
+
+    div.input-group input, div.input-group input:hover, div.input-group input:focus {
+        border-right: none;
+    }
+
+        div.input-group input.error {
+            background-color: #dcc4c4;
+            border-color: #e21717;
+        }
+
+div.input-group .input-group-text {
+    background-color: #02b5c2;
+}
+
+.btn-sms {
+    width: 122px;
+}
+
+.form-group:last-child input {
+    width: 80px;
+}
+
+@media (min-width: 576px) {
+    .form-inline .form-group {
+        flex: 0 1 auto;
+        margin-bottom: 1rem;
+    }
+}

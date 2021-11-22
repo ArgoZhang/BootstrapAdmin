@@ -1,0 +1,133 @@
+﻿@inherits HeaderBase
+@using Bootstrap.Admin.Blazor.Extensions
+
+<header class="header">
+    <div class="bg"></div>
+    <div class="d-flex align-items-center">
+        <a id="navbar" href="@RootLayout?.HomeUrl" class="sidebar-toggle-box">
+            <i class="fa fa-bars"></i>
+            <span id="websiteTitle">@WebTitle</span>
+        </a>
+        <div class="nav">
+            @if (@RootLayout?.IsAdmin ?? false)
+            {
+                <!-- tasks start -->
+                <div class="dropdown">
+                    <a data-toggle="dropdown" class="shadow-primary" href="#">
+                        <i class="fa fa-tasks"></i>
+                        <span id="msgHeaderTaskBadge" class="badge badge-pill badge-primary"></span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-arrow arrow-primary"></div>
+                        <div id="msgHeaderTaskContent" class="dropdown-header bg-primary">您有 <span id="msgHeaderTask">0</span> 个未完成的任务</div>
+                        <div class="dropdown-footer">
+                            <a href="@("~/Admin/Tasks".ToBlazorMenuUrl())">查看所有任务</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- tasks end -->
+                <!-- message dropdown start-->
+                <div class="dropdown">
+                    <a data-toggle="dropdown" class="shadow-info" href="#">
+                        <i class="fa fa-envelope"></i>
+                        <span id="msgHeaderMsgBadge" class="badge badge-pill badge-info"></span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-arrow arrow-info"></div>
+                        <div id="msgHeaderMsgContent" class="dropdown-header bg-info">您有 <span id="msgHeaderMsg">0</span> 个未读的消息</div>
+                        <div class="dropdown-footer">
+                            <a href="@("~/Admin/Messages".ToBlazorMenuUrl())">查看所有消息</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- message dropdown end -->
+                <!-- users dropdown start-->
+                <div class="dropdown">
+                    <a data-toggle="dropdown" class="shadow-success" href="#">
+                        <i class="fa fa-user-plus"></i>
+                        <span id="msgHeaderUserBadge" class="badge badge-pill badge-success"></span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-arrow arrow-success"></div>
+                        <div id="msgHeaderUserContent" class="dropdown-header bg-success">您有 <span id="msgHeaderUser">0</span> 条新用户通知</div>
+                        <div class="dropdown-footer">
+                            <a href="@("~/Admin/Notifications".ToBlazorMenuUrl())">查看所有通知</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- users dropdown end -->
+                <!-- apps dropdown start-->
+                <div class="dropdown">
+                    <a data-toggle="dropdown" class="shadow-warning" href="#">
+                        <i class="fa fa-bug"></i>
+                        <span id="msgHeaderAppBadge" class="badge badge-pill badge-warning"></span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-arrow arrow-warning"></div>
+                        <div id="msgHeaderAppContent" class="dropdown-header bg-warning">您有 <span id="msgHeaderApp">0</span> 条程序异常通知</div>
+                        <div class="dropdown-footer">
+                            <a href="@("~/Admin/Exceptions".ToBlazorMenuUrl())">查看所有异常</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- apps dropdown end -->
+                <!-- db dropdown start-->
+                <div class="dropdown">
+                    <a data-toggle="dropdown" class="shadow-danger" href="#">
+                        <i class="fa fa-database"></i>
+                        <span id="msgHeaderDbBadge" class="badge badge-pill badge-danger"></span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-arrow arrow-danger"></div>
+                        <div id="msgHeaderDbContent" class="dropdown-header bg-danger">您有 <span id="msgHeaderDb">0</span> 条数据库异常通知</div>
+                        <div class="dropdown-footer">
+                            <a href="@("~/Admin/Exceptions".ToBlazorMenuUrl())">查看所有异常</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- db dropdown end -->
+                <div class="dropdown">
+                    <a class="shadow-success" href="@("~/Account/Lock".ToBlazorMenuUrl())" data-toggle="tooltip" title="系统锁屏">
+                        <i class="fa fa-tv"></i>
+                    </a>
+                </div>
+            }
+            <div class="@(EnableBlazor ? "dropdown" : "dropdown d-none")">
+                <a class="shadow-success dropdown-mvc" href="#" data-method="blazor" data-toggle="tooltip" title="NETCore MVC 模式">
+                    <img src="images/netcore2.png" />
+                </a>
+            </div>
+        </div>
+        <div class="dropdown userinfo">
+            <div data-toggle="dropdown" class="dropdown-toggle shadow-default">
+                <img alt="" src="@Icon.ToBlazorLink()" />
+                <span class="username text-truncate d-inline-block">@DisplayName</span>
+            </div>
+            <div class="dropdown-menu dropdown-menu-right">
+                <div class="dropdown-item">
+                    <div class="d-flex flex-fill align-items-center">
+                        <img src="@Icon.ToBlazorLink()">
+                        <div class="flex-fill">
+                            <div class="username text-truncate">@DisplayName</div>
+                            <div>登录名：@RootLayout?.UserName</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="dropdown-item">
+                    <a href="@("~/Admin/Profiles".ToBlazorMenuUrl())"><i class=" fa fa-suitcase"></i>个人中心</a>
+                    <a href="@("~/Admin/Index".ToBlazorMenuUrl())"><i class="fa fa-cog"></i>设置</a>
+                    <a href="@("~/Admin/Notifications".ToBlazorMenuUrl())"><i class="fa fa-bell"></i>通知<span id="logoutNoti" class="badge badge-pill badge-success"></span></a>
+                </div>
+                <div class="dropdown-item">
+                    <a href="Account/Logout"><i class="fa fa-key"></i>注销</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="Pages"><i class="fa fa-home"></i>首页</a></li>
+            <li class="breadcrumb-item d-none" id="breadNav"></li>
+        </ol>
+    </nav>
+</header>

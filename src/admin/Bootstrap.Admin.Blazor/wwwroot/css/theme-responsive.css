@@ -1,0 +1,157 @@
+@media print {
+    a:link {
+        text-decoration: none !important;
+    }
+
+    a[href]:after {
+        content: none !important;
+    }
+}
+
+@media (min-width: 375px) {
+    .toolbar .dropdown-menu a {
+        padding: 0 14px;
+    }
+
+        .toolbar .dropdown-menu a:first-child {
+            border-left: none;
+        }
+
+    .form-check-input + span, .form-check-input + label {
+        max-width: 146px;
+    }
+}
+
+@media (min-width: 568px) {
+    .sidebar-toggle-box span {
+        display: inline;
+    }
+
+    .bootstrap-table .bs-bars .gear {
+        display: none;
+    }
+
+    .bootstrap-table .bs-bars .toolbar {
+        display: inline-flex;
+    }
+
+        .bootstrap-table .bs-bars .toolbar .btn i + span {
+            display: inline;
+        }
+}
+
+@media (min-width: 576px) {
+    .form-inline .control-label {
+        padding-top: 6px;
+        padding-bottom: 6px;
+    }
+
+    .form-inline input.form-control, .form-inline .input-group, .form-select > input.form-control {
+        width: 194px;
+    }
+
+        .form-inline .input-group input.form-control {
+            width: 1%;
+        }
+
+    .modal-lg {
+        max-width: calc(90%);
+    }
+
+    .btn-fill {
+        width: auto;
+    }
+}
+
+@media (min-width: 667px) {
+    .header .nav {
+        display: flex;
+        flex: 1 1 auto;
+    }
+
+    .sidebar-toggle-box {
+        flex: 0 1 auto;
+    }
+}
+
+@media (min-width: 768px) {
+    html {
+        -ms-overflow-style: none;
+    }
+
+    .sidebar-open aside {
+        transform: translate(0);
+    }
+
+    .bootstrap-table .fixed-table-body td .btn-group, .bootstrap-table .fixed-table-body td .btn {
+        white-space: nowrap;
+    }
+}
+
+@media (min-width: 769px) {
+    .sidebar-open aside {
+        transform: translate(-100%);
+    }
+
+    .sidebar-open footer {
+        display: flex;
+    }
+
+    aside {
+        transform: translate(0);
+        width: 13.375rem;
+        overflow: hidden;
+        bottom: 40px;
+    }
+
+        aside .sidebar {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            overflow: hidden;
+        }
+}
+
+@media (min-width: 940px) {
+    .form-check-input + span, .form-check-input + label {
+        max-width: 192px;
+    }
+}
+
+@media (min-width: 992px) {
+    .modal-lg {
+        max-width: 940px;
+    }
+
+    .modal-xl {
+        max-width: calc(100% - 100px);
+    }
+}
+
+@media (min-width: 1120px) {
+    .bootstrap-table .fixed-table-toolbar .columns button i + span, .bootstrap-table .fixed-table-toolbar .search button i + span {
+        display: inline-block;
+    }
+}
+
+@media (min-width: 1200px) {
+    .modal-xl {
+        max-width: 1100px;
+    }
+
+    .modal-body-fixed {
+        max-height: calc(80vh);
+    }
+}
+
+@media screen and (-ms-high-contrast:active), (-ms-high-contrast:none) {
+    .main-content, aside:not(:hover), header, .nav-brand a img, .nav-brand a span {
+        transition: none !important;
+    }
+
+    .sidebar .sub .nav-item .nav-link:before {
+        margin-top: -18px;
+    }
+}

@@ -1,0 +1,359 @@
+﻿#components-reconnect-modal {
+    z-index: 9999 !important;
+}
+
+.userinfo .username {
+    max-width: 120px;
+}
+
+.nav-link-bar {
+    border: 1px solid #dee2e6;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+    padding: 0.5rem 1rem;
+    background-color: #fff;
+}
+
+nav .dropdown .nav-link-close.dropdown-toggle:after {
+    display: none;
+}
+
+.dropdown-item, .nav-tabs .nav-link .fa, .nav-link, .nav-link-bar, .page-link {
+    cursor: pointer;
+}
+
+    .dropdown-item:hover {
+        background-color: #4f9ecc;
+    }
+
+
+.nav-tabs .nav-link, .nav-link-bar, .fa-close {
+    transition: all .3s linear;
+}
+
+.nav-tabs .nav-link {
+    white-space: nowrap;
+    color: #495057;
+    border-color: #dee2e6 #dee2e6 transparent;
+    transition: all .3s linear;
+}
+
+    .nav-tabs .nav-link:hover, .nav-link-bar:hover {
+        background-color: #4f9ecc;
+        border-bottom-color: #4f9ecc;
+    }
+
+    .nav-tabs .nav-link span {
+        margin: 0 10px;
+    }
+
+    .nav-tabs .nav-link .fa-close {
+        border-radius: 4px;
+        padding: 2px;
+        width: 18px;
+        height: 18px;
+        text-align: center;
+    }
+
+        .nav-tabs .nav-link .fa-close:hover {
+            background-color: #eee;
+        }
+
+.nav-link-bar.dropdown {
+    padding: 0;
+}
+
+.nav-link-close {
+    padding: 0.5rem 1rem;
+}
+
+.tab-content {
+    padding-top: 1rem;
+}
+
+.table th, .table td {
+    padding: 0.5rem;
+}
+
+.table .btn.btn-sm {
+    font-size: 0.75rem;
+    padding: 1px 5px;
+}
+
+.table .btn-group {
+    white-space: nowrap;
+}
+
+.table-col-lineno {
+    width: 46px;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.table-col-checkbox {
+    width: 32px;
+    text-align: center;
+}
+
+    .table-col-checkbox .checkbox-label {
+        display: none;
+    }
+
+.table-selected .form-checkbox {
+    line-height: 1;
+    vertical-align: text-bottom;
+}
+
+.bs-bars {
+    margin-bottom: 0.625rem;
+}
+
+    .bs-bars .dropdown-menu.show {
+        display: flex;
+        min-width: unset;
+    }
+
+    .bs-bars .dropdown-item {
+        padding: 6px 12px;
+    }
+
+        .bs-bars .dropdown-item:not(:first-child) {
+            border-left: solid 1px #aeb2b7;
+        }
+
+.bootstrap-table {
+    margin-bottom: 0;
+}
+
+    .bootstrap-table .fixed-table-toolbar:after {
+        display: block;
+        content: "";
+        clear: both;
+    }
+
+    .bootstrap-table .fixed-table-toolbar .columns-right {
+        margin-left: 5px;
+    }
+
+    .bootstrap-table .table-fixed {
+        height: 324px;
+        overflow: hidden;
+    }
+
+    .bootstrap-table .table-fixed-header {
+        overflow: hidden;
+    }
+
+        .bootstrap-table .table-fixed-header table th {
+            white-space: nowrap;
+        }
+
+    .bootstrap-table .fixed-table-body {
+        min-height: 284px;
+    }
+
+        .bootstrap-table .fixed-table-body table {
+            margin-top: -38px;
+        }
+
+        .bootstrap-table .fixed-table-body thead th, .bootstrap-table .fixed-table-header thead th {
+            border-bottom: 1px solid #dee2e6;
+        }
+
+    .bootstrap-table .datetime {
+        min-width: 170px;
+    }
+
+    .bootstrap-table .sortable {
+        padding-right: 30px;
+        cursor: pointer;
+    }
+
+        .bootstrap-table .sortable span {
+            display: inline-block;
+            width: 100%;
+        }
+
+        .bootstrap-table .sortable i {
+            margin-left: 8px;
+        }
+
+        .bootstrap-table .sortable .fa-sort {
+            color: #dee2e6;
+        }
+
+.table-wrapper {
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    border: solid 1px #dee2e6;
+}
+
+    .table-wrapper .table {
+        margin-bottom: -1px;
+    }
+
+    .table-wrapper .table {
+        border: none;
+    }
+
+        .table-wrapper .table th:last-child, .table-wrapper .table td:last-child {
+            border-right-width: 0;
+        }
+
+        .table-wrapper .table th:first-child, .table-wrapper .table td:first-child {
+            border-left-width: 0;
+        }
+
+.pagination-bar {
+    flex: 1 1 auto;
+    margin-bottom: 1rem;
+}
+
+.nav .pagination-bar .dropdown-menu {
+    width: 160px;
+}
+
+    .nav .pagination-bar .dropdown-menu .dropdown-item {
+        background-color: unset;
+        border-bottom: none;
+        font-size: 0.875rem;
+        padding: 6px 20px;
+    }
+
+        .nav .pagination-bar .dropdown-menu .dropdown-item.active, .nav .pagination-bar .dropdown-menu .dropdown-item:hover {
+            background-color: #77afd5;
+        }
+
+.nav .pagination-bar [data-toggle="dropdown"]:hover {
+    color: #fff;
+}
+
+.toast {
+    position: absolute;
+    z-index: -1;
+}
+
+    .toast.show {
+        z-index: 1030;
+    }
+
+    .toast:not(:last-child) {
+        margin-bottom: 0;
+    }
+
+.toast-top {
+    left: 0;
+    right: 0;
+    top: 1rem;
+    margin: 0 auto;
+}
+
+.toast-top-left {
+    top: 1rem;
+    left: 1rem;
+}
+
+.toast-top-right {
+    top: 1rem;
+    right: 1rem;
+}
+
+.toast-bottom {
+    left: 0;
+    right: 0;
+    bottom: 1rem;
+    margin: 0 auto;
+}
+
+.toast-bottom-left {
+    bottom: 1rem;
+    left: 1rem;
+}
+
+.toast-bottom-right {
+    bottom: 1rem;
+    right: 1rem;
+}
+
+.toast-center {
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    margin-top: calc(50vh - 42px);
+}
+
+.toast-bar {
+    margin-right: 8px;
+}
+
+.toast-header {
+    border-bottom: 1px solid #ccc;
+}
+
+.toast-body {
+    background-color: #e9ecef;
+    color: rgba(0, 0, 0, 0.9);
+    word-break: break-all;
+    width: 288px;
+}
+
+.toast-progress {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    height: 4px;
+    background-color: #000000;
+    opacity: 0.4;
+    -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=40);
+    filter: alpha(opacity=40);
+    width: 0;
+    transition: all 4s linear;
+}
+
+.showing .toast-progress, .show .toast-progress {
+    width: 100%;
+}
+
+.modal-confirm-body {
+    margin-bottom: 15px;
+    font-size: 1.125rem;
+}
+
+.card-footer {
+    text-align: right;
+    padding: 0.5rem 1rem;
+}
+
+.dropdown-mvc {
+    padding: 0 !important;
+}
+
+    .dropdown-mvc img {
+        width: 34px;
+    }
+
+@media (min-width: 568px) {
+    .toast {
+        max-width: 360px;
+    }
+
+    .toast-body {
+        width: 360px;
+    }
+}
+
+@media (min-width: 768px) {
+    .main-content {
+        padding: 0;
+    }
+
+    .tab-content {
+        padding: 1rem 1rem 0 1rem;
+        position: absolute;
+        overflow: auto;
+        top: 40px;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+}

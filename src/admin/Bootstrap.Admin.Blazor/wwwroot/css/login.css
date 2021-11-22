@@ -1,0 +1,141 @@
+﻿body {
+    color: #797979;
+    background-color: #f1f2f7;
+}
+
+.form-signin-heading {
+    margin: 0;
+    padding: 20px 15px;
+    text-align: center;
+    background-color: #41cac0;
+    border-radius: 5px 5px 0 0;
+    color: #fff;
+}
+
+.login-wrap {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
+}
+
+    .login-wrap .rememberPwd {
+        cursor: pointer;
+        color: #333;
+        margin-left: 2px;
+    }
+
+        .login-wrap .rememberPwd i {
+            width: 13px;
+        }
+
+    .login-wrap .card, .login-wrap .card:hover, .modal .card, .modal .card:hover {
+        border: 1px solid #84bbe2;
+    }
+
+.btn-login {
+    background: #f67a6e;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 300;
+    font-family: 'Open Sans', sans-serif;
+    box-shadow: 0 4px #e56b60;
+    margin-bottom: 0.75rem;
+    outline: none !important;
+    margin-top: -0.25rem;
+    line-height: 1;
+}
+
+    .btn-login:focus {
+        box-shadow: 0 4px #e56b60;
+    }
+
+.input-group-text {
+    background-color: #6bc3f4;
+    border-color: #1ca0e9;
+}
+
+.form-control, .input-group-append .btn {
+    border-color: #1ca0e9 !important;
+}
+
+.slidercaptcha {
+    display: none;
+    background-color: #00adec;
+    border-radius: 4px;
+    box-shadow: 0 0 10px #fff;
+    height: 274px;
+    width: 286px;
+    z-index: 1080;
+    position: absolute;
+}
+
+    .slidercaptcha canvas:first-child {
+        border-radius: 4px;
+        border: solid 1px #0076c9;
+    }
+
+    .slidercaptcha .close {
+        color: #fff;
+        margin-top: -2px;
+    }
+
+    .slidercaptcha.oauth {
+        height: 210px;
+    }
+
+    .slidercaptcha.card .card-body {
+        padding: 0.75rem 0 0 0;
+    }
+
+    .slidercaptcha.card .card-header {
+        background-image: none;
+        background-color: rgba(0, 0, 0, 0.03);
+        color: #fff;
+    }
+
+        .slidercaptcha.card .card-header .close:hover {
+            color: #fff;
+        }
+
+    .slidercaptcha.forgot, .slidercaptcha.reg {
+        bottom: 52px;
+    }
+
+.login-other {
+    display: table;
+    text-align: center;
+    white-space: nowrap;
+    margin: 0.25rem 0 0.625rem 0;
+}
+
+    .login-other:before, .login-other:after {
+        background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABaAAAAACCAYAAACuTHuKAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo1OThBRDY4OUNDMTYxMUU0OUE3NUVGOEJDMzMzMjE2NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo1OThBRDY4QUNDMTYxMUU0OUE3NUVGOEJDMzMzMjE2NyI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjU5OEFENjg3Q0MxNjExRTQ5QTc1RUY4QkMzMzMyMTY3IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU5OEFENjg4Q0MxNjExRTQ5QTc1RUY4QkMzMzMyMTY3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+VU513gAAADVJREFUeNrs0DENACAQBDBIWLGBJQby/mUcJn5sJXQmOQMAAAAAAJqt+2prAAAAAACg2xdgANk6BEVuJgyMAAAAAElFTkSuQmCC");
+        content: '';
+        display: table-cell;
+        position: relative;
+        top: 50%;
+        width: 50%;
+        background-repeat: no-repeat;
+    }
+
+    .login-other:before {
+        background-position: right 1em top 50%;
+    }
+
+    .login-other:after {
+        background-position: left 1em top 50%;
+    }
+
+.login-list {
+    display: flex;
+    justify-content: space-between;
+}
+
+    .login-list .item {
+        width: 32px;
+        height: 32px;
+    }
+
+.login-wrap .btn-sms {
+    width: 140px;
+}

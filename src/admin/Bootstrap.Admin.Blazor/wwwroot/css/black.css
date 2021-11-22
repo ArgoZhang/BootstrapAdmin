@@ -1,0 +1,100 @@
+body, a, .table {
+    color: #eee;
+}
+
+body, .modal-content {
+    background-color: #394450;
+}
+
+.header {
+    background: #212529;
+    border-bottom: 1px solid rgba(0,0,0,0.9);
+}
+
+.sidebar-toggle-box:hover, .userinfo .dropdown-toggle:hover, .userinfo.show .dropdown-toggle, .nav [data-toggle="dropdown"]:hover {
+    color: #f8f9fa;
+}
+
+.userinfo .dropdown-toggle, .nav [data-toggle="dropdown"] {
+    border: 1px solid #495057;
+}
+
+.breadcrumb {
+    border-top: solid 1px #495057;
+}
+
+.card {
+    background-color: #343a40;
+}
+
+.form-control {
+    /* background-color: rgba(255,255,255,0.5); */
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    color: #000000e6;
+}
+
+.form-control:disabled, .form-control[readonly] {
+    background-color: #6c757d;
+}
+
+.form-control:focus {
+    background-color: rgba(255,255,255,0.6);
+}
+
+.modal-footer {
+    border-top: 1px solid rgba(0,0,0,0.125);
+}
+
+.file-drop-zone.clickable:focus {
+    border: 1px solid #5acde2;
+}
+
+.table th, .table td, .dropdown-divider {
+    border-top: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.table-hover tbody tr:hover {
+    color: #fff;
+}
+
+.fixed-table-container tbody .selected td {
+    background-color: transparent;
+}
+
+.dropdown-menu {
+    background-color: #6c757d;
+}
+
+.dropdown-menu a {
+    color: rgba(0, 0, 0, 0.9);
+}
+
+.dropdown-item:hover, .dropdown-item:focus, .page-link:hover {
+    background-color: #495057;
+}
+
+.dropdown-select + .dropdown-menu a:hover {
+    background-color: #495057;
+    color: rgba(0, 0, 0, 0.9);
+}
+
+.fixed-table-loading, .modal-header {
+    background-color: #2e3640;
+}
+
+.input-group .btn:not(.btn-secondary):not(.btn-primary):not(.btn-warning):not(.btn-info):not(.btn-danger) {
+    border-color: #6c757d;
+    background-color: rgba(255,255,255,0.5);
+}
+
+.input-group input.form-control {
+    border-color: #6c757d;
+}
+
+.close {
+    text-shadow: 0 1px 0 #000;
+}
+
+.fontawesome-icon-list .fa-hover a, .sidebar-toggle-box, .userinfo .dropdown-toggle, .header .nav .dropdown > a, .sidebar .nav-link {
+    color: #eee;
+}

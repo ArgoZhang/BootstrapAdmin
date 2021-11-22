@@ -1,0 +1,39 @@
+html {
+    font-size: 16px;
+    -ms-overflow-style: auto;
+}
+
+body {
+    background: #8075c6;
+    color: #fff;
+}
+
+img {
+    width: 150px;
+    height: auto;
+}
+
+.error-wrapper {
+    text-align: center;
+    margin: 0 auto;
+    max-width: 30rem;
+    padding: 1rem;
+}
+
+    .error-wrapper p {
+        padding-top: 10px;
+    }
+
+    .error-wrapper div {
+        text-align: left;
+    }
+
+a {
+    cursor: pointer;
+}
+
+    a, a:hover, a:focus {
+        text-decoration: none;
+        outline: none;
+        color: #371ed4;
+    }

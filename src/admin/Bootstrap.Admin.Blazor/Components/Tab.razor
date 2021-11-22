@@ -1,0 +1,5 @@
+﻿@inherits TabBase
+
+<div class="@(Active ? "nav-link active" : "nav-link")" @onclick="ClickTab" id="@Id" url="@Url">
+    <i class="@Icon"></i><span>@Title</span><i class="fa fa-close" @onclick="CloseTab"></i>
+</div>

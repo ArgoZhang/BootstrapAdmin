@@ -1,0 +1,257 @@
+/*--------------Tasks Widget--------------*/
+.task-content {
+    margin-bottom: 30px;
+}
+
+.tasks-widget .task-content:after {
+    clear: both;
+}
+
+.tasks-widget .task-footer {
+    margin-top: 5px;
+}
+
+    .tasks-widget .task-footer:after,
+    .tasks-widget .task-footer:before {
+        content: "";
+        display: table;
+        line-height: 0;
+    }
+
+    .tasks-widget .task-footer:after {
+        clear: both;
+    }
+
+.tasks-widget .task-list {
+    padding: 0;
+    margin: 0 0 20px 0;
+}
+
+    .tasks-widget .task-list > li {
+        position: relative;
+    }
+
+    .tasks-widget .task-list li.last-line {
+        border-bottom: none;
+    }
+
+    .tasks-widget .task-list li > .task-bell {
+        margin-left: 10px;
+    }
+
+    .tasks-widget .task-list li > .task-checkbox {
+        float: left;
+        width: 30px;
+    }
+
+    .tasks-widget .task-list li > .task-title {
+        overflow: hidden;
+        height: 46px;
+    }
+
+        .tasks-widget .task-list li > .task-title .task-value {
+            position: absolute;
+            left: 190px;
+            right: 84px;
+            top: 14px;
+            display: none;
+        }
+
+        .tasks-widget .task-list li > .task-title span {
+            display: inline-block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+        }
+
+        .tasks-widget .task-list li > .task-title .badge {
+            position: relative;
+            display: inline-block;
+            top: -16px;
+            left: -12px;
+        }
+
+        .tasks-widget .task-list li > .task-title .hidden-phone {
+            padding-top: 12px;
+            margin-right: 4px;
+        }
+
+            .tasks-widget .task-list li > .task-title .hidden-phone > span {
+                margin-right: 6px;
+                vertical-align: middle;
+            }
+
+            .tasks-widget .task-list li > .task-title .hidden-phone button.btn-xs {
+                font-size: 0.75rem;
+                line-height: 1.5;
+                margin-right: 4px;
+            }
+
+            .tasks-widget .task-list li > .task-title .hidden-phone a.btn-xs {
+                padding: 4px 5px;
+            }
+
+    .tasks-widget .task-list li > .task-config {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+
+    .tasks-widget .task-list li .task-title.notifi .task-title-sp {
+        max-width: 80px;
+    }
+
+    .tasks-widget .task-list li .task-title.notifi .task-value {
+        left: 120px;
+        right: 190px;
+    }
+
+    .tasks-widget .task-list li .task-title.notifi .task-time {
+        position: absolute;
+        right: 66px;
+        top: 15px;
+        display: inline-block;
+    }
+
+    .tasks-widget .task-list li .task-title .task-title-sp {
+        margin-right: 5px;
+        max-width: 120px;
+        margin-top: 14px;
+    }
+
+    .tasks-widget .task-list li.task-done .task-title-sp {
+        text-decoration: line-through;
+        color: #bbbbbb;
+    }
+
+    .tasks-widget .task-list li.task-done {
+        background: #f6f6f6;
+    }
+
+        .tasks-widget .task-list li.task-done:hover {
+            background: #f4f4f4;
+        }
+
+    .tasks-widget .task-list li:hover {
+        background: #f9f9f9;
+    }
+
+    .tasks-widget .task-list li .task-config {
+        display: none;
+    }
+
+    .tasks-widget .task-list li:hover > .task-config {
+        display: block;
+        margin-bottom: 0 !important;
+    }
+
+    .tasks-widget .task-list li i {
+        position: absolute;
+        left: 6px;
+        padding: 16px 10px;
+        cursor: pointer;
+        margin-top: 2px;
+    }
+
+#sortable {
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
+}
+
+.ui-sortable > li {
+    padding-left: 35px;
+    position: relative;
+    background: #f5f6f8;
+    margin-bottom: 2px;
+    border-bottom: none;
+}
+
+.ui-sortable li.title {
+    color: #0077de;
+    background-color: #b5f1b6;
+    padding: 10px 15px;
+}
+
+    .ui-sortable li.title:hover {
+        background-color: #b5f1b6;
+    }
+
+    .ui-sortable li.title:first-child {
+        border-radius: 4px 4px 0 0;
+    }
+
+.ui-sortable li.list-primary {
+    border-left: 3px solid #41CAC0;
+}
+
+.ui-sortable li.list-success {
+    border-left: 3px solid #78CD51;
+}
+
+.ui-sortable li.list-danger {
+    border-left: 3px solid #FF6C60;
+}
+
+.ui-sortable li.list-warning {
+    border-left: 3px solid #F1C500;
+}
+
+.ui-sortable li.list-info {
+    border-left: 3px solid #58C9F3;
+}
+
+.ui-sortable li.list-inverse {
+    border-left: 3px solid #BEC3C7;
+}
+
+.ui-sortable li.list-default {
+    border-left: 3px solid #BEC3C7;
+}
+
+.ui-sortable li.list-Exception {
+    border-left: 3px solid red;
+}
+
+.ui-sortable li.list-Message {
+    border-left: 3px solid #00ff00;
+}
+
+.ui-sortable li.list-Task {
+    border-left: 3px solid #2083a0;
+}
+
+.ui-sortable li.list-Notification {
+    border-left: 3px solid #b7d8e2;
+}
+
+.task-header {
+    font-size: 14px !important;
+    font-weight: 600;
+    background-color: #5cb85c !important;
+    color: #fff;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.task-oper {
+    padding-top: 15px;
+    padding-right: 20px;
+}
+
+@media (max-width: 548px) {
+    .tasks-widget .task-list li .task-title.notifi .task-value {
+        right: 66px;
+    }
+
+    .tasks-widget .task-list li .task-title.notifi .task-time {
+        display: none;
+    }
+}
+
+@media (min-width: 375px) {
+    .tasks-widget .task-list li > .task-title .task-value {
+        display: inline-block;
+    }
+}

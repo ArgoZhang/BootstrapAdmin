@@ -1,0 +1,32 @@
+﻿@inherits LayoutComponentBase
+@using Bootstrap.Admin.Blazor.Models
+@using Bootstrap.Admin.Blazor.Extensions
+
+
+<div class="error-content">
+    <div class="error-wrapper text-center">
+        <img src="@model?.Image" />
+        <h1>@model?.Content</h1>
+        <h3>@model?.Detail</h3>
+        <p><a href="/Account/Logout">登录</a> <span>或者</span> <a href="@model?.ReturnUrl.ToBlazorLink()">返回首页</a> <span>或者</span> <a href="/healths-ui">系统自检</a></p>
+        @if (@model?.Id == 403)
+        {
+            <div>
+                <p>也可能是以下原因导致您没有权限</p>
+                <p>1. 没有登录，请登录后查看</p>
+                <p>2. 当前用户未获得此资源的相应权限，请联系管理员</p>
+            </div>
+        }
+    </div>
+    @Body
+</div>
+
+@code {
+    protected ErrorModel? model;
+
+    protected override void OnInitialized()
+    {
+        var id = 404;
+        model = ErrorModel.CreateById(id);
+    }
+}

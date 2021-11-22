@@ -1,0 +1,25 @@
+﻿.login-footer {
+    display: none;
+}
+
+@media (min-width: 768px) {
+.login-footer {
+    display: block;
+    position: absolute;
+    bottom: 40px;
+}
+
+    .login-footer .login-footer-body {
+        display: flex;
+        width: 600px;
+        justify-content: space-around;
+    }
+
+        .login-footer .login-footer-body li {
+            list-style: none;
+        }
+
+            .login-footer .login-footer-body li a {
+                color: #7e8392;
+            }
+}

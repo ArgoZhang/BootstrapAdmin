@@ -1,0 +1,53 @@
+@media (min-width: 568px) {
+    .cache-item > :nth-child(2) {
+        flex: 0 0 144px;
+    }
+
+    .cache-item > :nth-child(4) {
+        flex: 1 1 auto;
+        display: block;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        margin-left: 10px;
+    }
+
+    .bootstrap-table .bs-bars .toolbar .btn i + span {
+        display: none;
+    }
+}
+
+@media (min-width: 667px) {
+    .bootstrap-table .bs-bars .toolbar .btn span {
+        display: inherit;
+    }
+}
+
+@media (min-width: 768px) {
+    .main-content {
+        position: absolute;
+        overflow: auto;
+        -ms-overflow-style: auto;
+    }
+
+    .header, .footer {
+        position: fixed;
+    }
+}
+
+@media (min-width: 769px) {
+    .sidebar-open .main-content {
+        margin-left: 0;
+        display: block;
+    }
+
+    .main-content {
+        margin-left: 13.375rem;
+    }
+}
+
+@media (min-width: 1077px) {
+    .bootstrap-table .bs-bars .toolbar .btn i + span {
+        display: inline;
+    }
+}

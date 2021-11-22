@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29215.179
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQLServer", "SQLServer", "{87319AF5-7C40-4362-B67C-35F9DD737DB4}"
 	ProjectSection(SolutionItems) = preProject
@@ -140,6 +140,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "github", "github", "{C07631
 		.github\workflows\docker.yml = .github\workflows\docker.yml
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.Admin.Blazor", "src\admin\Bootstrap.Admin.Blazor\Bootstrap.Admin.Blazor.csproj", "{485C1B75-7E3C-4AFC-8A91-2347FFEC1E96}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -182,6 +184,10 @@ Global
 		{B306BD58-1C73-40F2-86F7-E1763344007B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B306BD58-1C73-40F2-86F7-E1763344007B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B306BD58-1C73-40F2-86F7-E1763344007B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{485C1B75-7E3C-4AFC-8A91-2347FFEC1E96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{485C1B75-7E3C-4AFC-8A91-2347FFEC1E96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{485C1B75-7E3C-4AFC-8A91-2347FFEC1E96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{485C1B75-7E3C-4AFC-8A91-2347FFEC1E96}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -210,6 +216,7 @@ Global
 		{DAE3826B-AAAB-468A-9A06-2F56EF5C0767} = {41B6D37A-5E5E-42B3-85E4-D81A81E3D757}
 		{90BC5C25-0F93-4CDE-833C-3D8243E19D3B} = {DAE3826B-AAAB-468A-9A06-2F56EF5C0767}
 		{B306BD58-1C73-40F2-86F7-E1763344007B} = {DAE3826B-AAAB-468A-9A06-2F56EF5C0767}
+		{485C1B75-7E3C-4AFC-8A91-2347FFEC1E96} = {E03B7391-B52F-4449-B400-5CD9DE01F085}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {221EAE38-5F75-4391-9A48-E462A9F3B8FC}
