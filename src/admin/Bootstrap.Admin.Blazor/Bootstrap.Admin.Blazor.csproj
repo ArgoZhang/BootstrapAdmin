@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="BootstrapBlazor" Version="6.0.3" />
+    <PackageReference Include="BootstrapBlazor.DataAcces.PetaPoco" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>

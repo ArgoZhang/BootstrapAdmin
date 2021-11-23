@@ -7,8 +7,9 @@
         <div id="navBar" class="nav nav-tabs flex-fill flex-nowrap overflow-hidden" role="tablist">
             @foreach (var tab in Tabs)
             {
-                <Tab @key="@tab.Id" Active="@tab.Active" Id="@tab.Id" Icon="@tab.Icon" Url="@tab.Url.ToBlazorMenuUrl()" Title="@tab.Title"></Tab>
-            }
+                <Bootstrap.Admin.Blazor.Components.Tab @key="@tab.Id" Active="@tab.Active" Id="@tab.Id" Icon="@tab.Icon" Url="@tab.Url.ToBlazorMenuUrl()" Title="@tab.Title">
+                </Bootstrap.Admin.Blazor.Components.Tab>
+                }
         </div>
         <div class="nav-link-bar" @onclick="MoveNext"><i class="fa fa-chevron-right"></i></div>
         <div class="dropdown nav-link-bar">
