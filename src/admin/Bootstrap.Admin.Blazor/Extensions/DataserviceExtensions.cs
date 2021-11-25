@@ -1,4 +1,5 @@
 ﻿using BootstrapBlazor.Components;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Bootstrap.Admin.Blazor.Extensions
 {
@@ -14,35 +15,32 @@ namespace Bootstrap.Admin.Blazor.Extensions
         /// <returns></returns>
         public static IServiceCollection AddTableDataService(this IServiceCollection services)
         {
-            services.AddSingleton(typeof(IDataService<>), typeof(TableDataService<>));
+            services.AddScoped(typeof(IDataService<>), typeof(TableDataService<>));
             return services;
         }
 
-        internal class TableDataService<BootstrapDict> : DataServiceBase<Bootstrap.Security.BootstrapDict>
+        internal class TableDataService<TModel> : DataServiceBase<TModel> where TModel : class, new()
         {
+            [NotNull]
+            public Func<QueryPageOptions, Task<(IEnumerable<TModel> Items, int Total)>>? QueryAsyncCallback { get; set; }
+
             /// <summary>
             /// 查询操作方法
             /// </summary>
             /// <param name="options"></param>
             /// <returns></returns>
-            public override Task<QueryData<Bootstrap.Security.BootstrapDict>> QueryAsync(QueryPageOptions options)
+            public override async Task<QueryData<TModel>> QueryAsync(QueryPageOptions options)
             {
+                var items = await QueryAsyncCallback(options);
 
-                var items = DataAccess.DictHelper.RetrieveDicts();
-
-                var total = items.Count();
-
-                // 内存分页
-                items = items.Skip((options.PageIndex - 1) * options.PageItems).Take(options.PageItems).ToList();
-
-                return Task.FromResult(new QueryData<Bootstrap.Security.BootstrapDict>()
+                return new QueryData<TModel>()
                 {
-                    Items = items,
-                    TotalCount = total,
+                    Items = items.Items,
+                    TotalCount = items.Total,
                     IsSorted = true,
                     IsFiltered = true,
                     IsSearch = true
-                });
+                };
             }
         }
     }
