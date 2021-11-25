@@ -34,8 +34,6 @@ builder.Services.AddPetaPoco(option =>
 
 var app = builder.Build();
 
-app.Services.RegisterProvider();
-
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
