@@ -1,0 +1,10 @@
+﻿@page "/dicts"
+
+<BaseTable TModel="Bootstrap.Security.BootstrapDict" QueryAsyncCallback="@QueryAsyncCallback" OnCustomterColumnCreating="@OnCustomterColumnCreating">
+    <ColumnsTemplete Context="v">
+        <TableColumn TType="string" TItem="Bootstrap.Security.BootstrapDict" @bind-Field="v.Category" Text="字典标签"></TableColumn>
+        <TableColumn TType="string" TItem="Bootstrap.Security.BootstrapDict" @bind-Field="v.Name" Text="字典名称"></TableColumn>
+        <TableColumn TType="string" TItem="Bootstrap.Security.BootstrapDict" @bind-Field="v.Code" Text="字典代码"></TableColumn>
+        <TableColumn TType="int" TItem="Bootstrap.Security.BootstrapDict" @bind-Field="v.Define" Text="字典类型"></TableColumn>
+    </ColumnsTemplete>
+</BaseTable>
