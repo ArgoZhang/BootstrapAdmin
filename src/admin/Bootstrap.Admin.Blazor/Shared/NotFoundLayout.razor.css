@@ -1,0 +1,25 @@
+﻿.error {
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    right: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: #f7f7f7;
+}
+
+h3 {
+    font-size: 1.28rem;
+    font-weight: bold;
+    margin: 1.125rem 0;
+}
+
+.bg {
+    background-image: url('../images/bg404.png');
+    width: 458px;
+    height: 215px;
+    text-align: center;
+}
