@@ -1,0 +1,37 @@
+﻿.layout.is-page .layout-side {
+    color: #3f4254;
+    background-color: #fff;
+    box-shadow: 0 0 28px 0 rgb(82 63 105 / 5%);
+}
+
+.layout.is-page .layout-user .layout-title {
+    color: #3f4254;
+}
+
+.layout.is-page .layout-footer {
+    background-color: #e9ecef;
+}
+
+.layout-gotop {
+    background: #e9ecef;
+    color: #3f4254;
+}
+
+@media (min-width: 768px) {
+    .sidebar {
+        background-color: #fff !important;
+    }
+}
+
+.tabs-body {
+    background-color: #fff;
+}
+
+.tabs-body-content {
+    border-radius: var(--bs-border-radius);
+    padding: 1rem;
+}
+
+    .tabs-body-content .tabs-body-content {
+        background-color: #f5f8fa;
+    }
