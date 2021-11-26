@@ -4,7 +4,17 @@
     <ColumnsTemplete>
         <TableColumn @bind-Field="context.Category" Text="字典标签" Searchable="true" Filterable="true" Sortable="true"></TableColumn>
         <TableColumn @bind-Field="context.Name" Text="字典名称" Searchable="true" Filterable="true" Sortable="true"></TableColumn>
-        <TableColumn @bind-Field="context.Code" Text="字典代码" Searchable="true" Filterable="true" Sortable="true"></TableColumn>
-        <TableColumn @bind-Field="context.Define" Text="字典类型" Searchable="true" Filterable="true" Sortable="true"></TableColumn>
+        <TableColumn @bind-Field="context.Code" Text="字典代码" Filterable="true" Sortable="true"></TableColumn>
+        <TableColumn @bind-Field="context.Define" Text="字典类型" Searchable="true" Filterable="true" Sortable="true">
+            <Template Context="v">
+                @((MarkupString)CreateComponent(v.Value))
+            </Template>
+            <SearchTemplate Context="v">
+                <Select Items="@Categories" @bind-Value="v.Category" DisplayText="字典类型"></Select>
+            </SearchTemplate>
+            <EditTemplate Context="v">
+                <Select Items="@EditCategories" @bind-Value="v.Category" DisplayText="字典类型" style="width:200px"></Select>
+            </EditTemplate>
+        </TableColumn>
     </ColumnsTemplete>
 </BaseTable>
