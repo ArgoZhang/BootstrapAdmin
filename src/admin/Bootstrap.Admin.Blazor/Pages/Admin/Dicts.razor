@@ -1,10 +1,10 @@
 ﻿@page "/admin/dicts"
 
 <BaseTable TItem="BootstrapDict" IsPagination="false" QueryAsyncCallback="@QueryAsyncCallback">
-    <ColumnsTemplete Context="v">
-        <TableColumn @bind-Field="v.Category" Text="字典标签" Searchable="true" Filterable="true" Sortable="true"></TableColumn>
-        <TableColumn @bind-Field="v.Name" Text="字典名称" Searchable="true" Filterable="true" Sortable="true"></TableColumn>
-        <TableColumn @bind-Field="v.Code" Text="字典代码" Searchable="true" Filterable="true" Sortable="true"></TableColumn>
-        <TableColumn @bind-Field="v.Define" Text="字典类型" Searchable="true" Filterable="true" Sortable="true"></TableColumn>
+    <ColumnsTemplete>
+        <TableColumn @bind-Field="context.Category" Text="字典标签" Searchable="true" Filterable="true" Sortable="true"></TableColumn>
+        <TableColumn @bind-Field="context.Name" Text="字典名称" Searchable="true" Filterable="true" Sortable="true"></TableColumn>
+        <TableColumn @bind-Field="context.Code" Text="字典代码" Searchable="true" Filterable="true" Sortable="true"></TableColumn>
+        <TableColumn @bind-Field="context.Define" Text="字典类型" Searchable="true" Filterable="true" Sortable="true"></TableColumn>
     </ColumnsTemplete>
 </BaseTable>

@@ -57,7 +57,7 @@ namespace Microsoft.Extensions.DependencyInjection
             //    options.Filters.Add<ExceptionFilter>();
             //    options.Filters.Add<SignalRExceptionFilter<SignalRHub>>();
             //}).AddJsonOptions(op => op.JsonSerializerOptions.AddDefaultConverters());
-            services.AddControllers().AddJsonOptions(op => op.JsonSerializerOptions.AddDefaultConverters());
+            services.AddControllersWithViews().AddJsonOptions(op => op.JsonSerializerOptions.AddDefaultConverters());
 
             // 增加 BootstrapBlazor 组件
             services.AddBootstrapBlazor();
