@@ -9,7 +9,7 @@
 }
 
 .layout.is-page .layout-footer {
-    background-color: #e9ecef;
+    background-color: #f8f9fa;
 }
 
 .layout-gotop {
@@ -17,21 +17,12 @@
     color: #3f4254;
 }
 
+    .layout-gotop:hover {
+        background-color: #dee2e6;
+    }
+
 @media (min-width: 768px) {
     .sidebar {
         background-color: #fff !important;
     }
 }
-
-.tabs-body {
-    background-color: #fff;
-}
-
-.tabs-body-content {
-    border-radius: var(--bs-border-radius);
-    padding: 1rem;
-}
-
-    .tabs-body-content .tabs-body-content {
-        background-color: #f5f8fa;
-    }

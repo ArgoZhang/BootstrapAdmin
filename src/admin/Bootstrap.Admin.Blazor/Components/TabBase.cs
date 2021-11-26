@@ -60,7 +60,7 @@ namespace Bootstrap.Admin.Blazor.Components
         protected async Task CloseTab()
         {
             closeTab = true;
-            if (Layout.TabSet != null) await Layout.TabSet.CloseTab(Id);
+            //if (Layout.TabSet != null) await Layout.TabSet.CloseTab(Id);
         }
 
         /// <summary>

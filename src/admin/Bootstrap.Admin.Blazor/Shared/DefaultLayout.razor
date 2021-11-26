@@ -1,8 +1,3 @@
 ﻿@inherits LayoutComponentBase
 
-<CascadingValue Value=this Name="Default">
-    <Bootstrap.Admin.Blazor.Components.Header Header @ref="Header" Icon="@Model.Icon" @bind-DisplayName="DisplayName" @bind-WebTitle="WebTitle"/>
-    <Bootstrap.Admin.Blazor.Components.SideBar @ref="SideBar" Model=@Model @bind-DisplayName="DisplayName" @bind-WebTitle="WebTitle" />
-    @Body
-    <Bootstrap.Admin.Blazor.Components.Footer @ref="Footer" IsDemo=@Model.IsDemo @bind-Text="WebFooter"></Bootstrap.Admin.Blazor.Components.Footer>
-</CascadingValue>
+@Body

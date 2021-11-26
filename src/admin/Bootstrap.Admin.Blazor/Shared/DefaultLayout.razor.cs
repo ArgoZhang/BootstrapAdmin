@@ -5,11 +5,8 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Routing;
 using Microsoft.AspNetCore.Components.Server;
-using Microsoft.AspNetCore.Http;
 using Microsoft.JSInterop;
-using System;
 using System.Net;
-using System.Threading.Tasks;
 
 namespace Bootstrap.Admin.Blazor.Shared
 {
@@ -18,12 +15,6 @@ namespace Bootstrap.Admin.Blazor.Shared
     /// </summary>
     public partial class DefaultLayout
     {
-        /// <summary>
-        ///
-        /// </summary>
-        [Inject]
-        public AuthenticationStateProvider AuthenticationStateProvider { get; set; } = new ServerAuthenticationStateProvider();
-
         /// <summary>
         ///
         /// </summary>
@@ -41,11 +32,6 @@ namespace Bootstrap.Admin.Blazor.Shared
         /// </summary>
         [Inject]
         public IJSRuntime? JSRuntime { get; set; }
-
-        /// <summary>
-        ///
-        /// </summary>
-        public NavigatorBarModel Model { get; set; } = new NavigatorBarModel("");
 
         /// <summary>
         ///
@@ -87,39 +73,34 @@ namespace Bootstrap.Admin.Blazor.Shared
         /// </summary>
         protected SideBar? SideBar { get; set; }
 
-        /// <summary>
-        /// Footer 组件引用实例
-        /// </summary>
-        protected Footer? Footer { get; set; }
+        ///// <summary>
+        ///// OnInitializedAsync 方法
+        ///// </summary>
+        ///// <returns></returns>
+        //protected override async Task OnInitializedAsync()
+        //{
+        //// 网页跳转监控
+        //if (NavigationManager != null)
+        //{
+        //    NavigationManager.LocationChanged += NavigationManager_LocationChanged;
+        //}
 
-        /// <summary>
-        /// OnInitializedAsync 方法
-        /// </summary>
-        /// <returns></returns>
-        protected override async Task OnInitializedAsync()
-        {
-            // 网页跳转监控
-            if (NavigationManager != null)
-            {
-                NavigationManager.LocationChanged += NavigationManager_LocationChanged;
-            }
-
-            var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-            if (!state.User.Identity!.IsAuthenticated)
-            {
-                NavigationManager?.NavigateTo("/Account/Login?returnUrl=" + WebUtility.UrlEncode(new Uri(NavigationManager.Uri).PathAndQuery));
-            }
-            else
-            {
-                IsAdmin = state.User.IsInRole("Administrators");
-                UserName = state.User.Identity.Name ?? "";
-            }
-        }
+        //var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        //if (!state.User.Identity!.IsAuthenticated)
+        //{
+        //    NavigationManager?.NavigateTo("/Account/Login?returnUrl=" + WebUtility.UrlEncode(new Uri(NavigationManager.Uri).PathAndQuery));
+        //}
+        //else
+        //{
+        //    IsAdmin = state.User.IsInRole("Administrators");
+        //    UserName = state.User.Identity.Name ?? "";
+        //}
+        //}
 
         private void NavigationManager_LocationChanged(object? sender, LocationChangedEventArgs e)
         {
-            var name = $"/{NavigationManager?.ToBaseRelativePath(e.Location)}";
-            if (HttpContextAccessor != null) HttpContextAccessor.HttpContext?.SaveOnlineUser(name);
+            //var name = $"/{NavigationManager?.ToBaseRelativePath(e.Location)}";
+            //if (HttpContextAccessor != null) HttpContextAccessor.HttpContext?.SaveOnlineUser(name);
         }
 
         /// <summary>
@@ -127,14 +108,14 @@ namespace Bootstrap.Admin.Blazor.Shared
         /// </summary>
         protected override void OnParametersSet()
         {
-            if (NavigationManager != null)
-            {
-                RequestUrl = new UriBuilder(NavigationManager.Uri).Path;
-                Model = new NavigatorBarModel(UserName, RequestUrl.ToMvcMenuUrl());
-                DisplayName = Model.DisplayName;
-                WebTitle = Model.Title;
-                WebFooter = Model.Footer;
-            }
+            //if (NavigationManager != null)
+            //{
+            //    RequestUrl = new UriBuilder(NavigationManager.Uri).Path;
+            //    Model = new NavigatorBarModel(UserName, RequestUrl.ToMvcMenuUrl());
+            //    DisplayName = Model.DisplayName;
+            //    WebTitle = Model.Title;
+            //    WebFooter = Model.Footer;
+            //}
         }
 
         /// <summary>
@@ -162,20 +143,5 @@ namespace Bootstrap.Admin.Blazor.Shared
         /// </summary>
         /// <value></value>
         public string WebFooter { get; set; } = "";
-
-        /// <summary>
-        /// 网站页脚文字变化是触发此方法
-        /// </summary>
-        /// <param name="text"></param>
-        public void OnWebFooterChanged(string text) => Footer?.TextChanged.InvokeAsync(text);
-
-        /// <summary>
-        /// OnAfterRender 方法
-        /// </summary>
-        /// <param name="firstRender"></param>
-        protected override void OnAfterRender(bool firstRender)
-        {
-            if (firstRender) JSRuntime.InitDocument();
-        }
     }
 }
