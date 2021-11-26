@@ -1,0 +1,10 @@
+﻿@typeparam TItem
+
+<Table TItem="TItem" IsBordered="true" IsStriped="true" IsMultipleSelect="true" IsPagination="IsPagination" PageItemsSource="PageSource"
+       UseInjectDataService="true" DataService="DataService"
+       ShowToolbar="true" ShowExtendButtons="true" ShowSearch="true"
+       ShowCardView="true" ShowColumnList="true" OnColumnCreating="OnCustomterColumnCreating">
+    <TableColumns Context="v">
+        @ColumnsTemplete(v)
+    </TableColumns>
+</Table>

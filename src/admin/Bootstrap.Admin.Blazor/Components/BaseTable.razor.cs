@@ -1,14 +1,14 @@
-﻿using Bootstrap.Security;
-using BootstrapBlazor.Components;
+﻿using BootstrapBlazor.Components;
 using Microsoft.AspNetCore.Components;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Bootstrap.Admin.Blazor.Pages
+namespace Bootstrap.Admin.Blazor.Components
 {
     /// <summary>
     /// 
     /// </summary>
-    public partial class BaseTable<TModel> where TModel : class, new()
+    [CascadingTypeParameter(nameof(TItem))]
+    public partial class BaseTable<TItem> where TItem : class, new()
     {
 
         private int[] PageSource { get; set; } = { 5, 20, 40 };
@@ -18,7 +18,7 @@ namespace Bootstrap.Admin.Blazor.Pages
         /// </summary>
         [NotNull]
         [Parameter]
-        public Func<QueryPageOptions, Task<(IEnumerable<TModel> Items, int Total)>>? QueryAsyncCallback { get; set; }
+        public Func<QueryPageOptions, Task<(IEnumerable<TItem> Items, int Total)>>? QueryAsyncCallback { get; set; }
 
         /// <summary>
         /// 
@@ -32,11 +32,17 @@ namespace Bootstrap.Admin.Blazor.Pages
         /// </summary>
         [NotNull]
         [Parameter]
-        public RenderFragment<TModel>? ColumnsTemplete { get; set; }
+        public RenderFragment<TItem>? ColumnsTemplete { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Parameter]
+        public bool IsPagination { get; set; }
 
         [NotNull]
         [Inject]
-        private IDataService<TModel>? CustomerDataService { get; set; }
+        private IDataService<TItem>? DataService { get; set; }
 
         /// <summary>
         /// 
@@ -44,7 +50,11 @@ namespace Bootstrap.Admin.Blazor.Pages
         protected override void OnInitialized()
         {
             base.OnInitialized();
-            ((Extensions.DataserviceExtensions.TableDataService<TModel>)CustomerDataService).QueryAsyncCallback = QueryAsyncCallback;
+
+            if (DataService is BlazorTableDataService<TItem> tableService)
+            {
+                tableService.QueryAsyncCallback = QueryAsyncCallback;
+            }
         }
     }
 }
