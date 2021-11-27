@@ -10,10 +10,10 @@
                 @((MarkupString)CreateComponent(v.Value))
             </Template>
             <SearchTemplate Context="v">
-                <Select Items="@Categories" @bind-Value="v.Category" DisplayText="字典类型"></Select>
+                <Select Items="@Defines" @bind-Value="v.Define" DisplayText="字典类型"></Select>
             </SearchTemplate>
             <EditTemplate Context="v">
-                <Select Items="@EditCategories" @bind-Value="v.Category" DisplayText="字典类型" style="width:200px"></Select>
+                <Select Items="@EditDefines" @bind-Value="v.Define" DisplayText="字典类型" style="width:200px"></Select>
             </EditTemplate>
         </TableColumn>
     </ColumnsTemplete>
