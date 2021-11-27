@@ -25,6 +25,20 @@ namespace Bootstrap.Admin.Blazor.Components
         /// </summary>
         [NotNull]
         [Parameter]
+        public Func<IEnumerable<TItem>, Task<bool>>? DeleteAsyncCallback { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [NotNull]
+        [Parameter]
+        public Func<TItem, ItemChangedType, Task<bool>>? AddOrUpdateAsyncCallback { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [NotNull]
+        [Parameter]
         public Func<List<ITableColumn>, Task>? OnCustomterColumnCreating { get; set; }
 
         /// <summary>
@@ -54,6 +68,8 @@ namespace Bootstrap.Admin.Blazor.Components
             if (DataService is BlazorTableDataService<TItem> tableService)
             {
                 tableService.QueryAsyncCallback = QueryAsyncCallback;
+                tableService.DeleteAsyncCallback = DeleteAsyncCallback;
+                tableService.AddOrUpdateAsyncCallback = AddOrUpdateAsyncCallback;
             }
         }
     }

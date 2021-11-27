@@ -11,6 +11,12 @@ namespace Microsoft.Extensions.DependencyInjection
         [NotNull]
         public Func<QueryPageOptions, Task<(IEnumerable<TModel> Items, int Total)>>? QueryAsyncCallback { get; set; }
 
+        [NotNull]
+        public Func<IEnumerable<TModel>, Task<bool>>? DeleteAsyncCallback { get; set; }
+
+        [NotNull]
+        public Func<TModel, ItemChangedType, Task<bool>>? AddOrUpdateAsyncCallback { get; set; }
+
         /// <summary>
         /// 查询操作方法
         /// </summary>
@@ -28,6 +34,16 @@ namespace Microsoft.Extensions.DependencyInjection
                 IsFiltered = true,
                 IsSearch = true
             };
+        }
+
+        public override Task<bool> DeleteAsync(IEnumerable<TModel> models)
+        {
+            return DeleteAsyncCallback(models);
+        }
+
+        public override Task<bool> SaveAsync(TModel model, ItemChangedType changedType)
+        {
+            return AddOrUpdateAsyncCallback(model, changedType);
         }
     }
 }
