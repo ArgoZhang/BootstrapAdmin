@@ -6,14 +6,18 @@
         <TableColumn @bind-Field="context.Name" Text="字典名称" Searchable="true" Filterable="true" Sortable="true"></TableColumn>
         <TableColumn @bind-Field="context.Code" Text="字典代码" Filterable="true" Sortable="true"></TableColumn>
         <TableColumn @bind-Field="context.Define" Text="字典类型" Searchable="true" Filterable="true" Sortable="true">
-            <Template Context="v">
-                @((MarkupString)CreateComponent(v.Value))
-            </Template>
             <SearchTemplate Context="v">
-                <Select Items="@Defines" @bind-Value="v.Define" DisplayText="字典类型"></Select>
+                <div class="col-sm-6 col-md-6">
+                    @{
+                        v!.Define = 2;
+                    }
+                    <Select Items="@Defines" @bind-Value="v!.Define" DisplayText="字典类型"></Select>
+                </div>
             </SearchTemplate>
             <EditTemplate Context="v">
-                <Select Items="@EditDefines" @bind-Value="v.Define" DisplayText="字典类型" style="width:200px"></Select>
+                <div class="col-sm-6 col-md-6">
+                    <Select Items="@EditDefines" @bind-Value="v!.Define" DisplayText="字典类型"></Select>
+                </div>
             </EditTemplate>
         </TableColumn>
     </ColumnsTemplete>
