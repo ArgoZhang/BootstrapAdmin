@@ -18,21 +18,21 @@ namespace Bootstrap.Admin.Blazor.Components
         /// </summary>
         [NotNull]
         [Parameter]
-        public Func<QueryPageOptions, Task<(IEnumerable<TItem> Items, int Total)>>? QueryAsyncCallback { get; set; }
+        public Func<QueryPageOptions, Task<(IEnumerable<TItem> Items, int Total)>>? OnQueryAsyncCallback { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
         [NotNull]
         [Parameter]
-        public Func<IEnumerable<TItem>, Task<bool>>? DeleteAsyncCallback { get; set; }
+        public Func<IEnumerable<TItem>, Task<bool>>? OnDeleteAsyncCallback { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
         [NotNull]
         [Parameter]
-        public Func<TItem, ItemChangedType, Task<bool>>? AddOrUpdateAsyncCallback { get; set; }
+        public Func<TItem, ItemChangedType, Task<bool>>? OnAddOrUpdateAsyncCallback { get; set; }
 
         /// <summary>
         /// 
@@ -67,9 +67,9 @@ namespace Bootstrap.Admin.Blazor.Components
 
             if (DataService is BlazorTableDataService<TItem> tableService)
             {
-                tableService.QueryAsyncCallback = QueryAsyncCallback;
-                tableService.DeleteAsyncCallback = DeleteAsyncCallback;
-                tableService.AddOrUpdateAsyncCallback = AddOrUpdateAsyncCallback;
+                tableService.OnQueryAsyncCallback = OnQueryAsyncCallback;
+                tableService.OnDeleteAsyncCallback = OnDeleteAsyncCallback;
+                tableService.OnDeleteAsyncCallback = OnDeleteAsyncCallback;
             }
         }
     }
