@@ -69,7 +69,7 @@ namespace Bootstrap.Admin.Blazor.Components
             {
                 tableService.OnQueryAsyncCallback = OnQueryAsyncCallback;
                 tableService.OnDeleteAsyncCallback = OnDeleteAsyncCallback;
-                tableService.OnDeleteAsyncCallback = OnDeleteAsyncCallback;
+                tableService.OnAddOrUpdateAsyncCallback = OnAddOrUpdateAsyncCallback;
             }
         }
     }

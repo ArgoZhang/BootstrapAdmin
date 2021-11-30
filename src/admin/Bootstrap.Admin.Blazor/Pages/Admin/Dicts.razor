@@ -1,6 +1,10 @@
 ﻿@page "/admin/dicts"
 
-<BaseTable TItem="BootstrapDict" IsPagination="false" QueryAsyncCallback="@QueryAsyncCallback" DeleteAsyncCallback="@DeleteAsyncCallback" AddOrUpdateAsyncCallback="@AddOrUpdateAsyncCallback">
+<BaseTable TItem="BootstrapDict" IsPagination="false"
+           OnQueryAsyncCallback="@OnQueryAsyncCallback"
+           OnDeleteAsyncCallback="@OnDeleteAsyncCallback"
+           OnAddOrUpdateAsyncCallback="@OnAddOrUpdateAsyncCallback"
+           TableSearchModel="@DictsSearchModel">
     <ColumnsTemplete>
         <TableColumn @bind-Field="context.Category" Text="字典标签" Searchable="true" Filterable="true" Sortable="true"></TableColumn>
         <TableColumn @bind-Field="context.Name" Text="字典名称" Searchable="true" Filterable="true" Sortable="true"></TableColumn>

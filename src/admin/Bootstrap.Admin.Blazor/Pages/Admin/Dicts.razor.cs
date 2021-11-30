@@ -33,7 +33,7 @@ namespace Bootstrap.Admin.Blazor.Pages.Admin
             };
         }
 
-        private Task<(IEnumerable<BootstrapDict>, int)> QueryAsyncCallback(QueryPageOptions options)
+        private Task<(IEnumerable<BootstrapDict>, int)> OnQueryAsyncCallback(QueryPageOptions options)
         {
             var items = DataAccess.DictHelper.RetrieveDicts();
             var total = items.Count();
@@ -80,7 +80,7 @@ namespace Bootstrap.Admin.Blazor.Pages.Admin
             return Task.FromResult((items, total));
         }
 
-        private Task<bool> DeleteAsyncCallback(IEnumerable<BootstrapDict> dicts)
+        private Task<bool> OnDeleteAsyncCallback(IEnumerable<BootstrapDict> dicts)
         {
             var ids = dicts.Select(s => s.Id);
 #nullable disable
@@ -88,7 +88,7 @@ namespace Bootstrap.Admin.Blazor.Pages.Admin
 #nullable restore
         }
 
-        private Task<bool> AddOrUpdateAsyncCallback(BootstrapDict dicts, ItemChangedType changedType)
+        private Task<bool> OnAddOrUpdateAsyncCallback(BootstrapDict dicts, ItemChangedType changedType)
         {
             if (ItemChangedType.Add == changedType)
             {
@@ -99,12 +99,5 @@ namespace Bootstrap.Admin.Blazor.Pages.Admin
                 return Task.FromResult(DataAccess.DictHelper.Save(dicts));
             }
         }
-
-        private string CreateComponent(int code) => code switch
-        {
-            0 => "<div>系统使用</div>",
-            1 => "<div>自定义</div>",
-            _ => ""
-        };
     }
 }
