@@ -51,8 +51,21 @@ namespace Bootstrap.Admin.Blazor.Components
         /// <summary>
         /// 
         /// </summary>
+        [NotNull]
+        [Parameter]
+        public RenderFragment<ITableSearchModel>? CustomerSearchTemplate { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         [Parameter]
         public bool IsPagination { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Parameter]
+        public ITableSearchModel? TableSearchModel { get; set; }
 
         [NotNull]
         [Inject]

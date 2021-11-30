@@ -1,10 +1,15 @@
 ﻿@typeparam TItem
 
-<Table TItem="TItem" IsBordered="true" IsStriped="true" IsMultipleSelect="true" IsPagination="IsPagination" PageItemsSource="PageSource"
+<Table TItem="TItem" IsBordered="true" IsStriped="true" IsMultipleSelect="true"
+       IsPagination="IsPagination" PageItemsSource="PageSource"
        UseInjectDataService="true" DataService="DataService"
        ShowToolbar="true" ShowExtendButtons="true" ShowSearch="true"
-       ShowCardView="true" ShowColumnList="true" OnColumnCreating="OnCustomterColumnCreating">
+       ShowCardView="true" ShowColumnList="true" OnColumnCreating="OnCustomterColumnCreating"
+       CustomerSearchModel="@TableSearchModel">
     <TableColumns Context="v">
         @ColumnsTemplete(v)
     </TableColumns>
+    <CustomerSearchTemplate>
+        @CustomerSearchTemplate(context)
+    </CustomerSearchTemplate>
 </Table>

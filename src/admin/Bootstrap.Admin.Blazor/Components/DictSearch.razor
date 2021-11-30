@@ -1,0 +1,34 @@
+﻿@using System.Diagnostics.CodeAnalysis
+@using Bootstrap.Admin.Blazor.Models
+
+<div class="row g-3">
+    <div class="col-sm-6 col-md-6">
+        <BootstrapInput @bind-Value="Value.Name" ShowLabel="true" DisplayText="字典名称" />
+    </div>
+    <div class="col-sm-6 col-md-6">
+        <BootstrapInput @bind-Value="Value.Category" ShowLabel="true" DisplayText="字典标签" />
+    </div>
+    <div class="col-sm-6 col-md-6">
+        <Select Items="@Items" @bind-Value="Value.Define" ShowLabel="true" DisplayText="字典类型"></Select>
+    </div>
+</div>
+
+
+
+@code{
+
+    private IEnumerable<SelectedItem>? Items { get; set; } = new List<SelectedItem>()
+    {
+       new SelectedItem("","全部"),
+       new SelectedItem("0","系统使用"),
+       new SelectedItem("1","自定义"),
+    };
+
+    [Parameter]
+    [NotNull]
+    public DictsSearchModel? Value { get; set; }
+
+    [Parameter]
+    public EventCallback<DictsSearchModel> ValueChanged { get; set; }
+
+}

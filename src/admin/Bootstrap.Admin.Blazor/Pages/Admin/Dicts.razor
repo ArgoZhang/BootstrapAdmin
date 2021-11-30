@@ -1,4 +1,5 @@
 ﻿@page "/admin/dicts"
+@using Bootstrap.Admin.Blazor.Models
 
 <BaseTable TItem="BootstrapDict" IsPagination="false"
            OnQueryAsyncCallback="@OnQueryAsyncCallback"
@@ -6,18 +7,10 @@
            OnAddOrUpdateAsyncCallback="@OnAddOrUpdateAsyncCallback"
            TableSearchModel="@DictsSearchModel">
     <ColumnsTemplete>
-        <TableColumn @bind-Field="context.Category" Text="字典标签" Searchable="true" Filterable="true" Sortable="true"></TableColumn>
-        <TableColumn @bind-Field="context.Name" Text="字典名称" Searchable="true" Filterable="true" Sortable="true"></TableColumn>
+        <TableColumn @bind-Field="context.Category" Text="字典标签" Filterable="true" Sortable="true"></TableColumn>
+        <TableColumn @bind-Field="context.Name" Text="字典名称" Filterable="true" Sortable="true"></TableColumn>
         <TableColumn @bind-Field="context.Code" Text="字典代码" Filterable="true" Sortable="true"></TableColumn>
-        <TableColumn @bind-Field="context.Define" Text="字典类型" Searchable="true" Filterable="true" Sortable="true">
-            <SearchTemplate Context="v">
-                <div class="col-sm-6 col-md-6">
-                    @{
-                        v!.Define = 2;
-                    }
-                    <Select Items="@Defines" @bind-Value="v!.Define" DisplayText="字典类型"></Select>
-                </div>
-            </SearchTemplate>
+        <TableColumn @bind-Field="context.Define" Text="字典类型" Filterable="true" Sortable="true" Lookup="@LookUp">
             <EditTemplate Context="v">
                 <div class="col-sm-6 col-md-6">
                     <Select Items="@EditDefines" @bind-Value="v!.Define" DisplayText="字典类型"></Select>
@@ -25,4 +18,10 @@
             </EditTemplate>
         </TableColumn>
     </ColumnsTemplete>
+    <CustomerSearchTemplate>
+        @if (context is DictsSearchModel searchModel)
+        {
+            <DictSearch @bind-Value="@searchModel"></DictSearch>
+        }
+    </CustomerSearchTemplate>
 </BaseTable>

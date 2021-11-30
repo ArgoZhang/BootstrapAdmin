@@ -1,4 +1,5 @@
-﻿using Bootstrap.Security;
+﻿using Bootstrap.Admin.Blazor.Models;
+using Bootstrap.Security;
 using BootstrapBlazor.Components;
 using Microsoft.AspNetCore.Components;
 
@@ -12,6 +13,11 @@ namespace Bootstrap.Admin.Blazor.Pages.Admin
         private IEnumerable<SelectedItem>? Defines { get; set; }
 
         private IEnumerable<SelectedItem>? EditDefines { get; set; }
+
+
+        private IEnumerable<SelectedItem>? LookUp { get; set; }
+
+        private ITableSearchModel? DictsSearchModel { get; set; } = new DictsSearchModel();
 
         /// <summary>
         /// 
@@ -31,6 +37,8 @@ namespace Bootstrap.Admin.Blazor.Pages.Admin
                 new SelectedItem("0","系统使用"),
                 new SelectedItem("1","自定义"),
             };
+
+            LookUp = EditDefines;
         }
 
         private Task<(IEnumerable<BootstrapDict>, int)> OnQueryAsyncCallback(QueryPageOptions options)
@@ -39,21 +47,6 @@ namespace Bootstrap.Admin.Blazor.Pages.Admin
             var total = items.Count();
 
             // 处理高级搜索
-            if (!string.IsNullOrEmpty((options.SearchModel as BootstrapDict)?.Category))
-            {
-                items = items.Where(item => item.Category?.Contains(((BootstrapDict)options.SearchModel).Category, StringComparison.OrdinalIgnoreCase) ?? false);
-            }
-
-            if (!string.IsNullOrEmpty((options.SearchModel as BootstrapDict)?.Name))
-            {
-                items = items.Where(item => item.Name?.Contains(((BootstrapDict)options.SearchModel).Name, StringComparison.OrdinalIgnoreCase) ?? false);
-            }
-
-            if ((options.SearchModel as BootstrapDict)?.Define != 2)
-            {
-                items = items.Where(item => item.Define == (options.SearchModel as BootstrapDict)?.Define);
-            }
-
             if (options.Searchs.Any())
             {
                 items = items.Where(options.Searchs.GetFilterFunc<BootstrapDict>());
@@ -75,6 +68,7 @@ namespace Bootstrap.Admin.Blazor.Pages.Admin
 
             if (options.Filters.Any())
             {
+                var aa = options.Filters.GetFilterFunc<BootstrapDict>();
                 items = items.Where(options.Filters.GetFilterFunc<BootstrapDict>());
             }
             return Task.FromResult((items, total));
