@@ -6,8 +6,11 @@
        ShowToolbar="true" ShowExtendButtons="true" ShowSearch="true"
        ShowCardView="true" ShowColumnList="true" OnColumnCreating="OnCustomterColumnCreating"
        CustomerSearchModel="@TableSearchModel">
-    <TableColumns Context="v">
-        @ColumnsTemplete(v)
+    <TableToolbarTemplate>
+        @TableToolbarTemplate
+    </TableToolbarTemplate>
+    <TableColumns>
+        @ColumnsTemplete(context)
     </TableColumns>
     <CustomerSearchTemplate>
         @CustomerSearchTemplate(context)

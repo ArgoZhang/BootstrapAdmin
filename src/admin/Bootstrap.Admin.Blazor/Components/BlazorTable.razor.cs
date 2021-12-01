@@ -56,6 +56,13 @@ namespace Bootstrap.Admin.Blazor.Components
         /// <summary>
         /// 
         /// </summary>
+        [NotNull]
+        [Parameter]
+        public RenderFragment? TableToolbarTemplate { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         [Parameter]
         public bool IsPagination { get; set; }
 
