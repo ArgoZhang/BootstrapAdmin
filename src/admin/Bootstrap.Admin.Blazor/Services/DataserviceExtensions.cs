@@ -9,13 +9,13 @@ namespace Microsoft.Extensions.DependencyInjection
     internal class BlazorTableDataService<TModel> : DataServiceBase<TModel> where TModel : class, new()
     {
         [NotNull]
-        public Func<QueryPageOptions, Task<(IEnumerable<TModel> Items, int Total)>>? OnQueryAsyncCallback { get; set; }
+        public Func<QueryPageOptions, Task<(IEnumerable<TModel> Items, int Total)>>? OnQueryAsync { get; set; }
 
         [NotNull]
-        public Func<IEnumerable<TModel>, Task<bool>>? OnDeleteAsyncCallback { get; set; }
+        public Func<IEnumerable<TModel>, Task<bool>>? OnDeleteAsync { get; set; }
 
         [NotNull]
-        public Func<TModel, ItemChangedType, Task<bool>>? OnAddOrUpdateAsyncCallback { get; set; }
+        public Func<TModel, ItemChangedType, Task<bool>>? OnAddOrUpdateAsync { get; set; }
 
         /// <summary>
         /// 查询操作方法
@@ -24,7 +24,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <returns></returns>
         public override async Task<QueryData<TModel>> QueryAsync(QueryPageOptions options)
         {
-            var (Items, Total) = await OnQueryAsyncCallback(options);
+            var (Items, Total) = await OnQueryAsync(options);
 
             return new QueryData<TModel>()
             {
@@ -36,14 +36,8 @@ namespace Microsoft.Extensions.DependencyInjection
             };
         }
 
-        public override Task<bool> DeleteAsync(IEnumerable<TModel> models)
-        {
-            return OnDeleteAsyncCallback(models);
-        }
+        public override Task<bool> DeleteAsync(IEnumerable<TModel> models) => OnDeleteAsync(models);
 
-        public override Task<bool> SaveAsync(TModel model, ItemChangedType changedType)
-        {
-            return OnAddOrUpdateAsyncCallback(model, changedType);
-        }
+        public override Task<bool> SaveAsync(TModel model, ItemChangedType changedType) => OnAddOrUpdateAsync(model, changedType);
     }
 }

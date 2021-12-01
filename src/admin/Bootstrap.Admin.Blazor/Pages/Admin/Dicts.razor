@@ -1,11 +1,8 @@
 ﻿@page "/admin/dicts"
 @using Bootstrap.Admin.Blazor.Models
 
-<BaseTable TItem="BootstrapDict" IsPagination="false"
-           OnQueryAsyncCallback="@OnQueryAsyncCallback"
-           OnDeleteAsyncCallback="@OnDeleteAsyncCallback"
-           OnAddOrUpdateAsyncCallback="@OnAddOrUpdateAsyncCallback"
-           TableSearchModel="@DictsSearchModel">
+<BlazorTable TItem="BootstrapDict" IsPagination="false" TableSearchModel="@DictsSearchModel"
+             OnQueryAsync="@OnQueryAsync" OnDeleteAsync="@OnDeleteAsync" OnAddOrUpdateAsync="@OnAddOrUpdateAsync">
     <ColumnsTemplete>
         <TableColumn @bind-Field="context.Category" Text="字典标签" Filterable="true" Sortable="true"></TableColumn>
         <TableColumn @bind-Field="context.Name" Text="字典名称" Filterable="true" Sortable="true"></TableColumn>
@@ -24,4 +21,4 @@
             <DictSearch @bind-Value="@searchModel"></DictSearch>
         }
     </CustomerSearchTemplate>
-</BaseTable>
+</BlazorTable>

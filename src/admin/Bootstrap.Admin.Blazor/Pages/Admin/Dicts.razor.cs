@@ -1,7 +1,6 @@
 ﻿using Bootstrap.Admin.Blazor.Models;
 using Bootstrap.Security;
 using BootstrapBlazor.Components;
-using Microsoft.AspNetCore.Components;
 
 namespace Bootstrap.Admin.Blazor.Pages.Admin
 {
@@ -10,10 +9,7 @@ namespace Bootstrap.Admin.Blazor.Pages.Admin
     /// </summary>
     public partial class Dicts
     {
-        private IEnumerable<SelectedItem>? Defines { get; set; }
-
         private IEnumerable<SelectedItem>? EditDefines { get; set; }
-
 
         private IEnumerable<SelectedItem>? LookUp { get; set; }
 
@@ -25,12 +21,6 @@ namespace Bootstrap.Admin.Blazor.Pages.Admin
         protected override void OnInitialized()
         {
             base.OnInitialized();
-            Defines = new List<SelectedItem>()
-            {
-                new SelectedItem("2","全部"){ Active = true},
-                new SelectedItem("0","系统使用"),
-                new SelectedItem("1","自定义"),
-            };
 
             EditDefines = new List<SelectedItem>()
             {
@@ -41,7 +31,7 @@ namespace Bootstrap.Admin.Blazor.Pages.Admin
             LookUp = EditDefines;
         }
 
-        private Task<(IEnumerable<BootstrapDict>, int)> OnQueryAsyncCallback(QueryPageOptions options)
+        private Task<(IEnumerable<BootstrapDict>, int)> OnQueryAsync(QueryPageOptions options)
         {
             var items = DataAccess.DictHelper.RetrieveDicts();
             var total = items.Count();
@@ -74,15 +64,13 @@ namespace Bootstrap.Admin.Blazor.Pages.Admin
             return Task.FromResult((items, total));
         }
 
-        private Task<bool> OnDeleteAsyncCallback(IEnumerable<BootstrapDict> dicts)
+        private Task<bool> OnDeleteAsync(IEnumerable<BootstrapDict> dicts)
         {
-            var ids = dicts.Select(s => s.Id);
-#nullable disable
+            var ids = dicts.Select(s => s.Id!);
             return Task.FromResult(DataAccess.DictHelper.Delete(ids));
-#nullable restore
         }
 
-        private Task<bool> OnAddOrUpdateAsyncCallback(BootstrapDict dicts, ItemChangedType changedType)
+        private Task<bool> OnAddOrUpdateAsync(BootstrapDict dicts, ItemChangedType changedType)
         {
             if (ItemChangedType.Add == changedType)
             {

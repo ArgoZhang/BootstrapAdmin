@@ -8,7 +8,7 @@ namespace Bootstrap.Admin.Blazor.Components
     /// 
     /// </summary>
     [CascadingTypeParameter(nameof(TItem))]
-    public partial class BaseTable<TItem> where TItem : class, new()
+    public partial class BlazorTable<TItem> where TItem : class, new()
     {
 
         private int[] PageSource { get; set; } = { 5, 20, 40 };
@@ -16,23 +16,21 @@ namespace Bootstrap.Admin.Blazor.Components
         /// <summary>
         /// 
         /// </summary>
-        [NotNull]
         [Parameter]
-        public Func<QueryPageOptions, Task<(IEnumerable<TItem> Items, int Total)>>? OnQueryAsyncCallback { get; set; }
+        public Func<QueryPageOptions, Task<(IEnumerable<TItem> Items, int Total)>>? OnQueryAsync { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Parameter]
+        public Func<IEnumerable<TItem>, Task<bool>>? OnDeleteAsync { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
         [NotNull]
         [Parameter]
-        public Func<IEnumerable<TItem>, Task<bool>>? OnDeleteAsyncCallback { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [NotNull]
-        [Parameter]
-        public Func<TItem, ItemChangedType, Task<bool>>? OnAddOrUpdateAsyncCallback { get; set; }
+        public Func<TItem, ItemChangedType, Task<bool>>? OnAddOrUpdateAsync { get; set; }
 
         /// <summary>
         /// 
@@ -80,9 +78,9 @@ namespace Bootstrap.Admin.Blazor.Components
 
             if (DataService is BlazorTableDataService<TItem> tableService)
             {
-                tableService.OnQueryAsyncCallback = OnQueryAsyncCallback;
-                tableService.OnDeleteAsyncCallback = OnDeleteAsyncCallback;
-                tableService.OnAddOrUpdateAsyncCallback = OnAddOrUpdateAsyncCallback;
+                tableService.OnQueryAsync = OnQueryAsync;
+                tableService.OnDeleteAsync = OnDeleteAsync;
+                tableService.OnAddOrUpdateAsync = OnAddOrUpdateAsync;
             }
         }
     }
