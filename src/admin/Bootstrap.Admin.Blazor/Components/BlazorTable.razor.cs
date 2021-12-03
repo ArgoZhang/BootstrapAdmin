@@ -17,12 +17,14 @@ namespace Bootstrap.Admin.Blazor.Components
         /// 
         /// </summary>
         [Parameter]
-        public Func<QueryPageOptions, Task<(IEnumerable<TItem> Items, int Total)>>? OnQueryAsync { get; set; }
+        [NotNull]
+        public Func<Task<IEnumerable<TItem>>>? OnQueryAsync { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
         [Parameter]
+        [NotNull]
         public Func<IEnumerable<TItem>, Task<bool>>? OnDeleteAsync { get; set; }
 
         /// <summary>
@@ -30,7 +32,7 @@ namespace Bootstrap.Admin.Blazor.Components
         /// </summary>
         [NotNull]
         [Parameter]
-        public Func<TItem, ItemChangedType, Task<bool>>? OnAddOrUpdateAsync { get; set; }
+        public Func<TItem, Task<bool>>? OnAddOrUpdateAsync { get; set; }
 
         /// <summary>
         /// 
@@ -85,10 +87,47 @@ namespace Bootstrap.Admin.Blazor.Components
 
             if (DataService is BlazorTableDataService<TItem> tableService)
             {
-                tableService.OnQueryAsync = OnQueryAsync;
-                tableService.OnDeleteAsync = OnDeleteAsync;
-                tableService.OnAddOrUpdateAsync = OnAddOrUpdateAsync;
+                tableService.OnQueryAsync = OnQueryBaseAsync;
+                tableService.OnDeleteAsync = OnDeleteBaseAsync;
+                tableService.OnAddOrUpdateAsync = OnAddOrUpdateBaseAsync;
             }
+        }
+
+        private async Task<(IEnumerable<TItem>, int)> OnQueryBaseAsync(QueryPageOptions options)
+        {
+            var items = await OnQueryAsync();
+            var total = items.Count();
+
+            // 处理高级搜索
+            if (options.Searchs.Any())
+            {
+                items = items.Where(options.Searchs.GetFilterFunc<TItem>());
+            }
+            else if (options.CustomerSearchs.Any())
+            {
+                items = items.Where(options.Searchs.GetFilterFunc<TItem>());
+            }
+
+            if (!string.IsNullOrEmpty(options.SortName))
+            {
+                items = items.Sort(options.SortName, options.SortOrder);
+            }
+
+            if (options.Filters.Any())
+            {
+                items = items.Where(options.Filters.GetFilterFunc<TItem>());
+            }
+            return (items, total);
+        }
+
+        private async Task<bool> OnDeleteBaseAsync(IEnumerable<TItem> items)
+        {
+            return await OnDeleteAsync(items);
+        }
+
+        private async Task<bool> OnAddOrUpdateBaseAsync(TItem item, ItemChangedType changedType)
+        {
+            return await OnAddOrUpdateAsync(item);
         }
     }
 }
