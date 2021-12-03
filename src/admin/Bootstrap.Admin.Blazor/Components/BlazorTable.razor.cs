@@ -105,7 +105,7 @@ namespace Bootstrap.Admin.Blazor.Components
             }
             else if (options.CustomerSearchs.Any())
             {
-                items = items.Where(options.Searchs.GetFilterFunc<TItem>());
+                items = items.Where(options.CustomerSearchs.GetFilterFunc<TItem>());
             }
 
             if (!string.IsNullOrEmpty(options.SortName))
