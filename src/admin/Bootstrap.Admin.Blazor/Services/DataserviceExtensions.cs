@@ -9,7 +9,7 @@ namespace Microsoft.Extensions.DependencyInjection
     internal class BlazorTableDataService<TModel> : DataServiceBase<TModel> where TModel : class, new()
     {
         [NotNull]
-        public Func<QueryPageOptions, Task<(IEnumerable<TModel> Items, int Total)>>? OnQueryAsync { get; set; }
+        public Func<QueryPageOptions, Task<QueryData<TModel>>>? OnQueryAsync { get; set; }
 
         [NotNull]
         public Func<IEnumerable<TModel>, Task<bool>>? OnDeleteAsync { get; set; }
@@ -22,19 +22,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        public override async Task<QueryData<TModel>> QueryAsync(QueryPageOptions options)
-        {
-            var (Items, Total) = await OnQueryAsync(options);
-
-            return new QueryData<TModel>()
-            {
-                Items = Items,
-                TotalCount = Total,
-                IsSorted = true,
-                IsFiltered = true,
-                IsSearch = true
-            };
-        }
+        public override Task<QueryData<TModel>> QueryAsync(QueryPageOptions options) => OnQueryAsync(options);
 
         public override Task<bool> DeleteAsync(IEnumerable<TModel> models) => OnDeleteAsync(models);
 

@@ -93,7 +93,7 @@ namespace Bootstrap.Admin.Blazor.Components
             }
         }
 
-        private async Task<(IEnumerable<TItem>, int)> OnQueryBaseAsync(QueryPageOptions options)
+        private async Task<QueryData<TItem>> OnQueryBaseAsync(QueryPageOptions options)
         {
             var items = await OnQueryAsync();
             var total = items.Count();
@@ -117,7 +117,14 @@ namespace Bootstrap.Admin.Blazor.Components
             {
                 items = items.Where(options.Filters.GetFilterFunc<TItem>());
             }
-            return (items, total);
+            return new QueryData<TItem>()
+            {
+                Items = items,
+                TotalCount = total,
+                IsFiltered = options.Filters.Any(),
+                IsSearch = options.CustomerSearchs.Any(),
+                IsSorted = !string.IsNullOrEmpty(options.SortName),
+            };
         }
 
         private async Task<bool> OnDeleteBaseAsync(IEnumerable<TItem> items)
