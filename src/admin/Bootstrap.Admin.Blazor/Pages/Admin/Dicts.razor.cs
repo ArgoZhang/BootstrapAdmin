@@ -1,6 +1,8 @@
 ﻿using Bootstrap.Admin.Blazor.Models;
 using Bootstrap.Security;
 using BootstrapBlazor.Components;
+using Bootstrap.DataAccess;
+using Task = System.Threading.Tasks.Task;
 
 namespace Bootstrap.Admin.Blazor.Pages.Admin
 {
@@ -31,55 +33,20 @@ namespace Bootstrap.Admin.Blazor.Pages.Admin
             LookUp = EditDefines;
         }
 
-        private Task<(IEnumerable<BootstrapDict>, int)> OnQueryAsync(QueryPageOptions options)
+        private Task<IEnumerable<BootstrapDict>> OnQueryAsync()
         {
-            var items = DataAccess.DictHelper.RetrieveDicts();
-            var total = items.Count();
-
-            // 处理高级搜索
-            if (options.Searchs.Any())
-            {
-                items = items.Where(options.Searchs.GetFilterFunc<BootstrapDict>());
-            }
-            else
-            {
-                // 处理 SearchText 模糊搜索
-                if (!string.IsNullOrEmpty(options.SearchText))
-                {
-                    items = items.Where(item => (item.Name?.Contains(options.SearchText) ?? false)
-                        || (item.Category?.Contains(options.SearchText) ?? false));
-                }
-            }
-
-            if (!string.IsNullOrEmpty(options.SortName))
-            {
-                items = items.Sort(options.SortName, options.SortOrder);
-            }
-
-            if (options.Filters.Any())
-            {
-                var aa = options.Filters.GetFilterFunc<BootstrapDict>();
-                items = items.Where(options.Filters.GetFilterFunc<BootstrapDict>());
-            }
-            return Task.FromResult((items, total));
+            return Task.FromResult(DictHelper.RetrieveDicts());
         }
 
         private Task<bool> OnDeleteAsync(IEnumerable<BootstrapDict> dicts)
         {
             var ids = dicts.Select(s => s.Id!);
-            return Task.FromResult(DataAccess.DictHelper.Delete(ids));
+            return Task.FromResult(DictHelper.Delete(ids));
         }
 
-        private Task<bool> OnAddOrUpdateAsync(BootstrapDict dicts, ItemChangedType changedType)
+        private Task<bool> OnAddOrUpdateAsync(BootstrapDict dict)
         {
-            if (ItemChangedType.Add == changedType)
-            {
-                return Task.FromResult(DataAccess.DictHelper.Save(dicts));
-            }
-            else
-            {
-                return Task.FromResult(DataAccess.DictHelper.Save(dicts));
-            }
+            return Task.FromResult(DictHelper.Save(dict));
         }
     }
 }
