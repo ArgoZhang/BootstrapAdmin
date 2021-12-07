@@ -1,8 +1,8 @@
-﻿using BootstrapBlazor.Components;
-using Bootstrap.DataAccess;
-using Task = System.Threading.Tasks.Task;
+﻿using Bootstrap.DataAccess;
+using BootstrapBlazor.Components;
 using Microsoft.AspNetCore.Components;
 using System.Diagnostics.CodeAnalysis;
+using Task = System.Threading.Tasks.Task;
 
 namespace Bootstrap.Admin.Blazor.Pages.Admin
 {
@@ -19,9 +19,14 @@ namespace Bootstrap.Admin.Blazor.Pages.Admin
         [NotNull]
         private ToastService? ToastService { get; set; }
 
-        private Task<IEnumerable<User>> OnQueryAsync()
+        private Task<QueryData<User>> OnQueryAsync()
         {
-            return Task.FromResult(UserHelper.Retrieves());
+            var items = UserHelper.Retrieves();
+            return Task.FromResult(new QueryData<User>()
+            {
+                Items = items,
+                TotalCount = items.Count()
+            });
         }
 
         private async Task OnAssignmentDept(IEnumerable<User> users)

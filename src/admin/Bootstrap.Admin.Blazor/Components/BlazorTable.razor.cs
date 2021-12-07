@@ -18,7 +18,8 @@ namespace Bootstrap.Admin.Blazor.Components
         /// </summary>
         [Parameter]
         [NotNull]
-        public Func<Task<IEnumerable<TItem>>>? OnQueryAsync { get; set; }
+        [EditorRequired]
+        public Func<Task<QueryData<TItem>>>? OnQueryAsync { get; set; }
 
         /// <summary>
         /// 
@@ -93,48 +94,10 @@ namespace Bootstrap.Admin.Blazor.Components
             }
         }
 
-        private async Task<QueryData<TItem>> OnQueryBaseAsync(QueryPageOptions options)
-        {
-            var items = await OnQueryAsync();
-            var total = items.Count();
+        private Task<QueryData<TItem>> OnQueryBaseAsync(QueryPageOptions options) => OnQueryAsync();
 
-            // 处理高级搜索
-            if (options.Searchs.Any())
-            {
-                items = items.Where(options.Searchs.GetFilterFunc<TItem>());
-            }
-            else if (options.CustomerSearchs.Any())
-            {
-                items = items.Where(options.CustomerSearchs.GetFilterFunc<TItem>());
-            }
+        private Task<bool> OnDeleteBaseAsync(IEnumerable<TItem> items) => OnDeleteAsync(items);
 
-            if (!string.IsNullOrEmpty(options.SortName))
-            {
-                items = items.Sort(options.SortName, options.SortOrder);
-            }
-
-            if (options.Filters.Any())
-            {
-                items = items.Where(options.Filters.GetFilterFunc<TItem>());
-            }
-            return new QueryData<TItem>()
-            {
-                Items = items,
-                TotalCount = total,
-                IsFiltered = options.Filters.Any(),
-                IsSearch = options.CustomerSearchs.Any(),
-                IsSorted = !string.IsNullOrEmpty(options.SortName),
-            };
-        }
-
-        private async Task<bool> OnDeleteBaseAsync(IEnumerable<TItem> items)
-        {
-            return await OnDeleteAsync(items);
-        }
-
-        private async Task<bool> OnAddOrUpdateBaseAsync(TItem item, ItemChangedType changedType)
-        {
-            return await OnAddOrUpdateAsync(item);
-        }
+        private Task<bool> OnAddOrUpdateBaseAsync(TItem item, ItemChangedType changedType) => OnAddOrUpdateAsync(item);
     }
 }

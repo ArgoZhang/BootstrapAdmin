@@ -33,9 +33,14 @@ namespace Bootstrap.Admin.Blazor.Pages.Admin
             LookUp = EditDefines;
         }
 
-        private Task<IEnumerable<BootstrapDict>> OnQueryAsync()
+        private Task<QueryData<BootstrapDict>> OnQueryAsync()
         {
-            return Task.FromResult(DictHelper.RetrieveDicts());
+            var items = DictHelper.RetrieveDicts();
+            return Task.FromResult(new QueryData<BootstrapDict>()
+            {
+                Items = items,
+                TotalCount = items.Count()
+            });
         }
 
         private Task<bool> OnDeleteAsync(IEnumerable<BootstrapDict> dicts)
