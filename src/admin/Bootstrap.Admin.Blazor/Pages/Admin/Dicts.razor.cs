@@ -33,7 +33,7 @@ namespace Bootstrap.Admin.Blazor.Pages.Admin
             LookUp = EditDefines;
         }
 
-        private Task<QueryData<BootstrapDict>> OnQueryAsync()
+        private static Task<QueryData<BootstrapDict>> OnQueryAsync()
         {
             var items = DictHelper.RetrieveDicts();
             return Task.FromResult(new QueryData<BootstrapDict>()

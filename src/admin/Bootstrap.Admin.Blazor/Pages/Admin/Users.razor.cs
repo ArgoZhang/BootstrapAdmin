@@ -19,7 +19,7 @@ namespace Bootstrap.Admin.Blazor.Pages.Admin
         [NotNull]
         private ToastService? ToastService { get; set; }
 
-        private Task<QueryData<User>> OnQueryAsync()
+        private static Task<QueryData<User>> OnQueryAsync()
         {
             var items = UserHelper.Retrieves();
             return Task.FromResult(new QueryData<User>()
