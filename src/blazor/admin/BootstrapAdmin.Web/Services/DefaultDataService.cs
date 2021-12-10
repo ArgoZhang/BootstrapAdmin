@@ -19,12 +19,7 @@ namespace BootstrapBlazor.DataAcces.PetaPoco
         /// <summary>
         /// 构造函数
         /// </summary>
-        public DefaultDataService(IConfiguration configuration)
-        {
-            //TODO: 后期改造成自定适配 
-            var connString = configuration.GetConnectionString("bb");
-            _db = new Database<SQLiteDatabaseProvider>(connString);
-        }
+        public DefaultDataService(IDatabase db) => _db = db;
 
         /// <summary>
         /// 删除方法

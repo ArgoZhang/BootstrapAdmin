@@ -4,16 +4,16 @@
         <name>BootstrapAdmin.DataAccess</name>
     </assembly>
     <members>
-        <member name="T:Microsoft.Extensions.DependencyInjection.ServicesExtensions">
+        <member name="T:BootstrapAdmin.DataAccess.Extensions.MenuItemExtensions">
             <summary>
             
             </summary>
         </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.ServicesExtensions.AddDataAccessServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+        <member name="M:BootstrapAdmin.DataAccess.Extensions.MenuItemExtensions.Parse(BootstrapAdmin.DataAccess.Models.Menu)">
             <summary>
             
             </summary>
-            <param name="services"></param>
+            <param name="menu"></param>
             <returns></returns>
         </member>
         <member name="T:BootstrapAdmin.DataAccess.Models.Dict">
@@ -126,7 +126,7 @@
             
             </summary>
         </member>
-        <member name="M:BootstrapAdmin.DataAccess.Services.IMenu.GetMenus">
+        <member name="M:BootstrapAdmin.DataAccess.Services.IMenu.GetAdminMenusByUser(System.String)">
             <summary>
             
             </summary>
@@ -143,12 +143,37 @@
             </summary>
             <param name="db"></param>
         </member>
-        <member name="M:BootstrapAdmin.DataAccess.Services.MenuService.GetMenus">
+        <member name="M:BootstrapAdmin.DataAccess.Services.MenuService.GetAdminMenusByUser(System.String)">
             <summary>
             
             </summary>
             <returns></returns>
-            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:BootstrapAdmin.DataAccess.Services.MenuService.CascadeMenus(System.Collections.Generic.IEnumerable{BootstrapAdmin.DataAccess.Models.Menu})">
+            <summary>
+            获得带层次关系的菜单集合
+            </summary>
+            <param name="menus">未层次化菜单集合</param>
+            <returns>带层次化的菜单集合</returns>
+        </member>
+        <member name="M:BootstrapAdmin.DataAccess.Services.MenuService.RetrieveAllMenus(System.String)">
+            <summary>
+            获得指定用户名可访问的所有菜单集合
+            </summary>
+            <param name="userName">当前用户名</param>
+            <returns>未层次化的菜单集合</returns>
+        </member>
+        <member name="T:Microsoft.Extensions.DependencyInjection.ServicesExtensions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.ServicesExtensions.AddDataAccessServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
         </member>
     </members>
 </doc>

@@ -11,6 +11,6 @@ namespace BootstrapAdmin.DataAccess.Services
         /// 
         /// </summary>
         /// <returns></returns>
-        IEnumerable<Menu> GetMenus();
+        IEnumerable<MenuItem> GetAdminMenusByUser(string userName);
     }
 }

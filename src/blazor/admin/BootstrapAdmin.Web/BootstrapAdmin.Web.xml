@@ -161,11 +161,6 @@
             </summary>
             <param name="configuration"></param>
         </member>
-        <member name="T:BootstrapAdmin.Web.Services.IBootstrapMenu">
-            <summary>
-            
-            </summary>
-        </member>
         <member name="T:BootstrapAdmin.Web.Shared.MainLayout">
             <summary>
             MainLayout 布局类
@@ -197,7 +192,7 @@
             PetaPoco ORM 的 IDataService 接口实现
             </summary>
         </member>
-        <member name="M:BootstrapBlazor.DataAcces.PetaPoco.DefaultDataService`1.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+        <member name="M:BootstrapBlazor.DataAcces.PetaPoco.DefaultDataService`1.#ctor(PetaPoco.IDatabase)">
             <summary>
             构造函数
             </summary>

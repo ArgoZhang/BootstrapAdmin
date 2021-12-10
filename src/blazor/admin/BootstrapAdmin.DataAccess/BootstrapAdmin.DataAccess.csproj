@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -7,9 +7,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <!--<PackageReference Include="BootstrapBlazor" Version="6.1.1-beta01" />-->
     <PackageReference Include="Microsoft.Data.Sqlite" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
     <PackageReference Include="PetaPoco.Extensions" Version="5.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\BootstrapBlazor\src\BootstrapBlazor\BootstrapBlazor.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="BootstrapBlazor.Components" />
+    <Using Include="Microsoft.AspNetCore.Components" />
+    <Using Include="System.Diagnostics.CodeAnalysis" />
   </ItemGroup>
 
 </Project>

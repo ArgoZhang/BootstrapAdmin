@@ -78,6 +78,6 @@ namespace BootstrapAdmin.DataAccess.Models
         /// <summary>
         /// 获得/设置 当前菜单项的所有子菜单集合
         /// </summary>
-        public IEnumerable<Menu> Menus { get; set; } = new List<Menu>();
+        public List<Menu> Menus { get; } = new List<Menu>();
     }
 }

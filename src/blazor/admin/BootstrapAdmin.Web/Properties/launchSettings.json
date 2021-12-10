@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "Bootstrap.Admin.Blazor": {
+    "BootstrapAdmin.Web": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
