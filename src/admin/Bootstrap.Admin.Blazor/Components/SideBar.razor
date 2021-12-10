@@ -1,26 +1,22 @@
 ﻿@using Bootstrap.Admin.Blazor.Extensions
 @inherits SideBarBase
 
-<aside class="@Model.ShowSideBar">
+<aside class="">
     <div class="bg"></div>
     <div class="nav-brand justify-content-center">
         <a href="@RootLayout?.HomeUrl">
-            <img src="@Model.WebSiteLogo.ToBlazorLink()" />
+            <img src="" />
             <span>@WebTitle</span>
         </a>
     </div>
     <div class="nav-header flex-fill align-items-center">
         <a href="@("~/Admin/Profiles".ToBlazorMenuUrl())">
-            <img src="@Model.Icon.ToBlazorLink()" />
+            <img src="" />
             <span class="username d-inline-block text-truncate flex-fill">@DisplayName</span>
         </a>
     </div>
     <div class="sidebar">
         <ul class="nav-sidebar nav nav-pills flex-column flex-nowrap">
-            @foreach (var menu in Model.Navigations)
-            {
-                <NavItem Menu="@menu"></NavItem>
-            }
         </ul>
     </div>
 </aside>

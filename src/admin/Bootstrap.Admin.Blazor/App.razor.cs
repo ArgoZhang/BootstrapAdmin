@@ -1,4 +1,6 @@
-﻿namespace Bootstrap.Admin.Blazor
+﻿using Bootstrap.DataAccess;
+
+namespace Bootstrap.Admin.Blazor
 {
     /// <summary>
     /// 

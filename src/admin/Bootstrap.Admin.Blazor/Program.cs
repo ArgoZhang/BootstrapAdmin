@@ -23,7 +23,7 @@ app.UseRouting();
 app.UseCacheManager();
 
 // 开启 webapi
-app.MapDefaultControllerRoute();
+//app.MapDefaultControllerRoute();
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 

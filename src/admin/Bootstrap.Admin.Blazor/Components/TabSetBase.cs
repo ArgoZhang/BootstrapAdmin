@@ -1,7 +1,6 @@
 ﻿using Bootstrap.Admin.Blazor.Extensions;
 using Bootstrap.Admin.Blazor.Shared;
 using Bootstrap.Security;
-using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
 namespace Bootstrap.Admin.Blazor.Components

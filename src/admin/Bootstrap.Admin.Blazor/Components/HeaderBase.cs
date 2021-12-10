@@ -1,5 +1,6 @@
 ﻿using Bootstrap.Admin.Blazor.Shared;
-using Microsoft.AspNetCore.Components;
+using Bootstrap.DataAccess;
+using Task = System.Threading.Tasks.Task;
 
 namespace Bootstrap.Admin.Blazor.Components
 {
@@ -52,7 +53,7 @@ namespace Bootstrap.Admin.Blazor.Components
         /// <summary>
         /// 参数赋值方法
         /// </summary>
-        public override System.Threading.Tasks.Task SetParametersAsync(ParameterView parameters)
+        public override Task SetParametersAsync(ParameterView parameters)
         {
             parameters.SetParameterProperties(this);
             EnableBlazor = DictHelper.RetrieveEnableBlazor();

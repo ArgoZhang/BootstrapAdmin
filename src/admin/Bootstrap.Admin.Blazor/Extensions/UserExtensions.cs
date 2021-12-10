@@ -1,4 +1,6 @@
-﻿namespace Bootstrap.Admin.Blazor.Extensions
+﻿using Bootstrap.DataAccess;
+
+namespace Bootstrap.Admin.Blazor.Extensions
 {
     /// <summary>
     /// 获得 用户显示名称

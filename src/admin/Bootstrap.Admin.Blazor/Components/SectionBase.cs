@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
-
-namespace Bootstrap.Admin.Blazor.Components
+﻿namespace Bootstrap.Admin.Blazor.Components
 {
     /// <summary>
     /// 

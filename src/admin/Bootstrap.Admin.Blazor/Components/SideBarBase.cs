@@ -1,6 +1,5 @@
 ﻿using Bootstrap.Admin.Blazor.Models;
 using Bootstrap.Admin.Blazor.Shared;
-using Microsoft.AspNetCore.Components;
 
 namespace Bootstrap.Admin.Blazor.Components
 {
@@ -9,12 +8,6 @@ namespace Bootstrap.Admin.Blazor.Components
     /// </summary>
     public class SideBarBase : ComponentBase
     {
-        /// <summary>
-        /// 获得/设置 侧边栏绑定 Model 实例
-        /// </summary>
-        [Parameter]
-        public NavigatorBarModel Model { get; set; } = new NavigatorBarModel("");
-
         /// <summary>
         /// 获得 根模板页实例
         /// </summary>

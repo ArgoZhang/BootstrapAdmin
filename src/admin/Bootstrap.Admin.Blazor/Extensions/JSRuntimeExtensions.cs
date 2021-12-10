@@ -1,4 +1,5 @@
 ﻿using Bootstrap.Admin.Blazor.Components;
+using ToastCategory = BootstrapBlazor.Components.ToastCategory;
 
 namespace Microsoft.JSInterop
 {

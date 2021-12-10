@@ -1,5 +1,4 @@
 ﻿using Bootstrap.Admin.Blazor.Components;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Routing;
 using Microsoft.JSInterop;
 

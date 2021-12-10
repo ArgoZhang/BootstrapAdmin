@@ -1,6 +1,8 @@
-﻿using Longbow.Cache;
+﻿using Bootstrap.DataAccess;
+using Longbow.Cache;
 using Longbow.Web;
 using System.Net;
+using IIPLocatorProvider = Longbow.Web.IIPLocatorProvider;
 
 namespace Microsoft.AspNetCore.Http
 {

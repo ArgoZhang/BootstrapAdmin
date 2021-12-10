@@ -1,5 +1,4 @@
 ﻿using Bootstrap.Security;
-using Microsoft.AspNetCore.Components;
 
 namespace Bootstrap.Admin.Blazor.Components
 {

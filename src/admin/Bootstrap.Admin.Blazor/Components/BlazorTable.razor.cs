@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
-using System.Diagnostics.CodeAnalysis;
-
-namespace Bootstrap.Admin.Blazor.Components
+﻿namespace Bootstrap.Admin.Blazor.Components
 {
     /// <summary>
     /// 
