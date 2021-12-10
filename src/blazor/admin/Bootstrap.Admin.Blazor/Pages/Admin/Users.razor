@@ -1,0 +1,17 @@
+﻿@page "/admin/users"
+
+@*<BlazorTable TItem="User">
+    <TableToolbarTemplate>
+        <TableToolbarButton TItem="User" Color="Color.Info" Icon="fa fa-bank" Text="分配部门" OnClickCallback="OnAssignmentDept" />
+        <TableToolbarButton TItem="User" Color="Color.Warning" Icon="fa fa-sitemap" Text="分配角色" OnClickCallback="OnAssignmentRoles" />
+    </TableToolbarTemplate>
+    <ColumnsTemplete>
+        <TableColumn @bind-Field="@context.UserName" Text="登录名称" Sortable="true" Filterable="true" Searchable="true"></TableColumn>
+        <TableColumn @bind-Field="@context.DisplayName" Text="显示名称" Sortable="true" Filterable="true" Searchable="true"></TableColumn>
+        <TableColumn @bind-Field="@context.RegisterTime" Text="注册时间" Sortable="true" Filterable="true"></TableColumn>
+        <TableColumn @bind-Field="@context.ApprovedTime" Text="授权时间" Sortable="true" Filterable="true"></TableColumn>
+        <TableColumn @bind-Field="@context.ApprovedBy" Text="授权人" Sortable="true" Filterable="true"></TableColumn>
+        <TableColumn @bind-Field="@context.Description" Text="说明" Sortable="true" Filterable="true"></TableColumn>
+    </ColumnsTemplete>
+</BlazorTable>
+*@

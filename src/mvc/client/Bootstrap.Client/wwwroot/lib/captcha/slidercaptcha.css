@@ -1,0 +1,131 @@
+body {
+  overflow-x: hidden;
+}
+
+.block {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.sliderContainer {
+  position: relative;
+  text-align: center;
+  line-height: 40px;
+  background: #f7f9fa;
+  color: #45494c;
+  border-radius: 2px;
+}
+
+.sliderbg {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  background-color: #f7f9fa;
+  height: 40px;
+  border-radius: 2px;
+  border: 1px solid #e6e8eb;
+}
+
+.sliderContainer_active .slider {
+  top: -1px;
+  border: 1px solid #1991FA;
+}
+
+.sliderContainer_active .sliderMask {
+  border-width: 1px 0 1px 1px;
+}
+
+.sliderContainer_success .slider {
+  top: -1px;
+  border: 1px solid #52CCBA;
+  background-color: #52CCBA !important;
+}
+
+.sliderContainer_success .sliderMask {
+  border: 1px solid #52CCBA;
+  border-width: 1px 0 1px 1px;
+  background-color: #D2F4EF;
+}
+
+.sliderContainer_success .sliderIcon:before {
+  content: "\f00c";
+}
+
+.sliderContainer_fail .slider {
+  top: -1px;
+  border: 1px solid #f57a7a;
+  background-color: #f57a7a !important;
+}
+
+.sliderContainer_fail .sliderMask {
+  border: 1px solid #f57a7a;
+  background-color: #fce1e1;
+  border-width: 1px 0 1px 1px;
+}
+
+.sliderContainer_fail .sliderIcon:before {
+  content: "\f00d";
+}
+.sliderContainer_active .sliderText, .sliderContainer_success .sliderText, .sliderContainer_fail .sliderText {
+  display: none;
+}
+
+.sliderMask {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 40px;
+  border: 0 solid #1991FA;
+  background: #D1E9FE;
+  border-radius: 2px;
+}
+
+.slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  background: #fff;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: background .2s linear;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slider:hover {
+  background: #1991FA;
+}
+
+.slider:hover .sliderIcon {
+  background-position: 0 -13px;
+}
+
+.sliderText {
+  position: relative;
+}
+
+.sliderIcon {
+
+}
+
+.refreshIcon {
+  position: absolute;
+  right: 0;
+  top: 0;
+  cursor: pointer;
+  margin: 6px;
+  color: rgba(0,0,0,.25);
+  font-size: 1rem;
+  z-index: 5;
+  transition: color .3s linear;
+}
+
+  .refreshIcon:hover {
+    color: #6c757d;
+  }

@@ -1,0 +1,11 @@
+{
+  "solution": {
+    "path": "BootstrapAdmin.sln",
+    "projects": [
+      "src\\blazor\\admin\\Bootstrap.Admin.Blazor.DataAccess\\Bootstrap.Admin.Blazor.DataAccess.csproj",
+      "src\\blazor\\admin\\Bootstrap.Admin.Blazor\\Bootstrap.Admin.Blazor.csproj",
+      "src\\mvc\\admin\\Bootstrap.Admin\\Bootstrap.Admin.csproj",
+      "src\\mvc\\admin\\Bootstrap.DataAccess\\Bootstrap.DataAccess.csproj"
+    ]
+  }
+}

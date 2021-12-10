@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29215.179
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQLServer", "SQLServer", "{87319AF5-7C40-4362-B67C-35F9DD737DB4}"
 	ProjectSection(SolutionItems) = preProject
@@ -10,15 +10,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQLServer", "SQLServer", "{
 		db\SqlServer\Install.sql = db\SqlServer\Install.sql
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.Admin", "src\admin\Bootstrap.Admin\Bootstrap.Admin.csproj", "{7B2B7043-3CB2-4C5A-BDF2-8C47F1A5471A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.Admin", "src\mvc\admin\Bootstrap.Admin\Bootstrap.Admin.csproj", "{7B2B7043-3CB2-4C5A-BDF2-8C47F1A5471A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "db", "db", "{586410F2-C1F0-47CD-AB28-2CF506DED2C8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.Client", "src\client\Bootstrap.Client\Bootstrap.Client.csproj", "{C82A6E45-AB90-43D1-8429-5CBE953D8151}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.Client", "src\mvc\client\Bootstrap.Client\Bootstrap.Client.csproj", "{C82A6E45-AB90-43D1-8429-5CBE953D8151}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "client", "client", "{C7F51A14-2D89-4D1F-AD78-C42B79AB0BF0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.DataAccess", "src\admin\Bootstrap.DataAccess\Bootstrap.DataAccess.csproj", "{8D62BE79-BE13-43C8-969B-C9B00B3C84B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.DataAccess", "src\mvc\admin\Bootstrap.DataAccess\Bootstrap.DataAccess.csproj", "{8D62BE79-BE13-43C8-969B-C9B00B3C84B7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQLite", "SQLite", "{523515EC-2AD7-4282-9AF4-9D20371183B0}"
 	ProjectSection(SolutionItems) = preProject
@@ -26,7 +26,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQLite", "SQLite", "{523515
 		db\SQLite\Install.sql = db\SQLite\Install.sql
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.DataAccess.MongoDB", "src\admin\Bootstrap.DataAccess.MongoDB\Bootstrap.DataAccess.MongoDB.csproj", "{8336F096-4B4A-4710-A1FA-0F5E44CD8D26}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.DataAccess.MongoDB", "src\mvc\admin\Bootstrap.DataAccess.MongoDB\Bootstrap.DataAccess.MongoDB.csproj", "{8336F096-4B4A-4710-A1FA-0F5E44CD8D26}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MongoDB", "MongoDB", "{A06A0AD8-A246-4329-B024-7174AE4A3EDE}"
 	ProjectSection(SolutionItems) = preProject
@@ -57,9 +57,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Postgresql", "Postgresql", 
 		db\Postgresql\install.sql = db\Postgresql\install.sql
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.Client.DataAccess", "src\client\Bootstrap.Client.DataAccess\Bootstrap.Client.DataAccess.csproj", "{843811A2-FE49-410F-BF9F-9F1FB14A1DEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.Client.DataAccess", "src\mvc\client\Bootstrap.Client.DataAccess\Bootstrap.Client.DataAccess.csproj", "{843811A2-FE49-410F-BF9F-9F1FB14A1DEE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.Client.DataAccess.MongoDB", "src\client\Bootstrap.Client.DataAccess.MongoDB\Bootstrap.Client.DataAccess.MongoDB.csproj", "{BC1C6D63-ADA9-4C3B-89F0-CEB191A86BF5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.Client.DataAccess.MongoDB", "src\mvc\client\Bootstrap.Client.DataAccess.MongoDB\Bootstrap.Client.DataAccess.MongoDB.csproj", "{BC1C6D63-ADA9-4C3B-89F0-CEB191A86BF5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{6AD32A76-F3AA-423E-96EA-E5CC679934D1}"
 EndProject
@@ -74,9 +74,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{E057452E-0
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{85574E7C-7D58-4135-AB4B-76678552D271}"
-	ProjectSection(SolutionItems) = preProject
-		src\admin\Bootstrap.Admin\Dockerfile = src\admin\Bootstrap.Admin\Dockerfile
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "srcipts", "srcipts", "{72C103DB-E1D3-449F-97C2-DF12CA111FD4}"
 EndProject
@@ -130,15 +127,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "git", "git", "{64EACBD1-23D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "blazor", "blazor", "{DAE3826B-AAAB-468A-9A06-2F56EF5C0767}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.Client.Blazor", "src\blazor\Bootstrap.Client.Blazor\Bootstrap.Client.Blazor.csproj", "{90BC5C25-0F93-4CDE-833C-3D8243E19D3B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.Client.Blazor", "src\blazor\client\Bootstrap.Client.Blazor\Bootstrap.Client.Blazor.csproj", "{90BC5C25-0F93-4CDE-833C-3D8243E19D3B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.Client.Blazor.Shared", "src\blazor\Bootstrap.Client.Blazor.Shared\Bootstrap.Client.Blazor.Shared.csproj", "{B306BD58-1C73-40F2-86F7-E1763344007B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.Client.Blazor.Shared", "src\blazor\client\Bootstrap.Client.Blazor.Shared\Bootstrap.Client.Blazor.Shared.csproj", "{B306BD58-1C73-40F2-86F7-E1763344007B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "github", "github", "{C07631B9-5E5E-417A-9A16-3C88956D574E}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\build.yml = .github\workflows\build.yml
 		.github\workflows\docker.yml = .github\workflows\docker.yml
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.Admin.Blazor", "src\blazor\admin\Bootstrap.Admin.Blazor\Bootstrap.Admin.Blazor.csproj", "{485C1B75-7E3C-4AFC-8A91-2347FFEC1E96}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mvc", "mvc", "{C996F427-DA93-49D6-9804-4E665D195FC2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "admin", "admin", "{45ADEF9B-C8BD-4224-9E12-F6716E85A22C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "client", "client", "{55A2459A-6BDE-4493-B2C0-5BE1673E99EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bootstrap.Admin.Blazor.DataAccess", "src\blazor\admin\Bootstrap.Admin.Blazor.DataAccess\Bootstrap.Admin.Blazor.DataAccess.csproj", "{75730767-A53A-4CFB-BACB-B90401288FA6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -182,6 +189,14 @@ Global
 		{B306BD58-1C73-40F2-86F7-E1763344007B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B306BD58-1C73-40F2-86F7-E1763344007B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B306BD58-1C73-40F2-86F7-E1763344007B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{485C1B75-7E3C-4AFC-8A91-2347FFEC1E96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{485C1B75-7E3C-4AFC-8A91-2347FFEC1E96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{485C1B75-7E3C-4AFC-8A91-2347FFEC1E96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{485C1B75-7E3C-4AFC-8A91-2347FFEC1E96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75730767-A53A-4CFB-BACB-B90401288FA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75730767-A53A-4CFB-BACB-B90401288FA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75730767-A53A-4CFB-BACB-B90401288FA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75730767-A53A-4CFB-BACB-B90401288FA6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -190,7 +205,7 @@ Global
 		{87319AF5-7C40-4362-B67C-35F9DD737DB4} = {586410F2-C1F0-47CD-AB28-2CF506DED2C8}
 		{7B2B7043-3CB2-4C5A-BDF2-8C47F1A5471A} = {E03B7391-B52F-4449-B400-5CD9DE01F085}
 		{C82A6E45-AB90-43D1-8429-5CBE953D8151} = {C7F51A14-2D89-4D1F-AD78-C42B79AB0BF0}
-		{C7F51A14-2D89-4D1F-AD78-C42B79AB0BF0} = {41B6D37A-5E5E-42B3-85E4-D81A81E3D757}
+		{C7F51A14-2D89-4D1F-AD78-C42B79AB0BF0} = {C996F427-DA93-49D6-9804-4E665D195FC2}
 		{8D62BE79-BE13-43C8-969B-C9B00B3C84B7} = {E03B7391-B52F-4449-B400-5CD9DE01F085}
 		{523515EC-2AD7-4282-9AF4-9D20371183B0} = {586410F2-C1F0-47CD-AB28-2CF506DED2C8}
 		{8336F096-4B4A-4710-A1FA-0F5E44CD8D26} = {E03B7391-B52F-4449-B400-5CD9DE01F085}
@@ -200,7 +215,7 @@ Global
 		{6F61C2AC-84D4-48A9-8A48-680657CC8175} = {586410F2-C1F0-47CD-AB28-2CF506DED2C8}
 		{843811A2-FE49-410F-BF9F-9F1FB14A1DEE} = {C7F51A14-2D89-4D1F-AD78-C42B79AB0BF0}
 		{BC1C6D63-ADA9-4C3B-89F0-CEB191A86BF5} = {C7F51A14-2D89-4D1F-AD78-C42B79AB0BF0}
-		{E03B7391-B52F-4449-B400-5CD9DE01F085} = {41B6D37A-5E5E-42B3-85E4-D81A81E3D757}
+		{E03B7391-B52F-4449-B400-5CD9DE01F085} = {C996F427-DA93-49D6-9804-4E665D195FC2}
 		{C6F2DCA0-7941-4C28-9328-2D495F5DCB00} = {72C103DB-E1D3-449F-97C2-DF12CA111FD4}
 		{FDCFC3E3-14CF-40B2-9FE5-5BC239AAC110} = {72C103DB-E1D3-449F-97C2-DF12CA111FD4}
 		{5F732D4E-133B-4DA6-811B-C369CDC3FB89} = {72C103DB-E1D3-449F-97C2-DF12CA111FD4}
@@ -208,8 +223,13 @@ Global
 		{41E078CA-F005-4B66-B440-FD7EB731AD61} = {586410F2-C1F0-47CD-AB28-2CF506DED2C8}
 		{64EACBD1-23DD-4168-BEED-55D47DB1A8BB} = {72C103DB-E1D3-449F-97C2-DF12CA111FD4}
 		{DAE3826B-AAAB-468A-9A06-2F56EF5C0767} = {41B6D37A-5E5E-42B3-85E4-D81A81E3D757}
-		{90BC5C25-0F93-4CDE-833C-3D8243E19D3B} = {DAE3826B-AAAB-468A-9A06-2F56EF5C0767}
-		{B306BD58-1C73-40F2-86F7-E1763344007B} = {DAE3826B-AAAB-468A-9A06-2F56EF5C0767}
+		{90BC5C25-0F93-4CDE-833C-3D8243E19D3B} = {55A2459A-6BDE-4493-B2C0-5BE1673E99EE}
+		{B306BD58-1C73-40F2-86F7-E1763344007B} = {55A2459A-6BDE-4493-B2C0-5BE1673E99EE}
+		{485C1B75-7E3C-4AFC-8A91-2347FFEC1E96} = {45ADEF9B-C8BD-4224-9E12-F6716E85A22C}
+		{C996F427-DA93-49D6-9804-4E665D195FC2} = {41B6D37A-5E5E-42B3-85E4-D81A81E3D757}
+		{45ADEF9B-C8BD-4224-9E12-F6716E85A22C} = {DAE3826B-AAAB-468A-9A06-2F56EF5C0767}
+		{55A2459A-6BDE-4493-B2C0-5BE1673E99EE} = {DAE3826B-AAAB-468A-9A06-2F56EF5C0767}
+		{75730767-A53A-4CFB-BACB-B90401288FA6} = {45ADEF9B-C8BD-4224-9E12-F6716E85A22C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {221EAE38-5F75-4391-9A48-E462A9F3B8FC}

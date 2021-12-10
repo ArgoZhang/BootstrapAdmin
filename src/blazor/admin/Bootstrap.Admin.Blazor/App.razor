@@ -1,0 +1,11 @@
+﻿<BootstrapBlazorRoot>
+    <Router AppAssembly="@typeof(App).Assembly">
+        <Found Context="routeData">
+            <PageTitle>@Title</PageTitle>
+            <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+        </Found>
+        <NotFound>
+            <LayoutView Layout="@typeof(NotFoundLayout)" />
+        </NotFound>
+    </Router>
+</BootstrapBlazorRoot>
