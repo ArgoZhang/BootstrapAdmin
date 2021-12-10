@@ -63,6 +63,9 @@ namespace Microsoft.Extensions.DependencyInjection
             // 增加数据服务
             services.AddScoped(typeof(IDataService<>), typeof(BlazorTableDataService<>));
 
+            // 增加 BootstrapApp 上下文服务
+            services.AddSingleton<BootstrapAppContext>();
+
             return services;
         }
     }

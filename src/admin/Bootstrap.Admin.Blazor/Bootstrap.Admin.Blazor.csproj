@@ -9,6 +9,8 @@
     <Using Include="Bootstrap.Admin.Blazor.Services" />
     <Using Include="Bootstrap.DataAccess" />
     <Using Include="BootstrapBlazor.Components" />
+    <Using Include="Microsoft.AspNetCore.Components" />
+    <Using Include="System.Diagnostics.CodeAnalysis" />
   </ItemGroup>
 
   <ItemGroup>
