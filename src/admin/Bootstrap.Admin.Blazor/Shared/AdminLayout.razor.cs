@@ -1,6 +1,4 @@
-﻿using BootstrapBlazor.Components;
-
-namespace Bootstrap.Admin.Blazor.Shared
+﻿namespace Bootstrap.Admin.Blazor.Shared
 {
     /// <summary>
     /// AdminLayout 布局类

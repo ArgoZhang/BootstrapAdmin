@@ -1,5 +1,4 @@
-﻿using Bootstrap.DataAccess;
-using Bootstrap.Security.Mvc;
+﻿using Bootstrap.Security.Mvc;
 
 namespace Bootstrap.Admin.Blazor.Models
 {

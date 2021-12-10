@@ -2,7 +2,6 @@
 using Bootstrap.Admin.Blazor.Shared;
 using Bootstrap.Security;
 using Microsoft.AspNetCore.Components;
-using System.Threading.Tasks;
 
 namespace Bootstrap.Admin.Blazor.Components
 {

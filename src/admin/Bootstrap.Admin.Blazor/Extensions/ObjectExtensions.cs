@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-
-namespace Bootstrap.Admin.Blazor.Extensions
+﻿namespace Bootstrap.Admin.Blazor.Extensions
 {
     /// <summary>
     /// 

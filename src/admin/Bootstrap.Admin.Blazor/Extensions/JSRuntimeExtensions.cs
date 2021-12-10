@@ -1,5 +1,4 @@
 ﻿using Bootstrap.Admin.Blazor.Components;
-using System.Threading.Tasks;
 
 namespace Microsoft.JSInterop
 {

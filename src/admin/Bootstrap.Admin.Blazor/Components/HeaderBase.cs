@@ -1,5 +1,4 @@
 ﻿using Bootstrap.Admin.Blazor.Shared;
-using Bootstrap.DataAccess;
 using Microsoft.AspNetCore.Components;
 
 namespace Bootstrap.Admin.Blazor.Components

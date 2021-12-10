@@ -1,7 +1,5 @@
 ﻿using Bootstrap.Admin.Blazor.Models;
 using Bootstrap.Security;
-using BootstrapBlazor.Components;
-using Bootstrap.DataAccess;
 using Task = System.Threading.Tasks.Task;
 
 namespace Bootstrap.Admin.Blazor.Pages.Admin

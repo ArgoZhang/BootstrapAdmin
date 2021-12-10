@@ -1,12 +1,7 @@
 ﻿using Bootstrap.Admin.Blazor.Components;
-using Bootstrap.Admin.Blazor.Extensions;
-using Bootstrap.Admin.Blazor.Models;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Routing;
-using Microsoft.AspNetCore.Components.Server;
 using Microsoft.JSInterop;
-using System.Net;
 
 namespace Bootstrap.Admin.Blazor.Shared
 {

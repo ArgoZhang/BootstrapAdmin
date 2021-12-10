@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Bootstrap.Admin.Blazor.Extensions
+﻿namespace Bootstrap.Admin.Blazor.Extensions
 {
     /// <summary>
     /// Url 地址辅助操作类
