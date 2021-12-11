@@ -18,7 +18,6 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <returns></returns>
         public static IServiceCollection AddDataAccessServices(this IServiceCollection services)
         {
-            services.TryAddSingleton<IMenu, MenuService>();
             services.TryAddSingleton<IDatabase>(provider =>
             {
                 //TODO: 后期改造成自定适配
@@ -26,6 +25,9 @@ namespace Microsoft.Extensions.DependencyInjection
                 var connString = configuration.GetConnectionString("bb");
                 return new Database<SQLiteDatabaseProvider>(connString);
             });
+
+            services.TryAddSingleton<IMenu, MenuService>();
+            services.TryAddSingleton<IDict, DictService>();
             return services;
         }
     }

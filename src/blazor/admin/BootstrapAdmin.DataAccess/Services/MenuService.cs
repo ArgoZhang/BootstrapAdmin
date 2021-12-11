@@ -6,7 +6,7 @@ namespace BootstrapAdmin.DataAccess.Services
     /// <summary>
     /// 
     /// </summary>
-    public class MenuService : IMenu
+    class MenuService : IMenu
     {
         private IDatabase _db;
 
