@@ -5,6 +5,7 @@
       "src\\blazor\\admin\\BootstrapAdmin.DataAccess.EFCore\\BootstrapAdmin.DataAccess.EFCore.csproj",
       "src\\blazor\\admin\\BootstrapAdmin.DataAccess.Models\\BootstrapAdmin.DataAccess.Models.csproj",
       "src\\blazor\\admin\\BootstrapAdmin.DataAccess\\BootstrapAdmin.DataAccess.csproj",
+      "src\\blazor\\admin\\BootstrapAdmin.Web.Interface\\BootstrapAdmin.Web.Interface.csproj",
       "src\\blazor\\admin\\BootstrapAdmin.Web\\BootstrapAdmin.Web.csproj",
       "src\\mvc\\admin\\Bootstrap.Admin\\Bootstrap.Admin.csproj",
       "src\\mvc\\admin\\Bootstrap.DataAccess\\Bootstrap.DataAccess.csproj"

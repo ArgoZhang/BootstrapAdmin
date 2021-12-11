@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BootstrapAdmin.Web.Interface</name>
+    </assembly>
+    <members>
+        <member name="T:BootstrapAdmin.DataAccess.Interface.IDicts">
+            <summary>
+            Dict 字典表接口
+            </summary>
+        </member>
+        <member name="T:BootstrapAdmin.DataAccess.Interface.INavigations">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:BootstrapAdmin.DataAccess.Interface.INavigations.RetrieveAllMenus(System.String)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

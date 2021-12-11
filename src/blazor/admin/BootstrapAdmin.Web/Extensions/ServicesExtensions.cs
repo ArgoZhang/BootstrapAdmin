@@ -69,7 +69,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSingleton<BootstrapAppContext>();
 
             // 增加数据服务
-            services.AddDataAccessServices();
+            services.AddPetaPocoDataAccessServices();
 
             return services;
         }

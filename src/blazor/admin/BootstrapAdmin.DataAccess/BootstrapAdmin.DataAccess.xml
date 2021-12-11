@@ -9,27 +9,11 @@
             
             </summary>
         </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.ServicesExtensions.AddDataAccessServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+        <member name="M:Microsoft.Extensions.DependencyInjection.ServicesExtensions.AddPetaPocoDataAccessServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
             
             </summary>
             <param name="services"></param>
-            <returns></returns>
-        </member>
-        <member name="T:BootstrapAdmin.DataAccess.Services.IDicts">
-            <summary>
-            Dict 字典表接口
-            </summary>
-        </member>
-        <member name="T:BootstrapAdmin.DataAccess.Services.INavigations">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:BootstrapAdmin.DataAccess.Services.INavigations.RetrieveAllMenus(System.String)">
-            <summary>
-            
-            </summary>
             <returns></returns>
         </member>
         <member name="T:BootstrapAdmin.DataAccess.Services.NavigationsService">

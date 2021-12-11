@@ -1,9 +1,9 @@
-﻿using BootstrapAdmin.DataAccess.Interface;
-using BootstrapAdmin.DataAccess.Services;
+﻿using BootstrapAdmin.DataAccess.EFCore;
+using BootstrapAdmin.DataAccess.EFCore.Services;
+using BootstrapAdmin.DataAccess.Interface;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using PetaPoco;
-using PetaPoco.Providers;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -17,14 +17,14 @@ namespace Microsoft.Extensions.DependencyInjection
         /// </summary>
         /// <param name="services"></param>
         /// <returns></returns>
-        public static IServiceCollection AddPetaPocoDataAccessServices(this IServiceCollection services)
+        public static IServiceCollection AddEFCoreDataAccessServices(this IServiceCollection services)
         {
-            services.TryAddSingleton<IDatabase>(provider =>
+            services.AddDbContextFactory<BootstrapAdminContext>((provider, option) =>
             {
                 //TODO: 后期改造成自定适配
                 var configuration = provider.GetRequiredService<IConfiguration>();
                 var connString = configuration.GetConnectionString("bb");
-                return new Database<SQLiteDatabaseProvider>(connString);
+                option.UseSqlite(connString);
             });
 
             services.TryAddSingleton<INavigations, NavigationsService>();

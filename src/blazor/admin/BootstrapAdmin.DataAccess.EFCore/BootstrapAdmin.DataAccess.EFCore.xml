@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BootstrapAdmin.DataAccess.EFCore</name>
+    </assembly>
+    <members>
+        <member name="T:BootstrapAdmin.DataAccess.EFCore.BootstrapAdminContext">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:BootstrapAdmin.DataAccess.EFCore.BootstrapAdminContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{BootstrapAdmin.DataAccess.EFCore.BootstrapAdminContext})">
+            <summary>
+            构造函数
+            </summary>
+            <param name="options"></param>
+        </member>
+        <member name="P:BootstrapAdmin.DataAccess.EFCore.BootstrapAdminContext.Dicts">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:BootstrapAdmin.DataAccess.EFCore.BootstrapAdminContext.Navigations">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:BootstrapAdmin.DataAccess.EFCore.Services.NavigationsService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:BootstrapAdmin.DataAccess.EFCore.Services.NavigationsService.#ctor(Microsoft.EntityFrameworkCore.IDbContextFactory{BootstrapAdmin.DataAccess.EFCore.BootstrapAdminContext})">
+            <summary>
+            
+            </summary>
+            <param name="factory"></param>
+        </member>
+        <member name="M:BootstrapAdmin.DataAccess.EFCore.Services.NavigationsService.RetrieveAllMenus(System.String)">
+            <summary>
+            获得指定用户名可访问的所有菜单集合
+            </summary>
+            <param name="userName">当前用户名</param>
+            <returns>未层次化的菜单集合</returns>
+        </member>
+        <member name="T:Microsoft.Extensions.DependencyInjection.ServicesExtensions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.ServicesExtensions.AddEFCoreDataAccessServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

@@ -1,4 +1,4 @@
-﻿namespace BootstrapAdmin.DataAccess.Services
+﻿namespace BootstrapAdmin.DataAccess.Interface
 {
     /// <summary>
     /// Dict 字典表接口

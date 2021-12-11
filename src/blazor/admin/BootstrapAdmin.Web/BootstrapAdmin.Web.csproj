@@ -1,10 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-  </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="BootstrapBlazor" Version="6.1.1-beta01" />
   </ItemGroup>
@@ -16,7 +11,6 @@
   <ItemGroup>
     <Using Include="BootstrapBlazor.Components" />
     <Using Include="Microsoft.AspNetCore.Components" />
-    <Using Include="System.Diagnostics.CodeAnalysis" />
   </ItemGroup>
 
 </Project>
