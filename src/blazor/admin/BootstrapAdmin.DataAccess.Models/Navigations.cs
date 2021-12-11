@@ -1,14 +1,11 @@
 ﻿// Copyright (c) Argo Zhang (argo@163.com). All rights reserved.
 
-using PetaPoco;
-
 namespace BootstrapAdmin.DataAccess.Models
 {
     /// <summary>
     /// Bootstrap Admin 后台管理菜单相关操作实体类
     /// </summary>
-    [TableName("Navigations")]
-    public class Menu
+    public class Navigations
     {
         /// <summary>
         /// 获得/设置 菜单主键ID
@@ -78,6 +75,6 @@ namespace BootstrapAdmin.DataAccess.Models
         /// <summary>
         /// 获得/设置 当前菜单项的所有子菜单集合
         /// </summary>
-        public List<Menu> Menus { get; } = new List<Menu>();
+        public List<Navigations> Menus { get; } = new List<Navigations>();
     }
 }

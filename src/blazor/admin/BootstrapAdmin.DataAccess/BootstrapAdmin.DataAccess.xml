@@ -4,165 +4,6 @@
         <name>BootstrapAdmin.DataAccess</name>
     </assembly>
     <members>
-        <member name="T:BootstrapAdmin.DataAccess.Extensions.MenuItemExtensions">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:BootstrapAdmin.DataAccess.Extensions.MenuItemExtensions.Parse(BootstrapAdmin.DataAccess.Models.Menu)">
-            <summary>
-            
-            </summary>
-            <param name="menu"></param>
-            <returns></returns>
-        </member>
-        <member name="T:BootstrapAdmin.DataAccess.Models.Dict">
-            <summary>
-            字典配置项
-            </summary>
-        </member>
-        <member name="P:BootstrapAdmin.DataAccess.Models.Dict.Id">
-            <summary>
-            获得/设置 字典主键 数据库自增列
-            </summary>
-        </member>
-        <member name="P:BootstrapAdmin.DataAccess.Models.Dict.Category">
-            <summary>
-            获得/设置 字典分类
-            </summary>
-        </member>
-        <member name="P:BootstrapAdmin.DataAccess.Models.Dict.Name">
-            <summary>
-            获得/设置 字典名称
-            </summary>
-        </member>
-        <member name="P:BootstrapAdmin.DataAccess.Models.Dict.Code">
-            <summary>
-            获得/设置 字典字典值
-            </summary>
-        </member>
-        <member name="P:BootstrapAdmin.DataAccess.Models.Dict.Define">
-            <summary>
-            获得/设置 字典定义值 0 表示系统使用，1 表示用户自定义 默认为 1
-            </summary>
-        </member>
-        <member name="T:BootstrapAdmin.DataAccess.Models.Menu">
-            <summary>
-            Bootstrap Admin 后台管理菜单相关操作实体类
-            </summary>
-        </member>
-        <member name="P:BootstrapAdmin.DataAccess.Models.Menu.Id">
-            <summary>
-            获得/设置 菜单主键ID
-            </summary>
-        </member>
-        <member name="P:BootstrapAdmin.DataAccess.Models.Menu.ParentId">
-            <summary>
-            获得/设置 父级菜单ID 默认为 0
-            </summary>
-        </member>
-        <member name="P:BootstrapAdmin.DataAccess.Models.Menu.ParentName">
-            <summary>
-            获得/设置 父级菜单名称
-            </summary>
-        </member>
-        <member name="P:BootstrapAdmin.DataAccess.Models.Menu.Name">
-            <summary>
-            获得/设置 菜单名称
-            </summary>
-        </member>
-        <member name="P:BootstrapAdmin.DataAccess.Models.Menu.Order">
-            <summary>
-            获得/设置 菜单序号
-            </summary>
-        </member>
-        <member name="P:BootstrapAdmin.DataAccess.Models.Menu.Icon">
-            <summary>
-            获得/设置 菜单图标
-            </summary>
-        </member>
-        <member name="P:BootstrapAdmin.DataAccess.Models.Menu.Url">
-            <summary>
-            获得/设置 菜单URL地址
-            </summary>
-        </member>
-        <member name="P:BootstrapAdmin.DataAccess.Models.Menu.Category">
-            <summary>
-            获得/设置 菜单分类, 0 表示系统菜单 1 表示用户自定义菜单
-            </summary>
-        </member>
-        <member name="P:BootstrapAdmin.DataAccess.Models.Menu.CategoryName">
-            <summary>
-            获得 菜单分类名称，取字典表中的Name category="菜单"
-            </summary>
-        </member>
-        <member name="P:BootstrapAdmin.DataAccess.Models.Menu.Active">
-            <summary>
-            获得/设置 是否当前被选中 active为选中
-            </summary>
-        </member>
-        <member name="P:BootstrapAdmin.DataAccess.Models.Menu.Target">
-            <summary>
-            获得/设置 链接目标
-            </summary>
-        </member>
-        <member name="P:BootstrapAdmin.DataAccess.Models.Menu.IsResource">
-            <summary>
-            获得/设置 是否为资源文件, 0 表示菜单 1 表示资源 2 表示按钮
-            </summary>
-        </member>
-        <member name="P:BootstrapAdmin.DataAccess.Models.Menu.Application">
-            <summary>
-            获得/设置 所属应用程序，此属性由BA后台字典表分配
-            </summary>
-        </member>
-        <member name="P:BootstrapAdmin.DataAccess.Models.Menu.Menus">
-            <summary>
-            获得/设置 当前菜单项的所有子菜单集合
-            </summary>
-        </member>
-        <member name="T:BootstrapAdmin.DataAccess.Services.IMenu">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:BootstrapAdmin.DataAccess.Services.IMenu.GetAdminMenusByUser(System.String)">
-            <summary>
-            
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="T:BootstrapAdmin.DataAccess.Services.MenuService">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:BootstrapAdmin.DataAccess.Services.MenuService.#ctor(PetaPoco.IDatabase)">
-            <summary>
-            
-            </summary>
-            <param name="db"></param>
-        </member>
-        <member name="M:BootstrapAdmin.DataAccess.Services.MenuService.GetAdminMenusByUser(System.String)">
-            <summary>
-            
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:BootstrapAdmin.DataAccess.Services.MenuService.CascadeMenus(System.Collections.Generic.IEnumerable{BootstrapAdmin.DataAccess.Models.Menu})">
-            <summary>
-            获得带层次关系的菜单集合
-            </summary>
-            <param name="menus">未层次化菜单集合</param>
-            <returns>带层次化的菜单集合</returns>
-        </member>
-        <member name="M:BootstrapAdmin.DataAccess.Services.MenuService.RetrieveAllMenus(System.String)">
-            <summary>
-            获得指定用户名可访问的所有菜单集合
-            </summary>
-            <param name="userName">当前用户名</param>
-            <returns>未层次化的菜单集合</returns>
-        </member>
         <member name="T:Microsoft.Extensions.DependencyInjection.ServicesExtensions">
             <summary>
             
@@ -174,6 +15,40 @@
             </summary>
             <param name="services"></param>
             <returns></returns>
+        </member>
+        <member name="T:BootstrapAdmin.DataAccess.Services.IDicts">
+            <summary>
+            Dict 字典表接口
+            </summary>
+        </member>
+        <member name="T:BootstrapAdmin.DataAccess.Services.INavigations">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:BootstrapAdmin.DataAccess.Services.INavigations.RetrieveAllMenus(System.String)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:BootstrapAdmin.DataAccess.Services.NavigationsService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:BootstrapAdmin.DataAccess.Services.NavigationsService.#ctor(PetaPoco.IDatabase)">
+            <summary>
+            
+            </summary>
+            <param name="db"></param>
+        </member>
+        <member name="M:BootstrapAdmin.DataAccess.Services.NavigationsService.RetrieveAllMenus(System.String)">
+            <summary>
+            获得指定用户名可访问的所有菜单集合
+            </summary>
+            <param name="userName">当前用户名</param>
+            <returns>未层次化的菜单集合</returns>
         </member>
     </members>
 </doc>

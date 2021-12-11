@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="BootstrapBlazor" Version="6.1.1-beta01" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BootstrapAdmin.DataAccess\BootstrapAdmin.DataAccess.csproj" />
   </ItemGroup>
 

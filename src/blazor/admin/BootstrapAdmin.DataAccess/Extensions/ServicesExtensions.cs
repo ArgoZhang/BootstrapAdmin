@@ -26,8 +26,8 @@ namespace Microsoft.Extensions.DependencyInjection
                 return new Database<SQLiteDatabaseProvider>(connString);
             });
 
-            services.TryAddSingleton<IMenu, MenuService>();
-            services.TryAddSingleton<IDict, DictService>();
+            services.TryAddSingleton<INavigations, NavigationsService>();
+            services.TryAddSingleton<IDicts, DictsService>();
             return services;
         }
     }

@@ -5,12 +5,12 @@ namespace BootstrapAdmin.DataAccess.Services
     /// <summary>
     /// 
     /// </summary>
-    public interface IMenu
+    public interface INavigations
     {
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        IEnumerable<MenuItem> GetAdminMenusByUser(string userName);
+        List<Navigations> RetrieveAllMenus(string userName);
     }
 }

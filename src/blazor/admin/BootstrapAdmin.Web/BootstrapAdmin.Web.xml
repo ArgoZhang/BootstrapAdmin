@@ -83,6 +83,31 @@
             <typeparam name="TModel"></typeparam>
             <returns></returns>
         </member>
+        <member name="T:BootstrapAdmin.Web.Extensions.MenuExtensions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:BootstrapAdmin.Web.Extensions.MenuExtensions.Parse(BootstrapAdmin.DataAccess.Models.Navigations)">
+            <summary>
+            
+            </summary>
+            <param name="menu"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BootstrapAdmin.Web.Extensions.MenuExtensions.ToAdminMenus(System.Collections.Generic.List{BootstrapAdmin.DataAccess.Models.Navigations})">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BootstrapAdmin.Web.Extensions.MenuExtensions.CascadeMenus(System.Collections.Generic.IEnumerable{BootstrapAdmin.DataAccess.Models.Navigations})">
+            <summary>
+            获得带层次关系的菜单集合
+            </summary>
+            <param name="navigations">未层次化菜单集合</param>
+            <returns>带层次化的菜单集合</returns>
+        </member>
         <member name="T:BootstrapAdmin.Web.Models.DictsSearchModel">
             <summary>
             

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BootstrapAdmin.DataAccess.Services
 {
-    class DictService : IDict
+    class DictsService : IDicts
     {
     }
 }

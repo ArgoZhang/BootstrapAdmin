@@ -7,15 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BootstrapBlazor" Version="6.1.1-beta01" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
     <PackageReference Include="PetaPoco.Extensions" Version="5.2.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Using Include="BootstrapBlazor.Components" />
-    <Using Include="Microsoft.AspNetCore.Components" />
+    <ProjectReference Include="..\BootstrapAdmin.DataAccess.Models\BootstrapAdmin.DataAccess.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Using Include="System.Diagnostics.CodeAnalysis" />
   </ItemGroup>
 

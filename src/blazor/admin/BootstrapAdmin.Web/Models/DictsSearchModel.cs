@@ -32,17 +32,17 @@ namespace BootstrapAdmin.Web.Models
 
             if (!string.IsNullOrEmpty(Name))
             {
-                ret.Add(new SearchFilterAction(nameof(Dict.Name), Name));
+                ret.Add(new SearchFilterAction(nameof(Dicts.Name), Name));
             }
 
             if (!string.IsNullOrEmpty(Category))
             {
-                ret.Add(new SearchFilterAction(nameof(Dict.Category), Category));
+                ret.Add(new SearchFilterAction(nameof(Dicts.Category), Category));
             }
 
             if (Define.HasValue)
             {
-                ret.Add(new SearchFilterAction(nameof(Dict.Define), Define, FilterAction.Equal));
+                ret.Add(new SearchFilterAction(nameof(Dicts.Define), Define, FilterAction.Equal));
             }
 
             return ret;

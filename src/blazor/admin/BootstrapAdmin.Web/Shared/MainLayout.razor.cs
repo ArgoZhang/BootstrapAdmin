@@ -1,4 +1,5 @@
 ﻿using BootstrapAdmin.DataAccess.Services;
+using BootstrapAdmin.Web.Extensions;
 
 namespace BootstrapAdmin.Web.Shared
 {
@@ -11,7 +12,7 @@ namespace BootstrapAdmin.Web.Shared
 
         [Inject]
         [NotNull]
-        private IMenu? MenuService { get; set; }
+        private INavigations? NavigationsService { get; set; }
 
         /// <summary>
         /// 
@@ -20,7 +21,7 @@ namespace BootstrapAdmin.Web.Shared
         {
             base.OnInitialized();
 
-            MenuItems = MenuService.GetAdminMenusByUser("Admin");
+            MenuItems = NavigationsService.RetrieveAllMenus("Admin").ToAdminMenus();
         }
     }
 }

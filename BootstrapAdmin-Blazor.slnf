@@ -2,7 +2,8 @@
   "solution": {
     "path": "BootstrapAdmin.sln",
     "projects": [
-      "..\\BootstrapBlazor\\src\\BootstrapBlazor\\BootstrapBlazor.csproj",
+      "src\\blazor\\admin\\BootstrapAdmin.DataAccess.EFCore\\BootstrapAdmin.DataAccess.EFCore.csproj",
+      "src\\blazor\\admin\\BootstrapAdmin.DataAccess.Models\\BootstrapAdmin.DataAccess.Models.csproj",
       "src\\blazor\\admin\\BootstrapAdmin.DataAccess\\BootstrapAdmin.DataAccess.csproj",
       "src\\blazor\\admin\\BootstrapAdmin.Web\\BootstrapAdmin.Web.csproj",
       "src\\mvc\\admin\\Bootstrap.Admin\\Bootstrap.Admin.csproj",
