@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <PackageReference Include="BootstrapBlazor" Version="6.1.1-beta02" />
+    <PackageReference Include="BootstrapBlazor" Version="6.1.1-beta03" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
   </ItemGroup>
 
