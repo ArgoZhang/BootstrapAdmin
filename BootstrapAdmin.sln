@@ -149,9 +149,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BootstrapAdmin.DataAccess.E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BootstrapAdmin.DataAccess.Models", "src\blazor\admin\BootstrapAdmin.DataAccess.Models\BootstrapAdmin.DataAccess.Models.csproj", "{7E3861AB-F797-4A9F-B7CE-0E35751FFCD9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BootstrapAdmin.Web.Interface", "src\blazor\admin\BootstrapAdmin.Web.Interface\BootstrapAdmin.Web.Interface.csproj", "{C57CE871-FBC9-44B7-996B-E8D3449EDAD4}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BootstrapAdmin.DataAccess.PetaPoco", "src\blazor\admin\BootstrapAdmin.DataAccess.PetaPoco\BootstrapAdmin.DataAccess.PetaPoco.csproj", "{20D03C52-0F8B-47B6-BCA8-CF0812F82722}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BootstrapAdmin.Web.Core", "src\blazor\admin\BootstrapAdmin.Web.Core\BootstrapAdmin.Web.Core.csproj", "{DA143654-C258-410D-B5DC-FE446ED99CE4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -207,14 +207,14 @@ Global
 		{7E3861AB-F797-4A9F-B7CE-0E35751FFCD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E3861AB-F797-4A9F-B7CE-0E35751FFCD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E3861AB-F797-4A9F-B7CE-0E35751FFCD9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C57CE871-FBC9-44B7-996B-E8D3449EDAD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C57CE871-FBC9-44B7-996B-E8D3449EDAD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C57CE871-FBC9-44B7-996B-E8D3449EDAD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C57CE871-FBC9-44B7-996B-E8D3449EDAD4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{20D03C52-0F8B-47B6-BCA8-CF0812F82722}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{20D03C52-0F8B-47B6-BCA8-CF0812F82722}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{20D03C52-0F8B-47B6-BCA8-CF0812F82722}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{20D03C52-0F8B-47B6-BCA8-CF0812F82722}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA143654-C258-410D-B5DC-FE446ED99CE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA143654-C258-410D-B5DC-FE446ED99CE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA143654-C258-410D-B5DC-FE446ED99CE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA143654-C258-410D-B5DC-FE446ED99CE4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -249,8 +249,8 @@ Global
 		{EF5EF5A4-616A-4BA7-9E1E-1407E8EC0395} = {45ADEF9B-C8BD-4224-9E12-F6716E85A22C}
 		{D8ED2DF7-F7E1-4DE7-B097-D0BEE51D58E9} = {45ADEF9B-C8BD-4224-9E12-F6716E85A22C}
 		{7E3861AB-F797-4A9F-B7CE-0E35751FFCD9} = {45ADEF9B-C8BD-4224-9E12-F6716E85A22C}
-		{C57CE871-FBC9-44B7-996B-E8D3449EDAD4} = {45ADEF9B-C8BD-4224-9E12-F6716E85A22C}
 		{20D03C52-0F8B-47B6-BCA8-CF0812F82722} = {45ADEF9B-C8BD-4224-9E12-F6716E85A22C}
+		{DA143654-C258-410D-B5DC-FE446ED99CE4} = {45ADEF9B-C8BD-4224-9E12-F6716E85A22C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {221EAE38-5F75-4391-9A48-E462A9F3B8FC}
