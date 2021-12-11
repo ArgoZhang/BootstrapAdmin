@@ -1,4 +1,5 @@
 ﻿using BootstrapAdmin.DataAccess.Interface;
+using BootstrapAdmin.DataAccess.PetaPoco;
 using BootstrapAdmin.DataAccess.PetaPoco.Services;
 using BootstrapBlazor.Components;
 using BootstrapBlazor.DataAcces.PetaPoco.Services;
@@ -26,7 +27,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 //TODO: 后期改造成自定适配
                 var configuration = provider.GetRequiredService<IConfiguration>();
                 var connString = configuration.GetConnectionString("bb");
-                return new Database<SQLiteDatabaseProvider>(connString);
+                return new Database<SQLiteDatabaseProvider>(connString, new BootstrapAdminConventionMapper());
             });
 
             // 增加数据服务
