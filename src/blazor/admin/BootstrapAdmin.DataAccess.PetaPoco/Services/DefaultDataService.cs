@@ -14,12 +14,12 @@ namespace BootstrapBlazor.DataAcces.PetaPoco.Services
     /// </summary>
     class DefaultDataService<TModel> : DataServiceBase<TModel> where TModel : class, new()
     {
-        private readonly IDatabase _db;
+        private IDatabase Database { get; }
 
         /// <summary>
         /// 构造函数
         /// </summary>
-        public DefaultDataService(IDatabase db) => _db = db;
+        public DefaultDataService(IDatabase db) => Database = db;
 
         /// <summary>
         /// 删除方法
@@ -30,7 +30,7 @@ namespace BootstrapBlazor.DataAcces.PetaPoco.Services
         {
             // 通过模型获取主键列数据
             // 支持批量删除
-            _db.DeleteBatch(models);
+            Database.DeleteBatch(models);
             return Task.FromResult(true);
         }
 
@@ -44,11 +44,11 @@ namespace BootstrapBlazor.DataAcces.PetaPoco.Services
         {
             if (changedType == ItemChangedType.Add)
             {
-                await _db.InsertAsync(model);
+                await Database.InsertAsync(model);
             }
             else
             {
-                await _db.UpdateAsync(model);
+                await Database.UpdateAsync(model);
             }
             return true;
         }
@@ -70,14 +70,14 @@ namespace BootstrapBlazor.DataAcces.PetaPoco.Services
             var filters = option.Filters.Concat(option.Searchs).Concat(option.CustomerSearchs);
             if (option.IsPage)
             {
-                var items = await _db.PageAsync<TModel>(option.PageIndex, option.PageItems, filters, option.SortName, option.SortOrder);
+                var items = await Database.PageAsync<TModel>(option.PageIndex, option.PageItems, filters, option.SortName, option.SortOrder);
 
                 ret.TotalCount = Convert.ToInt32(items.TotalItems);
                 ret.Items = items.Items;
             }
             else
             {
-                var items = await _db.FetchAsync<TModel>(filters, option.SortName, option.SortOrder);
+                var items = await Database.FetchAsync<TModel>(filters, option.SortName, option.SortOrder);
                 ret.TotalCount = items.Count;
                 ret.Items = items;
             }

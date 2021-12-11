@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore;
 namespace BootstrapAdmin.DataAccess.EFCore.Services
 {
     /// <summary>
-    /// PetaPoco ORM 的 IDataService 接口实现
+    /// EFCore ORM 的 IDataService 接口实现
     /// </summary>
     class DefaultDataService<TModel> : DataServiceBase<TModel> where TModel : class, new()
     {
-        private IDbContextFactory<BootstrapAdminContext> DbFactory { get; set; }
+        private IDbContextFactory<BootstrapAdminContext> DbFactory { get; }
 
         /// <summary>
         /// 构造函数

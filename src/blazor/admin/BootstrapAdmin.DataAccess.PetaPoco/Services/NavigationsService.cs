@@ -9,7 +9,7 @@ namespace BootstrapAdmin.DataAccess.PetaPoco.Services
     /// </summary>
     class NavigationsService : INavigations
     {
-        private IDatabase Database { get; set; }
+        private IDatabase Database { get; }
 
         /// <summary>
         /// 
