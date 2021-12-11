@@ -13,7 +13,7 @@ namespace BootstrapAdmin.Web.Extensions
         /// </summary>
         /// <param name="menu"></param>
         /// <returns></returns>
-        public static MenuItem Parse(this DataAccess.Models.Navigations menu) => new()
+        public static MenuItem Parse(this DataAccess.Models.Navigation menu) => new()
         {
             Text = menu.Name,
             Url = menu.Url.Replace("~", ""),
@@ -28,7 +28,7 @@ namespace BootstrapAdmin.Web.Extensions
         /// 
         /// </summary>
         /// <returns></returns>
-        public static IEnumerable<MenuItem> ToAdminMenus(this List<Navigations> navigations)
+        public static IEnumerable<MenuItem> ToAdminMenus(this List<Navigation> navigations)
         {
             var menus = navigations.Where(m => m.Category == "0" && m.IsResource == 0);
             return CascadeMenus(menus);
@@ -39,7 +39,7 @@ namespace BootstrapAdmin.Web.Extensions
         /// </summary>
         /// <param name="navigations">未层次化菜单集合</param>
         /// <returns>带层次化的菜单集合</returns>
-        public static IEnumerable<MenuItem> CascadeMenus(IEnumerable<Navigations> navigations)
+        public static IEnumerable<MenuItem> CascadeMenus(IEnumerable<Navigation> navigations)
         {
             var root = navigations.Where(m => m.ParentId == "0")
                             .OrderBy(m => m.Category).ThenBy(m => m.Application).ThenBy(m => m.Order)
@@ -49,7 +49,7 @@ namespace BootstrapAdmin.Web.Extensions
             return root;
         }
 
-        private static void CascadeMenus(IEnumerable<Navigations> navigations, List<MenuItem> level)
+        private static void CascadeMenus(IEnumerable<Navigation> navigations, List<MenuItem> level)
         {
             level.ForEach(m =>
             {

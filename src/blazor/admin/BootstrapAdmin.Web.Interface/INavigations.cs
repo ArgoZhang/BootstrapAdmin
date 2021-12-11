@@ -11,6 +11,6 @@ namespace BootstrapAdmin.DataAccess.Interface
         /// 
         /// </summary>
         /// <returns></returns>
-        List<Navigations> RetrieveAllMenus(string userName);
+        List<Navigation> RetrieveAllMenus(string userName);
     }
 }

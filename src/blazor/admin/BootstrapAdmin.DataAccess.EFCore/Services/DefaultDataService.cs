@@ -58,7 +58,7 @@ namespace BootstrapAdmin.DataAccess.EFCore.Services
         /// </summary>
         /// <param name="option"></param>
         /// <returns></returns>
-        public override async Task<QueryData<TModel>> QueryAsync(QueryPageOptions option)
+        public override Task<QueryData<TModel>> QueryAsync(QueryPageOptions option)
         {
             var context = DbFactory.CreateDbContext();
             var ret = new QueryData<TModel>()
@@ -71,18 +71,25 @@ namespace BootstrapAdmin.DataAccess.EFCore.Services
             var filters = option.Filters.Concat(option.Searchs).Concat(option.CustomerSearchs);
             if (option.IsPage)
             {
-                var items = context.Set<TModel>().Where(filters.GetFilterLambda<TModel>()).Take(option.PageItems).Skip(option.PageItems * (option.PageIndex - 1));
+                var items = context.Set<TModel>()
+                                   .Where(filters.GetFilterLambda<TModel>())
+                                   .Sort(option.SortName!, option.SortOrder, !string.IsNullOrEmpty(option.SortName))
+                                   .Count(out var count)
+                                   .Page((option.PageIndex - 1) * option.PageItems, option.PageItems);
 
-                ret.TotalCount = await context.Set<TModel>().CountAsync();
+                ret.TotalCount = count;
                 ret.Items = items;
             }
             else
             {
-                var items = context.Set<TModel>().Where(option.Filters.GetFilterLambda<TModel>()).Where(option.CustomerSearchs.GetFilterLambda<TModel>());
-                ret.TotalCount = await context.Set<TModel>().CountAsync();
+                var items = context.Set<TModel>()
+                                   .Where(filters.GetFilterLambda<TModel>())
+                                   .Sort(option.SortName!, option.SortOrder, !string.IsNullOrEmpty(option.SortName))
+                                   .Count(out var count);
+                ret.TotalCount = count;
                 ret.Items = items;
             }
-            return ret;
+            return Task.FromResult(ret);
         }
     }
 }

@@ -5,7 +5,7 @@ namespace BootstrapAdmin.DataAccess.Models
     /// <summary>
     /// Bootstrap Admin 后台管理菜单相关操作实体类
     /// </summary>
-    public class Navigations
+    public class Navigation
     {
         /// <summary>
         /// 获得/设置 菜单主键ID
@@ -75,6 +75,6 @@ namespace BootstrapAdmin.DataAccess.Models
         /// <summary>
         /// 获得/设置 当前菜单项的所有子菜单集合
         /// </summary>
-        public List<Navigations> Menus { get; } = new List<Navigations>();
+        public List<Navigation> Menus { get; } = new List<Navigation>();
     }
 }

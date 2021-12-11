@@ -5,7 +5,7 @@ namespace BootstrapAdmin.DataAccess.Models
     /// <summary>
     /// 字典配置项
     /// </summary>
-    public class Dicts
+    public class Dict
     {
         /// <summary>
         /// 获得/设置 字典主键 数据库自增列

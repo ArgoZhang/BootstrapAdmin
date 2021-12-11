@@ -26,12 +26,12 @@ namespace BootstrapAdmin.DataAccess.EFCore
         /// 
         /// </summary>
         [NotNull]
-        public DbSet<Dicts>? Dicts { get; set; }
+        public DbSet<Dict>? Dicts { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
         [NotNull]
-        public DbSet<Navigations>? Navigations { get; set; }
+        public DbSet<Navigation>? Navigations { get; set; }
     }
 }

@@ -1,9 +1,9 @@
 ﻿@page "/admin/users"
 
-@*<BlazorTable TItem="User">
+<BlazorTable TItem="DataAccess.Models.User">
     <TableToolbarTemplate>
-        <TableToolbarButton TItem="User" Color="Color.Info" Icon="fa fa-bank" Text="分配部门" OnClickCallback="OnAssignmentDept" />
-        <TableToolbarButton TItem="User" Color="Color.Warning" Icon="fa fa-sitemap" Text="分配角色" OnClickCallback="OnAssignmentRoles" />
+        <TableToolbarButton TItem="DataAccess.Models.User" Color="Color.Info" Icon="fa fa-bank" Text="分配部门" OnClickCallback="OnAssignmentDept" />
+        <TableToolbarButton TItem="DataAccess.Models.User" Color="Color.Warning" Icon="fa fa-sitemap" Text="分配角色" OnClickCallback="OnAssignmentRoles" />
     </TableToolbarTemplate>
     <ColumnsTemplete>
         <TableColumn @bind-Field="@context.UserName" Text="登录名称" Sortable="true" Filterable="true" Searchable="true"></TableColumn>
@@ -14,4 +14,3 @@
         <TableColumn @bind-Field="@context.Description" Text="说明" Sortable="true" Filterable="true"></TableColumn>
     </ColumnsTemplete>
 </BlazorTable>
-*@
