@@ -72,7 +72,7 @@ namespace BootstrapAdmin.DataAccess.EFCore.Services
             if (option.IsPage)
             {
                 var items = context.Set<TModel>()
-                                   .Where(filters.GetFilterLambda<TModel>())
+                                   .Where(filters.GetFilterLambda<TModel>(), filters.Any())
                                    .Sort(option.SortName!, option.SortOrder, !string.IsNullOrEmpty(option.SortName))
                                    .Count(out var count)
                                    .Page((option.PageIndex - 1) * option.PageItems, option.PageItems);
@@ -83,7 +83,7 @@ namespace BootstrapAdmin.DataAccess.EFCore.Services
             else
             {
                 var items = context.Set<TModel>()
-                                   .Where(filters.GetFilterLambda<TModel>())
+                                   .Where(filters.GetFilterLambda<TModel>(), filters.Any())
                                    .Sort(option.SortName!, option.SortOrder, !string.IsNullOrEmpty(option.SortName))
                                    .Count(out var count);
                 ret.TotalCount = count;
