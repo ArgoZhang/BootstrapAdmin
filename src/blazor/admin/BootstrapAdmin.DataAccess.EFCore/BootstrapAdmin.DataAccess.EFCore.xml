@@ -25,6 +25,38 @@
             
             </summary>
         </member>
+        <member name="T:BootstrapAdmin.DataAccess.EFCore.Services.DefaultDataService`1">
+            <summary>
+            PetaPoco ORM 的 IDataService 接口实现
+            </summary>
+        </member>
+        <member name="M:BootstrapAdmin.DataAccess.EFCore.Services.DefaultDataService`1.#ctor(Microsoft.EntityFrameworkCore.IDbContextFactory{BootstrapAdmin.DataAccess.EFCore.BootstrapAdminContext})">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:BootstrapAdmin.DataAccess.EFCore.Services.DefaultDataService`1.DeleteAsync(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            删除方法
+            </summary>
+            <param name="models"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BootstrapAdmin.DataAccess.EFCore.Services.DefaultDataService`1.SaveAsync(`0,BootstrapBlazor.Components.ItemChangedType)">
+            <summary>
+            保存方法
+            </summary>
+            <param name="model"></param>
+            <param name="changedType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BootstrapAdmin.DataAccess.EFCore.Services.DefaultDataService`1.QueryAsync(BootstrapBlazor.Components.QueryPageOptions)">
+            <summary>
+            查询方法
+            </summary>
+            <param name="option"></param>
+            <returns></returns>
+        </member>
         <member name="T:BootstrapAdmin.DataAccess.EFCore.Services.NavigationsService">
             <summary>
             

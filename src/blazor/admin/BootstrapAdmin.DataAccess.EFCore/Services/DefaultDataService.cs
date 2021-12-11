@@ -24,12 +24,13 @@ namespace BootstrapAdmin.DataAccess.EFCore.Services
         /// </summary>
         /// <param name="models"></param>
         /// <returns></returns>
-        public override Task<bool> DeleteAsync(IEnumerable<TModel> models)
+        public override async Task<bool> DeleteAsync(IEnumerable<TModel> models)
         {
             // 通过模型获取主键列数据
             // 支持批量删除
-            using var context = DbFactory.CreateDbContext();
-            return Task.FromResult(true);
+            var context = DbFactory.CreateDbContext();
+            context.RemoveRange(models);
+            return await context.SaveChangesAsync() > 0;
         }
 
         /// <summary>
@@ -40,8 +41,16 @@ namespace BootstrapAdmin.DataAccess.EFCore.Services
         /// <returns></returns>
         public override async Task<bool> SaveAsync(TModel model, ItemChangedType changedType)
         {
-            using var context = DbFactory.CreateDbContext();
-            return true;
+            var context = DbFactory.CreateDbContext();
+            if (changedType == ItemChangedType.Add)
+            {
+                context.Entry(model).State = EntityState.Added;
+            }
+            else
+            {
+                context.Entry(model).State = EntityState.Modified;
+            }
+            return await context.SaveChangesAsync() > 0;
         }
 
         /// <summary>
@@ -51,6 +60,7 @@ namespace BootstrapAdmin.DataAccess.EFCore.Services
         /// <returns></returns>
         public override async Task<QueryData<TModel>> QueryAsync(QueryPageOptions option)
         {
+            var context = DbFactory.CreateDbContext();
             var ret = new QueryData<TModel>()
             {
                 IsSorted = true,
@@ -58,20 +68,20 @@ namespace BootstrapAdmin.DataAccess.EFCore.Services
                 IsSearch = true
             };
 
-            //var filters = option.Filters.Concat(option.Searchs).Concat(option.CustomerSearchs);
-            //if (option.IsPage)
-            //{
-            //    var items = await _db.PageAsync<TModel>(option.PageIndex, option.PageItems, filters, option.SortName, option.SortOrder);
+            var filters = option.Filters.Concat(option.Searchs).Concat(option.CustomerSearchs);
+            if (option.IsPage)
+            {
+                var items = context.Set<TModel>().Where(filters.GetFilterLambda<TModel>()).Take(option.PageItems).Skip(option.PageItems * (option.PageIndex - 1));
 
-            //    ret.TotalCount = Convert.ToInt32(items.TotalItems);
-            //    ret.Items = items.Items;
-            //}
-            //else
-            //{
-            //    var items = await _db.FetchAsync<TModel>(filters, option.SortName, option.SortOrder);
-            //    ret.TotalCount = items.Count;
-            //    ret.Items = items;
-            //}
+                ret.TotalCount = await context.Set<TModel>().CountAsync();
+                ret.Items = items;
+            }
+            else
+            {
+                var items = context.Set<TModel>().Where(option.Filters.GetFilterLambda<TModel>()).Where(option.CustomerSearchs.GetFilterLambda<TModel>());
+                ret.TotalCount = await context.Set<TModel>().CountAsync();
+                ret.Items = items;
+            }
             return ret;
         }
     }
