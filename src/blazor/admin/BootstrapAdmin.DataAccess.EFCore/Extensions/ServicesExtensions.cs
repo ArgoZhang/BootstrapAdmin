@@ -1,6 +1,7 @@
 ﻿using BootstrapAdmin.DataAccess.EFCore;
 using BootstrapAdmin.DataAccess.EFCore.Services;
 using BootstrapAdmin.DataAccess.Interface;
+using BootstrapBlazor.Components;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -27,8 +28,11 @@ namespace Microsoft.Extensions.DependencyInjection
                 option.UseSqlite(connString);
             });
 
-            services.TryAddSingleton<INavigations, NavigationsService>();
-            services.TryAddSingleton<IDicts, DictsService>();
+            // 增加数据服务
+            services.AddSingleton(typeof(IDataService<>), typeof(DefaultDataService<>));
+
+            services.AddSingleton<INavigations, NavigationsService>();
+            services.AddSingleton<IDicts, DictsService>();
             return services;
         }
     }

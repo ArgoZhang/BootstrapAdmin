@@ -64,25 +64,6 @@
             
             </summary>
         </member>
-        <member name="T:BootstrapAdmin.Web.Extensions.DatabaseExtensions">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:BootstrapAdmin.Web.Extensions.DatabaseExtensions.FetchAsync``1(PetaPoco.IDatabase,System.Collections.Generic.IEnumerable{BootstrapBlazor.Components.IFilterAction},System.String,BootstrapBlazor.Components.SortOrder)">
-            <summary>
-            
-            </summary>
-            <typeparam name="TModel"></typeparam>
-            <returns></returns>
-        </member>
-        <member name="M:BootstrapAdmin.Web.Extensions.DatabaseExtensions.PageAsync``1(PetaPoco.IDatabase,System.Int64,System.Int64,System.Collections.Generic.IEnumerable{BootstrapBlazor.Components.IFilterAction},System.String,BootstrapBlazor.Components.SortOrder)">
-            <summary>
-            
-            </summary>
-            <typeparam name="TModel"></typeparam>
-            <returns></returns>
-        </member>
         <member name="T:BootstrapAdmin.Web.Extensions.MenuExtensions">
             <summary>
             
@@ -211,38 +192,6 @@
             添加示例后台任务
             </summary>
             <param name="services"></param>
-        </member>
-        <member name="T:BootstrapBlazor.DataAcces.PetaPoco.DefaultDataService`1">
-            <summary>
-            PetaPoco ORM 的 IDataService 接口实现
-            </summary>
-        </member>
-        <member name="M:BootstrapBlazor.DataAcces.PetaPoco.DefaultDataService`1.#ctor(PetaPoco.IDatabase)">
-            <summary>
-            构造函数
-            </summary>
-        </member>
-        <member name="M:BootstrapBlazor.DataAcces.PetaPoco.DefaultDataService`1.DeleteAsync(System.Collections.Generic.IEnumerable{`0})">
-            <summary>
-            删除方法
-            </summary>
-            <param name="models"></param>
-            <returns></returns>
-        </member>
-        <member name="M:BootstrapBlazor.DataAcces.PetaPoco.DefaultDataService`1.SaveAsync(`0,BootstrapBlazor.Components.ItemChangedType)">
-            <summary>
-            保存方法
-            </summary>
-            <param name="model"></param>
-            <param name="changedType"></param>
-            <returns></returns>
-        </member>
-        <member name="M:BootstrapBlazor.DataAcces.PetaPoco.DefaultDataService`1.QueryAsync(BootstrapBlazor.Components.QueryPageOptions)">
-            <summary>
-            查询方法
-            </summary>
-            <param name="option"></param>
-            <returns></returns>
         </member>
     </members>
 </doc>

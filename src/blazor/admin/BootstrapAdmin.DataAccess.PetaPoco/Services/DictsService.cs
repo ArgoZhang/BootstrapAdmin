@@ -1,6 +1,6 @@
 ﻿using BootstrapAdmin.DataAccess.Interface;
 
-namespace BootstrapAdmin.DataAccess.Services
+namespace BootstrapAdmin.DataAccess.PetaPoco.Services
 {
     class DictsService : IDicts
     {

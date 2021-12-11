@@ -62,14 +62,14 @@ namespace Microsoft.Extensions.DependencyInjection
             // 增加 BootstrapBlazor 组件
             services.AddBootstrapBlazor();
 
-            // 增加数据服务
-            services.AddSingleton(typeof(IDataService<>), typeof(DefaultDataService<>));
-
             // 增加 BootstrapApp 上下文服务
             services.AddSingleton<BootstrapAppContext>();
 
-            // 增加数据服务
+            // 增加 PetaPoco 数据服务
             services.AddPetaPocoDataAccessServices();
+
+            // 增加 EFCore 数据服务
+            services.AddEFCoreDataAccessServices();
 
             return services;
         }

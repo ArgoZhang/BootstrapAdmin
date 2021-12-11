@@ -2,17 +2,17 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 // Website: https://www.blazor.zone or https://argozhang.github.io/
 
+using BootstrapAdmin.Web.Extensions;
+using BootstrapBlazor.Components;
 using PetaPoco;
 using PetaPoco.Extensions;
-using PetaPoco.Providers;
-using BootstrapAdmin.Web.Extensions;
 
-namespace BootstrapBlazor.DataAcces.PetaPoco
+namespace BootstrapBlazor.DataAcces.PetaPoco.Services
 {
     /// <summary>
     /// PetaPoco ORM 的 IDataService 接口实现
     /// </summary>
-    internal class DefaultDataService<TModel> : DataServiceBase<TModel> where TModel : class, new()
+    class DefaultDataService<TModel> : DataServiceBase<TModel> where TModel : class, new()
     {
         private readonly IDatabase _db;
 

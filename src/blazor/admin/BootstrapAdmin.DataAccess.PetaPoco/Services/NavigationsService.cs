@@ -2,7 +2,7 @@
 using BootstrapAdmin.DataAccess.Models;
 using PetaPoco;
 
-namespace BootstrapAdmin.DataAccess.Services
+namespace BootstrapAdmin.DataAccess.PetaPoco.Services
 {
     /// <summary>
     /// 

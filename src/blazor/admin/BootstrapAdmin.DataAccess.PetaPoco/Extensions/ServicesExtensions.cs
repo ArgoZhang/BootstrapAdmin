@@ -1,5 +1,7 @@
 ﻿using BootstrapAdmin.DataAccess.Interface;
-using BootstrapAdmin.DataAccess.Services;
+using BootstrapAdmin.DataAccess.PetaPoco.Services;
+using BootstrapBlazor.Components;
+using BootstrapBlazor.DataAcces.PetaPoco.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using PetaPoco;
@@ -27,8 +29,11 @@ namespace Microsoft.Extensions.DependencyInjection
                 return new Database<SQLiteDatabaseProvider>(connString);
             });
 
-            services.TryAddSingleton<INavigations, NavigationsService>();
-            services.TryAddSingleton<IDicts, DictsService>();
+            // 增加数据服务
+            services.AddSingleton(typeof(IDataService<>), typeof(DefaultDataService<>));
+
+            services.AddSingleton<INavigations, NavigationsService>();
+            services.AddSingleton<IDicts, DictsService>();
             return services;
         }
     }
