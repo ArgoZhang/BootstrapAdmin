@@ -1,4 +1,4 @@
-﻿using BootstrapAdmin.DataAccess.Interface;
+﻿using BootstrapAdmin.DataAccess.Core;
 using BootstrapAdmin.DataAccess.Models;
 using PetaPoco;
 

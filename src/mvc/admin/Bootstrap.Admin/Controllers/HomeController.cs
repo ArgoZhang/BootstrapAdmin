@@ -3,7 +3,6 @@ using Bootstrap.DataAccess;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 
 namespace Bootstrap.Admin.Controllers
 {

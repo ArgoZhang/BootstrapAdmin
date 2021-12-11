@@ -1,5 +1,4 @@
-﻿using Bootstrap.Admin.Pages.Extensions;
-using Bootstrap.Admin.Pages.Shared;
+﻿using Bootstrap.Admin.Pages.Shared;
 using Bootstrap.DataAccess;
 using Microsoft.AspNetCore.Components;
 

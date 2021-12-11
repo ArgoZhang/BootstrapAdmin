@@ -1,5 +1,3 @@
-using Bootstrap.Admin.Pages.Shared;
-
 namespace Bootstrap.Admin.Pages.Components
 {
     /// <summary>

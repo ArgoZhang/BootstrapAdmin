@@ -1,4 +1,4 @@
-﻿using BootstrapAdmin.DataAccess.Interface;
+﻿using BootstrapAdmin.DataAccess.Core;
 using BootstrapAdmin.DataAccess.PetaPoco;
 using BootstrapAdmin.DataAccess.PetaPoco.Services;
 using BootstrapBlazor.Components;

@@ -1,4 +1,4 @@
-﻿using BootstrapAdmin.DataAccess.Interface;
+﻿using BootstrapAdmin.DataAccess.Core;
 using BootstrapAdmin.Web.Extensions;
 
 namespace BootstrapAdmin.Web.Shared

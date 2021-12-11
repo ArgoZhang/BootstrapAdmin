@@ -1,5 +1,4 @@
-﻿using Bootstrap.Admin.Pages.Shared;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 

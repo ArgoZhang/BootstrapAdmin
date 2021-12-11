@@ -1,5 +1,4 @@
 ﻿using Bootstrap.Admin.Pages.Extensions;
-using Bootstrap.Admin.Pages.Shared;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;

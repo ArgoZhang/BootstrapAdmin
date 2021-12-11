@@ -1,5 +1,4 @@
-﻿using BootstrapAdmin.DataAccess.EFCore;
-using BootstrapAdmin.DataAccess.Interface;
+﻿using BootstrapAdmin.DataAccess.Core;
 using BootstrapAdmin.DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
 
