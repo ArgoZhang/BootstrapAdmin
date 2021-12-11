@@ -66,7 +66,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSingleton<BootstrapAppContext>();
 
             // 增加 PetaPoco 数据服务
-            services.AddPetaPocoDataAccessServices();
+            //services.AddPetaPocoDataAccessServices();
 
             // 增加 EFCore 数据服务
             services.AddEFCoreDataAccessServices();
