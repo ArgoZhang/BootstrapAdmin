@@ -1,5 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
+  <PropertyGroup>
+    <IsWebProject>true</IsWebProject>
+  </PropertyGroup>
+  
   <ItemGroup>
     <ProjectReference Include="..\BootstrapAdmin.DataAccess.EFCore\BootstrapAdmin.DataAccess.EFCore.csproj" />
     <ProjectReference Include="..\BootstrapAdmin.DataAccess.PetaPoco\BootstrapAdmin.DataAccess.PetaPoco.csproj" />
