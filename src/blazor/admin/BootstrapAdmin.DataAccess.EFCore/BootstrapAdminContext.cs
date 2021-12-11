@@ -32,6 +32,12 @@ namespace BootstrapAdmin.DataAccess.EFCore
         /// 
         /// </summary>
         [NotNull]
+        public DbSet<User>? Users { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [NotNull]
         public DbSet<Navigation>? Navigations { get; set; }
     }
 }
