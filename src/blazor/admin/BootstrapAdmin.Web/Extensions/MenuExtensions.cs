@@ -25,12 +25,22 @@ namespace BootstrapAdmin.Web.Extensions
         };
 
         /// <summary>
-        /// 
+        /// 获取前台菜单
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<MenuItem> ToClientMenus(this List<Navigation> navigations)
+        {
+            var menus = navigations.Where(m => m.Category == EnumNavigationCategory.Customer && m.IsResource == 0);
+            return CascadeMenus(menus);
+        }
+
+        /// <summary>
+        /// 获取后台管理菜单
         /// </summary>
         /// <returns></returns>
         public static IEnumerable<MenuItem> ToAdminMenus(this List<Navigation> navigations)
         {
-            var menus = navigations.Where(m => m.Category == "0" && m.IsResource == 0);
+            var menus = navigations.Where(m => m.Category == EnumNavigationCategory.System && m.IsResource == 0);
             return CascadeMenus(menus);
         }
 

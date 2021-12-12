@@ -45,7 +45,7 @@ namespace BootstrapAdmin.DataAccess.Models
         /// <summary>
         /// 获得/设置 菜单分类, 0 表示系统菜单 1 表示用户自定义菜单
         /// </summary>
-        public string Category { get; set; } = "0";
+        public EnumNavigationCategory Category { get; set; }
 
         /// <summary>
         /// 获得 菜单分类名称，取字典表中的Name category="菜单"
@@ -65,7 +65,7 @@ namespace BootstrapAdmin.DataAccess.Models
         /// <summary>
         /// 获得/设置 是否为资源文件, 0 表示菜单 1 表示资源 2 表示按钮
         /// </summary>
-        public int IsResource { get; set; }
+        public EnumResource IsResource { get; set; }
 
         /// <summary>
         /// 获得/设置 所属应用程序，此属性由BA后台字典表分配
