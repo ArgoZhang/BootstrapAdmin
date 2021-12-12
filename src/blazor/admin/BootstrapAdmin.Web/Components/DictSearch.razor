@@ -1,4 +1,4 @@
-﻿<div class="row g-3">
+﻿<div class="row g-3 form-inline">
     <div class="col-sm-6 col-md-6">
         <BootstrapInput @bind-Value="Value.Name" ShowLabel="true" DisplayText="字典名称" />
     </div>
@@ -6,17 +6,15 @@
         <BootstrapInput @bind-Value="Value.Category" ShowLabel="true" DisplayText="字典标签" />
     </div>
     <div class="col-sm-6 col-md-6">
-        <Select Items="@Items" @bind-Value="Value.Define" ShowLabel="true" DisplayText="字典类型"></Select>
+        <BootstrapInput @bind-Value="Value.Code" ShowLabel="true" DisplayText="字典代码" />
+    </div>
+    <div class="col-sm-6 col-md-6">
+        <Select Items="@Items" @bind-Value="Value.Define" ShowLabel="true" DisplayText="字典类型" />
     </div>
 </div>
 
 @code {
-    private IEnumerable<SelectedItem>? Items { get; set; } = new List<SelectedItem>()
-    {
-       new SelectedItem("","全部"),
-       new SelectedItem("0","系统使用"),
-       new SelectedItem("1","自定义"),
-    };
+    private IEnumerable<SelectedItem>? Items { get; set; } = typeof(EnumDictDefine).ToSelectList(new SelectedItem("", "全部"));
 
     [Parameter]
     [NotNull]

@@ -3,24 +3,29 @@
 namespace BootstrapAdmin.Web.Models
 {
     /// <summary>
-    /// 
+    /// 字典维护自定义高级搜索模型
     /// </summary>
     public class DictsSearchModel : ITableSearchModel
     {
         /// <summary>
-        /// 
+        /// 获得/设置 字典标签
         /// </summary>
         public string? Category { get; set; }
 
         /// <summary>
-        /// 
+        /// 获得/设置 字典类型
         /// </summary>
         public EnumDictDefine? Define { get; set; }
 
         /// <summary>
-        /// 
+        /// 获得/设置 字典名称
         /// </summary>
         public string? Name { get; set; }
+
+        /// <summary>
+        /// 获得/设置 字典代码
+        /// </summary>
+        public string? Code { get; set; }
 
         /// <summary>
         /// 
@@ -33,6 +38,11 @@ namespace BootstrapAdmin.Web.Models
             if (!string.IsNullOrEmpty(Name))
             {
                 ret.Add(new SearchFilterAction(nameof(Dict.Name), Name));
+            }
+
+            if (!string.IsNullOrEmpty(Code))
+            {
+                ret.Add(new SearchFilterAction(nameof(Dict.Code), Code));
             }
 
             if (!string.IsNullOrEmpty(Category))
