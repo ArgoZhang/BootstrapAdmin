@@ -1,4 +1,6 @@
-﻿using PetaPoco;
+﻿using BootstrapAdmin.DataAccess.Models;
+using BootstrapAdmin.DataAccess.PetaPoco.Coverters;
+using PetaPoco;
 using System.Reflection;
 
 namespace BootstrapAdmin.DataAccess.PetaPoco
@@ -49,6 +51,15 @@ namespace BootstrapAdmin.DataAccess.PetaPoco
             };
             ci.ResultColumn = resultColumns.Any(c => c == ci.ColumnName);
             return ci;
+        }
+
+        public override Func<object, object> GetFromDbConverter(PropertyInfo targetProperty, Type sourceType)
+        {
+            if (targetProperty.PropertyType.IsEnum && sourceType == typeof(string))
+            {
+                return new StringToEnumConverter(targetProperty.PropertyType).ConvertFromDb;
+            }
+            return base.GetFromDbConverter(targetProperty, sourceType);
         }
     }
 }
