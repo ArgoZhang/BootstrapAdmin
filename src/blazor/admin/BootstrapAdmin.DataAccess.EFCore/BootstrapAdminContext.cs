@@ -34,5 +34,18 @@ namespace BootstrapAdmin.DataAccess.EFCore
         /// </summary>
         [NotNull]
         public DbSet<Navigation>? Navigations { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="modelBuilder"></param>
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>().Ignore(u => u.Checked);
+            modelBuilder.Entity<User>().Ignore(u => u.UserStatus);
+            modelBuilder.Entity<User>().Ignore(u => u.Period);
+            modelBuilder.Entity<User>().Ignore(u => u.NewPassword);
+            modelBuilder.Entity<User>().Ignore(u => u.IsReset);
+        }
     }
 }
