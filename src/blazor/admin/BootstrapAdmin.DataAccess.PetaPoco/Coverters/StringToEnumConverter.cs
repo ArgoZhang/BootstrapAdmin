@@ -19,7 +19,7 @@
         /// <param name="value"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public object? ConvertFromDb(object value)
+        public object? ConvertFromDb(object? value)
         {
             if (value == null) throw new ArgumentNullException(nameof(value));
 
@@ -41,7 +41,7 @@
         /// <param name="value"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public object ConvertToDb(object value)
+        public object? ConvertToDb(object? value)
         {
             object? ret;
             var field = value?.ToString();
@@ -51,7 +51,7 @@
             }
             else
             {
-                ret = Enum.GetNames(TargetType).First();
+                throw new InvalidCastException($"{TargetType.Name} 未定义 {field} 成员");
             }
             return ret;
         }

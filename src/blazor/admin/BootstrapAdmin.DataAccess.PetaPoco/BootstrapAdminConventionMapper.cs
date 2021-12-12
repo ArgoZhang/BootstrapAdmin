@@ -1,5 +1,4 @@
-﻿using BootstrapAdmin.DataAccess.Models;
-using BootstrapAdmin.DataAccess.PetaPoco.Coverters;
+﻿using BootstrapAdmin.DataAccess.PetaPoco.Coverters;
 using PetaPoco;
 using System.Reflection;
 
@@ -53,7 +52,7 @@ namespace BootstrapAdmin.DataAccess.PetaPoco
             return ci;
         }
 
-        public override Func<object, object> GetFromDbConverter(PropertyInfo targetProperty, Type sourceType)
+        public override Func<object?, object?> GetFromDbConverter(PropertyInfo targetProperty, Type sourceType)
         {
             if (targetProperty.PropertyType.IsEnum && sourceType == typeof(string))
             {

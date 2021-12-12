@@ -30,6 +30,6 @@ namespace BootstrapAdmin.DataAccess.Models
         /// <summary>
         /// 获得/设置 字典定义值 0 表示系统使用，1 表示用户自定义 默认为 1
         /// </summary>
-        public EnumDictDefine Define { get; set; } = EnumDictDefine.Client;
+        public EnumDictDefine Define { get; set; } = EnumDictDefine.Customer;
     }
 }

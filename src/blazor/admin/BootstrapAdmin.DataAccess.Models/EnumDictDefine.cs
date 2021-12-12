@@ -17,6 +17,6 @@ namespace BootstrapAdmin.DataAccess.Models
         /// 用户自定义
         /// </summary>
         [Description("自定义")]
-        Client
+        Customer
     }
 }
