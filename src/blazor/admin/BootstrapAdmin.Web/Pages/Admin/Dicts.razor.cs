@@ -1,4 +1,5 @@
-﻿using BootstrapAdmin.Web.Models;
+﻿using BootstrapAdmin.DataAccess.Models;
+using BootstrapAdmin.Web.Models;
 
 namespace BootstrapAdmin.Web.Pages.Admin
 {
@@ -20,12 +21,7 @@ namespace BootstrapAdmin.Web.Pages.Admin
         {
             base.OnInitialized();
 
-            EditDefines = new List<SelectedItem>()
-            {
-                new SelectedItem("0","系统使用"),
-                new SelectedItem("1","自定义"),
-            };
-
+            EditDefines = typeof(EnumDictDefine).ToSelectList();
             LookUp = EditDefines;
         }
     }

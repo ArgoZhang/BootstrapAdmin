@@ -15,7 +15,7 @@ namespace BootstrapAdmin.Web.Models
         /// <summary>
         /// 
         /// </summary>
-        public int? Define { get; set; }
+        public EnumDictDefine? Define { get; set; }
 
         /// <summary>
         /// 
@@ -42,7 +42,7 @@ namespace BootstrapAdmin.Web.Models
 
             if (Define.HasValue)
             {
-                ret.Add(new SearchFilterAction(nameof(Dict.Define), Define, FilterAction.Equal));
+                ret.Add(new SearchFilterAction(nameof(Dict.Define), Define.Value.ToString(), FilterAction.Equal));
             }
 
             return ret;
