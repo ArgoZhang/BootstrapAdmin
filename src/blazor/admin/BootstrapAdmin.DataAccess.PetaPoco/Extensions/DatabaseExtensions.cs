@@ -90,20 +90,36 @@ namespace BootstrapAdmin.Web.Extensions
                 case ExpressionType.GreaterThanOrEqual:
                 case ExpressionType.LessThan:
                 case ExpressionType.LessThanOrEqual:
-                    var binaryExp = (expression as BinaryExpression)!;
-                    var left = (binaryExp.Left as MemberExpression)!;
-
-                    // 查找 PetaPoco.Column 标签
-                    var columnName = GetColumnName(left.Member) ?? left.Member.Name;
-
-                    // 查找操作符右侧
-                    var right = (binaryExp.Right as ConstantExpression)!;
-                    var v = right.Value;
-
-                    if (v != null)
+                    if (expression is BinaryExpression binaryExp)
                     {
-                        var operatorExp = GetOperatorExpression(expression);
-                        sql.Where($"{db.Provider.EscapeSqlIdentifier(columnName)} {operatorExp} @0", v);
+                        MemberExpression? left = null;
+                        if (binaryExp.Left is MethodCallExpression methodLeft && methodLeft.Method.Name == "ToString" && methodLeft.Object is MemberExpression p && p.Type.IsEnum)
+                        {
+                            // 枚举转字符串
+                            left = p;
+                        }
+                        else if (binaryExp.Left is MemberExpression m)
+                        {
+                            left = m;
+                        }
+
+                        if (left != null)
+                        {
+                            // 查找 PetaPoco.Column 标签
+                            var columnName = GetColumnName(left.Member) ?? left.Member.Name;
+
+                            // 查找操作符右侧
+                            if (binaryExp.Right is ConstantExpression right)
+                            {
+                                var v = right.Value;
+
+                                if (v != null)
+                                {
+                                    var operatorExp = GetOperatorExpression(expression);
+                                    sql.Where($"{db.Provider.EscapeSqlIdentifier(columnName)} {operatorExp} @0", v);
+                                }
+                            }
+                        }
                     }
                     break;
 
