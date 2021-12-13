@@ -1,15 +1,15 @@
 ﻿<div class="row g-3 form-inline">
     <div class="col-sm-6 col-md-6">
-        <BootstrapInput @bind-Value="Value.Name" ShowLabel="true" DisplayText="字典名称" />
+        <BootstrapInput @bind-Value="Value.Category" ShowLabel="true" />
     </div>
     <div class="col-sm-6 col-md-6">
-        <BootstrapInput @bind-Value="Value.Category" ShowLabel="true" DisplayText="字典标签" />
+        <BootstrapInput @bind-Value="Value.Name" ShowLabel="true" />
     </div>
     <div class="col-sm-6 col-md-6">
-        <BootstrapInput @bind-Value="Value.Code" ShowLabel="true" DisplayText="字典代码" />
+        <BootstrapInput @bind-Value="Value.Code" ShowLabel="true" />
     </div>
     <div class="col-sm-6 col-md-6">
-        <Select Items="@Items" @bind-Value="Value.Define" ShowLabel="true" DisplayText="字典类型" />
+        <Select Items="@Items" @bind-Value="Value.Define" ShowLabel="true" />
     </div>
 </div>
 

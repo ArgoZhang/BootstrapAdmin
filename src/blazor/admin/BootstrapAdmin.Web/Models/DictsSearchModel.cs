@@ -1,4 +1,5 @@
 ﻿using BootstrapAdmin.DataAccess.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace BootstrapAdmin.Web.Models
 {
@@ -10,22 +11,26 @@ namespace BootstrapAdmin.Web.Models
         /// <summary>
         /// 获得/设置 字典标签
         /// </summary>
+        [Display(Name = "字典标签")]
         public string? Category { get; set; }
-
-        /// <summary>
-        /// 获得/设置 字典类型
-        /// </summary>
-        public EnumDictDefine? Define { get; set; }
 
         /// <summary>
         /// 获得/设置 字典名称
         /// </summary>
+        [Display(Name = "字典名称")]
         public string? Name { get; set; }
 
         /// <summary>
         /// 获得/设置 字典代码
         /// </summary>
+        [Display(Name = "字典代码")]
         public string? Code { get; set; }
+
+        /// <summary>
+        /// 获得/设置 字典类型
+        /// </summary>
+        [Display(Name = "字典类型")]
+        public EnumDictDefine? Define { get; set; }
 
         /// <summary>
         /// 
