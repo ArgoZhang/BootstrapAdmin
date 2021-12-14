@@ -60,11 +60,12 @@ namespace Bootstrap.Admin.Controllers
         /// </summary>
         /// <returns>The login.</returns>
         /// <param name="userService"></param>
+        /// <param name="loginService"></param>
         /// <param name="userName">User name.</param>
         /// <param name="password">Password.</param>
         /// <param name="remember">Remember.</param>
         [HttpPost]
-        public async Task<IActionResult> Login([FromServices] IUsers userService, string userName, string password, string remember)
+        public async Task<IActionResult> Login([FromServices] IUsers userService, [FromServices] ILogins loginService, string userName, string password, string remember)
         {
             if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
             {
@@ -72,7 +73,7 @@ namespace Bootstrap.Admin.Controllers
             }
 
             var auth = userService.Authenticate(userName, password);
-            //await HttpContext.Log(userName, auth);
+            await loginService.Log(userName, auth);
             return auth ? await SignInAsync(userName, remember == "true") : RedirectLogin();
         }
 

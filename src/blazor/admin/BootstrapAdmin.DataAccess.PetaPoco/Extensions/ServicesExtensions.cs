@@ -33,9 +33,11 @@ namespace Microsoft.Extensions.DependencyInjection
             // 增加数据服务
             services.AddSingleton(typeof(IDataService<>), typeof(DefaultDataService<>));
 
+            // 增加业务服务
             services.AddSingleton<INavigations, NavigationsService>();
             services.AddSingleton<IDicts, DictsService>();
             services.AddSingleton<IUsers, UsersService>();
+            services.AddSingleton<ILogins, LoginsService>();
             return services;
         }
     }
