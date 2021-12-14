@@ -1,0 +1,8 @@
+﻿@layout LoginLayout
+@page "/Account/Login"
+
+<form method="post" action="/Account/Login">
+    <BootstrapInput TValue="string" ShowLabel="true" DisplayText="用户：" name="userName" />
+    <BootstrapInput TValue="string" ShowLabel="true" DisplayText="密码：" name="password" />
+    <Button ButtonType="ButtonType.Submit" Text="登录" />
+</form>

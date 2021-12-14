@@ -18,5 +18,13 @@
         /// <param name="userName"></param>
         /// <returns></returns>
         List<string> GetApps(string userName);
+
+        /// <summary>
+        /// 认证方法
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        bool Authenticate(string userName, string password);
     }
 }
