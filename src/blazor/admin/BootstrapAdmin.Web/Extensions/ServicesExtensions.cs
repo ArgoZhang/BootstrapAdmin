@@ -12,7 +12,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// 添加示例后台任务
         /// </summary>
         /// <param name="services"></param>
-        public static IServiceCollection AddBootstrapBlazorAdminServices(this IServiceCollection services)
+        public static IServiceCollection AddBootstrapBlazorAdmin(this IServiceCollection services)
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 

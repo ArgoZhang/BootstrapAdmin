@@ -5,7 +5,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
 // 注入项目服务
-builder.Services.AddBootstrapBlazorAdminServices();
+builder.Services.AddBootstrapBlazorAdmin();
 
 var app = builder.Build();
 
@@ -19,7 +19,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthentication();
+app.UseBootstrapBlazorAdmin();
 
 // 开启缓存中间件
 //app.UseCacheManager();
