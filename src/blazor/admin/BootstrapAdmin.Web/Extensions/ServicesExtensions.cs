@@ -64,7 +64,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddBootstrapBlazor();
 
             // 增加认证授权服务
-            services.AddBootstrapAdminAuthentication
+            services.AddBootstrapAdminAuthentication<RoleService>();
 
             // 增加 BootstrapApp 上下文服务
             services.AddSingleton<BootstrapAppContext>();
