@@ -5,6 +5,7 @@
   </PropertyGroup>
   
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\..\Longbow.Utility\src\Bootstrap.Security.Blazor\Bootstrap.Security.Blazor.csproj" />
     <ProjectReference Include="..\BootstrapAdmin.DataAccess.EFCore\BootstrapAdmin.DataAccess.EFCore.csproj" />
     <ProjectReference Include="..\BootstrapAdmin.DataAccess.PetaPoco\BootstrapAdmin.DataAccess.PetaPoco.csproj" />
   </ItemGroup>
