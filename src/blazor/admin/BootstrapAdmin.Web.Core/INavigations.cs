@@ -1,6 +1,6 @@
 ﻿using BootstrapAdmin.DataAccess.Models;
 
-namespace BootstrapAdmin.DataAccess.Core
+namespace BootstrapAdmin.Web.Core
 {
     /// <summary>
     /// 

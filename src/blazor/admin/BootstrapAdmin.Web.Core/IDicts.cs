@@ -1,4 +1,4 @@
-﻿namespace BootstrapAdmin.DataAccess.Core
+﻿namespace BootstrapAdmin.Web.Core
 {
     /// <summary>
     /// Dict 字典表接口

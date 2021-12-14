@@ -16,7 +16,7 @@
         /// <param name="configuration"></param>
         public BootstrapAppContext(IConfiguration configuration)
         {
-            AppId = configuration.GetValue("AppId", "demo");
+            AppId = configuration.GetValue("AppId", "BA");
         }
     }
 }

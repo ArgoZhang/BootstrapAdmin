@@ -1,6 +1,6 @@
-﻿using BootstrapAdmin.DataAccess.Core;
-using BootstrapAdmin.DataAccess.PetaPoco;
+﻿using BootstrapAdmin.DataAccess.PetaPoco;
 using BootstrapAdmin.DataAccess.PetaPoco.Services;
+using BootstrapAdmin.Web.Core;
 using BootstrapBlazor.Components;
 using BootstrapBlazor.DataAcces.PetaPoco.Services;
 using Microsoft.Extensions.Configuration;
@@ -35,6 +35,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
             services.AddSingleton<INavigations, NavigationsService>();
             services.AddSingleton<IDicts, DictsService>();
+            services.AddSingleton<IUsers, UsersService>();
             return services;
         }
     }

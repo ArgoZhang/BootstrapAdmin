@@ -1,5 +1,5 @@
-﻿using BootstrapAdmin.DataAccess.Core;
-using BootstrapAdmin.DataAccess.Models;
+﻿using BootstrapAdmin.DataAccess.Models;
+using BootstrapAdmin.Web.Core;
 using PetaPoco;
 
 namespace BootstrapAdmin.DataAccess.PetaPoco.Services
@@ -7,10 +7,8 @@ namespace BootstrapAdmin.DataAccess.PetaPoco.Services
     /// <summary>
     /// 
     /// </summary>
-    class NavigationsService : INavigations
+    class NavigationsService : BaseDatabase, INavigations
     {
-        private IDatabase Database { get; }
-
         /// <summary>
         /// 
         /// </summary>

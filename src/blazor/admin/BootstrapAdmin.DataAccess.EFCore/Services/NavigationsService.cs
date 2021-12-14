@@ -1,4 +1,4 @@
-﻿using BootstrapAdmin.DataAccess.Core;
+﻿using BootstrapAdmin.Web.Core;
 using BootstrapAdmin.DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
 

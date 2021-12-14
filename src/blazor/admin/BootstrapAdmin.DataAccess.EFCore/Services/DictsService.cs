@@ -1,4 +1,4 @@
-﻿using BootstrapAdmin.DataAccess.Core;
+﻿using BootstrapAdmin.Web.Core;
 
 namespace BootstrapAdmin.DataAccess.EFCore.Services
 {

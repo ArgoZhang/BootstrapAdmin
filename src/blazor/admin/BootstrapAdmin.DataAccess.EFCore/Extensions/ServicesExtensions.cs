@@ -1,6 +1,6 @@
 ﻿using BootstrapAdmin.DataAccess.EFCore;
 using BootstrapAdmin.DataAccess.EFCore.Services;
-using BootstrapAdmin.DataAccess.Core;
+using BootstrapAdmin.Web.Core;
 using BootstrapBlazor.Components;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
