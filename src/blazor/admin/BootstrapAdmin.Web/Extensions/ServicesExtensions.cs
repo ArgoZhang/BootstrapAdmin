@@ -1,4 +1,6 @@
 ﻿using BootstrapAdmin.Web.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Components.Authorization;
 using System.Text;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -60,6 +62,9 @@ namespace Microsoft.Extensions.DependencyInjection
 
             // 增加 BootstrapBlazor 组件
             services.AddBootstrapBlazor();
+
+            // 增加认证授权服务
+            services.AddBootstrapAdminAuthentication<RoleService>();
 
             // 增加 BootstrapApp 上下文服务
             services.AddSingleton<BootstrapAppContext>();

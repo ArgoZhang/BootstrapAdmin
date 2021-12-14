@@ -12,14 +12,3 @@
         <Select Items="@Items" @bind-Value="Value.Define" ShowLabel="true" />
     </div>
 </div>
-
-@code {
-    private IEnumerable<SelectedItem>? Items { get; set; } = typeof(EnumDictDefine).ToSelectList(new SelectedItem("", "全部"));
-
-    [Parameter]
-    [NotNull]
-    public DictsSearchModel? Value { get; set; }
-
-    [Parameter]
-    public EventCallback<DictsSearchModel> ValueChanged { get; set; }
-}

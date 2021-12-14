@@ -2,6 +2,8 @@
   "solution": {
     "path": "BootstrapAdmin.sln",
     "projects": [
+      "..\\..\\Longbow.Utility\\src\\Bootstrap.Security.Blazor\\Bootstrap.Security.Blazor.csproj",
+      "..\\BootstrapBlazor\\src\\BootstrapBlazor\\BootstrapBlazor.csproj",
       "src\\blazor\\admin\\BootstrapAdmin.DataAccess.EFCore\\BootstrapAdmin.DataAccess.EFCore.csproj",
       "src\\blazor\\admin\\BootstrapAdmin.DataAccess.Models\\BootstrapAdmin.DataAccess.Models.csproj",
       "src\\blazor\\admin\\BootstrapAdmin.DataAccess.PetaPoco\\BootstrapAdmin.DataAccess.PetaPoco.csproj",

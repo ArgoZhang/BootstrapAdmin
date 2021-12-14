@@ -1,11 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <PackageReference Include="BootstrapBlazor" Version="6.1.1-beta03" />
+    <!--<PackageReference Include="BootstrapBlazor" Version="6.1.1-beta03" />-->
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\BootstrapBlazor\src\BootstrapBlazor\BootstrapBlazor.csproj" />
     <ProjectReference Include="..\BootstrapAdmin.DataAccess.Models\BootstrapAdmin.DataAccess.Models.csproj" />
   </ItemGroup>
 
