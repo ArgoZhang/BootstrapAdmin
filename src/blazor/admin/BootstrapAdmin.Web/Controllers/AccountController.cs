@@ -1,11 +1,11 @@
-﻿using BootstrapAdmin.Web.Services;
+﻿using BootstrapAdmin.Web.Core;
+using BootstrapAdmin.Web.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Security.Claims;
-using BootstrapAdmin.Web.Core;
 
 namespace Bootstrap.Admin.Controllers
 {
@@ -54,16 +54,6 @@ namespace Bootstrap.Admin.Controllers
         //    else ret = Login(userName, password, string.Empty);
         //    return ret;
         //}
-
-        private ViewResult LoginView(string view)
-        {
-            if (string.IsNullOrEmpty(view))
-            {
-                // retrieve login view from db
-                //view = DictHelper.RetrieveLoginView();
-            }
-            return View(view);
-        }
 
         /// <summary>
         /// Login the specified userName, password and remember.
