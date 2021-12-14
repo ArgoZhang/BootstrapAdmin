@@ -3,9 +3,12 @@
   <PropertyGroup>
     <IsWebProject>true</IsWebProject>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Bootstrap.Security.Blazor" Version="6.0.0-beta01" />
+  </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\..\Longbow.Utility\src\Bootstrap.Security.Blazor\Bootstrap.Security.Blazor.csproj" />
     <ProjectReference Include="..\BootstrapAdmin.DataAccess.EFCore\BootstrapAdmin.DataAccess.EFCore.csproj" />
     <ProjectReference Include="..\BootstrapAdmin.DataAccess.PetaPoco\BootstrapAdmin.DataAccess.PetaPoco.csproj" />
   </ItemGroup>
