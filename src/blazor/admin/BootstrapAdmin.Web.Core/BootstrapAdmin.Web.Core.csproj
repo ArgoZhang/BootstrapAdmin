@@ -6,7 +6,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\BootstrapBlazor\src\BootstrapBlazor\BootstrapBlazor.csproj" />
     <ProjectReference Include="..\BootstrapAdmin.DataAccess.Models\BootstrapAdmin.DataAccess.Models.csproj" />
   </ItemGroup>
 
