@@ -1,5 +1,6 @@
 ﻿using BootstrapAdmin.Web.Core;
 using BootstrapAdmin.Web.Extensions;
+using Microsoft.AspNetCore.Components.Authorization;
 
 namespace BootstrapAdmin.Web.Shared
 {
@@ -20,7 +21,7 @@ namespace BootstrapAdmin.Web.Shared
 
         [Inject]
         [NotNull]
-        private IUsers? UsersService { get; set; }
+        private AuthenticationStateProvider? AuthenticationStateProvider { get; set; }
 
         [Inject]
         [NotNull]
@@ -43,7 +44,18 @@ namespace BootstrapAdmin.Web.Shared
 
             Title = DictsService.GetWebTitle();
             Footer = DictsService.GetWebFooter();
-            DisplayName = UsersService.GetDisplayName();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        protected override async Task OnInitializedAsync()
+        {
+            var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            var userName = state.User.Identity?.Name;
+            DisplayName = UsersService.GetDisplayName(userName);
+
         }
     }
 }

@@ -33,7 +33,8 @@ namespace BootstrapAdmin.DataAccess.PetaPoco.Services
             var name = dicts.FirstOrDefault(d => d.Category == "应用程序" && d.Code == AppId)?.Name;
             if (!string.IsNullOrEmpty(name))
             {
-                title = dicts.First(d => d.Category == name && d.Name == "网站标题")?.Code ?? "网站标题";
+                var dict = dicts.FirstOrDefault(d => d.Category == name && d.Name == "网站标题") ?? dicts.FirstOrDefault(d => d.Category == "网站设置" && d.Name == "网站标题");
+                title = dict?.Code ?? "网站标题";
             }
             return title;
         }
@@ -49,7 +50,8 @@ namespace BootstrapAdmin.DataAccess.PetaPoco.Services
             var name = dicts.FirstOrDefault(d => d.Category == "应用程序" && d.Code == AppId)?.Name;
             if (!string.IsNullOrEmpty(name))
             {
-                title = dicts.First(d => d.Category == name && d.Name == "网站页脚")?.Code ?? "网站页脚";
+                var dict = dicts.FirstOrDefault(d => d.Category == name && d.Name == "网站页脚") ?? dicts.FirstOrDefault(d => d.Category == "网站设置" && d.Name == "网站页脚");
+                title = dict?.Code ?? "网站标题";
             }
             return title;
         }

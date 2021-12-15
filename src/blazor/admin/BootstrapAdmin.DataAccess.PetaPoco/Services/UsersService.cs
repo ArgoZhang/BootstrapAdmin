@@ -37,7 +37,7 @@ namespace BootstrapAdmin.DataAccess.PetaPoco.Services
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public string GetDisplayName(string userName) => Database.ExecuteScalar<string>("select DisplayName from Users where UserName = @0", userName);
+        public string? GetDisplayName(string? userName) => string.IsNullOrEmpty(userName) ? "" : Database.ExecuteScalar<string>("select DisplayName from Users where UserName = @0", userName);
 
         /// <summary>
         /// 

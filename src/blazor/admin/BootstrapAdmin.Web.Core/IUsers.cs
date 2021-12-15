@@ -10,7 +10,7 @@
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        string GetDisplayName(string userName);
+        string? GetDisplayName(string? userName);
 
         /// <summary>
         /// 通过用户名获取角色列表

@@ -61,6 +61,7 @@ namespace Bootstrap.Admin.Controllers
         /// <returns>The login.</returns>
         /// <param name="userService"></param>
         /// <param name="loginService"></param>
+        /// <param name="context"></param>
         /// <param name="userName">User name.</param>
         /// <param name="password">Password.</param>
         /// <param name="remember">Remember.</param>

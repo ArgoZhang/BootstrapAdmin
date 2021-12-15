@@ -13,6 +13,11 @@
         /// <summary>
         /// 
         /// </summary>
+        public string? UserName { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="configuration"></param>
         public BootstrapAppContext(IConfiguration configuration)
         {
