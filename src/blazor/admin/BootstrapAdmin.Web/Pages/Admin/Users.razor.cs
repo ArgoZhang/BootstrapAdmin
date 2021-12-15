@@ -16,7 +16,7 @@ namespace BootstrapAdmin.Web.Pages.Admin
         {
             var option = new DialogOption()
             {
-                Title = $"分配部门 - {user.ToString()}",
+                Title = $"分配部门 - {user}",
                 Component = BootstrapDynamicComponent.CreateComponent<UserGroup>(new Dictionary<string, object>
                 {
                     [nameof(UserGroup.UserName)] = user.UserName
@@ -30,7 +30,7 @@ namespace BootstrapAdmin.Web.Pages.Admin
         {
             var option = new DialogOption()
             {
-                Title = $"分配角色 - {user.ToString()}",
+                Title = $"分配角色 - {user}",
                 Component = BootstrapDynamicComponent.CreateComponent<UserRole>(new Dictionary<string, object>
                 {
                     [nameof(UserGroup.UserName)] = user.UserName
