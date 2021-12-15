@@ -56,5 +56,17 @@
         /// </summary>
         [Parameter]
         public Func<QueryPageOptions, Task<QueryData<TItem>>>? OnQueryAsync { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Parameter]
+        public List<TItem> SelectedRows { get; set; } = new List<TItem>();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Parameter]
+        public EventCallback<List<TItem>> SelectedRowsChanged { get; set; }
     }
 }

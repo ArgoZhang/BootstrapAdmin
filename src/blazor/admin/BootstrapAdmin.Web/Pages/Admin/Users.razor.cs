@@ -15,6 +15,8 @@ namespace BootstrapAdmin.Web.Pages.Admin
         [NotNull]
         private ToastService? ToastService { get; set; }
 
+        private List<User> SelectedRows { get; set; } = new List<User>();
+
         private async Task OnAssignmentDept(IEnumerable<User> users)
         {
             if (users.Count() == 1)
