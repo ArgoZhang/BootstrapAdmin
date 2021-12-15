@@ -67,17 +67,16 @@ namespace BootstrapBlazor.DataAcces.PetaPoco.Services
                 IsSearch = true
             };
 
-            var filters = option.Filters.Concat(option.Searchs).Concat(option.CustomerSearchs);
             if (option.IsPage)
             {
-                var items = await Database.PageAsync<TModel>(option.PageIndex, option.PageItems, filters, option.SortName, option.SortOrder);
+                var items = await Database.PageAsync<TModel>(option);
 
                 ret.TotalCount = Convert.ToInt32(items.TotalItems);
                 ret.Items = items.Items;
             }
             else
             {
-                var items = await Database.FetchAsync<TModel>(filters, option.SortName, option.SortOrder);
+                var items = await Database.FetchAsync<TModel>(option);
                 ret.TotalCount = items.Count;
                 ret.Items = items;
             }

@@ -19,12 +19,27 @@ namespace BootstrapAdmin.Web.Extensions
         /// </summary>
         /// <typeparam name="TModel"></typeparam>
         /// <returns></returns>
-        public static Task<List<TModel>> FetchAsync<TModel>(this IDatabase db, IEnumerable<IFilterAction> where, string? sortName = null, SortOrder sortOrder = SortOrder.Unset)
+        public static Task<List<TModel>> FetchAsync<TModel>(this IDatabase db, QueryPageOptions options)
         {
-            var exp = where.GetFilterLambda<TModel>();
             var sql = new Sql();
-            AnalysisExpression(exp, db, sql);
 
+            // 处理模糊查询
+            if (options.Searchs.Any())
+            {
+                var searchTextSql = new Sql();
+                AnalysisExpression(options.Searchs.GetFilterLambda<TModel>(FilterLogic.Or), db, searchTextSql);
+                sql.Append(searchTextSql.ToString().Replace("\nAND", "\nOR"), searchTextSql.Arguments);
+            }
+
+            // 处理高级搜索与过滤
+            var filters = options.Filters.Concat(options.CustomerSearchs);
+            if (filters.Any())
+            {
+                AnalysisExpression(filters.GetFilterLambda<TModel>(), db, sql);
+            }
+
+            var sortName = options.SortName;
+            var sortOrder = options.SortOrder;
             if (!string.IsNullOrEmpty(sortName) && sortOrder != SortOrder.Unset)
             {
                 sql.OrderBy(sortOrder == SortOrder.Asc ? sortName : $"{sortName} desc");
@@ -37,17 +52,33 @@ namespace BootstrapAdmin.Web.Extensions
         /// </summary>
         /// <typeparam name="TModel"></typeparam>
         /// <returns></returns>
-        public static Task<Page<TModel>> PageAsync<TModel>(this IDatabase db, long pageIndex, long pageItems, IEnumerable<IFilterAction> where, string? sortName = null, SortOrder sortOrder = SortOrder.Unset)
+        public static Task<Page<TModel>> PageAsync<TModel>(this IDatabase db, QueryPageOptions options)
         {
-            var exp = where.GetFilterLambda<TModel>();
             var sql = new Sql();
-            AnalysisExpression(exp, db, sql);
+
+            // 处理模糊查询
+            if (options.Searchs.Any())
+            {
+                var searchTextSql = new Sql();
+                AnalysisExpression(options.Searchs.GetFilterLambda<TModel>(FilterLogic.Or), db, searchTextSql);
+                sql.Append(searchTextSql.ToString().Replace("\nAND", "OR"), searchTextSql.Arguments);
+            }
+
+            // 处理高级搜索与过滤
+            var filters = options.Filters.Concat(options.CustomerSearchs);
+            if (filters.Any())
+            {
+                AnalysisExpression(filters.GetFilterLambda<TModel>(), db, sql);
+            }
+
+            var sortName = options.SortName;
+            var sortOrder = options.SortOrder;
 
             if (!string.IsNullOrEmpty(sortName) && sortOrder != SortOrder.Unset)
             {
                 sql.OrderBy(sortOrder == SortOrder.Asc ? sortName : $"{sortName} desc");
             }
-            return db.PageAsync<TModel>(pageIndex, pageItems, sql);
+            return db.PageAsync<TModel>(options.PageIndex, options.PageItems, sql);
         }
 
         private static void AnalysisExpression(Expression expression, IDatabase db, Sql sql)
@@ -65,6 +96,13 @@ namespace BootstrapAdmin.Web.Extensions
                     {
                         AnalysisExpression(andExp.Left, db, sql);
                         AnalysisExpression(andExp.Right, db, sql);
+                    }
+                    break;
+                case ExpressionType.OrElse:
+                    if (expression is BinaryExpression orExp)
+                    {
+                        AnalysisExpression(orExp.Left, db, sql);
+                        AnalysisExpression(orExp.Right, db, sql);
                     }
                     break;
                 case ExpressionType.Call:
@@ -122,7 +160,6 @@ namespace BootstrapAdmin.Web.Extensions
                         }
                     }
                     break;
-
             }
         }
 
