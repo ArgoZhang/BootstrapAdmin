@@ -1,4 +1,6 @@
-﻿using BootstrapAdmin.Web.Core;
+﻿using BootstrapAdmin.DataAccess.Models;
+using BootstrapAdmin.Web.Core;
+using Longbow.Security.Cryptography;
 using PetaPoco;
 
 namespace BootstrapAdmin.DataAccess.PetaPoco.Services
@@ -20,8 +22,22 @@ namespace BootstrapAdmin.DataAccess.PetaPoco.Services
         /// <exception cref="NotImplementedException"></exception>
         public bool Authenticate(string userName, string password)
         {
-            return true;
+            var user = Database.SingleOrDefault<User>("select DisplayName, Password, PassSalt from Users where ApprovedTime is not null and UserName = @0", userName);
+
+            var isAuth = false;
+            if (user != null && !string.IsNullOrEmpty(user.PassSalt))
+            {
+                isAuth = user.Password == LgbCryptography.ComputeHash(password, user.PassSalt);
+            }
+            return isAuth;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public string GetDisplayName(string userName) => Database.ExecuteScalar<string>("select DisplayName from Users where UserName = @0", userName);
 
         /// <summary>
         /// 
