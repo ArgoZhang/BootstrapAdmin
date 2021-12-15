@@ -1,4 +1,5 @@
 ﻿using BootstrapAdmin.DataAccess.Models;
+using BootstrapAdmin.Web.Components;
 
 namespace BootstrapAdmin.Web.Pages.Admin
 {
@@ -11,52 +12,32 @@ namespace BootstrapAdmin.Web.Pages.Admin
         [NotNull]
         private DialogService? DialogService { get; set; }
 
-        [Inject]
-        [NotNull]
-        private ToastService? ToastService { get; set; }
-
-        private List<User> SelectedRows { get; set; } = new List<User>();
-
-        private async Task OnAssignmentDept(IEnumerable<User> users)
+        private async Task OnAssignmentDept(User user)
         {
-            if (users.Count() == 1)
+            var option = new DialogOption()
             {
-                //var option = new DialogOption()
-                //{
-                //    Title = "部门授权",
-                //    BodyTemplate = BootstrapDynamicComponent.CreateComponent<CheckboxList<string>>(new Dictionary<string, object>
-                //    {
-                //        [nameof(CheckboxList<string>.Items)] = GroupHelper.Retrieves().Select(s => new SelectedItem(s.GroupCode, s.GroupName))
-                //    }).Render()
-                //};
+                Title = $"分配部门 - {user.ToString()}",
+                Component = BootstrapDynamicComponent.CreateComponent<UserGroup>(new Dictionary<string, object>
+                {
+                    [nameof(UserGroup.UserName)] = user.UserName
+                })
+            };
 
-                //await DialogService.Show(option);
-            }
-            else
-            {
-                await ToastService.Warning("部门授权", "请选择一个用户");
-            }
+            await DialogService.Show(option);
         }
 
-        private async Task OnAssignmentRoles(IEnumerable<User> users)
+        private async Task OnAssignmentRoles(User user)
         {
-            if (users.Count() != 0)
+            var option = new DialogOption()
             {
-                //var option = new DialogOption()
-                //{
-                //    Title = "分配角色",
-                //    BodyTemplate = BootstrapDynamicComponent.CreateComponent<CheckboxList<string>>(new Dictionary<string, object>
-                //    {
-                //        [nameof(CheckboxList<string>.Items)] = RoleHelper.Retrieves().Select(s => new SelectedItem(s.Id!, s.RoleName) { Active = s.Checked == "" ? false : true })
-                //    }).Render()
-                //};
+                Title = $"分配角色 - {user.ToString()}",
+                Component = BootstrapDynamicComponent.CreateComponent<UserRole>(new Dictionary<string, object>
+                {
+                    [nameof(UserGroup.UserName)] = user.UserName
+                })
+            };
 
-                //await DialogService.Show(option);
-            }
-            else
-            {
-                await ToastService.Warning("分配角色", "请选择一个用户");
-            }
+            await DialogService.Show(option);
         }
     }
 }

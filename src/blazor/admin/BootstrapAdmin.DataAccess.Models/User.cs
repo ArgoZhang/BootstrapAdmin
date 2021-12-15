@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Xml.Linq;
 
 namespace BootstrapAdmin.DataAccess.Models
 {
@@ -10,6 +12,7 @@ namespace BootstrapAdmin.DataAccess.Models
         /// <summary>
         /// 获得/设置 系统登录用户名
         /// </summary>
+        [Display(Name = "登录名称")]
         public string UserName { get; set; } = "";
 
         /// <summary>
@@ -40,7 +43,7 @@ namespace BootstrapAdmin.DataAccess.Models
         /// <summary>
         /// 获取/设置 密码
         /// </summary>
-        [DisplayName("登录密码")]
+        [Display(Name = "登录密码")]
         public string Password { get; set; } = "";
 
         /// <summary>
@@ -56,25 +59,25 @@ namespace BootstrapAdmin.DataAccess.Models
         /// <summary>
         /// 获得/设置 用户注册时间
         /// </summary>
-        [DisplayName("注册时间")]
+        [Display(Name = "注册时间")]
         public DateTime RegisterTime { get; set; } = DateTime.Now;
 
         /// <summary>
         /// 获得/设置 用户被批复时间
         /// </summary>
-        [DisplayName("授权时间")]
+        [Display(Name = "授权时间")]
         public DateTime? ApprovedTime { get; set; }
 
         /// <summary>
         /// 获得/设置 用户批复人
         /// </summary>
-        [DisplayName("授权人")]
+        [Display(Name = "授权人")]
         public string? ApprovedBy { get; set; }
 
         /// <summary>
         /// 获得/设置 用户的申请理由
         /// </summary>
-        [DisplayName("说明")]
+        [Display(Name = "说明")]
         public string Description { get; set; } = "";
 
         /// <summary>
@@ -90,7 +93,7 @@ namespace BootstrapAdmin.DataAccess.Models
         /// <summary>
         /// 获得/设置 新密码
         /// </summary>
-        [DisplayName("确认密码")]
+        [Display(Name = "确认密码")]
         public string NewPassword { get; set; } = "";
 
         /// <summary>

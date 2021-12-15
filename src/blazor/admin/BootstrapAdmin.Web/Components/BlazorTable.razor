@@ -4,15 +4,18 @@
        IsPagination="IsPagination" PageItemsSource="PageItemsSource"
        UseInjectDataService="true" DataService="DataService" OnQueryAsync="OnQueryAsync!"
        ShowToolbar="true" ShowExtendButtons="true" ShowSearch="true"
-       ShowCardView="true" ShowColumnList="true" @bind-SelectedRows="SelectedRows"
+       ShowCardView="true" ShowColumnList="true"
        CustomerSearchModel="@TableSearchModel">
     <TableToolbarTemplate>
         @TableToolbarTemplate
     </TableToolbarTemplate>
     <TableColumns>
-        @ColumnsTemplete(context)
+        @ColumnsTemplete?.Invoke(context)
     </TableColumns>
     <CustomerSearchTemplate>
-        @CustomerSearchTemplate(context)
+        @CustomerSearchTemplate?.Invoke(context)
     </CustomerSearchTemplate>
+    <RowButtonTemplate>
+        @RowButtonTemplate?.Invoke(context)
+    </RowButtonTemplate>
 </Table>
