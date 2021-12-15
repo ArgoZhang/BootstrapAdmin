@@ -3,7 +3,6 @@ using BootstrapAdmin.DataAccess.EFCore.Services;
 using BootstrapAdmin.Web.Core;
 using BootstrapBlazor.Components;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -16,17 +15,33 @@ namespace Microsoft.Extensions.DependencyInjection
         /// 
         /// </summary>
         /// <param name="services"></param>
+        /// <param name="optionConfigure"></param>
+        /// <param name="lifetime"></param>
         /// <returns></returns>
-        public static IServiceCollection AddEFCoreDataAccessServices(this IServiceCollection services)
+        public static IServiceCollection AddEFCoreDataAccessServices(this IServiceCollection services, Action<IServiceProvider, DbContextOptionsBuilder> optionConfigure, ServiceLifetime lifetime = ServiceLifetime.Singleton)
         {
-            services.AddDbContextFactory<BootstrapAdminContext>((provider, option) =>
-            {
-                //TODO: 后期改造成自定适配
-                var configuration = provider.GetRequiredService<IConfiguration>();
-                var connString = configuration.GetConnectionString("bb");
-                option.UseSqlite(connString);
-            });
+            services.AddDbContextFactory<BootstrapAdminContext>(optionConfigure, lifetime);
 
+            services.AddServices();
+            return services;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="optionConfigure"></param>
+        /// <param name="lifetime"></param>
+        /// <returns></returns>
+        public static IServiceCollection AddEFCoreDataAccessServices(this IServiceCollection services, Action<DbContextOptionsBuilder> optionConfigure, ServiceLifetime lifetime = ServiceLifetime.Singleton)
+        {
+            services.AddDbContextFactory<BootstrapAdminContext>(optionConfigure, lifetime);
+
+            services.AddServices();
+            return services;
+        }
+
+        private static IServiceCollection AddServices(this IServiceCollection services)
+        {
             // 增加数据服务
             services.AddSingleton(typeof(IDataService<>), typeof(DefaultDataService<>));
 

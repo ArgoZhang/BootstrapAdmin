@@ -1,5 +1,6 @@
 ﻿using BootstrapAdmin.Web.Services;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -67,11 +68,16 @@ namespace Microsoft.Extensions.DependencyInjection
             // 增加 BootstrapApp 上下文服务
             services.AddScoped<BootstrapAppContext>();
 
+            // 增加 EFCore 数据服务
+            services.AddEFCoreDataAccessServices((provider, option) =>
+            {
+                var configuration = provider.GetRequiredService<IConfiguration>();
+                var connString = configuration.GetConnectionString("bb");
+                option.UseSqlite(connString);
+            });
+
             // 增加 PetaPoco 数据服务
             services.AddPetaPocoDataAccessServices();
-
-            // 增加 EFCore 数据服务
-            //services.AddEFCoreDataAccessServices();
 
             return services;
         }
