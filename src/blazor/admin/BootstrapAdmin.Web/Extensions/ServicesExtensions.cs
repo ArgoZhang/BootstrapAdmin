@@ -65,7 +65,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddBootstrapAdminSecurity<AdminService>();
 
             // 增加 BootstrapApp 上下文服务
-            services.AddSingleton<BootstrapAppContext>();
+            services.AddScoped<BootstrapAppContext>();
 
             // 增加 PetaPoco 数据服务
             services.AddPetaPocoDataAccessServices();

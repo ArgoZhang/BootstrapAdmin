@@ -14,6 +14,24 @@ namespace BootstrapAdmin.Web.Shared
         [NotNull]
         private INavigations? NavigationsService { get; set; }
 
+        [Inject]
+        [NotNull]
+        private IDicts? DictsService { get; set; }
+
+        [Inject]
+        [NotNull]
+        private IUsers? UsersService { get; set; }
+
+        [Inject]
+        [NotNull]
+        private IUsers? UsersService { get; set; }
+
+        private string? Title { get; set; }
+
+        private string? Footer { get; set; }
+
+        private string? DisplayName { get; set; }
+
         /// <summary>
         /// 
         /// </summary>
@@ -22,6 +40,10 @@ namespace BootstrapAdmin.Web.Shared
             base.OnInitialized();
 
             MenuItems = NavigationsService.RetrieveAllMenus("Admin").ToAdminMenus();
+
+            Title = DictsService.GetWebTitle();
+            Footer = DictsService.GetWebFooter();
+            DisplayName = UsersService.GetDisplayName();
         }
     }
 }

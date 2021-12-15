@@ -65,7 +65,10 @@ namespace Bootstrap.Admin.Controllers
         /// <param name="password">Password.</param>
         /// <param name="remember">Remember.</param>
         [HttpPost]
-        public async Task<IActionResult> Login([FromServices] IUsers userService, [FromServices] ILogins loginService, string userName, string password, string remember)
+        public async Task<IActionResult> Login(string userName, string password, string remember,
+            [FromServices] IUsers userService,
+            [FromServices] ILogins loginService,
+            [FromServices] BootstrapAppContext context)
         {
             if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
             {
@@ -74,6 +77,10 @@ namespace Bootstrap.Admin.Controllers
 
             var auth = userService.Authenticate(userName, password);
             await loginService.Log(userName, auth);
+            if(auth)
+            {
+                context.UserName = userName;
+            }
             return auth ? await SignInAsync(userName, remember == "true") : RedirectLogin();
         }
 
