@@ -1,5 +1,6 @@
 ﻿using BootstrapAdmin.Web.Core;
 using BootstrapAdmin.Web.Services;
+using BootstrapAdmin.Web.Services.SMS;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -15,46 +16,9 @@ namespace Bootstrap.Admin.Controllers
     [AllowAnonymous]
     public class AccountController : Controller
     {
-        //private const string MobileSchema = "Mobile";
-        ///// <summary>
-        ///// 系统锁屏界面
-        ///// </summary>
-        ///// <returns></returns>
-        //[HttpGet]
-        //public async Task<ActionResult> Lock()
-        //{
-        //    if (!User.Identity!.IsAuthenticated) return Login();
+        private const string MobileSchema = "Mobile";
 
-        //    var authenticationType = User.Identity.AuthenticationType;
-        //    await HttpContext.SignOutAsync();
-        //    var urlReferrer = Request.Headers["Referer"].FirstOrDefault();
-        //    if (urlReferrer?.Contains("/Pages", StringComparison.OrdinalIgnoreCase) ?? false) urlReferrer = "/Pages";
-        //    return View(new LockModel(User.Identity.Name)
-        //    {
-        //        AuthenticationType = authenticationType,
-        //        ReturnUrl = WebUtility.UrlEncode(string.IsNullOrEmpty(urlReferrer) ? CookieAuthenticationDefaults.LoginPath.Value : urlReferrer)
-        //    });
-        //}
-
-        ///// <summary>
-        ///// 系统锁屏界面
-        ///// </summary>
-        ///// <param name="provider"></param>
-        ///// <param name="userName"></param>
-        ///// <param name="password"></param>
-        ///// <param name="authType"></param>
-        ///// <returns></returns>
-        //[HttpPost]
-        //[IgnoreAntiforgeryToken]
-        //public Task<IActionResult> Lock([FromServices] ISMSProvider provider, string userName, string password, string authType)
-        //{
-        //    // 根据不同的登陆方式
-        //    Task<IActionResult> ret;
-        //    if (authType == MobileSchema) ret = Mobile(provider, userName, password);
-        //    else ret = Login(userName, password, string.Empty);
-        //    return ret;
-        //}
-
+        #region UserLogin
         /// <summary>
         /// Login the specified userName, password and remember.
         /// </summary>
@@ -96,6 +60,18 @@ namespace Bootstrap.Admin.Controllers
             return Redirect(originUrl);
         }
 
+        private IActionResult RedirectLogin()
+        {
+            var query = Request.Query.Aggregate(new Dictionary<string, string?>(), (d, v) =>
+            {
+                d.Add(v.Key, v.Value.ToString());
+                return d;
+            });
+            return Redirect(QueryHelpers.AddQueryString(Request.PathBase + CookieAuthenticationDefaults.LoginPath, query));
+        }
+        #endregion
+
+        #region Logout
         /// <summary>
         /// Logout this instance.
         /// </summary>
@@ -108,57 +84,51 @@ namespace Bootstrap.Admin.Controllers
             await HttpContext.SignOutAsync();
             return Redirect(QueryHelpers.AddQueryString(Request.PathBase + CookieAuthenticationDefaults.LoginPath, "AppId", appId ?? context.AppId));
         }
+        #endregion
 
-        private IActionResult RedirectLogin()
+        #region Mobile Login
+        /// <summary>
+        /// 短信验证登陆方法
+        /// </summary>
+        /// <param name="provider"></param>
+        /// <param name="loginService"></param>
+        /// <param name="phone"></param>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        [HttpPost()]
+        public async Task<IActionResult> Mobile([FromServices] ISMSProvider provider, [FromServices] ILogins loginService, string phone, string code)
         {
-            var query = Request.Query.Aggregate(new Dictionary<string, string?>(), (d, v) =>
+            if (string.IsNullOrEmpty(phone) || string.IsNullOrEmpty(code)) return RedirectLogin();
+
+            var auth = provider.Validate(phone, code);
+            await loginService.Log(phone, auth);
+            if (auth)
             {
-                d.Add(v.Key, v.Value.ToString());
-                return d;
-            });
-            return Redirect(QueryHelpers.AddQueryString(Request.PathBase + CookieAuthenticationDefaults.LoginPath, query));
+                //var user = UserHelper.Retrieves().FirstOrDefault(u => u.UserName == phone);
+                //if (user == null)
+                //{
+                //    user = new User()
+                //    {
+                //        ApprovedBy = "Mobile",
+                //        ApprovedTime = DateTime.Now,
+                //        DisplayName = "手机用户",
+                //        UserName = phone,
+                //        Password = code,
+                //        Icon = "default.jpg",
+                //        Description = "手机用户",
+                //        App = provider.Options.App
+                //    };
+                //    if (UserHelper.Save(user) && !string.IsNullOrEmpty(user.Id))
+                //    {
+                //        // 根据配置文件设置默认角色
+                //        var roles = RoleHelper.Retrieves().Where(r => provider.Options.Roles.Any(rl => rl.Equals(r.RoleName, StringComparison.OrdinalIgnoreCase))).Select(r => r.Id!);
+                //        RoleHelper.SaveByUserId(user.Id, roles);
+                //    }
+                //}
+            }
+            return auth ? await SignInAsync(phone, true, MobileSchema) : RedirectLogin();
         }
-
-        ///// <summary>
-        ///// 短信验证登陆方法
-        ///// </summary>
-        ///// <param name="provider"></param>
-        ///// <param name="phone"></param>
-        ///// <param name="code"></param>
-        ///// <returns></returns>
-        //[HttpPost()]
-        //public async Task<IActionResult> Mobile([FromServices] ISMSProvider provider, string phone, string code)
-        //{
-        //    if (string.IsNullOrEmpty(phone) || string.IsNullOrEmpty(code)) return RedirectLogin();
-
-        //    var auth = provider.Validate(phone, code);
-        //    await HttpContext.Log(phone, auth);
-        //    if (auth)
-        //    {
-        //        var user = UserHelper.Retrieves().FirstOrDefault(u => u.UserName == phone);
-        //        if (user == null)
-        //        {
-        //            user = new User()
-        //            {
-        //                ApprovedBy = "Mobile",
-        //                ApprovedTime = DateTime.Now,
-        //                DisplayName = "手机用户",
-        //                UserName = phone,
-        //                Password = code,
-        //                Icon = "default.jpg",
-        //                Description = "手机用户",
-        //                App = provider.Options.App
-        //            };
-        //            if (UserHelper.Save(user) && !string.IsNullOrEmpty(user.Id))
-        //            {
-        //                // 根据配置文件设置默认角色
-        //                var roles = RoleHelper.Retrieves().Where(r => provider.Options.Roles.Any(rl => rl.Equals(r.RoleName, StringComparison.OrdinalIgnoreCase))).Select(r => r.Id!);
-        //                RoleHelper.SaveByUserId(user.Id, roles);
-        //            }
-        //        }
-        //    }
-        //    return auth ? await SignInAsync(phone, true, MobileSchema) : RedirectLogin();
-        //}
+        #endregion
 
         ///// <summary>
         ///// Accesses the denied.
@@ -221,6 +191,44 @@ namespace Bootstrap.Admin.Controllers
         //{
         //    var enabled = config.GetValue($"{nameof(WeChatOptions)}:Enabled", false);
         //    return Challenge(enabled ? WeChatDefaults.AuthenticationScheme : CookieAuthenticationDefaults.AuthenticationScheme);
+        //}
+        ///// <summary>
+        ///// 系统锁屏界面
+        ///// </summary>
+        ///// <returns></returns>
+        //[HttpGet]
+        //public async Task<ActionResult> Lock()
+        //{
+        //    if (!User.Identity!.IsAuthenticated) return Login();
+
+        //    var authenticationType = User.Identity.AuthenticationType;
+        //    await HttpContext.SignOutAsync();
+        //    var urlReferrer = Request.Headers["Referer"].FirstOrDefault();
+        //    if (urlReferrer?.Contains("/Pages", StringComparison.OrdinalIgnoreCase) ?? false) urlReferrer = "/Pages";
+        //    return View(new LockModel(User.Identity.Name)
+        //    {
+        //        AuthenticationType = authenticationType,
+        //        ReturnUrl = WebUtility.UrlEncode(string.IsNullOrEmpty(urlReferrer) ? CookieAuthenticationDefaults.LoginPath.Value : urlReferrer)
+        //    });
+        //}
+
+        ///// <summary>
+        ///// 系统锁屏界面
+        ///// </summary>
+        ///// <param name="provider"></param>
+        ///// <param name="userName"></param>
+        ///// <param name="password"></param>
+        ///// <param name="authType"></param>
+        ///// <returns></returns>
+        //[HttpPost]
+        //[IgnoreAntiforgeryToken]
+        //public Task<IActionResult> Lock([FromServices] ISMSProvider provider, string userName, string password, string authType)
+        //{
+        //    // 根据不同的登陆方式
+        //    Task<IActionResult> ret;
+        //    if (authType == MobileSchema) ret = Mobile(provider, userName, password);
+        //    else ret = Login(userName, password, string.Empty);
+        //    return ret;
         //}
     }
 }

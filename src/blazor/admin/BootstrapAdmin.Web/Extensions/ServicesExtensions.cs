@@ -1,6 +1,8 @@
 ﻿using BootstrapAdmin.Web.Services;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
+using BootstrapAdmin.Web.Services.SMS.Tencent;
+using BootstrapAdmin.Web.Services.SMS;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -61,6 +63,9 @@ namespace Microsoft.Extensions.DependencyInjection
 
             // 增加 BootstrapBlazor 组件
             services.AddBootstrapBlazor();
+
+            // 增加手机短信服务
+            services.AddTransient<ISMSProvider, TencentSMSProvider>();
 
             // 增加认证授权服务
             services.AddBootstrapAdminSecurity<AdminService>();

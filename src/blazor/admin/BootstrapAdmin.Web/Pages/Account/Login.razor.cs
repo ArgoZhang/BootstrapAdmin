@@ -1,5 +1,4 @@
 ﻿using BootstrapAdmin.Web.Core;
-using BootstrapAdmin.Web.Services;
 
 namespace BootstrapAdmin.Web.Pages.Account
 {
@@ -23,10 +22,6 @@ namespace BootstrapAdmin.Web.Pages.Account
         [Inject]
         [NotNull]
         private IDicts? DictsService { get; set; }
-
-        [Inject]
-        [NotNull]
-        private IUsers? UserService { get; set; }
 
         /// <summary>
         /// 
