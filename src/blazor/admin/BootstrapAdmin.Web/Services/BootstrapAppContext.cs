@@ -1,4 +1,6 @@
-﻿namespace BootstrapAdmin.Web.Services
+﻿using Microsoft.AspNetCore.Components.Authorization;
+
+namespace BootstrapAdmin.Web.Services
 {
     /// <summary>
     /// 
@@ -13,7 +15,14 @@
         /// <summary>
         /// 
         /// </summary>
+        [NotNull]
         public string? UserName { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [NotNull]
+        public string? DisplayName { get; internal set; }
 
         /// <summary>
         /// 
