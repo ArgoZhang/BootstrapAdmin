@@ -11,6 +11,6 @@ namespace BootstrapAdmin.Web.Core
         /// 
         /// </summary>
         /// <returns></returns>
-        List<Navigation> RetrieveAllMenus(string userName);
+        List<Navigation> GetAllMenus(string userName);
     }
 }
