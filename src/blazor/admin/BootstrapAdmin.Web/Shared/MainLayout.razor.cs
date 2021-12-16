@@ -1,4 +1,5 @@
-﻿using BootstrapAdmin.Web.Core;
+﻿using Bootstrap.Security.Blazor;
+using BootstrapAdmin.Web.Core;
 using BootstrapAdmin.Web.Extensions;
 using BootstrapAdmin.Web.Services;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -32,6 +33,14 @@ namespace BootstrapAdmin.Web.Shared
         [NotNull]
         private BootstrapAppContext? Context { get; set; }
 
+        [Inject]
+        [NotNull]
+        private NavigationManager? Navigation { get; set; }
+
+        [Inject]
+        [NotNull]
+        private IBootstrapAdminService? SecurityService { get; set; }
+
         private string? Title { get; set; }
 
         private string? Footer { get; set; }
@@ -45,7 +54,7 @@ namespace BootstrapAdmin.Web.Shared
         {
             base.OnInitialized();
 
-            MenuItems = NavigationsService.RetrieveAllMenus("Admin").ToAdminMenus();
+            MenuItems = NavigationsService.GetAllMenus("Admin").ToAdminMenus();
 
             Title = DictsService.GetWebTitle();
             Footer = DictsService.GetWebFooter();
@@ -63,5 +72,7 @@ namespace BootstrapAdmin.Web.Shared
             Context.UserName = userName;
             Context.DisplayName = DisplayName;
         }
+
+        private Task<bool> OnAuthorizing(string url) => SecurityService.AuhorizingNavigation(Context.UserName, url);
     }
 }
