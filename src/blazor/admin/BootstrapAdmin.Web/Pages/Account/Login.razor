@@ -1,8 +1,80 @@
 ﻿@layout LoginLayout
 @page "/Account/Login"
 
-<form method="post" action="/Account/Login">
-    <BootstrapInput TValue="string" ShowLabel="true" DisplayText="用户：" name="userName" />
-    <BootstrapInput TValue="string" ShowLabel="true" DisplayText="密码：" name="password" />
-    <Button ButtonType="ButtonType.Submit" Text="登录" />
-</form>
+<div class="wrap">
+    <div class="container">
+        <form method="post" class="form-signin">
+            <h2 class="form-signin-heading">@Title</h2>
+            <div class="login-wrap">
+                <Block Condition="!AllowMobile">
+                    <BootstrapInputGroup>
+                        <BootstrapInputGroupIcon Icon="fa fa-fw fa-user" />
+                        <BootstrapInput TValue="string" @bind-Value="UserName" maxlength="16" IsAutoFocus="true" PlaceHolder="用户名" />
+                    </BootstrapInputGroup>
+                    <BootstrapInputGroup class="mt-3">
+                        <BootstrapInputGroupIcon Icon="fa fa-fw fa-lock" />
+                        <BootstrapPassword @bind-Value="Password" PlaceHolder="密码" />
+                    </BootstrapInputGroup>
+                </Block>
+                <Block Condition="AllowMobile">
+                    <BootstrapInputGroup>
+                        <BootstrapInputGroupIcon Icon="fa fa-fw fa-user" />
+                        <BootstrapInput TValue="string" type="tel" name="phone" class="digits" maxlength="11" PlaceHolder="手机号码" />
+                    </BootstrapInputGroup>
+                    <BootstrapInputGroup class="mt-3">
+                        <BootstrapInputGroupIcon Icon="fa fa-fw fa-lock" />
+                        <BootstrapInput TValue="string" typeof="number" name="code" class="digits" maxlength="4" IsDisabled="true" PlaceHolder="验证码" />
+                        <Button class="btn-sms" Text="发送验证码">
+                            <Tooltip Title="点击发送验证码" Placement="Placement.Top" />
+                        </Button>
+                    </BootstrapInputGroup>
+                </Block>
+                <div class="d-flex justify-content-between mt-3">
+                    <Checkbox @bind-Value="RememberPassword" Color="Color.Primary" ShowAfterLabel="true" DisplayText="记住密码自动登录" />
+                    <SwitchButton @bind-ToggleState="AllowMobile" OffText="短信验证登录" OnText="用户密码登录" />
+                </div>
+                <Button class="btn-login mt-3" ButtonType="ButtonType.Button" Size="Size.Large" IsBlock="true" Color="Color.Danger" OnClick="OnSignIn" Text="登 录">
+                    <Tooltip Placement="Placement.Top" Title="不填写密码默认使用 Gitee 认证" />
+                </Button>
+                <div class="d-flex justify-content-between">
+                    <LinkButton Text="申请账号" OnClick="OnSignUp" />
+                    <LinkButton Text="忘记密码" OnClick="OnForgotPassword" />
+                </div>
+                <Block Condition="AllowOAuth">
+                    <div class="login-other">
+                        <span class="text-muted">
+                            其他方式登录
+                        </span>
+                    </div>
+                    <div class="login-list">
+                        <div class="item">
+                            <a href="Account/Gitee" data-toggle="tooltip" title="使用 Gitee 帐号登录">
+                                <img class="item" src="images/gitee.svg" />
+                            </a>
+                        </div>
+                        <div class="item">
+                            <a href="Account/GitHub" data-toggle="tooltip" title="使用 GitHub 帐号登录">
+                                <img class="item" src="images/git.svg" />
+                            </a>
+                        </div>
+                        <div class="item">
+                            <a href="#" data-toggle="tooltip" title="微信-暂未实现">
+                                <img class="item" src="images/weixin-2.svg" />
+                            </a>
+                        </div>
+                        <div class="item">
+                            <a href="Account/Tencent" data-toggle="tooltip" title="使用 QQ 账号登录">
+                                <img class="item" src="images/qq.svg" />
+                            </a>
+                        </div>
+                        <div class="item">
+                            <a href="Account/Alipay" data-toggle="tooltip" title="使用支付宝账号登录">
+                                <img class="item" src="images/zhifubao.svg" />
+                            </a>
+                        </div>
+                    </div>
+                </Block>
+            </div>
+        </form>
+    </div>
+</div>

@@ -13,7 +13,7 @@ namespace Bootstrap.Admin.Controllers
     /// Account controller.
     /// </summary>
     [AllowAnonymous]
-    public class AccountController : Controller
+    public class LoginController : Controller
     {
         //private const string MobileSchema = "Mobile";
         ///// <summary>
@@ -55,35 +55,43 @@ namespace Bootstrap.Admin.Controllers
         //    return ret;
         //}
 
-        /// <summary>
-        /// Login the specified userName, password and remember.
-        /// </summary>
-        /// <returns>The login.</returns>
-        /// <param name="userService"></param>
-        /// <param name="loginService"></param>
-        /// <param name="context"></param>
-        /// <param name="userName">User name.</param>
-        /// <param name="password">Password.</param>
-        /// <param name="remember">Remember.</param>
-        [HttpPost]
-        public async Task<IActionResult> Login(string userName, string password, string remember,
-            [FromServices] IUsers userService,
-            [FromServices] ILogins loginService,
-            [FromServices] BootstrapAppContext context)
-        {
-            if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
-            {
-                return RedirectLogin();
-            }
+        ///// <summary>
+        ///// Login the specified userName, password and remember.
+        ///// </summary>
+        ///// <returns>The login.</returns>
+        ///// <param name="userService"></param>
+        ///// <param name="loginService"></param>
+        ///// <param name="context"></param>
+        ///// <param name="userName">User name.</param>
+        ///// <param name="password">Password.</param>
+        ///// <param name="remember">Remember.</param>
+        //[HttpPost]
+        //public async Task<IActionResult> Login(string userName, string password, string remember,
+        //    [FromServices] IUsers userService,
+        //    [FromServices] ILogins loginService,
+        //    [FromServices] BootstrapAppContext context)
+        //{
+        //    if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
+        //    {
+        //        return RedirectLogin();
+        //    }
 
-            var auth = userService.Authenticate(userName, password);
-            await loginService.Log(userName, auth);
-            if(auth)
-            {
-                context.UserName = userName;
-            }
-            return auth ? await SignInAsync(userName, remember == "true") : RedirectLogin();
-        }
+        //    var auth = userService.Authenticate(userName, password);
+        //    await loginService.Log(userName, auth);
+        //    if (auth)
+        //    {
+        //        context.UserName = userName;
+        //    }
+        //    return auth ? await SignInAsync(userName, remember == "true") : RedirectLogin();
+        //}
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Index([FromServices]IUsers user, [FromServices] LoginService loginService, [FromQuery] string? id) => loginService.Valid(id)
+            ? await SignInAsync(loginService.UserName, loginService.Remember)
+            : Redirect(CookieAuthenticationDefaults.LoginPath);
 
         private async Task<IActionResult> SignInAsync(string userName, bool persistent, string authenticationScheme = CookieAuthenticationDefaults.AuthenticationScheme)
         {
