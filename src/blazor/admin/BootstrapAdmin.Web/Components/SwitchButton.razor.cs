@@ -31,12 +31,22 @@ namespace BootstrapAdmin.Web.Components
         [Parameter]
         public EventCallback<bool> ToggleStateChanged { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        [Parameter]
+        public EventCallback<MouseEventArgs> OnClick { get; set; }
+
         private async Task Toggle()
         {
             ToggleState = !ToggleState;
             if (ToggleStateChanged.HasDelegate)
             {
                 await ToggleStateChanged.InvokeAsync(ToggleState);
+            }
+            if (OnClick.HasDelegate)
+            {
+                await OnClick.InvokeAsync();
             }
         }
 

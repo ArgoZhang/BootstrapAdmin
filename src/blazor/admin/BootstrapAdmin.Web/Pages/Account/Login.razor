@@ -3,20 +3,11 @@
 
 <div class="wrap">
     <div class="container">
-        <form method="post" class="form-signin">
+        <form method="post" class="form-signin" action="@PostUrl">
             <h2 class="form-signin-heading">@Title</h2>
             <div class="login-wrap">
-                <Block Condition="!AllowMobile">
-                    <BootstrapInputGroup>
-                        <BootstrapInputGroupIcon Icon="fa fa-fw fa-user" />
-                        <BootstrapInput TValue="string" @bind-Value="UserName" maxlength="16" IsAutoFocus="true" PlaceHolder="用户名" />
-                    </BootstrapInputGroup>
-                    <BootstrapInputGroup class="mt-3">
-                        <BootstrapInputGroupIcon Icon="fa fa-fw fa-lock" />
-                        <BootstrapPassword @bind-Value="Password" PlaceHolder="密码" />
-                    </BootstrapInputGroup>
-                </Block>
-                <Block Condition="AllowMobile">
+                @if (UseMobileLogin)
+                {
                     <BootstrapInputGroup>
                         <BootstrapInputGroupIcon Icon="fa fa-fw fa-user" />
                         <BootstrapInput TValue="string" type="tel" name="phone" class="digits" maxlength="11" PlaceHolder="手机号码" />
@@ -28,12 +19,25 @@
                             <Tooltip Title="点击发送验证码" Placement="Placement.Top" />
                         </Button>
                     </BootstrapInputGroup>
-                </Block>
+                }
+                else
+                {
+                    <BootstrapInputGroup>
+                        <BootstrapInputGroupIcon Icon="fa fa-fw fa-user" />
+                        <BootstrapInput TValue="string" name="userName" maxlength="16" IsAutoFocus="true" PlaceHolder="用户名" />
+                    </BootstrapInputGroup>
+                    <BootstrapInputGroup class="mt-3">
+                        <BootstrapInputGroupIcon Icon="fa fa-fw fa-lock" />
+                        <BootstrapPassword name="password" PlaceHolder="密码" />
+                    </BootstrapInputGroup>
+                }
                 <div class="d-flex justify-content-between mt-3">
                     <Checkbox @bind-Value="RememberPassword" Color="Color.Primary" ShowAfterLabel="true" DisplayText="记住密码自动登录" />
-                    <SwitchButton @bind-ToggleState="AllowMobile" OffText="短信验证登录" OnText="用户密码登录" />
+                    <Block Condition="AllowMobile">
+                        <SwitchButton @bind-ToggleState="UseMobileLogin" OnClick="OnClickSwitchButton" OffText="短信验证登录" OnText="用户密码登录" />
+                    </Block>
                 </div>
-                <Button class="btn-login mt-3" ButtonType="ButtonType.Button" Size="Size.Large" IsBlock="true" Color="Color.Danger" OnClick="OnSignIn" Text="登 录">
+                <Button class="btn-login mt-3" ButtonType="ButtonType.Submit" Size="Size.Large" IsBlock="true" Color="Color.Danger" Text="登 录">
                     <Tooltip Placement="Placement.Top" Title="不填写密码默认使用 Gitee 认证" />
                 </Button>
                 <div class="d-flex justify-content-between">

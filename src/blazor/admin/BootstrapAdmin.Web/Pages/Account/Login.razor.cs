@@ -8,31 +8,21 @@ namespace BootstrapAdmin.Web.Pages.Account
     /// </summary>
     public partial class Login
     {
-        [Inject]
-        [NotNull]
-        private IDicts? DictsService { get; set; }
-
         private string? Title { get; set; }
 
-        private bool AllowMobile { get; set; }
+        private bool AllowMobile { get; set; } = true;
+
+        private bool UseMobileLogin { get; set; }
 
         private bool AllowOAuth { get; set; } = true;
 
-        [NotNull]
-        private string? UserName { get; set; }
-
-        [NotNull]
-        private string? Password { get; set; }
-
         private bool RememberPassword { get; set; }
 
-        [Inject]
-        [NotNull]
-        private NavigationManager? Navigation { get; set; }
+        private string? PostUrl { get; set; } = "/Account/Login";
 
         [Inject]
         [NotNull]
-        private LoginService? LoginService { get; set; }
+        private IDicts? DictsService { get; set; }
 
         [Inject]
         [NotNull]
@@ -48,22 +38,9 @@ namespace BootstrapAdmin.Web.Pages.Account
             Title = DictsService.GetWebTitle();
         }
 
-        void OnClickMobile()
+        void OnClickSwitchButton()
         {
-            AllowMobile = true;
-        }
-
-        void OnSignIn()
-        {
-            var auth = UserService.Authenticate(UserName, Password);
-
-            if (auth)
-            {
-                LoginService.LoginSeessionId = Guid.NewGuid().ToString();
-                LoginService.UserName = UserName;
-                LoginService.Remember = RememberPassword;
-                Navigation.NavigateTo($"/Login?id={LoginService.LoginSeessionId}", true);
-            }
+            PostUrl = UseMobileLogin ? "/Account/Mobile" : "/Account/Login";
         }
 
         void OnSignUp()
