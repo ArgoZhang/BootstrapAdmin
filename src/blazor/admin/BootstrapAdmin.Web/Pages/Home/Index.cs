@@ -1,4 +1,6 @@
-﻿namespace BootstrapAdmin.Web.Pages.Home
+﻿using Microsoft.AspNetCore.Authorization;
+
+namespace BootstrapAdmin.Web.Pages.Home
 {
     /// <summary>
     /// 
@@ -6,6 +8,7 @@
     [Route("/")]
     [Route("/Home")]
     [Route("/Home/Index")]
+    [Authorize]
     public class Index : ComponentBase
     {
         [Inject]

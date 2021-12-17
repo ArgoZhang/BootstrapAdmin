@@ -60,13 +60,13 @@ namespace BootstrapAdmin.Web.Shared
                 Context.UserName = userName;
                 Context.DisplayName = DisplayName;
 
-                MenuItems = NavigationsService.GetAllMenus("Admin").ToAdminMenus();
+                MenuItems = NavigationsService.GetAllMenus(userName).ToAdminMenus();
+
+                Login = true;
             }
 
             Title = DictsService.GetWebTitle();
             Footer = DictsService.GetWebFooter();
-
-            Login = true;
         }
 
         private Task<bool> OnAuthorizing(string url) => SecurityService.AuhorizingNavigation(Context.UserName, url);
