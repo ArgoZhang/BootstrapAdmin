@@ -37,19 +37,15 @@
                         <SwitchButton @bind-ToggleState="UseMobileLogin" OnClick="OnClickSwitchButton" OffText="短信验证登录" OnText="用户密码登录" />
                     </Block>
                 </div>
-                <Button class="btn-login mt-3" ButtonType="ButtonType.Submit" Size="Size.Large" IsBlock="true" Color="Color.Danger" Text="登 录">
+                <Button class="btn-login mt-3" ButtonType="ButtonType.Submit" Size="Size.Large" IsBlock="true" Color="Color.None" Text="登 录">
                     <Tooltip Placement="Placement.Top" Title="不填写密码默认使用 Gitee 认证" />
                 </Button>
-                <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-between mt-3">
                     <LinkButton Text="申请账号" OnClick="OnSignUp" />
                     <LinkButton Text="忘记密码" OnClick="OnForgotPassword" />
                 </div>
                 <Block Condition="AllowOAuth">
-                    <div class="login-other">
-                        <span class="text-muted">
-                            其他方式登录
-                        </span>
-                    </div>
+                    <Divider Text="其他方式登录" />
                     <div class="login-list">
                         <LinkButton Url="Account/Gitee" Title="使用 Gitee 帐号登录" Img="images/gitee.svg" />
                         <LinkButton Url="Account/Gitee" Title="使用 GitHub 帐号登录" Img="images/git.svg" />
