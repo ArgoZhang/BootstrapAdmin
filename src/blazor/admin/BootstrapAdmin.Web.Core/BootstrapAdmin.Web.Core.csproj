@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <PackageReference Include="BootstrapBlazor" Version="6.1.1-beta06" />
+    <PackageReference Include="Bootstrap.Security.Blazor" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
   </ItemGroup>
 
