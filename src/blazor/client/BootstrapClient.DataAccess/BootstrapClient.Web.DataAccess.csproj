@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\admin\BootstrapAdmin.DataAccess.PetaPoco\BootstrapAdmin.DataAccess.PetaPoco.csproj" />
+    <ProjectReference Include="..\..\admin\BootstrapAdmin.Web.Core\BootstrapAdmin.Web.Core.csproj" />
+  </ItemGroup>
+
+</Project>

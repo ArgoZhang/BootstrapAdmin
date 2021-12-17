@@ -2,7 +2,8 @@
 
 <Layout SideWidth="0" IsPage="true" ShowGotoTop="true" ShowCollapseBar="true"
         IsFullSide="@IsFullSide" IsFixedHeader="@IsFixedHeader" IsFixedFooter="@IsFixedFooter" ShowFooter="@ShowFooter"
-        Menus="@Menus" UseTabSet="@UseTabSet" TabItemTextDictionary="@TabItemTextDictionary" AdditionalAssemblies="new[] { GetType().Assembly }" class="@Theme">
+        Menus="@MenuItems" UseTabSet="@UseTabSet" TabItemTextDictionary="@TabItemTextDictionary" 
+        AdditionalAssemblies="new[] { GetType().Assembly }" OnAuthorizing="@OnAuthorizing" class="@Theme">
     <Header>
         <span class="ml-3 flex-sm-fill d-none d-sm-block">Bootstrap of Blazor</span>
         <Widget></Widget>
@@ -14,7 +15,7 @@
         <div class="layout-banner">
             <img class="layout-logo" src="_content/Bootstrap.Client.Blazor.Shared/images/brand.png" />
             <div class="layout-title">
-                <span>后台管理</span>
+                <span>@Title</span>
             </div>
         </div>
         <div class="layout-user">
@@ -32,11 +33,11 @@
     </Main>
     <Footer>
         <div class="text-center flex-fill">
-            <a class="page-layout-demo-footer-link" href="https://gitee.com/LongbowEnterprise/BootstrapAdmin" target="_blank">Bootstrap Admin</a>
+            <a class="page-layout-demo-footer-link" href="https://gitee.com/LongbowEnterprise/BootstrapAdmin" target="_blank">@Footer</a>
         </div>
     </Footer>
     <NotAuthorized>
-        <RedirectToLogin />
+        <Redirect Url="@GetAuthorUrl()" />
     </NotAuthorized>
 </Layout>
 
@@ -141,9 +142,3 @@
         </div>
     </div>
 </Drawer>
-
-<Toast />
-<Dialog />
-<PopoverConfirm />
-<Message />
-<SweetAlert />

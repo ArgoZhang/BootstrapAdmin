@@ -3,7 +3,10 @@ using BootstrapAdmin.Web.Core;
 
 namespace BootstrapAdmin.Web.Services
 {
-    class AdminService : IBootstrapAdminService
+    /// <summary>
+    /// 
+    /// </summary>
+    public class AdminService : IBootstrapAdminService
     {
         private IUsers User { get; set; }
 

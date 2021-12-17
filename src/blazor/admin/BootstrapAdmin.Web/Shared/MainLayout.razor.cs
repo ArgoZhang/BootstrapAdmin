@@ -43,8 +43,6 @@ namespace BootstrapAdmin.Web.Shared
 
         private string? DisplayName { get; set; }
 
-        private bool Login { get; set; }
-
         /// <summary>
         /// OnInitializedAsync 方法
         /// </summary>
@@ -61,8 +59,6 @@ namespace BootstrapAdmin.Web.Shared
                 Context.DisplayName = DisplayName;
 
                 MenuItems = NavigationsService.GetAllMenus(userName).ToAdminMenus();
-
-                Login = true;
             }
 
             Title = DictsService.GetWebTitle();
