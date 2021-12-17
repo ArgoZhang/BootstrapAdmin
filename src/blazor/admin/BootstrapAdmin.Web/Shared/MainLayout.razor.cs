@@ -35,10 +35,6 @@ namespace BootstrapAdmin.Web.Shared
 
         [Inject]
         [NotNull]
-        private NavigationManager? Navigation { get; set; }
-
-        [Inject]
-        [NotNull]
         private IBootstrapAdminService? SecurityService { get; set; }
 
         private string? Title { get; set; }
@@ -47,30 +43,30 @@ namespace BootstrapAdmin.Web.Shared
 
         private string? DisplayName { get; set; }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        protected override void OnInitialized()
-        {
-            base.OnInitialized();
-
-            MenuItems = NavigationsService.GetAllMenus("Admin").ToAdminMenus();
-
-            Title = DictsService.GetWebTitle();
-            Footer = DictsService.GetWebFooter();
-        }
+        private bool Login { get; set; }
 
         /// <summary>
-        /// 
+        /// OnInitializedAsync 方法
         /// </summary>
         /// <returns></returns>
         protected override async Task OnInitializedAsync()
         {
             var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
             var userName = state.User.Identity?.Name;
-            DisplayName = UsersService.GetDisplayName(userName);
-            Context.UserName = userName;
-            Context.DisplayName = DisplayName;
+
+            if (!string.IsNullOrEmpty(userName))
+            {
+                DisplayName = UsersService.GetDisplayName(userName);
+                Context.UserName = userName;
+                Context.DisplayName = DisplayName;
+
+                MenuItems = NavigationsService.GetAllMenus("Admin").ToAdminMenus();
+            }
+
+            Title = DictsService.GetWebTitle();
+            Footer = DictsService.GetWebFooter();
+
+            Login = true;
         }
 
         private Task<bool> OnAuthorizing(string url) => SecurityService.AuhorizingNavigation(Context.UserName, url);

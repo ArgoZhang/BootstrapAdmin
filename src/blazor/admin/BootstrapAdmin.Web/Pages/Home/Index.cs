@@ -22,6 +22,9 @@
             Navigation.NavigateTo($"/Admin/Index", true);
         }
 #else
+        /// <summary>
+        /// 
+        /// </summary>
         protected override void OnInitialized()
         {
             Navigation.NavigateTo($"/Admin/Index", true);
