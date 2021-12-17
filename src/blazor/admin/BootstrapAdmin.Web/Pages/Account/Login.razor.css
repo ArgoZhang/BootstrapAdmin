@@ -21,16 +21,6 @@
     margin: 1rem;
 }
 
-    .login-wrap .rememberPwd {
-        cursor: pointer;
-        color: #333;
-        margin-left: 2px;
-    }
-
-        .login-wrap .rememberPwd i {
-            width: 13px;
-        }
-
     .login-wrap .card, .login-wrap .card:hover, .modal .card, .modal .card:hover {
         border: 1px solid #84bbe2;
     }
@@ -139,12 +129,12 @@
     justify-content: space-between;
 }
 
-    .login-list .item {
+    .login-list ::deep img {
         width: 32px;
         height: 32px;
     }
 
-.login-wrap .btn-sms {
+.btn-sms {
     width: 140px;
 }
 
