@@ -1,8 +1,8 @@
 ﻿@page "/Admin/Users"
 
-<BlazorTable TItem="DataAccess.Models.User">
+<BlazorTable TItem="DataAccess.Models.User" ExtendButtonColumnWidth="260">
     <TableToolbarTemplate>
-        <TableToolbarButton TItem="DataAccess.Models.User" IsEnableWhenSelectedOneRow="true" Color="Color.Warning" Icon="fa fa-bank" Text="分配部门" OnClickCallback="users => OnAssignmentDept(users.First())" />
+        <TableToolbarButton TItem="DataAccess.Models.User" IsEnableWhenSelectedOneRow="true" Color="Color.Warning" Icon="fa fa-bank" Text="分配部门" OnClickCallback="users => OnAssignmentGroups(users.First())" />
         <TableToolbarButton TItem="DataAccess.Models.User" IsEnableWhenSelectedOneRow="true" Color="Color.Info" Icon="fa fa-sitemap" Text="分配角色" OnClickCallback="users => OnAssignmentRoles(users.First())" />
     </TableToolbarTemplate>
     <ColumnsTemplete>
@@ -14,7 +14,7 @@
         <TableColumn @bind-Field="@context.Description" Sortable="true" Filterable="true"></TableColumn>
     </ColumnsTemplete>
     <RowButtonTemplate>
-        <TableCellButton Size="Size.ExtraSmall" Color="Color.Warning" Icon="fa fa-bank" Text="分配部门" OnClick="() => OnAssignmentDept(context)" />
+        <TableCellButton Size="Size.ExtraSmall" Color="Color.Warning" Icon="fa fa-bank" Text="分配部门" OnClick="() => OnAssignmentGroups(context)" />
         <TableCellButton Size="Size.ExtraSmall" Color="Color.Info" Icon="fa fa-sitemap" Text="分配角色" OnClick="() => OnAssignmentRoles(context)" />
     </RowButtonTemplate>
 </BlazorTable>

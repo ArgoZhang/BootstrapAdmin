@@ -102,13 +102,10 @@ namespace BootstrapAdmin.DataAccess.Models
         public int IsReset { get; set; }
 
         /// <summary>
-        /// 获得/设置 默认格式为 UserName (DisplayName)
+        /// 获得/设置 默认格式为 DisplayName (UserName)
         /// </summary>
         /// <returns></returns>
-        public override string ToString()
-        {
-            return string.Format("{0} ({1})", UserName, DisplayName);
-        }
+        public override string ToString() => $"{DisplayName} ({UserName})";
     }
 
     /// <summary>
