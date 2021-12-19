@@ -1,1 +1,17 @@
 ﻿@page "/Admin/Menus"
+
+<BlazorTable TItem="DataAccess.Models.Navigation" ExtendButtonColumnWidth="260">
+    <TableToolbarTemplate>
+        <TableToolbarButton TItem="DataAccess.Models.Navigation" IsEnableWhenSelectedOneRow="true" Color="Color.Info" Icon="fa fa-sitemap" Text="分配角色" OnClickCallback="menus => OnAssignmentRoles(menus.First())" />
+    </TableToolbarTemplate>
+    <ColumnsTemplete>
+        <TableColumn @bind-Field="@context.Name" Sortable="true" Filterable="true" Searchable="true" Width="180"></TableColumn>
+        <TableColumn @bind-Field="@context.Icon" Sortable="true" Filterable="true" Searchable="true" Width="180"></TableColumn>
+        <TableColumn @bind-Field="@context.Url" Sortable="true" Filterable="true"></TableColumn>
+        <TableColumn @bind-Field="@context.Category" Sortable="true" Filterable="true"></TableColumn>
+        <TableColumn @bind-Field="@context.Application" Sortable="true" Filterable="true"></TableColumn>
+    </ColumnsTemplete>
+    <RowButtonTemplate>
+        <TableCellButton Size="Size.ExtraSmall" Color="Color.Info" Icon="fa fa-sitemap" Text="分配角色" OnClick="() => OnAssignmentRoles(context)" />
+    </RowButtonTemplate>
+</BlazorTable>
