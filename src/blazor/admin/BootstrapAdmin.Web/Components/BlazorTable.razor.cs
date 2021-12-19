@@ -15,6 +15,12 @@
         /// <summary>
         /// 
         /// </summary>
+        [Parameter]
+        public int ExtendButtonColumnWidth { get; set; } = 130;
+
+        /// <summary>
+        /// 
+        /// </summary>
         [NotNull]
         [Parameter]
         public RenderFragment<TItem>? ColumnsTemplete { get; set; }
