@@ -2,6 +2,10 @@
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+:root {
+    --bb-footer-height: 40px;
+}
+
 #blazor-error-ui {
     background: lightyellow;
     bottom: 0;
@@ -33,4 +37,39 @@
 
 .tabs-border-card {
     box-shadow: none;
+}
+
+.tabs-body {
+    height: calc(100vh - 89px - var(--bb-footer-height));
+    overflow: auto;
+    scrollbar-color: rgba(0,0,0,0.3) rgba(0,0,0,0);
+    scrollbar-width: thin;
+}
+
+    .tabs-body::-webkit-scrollbar {
+        width: 6px;
+        height: 6px
+    }
+
+    .tabs-body::-webkit-scrollbar-thumb {
+        border-radius: 3px;
+        background-color: rgba(0,0,0,0.2);
+    }
+
+        .tabs-body::-webkit-scrollbar-thumb:hover {
+            background-color: rgba(0,0,0,0.3);
+        }
+
+    .tabs-body .tabs-body-content {
+        width: calc(100vw - 214px - 32px);
+    }
+
+@media (min-width: 992px) {
+    .tabs-body {
+        overflow: hidden;
+    }
+
+        .tabs-body:hover {
+            overflow-y: auto;
+        }
 }
