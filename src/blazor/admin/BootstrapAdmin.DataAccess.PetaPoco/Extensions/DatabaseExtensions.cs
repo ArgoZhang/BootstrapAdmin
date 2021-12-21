@@ -153,8 +153,9 @@ namespace BootstrapAdmin.Web.Extensions
 
                                 if (v != null)
                                 {
+                                    var val = v.GetType().IsEnum ? v.ToString() : v;
                                     var operatorExp = GetOperatorExpression(expression);
-                                    sql.Where($"{db.Provider.EscapeSqlIdentifier(columnName)} {operatorExp} @0", v);
+                                    sql.Where($"{db.Provider.EscapeSqlIdentifier(columnName)} {operatorExp} @0", val);
                                 }
                             }
                         }
