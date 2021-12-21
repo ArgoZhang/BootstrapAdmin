@@ -2,51 +2,50 @@
 using BootstrapAdmin.Web.Core;
 using BootstrapAdmin.Web.Extensions;
 
-namespace BootstrapAdmin.Web.Pages.Admin
+namespace BootstrapAdmin.Web.Pages.Admin;
+
+/// <summary>
+/// 
+/// </summary>
+public partial class Users
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public partial class Users
+    [Inject]
+    [NotNull]
+    private DialogService? DialogService { get; set; }
+
+    [Inject]
+    [NotNull]
+    private ToastService? ToastService { get; set; }
+
+    [Inject]
+    [NotNull]
+    private IGroup? GroupService { get; set; }
+
+    [Inject]
+    [NotNull]
+    private IRole? RoleService { get; set; }
+
+    private async Task OnAssignmentGroups(User user)
     {
-        [Inject]
-        [NotNull]
-        private DialogService? DialogService { get; set; }
+        var groups = GroupService.GetAll().ToSelectedItemList();
+        var values = GroupService.GetGroupsByUserId(user.Id);
 
-        [Inject]
-        [NotNull]
-        private ToastService? ToastService { get; set; }
-
-        [Inject]
-        [NotNull]
-        private IGroup? GroupService { get; set; }
-
-        [Inject]
-        [NotNull]
-        private IRole? RoleService { get; set; }
-
-        private async Task OnAssignmentGroups(User user)
+        await DialogService.ShowAssignmentDialog($"分配部门 - {user}", groups, values, () =>
         {
-            var groups = GroupService.GetAll().ToSelectedItemList();
-            var values = GroupService.GetGroupsByUserId(user.Id);
+            var ret = GroupService.SaveGroupsByUserId(user.Id, values);
+            return Task.FromResult(ret);
+        }, ToastService);
+    }
 
-            await DialogService.ShowAssignmentDialog($"分配部门 - {user}", groups, values, () =>
-            {
-                var ret = GroupService.SaveGroupsByUserId(user.Id, values);
-                return Task.FromResult(ret);
-            }, ToastService);
-        }
+    private async Task OnAssignmentRoles(User user)
+    {
+        var groups = RoleService.GetAll().ToSelectedItemList();
+        var values = RoleService.GetRolesByUserId(user.Id);
 
-        private async Task OnAssignmentRoles(User user)
+        await DialogService.ShowAssignmentDialog($"分配角色 - {user}", groups, values, () =>
         {
-            var groups = RoleService.GetAll().ToSelectedItemList();
-            var values = RoleService.GetRolesByUserId(user.Id);
-
-            await DialogService.ShowAssignmentDialog($"分配角色 - {user}", groups, values, () =>
-            {
-                var ret = RoleService.SaveRolesByUserId(user.Id, values);
-                return Task.FromResult(ret);
-            }, ToastService);
-        }
+            var ret = RoleService.SaveRolesByUserId(user.Id, values);
+            return Task.FromResult(ret);
+        }, ToastService);
     }
 }
