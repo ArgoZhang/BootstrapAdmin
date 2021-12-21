@@ -1,21 +1,18 @@
-﻿using BootstrapAdmin.Web.Components;
+﻿namespace BootstrapAdmin.Web.Pages.Admin;
 
-namespace BootstrapAdmin.Web.Pages.Admin
+public partial class Menus
 {
-    public partial class Menus
+    [Inject]
+    [NotNull]
+    private DialogService? DialogService { get; set; }
+
+    private async Task OnAssignmentRoles(DataAccess.Models.Navigation menu)
     {
-        [Inject]
-        [NotNull]
-        private DialogService? DialogService { get; set; }
-
-        private async Task OnAssignmentRoles(DataAccess.Models.Navigation menu)
+        var option = new DialogOption()
         {
-            var option = new DialogOption()
-            {
-                Title = $"分配角色 - {menu}",
-            };
+            Title = $"分配角色 - {menu}",
+        };
 
-            await DialogService.Show(option);
-        }
+        await DialogService.Show(option);
     }
 }

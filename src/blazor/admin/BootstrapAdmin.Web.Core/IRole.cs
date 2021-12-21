@@ -16,15 +16,30 @@ public interface IRole
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="userId"></param>
     /// <returns></returns>
-    List<string> GetUsersByRoleId(string? id);
+    List<string> GetRolesByGroupId(string? userId);
 
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="values"></param>
+    /// <param name="groupId"></param>
+    /// <param name="roleIds"></param>
     /// <returns></returns>
-    bool SaveUsersByRoleId(string? id, IEnumerable<string> values);
+    bool SaveRolesByGroupId(string? groupId, IEnumerable<string> roleIds);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <returns></returns>
+    List<string> GetRolesByUserId(string? groupId);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="groupId"></param>
+    /// <param name="roleIds"></param>
+    /// <returns></returns>
+    bool SaveRolesByUserId(string? groupId, IEnumerable<string> roleIds);
 }
