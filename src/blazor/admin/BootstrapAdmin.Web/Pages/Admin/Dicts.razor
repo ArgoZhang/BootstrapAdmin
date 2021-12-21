@@ -1,6 +1,6 @@
 ﻿@page "/Admin/Dicts"
 
-<BlazorTable TItem="DataAccess.Models.Dict" IsPagination="false" TableSearchModel="DictsSearchModel">
+<BlazorTable TItem="DataAccess.Models.Dict" TableSearchModel="DictsSearchModel">
     <ColumnsTemplete>
         <TableColumn @bind-Field="context.Category" Filterable="true" Searchable="true" Sortable="true"></TableColumn>
         <TableColumn @bind-Field="context.Name" Filterable="true" Searchable="true" Sortable="true"></TableColumn>

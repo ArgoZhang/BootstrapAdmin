@@ -48,7 +48,7 @@
         /// 
         /// </summary>
         [Parameter]
-        public bool IsPagination { get; set; } = true;
+        public bool IsPagination { get; set; }
 
         /// <summary>
         /// 

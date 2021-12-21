@@ -25,6 +25,6 @@ namespace BootstrapAdmin.DataAccess.Models
         /// </summary>
         [DisplayName("角色描述")]
         [NotNull]
-        public string? Description { get; set; } 
+        public string? Description { get; set; }
     }
 }

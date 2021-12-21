@@ -5,6 +5,7 @@
 :root {
     --bb-footer-height: 40px;
     --bb-tab-header-height: 39px;
+    --bb-checkboxlist-item-width: 180px;
 }
 
 #blazor-error-ui {
@@ -71,4 +72,12 @@
 
     ::-webkit-scrollbar-thumb:hover {
         background-color: rgba(0,0,0,0.3);
+    }
+
+.checkbox-list .checkbox-item {
+    width: var(--bb-checkboxlist-item-width);
+}
+
+    .checkbox-list .checkbox-item .form-check-label {
+        max-width: calc(var(--bb-checkboxlist-item-width) - 16px);
     }

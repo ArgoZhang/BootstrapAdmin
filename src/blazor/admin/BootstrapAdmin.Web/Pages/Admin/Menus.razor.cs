@@ -13,10 +13,6 @@ namespace BootstrapAdmin.Web.Pages.Admin
             var option = new DialogOption()
             {
                 Title = $"分配角色 - {menu}",
-                Component = BootstrapDynamicComponent.CreateComponent<MenuRole>(new Dictionary<string, object>
-                {
-                    [nameof(MenuRole.MenuId)] = menu.Id!
-                })
             };
 
             await DialogService.Show(option);

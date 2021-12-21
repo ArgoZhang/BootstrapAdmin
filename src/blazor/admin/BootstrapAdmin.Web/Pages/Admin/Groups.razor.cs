@@ -1,5 +1,6 @@
 ﻿using BootstrapAdmin.DataAccess.Models;
-using BootstrapAdmin.Web.Components;
+using BootstrapAdmin.Web.Core;
+using BootstrapAdmin.Web.Extensions;
 
 namespace BootstrapAdmin.Web.Pages.Admin
 {
@@ -9,47 +10,40 @@ namespace BootstrapAdmin.Web.Pages.Admin
         [NotNull]
         private DialogService? DialogService { get; set; }
 
+        [Inject]
+        [NotNull]
+        private ToastService? ToastService { get; set; }
+
+        [Inject]
+        [NotNull]
+        private IUser? UserService { get; set; }
+
+        [Inject]
+        [NotNull]
+        private IRole? RoleService { get; set; }
+
         private async Task OnAssignmentUsers(Group group)
         {
-            var option = new DialogOption()
-            {
-                Title = $"分配用户 - {group}",
-                Component = BootstrapDynamicComponent.CreateComponent<GroupUser>(new Dictionary<string, object>
-                {
-                    [nameof(GroupUser.GroupId)] = group.Id!
-                }),
-                ShowFooter = false
-            };
+            var users = UserService.GetAll().ToSelectedItemList();
+            var values = UserService.GetUsersByGroupId(group.Id);
 
-            await DialogService.Show(option);
+            await DialogService.ShowAssignmentDialog($"分配用户 - {group}", users, values, () =>
+            {
+                var ret = UserService.SaveUsersByGroupId(group.Id, values);
+                return Task.FromResult(ret);
+            }, ToastService);
         }
 
         private async Task OnAssignmentRoles(Group group)
         {
-            var option = new DialogOption()
+            var users = RoleService.GetAll().ToSelectedItemList();
+            var values = RoleService.GetUsersByRoleId(group.Id);
+
+            await DialogService.ShowAssignmentDialog($"分配角色 - {group}", users, values, () =>
             {
-                Title = $"分配角色 - {group}"
-            };
-            var items = new List<SelectedItem>() { new SelectedItem("1", "角色1"), new SelectedItem("2", "角色2") };
-            option.Component = BootstrapDynamicComponent.CreateComponent<CheckboxList<IEnumerable<string>>>(new Dictionary<string, object>
-            {
-                [nameof(CheckboxList<IEnumerable<string>>.Value)] = new List<string>() { "1" },
-                [nameof(CheckboxList<IEnumerable<string>>.Items)] = items
-            });
-            option.FooterTemplate = builder =>
-            {
-                builder.OpenComponent<Button>(0);
-                builder.AddAttribute(1, nameof(Button.Color), Color.Primary);
-                builder.AddAttribute(2, nameof(Button.Text), "保存");
-                builder.AddAttribute(3, nameof(Button.Icon), "fa fa-save");
-                builder.AddAttribute(4, nameof(Button.OnClickWithoutRender), async () =>
-                {
-                    var t = items;
-                    await option.Dialog.Close();
-                });
-                builder.CloseComponent();
-            };
-            await DialogService.Show(option);
+                var ret = RoleService.SaveUsersByRoleId(group.Id, values);
+                return Task.FromResult(ret);
+            }, ToastService);
         }
     }
 }

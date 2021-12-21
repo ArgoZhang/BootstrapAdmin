@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Xml.Linq;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace BootstrapAdmin.DataAccess.Models
 {
@@ -18,21 +16,25 @@ namespace BootstrapAdmin.DataAccess.Models
         /// <summary>
         /// 获得/设置 用户显示名称
         /// </summary>
+        [Display(Name = "显示名称")]
         public string DisplayName { get; set; } = "";
 
         /// <summary>
         /// 获得/设置 用户头像图标路径
         /// </summary>
+        [Display(Name = "用户头像")]
         public string Icon { get; set; } = "";
 
         /// <summary>
         /// 获得/设置 用户设置样式表名称
         /// </summary>
+        [Display(Name = "主题")]
         public string Css { get; set; } = "";
 
         /// <summary>
         /// 获得/设置 用户默认登陆 App 标识
         /// </summary>
+        [Display(Name = "默认 APP")]
         public string App { get; set; } = "";
 
         /// <summary>
@@ -43,7 +45,6 @@ namespace BootstrapAdmin.DataAccess.Models
         /// <summary>
         /// 获取/设置 密码
         /// </summary>
-        [Display(Name = "登录密码")]
         public string Password { get; set; } = "";
 
         /// <summary>
@@ -117,22 +118,27 @@ namespace BootstrapAdmin.DataAccess.Models
         /// 更改密码
         /// </summary>
         ChangePassword,
+
         /// <summary>
         /// 更改样式
         /// </summary>
         ChangeTheme,
+
         /// <summary>
         /// 更改显示名称
         /// </summary>
         ChangeDisplayName,
+
         /// <summary>
         /// 审批用户
         /// </summary>
         ApproveUser,
+
         /// <summary>
         /// 拒绝用户
         /// </summary>
         RejectUser,
+
         /// <summary>
         /// 保存默认应用
         /// </summary>

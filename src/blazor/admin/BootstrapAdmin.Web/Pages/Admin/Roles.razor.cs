@@ -14,10 +14,6 @@ namespace BootstrapAdmin.Web.Pages.Admin
             var option = new DialogOption()
             {
                 Title = $"分配用户 - {role}",
-                Component = BootstrapDynamicComponent.CreateComponent<RoleUser>(new Dictionary<string, object>
-                {
-                    [nameof(RoleUser.RoleId)] = role.Id!
-                })
             };
 
             await DialogService.Show(option);
@@ -28,10 +24,6 @@ namespace BootstrapAdmin.Web.Pages.Admin
             var option = new DialogOption()
             {
                 Title = $"分配部门 - {role}",
-                Component = BootstrapDynamicComponent.CreateComponent<RoleGroup>(new Dictionary<string, object>
-                {
-                    [nameof(RoleGroup.RoleId)] = role.Id!
-                })
             };
 
             await DialogService.Show(option);
@@ -42,10 +34,6 @@ namespace BootstrapAdmin.Web.Pages.Admin
             var option = new DialogOption()
             {
                 Title = $"分配菜单 - {role}",
-                Component = BootstrapDynamicComponent.CreateComponent<RoleMenu>(new Dictionary<string, object>
-                {
-                    [nameof(RoleMenu.RoleId)] = role.Id!
-                })
             };
 
             await DialogService.Show(option);
@@ -56,10 +44,6 @@ namespace BootstrapAdmin.Web.Pages.Admin
             var option = new DialogOption()
             {
                 Title = $"分配应用 - {role}",
-                Component = BootstrapDynamicComponent.CreateComponent<RoleApp>(new Dictionary<string, object>
-                {
-                    [nameof(RoleApp.RoleId)] = role.Id!
-                })
             };
 
             await DialogService.Show(option);

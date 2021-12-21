@@ -17,10 +17,6 @@ namespace BootstrapAdmin.Web.Pages.Admin
             var option = new DialogOption()
             {
                 Title = $"分配部门 - {user}",
-                Component = BootstrapDynamicComponent.CreateComponent<UserGroup>(new Dictionary<string, object>
-                {
-                    [nameof(UserGroup.UserId)] = user.Id!
-                })
             };
 
             await DialogService.Show(option);
@@ -31,10 +27,6 @@ namespace BootstrapAdmin.Web.Pages.Admin
             var option = new DialogOption()
             {
                 Title = $"分配角色 - {user}",
-                Component = BootstrapDynamicComponent.CreateComponent<UserRole>(new Dictionary<string, object>
-                {
-                    [nameof(UserGroup.UserId)] = user.Id!
-                })
             };
 
             await DialogService.Show(option);

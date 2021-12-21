@@ -31,8 +31,8 @@ namespace Bootstrap.Admin.Controllers
         /// <param name="remember">Remember.</param>
         [HttpPost]
         public async Task<IActionResult> Login(string userName, string password, string remember,
-            [FromServices] IUsers userService,
-            [FromServices] ILogins loginService,
+            [FromServices] IUser userService,
+            [FromServices] ILogin loginService,
             [FromServices] BootstrapAppContext context)
         {
             if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
@@ -96,7 +96,7 @@ namespace Bootstrap.Admin.Controllers
         /// <param name="code"></param>
         /// <returns></returns>
         [HttpPost()]
-        public async Task<IActionResult> Mobile([FromServices] ISMSProvider provider, [FromServices] ILogins loginService, string phone, string code)
+        public async Task<IActionResult> Mobile([FromServices] ISMSProvider provider, [FromServices] ILogin loginService, string phone, string code)
         {
             if (string.IsNullOrEmpty(phone) || string.IsNullOrEmpty(code)) return RedirectLogin();
 

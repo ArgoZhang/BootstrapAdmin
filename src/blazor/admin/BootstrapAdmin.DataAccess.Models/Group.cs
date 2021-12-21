@@ -32,6 +32,6 @@ namespace BootstrapAdmin.DataAccess.Models
         [Display(Name = "群组描述")]
         public string? Description { get; set; }
 
-        public override string ToString() => $"{GroupName}({GroupCode})";
+        public override string ToString() => $"{GroupName} ({GroupCode})";
     }
 }
