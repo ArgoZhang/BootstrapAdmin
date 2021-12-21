@@ -64,13 +64,12 @@ namespace BootstrapAdmin.DataAccess.PetaPoco
             return ci;
         }
 
-        public override Func<object?, object?> GetFromDbConverter(PropertyInfo targetProperty, Type sourceType)
-        {
-            if (targetProperty.PropertyType.IsEnum && sourceType == typeof(string))
-            {
-                return new StringToEnumConverter(targetProperty.PropertyType).ConvertFromDb;
-            }
-            return base.GetFromDbConverter(targetProperty, sourceType);
-        }
+        public override Func<object?, object?> GetFromDbConverter(PropertyInfo targetProperty, Type sourceType) => targetProperty.PropertyType.IsEnum && sourceType == typeof(string)
+            ? new StringToEnumConverter(targetProperty.PropertyType).ConvertFromDb
+            : base.GetFromDbConverter(targetProperty, sourceType);
+
+        public override Func<object?, object?> GetToDbConverter(PropertyInfo targetProperty) => targetProperty.PropertyType.IsEnum
+            ? new StringToEnumConverter(targetProperty.PropertyType).ConvertToDb
+            : base.GetToDbConverter(targetProperty);
     }
 }
