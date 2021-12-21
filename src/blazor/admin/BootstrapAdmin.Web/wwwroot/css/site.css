@@ -86,3 +86,14 @@
     color: var(--bs-info);
     margin-right: .25rem;
 }
+
+.tree .tree-item {
+    margin: 2px 0;
+}
+
+    .tree .tree-item .tree-content {
+        border-radius: var(--bs-border-radius);
+        background-color: var(--bs-gray-200);
+        padding-right: .5rem;
+        padding-left: .25rem;
+    }
