@@ -7,7 +7,7 @@ namespace BootstrapAdmin.DataAccess.EFCore.Services
     /// <summary>
     /// 
     /// </summary>
-    class NavigationsService : INavigations
+    class NavigationsService : INavigation
     {
         private IDbContextFactory<BootstrapAdminContext> DbFactory { get; set; }
 

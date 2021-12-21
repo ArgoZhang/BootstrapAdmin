@@ -3,7 +3,7 @@
     /// <summary>
     /// 
     /// </summary>
-    public interface ILogins
+    public interface ILogin
     {
         /// <summary>
         /// 

@@ -3,7 +3,7 @@
     /// <summary>
     /// Dict 字典表接口
     /// </summary>
-    public interface IDicts
+    public interface IDict
     {
         /// <summary>
         /// 获取 站点 Title 配置信息

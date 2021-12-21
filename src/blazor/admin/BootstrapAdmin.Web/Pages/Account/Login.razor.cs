@@ -21,7 +21,7 @@ namespace BootstrapAdmin.Web.Pages.Account
 
         [Inject]
         [NotNull]
-        private IDicts? DictsService { get; set; }
+        private IDict? DictsService { get; set; }
 
         /// <summary>
         /// 

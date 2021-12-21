@@ -45,8 +45,8 @@ namespace Microsoft.Extensions.DependencyInjection
             // 增加数据服务
             services.AddSingleton(typeof(IDataService<>), typeof(DefaultDataService<>));
 
-            services.AddSingleton<INavigations, NavigationsService>();
-            services.AddSingleton<IDicts, DictsService>();
+            services.AddSingleton<INavigation, NavigationsService>();
+            services.AddSingleton<IDict, DictsService>();
             return services;
         }
     }

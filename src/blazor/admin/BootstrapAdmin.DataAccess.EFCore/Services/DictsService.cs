@@ -2,7 +2,7 @@
 
 namespace BootstrapAdmin.DataAccess.EFCore.Services
 {
-    class DictsService : IDicts
+    class DictsService : IDict
     {
         public string GetWebFooter()
         {

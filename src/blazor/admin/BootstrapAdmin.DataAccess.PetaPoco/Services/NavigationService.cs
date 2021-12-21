@@ -7,13 +7,13 @@ namespace BootstrapAdmin.DataAccess.PetaPoco.Services
     /// <summary>
     /// 
     /// </summary>
-    class NavigationsService : BaseDatabase, INavigations
+    class NavigationService : BaseDatabase, INavigation
     {
         /// <summary>
         /// 
         /// </summary>
         /// <param name="db"></param>
-        public NavigationsService(IDatabase db) => Database = db;
+        public NavigationService(IDatabase db) => Database = db;
 
         /// <summary>
         /// 获得指定用户名可访问的所有菜单集合

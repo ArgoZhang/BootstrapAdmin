@@ -8,16 +8,16 @@ namespace BootstrapAdmin.Web.Services
     /// </summary>
     public class AdminService : IBootstrapAdminService
     {
-        private IUsers User { get; set; }
+        private IUser User { get; set; }
 
-        private INavigations Navigations { get; set; }
+        private INavigation Navigations { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="user"></param>
         /// <param name="navigations"></param>
-        public AdminService(IUsers user, INavigations navigations)
+        public AdminService(IUser user, INavigation navigations)
         {
             User = user;
             Navigations = navigations;

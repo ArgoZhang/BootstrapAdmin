@@ -60,15 +60,15 @@ namespace BootstrapClient.Web.Shared.Shared
 
         [Inject]
         [NotNull]
-        private IDicts? DictsService { get; set; }
+        private IDict? DictsService { get; set; }
 
         [Inject]
         [NotNull]
-        private IUsers? UsersService { get; set; }
+        private IUser? UsersService { get; set; }
 
         [Inject]
         [NotNull]
-        private INavigations? NavigationsService { get; set; }
+        private INavigation? NavigationsService { get; set; }
 
         [Inject]
         [NotNull]

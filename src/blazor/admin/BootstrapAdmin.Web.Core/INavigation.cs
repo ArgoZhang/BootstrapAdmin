@@ -5,7 +5,7 @@ namespace BootstrapAdmin.Web.Core
     /// <summary>
     /// 
     /// </summary>
-    public interface INavigations
+    public interface INavigation
     {
         /// <summary>
         /// 

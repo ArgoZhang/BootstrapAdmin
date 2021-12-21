@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BootstrapAdmin.DataAccess.PetaPoco.Services
 {
-    class LoginsService : ILogins
+    class LoginService : ILogin
     {
         /// <summary>
         /// 

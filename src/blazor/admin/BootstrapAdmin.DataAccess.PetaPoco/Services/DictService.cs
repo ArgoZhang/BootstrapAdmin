@@ -5,7 +5,7 @@ using PetaPoco;
 
 namespace BootstrapAdmin.DataAccess.PetaPoco.Services
 {
-    class DictsService : BaseDatabase, IDicts
+    class DictService : BaseDatabase, IDict
     {
         private string AppId { get; set; }
 
@@ -14,7 +14,7 @@ namespace BootstrapAdmin.DataAccess.PetaPoco.Services
         /// </summary>
         /// <param name="db"></param>
         /// <param name="configuration"></param>
-        public DictsService(IDatabase db, IConfiguration configuration)
+        public DictService(IDatabase db, IConfiguration configuration)
         {
             Database = db;
             AppId = configuration.GetValue("AppId", "BA");
