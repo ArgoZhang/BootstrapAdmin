@@ -81,3 +81,8 @@
     .checkbox-list .checkbox-item .form-check-label {
         max-width: calc(var(--bb-checkboxlist-item-width) - 16px);
     }
+
+.table-cell .is-node {
+    color: var(--bs-info);
+    margin-right: .25rem;
+}
