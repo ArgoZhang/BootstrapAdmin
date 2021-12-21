@@ -22,12 +22,16 @@ public partial class Roles
     [NotNull]
     private IUser? UserService { get; set; }
 
+    [Inject]
+    [NotNull]
+    private IApp? AppService { get; set; }
+
     private async Task OnAssignmentUsers(Role role)
     {
         var users = UserService.GetAll().ToSelectedItemList();
         var values = UserService.GetUsersByRoleId(role.Id);
 
-        await DialogService.ShowAssignmentDialog($"分配部门 - {role.RoleName}", users, values, () =>
+        await DialogService.ShowAssignmentDialog($"分配用户 - {role.RoleName}", users, values, () =>
         {
             var ret = UserService.SaveUsersByRoleId(role.Id, values);
             return Task.FromResult(ret);
@@ -58,12 +62,13 @@ public partial class Roles
 
     private async Task OnAssignmentApps(Role role)
     {
-        var option = new DialogOption()
+        var apps = AppService.GetAll();
+        var values = AppService.GetAppsByRoleId(role.Id);
+
+        await DialogService.ShowAssignmentDialog($"分配应用 - {role.RoleName}", apps, values, () =>
         {
-            Title = $"分配应用 - {role}",
-        };
-
-        await DialogService.Show(option);
+            var ret = AppService.SaveAppsByRoleId(role.Id, values);
+            return Task.FromResult(ret);
+        }, ToastService);
     }
-
 }

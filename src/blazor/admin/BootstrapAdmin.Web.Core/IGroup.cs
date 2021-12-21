@@ -7,7 +7,6 @@ namespace BootstrapAdmin.Web.Core;
 /// </summary>
 public interface IGroup
 {
-
     /// <summary>
     /// 获得所有用户
     /// </summary>

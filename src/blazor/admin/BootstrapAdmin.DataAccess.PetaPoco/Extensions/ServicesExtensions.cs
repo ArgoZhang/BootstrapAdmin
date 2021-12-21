@@ -40,6 +40,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSingleton<ILogin, LoginService>();
             services.AddSingleton<IRole, RoleService>();
             services.AddSingleton<IGroup, GroupService>();
+            services.AddSingleton<IApp, AppService>();
             return services;
         }
     }
