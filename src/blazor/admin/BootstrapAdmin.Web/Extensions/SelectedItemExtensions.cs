@@ -20,4 +20,11 @@ public static class SelectedItemExtensions
     /// <param name="users"></param>
     /// <returns></returns>
     public static List<SelectedItem> ToSelectedItemList(this IEnumerable<Role> roles) => roles.Select(i => new SelectedItem { Value = i.Id!, Text = i.RoleName }).ToList();
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="users"></param>
+    /// <returns></returns>
+    public static List<SelectedItem> ToSelectedItemList(this IEnumerable<Group> groups) => groups.Select(i => new SelectedItem { Value = i.Id!, Text = i.ToString() }).ToList();
 }
