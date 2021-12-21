@@ -23,6 +23,7 @@ namespace BootstrapAdmin.DataAccess.Models
         /// 获得/设置 菜单名称
         /// </summary>
         [Display(Name = "名称")]
+        [NotNull]
         public string? Name { get; set; }
 
         /// <summary>

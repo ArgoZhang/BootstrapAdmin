@@ -48,10 +48,18 @@ public partial class Menus
     {
         base.OnInitialized();
 
-        Navigations = NavigationService.GetAllMenus(AppContext.UserName);
         Targets = LookupHelper.GetTargets();
         Apps = LookupHelper.GetApps(DictService);
     }
+
+    /// <summary>
+    /// OnInitializedAsync 方法
+    /// </summary>
+    /// <returns></returns>
+    protected override Task OnInitializedAsync() => Task.Run(() =>
+    {
+        Navigations = NavigationService.GetAllMenus(AppContext.UserName);
+    });
 
     private async Task OnAssignmentRoles(DataAccess.Models.Navigation menu)
     {
@@ -67,15 +75,15 @@ public partial class Menus
 
     private Task<QueryData<Navigation>> OnQueryAsync(QueryPageOptions options)
     {
-        var menus = Navigations.Where(m => m.ParentId == "0").OrderBy(m => m.Order).ToList();
+        var menus = Navigations.Where(m => m.ParentId == "0").OrderBy(m => m.Order);
         foreach (var item in menus)
         {
             item.HasChildren = Navigations.Any(i => i.ParentId == item.Id);
         }
+
         return Task.FromResult(new QueryData<Navigation>()
         {
-            Items = menus,
-            TotalCount = menus.Count
+            Items = menus
         });
     }
 
