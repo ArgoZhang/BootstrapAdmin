@@ -54,6 +54,12 @@
         /// 
         /// </summary>
         [Parameter]
+        public bool IsTree { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Parameter]
         public ITableSearchModel? TableSearchModel { get; set; }
 
         /// <summary>
@@ -67,5 +73,11 @@
         /// </summary>
         [Parameter]
         public Func<QueryPageOptions, Task<QueryData<TItem>>>? OnQueryAsync { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Parameter]
+        public Func<TItem, Task<IEnumerable<TItem>>>? OnTreeExpand { get; set; }
     }
 }

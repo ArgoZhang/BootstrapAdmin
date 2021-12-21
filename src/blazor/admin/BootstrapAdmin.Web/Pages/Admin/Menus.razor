@@ -1,15 +1,21 @@
 ﻿@page "/Admin/Menus"
 
-<BlazorTable TItem="DataAccess.Models.Navigation" ExtendButtonColumnWidth="260">
+<BlazorTable TItem="DataAccess.Models.Navigation" IsTree="true" OnTreeExpand="OnTreeExpand" ExtendButtonColumnWidth="200" OnQueryAsync="OnQueryAsync">
     <TableToolbarTemplate>
         <TableToolbarButton TItem="DataAccess.Models.Navigation" IsEnableWhenSelectedOneRow="true" Color="Color.Info" Icon="fa fa-sitemap" Text="分配角色" OnClickCallback="menus => OnAssignmentRoles(menus.First())" />
     </TableToolbarTemplate>
     <ColumnsTemplete>
-        <TableColumn @bind-Field="@context.Name" Sortable="true" Filterable="true" Searchable="true" Width="180"></TableColumn>
-        <TableColumn @bind-Field="@context.Icon" Sortable="true" Filterable="true" Searchable="true" Width="180"></TableColumn>
-        <TableColumn @bind-Field="@context.Url" Sortable="true" Filterable="true"></TableColumn>
+        <TableColumn @bind-Field="@context.Name" Sortable="true" Filterable="true" Searchable="true" Width="200"></TableColumn>
+        <TableColumn @bind-Field="@context.Order" Width="50"></TableColumn>
+        <TableColumn @bind-Field="@context.Icon" Width="50" Align="Alignment.Center">
+            <Template Context="v">
+                <i class="text-info @v.Value"></i>
+            </Template>
+        </TableColumn>
+        <TableColumn @bind-Field="@context.Url"></TableColumn>
         <TableColumn @bind-Field="@context.Category" Sortable="true" Filterable="true"></TableColumn>
-        <TableColumn @bind-Field="@context.Application" Sortable="true" Filterable="true"></TableColumn>
+        <TableColumn @bind-Field="@context.Target" Sortable="true" Filterable="true" Lookup="Targets"></TableColumn>
+        <TableColumn @bind-Field="@context.Application" Sortable="true" Filterable="true" Lookup="Apps"></TableColumn>
     </ColumnsTemplete>
     <RowButtonTemplate>
         <TableCellButton Size="Size.ExtraSmall" Color="Color.Info" Icon="fa fa-sitemap" Text="分配角色" OnClick="() => OnAssignmentRoles(context)" />

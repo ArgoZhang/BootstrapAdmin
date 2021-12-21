@@ -33,11 +33,12 @@ namespace BootstrapAdmin.DataAccess.PetaPoco
         /// <returns></returns>
         public override ColumnInfo GetColumnInfo(PropertyInfo pocoProperty) => pocoProperty.DeclaringType?.Name switch
         {
-            nameof(Models.User) => RetrieveUserColumnInfo(pocoProperty),
+            nameof(Models.User) => GetUserColumnInfo(pocoProperty),
+            nameof(Models.Navigation) => GetNavigationColumnInfo(pocoProperty),
             _ => base.GetColumnInfo(pocoProperty)
         };
 
-        private ColumnInfo RetrieveUserColumnInfo(PropertyInfo pocoProperty)
+        private ColumnInfo GetUserColumnInfo(PropertyInfo pocoProperty)
         {
             var ci = base.GetColumnInfo(pocoProperty);
             var resultColumns = new List<string>
@@ -47,6 +48,17 @@ namespace BootstrapAdmin.DataAccess.PetaPoco
                 nameof(Models.User.Period),
                 nameof(Models.User.NewPassword),
                 nameof(Models.User.IsReset)
+            };
+            ci.ResultColumn = resultColumns.Any(c => c == ci.ColumnName);
+            return ci;
+        }
+
+        private ColumnInfo GetNavigationColumnInfo(PropertyInfo pocoProperty)
+        {
+            var ci = base.GetColumnInfo(pocoProperty);
+            var resultColumns = new List<string>
+            {
+                nameof(Models.Navigation.HasChildren)
             };
             ci.ResultColumn = resultColumns.Any(c => c == ci.ColumnName);
             return ci;
