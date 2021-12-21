@@ -1,6 +1,7 @@
 ﻿using BootstrapAdmin.DataAccess.Models;
 using BootstrapAdmin.Web.Core;
 using BootstrapAdmin.Web.Extensions;
+using BootstrapAdmin.Web.Services;
 
 namespace BootstrapAdmin.Web.Pages.Admin;
 
@@ -25,6 +26,14 @@ public partial class Roles
     [Inject]
     [NotNull]
     private IApp? AppService { get; set; }
+
+    [Inject]
+    [NotNull]
+    private INavigation? NavigationService { get; set; }
+
+    [Inject]
+    [NotNull]
+    private BootstrapAppContext? AppContext { get; set; }
 
     private async Task OnAssignmentUsers(Role role)
     {
@@ -52,12 +61,14 @@ public partial class Roles
 
     private async Task OnAssignmentMenus(Role role)
     {
-        var option = new DialogOption()
-        {
-            Title = $"分配菜单 - {role}",
-        };
+        var apps = NavigationService.GetAllMenus(AppContext.UserName);
+        var values = NavigationService.GetMenusByRoleId(role.Id);
 
-        await DialogService.Show(option);
+        await DialogService.ShowNavigationDialog($"分配菜单 - 当前角色: {role.RoleName}", apps, values, () =>
+        {
+            var ret = NavigationService.SaveMenusByRoleId(role.Id, values);
+            return Task.FromResult(ret);
+        }, ToastService);
     }
 
     private async Task OnAssignmentApps(Role role)
