@@ -81,4 +81,25 @@ class RoleService : BaseDatabase, IRole
         }
         return ret;
     }
+
+    public List<string> GetRolesByMenuId(string? menuId) => Database.Fetch<string>("select RoleID from NavigationRole where NavigationID = @0", menuId);
+
+    public bool SaveRolesByMenuId(string? menuId, IEnumerable<string> roleIds)
+    {
+        var ret = false;
+        try
+        {
+            Database.BeginTransaction();
+            Database.Execute("delete from NavigationRole where NavigationID = @0", menuId);
+            Database.InsertBatch("NavigationRole", roleIds.Select(g => new { RoleID = g, NavigationID = menuId }));
+            Database.CompleteTransaction();
+            ret = true;
+        }
+        catch (Exception)
+        {
+            Database.AbortTransaction();
+            throw;
+        }
+        return ret;
+    }
 }

@@ -31,7 +31,7 @@ public partial class Roles
         var users = UserService.GetAll().ToSelectedItemList();
         var values = UserService.GetUsersByRoleId(role.Id);
 
-        await DialogService.ShowAssignmentDialog($"分配用户 - {role.RoleName}", users, values, () =>
+        await DialogService.ShowAssignmentDialog($"分配用户 - 当前角色: {role.RoleName}", users, values, () =>
         {
             var ret = UserService.SaveUsersByRoleId(role.Id, values);
             return Task.FromResult(ret);
@@ -43,7 +43,7 @@ public partial class Roles
         var groups = GroupService.GetAll().ToSelectedItemList();
         var values = GroupService.GetGroupsByRoleId(role.Id);
 
-        await DialogService.ShowAssignmentDialog($"分配部门 - {role.RoleName}", groups, values, () =>
+        await DialogService.ShowAssignmentDialog($"分配部门 - 当前角色: {role.RoleName}", groups, values, () =>
         {
             var ret = GroupService.SaveGroupsByRoleId(role.Id, values);
             return Task.FromResult(ret);
@@ -65,7 +65,7 @@ public partial class Roles
         var apps = AppService.GetAll();
         var values = AppService.GetAppsByRoleId(role.Id);
 
-        await DialogService.ShowAssignmentDialog($"分配应用 - {role.RoleName}", apps, values, () =>
+        await DialogService.ShowAssignmentDialog($"分配应用 - 当前角色: {role.RoleName}", apps, values, () =>
         {
             var ret = AppService.SaveAppsByRoleId(role.Id, values);
             return Task.FromResult(ret);

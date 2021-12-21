@@ -30,7 +30,7 @@ public partial class Users
         var groups = GroupService.GetAll().ToSelectedItemList();
         var values = GroupService.GetGroupsByUserId(user.Id);
 
-        await DialogService.ShowAssignmentDialog($"分配部门 - {user}", groups, values, () =>
+        await DialogService.ShowAssignmentDialog($"分配部门 - 当前用户: {user}", groups, values, () =>
         {
             var ret = GroupService.SaveGroupsByUserId(user.Id, values);
             return Task.FromResult(ret);
@@ -42,7 +42,7 @@ public partial class Users
         var groups = RoleService.GetAll().ToSelectedItemList();
         var values = RoleService.GetRolesByUserId(user.Id);
 
-        await DialogService.ShowAssignmentDialog($"分配角色 - {user}", groups, values, () =>
+        await DialogService.ShowAssignmentDialog($"分配角色 - 当前用户: {user}", groups, values, () =>
         {
             var ret = RoleService.SaveRolesByUserId(user.Id, values);
             return Task.FromResult(ret);
