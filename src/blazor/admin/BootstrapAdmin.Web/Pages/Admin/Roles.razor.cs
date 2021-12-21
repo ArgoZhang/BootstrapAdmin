@@ -1,5 +1,7 @@
 ﻿using BootstrapAdmin.DataAccess.Models;
 using BootstrapAdmin.Web.Components;
+using BootstrapAdmin.Web.Core;
+using BootstrapAdmin.Web.Extensions;
 
 namespace BootstrapAdmin.Web.Pages.Admin
 {
@@ -8,6 +10,14 @@ namespace BootstrapAdmin.Web.Pages.Admin
         [Inject]
         [NotNull]
         private DialogService? DialogService { get; set; }
+
+        [Inject]
+        [NotNull]
+        private ToastService? ToastService { get; set; }
+
+        [Inject]
+        [NotNull]
+        private IGroup? GroupService { get; set; }
 
         private async Task OnAssignmentUsers(Role role)
         {
@@ -21,12 +31,14 @@ namespace BootstrapAdmin.Web.Pages.Admin
 
         private async Task OnAssignmentGroups(Role role)
         {
-            var option = new DialogOption()
-            {
-                Title = $"分配部门 - {role}",
-            };
+            var groups = GroupService.GetAll().ToSelectedItemList();
+            var values = GroupService.GetGroupsByRoleId(role.Id);
 
-            await DialogService.Show(option);
+            await DialogService.ShowAssignmentDialog($"分配部门 - {role.RoleName}", groups, values, () =>
+            {
+                var ret = GroupService.SaveGroupsByRoleId(role.Id, values);
+                return Task.FromResult(ret);
+            }, ToastService);
         }
 
         private async Task OnAssignmentMenus(Role role)

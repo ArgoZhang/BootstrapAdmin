@@ -49,5 +49,37 @@ namespace BootstrapAdmin.DataAccess.PetaPoco.Services
             }
             return ret;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="roleId"></param>
+        /// <returns></returns>
+        public List<string> GetGroupsByRoleId(string? roleId) => Database.Fetch<string>("select GroupID from RoleGroup where RoleGroup = @0", roleId);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="roleId"></param>
+        /// <param name="groupIds"></param>
+        /// <returns></returns>
+        public bool SaveGroupsByRoleId(string? roleId, IEnumerable<string> groupIds)
+        {
+            var ret = false;
+            try
+            {
+                Database.BeginTransaction();
+                Database.Execute("delete from RoleGroup where RoleGroup = @0", roleId);
+                Database.InsertBatch("RoleGroup", groupIds.Select(g => new { GroupID = g, RoleID = roleId }));
+                Database.CompleteTransaction();
+                ret = true;
+            }
+            catch (Exception)
+            {
+                Database.AbortTransaction();
+                throw;
+            }
+            return ret;
+        }
     }
 }

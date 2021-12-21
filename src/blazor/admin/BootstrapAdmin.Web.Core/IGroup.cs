@@ -25,7 +25,22 @@ public interface IGroup
     /// 
     /// </summary>
     /// <param name="userId"></param>
-    /// <param name="values"></param>
+    /// <param name="groupIds"></param>
     /// <returns></returns>
     bool SaveGroupsByUserId(string? userId, IEnumerable<string> groupIds);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="roleId"></param>
+    /// <returns></returns>
+    List<string> GetGroupsByRoleId(string? roleId);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="roleId"></param>
+    /// <param name="groupIds"></param>
+    /// <returns></returns>
+    bool SaveGroupsByRoleId(string? roleId, IEnumerable<string> groupIds);
 }
