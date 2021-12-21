@@ -5,7 +5,7 @@
         <TableToolbarButton TItem="DataAccess.Models.Navigation" IsEnableWhenSelectedOneRow="true" Color="Color.Info" Icon="fa fa-sitemap" Text="分配角色" OnClickCallback="menus => OnAssignmentRoles(menus.First())" />
     </TableToolbarTemplate>
     <ColumnsTemplete>
-        <TableColumn @bind-Field="@context.Name" Sortable="true" Filterable="true" Searchable="true" Width="200"></TableColumn>
+        <TableColumn @bind-Field="@context.Name" Filterable="true" Searchable="true" Width="200"></TableColumn>
         <TableColumn @bind-Field="@context.Order" Width="50"></TableColumn>
         <TableColumn @bind-Field="@context.Icon" Width="50" Align="Alignment.Center">
             <Template Context="v">
@@ -13,9 +13,10 @@
             </Template>
         </TableColumn>
         <TableColumn @bind-Field="@context.Url"></TableColumn>
-        <TableColumn @bind-Field="@context.Category" Sortable="true" Filterable="true"></TableColumn>
-        <TableColumn @bind-Field="@context.Target" Sortable="true" Filterable="true" Lookup="Targets"></TableColumn>
-        <TableColumn @bind-Field="@context.Application" Sortable="true" Filterable="true" Lookup="Apps"></TableColumn>
+        <TableColumn @bind-Field="@context.Category" Filterable="true"></TableColumn>
+        <TableColumn @bind-Field="@context.Target" Filterable="true" Lookup="Targets"></TableColumn>
+        <TableColumn @bind-Field="@context.IsResource" Filterable="true"></TableColumn>
+        <TableColumn @bind-Field="@context.Application" Filterable="true" Lookup="Apps"></TableColumn>
     </ColumnsTemplete>
     <RowButtonTemplate>
         <TableCellButton Size="Size.ExtraSmall" Color="Color.Info" Icon="fa fa-sitemap" Text="分配角色" OnClick="() => OnAssignmentRoles(context)" />

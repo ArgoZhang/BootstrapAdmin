@@ -59,6 +59,7 @@ namespace BootstrapAdmin.DataAccess.Models
         /// <summary>
         /// 获得/设置 是否为资源文件, 0 表示菜单 1 表示资源 2 表示按钮
         /// </summary>
+        [Display(Name = "类型")]
         public EnumResource IsResource { get; set; }
 
         /// <summary>
