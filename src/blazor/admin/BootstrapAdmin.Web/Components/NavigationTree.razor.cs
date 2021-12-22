@@ -29,5 +29,5 @@ public partial class NavigationTree
         return Task.CompletedTask;
     }
 
-    private string GetApp(string app) => DictService.GetApps().FirstOrDefault(i => i.Value == app)?.Text ?? "未设置";
+    private string GetApp(string? app) => DictService.GetApps().FirstOrDefault(i => i.Value == app)?.Text ?? "未设置";
 }
