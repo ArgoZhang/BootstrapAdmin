@@ -1,0 +1,7 @@
+﻿<BootstrapInputGroup class="mt-3">
+    <BootstrapInputGroupIcon Icon="fa fa-fw fa-lock" />
+    <BootstrapInput TValue="string" typeof="number" name="code" class="digits" maxlength="4" IsDisabled="IsSendCode" PlaceHolder="验证码" />
+    <Button class="btn-sms" Text="@SendCodeText" OnClick="OnSendCode" LoadingIcon="" IsAsync="true">
+        <Tooltip Title="点击发送验证码" Placement="Placement.Top" />
+    </Button>
+</BootstrapInputGroup>

@@ -12,13 +12,7 @@
                         <BootstrapInputGroupIcon Icon="fa fa-fw fa-user" />
                         <BootstrapInput TValue="string" type="tel" name="phone" class="digits" maxlength="11" PlaceHolder="手机号码" />
                     </BootstrapInputGroup>
-                    <BootstrapInputGroup class="mt-3">
-                        <BootstrapInputGroupIcon Icon="fa fa-fw fa-lock" />
-                        <BootstrapInput TValue="string" typeof="number" name="code" class="digits" maxlength="4" IsDisabled="true" PlaceHolder="验证码" />
-                        <Button class="btn-sms" Text="发送验证码">
-                            <Tooltip Title="点击发送验证码" Placement="Placement.Top" />
-                        </Button>
-                    </BootstrapInputGroup>
+                    <SMSButton />
                 }
                 else
                 {

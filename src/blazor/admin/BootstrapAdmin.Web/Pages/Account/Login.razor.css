@@ -71,7 +71,7 @@
         height: 32px;
     }
 
-.btn-sms {
+::deep .btn-sms {
     width: 140px;
 }
 
