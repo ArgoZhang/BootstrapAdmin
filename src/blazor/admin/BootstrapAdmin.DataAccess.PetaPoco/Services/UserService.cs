@@ -126,4 +126,47 @@ class UserService : BaseDatabase, IUser
         }
         return ret;
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="phone"></param>
+    /// <param name="appId"></param>
+    /// <param name="roles"></param>
+    /// <returns></returns>
+    public bool TryCreateUserByPhone(string phone, string appId, ICollection<string> roles)
+    {
+        var ret = false;
+        try
+        {
+            var user = GetAll().FirstOrDefault(user => user.UserName == phone);
+            if (user == null)
+            {
+                Database.BeginTransaction();
+                user = new User()
+                {
+                    ApprovedBy = "Mobile",
+                    ApprovedTime = DateTime.Now,
+                    DisplayName = "手机用户",
+                    UserName = phone,
+                    Icon = "default.jpg",
+                    Description = "手机用户",
+                    App = appId
+                };
+                Database.Save(user);
+
+                // Authorization
+                var roleIds = Database.Fetch<string>("select ID from Roles where RoleName in (@roles)", new { roles });
+                Database.InsertBatch("UserRole", roleIds.Select(g => new { RoleID = g, UserID = user.Id }));
+                Database.CompleteTransaction();
+            }
+            ret = true;
+        }
+        catch (Exception)
+        {
+            Database.AbortTransaction();
+            throw;
+        }
+        return ret;
+    }
 }

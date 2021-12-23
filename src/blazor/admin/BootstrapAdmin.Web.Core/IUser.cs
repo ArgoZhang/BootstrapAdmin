@@ -71,4 +71,13 @@ public interface IUser
     /// <param name="password"></param>
     /// <returns></returns>
     bool Authenticate(string userName, string password);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="phone"></param>
+    /// <param name="appId"></param>
+    /// <param name="roles"></param>
+    /// <returns></returns>
+    bool TryCreateUserByPhone(string phone, string appId, ICollection<string> roles);
 }
