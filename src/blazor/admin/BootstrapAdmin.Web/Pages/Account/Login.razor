@@ -8,10 +8,6 @@
             <div class="login-wrap">
                 @if (UseMobileLogin)
                 {
-                    <BootstrapInputGroup>
-                        <BootstrapInputGroupIcon Icon="fa fa-fw fa-user" />
-                        <BootstrapInput TValue="string" type="tel" name="phone" class="digits" maxlength="11" PlaceHolder="手机号码" />
-                    </BootstrapInputGroup>
                     <SMSButton />
                 }
                 else

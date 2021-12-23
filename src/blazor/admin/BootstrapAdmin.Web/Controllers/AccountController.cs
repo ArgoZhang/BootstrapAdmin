@@ -96,7 +96,11 @@ namespace Bootstrap.Admin.Controllers
         /// <param name="code"></param>
         /// <returns></returns>
         [HttpPost()]
-        public async Task<IActionResult> Mobile([FromServices] ISMSProvider provider, [FromServices] ILogin loginService, string phone, string code)
+        public async Task<IActionResult> Mobile(string phone, string code,
+            [FromServices] ISMSProvider provider,
+            [FromServices] ILogin loginService,
+            [FromServices] IUser userService,
+            [FromServices] BootstrapAppContext context)
         {
             if (string.IsNullOrEmpty(phone) || string.IsNullOrEmpty(code)) return RedirectLogin();
 
@@ -104,27 +108,7 @@ namespace Bootstrap.Admin.Controllers
             await loginService.Log(phone, auth);
             if (auth)
             {
-                //var user = UserHelper.Retrieves().FirstOrDefault(u => u.UserName == phone);
-                //if (user == null)
-                //{
-                //    user = new User()
-                //    {
-                //        ApprovedBy = "Mobile",
-                //        ApprovedTime = DateTime.Now,
-                //        DisplayName = "手机用户",
-                //        UserName = phone,
-                //        Password = code,
-                //        Icon = "default.jpg",
-                //        Description = "手机用户",
-                //        App = provider.Options.App
-                //    };
-                //    if (UserHelper.Save(user) && !string.IsNullOrEmpty(user.Id))
-                //    {
-                //        // 根据配置文件设置默认角色
-                //        var roles = RoleHelper.Retrieves().Where(r => provider.Options.Roles.Any(rl => rl.Equals(r.RoleName, StringComparison.OrdinalIgnoreCase))).Select(r => r.Id!);
-                //        RoleHelper.SaveByUserId(user.Id, roles);
-                //    }
-                //}
+                userService.TryCreateUserByPhone(phone, context.AppId, provider.Options.Roles);
             }
             return auth ? await SignInAsync(phone, true, MobileSchema) : RedirectLogin();
         }

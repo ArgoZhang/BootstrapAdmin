@@ -1,4 +1,6 @@
-﻿namespace BootstrapAdmin.Web.Components;
+﻿using BootstrapAdmin.Web.Services.SMS;
+
+namespace BootstrapAdmin.Web.Components;
 
 public partial class SMSButton : IDisposable
 {
@@ -8,18 +10,45 @@ public partial class SMSButton : IDisposable
 
     private CancellationTokenSource? CancelToken { get; set; }
 
+    [NotNull]
+    private string? PhoneNumber { get; set; }
+
+    private string? Code { get; set; }
+
+    [Inject]
+    [NotNull]
+    private ISMSProvider? SMSProvider { get; set; }
+
     async Task OnSendCode()
     {
-        IsSendCode = false;
-        var count = 60;
-        CancelToken ??= new CancellationTokenSource();
-        while (!CancelToken.IsCancellationRequested && count > 0)
+        if (!string.IsNullOrEmpty(PhoneNumber))
         {
-            SendCodeText = $"发送验证码 ({count--})";
-            StateHasChanged();
-            await Task.Delay(1000, CancelToken.Token);
+            var result = await SMSProvider.SendCodeAsync(PhoneNumber);
+            if (result.Result)
+            {
+#if DEBUG
+                Code = result.Data;
+#endif
+                IsSendCode = false;
+                var count = 60;
+                CancelToken ??= new CancellationTokenSource();
+                while (CancelToken != null && !CancelToken.IsCancellationRequested && count > 0)
+                {
+                    SendCodeText = $"发送验证码 ({count--})";
+                    StateHasChanged();
+                    await Task.Delay(1000, CancelToken.Token);
+                }
+                SendCodeText = "发送验证码";
+            }
+            else
+            {
+                // 短信发送失败
+            }
         }
-        SendCodeText = "发送验证码";
+        else
+        {
+            // 手机号不可为空
+        }
     }
 
     private void Dispose(bool disposing)
