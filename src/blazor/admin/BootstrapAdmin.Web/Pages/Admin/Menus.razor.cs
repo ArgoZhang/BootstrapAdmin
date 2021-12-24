@@ -33,9 +33,6 @@ public partial class Menus
     private BootstrapAppContext? AppContext { get; set; }
 
     [NotNull]
-    private List<Navigation>? Navigations { get; set; }
-
-    [NotNull]
     private List<SelectedItem>? Targets { get; set; }
 
     [NotNull]
@@ -52,15 +49,6 @@ public partial class Menus
         Apps = LookupHelper.GetApps(DictService);
     }
 
-    /// <summary>
-    /// OnInitializedAsync 方法
-    /// </summary>
-    /// <returns></returns>
-    protected override Task OnInitializedAsync() => Task.Run(() =>
-    {
-        Navigations = NavigationService.GetAllMenus(AppContext.UserName);
-    });
-
     private async Task OnAssignmentRoles(DataAccess.Models.Navigation menu)
     {
         var roles = RoleService.GetAll().ToSelectedItemList();
@@ -75,10 +63,11 @@ public partial class Menus
 
     private Task<QueryData<Navigation>> OnQueryAsync(QueryPageOptions options)
     {
-        var menus = Navigations.Where(m => m.ParentId == "0").OrderBy(m => m.Order);
+        var navs = NavigationService.GetAllMenus(AppContext.UserName);
+        var menus = navs.Where(m => m.ParentId == "0").OrderBy(m => m.Order);
         foreach (var item in menus)
         {
-            item.HasChildren = Navigations.Any(i => i.ParentId == item.Id);
+            item.HasChildren = navs.Any(i => i.ParentId == item.Id);
         }
 
         return Task.FromResult(new QueryData<Navigation>()
@@ -87,5 +76,9 @@ public partial class Menus
         });
     }
 
-    private Task<IEnumerable<Navigation>> OnTreeExpand(Navigation menu) => Task.FromResult(Navigations.Where(m => m.ParentId == menu.Id).OrderBy(m => m.Order).AsEnumerable());
+    private Task<IEnumerable<Navigation>> OnTreeExpand(Navigation menu)
+    {
+        var navs = NavigationService.GetAllMenus(AppContext.UserName);
+        return Task.FromResult(navs.Where(m => m.ParentId == menu.Id).OrderBy(m => m.Order).AsEnumerable());
+    }
 }
