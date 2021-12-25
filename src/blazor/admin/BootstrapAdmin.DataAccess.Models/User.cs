@@ -47,6 +47,8 @@ namespace BootstrapAdmin.DataAccess.Models
         /// <summary>
         /// 获取/设置 密码
         /// </summary>
+        [Display(Name = "密码")]
+        [Required(ErrorMessage = "{0}不可为空")]
         public string? Password { get; set; }
 
         /// <summary>
@@ -87,6 +89,7 @@ namespace BootstrapAdmin.DataAccess.Models
         /// 获得/设置 新密码
         /// </summary>
         [Display(Name = "新密码")]
+        [Required(ErrorMessage = "{0}不可为空")]
         [NotNull]
         public string? NewPassword { get; set; }
 
@@ -94,6 +97,8 @@ namespace BootstrapAdmin.DataAccess.Models
         /// 获得/设置 新密码
         /// </summary>
         [Display(Name = "确认密码")]
+        [Required(ErrorMessage = "{0}不可为空")]
+        [Compare("NewPassword", ErrorMessage = "{0}与{1}不一致")]
         [NotNull]
         public string? ConfirmPassword { get; set; }
 
