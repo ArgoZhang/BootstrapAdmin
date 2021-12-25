@@ -4,7 +4,7 @@
     /// 
     /// </summary>
     [CascadingTypeParameter(nameof(TItem))]
-    public partial class BlazorTable<TItem> where TItem : class, new()
+    public partial class AdminTable<TItem> where TItem : class, new()
     {
         /// <summary>
         /// 

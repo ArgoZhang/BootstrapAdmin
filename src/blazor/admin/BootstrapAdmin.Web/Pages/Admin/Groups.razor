@@ -1,6 +1,6 @@
 ﻿@page "/Admin/Groups"
 
-<BlazorTable TItem="DataAccess.Models.Group" ExtendButtonColumnWidth="260">
+<AdminTable TItem="DataAccess.Models.Group" ExtendButtonColumnWidth="260">
     <TableToolbarTemplate>
         <TableToolbarButton TItem="DataAccess.Models.Group" IsEnableWhenSelectedOneRow="true" Color="Color.Warning" Icon="fa fa-user" Text="分配用户" OnClickCallback="groups => OnAssignmentUsers(groups.First())" />
         <TableToolbarButton TItem="DataAccess.Models.Group" IsEnableWhenSelectedOneRow="true" Color="Color.Info" Icon="fa fa-sitemap" Text="分配角色" OnClickCallback="groups => OnAssignmentRoles(groups.First())" />
@@ -14,4 +14,4 @@
         <TableCellButton Size="Size.ExtraSmall" Color="Color.Warning" Icon="fa fa-user" Text="分配用户" OnClick="() => OnAssignmentUsers(context)" />
         <TableCellButton Size="Size.ExtraSmall" Color="Color.Info" Icon="fa fa-sitemap" Text="分配角色" OnClick="() => OnAssignmentRoles(context)" />
     </RowButtonTemplate>
-</BlazorTable>
+</AdminTable>

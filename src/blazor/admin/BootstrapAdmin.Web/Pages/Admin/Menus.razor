@@ -1,6 +1,6 @@
 ﻿@page "/Admin/Menus"
 
-<BlazorTable TItem="DataAccess.Models.Navigation" IsTree="true" OnTreeExpand="OnTreeExpand" ExtendButtonColumnWidth="200" OnQueryAsync="OnQueryAsync">
+<AdminTable TItem="DataAccess.Models.Navigation" IsTree="true" OnTreeExpand="OnTreeExpand" ExtendButtonColumnWidth="200" OnQueryAsync="OnQueryAsync">
     <TableToolbarTemplate>
         <TableToolbarButton TItem="DataAccess.Models.Navigation" IsEnableWhenSelectedOneRow="true" Color="Color.Info" Icon="fa fa-sitemap" Text="分配角色" OnClickCallback="menus => OnAssignmentRoles(menus.First())" />
     </TableToolbarTemplate>
@@ -21,4 +21,4 @@
     <RowButtonTemplate>
         <TableCellButton Size="Size.ExtraSmall" Color="Color.Info" Icon="fa fa-sitemap" Text="分配角色" OnClick="() => OnAssignmentRoles(context)" />
     </RowButtonTemplate>
-</BlazorTable>
+</AdminTable>
