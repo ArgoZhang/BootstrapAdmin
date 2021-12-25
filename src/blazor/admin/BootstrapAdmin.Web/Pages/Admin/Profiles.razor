@@ -56,7 +56,7 @@
         </AdminAlert>
         <div class="row g-3 form-inline">
             <div class="col-12 col-sm-6">
-                <Dropdown Items="Themes" @bind-Value="CurrentUser.Theme" />
+                <Dropdown Items="Themes" @bind-Value="CurrentUser.Css" />
             </div>
             <div class="col-12 col-sm-6 text-end">
                 <Button Icon="fa fa-save" Text="保存" OnClickWithoutRender="OnSaveTheme" />
@@ -66,30 +66,7 @@
 </div>
 
 @*
-    
-    <div class="card" asp-auth="saveTheme">
-    <div class="card-header"></div>
-    <div class="card-body">
-    <div class="alert alert-info" role="alert">
-    <span>注意：本设置将覆盖<b><a class="badge-pill" href="./Settings">网站设置</a></b>中设置的网站样式</span>
-    </div>
-    <div class="form-group">
-    <div class="btn-group" role="group">
-    <button id="css" class="btn btn-success dropdown-select dropdown-toggle" data-toggle="dropdown" data-default-val="" value="@Model.Css">默认样式</button>
-    <div class="dropdown-menu">
-    <a href="#" data-val="">默认样式</a>
-    @foreach (var css in Model.Themes)
-    {
-    <a href="#" data-val="@css.Code">@css.Name</a>
-    }
-    </div>
-    </div>
-    </div>
-    <div class="modal-footer">
-    <button id="btnSaveCss" data-method="profileCss" class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
-    </div>
-    </div>
-    </div>
+   
     <div class="card" asp-auth="saveIcon">
     <div class="card-header">修改头像</div>
     <div class="card-body">

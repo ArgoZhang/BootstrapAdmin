@@ -31,7 +31,7 @@ namespace BootstrapAdmin.DataAccess.Models
         /// 获得/设置 用户设置样式表名称
         /// </summary>
         [Display(Name = "主题")]
-        public string? Theme { get; set; }
+        public string? Css { get; set; }
 
         /// <summary>
         /// 获得/设置 用户默认登陆 App 标识
