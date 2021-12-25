@@ -11,33 +11,33 @@ namespace BootstrapAdmin.DataAccess.Models
         /// 获得/设置 系统登录用户名
         /// </summary>
         [Display(Name = "登录名称")]
-        public string UserName { get; set; } = "";
+        public string? UserName { get; set; }
 
         /// <summary>
         /// 获得/设置 用户显示名称
         /// </summary>
         [Display(Name = "显示名称")]
         [Required(ErrorMessage = "{0}不可为空")]
-        [MaxLength(10)]
-        public string DisplayName { get; set; } = "";
+        [MaxLength(50, ErrorMessage = "{0}不能超过 50 个字符")]
+        public string? DisplayName { get; set; }
 
         /// <summary>
         /// 获得/设置 用户头像图标路径
         /// </summary>
         [Display(Name = "用户头像")]
-        public string Icon { get; set; } = "";
+        public string? Icon { get; set; }
 
         /// <summary>
         /// 获得/设置 用户设置样式表名称
         /// </summary>
         [Display(Name = "主题")]
-        public string Css { get; set; } = "";
+        public string? Css { get; set; }
 
         /// <summary>
         /// 获得/设置 用户默认登陆 App 标识
         /// </summary>
         [Display(Name = "默认 APP")]
-        public string App { get; set; } = "";
+        public string? App { get; set; }
 
         /// <summary>
         /// 获得/设置 用户主键ID
@@ -47,17 +47,12 @@ namespace BootstrapAdmin.DataAccess.Models
         /// <summary>
         /// 获取/设置 密码
         /// </summary>
-        public string Password { get; set; } = "";
+        public string? Password { get; set; }
 
         /// <summary>
         /// 获取/设置 密码盐
         /// </summary>
-        public string PassSalt { get; set; } = "";
-
-        /// <summary>
-        /// 获取/设置 角色用户关联状态 checked 标示已经关联 '' 标示未关联
-        /// </summary>
-        public string Checked { get; set; } = "";
+        public string? PassSalt { get; set; }
 
         /// <summary>
         /// 获得/设置 用户注册时间
@@ -81,7 +76,7 @@ namespace BootstrapAdmin.DataAccess.Models
         /// 获得/设置 用户的申请理由
         /// </summary>
         [Display(Name = "说明")]
-        public string Description { get; set; } = "";
+        public string? Description { get; set; }
 
         /// <summary>
         /// 获得/设置 通知描述 2分钟内为刚刚
@@ -91,8 +86,16 @@ namespace BootstrapAdmin.DataAccess.Models
         /// <summary>
         /// 获得/设置 新密码
         /// </summary>
+        [Display(Name = "新密码")]
+        [NotNull]
+        public string? NewPassword { get; set; }
+
+        /// <summary>
+        /// 获得/设置 新密码
+        /// </summary>
         [Display(Name = "确认密码")]
-        public string NewPassword { get; set; } = "";
+        [NotNull]
+        public string? ConfirmPassword { get; set; }
 
         /// <summary>
         /// 获得/设置 是否重置密码

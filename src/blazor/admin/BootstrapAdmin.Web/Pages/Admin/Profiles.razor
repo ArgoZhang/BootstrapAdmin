@@ -14,6 +14,29 @@
         </EditorForm>
     </ValidateForm>
 </AdminCard>
+
+<AdminCard HeaderText="修改密码" AuthorizeKey="SavePassword">
+    <AdminAlert Text="演示系统禁止更改管理员密码" />
+    <ValidateForm OnValidSubmit="OnSavePassword" Model="CurrentUser">
+        <div class="row g-3 form-inline">
+            <div class="col-12 col-sm-6">
+                <BootstrapInput @bind-Value="@CurrentUser.Password" DisplayText="原密码" />
+            </div>
+            <div class="col-12 col-sm-6 d-none d-sm-block">
+            </div>
+            <div class="col-12 col-sm-6">
+                <BootstrapInput @bind-Value="@CurrentUser.NewPassword" />
+            </div>
+            <div class="col-12 col-sm-6">
+                <BootstrapInput @bind-Value="@CurrentUser.ConfirmPassword" />
+            </div>
+            <div class="col-12 text-end">
+                <SubmitButton />
+            </div>
+        </div>
+    </ValidateForm>
+</AdminCard>
+
 @*<div class="card" asp-auth="saveDisplayName">
     <div class="card-header"></div>
     <div class="card-body" data-toggle="LgbValidate" data-valid-button="#btnSaveDisplayName">

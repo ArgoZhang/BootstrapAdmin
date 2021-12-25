@@ -9,6 +9,8 @@ public partial class Profiles
 {
     public bool IsDemo { get; set; }
 
+    private string? ConfirmPassword { get; set; }
+
     [NotNull]
     private User? CurrentUser { get; set; }
 
@@ -32,6 +34,11 @@ public partial class Profiles
     }
 
     private Task OnSaveDisplayName(EditContext context)
+    {
+        return Task.CompletedTask;
+    }
+
+    private Task OnSavePassword(EditContext context)
     {
         return Task.CompletedTask;
     }

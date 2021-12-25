@@ -97,3 +97,7 @@
         padding-right: .5rem;
         padding-left: .25rem;
     }
+
+.tabs-body-content .card:not(:first-child) {
+    margin-top: 1rem;
+}
