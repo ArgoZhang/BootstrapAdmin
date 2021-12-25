@@ -1,8 +1,7 @@
 ﻿using BootstrapAdmin.Web.Services;
-using System.Text;
-using Microsoft.EntityFrameworkCore;
-using BootstrapAdmin.Web.Services.SMS.Tencent;
 using BootstrapAdmin.Web.Services.SMS;
+using BootstrapAdmin.Web.Services.SMS.Tencent;
+using System.Text;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -74,12 +73,12 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<BootstrapAppContext>();
 
             // 增加 EFCore 数据服务
-            services.AddEFCoreDataAccessServices((provider, option) =>
-            {
-                var configuration = provider.GetRequiredService<IConfiguration>();
-                var connString = configuration.GetConnectionString("bb");
-                option.UseSqlite(connString);
-            });
+            //services.AddEFCoreDataAccessServices((provider, option) =>
+            //{
+            //    var configuration = provider.GetRequiredService<IConfiguration>();
+            //    var connString = configuration.GetConnectionString("bb");
+            //    option.UseSqlite(connString);
+            //});
 
             // 增加 PetaPoco 数据服务
             services.AddPetaPocoDataAccessServices();
