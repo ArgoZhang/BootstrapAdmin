@@ -64,7 +64,7 @@ public partial class Menus
     private Task<QueryData<Navigation>> OnQueryAsync(QueryPageOptions options)
     {
         var navs = NavigationService.GetAllMenus(AppContext.UserName);
-        var menus = navs.Where(m => m.ParentId == "0").OrderBy(m => m.Order);
+        var menus = navs.Where(m => m.ParentId == "0").OrderBy(m => m.Application).ThenBy(m => m.Order);
         foreach (var item in menus)
         {
             item.HasChildren = navs.Any(i => i.ParentId == item.Id);
