@@ -44,7 +44,6 @@ namespace BootstrapAdmin.DataAccess.PetaPoco
             var resultColumns = new List<string>
             {
                 nameof(Models.User.Checked),
-                nameof(Models.User.UserStatus),
                 nameof(Models.User.Period),
                 nameof(Models.User.NewPassword),
                 nameof(Models.User.IsReset)
