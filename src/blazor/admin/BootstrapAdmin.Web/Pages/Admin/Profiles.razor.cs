@@ -2,7 +2,6 @@
 using BootstrapAdmin.Web.Core;
 using BootstrapAdmin.Web.Extensions;
 using BootstrapAdmin.Web.Services;
-using BootstrapAdmin.Web.Utils;
 using Microsoft.AspNetCore.Components.Forms;
 
 namespace BootstrapAdmin.Web.Pages.Admin;
@@ -23,6 +22,9 @@ public partial class Profiles
     [NotNull]
     private List<SelectedItem>? Apps { get; set; }
 
+    [NotNull]
+    private List<SelectedItem>? Themes { get; set; }
+
     [Inject]
     [NotNull]
     private IDict? DictService { get; set; }
@@ -41,6 +43,7 @@ public partial class Profiles
             DisplayName = AppContext.DisplayName
         };
         Apps = DictService.GetApps().ToSelectedItemList();
+        Themes = DictService.GetThemes().ToSelectedItemList();
     }
 
     private Task OnSaveDisplayName(EditContext context)
@@ -54,6 +57,11 @@ public partial class Profiles
     }
 
     private Task OnSaveApp()
+    {
+        return Task.CompletedTask;
+    }
+
+    private Task OnSaveTheme()
     {
         return Task.CompletedTask;
     }
