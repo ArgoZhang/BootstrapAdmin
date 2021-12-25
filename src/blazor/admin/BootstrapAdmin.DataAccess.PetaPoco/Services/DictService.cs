@@ -26,7 +26,13 @@ class DictService : BaseDatabase, IDict
     public Dictionary<string, string> GetApps()
     {
         var dicts = GetAll();
-        return dicts.Where(d => d.Category == "应用程序").Select(d => new SelectedItem(d.Code, d.Name)).ToDictionary(i => i.Value, i => i.Text);
+        return dicts.Where(d => d.Category == "应用程序").Select(d => new KeyValuePair<string, string>(d.Code, d.Name)).ToDictionary(i => i.Key, i => i.Value);
+    }
+
+    public Dictionary<string, string> GetThemes()
+    {
+        var dicts = GetAll();
+        return dicts.Where(d => d.Category == "网站样式").Select(d => new KeyValuePair<string, string>(d.Code, d.Name)).ToDictionary(i => i.Key, i => i.Value);
     }
 
     /// <summary>

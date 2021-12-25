@@ -12,6 +12,12 @@
         Dictionary<string, string> GetApps();
 
         /// <summary>
+        /// 获得 配置所有的主题集合
+        /// </summary>
+        /// <returns></returns>
+        Dictionary<string, string> GetThemes();
+
+        /// <summary>
         /// 获取当前系统配置是否为演示模式
         /// </summary>
         /// <returns></returns>

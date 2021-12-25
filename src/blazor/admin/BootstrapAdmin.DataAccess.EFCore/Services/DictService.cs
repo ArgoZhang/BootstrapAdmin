@@ -3,9 +3,14 @@ using BootstrapBlazor.Components;
 
 namespace BootstrapAdmin.DataAccess.EFCore.Services
 {
-    class DictsService : IDict
+    class DictService : IDict
     {
         public Dictionary<string, string> GetApps()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Dictionary<string, string> GetThemes()
         {
             throw new NotImplementedException();
         }
