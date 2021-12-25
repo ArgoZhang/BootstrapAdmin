@@ -104,7 +104,7 @@
 
 .tabs-body-content .tab-scroll-body {
     overflow: auto;
-    height: 100%;
-    margin-right: -1rem;
-    padding-right: 1rem;
+    height: calc(100% + 2rem);
+    padding: 1rem;
+    margin: -1rem;
 }

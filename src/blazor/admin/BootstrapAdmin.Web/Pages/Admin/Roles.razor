@@ -1,6 +1,6 @@
 ﻿@page "/Admin/Roles"
 
-<AdminTable TItem="DataAccess.Models.Role" ExtendButtonColumnWidth="340">
+<AdminTable TItem="DataAccess.Models.Role" ExtendButtonColumnWidth="325">
     <TableToolbarTemplate>
         <TableToolbarButton TItem="DataAccess.Models.Role" IsEnableWhenSelectedOneRow="true" Color="Color.Info" Icon="fa fa-user" Text="用户" OnClickCallback="roles => OnAssignmentUsers(roles.First())" />
         <TableToolbarButton TItem="DataAccess.Models.Role" IsEnableWhenSelectedOneRow="true" Color="Color.Warning" Icon="fa fa-bank" Text="部门" OnClickCallback="roles => OnAssignmentGroups(roles.First())" />
