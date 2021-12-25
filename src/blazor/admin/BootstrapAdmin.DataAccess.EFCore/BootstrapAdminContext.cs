@@ -42,7 +42,6 @@ namespace BootstrapAdmin.DataAccess.EFCore
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().Ignore(u => u.Checked);
-            modelBuilder.Entity<User>().Ignore(u => u.UserStatus);
             modelBuilder.Entity<User>().Ignore(u => u.Period);
             modelBuilder.Entity<User>().Ignore(u => u.NewPassword);
             modelBuilder.Entity<User>().Ignore(u => u.IsReset);

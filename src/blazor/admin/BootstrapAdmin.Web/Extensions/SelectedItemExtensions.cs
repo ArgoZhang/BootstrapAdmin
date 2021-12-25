@@ -27,4 +27,11 @@ public static class SelectedItemExtensions
     /// <param name="users"></param>
     /// <returns></returns>
     public static List<SelectedItem> ToSelectedItemList(this IEnumerable<Group> groups) => groups.Select(i => new SelectedItem { Value = i.Id!, Text = i.ToString() }).ToList();
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="users"></param>
+    /// <returns></returns>
+    public static List<SelectedItem> ToSelectedItemList(this Dictionary<string, string> dict) => dict.Select(i => new SelectedItem { Value = i.Key, Text = i.Value }).ToList();
 }

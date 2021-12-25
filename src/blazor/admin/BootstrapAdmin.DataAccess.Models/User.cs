@@ -17,6 +17,8 @@ namespace BootstrapAdmin.DataAccess.Models
         /// 获得/设置 用户显示名称
         /// </summary>
         [Display(Name = "显示名称")]
+        [Required(ErrorMessage = "{0}不可为空")]
+        [MaxLength(10)]
         public string DisplayName { get; set; } = "";
 
         /// <summary>
@@ -80,11 +82,6 @@ namespace BootstrapAdmin.DataAccess.Models
         /// </summary>
         [Display(Name = "说明")]
         public string Description { get; set; } = "";
-
-        /// <summary>
-        /// 获得/设置 用户当前状态 0 表示管理员注册用户 1 表示用户注册 2 表示更改密码 3 表示更改个人皮肤 4 表示更改显示名称 5 批复新用户注册操作
-        /// </summary>
-        public UserStates UserStatus { get; set; }
 
         /// <summary>
         /// 获得/设置 通知描述 2分钟内为刚刚
