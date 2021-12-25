@@ -9,11 +9,11 @@
                     <Display @bind-Value="@CurrentUser.UserName" />
                 </div>
                 <div class="col-12 col-sm-6">
-                    <BootstrapInput @bind-Value="@CurrentUser.DisplayName" />
+                    <BootstrapInput @bind-Value="@CurrentUser.DisplayName" Readonly="IsDemo" />
                 </div>
                 <Block Condition="!IsDemo">
                     <div class="col-12 text-end">
-                        <Button ButtonType="ButtonType.Submit" Icon="fa fa-save" Text="提交" />
+                        <Button ButtonType="ButtonType.Submit" Icon="fa fa-save" Text="保存" />
                     </div>
                 </Block>
             </div>
@@ -25,19 +25,19 @@
         <ValidateForm OnValidSubmit="OnSavePassword" Model="CurrentUser">
             <div class="row g-3 form-inline">
                 <div class="col-12 col-sm-6">
-                    <BootstrapInput @bind-Value="@CurrentUser.Password" DisplayText="原密码" />
+                    <BootstrapInput @bind-Value="@CurrentUser.Password" DisplayText="原密码" Readonly="IsDemo" />
                 </div>
                 <div class="col-12 col-sm-6 d-none d-sm-block">
                 </div>
                 <div class="col-12 col-sm-6">
-                    <BootstrapInput @bind-Value="@CurrentUser.NewPassword" />
+                    <BootstrapInput @bind-Value="@CurrentUser.NewPassword" Readonly="IsDemo" />
                 </div>
                 <div class="col-12 col-sm-6">
-                    <BootstrapInput @bind-Value="@CurrentUser.ConfirmPassword" />
+                    <BootstrapInput @bind-Value="@CurrentUser.ConfirmPassword" Readonly="IsDemo" />
                 </div>
                 <Block Condition="!IsDemo">
                     <div class="col-12 text-end">
-                        <Button ButtonType="ButtonType.Submit" Icon="fa fa-save" Text="提交" />
+                        <Button ButtonType="ButtonType.Submit" Icon="fa fa-save" Text="保存" />
                     </div>
                 </Block>
             </div>
@@ -82,17 +82,3 @@
         </div>
     </AdminCard>
 </div>
-
-@*
-
-    <div class="card" asp-auth="saveIcon">
-    <div class="card-header">修改头像</div>
-    <div class="card-body">
-    <form enctype="multipart/form-data">
-    <div class="form-group">
-    <input id="fileIcon" type="file" data-init="@Model.Size" data-file="@Model.FileName">
-    </div>
-    </form>
-    <img class="card-img d-none" src="@Url.Content(Model.Icon)" />
-    </div>
-    </div>*@

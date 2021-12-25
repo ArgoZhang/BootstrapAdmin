@@ -8,7 +8,7 @@ namespace BootstrapAdmin.Web.Pages.Admin;
 
 public partial class Profiles
 {
-    public bool IsDemo { get; set; }
+    private bool IsDemo { get; set; }
 
     private string? ConfirmPassword { get; set; }
 
