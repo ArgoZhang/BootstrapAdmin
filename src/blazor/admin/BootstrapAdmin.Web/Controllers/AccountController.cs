@@ -25,15 +25,13 @@ namespace Bootstrap.Admin.Controllers
         /// <returns>The login.</returns>
         /// <param name="userService"></param>
         /// <param name="loginService"></param>
-        /// <param name="context"></param>
         /// <param name="userName">User name.</param>
         /// <param name="password">Password.</param>
         /// <param name="remember">Remember.</param>
         [HttpPost]
         public async Task<IActionResult> Login(string userName, string password, string remember,
             [FromServices] IUser userService,
-            [FromServices] ILogin loginService,
-            [FromServices] BootstrapAppContext context)
+            [FromServices] ILogin loginService)
         {
             if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
             {
@@ -42,10 +40,6 @@ namespace Bootstrap.Admin.Controllers
 
             var auth = userService.Authenticate(userName, password);
             await loginService.Log(userName, auth);
-            if (auth)
-            {
-                context.UserName = userName;
-            }
             return auth ? await SignInAsync(userName, remember == "true") : RedirectLogin();
         }
 
