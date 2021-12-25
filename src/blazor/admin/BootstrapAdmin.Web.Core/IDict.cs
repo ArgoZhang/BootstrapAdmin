@@ -12,6 +12,12 @@
         Dictionary<string, string> GetApps();
 
         /// <summary>
+        /// 获得 配置所有的登录页集合
+        /// </summary>
+        /// <returns></returns>
+        Dictionary<string, string> GetLogins();
+
+        /// <summary>
         /// 获得 配置所有的主题集合
         /// </summary>
         /// <returns></returns>

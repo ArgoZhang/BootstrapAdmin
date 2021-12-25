@@ -10,6 +10,11 @@ namespace BootstrapAdmin.DataAccess.EFCore.Services
             throw new NotImplementedException();
         }
 
+        public Dictionary<string, string> GetLogins()
+        {
+            throw new NotImplementedException();
+        }
+
         public Dictionary<string, string> GetThemes()
         {
             throw new NotImplementedException();

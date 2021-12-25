@@ -29,6 +29,12 @@ class DictService : BaseDatabase, IDict
         return dicts.Where(d => d.Category == "应用程序").Select(d => new KeyValuePair<string, string>(d.Code, d.Name)).ToDictionary(i => i.Key, i => i.Value);
     }
 
+    public Dictionary<string, string> GetLogins()
+    {
+        var dicts = GetAll();
+        return dicts.Where(d => d.Category == "系统首页").Select(d => new KeyValuePair<string, string>(d.Code, d.Name)).ToDictionary(i => i.Key, i => i.Value);
+    }
+
     public Dictionary<string, string> GetThemes()
     {
         var dicts = GetAll();
