@@ -29,6 +29,8 @@ public partial class Profiles
     [NotNull]
     private IDict? DictService { get; set; }
 
+    private List<UploadFile> PreviewFileList { get; } = new(new[] { new UploadFile { PrevUrl = "/images/Argo.png" } });
+
     /// <summary>
     /// 
     /// </summary>
@@ -42,6 +44,7 @@ public partial class Profiles
             UserName = AppContext.UserName,
             DisplayName = AppContext.DisplayName
         };
+        IsDemo = DictService.IsDemo();
         Apps = DictService.GetApps().ToSelectedItemList();
         Themes = DictService.GetThemes().ToSelectedItemList();
     }
@@ -62,6 +65,11 @@ public partial class Profiles
     }
 
     private Task OnSaveTheme()
+    {
+        return Task.CompletedTask;
+    }
+
+    private Task OnSaveIcon()
     {
         return Task.CompletedTask;
     }

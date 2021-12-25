@@ -2,22 +2,26 @@
 
 <div class="tab-scroll-body">
     <AdminCard HeaderText="基本资料" AuthorizeKey="SaveDisplayName">
-        <AdminAlert Text="演示系统禁止更改管理员显示名称" />
+        <AdminAlert Text="演示系统禁止更改管理员显示名称" IsShow="IsDemo" />
         <ValidateForm OnValidSubmit="OnSaveDisplayName" Model="CurrentUser">
-            <EditorForm AutoGenerateAllItem="false" TModel="User" RowType="RowType.Inline" ItemsPerRow="2">
-                <FieldItems>
-                    <EditorItem @bind-Field="context.UserName" Readonly="true" />
-                    <EditorItem @bind-Field="context.DisplayName" />
-                </FieldItems>
-                <Buttons>
-                    <SubmitButton />
-                </Buttons>
-            </EditorForm>
+            <div class="row g-3 form-inline">
+                <div class="col-12 col-sm-6">
+                    <Display @bind-Value="@CurrentUser.UserName" />
+                </div>
+                <div class="col-12 col-sm-6">
+                    <BootstrapInput @bind-Value="@CurrentUser.DisplayName" />
+                </div>
+                <Block Condition="!IsDemo">
+                    <div class="col-12 text-end">
+                        <Button ButtonType="ButtonType.Submit" Icon="fa fa-save" Text="提交" />
+                    </div>
+                </Block>
+            </div>
         </ValidateForm>
     </AdminCard>
 
     <AdminCard HeaderText="修改密码" AuthorizeKey="SavePassword">
-        <AdminAlert Text="演示系统禁止更改管理员密码" />
+        <AdminAlert Text="演示系统禁止更改管理员密码" IsShow="IsDemo" />
         <ValidateForm OnValidSubmit="OnSavePassword" Model="CurrentUser">
             <div class="row g-3 form-inline">
                 <div class="col-12 col-sm-6">
@@ -31,42 +35,56 @@
                 <div class="col-12 col-sm-6">
                     <BootstrapInput @bind-Value="@CurrentUser.ConfirmPassword" />
                 </div>
-                <div class="col-12 text-end">
-                    <SubmitButton />
-                </div>
+                <Block Condition="!IsDemo">
+                    <div class="col-12 text-end">
+                        <Button ButtonType="ButtonType.Submit" Icon="fa fa-save" Text="提交" />
+                    </div>
+                </Block>
             </div>
         </ValidateForm>
     </AdminCard>
 
     <AdminCard HeaderText="默认应用" AuthorizeKey="SaveApp">
-        <AdminAlert Text="演示系统禁止更改默认应用" />
+        <AdminAlert Text="演示系统禁止更改默认应用" IsShow="IsDemo" />
         <div class="row g-3 form-inline">
             <div class="col-12 col-sm-6">
                 <Dropdown Items="Apps" @bind-Value="CurrentUser.App" />
             </div>
-            <div class="col-12 col-sm-6 text-end">
-                <Button Icon="fa fa-save" Text="保存" OnClickWithoutRender="OnSaveApp" />
-            </div>
+            <Block Condition="!IsDemo">
+                <div class="col-12 col-sm-6 text-end">
+                    <Button Icon="fa fa-save" Text="保存" OnClickWithoutRender="OnSaveApp" />
+                </div>
+            </Block>
         </div>
     </AdminCard>
 
     <AdminCard HeaderText="网站样式" AuthorizeKey="SaveApp">
         <AdminAlert Color="Color.Info">
-            <span>注意：本设置将覆盖 <b><a class="badge-pill" href="./Settings">网站设置</a></b> 中设置的网站样式</span>
+            <span>注意：本设置将覆盖 <b><TabLink Url="/Admin/Settings" Text="网站设置" Icon="fa fa-fa">网站设置</TabLink></b> 中设置的网站样式</span>
         </AdminAlert>
         <div class="row g-3 form-inline">
             <div class="col-12 col-sm-6">
                 <Dropdown Items="Themes" @bind-Value="CurrentUser.Css" />
             </div>
-            <div class="col-12 col-sm-6 text-end">
-                <Button Icon="fa fa-save" Text="保存" OnClickWithoutRender="OnSaveTheme" />
+            <Block Condition="!IsDemo">
+                <div class="col-12 col-sm-6 text-end">
+                    <Button Icon="fa fa-save" Text="保存" OnClickWithoutRender="OnSaveTheme" />
+                </div>
+            </Block>
+        </div>
+    </AdminCard>
+
+    <AdminCard HeaderText="个人头像" AuthorizeKey="SaveIcon">
+        <div class="row g-3 form-inline">
+            <div class="col-12 col-sm-6">
+                <CardUpload TValue="string" IsSingle DefaultFileList="PreviewFileList" />
             </div>
         </div>
     </AdminCard>
 </div>
 
 @*
-   
+
     <div class="card" asp-auth="saveIcon">
     <div class="card-header">修改头像</div>
     <div class="card-body">
