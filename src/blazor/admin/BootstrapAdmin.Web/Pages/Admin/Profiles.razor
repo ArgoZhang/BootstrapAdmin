@@ -1,76 +1,57 @@
 ﻿@page "/Admin/Profiles"
 
-<AdminCard HeaderText="基本资料" AuthorizeKey="SaveDisplayName">
-    <AdminAlert Text="演示系统禁止更改管理员显示名称" />
-    <ValidateForm OnValidSubmit="OnSaveDisplayName" Model="CurrentUser">
-        <EditorForm AutoGenerateAllItem="false" TModel="User" RowType="RowType.Inline" ItemsPerRow="2">
-            <FieldItems>
-                <EditorItem @bind-Field="context.UserName" Readonly="true" />
-                <EditorItem @bind-Field="context.DisplayName" />
-            </FieldItems>
-            <Buttons>
-                <SubmitButton />
-            </Buttons>
-        </EditorForm>
-    </ValidateForm>
-</AdminCard>
+<div class="tab-scroll-body">
+    <AdminCard HeaderText="基本资料" AuthorizeKey="SaveDisplayName">
+        <AdminAlert Text="演示系统禁止更改管理员显示名称" />
+        <ValidateForm OnValidSubmit="OnSaveDisplayName" Model="CurrentUser">
+            <EditorForm AutoGenerateAllItem="false" TModel="User" RowType="RowType.Inline" ItemsPerRow="2">
+                <FieldItems>
+                    <EditorItem @bind-Field="context.UserName" Readonly="true" />
+                    <EditorItem @bind-Field="context.DisplayName" />
+                </FieldItems>
+                <Buttons>
+                    <SubmitButton />
+                </Buttons>
+            </EditorForm>
+        </ValidateForm>
+    </AdminCard>
 
-<AdminCard HeaderText="修改密码" AuthorizeKey="SavePassword">
-    <AdminAlert Text="演示系统禁止更改管理员密码" />
-    <ValidateForm OnValidSubmit="OnSavePassword" Model="CurrentUser">
+    <AdminCard HeaderText="修改密码" AuthorizeKey="SavePassword">
+        <AdminAlert Text="演示系统禁止更改管理员密码" />
+        <ValidateForm OnValidSubmit="OnSavePassword" Model="CurrentUser">
+            <div class="row g-3 form-inline">
+                <div class="col-12 col-sm-6">
+                    <BootstrapInput @bind-Value="@CurrentUser.Password" DisplayText="原密码" />
+                </div>
+                <div class="col-12 col-sm-6 d-none d-sm-block">
+                </div>
+                <div class="col-12 col-sm-6">
+                    <BootstrapInput @bind-Value="@CurrentUser.NewPassword" />
+                </div>
+                <div class="col-12 col-sm-6">
+                    <BootstrapInput @bind-Value="@CurrentUser.ConfirmPassword" />
+                </div>
+                <div class="col-12 text-end">
+                    <SubmitButton />
+                </div>
+            </div>
+        </ValidateForm>
+    </AdminCard>
+
+    <AdminCard HeaderText="默认应用" AuthorizeKey="SaveApp">
+        <AdminAlert Text="演示系统禁止更改默认应用" />
         <div class="row g-3 form-inline">
             <div class="col-12 col-sm-6">
-                <BootstrapInput @bind-Value="@CurrentUser.Password" DisplayText="原密码" />
+                <Dropdown Items="Apps" @bind-Value="CurrentUser.App" />
             </div>
-            <div class="col-12 col-sm-6 d-none d-sm-block">
-            </div>
-            <div class="col-12 col-sm-6">
-                <BootstrapInput @bind-Value="@CurrentUser.NewPassword" />
-            </div>
-            <div class="col-12 col-sm-6">
-                <BootstrapInput @bind-Value="@CurrentUser.ConfirmPassword" />
-            </div>
-            <div class="col-12 text-end">
-                <SubmitButton />
+            <div class="col-12 col-sm-6 text-end">
+                <Button Icon="fa fa-save" Text="保存" OnClickWithoutRender="OnSaveApp" />
             </div>
         </div>
-    </ValidateForm>
-</AdminCard>
+    </AdminCard>
+</div>
 
-@*<div class="card" asp-auth="saveDisplayName">
-    <div class="card-header"></div>
-    <div class="card-body" data-toggle="LgbValidate" data-valid-button="#btnSaveDisplayName">
-    </div>
-    </div>
-    <div class="card" asp-auth="savePassword" asp-condition="!@Model.External">
-    <div class="card-header">修改密码</div>
-    <div class="card-body" data-toggle="LgbValidate" data-valid-button="#btnSavePassword">
-    <div class="alert alert-danger" role="alert" asp-condition="@Model.IsDemo">
-    <span>演示系统禁止更改管理员密码</span>
-    </div>
-    <form class="form-inline">
-    <div class="row">
-    <div class="form-group col-sm-6 col-md-auto">
-    <label class="control-label" for="currentPassword">原密码: </label>
-    <input type="password" class="form-control" id="currentPassword" placeholder="原密码" maxlength="16" data-valid="true" />
-    </div>
-    </div>
-    <div class="row">
-    <div class="form-group col-sm-6 col-md-auto">
-    <label class="control-label" for="newPassword">新密码: </label>
-    <input type="password" class="form-control" id="newPassword" placeholder="新密码" maxlength="16" data-valid="true" />
-    </div>
-    <div class="form-group col-sm-6 col-md-auto">
-    <label class="control-label" for="confirmPassword">确认密码: </label>
-    <input type="password" class="form-control" id="confirmPassword" placeholder="与新密码一致" maxlength="16" equalTo="#newPassword" data-valid="true" />
-    </div>
-    </div>
-    </form>
-    <div class="modal-footer" asp-condition="!@Model.IsDemo">
-    <button id="btnSavePassword" data-method="password" class="btn btn-secondary" type="button"><i class="fa fa-save"></i><span>保存</span></button>
-    </div>
-    </div>
-    </div>
+@*
     <div class="card" asp-auth="saveApp">
     <div class="card-header">默认应用</div>
     <div class="card-body">

@@ -1,6 +1,8 @@
 ﻿using BootstrapAdmin.DataAccess.Models;
 using BootstrapAdmin.Web.Core;
+using BootstrapAdmin.Web.Extensions;
 using BootstrapAdmin.Web.Services;
+using BootstrapAdmin.Web.Utils;
 using Microsoft.AspNetCore.Components.Forms;
 
 namespace BootstrapAdmin.Web.Pages.Admin;
@@ -18,6 +20,13 @@ public partial class Profiles
     [NotNull]
     public BootstrapAppContext? AppContext { get; set; }
 
+    [NotNull]
+    private List<SelectedItem>? Apps { get; set; }
+
+    [Inject]
+    [NotNull]
+    private IDict? DictService { get; set; }
+
     /// <summary>
     /// 
     /// </summary>
@@ -31,6 +40,7 @@ public partial class Profiles
             UserName = AppContext.UserName,
             DisplayName = AppContext.DisplayName
         };
+        Apps = DictService.GetApps().ToSelectedItemList();
     }
 
     private Task OnSaveDisplayName(EditContext context)
@@ -39,6 +49,11 @@ public partial class Profiles
     }
 
     private Task OnSavePassword(EditContext context)
+    {
+        return Task.CompletedTask;
+    }
+
+    private Task OnSaveApp()
     {
         return Task.CompletedTask;
     }

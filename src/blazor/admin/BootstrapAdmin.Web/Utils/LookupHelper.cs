@@ -1,7 +1,4 @@
-﻿using BootstrapAdmin.Web.Core;
-using BootstrapAdmin.Web.Extensions;
-
-namespace BootstrapAdmin.Web.Utils;
+﻿namespace BootstrapAdmin.Web.Utils;
 
 static class LookupHelper
 {
@@ -12,6 +9,4 @@ static class LookupHelper
         new SelectedItem("_parent", "父级窗口"),
         new SelectedItem("_top", "顶级窗口"),
     };
-
-    public static List<SelectedItem> GetApps(IDict dictService) => dictService.GetApps().ToSelectedItemList();
 }

@@ -46,7 +46,7 @@ public partial class Menus
         base.OnInitialized();
 
         Targets = LookupHelper.GetTargets();
-        Apps = LookupHelper.GetApps(DictService);
+        Apps = DictService.GetApps().ToSelectedItemList();
     }
 
     private async Task OnAssignmentRoles(DataAccess.Models.Navigation menu)
