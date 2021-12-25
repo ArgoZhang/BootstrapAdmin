@@ -1,26 +1,19 @@
 ﻿@page "/Admin/Profiles"
 
-<Block Name="saveDisplayName">
-    <Card>
-        <CardHeader>
-            基本资料
-        </CardHeader>
-        <CardBody>
-            <AdminAlert Text="演示系统禁止更改管理员显示名称" />
-            <ValidateForm OnValidSubmit="OnSaveDisplayName" Model="CurrentUser">
-                <EditorForm AutoGenerateAllItem="false" TModel="User" RowType="RowType.Inline" ItemsPerRow="2">
-                    <FieldItems>
-                        <EditorItem @bind-Field="context.UserName" Readonly="true" />
-                        <EditorItem @bind-Field="context.DisplayName" />
-                    </FieldItems>
-                    <Buttons>
-                        <Button ButtonType="ButtonType.Submit" Icon="fa fa-save" Text="提交" />
-                    </Buttons>
-                </EditorForm>
-            </ValidateForm>
-        </CardBody>
-    </Card>
-</Block>
+<AdminCard HeaderText="基本资料" AuthorizeKey="SaveDisplayName">
+    <AdminAlert Text="演示系统禁止更改管理员显示名称" />
+    <ValidateForm OnValidSubmit="OnSaveDisplayName" Model="CurrentUser">
+        <EditorForm AutoGenerateAllItem="false" TModel="User" RowType="RowType.Inline" ItemsPerRow="2">
+            <FieldItems>
+                <EditorItem @bind-Field="context.UserName" Readonly="true" />
+                <EditorItem @bind-Field="context.DisplayName" />
+            </FieldItems>
+            <Buttons>
+                <SubmitButton />
+            </Buttons>
+        </EditorForm>
+    </ValidateForm>
+</AdminCard>
 @*<div class="card" asp-auth="saveDisplayName">
     <div class="card-header"></div>
     <div class="card-body" data-toggle="LgbValidate" data-valid-button="#btnSaveDisplayName">
