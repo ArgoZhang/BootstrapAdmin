@@ -23,10 +23,10 @@ class DictService : BaseDatabase, IDict
 
     private List<Dict> GetAll() => Database.Fetch<Dict>();
 
-    public List<SelectedItem> GetApps()
+    public Dictionary<string, string> GetApps()
     {
         var dicts = GetAll();
-        return dicts.Where(d => d.Category == "应用程序").Select(d => new SelectedItem(d.Code, d.Name)).ToList();
+        return dicts.Where(d => d.Category == "应用程序").Select(d => new SelectedItem(d.Code, d.Name)).ToDictionary(i => i.Value, i => i.Text);
     }
 
     /// <summary>
@@ -61,5 +61,16 @@ class DictService : BaseDatabase, IDict
             title = dict?.Code ?? "网站标题";
         }
         return title;
+    }
+
+    /// <summary>
+    /// 获得 应用是否为演示模式
+    /// </summary>
+    /// <returns></returns>
+    public bool IsDemo()
+    {
+        var dicts = GetAll();
+        var code = dicts.FirstOrDefault(d => d.Category == "网站设置" && d.Name == "演示系统" && d.Define == EnumDictDefine.System)?.Code ?? "0";
+        return code == "1";
     }
 }

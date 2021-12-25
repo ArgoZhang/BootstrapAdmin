@@ -1,21 +1,14 @@
-﻿using BootstrapAdmin.DataAccess.Models;
-using BootstrapAdmin.Web.Core;
-using BootstrapBlazor.Components;
+﻿using BootstrapAdmin.Web.Core;
 using PetaPoco;
 
 namespace BootstrapAdmin.DataAccess.PetaPoco.Services;
 
 class AppService : BaseDatabase, IApp
 {
-    private List<SelectedItem> Apps { get; set; }
-
-    public AppService(IDatabase db, IDict dict)
+    public AppService(IDatabase db)
     {
         Database = db;
-        Apps = dict.GetApps();
     }
-
-    public List<SelectedItem> GetAll() => Apps;
 
     public List<string> GetAppsByRoleId(string? roleId) => Database.Fetch<string>("select AppID from RoleApp where RoleID = @0", roleId);
 

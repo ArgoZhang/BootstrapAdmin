@@ -5,7 +5,7 @@ namespace BootstrapAdmin.DataAccess.EFCore.Services
 {
     class DictsService : IDict
     {
-        public List<SelectedItem> GetApps()
+        public Dictionary<string, string> GetApps()
         {
             throw new NotImplementedException();
         }
@@ -16,6 +16,11 @@ namespace BootstrapAdmin.DataAccess.EFCore.Services
         }
 
         public string GetWebTitle()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IsDemo()
         {
             throw new NotImplementedException();
         }

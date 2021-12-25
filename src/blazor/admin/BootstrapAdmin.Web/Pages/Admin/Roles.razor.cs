@@ -29,6 +29,10 @@ public partial class Roles
 
     [Inject]
     [NotNull]
+    private IDict? DictService { get; set; }
+
+    [Inject]
+    [NotNull]
     private INavigation? NavigationService { get; set; }
 
     [Inject]
@@ -73,10 +77,10 @@ public partial class Roles
 
     private async Task OnAssignmentApps(Role role)
     {
-        var apps = AppService.GetAll();
+        var apps = DictService.GetApps();
         var values = AppService.GetAppsByRoleId(role.Id);
 
-        await DialogService.ShowAssignmentDialog($"分配应用 - 当前角色: {role.RoleName}", apps, values, () =>
+        await DialogService.ShowAssignmentDialog($"分配应用 - 当前角色: {role.RoleName}", apps.ToSelectedItemList(), values, () =>
         {
             var ret = AppService.SaveAppsByRoleId(role.Id, values);
             return Task.FromResult(ret);
