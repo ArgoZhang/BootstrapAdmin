@@ -1,4 +1,5 @@
-﻿using BootstrapAdmin.Web.Core;
+﻿using BootstrapAdmin.DataAccess.Models;
+using BootstrapAdmin.Web.Core;
 using BootstrapBlazor.Components;
 
 namespace BootstrapAdmin.DataAccess.EFCore.Services
@@ -31,6 +32,16 @@ namespace BootstrapAdmin.DataAccess.EFCore.Services
         }
 
         public bool IsDemo()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool SaveDemo(bool isDemo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool AuthenticateDemo(string code)
         {
             throw new NotImplementedException();
         }

@@ -30,6 +30,20 @@
         bool IsDemo();
 
         /// <summary>
+        /// 保存当前网站是否为演示系统
+        /// </summary>
+        /// <param name="isDemo"></param>
+        /// <returns></returns>
+        bool SaveDemo(bool isDemo);
+
+        /// <summary>
+        /// 获得当前授权码是否有效可更改网站设置
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        bool AuthenticateDemo(string code);
+
+        /// <summary>
         /// 获取 站点 Title 配置信息
         /// </summary>
         /// <returns></returns>

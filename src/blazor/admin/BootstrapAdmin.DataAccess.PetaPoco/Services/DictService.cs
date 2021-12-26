@@ -1,6 +1,7 @@
 ﻿using BootstrapAdmin.DataAccess.Models;
 using BootstrapAdmin.Web.Core;
 using BootstrapBlazor.Components;
+using Longbow.Security.Cryptography;
 using Microsoft.Extensions.Configuration;
 using PetaPoco;
 
@@ -85,4 +86,32 @@ class DictService : BaseDatabase, IDict
         var code = dicts.FirstOrDefault(d => d.Category == "网站设置" && d.Name == "演示系统" && d.Define == EnumDictDefine.System)?.Code ?? "0";
         return code == "1";
     }
+
+    /// <summary>
+    /// 获得当前授权码是否有效可更改网站设置
+    /// </summary>
+    /// <param name="code"></param>
+    /// <returns></returns>
+    public bool AuthenticateDemo(string code)
+    {
+        var ret = false;
+        if (!string.IsNullOrEmpty(code))
+        {
+            var dicts = GetAll();
+            var salt = dicts.FirstOrDefault(d => d.Category == "网站设置" && d.Name == "授权盐值" && d.Define == EnumDictDefine.System)?.Code;
+            var authCode = dicts.FirstOrDefault(d => d.Category == "网站设置" && d.Name == "哈希结果" && d.Define == EnumDictDefine.System)?.Code;
+            if (!string.IsNullOrEmpty(salt))
+            {
+                ret = LgbCryptography.ComputeHash(code, salt) == authCode;
+            }
+        }
+        return ret;
+    }
+
+    /// <summary>
+    /// 保存当前网站是否为演示系统
+    /// </summary>
+    /// <param name="isDemo"></param>
+    /// <returns></returns>
+    public bool SaveDemo(bool isDemo) => Database.Execute("Update Dicts Set Code = @0 Where Category = @1 and Name = @2 and Define = @3", isDemo ? "1" : "0", "网站设置", "演示系统", EnumDictDefine.System.ToString()) == 1;
 }
