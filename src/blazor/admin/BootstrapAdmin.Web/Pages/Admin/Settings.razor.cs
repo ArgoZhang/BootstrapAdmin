@@ -36,7 +36,11 @@ namespace BootstrapAdmin.Web.Pages.Admin
             IsDemo = DictService.IsDemo();
             Logins = DictService.GetLogins().ToSelectedItemList();
             Themes = DictService.GetThemes().ToSelectedItemList();
-            AppInfo = new();
+            AppInfo = new()
+            {
+                IsDemo = IsDemo,
+                AuthCode = "123789"
+            };
         }
 
         private Task OnSaveTitle(EditContext context)
@@ -64,9 +68,15 @@ namespace BootstrapAdmin.Web.Pages.Admin
             return Task.CompletedTask;
         }
 
-        private void OnSaveDemo()
+        private Task OnSaveDemo(EditContext context)
         {
-            IsDemo = AppInfo.IsDemo;
+            if (DictService.AuthenticateDemo(AppInfo.AuthCode))
+            {
+                IsDemo = AppInfo.IsDemo;
+                DictService.SaveDemo(IsDemo);
+            }
+            StateHasChanged();
+            return Task.CompletedTask;
         }
     }
 }

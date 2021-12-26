@@ -81,13 +81,18 @@
     </AdminCard>
 
     <AdminCard HeaderText="系统演示设置" AuthorizeKey="SaveDemo">
-        <div class="row g-3 form-inline">
-            <div class="col-12 col-sm-6">
-                <Toggle @bind-Value="AppInfo.IsDemo" OnText="启用" OffText="关闭" />
+        <ValidateForm OnValidSubmit="OnSaveDemo" Model="AppInfo">
+            <div class="row g-3 form-inline">
+                <div class="col-12 col-sm-4">
+                    <Toggle @bind-Value="AppInfo.IsDemo" OnText="启用" OffText="关闭" />
+                </div>
+                <div class="col-12 col-sm-4">
+                    <BootstrapPassword @bind-Value="@AppInfo.AuthCode" />
+                </div>
+                <div class="col-12 col-sm-4 text-end">
+                    <Button ButtonType="ButtonType.Submit" Icon="fa fa-save" Text="保存" />
+                </div>
             </div>
-            <div class="col-12 col-sm-6 text-end">
-                <Button Icon="fa fa-save" Text="保存" OnClick="OnSaveDemo" />
-            </div>
-        </div>
+        </ValidateForm>
     </AdminCard>
 </div>
