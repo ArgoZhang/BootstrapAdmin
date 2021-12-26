@@ -1,6 +1,6 @@
 ﻿@page "/Admin/Tasks"
 
-<Card IsCollapsible="true" HeaderText="任务介绍">
+<Card IsCollapsible="true" HeaderText="任务介绍" class="mb-3">
     <CardBody>
         <Alert class="mb-0">
             <p class="font-weight-bold">后台任务说明：</p>
@@ -27,3 +27,20 @@
         </Alert>
     </CardBody>
 </Card>
+
+<AdminTable TItem="TasksModel" ExtendButtonColumnWidth="270" OnQueryAsync="OnQueryAsync">
+    <ColumnsTemplete>
+        <TableColumn @bind-Field="@context.Name" Sortable="true" Filterable="true" Searchable="true" Width="180"></TableColumn>
+        <TableColumn @bind-Field="@context.CreateTime" Sortable="true" Filterable="true" Searchable="true"></TableColumn>
+        <TableColumn @bind-Field="@context.LastRuntime" Sortable="true" Filterable="true" Searchable="true"></TableColumn>
+        <TableColumn @bind-Field="@context.NextRuntime" Sortable="true" Filterable="true" Searchable="true"></TableColumn>
+        <TableColumn @bind-Field="@context.Trigger" Sortable="true" Filterable="true" Searchable="true"></TableColumn>
+        <TableColumn @bind-Field="@context.LastRunResult" Sortable="true" Filterable="true" Searchable="true"></TableColumn>
+        <TableColumn @bind-Field="@context.Status" Sortable="true" Filterable="true" Searchable="true"></TableColumn>
+    </ColumnsTemplete>
+    <RowButtonTemplate>
+        <TableCellButton Size="Size.ExtraSmall" Color="Color.Warning" Icon="fa fa-pause-circle" Text="暂停" OnClick="() => OnPause(context)" />
+        <TableCellButton Size="Size.ExtraSmall" Color="Color.Success" Icon="fa fa-play-circle" Text="运行" OnClick="() => OnRun(context)" />
+        <TableCellButton Size="Size.ExtraSmall" Color="Color.Info" Icon="fa fa-info-circle" Text="日志" OnClick="() => OnLog(context)" />
+    </RowButtonTemplate>
+</AdminTable>
