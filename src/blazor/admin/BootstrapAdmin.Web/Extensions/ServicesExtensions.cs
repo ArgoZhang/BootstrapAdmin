@@ -2,6 +2,7 @@
 using BootstrapAdmin.Web.Services.SMS;
 using BootstrapAdmin.Web.Services.SMS.Tencent;
 using Longbow.Tasks;
+using Microsoft.EntityFrameworkCore;
 using System.Text;
 
 namespace Microsoft.Extensions.DependencyInjection
