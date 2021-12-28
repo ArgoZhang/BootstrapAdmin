@@ -47,6 +47,8 @@ namespace Microsoft.Extensions.DependencyInjection
 
             services.AddSingleton<INavigation, NavigationsService>();
             services.AddSingleton<IDict, DictService>();
+            services.AddSingleton<IUser, UserService>();
+            services.AddSingleton<ILogin, LoginService>();
             return services;
         }
     }
