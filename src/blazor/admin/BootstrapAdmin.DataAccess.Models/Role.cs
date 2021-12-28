@@ -26,5 +26,26 @@ namespace BootstrapAdmin.DataAccess.Models
         [DisplayName("角色描述")]
         [NotNull]
         public string? Description { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICollection<User>? Users { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public List<UserRole>? UserRoles { get; set; }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICollection<Navigation>? Navigations { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public List<NavigationRole>? NavigationRoles { get; set; }
     }
 }

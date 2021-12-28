@@ -73,5 +73,15 @@ namespace BootstrapAdmin.DataAccess.Models
         /// 
         /// </summary>
         public bool HasChildren { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICollection<Role>? Roles { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public List<NavigationRole>? NavigationRoles { get; set; }
     }
 }

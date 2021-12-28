@@ -108,6 +108,16 @@ namespace BootstrapAdmin.DataAccess.Models
         public int IsReset { get; set; }
 
         /// <summary>
+        /// 
+        /// </summary>
+        public ICollection<Role>? Roles { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public List<UserRole>? UserRoles { get; set; }
+
+        /// <summary>
         /// 获得/设置 默认格式为 DisplayName (UserName)
         /// </summary>
         /// <returns></returns>

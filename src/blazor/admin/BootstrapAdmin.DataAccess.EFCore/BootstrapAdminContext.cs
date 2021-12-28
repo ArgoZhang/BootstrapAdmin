@@ -33,7 +33,25 @@ namespace BootstrapAdmin.DataAccess.EFCore
         /// 
         /// </summary>
         [NotNull]
+        public DbSet<Role>? Roles { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [NotNull]
+        public DbSet<UserRole>? UserRole { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [NotNull]
         public DbSet<Navigation>? Navigations { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [NotNull]
+        public DbSet<NavigationRole>? NavigationRole { get; set; }
 
         /// <summary>
         /// 
@@ -41,10 +59,8 @@ namespace BootstrapAdmin.DataAccess.EFCore
         /// <param name="modelBuilder"></param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().Ignore(u => u.Period);
-            modelBuilder.Entity<User>().Ignore(u => u.NewPassword);
-            modelBuilder.Entity<User>().Ignore(u => u.CofirmPassword);
-            modelBuilder.Entity<User>().Ignore(u => u.IsReset);
+            base.OnModelCreating(modelBuilder);
+            EntityConfiguration.Configure(modelBuilder);
         }
     }
 }
