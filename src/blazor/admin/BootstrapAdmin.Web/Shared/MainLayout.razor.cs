@@ -15,6 +15,10 @@ namespace BootstrapAdmin.Web.Shared
 
         [Inject]
         [NotNull]
+        private NavigationManager? NavigationManager { get; set; }
+
+        [Inject]
+        [NotNull]
         private INavigation? NavigationsService { get; set; }
 
         [Inject]
@@ -66,5 +70,7 @@ namespace BootstrapAdmin.Web.Shared
         }
 
         private Task<bool> OnAuthorizing(string url) => SecurityService.AuhorizingNavigation(Context.UserName, url);
+
+        private void OnLogout() => NavigationManager.NavigateTo("/Account/Logout", true);
     }
 }
