@@ -26,7 +26,7 @@ namespace BootstrapAdmin.DataAccess.EFCore.Services
         {
             using var context = DbFactory.CreateDbContext();
 
-            var user = context.Set<User>().Include(s => s.Roles).ThenInclude(s => s.Navigations).AsSplitQuery().FirstOrDefault(s => s.UserName == userName);
+            var user = context.Set<User>().Include(s => s.Roles).ThenInclude(s => s.Navigations.Where(s => s.IsResource == EnumResource.Navigation)).AsSplitQuery().FirstOrDefault(s => s.UserName == userName);
 
             if (user == null)
                 return new List<Navigation>();

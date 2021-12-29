@@ -38,7 +38,7 @@ public class UserService : IUser
 
     public List<string> GetApps(string userName)
     {
-        throw new NotImplementedException();
+        return new List<string> { "BA" };
     }
 
     public string? GetDisplayName(string? userName)
