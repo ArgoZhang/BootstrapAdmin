@@ -114,5 +114,19 @@
 }
 
     .card:hover {
-        box-shadow: 0 0 8px 0 rgb(0 0 0 / 8%), 0 2px 4px 0 rgb(255 255 255 / 0%);
+        box-shadow: 0 1px 7px 0 rgb(0 0 0 / 5%), 0 2px 8px 0 rgb(0 0 0 / 7%), 0 3px 9px 0 rgb(0 0 0 / 6%), 0 5px 10px 0 rgb(0 0 0 / 3%);
     }
+
+.app-type {
+    width: 40px;
+    text-align: left;
+    color: var(--bs-primary);
+}
+
+.app-text {
+    width: 100px;
+    overflow: hidden;
+    text-align: right;
+    text-overflow: ellipsis;
+    color: var(--bs-info);
+}

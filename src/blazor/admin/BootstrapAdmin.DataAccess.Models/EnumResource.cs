@@ -20,7 +20,7 @@ namespace BootstrapAdmin.DataAccess.Models
         /// <summary>
         /// 
         /// </summary>
-        [Description("块")]
+        [Description("代码块")]
         Block
     }
 }
