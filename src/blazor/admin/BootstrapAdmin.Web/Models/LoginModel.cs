@@ -5,15 +5,6 @@
     /// </summary>
     public class LoginModel
     {
-        ///// <summary>
-        ///// 默认构造函数
-        ///// </summary>
-        ///// <param name="appId"></param>
-        //public LoginModel(string? appId = null)
-        //{
-        //    //ImageLibUrl = DictHelper.RetrieveImagesLibUrl();
-        //}
-
         /// <summary>
         /// 验证码图床地址
         /// </summary>
