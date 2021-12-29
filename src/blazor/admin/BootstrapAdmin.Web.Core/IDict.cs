@@ -37,6 +37,12 @@
         bool SaveDemo(bool isDemo);
 
         /// <summary>
+        /// 保存健康检查
+        /// </summary>
+        /// <returns></returns>
+        bool SaveHealthCheck(bool enable = true);
+
+        /// <summary>
         /// 获得当前授权码是否有效可更改网站设置
         /// </summary>
         /// <param name="code"></param>
