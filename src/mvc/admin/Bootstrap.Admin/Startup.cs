@@ -91,10 +91,7 @@ namespace Bootstrap.Admin
                 options.Filters.Add<SignalRExceptionFilter<SignalRHub>>();
             }).AddJsonOptions(op => op.JsonSerializerOptions.AddDefaultConverters());
             services.AddRazorPages();
-            services.AddServerSideBlazor().AddCircuitOptions(options =>
-            {
-                if (Enviroment.IsDevelopment()) options.DetailedErrors = true;
-            });
+            services.AddServerSideBlazor();
             services.AddDisplayNames();
             services.AddBootstrapBlazor();
         }
