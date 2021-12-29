@@ -101,5 +101,10 @@ namespace BootstrapAdmin.DataAccess.EFCore.Services
             }
             return ret;
         }
+
+        public bool SaveHealthCheck(bool enable = true)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
