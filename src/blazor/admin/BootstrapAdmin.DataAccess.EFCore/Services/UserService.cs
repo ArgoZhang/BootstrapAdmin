@@ -58,26 +58,82 @@ public class UserService : IUser
 
     public List<string> GetUsersByGroupId(string? groupId)
     {
-        throw new NotImplementedException();
+        using var context = DbFactory.CreateDbContext();
+
+        return context.UserGroup.Where(s => s.GroupId == groupId).Select(s => s.UserId).ToList();
     }
 
     public List<string> GetUsersByRoleId(string? roleId)
     {
-        throw new NotImplementedException();
+        using var context = DbFactory.CreateDbContext();
+
+        return context.UserRole.Where(s => s.RoleId == roleId).Select(s => s.UserId).ToList();
     }
 
     public bool SaveUsersByGroupId(string? groupId, IEnumerable<string> userIds)
     {
-        throw new NotImplementedException();
+        using var dbcontext = DbFactory.CreateDbContext();
+        var group = dbcontext.Groups.Include(s => s.Users).Where(s => s.Id == groupId).FirstOrDefault();
+        if (group != null)
+        {
+            group.Users = dbcontext.Users.Where(s => userIds.Contains(s.Id)).ToList();
+            return dbcontext.SaveChanges() > 0;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public bool SaveUsersByRoleId(string? roleId, IEnumerable<string> userIds)
     {
-        throw new NotImplementedException();
+        using var dbcontext = DbFactory.CreateDbContext();
+        var currentrole = dbcontext.Roles.Include(s => s.Users).Where(s => s.Id == roleId).FirstOrDefault();
+        if (currentrole != null)
+        {
+            currentrole.Users = dbcontext.Users.Where(s => userIds.Contains(s.Id)).ToList();
+            return dbcontext.SaveChanges() > 0;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public bool TryCreateUserByPhone(string phone, string appId, ICollection<string> roles)
     {
-        throw new NotImplementedException();
+        var ret = false;
+        using var dbcontext = DbFactory.CreateDbContext();
+        try
+        {
+            var user = GetAll().FirstOrDefault(user => user.UserName == phone);
+            if (user == null)
+            {
+                dbcontext.Database.BeginTransaction();
+                user = new User()
+                {
+                    ApprovedBy = "Mobile",
+                    ApprovedTime = DateTime.Now,
+                    DisplayName = "手机用户",
+                    UserName = phone,
+                    Icon = "default.jpg",
+                    Description = "手机用户",
+                    App = appId
+                };
+                dbcontext.Add(user);
+
+                // Authorization
+                var roleIds = dbcontext.Roles.Where(s => roles.Contains(s.RoleName)).Select(s => s.Id).ToList();
+                dbcontext.AddRange(roleIds.Select(g => new { RoleID = g, UserID = user.Id }));
+                ret = dbcontext.SaveChanges() > 0;
+            }
+            ret = true;
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+        return ret;
     }
 }

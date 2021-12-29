@@ -16,9 +16,9 @@ public interface IRole
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="userId"></param>
+    /// <param name="groupId"></param>
     /// <returns></returns>
-    List<string> GetRolesByGroupId(string? userId);
+    List<string> GetRolesByGroupId(string? groupId);
 
     /// <summary>
     /// 
@@ -31,17 +31,17 @@ public interface IRole
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="groupId"></param>
+    /// <param name="userId"></param>
     /// <returns></returns>
-    List<string> GetRolesByUserId(string? groupId);
+    List<string> GetRolesByUserId(string? userId);
 
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="groupId"></param>
+    /// <param name="userId"></param>
     /// <param name="roleIds"></param>
     /// <returns></returns>
-    bool SaveRolesByUserId(string? groupId, IEnumerable<string> roleIds);
+    bool SaveRolesByUserId(string? userId, IEnumerable<string> roleIds);
 
     /// <summary>
     /// 

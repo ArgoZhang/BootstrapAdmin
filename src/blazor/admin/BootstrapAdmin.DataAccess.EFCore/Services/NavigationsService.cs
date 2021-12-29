@@ -42,7 +42,7 @@ namespace BootstrapAdmin.DataAccess.EFCore.Services
 
         public bool SaveMenusByRoleId(string? roleId, List<string> menuIds)
         {
-            var dbcontext = DbFactory.CreateDbContext();
+            using var dbcontext = DbFactory.CreateDbContext();
             var currentrole = dbcontext.Roles.Include(s => s.Navigations).Where(s => s.Id == roleId).FirstOrDefault();
             if (currentrole != null)
             {

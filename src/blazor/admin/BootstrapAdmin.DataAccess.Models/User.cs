@@ -118,6 +118,16 @@ namespace BootstrapAdmin.DataAccess.Models
         public List<UserRole>? UserRoles { get; set; }
 
         /// <summary>
+        /// 
+        /// </summary>
+        public ICollection<Group>? Groups { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICollection<UserGroup>? UserGroup { get; set; }
+
+        /// <summary>
         /// 获得/设置 默认格式为 DisplayName (UserName)
         /// </summary>
         /// <returns></returns>

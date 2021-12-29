@@ -48,6 +48,8 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSingleton<INavigation, NavigationsService>();
             services.AddSingleton<IDict, DictService>();
             services.AddSingleton<IUser, UserService>();
+            services.AddSingleton<IRole, RoleService>();
+            services.AddSingleton<IGroup, GroupService>();
             services.AddSingleton<ILogin, LoginService>();
             return services;
         }

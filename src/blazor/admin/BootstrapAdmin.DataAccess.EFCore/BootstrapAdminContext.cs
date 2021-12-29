@@ -56,6 +56,24 @@ namespace BootstrapAdmin.DataAccess.EFCore
         /// <summary>
         /// 
         /// </summary>
+        [NotNull]
+        public DbSet<Group>? Groups { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [NotNull]
+        public DbSet<UserGroup>? UserGroup { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [NotNull]
+        public DbSet<RoleGroup>? RoleGroup { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="modelBuilder"></param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

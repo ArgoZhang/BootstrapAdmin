@@ -47,5 +47,15 @@ namespace BootstrapAdmin.DataAccess.Models
         /// 
         /// </summary>
         public List<NavigationRole>? NavigationRoles { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICollection<Group>? Groups { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public List<RoleGroup>? RoleGroup { get; set; }
     }
 }
