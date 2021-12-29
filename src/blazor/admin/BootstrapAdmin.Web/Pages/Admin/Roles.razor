@@ -8,7 +8,7 @@
         <TableToolbarButton TItem="DataAccess.Models.Role" IsEnableWhenSelectedOneRow="true" Color="Color.Secondary" Icon="fa fa-cubes" Text="应用" OnClickCallback="roles => OnAssignmentApps(roles.First())" />
     </TableToolbarTemplate>
     <ColumnsTemplete>
-        <TableColumn @bind-Field="@context.RoleName" Sortable="true" Filterable="true" Searchable="true" Width="180"></TableColumn>
+        <TableColumn @bind-Field="@context.RoleName" Sortable="true" Filterable="true" Searchable="true" Width="120"></TableColumn>
         <TableColumn @bind-Field="@context.Description" Sortable="true" Filterable="true" Searchable="true"></TableColumn>
     </ColumnsTemplete>
     <RowButtonTemplate>
