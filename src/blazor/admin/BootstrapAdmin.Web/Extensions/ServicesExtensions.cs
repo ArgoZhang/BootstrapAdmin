@@ -1,6 +1,7 @@
 ﻿using BootstrapAdmin.Web.Services;
 using BootstrapAdmin.Web.Services.SMS;
 using BootstrapAdmin.Web.Services.SMS.Tencent;
+using Longbow.Tasks;
 using System.Text;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -82,6 +83,10 @@ namespace Microsoft.Extensions.DependencyInjection
 
             // 增加 PetaPoco 数据服务
             services.AddPetaPocoDataAccessServices();
+
+            // 增加后台任务
+            services.AddTaskServices();
+            services.AddHostedService<AdminTaskService>();
 
             return services;
         }

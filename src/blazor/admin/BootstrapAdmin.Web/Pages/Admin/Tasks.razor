@@ -1,46 +1,56 @@
 ﻿@page "/Admin/Tasks"
 
-<Card IsCollapsible="true" HeaderText="任务介绍" class="mb-3">
-    <CardBody>
-        <Alert class="mb-0">
-            <p class="font-weight-bold">后台任务说明：</p>
-            <p>1. 默认任务 (立即执行，仅执行一次)</p>
-            <p>
-                <code>
-                    TaskServicesManager.GetOrAdd("简单任务", token => Task.Delay(1000));
-                </code>
-            </p>
-            <p>2. 周期性任务 (1 分钟后间隔 5 秒执行 2 次任务)</p>
-            <p>
-                <code>
-                    var trigger = TriggerBuilder.Default.WithInterval(TimeSpan.FromSeconds(5)).WithRepeatCount(2).WithStartTime(DateTimeOffset.Now.AddMinutes(1)).Build();
-                    <br />
-                    TaskServicesManager.GetOrAdd("测试任务", token => Task.Delay(1000), trigger);
-                </code>
-            </p>
-            <p>3. Cron 表达式任务 (间隔 5 秒循环执行任务)</p>
-            <div>
-                <code>
-                    TaskServicesManager.GetOrAdd("Cron 表达式任务", token => Task.Delay(1000), TriggerBuilder.Build("*/5 * * * * *"));
-                </code>
-            </div>
-        </Alert>
-    </CardBody>
-</Card>
+<div class="tab-scroll-body">
+    <Card IsCollapsible="true" HeaderText="任务介绍" class="mb-3">
+        <CardBody>
+            <Alert class="mb-0">
+                <p class="font-weight-bold">后台任务说明：</p>
+                <p>1. 默认任务 (立即执行，仅执行一次)</p>
+                <p>
+                    <code>
+                        TaskServicesManager.GetOrAdd("简单任务", token => Task.Delay(1000));
+                    </code>
+                </p>
+                <p>2. 周期性任务 (1 分钟后间隔 5 秒执行 2 次任务)</p>
+                <p>
+                    <code>
+                        var trigger = TriggerBuilder.Default.WithInterval(TimeSpan.FromSeconds(5)).WithRepeatCount(2).WithStartTime(DateTimeOffset.Now.AddMinutes(1)).Build();
+                        <br />
+                        TaskServicesManager.GetOrAdd("测试任务", token => Task.Delay(1000), trigger);
+                    </code>
+                </p>
+                <p>3. Cron 表达式任务 (间隔 5 秒循环执行任务)</p>
+                <div>
+                    <code>
+                        TaskServicesManager.GetOrAdd("Cron 表达式任务", token => Task.Delay(1000), TriggerBuilder.Build("*/5 * * * * *"));
+                    </code>
+                </div>
+            </Alert>
+        </CardBody>
+    </Card>
 
-<AdminTable TItem="TasksModel" ExtendButtonColumnWidth="270" OnQueryAsync="OnQueryAsync">
-    <ColumnsTemplete>
-        <TableColumn @bind-Field="@context.Name" Sortable="true" Filterable="true" Searchable="true" Width="180"></TableColumn>
-        <TableColumn @bind-Field="@context.CreateTime" Sortable="true" Filterable="true" Searchable="true"></TableColumn>
-        <TableColumn @bind-Field="@context.LastRuntime" Sortable="true" Filterable="true" Searchable="true"></TableColumn>
-        <TableColumn @bind-Field="@context.NextRuntime" Sortable="true" Filterable="true" Searchable="true"></TableColumn>
-        <TableColumn @bind-Field="@context.Trigger" Sortable="true" Filterable="true" Searchable="true"></TableColumn>
-        <TableColumn @bind-Field="@context.LastRunResult" Sortable="true" Filterable="true" Searchable="true"></TableColumn>
-        <TableColumn @bind-Field="@context.Status" Sortable="true" Filterable="true" Searchable="true"></TableColumn>
-    </ColumnsTemplete>
-    <RowButtonTemplate>
-        <TableCellButton Size="Size.ExtraSmall" Color="Color.Warning" Icon="fa fa-pause-circle" Text="暂停" OnClick="() => OnPause(context)" />
-        <TableCellButton Size="Size.ExtraSmall" Color="Color.Success" Icon="fa fa-play-circle" Text="运行" OnClick="() => OnRun(context)" />
-        <TableCellButton Size="Size.ExtraSmall" Color="Color.Info" Icon="fa fa-info-circle" Text="日志" OnClick="() => OnLog(context)" />
-    </RowButtonTemplate>
-</AdminTable>
+    <AdminTable TItem="TasksModel" ExtendButtonColumnWidth="270" OnQueryAsync="OnQueryAsync">
+        <ColumnsTemplete>
+            <TableColumn @bind-Field="@context.Name" Sortable="true" Filterable="true" Searchable="true" Width="80"></TableColumn>
+            <TableColumn @bind-Field="@context.CreateTime" Sortable="true" Filterable="true" Searchable="true" FormatString="yyyy-MM-dd HH:mm:ss"></TableColumn>
+            <TableColumn @bind-Field="@context.LastRuntime" Sortable="true" Filterable="true" Searchable="true" FormatString="yyyy-MM-dd HH:mm:ss"></TableColumn>
+            <TableColumn @bind-Field="@context.NextRuntime" Sortable="true" Filterable="true" Searchable="true" FormatString="yyyy-MM-dd HH:mm:ss"></TableColumn>
+            <TableColumn @bind-Field="@context.Trigger" Sortable="true" Filterable="true" Searchable="true"></TableColumn>
+            <TableColumn @bind-Field="@context.LastRunResult" Sortable="true" Filterable="true" Searchable="true">
+                <Template Context="v">
+                    <Tag Color="GetResultColor(v.Value)">@FormatResult(v.Value)</Tag>
+                </Template>
+            </TableColumn>
+            <TableColumn @bind-Field="@context.Status" Sortable="true" Filterable="true" Searchable="true">
+                <Template Context="v">
+                    <Tag Color="GetStatusColor(v.Value)" Icon="@GetStatusIcon(v.Value)">@FormatStatus(v.Value)</Tag>
+                </Template>
+            </TableColumn>
+        </ColumnsTemplete>
+        <RowButtonTemplate>
+            <TableCellButton Size="Size.ExtraSmall" Color="Color.Warning" Icon="fa fa-pause-circle" Text="暂停" OnClick="() => OnPause(context)" />
+            <TableCellButton Size="Size.ExtraSmall" Color="Color.Success" Icon="fa fa-play-circle" Text="运行" OnClick="() => OnRun(context)" />
+            <TableCellButton Size="Size.ExtraSmall" Color="Color.Info" Icon="fa fa-info-circle" Text="日志" OnClick="() => OnLog(context)" />
+        </RowButtonTemplate>
+    </AdminTable>
+</div>
