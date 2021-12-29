@@ -14,6 +14,5 @@ public static class TasksExtensions
         LastRunResult = i.LastRunResult,
         Status = i.Status,
         Trigger = i.Triggers.First().ToString()
-
     }).ToList();
 }
