@@ -1,13 +1,12 @@
 ﻿using PetaPoco;
 
-namespace BootstrapAdmin.DataAccess.PetaPoco.Services
+namespace BootstrapAdmin.DataAccess.PetaPoco.Services;
+
+abstract class BaseDatabase
 {
-    abstract class BaseDatabase
-    {
-        /// <summary>
-        /// 
-        /// </summary>
-        [NotNull]
-        protected IDatabase? Database { get; set; }
-    }
+    /// <summary>
+    /// 
+    /// </summary>
+    [NotNull]
+    protected IDatabase? Database { get; set; }
 }

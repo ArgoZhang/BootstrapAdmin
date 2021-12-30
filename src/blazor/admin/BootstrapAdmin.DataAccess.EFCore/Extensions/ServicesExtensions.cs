@@ -4,50 +4,49 @@ using BootstrapAdmin.Web.Core;
 using BootstrapBlazor.Components;
 using Microsoft.EntityFrameworkCore;
 
-namespace Microsoft.Extensions.DependencyInjection
+namespace Microsoft.Extensions.DependencyInjection;
+
+/// <summary>
+/// 
+/// </summary>
+public static class ServicesExtensions
 {
     /// <summary>
     /// 
     /// </summary>
-    public static class ServicesExtensions
+    /// <param name="services"></param>
+    /// <param name="optionConfigure"></param>
+    /// <param name="lifetime"></param>
+    /// <returns></returns>
+    public static IServiceCollection AddEFCoreDataAccessServices(this IServiceCollection services, Action<IServiceProvider, DbContextOptionsBuilder> optionConfigure, ServiceLifetime lifetime = ServiceLifetime.Singleton)
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="services"></param>
-        /// <param name="optionConfigure"></param>
-        /// <param name="lifetime"></param>
-        /// <returns></returns>
-        public static IServiceCollection AddEFCoreDataAccessServices(this IServiceCollection services, Action<IServiceProvider, DbContextOptionsBuilder> optionConfigure, ServiceLifetime lifetime = ServiceLifetime.Singleton)
-        {
-            services.AddDbContextFactory<BootstrapAdminContext>(optionConfigure, lifetime);
+        services.AddDbContextFactory<BootstrapAdminContext>(optionConfigure, lifetime);
 
-            services.AddServices();
-            return services;
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="services"></param>
-        /// <param name="optionConfigure"></param>
-        /// <param name="lifetime"></param>
-        /// <returns></returns>
-        public static IServiceCollection AddEFCoreDataAccessServices(this IServiceCollection services, Action<DbContextOptionsBuilder> optionConfigure, ServiceLifetime lifetime = ServiceLifetime.Singleton)
-        {
-            services.AddDbContextFactory<BootstrapAdminContext>(optionConfigure, lifetime);
+        services.AddServices();
+        return services;
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="services"></param>
+    /// <param name="optionConfigure"></param>
+    /// <param name="lifetime"></param>
+    /// <returns></returns>
+    public static IServiceCollection AddEFCoreDataAccessServices(this IServiceCollection services, Action<DbContextOptionsBuilder> optionConfigure, ServiceLifetime lifetime = ServiceLifetime.Singleton)
+    {
+        services.AddDbContextFactory<BootstrapAdminContext>(optionConfigure, lifetime);
 
-            services.AddServices();
-            return services;
-        }
+        services.AddServices();
+        return services;
+    }
 
-        private static IServiceCollection AddServices(this IServiceCollection services)
-        {
-            // 增加数据服务
-            services.AddSingleton(typeof(IDataService<>), typeof(DefaultDataService<>));
+    private static IServiceCollection AddServices(this IServiceCollection services)
+    {
+        // 增加数据服务
+        services.AddSingleton(typeof(IDataService<>), typeof(DefaultDataService<>));
 
-            services.AddSingleton<INavigation, NavigationsService>();
-            services.AddSingleton<IDict, DictService>();
-            return services;
-        }
+        services.AddSingleton<INavigation, NavigationsService>();
+        services.AddSingleton<IDict, DictService>();
+        return services;
     }
 }
