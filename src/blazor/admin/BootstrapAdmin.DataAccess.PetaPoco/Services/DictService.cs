@@ -113,7 +113,7 @@ class DictService : BaseDatabase, IDict
     /// </summary>
     /// <param name="isDemo"></param>
     /// <returns></returns>
-    public bool SaveDemo(bool isDemo) => Database.Execute("Update Dicts Set Code = @0 Where Category = @1 and Name = @2 and Define = @3", isDemo ? "1" : "0", "网站设置", "演示系统", EnumDictDefine.System.ToString()) == 1;
+    public bool SaveDemo(bool isDemo) => Database.Execute("Update Dicts Set Code = @0 Where Category = @1 and Name = @2 and Define = @3", isDemo ? "1" : "0", "网站设置", "演示系统", EnumDictDefine.System) == 1;
 
     /// <summary>
     /// 
@@ -121,5 +121,5 @@ class DictService : BaseDatabase, IDict
     /// <param name="enable"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public bool SaveHealthCheck(bool enable = true) => Database.Execute("Update Dicts Set Code = @0 Where Category = @1 and Name = @2 and Define = @3", enable ? "1" : "0", "网站设置", "健康检查", EnumDictDefine.System.ToString()) == 1;
+    public bool SaveHealthCheck(bool enable = true) => Database.Execute("Update Dicts Set Code = @0 Where Category = @1 and Name = @2 and Define = @3", enable ? "1" : "0", "网站设置", "健康检查", EnumDictDefine.System) == 1;
 }
