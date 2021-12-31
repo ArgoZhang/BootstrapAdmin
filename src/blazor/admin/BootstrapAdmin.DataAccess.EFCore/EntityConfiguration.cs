@@ -53,8 +53,6 @@ public static class EntityConfiguration
 
         builder.Entity<Navigation>().ToTable("Navigations");
         builder.Entity<Navigation>().Property(s => s.Id).HasConversion(converter).ValueGeneratedOnAdd();
-        builder.Entity<Navigation>().Property(s => s.IsResource).HasConversion(v => v.ToString(),
-            v => (EnumResource)Enum.Parse(typeof(EnumResource), v));
         builder.Entity<Navigation>().Ignore(s => s.HasChildren);
 
         builder.Entity<Dict>().Property(s => s.Id).HasConversion(converter).ValueGeneratedOnAdd();
