@@ -38,6 +38,12 @@ public partial class Login
         PostUrl = UseMobileLogin ? "/Account/Mobile" : "/Account/Login";
     }
 
+    Task OnRememberPassword(bool remember)
+    {
+        PostUrl = "/Account/Login?remember=true";
+        return Task.CompletedTask;
+    }
+
     void OnSignUp()
     {
 

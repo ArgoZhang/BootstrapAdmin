@@ -22,7 +22,7 @@
                     </BootstrapInputGroup>
                 }
                 <div class="d-flex justify-content-between mt-3">
-                    <Checkbox @bind-Value="RememberPassword" Color="Color.Primary" ShowAfterLabel="true" DisplayText="记住密码自动登录" />
+                    <Checkbox @bind-Value="RememberPassword" Color="Color.Primary" ShowAfterLabel="true" DisplayText="记住密码自动登录" OnValueChanged="OnRememberPassword" />
                     <Block Condition="AllowMobile">
                         <SwitchButton @bind-ToggleState="UseMobileLogin" OnClick="OnClickSwitchButton" OffText="短信验证登录" OnText="用户密码登录" />
                     </Block>

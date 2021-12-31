@@ -23,14 +23,16 @@ namespace Bootstrap.Admin.Controllers
         /// Login the specified userName, password and remember.
         /// </summary>
         /// <returns>The login.</returns>
-        /// <param name="userService"></param>
-        /// <param name="loginService"></param>
         /// <param name="userName">User name.</param>
         /// <param name="password">Password.</param>
         /// <param name="remember">Remember.</param>
+        /// <param name="userService"></param>
+        /// <param name="dictService"></param>
+        /// <param name="loginService"></param>
         [HttpPost]
-        public async Task<IActionResult> Login(string userName, string password, string remember,
+        public async Task<IActionResult> Login(string userName, string password, [FromQuery] string? remember,
             [FromServices] IUser userService,
+            [FromServices] IDict dictService,
             [FromServices] ILogin loginService)
         {
             if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
@@ -39,15 +41,23 @@ namespace Bootstrap.Admin.Controllers
             }
 
             var auth = userService.Authenticate(userName, password);
+            var persistent = remember == "true";
+            var period = 0;
+            if (persistent)
+            {
+                // Cookie 持久化
+                period = dictService.GetCookieExpiresPeriod();
+            }
             await loginService.Log(userName, auth);
-            return auth ? await SignInAsync(userName, remember == "true") : RedirectLogin();
+
+            return auth ? await SignInAsync(userName, persistent, period) : RedirectLogin();
         }
 
-        private async Task<IActionResult> SignInAsync(string userName, bool persistent, string authenticationScheme = CookieAuthenticationDefaults.AuthenticationScheme)
+        private async Task<IActionResult> SignInAsync(string userName, bool persistent, int period = 0, string authenticationScheme = CookieAuthenticationDefaults.AuthenticationScheme)
         {
             var identity = new ClaimsIdentity(authenticationScheme);
             identity.AddClaim(new Claim(ClaimTypes.Name, userName));
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity), new AuthenticationProperties { ExpiresUtc = DateTimeOffset.Now.AddDays(period), IsPersistent = persistent });
 
             // redirect origin url
             var originUrl = Request.Query[CookieAuthenticationDefaults.ReturnUrlParameter].FirstOrDefault() ?? "/Home/Index";
@@ -104,7 +114,7 @@ namespace Bootstrap.Admin.Controllers
             {
                 userService.TryCreateUserByPhone(phone, context.AppId, provider.Options.Roles);
             }
-            return auth ? await SignInAsync(phone, true, MobileSchema) : RedirectLogin();
+            return auth ? await SignInAsync(phone, false, 0, MobileSchema) : RedirectLogin();
         }
         #endregion
 
