@@ -54,4 +54,3 @@ public static class ServicesExtensions
             return services;
         }
     }
-}

@@ -22,7 +22,7 @@ class DictService : BaseDatabase, IDict
         AppId = configuration.GetValue("AppId", "BA");
     }
 
-    private List<Dict> GetAll() => Database.Fetch<Dict>();
+    public List<Dict> GetAll() => Database.Fetch<Dict>();
 
     public Dictionary<string, string> GetApps()
     {

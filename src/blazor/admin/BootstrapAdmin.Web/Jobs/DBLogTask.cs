@@ -1,6 +1,5 @@
 ﻿using BootstrapAdmin.DataAccess.Models;
 using Longbow.Tasks;
-using PetaPoco;
 using System.Collections.Concurrent;
 
 namespace BootstrapAdmin.Web.Jobs
