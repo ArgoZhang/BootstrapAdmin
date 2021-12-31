@@ -5,10 +5,10 @@ using Longbow.Security.Cryptography;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-namespace BootstrapAdmin.DataAccess.EFCore.Services
+namespace BootstrapAdmin.DataAccess.EFCore.Services;
+
+class DictService : IDict
 {
-    class DictService : IDict
-    {
         private IDbContextFactory<BootstrapAdminContext> DbFactory { get; set; }
 
         private string AppId { get; set; }
@@ -107,4 +107,3 @@ namespace BootstrapAdmin.DataAccess.EFCore.Services
             return true;
         }
     }
-}

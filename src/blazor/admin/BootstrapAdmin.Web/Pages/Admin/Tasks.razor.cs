@@ -84,4 +84,6 @@ public partial class Tasks
     {
         return Task.CompletedTask;
     }
+
+    private static bool OnCheckTaskStatus(TasksModel model) => model.Status != SchedulerStatus.Disabled;
 }

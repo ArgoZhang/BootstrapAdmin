@@ -14,66 +14,65 @@ using System.Collections.Specialized;
 using System.Data.Common;
 using System.Text;
 
-namespace Microsoft.Extensions.DependencyInjection
+namespace Microsoft.Extensions.DependencyInjection;
+
+/// <summary>
+/// 
+/// </summary>
+public static class ServicesExtensions
 {
     /// <summary>
     /// 
     /// </summary>
-    public static class ServicesExtensions
+    /// <param name="services"></param>
+    /// <returns></returns>
+    public static IServiceCollection AddPetaPocoDataAccessServices(this IServiceCollection services)
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="services"></param>
-        /// <returns></returns>
-        public static IServiceCollection AddPetaPocoDataAccessServices(this IServiceCollection services)
+        services.TryAddSingleton<IDatabase>(provider =>
         {
-            services.TryAddSingleton<IDatabase>(provider =>
-            {
                 //TODO: 后期改造成自定适配
                 var configuration = provider.GetRequiredService<IConfiguration>();
-                var connString = configuration.GetConnectionString("bb");
-                var db = new Database<SQLiteDatabaseProvider>(connString, new BootstrapAdminConventionMapper());
+            var connString = configuration.GetConnectionString("bb");
+            var db = new Database<SQLiteDatabaseProvider>(connString, new BootstrapAdminConventionMapper());
 
-                var logger = provider.GetRequiredService<ILogger<Database>>();
-                db.ExceptionThrown += (sender, e) =>
+            var logger = provider.GetRequiredService<ILogger<Database>>();
+            db.ExceptionThrown += (sender, e) =>
+            {
+                var message = e.Exception.Format(new NameValueCollection()
                 {
-                    var message = e.Exception.Format(new NameValueCollection()
-                    {
-                        [nameof(db.LastCommand)] = db.LastCommand,
-                        [nameof(db.LastArgs)] = string.Join(",", db.LastArgs)
-                    });
-                    logger.LogInformation(message);
-                };
-                var env = provider.GetRequiredService<IWebHostEnvironment>();
-                if (env.IsDevelopment())
+                    [nameof(db.LastCommand)] = db.LastCommand,
+                    [nameof(db.LastArgs)] = string.Join(",", db.LastArgs)
+                });
+                logger.LogInformation(message);
+            };
+            var env = provider.GetRequiredService<IWebHostEnvironment>();
+            if (env.IsDevelopment())
+            {
+                db.CommandExecuted += (sender, args) =>
                 {
-                    db.CommandExecuted += (sender, args) =>
+                    var parameters = new StringBuilder();
+                    foreach (DbParameter p in args.Command.Parameters)
                     {
-                        var parameters = new StringBuilder();
-                        foreach (DbParameter p in args.Command.Parameters)
-                        {
-                            parameters.AppendFormat("{0}: {1}  ", p.ParameterName, p.Value);
-                        }
-                        logger.LogInformation(args.Command.CommandText);
-                        logger.LogInformation(parameters.ToString());
-                    };
+                        parameters.AppendFormat("{0}: {1}  ", p.ParameterName, p.Value);
+                    }
+                    logger.LogInformation(args.Command.CommandText);
+                    logger.LogInformation(parameters.ToString());
                 };
-                return db;
-            });
+            };
+            return db;
+        });
 
-            // 增加数据服务
-            services.AddSingleton(typeof(IDataService<>), typeof(DefaultDataService<>));
+        // 增加数据服务
+        services.AddSingleton(typeof(IDataService<>), typeof(DefaultDataService<>));
 
-            // 增加业务服务
-            services.AddSingleton<INavigation, NavigationService>();
-            services.AddSingleton<IDict, DictService>();
-            services.AddSingleton<IUser, UserService>();
-            services.AddSingleton<ILogin, LoginService>();
-            services.AddSingleton<IRole, RoleService>();
-            services.AddSingleton<IGroup, GroupService>();
-            services.AddSingleton<IApp, AppService>();
-            return services;
-        }
+        // 增加业务服务
+        services.AddSingleton<INavigation, NavigationService>();
+        services.AddSingleton<IDict, DictService>();
+        services.AddSingleton<IUser, UserService>();
+        services.AddSingleton<ILogin, LoginService>();
+        services.AddSingleton<IRole, RoleService>();
+        services.AddSingleton<IGroup, GroupService>();
+        services.AddSingleton<IApp, AppService>();
+        return services;
     }
 }

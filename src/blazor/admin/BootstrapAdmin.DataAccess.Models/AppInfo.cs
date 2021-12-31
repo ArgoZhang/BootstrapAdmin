@@ -38,6 +38,7 @@ public class AppInfo
     /// <summary>
     /// 
     /// </summary>
+    [Display(Name = "系统演示")]
     public bool IsDemo { get; set; }
 
     /// <summary>
