@@ -18,7 +18,7 @@ namespace BootstrapAdmin.Web.Core
         /// </summary>
         /// <param name="roleId"></param>
         /// <returns></returns>
-        List<string?> GetMenusByRoleId(string? roleId);
+        List<string> GetMenusByRoleId(string? roleId);
 
         /// <summary>
         /// 
