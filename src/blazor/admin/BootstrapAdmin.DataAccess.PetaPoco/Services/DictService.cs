@@ -11,18 +11,13 @@ class DictService : BaseDatabase, IDict
 {
     private string AppId { get; set; }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="db"></param>
-    /// <param name="configuration"></param>
     public DictService(IDatabase db, IConfiguration configuration)
     {
         Database = db;
         AppId = configuration.GetValue("AppId", "BA");
     }
 
-    private List<Dict> GetAll() => Database.Fetch<Dict>();
+    public List<Dict> GetAll() => Database.Fetch<Dict>();
 
     public Dictionary<string, string> GetApps()
     {

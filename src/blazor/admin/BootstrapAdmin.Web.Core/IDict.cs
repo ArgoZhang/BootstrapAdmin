@@ -1,10 +1,18 @@
-﻿namespace BootstrapAdmin.Web.Core;
+﻿using BootstrapAdmin.DataAccess.Models;
+
+namespace BootstrapAdmin.Web.Core;
 
 /// <summary>
 /// Dict 字典表接口
 /// </summary>
 public interface IDict
 {
+    /// <summary>
+    /// 获得 所有数据方法
+    /// </summary>
+    /// <returns></returns>
+    List<Dict> GetAll();
+
     /// <summary>
     /// 获得 配置所有的 App 集合
     /// </summary>

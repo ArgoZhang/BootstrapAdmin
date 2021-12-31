@@ -1,11 +1,11 @@
 ﻿@page "/Admin/Dicts"
 
-<AdminTable TItem="DataAccess.Models.Dict" TableSearchModel="DictsSearchModel">
+<AdminTable TItem="DataAccess.Models.Dict" TableSearchModel="DictsSearchModel" OnQueryAsync="OnQueryAsync">
     <ColumnsTemplete>
         <TableColumn @bind-Field="context.Category" Filterable="true" Searchable="true" Sortable="true"></TableColumn>
         <TableColumn @bind-Field="context.Name" Filterable="true" Searchable="true" Sortable="true"></TableColumn>
         <TableColumn @bind-Field="context.Code" Filterable="true" Searchable="true" Sortable="true"></TableColumn>
-        <TableColumn @bind-Field="context.Define" Filterable="true" Searchable="true" Sortable="true" DefaultSort="true" DefaultSortOrder="SortOrder.Desc"></TableColumn>
+        <TableColumn @bind-Field="context.Define" Filterable="true" Searchable="true" Sortable="true"></TableColumn>
     </ColumnsTemplete>
     <CustomerSearchTemplate>
         @if (context is DictsSearchModel searchModel)

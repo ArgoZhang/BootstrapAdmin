@@ -6,6 +6,11 @@ namespace BootstrapAdmin.DataAccess.EFCore.Services;
 
 class DictService : IDict
 {
+    public List<Dict> GetAll()
+    {
+        throw new NotImplementedException();
+    }
+
     public Dictionary<string, string> GetApps()
     {
         throw new NotImplementedException();
