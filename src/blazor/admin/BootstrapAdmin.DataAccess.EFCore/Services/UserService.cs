@@ -53,21 +53,21 @@ public class UserService : IUser
 
         var user = context.Users.Include(s => s.Roles).FirstOrDefault(s => s.UserName == userName);
 
-        return user != null ? user?.Roles?.Select(s => s.RoleName).ToList() : new List<string>();
+        return user != null ? user.Roles!.Select(s => s.RoleName).ToList() : new List<string>();
     }
 
     public List<string> GetUsersByGroupId(string? groupId)
     {
         using var context = DbFactory.CreateDbContext();
 
-        return context.UserGroup.Where(s => s.GroupId == groupId).Select(s => s.UserId).ToList();
+        return context.UserGroup.Where(s => s.GroupId == groupId).Select(s => s.UserId!).ToList();
     }
 
     public List<string> GetUsersByRoleId(string? roleId)
     {
         using var context = DbFactory.CreateDbContext();
 
-        return context.UserRole.Where(s => s.RoleId == roleId).Select(s => s.UserId).ToList();
+        return context.UserRole.Where(s => s.RoleId == roleId).Select(s => s.UserId!).ToList();
     }
 
     public bool SaveUsersByGroupId(string? groupId, IEnumerable<string> userIds)

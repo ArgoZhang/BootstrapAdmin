@@ -26,14 +26,14 @@ public class GroupService : IGroup
     {
         using var dbcontext = DbFactory.CreateDbContext();
 
-        return dbcontext.RoleGroup.Where(s => s.RoleId == roleId).Select(s => s.GroupId).ToList();
+        return dbcontext.RoleGroup.Where(s => s.RoleId == roleId).Select(s => s.GroupId!).ToList();
     }
 
     public List<string> GetGroupsByUserId(string? userId)
     {
         using var dbcontext = DbFactory.CreateDbContext();
 
-        return dbcontext.UserGroup.Where(s => s.UserId == userId).Select(s => s.GroupId).ToList();
+        return dbcontext.UserGroup.Where(s => s.UserId == userId).Select(s => s.GroupId!).ToList();
     }
 
     public bool SaveGroupsByRoleId(string? roleId, IEnumerable<string> groupIds)

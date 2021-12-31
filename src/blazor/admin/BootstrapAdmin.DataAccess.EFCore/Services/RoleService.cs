@@ -26,21 +26,21 @@ public class RoleService : IRole
     {
         using var dbcontext = DbFactory.CreateDbContext();
 
-        return dbcontext.RoleGroup.Where(s => s.GroupId == groupId).Select(s => s.RoleId).ToList();
+        return dbcontext.RoleGroup.Where(s => s.GroupId == groupId).Select(s => s.RoleId!).ToList();
     }
 
     public List<string> GetRolesByMenuId(string? menuId)
     {
         using var dbcontext = DbFactory.CreateDbContext();
 
-        return dbcontext.NavigationRole.Where(s => s.NavigationId == menuId).Select(s => s.RoleId).ToList();
+        return dbcontext.NavigationRole.Where(s => s.NavigationId == menuId).Select(s => s.RoleId!).ToList();
     }
 
     public List<string> GetRolesByUserId(string? userId)
     {
         using var dbcontext = DbFactory.CreateDbContext();
 
-        return dbcontext.UserRole.Where(s => s.UserId == userId).Select(s => s.RoleId).ToList();
+        return dbcontext.UserRole.Where(s => s.UserId == userId).Select(s => s.RoleId!).ToList();
     }
 
     public bool SaveRolesByGroupId(string? groupId, IEnumerable<string> roleIds)

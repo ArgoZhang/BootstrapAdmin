@@ -26,18 +26,18 @@ namespace BootstrapAdmin.DataAccess.EFCore.Services
         {
             using var context = DbFactory.CreateDbContext();
 
-            var user = context.Set<User>().Include(s => s.Roles).ThenInclude(s => s.Navigations.Where(s => s.IsResource == EnumResource.Navigation)).AsSplitQuery().FirstOrDefault(s => s.UserName == userName);
+            var user = context.Set<User>().Include(s => s.Roles!).ThenInclude(s => s.Navigations!.Where(s => s.IsResource == EnumResource.Navigation)).AsSplitQuery().FirstOrDefault(s => s.UserName == userName);
 
             if (user == null)
                 return new List<Navigation>();
-            return user.Roles.SelectMany(s => s.Navigations).ToList();
+            return user.Roles!.SelectMany(s => s.Navigations!).ToList();
         }
 
-        public List<string?> GetMenusByRoleId(string? roleId)
+        public List<string> GetMenusByRoleId(string? roleId)
         {
             using var context = DbFactory.CreateDbContext();
 
-            return context.NavigationRole.Where(s => s.RoleId == roleId).Select(s => s.NavigationId).ToList();
+            return context.NavigationRole.Where(s => s.RoleId == roleId).Select(s => s.NavigationId!).ToList();
         }
 
         public bool SaveMenusByRoleId(string? roleId, List<string> menuIds)
