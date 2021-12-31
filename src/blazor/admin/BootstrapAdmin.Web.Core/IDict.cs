@@ -69,5 +69,11 @@ namespace BootstrapAdmin.Web.Core
         /// </summary>
         /// <returns></returns>
         string GetWebFooter();
+
+        /// <summary>
+        /// 获得 Cookie 登录持久化时长
+        /// </summary>
+        /// <returns></returns>
+        int GetCookieExpiresPeriod();
     }
 }

@@ -122,4 +122,16 @@ class DictService : BaseDatabase, IDict
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
     public bool SaveHealthCheck(bool enable = true) => Database.Execute("Update Dicts Set Code = @0 Where Category = @1 and Name = @2 and Define = @3", enable ? "1" : "0", "网站设置", "健康检查", EnumDictDefine.System.ToString()) == 1;
+
+    /// <summary>
+    /// 获取当前网站 Cookie 保持时长
+    /// </summary>
+    /// <returns></returns>
+    public int GetCookieExpiresPeriod()
+    {
+        var dicts = GetAll();
+        var code = dicts.FirstOrDefault(d => d.Category == "网站设置" && d.Name == "Cookie保留时长" && d.Define == EnumDictDefine.System)?.Code ?? "0";
+        _ = int.TryParse(code, out var ret);
+        return ret;
+    }
 }
