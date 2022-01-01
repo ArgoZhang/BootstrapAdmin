@@ -57,7 +57,17 @@ namespace Bootstrap.Admin.Controllers
         {
             var identity = new ClaimsIdentity(authenticationScheme);
             identity.AddClaim(new Claim(ClaimTypes.Name, userName));
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity), new AuthenticationProperties { ExpiresUtc = DateTimeOffset.Now.AddDays(period), IsPersistent = persistent });
+
+            var properties = new AuthenticationProperties();
+            if (persistent)
+            {
+                properties.IsPersistent = true;
+            }
+            if (period != 0)
+            {
+                properties.ExpiresUtc = DateTimeOffset.Now.AddDays(period);
+            }
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity), properties);
 
             return Redirect(returnUrl ?? "/Home/Index");
         }
