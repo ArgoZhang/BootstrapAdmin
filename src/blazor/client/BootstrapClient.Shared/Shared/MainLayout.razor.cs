@@ -1,11 +1,10 @@
 ﻿using Bootstrap.Security.Blazor;
+using BootstrapAdmin.Extensions;
 using BootstrapAdmin.Web.Core;
-using BootstrapAdmin.Web.Extensions;
 using BootstrapBlazor.Components;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 
 namespace BootstrapClient.Web.Shared.Shared

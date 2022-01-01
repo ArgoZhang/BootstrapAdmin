@@ -155,6 +155,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BootstrapClient.Web.Shared"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BootstrapClient.Web", "src\blazor\client\BootstrapClient.Web\BootstrapClient.Web.csproj", "{6CD7A35B-93A8-4DB2-B078-EE5A81F40032}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BootstrapAdmin.Extensions", "src\blazor\admin\BootstrapAdmin.Extensions\BootstrapAdmin.Extensions.csproj", "{EED6219B-91BA-4D97-83B7-2E26EBBB31E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -221,6 +223,10 @@ Global
 		{6CD7A35B-93A8-4DB2-B078-EE5A81F40032}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6CD7A35B-93A8-4DB2-B078-EE5A81F40032}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6CD7A35B-93A8-4DB2-B078-EE5A81F40032}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EED6219B-91BA-4D97-83B7-2E26EBBB31E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EED6219B-91BA-4D97-83B7-2E26EBBB31E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EED6219B-91BA-4D97-83B7-2E26EBBB31E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EED6219B-91BA-4D97-83B7-2E26EBBB31E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -258,6 +264,7 @@ Global
 		{640F598B-6586-4AD6-B544-78CFF2602DFB} = {55A2459A-6BDE-4493-B2C0-5BE1673E99EE}
 		{93770088-3463-427B-9CD8-88B8D7945C83} = {55A2459A-6BDE-4493-B2C0-5BE1673E99EE}
 		{6CD7A35B-93A8-4DB2-B078-EE5A81F40032} = {55A2459A-6BDE-4493-B2C0-5BE1673E99EE}
+		{EED6219B-91BA-4D97-83B7-2E26EBBB31E8} = {45ADEF9B-C8BD-4224-9E12-F6716E85A22C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {221EAE38-5F75-4391-9A48-E462A9F3B8FC}
