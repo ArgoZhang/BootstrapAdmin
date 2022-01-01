@@ -30,9 +30,6 @@ namespace BootstrapClient.Web.Shared.Shared
 
         private IEnumerable<MenuItem>? MenuItems { get; set; }
 
-        [NotNull]
-        private Dictionary<string, string>? TabItemTextDictionary { get; set; }
-
         /// <summary>
         /// 获得 当前用户登录显示名称
         /// </summary>
