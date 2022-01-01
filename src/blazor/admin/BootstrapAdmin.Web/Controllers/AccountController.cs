@@ -30,7 +30,7 @@ namespace Bootstrap.Admin.Controllers
         /// <param name="dictService"></param>
         /// <param name="loginService"></param>
         [HttpPost]
-        public async Task<IActionResult> Login(string userName, string password, [FromQuery] string? remember,
+        public async Task<IActionResult> Login(string userName, string password, [FromQuery] string? remember, [FromQuery] string? returnUrl,
             [FromServices] IUser userService,
             [FromServices] IDict dictService,
             [FromServices] ILogin loginService)
@@ -50,28 +50,28 @@ namespace Bootstrap.Admin.Controllers
             }
             await loginService.Log(userName, auth);
 
-            return auth ? await SignInAsync(userName, persistent, period) : RedirectLogin();
+            return auth ? await SignInAsync(userName, persistent, period, returnUrl) : RedirectLogin(returnUrl);
         }
 
-        private async Task<IActionResult> SignInAsync(string userName, bool persistent, int period = 0, string authenticationScheme = CookieAuthenticationDefaults.AuthenticationScheme)
+        private async Task<IActionResult> SignInAsync(string userName, bool persistent, int period = 0, string? returnUrl = null, string authenticationScheme = CookieAuthenticationDefaults.AuthenticationScheme)
         {
             var identity = new ClaimsIdentity(authenticationScheme);
             identity.AddClaim(new Claim(ClaimTypes.Name, userName));
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity), new AuthenticationProperties { ExpiresUtc = DateTimeOffset.Now.AddDays(period), IsPersistent = persistent });
 
-            // redirect origin url
-            var originUrl = Request.Query[CookieAuthenticationDefaults.ReturnUrlParameter].FirstOrDefault() ?? "/Home/Index";
-            return Redirect(originUrl);
+            return Redirect(returnUrl ?? "/Home/Index");
         }
 
-        private IActionResult RedirectLogin()
+        private IActionResult RedirectLogin(string? returnUrl = null)
         {
             var query = Request.Query.Aggregate(new Dictionary<string, string?>(), (d, v) =>
             {
                 d.Add(v.Key, v.Value.ToString());
                 return d;
             });
-            return Redirect(QueryHelpers.AddQueryString(Request.PathBase + CookieAuthenticationDefaults.LoginPath, query));
+            return returnUrl == null
+                ? Redirect(QueryHelpers.AddQueryString(Request.PathBase + CookieAuthenticationDefaults.LoginPath, query))
+                : Redirect(returnUrl);
         }
         #endregion
 
@@ -94,14 +94,9 @@ namespace Bootstrap.Admin.Controllers
         /// <summary>
         /// 短信验证登陆方法
         /// </summary>
-        /// <param name="provider"></param>
-        /// <param name="loginService"></param>
-        /// <param name="phone"></param>
-        /// <param name="code"></param>
-        /// <param name="remember">Remember.</param>
         /// <returns></returns>
         [HttpPost()]
-        public async Task<IActionResult> Mobile(string phone, string code, [FromQuery] string? remember,
+        public async Task<IActionResult> Mobile(string phone, string code, [FromQuery] string? remember, [FromQuery] string? returnUrl,
             [FromServices] ISMSProvider provider,
             [FromServices] ILogin loginService,
             [FromServices] IUser userService,
@@ -123,7 +118,7 @@ namespace Bootstrap.Admin.Controllers
             {
                 userService.TryCreateUserByPhone(phone, code, context.AppId, provider.Options.Roles);
             }
-            return auth ? await SignInAsync(phone, persistent, period, MobileSchema) : RedirectLogin();
+            return auth ? await SignInAsync(phone, persistent, period, returnUrl, MobileSchema) : RedirectLogin(returnUrl);
         }
         #endregion
 

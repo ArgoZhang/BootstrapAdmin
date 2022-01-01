@@ -17,7 +17,11 @@ public partial class Login
 
     private bool RememberPassword { get; set; }
 
-    private string? PostUrl { get; set; } = "/Account/Login";
+    private string? PostUrl { get; set; }
+
+    [SupplyParameterFromQuery]
+    [Parameter]
+    public string? ReturnUrl { get; set; }
 
     [Inject]
     [NotNull]
@@ -31,18 +35,23 @@ public partial class Login
         base.OnInitialized();
 
         Title = DictsService.GetWebTitle();
+
+        PostUrl = QueryHelper.AddQueryString("/Account/Login", "ReturnUrl", ReturnUrl ?? "");
     }
 
     void OnClickSwitchButton()
     {
         var rem = RememberPassword ? "true" : "false";
-        PostUrl = UseMobileLogin ? $"/Account/Mobile?remember={rem}" : $"/Account/Login?remember={rem}";
+        PostUrl = QueryHelper.AddQueryString(UseMobileLogin ? "/Account/Mobile" : "/Account/Login", new Dictionary<string, string?>()
+        {
+            [nameof(ReturnUrl)] = ReturnUrl,
+            ["remember"] = rem
+        });
     }
 
     Task OnRememberPassword(bool remember)
     {
-        var rem = remember ? "true" : "false";
-        PostUrl = UseMobileLogin ? $"/Account/Mobile?remember={rem}" : $"/Account/Login?remember={rem}";
+        OnClickSwitchButton();
         return Task.CompletedTask;
     }
 

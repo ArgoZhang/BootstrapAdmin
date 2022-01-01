@@ -73,6 +73,10 @@ namespace BootstrapClient.Web.Shared.Shared
         [NotNull]
         private IOptions<BootstrapAdminAuthenticationOptions>? AuthorizationOption { get; set; }
 
+        [Inject]
+        [NotNull]
+        private NavigationManager? NavigationManager { get; set; }
+
         /// <summary>
         /// OnInitialized 方法
         /// </summary>
@@ -95,6 +99,6 @@ namespace BootstrapClient.Web.Shared.Shared
 
         private Task<bool> OnAuthorizing(string url) => SecurityService.AuhorizingNavigation(UserName, url);
 
-        private string GetAuthorUrl() => $"{AuthorizationOption.Value.AuthHost}/Account/Login";
+        private string GetAuthorUrl() => $"{AuthorizationOption.Value.AuthHost}/Account/Login?ReturnUrl={NavigationManager.Uri}";
     }
 }
