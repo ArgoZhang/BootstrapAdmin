@@ -99,8 +99,8 @@ namespace BootstrapAdmin.Web.Pages.Admin
             {
                 IsDemo = AppInfo.IsDemo;
                 ret = DictService.SaveDemo(IsDemo);
+                StateHasChanged();
             }
-            StateHasChanged();
             await ShowToast(ret, "演示系统");
         }
     }

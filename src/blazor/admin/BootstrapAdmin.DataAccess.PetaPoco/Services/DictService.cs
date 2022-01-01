@@ -33,7 +33,7 @@ class DictService : BaseDatabase, IDict
     public Dictionary<string, string> GetLogins()
     {
         var dicts = GetAll();
-        return dicts.Where(d => d.Category == "系统首页").Select(d => new KeyValuePair<string, string>(d.Code, d.Name)).ToDictionary(i => i.Key, i => i.Value);
+        return dicts.Where(d => d.Category == "系统首页").Select(d => new KeyValuePair<string, string>(d.Code, d.Name)).OrderBy(i => i.Value).ToDictionary(i => i.Key, i => i.Value);
     }
 
     public string GetCurrentLogin()
@@ -119,7 +119,7 @@ class DictService : BaseDatabase, IDict
     /// </summary>
     /// <param name="isDemo"></param>
     /// <returns></returns>
-    public bool SaveDemo(bool isDemo) => Database.Execute("Update Dicts Set Code = @0 Where Category = @1 and Name = @2 and Define = @3", isDemo ? "1" : "0", "网站设置", "演示系统", EnumDictDefine.System.ToString()) == 1;
+    public bool SaveDemo(bool isDemo) => Database.Execute("Update Dicts Set Code = @0 Where Category = @1 and Name = @2 and Define = @3", isDemo ? "1" : "0", "网站设置", "演示系统", EnumDictDefine.System) == 1;
 
     /// <summary>
     /// 
