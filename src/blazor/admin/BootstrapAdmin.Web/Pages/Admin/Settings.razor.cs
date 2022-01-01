@@ -26,6 +26,10 @@ namespace BootstrapAdmin.Web.Pages.Admin
         [NotNull]
         private IUser? UserService { get; set; }
 
+        [Inject]
+        [NotNull]
+        private ToastService? ToastService { get; set; }
+
         /// <summary>
         /// 
         /// </summary>
@@ -41,44 +45,63 @@ namespace BootstrapAdmin.Web.Pages.Admin
                 IsDemo = IsDemo,
                 AuthCode = "123789",
                 Title = DictService.GetWebTitle(),
-                Footer = DictService.GetWebFooter()
+                Footer = DictService.GetWebFooter(),
+                Login = DictService.GetCurrentLogin()
             };
         }
 
-        private Task OnSaveTitle(EditContext context)
+        private async Task ShowToast(bool result, string title)
         {
-            return Task.CompletedTask;
+            if (result)
+            {
+                await ToastService.Success(title, $"保存{title}成功");
+            }
+            else
+            {
+                await ToastService.Error(title, $"保存{title}失败");
+            }
         }
 
-        private Task OnSaveFooter(EditContext context)
+        private async Task OnSaveTitle(EditContext context)
         {
-            return Task.CompletedTask;
+            var ret = DictService.SaveWebTitle(AppInfo.Title);
+            await ShowToast(ret, "网站标题");
         }
 
-        private Task OnSaveLogin(EditContext context)
+        private async Task OnSaveFooter(EditContext context)
         {
-            return Task.CompletedTask;
+            var ret = DictService.SaveWebTitle(AppInfo.Title);
+            await ShowToast(ret, "网站页脚");
         }
 
-        private Task OnSaveAuthUrl(EditContext context)
+        private async Task OnSaveLogin(EditContext context)
         {
-            return Task.CompletedTask;
+            var ret = DictService.SaveLogin(AppInfo.Login);
+            await ShowToast(ret, "登录界面");
         }
 
-        private Task OnSaveTheme(EditContext context)
+        private async Task OnSaveAuthUrl(EditContext context)
         {
-            return Task.CompletedTask;
+            var ret = DictService.SaveLogin(AppInfo.Login);
+            await ShowToast(ret, "授权后台地址");
         }
 
-        private Task OnSaveDemo(EditContext context)
+        private async Task OnSaveTheme(EditContext context)
         {
+            var ret = DictService.SaveLogin(AppInfo.Login);
+            await ShowToast(ret, "网站主题");
+        }
+
+        private async Task OnSaveDemo(EditContext context)
+        {
+            var ret = false;
             if (DictService.AuthenticateDemo(AppInfo.AuthCode))
             {
                 IsDemo = AppInfo.IsDemo;
-                DictService.SaveDemo(IsDemo);
+                ret = DictService.SaveDemo(IsDemo);
             }
             StateHasChanged();
-            return Task.CompletedTask;
+            await ShowToast(ret, "演示系统");
         }
     }
 }

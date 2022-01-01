@@ -36,6 +36,12 @@ class DictService : BaseDatabase, IDict
         return dicts.Where(d => d.Category == "系统首页").Select(d => new KeyValuePair<string, string>(d.Code, d.Name)).ToDictionary(i => i.Key, i => i.Value);
     }
 
+    public string GetCurrentLogin()
+    {
+        var dicts = GetAll();
+        return dicts.FirstOrDefault(d => d.Category == "网站设置" && d.Name == "登录界面" && d.Define == EnumDictDefine.System)?.Code ?? "Login";
+    }
+
     public Dictionary<string, string> GetThemes()
     {
         var dicts = GetAll();
@@ -134,4 +140,16 @@ class DictService : BaseDatabase, IDict
         _ = int.TryParse(code, out var ret);
         return ret;
     }
+
+    private bool SaveDict(Dict dict) => Database.Update<Dict>("set Code = @Code where Category = @Category and Name = @Name", dict) == 1;
+
+    public bool SaveLogin(string login) => SaveDict(new Dict { Category = "网站设置", Name = "登录界面", Code = login });
+
+    public bool SaveTheme(string theme) => SaveDict(new Dict { Category = "网站设置", Name = "使用样式", Code = theme });
+
+    public bool SaveWebTitle(string title) => SaveDict(new Dict { Category = "网站设置", Name = "网站标题", Code = title });
+
+    public bool SaveWebFooter(string footer) => SaveDict(new Dict { Category = "网站设置", Name = "网站页脚", Code = footer });
+
+    public bool SaveCookieExpiresPeriod(int expiresPeriod) => SaveDict(new Dict { Category = "网站设置", Name = "Cookie保留时长", Code = expiresPeriod.ToString() });
 }

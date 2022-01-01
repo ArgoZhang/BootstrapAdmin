@@ -27,10 +27,25 @@ namespace BootstrapAdmin.Web.Core
         Dictionary<string, string> GetLogins();
 
         /// <summary>
+        /// 获得 当前配置登录页
+        /// </summary>
+        /// <returns></returns>
+        string GetCurrentLogin();
+
+        bool SaveLogin(string login);
+
+        /// <summary>
         /// 获得 配置所有的主题集合
         /// </summary>
         /// <returns></returns>
         Dictionary<string, string> GetThemes();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="theme"></param>
+        /// <returns></returns>
+        bool SaveTheme(string theme);
 
         /// <summary>
         /// 获取当前系统配置是否为演示模式
@@ -65,15 +80,36 @@ namespace BootstrapAdmin.Web.Core
         string GetWebTitle();
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="title"></param>
+        /// <returns></returns>
+        bool SaveWebTitle(string title);
+
+        /// <summary>
         /// 获取站点 Footer 配置信息
         /// </summary>
         /// <returns></returns>
         string GetWebFooter();
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="footer"></param>
+        /// <returns></returns>
+        bool SaveWebFooter(string footer);
+
+        /// <summary>
         /// 获得 Cookie 登录持久化时长
         /// </summary>
         /// <returns></returns>
         int GetCookieExpiresPeriod();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="expiresPeriod"></param>
+        /// <returns></returns>
+        bool SaveCookieExpiresPeriod(int expiresPeriod);
     }
 }
