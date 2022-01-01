@@ -2,7 +2,7 @@
 using BootstrapBlazor.Components;
 using Microsoft.AspNetCore.Components.Routing;
 
-namespace BootstrapAdmin.Web.Extensions
+namespace BootstrapAdmin.Extensions
 {
     /// <summary>
     /// 
