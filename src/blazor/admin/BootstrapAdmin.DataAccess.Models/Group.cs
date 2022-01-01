@@ -32,26 +32,6 @@ namespace BootstrapAdmin.DataAccess.Models
         [Display(Name = "群组描述")]
         public string? Description { get; set; }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public ICollection<User>? Users { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public ICollection<UserGroup>? UserGroup { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public ICollection<Role>? Roles { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public List<RoleGroup>? RoleGroup { get; set; }
-
         public override string ToString() => $"{GroupName} ({GroupCode})";
     }
 }

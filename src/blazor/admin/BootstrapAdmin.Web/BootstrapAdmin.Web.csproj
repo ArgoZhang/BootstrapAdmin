@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BootstrapAdmin.DataAccess.EFCore\BootstrapAdmin.DataAccess.EFCore.csproj" />
+    <ProjectReference Include="..\BootstrapAdmin.DataAccess.PetaPoco\BootstrapAdmin.DataAccess.PetaPoco.csproj" />
     <ProjectReference Include="..\BootstrapAdmin.Extensions\BootstrapAdmin.Extensions.csproj" />
   </ItemGroup>
 

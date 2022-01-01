@@ -1,4 +1,6 @@
-﻿namespace BootstrapAdmin.DataAccess.Models;
+﻿using BootstrapAdmin.DataAccess.Models;
+
+namespace BootstrapAdmin.DataAccess.EFCore.Models;
 
 public class UserRole
 {

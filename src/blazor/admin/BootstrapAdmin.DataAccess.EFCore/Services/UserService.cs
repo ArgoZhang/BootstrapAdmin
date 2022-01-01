@@ -16,7 +16,7 @@ public class UserService : IUser
 
     public UserService(IDbContextFactory<BootstrapAdminContext> factory) => DbFactory = factory;
 
-    public List<User> GetAll()
+    public IEnumerable<User> GetAll()
     {
         using var context = DbFactory.CreateDbContext();
         return context.Users.ToList();
@@ -76,7 +76,7 @@ public class UserService : IUser
         var group = dbcontext.Groups.Include(s => s.Users).Where(s => s.Id == groupId).FirstOrDefault();
         if (group != null)
         {
-            group.Users = dbcontext.Users.Where(s => userIds.Contains(s.Id)).ToList();
+            group.Users = dbcontext.Users.Where(s => userIds.Contains(s.Id));
             return dbcontext.SaveChanges() > 0;
         }
         else

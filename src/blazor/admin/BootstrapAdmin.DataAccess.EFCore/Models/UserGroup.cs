@@ -1,6 +1,8 @@
-﻿namespace BootstrapAdmin.DataAccess.Models;
+﻿using BootstrapAdmin.DataAccess.Models;
 
-public class NavigationRole
+namespace BootstrapAdmin.DataAccess.EFCore.Models;
+
+public class UserGroup
 {
     /// <summary>
     /// 
@@ -10,20 +12,20 @@ public class NavigationRole
     /// <summary>
     /// 
     /// </summary>
-    public string? NavigationId { get; set; }
+    public string? UserId { get; set; }
 
     /// <summary>
     /// 
     /// </summary>
-    public Navigation? Navigation { get; set; }
+    public User? User { get; set; }
 
     /// <summary>
     /// 
     /// </summary>
-    public string? RoleId { get; set; }
+    public string? GroupId { get; set; }
 
     /// <summary>
     /// 
     /// </summary>
-    public Role? Role { get; set; }
+    public Group? Group { get; set; }
 }

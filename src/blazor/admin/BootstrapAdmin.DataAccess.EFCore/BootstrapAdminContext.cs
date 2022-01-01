@@ -1,4 +1,5 @@
-﻿using BootstrapAdmin.DataAccess.Models;
+﻿using BootstrapAdmin.DataAccess.EFCore.Models;
+using BootstrapAdmin.DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace BootstrapAdmin.DataAccess.EFCore
@@ -27,13 +28,13 @@ namespace BootstrapAdmin.DataAccess.EFCore
         /// 
         /// </summary>
         [NotNull]
-        public DbSet<User>? Users { get; set; }
+        public DbSet<EFUser>? Users { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
         [NotNull]
-        public DbSet<Role>? Roles { get; set; }
+        public DbSet<EFRole>? Roles { get; set; }
 
         /// <summary>
         /// 
@@ -45,7 +46,7 @@ namespace BootstrapAdmin.DataAccess.EFCore
         /// 
         /// </summary>
         [NotNull]
-        public DbSet<Navigation>? Navigations { get; set; }
+        public DbSet<EFNavigation>? Navigations { get; set; }
 
         /// <summary>
         /// 
@@ -57,7 +58,7 @@ namespace BootstrapAdmin.DataAccess.EFCore
         /// 
         /// </summary>
         [NotNull]
-        public DbSet<Group>? Groups { get; set; }
+        public DbSet<EFGroup>? Groups { get; set; }
 
         /// <summary>
         /// 
