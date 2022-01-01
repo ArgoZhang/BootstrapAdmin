@@ -79,5 +79,5 @@ public interface IUser
     /// <param name="appId"></param>
     /// <param name="roles"></param>
     /// <returns></returns>
-    bool TryCreateUserByPhone(string phone, string appId, ICollection<string> roles);
+    bool TryCreateUserByPhone(string phone, string code, string appId, ICollection<string> roles);
 }

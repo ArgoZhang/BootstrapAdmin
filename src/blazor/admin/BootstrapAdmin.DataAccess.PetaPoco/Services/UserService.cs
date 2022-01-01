@@ -134,7 +134,7 @@ class UserService : BaseDatabase, IUser
     /// <param name="appId"></param>
     /// <param name="roles"></param>
     /// <returns></returns>
-    public bool TryCreateUserByPhone(string phone, string appId, ICollection<string> roles)
+    public bool TryCreateUserByPhone(string phone, string code, string appId, ICollection<string> roles)
     {
         var ret = false;
         try
@@ -142,6 +142,7 @@ class UserService : BaseDatabase, IUser
             var user = GetAll().FirstOrDefault(user => user.UserName == phone);
             if (user == null)
             {
+                var salt = LgbCryptography.GenerateSalt();
                 Database.BeginTransaction();
                 user = new User()
                 {
@@ -151,6 +152,8 @@ class UserService : BaseDatabase, IUser
                     UserName = phone,
                     Icon = "default.jpg",
                     Description = "手机用户",
+                    PassSalt = salt,
+                    Password = LgbCryptography.ComputeHash(code, salt),
                     App = appId
                 };
                 Database.Save(user);

@@ -47,6 +47,8 @@ namespace BootstrapAdmin.Web.Shared
 
         private string? DisplayName { get; set; }
 
+        private string? UserName { get; set; }
+
         /// <summary>
         /// OnInitializedAsync 方法
         /// </summary>
@@ -54,15 +56,15 @@ namespace BootstrapAdmin.Web.Shared
         protected override async Task OnInitializedAsync()
         {
             var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-            var userName = state.User.Identity?.Name;
+            UserName = state.User.Identity?.Name;
 
-            if (!string.IsNullOrEmpty(userName))
+            if (!string.IsNullOrEmpty(UserName))
             {
-                DisplayName = UsersService.GetDisplayName(userName);
-                Context.UserName = userName;
+                DisplayName = UsersService.GetDisplayName(UserName);
+                Context.UserName = UserName;
                 Context.DisplayName = DisplayName;
 
-                MenuItems = NavigationsService.GetAllMenus(userName).ToAdminMenus();
+                MenuItems = NavigationsService.GetAllMenus(UserName).ToAdminMenus();
             }
 
             Title = DictsService.GetWebTitle();

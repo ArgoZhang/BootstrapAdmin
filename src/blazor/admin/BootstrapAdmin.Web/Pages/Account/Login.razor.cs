@@ -35,12 +35,14 @@ public partial class Login
 
     void OnClickSwitchButton()
     {
-        PostUrl = UseMobileLogin ? "/Account/Mobile" : "/Account/Login";
+        var rem = RememberPassword ? "true" : "false";
+        PostUrl = UseMobileLogin ? $"/Account/Mobile?remember={rem}" : $"/Account/Login?remember={rem}";
     }
 
     Task OnRememberPassword(bool remember)
     {
-        PostUrl = "/Account/Login?remember=true";
+        var rem = remember ? "true" : "false";
+        PostUrl = UseMobileLogin ? $"/Account/Mobile?remember={rem}" : $"/Account/Login?remember={rem}";
         return Task.CompletedTask;
     }
 

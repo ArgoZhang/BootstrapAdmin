@@ -98,23 +98,32 @@ namespace Bootstrap.Admin.Controllers
         /// <param name="loginService"></param>
         /// <param name="phone"></param>
         /// <param name="code"></param>
+        /// <param name="remember">Remember.</param>
         /// <returns></returns>
         [HttpPost()]
-        public async Task<IActionResult> Mobile(string phone, string code,
+        public async Task<IActionResult> Mobile(string phone, string code, [FromQuery] string? remember,
             [FromServices] ISMSProvider provider,
             [FromServices] ILogin loginService,
             [FromServices] IUser userService,
+            [FromServices] IDict dictService,
             [FromServices] BootstrapAppContext context)
         {
             if (string.IsNullOrEmpty(phone) || string.IsNullOrEmpty(code)) return RedirectLogin();
 
             var auth = provider.Validate(phone, code);
+            var persistent = remember == "true";
+            var period = 0;
+            if (persistent)
+            {
+                // Cookie 持久化
+                period = dictService.GetCookieExpiresPeriod();
+            }
             await loginService.Log(phone, auth);
             if (auth)
             {
-                userService.TryCreateUserByPhone(phone, context.AppId, provider.Options.Roles);
+                userService.TryCreateUserByPhone(phone, code, context.AppId, provider.Options.Roles);
             }
-            return auth ? await SignInAsync(phone, false, 0, MobileSchema) : RedirectLogin();
+            return auth ? await SignInAsync(phone, persistent, period, MobileSchema) : RedirectLogin();
         }
         #endregion
 
