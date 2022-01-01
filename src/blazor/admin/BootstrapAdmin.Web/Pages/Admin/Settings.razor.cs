@@ -39,7 +39,9 @@ namespace BootstrapAdmin.Web.Pages.Admin
             AppInfo = new()
             {
                 IsDemo = IsDemo,
-                AuthCode = "123789"
+                AuthCode = "123789",
+                Title = DictService.GetWebTitle(),
+                Footer = DictService.GetWebFooter()
             };
         }
 
