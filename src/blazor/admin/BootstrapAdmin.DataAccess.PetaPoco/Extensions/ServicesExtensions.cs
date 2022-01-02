@@ -30,8 +30,8 @@ public static class ServicesExtensions
     {
         services.TryAddSingleton<IDatabase>(provider =>
         {
-                //TODO: 后期改造成自定适配
-                var configuration = provider.GetRequiredService<IConfiguration>();
+            //TODO: 后期改造成自定适配
+            var configuration = provider.GetRequiredService<IConfiguration>();
             var connString = configuration.GetConnectionString("bb");
             var db = new Database<SQLiteDatabaseProvider>(connString, new BootstrapAdminConventionMapper());
 
@@ -43,7 +43,7 @@ public static class ServicesExtensions
                     [nameof(db.LastCommand)] = db.LastCommand,
                     [nameof(db.LastArgs)] = string.Join(",", db.LastArgs)
                 });
-                logger.LogInformation(message);
+                logger.LogError(e.Exception, message);
             };
             var env = provider.GetRequiredService<IWebHostEnvironment>();
             if (env.IsDevelopment())
