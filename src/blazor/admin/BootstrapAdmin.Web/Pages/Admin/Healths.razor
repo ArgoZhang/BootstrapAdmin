@@ -10,7 +10,7 @@
         </div>
     </CardHeader>
     <CardBody>
-        <Table TItem="HealthsCheckReportItem" OnQueryAsync="OnQueryAsync" ShowSkeleton="true" IsBordered="true" IsStriped="true" ShowExtendButtons="true">
+        <Table TItem="HealthCheckReportItem" OnQueryAsync="OnQueryAsync" ShowSkeleton="true" IsBordered="true" IsStriped="true" ShowExtendButtons="true">
             <TableColumns>
                 <TableColumn @bind-Field="@context.Name" Lookup="@GetNameLookup()" Text="检查项"></TableColumn>
                 <TableColumn @bind-Field="@context.Description" Text="描述"></TableColumn>

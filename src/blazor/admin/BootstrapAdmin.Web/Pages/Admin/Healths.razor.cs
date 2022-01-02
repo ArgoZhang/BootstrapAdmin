@@ -38,12 +38,12 @@ public partial class Healths
         Client.BaseAddress = new Uri(NavigationManager.BaseUri);
     }
 
-    private async Task<QueryData<HealthsCheckReportItem>> OnQueryAsync(QueryPageOptions options)
+    private async Task<QueryData<HealthCheckReportItem>> OnQueryAsync(QueryPageOptions options)
     {
         var payload = await Client.GetStringAsync("/Healths");
-        var report = HealthsCheckHelper.Parse(payload);
+        var report = HealthCheckHelper.Parse(payload);
 
-        var ret = new QueryData<HealthsCheckReportItem>()
+        var ret = new QueryData<HealthCheckReportItem>()
         {
             IsSorted = true,
             IsFiltered = true,
@@ -80,7 +80,7 @@ public partial class Healths
         _ => "fa fa-times-circle"
     };
 
-    private Task OnRowButtonClick(HealthsCheckReportItem item) => DialogService.Show(new DialogOption()
+    private Task OnRowButtonClick(HealthCheckReportItem item) => DialogService.Show(new DialogOption()
     {
         Title = $"{LookupHelper.GetCheckItems().FirstOrDefault(i => i.Value == item.Name)?.Text} - 详细数据",
         IsScrolling = true,
