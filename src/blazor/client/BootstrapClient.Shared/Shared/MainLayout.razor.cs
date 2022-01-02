@@ -1,7 +1,7 @@
 ﻿using Bootstrap.Security.Blazor;
-using BootstrapAdmin.Extensions;
 using BootstrapAdmin.Web.Core;
 using BootstrapBlazor.Components;
+using BootstrapClient.Web.Shared.Extensions;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;

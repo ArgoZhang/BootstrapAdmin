@@ -1,8 +1,7 @@
 ﻿using BootstrapAdmin.DataAccess.Models;
-using BootstrapBlazor.Components;
 using Microsoft.AspNetCore.Components.Routing;
 
-namespace BootstrapAdmin.Extensions
+namespace BootstrapAdmin.Web.Extensions
 {
     /// <summary>
     /// 
