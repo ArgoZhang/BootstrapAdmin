@@ -45,14 +45,6 @@
     height: calc(100vh - var(--bb-layout-header-height) - var(--bb-tab-header-height) - var(--bb-footer-height));
 }
 
-.table-scroll {
-    overflow: hidden;
-}
-
-    .table-scroll:hover {
-        overflow-y: auto;
-    }
-
 .tabs-body-content .error-stack {
     height: calc(100vh - var(--bb-layout-header-height) - var(--bb-tab-header-height) - var(--bb-footer-height));
     overflow: auto;

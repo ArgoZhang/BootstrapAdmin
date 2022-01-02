@@ -1,1 +1,30 @@
 ﻿@page "/Admin/Healths"
+@using Bootstrap.Security.Blazor.HealthChecks
+
+<Card IsShadow="true">
+    <CardHeader>
+        <div class="d-flex align-items-center">
+            <span class="flex-fill">健康检查结果</span>
+            <span class="mx-3">@Duration</span>
+            <Tag Color="GetTagColor()" Icon="@GetTagIcon()">@GetTagText()</Tag>
+        </div>
+    </CardHeader>
+    <CardBody>
+        <Table TItem="HealthsCheckReportItem" OnQueryAsync="OnQueryAsync" ShowSkeleton="true" IsBordered="true" IsStriped="true" ShowExtendButtons="true">
+            <TableColumns>
+                <TableColumn @bind-Field="@context.Name" Lookup="@GetNameLookup()" Text="检查项"></TableColumn>
+                <TableColumn @bind-Field="@context.Description" Text="描述"></TableColumn>
+                <TableColumn @bind-Field="@context.Duration" Text="时长"></TableColumn>
+                <TableColumn @bind-Field="@context.Exception" Text="异常"></TableColumn>
+                <TableColumn @bind-Field="@context.Status" Text="检查结果">
+                    <Template Context="v">
+                        <Tag Icon="@GetTagIcon(v.Value)" Color="@GetTagColor(v.Value)">@GetTagText(v.Value)</Tag>
+                    </Template>
+                </TableColumn>
+            </TableColumns>
+            <RowButtonTemplate>
+                <TableCellButton Color="Color.Primary" Icon="fa fa-info-circle" Text="明细" OnClick="@(() => OnRowButtonClick(context))" />
+            </RowButtonTemplate>
+        </Table>
+    </CardBody>
+</Card>

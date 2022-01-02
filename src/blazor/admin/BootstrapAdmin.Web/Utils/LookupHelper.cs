@@ -15,4 +15,16 @@ static class LookupHelper
         new SelectedItem("App", "应用程序"),
         new SelectedItem("DB", "数据库")
     };
+
+    public static List<SelectedItem> GetCheckItems() => new()
+    {
+        new("db", "数据库"),
+        new("environment", "环境变量"),
+        new("dotnet-runtime", "运行时"),
+        new("file", "文件系统"),
+        new("gc", "回收器"),
+        new("app-mem", "程序内存"),
+        new("sys-mem", "系统内存"),
+        new("Gitee", "Gitee")
+    };
 }
