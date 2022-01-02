@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 // Website: https://www.blazor.zone or https://argozhang.github.io/
 
+using BootstrapAdmin.DataAccess.PetaPoco.Extensions;
 using BootstrapAdmin.Web.Extensions;
 using BootstrapBlazor.Components;
 using PetaPoco;
@@ -71,7 +72,7 @@ class DefaultDataService<TModel> : DataServiceBase<TModel> where TModel : class,
         {
             var items = await Database.PageAsync<TModel>(option);
 
-            ret.TotalCount = Convert.ToInt32(items.TotalItems);
+            ret.TotalCount = items.TotalItems.ToInt32();
             ret.Items = items.Items;
         }
         else
