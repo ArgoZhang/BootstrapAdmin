@@ -8,16 +8,16 @@ namespace BootstrapAdmin.Web.HealthChecks;
 /// </summary>
 class GiteeHttpHealthCheck : IHealthCheck
 {
-    private readonly GiteeHttpClient _client;
+    private GiteeHttpClient Client { get; set; }
+
     /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="client"></param>
     /// <param name="accessor"></param>
-    public GiteeHttpHealthCheck(GiteeHttpClient client, IHttpContextAccessor accessor)
+    public GiteeHttpHealthCheck(GiteeHttpClient client)
     {
-        _client = client;
-        _client.HttpClient.BaseAddress = new Uri($"{accessor.HttpContext!.Request.Scheme}://{accessor.HttpContext?.Request.Host}{accessor.HttpContext?.Request.PathBase}");
+        Client = client;
     }
 
     /// <summary>
@@ -38,7 +38,7 @@ class GiteeHttpHealthCheck : IHealthCheck
             object? result = null;
             try
             {
-                result = await _client.HttpClient.GetFromJsonAsync<object>($"/api/Gitee/{url}", cancellationToken);
+                result = await Client.HttpClient.GetFromJsonAsync<object>($"/api/Gitee/{url}", cancellationToken);
             }
             catch (Exception ex) { error = ex; }
             sw.Stop();
