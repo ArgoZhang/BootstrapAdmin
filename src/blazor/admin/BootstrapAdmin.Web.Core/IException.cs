@@ -1,6 +1,8 @@
-﻿namespace BootstrapAdmin.Web.Core;
+﻿using BootstrapAdmin.DataAccess.Models;
+
+namespace BootstrapAdmin.Web.Core;
 
 public interface IException
 {
-    bool Log(DataAccess.Models.Exception exception);
+    bool Log(Error exception);
 }

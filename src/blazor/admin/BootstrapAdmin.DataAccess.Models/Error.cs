@@ -5,7 +5,7 @@ namespace BootstrapAdmin.DataAccess.Models;
 /// <summary>
 /// 异常实体类
 /// </summary>
-public class Exception
+public class Error
 {
     /// <summary>
     /// 获得/设置 主键

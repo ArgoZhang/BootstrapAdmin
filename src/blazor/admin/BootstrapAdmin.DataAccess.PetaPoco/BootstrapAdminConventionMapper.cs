@@ -21,6 +21,7 @@ class BootstrapAdminConventionMapper : ConventionMapper
 
         ti.TableName = pocoType.Name switch
         {
+            "Error" => "Exceptions",
             _ => $"{pocoType.Name}s"
         };
         return ti;
