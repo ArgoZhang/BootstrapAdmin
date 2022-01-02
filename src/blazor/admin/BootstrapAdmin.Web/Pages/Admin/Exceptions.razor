@@ -2,7 +2,7 @@
 
 <AdminTable TItem="DataAccess.Models.Error"
             IsPagination="true" PageItemsSource="PageItemsSource"
-            ShowDefaultButtons="false" ShowExtendButtons="false" ShowAdvancedSearch="false"
+            ShowDefaultButtons="false" ShowExtendButtons="false" TableSearchModel="ErrorSearchModel"
             OnQueryAsync="OnQueryAsync">
     <ColumnsTemplete>
         <TableColumn @bind-Field="context.LogTime" Filterable="true" Searchable="true" Sortable="true"></TableColumn>
@@ -11,5 +11,12 @@
         <TableColumn @bind-Field="context.UserIp" Filterable="true" Searchable="true" Sortable="true"></TableColumn>
         <TableColumn @bind-Field="context.ExceptionType" Filterable="true" Searchable="true" Sortable="true"></TableColumn>
         <TableColumn @bind-Field="context.Message" Filterable="true" Searchable="true" Sortable="true"></TableColumn>
+        <TableColumn @bind-Field="context.Category" Lookup="CategroyLookup" Filterable="true" Searchable="true" Sortable="true"></TableColumn>
     </ColumnsTemplete>
+    <CustomerSearchTemplate>
+        @if (context is ErrorSearchModel searchModel)
+        {
+            <ErrorSearch @bind-Value="@searchModel"></ErrorSearch>
+        }
+    </CustomerSearchTemplate>
 </AdminTable>
