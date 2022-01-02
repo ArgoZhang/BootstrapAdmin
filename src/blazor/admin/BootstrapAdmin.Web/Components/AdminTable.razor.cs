@@ -60,6 +60,24 @@
         /// 
         /// </summary>
         [Parameter]
+        public bool ShowAdvancedSearch { get; set; } = true;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Parameter]
+        public bool ShowDefaultButtons { get; set; } = true;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Parameter]
+        public bool ShowExtendButtons { get; set; } = true;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Parameter]
         public ITableSearchModel? TableSearchModel { get; set; }
 
         /// <summary>
