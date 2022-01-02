@@ -152,4 +152,22 @@ class DictService : BaseDatabase, IDict
     public bool SaveWebFooter(string footer) => SaveDict(new Dict { Category = "网站设置", Name = "网站页脚", Code = footer });
 
     public bool SaveCookieExpiresPeriod(int expiresPeriod) => SaveDict(new Dict { Category = "网站设置", Name = "Cookie保留时长", Code = expiresPeriod.ToString() });
+
+    public string? GetProfileUrl(string appId) => GetUrlByName(appId, "个人中心地址");
+
+    public string? GetSettingsUrl(string appId) => GetUrlByName(appId, "系统设置地址");
+
+    public string? GetNotificationUrl(string appId) => GetUrlByName(appId, "系统通知地址");
+
+    private string? GetUrlByName(string appId, string dictName)
+    {
+        string? url = null;
+        var dicts = GetAll();
+        var appName = dicts.FirstOrDefault(d => d.Category == "应用程序" && d.Code == appId && d.Define == EnumDictDefine.System)?.Name;
+        if (!string.IsNullOrEmpty(appName))
+        {
+            url = dicts.FirstOrDefault(d => d.Category == appName && d.Name == dictName && d.Define == EnumDictDefine.Customer)?.Code;
+        }
+        return url;
+    }
 }

@@ -5,6 +5,7 @@ using BootstrapClient.Web.Shared.Extensions;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 
 namespace BootstrapClient.Web.Shared.Shared
@@ -29,6 +30,12 @@ namespace BootstrapClient.Web.Shared.Shared
         private bool ShowFooter { get; set; } = true;
 
         private IEnumerable<MenuItem>? MenuItems { get; set; }
+
+        private string? ProfileUrl { get; set; }
+
+        private string? SettingsUrl { get; set; }
+
+        private string? NotificationUrl { get; set; }
 
         /// <summary>
         /// 获得 当前用户登录显示名称
@@ -74,6 +81,31 @@ namespace BootstrapClient.Web.Shared.Shared
         [NotNull]
         private NavigationManager? NavigationManager { get; set; }
 
+        [Inject]
+        [NotNull]
+        private IConfiguration? Configuration { get; set; }
+
+        /// <summary>
+        /// OnInitialized 方法
+        /// </summary>
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+
+            // TODO: 后期重构 AppId 到统一的地方
+            var appId = Configuration.GetValue("AppId", "Blazor");
+            ProfileUrl = CombinePath(DictsService.GetProfileUrl(appId));
+            SettingsUrl = CombinePath(DictsService.GetSettingsUrl(appId));
+            NotificationUrl = CombinePath(DictsService.GetNotificationUrl(appId));
+        }
+
+        private string CombinePath(string? url)
+        {
+            url ??= "";
+            var hostUrl = AuthorizationOption.Value.AuthHost.TrimEnd('/');
+            return string.Join('/', hostUrl, url.TrimStart('/'));
+        }
+
         /// <summary>
         /// OnInitialized 方法
         /// </summary>
@@ -96,6 +128,8 @@ namespace BootstrapClient.Web.Shared.Shared
 
         private Task<bool> OnAuthorizing(string url) => SecurityService.AuhorizingNavigation(UserName, url);
 
-        private string GetAuthorUrl() => $"{AuthorizationOption.Value.AuthHost}/Account/Login?ReturnUrl={NavigationManager.Uri}";
+        private string GetAuthorUrl() => CombinePath($"/Account/Login?ReturnUrl={NavigationManager.Uri}");
+
+        private void OnLogout() => NavigationManager.NavigateTo(CombinePath("/Account/Logout"), true);
     }
 }

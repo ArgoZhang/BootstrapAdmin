@@ -8,8 +8,14 @@
     <Header>
         <span class="ml-3 flex-sm-fill d-none d-sm-block">Bootstrap of Blazor</span>
         <Widget></Widget>
-        <img src="_content/BootstrapClient.Web.Shared/images/Argo.png" class="layout-avatar-right" />
-        <span class="mx-3 d-none d-sm-block">@DisplayName</span>
+        <Logout ImageUrl="_content/BootstrapClient.Web.Shared/images/Argo.png" DisplayName="@DisplayName" UserName="@UserName">
+            <LinkTemplate>
+                <a href="@ProfileUrl"><i class="fa fa-suitcase"></i>个人中心</a>
+                <a href="@SettingsUrl"><i class="fa fa-cog"></i>设置</a>
+                <a href="@NotificationUrl"><i class="fa fa-bell"></i>通知<span id="logoutNoti" class="badge badge-pill badge-success"></span></a>
+                <a href="#" @onclick="OnLogout"><i class="fa fa-key"></i>注销</a>
+            </LinkTemplate>
+        </Logout>
         <div class="layout-drawer" @onclick="@(e => IsOpen = !IsOpen)"><i class="fa fa-gears"></i></div>
     </Header>
     <Side>

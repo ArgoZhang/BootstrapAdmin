@@ -111,5 +111,11 @@ namespace BootstrapAdmin.Web.Core
         /// <param name="expiresPeriod"></param>
         /// <returns></returns>
         bool SaveCookieExpiresPeriod(int expiresPeriod);
+
+        string? GetProfileUrl(string appId);
+
+        string? GetSettingsUrl(string appId);
+
+        string? GetNotificationUrl(string appId);
     }
 }
