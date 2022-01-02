@@ -11,7 +11,6 @@ namespace Bootstrap.DataAccess
     [TableName("DBLogs")]
     public class DBLog
     {
-
         /// <summary>
         /// 获得/设置 主键ID
         /// </summary>
