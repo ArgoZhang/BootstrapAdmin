@@ -10,7 +10,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\admin\BootstrapAdmin.Extensions\BootstrapAdmin.Extensions.csproj" />
     <ProjectReference Include="..\BootstrapClient.DataAccess\BootstrapClient.Web.DataAccess.csproj" />
   </ItemGroup>
 
