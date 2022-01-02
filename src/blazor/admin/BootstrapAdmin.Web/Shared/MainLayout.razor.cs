@@ -41,6 +41,10 @@ namespace BootstrapAdmin.Web.Shared
         [NotNull]
         private IBootstrapAdminService? SecurityService { get; set; }
 
+        [Inject]
+        [NotNull]
+        private ToastService? ToastService { get; set; }
+
         private string? Title { get; set; }
 
         private string? Footer { get; set; }
@@ -74,5 +78,12 @@ namespace BootstrapAdmin.Web.Shared
         private Task<bool> OnAuthorizing(string url) => SecurityService.AuhorizingNavigation(Context.UserName, url);
 
         private void OnLogout() => NavigationManager.NavigateTo("/Account/Logout", true);
+
+        private async Task OnErrorHandleAsync(ILogger logger, Exception ex)
+        {
+            await ToastService.Error(Title, ex.Message);
+
+            logger.LogError(ex, "ErrorLogger");
+        }
     }
 }

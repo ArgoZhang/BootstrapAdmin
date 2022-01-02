@@ -1,4 +1,5 @@
-﻿using BootstrapAdmin.Web.Core;
+﻿using BootstrapAdmin.DataAccess.Models;
+using BootstrapAdmin.Web.Core;
 using System.Collections.Specialized;
 using System.Data.Common;
 
@@ -16,11 +17,16 @@ public static class ExceptionsHelper
     /// <param name="ex"></param>
     /// <param name="additionalInfo"></param>
     /// <returns></returns>
-    public static void Log(IServiceProvider provider, Exception? ex, NameValueCollection additionalInfo)
+    public static void Log(IServiceProvider provider, EventId eventId, Exception? ex, NameValueCollection additionalInfo)
     {
-        if (ex != null)
+        // 1001 为 DB 异常防止循环调用
+        if (ex != null && eventId.Id != 1001)
         {
-            var errorPage = additionalInfo?["ErrorPage"] ?? (ex.GetType().Name.Length > 50 ? ex.GetType().Name.Substring(0, 50) : ex.GetType().Name);
+            // 数据库长度 50 需要截取
+            var errorPage = ex.GetType().Name.Length > 50
+                ? ex.GetType().Name[..50]
+                : ex.GetType().Name;
+
             var loopEx = ex;
             var category = "App";
             while (loopEx != null)
@@ -32,12 +38,12 @@ public static class ExceptionsHelper
                 }
                 loopEx = loopEx.InnerException;
             }
-            var exception = new DataAccess.Models.Exception
+            var exception = new Error
             {
                 AppDomainName = AppDomain.CurrentDomain.FriendlyName,
                 ErrorPage = errorPage,
-                UserId = additionalInfo?["UserId"],
-                UserIp = additionalInfo?["UserIp"],
+                UserId = "",
+                UserIp = "",
                 ExceptionType = ex.GetType().FullName,
                 Message = ex.Message,
                 StackTrace = ex.StackTrace,

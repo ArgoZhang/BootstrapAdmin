@@ -43,7 +43,7 @@ public static class ServicesExtensions
                     [nameof(db.LastCommand)] = db.LastCommand,
                     [nameof(db.LastArgs)] = string.Join(",", db.LastArgs)
                 });
-                logger.LogError(e.Exception, message);
+                logger.LogError(new EventId(1001, "GlobalException"), e.Exception, message);
             };
             var env = provider.GetRequiredService<IWebHostEnvironment>();
             if (env.IsDevelopment())
