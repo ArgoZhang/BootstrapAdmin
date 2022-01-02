@@ -10,8 +10,11 @@
         /// </summary>
         /// <param name="builder"></param>
         /// <returns></returns>
-        public static IApplicationBuilder UseBootstrapBlazorAdmin(this IApplicationBuilder builder)
+        public static WebApplication UseBootstrapBlazorAdmin(this WebApplication builder)
         {
+            // 开启健康检查
+            builder.MapBootstrapHealthChecks();
+
             builder.UseAuthentication();
             builder.UseAuthorization();
 

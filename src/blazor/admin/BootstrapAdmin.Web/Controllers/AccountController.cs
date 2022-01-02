@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Security.Claims;
 
-namespace Bootstrap.Admin.Controllers
+namespace BootstrapAdmin.Web.Controllers
 {
     /// <summary>
     /// Account controller.

@@ -4,6 +4,8 @@ using BootstrapAdmin.Web.Services.SMS.Tencent;
 using BootstrapAdmin.Web.Utils;
 //using Microsoft.EntityFrameworkCore;
 using System.Text;
+using System.Text.Encodings.Web;
+using System.Text.Unicode;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -19,16 +21,21 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddBootstrapBlazorAdmin(this IServiceCollection services)
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-
             services.AddLogging(logging => logging.AddFileLogger().AddCloudLogger().AddDBLogger(ExceptionsHelper.Log));
             services.AddCors();
             services.AddResponseCompression();
+
+            // 增加编码服务
+            services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
+
+            // 增加 健康检查服务
+            services.AddAdminHealthChecks();
 
             // 增加 BootstrapBlazor 组件
             services.AddBootstrapBlazor();
 
             // 增加手机短信服务
-            services.AddScoped<ISMSProvider, TencentSMSProvider>();
+            services.AddSingleton<ISMSProvider, TencentSMSProvider>();
 
             // 增加认证授权服务
             services.AddBootstrapAdminSecurity<AdminService>();
