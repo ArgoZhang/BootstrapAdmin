@@ -1,4 +1,5 @@
-﻿using BootstrapAdmin.Web.Services;
+﻿using BootstrapAdmin.Web.Core;
+using BootstrapAdmin.Web.Services;
 using BootstrapAdmin.Web.Services.SMS;
 using BootstrapAdmin.Web.Services.SMS.Tencent;
 using BootstrapAdmin.Web.Utils;
@@ -20,13 +21,9 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <param name="services"></param>
         public static IServiceCollection AddBootstrapBlazorAdmin(this IServiceCollection services)
         {
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             services.AddLogging(logging => logging.AddFileLogger().AddCloudLogger().AddDBLogger(ExceptionsHelper.Log));
             services.AddCors();
             services.AddResponseCompression();
-
-            // 增加编码服务
-            services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
 
             // 增加 健康检查服务
             services.AddAdminHealthChecks();

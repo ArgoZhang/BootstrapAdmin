@@ -29,9 +29,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\admin\Bootstrap.Admin\Bootstrap.Admin.csproj" />
-    <ProjectReference Include="..\..\src\admin\Bootstrap.DataAccess.MongoDB\Bootstrap.DataAccess.MongoDB.csproj" />
-    <ProjectReference Include="..\..\src\admin\Bootstrap.DataAccess\Bootstrap.DataAccess.csproj" />
+    <ProjectReference Include="..\..\src\mvc\admin\Bootstrap.Admin\Bootstrap.Admin.csproj" />
+    <ProjectReference Include="..\..\src\mvc\admin\Bootstrap.DataAccess.MongoDB\Bootstrap.DataAccess.MongoDB.csproj" />
+    <ProjectReference Include="..\..\src\mvc\admin\Bootstrap.DataAccess\Bootstrap.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>

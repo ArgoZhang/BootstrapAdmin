@@ -1,4 +1,4 @@
-﻿using BootstrapAdmin.Web.Services;
+﻿using BootstrapAdmin.Web.Core;
 using System.Text;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -14,8 +14,6 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <param name="services"></param>
         public static IServiceCollection AddBootstrapBlazorClient(this IServiceCollection services)
         {
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-
             services.AddCors();
             services.AddResponseCompression();
 

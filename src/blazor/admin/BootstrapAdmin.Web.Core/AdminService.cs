@@ -1,9 +1,11 @@
 ﻿using Bootstrap.Security.Blazor;
-using BootstrapAdmin.Web.Core;
 
-namespace BootstrapAdmin.Web.Services;
+namespace BootstrapAdmin.Web.Core;
 
-class AdminService : IBootstrapAdminService
+/// <summary>
+/// 
+/// </summary>
+public class AdminService : IBootstrapAdminService
 {
     private IUser User { get; set; }
 

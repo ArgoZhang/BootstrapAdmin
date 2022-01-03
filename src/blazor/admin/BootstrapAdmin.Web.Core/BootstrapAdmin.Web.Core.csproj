@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <PackageReference Include="Bootstrap.Security.Blazor" Version="6.0.0" />
+    <PackageReference Include="Bootstrap.Security.Blazor" Version="6.0.1-beta01" />
   </ItemGroup>
 
   <ItemGroup>
