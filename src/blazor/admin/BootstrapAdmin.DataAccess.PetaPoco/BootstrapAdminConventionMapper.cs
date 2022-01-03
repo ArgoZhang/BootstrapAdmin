@@ -57,9 +57,9 @@ class BootstrapAdminConventionMapper : ConventionMapper
     {
         var ci = base.GetColumnInfo(pocoProperty);
         var resultColumns = new List<string>
-            {
-                nameof(Models.Navigation.HasChildren)
-            };
+        {
+            nameof(Models.Navigation.HasChildren)
+        };
         ci.ResultColumn = resultColumns.Any(c => c == ci.ColumnName);
         return ci;
     }
