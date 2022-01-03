@@ -128,8 +128,8 @@ namespace BootstrapClient.Web.Shared.Shared
 
         private Task<bool> OnAuthorizing(string url) => SecurityService.AuhorizingNavigation(UserName, url);
 
-        private string GetAuthorUrl() => CombinePath($"/Account/Login?ReturnUrl={NavigationManager.Uri}");
+        private string LogoutUrl => CombinePath($"/Account/Logout");
 
-        private void OnLogout() => NavigationManager.NavigateTo(CombinePath("/Account/Logout"), true);
+        private string AuthorUrl => CombinePath($"/Account/Login?ReturnUrl={NavigationManager.Uri}");
     }
 }
