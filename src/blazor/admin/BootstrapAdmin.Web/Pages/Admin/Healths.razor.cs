@@ -54,6 +54,7 @@ public partial class Healths
         Duration = report.Duration;
         Status = report.Status;
 
+        StateHasChanged();
         return ret;
     }
 
