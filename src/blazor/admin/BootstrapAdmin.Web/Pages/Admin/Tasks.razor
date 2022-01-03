@@ -29,7 +29,7 @@
         </CardBody>
     </Card>
 
-    <AdminTable TItem="TasksModel" ExtendButtonColumnWidth="270" OnQueryAsync="OnQueryAsync">
+    <AdminTable TItem="TasksModel" ExtendButtonColumnWidth="270" OnQueryAsync="OnQueryAsync" IsFixedHeader="false">
         <ColumnsTemplete>
             <TableColumn @bind-Field="@context.Name" Sortable="true" Filterable="true" Searchable="true" Width="80"></TableColumn>
             <TableColumn @bind-Field="@context.CreateTime" Sortable="true" Filterable="true" Searchable="true" FormatString="yyyy-MM-dd HH:mm:ss"></TableColumn>

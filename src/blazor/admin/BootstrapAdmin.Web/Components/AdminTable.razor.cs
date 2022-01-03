@@ -54,6 +54,12 @@
         /// 
         /// </summary>
         [Parameter]
+        public bool IsFixedHeader { get; set; } = true;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Parameter]
         public bool IsTree { get; set; }
 
         /// <summary>
