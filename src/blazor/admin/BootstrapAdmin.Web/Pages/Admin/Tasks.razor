@@ -35,7 +35,7 @@
             <TableColumn @bind-Field="@context.CreateTime" Sortable="true" Filterable="true" Searchable="true" FormatString="yyyy-MM-dd HH:mm:ss"></TableColumn>
             <TableColumn @bind-Field="@context.LastRuntime" Sortable="true" Filterable="true" Searchable="true" FormatString="yyyy-MM-dd HH:mm:ss"></TableColumn>
             <TableColumn @bind-Field="@context.NextRuntime" Sortable="true" Filterable="true" Searchable="true" FormatString="yyyy-MM-dd HH:mm:ss"></TableColumn>
-            <TableColumn @bind-Field="@context.Trigger" Sortable="true" Filterable="true" Searchable="true"></TableColumn>
+            <TableColumn @bind-Field="@context.Trigger" Sortable="true" Filterable="true" Searchable="true" TextWrap="true"></TableColumn>
             <TableColumn @bind-Field="@context.LastRunResult" Sortable="true" Filterable="true" Searchable="true">
                 <Template Context="v">
                     <Tag Color="GetResultColor(v.Value)">@FormatResult(v.Value)</Tag>
