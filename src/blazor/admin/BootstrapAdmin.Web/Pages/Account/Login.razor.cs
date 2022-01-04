@@ -27,6 +27,10 @@ public partial class Login
     [NotNull]
     private IDict? DictsService { get; set; }
 
+    private string? UserName { get; set; }
+
+    private string? Password { get; set; }
+
     /// <summary>
     /// 
     /// </summary>
@@ -37,6 +41,11 @@ public partial class Login
         Title = DictsService.GetWebTitle();
 
         PostUrl = QueryHelper.AddQueryString("/Account/Login", "ReturnUrl", ReturnUrl ?? "");
+
+#if DEBUG
+        UserName = "Admin";
+        Password = "123789";
+#endif
     }
 
     void OnClickSwitchButton()
