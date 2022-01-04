@@ -44,6 +44,10 @@ public static class DatabaseExtensions
         {
             sql.OrderBy(sortOrder == SortOrder.Asc ? sortName : $"{sortName} desc");
         }
+        else if (options.SortList != null && options.SortList.Any())
+        {
+            sql.OrderBy(string.Join(",", options.SortList));
+        }
         return db.FetchAsync<TModel>(sql);
     }
 

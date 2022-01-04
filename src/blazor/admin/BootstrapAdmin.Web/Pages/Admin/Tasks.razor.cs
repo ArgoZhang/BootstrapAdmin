@@ -27,6 +27,8 @@ public partial class Tasks
 
     private bool IsDemo { get; set; }
 
+    private List<string> SortList { get; } = new List<string>() { "Name", "LastRuntime desc" };
+
     protected override void OnInitialized()
     {
         base.OnInitialized();
@@ -36,7 +38,7 @@ public partial class Tasks
 
     private Task<QueryData<TasksModel>> OnQueryAsync(QueryPageOptions options)
     {
-        var tasks = TaskServicesManager.ToList().OrderBy(i => i.Name).ToTasksModelList();
+        var tasks = TaskServicesManager.ToList().ToTasksModelList();
         var model = tasks.FirstOrDefault(i => i.Name == SelectedRows.FirstOrDefault()?.Name);
         SelectedRows.Clear();
         if (model != null)

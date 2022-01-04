@@ -21,6 +21,12 @@
         /// <summary>
         /// 
         /// </summary>
+        [Parameter]
+        public List<string>? SortList { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         [NotNull]
         [Parameter]
         public RenderFragment<TItem>? ColumnsTemplete { get; set; }
