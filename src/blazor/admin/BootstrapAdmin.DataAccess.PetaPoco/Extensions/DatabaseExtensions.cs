@@ -21,33 +21,7 @@ public static class DatabaseExtensions
     /// <returns></returns>
     public static Task<List<TModel>> FetchAsync<TModel>(this IDatabase db, QueryPageOptions options)
     {
-        var sql = new Sql();
-
-        // 处理模糊查询
-        if (options.Searchs.Any())
-        {
-            var searchTextSql = new Sql();
-            AnalysisExpression(options.Searchs.GetFilterLambda<TModel>(FilterLogic.Or), db, searchTextSql);
-            sql.Append(searchTextSql.ToString().Replace("\nAND", "\nOR"), searchTextSql.Arguments);
-        }
-
-        // 处理高级搜索与过滤
-        var filters = options.Filters.Concat(options.CustomerSearchs);
-        if (filters.Any())
-        {
-            AnalysisExpression(filters.GetFilterLambda<TModel>(), db, sql);
-        }
-
-        var sortName = options.SortName;
-        var sortOrder = options.SortOrder;
-        if (!string.IsNullOrEmpty(sortName) && sortOrder != SortOrder.Unset)
-        {
-            sql.OrderBy(sortOrder == SortOrder.Asc ? sortName : $"{sortName} desc");
-        }
-        else if (options.SortList != null && options.SortList.Any())
-        {
-            sql.OrderBy(string.Join(",", options.SortList));
-        }
+        var sql = db.ProcessQuery<TModel>(options);
         return db.FetchAsync<TModel>(sql);
     }
 
@@ -57,6 +31,12 @@ public static class DatabaseExtensions
     /// <typeparam name="TModel"></typeparam>
     /// <returns></returns>
     public static Task<Page<TModel>> PageAsync<TModel>(this IDatabase db, QueryPageOptions options)
+    {
+        var sql = db.ProcessQuery<TModel>(options);
+        return db.PageAsync<TModel>(options.PageIndex, options.PageItems, sql);
+    }
+
+    private static Sql ProcessQuery<TModel>(this IDatabase db, QueryPageOptions options)
     {
         var sql = new Sql();
 
@@ -68,21 +48,31 @@ public static class DatabaseExtensions
             sql.Append(searchTextSql.ToString().Replace("\nAND", "OR"), searchTextSql.Arguments);
         }
 
-        // 处理高级搜索与过滤
+        // 处理高级搜索
+        if (options.AdvanceSearchs.Any())
+        {
+            AnalysisExpression(options.AdvanceSearchs.GetFilterLambda<TModel>(), db, sql);
+        }
+
+        // 处理自定义搜索与过滤
         var filters = options.Filters.Concat(options.CustomerSearchs);
         if (filters.Any())
         {
             AnalysisExpression(filters.GetFilterLambda<TModel>(), db, sql);
         }
 
+        // 支持多列排序
         var sortName = options.SortName;
         var sortOrder = options.SortOrder;
-
         if (!string.IsNullOrEmpty(sortName) && sortOrder != SortOrder.Unset)
         {
             sql.OrderBy(sortOrder == SortOrder.Asc ? sortName : $"{sortName} desc");
         }
-        return db.PageAsync<TModel>(options.PageIndex, options.PageItems, sql);
+        else if (options.SortList != null && options.SortList.Any())
+        {
+            sql.OrderBy(string.Join(",", options.SortList));
+        }
+        return sql;
     }
 
     private static void AnalysisExpression(Expression expression, IDatabase db, Sql sql)

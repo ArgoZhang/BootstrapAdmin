@@ -65,7 +65,8 @@ class DefaultDataService<TModel> : DataServiceBase<TModel> where TModel : class,
         {
             IsSorted = true,
             IsFiltered = true,
-            IsSearch = true
+            IsSearch = true,
+            IsAdvanceSearch = option.AdvanceSearchs.Any() || option.CustomerSearchs.Any()
         };
 
         if (option.IsPage)
