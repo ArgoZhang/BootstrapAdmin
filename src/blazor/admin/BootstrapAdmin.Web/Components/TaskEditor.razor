@@ -1,0 +1,11 @@
+﻿<div class="row g-3 form-inline">
+    <div class="col-12">
+        <BootstrapInput @bind-Value="@Value.Name" placeholder="不可为空，50字以内" maxlength="50" />
+    </div>
+    <div class="col-12">
+        <Select @bind-Value="@Value.Trigger" Items="Items" />
+    </div>
+    <div class="col-12">
+        <Display TValue="string" Value="@TaskName" ShowLabel="true" DisplayText="内置任务" />
+    </div>
+</div>
