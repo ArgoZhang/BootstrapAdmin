@@ -1,4 +1,4 @@
-﻿using BootstrapAdmin.Web.Components;
+﻿using BootstrapAdmin.Web.Core;
 using BootstrapAdmin.Web.Extensions;
 using BootstrapAdmin.Web.Models;
 using Longbow.Tasks;
@@ -7,17 +7,75 @@ namespace BootstrapAdmin.Web.Pages.Admin;
 
 public partial class Tasks
 {
-    [NotNull]
-    private AdminTable<TasksModel>? TaskTable { get; set; }
+    private List<TasksModel> SelectedRows { get; set; } = new List<TasksModel>();
 
-    private static Task<QueryData<TasksModel>> OnQueryAsync(QueryPageOptions options)
+    private static IEnumerable<string> Jobs => new string[]
     {
-        var tasks = TaskServicesManager.ToList().ToTasksModelList();
+        "单次任务",
+        "周期任务",
+        "Cron 任务",
+        "超时任务",
+        "取消任务",
+        "禁用任务",
+        "SQL日志",
+        "健康检查"
+    };
+
+    [Inject]
+    [NotNull]
+    private IDict? DictService { get; set; }
+
+    private bool IsDemo { get; set; }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        IsDemo = DictService.IsDemo();
+    }
+
+    private Task<QueryData<TasksModel>> OnQueryAsync(QueryPageOptions options)
+    {
+        var tasks = TaskServicesManager.ToList().OrderBy(i => i.Name).ToTasksModelList();
+        var model = tasks.FirstOrDefault(i => i.Name == SelectedRows.FirstOrDefault()?.Name);
+        SelectedRows.Clear();
+        if (model != null)
+        {
+            SelectedRows.Add(model);
+        }
         return Task.FromResult(new QueryData<TasksModel>()
         {
             Items = tasks
         });
     }
+
+    private static Task<bool> OnSaveAsync(TasksModel model, ItemChangedType changedType)
+    {
+        var taskExecutor = new DefaultTaskExecutor();
+        TaskServicesManager.Remove(model.Name);
+        TaskServicesManager.GetOrAdd(model.Name, token => taskExecutor.Execute(token), TriggerBuilder.Build(model.Trigger));
+        return Task.FromResult(true);
+    }
+
+    private Task<bool> OnDeleteAsync(IEnumerable<TasksModel> models)
+    {
+        // 演示模式下禁止删除内置任务
+        if (IsDemo)
+        {
+            var m = models.ToList();
+            m.RemoveAll(m => Jobs.Any(i => i == m.Name));
+            models = m;
+        }
+
+        // 循环删除任务
+        foreach (var model in models)
+        {
+            TaskServicesManager.Remove(model.Name);
+        }
+        return Task.FromResult(true);
+    }
+
+    private bool OnShowButtonCallback(TasksModel model) => !IsDemo || !Jobs.Any(i => i == model.Name);
 
     private static Color GetResultColor(TriggerResult result) => result switch
     {
@@ -60,23 +118,27 @@ public partial class Tasks
         _ => "未知状态"
     };
 
-    private static Task OnPause(TasksModel model)
+    private Task OnPause(TasksModel model)
     {
         var task = TaskServicesManager.ToList().FirstOrDefault(i => i.Name == model.Name);
         if (task != null)
         {
             task.Status = SchedulerStatus.Ready;
         }
+        SelectedRows.Clear();
+        SelectedRows.Add(model);
         return Task.CompletedTask;
     }
 
-    private static Task OnRun(TasksModel model)
+    private Task OnRun(TasksModel model)
     {
         var task = TaskServicesManager.ToList().FirstOrDefault(i => i.Name == model.Name);
         if (task != null)
         {
             task.Status = SchedulerStatus.Running;
         }
+        SelectedRows.Clear();
+        SelectedRows.Add(model);
         return Task.CompletedTask;
     }
 
@@ -86,4 +148,14 @@ public partial class Tasks
     }
 
     private static bool OnCheckTaskStatus(TasksModel model) => model.Status != SchedulerStatus.Disabled;
+
+    class DefaultTaskExecutor : ITask
+    {
+        /// <summary>
+        /// 任务执行方法
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public Task Execute(CancellationToken cancellationToken) => Task.Delay(1000, cancellationToken);
+    }
 }

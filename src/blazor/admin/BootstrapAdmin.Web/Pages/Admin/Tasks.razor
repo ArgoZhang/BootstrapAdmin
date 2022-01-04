@@ -29,8 +29,14 @@
         </CardBody>
     </Card>
 
-    <AdminTable TItem="TasksModel" ExtendButtonColumnWidth="270" OnQueryAsync="OnQueryAsync" IsFixedHeader="false">
-        <ColumnsTemplete>
+    <AdminAlert Text="演示系统禁止修改内置后台任务" IsShow="IsDemo" />
+
+    <Table TItem="TasksModel" ExtendButtonColumnWidth="270" IsBordered="true" IsStriped="true"
+           IsMultipleSelect="true" IsFixedHeader="false"
+           ShowToolbar="true" ShowExtendButtons="true" SelectedRows="SelectedRows"
+           ShowEditButtonCallback="OnShowButtonCallback" ShowDeleteButtonCallback="OnShowButtonCallback"
+           OnQueryAsync="OnQueryAsync" OnDeleteAsync="OnDeleteAsync" OnSaveAsync="OnSaveAsync">
+        <TableColumns>
             <TableColumn @bind-Field="@context.Name" Sortable="true" Filterable="true" Searchable="true" Width="80"></TableColumn>
             <TableColumn @bind-Field="@context.CreateTime" Sortable="true" Filterable="true" Searchable="true" FormatString="yyyy-MM-dd HH:mm:ss"></TableColumn>
             <TableColumn @bind-Field="@context.LastRuntime" Sortable="true" Filterable="true" Searchable="true" FormatString="yyyy-MM-dd HH:mm:ss"></TableColumn>
@@ -46,11 +52,14 @@
                     <Tag Color="GetStatusColor(v.Value)" Icon="@GetStatusIcon(v.Value)">@FormatStatus(v.Value)</Tag>
                 </Template>
             </TableColumn>
-        </ColumnsTemplete>
+        </TableColumns>
+        <EditTemplate>
+            <TaskEditor @bind-Value="context" />
+        </EditTemplate>
         <RowButtonTemplate>
             <TableCellButton Size="Size.ExtraSmall" Color="Color.Warning" Icon="fa fa-pause-circle" Text="暂停" OnClick="() => OnPause(context)" IsShow="OnCheckTaskStatus(context)" AutoRenderTableWhenClick="true" />
             <TableCellButton Size="Size.ExtraSmall" Color="Color.Success" Icon="fa fa-play-circle" Text="运行" OnClick="() => OnRun(context)" IsShow="OnCheckTaskStatus(context)" AutoRenderTableWhenClick="true" />
             <TableCellButton Size="Size.ExtraSmall" Color="Color.Info" Icon="fa fa-info-circle" Text="日志" OnClick="() => OnLog(context)" IsShow="OnCheckTaskStatus(context)" AutoRenderTableWhenClick="true" />
         </RowButtonTemplate>
-    </AdminTable>
+    </Table>
 </div>
