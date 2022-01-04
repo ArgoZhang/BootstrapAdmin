@@ -19,7 +19,7 @@ class ExceptionService : BaseDatabase, IException
         return true;
     }
 
-    public (IEnumerable<Error> Items, int ItemsCount) GetAll(string? searchText, ExceptionFilter filter, int pageIndex, int pageItems, string? sortName, string sortOrder)
+    public (IEnumerable<Error> Items, int ItemsCount) GetAll(string? searchText, ExceptionFilter filter, int pageIndex, int pageItems, List<string> sortList)
     {
         var sql = new Sql();
 
@@ -45,18 +45,13 @@ class ExceptionService : BaseDatabase, IException
 
         sql.Where("LogTime >= @0 and LogTime <= @1", filter.Star, filter.End);
 
-        if (sortOrder == "Unset")
+        if (sortList.Any())
         {
-            sortOrder = "desc";
-        }
-
-        if (string.IsNullOrEmpty(sortName))
-        {
-            sql.OrderBy("Logtime desc", "ErrorPage", "UserId");
+            sql.OrderBy(string.Join(", ", sortList));
         }
         else
         {
-            sql.OrderBy($"{sortName} {sortOrder}");
+            sql.OrderBy("Logtime desc", "ErrorPage", "UserId");
         }
 
         var data = Database.Page<Error>(pageIndex, pageItems, sql);
