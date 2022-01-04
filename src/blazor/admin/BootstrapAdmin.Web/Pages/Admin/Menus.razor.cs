@@ -72,6 +72,9 @@ public partial class Menus
 
         return Task.FromResult(new QueryData<Navigation>()
         {
+            IsFiltered = true,
+            IsSearch = true,
+            IsSorted = true,
             Items = menus
         });
     }

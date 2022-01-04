@@ -25,6 +25,8 @@ public partial class Users
     [NotNull]
     private IRole? RoleService { get; set; }
 
+    private List<string> SortList { get; } = new List<string> { "UserName" };
+
     private async Task OnAssignmentGroups(User user)
     {
         var groups = GroupService.GetAll().ToSelectedItemList();
