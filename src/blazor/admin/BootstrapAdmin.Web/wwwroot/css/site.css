@@ -114,3 +114,7 @@
     text-overflow: ellipsis;
     color: var(--bs-info);
 }
+
+.btn-hc {
+    padding: 3px 12px;
+}

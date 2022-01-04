@@ -23,6 +23,9 @@ public partial class Healths
 
     private HealthStatus Status { get; set; }
 
+    [NotNull]
+    private Table<HealthCheckReportItem>? HealthTable { get; set; }
+
     [Inject]
     [NotNull]
     private DialogService? DialogService { get; set; }
@@ -56,6 +59,13 @@ public partial class Healths
 
         StateHasChanged();
         return ret;
+    }
+
+    private async Task OnCheck()
+    {
+        await HealthTable.ToggleLoading(true);
+        await HealthTable.QueryAsync();
+        await HealthTable.ToggleLoading(false);
     }
 
     private static List<SelectedItem> GetNameLookup() => LookupHelper.GetCheckItems();

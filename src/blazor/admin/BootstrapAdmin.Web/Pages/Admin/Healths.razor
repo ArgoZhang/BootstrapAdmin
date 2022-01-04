@@ -5,12 +5,14 @@
     <CardHeader>
         <div class="d-flex align-items-center">
             <span class="flex-fill">健康检查结果</span>
-            <span class="mx-3">@Duration</span>
-            <Tag Color="GetTagColor()" Icon="@GetTagIcon()">@GetTagText()</Tag>
+            <span class="me-3">@Duration</span>
+            <Tag class="me-3" Color="GetTagColor()" Icon="@GetTagIcon()">@GetTagText()</Tag>
+            <Button class="btn-hc" IsAsync="true" OnClickWithoutRender="OnCheck" Icon="fa fa-fw fa-refresh" Text="重新检查"></Button>
         </div>
     </CardHeader>
     <CardBody>
-        <Table TItem="HealthCheckReportItem" OnQueryAsync="OnQueryAsync" ShowSkeleton="true" IsBordered="true" IsStriped="true" ShowExtendButtons="true">
+        <Table TItem="HealthCheckReportItem" IsBordered="true" IsStriped="true" @ref="HealthTable"
+               OnQueryAsync="OnQueryAsync" ShowSkeleton="true" ShowLoading="true" ShowExtendButtons="true">
             <TableColumns>
                 <TableColumn @bind-Field="@context.Name" Lookup="@GetNameLookup()" Text="检查项"></TableColumn>
                 <TableColumn @bind-Field="@context.Description" Text="描述"></TableColumn>
