@@ -12,6 +12,7 @@ namespace BootstrapAdmin.DataAccess.Models
         /// <summary>
         /// 获得/设置 菜单主键ID
         /// </summary>
+        [NotNull]
         public string? Id { set; get; }
 
         /// <summary>

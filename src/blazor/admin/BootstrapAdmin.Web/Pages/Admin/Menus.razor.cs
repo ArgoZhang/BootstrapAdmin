@@ -1,6 +1,7 @@
 ﻿using BootstrapAdmin.DataAccess.Models;
 using BootstrapAdmin.Web.Core;
 using BootstrapAdmin.Web.Extensions;
+using BootstrapAdmin.Web.Models;
 using BootstrapAdmin.Web.Services;
 using BootstrapAdmin.Web.Utils;
 
@@ -38,6 +39,11 @@ public partial class Menus
     [NotNull]
     private List<SelectedItem>? Apps { get; set; }
 
+    [NotNull]
+    private List<SelectedItem>? ParementMenus { get; set; }
+
+    private ITableSearchModel? SearchModel { get; set; } = new MenusSearchModel();
+
     /// <summary>
     /// OnInitialized 方法
     /// </summary>
@@ -47,6 +53,9 @@ public partial class Menus
 
         Targets = LookupHelper.GetTargets();
         Apps = DictService.GetApps().ToSelectedItemList();
+
+        ParementMenus = NavigationService.GetAllMenus(AppContext.UserName).Where(s => s.ParentId == "0").Select(s => new SelectedItem(s.Id, s.Name)).ToList();
+        ParementMenus.Insert(0, new SelectedItem("0", "请选择"));
     }
 
     private async Task OnAssignmentRoles(DataAccess.Models.Navigation menu)
