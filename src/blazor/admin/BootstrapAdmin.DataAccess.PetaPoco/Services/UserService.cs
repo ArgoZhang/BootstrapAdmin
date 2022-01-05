@@ -179,7 +179,26 @@ class UserService : BaseDatabase, IUser
         var pwd = LgbCryptography.ComputeHash(password, salt);
         if (string.IsNullOrEmpty(id))
         {
-            Database.Execute("INSERT INTO Users (UserName, Password, PassSalt, DisplayName, RegisterTime, ApprovedTime, ApprovedBy, [Description]) values (@0, @1, @2, @3, @4, @4, 'system', '系统默认创建');", userName, pwd, salt, displayName, DateTime.Now);
+            try
+            {
+                if (!Database.Exists<User>("UserName = @0", userName))
+                {
+                    // 开始事务
+                    Database.BeginTransaction();
+                    // 插入用户
+                    Database.Execute("INSERT INTO Users (UserName, Password, PassSalt, DisplayName, RegisterTime, ApprovedTime, ApprovedBy, [Description]) values (@0, @1, @2, @3, @4, @4, 'system', '系统默认创建');", userName, pwd, salt, displayName, DateTime.Now);
+
+                    // 授权 Default 角色
+                    Database.Execute("insert into UserRole (UserID, RoleID) select ID, (select ID from Roles where RoleName = 'Default') RoleId from Users where UserName = @0", userName);
+                    // 结束事务
+                    Database.CompleteTransaction();
+                }
+            }
+            catch (Exception)
+            {
+                Database.AbortTransaction();
+                throw;
+            }
         }
         else
         {
