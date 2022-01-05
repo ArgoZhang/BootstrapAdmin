@@ -2,7 +2,9 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 // Website: https://www.blazor.zone or https://argozhang.github.io/
 
+using BootstrapAdmin.DataAccess.Models;
 using BootstrapAdmin.DataAccess.PetaPoco.Extensions;
+using BootstrapAdmin.Web.Core;
 using BootstrapAdmin.Web.Extensions;
 using BootstrapBlazor.Components;
 using PetaPoco;
@@ -17,10 +19,12 @@ class DefaultDataService<TModel> : DataServiceBase<TModel> where TModel : class,
 {
     private IDatabase Database { get; }
 
+    private IUser UserService { get; }
+
     /// <summary>
     /// 构造函数
     /// </summary>
-    public DefaultDataService(IDatabase db) => Database = db;
+    public DefaultDataService(IDatabase db, IUser userService) => (Database, UserService) = (db, userService);
 
     /// <summary>
     /// 删除方法
@@ -43,13 +47,20 @@ class DefaultDataService<TModel> : DataServiceBase<TModel> where TModel : class,
     /// <returns></returns>
     public override async Task<bool> SaveAsync(TModel model, ItemChangedType changedType)
     {
-        if (changedType == ItemChangedType.Add)
+        if (model is User user)
         {
-            await Database.InsertAsync(model);
+            UserService.SaveUser(user.Id, user.UserName, user.DisplayName, user.NewPassword);
         }
         else
         {
-            await Database.UpdateAsync(model);
+            if (changedType == ItemChangedType.Add)
+            {
+                await Database.InsertAsync(model);
+            }
+            else
+            {
+                await Database.UpdateAsync(model);
+            }
         }
         return true;
     }

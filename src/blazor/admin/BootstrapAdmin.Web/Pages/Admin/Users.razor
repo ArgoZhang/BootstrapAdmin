@@ -1,20 +1,39 @@
 ﻿@page "/Admin/Users"
 
-<AdminTable TItem="DataAccess.Models.User" ExtendButtonColumnWidth="270" SortList="SortList">
+<Table TItem="DataAccess.Models.User" IsBordered="true" IsStriped="true" IsMultipleSelect="true"
+       ExtendButtonColumnWidth="270" SortList="SortList"
+       ShowToolbar="true" ShowExtendButtons="true" ShowSearch="true"
+       UseInjectDataService="true">
     <TableToolbarTemplate>
         <TableToolbarButton TItem="DataAccess.Models.User" IsEnableWhenSelectedOneRow="true" Color="Color.Warning" Icon="fa fa-bank" Text="分配部门" OnClickCallback="users => OnAssignmentGroups(users.First())" />
         <TableToolbarButton TItem="DataAccess.Models.User" IsEnableWhenSelectedOneRow="true" Color="Color.Info" Icon="fa fa-sitemap" Text="分配角色" OnClickCallback="users => OnAssignmentRoles(users.First())" />
     </TableToolbarTemplate>
-    <ColumnsTemplete>
+    <TableColumns>
         <TableColumn @bind-Field="@context.UserName" Sortable="true" Filterable="true" Searchable="true"></TableColumn>
         <TableColumn @bind-Field="@context.DisplayName" Sortable="true" Filterable="true" Searchable="true"></TableColumn>
         <TableColumn @bind-Field="@context.RegisterTime" Sortable="true" Filterable="true"></TableColumn>
         <TableColumn @bind-Field="@context.ApprovedTime" Sortable="true" Filterable="true"></TableColumn>
         <TableColumn @bind-Field="@context.ApprovedBy" Sortable="true" Filterable="true"></TableColumn>
         <TableColumn @bind-Field="@context.Description" Sortable="true" Filterable="true"></TableColumn>
-    </ColumnsTemplete>
+    </TableColumns>
+    <EditTemplate>
+        <div class="row g-3 form-inline">
+            <div class="col-12 col-sm-6">
+                <BootstrapInput @bind-Value="@context.UserName" IsDisabled="GetDisabled(context.Id)" ValidateRules="UserRules" placeholder="不可为空，16字以内" maxlength="16" />
+            </div>
+            <div class="col-12 col-sm-6">
+                <BootstrapInput @bind-Value="@context.DisplayName" placeholder="不可为空，20字以内" maxlength="20" />
+            </div>
+            <div class="col-12 col-sm-6">
+                <BootstrapInput @bind-Value="@context.NewPassword" placeholder="不可为空，16字以内" maxlength="16" />
+            </div>
+            <div class="col-12 col-sm-6">
+                <BootstrapInput @bind-Value="@context.ConfirmPassword" placeholder="与登陆密码一致" ShowLabel="true" maxlength="16" />
+            </div>
+        </div>
+    </EditTemplate>
     <RowButtonTemplate>
         <TableCellButton Size="Size.ExtraSmall" Color="Color.Warning" Icon="fa fa-bank" Text="分配部门" OnClick="() => OnAssignmentGroups(context)" />
         <TableCellButton Size="Size.ExtraSmall" Color="Color.Info" Icon="fa fa-sitemap" Text="分配角色" OnClick="() => OnAssignmentRoles(context)" />
     </RowButtonTemplate>
-</AdminTable>
+</Table>

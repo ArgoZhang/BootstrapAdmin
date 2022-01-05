@@ -80,4 +80,14 @@ public interface IUser
     /// <param name="roles"></param>
     /// <returns></returns>
     bool TryCreateUserByPhone(string phone, string code, string appId, ICollection<string> roles);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="userName"></param>
+    /// <param name="displayName"></param>
+    /// <param name="password"></param>
+    /// <returns></returns>
+    bool SaveUser(string? id, string userName, string displayName, string password);
 }

@@ -172,4 +172,19 @@ class UserService : BaseDatabase, IUser
         }
         return ret;
     }
+
+    public bool SaveUser(string? id, string userName, string displayName, string password)
+    {
+        var salt = LgbCryptography.GenerateSalt();
+        var pwd = LgbCryptography.ComputeHash(password, salt);
+        if (string.IsNullOrEmpty(id))
+        {
+            Database.Execute("INSERT INTO Users (UserName, Password, PassSalt, DisplayName, RegisterTime, ApprovedTime, ApprovedBy, [Description]) values (@0, @1, @2, @3, @4, @4, 'system', '系统默认创建');", userName, pwd, salt, displayName, DateTime.Now);
+        }
+        else
+        {
+            Database.Update<User>("set Password = @1, PassSalt = @2, DisplayName = @3 where Id = @0", id, pwd, salt, displayName);
+        }
+        return true;
+    }
 }

@@ -43,12 +43,14 @@ class BootstrapAdminConventionMapper : ConventionMapper
     {
         var ci = base.GetColumnInfo(pocoProperty);
         var resultColumns = new List<string>
-            {
-                nameof(Models.User.Period),
-                nameof(Models.User.NewPassword),
-                nameof(Models.User.ConfirmPassword),
-                nameof(Models.User.IsReset)
-            };
+        {
+            nameof(Models.User.Password),
+            nameof(Models.User.PassSalt),
+            nameof(Models.User.NewPassword),
+            nameof(Models.User.ConfirmPassword),
+            nameof(Models.User.Period),
+            nameof(Models.User.IsReset)
+        };
         ci.ResultColumn = resultColumns.Any(c => c == ci.ColumnName);
         return ci;
     }
