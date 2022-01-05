@@ -40,32 +40,32 @@ public class MenusSearchModel : ITableSearchModel
         var ret = new List<IFilterAction>();
         if (!string.IsNullOrEmpty(Name))
         {
-            ret.Add(new SearchFilterAction(nameof(Navigation.Name), Name));
+            ret.Add(new SearchFilterAction(nameof(Navigation.Name), Name, FilterAction.Equal));
         }
 
         if (!string.IsNullOrEmpty(Url))
         {
-            ret.Add(new SearchFilterAction(nameof(Navigation.Url), Url));
+            ret.Add(new SearchFilterAction(nameof(Navigation.Url), Url, FilterAction.Equal));
         }
 
         if (Category.HasValue)
         {
-            ret.Add(new SearchFilterAction(nameof(Navigation.Category), Category.Value));
+            ret.Add(new SearchFilterAction(nameof(Navigation.Category), Category.Value, FilterAction.Equal));
         }
 
         if (!string.IsNullOrEmpty(Application))
         {
-            ret.Add(new SearchFilterAction(nameof(Navigation.Application), Application));
+            ret.Add(new SearchFilterAction(nameof(Navigation.Application), Application, FilterAction.Equal));
         }
 
         if (IsResource.HasValue)
         {
-            ret.Add(new SearchFilterAction(nameof(Navigation.IsResource), IsResource.Value));
+            ret.Add(new SearchFilterAction(nameof(Navigation.IsResource), IsResource.Value, FilterAction.Equal));
         }
 
         if (!string.IsNullOrEmpty(Target))
         {
-            ret.Add(new SearchFilterAction(nameof(Navigation.Target), Target));
+            ret.Add(new SearchFilterAction(nameof(Navigation.Target), Target, FilterAction.Equal));
         }
         return ret;
     }
