@@ -3,7 +3,7 @@
 
 <div class="wrap">
     <div class="container">
-        <form method="post" class="form-signin" action="@PostUrl">
+        <form method="post" class="form-signin" action="@PostUrl" @ref="LoginForm">
             <h2 class="form-signin-heading">@Title</h2>
             <div class="login-wrap">
                 @if (UseMobileLogin)
@@ -21,13 +21,16 @@
                         <BootstrapPassword name="password" PlaceHolder="密码" Value="@Password" />
                     </BootstrapInputGroup>
                 }
+                <div class="error-msg">
+                    用户名密码错误
+                </div>
                 <div class="d-flex justify-content-between mt-3">
                     <Checkbox @bind-Value="RememberPassword" Color="Color.Primary" ShowAfterLabel="true" DisplayText="记住密码自动登录" OnValueChanged="OnRememberPassword" />
                     <Block Condition="AllowMobile">
                         <SwitchButton @bind-ToggleState="UseMobileLogin" OnClick="OnClickSwitchButton" OffText="短信验证登录" OnText="用户密码登录" />
                     </Block>
                 </div>
-                <Button class="btn-login mt-3" ButtonType="ButtonType.Submit" Size="Size.Large" IsBlock="true" Color="Color.None" Text="登 录">
+                <Button class="btn-login mt-3" Size="Size.Large" IsBlock="true" Color="Color.None" Text="登 录" OnClickWithoutRender="OnLogin">
                     <Tooltip Placement="Placement.Top" Title="不填写密码默认使用 Gitee 认证" />
                 </Button>
                 <div class="d-flex justify-content-between mt-3">

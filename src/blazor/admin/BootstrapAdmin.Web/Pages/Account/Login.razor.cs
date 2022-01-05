@@ -1,4 +1,5 @@
 ﻿using BootstrapAdmin.Web.Core;
+using Microsoft.JSInterop;
 
 namespace BootstrapAdmin.Web.Pages.Account;
 
@@ -17,6 +18,8 @@ public partial class Login
 
     private bool RememberPassword { get; set; }
 
+    private ElementReference LoginForm { get; set; }
+
     private string? PostUrl { get; set; }
 
     [SupplyParameterFromQuery]
@@ -26,6 +29,10 @@ public partial class Login
     [Inject]
     [NotNull]
     private IDict? DictsService { get; set; }
+
+    [Inject]
+    [NotNull]
+    private IJSRuntime? JSRuntime { get; set; }
 
     private string? UserName { get; set; }
 
@@ -63,6 +70,8 @@ public partial class Login
         OnClickSwitchButton();
         return Task.CompletedTask;
     }
+
+    async Task OnLogin() => await JSRuntime.InvokeVoidAsync("$.login", LoginForm, UseMobileLogin, $"api/Login");
 
     void OnSignUp()
     {

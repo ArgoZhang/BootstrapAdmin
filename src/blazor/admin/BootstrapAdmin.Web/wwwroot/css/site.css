@@ -118,3 +118,16 @@
 .btn-hc {
     padding: 3px 12px;
 }
+
+.error-msg {
+    color: var(--bs-danger);
+    font-weight: bold;
+    margin-top: -87px;
+    position: absolute;
+    font-size: 80%;
+    display: none;
+}
+
+    .error-msg.show {
+        display: block;
+    }
