@@ -30,8 +30,6 @@ public partial class Users
     [NotNull]
     private IUser? UserService { get; set; }
 
-    private List<string> SortList { get; } = new List<string> { "UserName" };
-
     private static bool GetDisabled(string? id) => !string.IsNullOrEmpty(id);
 
     private List<IValidator> UserRules { get; } = new List<IValidator>();

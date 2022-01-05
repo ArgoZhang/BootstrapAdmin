@@ -186,7 +186,7 @@ class UserService : BaseDatabase, IUser
                     // 开始事务
                     Database.BeginTransaction();
                     // 插入用户
-                    Database.Execute("INSERT INTO Users (UserName, Password, PassSalt, DisplayName, RegisterTime, ApprovedTime, ApprovedBy, [Description]) values (@0, @1, @2, @3, @4, @4, 'system', '系统默认创建');", userName, pwd, salt, displayName, DateTime.Now);
+                    Database.Execute("INSERT INTO Users (UserName, Password, PassSalt, DisplayName, RegisterTime, ApprovedTime, ApprovedBy, Description) values (@0, @1, @2, @3, @4, @4, 'system', '系统默认创建');", userName, pwd, salt, displayName, DateTime.Now);
 
                     // 授权 Default 角色
                     Database.Execute("insert into UserRole (UserID, RoleID) select ID, (select ID from Roles where RoleName = 'Default') RoleId from Users where UserName = @0", userName);
