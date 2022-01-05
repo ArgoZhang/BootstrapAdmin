@@ -1,5 +1,4 @@
-﻿using BootstrapAdmin.DataAccess.Models;
-using BootstrapAdmin.Web.Core;
+﻿using BootstrapAdmin.Web.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
@@ -25,7 +24,7 @@ public class LoginController : ControllerBase
         {
             result.Authenticated = userService.Authenticate(user.UserName, user.Password);
         }
-        if(!result.Authenticated)
+        if (!result.Authenticated)
         {
             result.Error = "用户名或者密码错误";
         }

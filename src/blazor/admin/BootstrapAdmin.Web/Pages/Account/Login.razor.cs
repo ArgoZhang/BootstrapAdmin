@@ -55,6 +55,22 @@ public partial class Login
 #endif
     }
 
+    /// <summary>
+    /// OnAfterRenderAsync 方法
+    /// </summary>
+    /// <param name="firstRender"></param>
+    /// <returns></returns>
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+
+        if (firstRender)
+        {
+            // register javascript
+            await JSRuntime.InvokeVoidAsync("$.login", LoginForm, "api/Login");
+        }
+    }
+
     void OnClickSwitchButton()
     {
         var rem = RememberPassword ? "true" : "false";
@@ -70,8 +86,6 @@ public partial class Login
         OnClickSwitchButton();
         return Task.CompletedTask;
     }
-
-    async Task OnLogin() => await JSRuntime.InvokeVoidAsync("$.login", LoginForm, UseMobileLogin, $"api/Login");
 
     void OnSignUp()
     {
