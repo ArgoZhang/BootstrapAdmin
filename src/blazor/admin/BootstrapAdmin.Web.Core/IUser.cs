@@ -12,7 +12,7 @@ public interface IUser
     /// </summary>
     /// <param name="userName"></param>
     /// <returns></returns>
-    string? GetDisplayName(string? userName);
+    User? GetUserByUserName(string? userName);
 
     /// <summary>
     /// 通过用户名获取角色列表

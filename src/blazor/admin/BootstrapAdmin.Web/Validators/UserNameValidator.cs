@@ -23,7 +23,7 @@ public class UserNameValidator : IValidator
     /// <param name="results"></param>
     public void Validate(object? propertyValue, ValidationContext context, List<ValidationResult> results)
     {
-        var displayName = UserService.GetDisplayName(propertyValue?.ToString());
+        var displayName = UserService.GetUserByUserName(propertyValue?.ToString())?.DisplayName;
         if (!string.IsNullOrEmpty(displayName))
         {
             ErrorMessage = $"{context.DisplayName}已存在";

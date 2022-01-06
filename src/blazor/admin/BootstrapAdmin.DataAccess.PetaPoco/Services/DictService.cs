@@ -170,4 +170,14 @@ class DictService : BaseDatabase, IDict
         }
         return url;
     }
+
+    /// <summary>
+    /// 获取头像路径
+    /// </summary>
+    /// <returns></returns>
+    public string RetrieveIconFolderPath()
+    {
+        var dicts = GetAll();
+        return dicts.FirstOrDefault(d => d.Name == "头像路径" && d.Category == "头像地址" && d.Define == EnumDictDefine.System)?.Code ?? "images/uploder/";
+    }
 }
