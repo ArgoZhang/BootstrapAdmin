@@ -50,8 +50,8 @@ public static class ExceptionsHelper
                 LogTime = DateTime.Now,
                 Category = category
             };
-            var expceptionService = provider.GetRequiredService<IException>();
-            expceptionService.Log(exception);
+            //var expceptionService = provider.GetRequiredService<IException>();
+            //expceptionService.Log(exception);
         }
     }
 }

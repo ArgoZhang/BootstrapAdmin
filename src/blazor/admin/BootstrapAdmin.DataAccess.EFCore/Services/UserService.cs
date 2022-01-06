@@ -136,4 +136,14 @@ public class UserService : IUser
         }
         return ret;
     }
+
+    List<User> IUser.GetAll()
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool TryCreateUserByPhone(string phone, string code, string appId, ICollection<string> roles)
+    {
+        throw new NotImplementedException();
+    }
 }

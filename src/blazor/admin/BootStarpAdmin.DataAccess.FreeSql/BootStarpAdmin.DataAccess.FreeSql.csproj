@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BootstrapAdmin.DataAccess.Models\BootstrapAdmin.DataAccess.Models.csproj" />
+    <ProjectReference Include="..\BootstrapAdmin.Web.Core\BootstrapAdmin.Web.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BootstrapBlazor" Version="6.1.2-beta13" />
+    <PackageReference Include="FreeSql" Version="3.0.100" />
+    <PackageReference Include="FreeSql.Provider.Sqlite" Version="3.0.100" />
+  </ItemGroup>
+
+</Project>

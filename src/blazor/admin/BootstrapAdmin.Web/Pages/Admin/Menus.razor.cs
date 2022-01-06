@@ -65,10 +65,10 @@ public partial class Menus
     {
         var navs = NavigationService.GetAllMenus(AppContext.UserName);
         var menus = navs.Where(m => m.ParentId == "0");
-        foreach (var item in menus)
-        {
-            item.HasChildren = navs.Any(i => i.ParentId == item.Id);
-        }
+        //foreach (var item in menus)
+        //{
+        //    item.HasChildren = navs.Any(i => i.ParentId == item.Id);
+        //}
 
         return Task.FromResult(new QueryData<Navigation>()
         {

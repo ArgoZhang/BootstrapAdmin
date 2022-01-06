@@ -1,4 +1,5 @@
 ﻿using BootstrapAdmin.Web.Core;
+using BootstrapAdmin.Web.HealthChecks;
 using BootstrapAdmin.Web.Services;
 using BootstrapAdmin.Web.Services.SMS;
 using BootstrapAdmin.Web.Services.SMS.Tencent;
@@ -8,7 +9,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
 
-namespace Microsoft.Extensions.DependencyInjection
+namespace BootstrapAdmin.Web.Extensions
 {
     /// <summary>
     /// 
@@ -49,7 +50,8 @@ namespace Microsoft.Extensions.DependencyInjection
             //});
 
             // 增加 PetaPoco 数据服务
-            services.AddPetaPocoDataAccessServices();
+            //services.AddPetaPocoDataAccessServices();
+            services.AddFreeSql();
 
             // 增加后台任务
             services.AddTaskServices();

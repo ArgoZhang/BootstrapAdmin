@@ -1,6 +1,4 @@
-﻿using BootstrapAdmin.Web.HealthChecks;
-
-namespace Microsoft.Extensions.DependencyInjection;
+﻿namespace BootstrapAdmin.Web.HealthChecks;
 
 /// <summary>
 /// 健康检查扩展类
