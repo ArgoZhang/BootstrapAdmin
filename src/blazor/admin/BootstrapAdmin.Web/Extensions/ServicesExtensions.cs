@@ -52,10 +52,7 @@ namespace BootstrapAdmin.Web.Extensions
             {
                 var configuration = provider.GetRequiredService<IConfiguration>();
                 var connString = configuration.GetConnectionString("bb");
-                builder.UseConnectionString(FreeSql.DataType.Sqlite, connString)
-                    //开发环境:自动同步实体
-                    .UseAutoSyncStructure(true)
-                    .UseNoneCommandParameter(true);
+                builder.UseConnectionString(FreeSql.DataType.Sqlite, connString);
 #if DEBUG
                 //调试sql语句输出
                 builder.UseMonitorCommand(cmd => System.Console.WriteLine(cmd.CommandText));
