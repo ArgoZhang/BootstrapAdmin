@@ -1,5 +1,4 @@
 ﻿using BootstrapAdmin.DataAccess.Models;
-using BootstrapAdmin.DataAccess.PetaPoco.Extensions;
 using BootstrapAdmin.Web.Core;
 using PetaPoco;
 
@@ -55,6 +54,6 @@ class ExceptionService : BaseDatabase, IException
         }
 
         var data = Database.Page<Error>(pageIndex, pageItems, sql);
-        return (data.Items, data.TotalItems.ToInt32());
+        return (data.Items, Convert.ToInt32(data.TotalItems));
     }
 }
