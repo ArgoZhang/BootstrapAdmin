@@ -3,7 +3,6 @@
 // Website: https://www.blazor.zone or https://argozhang.github.io/
 
 using BootstrapAdmin.DataAccess.Models;
-using BootstrapAdmin.DataAccess.PetaPoco.Extensions;
 using BootstrapAdmin.Web.Core;
 using BootstrapAdmin.Web.Extensions;
 using BootstrapBlazor.Components;
@@ -84,7 +83,7 @@ class DefaultDataService<TModel> : DataServiceBase<TModel> where TModel : class,
         {
             var items = await Database.PageAsync<TModel>(option);
 
-            ret.TotalCount = items.TotalItems.ToInt32();
+            ret.TotalCount = Convert.ToInt32(items.TotalItems);
             ret.Items = items.Items;
         }
         else
