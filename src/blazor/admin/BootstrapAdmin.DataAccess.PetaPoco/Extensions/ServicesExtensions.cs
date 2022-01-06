@@ -26,14 +26,14 @@ public static class ServicesExtensions
     /// </summary>
     /// <param name="services"></param>
     /// <returns></returns>
-    public static IServiceCollection AddPetaPocoDataAccessServices(this IServiceCollection services)
+    public static IServiceCollection AddPetaPocoDataAccessServices(this IServiceCollection services, Action<IServiceProvider, IDatabaseBuildConfiguration> builder)
     {
         services.TryAddSingleton<IDatabase>(provider =>
         {
-            //TODO: 后期改造成自定适配
-            var configuration = provider.GetRequiredService<IConfiguration>();
-            var connString = configuration.GetConnectionString("bb");
-            var db = new Database<SQLiteDatabaseProvider>(connString, new BootstrapAdminConventionMapper());
+            var option = DatabaseConfiguration.Build();
+            builder(provider, option);
+            option.UsingDefaultMapper<BootstrapAdminConventionMapper>();
+            var db = new Database(option);
 
             var logger = provider.GetRequiredService<ILogger<Database>>();
             db.ExceptionThrown += (sender, e) =>

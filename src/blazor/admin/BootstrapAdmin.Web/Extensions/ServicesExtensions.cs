@@ -3,10 +3,8 @@ using BootstrapAdmin.Web.Services;
 using BootstrapAdmin.Web.Services.SMS;
 using BootstrapAdmin.Web.Services.SMS.Tencent;
 using BootstrapAdmin.Web.Utils;
-//using Microsoft.EntityFrameworkCore;
-using System.Text;
-using System.Text.Encodings.Web;
-using System.Text.Unicode;
+using PetaPoco;
+using PetaPoco.Providers;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -49,7 +47,13 @@ namespace Microsoft.Extensions.DependencyInjection
             //});
 
             // 增加 PetaPoco 数据服务
-            services.AddPetaPocoDataAccessServices();
+            services.AddPetaPocoDataAccessServices((provider, builder) =>
+            {
+                var configuration = provider.GetRequiredService<IConfiguration>();
+                var connString = configuration.GetConnectionString("bb");
+                builder.UsingProvider<SQLiteDatabaseProvider>()
+                       .UsingConnectionString(connString);
+            });
 
             // 增加后台任务
             services.AddTaskServices();
