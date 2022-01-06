@@ -4,10 +4,6 @@ using BootstrapAdmin.Web.Services;
 using BootstrapAdmin.Web.Services.SMS;
 using BootstrapAdmin.Web.Services.SMS.Tencent;
 using BootstrapAdmin.Web.Utils;
-//using Microsoft.EntityFrameworkCore;
-using System.Text;
-using System.Text.Encodings.Web;
-using System.Text.Unicode;
 
 namespace BootstrapAdmin.Web.Extensions
 {
@@ -51,7 +47,20 @@ namespace BootstrapAdmin.Web.Extensions
 
             // 增加 PetaPoco 数据服务
             //services.AddPetaPocoDataAccessServices();
-            services.AddFreeSql();
+
+            services.AddFreeSql((provider, builder) =>
+            {
+                var configuration = provider.GetRequiredService<IConfiguration>();
+                var connString = configuration.GetConnectionString("bb");
+                builder.UseConnectionString(FreeSql.DataType.Sqlite, connString)
+                    //开发环境:自动同步实体
+                    .UseAutoSyncStructure(true)
+                    .UseNoneCommandParameter(true);
+#if DEBUG
+                //调试sql语句输出
+                builder.UseMonitorCommand(cmd => System.Console.WriteLine(cmd.CommandText));
+#endif
+            });
 
             // 增加后台任务
             services.AddTaskServices();
