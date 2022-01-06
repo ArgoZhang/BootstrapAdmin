@@ -11,6 +11,10 @@ namespace BootstrapAdmin.DataAccess.Models
         /// 获得/设置 系统登录用户名
         /// </summary>
         [Display(Name = "登录名称")]
+        [Required(ErrorMessage = "{0}不可为空")]
+        [RegularExpression("^[a-zA-Z0-9_@.]*$", ErrorMessage = "登录名称包含非法字符")]
+        [MaxLength(16, ErrorMessage = "{0}不能超过 16 个字符")]
+        [NotNull]
         public string? UserName { get; set; }
 
         /// <summary>
@@ -18,7 +22,8 @@ namespace BootstrapAdmin.DataAccess.Models
         /// </summary>
         [Display(Name = "显示名称")]
         [Required(ErrorMessage = "{0}不可为空")]
-        [MaxLength(50, ErrorMessage = "{0}不能超过 50 个字符")]
+        [MaxLength(20, ErrorMessage = "{0}不能超过 20 个字符")]
+        [NotNull]
         public string? DisplayName { get; set; }
 
         /// <summary>
@@ -49,6 +54,8 @@ namespace BootstrapAdmin.DataAccess.Models
         /// </summary>
         [Display(Name = "密码")]
         [Required(ErrorMessage = "{0}不可为空")]
+        [MaxLength(16, ErrorMessage = "{0}不能超过 16 个字符")]
+        [NotNull]
         public string? Password { get; set; }
 
         /// <summary>
@@ -78,6 +85,7 @@ namespace BootstrapAdmin.DataAccess.Models
         /// 获得/设置 用户的申请理由
         /// </summary>
         [Display(Name = "说明")]
+        [NotNull]
         public string? Description { get; set; }
 
         /// <summary>
@@ -90,6 +98,7 @@ namespace BootstrapAdmin.DataAccess.Models
         /// </summary>
         [Display(Name = "新密码")]
         [Required(ErrorMessage = "{0}不可为空")]
+        [MaxLength(16, ErrorMessage = "{0}不能超过 16 个字符")]
         [NotNull]
         public string? NewPassword { get; set; }
 
@@ -99,6 +108,7 @@ namespace BootstrapAdmin.DataAccess.Models
         [Display(Name = "确认密码")]
         [Required(ErrorMessage = "{0}不可为空")]
         [Compare("NewPassword", ErrorMessage = "{0}与{1}不一致")]
+        [MaxLength(16, ErrorMessage = "{0}不能超过 16 个字符")]
         [NotNull]
         public string? ConfirmPassword { get; set; }
 

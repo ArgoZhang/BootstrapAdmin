@@ -117,5 +117,7 @@ namespace BootstrapAdmin.Web.Core
         string? GetSettingsUrl(string appId);
 
         string? GetNotificationUrl(string appId);
+
+        string RetrieveIconFolderPath();
     }
 }

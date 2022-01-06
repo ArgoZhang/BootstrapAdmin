@@ -1,0 +1,125 @@
+﻿.form-signin-heading {
+    margin: 0;
+    padding: 20px 15px;
+    text-align: center;
+    background-color: #41cac0;
+    border-radius: 5px 5px 0 0;
+    color: #fff;
+}
+
+.login-wrap {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
+}
+
+    .login-wrap .card, .login-wrap .card:hover, .modal .card, .modal .card:hover {
+        border: 1px solid #84bbe2;
+    }
+
+.login-sms,
+.is-mobile .login-up {
+    display: none;
+}
+
+.is-mobile .login-sms {
+    display: block;
+}
+
+::deep .btn-login {
+    background: #f67a6e;
+    border-color: transparent;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 300;
+    font-family: 'Open Sans', sans-serif;
+    box-shadow: 0 4px #e56b60;
+    line-height: 1;
+}
+
+    ::deep .btn-login:focus {
+        box-shadow: 0 4px #e56b60;
+    }
+
+::deep .input-group-text {
+    background-color: #6bc3f4;
+    border-color: #1ca0e9;
+}
+
+::deep .form-check-label {
+    color: #212529;
+}
+
+::deep .form-control {
+    border-color: #1ca0e9 !important;
+}
+
+::deep .divider-wrap {
+    background-color: #7c86bb;
+}
+
+::deep .divider-text {
+    background-color: #a7daf9;
+}
+
+.login-list {
+    display: flex;
+    justify-content: space-between;
+}
+
+    .login-list ::deep img {
+        width: 32px;
+        height: 32px;
+    }
+
+::deep .btn-sms {
+    width: 140px;
+}
+
+@media (max-width: 767px) {
+    .form-signin {
+        margin: 0 auto;
+        background: #fff;
+        border-radius: 5px;
+        max-width: 320px;
+        border: solid 1px #ddd;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.125);
+    }
+}
+
+@media (min-width: 768px) {
+    .form-signin-heading {
+        padding: 28px 0;
+        background-color: transparent;
+    }
+
+    .login-wrap {
+        width: 300px;
+        height: 274px;
+        position: relative;
+        left: 346px;
+        justify-content: center;
+    }
+
+    .slidercaptcha {
+        width: 300px;
+    }
+
+        .slidercaptcha, .slidercaptcha.oauth {
+            height: 280px;
+        }
+
+            .slidercaptcha.card .card-body {
+                padding: 15px 15px 0 15px;
+            }
+
+    .login-footer {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+    }
+
+        .login-footer .login-footer-body li a {
+            color: #e0e0e0;
+        }
+}

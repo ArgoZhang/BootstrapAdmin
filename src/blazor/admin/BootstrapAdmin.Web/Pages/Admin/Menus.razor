@@ -1,11 +1,14 @@
 ﻿@page "/Admin/Menus"
 
-<AdminTable TItem="DataAccess.Models.Navigation" IsTree="true" OnTreeExpand="OnTreeExpand" ExtendButtonColumnWidth="200" OnQueryAsync="OnQueryAsync">
+<Table TItem="DataAccess.Models.Navigation" IsBordered="true" IsStriped="true" IsMultipleSelect="true"
+       IsFixedHeader="true" IsTree="true" OnTreeExpand="OnTreeExpand" ExtendButtonColumnWidth="200"
+       ShowToolbar="true" ShowExtendButtons="true" ShowSearch="true" CustomerSearchModel="SearchModel"
+       UseInjectDataService="true" OnQueryAsync="OnQueryAsync">
     <TableToolbarTemplate>
         <TableToolbarButton TItem="DataAccess.Models.Navigation" IsEnableWhenSelectedOneRow="true" Color="Color.Info" Icon="fa fa-sitemap" Text="分配角色" OnClickCallback="menus => OnAssignmentRoles(menus.First())" />
     </TableToolbarTemplate>
-    <ColumnsTemplete>
-        <TableColumn @bind-Field="@context.Name" Filterable="true" Searchable="true" Width="200"></TableColumn>
+    <TableColumns>
+        <TableColumn @bind-Field="@context.Name" Filterable="true" Width="200"></TableColumn>
         <TableColumn @bind-Field="@context.Order" Width="50"></TableColumn>
         <TableColumn @bind-Field="@context.Icon" Width="50" Align="Alignment.Center">
             <Template Context="v">
@@ -17,8 +20,45 @@
         <TableColumn @bind-Field="@context.Target" Filterable="true" Lookup="Targets"></TableColumn>
         <TableColumn @bind-Field="@context.IsResource" Filterable="true"></TableColumn>
         <TableColumn @bind-Field="@context.Application" Filterable="true" Lookup="Apps"></TableColumn>
-    </ColumnsTemplete>
+    </TableColumns>
+    <EditTemplate Context="v">
+        <div class="row g-3 form-inline">
+            <div class="col-12 col-sm-6 col-md-6">
+                <BootstrapInput @bind-Value="v.Name" DisplayText="菜单名称" ShowLabel="true"></BootstrapInput>
+            </div>
+            <div class="col-12 col-sm-6 col-md-6">
+                <Select @bind-Value="v.ParentId" Items="@ParementMenus" IsDisabled="@(v.ParentId == "0")" DisplayText="父级菜单" ShowLabel="true"></Select>
+            </div>
+            <div class="col-12 col-sm-6 col-md-6">
+                <BootstrapInput @bind-Value="v.Order"></BootstrapInput>
+            </div>
+            <div class="col-12 col-sm-6 col-md-6">
+                <BootstrapInput @bind-Value="v.Icon"></BootstrapInput>
+            </div>
+            <div class="col-12">
+                <BootstrapInput @bind-Value="v.Url"></BootstrapInput>
+            </div>
+            <div class="col-12 col-sm-6 col-md-6">
+                <Select @bind-Value="v.Category"></Select>
+            </div>
+            <div class="col-12 col-sm-6 col-md-6">
+                <Select Items="@Targets" @bind-Value="v.Target"></Select>
+            </div>
+            <div class="col-12 col-sm-6 col-md-6">
+                <Select @bind-Value="v.IsResource"></Select>
+            </div>
+            <div class="col-12 col-sm-6 col-md-6">
+                <Select Items="@Apps" @bind-Value="v.Application"></Select>
+            </div>
+        </div>
+    </EditTemplate>
     <RowButtonTemplate>
         <TableCellButton Size="Size.ExtraSmall" Color="Color.Info" Icon="fa fa-sitemap" Text="分配角色" OnClick="() => OnAssignmentRoles(context)" />
     </RowButtonTemplate>
-</AdminTable>
+    <CustomerSearchTemplate>
+        @if (context is MenusSearchModel searchModel)
+        {
+            <MenusSearch @bind-Value="searchModel"></MenusSearch>
+        }
+    </CustomerSearchTemplate>
+</Table>

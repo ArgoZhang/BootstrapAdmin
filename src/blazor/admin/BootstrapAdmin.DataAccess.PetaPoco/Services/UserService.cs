@@ -43,7 +43,7 @@ class UserService : BaseDatabase, IUser
     /// </summary>
     /// <param name="userName"></param>
     /// <returns></returns>
-    public string? GetDisplayName(string? userName) => string.IsNullOrEmpty(userName) ? "" : Database.ExecuteScalar<string>("select DisplayName from Users where UserName = @0", userName);
+    public User? GetUserByUserName(string? userName) => string.IsNullOrEmpty(userName) ? null : Database.FirstOrDefault<User>("Where UserName = @0", userName);
 
     /// <summary>
     /// 
@@ -128,7 +128,7 @@ class UserService : BaseDatabase, IUser
     }
 
     /// <summary>
-    /// 
+    /// 创建手机用户
     /// </summary>
     /// <param name="phone"></param>
     /// <param name="appId"></param>
@@ -139,11 +139,13 @@ class UserService : BaseDatabase, IUser
         var ret = false;
         try
         {
-            var user = GetAll().FirstOrDefault(user => user.UserName == phone);
+            var salt = LgbCryptography.GenerateSalt();
+            var pwd = LgbCryptography.ComputeHash(code, salt);
+            var user = Database.FirstOrDefault<User>("Where UserName = @0", phone);
             if (user == null)
             {
-                var salt = LgbCryptography.GenerateSalt();
                 Database.BeginTransaction();
+                // 插入用户
                 user = new User()
                 {
                     ApprovedBy = "Mobile",
@@ -157,11 +159,16 @@ class UserService : BaseDatabase, IUser
                     App = appId
                 };
                 Database.Save(user);
-
                 // Authorization
                 var roleIds = Database.Fetch<string>("select ID from Roles where RoleName in (@roles)", new { roles });
                 Database.InsertBatch("UserRole", roleIds.Select(g => new { RoleID = g, UserID = user.Id }));
                 Database.CompleteTransaction();
+            }
+            else
+            {
+                user.PassSalt = salt;
+                user.Password = pwd;
+                Database.Update(user);
             }
             ret = true;
         }
@@ -169,6 +176,53 @@ class UserService : BaseDatabase, IUser
         {
             Database.AbortTransaction();
             throw;
+        }
+        return ret;
+    }
+
+    public bool SaveUser(string userName, string displayName, string password)
+    {
+        var salt = LgbCryptography.GenerateSalt();
+        var pwd = LgbCryptography.ComputeHash(password, salt);
+        var user = Database.FirstOrDefault<User>("Where UserName = @0", userName);
+        bool ret;
+        if (user == null)
+        {
+            try
+            {
+                // 开始事务
+                Database.BeginTransaction();
+                user = new User()
+                {
+                    ApprovedBy = "System",
+                    ApprovedTime = DateTime.Now,
+                    DisplayName = "手机用户",
+                    UserName = userName,
+                    Icon = "default.jpg",
+                    Description = "系统默认创建",
+                    PassSalt = salt,
+                    Password = pwd
+                };
+                Database.Save(user);
+                // 授权 Default 角色
+                Database.Execute("insert into UserRole (UserID, RoleID) select ID, (select ID from Roles where RoleName = 'Default') RoleId from Users where UserName = @0", userName);
+                // 结束事务
+                Database.CompleteTransaction();
+                ret = true;
+            }
+            catch (Exception)
+            {
+                Database.AbortTransaction();
+                throw;
+            }
+        }
+        else
+        {
+            user.DisplayName = displayName;
+            user.PassSalt = salt;
+            user.Password = pwd;
+            Database.Update(user);
+            ret = true;
         }
         return ret;
     }

@@ -12,7 +12,7 @@ public interface IUser
     /// </summary>
     /// <param name="userName"></param>
     /// <returns></returns>
-    string? GetDisplayName(string? userName);
+    User? GetUserByUserName(string? userName);
 
     /// <summary>
     /// 通过用户名获取角色列表
@@ -80,4 +80,13 @@ public interface IUser
     /// <param name="roles"></param>
     /// <returns></returns>
     bool TryCreateUserByPhone(string phone, string code, string appId, ICollection<string> roles);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="userName"></param>
+    /// <param name="displayName"></param>
+    /// <param name="password"></param>
+    /// <returns></returns>
+    bool SaveUser(string userName, string displayName, string password);
 }

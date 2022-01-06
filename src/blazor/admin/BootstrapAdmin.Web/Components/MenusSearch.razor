@@ -1,0 +1,20 @@
+﻿<div class="row g-3 form-inline">
+    <div class="col-sm-6 col-md-6">
+        <BootstrapInput @bind-Value="Value.Name" ShowLabel="true" />
+    </div>
+    <div class="col-sm-6 col-md-6">
+        <BootstrapInput @bind-Value="Value.Url" ShowLabel="true" />
+    </div>
+    <div class="col-sm-6 col-md-6">
+        <Select Items="@CategoryItems" @bind-Value="Value.Category" ShowLabel="true"></Select>
+    </div>
+    <div class="col-12 col-sm-6 col-md-6">
+        <Select Items="@TargetItems" @bind-Value="Value.Target" ShowLabel="true"></Select>
+    </div>
+    <div class="col-sm-6 col-md-6">
+        <Select Items="@ResourceItems" @bind-Value="Value.IsResource" ShowLabel="true"></Select>
+    </div>
+    <div class="col-sm-6 col-md-6">
+        <Select Items="@AppItems" @bind-Value="Value.Application" ShowLabel="true"></Select>
+    </div>
+</div>

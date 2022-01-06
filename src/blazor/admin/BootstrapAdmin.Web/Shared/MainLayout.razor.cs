@@ -1,4 +1,5 @@
 ﻿using Bootstrap.Security.Blazor;
+using BootstrapAdmin.DataAccess.Models;
 using BootstrapAdmin.Web.Core;
 using BootstrapAdmin.Web.Extensions;
 using BootstrapAdmin.Web.Services;
@@ -49,6 +50,9 @@ namespace BootstrapAdmin.Web.Shared
 
         private string? UserName { get; set; }
 
+        [NotNull]
+        private string? Icon { get; set; }
+
         /// <summary>
         /// OnInitializedAsync 方法
         /// </summary>
@@ -60,15 +64,19 @@ namespace BootstrapAdmin.Web.Shared
 
             if (!string.IsNullOrEmpty(UserName))
             {
-                DisplayName = UsersService.GetDisplayName(UserName);
+                var user = UsersService.GetUserByUserName(UserName);
+                DisplayName = user?.DisplayName ?? "未注册账户";
                 Context.UserName = UserName;
                 Context.DisplayName = DisplayName;
+                Icon = string.IsNullOrEmpty(user?.Icon) ? "images/uploader/default.jpg" : GetIcon(user.Icon);
 
                 MenuItems = NavigationsService.GetAllMenus(UserName).ToAdminMenus();
             }
 
             Title = DictsService.GetWebTitle();
             Footer = DictsService.GetWebFooter();
+
+            string GetIcon(string icon) => icon.Contains("://", StringComparison.OrdinalIgnoreCase) ? icon : string.Format("{0}{1}", DictsService.RetrieveIconFolderPath(), icon);
         }
 
         private Task<bool> OnAuthorizing(string url) => SecurityService.AuhorizingNavigation(Context.UserName, url);

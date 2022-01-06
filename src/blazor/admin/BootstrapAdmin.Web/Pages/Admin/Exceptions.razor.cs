@@ -7,7 +7,7 @@ namespace BootstrapAdmin.Web.Pages.Admin;
 
 public partial class Exceptions
 {
-    private List<int> PageItemsSource { get; } = new List<int> { 5, 20, 40, 80, 100, 200 };
+    private List<int> PageItemsSource { get; } = new List<int> { 20, 40, 80, 100, 200 };
 
     private ErrorSearchModel ErrorSearchModel { get; set; } = new ErrorSearchModel();
 
@@ -43,7 +43,16 @@ public partial class Exceptions
             End = ErrorSearchModel.LogTime.End,
         };
 
-        var (Items, ItemsCount) = ExceptionService.GetAll(options.SearchText, filter, options.PageIndex, options.PageItems, options.SortName, options.SortOrder.ToString());
+        var sortList = new List<string>();
+        if (options.SortOrder != SortOrder.Unset && !string.IsNullOrEmpty(options.SortName))
+        {
+            sortList.Add($"{options.SortName} {options.SortOrder}");
+        }
+        else if (options.SortList != null)
+        {
+            sortList.AddRange(options.SortList);
+        }
+        var (Items, ItemsCount) = ExceptionService.GetAll(options.SearchText, filter, options.PageIndex, options.PageItems, sortList);
 
         ret.TotalCount = ItemsCount;
         ret.Items = Items;

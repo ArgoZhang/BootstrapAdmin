@@ -6,5 +6,5 @@ public interface IException
 {
     bool Log(Error exception);
 
-    (IEnumerable<Error> Items, int ItemsCount) GetAll(string? searchText, ExceptionFilter filter, int pageIndex, int pageItems, string? sortName, string sortOrder);
+    (IEnumerable<Error> Items, int ItemsCount) GetAll(string? searchText, ExceptionFilter filter, int pageIndex, int pageItems, List<string> sortList);
 }
