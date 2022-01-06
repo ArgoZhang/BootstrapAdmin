@@ -141,7 +141,7 @@ class UserService : BaseDatabase, IUser
         {
             var salt = LgbCryptography.GenerateSalt();
             var pwd = LgbCryptography.ComputeHash(code, salt);
-            var user = Database.FirstOrDefault<User>("UserName = @0", phone);
+            var user = Database.FirstOrDefault<User>("Where UserName = @0", phone);
             if (user == null)
             {
                 Database.BeginTransaction();
@@ -184,7 +184,7 @@ class UserService : BaseDatabase, IUser
     {
         var salt = LgbCryptography.GenerateSalt();
         var pwd = LgbCryptography.ComputeHash(password, salt);
-        var user = Database.FirstOrDefault<User>("UserName = @0", userName);
+        var user = Database.FirstOrDefault<User>("Where UserName = @0", userName);
         bool ret;
         if (user == null)
         {
