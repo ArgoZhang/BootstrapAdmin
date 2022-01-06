@@ -84,10 +84,9 @@ public interface IUser
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="id"></param>
     /// <param name="userName"></param>
     /// <param name="displayName"></param>
     /// <param name="password"></param>
     /// <returns></returns>
-    bool SaveUser(string? id, string userName, string displayName, string password);
+    bool SaveUser(string userName, string displayName, string password);
 }

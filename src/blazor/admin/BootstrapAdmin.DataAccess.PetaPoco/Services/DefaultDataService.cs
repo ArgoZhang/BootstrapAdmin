@@ -49,7 +49,7 @@ class DefaultDataService<TModel> : DataServiceBase<TModel> where TModel : class,
     {
         if (model is User user)
         {
-            UserService.SaveUser(user.Id, user.UserName, user.DisplayName, user.NewPassword);
+            UserService.SaveUser(user.UserName, user.DisplayName, user.NewPassword);
         }
         else
         {

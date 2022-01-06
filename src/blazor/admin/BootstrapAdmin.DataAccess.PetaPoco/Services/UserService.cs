@@ -128,7 +128,7 @@ class UserService : BaseDatabase, IUser
     }
 
     /// <summary>
-    /// 
+    /// 创建手机用户
     /// </summary>
     /// <param name="phone"></param>
     /// <param name="appId"></param>
@@ -139,11 +139,13 @@ class UserService : BaseDatabase, IUser
         var ret = false;
         try
         {
-            var user = GetAll().FirstOrDefault(user => user.UserName == phone);
+            var salt = LgbCryptography.GenerateSalt();
+            var pwd = LgbCryptography.ComputeHash(code, salt);
+            var user = Database.FirstOrDefault<User>("UserName = @0", phone);
             if (user == null)
             {
-                var salt = LgbCryptography.GenerateSalt();
                 Database.BeginTransaction();
+                // 插入用户
                 user = new User()
                 {
                     ApprovedBy = "Mobile",
@@ -157,11 +159,16 @@ class UserService : BaseDatabase, IUser
                     App = appId
                 };
                 Database.Save(user);
-
                 // Authorization
                 var roleIds = Database.Fetch<string>("select ID from Roles where RoleName in (@roles)", new { roles });
                 Database.InsertBatch("UserRole", roleIds.Select(g => new { RoleID = g, UserID = user.Id }));
                 Database.CompleteTransaction();
+            }
+            else
+            {
+                user.PassSalt = salt;
+                user.Password = pwd;
+                Database.Update(user);
             }
             ret = true;
         }
@@ -173,26 +180,35 @@ class UserService : BaseDatabase, IUser
         return ret;
     }
 
-    public bool SaveUser(string? id, string userName, string displayName, string password)
+    public bool SaveUser(string userName, string displayName, string password)
     {
         var salt = LgbCryptography.GenerateSalt();
         var pwd = LgbCryptography.ComputeHash(password, salt);
-        if (string.IsNullOrEmpty(id))
+        var user = Database.FirstOrDefault<User>("UserName = @0", userName);
+        bool ret;
+        if (user == null)
         {
             try
             {
-                if (!Database.Exists<User>("UserName = @0", userName))
+                // 开始事务
+                Database.BeginTransaction();
+                user = new User()
                 {
-                    // 开始事务
-                    Database.BeginTransaction();
-                    // 插入用户
-                    Database.Execute("INSERT INTO Users (UserName, Password, PassSalt, DisplayName, RegisterTime, ApprovedTime, ApprovedBy, Description) values (@0, @1, @2, @3, @4, @4, 'system', '系统默认创建');", userName, pwd, salt, displayName, DateTime.Now);
-
-                    // 授权 Default 角色
-                    Database.Execute("insert into UserRole (UserID, RoleID) select ID, (select ID from Roles where RoleName = 'Default') RoleId from Users where UserName = @0", userName);
-                    // 结束事务
-                    Database.CompleteTransaction();
-                }
+                    ApprovedBy = "System",
+                    ApprovedTime = DateTime.Now,
+                    DisplayName = "手机用户",
+                    UserName = userName,
+                    Icon = "default.jpg",
+                    Description = "系统默认创建",
+                    PassSalt = salt,
+                    Password = pwd
+                };
+                Database.Save(user);
+                // 授权 Default 角色
+                Database.Execute("insert into UserRole (UserID, RoleID) select ID, (select ID from Roles where RoleName = 'Default') RoleId from Users where UserName = @0", userName);
+                // 结束事务
+                Database.CompleteTransaction();
+                ret = true;
             }
             catch (Exception)
             {
@@ -202,8 +218,12 @@ class UserService : BaseDatabase, IUser
         }
         else
         {
-            Database.Update<User>("set Password = @1, PassSalt = @2, DisplayName = @3 where Id = @0", id, pwd, salt, displayName);
+            user.DisplayName = displayName;
+            user.PassSalt = salt;
+            user.Password = pwd;
+            Database.Update(user);
+            ret = true;
         }
-        return true;
+        return ret;
     }
 }
