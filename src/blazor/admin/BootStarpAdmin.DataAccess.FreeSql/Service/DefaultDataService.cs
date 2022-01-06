@@ -2,9 +2,9 @@
 
 namespace BootStarpAdmin.DataAccess.FreeSql.Service;
 
-public class DefaultDataService<TModel> : DataServiceBase<TModel> where TModel : class, new()
+class DefaultDataService<TModel> : DataServiceBase<TModel> where TModel : class, new()
 {
-    private IFreeSql FreeSql;
+    private IFreeSql FreeSql { get; }
 
     public DefaultDataService(IFreeSql freeSql) => FreeSql = freeSql;
 

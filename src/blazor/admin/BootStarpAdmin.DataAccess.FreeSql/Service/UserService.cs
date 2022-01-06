@@ -1,10 +1,5 @@
 ﻿using BootstrapAdmin.DataAccess.Models;
 using BootstrapAdmin.Web.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BootStarpAdmin.DataAccess.FreeSql.Service;
 
@@ -39,12 +34,22 @@ public class UserService : IUser
         return new List<string> { "Default" };
     }
 
+    public User? GetUserByUserName(string? userName)
+    {
+        throw new NotImplementedException();
+    }
+
     public List<string> GetUsersByGroupId(string? groupId)
     {
         throw new NotImplementedException();
     }
 
     public List<string> GetUsersByRoleId(string? roleId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool SaveUser(string userName, string displayName, string password)
     {
         throw new NotImplementedException();
     }

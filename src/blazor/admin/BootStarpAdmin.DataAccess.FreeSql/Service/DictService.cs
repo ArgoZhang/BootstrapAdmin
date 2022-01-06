@@ -69,6 +69,11 @@ public class DictService : IDict
         throw new NotImplementedException();
     }
 
+    public string RetrieveIconFolderPath()
+    {
+        throw new NotImplementedException();
+    }
+
     public bool SaveCookieExpiresPeriod(int expiresPeriod)
     {
         throw new NotImplementedException();
