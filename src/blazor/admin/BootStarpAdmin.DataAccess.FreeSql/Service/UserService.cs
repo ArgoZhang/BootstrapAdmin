@@ -5,7 +5,7 @@ namespace BootStarpAdmin.DataAccess.FreeSql.Service;
 
 public class UserService : IUser
 {
-    private IFreeSql FreeSql;
+    private IFreeSql FreeSql { get; }
 
     public UserService(IFreeSql freeSql) => FreeSql = freeSql;
 

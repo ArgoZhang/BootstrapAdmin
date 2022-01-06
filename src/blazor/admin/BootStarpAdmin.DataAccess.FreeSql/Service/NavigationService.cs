@@ -5,7 +5,7 @@ namespace BootStarpAdmin.DataAccess.FreeSql.Service;
 
 public class NavigationService : INavigation
 {
-    private IFreeSql FreeSql;
+    private IFreeSql FreeSql { get; }
 
     public NavigationService(IFreeSql freeSql) => FreeSql = freeSql;
 

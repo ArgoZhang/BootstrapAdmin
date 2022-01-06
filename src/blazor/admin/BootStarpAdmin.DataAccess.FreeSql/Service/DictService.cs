@@ -5,7 +5,7 @@ namespace BootStarpAdmin.DataAccess.FreeSql.Service;
 
 public class DictService : IDict
 {
-    private IFreeSql FreeSql;
+    private IFreeSql FreeSql { get; }
 
     public DictService(IFreeSql freeSql) => FreeSql = freeSql;
 

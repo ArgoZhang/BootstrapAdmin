@@ -1,4 +1,5 @@
-﻿using BootstrapBlazor.Components;
+﻿using BootStarpAdmin.DataAccess.FreeSql.Extensions;
+using BootstrapBlazor.Components;
 
 namespace BootStarpAdmin.DataAccess.FreeSql.Service;
 
@@ -13,9 +14,10 @@ class DefaultDataService<TModel> : DataServiceBase<TModel> where TModel : class,
     /// </summary>
     /// <param name="models"></param>
     /// <returns></returns>
-    public override Task<bool> DeleteAsync(IEnumerable<TModel> models)
+    public override async Task<bool> DeleteAsync(IEnumerable<TModel> models)
     {
-        return Task.FromResult(true);
+        await FreeSql.Delete<TModel>(models).ExecuteAffrowsAsync();
+        return true;
     }
 
     /// <summary>
@@ -26,7 +28,15 @@ class DefaultDataService<TModel> : DataServiceBase<TModel> where TModel : class,
     /// <returns></returns>
     public override async Task<bool> SaveAsync(TModel model, ItemChangedType changedType)
     {
-        return await FreeSql.InsertOrUpdate<TModel>().ExecuteAffrowsAsync() > 0;
+        if (changedType == ItemChangedType.Add)
+        {
+            await FreeSql.Insert<TModel>(model).ExecuteAffrowsAsync();
+        }
+        else if (changedType == ItemChangedType.Update)
+        {
+            await FreeSql.Update<TModel>(model).ExecuteAffrowsAsync();
+        }
+        return true;
     }
 
     public override Task<QueryData<TModel>> QueryAsync(QueryPageOptions option)
@@ -35,29 +45,29 @@ class DefaultDataService<TModel> : DataServiceBase<TModel> where TModel : class,
         {
             IsSorted = true,
             IsFiltered = true,
-            IsSearch = true
+            IsSearch = true,
+            IsAdvanceSearch = option.AdvanceSearchs.Any() || option.CustomerSearchs.Any()
         };
 
-        var filters = option.Filters.Concat(option.Searchs).Concat(option.CustomerSearchs);
         if (option.IsPage)
         {
-            var items = FreeSql.Select<TModel>()
-                               .WhereIf(filters.Any(), filters.GetFilterLambda<TModel>())
+            ret.Items = FreeSql.Select<TModel>()
+                               .WhereDynamicFilter(option.ToDynamicFilter())
+                               .OrderByPropertyNameIf(option.SortOrder != SortOrder.Unset, option.SortName, option.SortOrder == SortOrder.Asc)
                                .Count(out var count)
-                               .Page((option.PageIndex - 1) * option.PageItems, option.PageItems)
+                               .Page(option.PageIndex, option.PageItems)
                                .ToList();
 
             ret.TotalCount = Convert.ToInt32(count);
-            ret.Items = items;
         }
         else
         {
-            var items = FreeSql.Select<TModel>()
-                               .WhereIf(filters.Any(), filters.GetFilterLambda<TModel>())
+            ret.Items = FreeSql.Select<TModel>()
+                               .WhereDynamicFilter(option.ToDynamicFilter())
+                               .OrderByPropertyNameIf(option.SortOrder != SortOrder.Unset, option.SortName, option.SortOrder == SortOrder.Asc)
                                .Count(out var count)
                                .ToList();
             ret.TotalCount = Convert.ToInt32(count);
-            ret.Items = items;
         }
         return Task.FromResult(ret);
     }
