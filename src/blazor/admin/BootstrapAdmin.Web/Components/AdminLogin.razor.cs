@@ -26,13 +26,13 @@ public partial class AdminLogin
     [NotNull]
     private IDict? DictsService { get; set; }
 
-    private string? UserName { get; set; }
-
-    private string? Password { get; set; }
-
     [Inject]
     [NotNull]
     private IJSRuntime? JSRuntime { get; set; }
+
+    private string? ClassString => CssBuilder.Default("login-wrap")
+        .AddClass("is-mobile", UseMobileLogin)
+        .Build();
 
     /// <summary>
     /// 
@@ -44,11 +44,6 @@ public partial class AdminLogin
         Title = DictsService.GetWebTitle();
 
         PostUrl = QueryHelper.AddQueryString("/Account/Login", "ReturnUrl", ReturnUrl ?? "");
-
-#if DEBUG
-        UserName = "Admin";
-        Password = "123789";
-#endif
     }
 
     void OnClickSwitchButton()

@@ -1,4 +1,5 @@
 ﻿using BootstrapAdmin.Web.Core;
+using BootstrapAdmin.Web.Services.SMS;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
@@ -11,22 +12,38 @@ namespace BootstrapAdmin.Web.Controllers.api;
 public class LoginController : ControllerBase
 {
     /// <summary>
-    /// JWT 登陆认证接口
+    /// 登录认证接口
     /// </summary>
     /// <param name="config"></param>
     /// <param name="user"></param>
     /// <returns></returns>
     [HttpPost()]
-    public AuthenticateResult Post(LoginUser user, [FromServices] IUser userService)
+    public AuthenticateResult Post(LoginUser user, [FromQuery] bool mobile,
+        [FromServices] IUser userService,
+        [FromServices] ISMSProvider provider)
     {
         var result = new AuthenticateResult();
-        if (!string.IsNullOrEmpty(user.UserName) && !string.IsNullOrEmpty(user.Password))
+        if (mobile)
         {
-            result.Authenticated = userService.Authenticate(user.UserName, user.Password);
+            if (!string.IsNullOrEmpty(user.UserName) && !string.IsNullOrEmpty(user.Password))
+            {
+                result.Authenticated = provider.Validate(user.UserName, user.Password);
+            }
+            if (!result.Authenticated)
+            {
+                result.Error = "验证码不正确";
+            }
         }
-        if (!result.Authenticated)
+        else
         {
-            result.Error = "用户名或者密码错误";
+            if (!string.IsNullOrEmpty(user.UserName) && !string.IsNullOrEmpty(user.Password))
+            {
+                result.Authenticated = userService.Authenticate(user.UserName, user.Password);
+            }
+            if (!result.Authenticated)
+            {
+                result.Error = "用户名或者密码错误";
+            }
         }
         return result;
     }

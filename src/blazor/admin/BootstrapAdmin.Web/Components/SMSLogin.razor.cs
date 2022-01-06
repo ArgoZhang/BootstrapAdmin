@@ -2,7 +2,7 @@
 
 namespace BootstrapAdmin.Web.Components;
 
-public partial class SMSButton : IDisposable
+public partial class SMSLogin : IDisposable
 {
     private bool IsSendCode { get; set; } = true;
 

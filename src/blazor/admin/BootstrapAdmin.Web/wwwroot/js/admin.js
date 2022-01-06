@@ -13,7 +13,7 @@
             $('[data-bs-toggle="tooltip"]').tooltip();
 
             // handle input event
-            $('input').on('change', function () {
+            $form.on('change', 'input', function () {
                 // dispose login wrap error
                 $login.tooltip('dispose');
 
@@ -36,48 +36,75 @@
 
             $('.btn-login').on('click', function (e) {
                 e.preventDefault();
-                var mobile = $form.attr('data-mobile') === '';
+                var mobile = $form.find('.is-mobile').length === 1;
+                var userName = "";
+                var password = "";
                 if (mobile) {
-                    $form.submit();
+                    var $phone = $form.find('[name="phone"]');
+                    var $code = $form.find('[name="code"]');
+                    userName = $phone.val();
+                    password = $code.val();
+
+                    if (userName === '') {
+                        $phone.trigger("change");
+                        return;
+                    }
+                    if (password === '') {
+                        $code.trigger("change");
+                        return;
+                    }
                 }
                 else {
                     var $userName = $form.find('[name="userName"]');
                     var $password = $form.find('[name="password"]');
-                    var userName = $userName.val();
-                    var password = $password.val();
-                    if (userName !== '' && password !== '') {
-                        var postData = JSON.stringify({ userName, password });
-                        // call webapi authenticate
-                        $.ajax({
-                            url: $.formatUrl(url),
-                            data: postData,
-                            method: 'POST',
-                            contentType: 'application/json',
-                            dataType: 'json',
-                            crossDomain: false,
-                            success: function (result) {
-                                if (result.authenticated) {
-                                    $form.submit();
-                                }
-                                else {
-                                    console.log(result.error);
-                                    var $login = $('.login-wrap').addClass('is-invalid').tooltip({
-                                        title: result.error
-                                    });
-                                    var handler = window.setTimeout(function () {
-                                        if (handler) {
-                                            window.clearTimeout(handler);
-                                        }
-                                        $login.tooltip('show');
-                                    }, 100);
-                                }
-                            },
-                            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                                console.log(errorThrown);
-                            }
-                        });
+                    userName = $userName.val();
+                    password = $password.val();
+
+                    if (userName === '') {
+                        $userName.trigger("change");
+                        return;
+                    }
+                    if (password === '') {
+                        password.trigger("change");
+                        return;
                     }
                 }
+
+                var authenticate = function (postData, mobile) {
+                    var postUrl = url + '?mobile=' + mobile;
+                    $.ajax({
+                        url: $.formatUrl(postUrl),
+                        data: postData,
+                        method: 'POST',
+                        contentType: 'application/json',
+                        dataType: 'json',
+                        crossDomain: false,
+                        success: function (result) {
+                            if (result.authenticated) {
+                                $form.submit();
+                            }
+                            else {
+                                console.log(result.error);
+                                var $login = $('.login-wrap').addClass('is-invalid').tooltip({
+                                    title: result.error
+                                });
+                                var handler = window.setTimeout(function () {
+                                    if (handler) {
+                                        window.clearTimeout(handler);
+                                    }
+                                    $login.tooltip('show');
+                                }, 100);
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            console.log(errorThrown);
+                        }
+                    });
+                }
+
+                var postData = JSON.stringify({ userName, password });
+                // call webapi authenticate
+                authenticate(postData, mobile);
             });
         }
     });

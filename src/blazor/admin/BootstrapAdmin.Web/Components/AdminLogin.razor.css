@@ -17,6 +17,15 @@
         border: 1px solid #84bbe2;
     }
 
+.login-sms,
+.is-mobile .login-up {
+    display: none;
+}
+
+.is-mobile .login-sms {
+    display: block;
+}
+
 ::deep .btn-login {
     background: #f67a6e;
     border-color: transparent;
