@@ -1,4 +1,5 @@
-﻿using BootStarpAdmin.DataAccess.FreeSql.Service;
+﻿using BootStarpAdmin.DataAccess.FreeSql.Extensions;
+using BootStarpAdmin.DataAccess.FreeSql.Service;
 using BootstrapAdmin.Web.Core;
 using BootstrapBlazor.Components;
 using FreeSql;
@@ -15,6 +16,7 @@ public static class ServicesExtensions
             var builder = new FreeSqlBuilder();
             freeSqlBuilder(provider, builder);
             var instance = builder.Build();
+            instance.Mapper();
             return instance;
         });
 
