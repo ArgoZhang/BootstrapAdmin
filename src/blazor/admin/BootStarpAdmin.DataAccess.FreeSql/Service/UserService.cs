@@ -34,10 +34,7 @@ public class UserService : IUser
         return new List<string> { "Default" };
     }
 
-    public User? GetUserByUserName(string? userName)
-    {
-        throw new NotImplementedException();
-    }
+    public User? GetUserByUserName(string? userName) => string.IsNullOrEmpty(userName) ? null : FreeSql.Select<User>().Where(i => i.UserName == userName).ToOne();
 
     public List<string> GetUsersByGroupId(string? groupId)
     {

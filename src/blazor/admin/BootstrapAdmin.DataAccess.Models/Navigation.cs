@@ -75,6 +75,6 @@ namespace BootstrapAdmin.DataAccess.Models
         /// <summary>
         /// 
         /// </summary>
-        //public bool HasChildren { get; set; }
+        public bool HasChildren { get; set; }
     }
 }
