@@ -7,10 +7,10 @@
         <TableToolbarButton TItem="DataAccess.Models.Role" IsEnableWhenSelectedOneRow="true" Color="Color.Success" Icon="fa fa-dashboard" Text="菜单" OnClickCallback="roles => OnAssignmentMenus(roles.First())" />
         <TableToolbarButton TItem="DataAccess.Models.Role" IsEnableWhenSelectedOneRow="true" Color="Color.Secondary" Icon="fa fa-cubes" Text="应用" OnClickCallback="roles => OnAssignmentApps(roles.First())" />
     </TableToolbarTemplate>
-    <ColumnsTemplete>
+    <TableColumns>
         <TableColumn @bind-Field="@context.RoleName" Sortable="true" Filterable="true" Searchable="true" Width="120"></TableColumn>
         <TableColumn @bind-Field="@context.Description" Sortable="true" Filterable="true" Searchable="true"></TableColumn>
-    </ColumnsTemplete>
+    </TableColumns>
     <RowButtonTemplate>
         <TableCellButton Size="Size.ExtraSmall" Color="Color.Info" Icon="fa fa-user" Text="用户" OnClick="() => OnAssignmentUsers(context)" />
         <TableCellButton Size="Size.ExtraSmall" Color="Color.Warning" Icon="fa fa-bank" Text="部门" OnClick="() => OnAssignmentGroups(context)" />
