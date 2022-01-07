@@ -3,7 +3,7 @@
 <Table TItem="DataAccess.Models.User" IsBordered="true" IsStriped="true" IsMultipleSelect="true"
        ExtendButtonColumnWidth="270"
        ShowToolbar="true" ShowExtendButtons="true" ShowSearch="true"
-       UseInjectDataService="true">
+       UseInjectDataService="true" OnSaveAsync="@OnSaveAsync">
     <TableToolbarTemplate>
         <TableToolbarButton TItem="DataAccess.Models.User" IsEnableWhenSelectedOneRow="true" Color="Color.Warning" Icon="fa fa-bank" Text="分配部门" OnClickCallback="users => OnAssignmentGroups(users.First())" />
         <TableToolbarButton TItem="DataAccess.Models.User" IsEnableWhenSelectedOneRow="true" Color="Color.Info" Icon="fa fa-sitemap" Text="分配角色" OnClickCallback="users => OnAssignmentRoles(users.First())" />
