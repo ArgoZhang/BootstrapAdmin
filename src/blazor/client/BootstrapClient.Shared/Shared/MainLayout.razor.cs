@@ -117,10 +117,11 @@ namespace BootstrapClient.Web.Shared.Shared
             if (!string.IsNullOrEmpty(userName))
             {
                 UserName = userName;
-                DisplayName = UsersService.GetDisplayName(userName);
+                var user = UsersService.GetUserByUserName(userName);
 
                 MenuItems = NavigationsService.GetAllMenus(userName).ToClientMenus();
 
+                DisplayName = user?.DisplayName ?? "未注册账户";
                 Title = DictsService.GetWebTitle();
                 Footer = DictsService.GetWebFooter();
             }
