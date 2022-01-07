@@ -80,6 +80,18 @@ namespace BootstrapAdmin.Web.Components
         /// 
         /// </summary>
         [Parameter]
+        public bool ShowToolbar { get; set; } = true;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Parameter]
+        public bool ShowSearch { get; set; } = true;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Parameter]
         public bool ShowAdvancedSearch { get; set; } = true;
 
         /// <summary>

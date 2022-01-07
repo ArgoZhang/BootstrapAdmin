@@ -11,7 +11,8 @@
         </div>
     </CardHeader>
     <CardBody>
-        <AdminTable TItem="HealthCheckReportItem" OnQueryAsync="OnQueryAsync" @ref="HealthTable">
+        <AdminTable TItem="HealthCheckReportItem" IsFixedHeader="false" @ref="HealthTable"
+                    ShowToolbar="false" ShowSearch="false" OnQueryAsync="OnQueryAsync">
             <TableColumns>
                 <TableColumn @bind-Field="@context.Name" Lookup="@GetNameLookup()" Text="检查项"></TableColumn>
                 <TableColumn @bind-Field="@context.Description" Text="描述"></TableColumn>
