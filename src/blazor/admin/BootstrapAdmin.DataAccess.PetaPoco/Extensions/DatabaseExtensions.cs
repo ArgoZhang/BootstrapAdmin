@@ -147,7 +147,7 @@ public static class DatabaseExtensions
 
                             if (v != null)
                             {
-                                var val = v.GetType().IsEnum ? v.ToString() : v;
+                                var val = v.GetType().IsEnum ? (int)v : v;
                                 var operatorExp = GetOperatorExpression(expression);
                                 sql.Where($"{db.Provider.EscapeSqlIdentifier(columnName)} {operatorExp} @0", val);
                             }

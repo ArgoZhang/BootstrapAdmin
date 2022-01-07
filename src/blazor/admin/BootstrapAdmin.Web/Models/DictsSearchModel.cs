@@ -57,7 +57,7 @@ namespace BootstrapAdmin.Web.Models
 
             if (Define.HasValue)
             {
-                ret.Add(new SearchFilterAction(nameof(Dict.Define), Define.Value.ToString(), FilterAction.Equal));
+                ret.Add(new SearchFilterAction(nameof(Dict.Define), Define.Value, FilterAction.Equal));
             }
 
             return ret;
