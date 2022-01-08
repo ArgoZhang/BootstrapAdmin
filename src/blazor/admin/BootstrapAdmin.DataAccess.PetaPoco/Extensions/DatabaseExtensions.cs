@@ -10,9 +10,9 @@ using System.Reflection;
 namespace BootstrapAdmin.Web.Extensions;
 
 /// <summary>
-/// 
+/// PetaPoco 数据操作扩展类
 /// </summary>
-public static class DatabaseExtensions
+static class DatabaseExtensions
 {
     /// <summary>
     /// 
