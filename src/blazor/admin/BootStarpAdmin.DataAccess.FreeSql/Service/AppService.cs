@@ -19,7 +19,7 @@ public class AppService : IApp
             FreeSql.Transaction(() =>
             {
                 FreeSql.Ado.ExecuteNonQuery("delete from RoleApp where RoleID = @roleId", new { roleId = roleId });
-                FreeSql.Insert(appIds.Select(g => new RoleApp { AppID = g, RoleID = roleId }));
+                FreeSql.Insert(appIds.Select(g => new RoleApp { AppID = g, RoleID = roleId })).ExecuteAffrows();
                 ret = true;
             });
         }

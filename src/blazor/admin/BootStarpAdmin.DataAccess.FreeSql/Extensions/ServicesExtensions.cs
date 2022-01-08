@@ -27,6 +27,7 @@ public static class ServicesExtensions
         services.AddSingleton<IDict, DictService>();
         services.AddSingleton<IGroup, GroupService>();
         services.AddSingleton<IRole, RoleService>();
+        services.AddSingleton<IApp, AppService>();
         services.AddSingleton<IException, ExceptionService>();
         return services;
     }

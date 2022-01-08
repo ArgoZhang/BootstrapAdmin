@@ -24,7 +24,7 @@ public class GroupService : IGroup
             FreeSql.Transaction(() =>
             {
                 FreeSql.Ado.ExecuteNonQuery("delete from RoleGroup where RoleID = @roleId", new { roleId = roleId });
-                FreeSql.Insert(groupIds.Select(g => new RoleGroup { GroupID = g, RoleID = roleId }));
+                FreeSql.Insert(groupIds.Select(g => new RoleGroup { GroupID = g, RoleID = roleId })).ExecuteAffrows();
                 ret = true;
             });
         }
