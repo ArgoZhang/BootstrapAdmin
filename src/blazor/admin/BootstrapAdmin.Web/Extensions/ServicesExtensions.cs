@@ -4,6 +4,8 @@ using BootstrapAdmin.Web.Services;
 using BootstrapAdmin.Web.Services.SMS;
 using BootstrapAdmin.Web.Services.SMS.Tencent;
 using BootstrapAdmin.Web.Utils;
+using PetaPoco;
+using PetaPoco.Providers;
 
 namespace BootstrapAdmin.Web.Extensions
 {
@@ -57,6 +59,12 @@ namespace BootstrapAdmin.Web.Extensions
                 //调试sql语句输出
                 builder.UseMonitorCommand(cmd => System.Console.WriteLine(cmd.CommandText));
 #endif
+            services.AddPetaPocoDataAccessServices((provider, builder) =>
+            {
+                var configuration = provider.GetRequiredService<IConfiguration>();
+                var connString = configuration.GetConnectionString("bb");
+                builder.UsingProvider<SQLiteDatabaseProvider>()
+                       .UsingConnectionString(connString);
             });
 
             // 增加后台任务

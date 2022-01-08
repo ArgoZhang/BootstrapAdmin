@@ -1,9 +1,8 @@
 ﻿@page "/Admin/Menus"
 
-<Table TItem="DataAccess.Models.Navigation" IsBordered="true" IsStriped="true" IsMultipleSelect="true"
-       IsFixedHeader="true" IsTree="true" OnTreeExpand="OnTreeExpand" ExtendButtonColumnWidth="200"
-       ShowToolbar="true" ShowExtendButtons="true" ShowSearch="true" CustomerSearchModel="SearchModel"
-       UseInjectDataService="true" OnQueryAsync="OnQueryAsync">
+<AdminTable TItem="DataAccess.Models.Navigation" 
+       IsTree="true" OnTreeExpand="OnTreeExpand" ExtendButtonColumnWidth="200"
+       CustomerSearchModel="SearchModel" OnQueryAsync="OnQueryAsync">
     <TableToolbarTemplate>
         <TableToolbarButton TItem="DataAccess.Models.Navigation" IsEnableWhenSelectedOneRow="true" Color="Color.Info" Icon="fa fa-sitemap" Text="分配角色" OnClickCallback="menus => OnAssignmentRoles(menus.First())" />
     </TableToolbarTemplate>
@@ -61,4 +60,4 @@
             <MenusSearch @bind-Value="searchModel"></MenusSearch>
         }
     </CustomerSearchTemplate>
-</Table>
+</AdminTable>

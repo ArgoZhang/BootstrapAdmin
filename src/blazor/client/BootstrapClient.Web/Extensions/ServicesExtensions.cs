@@ -1,4 +1,6 @@
 ﻿using BootstrapAdmin.Web.Core;
+using PetaPoco.Providers;
+using PetaPoco;
 using System.Text;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -24,7 +26,13 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddBootstrapAdminSecurity<AdminService>();
 
             // 增加 PetaPoco 数据服务
-            services.AddPetaPocoDataAccessServices();
+            services.AddPetaPocoDataAccessServices((provider, builder) =>
+            {
+                var configuration = provider.GetRequiredService<IConfiguration>();
+                var connString = configuration.GetConnectionString("bb");
+                builder.UsingProvider<SQLiteDatabaseProvider>()
+                       .UsingConnectionString(connString);
+            });
 
             return services;
         }

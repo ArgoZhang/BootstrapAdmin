@@ -1,4 +1,6 @@
-﻿namespace BootstrapAdmin.Web.Components
+﻿using BootstrapAdmin.Web.Models;
+
+namespace BootstrapAdmin.Web.Components
 {
     /// <summary>
     /// 
@@ -29,7 +31,7 @@
         /// </summary>
         [NotNull]
         [Parameter]
-        public RenderFragment<TItem>? ColumnsTemplete { get; set; }
+        public RenderFragment<TItem>? TableColumns { get; set; }
 
         /// <summary>
         /// 
@@ -42,6 +44,12 @@
         /// </summary>
         [Parameter]
         public RenderFragment<ITableSearchModel>? CustomerSearchTemplate { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Parameter]
+        public RenderFragment<TItem>? EditTemplate { get; set; }
 
         /// <summary>
         /// 
@@ -72,6 +80,18 @@
         /// 
         /// </summary>
         [Parameter]
+        public bool ShowToolbar { get; set; } = true;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Parameter]
+        public bool ShowSearch { get; set; } = true;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Parameter]
         public bool ShowAdvancedSearch { get; set; } = true;
 
         /// <summary>
@@ -90,7 +110,7 @@
         /// 
         /// </summary>
         [Parameter]
-        public ITableSearchModel? TableSearchModel { get; set; }
+        public ITableSearchModel? CustomerSearchModel { get; set; }
 
         /// <summary>
         /// 
@@ -109,5 +129,53 @@
         /// </summary>
         [Parameter]
         public Func<TItem, Task<IEnumerable<TItem>>>? OnTreeExpand { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Parameter]
+        public Func<TItem, ItemChangedType, Task<bool>>? OnSaveAsync { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Parameter]
+        public Func<IEnumerable<TItem>, Task<bool>>? OnDeleteAsync { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Parameter]
+        public List<TItem>? SelectedRows { get; set; } = new List<TItem>();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Parameter]
+        public Func<TItem, bool>? ShowEditButtonCallback { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Parameter]
+        public Func<TItem, bool>? ShowDeleteButtonCallback { get; set; }
+
+        [NotNull]
+        private Table<TItem>? Instance { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="v"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public ValueTask ToggleLoading(bool v) => Instance.ToggleLoading(v);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public Task QueryAsync() => Instance.QueryAsync();
     }
 }

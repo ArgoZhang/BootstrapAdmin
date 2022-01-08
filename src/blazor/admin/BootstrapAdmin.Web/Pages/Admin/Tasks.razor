@@ -31,9 +31,8 @@
 
     <AdminAlert Text="演示系统禁止修改内置后台任务" IsShow="IsDemo" />
 
-    <Table TItem="TasksModel" ExtendButtonColumnWidth="270" IsBordered="true" IsStriped="true"
-           IsMultipleSelect="true" IsFixedHeader="false" SortList="SortList"
-           ShowToolbar="true" ShowExtendButtons="true" SelectedRows="SelectedRows"
+    <AdminTable TItem="TasksModel" ExtendButtonColumnWidth="270" IsFixedHeader="false" SortList="SortList"
+           SelectedRows="SelectedRows" 
            ShowEditButtonCallback="OnShowButtonCallback" ShowDeleteButtonCallback="OnShowButtonCallback"
            OnQueryAsync="OnQueryAsync" OnDeleteAsync="OnDeleteAsync" OnSaveAsync="OnSaveAsync">
         <TableColumns>
@@ -61,5 +60,5 @@
             <TableCellButton Size="Size.ExtraSmall" Color="Color.Success" Icon="fa fa-play-circle" Text="运行" OnClick="() => OnRun(context)" IsShow="OnCheckTaskStatus(context)" AutoRenderTableWhenClick="true" />
             <TableCellButton Size="Size.ExtraSmall" Color="Color.Info" Icon="fa fa-info-circle" Text="日志" OnClick="() => OnLog(context)" IsShow="OnCheckTaskStatus(context)" AutoRenderTableWhenClick="true" />
         </RowButtonTemplate>
-    </Table>
+    </AdminTable>
 </div>
