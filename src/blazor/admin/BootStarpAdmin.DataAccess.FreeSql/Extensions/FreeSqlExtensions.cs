@@ -28,6 +28,10 @@ public static class FreeSqlExtensions
         {
             i.Name("Roles");
         });
+        freeSql.CodeFirst.ConfigEntity<Error>(i =>
+        {
+            i.Name("Exceptions");
+        });
         freeSql.CodeFirst.ConfigEntity<UserRole>(i =>
         {
             i.Name("UserRole");

@@ -41,7 +41,7 @@ public class ExceptionService : IException
         }
         else
         {
-            items.OrderBy("UserId ErrorPage Logtime desc");
+            items.OrderBy("Logtime desc");
         }
         var errors = items.Count(out var count).Page(pageIndex, pageItems).ToList();
 
