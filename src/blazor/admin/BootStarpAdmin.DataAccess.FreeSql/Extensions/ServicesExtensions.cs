@@ -24,14 +24,14 @@ public static class ServicesExtensions
         services.AddSingleton(typeof(IDataService<>), typeof(DefaultDataService<>));
 
         // 增加业务服务
-        services.AddSingleton<ILogin, LoginService>();
-        services.AddSingleton<IUser, UserService>();
-        services.AddSingleton<INavigation, NavigationService>();
-        services.AddSingleton<IDict, DictService>();
-        services.AddSingleton<IGroup, GroupService>();
-        services.AddSingleton<IRole, RoleService>();
         services.AddSingleton<IApp, AppService>();
+        services.AddSingleton<IDict, DictService>();
         services.AddSingleton<IException, ExceptionService>();
+        services.AddSingleton<IGroup, GroupService>();
+        services.AddSingleton<ILogin, LoginService>();
+        services.AddSingleton<INavigation, NavigationService>();
+        services.AddSingleton<IRole, RoleService>();
+        services.AddSingleton<IUser, UserService>();
         return services;
     }
 }

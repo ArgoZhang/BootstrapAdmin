@@ -3,7 +3,7 @@ using BootstrapAdmin.DataAccess.Models;
 
 namespace BootStarpAdmin.DataAccess.FreeSql.Extensions;
 
-public static class FreeSqlExtensions
+static class FreeSqlExtensions
 {
     public static void Mapper(this IFreeSql freeSql)
     {
