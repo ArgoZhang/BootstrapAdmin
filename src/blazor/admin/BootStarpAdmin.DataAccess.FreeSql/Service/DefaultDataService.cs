@@ -48,35 +48,17 @@ class DefaultDataService<TModel> : DataServiceBase<TModel> where TModel : class,
             IsSearch = true,
             IsAdvanceSearch = option.AdvanceSearchs.Any() || option.CustomerSearchs.Any()
         };
-
-        if (option.IsPage)
-        {
-            ret.Items = FreeSql.Select<TModel>()
-                               .WhereDynamicFilter(option.Searchs.ToDynamicFilter())
-                               .WhereDynamicFilter(option.Filters
-                                    .Concat(option.AdvanceSearchs)
-                                    .Concat(option.CustomerSearchs)
-                                    .ToDynamicFilter())
-                               .OrderByPropertyNameIf(option.SortOrder != SortOrder.Unset, option.SortName, option.SortOrder == SortOrder.Asc)
-                               .Count(out var count)
-                               .Page(option.PageIndex, option.PageItems)
-                               .ToList();
-
-            ret.TotalCount = Convert.ToInt32(count);
-        }
-        else
-        {
-            ret.Items = FreeSql.Select<TModel>()
-                               .WhereDynamicFilter(option.Searchs.ToDynamicFilter())
-                               .WhereDynamicFilter(option.Filters
-                                    .Concat(option.AdvanceSearchs)
-                                    .Concat(option.CustomerSearchs)
-                                    .ToDynamicFilter())
-                               .OrderByPropertyNameIf(option.SortOrder != SortOrder.Unset, option.SortName, option.SortOrder == SortOrder.Asc)
-                               .Count(out var count)
-                               .ToList();
-            ret.TotalCount = Convert.ToInt32(count);
-        }
+        ret.Items = FreeSql.Select<TModel>()
+                           .WhereDynamicFilter(option.Searchs.ToDynamicFilter())
+                           .WhereDynamicFilter(option.Filters
+                                .Concat(option.AdvanceSearchs)
+                                .Concat(option.CustomerSearchs)
+                                .ToDynamicFilter())
+                           .OrderByPropertyNameIf(option.SortOrder != SortOrder.Unset, option.SortName, option.SortOrder == SortOrder.Asc)
+                           .Count(out var count)
+                           .PageIf(option.PageIndex, option.PageItems, option.IsPage)
+                           .ToList();
+        ret.TotalCount = Convert.ToInt32(count);
         return Task.FromResult(ret);
     }
 }

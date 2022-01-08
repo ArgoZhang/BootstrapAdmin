@@ -1,4 +1,5 @@
 ﻿using BootstrapBlazor.Components;
+using FreeSql;
 using FreeSql.Internal.Model;
 
 namespace BootStarpAdmin.DataAccess.FreeSql.Extensions;
@@ -8,6 +9,10 @@ namespace BootStarpAdmin.DataAccess.FreeSql.Extensions;
 /// </summary>
 static class FilterExtensions
 {
+    public static ISelect<TModel> PageIf<TModel>(this ISelect<TModel> source, int pageIndex, int pageItems, bool isPage) => isPage
+        ? source.Page(pageIndex, pageItems)
+        : source;
+
     /// <summary>
     /// 
     /// </summary>
