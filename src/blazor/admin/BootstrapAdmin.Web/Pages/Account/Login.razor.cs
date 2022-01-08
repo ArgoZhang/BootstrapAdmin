@@ -5,6 +5,9 @@
 /// </summary>
 public partial class Login
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [SupplyParameterFromQuery]
     [Parameter]
     public string? ReturnUrl { get; set; }

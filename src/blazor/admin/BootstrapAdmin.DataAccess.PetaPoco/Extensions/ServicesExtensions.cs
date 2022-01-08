@@ -25,6 +25,7 @@ public static class ServicesExtensions
     /// 
     /// </summary>
     /// <param name="services"></param>
+    /// <param name="builder"></param>
     /// <returns></returns>
     public static IServiceCollection AddPetaPocoDataAccessServices(this IServiceCollection services, Action<IServiceProvider, IDatabaseBuildConfiguration> builder)
     {

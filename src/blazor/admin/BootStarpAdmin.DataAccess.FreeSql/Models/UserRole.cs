@@ -1,6 +1,6 @@
 ﻿namespace BootStarpAdmin.DataAccess.FreeSql.Models;
 
-public class UserRole
+class UserRole
 {
     public string? ID { get; set; }
 

@@ -1,33 +1,32 @@
 ﻿using System.ComponentModel;
 
-namespace BootstrapAdmin.DataAccess.Models
+namespace BootstrapAdmin.DataAccess.Models;
+
+/// <summary>
+/// 后台数据库脚本执行日志实体类
+/// </summary>
+public class DBLog
 {
     /// <summary>
-    /// 后台数据库脚本执行日志实体类
+    /// 获得/设置 主键ID
     /// </summary>
-    public class DBLog
-    {
-        /// <summary>
-        /// 获得/设置 主键ID
-        /// </summary>
-        public string? Id { get; set; }
+    public string? Id { get; set; }
 
-        /// <summary>
-        /// 获得/设置 当前登陆名
-        /// </summary>
-        [DisplayName("所属用户")]
-        public string? UserName { get; set; }
+    /// <summary>
+    /// 获得/设置 当前登陆名
+    /// </summary>
+    [DisplayName("所属用户")]
+    public string? UserName { get; set; }
 
-        /// <summary>
-        /// 获得/设置 数据库执行脚本
-        /// </summary>
-        [DisplayName("脚本内容")]
-        public string SQL { get; set; } = "";
+    /// <summary>
+    /// 获得/设置 数据库执行脚本
+    /// </summary>
+    [DisplayName("脚本内容")]
+    public string SQL { get; set; } = "";
 
-        /// <summary>
-        /// 获取/设置 用户角色关联状态 checked 标示已经关联 '' 标示未关联
-        /// </summary>
-        [DisplayName("执行时间")]
-        public DateTime LogTime { get; set; }
-    }
+    /// <summary>
+    /// 获取/设置 用户角色关联状态 checked 标示已经关联 '' 标示未关联
+    /// </summary>
+    [DisplayName("执行时间")]
+    public DateTime LogTime { get; set; }
 }

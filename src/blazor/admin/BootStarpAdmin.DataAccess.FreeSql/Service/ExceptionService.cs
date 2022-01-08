@@ -3,9 +3,9 @@ using BootstrapAdmin.Web.Core;
 
 namespace BootStarpAdmin.DataAccess.FreeSql.Service;
 
-public class ExceptionService : IException
+class ExceptionService : IException
 {
-    private IFreeSql FreeSql;
+    private IFreeSql FreeSql { get; }
 
     public ExceptionService(IFreeSql freeSql) => FreeSql = freeSql;
 
@@ -15,25 +15,25 @@ public class ExceptionService : IException
 
         if (!string.IsNullOrEmpty(searchText))
         {
-            items.Where($"ErrorPage Like %@searchText% or Message Like  %@searchText% or StackTrace Like  %@searchText%", new { searchText = searchText });
+            items.Where($"ErrorPage Like %@searchText% or Message Like  %@searchText% or StackTrace Like  %@searchText%", new { searchText });
         }
 
         if (!string.IsNullOrEmpty(filter.Category))
         {
-            items.Where("Category = @Category", new { Category = filter.Category });
+            items.Where("Category = @Category", new { filter.Category });
         }
 
         if (!string.IsNullOrEmpty(filter.UserId))
         {
-            items.Where("UserId Like %@UserId%", new { UserId = filter.UserId });
+            items.Where("UserId Like %@UserId%", new { filter.UserId });
         }
 
         if (!string.IsNullOrEmpty(filter.ErrorPage))
         {
-            items.Where("ErrorPage Like %{ErrorPage}%", new { ErrorPage = filter.ErrorPage });
+            items.Where("ErrorPage Like %{ErrorPage}%", new { filter.ErrorPage });
         }
 
-        items.Where("LogTime >= @Star and LogTime <= @End", new { Star = filter.Star, End = filter.End });
+        items.Where("LogTime >= @Star and LogTime <= @End", new { filter.Star, filter.End });
 
         if (sortList.Any())
         {

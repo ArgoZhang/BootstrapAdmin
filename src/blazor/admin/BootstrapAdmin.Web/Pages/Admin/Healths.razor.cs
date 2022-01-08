@@ -9,6 +9,9 @@ using System.Text.Json.Serialization;
 
 namespace BootstrapAdmin.Web.Pages.Admin;
 
+/// <summary>
+/// 
+/// </summary>
 public partial class Healths
 {
     [Inject]
@@ -33,6 +36,9 @@ public partial class Healths
     [NotNull]
     private HttpClient? Client { get; set; }
 
+    /// <summary>
+    /// 
+    /// </summary>
     protected override void OnInitialized()
     {
         base.OnInitialized();

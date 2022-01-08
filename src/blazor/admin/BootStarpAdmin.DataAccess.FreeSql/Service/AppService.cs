@@ -3,13 +3,13 @@ using BootstrapAdmin.Web.Core;
 
 namespace BootStarpAdmin.DataAccess.FreeSql.Service;
 
-public class AppService : IApp
+class AppService : IApp
 {
-    private IFreeSql FreeSql;
+    private IFreeSql FreeSql { get; }
 
     public AppService(IFreeSql freeSql) => FreeSql = freeSql;
 
-    public List<string> GetAppsByRoleId(string? roleId) => FreeSql.Ado.Query<string>("select AppID from RoleApp where RoleID = @roleId", new { roleId = roleId });
+    public List<string> GetAppsByRoleId(string? roleId) => FreeSql.Ado.Query<string>("select AppID from RoleApp where RoleID = @roleId", new { roleId });
 
     public bool SaveAppsByRoleId(string? roleId, IEnumerable<string> appIds)
     {
@@ -18,7 +18,7 @@ public class AppService : IApp
         {
             FreeSql.Transaction(() =>
             {
-                FreeSql.Ado.ExecuteNonQuery("delete from RoleApp where RoleID = @roleId", new { roleId = roleId });
+                FreeSql.Ado.ExecuteNonQuery("delete from RoleApp where RoleID = @roleId", new { roleId });
                 FreeSql.Insert(appIds.Select(g => new RoleApp { AppID = g, RoleID = roleId })).ExecuteAffrows();
                 ret = true;
             });

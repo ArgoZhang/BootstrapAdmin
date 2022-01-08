@@ -7,6 +7,9 @@ using BootstrapAdmin.Web.Utils;
 
 namespace BootstrapAdmin.Web.Pages.Admin;
 
+/// <summary>
+/// 
+/// </summary>
 public partial class Menus
 {
     [Inject]

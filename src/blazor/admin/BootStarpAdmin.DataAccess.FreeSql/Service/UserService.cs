@@ -5,7 +5,7 @@ using Longbow.Security.Cryptography;
 
 namespace BootStarpAdmin.DataAccess.FreeSql.Service;
 
-public class UserService : IUser
+class UserService : IUser
 {
     private IFreeSql FreeSql { get; }
 
@@ -13,7 +13,12 @@ public class UserService : IUser
 
     public bool Authenticate(string userName, string password)
     {
-        var user = FreeSql.Select<User>().Where(s => s.ApprovedTime != null && s.UserName == userName).ToOne(s => new User { DisplayName = s.DisplayName, PassSalt = s.PassSalt, Password = s.Password });
+        var user = FreeSql.Select<User>().Where(s => s.ApprovedTime != null && s.UserName == userName).ToOne(s => new User
+        {
+            DisplayName = s.DisplayName,
+            PassSalt = s.PassSalt,
+            Password = s.Password
+        });
 
         var isAuth = false;
         if (user != null && !string.IsNullOrEmpty(user.PassSalt))
@@ -40,19 +45,19 @@ public class UserService : IUser
 
     public List<string> GetRoles(string userName)
     {
-        return FreeSql.Ado.Query<string>($"select r.RoleName from Roles r inner join UserRole ur on r.ID=ur.RoleID inner join Users u on ur.UserID = u.ID and u.UserName = @userName union select r.RoleName from Roles r inner join RoleGroup rg on r.ID = rg.RoleID inner join Groups g on rg.GroupID = g.ID inner join UserGroup ug on ug.GroupID = g.ID inner join Users u on ug.UserID = u.ID and u.UserName = @userName", new { userName = userName }).ToList();
+        return FreeSql.Ado.Query<string>($"select r.RoleName from Roles r inner join UserRole ur on r.ID=ur.RoleID inner join Users u on ur.UserID = u.ID and u.UserName = @userName union select r.RoleName from Roles r inner join RoleGroup rg on r.ID = rg.RoleID inner join Groups g on rg.GroupID = g.ID inner join UserGroup ug on ug.GroupID = g.ID inner join Users u on ug.UserID = u.ID and u.UserName = @userName", new { userName }).ToList();
     }
 
     public User? GetUserByUserName(string? userName) => string.IsNullOrEmpty(userName) ? null : FreeSql.Select<User>().Where(i => i.UserName == userName).ToOne();
 
     public List<string> GetUsersByGroupId(string? groupId)
     {
-        return FreeSql.Ado.Query<string>("select UserID from UserGroup where GroupID = @groupId", new { groupId = groupId }).ToList();
+        return FreeSql.Ado.Query<string>("select UserID from UserGroup where GroupID = @groupId", new { groupId }).ToList();
     }
 
     public List<string> GetUsersByRoleId(string? roleId)
     {
-        return FreeSql.Ado.Query<string>("select UserID from UserRole where RoleID = @roleId", new { roleId = roleId }).ToList();
+        return FreeSql.Ado.Query<string>("select UserID from UserRole where RoleID = @roleId", new { roleId }).ToList();
     }
 
     public bool SaveUser(string userName, string displayName, string password)
@@ -80,7 +85,7 @@ public class UserService : IUser
                 };
                 FreeSql.Insert(user).ExecuteAffrows();
                 // 授权 Default 角色
-                FreeSql.Ado.ExecuteNonQuery("insert into UserRole (UserID, RoleID) select ID, (select ID from Roles where RoleName = 'Default') RoleId from Users where UserName = @userName", new { userName = userName });
+                FreeSql.Ado.ExecuteNonQuery("insert into UserRole (UserID, RoleID) select ID, (select ID from Roles where RoleName = 'Default') RoleId from Users where UserName = @userName", new { userName });
                 ret = true;
             });
         }
@@ -102,7 +107,7 @@ public class UserService : IUser
         {
             FreeSql.Transaction(() =>
             {
-                FreeSql.Ado.ExecuteNonQuery("delete from UserGroup where GroupId = @groupId", new { groupId = groupId });
+                FreeSql.Ado.ExecuteNonQuery("delete from UserGroup where GroupId = @groupId", new { groupId });
                 FreeSql.Insert(userIds.Select(g => new UserGroup { UserID = g, GroupID = groupId })).ExecuteAffrows();
             });
 
@@ -122,7 +127,7 @@ public class UserService : IUser
         {
             FreeSql.Transaction(() =>
             {
-                FreeSql.Ado.ExecuteNonQuery("delete from UserRole where RoleID = @roleId", new { roleId = roleId });
+                FreeSql.Ado.ExecuteNonQuery("delete from UserRole where RoleID = @roleId", new { roleId });
                 FreeSql.Insert(userIds.Select(g => new UserRole { UserID = g, RoleID = roleId })).ExecuteAffrows();
                 ret = true;
             });
@@ -134,6 +139,14 @@ public class UserService : IUser
         return ret;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="phone"></param>
+    /// <param name="code"></param>
+    /// <param name="appId"></param>
+    /// <param name="roles"></param>
+    /// <returns></returns>
     public bool TryCreateUserByPhone(string phone, string code, string appId, ICollection<string> roles)
     {
         var ret = false;

@@ -5,16 +5,12 @@ using Microsoft.Extensions.Configuration;
 
 namespace BootStarpAdmin.DataAccess.FreeSql.Service;
 
-public class DictService : IDict
+class DictService : IDict
 {
     private IFreeSql FreeSql { get; }
 
     private string? AppId { get; set; }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="freeSql"></param>
     public DictService(IFreeSql freeSql, IConfiguration configuration)
     {
         FreeSql = freeSql;

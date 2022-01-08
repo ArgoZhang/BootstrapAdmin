@@ -4,17 +4,17 @@ using BootstrapAdmin.Web.Core;
 
 namespace BootStarpAdmin.DataAccess.FreeSql.Service;
 
-public class GroupService : IGroup
+class GroupService : IGroup
 {
-    private IFreeSql FreeSql;
+    private IFreeSql FreeSql { get; }
 
     public GroupService(IFreeSql freeSql) => FreeSql = freeSql;
 
     public List<Group> GetAll() => FreeSql.Select<Group>().ToList();
 
-    public List<string> GetGroupsByRoleId(string? roleId) => FreeSql.Ado.Query<string>("select GroupID from RoleGroup where RoleID = @roleId", new { roleId = roleId });
+    public List<string> GetGroupsByRoleId(string? roleId) => FreeSql.Ado.Query<string>("select GroupID from RoleGroup where RoleID = @roleId", new { roleId });
 
-    public List<string> GetGroupsByUserId(string? userId) => FreeSql.Ado.Query<string>("select GroupID from UserGroup where UserID = @userId", new { userId = userId });
+    public List<string> GetGroupsByUserId(string? userId) => FreeSql.Ado.Query<string>("select GroupID from UserGroup where UserID = @userId", new { userId });
 
     public bool SaveGroupsByRoleId(string? roleId, IEnumerable<string> groupIds)
     {
@@ -23,7 +23,7 @@ public class GroupService : IGroup
         {
             FreeSql.Transaction(() =>
             {
-                FreeSql.Ado.ExecuteNonQuery("delete from RoleGroup where RoleID = @roleId", new { roleId = roleId });
+                FreeSql.Ado.ExecuteNonQuery("delete from RoleGroup where RoleID = @roleId", new { roleId });
                 FreeSql.Insert(groupIds.Select(g => new RoleGroup { GroupID = g, RoleID = roleId })).ExecuteAffrows();
                 ret = true;
             });
@@ -42,7 +42,7 @@ public class GroupService : IGroup
         {
             FreeSql.Transaction(() =>
             {
-                FreeSql.Ado.ExecuteNonQuery("delete from UserGroup where UserID = @userId", new { userId = userId });
+                FreeSql.Ado.ExecuteNonQuery("delete from UserGroup where UserID = @userId", new { userId });
                 FreeSql.Insert(groupIds.Select(g => new UserGroup { GroupID = g, UserID = userId }));
                 ret = true;
             });

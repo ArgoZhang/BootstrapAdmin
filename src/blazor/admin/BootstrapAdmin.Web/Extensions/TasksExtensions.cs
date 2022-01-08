@@ -3,8 +3,14 @@ using Longbow.Tasks;
 
 namespace BootstrapAdmin.Web.Extensions;
 
+/// <summary>
+/// 
+/// </summary>
 public static class TasksExtensions
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static List<TasksModel> ToTasksModelList(this IEnumerable<IScheduler> schedulers) => schedulers.Select(i => new TasksModel
     {
         Name = i.Name,

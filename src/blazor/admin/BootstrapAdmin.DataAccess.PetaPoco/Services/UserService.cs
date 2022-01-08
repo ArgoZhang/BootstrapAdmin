@@ -131,6 +131,7 @@ class UserService : BaseDatabase, IUser
     /// 创建手机用户
     /// </summary>
     /// <param name="phone"></param>
+    /// <param name="code"></param>
     /// <param name="appId"></param>
     /// <param name="roles"></param>
     /// <returns></returns>

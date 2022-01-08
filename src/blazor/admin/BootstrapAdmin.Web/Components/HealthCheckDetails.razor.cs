@@ -2,8 +2,14 @@
 
 namespace BootstrapAdmin.Web.Components;
 
+/// <summary>
+/// 
+/// </summary>
 public partial class HealthCheckDetails
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [Parameter]
     [EditorRequired]
     [NotNull]

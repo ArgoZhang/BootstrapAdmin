@@ -17,21 +17,21 @@ public static class SelectedItemExtensions
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="users"></param>
+    /// <param name="roles"></param>
     /// <returns></returns>
     public static List<SelectedItem> ToSelectedItemList(this IEnumerable<Role> roles) => roles.Select(i => new SelectedItem { Value = i.Id!, Text = i.RoleName }).ToList();
 
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="users"></param>
+    /// <param name="groups"></param>
     /// <returns></returns>
     public static List<SelectedItem> ToSelectedItemList(this IEnumerable<Group> groups) => groups.Select(i => new SelectedItem { Value = i.Id!, Text = i.ToString() }).ToList();
 
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="users"></param>
+    /// <param name="dict"></param>
     /// <returns></returns>
     public static List<SelectedItem> ToSelectedItemList(this Dictionary<string, string> dict) => dict.Select(i => new SelectedItem { Value = i.Key, Text = i.Value }).ToList();
 }

@@ -3,6 +3,9 @@ using Microsoft.JSInterop;
 
 namespace BootstrapAdmin.Web.Components;
 
+/// <summary>
+/// 
+/// </summary>
 public partial class AdminLogin
 {
     private string? Title { get; set; }
@@ -19,6 +22,9 @@ public partial class AdminLogin
 
     private string? PostUrl { get; set; }
 
+    /// <summary>
+    /// 
+    /// </summary>
     [Parameter]
     public string? ReturnUrl { get; set; }
 

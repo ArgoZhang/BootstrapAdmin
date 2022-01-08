@@ -8,8 +8,14 @@ namespace BootstrapAdmin.Web.Extensions;
 /// </summary>
 public static class DialogExtensions
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static Task ShowAssignmentDialog(this DialogService dialogService, string title, List<SelectedItem> items, List<string> value, Func<Task<bool>> saveCallback, ToastService? toast) => dialogService.ShowDialog<Assignment, SelectedItem>(title, items, value, saveCallback, toast);
 
+    /// <summary>
+    /// 
+    /// </summary>
     public static Task ShowNavigationDialog(this DialogService dialogService, string title, List<Navigation> items, List<string> value, Func<Task<bool>> saveCallback, ToastService? toast) => dialogService.ShowDialog<NavigationTree, Navigation>(title, items, value, saveCallback, toast);
 
     private static Task ShowDialog<TBody, TItem>(this DialogService dialogService, string title, List<TItem> items, List<string> value, Func<Task<bool>> saveCallback, ToastService? toast) where TBody : AssignmentBase<TItem> => dialogService.ShowSaveDialog<TBody>(title, async () =>

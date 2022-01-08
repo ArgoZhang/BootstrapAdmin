@@ -2,7 +2,7 @@
 
 namespace BootStarpAdmin.DataAccess.FreeSql.Service;
 
-public class LoginService : ILogin
+class LoginService : ILogin
 {
     public Task<bool> Log(string userName, bool result)
     {

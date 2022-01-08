@@ -14,7 +14,6 @@ class GiteeHttpHealthCheck : IHealthCheck
     /// 构造函数
     /// </summary>
     /// <param name="client"></param>
-    /// <param name="accessor"></param>
     public GiteeHttpHealthCheck(GiteeHttpClient client)
     {
         Client = client;

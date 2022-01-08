@@ -14,6 +14,7 @@ public static class ExceptionsHelper
     /// 
     /// </summary>
     /// <param name="provider"></param>
+    /// <param name="eventId"></param>
     /// <param name="ex"></param>
     /// <param name="additionalInfo"></param>
     /// <returns></returns>

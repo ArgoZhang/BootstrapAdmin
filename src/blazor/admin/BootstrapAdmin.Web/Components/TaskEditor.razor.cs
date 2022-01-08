@@ -2,12 +2,21 @@
 
 namespace BootstrapAdmin.Web.Components;
 
+/// <summary>
+/// 
+/// </summary>
 public partial class TaskEditor
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [Parameter]
     [NotNull]
     public TasksModel? Value { get; set; }
 
+    /// <summary>
+    /// 
+    /// </summary>
     [Parameter]
     public EventCallback<TasksModel> ValueChanged { get; set; }
 
@@ -16,6 +25,9 @@ public partial class TaskEditor
     [NotNull]
     private List<SelectedItem>? Items { get; set; }
 
+    /// <summary>
+    /// 
+    /// </summary>
     protected override void OnInitialized()
     {
         base.OnInitialized();

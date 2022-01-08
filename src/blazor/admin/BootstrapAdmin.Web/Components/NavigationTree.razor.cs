@@ -3,6 +3,9 @@ using BootstrapAdmin.Web.Extensions;
 
 namespace BootstrapAdmin.Web.Components;
 
+/// <summary>
+/// 
+/// </summary>
 public partial class NavigationTree
 {
     [NotNull]

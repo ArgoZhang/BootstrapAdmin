@@ -24,6 +24,9 @@ namespace BootstrapAdmin.Web.Components
         [Parameter]
         public EventCallback<ErrorSearchModel> ValueChanged { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         protected override void OnInitialized()
         {
             base.OnInitialized();

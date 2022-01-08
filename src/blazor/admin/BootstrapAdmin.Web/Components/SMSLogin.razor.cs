@@ -2,6 +2,9 @@
 
 namespace BootstrapAdmin.Web.Components;
 
+/// <summary>
+/// 
+/// </summary>
 public partial class SMSLogin : IDisposable
 {
     private bool IsSendCode { get; set; } = true;
@@ -64,6 +67,9 @@ public partial class SMSLogin : IDisposable
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public void Dispose()
     {
         Dispose(true);

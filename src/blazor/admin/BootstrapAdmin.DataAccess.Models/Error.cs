@@ -12,6 +12,9 @@ public class Error
     /// </summary>
     public string? Id { get; set; }
 
+    /// <summary>
+    /// 
+    /// </summary>
     [DisplayName("应用程序")]
     public string? AppDomainName { get; set; }
 

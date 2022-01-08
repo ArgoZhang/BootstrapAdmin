@@ -6,7 +6,7 @@ namespace BootStarpAdmin.DataAccess.FreeSql.Extensions;
 /// <summary>
 /// 
 /// </summary>
-public static class FilterExtensions
+static class FilterExtensions
 {
     /// <summary>
     /// 
