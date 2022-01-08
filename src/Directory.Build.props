@@ -11,7 +11,7 @@
     <RepositoryUrl>https://gitee.com/LongbowEnterprise/BootstrapAdmin.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <Nullable>enable</Nullable>
-    <DocumentationFile>$(MSBuildProjectName).xml</DocumentationFile>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
 </Project>

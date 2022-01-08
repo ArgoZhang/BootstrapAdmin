@@ -3,8 +3,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BootstrapAdmin.Web.Validators;
 
+/// <summary>
+/// 
+/// </summary>
 public class UserNameValidator : IValidator
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public string? ErrorMessage { get; set; }
 
     private IUser UserService { get; }

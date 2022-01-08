@@ -5,6 +5,9 @@ using BootstrapAdmin.Web.Utils;
 
 namespace BootstrapAdmin.Web.Pages.Admin;
 
+/// <summary>
+/// 
+/// </summary>
 public partial class Exceptions
 {
     private List<int> PageItemsSource { get; } = new List<int> { 20, 40, 80, 100, 200 };
@@ -18,6 +21,9 @@ public partial class Exceptions
     [NotNull]
     private List<SelectedItem>? CategroyLookup { get; set; }
 
+    /// <summary>
+    /// 
+    /// </summary>
     protected override void OnInitialized()
     {
         base.OnInitialized();

@@ -66,4 +66,9 @@ public partial class Users
             return Task.FromResult(ret);
         }, ToastService);
     }
+
+    private Task<bool> OnSaveAsync(User user, ItemChangedType itemChangedType)
+    {
+        return Task.FromResult(UserService.SaveUser(user.UserName, user.DisplayName, user.NewPassword));
+    }
 }

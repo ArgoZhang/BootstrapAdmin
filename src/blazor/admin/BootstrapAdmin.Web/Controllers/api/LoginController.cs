@@ -6,6 +6,9 @@ using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
 namespace BootstrapAdmin.Web.Controllers.api;
 
+/// <summary>
+/// 
+/// </summary>
 [Route("api/[controller]")]
 [AllowAnonymous]
 [ApiController]
@@ -14,8 +17,10 @@ public class LoginController : ControllerBase
     /// <summary>
     /// 登录认证接口
     /// </summary>
-    /// <param name="config"></param>
     /// <param name="user"></param>
+    /// <param name="mobile"></param>
+    /// <param name="userService"></param>
+    /// <param name="provider"></param>
     /// <returns></returns>
     [HttpPost()]
     public AuthenticateResult Post(LoginUser user, [FromQuery] bool mobile,
@@ -58,17 +63,35 @@ public class LoginController : ControllerBase
         return null;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class AuthenticateResult
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public string? Error { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public bool Authenticated { get; set; }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class LoginUser
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public string? UserName { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public string? Password { get; set; }
     }
 }

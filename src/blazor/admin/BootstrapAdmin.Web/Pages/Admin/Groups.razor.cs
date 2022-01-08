@@ -4,6 +4,9 @@ using BootstrapAdmin.Web.Extensions;
 
 namespace BootstrapAdmin.Web.Pages.Admin;
 
+/// <summary>
+/// 
+/// </summary>
 public partial class Groups
 {
     [Inject]

@@ -2,6 +2,9 @@
 
 namespace BootstrapAdmin.DataAccess.Models;
 
+/// <summary>
+/// 
+/// </summary>
 public class AppInfo
 {
     /// <summary>

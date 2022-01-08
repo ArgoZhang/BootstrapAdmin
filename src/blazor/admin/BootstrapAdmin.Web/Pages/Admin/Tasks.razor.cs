@@ -5,6 +5,9 @@ using Longbow.Tasks;
 
 namespace BootstrapAdmin.Web.Pages.Admin;
 
+/// <summary>
+/// 
+/// </summary>
 public partial class Tasks
 {
     private List<TasksModel> SelectedRows { get; set; } = new List<TasksModel>();
@@ -29,6 +32,9 @@ public partial class Tasks
 
     private List<string> SortList { get; } = new List<string>() { "Name", "LastRuntime desc" };
 
+    /// <summary>
+    /// 
+    /// </summary>
     protected override void OnInitialized()
     {
         base.OnInitialized();

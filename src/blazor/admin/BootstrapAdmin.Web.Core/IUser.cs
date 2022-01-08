@@ -76,6 +76,7 @@ public interface IUser
     /// 
     /// </summary>
     /// <param name="phone"></param>
+    /// <param name="code"></param>
     /// <param name="appId"></param>
     /// <param name="roles"></param>
     /// <returns></returns>

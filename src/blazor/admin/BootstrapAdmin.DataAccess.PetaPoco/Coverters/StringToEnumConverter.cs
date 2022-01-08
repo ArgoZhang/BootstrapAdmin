@@ -3,7 +3,7 @@
 /// <summary>
 /// 字符串转枚举转换器
 /// </summary>
-public class StringToEnumConverter
+class StringToEnumConverter
 {
     private Type TargetType { get; set; }
 
@@ -21,7 +21,10 @@ public class StringToEnumConverter
     /// <exception cref="NotImplementedException"></exception>
     public object? ConvertFromDb(object? value)
     {
-        if (value == null) throw new ArgumentNullException(nameof(value));
+        if (value == null)
+        {
+            throw new ArgumentNullException(nameof(value));
+        }
 
         object? ret;
         if (value != null && Enum.TryParse(TargetType, value.ToString(), true, out var v))

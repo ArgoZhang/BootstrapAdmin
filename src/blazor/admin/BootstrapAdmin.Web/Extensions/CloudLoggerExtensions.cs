@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging.Configuration;
 using Microsoft.Extensions.Options;
 
-namespace Microsoft.Extensions.DependencyInjection
+namespace BootstrapAdmin.Web.Extensions
 {
     /// <summary>
     /// 邮件日志扩展方法

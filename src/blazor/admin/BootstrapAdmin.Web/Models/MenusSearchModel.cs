@@ -3,11 +3,20 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BootstrapAdmin.Web.Models;
 
+/// <summary>
+/// 
+/// </summary>
 public class MenusSearchModel : ITableSearchModel
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [Display(Name = "名称")]
     public string? Name { get; set; }
 
+    /// <summary>
+    /// 
+    /// </summary>
     [Display(Name = "地址")]
     public string? Url { get; set; }
 
@@ -35,6 +44,10 @@ public class MenusSearchModel : ITableSearchModel
     [Display(Name = "所属应用")]
     public string? Application { get; set; }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     public IEnumerable<IFilterAction> GetSearchs()
     {
         var ret = new List<IFilterAction>();
@@ -70,6 +83,9 @@ public class MenusSearchModel : ITableSearchModel
         return ret;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public void Reset()
     {
         Name = null;

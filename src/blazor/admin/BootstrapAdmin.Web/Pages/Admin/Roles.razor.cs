@@ -5,6 +5,9 @@ using BootstrapAdmin.Web.Services;
 
 namespace BootstrapAdmin.Web.Pages.Admin;
 
+/// <summary>
+/// 
+/// </summary>
 public partial class Roles
 {
     [Inject]

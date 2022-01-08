@@ -114,4 +114,49 @@ class DictService : IDict
         _ = int.TryParse(code, out var ret);
         return ret;
     }
+
+    public string GetCurrentLogin()
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool SaveLogin(string login)
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool SaveTheme(string theme)
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool SaveWebTitle(string title)
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool SaveWebFooter(string footer)
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool SaveCookieExpiresPeriod(int expiresPeriod)
+    {
+        throw new NotImplementedException();
+    }
+
+    public string? GetProfileUrl(string appId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public string? GetSettingsUrl(string appId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public string? GetNotificationUrl(string appId)
+    {
+        throw new NotImplementedException();
+    }
 }

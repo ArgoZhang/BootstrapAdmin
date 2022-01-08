@@ -6,6 +6,9 @@ using BootstrapAdmin.Web.Utils;
 
 namespace BootstrapAdmin.Web.Components;
 
+/// <summary>
+/// 
+/// </summary>
 public partial class MenusSearch
 {
     [NotNull]
@@ -20,14 +23,22 @@ public partial class MenusSearch
 
     private List<SelectedItem>? TargetItems { get; set; }
 
+    /// <summary>
+    /// 
+    /// </summary>
     [Parameter]
     [NotNull]
     public MenusSearchModel? Value { get; set; }
 
+    /// <summary>
+    /// 
+    /// </summary>
     [Parameter]
     public EventCallback<MenusSearchModel> ValueChanged { get; set; }
 
-
+    /// <summary>
+    /// 
+    /// </summary>
     protected override void OnInitialized()
     {
         base.OnInitialized();

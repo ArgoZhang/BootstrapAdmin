@@ -1,4 +1,4 @@
-﻿namespace Microsoft.AspNetCore.Builder
+﻿namespace BootstrapAdmin.Web.Extensions
 {
     /// <summary>
     /// 

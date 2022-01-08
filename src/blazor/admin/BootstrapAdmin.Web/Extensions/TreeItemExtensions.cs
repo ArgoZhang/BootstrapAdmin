@@ -2,8 +2,19 @@
 
 namespace BootstrapAdmin.Web.Extensions;
 
+/// <summary>
+/// 
+/// </summary>
 public static class TreeItemExtensions
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="navigations"></param>
+    /// <param name="selectedItems"></param>
+    /// <param name="render"></param>
+    /// <param name="parentId"></param>
+    /// <returns></returns>
     public static List<TreeItem> ToTreeItemList(this IEnumerable<Navigation> navigations, List<string> selectedItems, RenderFragment<Navigation> render, string? parentId = "0")
     {
         var trees = new List<TreeItem>();

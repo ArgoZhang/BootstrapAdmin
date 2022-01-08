@@ -14,6 +14,7 @@ public class GiteeHttpClient
     /// 构造函数
     /// </summary>
     /// <param name="client"></param>
+    /// <param name="accessor"></param>
     public GiteeHttpClient(HttpClient client, IHttpContextAccessor accessor)
     {
         client.Timeout = TimeSpan.FromSeconds(10);

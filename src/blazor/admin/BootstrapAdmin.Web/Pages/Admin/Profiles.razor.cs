@@ -6,15 +6,19 @@ using Microsoft.AspNetCore.Components.Forms;
 
 namespace BootstrapAdmin.Web.Pages.Admin;
 
+/// <summary>
+/// 
+/// </summary>
 public partial class Profiles
 {
     private bool IsDemo { get; set; }
 
-    private string? ConfirmPassword { get; set; }
-
     [NotNull]
     private User? CurrentUser { get; set; }
 
+    /// <summary>
+    /// 
+    /// </summary>
     [Inject]
     [NotNull]
     public BootstrapAppContext? AppContext { get; set; }

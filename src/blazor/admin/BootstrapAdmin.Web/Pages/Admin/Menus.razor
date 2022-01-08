@@ -1,13 +1,13 @@
 ﻿@page "/Admin/Menus"
 
-<AdminTable TItem="DataAccess.Models.Navigation" 
-       IsTree="true" OnTreeExpand="OnTreeExpand" ExtendButtonColumnWidth="200"
-       CustomerSearchModel="SearchModel" OnQueryAsync="OnQueryAsync">
+<AdminTable TItem="DataAccess.Models.Navigation"
+            IsTree="true" OnTreeExpand="OnTreeExpand" ExtendButtonColumnWidth="200"
+            CustomerSearchModel="SearchModel" OnQueryAsync="OnQueryAsync">
     <TableToolbarTemplate>
         <TableToolbarButton TItem="DataAccess.Models.Navigation" IsEnableWhenSelectedOneRow="true" Color="Color.Info" Icon="fa fa-sitemap" Text="分配角色" OnClickCallback="menus => OnAssignmentRoles(menus.First())" />
     </TableToolbarTemplate>
     <TableColumns>
-        <TableColumn @bind-Field="@context.Name" Filterable="true" Width="200"></TableColumn>
+        <TableColumn @bind-Field="@context.Name" Filterable="true" Searchable="true" Width="200"></TableColumn>
         <TableColumn @bind-Field="@context.Order" Width="50"></TableColumn>
         <TableColumn @bind-Field="@context.Icon" Width="50" Align="Alignment.Center">
             <Template Context="v">

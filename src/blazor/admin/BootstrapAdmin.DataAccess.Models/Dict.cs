@@ -1,12 +1,14 @@
 ﻿// Copyright (c) Argo Zhang (argo@163.com). All rights reserved.
 
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BootstrapAdmin.DataAccess.Models;
 
 /// <summary>
 /// 字典配置项
 /// </summary>
+[Table("Dicts")]
 public class Dict
 {
     /// <summary>

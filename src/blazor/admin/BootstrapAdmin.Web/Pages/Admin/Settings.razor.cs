@@ -3,105 +3,107 @@ using BootstrapAdmin.Web.Core;
 using BootstrapAdmin.Web.Extensions;
 using Microsoft.AspNetCore.Components.Forms;
 
-namespace BootstrapAdmin.Web.Pages.Admin
+namespace BootstrapAdmin.Web.Pages.Admin;
+
+/// <summary>
+/// 
+/// </summary>
+public partial class Settings
 {
-    public partial class Settings
+    private bool IsDemo { get; set; }
+
+    [NotNull]
+    private AppInfo? AppInfo { get; set; }
+
+    [NotNull]
+    private List<SelectedItem>? Logins { get; set; }
+
+    [NotNull]
+    private List<SelectedItem>? Themes { get; set; }
+
+    [Inject]
+    [NotNull]
+    private IDict? DictService { get; set; }
+
+    [Inject]
+    [NotNull]
+    private IUser? UserService { get; set; }
+
+    [Inject]
+    [NotNull]
+    private ToastService? ToastService { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    protected override void OnInitialized()
     {
-        private bool IsDemo { get; set; }
+        base.OnInitialized();
 
-        [NotNull]
-        private AppInfo? AppInfo { get; set; }
-
-        [NotNull]
-        private List<SelectedItem>? Logins { get; set; }
-
-        [NotNull]
-        private List<SelectedItem>? Themes { get; set; }
-
-        [Inject]
-        [NotNull]
-        private IDict? DictService { get; set; }
-
-        [Inject]
-        [NotNull]
-        private IUser? UserService { get; set; }
-
-        [Inject]
-        [NotNull]
-        private ToastService? ToastService { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        protected override void OnInitialized()
+        IsDemo = DictService.IsDemo();
+        Logins = DictService.GetLogins().ToSelectedItemList();
+        Themes = DictService.GetThemes().ToSelectedItemList();
+        AppInfo = new()
         {
-            base.OnInitialized();
+            IsDemo = IsDemo,
+            AuthCode = "123789",
+            Title = DictService.GetWebTitle(),
+            Footer = DictService.GetWebFooter(),
+            Login = DictService.GetCurrentLogin()
+        };
+    }
 
-            IsDemo = DictService.IsDemo();
-            Logins = DictService.GetLogins().ToSelectedItemList();
-            Themes = DictService.GetThemes().ToSelectedItemList();
-            AppInfo = new()
-            {
-                IsDemo = IsDemo,
-                AuthCode = "123789",
-                Title = DictService.GetWebTitle(),
-                Footer = DictService.GetWebFooter(),
-                Login = DictService.GetCurrentLogin()
-            };
-        }
-
-        private async Task ShowToast(bool result, string title)
+    private async Task ShowToast(bool result, string title)
+    {
+        if (result)
         {
-            if (result)
-            {
-                await ToastService.Success(title, $"保存{title}成功");
-            }
-            else
-            {
-                await ToastService.Error(title, $"保存{title}失败");
-            }
+            await ToastService.Success(title, $"保存{title}成功");
         }
-
-        private async Task OnSaveTitle(EditContext context)
+        else
         {
-            var ret = DictService.SaveWebTitle(AppInfo.Title);
-            await ShowToast(ret, "网站标题");
+            await ToastService.Error(title, $"保存{title}失败");
         }
+    }
 
-        private async Task OnSaveFooter(EditContext context)
-        {
-            var ret = DictService.SaveWebTitle(AppInfo.Title);
-            await ShowToast(ret, "网站页脚");
-        }
+    private async Task OnSaveTitle(EditContext context)
+    {
+        var ret = DictService.SaveWebTitle(AppInfo.Title);
+        await ShowToast(ret, "网站标题");
+    }
 
-        private async Task OnSaveLogin(EditContext context)
-        {
-            var ret = DictService.SaveLogin(AppInfo.Login);
-            await ShowToast(ret, "登录界面");
-        }
+    private async Task OnSaveFooter(EditContext context)
+    {
+        var ret = DictService.SaveWebTitle(AppInfo.Title);
+        await ShowToast(ret, "网站页脚");
+    }
 
-        private async Task OnSaveAuthUrl(EditContext context)
-        {
-            var ret = DictService.SaveLogin(AppInfo.Login);
-            await ShowToast(ret, "授权后台地址");
-        }
+    private async Task OnSaveLogin(EditContext context)
+    {
+        var ret = DictService.SaveLogin(AppInfo.Login);
+        await ShowToast(ret, "登录界面");
+    }
 
-        private async Task OnSaveTheme(EditContext context)
-        {
-            var ret = DictService.SaveLogin(AppInfo.Login);
-            await ShowToast(ret, "网站主题");
-        }
+    private async Task OnSaveAuthUrl(EditContext context)
+    {
+        var ret = DictService.SaveLogin(AppInfo.Login);
+        await ShowToast(ret, "授权后台地址");
+    }
 
-        private async Task OnSaveDemo(EditContext context)
+    private async Task OnSaveTheme(EditContext context)
+    {
+        var ret = DictService.SaveLogin(AppInfo.Login);
+        await ShowToast(ret, "网站主题");
+    }
+
+    private async Task OnSaveDemo(EditContext context)
+    {
+        var ret = false;
+        if (DictService.AuthenticateDemo(AppInfo.AuthCode))
         {
-            var ret = false;
-            if (DictService.AuthenticateDemo(AppInfo.AuthCode))
-            {
-                IsDemo = AppInfo.IsDemo;
-                ret = DictService.SaveDemo(IsDemo);
-                StateHasChanged();
-            }
-            await ShowToast(ret, "演示系统");
+            IsDemo = AppInfo.IsDemo;
+            ret = DictService.SaveDemo(IsDemo);
+            StateHasChanged();
         }
+        await ShowToast(ret, "演示系统");
     }
 }
