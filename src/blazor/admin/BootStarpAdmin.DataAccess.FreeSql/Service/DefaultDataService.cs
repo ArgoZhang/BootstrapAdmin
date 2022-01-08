@@ -52,7 +52,11 @@ class DefaultDataService<TModel> : DataServiceBase<TModel> where TModel : class,
         if (option.IsPage)
         {
             ret.Items = FreeSql.Select<TModel>()
-                               .WhereDynamicFilter(option.ToDynamicFilter())
+                               .WhereDynamicFilter(option.Searchs.ToDynamicFilter())
+                               .WhereDynamicFilter(option.Filters
+                                    .Concat(option.AdvanceSearchs)
+                                    .Concat(option.CustomerSearchs)
+                                    .ToDynamicFilter())
                                .OrderByPropertyNameIf(option.SortOrder != SortOrder.Unset, option.SortName, option.SortOrder == SortOrder.Asc)
                                .Count(out var count)
                                .Page(option.PageIndex, option.PageItems)
@@ -63,7 +67,11 @@ class DefaultDataService<TModel> : DataServiceBase<TModel> where TModel : class,
         else
         {
             ret.Items = FreeSql.Select<TModel>()
-                               .WhereDynamicFilter(option.ToDynamicFilter())
+                               .WhereDynamicFilter(option.Searchs.ToDynamicFilter())
+                               .WhereDynamicFilter(option.Filters
+                                    .Concat(option.AdvanceSearchs)
+                                    .Concat(option.CustomerSearchs)
+                                    .ToDynamicFilter())
                                .OrderByPropertyNameIf(option.SortOrder != SortOrder.Unset, option.SortName, option.SortOrder == SortOrder.Asc)
                                .Count(out var count)
                                .ToList();

@@ -11,13 +11,14 @@ static class FilterExtensions
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="option"></param>
+    /// <param name="filters"></param>
     /// <returns></returns>
-    public static DynamicFilterInfo ToDynamicFilter(this QueryPageOptions option)
+    public static DynamicFilterInfo ToDynamicFilter(this IEnumerable<IFilterAction> filters)
     {
         var ret = new DynamicFilterInfo() { Filters = new List<DynamicFilterInfo>() };
 
-        foreach (var filter in option.Filters.Concat(option.Searchs))
+        // 处理 过滤 高级搜索 自定义搜索
+        foreach (var filter in filters)
         {
             var item = new DynamicFilterInfo() { Filters = new List<DynamicFilterInfo>() };
             var actions = filter.GetFilterConditions();
