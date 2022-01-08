@@ -77,6 +77,19 @@ public partial class Menus
     {
         var navs = NavigationService.GetAllMenus(AppContext.UserName);
         var menus = navs.Where(m => m.ParentId == "0");
+
+        // 处理模糊查询
+        if (options.Searchs.Any())
+        {
+            menus = menus.Where(options.Searchs.GetFilterFunc<Navigation>(FilterLogic.Or));
+        }
+
+        //  处理 Filter 高级搜索
+        if (options.CustomerSearchs.Any() || options.Filters.Any())
+        {
+            menus = menus.Where(options.CustomerSearchs.Concat(options.Filters).GetFilterFunc<Navigation>());
+        }
+
         foreach (var item in menus)
         {
             item.HasChildren = navs.Any(i => i.ParentId == item.Id);
