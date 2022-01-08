@@ -4,8 +4,6 @@ using BootstrapAdmin.Web.Services;
 using BootstrapAdmin.Web.Services.SMS;
 using BootstrapAdmin.Web.Services.SMS.Tencent;
 using BootstrapAdmin.Web.Utils;
-using PetaPoco;
-using PetaPoco.Providers;
 
 namespace BootstrapAdmin.Web.Extensions
 {
@@ -48,28 +46,25 @@ namespace BootstrapAdmin.Web.Extensions
             //});
 
             // 增加 PetaPoco 数据服务
-            //services.AddPetaPocoDataAccessServices();
+            //services.AddPetaPocoDataAccessServices((provider, builder) =>
+            //{
+            //    var configuration = provider.GetRequiredService<IConfiguration>();
+            //    var connString = configuration.GetConnectionString("bb");
+            //    builder.UsingProvider<SQLiteDatabaseProvider>()
+            //           .UsingConnectionString(connString);
+            //});
 
-            //            services.AddFreeSql((provider, builder) =>
-            //            {
-            //                var configuration = provider.GetRequiredService<IConfiguration>();
-            //                var connString = configuration.GetConnectionString("bb");
-            //                builder.UseConnectionString(FreeSql.DataType.Sqlite, connString);
-            //#if DEBUG
-            //                //调试sql语句输出
-            //                builder.UseMonitorCommand(cmd => System.Console.WriteLine(cmd.CommandText));
-            //#endif
-
-            //
-            //            });
-
-            services.AddPetaPocoDataAccessServices((provider, builder) =>
+            services.AddFreeSql((provider, builder) =>
             {
                 var configuration = provider.GetRequiredService<IConfiguration>();
                 var connString = configuration.GetConnectionString("bb");
-                builder.UsingProvider<SQLiteDatabaseProvider>()
-                       .UsingConnectionString(connString);
+                builder.UseConnectionString(FreeSql.DataType.Sqlite, connString);
+#if DEBUG
+                //调试sql语句输出
+                builder.UseMonitorCommand(cmd => System.Console.WriteLine(cmd.CommandText));
+#endif
             });
+
 
             // 增加后台任务
             services.AddTaskServices();
