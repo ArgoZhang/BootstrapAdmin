@@ -86,6 +86,12 @@ namespace BootstrapAdmin.Web.Components
         /// 
         /// </summary>
         [Parameter]
+        public bool ShowLoading { get; set; } = false;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Parameter]
         public bool ShowSearch { get; set; } = true;
 
         /// <summary>
