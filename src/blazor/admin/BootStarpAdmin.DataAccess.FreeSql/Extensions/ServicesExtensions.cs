@@ -20,7 +20,10 @@ public static class ServicesExtensions
             return instance;
         });
 
+        // 增加数据服务
         services.AddSingleton(typeof(IDataService<>), typeof(DefaultDataService<>));
+
+        // 增加业务服务
         services.AddSingleton<ILogin, LoginService>();
         services.AddSingleton<IUser, UserService>();
         services.AddSingleton<INavigation, NavigationService>();
