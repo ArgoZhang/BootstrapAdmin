@@ -142,4 +142,11 @@ public interface IDict
     /// </summary>
     /// <returns></returns>
     string RetrieveIconFolderPath();
+
+    /// <summary>
+    /// 通过指定 appId 获得配置首页地址
+    /// </summary>
+    /// <param name="appId"></param>
+    /// <returns></returns>
+    string? GetHomeUrlByAppId(string? appId);
 }

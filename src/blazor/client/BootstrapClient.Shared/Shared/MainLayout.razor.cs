@@ -85,6 +85,8 @@ namespace BootstrapClient.Web.Shared.Shared
         [NotNull]
         private IConfiguration? Configuration { get; set; }
 
+        private string? AppId { get; set; }
+
         /// <summary>
         /// OnInitialized 方法
         /// </summary>
@@ -92,11 +94,10 @@ namespace BootstrapClient.Web.Shared.Shared
         {
             base.OnInitialized();
 
-            // TODO: 后期重构 AppId 到统一的地方
-            var appId = Configuration.GetValue("AppId", "Blazor");
-            ProfileUrl = CombinePath(DictsService.GetProfileUrl(appId));
-            SettingsUrl = CombinePath(DictsService.GetSettingsUrl(appId));
-            NotificationUrl = CombinePath(DictsService.GetNotificationUrl(appId));
+            AppId = Configuration.GetValue("AppId", "Blazor");
+            ProfileUrl = CombinePath(DictsService.GetProfileUrl(AppId));
+            SettingsUrl = CombinePath(DictsService.GetSettingsUrl(AppId));
+            NotificationUrl = CombinePath(DictsService.GetNotificationUrl(AppId));
         }
 
         private string CombinePath(string? url)
@@ -129,8 +130,8 @@ namespace BootstrapClient.Web.Shared.Shared
 
         private Task<bool> OnAuthorizing(string url) => SecurityService.AuhorizingNavigation(UserName, url);
 
-        private string LogoutUrl => CombinePath($"/Account/Logout");
+        private string LogoutUrl => CombinePath($"/Account/Logout?AppId={AppId}");
 
-        private string AuthorUrl => CombinePath($"/Account/Login?ReturnUrl={NavigationManager.Uri}");
+        private string AuthorUrl => CombinePath($"/Account/Login?ReturnUrl={NavigationManager.Uri}&AppId={AppId}");
     }
 }

@@ -5,8 +5,6 @@ namespace BootstrapAdmin.Web.Pages.Home;
 /// <summary>
 /// 
 /// </summary>
-[Route("/")]
-[Route("/Home")]
 [Route("/Home/Index")]
 [Authorize]
 public class Index : ComponentBase

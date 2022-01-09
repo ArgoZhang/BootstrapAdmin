@@ -11,4 +11,11 @@ public partial class Login
     [SupplyParameterFromQuery]
     [Parameter]
     public string? ReturnUrl { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    [SupplyParameterFromQuery]
+    [Parameter]
+    public string? AppId { get; set; }
 }

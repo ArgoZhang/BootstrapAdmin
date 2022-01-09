@@ -153,4 +153,20 @@ class DictService : IDict
         }
         return url;
     }
+
+    /// <summary>
+    /// 通过指定 appId 获得配置首页地址
+    /// </summary>
+    /// <param name="appId"></param>
+    /// <returns></returns>
+    public string? GetHomeUrlByAppId(string? appId)
+    {
+        string? url = null;
+        if (!string.IsNullOrEmpty(appId))
+        {
+            var dicts = GetAll();
+            url = dicts.FirstOrDefault(d => d.Category == "应用首页" && d.Name.Equals(appId, StringComparison.OrdinalIgnoreCase) && d.Define == EnumDictDefine.System)?.Code;
+        }
+        return url;
+    }
 }

@@ -28,6 +28,12 @@ public partial class AdminLogin
     [Parameter]
     public string? ReturnUrl { get; set; }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    [Parameter]
+    public string? AppId { get; set; }
+
     [Inject]
     [NotNull]
     private IDict? DictsService { get; set; }
@@ -49,7 +55,11 @@ public partial class AdminLogin
 
         Title = DictsService.GetWebTitle();
 
-        PostUrl = QueryHelper.AddQueryString("/Account/Login", "ReturnUrl", ReturnUrl ?? "");
+        PostUrl = QueryHelper.AddQueryString("/Account/Login", new Dictionary<string, string?>
+        {
+            ["ReturnUrl"] = ReturnUrl,
+            ["AppId"] = AppId
+        });
     }
 
     void OnClickSwitchButton()
@@ -58,6 +68,7 @@ public partial class AdminLogin
         PostUrl = QueryHelper.AddQueryString(UseMobileLogin ? "/Account/Mobile" : "/Account/Login", new Dictionary<string, string?>()
         {
             [nameof(ReturnUrl)] = ReturnUrl,
+            ["AppId"] = AppId,
             ["remember"] = rem
         });
     }

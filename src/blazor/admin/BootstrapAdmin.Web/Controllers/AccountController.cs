@@ -27,11 +27,12 @@ namespace BootstrapAdmin.Web.Controllers
         /// <param name="password">Password.</param>
         /// <param name="remember">Remember.</param>
         /// <param name="returnUrl"></param>
+        /// <param name="appId"></param>
         /// <param name="userService"></param>
         /// <param name="dictService"></param>
         /// <param name="loginService"></param>
         [HttpPost]
-        public async Task<IActionResult> Login(string userName, string password, [FromQuery] string? remember, [FromQuery] string? returnUrl,
+        public async Task<IActionResult> Login(string userName, string password, [FromQuery] string? remember, [FromQuery] string? returnUrl, [FromQuery] string? appId,
             [FromServices] IUser userService,
             [FromServices] IDict dictService,
             [FromServices] ILogin loginService)
@@ -51,10 +52,10 @@ namespace BootstrapAdmin.Web.Controllers
             }
             await loginService.Log(userName, auth);
 
-            return auth ? await SignInAsync(userName, persistent, period, returnUrl) : RedirectLogin(returnUrl);
+            return auth ? await SignInAsync(userName, returnUrl ?? GetAppHomeUrl(dictService, appId), persistent, period) : RedirectLogin(returnUrl);
         }
 
-        private async Task<IActionResult> SignInAsync(string userName, bool persistent, int period = 0, string? returnUrl = null, string authenticationScheme = CookieAuthenticationDefaults.AuthenticationScheme)
+        private async Task<IActionResult> SignInAsync(string userName, string returnUrl, bool persistent, int period = 0, string authenticationScheme = CookieAuthenticationDefaults.AuthenticationScheme)
         {
             var identity = new ClaimsIdentity(authenticationScheme);
             identity.AddClaim(new Claim(ClaimTypes.Name, userName));
@@ -70,8 +71,16 @@ namespace BootstrapAdmin.Web.Controllers
             }
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity), properties);
 
-            return Redirect(returnUrl ?? "/Home/Index");
+            return Redirect(returnUrl);
         }
+
+        /// <summary>
+        /// 通过 appId 获取设置的首页
+        /// </summary>
+        /// <param name="dictService"></param>
+        /// <param name="appId"></param>
+        /// <returns></returns>
+        private static string GetAppHomeUrl(IDict dictService, string? appId) => dictService.GetHomeUrlByAppId(appId) ?? "/Admin/Index";
 
         private IActionResult RedirectLogin(string? returnUrl = null)
         {
@@ -108,13 +117,17 @@ namespace BootstrapAdmin.Web.Controllers
         /// <returns></returns>
         [HttpPost()]
         public async Task<IActionResult> Mobile(string phone, string code, [FromQuery] string? remember, [FromQuery] string? returnUrl,
+            [FromQuery] string? appId,
             [FromServices] ISMSProvider provider,
             [FromServices] ILogin loginService,
             [FromServices] IUser userService,
             [FromServices] IDict dictService,
             [FromServices] BootstrapAppContext context)
         {
-            if (string.IsNullOrEmpty(phone) || string.IsNullOrEmpty(code)) return RedirectLogin();
+            if (string.IsNullOrEmpty(phone) || string.IsNullOrEmpty(code))
+            {
+                return RedirectLogin();
+            }
 
             var auth = provider.Validate(phone, code);
             var persistent = remember == "true";
@@ -129,7 +142,7 @@ namespace BootstrapAdmin.Web.Controllers
             {
                 userService.TryCreateUserByPhone(phone, code, context.AppId, provider.Options.Roles);
             }
-            return auth ? await SignInAsync(phone, persistent, period, returnUrl, MobileSchema) : RedirectLogin(returnUrl);
+            return auth ? await SignInAsync(phone, returnUrl ?? GetAppHomeUrl(dictService, appId), persistent, period, MobileSchema) : RedirectLogin(returnUrl);
         }
         #endregion
 
