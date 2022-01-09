@@ -148,5 +148,5 @@ public interface IDict
     /// </summary>
     /// <param name="appId"></param>
     /// <returns></returns>
-    string? GetHomeUrlByAppId(string? appId);
+    string? GetHomeUrlByAppId(string? appId = null);
 }

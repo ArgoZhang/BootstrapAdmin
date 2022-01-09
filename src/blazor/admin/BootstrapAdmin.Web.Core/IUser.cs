@@ -29,6 +29,13 @@ public interface IUser
     List<string> GetApps(string userName);
 
     /// <summary>
+    /// 通过用户名获得指定的前台 AppId
+    /// </summary>
+    /// <param name="userName"></param>
+    /// <returns></returns>
+    string? GetAppIdByUserName(string userName);
+
+    /// <summary>
     /// 
     /// </summary>
     /// <param name="groupId"></param>

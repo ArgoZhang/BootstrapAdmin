@@ -38,6 +38,13 @@ class UserService : IUser
         return FreeSql.Ado.Query<string>($"select d.Code from Dicts d inner join RoleApp ra on d.Code = ra.AppId inner join (select r.Id from Roles r inner join UserRole ur on r.ID = ur.RoleID inner join Users u on ur.UserID = u.ID where u.UserName = @UserName union select r.Id from Roles r inner join RoleGroup rg on r.ID = rg.RoleID inner join Groups g on rg.GroupID = g.ID inner join UserGroup ug on ug.GroupID = g.ID inner join Users u on ug.UserID = u.ID where u.UserName = @UserName) r on ra.RoleId = r.ID union select Code from Dicts where Category = @Category and exists(select r.ID from Roles r inner join UserRole ur on r.ID = ur.RoleID inner join Users u on ur.UserID = u.ID where u.UserName = @UserName and r.RoleName = @RoleName union select r.ID from Roles r inner join RoleGroup rg on r.ID = rg.RoleID inner join Groups g on rg.GroupID = g.ID inner join UserGroup ug on ug.GroupID = g.ID inner join Users u on ug.UserID = u.ID where u.UserName = @UserName and r.RoleName = @RoleName)", new { UserName = userName, Category = "应用程序", RoleName = "Administrators" }).ToList();
     }
 
+    /// <summary>
+    /// 通过用户名获得指定的前台 AppId
+    /// </summary>
+    /// <param name="userName"></param>
+    /// <returns></returns>
+    public string? GetAppIdByUserName(string userName) => FreeSql.Select<User>().Where(s => s.UserName == userName).ToOne(s => s.App);
+
     public string? GetDisplayName(string? userName)
     {
         return FreeSql.Select<User>().Where(s => s.UserName == userName).ToOne(s => s.DisplayName);

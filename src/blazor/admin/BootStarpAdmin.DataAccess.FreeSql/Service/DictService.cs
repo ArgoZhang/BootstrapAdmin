@@ -159,14 +159,12 @@ class DictService : IDict
     /// </summary>
     /// <param name="appId"></param>
     /// <returns></returns>
-    public string? GetHomeUrlByAppId(string? appId)
+    public string? GetHomeUrlByAppId(string? appId = null)
     {
         string? url = null;
-        if (!string.IsNullOrEmpty(appId))
-        {
-            var dicts = GetAll();
-            url = dicts.FirstOrDefault(d => d.Category == "应用首页" && d.Name.Equals(appId, StringComparison.OrdinalIgnoreCase) && d.Define == EnumDictDefine.System)?.Code;
-        }
+        var dicts = GetAll();
+        appId ??= "BA";
+        url = dicts.FirstOrDefault(d => d.Category == "应用首页" && d.Name.Equals(appId, StringComparison.OrdinalIgnoreCase) && d.Define == EnumDictDefine.System)?.Code;
         return url;
     }
 }

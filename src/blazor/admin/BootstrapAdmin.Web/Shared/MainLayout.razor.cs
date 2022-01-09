@@ -20,11 +20,11 @@ namespace BootstrapAdmin.Web.Shared
 
         [Inject]
         [NotNull]
-        private IDict? DictsService { get; set; }
+        private AuthenticationStateProvider? AuthenticationStateProvider { get; set; }
 
         [Inject]
         [NotNull]
-        private AuthenticationStateProvider? AuthenticationStateProvider { get; set; }
+        private IDict? DictsService { get; set; }
 
         [Inject]
         [NotNull]

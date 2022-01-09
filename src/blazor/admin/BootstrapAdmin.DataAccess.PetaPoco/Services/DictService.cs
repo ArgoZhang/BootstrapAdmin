@@ -186,14 +186,12 @@ class DictService : BaseDatabase, IDict
     /// </summary>
     /// <param name="appId"></param>
     /// <returns></returns>
-    public string? GetHomeUrlByAppId(string? appId)
+    public string? GetHomeUrlByAppId(string? appId = null)
     {
         string? url = null;
-        if (!string.IsNullOrEmpty(appId))
-        {
-            var dicts = GetAll();
-            url = dicts.FirstOrDefault(d => d.Category == "应用首页" && d.Name.Equals(appId, StringComparison.OrdinalIgnoreCase) && d.Define == EnumDictDefine.System)?.Code;
-        }
+        appId ??= "BA";
+        var dicts = GetAll();
+        url = dicts.FirstOrDefault(d => d.Category == "应用首页" && d.Name.Equals(appId, StringComparison.OrdinalIgnoreCase) && d.Define == EnumDictDefine.System)?.Code;
         return url;
     }
 }
