@@ -1,10 +1,10 @@
 ﻿@typeparam TItem
 
-<Table TItem="TItem" IsBordered="true" IsStriped="true" IsMultipleSelect="true" @ref="Instance"
+<Table TItem="TItem" IsBordered="true" IsStriped="true" IsMultipleSelect="IsMultipleSelect" @ref="Instance"
        IsPagination="IsPagination" PageItemsSource="PageItemsSource" IsFixedHeader="IsFixedHeader"
        IsTree="IsTree" OnTreeExpand="OnTreeExpand!" TreeIcon="fa-chevron-circle-right"
        ShowDefaultButtons="ShowDefaultButtons" ShowAdvancedSearch="ShowAdvancedSearch"
-       ShowEmpty="true" EmptyText="暂无数据" EmptyImage="images/empty.svg" SortList="SortList"
+       ShowEmpty="ShowEmpty" EmptyText="暂无数据" EmptyImage="images/empty.svg" SortList="SortList"
        OnQueryAsync="OnQueryAsync!" OnDeleteAsync="OnDeleteAsync!" OnSaveAsync="OnSaveAsync!"
        ShowSkeleton="true" ShowLoading="ShowLoading" ShowSearch="ShowSearch"
        ShowToolbar="ShowToolbar" ShowExtendButtons="ShowExtendButtons"

@@ -68,6 +68,12 @@ namespace BootstrapAdmin.Web.Components
         /// 
         /// </summary>
         [Parameter]
+        public bool IsMultipleSelect { get; set; } = true;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Parameter]
         public bool IsFixedHeader { get; set; } = true;
 
         /// <summary>
@@ -81,6 +87,12 @@ namespace BootstrapAdmin.Web.Components
         /// </summary>
         [Parameter]
         public bool ShowToolbar { get; set; } = true;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Parameter]
+        public bool ShowEmpty { get; set; } = true;
 
         /// <summary>
         /// 
