@@ -122,12 +122,6 @@ namespace BootstrapAdmin.Web.Components
         /// 
         /// </summary>
         [Parameter]
-        public IDataService<TItem>? DataService { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [Parameter]
         public Func<QueryPageOptions, Task<QueryData<TItem>>>? OnQueryAsync { get; set; }
 
         /// <summary>

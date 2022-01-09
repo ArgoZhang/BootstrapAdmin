@@ -65,7 +65,6 @@ namespace BootstrapAdmin.Web.Extensions
 #endif
             });
 
-
             // 增加后台任务
             services.AddTaskServices();
             services.AddHostedService<AdminTaskService>();
