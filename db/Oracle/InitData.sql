@@ -77,13 +77,13 @@ INSERT INTO Dicts (Id, Category, Name, Code, Define) Values (SEQ_DICTS_ID.NEXTVA
 INSERT INTO Dicts (Id, Category, Name, Code, Define) Values (SEQ_DICTS_ID.NEXTVAL, '网站设置', '后台地址', 'http://localhost:50852', 0);
 
 -- 系统登录首页设置
-INSERT INTO Dicts (Id, Category, Name, Code, Define) VALUES (SEQ_DICTS_ID.NEXTVAL, '系统首页', '高仿码云', 'Login-Gitee', 1);
-INSERT INTO Dicts (Id, Category, Name, Code, Define) VALUES (SEQ_DICTS_ID.NEXTVAL, '系统首页', '蓝色清新', 'Login-Blue', 1);
-INSERT INTO Dicts (Id, Category, Name, Code, Define) VALUES (SEQ_DICTS_ID.NEXTVAL, '系统首页', '系统默认', 'Login', 1);
-INSERT INTO Dicts (Id, Category, Name, Code, Define) VALUES (SEQ_DICTS_ID.NEXTVAL, '系统首页', '科技动感', 'Login-Tec', 1);
-INSERT INTO Dicts (Id, Category, Name, Code, Define) VALUES (SEQ_DICTS_ID.NEXTVAL, '系统首页', 'Admin-LTE', 'Login-LTE', 1);
+INSERT INTO Dicts (Id, Category, Name, Code, Define) VALUES (SEQ_DICTS_ID.NEXTVAL, '系统首页', '高仿码云', 'Login-Gitee', 0);
+INSERT INTO Dicts (Id, Category, Name, Code, Define) VALUES (SEQ_DICTS_ID.NEXTVAL, '系统首页', '蓝色清新', 'Login-Blue', 0);
+INSERT INTO Dicts (Id, Category, Name, Code, Define) VALUES (SEQ_DICTS_ID.NEXTVAL, '系统首页', '系统默认', 'Login', 0);
+INSERT INTO Dicts (Id, Category, Name, Code, Define) VALUES (SEQ_DICTS_ID.NEXTVAL, '系统首页', '科技动感', 'Login-Tec', 0);
+INSERT INTO Dicts (Id, Category, Name, Code, Define) VALUES (SEQ_DICTS_ID.NEXTVAL, '系统首页', 'Admin-LTE', 'Login-LTE', 0);
 
-INSERT INTO Dicts (Id, Category, Name, Code, Define) VALUES (SEQ_DICTS_ID.NEXTVAL, '网站设置', '登录界面', 'Login', 1);
+INSERT INTO Dicts (Id, Category, Name, Code, Define) VALUES (SEQ_DICTS_ID.NEXTVAL, '网站设置', '登录界面', 'Login', 0);
 
 DELETE FROM Navigations Where Category = '0';
 INSERT INTO Navigations (Id, ParentId, Name, "ORDER", Icon, Url, Category) Values (SEQ_NAVIGATIONS_ID.NEXTVAL, 0, '后台管理', 10, 'fa fa-gear', '~/Admin/Index', '0');

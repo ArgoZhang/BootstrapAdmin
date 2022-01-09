@@ -82,13 +82,13 @@ INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('网站设置
 INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('网站设置', '后台地址', 'http://localhost:50852', 0);
 
 -- 系统登录首页设置
-INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('系统首页', '2-高仿码云', 'Login-Gitee', 1);
-INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('系统首页', '3-蓝色清新', 'Login-Blue', 1);
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('系统首页', '2-高仿码云', 'Login-Gitee', 0);
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('系统首页', '3-蓝色清新', 'Login-Blue', 0);
 INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('系统首页', '1-系统默认', 'Login', 1);
-INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统首页', '科技动感', '4-Login-Tec', 1);
-INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统首页', 'Admin-LTE', '5-Login-LTE', 1);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统首页', '科技动感', '4-Login-Tec', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统首页', 'Admin-LTE', '5-Login-LTE', 0);
 
-INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('网站设置', '登录界面', 'Login', 1);
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('网站设置', '登录界面', 'Login', 0);
 
 DELETE FROM Navigations Where Category = '0';
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, '后台管理', 10, 'fa fa-gear', '~/Admin/Index', '0');
