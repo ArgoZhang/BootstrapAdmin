@@ -1,16 +1,16 @@
-﻿using BootstrapAdmin.Web.Core;
+﻿using BootstrapAdmin.Web.Core.Services;
 using BootstrapAdmin.Web.HealthChecks;
 using BootstrapAdmin.Web.Services;
 using BootstrapAdmin.Web.Services.SMS;
 using BootstrapAdmin.Web.Services.SMS.Tencent;
 using BootstrapAdmin.Web.Utils;
 
-namespace BootstrapAdmin.Web.Extensions
+namespace Microsoft.Extensions.DependencyInjection
 {
     /// <summary>
     /// 
     /// </summary>
-    public static class ServicesExtensions
+    public static class ServiceCollectionExtensions
     {
         /// <summary>
         /// 添加示例后台任务

@@ -19,7 +19,7 @@ namespace Microsoft.Extensions.DependencyInjection;
 /// <summary>
 /// 
 /// </summary>
-public static class ServicesExtensions
+public static class ServiceCollectionExtensions
 {
     /// <summary>
     /// 

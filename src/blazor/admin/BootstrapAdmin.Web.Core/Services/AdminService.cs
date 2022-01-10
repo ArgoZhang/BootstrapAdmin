@@ -1,6 +1,6 @@
 ﻿using Bootstrap.Security.Blazor;
 
-namespace BootstrapAdmin.Web.Core;
+namespace BootstrapAdmin.Web.Core.Services;
 
 /// <summary>
 /// 
