@@ -22,6 +22,9 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddCors();
             services.AddResponseCompression();
 
+            // 增加 缓存管理服务
+            services.AddCacheManager();
+
             // 增加 健康检查服务
             services.AddAdminHealthChecks();
 

@@ -38,7 +38,7 @@ public class Index : ComponentBase
     protected override void OnInitialized()
     {
         var appId = UsersService.GetAppIdByUserName(Context.UserName);
-        Url = DictsService.GetHomeUrlByAppId(appId) ?? "Admin/Index";
+        Url = DictsService.GetHomeUrlByAppId(appId) ?? "/Admin/Index";
 
 #if !DEBUG
         Navigation.NavigateTo(Url, true);
