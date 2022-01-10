@@ -10,7 +10,7 @@ namespace Microsoft.Extensions.DependencyInjection;
 /// <summary>
 /// FreeSql ORM 注入服务扩展类
 /// </summary>
-public static class ServicesExtensions
+public static class ServiceCollectionExtensions
 {
     /// <summary>
     /// 注入 FreeSql 数据服务类
