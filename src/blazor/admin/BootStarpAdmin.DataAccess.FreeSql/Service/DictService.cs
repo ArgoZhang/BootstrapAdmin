@@ -7,6 +7,8 @@ namespace BootStarpAdmin.DataAccess.FreeSql.Service;
 
 class DictService : IDict
 {
+    private const string DictServiceCacheKey = "DictService-GetAll";
+
     private IFreeSql FreeSql { get; }
 
     private string? AppId { get; set; }
@@ -33,10 +35,11 @@ class DictService : IDict
         return ret;
     }
 
-    public List<Dict> GetAll()
-    {
-        return FreeSql.Select<Dict>().ToList();
-    }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public List<Dict> GetAll() => CacheManager.GetOrCreate<List<Dict>>(DictServiceCacheKey, entry => FreeSql.Select<Dict>().ToList());
 
     public Dictionary<string, string> GetApps()
     {
@@ -122,7 +125,7 @@ class DictService : IDict
         if (ret)
         {
             // 更新缓存
-            CacheManager.Remove(DictServiceCacheKey);
+            CacheManager.Clear(DictServiceCacheKey);
         }
         return ret;
     }

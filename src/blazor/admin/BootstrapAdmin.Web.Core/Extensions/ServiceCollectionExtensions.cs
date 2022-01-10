@@ -16,8 +16,7 @@ public static class ServiceCollectionExtensions
     /// <returns></returns>
     public static IServiceCollection AddCacheManager(this IServiceCollection services)
     {
-        services.AddMemoryCache();
-        services.TryAddSingleton<ICacheManager>(DefaultCacheManager.Instance);
+        services.TryAddSingleton<ICacheManager>(provider => DefaultCacheManager.Instance);
         return services;
     }
 }

@@ -23,6 +23,15 @@ public interface ICacheManager
     /// <summary>
     /// 
     /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="key"></param>
+    /// <param name="factory"></param>
+    /// <returns></returns>
+    Task<T> GetOrCreateAsync<T>(string key, Func<ICacheEntry, Task<T>> factory);
+
+    /// <summary>
+    /// 
+    /// </summary>
     /// <param name="key"></param>
     void Clear(string? key = null);
 }

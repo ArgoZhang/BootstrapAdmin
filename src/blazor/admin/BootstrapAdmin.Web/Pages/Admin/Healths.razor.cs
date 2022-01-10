@@ -33,6 +33,10 @@ public partial class Healths
     [NotNull]
     private DialogService? DialogService { get; set; }
 
+    [Inject]
+    [NotNull]
+    private BootstrapBlazor.Web.Core.ICacheManager? CacheManager { get; set; }
+
     [NotNull]
     private HttpClient? Client { get; set; }
 
@@ -49,8 +53,11 @@ public partial class Healths
 
     private async Task<QueryData<HealthCheckReportItem>> OnQueryAsync(QueryPageOptions options)
     {
-        var payload = await Client.GetStringAsync("/Healths");
-        var report = HealthCheckHelper.Parse(payload);
+        var report = await CacheManager.GetOrCreateAsync("Health", async entry =>
+        {
+            var payload = await Client.GetStringAsync("/Healths");
+            return HealthCheckHelper.Parse(payload);
+        });
 
         var ret = new QueryData<HealthCheckReportItem>()
         {
