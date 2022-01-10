@@ -155,7 +155,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BootstrapClient.Web.Shared"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BootstrapClient.Web", "src\blazor\client\BootstrapClient.Web\BootstrapClient.Web.csproj", "{6CD7A35B-93A8-4DB2-B078-EE5A81F40032}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BootStarpAdmin.DataAccess.FreeSql", "src\blazor\admin\BootStarpAdmin.DataAccess.FreeSql\BootStarpAdmin.DataAccess.FreeSql.csproj", "{11122D97-B349-4A3E-B7DD-73B8B363C47C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BootStarpAdmin.DataAccess.FreeSql", "src\blazor\admin\BootStarpAdmin.DataAccess.FreeSql\BootStarpAdmin.DataAccess.FreeSql.csproj", "{11122D97-B349-4A3E-B7DD-73B8B363C47C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

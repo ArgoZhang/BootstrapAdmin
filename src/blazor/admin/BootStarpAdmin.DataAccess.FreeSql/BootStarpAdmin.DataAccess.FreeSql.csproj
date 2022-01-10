@@ -1,12 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\BootstrapAdmin.DataAccess.Models\BootstrapAdmin.DataAccess.Models.csproj" />
     <ProjectReference Include="..\BootstrapAdmin.Web.Core\BootstrapAdmin.Web.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BootstrapBlazor" Version="6.2.6" />
+    <PackageReference Include="BootstrapBlazor" Version="6.2.7-beta02" />
     <PackageReference Include="FreeSql.Provider.Sqlite" Version="3.0.100" />
   </ItemGroup>
 
