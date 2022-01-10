@@ -116,23 +116,22 @@ class DictService : IDict
         return dicts.FirstOrDefault(d => d.Name == "头像路径" && d.Category == "头像地址" && d.Define == EnumDictDefine.System)?.Code ?? "images/uploder/";
     }
 
-    private bool SaveDict(Dict dict) => FreeSql.Update<Dict>().Where(s => s.Category == dict.Category && s.Name == dict.Code).Set(s => s.Code, dict.Code).ExecuteAffrows() > 0;
+    private bool SaveDict(Dict dict)
+    {
+        var ret = FreeSql.Update<Dict>().Where(s => s.Category == dict.Category && s.Name == dict.Code).Set(s => s.Code, dict.Code).ExecuteAffrows() > 0;
+        if (ret)
+        {
+            // 更新缓存
+            CacheManager.Remove(DictServiceCacheKey);
+        }
+        return ret;
+    }
 
     public bool SaveCookieExpiresPeriod(int expiresPeriod) => SaveDict(new Dict { Category = "网站设置", Name = "Cookie保留时长", Code = expiresPeriod.ToString() });
 
-    public bool SaveDemo(bool isDemo)
-    {
-        return FreeSql.Update<Dict>()
-                .Where(s => s.Category == "网站设置" && s.Name == "演示系统" && s.Define == EnumDictDefine.System)
-                .Set(s => s.Code, isDemo ? "1" : "0").ExecuteAffrows() > 0;
-    }
+    public bool SaveDemo(bool isDemo) => SaveDict(new Dict { Category = "网站设置", Name = "演示系统", Define = EnumDictDefine.System, Code = isDemo ? "1" : "0" });
 
-    public bool SaveHealthCheck(bool enable = true)
-    {
-        return FreeSql.Update<Dict>()
-                .Where(s => s.Category == "网站设置" && s.Name == "健康检查" && s.Define == EnumDictDefine.System)
-                .Set(s => s.Code, enable ? "1" : "0").ExecuteAffrows() > 0;
-    }
+    public bool SaveHealthCheck(bool enable = true) => SaveDict(new Dict { Category = "网站设置", Name = "演示系统", Define = EnumDictDefine.System, Code = enable ? "1" : "0" });
 
     public bool SaveLogin(string login) => SaveDict(new Dict { Category = "网站设置", Name = "登录界面", Code = login });
 
