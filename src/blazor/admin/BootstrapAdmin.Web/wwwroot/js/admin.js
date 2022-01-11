@@ -65,7 +65,7 @@
                         return;
                     }
                     if (password === '') {
-                        password.trigger("change");
+                        $password.trigger("change");
                         return;
                     }
                 }
