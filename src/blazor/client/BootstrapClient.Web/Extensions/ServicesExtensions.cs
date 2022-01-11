@@ -1,7 +1,6 @@
-﻿using BootstrapAdmin.Web.Core;
-using PetaPoco.Providers;
+﻿using BootstrapAdmin.Web.Core.Services;
 using PetaPoco;
-using System.Text;
+using PetaPoco.Providers;
 
 namespace Microsoft.Extensions.DependencyInjection
 {

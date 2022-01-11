@@ -84,14 +84,17 @@ namespace BootstrapAdmin.Web.Controllers
 
         private IActionResult RedirectLogin(string? returnUrl = null)
         {
-            var query = Request.Query.Aggregate(new Dictionary<string, string?>(), (d, v) =>
+            var url = returnUrl;
+            if (string.IsNullOrEmpty(url))
             {
-                d.Add(v.Key, v.Value.ToString());
-                return d;
-            });
-            return returnUrl == null
-                ? Redirect(QueryHelpers.AddQueryString(Request.PathBase + CookieAuthenticationDefaults.LoginPath, query))
-                : Redirect(returnUrl);
+                var query = Request.Query.Aggregate(new Dictionary<string, string?>(), (d, v) =>
+                {
+                    d.Add(v.Key, v.Value.ToString());
+                    return d;
+                });
+                url = QueryHelpers.AddQueryString(Request.PathBase + CookieAuthenticationDefaults.LoginPath, query);
+            }
+            return Redirect(url);
         }
         #endregion
 
@@ -99,14 +102,18 @@ namespace BootstrapAdmin.Web.Controllers
         /// <summary>
         /// Logout this instance.
         /// </summary>
-        /// <param name="context"></param>
+        /// <param name="returnUrl"></param>
         /// <param name="appId"></param>
         /// <returns>The logout.</returns>
         [HttpGet]
-        public async Task<IActionResult> Logout([FromServices] BootstrapAppContext context, [FromQuery] string appId)
+        public async Task<IActionResult> Logout([FromQuery] string returnUrl, [FromQuery] string appId)
         {
             await HttpContext.SignOutAsync();
-            return Redirect(QueryHelpers.AddQueryString(Request.PathBase + CookieAuthenticationDefaults.LoginPath, "AppId", appId ?? context.AppId));
+            return Redirect(QueryHelpers.AddQueryString(Request.PathBase + CookieAuthenticationDefaults.LoginPath, new Dictionary<string, string?>
+            {
+                ["AppId"] = appId,
+                ["ReturnUrl"] = returnUrl
+            }));
         }
         #endregion
 

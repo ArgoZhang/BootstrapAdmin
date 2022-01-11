@@ -165,7 +165,9 @@ class DictService : IDict
     {
         string? url = null;
         var dicts = GetAll();
-        appId ??= "BA";
+
+        // appId 为空时读取前台列表取第一个应用作为默认应用
+        appId ??= GetApps().FirstOrDefault(d => d.Key != "BA").Key ?? AppId;
         url = dicts.FirstOrDefault(d => d.Category == "应用首页" && d.Name.Equals(appId, StringComparison.OrdinalIgnoreCase) && d.Define == EnumDictDefine.System)?.Code;
         return url;
     }
