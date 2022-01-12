@@ -7,8 +7,10 @@ namespace BootstrapAdmin.DataAccess.PetaPoco.Services;
 /// <summary>
 /// 
 /// </summary>
-class NavigationService : BaseDatabase, INavigation
+class NavigationService : INavigation
 {
+    private IDatabase Database { get; }
+
     /// <summary>
     /// 
     /// </summary>

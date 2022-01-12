@@ -4,8 +4,10 @@ using PetaPoco;
 
 namespace BootstrapAdmin.DataAccess.PetaPoco.Services;
 
-class ExceptionService : BaseDatabase, IException
+class ExceptionService : IException
 {
+    private IDatabase Database { get; }
+
     public ExceptionService(IDatabase db) => Database = db;
 
     public bool Log(Error exception)

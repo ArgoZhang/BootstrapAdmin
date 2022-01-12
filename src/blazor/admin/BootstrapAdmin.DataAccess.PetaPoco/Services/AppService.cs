@@ -3,8 +3,10 @@ using PetaPoco;
 
 namespace BootstrapAdmin.DataAccess.PetaPoco.Services;
 
-class AppService : BaseDatabase, IApp
+class AppService : IApp
 {
+    private IDatabase Database { get; }
+
     public AppService(IDatabase db)
     {
         Database = db;

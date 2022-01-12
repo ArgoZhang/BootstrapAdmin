@@ -1,14 +1,12 @@
 ﻿// Copyright (c) Argo Zhang (argo@163.com). All rights reserved.
 
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BootstrapAdmin.DataAccess.Models;
 
 /// <summary>
 /// Bootstrap Admin 后台管理菜单相关操作实体类
 /// </summary>
-[Table("Navigations")]
 public class Navigation
 {
     /// <summary>

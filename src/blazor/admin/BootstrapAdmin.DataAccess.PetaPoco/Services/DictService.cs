@@ -7,8 +7,10 @@ using PetaPoco;
 
 namespace BootstrapAdmin.DataAccess.PetaPoco.Services;
 
-class DictService : BaseDatabase, IDict
+class DictService : IDict
 {
+    private IDatabase Database { get; }
+
     private string AppId { get; set; }
 
     /// <summary>

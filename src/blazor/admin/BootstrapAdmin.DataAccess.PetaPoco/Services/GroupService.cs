@@ -4,8 +4,10 @@ using PetaPoco;
 
 namespace BootstrapAdmin.DataAccess.PetaPoco.Services;
 
-class GroupService : BaseDatabase, IGroup
+class GroupService : IGroup
 {
+    private IDatabase Database { get; }
+
     /// <summary>
     /// 
     /// </summary>
