@@ -83,12 +83,6 @@ public partial class Settings
         await ShowToast(ret, "登录界面");
     }
 
-    private async Task OnSaveAuthUrl(EditContext context)
-    {
-        var ret = DictService.SaveLogin(AppInfo.Login);
-        await ShowToast(ret, "授权后台地址");
-    }
-
     private async Task OnSaveTheme(EditContext context)
     {
         var ret = DictService.SaveLogin(AppInfo.Login);
@@ -105,5 +99,11 @@ public partial class Settings
             StateHasChanged();
         }
         await ShowToast(ret, "演示系统");
+    }
+
+    private async Task OnSaveApp(EditContext context)
+    {
+        var ret = DictService.SaveDemo(AppInfo.EnableDefaultApp);
+        await ShowToast(ret, "默认应用");
     }
 }

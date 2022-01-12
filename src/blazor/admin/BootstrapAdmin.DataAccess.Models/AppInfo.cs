@@ -26,7 +26,7 @@ public class AppInfo
     /// <summary>
     /// 
     /// </summary>
-    [Display(Name = "登录地址")]
+    [Display(Name = "登录首页")]
     [NotNull]
     public string? Login { get; set; }
 
@@ -40,8 +40,15 @@ public class AppInfo
     /// <summary>
     /// 
     /// </summary>
+    [Display(Name = "网站主题")]
     [NotNull]
     public string? Theme { get; set; }
+
+    /// <summary>
+    /// 是否开启默认应用功能
+    /// </summary>
+    [Display(Name = "默认应用")]
+    public bool EnableDefaultApp { get; set; }
 
     /// <summary>
     /// 

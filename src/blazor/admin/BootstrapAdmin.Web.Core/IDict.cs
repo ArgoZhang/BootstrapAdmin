@@ -65,6 +65,13 @@ public interface IDict
     bool SaveDemo(bool isDemo);
 
     /// <summary>
+    /// 保存是否开启默认应用设置
+    /// </summary>
+    /// <param name="enabled"></param>
+    /// <returns></returns>
+    bool SavDefaultApp(bool enabled);
+
+    /// <summary>
     /// 保存健康检查
     /// </summary>
     /// <returns></returns>

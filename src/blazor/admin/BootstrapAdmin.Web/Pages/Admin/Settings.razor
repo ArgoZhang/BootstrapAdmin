@@ -47,22 +47,6 @@
         </ValidateForm>
     </AdminCard>
 
-    <AdminCard HeaderText="后台管理地址设置" AuthorizeKey="SaveLogin">
-        <AdminAlert Text="此功能给前台网站拼接后台功能菜单时使用" Color="Color.Info" />
-        <ValidateForm OnValidSubmit="OnSaveAuthUrl" Model="AppInfo">
-            <div class="row g-3 form-inline">
-                <div class="col-12 col-sm-6">
-                    <BootstrapInput @bind-Value="@AppInfo.AuthUrl" Readonly="IsDemo" />
-                </div>
-                <Block Condition="!IsDemo">
-                    <div class="col-12 col-sm-6 text-end">
-                        <Button ButtonType="ButtonType.Submit" Icon="fa fa-save" Text="保存" />
-                    </div>
-                </Block>
-            </div>
-        </ValidateForm>
-    </AdminCard>
-
     <AdminCard HeaderText="网站样式设置" AuthorizeKey="SaveTheme">
         <AdminAlert Color="Color.Info">
             <span>注意：本设置将覆盖 <b><TabLink Url="/Admin/Profiles" Text="个人中心" Icon="fa fa-fa">个人中心</TabLink></b> 中设置的网站样式覆盖本设置</span>
@@ -80,7 +64,24 @@
         </ValidateForm>
     </AdminCard>
 
+
+    <AdminCard HeaderText="默认应用设置" AuthorizeKey="DefaultApp">
+        <AdminAlert Text="开启本功能后登录后自动导航到第一个已授权前台应用" Color="Color.Info" />
+        <ValidateForm OnValidSubmit="OnSaveApp" Model="AppInfo">
+            <div class="row g-3 form-inline">
+                <div class="col-12 col-sm-6">
+                    <Toggle @bind-Value="AppInfo.EnableDefaultApp" OnText="启用" OffText="关闭" />
+                </div>
+                <div class="col-12 col-sm-6 text-end">
+                    <Button ButtonType="ButtonType.Submit" Icon="fa fa-save" Text="保存" />
+                </div>
+            </div>
+        </ValidateForm>
+    </AdminCard>
+
+
     <AdminCard HeaderText="系统演示设置" AuthorizeKey="SaveDemo">
+        <AdminAlert Text="开启本功能后系统运行在演示模式下部分功能禁止操作" Color="Color.Info" />
         <ValidateForm OnValidSubmit="OnSaveDemo" Model="AppInfo">
             <div class="row g-3 form-inline">
                 <div class="col-12 col-sm-4">

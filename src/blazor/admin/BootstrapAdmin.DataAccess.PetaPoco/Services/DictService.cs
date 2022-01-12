@@ -117,9 +117,28 @@ class DictService : BaseDatabase, IDict
     /// <summary>
     /// 保存当前网站是否为演示系统
     /// </summary>
-    /// <param name="isDemo"></param>
+    /// <param name="enable"></param>
     /// <returns></returns>
-    public bool SaveDemo(bool isDemo) => Database.Execute("Update Dicts Set Code = @0 Where Category = @1 and Name = @2 and Define = @3", isDemo ? "1" : "0", "网站设置", "演示系统", EnumDictDefine.System) == 1;
+    public bool SaveDemo(bool enable) => SaveDict(new Dict
+    {
+        Category = "网站设置",
+        Name = "演示系统",
+        Code = enable ? "1" : "0",
+        Define = EnumDictDefine.System
+    });
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="enable"></param>
+    /// <returns></returns>
+    public bool SavDefaultApp(bool enable) => SaveDict(new Dict
+    {
+        Category = "网站设置",
+        Name = "默认应用程序",
+        Code = enable ? "1" : "0",
+        Define = EnumDictDefine.System
+    });
 
     /// <summary>
     /// 
@@ -127,7 +146,13 @@ class DictService : BaseDatabase, IDict
     /// <param name="enable"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public bool SaveHealthCheck(bool enable = true) => Database.Execute("Update Dicts Set Code = @0 Where Category = @1 and Name = @2 and Define = @3", enable ? "1" : "0", "网站设置", "健康检查", EnumDictDefine.System.ToString()) == 1;
+    public bool SaveHealthCheck(bool enable = true) => SaveDict(new Dict
+    {
+        Category = "网站设置",
+        Name = "健康检查",
+        Code = enable ? "1" : "0",
+        Define = EnumDictDefine.System
+    });
 
     /// <summary>
     /// 获取当前网站 Cookie 保持时长

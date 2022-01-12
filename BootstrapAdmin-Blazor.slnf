@@ -6,8 +6,10 @@
       "src\\blazor\\admin\\BootstrapAdmin.DataAccess.PetaPoco\\BootstrapAdmin.DataAccess.PetaPoco.csproj",
       "src\\blazor\\admin\\BootstrapAdmin.Web.Core\\BootstrapAdmin.Web.Core.csproj",
       "src\\blazor\\admin\\BootstrapAdmin.Web\\BootstrapAdmin.Web.csproj",
-      "src\\mvc\\admin\\Bootstrap.Admin\\Bootstrap.Admin.csproj",
-      "src\\mvc\\admin\\Bootstrap.DataAccess\\Bootstrap.DataAccess.csproj"
+      "src\\blazor\\client\\BootstrapClient.DataAccess\\BootstrapClient.Web.DataAccess.csproj",
+      "src\\blazor\\client\\BootstrapClient.Shared\\BootstrapClient.Web.Shared.csproj",
+      "src\\blazor\\client\\BootstrapClient.Web\\BootstrapClient.Web.csproj",
+      "test\\UnitTest\\UnitTest.csproj"
     ]
   }
 }
