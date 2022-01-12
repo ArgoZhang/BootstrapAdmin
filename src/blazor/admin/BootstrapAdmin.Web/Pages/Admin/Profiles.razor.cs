@@ -33,6 +33,10 @@ public partial class Profiles
     [NotNull]
     private IDict? DictService { get; set; }
 
+    [Inject]
+    [NotNull]
+    private IUser? UserService { get; set; }
+
     private List<UploadFile> PreviewFileList { get; } = new(new[] { new UploadFile { PrevUrl = "/images/Argo.png" } });
 
     /// <summary>
@@ -42,9 +46,10 @@ public partial class Profiles
     {
         base.OnInitialized();
 
+        var user = UserService.GetUserByUserName(AppContext.UserName);
         CurrentUser = new User()
         {
-            App = AppContext.AppId,
+            App = user?.App ?? AppContext.AppId,
             UserName = AppContext.UserName,
             DisplayName = AppContext.DisplayName
         };
@@ -65,6 +70,10 @@ public partial class Profiles
 
     private Task OnSaveApp()
     {
+        if (CurrentUser.App != null)
+        {
+            UserService.SaveApp(AppContext.UserName, CurrentUser.App);
+        }
         return Task.CompletedTask;
     }
 

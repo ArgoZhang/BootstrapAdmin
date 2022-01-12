@@ -234,4 +234,10 @@ class UserService : BaseDatabase, IUser
         }
         return ret;
     }
+
+    public bool SaveApp(string userName, string app)
+    {
+        Database.Update<User>("Set App = @1 Where UserName = @0", userName, app);
+        return true;
+    }
 }

@@ -72,6 +72,13 @@ public interface IUser
     List<User> GetAll();
 
     /// <summary>
+    /// 保存指定用户的默认 App
+    /// </summary>
+    /// <param name="userName"></param>
+    /// <param name="app"></param>
+    bool SaveApp(string userName, string app);
+
+    /// <summary>
     /// 认证方法
     /// </summary>
     /// <param name="userName"></param>
