@@ -121,7 +121,7 @@ class DictService : IDict
 
     private bool SaveDict(Dict dict)
     {
-        var ret = FreeSql.Update<Dict>().Where(s => s.Category == dict.Category && s.Name == dict.Code).Set(s => s.Code, dict.Code).ExecuteAffrows() > 0;
+        var ret = FreeSql.Update<Dict>().Where(s => s.Category == dict.Category && s.Name == dict.Name).Set(s => s.Code, dict.Code).ExecuteAffrows() > 0;
         if (ret)
         {
             // 更新缓存
