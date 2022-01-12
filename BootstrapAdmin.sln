@@ -157,6 +157,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BootstrapClient.Web", "src\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BootStarpAdmin.DataAccess.FreeSql", "src\blazor\admin\BootStarpAdmin.DataAccess.FreeSql\BootStarpAdmin.DataAccess.FreeSql.csproj", "{11122D97-B349-4A3E-B7DD-73B8B363C47C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BootStarpAdmin.DataAccess.SqlSugar", "src\blazor\admin\BootStarpAdmin.DataAccess.SqlSugar\BootStarpAdmin.DataAccess.SqlSugar.csproj", "{1D20E6CF-9825-4CDE-B732-AE586BD1AABA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -227,6 +229,10 @@ Global
 		{11122D97-B349-4A3E-B7DD-73B8B363C47C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11122D97-B349-4A3E-B7DD-73B8B363C47C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11122D97-B349-4A3E-B7DD-73B8B363C47C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D20E6CF-9825-4CDE-B732-AE586BD1AABA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D20E6CF-9825-4CDE-B732-AE586BD1AABA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D20E6CF-9825-4CDE-B732-AE586BD1AABA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D20E6CF-9825-4CDE-B732-AE586BD1AABA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -265,6 +271,7 @@ Global
 		{93770088-3463-427B-9CD8-88B8D7945C83} = {55A2459A-6BDE-4493-B2C0-5BE1673E99EE}
 		{6CD7A35B-93A8-4DB2-B078-EE5A81F40032} = {55A2459A-6BDE-4493-B2C0-5BE1673E99EE}
 		{11122D97-B349-4A3E-B7DD-73B8B363C47C} = {45ADEF9B-C8BD-4224-9E12-F6716E85A22C}
+		{1D20E6CF-9825-4CDE-B732-AE586BD1AABA} = {45ADEF9B-C8BD-4224-9E12-F6716E85A22C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {221EAE38-5F75-4391-9A48-E462A9F3B8FC}
