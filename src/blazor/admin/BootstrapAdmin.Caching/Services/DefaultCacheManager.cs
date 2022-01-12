@@ -1,13 +1,12 @@
-﻿using BootstrapBlazor.Web.Core;
-using Microsoft.Extensions.Caching.Memory;
+﻿using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Primitives;
 
-namespace BootstrapAdmin.Web.Core.Services;
+namespace BootstrapAdmin.Caching.Services;
 
 class DefaultCacheManager : ICacheManager
 {
     [NotNull]
-    private IMemoryCache? Cache { get; set; }
+    private MemoryCache? Cache { get; set; }
 
     private List<(string Key, CancellationTokenSource Token)> Keys { get; } = new(256);
 
@@ -25,7 +24,7 @@ class DefaultCacheManager : ICacheManager
         Cache = new MemoryCache(new MemoryCacheOptions());
     }
 
-    public T GetOrCreate<T>(string key, Func<ICacheEntry, T> factory) => Cache.GetOrCreate(key, entry =>
+    public T GetOrAdd<T>(string key, Func<ICacheEntry, T> factory) => Cache.GetOrCreate(key, entry =>
     {
         HandlerEntry(key, entry);
         return factory(entry);
@@ -38,7 +37,7 @@ class DefaultCacheManager : ICacheManager
     /// <param name="key"></param>
     /// <param name="factory"></param>
     /// <returns></returns>
-    public Task<T> GetOrCreateAsync<T>(string key, Func<ICacheEntry, Task<T>> factory) => Cache.GetOrCreate(key, entry =>
+    public Task<T> GetOrAddAsync<T>(string key, Func<ICacheEntry, Task<T>> factory) => Cache.GetOrCreate(key, entry =>
     {
         HandlerEntry(key, entry);
         return factory(entry);
@@ -91,7 +90,7 @@ class DefaultCacheManager : ICacheManager
         }
         else
         {
-            Init();
+            Cache.Compact(100);
         }
     }
 

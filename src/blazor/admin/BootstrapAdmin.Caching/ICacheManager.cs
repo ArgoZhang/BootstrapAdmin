@@ -4,7 +4,7 @@
 
 using Microsoft.Extensions.Caching.Memory;
 
-namespace BootstrapBlazor.Web.Core;
+namespace BootstrapAdmin.Caching;
 
 /// <summary>
 /// CacheManager 接口类
@@ -18,7 +18,7 @@ public interface ICacheManager
     /// <param name="key"></param>
     /// <param name="factory"></param>
     /// <returns></returns>
-    T GetOrCreate<T>(string key, Func<ICacheEntry, T> factory);
+    T GetOrAdd<T>(string key, Func<ICacheEntry, T> factory);
 
     /// <summary>
     /// 
@@ -27,7 +27,7 @@ public interface ICacheManager
     /// <param name="key"></param>
     /// <param name="factory"></param>
     /// <returns></returns>
-    Task<T> GetOrCreateAsync<T>(string key, Func<ICacheEntry, Task<T>> factory);
+    Task<T> GetOrAddAsync<T>(string key, Func<ICacheEntry, Task<T>> factory);
 
     /// <summary>
     /// 

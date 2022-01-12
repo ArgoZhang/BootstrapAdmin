@@ -1,8 +1,7 @@
-﻿using BootstrapAdmin.Web.Core.Services;
-using BootstrapBlazor.Web.Core;
+﻿using BootstrapAdmin.Caching.Services;
 using Microsoft.Extensions.Caching.Memory;
 
-namespace BootstrapAdmin.Web.Core;
+namespace BootstrapAdmin.Caching;
 
 /// <summary>
 /// 缓存管理类
@@ -18,11 +17,17 @@ public static class CacheManager
     /// <param name="key"></param>
     /// <param name="valueFactory"></param>
     /// <returns></returns>
-    public static TItem GetOrCreate<TItem>(string key, Func<ICacheEntry, TItem> valueFactory) => Cache.GetOrCreate(key, valueFactory);
+    public static TItem GetOrAdd<TItem>(string key, Func<ICacheEntry, TItem> valueFactory)
+    {
+        return Cache.GetOrAdd(key, valueFactory);
+    }
 
     /// <summary>
     /// 清除指定键值缓存项
     /// </summary>
     /// <param name="key"></param>
-    public static void Clear(string? key) => Cache.Clear(key);
+    public static void Clear(string? key)
+    {
+        Cache.Clear(key);
+    }
 }

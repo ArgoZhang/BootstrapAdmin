@@ -53,7 +53,7 @@ public partial class Healths
 
     private async Task<QueryData<HealthCheckReportItem>> OnQueryAsync(QueryPageOptions options)
     {
-        var report = await CacheManager.GetOrCreateAsync("Health", async entry =>
+        var report = await CacheManager.GetOrAddAsync("Health", async entry =>
         {
             var payload = await Client.GetStringAsync("/Healths");
             return HealthCheckHelper.Parse(payload);

@@ -1,5 +1,6 @@
-﻿using BootstrapAdmin.Web.Core.Services;
-using BootstrapBlazor.Web.Core;
+﻿using BootstrapAdmin.Caching;
+using BootstrapAdmin.Caching.Services;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Microsoft.Extensions.DependencyInjection;
