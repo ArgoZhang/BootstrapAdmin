@@ -149,4 +149,10 @@ public interface IDict
     /// <param name="appId"></param>
     /// <returns></returns>
     string? GetHomeUrlByAppId(string? appId = null);
+
+    /// <summary>
+    /// 是否开启默认应用
+    /// </summary>
+    /// <returns></returns>
+    bool GetEnableDefaultApp();
 }

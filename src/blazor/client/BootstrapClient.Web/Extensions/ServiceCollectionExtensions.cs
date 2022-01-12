@@ -7,7 +7,7 @@ namespace Microsoft.Extensions.DependencyInjection
     /// <summary>
     /// 
     /// </summary>
-    public static class ServicesExtensions
+    public static class ServiceCollectionExtensions
     {
         /// <summary>
         /// 添加示例后台任务

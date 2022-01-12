@@ -159,6 +159,13 @@ class DictService : BaseDatabase, IDict
 
     public string? GetNotificationUrl(string appId) => GetUrlByName(appId, "系统通知地址");
 
+    public bool GetEnableDefaultApp()
+    {
+        var dicts = GetAll();
+        var code = dicts.FirstOrDefault(d => d.Category == "网站设置" && d.Name == "默认应用程序")?.Code ?? "0";
+        return code == "1";
+    }
+
     private string? GetUrlByName(string appId, string dictName)
     {
         string? url = null;
@@ -191,9 +198,14 @@ class DictService : BaseDatabase, IDict
         string? url = null;
         var dicts = GetAll();
 
-        // appId 为空时读取前台列表取第一个应用作为默认应用
-        appId ??= GetApps().FirstOrDefault(d => d.Key != AppId).Key ?? AppId;
-        url = dicts.FirstOrDefault(d => d.Category == "应用首页" && d.Name.Equals(appId, StringComparison.OrdinalIgnoreCase) && d.Define == EnumDictDefine.System)?.Code;
+        // 查看是否开启默认应用
+        var enableDefaultApp = GetEnableDefaultApp();
+        if (enableDefaultApp)
+        {
+            // appId 为空时读取前台列表取第一个应用作为默认应用
+            appId ??= GetApps().FirstOrDefault(d => d.Key != AppId).Key ?? AppId;
+            url = dicts.FirstOrDefault(d => d.Category == "应用首页" && d.Name.Equals(appId, StringComparison.OrdinalIgnoreCase) && d.Define == EnumDictDefine.System)?.Code;
+        }
         return url;
     }
 }
