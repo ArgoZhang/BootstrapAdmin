@@ -14,16 +14,19 @@ public static class MenuExtensions
     /// </summary>
     /// <param name="menu"></param>
     /// <returns></returns>
-    public static MenuItem Parse(this Navigation menu) => new()
+    public static MenuItem Parse(this Navigation menu)
     {
-        Text = menu.Name,
-        Url = menu.Url.Replace("~", ""),
-        Icon = menu.Icon,
-        Match = NavLinkMatch.All,
-        Target = menu.Target,
-        Id = menu.Id,
-        ParentId = menu.ParentId
-    };
+        return new()
+        {
+            Text = menu.Name,
+            Url = menu.Url.Replace("~", ""),
+            Icon = menu.Icon,
+            Match = NavLinkMatch.All,
+            Target = menu.Target,
+            Id = menu.Id,
+            ParentId = menu.ParentId
+        };
+    }
 
     /// <summary>
     /// 获取前台菜单
@@ -31,7 +34,7 @@ public static class MenuExtensions
     /// <returns></returns>
     public static IEnumerable<MenuItem> ToClientMenus(this List<Navigation> navigations)
     {
-        var menus = navigations.Where(m => m.Category == EnumNavigationCategory.Customer && m.IsResource == 0);
+        var menus = navigations.Where(m => m.IsResource == 0);
         return CascadeMenus(menus);
     }
 

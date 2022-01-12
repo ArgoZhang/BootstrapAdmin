@@ -1,4 +1,4 @@
-﻿using BootstrapAdmin.Web.Core.Services;
+﻿using BootstrapClient.Web.Core.Services;
 using PetaPoco;
 using PetaPoco.Providers;
 

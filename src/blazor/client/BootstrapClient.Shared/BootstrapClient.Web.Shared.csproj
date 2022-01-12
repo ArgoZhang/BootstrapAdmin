@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BootstrapClient.DataAccess\BootstrapClient.Web.DataAccess.csproj" />
+    <ProjectReference Include="..\BootstrapClient.DataAccess\BootstrapClient.DataAccess.PetaPoco.csproj" />
   </ItemGroup>
 
 </Project>

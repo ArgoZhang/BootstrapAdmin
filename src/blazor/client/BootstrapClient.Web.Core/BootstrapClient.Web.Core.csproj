@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="Bootstrap.Security.Blazor" Version="6.0.1-beta01" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BootstrapClient.Web.Models\BootstrapClient.DataAccess.Models.csproj" />
+  </ItemGroup>
+
+</Project>

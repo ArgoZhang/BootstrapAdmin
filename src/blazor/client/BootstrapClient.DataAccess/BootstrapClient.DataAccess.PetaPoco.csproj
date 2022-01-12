@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="BootstrapBlazor" Version="6.2.7-beta03" />
+    <PackageReference Include="Longbow.Security.Cryptography" Version="5.2.0" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="6.0.1" />
+    <PackageReference Include="PetaPoco.Extensions" Version="5.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BootstrapClient.Web.Core\BootstrapClient.Web.Core.csproj" />
+  </ItemGroup>
+
+</Project>
