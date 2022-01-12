@@ -52,7 +52,7 @@ class DefaultCacheManager : ICacheManager
         if (entry.AbsoluteExpiration == null || entry.SlidingExpiration == null || entry.AbsoluteExpirationRelativeToNow == null)
         {
             // 缓存 10 分钟
-            entry.SlidingExpiration = TimeSpan.FromSeconds(600);
+            entry.SlidingExpiration = TimeSpan.FromMinutes(10);
         }
 
         if (entry.ExpirationTokens.Count == 0)
@@ -82,13 +82,12 @@ class DefaultCacheManager : ICacheManager
     {
         if (!string.IsNullOrEmpty(key))
         {
-            var cacheKey = Keys.LastOrDefault(item => item.Key == key);
-            if (cacheKey.Token != null)
+            var (Key, Token) = Keys.LastOrDefault(item => item.Key == key);
+            if (Token != null)
             {
-                cacheKey.Token.Cancel();
-                cacheKey.Token.Dispose();
+                Token.Cancel();
+                Token.Dispose();
             }
-            Keys.Remove(cacheKey);
         }
         else
         {
