@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BootStarpAdmin.DataAccess.FreeSql\BootStarpAdmin.DataAccess.FreeSql.csproj" />
+    <ProjectReference Include="..\BootstrapAdmin.DataAccess.PetaPoco\BootstrapAdmin.DataAccess.PetaPoco.csproj" />
   </ItemGroup>
 
   <ItemGroup>
