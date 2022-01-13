@@ -66,6 +66,22 @@ public interface IUser
     bool SaveUsersByRoleId(string? roleId, IEnumerable<string> userIds);
 
     /// <summary>
+    /// 更新密码方法
+    /// </summary>
+    /// <param name="userName"></param>
+    /// <param name="password"></param>
+    /// <param name="newPassword"></param>
+    bool ChangePassword(string userName, string password, string newPassword);
+
+    /// <summary>
+    /// 保存显示名称方法
+    /// </summary>
+    /// <param name="userName"></param>
+    /// <param name="displayName"></param>
+    /// <returns></returns>
+    bool SaveDisplayName(string userName, string displayName);
+
+    /// <summary>
     /// 获得所有用户
     /// </summary>
     /// <returns></returns>

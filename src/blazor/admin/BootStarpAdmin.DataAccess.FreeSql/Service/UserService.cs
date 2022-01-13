@@ -203,4 +203,14 @@ class UserService : IUser
     {
         throw new NotImplementedException();
     }
+
+    public bool ChangePassword(string userName, string password, string newPassword)
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool SaveDisplayName(string userName, string displayName)
+    {
+        throw new NotImplementedException();
+    }
 }

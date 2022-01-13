@@ -137,6 +137,30 @@ class UserService : IUser
     }
 
     /// <summary>
+    /// 更新密码方法
+    /// </summary>
+    /// <param name="userName"></param>
+    /// <param name="password"></param>
+    /// <param name="newPassword"></param>
+    public bool ChangePassword(string userName, string password, string newPassword)
+    {
+        var ret = false;
+        if (Authenticate(userName, password))
+        {
+            var passSalt = LgbCryptography.GenerateSalt();
+            password = LgbCryptography.ComputeHash(newPassword, passSalt);
+            string sql = "set Password = @0, PassSalt = @1 where UserName = @2";
+            ret = Database.Update<User>(sql, password, passSalt, userName) == 1;
+        }
+        return ret;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public bool SaveDisplayName(string userName, string displayName) => Database.Update<User>("set DisplayName = @1 where UserName = @0", userName, displayName) == 1;
+
+    /// <summary>
     /// 创建手机用户
     /// </summary>
     /// <param name="phone"></param>

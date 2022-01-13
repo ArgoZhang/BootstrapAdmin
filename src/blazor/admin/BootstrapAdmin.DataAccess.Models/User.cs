@@ -42,6 +42,7 @@ public class User
     /// 获得/设置 用户默认登陆 App 标识
     /// </summary>
     [Display(Name = "默认 APP")]
+    [NotNull]
     public string? App { get; set; }
 
     /// <summary>
