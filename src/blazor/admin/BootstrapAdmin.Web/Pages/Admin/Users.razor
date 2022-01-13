@@ -25,10 +25,10 @@
                 <BootstrapInput @bind-Value="@context.DisplayName" placeholder="不可为空，20字以内" maxlength="20" />
             </div>
             <div class="col-12 col-sm-6">
-                <BootstrapInput @bind-Value="@context.NewPassword" placeholder="不可为空，16字以内" maxlength="16" />
+                <BootstrapPassword @bind-Value="@context.NewPassword" placeholder="不可为空，16字以内" maxlength="16" />
             </div>
             <div class="col-12 col-sm-6">
-                <BootstrapInput @bind-Value="@context.ConfirmPassword" placeholder="与登陆密码一致" ShowLabel="true" maxlength="16" />
+                <BootstrapPassword @bind-Value="@context.ConfirmPassword" placeholder="与登陆密码一致" maxlength="16" />
             </div>
         </div>
     </EditTemplate>

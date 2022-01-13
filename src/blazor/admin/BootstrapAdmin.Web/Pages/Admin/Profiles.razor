@@ -31,10 +31,10 @@
                 <div class="col-12 col-sm-6 d-none d-sm-block">
                 </div>
                 <div class="col-12 col-sm-6">
-                    <BootstrapInput @bind-Value="@CurrentUser.NewPassword" Readonly="IsDemo" />
+                    <BootstrapPassword @bind-Value="@CurrentUser.NewPassword" Readonly="IsDemo" />
                 </div>
                 <div class="col-12 col-sm-6">
-                    <BootstrapInput @bind-Value="@CurrentUser.ConfirmPassword" Readonly="IsDemo" />
+                    <BootstrapPassword @bind-Value="@CurrentUser.ConfirmPassword" Readonly="IsDemo" />
                 </div>
                 <Block Condition="!IsDemo">
                     <div class="col-12 text-end">
