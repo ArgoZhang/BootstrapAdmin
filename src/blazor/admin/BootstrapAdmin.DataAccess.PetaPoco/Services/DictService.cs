@@ -1,4 +1,5 @@
-﻿using BootstrapAdmin.DataAccess.Models;
+﻿using BootstrapAdmin.Caching;
+using BootstrapAdmin.DataAccess.Models;
 using BootstrapAdmin.Web.Core;
 using BootstrapBlazor.Components;
 using Longbow.Security.Cryptography;
@@ -9,6 +10,8 @@ namespace BootstrapAdmin.DataAccess.PetaPoco.Services;
 
 class DictService : IDict
 {
+    private const string DictServiceCacheKey = "DictService-GetAll";
+
     private IDatabase Database { get; }
 
     private string AppId { get; set; }
@@ -24,7 +27,7 @@ class DictService : IDict
         AppId = configuration.GetValue("AppId", "BA");
     }
 
-    public List<Dict> GetAll() => Database.Fetch<Dict>();
+    public List<Dict> GetAll() => CacheManager.GetOrAdd(DictServiceCacheKey, entry => Database.Fetch<Dict>());
 
     public Dictionary<string, string> GetApps()
     {
@@ -168,7 +171,16 @@ class DictService : IDict
         return ret;
     }
 
-    private bool SaveDict(Dict dict) => Database.Update<Dict>("set Code = @Code where Category = @Category and Name = @Name", dict) == 1;
+    private bool SaveDict(Dict dict)
+    {
+        var ret = Database.Update<Dict>("set Code = @Code where Category = @Category and Name = @Name", dict) == 1;
+        if (ret)
+        {
+            // 更新缓存
+            CacheManager.Clear(DictServiceCacheKey);
+        }
+        return ret;
+    }
 
     public bool SaveLogin(string login) => SaveDict(new Dict { Category = "网站设置", Name = "登录界面", Code = login });
 

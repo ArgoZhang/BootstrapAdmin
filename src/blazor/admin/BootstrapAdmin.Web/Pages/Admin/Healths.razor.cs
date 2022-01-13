@@ -35,7 +35,7 @@ public partial class Healths
 
     [Inject]
     [NotNull]
-    private BootstrapBlazor.Web.Core.ICacheManager? CacheManager { get; set; }
+    private BootstrapAdmin.Caching.ICacheManager? CacheManager { get; set; }
 
     [NotNull]
     private HttpClient? Client { get; set; }
