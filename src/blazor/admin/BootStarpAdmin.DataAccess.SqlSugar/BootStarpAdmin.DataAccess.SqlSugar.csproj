@@ -2,7 +2,7 @@
 
   <ItemGroup>
     <PackageReference Include="BootstrapBlazor" Version="6.2.7-beta02" />
-    <PackageReference Include="SqlSugar" Version="5.0.5.2" />
+    <PackageReference Include="SqlSugarCore" Version="5.0.5.2" />
   </ItemGroup>
 
   <ItemGroup>
