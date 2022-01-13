@@ -148,7 +148,13 @@ public interface IDict
     /// 
     /// </summary>
     /// <returns></returns>
-    string RetrieveIconFolderPath();
+    string GetIconFolderPath();
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    string GetDefaultIcon();
 
     /// <summary>
     /// 通过指定 appId 获得配置首页地址

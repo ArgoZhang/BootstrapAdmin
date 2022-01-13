@@ -90,6 +90,14 @@ public interface IUser
     bool SaveTheme(string userName, string theme);
 
     /// <summary>
+    /// 保存用户头像方法
+    /// </summary>
+    /// <param name="userName"></param>
+    /// <param name="logo"></param>
+    /// <returns></returns>
+    bool SaveLogo(string userName, string? logo);
+
+    /// <summary>
     /// 获得所有用户
     /// </summary>
     /// <returns></returns>

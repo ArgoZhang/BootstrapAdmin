@@ -218,4 +218,9 @@ class UserService : IUser
     {
         throw new NotImplementedException();
     }
+
+    public bool SaveLogo(string userName, string? logo)
+    {
+        throw new NotImplementedException();
+    }
 }

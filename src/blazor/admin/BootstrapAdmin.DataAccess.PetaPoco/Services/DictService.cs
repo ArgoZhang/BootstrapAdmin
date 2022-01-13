@@ -221,10 +221,20 @@ class DictService : IDict
     /// 获取头像路径
     /// </summary>
     /// <returns></returns>
-    public string RetrieveIconFolderPath()
+    public string GetIconFolderPath()
     {
         var dicts = GetAll();
-        return dicts.FirstOrDefault(d => d.Name == "头像路径" && d.Category == "头像地址" && d.Define == EnumDictDefine.System)?.Code ?? "images/uploder/";
+        return dicts.FirstOrDefault(d => d.Name == "头像路径" && d.Category == "头像地址" && d.Define == EnumDictDefine.System)?.Code ?? "/images/uploder/";
+    }
+
+    /// <summary>
+    /// 获取头像路径
+    /// </summary>
+    /// <returns></returns>
+    public string GetDefaultIcon()
+    {
+        var dicts = GetAll();
+        return dicts.FirstOrDefault(d => d.Name == "头像文件" && d.Category == "头像地址" && d.Define == EnumDictDefine.System)?.Code ?? "default.jpg";
     }
 
     /// <summary>

@@ -68,7 +68,7 @@ namespace BootstrapAdmin.Web.Shared
                 DisplayName = user?.DisplayName ?? "未注册账户";
                 Context.UserName = UserName;
                 Context.DisplayName = DisplayName;
-                Icon = string.IsNullOrEmpty(user?.Icon) ? "images/uploader/default.jpg" : GetIcon(user.Icon);
+                Icon = string.IsNullOrEmpty(user?.Icon) ? "/images/uploader/default.jpg" : GetIcon(user.Icon);
 
                 MenuItems = NavigationsService.GetAllMenus(UserName).ToAdminMenus();
             }
@@ -76,7 +76,7 @@ namespace BootstrapAdmin.Web.Shared
             Title = DictsService.GetWebTitle();
             Footer = DictsService.GetWebFooter();
 
-            string GetIcon(string icon) => icon.Contains("://", StringComparison.OrdinalIgnoreCase) ? icon : string.Format("{0}{1}", DictsService.RetrieveIconFolderPath(), icon);
+            string GetIcon(string icon) => icon.Contains("://", StringComparison.OrdinalIgnoreCase) ? icon : string.Format("{0}{1}", DictsService.GetIconFolderPath(), icon);
         }
 
         private Task<bool> OnAuthorizing(string url) => SecurityService.AuhorizingNavigation(Context.UserName, url);

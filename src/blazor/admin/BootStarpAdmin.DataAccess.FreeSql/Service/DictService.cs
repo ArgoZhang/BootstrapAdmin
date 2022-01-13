@@ -182,4 +182,14 @@ class DictService : IDict
     {
         throw new NotImplementedException();
     }
+
+    public string GetIconFolderPath()
+    {
+        throw new NotImplementedException();
+    }
+
+    public string GetDefaultIcon()
+    {
+        throw new NotImplementedException();
+    }
 }
