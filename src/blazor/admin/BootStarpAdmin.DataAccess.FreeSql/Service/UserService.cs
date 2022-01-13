@@ -198,4 +198,9 @@ class UserService : IUser
         }
         return ret;
     }
+
+    public bool SaveApp(string userName, string app)
+    {
+        throw new NotImplementedException();
+    }
 }

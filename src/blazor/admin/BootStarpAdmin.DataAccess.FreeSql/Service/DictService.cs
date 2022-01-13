@@ -1,4 +1,5 @@
-﻿using BootstrapAdmin.DataAccess.Models;
+﻿using BootstrapAdmin.Caching;
+using BootstrapAdmin.DataAccess.Models;
 using BootstrapAdmin.Web.Core;
 using Longbow.Security.Cryptography;
 using Microsoft.Extensions.Configuration;
@@ -39,7 +40,7 @@ class DictService : IDict
     /// 
     /// </summary>
     /// <returns></returns>
-    public List<Dict> GetAll() => CacheManager.GetOrCreate<List<Dict>>(DictServiceCacheKey, entry => FreeSql.Select<Dict>().ToList());
+    public List<Dict> GetAll() => CacheManager.GetOrAdd<List<Dict>>(DictServiceCacheKey, entry => FreeSql.Select<Dict>().ToList());
 
     public Dictionary<string, string> GetApps()
     {
@@ -170,5 +171,15 @@ class DictService : IDict
         appId ??= GetApps().FirstOrDefault(d => d.Key != "BA").Key ?? AppId;
         url = dicts.FirstOrDefault(d => d.Category == "应用首页" && d.Name.Equals(appId, StringComparison.OrdinalIgnoreCase) && d.Define == EnumDictDefine.System)?.Code;
         return url;
+    }
+
+    public bool SavDefaultApp(bool enabled)
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool GetEnableDefaultApp()
+    {
+        throw new NotImplementedException();
     }
 }

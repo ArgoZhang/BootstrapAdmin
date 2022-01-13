@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <ProjectReference Include="..\BootstrapAdmin.Caching\BootstrapAdmin.Caching.csproj" />
     <ProjectReference Include="..\BootstrapAdmin.Web.Core\BootstrapAdmin.Web.Core.csproj" />
   </ItemGroup>
 
