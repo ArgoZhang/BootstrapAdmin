@@ -1,5 +1,6 @@
 ﻿using BootstrapAdmin.Caching.Services;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Primitives;
 
 namespace BootstrapAdmin.Caching;
 
@@ -16,10 +17,11 @@ public static class CacheManager
     /// <typeparam name="TItem"></typeparam>
     /// <param name="key"></param>
     /// <param name="valueFactory"></param>
+    /// <param name="token"></param>
     /// <returns></returns>
-    public static TItem GetOrAdd<TItem>(string key, Func<ICacheEntry, TItem> valueFactory)
+    public static TItem GetOrAdd<TItem>(string key, Func<ICacheEntry, TItem> valueFactory, IChangeToken? token = null)
     {
-        return Cache.GetOrAdd(key, valueFactory);
+        return Cache.GetOrAdd(key, valueFactory, token);
     }
 
     /// <summary>

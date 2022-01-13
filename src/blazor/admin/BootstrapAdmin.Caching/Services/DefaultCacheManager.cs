@@ -8,8 +8,6 @@ class DefaultCacheManager : ICacheManager
     [NotNull]
     private MemoryCache? Cache { get; set; }
 
-    private List<(string Key, CancellationTokenSource Token)> Keys { get; } = new(256);
-
     /// <summary>
     /// 
     /// </summary>
@@ -20,13 +18,20 @@ class DefaultCacheManager : ICacheManager
 
     private void Init()
     {
-        Keys.Clear();
         Cache = new MemoryCache(new MemoryCacheOptions());
     }
 
-    public T GetOrAdd<T>(string key, Func<ICacheEntry, T> factory) => Cache.GetOrCreate(key, entry =>
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="key"></param>
+    /// <param name="factory"></param>
+    /// <param name="token"></param>
+    /// <returns></returns>
+    public T GetOrAdd<T>(string key, Func<ICacheEntry, T> factory, IChangeToken? token = null) => Cache.GetOrCreate(key, entry =>
     {
-        HandlerEntry(key, entry);
+        HandlerEntry(key, entry, token);
         return factory(entry);
     });
 
@@ -43,50 +48,25 @@ class DefaultCacheManager : ICacheManager
         return factory(entry);
     });
 
-    private void HandlerEntry(string key, ICacheEntry entry)
+    private static void HandlerEntry(string key, ICacheEntry entry, IChangeToken? token = null)
     {
-        (string Key, CancellationTokenSource Token) cacheKey = new();
-        cacheKey.Key = key;
-
-        if (entry.AbsoluteExpiration == null || entry.SlidingExpiration == null || entry.AbsoluteExpirationRelativeToNow == null)
+        if (token != null)
         {
-            // 缓存 10 分钟
-            entry.SlidingExpiration = TimeSpan.FromMinutes(10);
-        }
-
-        if (entry.ExpirationTokens.Count == 0)
-        {
-            // 增加缓存 Token
-            cacheKey.Token = new CancellationTokenSource();
-            entry.AddExpirationToken(new CancellationChangeToken(cacheKey.Token.Token));
+            entry.AddExpirationToken(token);
         }
 
         entry.RegisterPostEvictionCallback((key, value, reason, state) =>
         {
-            // 清理过期缓存键值
-            var k = key.ToString();
-            if (!string.IsNullOrEmpty(k))
-            {
-                var item = Keys.LastOrDefault(item => item.Key == k);
-                if (item.Key != null)
-                {
-                    Keys.Remove(item);
-                }
-            }
+
         });
-        Keys.Add(cacheKey);
     }
 
     public void Clear(string? key)
     {
         if (!string.IsNullOrEmpty(key))
         {
-            var (Key, Token) = Keys.LastOrDefault(item => item.Key == key);
-            if (Token != null)
-            {
-                Token.Cancel();
-                Token.Dispose();
-            }
+            // 通过 TokenManager 管理依赖
+            Cache.Remove(key);
         }
         else
         {

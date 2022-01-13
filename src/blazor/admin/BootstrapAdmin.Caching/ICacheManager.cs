@@ -3,6 +3,7 @@
 // Website: https://www.blazor.zone or https://argozhang.github.io/
 
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Primitives;
 
 namespace BootstrapAdmin.Caching;
 
@@ -17,8 +18,9 @@ public interface ICacheManager
     /// <typeparam name="T"></typeparam>
     /// <param name="key"></param>
     /// <param name="factory"></param>
+    /// <param name="token"></param>
     /// <returns></returns>
-    T GetOrAdd<T>(string key, Func<ICacheEntry, T> factory);
+    T GetOrAdd<T>(string key, Func<ICacheEntry, T> factory, IChangeToken? token = null);
 
     /// <summary>
     /// 
