@@ -213,4 +213,9 @@ class UserService : IUser
     {
         throw new NotImplementedException();
     }
+
+    public bool SaveTheme(string userName, string theme)
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -82,6 +82,14 @@ public interface IUser
     bool SaveDisplayName(string userName, string displayName);
 
     /// <summary>
+    /// 保存用户主题方法
+    /// </summary>
+    /// <param name="userName"></param>
+    /// <param name="theme"></param>
+    /// <returns></returns>
+    bool SaveTheme(string userName, string theme);
+
+    /// <summary>
     /// 获得所有用户
     /// </summary>
     /// <returns></returns>

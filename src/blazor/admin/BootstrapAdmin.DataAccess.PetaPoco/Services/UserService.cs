@@ -161,6 +161,11 @@ class UserService : IUser
     public bool SaveDisplayName(string userName, string displayName) => Database.Update<User>("set DisplayName = @1 where UserName = @0", userName, displayName) == 1;
 
     /// <summary>
+    /// 
+    /// </summary>
+    public bool SaveTheme(string userName, string theme) => Database.Update<User>("set Css = @1 where UserName = @0", userName, theme) == 1;
+
+    /// <summary>
     /// 创建手机用户
     /// </summary>
     /// <param name="phone"></param>

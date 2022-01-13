@@ -92,9 +92,10 @@ public partial class Profiles
         await ShowToast(ret, "默认应用");
     }
 
-    private Task OnSaveTheme()
+    private async Task OnSaveTheme()
     {
-        return Task.CompletedTask;
+        var ret = string.IsNullOrEmpty(CurrentUser.Css) ? false : UserService.SaveTheme(AppContext.UserName, CurrentUser.Css);
+        await ShowToast(ret, "网站样式");
     }
 
     private Task OnSaveIcon()
