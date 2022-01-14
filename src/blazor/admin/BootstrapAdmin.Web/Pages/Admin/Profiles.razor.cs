@@ -131,7 +131,7 @@ public partial class Profiles
     {
         // 保存到物理文件
         var logoFile = $"{CurrentUser.UserName}{Path.GetExtension(file.OriginFileName)}";
-        var fileName = Path.Combine(WebHost.WebRootPath, DefaultLogoFolder.Replace("/", "\\").TrimStart('\\'), logoFile);
+        var fileName = WebHost.CombineLogoFile(DefaultLogoFolder, logoFile);
         if (File.Exists(fileName))
         {
             File.Delete(fileName);
@@ -163,7 +163,7 @@ public partial class Profiles
         var logoFile = file.FileName;
         if (!string.IsNullOrEmpty(logoFile))
         {
-            var fileName = Path.Combine(WebHost.WebRootPath, DefaultLogoFolder.Replace("/", "\\").TrimStart('\\'), logoFile);
+            var fileName = WebHost.CombineLogoFile(DefaultLogoFolder, logoFile);
             if (!logoFile.Equals(DefaultLogo, StringComparison.OrdinalIgnoreCase) && File.Exists(fileName))
             {
                 File.Delete(fileName);
