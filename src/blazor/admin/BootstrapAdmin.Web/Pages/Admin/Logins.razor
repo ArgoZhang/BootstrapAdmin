@@ -1,14 +1,15 @@
 ﻿@page "/admin/logins"
 
-<AdminTable TItem="LoginLog" IsPagination="true" ShowDefaultButtons="false" ShowExtendButtons="false">
+<AdminTable TItem="LoginLog" IsPagination="true" CustomerSearchModel="@TableSearchModel"
+            ShowDefaultButtons="false" ShowExtendButtons="false" IsFixedHeader="false">
     <TableColumns>
-        <TableColumn @bind-Field="@context.UserName" Filterable="true"></TableColumn>
+        <TableColumn @bind-Field="@context.UserName" Filterable="true" Searchable="true"></TableColumn>
         <TableColumn @bind-Field="@context.LoginTime" Filterable="true"></TableColumn>
-        <TableColumn @bind-Field="@context.Ip" Filterable="true"></TableColumn>
-        <TableColumn @bind-Field="@context.City" Filterable="true"></TableColumn>
+        <TableColumn @bind-Field="@context.Ip" Filterable="true" Searchable="true"></TableColumn>
+        <TableColumn @bind-Field="@context.City" Filterable="true" Searchable="true"></TableColumn>
         <TableColumn @bind-Field="@context.Browser" Filterable="true"></TableColumn>
         <TableColumn @bind-Field="@context.OS" Filterable="true"></TableColumn>
-        <TableColumn @bind-Field="@context.Result" Filterable="true">
+        <TableColumn @bind-Field="@context.Result" Filterable="true" Searchable="true">
             <Template Context="v">
                 @if (v.Value == "登录成功")
                 {
@@ -21,4 +22,10 @@
             </Template>
         </TableColumn>
     </TableColumns>
+    <CustomerSearchTemplate Context="v">
+        @if (v is LoginLogModel m)
+        {
+            <LoginLogSearch @bind-Value="m"></LoginLogSearch>
+        }
+    </CustomerSearchTemplate>
 </AdminTable>
