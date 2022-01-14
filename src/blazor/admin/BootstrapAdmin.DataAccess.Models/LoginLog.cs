@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Bootstrap.DataAccess;
+namespace BootstrapAdmin.DataAccess.Models;
 
 /// <summary>
 /// 登录用户信息实体类
