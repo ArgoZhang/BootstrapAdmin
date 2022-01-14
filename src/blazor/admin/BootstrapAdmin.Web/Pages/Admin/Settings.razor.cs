@@ -54,6 +54,8 @@ public partial class Settings
             TitleSetting = DictService.GetAppTitle(),
             FixHeaderSetting = DictService.GetAppFixHeader(),
             HealthCheckSetting = DictService.GetAppHealthCheck(),
+            MobileLogin = DictService.GetAppMobileLogin(),
+            OAuthLogin = DictService.GetAppOAuthLogin()
         };
     }
 
@@ -118,5 +120,12 @@ public partial class Settings
         DictService.SaveAppFixHeader(AppInfo.FixHeaderSetting);
         DictService.SaveAppHealthCheck(AppInfo.HealthCheckSetting);
         await ShowToast(ret, "网站功能");
+    }
+
+    private async Task OnSaveSaveAppLogin(EditContext context)
+    {
+        var ret = DictService.SaveAppMobileLogin(AppInfo.MobileLogin);
+        DictService.SaveAppOAuthLogin(AppInfo.TitleSetting);
+        await ShowToast(ret, "网站登录");
     }
 }

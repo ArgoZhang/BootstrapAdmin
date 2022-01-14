@@ -86,6 +86,21 @@
         </ValidateForm>
     </AdminCard>
 
+    <AdminCard HeaderText="网站登录设置" AuthorizeKey="SaveAppLogin">
+        <ValidateForm OnValidSubmit="OnSaveSaveAppLogin" Model="AppInfo">
+            <div class="row g-3 form-inline">
+                <div class="col-6 col-sm-6">
+                    <Toggle @bind-Value="AppInfo.MobileLogin" OnText="启用" OffText="关闭"></Toggle>
+                </div>
+                <div class="col-6 col-sm-6">
+                    <Toggle @bind-Value="AppInfo.OAuthLogin" OnText="启用" OffText="关闭"></Toggle>
+                </div>
+                <div class="col-12 col-sm-12 text-end">
+                    <Button ButtonType="ButtonType.Submit" Icon="fa fa-save" Text="保存" />
+                </div>
+            </div>
+        </ValidateForm>
+    </AdminCard>
 
     <AdminCard HeaderText="默认应用设置" AuthorizeKey="DefaultApp">
         <AdminAlert Text="开启本功能后登录成功时自动导航到第一个已授权前台应用" Color="Color.Info" />

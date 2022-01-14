@@ -216,4 +216,28 @@ public interface IDict
     /// </summary>
     /// <returns></returns>
     bool SaveAppHealthCheck(bool value);
+
+    /// <summary>
+    /// 是否开启手机认证设置
+    /// </summary>
+    /// <returns></returns>
+    bool GetAppMobileLogin();
+
+    /// <summary>
+    /// 保存手机认证设置
+    /// </summary>
+    /// <returns></returns>
+    bool SaveAppMobileLogin(bool value);
+
+    /// <summary>
+    /// 是否开启 OAuth 认证设置
+    /// </summary>
+    /// <returns></returns>
+    bool GetAppOAuthLogin();
+
+    /// <summary>
+    /// 保存 OAuth 认证设置
+    /// </summary>
+    /// <returns></returns>
+    bool SaveAppOAuthLogin(bool value);
 }

@@ -83,6 +83,18 @@ public class AppInfo
     /// <summary>
     /// 
     /// </summary>
+    [Display(Name = "手机登录")]
+    public bool MobileLogin { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    [Display(Name = "OAuth认证")]
+    public bool OAuthLogin { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
     [Display(Name = "授权码")]
     [Required(ErrorMessage = "{0}不可为空")]
     [NotNull]
