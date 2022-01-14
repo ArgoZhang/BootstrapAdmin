@@ -314,13 +314,15 @@ class DictService : IDict
 
     public bool SaveAutoLockScreen(bool value) => SaveDict(new Dict { Category = "网站设置", Name = "自动锁屏", Code = value ? "1" : "0" });
 
-    public string? GetAutoLockScreenInterval()
+    public int GetAutoLockScreenInterval()
     {
         var dicts = GetAll();
-        return dicts.FirstOrDefault(s => s.Category == "网站设置" && s.Name == "自动锁屏时长" && s.Define == EnumDictDefine.System)?.Code;
+        var value = dicts.FirstOrDefault(s => s.Category == "网站设置" && s.Name == "自动锁屏时长" && s.Define == EnumDictDefine.System)?.Code ?? "0";
+        _ = int.TryParse(value, out var ret);
+        return ret;
     }
 
-    public bool SaveAutoLockScreenInterval(string value) => SaveDict(new Dict { Category = "网站设置", Name = "自动锁屏时长", Code = value });
+    public bool SaveAutoLockScreenInterval(int value) => SaveDict(new Dict { Category = "网站设置", Name = "自动锁屏时长", Code = value.ToString() });
 
     public Dictionary<string, string> GetIps()
     {
@@ -396,4 +398,22 @@ class DictService : IDict
     }
 
     public bool SaveIPCacheExpired(int value) => SaveDict(new Dict { Category = "网站设置", Name = "IP请求缓存时长", Code = value.ToString() });
+
+    public Dictionary<string, string> GetFrontApp()
+    {
+        var dicts = GetAll();
+        return dicts.Where(s => s.Category == "应用程序" && s.Code != "BA").ToDictionary(s => s.Name, s => s.Code);
+    }
+
+    public string GetFrontUrl(string name)
+    {
+        var dicts = GetAll();
+        return dicts.Where(s => s.Category == "应用首页" && s.Name == name).FirstOrDefault()?.Code ?? "";
+    }
+
+    public string? GetAppNameByAppName(string name)
+    {
+        var dicts = GetAll();
+        return dicts.Where(s => s.Category == "应用程序" && s.Code == name).FirstOrDefault()?.Name;
+    }
 }

@@ -47,11 +47,29 @@
         </ValidateForm>
     </AdminCard>
 
+    <AdminCard HeaderText="前台应用设置" AuthorizeKey="SaveFrontApp">
+        <div class="row g-3 form-inline">
+            @foreach (var item in AppInfo.FrontApp)
+            {
+                var value = DictService.GetFrontUrl(item.Value);
+                <div class="col-12 col-sm-6">
+                    <BootstrapInputGroup>
+                        <BootstrapInput Value="value" DisplayText="@item.Key" ShowLabel="true"></BootstrapInput>
+                        <Button Icon="fa fa-trash-o" Color="Color.Danger" Text="删除" OnClickWithoutRender="@OnDeleteFrontApp" />
+                        <Button Icon="fa fa-edit" Text="编辑" OnClickWithoutRender="@OnSaveFrontApp" />
+                    </BootstrapInputGroup>
+                </div>
+            }
+            <div class="col-12 col-sm-6 text-end">
+                <Button ButtonType="ButtonType.Button" Icon="fa fa-plus" Text="新增" OnClickWithoutRender="@OnSaveFrontApp" />
+            </div>
+        </div>
+    </AdminCard>
+
     <AdminCard HeaderText="网站样式设置" AuthorizeKey="SaveTheme">
         <AdminAlert Color="Color.Info">
             <span>注意：本设置将覆盖 <b><TabLink Url="/Admin/Profiles" Text="个人中心" Icon="fa fa-fa">个人中心</TabLink></b> 中设置的网站样式覆盖本设置</span>
         </AdminAlert>
-
         <ValidateForm OnValidSubmit="OnSaveTheme" Model="AppInfo">
             <div class="row g-3 form-inline">
                 <div class="col-12 col-sm-6">
@@ -133,7 +151,7 @@
     </AdminCard>
 
     <AdminCard HeaderText="地址位置信息" AuthorizeKey="SaveLogCache">
-        <ValidateForm OnValidSubmit="OnSaveLogCache" Model="AppInfo">
+        <ValidateForm OnValidSubmit="SaveAdressInfo" Model="AppInfo">
             <div class="row g-3 form-inline">
                 <div class="col-6 col-sm-6">
                     <Dropdown Items="@IPs" @bind-Value="AppInfo.Ip" ShowLabel="false"></Dropdown>
@@ -146,7 +164,7 @@
     </AdminCard>
 
     <AdminCard HeaderText="日志缓存设置" AuthorizeKey="SaveAdressInfo">
-        <ValidateForm OnValidSubmit="SaveAdressInfo" Model="AppInfo">
+        <ValidateForm OnValidSubmit="OnSaveLogCache" Model="AppInfo">
             <div class="row g-3 form-inline">
                 <div class="col-6 col-sm-6">
                     <BootstrapInputNumber @bind-Value="AppInfo.ExceptionExpired"></BootstrapInputNumber>

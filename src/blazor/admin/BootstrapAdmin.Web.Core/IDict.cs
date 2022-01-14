@@ -257,13 +257,13 @@ public interface IDict
     /// 获得自动锁屏间隔时间
     /// </summary>
     /// <returns></returns>
-    string? GetAutoLockScreenInterval();
+    int GetAutoLockScreenInterval();
 
     /// <summary>
     /// 保存自动锁屏间隔时间
     /// </summary>
     /// <returns></returns>
-    bool SaveAutoLockScreenInterval(string value);
+    bool SaveAutoLockScreenInterval(int value);
 
     /// <summary>
     /// 获得地理位置服务
@@ -354,4 +354,22 @@ public interface IDict
     /// </summary>
     /// <returns></returns>
     bool SaveIPCacheExpired(int value);
+
+    /// <summary>
+    /// 获得前台应用
+    /// </summary>
+    /// <returns></returns>
+    Dictionary<string, string>? GetFrontApp();
+
+    /// <summary>
+    /// 获得前台应用
+    /// </summary>
+    /// <returns></returns>
+    string GetFrontUrl(string name);
+
+    /// <summary>
+    /// 获得前台应用
+    /// </summary>
+    /// <returns></returns>
+    string? GetAppNameByAppName(string name);
 }

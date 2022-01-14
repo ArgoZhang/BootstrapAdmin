@@ -1,4 +1,5 @@
 ﻿using BootstrapAdmin.DataAccess.Models;
+using BootstrapAdmin.Web.Components;
 using BootstrapAdmin.Web.Core;
 using BootstrapAdmin.Web.Extensions;
 using Microsoft.AspNetCore.Components.Forms;
@@ -36,6 +37,10 @@ public partial class Settings
     [NotNull]
     private ToastService? ToastService { get; set; }
 
+    [Inject]
+    [NotNull]
+    private DialogService? DialogService { get; set; }
+
     /// <summary>
     /// 
     /// </summary>
@@ -61,13 +66,14 @@ public partial class Settings
             MobileLogin = DictService.GetAppMobileLogin(),
             OAuthLogin = DictService.GetAppOAuthLogin(),
             AutoLock = DictService.GetAutoLockScreen(),
-            Interval = Convert.ToInt32(DictService.GetAutoLockScreenInterval()),
+            Interval = DictService.GetAutoLockScreenInterval(),
             ExceptionExpired = DictService.GetExceptionExpired(),
             OperateExpired = DictService.GetOperateExpired(),
             LoginExpired = DictService.GetLoginExpired(),
             AccessExpired = DictService.GetAccessExpired(),
             CookieExpired = DictService.GetCookieExpiresPeriod(),
             IPCacheExpired = DictService.GetIPCacheExpired(),
+            FrontApp = DictService.GetFrontApp()
         };
     }
 
@@ -137,14 +143,14 @@ public partial class Settings
     private async Task OnSaveSaveAppLogin(EditContext context)
     {
         var ret = DictService.SaveAppMobileLogin(AppInfo.MobileLogin);
-        DictService.SaveAppOAuthLogin(AppInfo.TitleSetting);
+        DictService.SaveAppOAuthLogin(AppInfo.OAuthLogin);
         await ShowToast(ret, "网站登录");
     }
 
     private async Task OnSaveAppLockScreen(EditContext context)
     {
         var ret = DictService.SaveAutoLockScreen(AppInfo.AutoLock);
-        DictService.SaveAutoLockScreenInterval(AppInfo.Interval.ToString());
+        DictService.SaveAutoLockScreenInterval(AppInfo.Interval);
         await ShowToast(ret, "自动锁屏");
     }
 
@@ -164,5 +170,34 @@ public partial class Settings
         DictService.SaveIPCacheExpired(AppInfo.IPCacheExpired);
 
         await ShowToast(ret, "日志缓存");
+    }
+
+    private async Task OnSaveFrontApp()
+    {
+
+        DialogOption option = new DialogOption
+        {
+            Title = "添加前台应用",
+            BodyTemplate = BootstrapDynamicComponent.CreateComponent<FrontAppDialog>(new Dictionary<string, object?>
+            {
+                [nameof(FrontAppDialog.Value)] = AppInfo
+            }).Render(),
+            ShowFooter = false,
+        };
+        await DialogService.Show(option);
+    }
+
+    private async Task OnDeleteFrontApp()
+    {
+        DialogOption option = new DialogOption
+        {
+            Title = "添加前台应用",
+            BodyTemplate = BootstrapDynamicComponent.CreateComponent<FrontAppDialog>(new Dictionary<string, object?>
+            {
+                [nameof(FrontAppDialog.Value)] = AppInfo
+            }).Render(),
+            ShowFooter = false,
+        };
+        await DialogService.Show(option);
     }
 }
