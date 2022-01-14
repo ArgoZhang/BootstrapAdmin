@@ -102,12 +102,55 @@ public class AppInfo
     /// 
     /// </summary>
     [Display(Name = "时长间隔（秒）")]
+    [Required(ErrorMessage = "{0}不可为空")]
     public int Interval { get; set; }
 
     /// <summary>
     /// 
     /// </summary>
     public string? Ip { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    [Display(Name = "异常日志（月）")]
+    [Required(ErrorMessage = "{0}不可为空")]
+    public int ExceptionExpired { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    [Display(Name = "操作日志（月）")]
+    [Required(ErrorMessage = "{0}不可为空")]
+    public int OperateExpired { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    [Display(Name = "操作日志（月）")]
+    [Required(ErrorMessage = "{0}不可为空")]
+    public int LoginExpired { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    [Display(Name = "访问日志（月）")]
+    [Required(ErrorMessage = "{0}不可为空")]
+    public int AccessExpired { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    [Display(Name = "Cookie（天）")]
+    [Required(ErrorMessage = "{0}不可为空")]
+    public int CookieExpired { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    [Display(Name = "IP 缓存（分）")]
+    [Required(ErrorMessage = "{0}不可为空")]
+    public int IPCacheExpired { get; set; }
 
     /// <summary>
     /// 

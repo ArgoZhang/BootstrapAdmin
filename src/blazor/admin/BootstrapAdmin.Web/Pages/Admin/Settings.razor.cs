@@ -62,6 +62,12 @@ public partial class Settings
             OAuthLogin = DictService.GetAppOAuthLogin(),
             AutoLock = DictService.GetAutoLockScreen(),
             Interval = Convert.ToInt32(DictService.GetAutoLockScreenInterval()),
+            ExceptionExpired = DictService.GetExceptionExpired(),
+            OperateExpired = DictService.GetOperateExpired(),
+            LoginExpired = DictService.GetLoginExpired(),
+            AccessExpired = DictService.GetAccessExpired(),
+            CookieExpired = DictService.GetCookieExpiresPeriod(),
+            IPCacheExpired = DictService.GetIPCacheExpired(),
         };
     }
 
@@ -146,5 +152,17 @@ public partial class Settings
     {
         var ret = DictService.SaveCurrentIp(AppInfo.Ip!);
         await ShowToast(ret, "地理位置");
+    }
+
+    private async Task OnSaveLogCache(EditContext context)
+    {
+        var ret = DictService.SaveCookieExpiresPeriod(AppInfo.CookieExpired);
+        DictService.SaveExceptionExpired(AppInfo.ExceptionExpired);
+        DictService.SaveAccessExpired(AppInfo.AccessExpired);
+        DictService.SaveOperateExpired(AppInfo.OperateExpired);
+        DictService.SaveLoginExpired(AppInfo.LoginExpired);
+        DictService.SaveIPCacheExpired(AppInfo.IPCacheExpired);
+
+        await ShowToast(ret, "日志缓存");
     }
 }

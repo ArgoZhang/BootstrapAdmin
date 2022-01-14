@@ -282,4 +282,76 @@ public interface IDict
     /// </summary>
     /// <returns></returns>
     bool SaveCurrentIp(string value);
+
+    /// <summary>
+    /// 获得 Cookie 过期时间
+    /// </summary>
+    /// <returns></returns>
+    int GetCookieExpired();
+
+    /// <summary>
+    /// 设置 Cookie 过期时间
+    /// </summary>
+    /// <returns></returns>
+    bool SaveCookieExpired(int value);
+
+    /// <summary>
+    /// 获得程序异常保留时长
+    /// </summary>
+    /// <returns></returns>
+    int GetExceptionExpired();
+
+    /// <summary>
+    /// 设置程序异常保留时长
+    /// </summary>
+    /// <returns></returns>
+    bool SaveExceptionExpired(int value);
+
+    /// <summary>
+    /// 获得操作日志保留时长
+    /// </summary>
+    /// <returns></returns>
+    int GetOperateExpired();
+
+    /// <summary>
+    /// 设置操作日志保留时长
+    /// </summary>
+    /// <returns></returns>
+    bool SaveOperateExpired(int value);
+
+    /// <summary>
+    /// 获得登录日志保留时长
+    /// </summary>
+    /// <returns></returns>
+    int GetLoginExpired();
+
+    /// <summary>
+    /// 设置登录日志保留时长
+    /// </summary>
+    /// <returns></returns>
+    bool SaveLoginExpired(int value);
+
+    /// <summary>
+    /// 获得访问日志保留时长
+    /// </summary>
+    /// <returns></returns>
+    int GetAccessExpired();
+
+    /// <summary>
+    /// 设置访问日志保留时长
+    /// </summary>
+    /// <returns></returns>
+    bool SaveAccessExpired(int value);
+
+    /// <summary>
+    /// 获得 IP 请求缓存时长
+    /// </summary>
+    /// <returns></returns>
+    int GetIPCacheExpired();
+
+    /// <summary>
+    /// 设置 IP 请求缓存时长
+    /// </summary>
+    /// <returns></returns>
+    bool SaveIPCacheExpired(int value);
 }

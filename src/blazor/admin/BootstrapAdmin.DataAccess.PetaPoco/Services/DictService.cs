@@ -335,4 +335,65 @@ class DictService : IDict
     }
 
     public bool SaveCurrentIp(string value) => SaveDict(new Dict { Category = "网站设置", Name = "IP地理位置接口", Code = value });
+
+    public int GetCookieExpired()
+    {
+        var dicts = GetAll();
+        var value = dicts.FirstOrDefault(s => s.Category == "网站设置" && s.Name == "Cookie保留时长" && s.Define == EnumDictDefine.System)?.Code ?? "0";
+        _ = int.TryParse(value, out var ret);
+        return ret;
+    }
+
+    public bool SaveCookieExpired(int value) => SaveDict(new Dict { Category = "网站设置", Name = "Cookie保留时长", Code = value.ToString() });
+
+    public int GetExceptionExpired()
+    {
+        var dicts = GetAll();
+        var value = dicts.FirstOrDefault(s => s.Category == "网站设置" && s.Name == "程序异常保留时长" && s.Define == EnumDictDefine.System)?.Code ?? "0";
+        _ = int.TryParse(value, out var ret);
+        return ret; ;
+    }
+
+    public bool SaveExceptionExpired(int value) => SaveDict(new Dict { Category = "网站设置", Name = "程序异常保留时长", Code = value.ToString() });
+
+    public int GetOperateExpired()
+    {
+        var dicts = GetAll();
+        var value = dicts.FirstOrDefault(s => s.Category == "网站设置" && s.Name == "操作日志保留时长" && s.Define == EnumDictDefine.System)?.Code ?? "0";
+        _ = int.TryParse(value, out var ret);
+        return ret; ;
+    }
+
+    public bool SaveOperateExpired(int value) => SaveDict(new Dict { Category = "网站设置", Name = "操作日志保留时长", Code = value.ToString() });
+
+    public int GetLoginExpired()
+    {
+        var dicts = GetAll();
+        var value = dicts.FirstOrDefault(s => s.Category == "网站设置" && s.Name == "登录日志保留时长" && s.Define == EnumDictDefine.System)?.Code ?? "0";
+        _ = int.TryParse(value, out var ret);
+        return ret; ;
+    }
+
+    public bool SaveLoginExpired(int value) => SaveDict(new Dict { Category = "网站设置", Name = "登录日志保留时长", Code = value.ToString() });
+
+
+    public int GetAccessExpired()
+    {
+        var dicts = GetAll();
+        var value = dicts.FirstOrDefault(s => s.Category == "网站设置" && s.Name == "访问日志保留时长" && s.Define == EnumDictDefine.System)?.Code ?? "0";
+        _ = int.TryParse(value, out var ret);
+        return ret; ;
+    }
+
+    public bool SaveAccessExpired(int value) => SaveDict(new Dict { Category = "网站设置", Name = "访问日志保留时长", Code = value.ToString() });
+
+    public int GetIPCacheExpired()
+    {
+        var dicts = GetAll();
+        var value = dicts.FirstOrDefault(s => s.Category == "网站设置" && s.Name == "IP请求缓存时长" && s.Define == EnumDictDefine.System)?.Code ?? "0";
+        _ = int.TryParse(value, out var ret);
+        return ret; ;
+    }
+
+    public bool SaveIPCacheExpired(int value) => SaveDict(new Dict { Category = "网站设置", Name = "IP请求缓存时长", Code = value.ToString() });
 }

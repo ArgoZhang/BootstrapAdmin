@@ -132,13 +132,41 @@
         </ValidateForm>
     </AdminCard>
 
-    <AdminCard HeaderText="地址位置信息" AuthorizeKey="SaveAdressInfo">
-        <ValidateForm OnValidSubmit="SaveAdressInfo" Model="AppInfo">
+    <AdminCard HeaderText="地址位置信息" AuthorizeKey="SaveLogCache">
+        <ValidateForm OnValidSubmit="OnSaveLogCache" Model="AppInfo">
             <div class="row g-3 form-inline">
                 <div class="col-6 col-sm-6">
                     <Dropdown Items="@IPs" @bind-Value="AppInfo.Ip" ShowLabel="false"></Dropdown>
                 </div>
                 <div class="col-6 col-sm-6 text-end">
+                    <Button ButtonType="ButtonType.Submit" Icon="fa fa-save" Text="保存" />
+                </div>
+            </div>
+        </ValidateForm>
+    </AdminCard>
+
+    <AdminCard HeaderText="日志缓存设置" AuthorizeKey="SaveAdressInfo">
+        <ValidateForm OnValidSubmit="SaveAdressInfo" Model="AppInfo">
+            <div class="row g-3 form-inline">
+                <div class="col-6 col-sm-6">
+                    <BootstrapInputNumber @bind-Value="AppInfo.ExceptionExpired"></BootstrapInputNumber>
+                </div>
+                <div class="col-6 col-sm-6">
+                    <BootstrapInputNumber @bind-Value="AppInfo.OperateExpired"></BootstrapInputNumber>
+                </div>
+                <div class="col-6 col-sm-6">
+                    <BootstrapInputNumber @bind-Value="AppInfo.LoginExpired"></BootstrapInputNumber>
+                </div>
+                <div class="col-6 col-sm-6">
+                    <BootstrapInputNumber @bind-Value="AppInfo.AccessExpired"></BootstrapInputNumber>
+                </div>
+                <div class="col-6 col-sm-6">
+                    <BootstrapInputNumber @bind-Value="AppInfo.CookieExpired"></BootstrapInputNumber>
+                </div>
+                <div class="col-6 col-sm-6">
+                    <BootstrapInputNumber @bind-Value="AppInfo.IPCacheExpired"></BootstrapInputNumber>
+                </div>
+                <div class="col-12 col-sm-12 text-end">
                     <Button ButtonType="ButtonType.Submit" Icon="fa fa-save" Text="保存" />
                 </div>
             </div>
