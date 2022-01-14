@@ -18,9 +18,8 @@ public interface ICacheManager
     /// <typeparam name="T"></typeparam>
     /// <param name="key"></param>
     /// <param name="factory"></param>
-    /// <param name="token"></param>
     /// <returns></returns>
-    T GetOrAdd<T>(string key, Func<ICacheEntry, T> factory, IChangeToken? token = null);
+    T GetOrAdd<T>(string key, Func<ICacheEntry, T> factory);
 
     /// <summary>
     /// 

@@ -17,11 +17,10 @@ public static class CacheManager
     /// <typeparam name="TItem"></typeparam>
     /// <param name="key"></param>
     /// <param name="valueFactory"></param>
-    /// <param name="token"></param>
     /// <returns></returns>
-    public static TItem GetOrAdd<TItem>(string key, Func<ICacheEntry, TItem> valueFactory, IChangeToken? token = null)
+    public static TItem GetOrAdd<TItem>(string key, Func<ICacheEntry, TItem> valueFactory)
     {
-        return Cache.GetOrAdd(key, valueFactory, token);
+        return Cache.GetOrAdd(key, valueFactory);
     }
 
     /// <summary>

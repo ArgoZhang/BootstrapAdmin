@@ -55,6 +55,12 @@ class DefaultCacheManager : ICacheManager
             entry.AddExpirationToken(token);
         }
 
+        // 内置缓存策略 缓存相对时间 10 分钟
+        if (entry.AbsoluteExpiration == null && entry.SlidingExpiration == null && !entry.ExpirationTokens.Any())
+        {
+            entry.SlidingExpiration = TimeSpan.FromMinutes(10);
+        }
+
         entry.RegisterPostEvictionCallback((key, value, reason, state) =>
         {
 
