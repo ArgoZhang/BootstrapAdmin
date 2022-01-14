@@ -1,0 +1,24 @@
+﻿@page "/admin/logins"
+
+<AdminTable TItem="LoginLog" IsPagination="true" ShowDefaultButtons="false" ShowExtendButtons="false">
+    <TableColumns>
+        <TableColumn @bind-Field="@context.UserName" Filterable="true"></TableColumn>
+        <TableColumn @bind-Field="@context.LoginTime" Filterable="true"></TableColumn>
+        <TableColumn @bind-Field="@context.Ip" Filterable="true"></TableColumn>
+        <TableColumn @bind-Field="@context.City" Filterable="true"></TableColumn>
+        <TableColumn @bind-Field="@context.Browser" Filterable="true"></TableColumn>
+        <TableColumn @bind-Field="@context.OS" Filterable="true"></TableColumn>
+        <TableColumn @bind-Field="@context.Result" Filterable="true">
+            <Template Context="v">
+                @if (v.Value == "登录成功")
+                {
+                    <Badge Color="Color.Success">@v.Value</Badge>
+                }
+                else
+                {
+                    <Badge Color="Color.Danger">@v.Value</Badge>
+                }
+            </Template>
+        </TableColumn>
+    </TableColumns>
+</AdminTable>
