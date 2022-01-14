@@ -305,4 +305,20 @@ class DictService : IDict
     }
 
     public bool SaveAppOAuthLogin(bool value) => SaveDict(new Dict { Category = "网站设置", Name = "OAuth 认证登录", Code = value ? "1" : "0" });
+
+    public bool GetAutoLockScreen()
+    {
+        var dicts = GetAll();
+        return dicts.FirstOrDefault(s => s.Category == "网站设置" && s.Name == "自动锁屏" && s.Define == EnumDictDefine.System)?.Code == "1" ? true : false;
+    }
+
+    public bool SaveAutoLockScreen(bool value) => SaveDict(new Dict { Category = "网站设置", Name = "自动锁屏", Code = value ? "1" : "0" });
+
+    public string? GetAutoLockScreenInterval()
+    {
+        var dicts = GetAll();
+        return dicts.FirstOrDefault(s => s.Category == "网站设置" && s.Name == "自动锁屏时长" && s.Define == EnumDictDefine.System)?.Code;
+    }
+
+    public bool SaveAutoLockScreenInterval(string value) => SaveDict(new Dict { Category = "网站设置", Name = "自动锁屏时长", Code = value });
 }

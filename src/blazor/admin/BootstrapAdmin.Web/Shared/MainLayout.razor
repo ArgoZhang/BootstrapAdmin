@@ -41,3 +41,8 @@
         <Redirect />
     </NotAuthorized>
 </Layout>
+
+@if (Lock)
+{
+    <AutoRedirect LogoutUrl="/Account/Logout" Interval="@LockInterval"></AutoRedirect>
+}

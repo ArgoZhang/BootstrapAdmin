@@ -240,4 +240,28 @@ public interface IDict
     /// </summary>
     /// <returns></returns>
     bool SaveAppOAuthLogin(bool value);
+
+    /// <summary>
+    /// 是否开启自动锁屏设置
+    /// </summary>
+    /// <returns></returns>
+    bool GetAutoLockScreen();
+
+    /// <summary>
+    /// 保存自动锁屏设置
+    /// </summary>
+    /// <returns></returns>
+    bool SaveAutoLockScreen(bool value);
+
+    /// <summary>
+    /// 获得自动锁屏间隔时间
+    /// </summary>
+    /// <returns></returns>
+    string? GetAutoLockScreenInterval();
+
+    /// <summary>
+    /// 保存自动锁屏间隔时间
+    /// </summary>
+    /// <returns></returns>
+    bool SaveAutoLockScreenInterval(string value);
 }
