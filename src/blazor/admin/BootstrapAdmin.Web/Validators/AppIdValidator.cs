@@ -29,8 +29,8 @@ public class AppIdValidator : IValidator
     /// <param name="results"></param>
     public void Validate(object? propertyValue, ValidationContext context, List<ValidationResult> results)
     {
-        var AppName = DictService.GetAppNameByAppName(propertyValue?.ToString()!);
-        if (!string.IsNullOrEmpty(AppName))
+        var check = DictService.ExistsAppId(propertyValue?.ToString()!);
+        if (check)
         {
             ErrorMessage = $"{context.DisplayName}已存在";
         }
