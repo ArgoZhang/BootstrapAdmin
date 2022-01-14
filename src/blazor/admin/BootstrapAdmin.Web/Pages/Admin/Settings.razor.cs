@@ -55,7 +55,9 @@ public partial class Settings
             FixHeaderSetting = DictService.GetAppFixHeader(),
             HealthCheckSetting = DictService.GetAppHealthCheck(),
             MobileLogin = DictService.GetAppMobileLogin(),
-            OAuthLogin = DictService.GetAppOAuthLogin()
+            OAuthLogin = DictService.GetAppOAuthLogin(),
+            AutoLock = DictService.GetAutoLockScreen(),
+            Interval = Convert.ToInt32(DictService.GetAutoLockScreenInterval())
         };
     }
 
@@ -127,5 +129,12 @@ public partial class Settings
         var ret = DictService.SaveAppMobileLogin(AppInfo.MobileLogin);
         DictService.SaveAppOAuthLogin(AppInfo.TitleSetting);
         await ShowToast(ret, "网站登录");
+    }
+
+    private async Task OnSaveAppLockScreen(EditContext context)
+    {
+        var ret = DictService.SaveAutoLockScreen(AppInfo.AutoLock);
+        DictService.SaveAutoLockScreenInterval(AppInfo.Interval.ToString());
+        await ShowToast(ret, "自动锁屏");
     }
 }

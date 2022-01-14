@@ -95,6 +95,18 @@ public class AppInfo
     /// <summary>
     /// 
     /// </summary>
+    [Display(Name = "自动锁屏")]
+    public bool AutoLock { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    [Display(Name = "时长间隔（秒）")]
+    public int Interval { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
     [Display(Name = "授权码")]
     [Required(ErrorMessage = "{0}不可为空")]
     [NotNull]
