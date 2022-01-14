@@ -59,6 +59,30 @@ public class AppInfo
     /// <summary>
     /// 
     /// </summary>
+    [Display(Name = "侧边栏设置")]
+    public bool SiderbarSetting { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    [Display(Name = "标题设置")]
+    public bool TitleSetting { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    [Display(Name = "固定表头")]
+    public bool FixHeaderSetting { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    [Display(Name = "健康检查")]
+    public bool HealthCheckSetting { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
     [Display(Name = "授权码")]
     [Required(ErrorMessage = "{0}不可为空")]
     [NotNull]

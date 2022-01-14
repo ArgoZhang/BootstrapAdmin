@@ -49,7 +49,11 @@ public partial class Settings
             AuthCode = "123789",
             Title = DictService.GetWebTitle(),
             Footer = DictService.GetWebFooter(),
-            Login = DictService.GetCurrentLogin()
+            Login = DictService.GetCurrentLogin(),
+            SiderbarSetting = DictService.GetAppSiderbar(),
+            TitleSetting = DictService.GetAppTitle(),
+            FixHeaderSetting = DictService.GetAppFixHeader(),
+            HealthCheckSetting = DictService.GetAppHealthCheck(),
         };
     }
 
@@ -105,5 +109,14 @@ public partial class Settings
     {
         var ret = DictService.SaveDemo(AppInfo.EnableDefaultApp);
         await ShowToast(ret, "默认应用");
+    }
+
+    private async Task OnSaveAppFeatures(EditContext context)
+    {
+        var ret = DictService.SaveAppSiderbar(AppInfo.SiderbarSetting);
+        DictService.SaveAppTitle(AppInfo.TitleSetting);
+        DictService.SaveAppFixHeader(AppInfo.FixHeaderSetting);
+        DictService.SaveAppHealthCheck(AppInfo.HealthCheckSetting);
+        await ShowToast(ret, "网站功能");
     }
 }

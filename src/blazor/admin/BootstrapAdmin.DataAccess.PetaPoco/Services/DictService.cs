@@ -257,4 +257,36 @@ class DictService : IDict
         }
         return url;
     }
+
+    public bool GetAppSiderbar()
+    {
+        var dicts = GetAll();
+        return dicts.FirstOrDefault(s => s.Category == "网站设置" && s.Name == "侧边栏状态" && s.Define == EnumDictDefine.System)?.Code == "1" ? true : false;
+    }
+
+    public bool SaveAppSiderbar(bool value) => SaveDict(new Dict { Category = "网站设置", Name = "侧边栏状态", Code = value ? "1" : "0" });
+
+    public bool GetAppTitle()
+    {
+        var dicts = GetAll();
+        return dicts.FirstOrDefault(s => s.Category == "网站设置" && s.Name == "卡片标题状态" && s.Define == EnumDictDefine.System)?.Code == "1" ? true : false;
+    }
+
+    public bool SaveAppTitle(bool value) => SaveDict(new Dict { Category = "网站设置", Name = "卡片标题状态", Code = value ? "1" : "0" });
+
+    public bool GetAppFixHeader()
+    {
+        var dicts = GetAll();
+        return dicts.FirstOrDefault(s => s.Category == "网站设置" && s.Name == "固定表头" && s.Define == EnumDictDefine.System)?.Code == "1" ? true : false;
+    }
+
+    public bool SaveAppFixHeader(bool value) => SaveDict(new Dict { Category = "网站设置", Name = "固定表头", Code = value ? "1" : "0" });
+
+    public bool GetAppHealthCheck()
+    {
+        var dicts = GetAll();
+        return dicts.FirstOrDefault(s => s.Category == "网站设置" && s.Name == "健康检查" && s.Define == EnumDictDefine.System)?.Code == "1" ? true : false;
+    }
+
+    public bool SaveAppHealthCheck(bool value) => SaveDict(new Dict { Category = "网站设置", Name = "健康检查", Code = value ? "1" : "0" });
 }

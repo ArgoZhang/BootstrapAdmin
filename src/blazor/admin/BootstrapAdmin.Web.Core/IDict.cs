@@ -168,4 +168,52 @@ public interface IDict
     /// </summary>
     /// <returns></returns>
     bool GetEnableDefaultApp();
+
+    /// <summary>
+    /// 是否开启侧边栏设置
+    /// </summary>
+    /// <returns></returns>
+    bool GetAppSiderbar();
+
+    /// <summary>
+    /// 保存侧边栏设置
+    /// </summary>
+    /// <returns></returns>
+    bool SaveAppSiderbar(bool value);
+
+    /// <summary>
+    /// 是否开启标题设置
+    /// </summary>
+    /// <returns></returns>
+    bool GetAppTitle();
+
+    /// <summary>
+    /// 保存标题设置
+    /// </summary>
+    /// <returns></returns>
+    bool SaveAppTitle(bool value);
+
+    /// <summary>
+    /// 是否开启固定表头设置
+    /// </summary>
+    /// <returns></returns>
+    bool GetAppFixHeader();
+
+    /// <summary>
+    /// 保存固定表头设置
+    /// </summary>
+    /// <returns></returns>
+    bool SaveAppFixHeader(bool value);
+
+    /// <summary>
+    /// 是否开启健康检查设置
+    /// </summary>
+    /// <returns></returns>
+    bool GetAppHealthCheck();
+
+    /// <summary>
+    /// 保存健康检查设置
+    /// </summary>
+    /// <returns></returns>
+    bool SaveAppHealthCheck(bool value);
 }
