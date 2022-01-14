@@ -1,11 +1,7 @@
 ﻿using Bootstrap.Security.Blazor.HealthChecks;
 using BootstrapAdmin.Web.Components;
-using BootstrapAdmin.Web.Services;
 using BootstrapAdmin.Web.Utils;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using System;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace BootstrapAdmin.Web.Pages.Admin;
 
@@ -53,11 +49,8 @@ public partial class Healths
 
     private async Task<QueryData<HealthCheckReportItem>> OnQueryAsync(QueryPageOptions options)
     {
-        var report = await CacheManager.GetOrAddAsync("Health", async entry =>
-        {
-            var payload = await Client.GetStringAsync("/Healths");
-            return HealthCheckHelper.Parse(payload);
-        });
+        var payload = await Client.GetStringAsync("/Healths");
+        var report = HealthCheckHelper.Parse(payload);
 
         var ret = new QueryData<HealthCheckReportItem>()
         {
