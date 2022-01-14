@@ -1,4 +1,5 @@
-﻿using BootstrapAdmin.DataAccess.Models;
+﻿using BootstrapAdmin.Caching;
+using BootstrapAdmin.DataAccess.Models;
 using BootstrapAdmin.Web.Core;
 using PetaPoco;
 
@@ -6,6 +7,16 @@ namespace BootstrapAdmin.DataAccess.PetaPoco.Services;
 
 class RoleService : IRole
 {
+    private const string RoleServiceGetAllCacheKey = "RoleService-GetAll";
+
+    private const string RoleServiceGetRolesByUserIdCacheKey = "RoleService-GetRolesByUserId";
+
+    private const string RoleServiceGetRolesByGroupIdCacheKey = "RoleService-GetRolesByGroupId";
+
+    private CancellationTokenSource? GetRolesByUserIdCancellationTokenSource { get; set; }
+
+    private CancellationTokenSource? GetRolesByGroupIdCancellationTokenSource { get; set; }
+
     private IDatabase Database { get; }
 
     /// <summary>
@@ -18,14 +29,14 @@ class RoleService : IRole
     /// 
     /// </summary>
     /// <returns></returns>
-    public List<Role> GetAll() => Database.Fetch<Role>();
+    public List<Role> GetAll() => CacheManager.GetOrAdd(RoleServiceGetAllCacheKey, entry => Database.Fetch<Role>());
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="groupId"></param>
     /// <returns></returns>
-    public List<string> GetRolesByGroupId(string? groupId) => Database.Fetch<string>("select RoleID from RoleGroup where GroupID = @0", groupId);
+    public List<string> GetRolesByGroupId(string? groupId) => CacheManager.GetOrAdd($"{RoleServiceGetRolesByGroupIdCacheKey}-{groupId}", entry => Database.Fetch<string>("select RoleID from RoleGroup where GroupID = @0", groupId));
 
     /// <summary>
     /// 
@@ -57,7 +68,7 @@ class RoleService : IRole
     /// </summary>
     /// <param name="userId"></param>
     /// <returns></returns>
-    public List<string> GetRolesByUserId(string? userId) => Database.Fetch<string>("select RoleID from UserRole where UserID = @0", userId);
+    public List<string> GetRolesByUserId(string? userId) => CacheManager.GetOrAdd($"{RoleServiceGetRolesByUserIdCacheKey}-{userId}", entry => Database.Fetch<string>("select RoleID from UserRole where UserID = @0", userId));
 
     /// <summary>
     /// 
@@ -84,7 +95,7 @@ class RoleService : IRole
         return ret;
     }
 
-    public List<string> GetRolesByMenuId(string? menuId) => Database.Fetch<string>("select RoleID from NavigationRole where NavigationID = @0", menuId);
+    public List<string> GetRolesByMenuId(string? menuId) => CacheManager.GetOrAdd($"{RoleServiceGetRolesByUserIdCacheKey}-{menuId}", entry => Database.Fetch<string>("select RoleID from NavigationRole where NavigationID = @0", menuId));
 
     public bool SaveRolesByMenuId(string? menuId, IEnumerable<string> roleIds)
     {

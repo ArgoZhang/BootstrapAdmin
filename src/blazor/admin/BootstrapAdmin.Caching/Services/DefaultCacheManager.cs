@@ -27,11 +27,10 @@ class DefaultCacheManager : ICacheManager
     /// <typeparam name="T"></typeparam>
     /// <param name="key"></param>
     /// <param name="factory"></param>
-    /// <param name="token"></param>
     /// <returns></returns>
-    public T GetOrAdd<T>(string key, Func<ICacheEntry, T> factory, IChangeToken? token = null) => Cache.GetOrCreate(key, entry =>
+    public T GetOrAdd<T>(string key, Func<ICacheEntry, T> factory) => Cache.GetOrCreate(key, entry =>
     {
-        HandlerEntry(key, entry, token);
+        HandlerEntry(key, entry);
         return factory(entry);
     });
 
