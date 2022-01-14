@@ -1,11 +1,13 @@
 ﻿using BootstrapAdmin.Web.Core;
 using BootstrapAdmin.Web.Services;
 using BootstrapAdmin.Web.Services.SMS;
+using Longbow.Web;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
+using System.Net;
 using System.Security.Claims;
 
 namespace BootstrapAdmin.Web.Controllers
@@ -50,7 +52,12 @@ namespace BootstrapAdmin.Web.Controllers
                 // Cookie 持久化
                 period = dictService.GetCookieExpiresPeriod();
             }
-            await loginService.Log(userName, auth);
+            var ipLocator = HttpContext.RequestServices.GetRequiredService<BootstrapBlazor.Components.IIPLocatorProvider>();
+            var ip = HttpContext.Connection.RemoteIpAddress?.ToIPv4String() ?? "";
+            var userAgent = HttpContext.Request.Headers["User-Agent"];
+            var agent = new UserAgent(userAgent);
+            var address = await ipLocator.Locate(ip);
+            await loginService.Log(userName, DateTime.Now, ip, address, $"{agent.Browser.Name} {agent.Browser.Version}", userAgent, $"{agent.OS.Name} {agent.OS.Version}", auth);
 
             return auth ? await SignInAsync(userName, returnUrl ?? GetAppHomeUrl(dictService, appId), persistent, period) : RedirectLogin(returnUrl);
         }
@@ -144,13 +151,19 @@ namespace BootstrapAdmin.Web.Controllers
                 // Cookie 持久化
                 period = dictService.GetCookieExpiresPeriod();
             }
-            await loginService.Log(phone, auth);
+            var ipLocator = HttpContext.RequestServices.GetRequiredService<BootstrapBlazor.Components.IIPLocatorProvider>();
+            var ip = HttpContext.Connection.RemoteIpAddress?.ToIPv4String() ?? "";
+            var userAgent = HttpContext.Request.Headers["User-Agent"];
+            var agent = new UserAgent(userAgent);
+            var address = await ipLocator.Locate(ip);
+            await loginService.Log(phone, DateTime.Now, ip, address, $"{agent.Browser.Name} {agent.Browser.Version}", userAgent, $"{agent.OS.Name} {agent.OS.Version}", auth);
             if (auth)
             {
                 userService.TryCreateUserByPhone(phone, code, context.AppId, provider.Options.Roles);
             }
             return auth ? await SignInAsync(phone, returnUrl ?? GetAppHomeUrl(dictService, appId), persistent, period, MobileSchema) : RedirectLogin(returnUrl);
         }
+
         #endregion
 
         ///// <summary>
