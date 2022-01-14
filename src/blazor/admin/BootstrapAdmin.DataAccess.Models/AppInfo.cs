@@ -107,6 +107,11 @@ public class AppInfo
     /// <summary>
     /// 
     /// </summary>
+    public string? Ip { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
     [Display(Name = "授权码")]
     [Required(ErrorMessage = "{0}不可为空")]
     [NotNull]

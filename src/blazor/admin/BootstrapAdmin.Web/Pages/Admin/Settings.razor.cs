@@ -21,6 +21,9 @@ public partial class Settings
     [NotNull]
     private List<SelectedItem>? Themes { get; set; }
 
+    [NotNull]
+    private List<SelectedItem>? IPs { get; set; }
+
     [Inject]
     [NotNull]
     private IDict? DictService { get; set; }
@@ -43,6 +46,7 @@ public partial class Settings
         IsDemo = DictService.IsDemo();
         Logins = DictService.GetLogins().ToSelectedItemList();
         Themes = DictService.GetThemes().ToSelectedItemList();
+        IPs = DictService.GetIps().ToSelectedItemList();
         AppInfo = new()
         {
             IsDemo = IsDemo,
@@ -57,7 +61,7 @@ public partial class Settings
             MobileLogin = DictService.GetAppMobileLogin(),
             OAuthLogin = DictService.GetAppOAuthLogin(),
             AutoLock = DictService.GetAutoLockScreen(),
-            Interval = Convert.ToInt32(DictService.GetAutoLockScreenInterval())
+            Interval = Convert.ToInt32(DictService.GetAutoLockScreenInterval()),
         };
     }
 
@@ -136,5 +140,11 @@ public partial class Settings
         var ret = DictService.SaveAutoLockScreen(AppInfo.AutoLock);
         DictService.SaveAutoLockScreenInterval(AppInfo.Interval.ToString());
         await ShowToast(ret, "自动锁屏");
+    }
+
+    private async Task SaveAdressInfo(EditContext context)
+    {
+        var ret = DictService.SaveCurrentIp(AppInfo.Ip!);
+        await ShowToast(ret, "地理位置");
     }
 }

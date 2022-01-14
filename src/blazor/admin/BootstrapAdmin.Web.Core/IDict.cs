@@ -264,4 +264,22 @@ public interface IDict
     /// </summary>
     /// <returns></returns>
     bool SaveAutoLockScreenInterval(string value);
+
+    /// <summary>
+    /// 获得地理位置服务
+    /// </summary>
+    /// <returns></returns>
+    Dictionary<string, string> GetIps();
+
+    /// <summary>
+    /// 获得当前地理位置服务
+    /// </summary>
+    /// <returns></returns>
+    string? GetCurrentIp();
+
+    /// <summary>
+    /// 设置当前地理位置服务
+    /// </summary>
+    /// <returns></returns>
+    bool SaveCurrentIp(string value);
 }

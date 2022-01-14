@@ -321,4 +321,18 @@ class DictService : IDict
     }
 
     public bool SaveAutoLockScreenInterval(string value) => SaveDict(new Dict { Category = "网站设置", Name = "自动锁屏时长", Code = value });
+
+    public Dictionary<string, string> GetIps()
+    {
+        var dicts = GetAll();
+        return dicts.Where(d => d.Category == "地理位置服务").Select(d => new KeyValuePair<string, string>(d.Code, d.Name)).OrderBy(i => i.Value).ToDictionary(i => i.Key, i => i.Value);
+    }
+
+    public string? GetCurrentIp()
+    {
+        var dicts = GetAll();
+        return dicts.FirstOrDefault(s => s.Category == "网站设置" && s.Name == "IP地理位置接口" && s.Define == EnumDictDefine.System)?.Code;
+    }
+
+    public bool SaveCurrentIp(string value) => SaveDict(new Dict { Category = "网站设置", Name = "IP地理位置接口", Code = value });
 }
