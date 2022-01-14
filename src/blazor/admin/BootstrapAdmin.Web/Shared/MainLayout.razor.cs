@@ -52,7 +52,7 @@ namespace BootstrapAdmin.Web.Shared
 
         private bool Lock { get; set; }
 
-        private string? LockInterval { get; set; }
+        private int LockInterval { get; set; }
 
         [NotNull]
         private string? Icon { get; set; }
@@ -82,7 +82,7 @@ namespace BootstrapAdmin.Web.Shared
 
             string GetIcon(string icon) => icon.Contains("://", StringComparison.OrdinalIgnoreCase) ? icon : string.Format("{0}{1}", DictsService.GetIconFolderPath(), icon);
             Lock = DictsService.GetAutoLockScreen();
-            LockInterval = DictsService.GetAutoLockScreenInterval();
+            LockInterval = Convert.ToInt32(DictsService.GetAutoLockScreenInterval());
         }
 
         private Task<bool> OnAuthorizing(string url) => SecurityService.AuhorizingNavigation(Context.UserName, url);
