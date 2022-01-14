@@ -91,15 +91,15 @@ public partial class Profiles
         }
     }
 
-    private async Task ShowToast(bool result, string title)
+    private async Task ShowToast(bool result, string title, string? content = "保存")
     {
         if (result)
         {
-            await ToastService.Success(title, $"保存{title}成功");
+            await ToastService.Success(title, $"{content}{title}成功");
         }
         else
         {
-            await ToastService.Error(title, $"保存{title}失败");
+            await ToastService.Error(title, $"{content}{title}失败");
         }
     }
 
@@ -170,7 +170,7 @@ public partial class Profiles
             }
             ret = UserService.SaveLogo(CurrentUser.UserName, null);
         }
-        await ShowToast(ret, "用户头像");
+        await ShowToast(ret, "用户头像", "删除");
         return ret;
     }
 }
