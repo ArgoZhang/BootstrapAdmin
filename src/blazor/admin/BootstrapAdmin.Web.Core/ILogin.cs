@@ -6,10 +6,16 @@
 public interface ILogin
 {
     /// <summary>
-    /// 记录登录日志
+    /// 
     /// </summary>
     /// <param name="userName"></param>
+    /// <param name="loginTime"></param>
+    /// <param name="IP"></param>
+    /// <param name="address"></param>
+    /// <param name="browser"></param>
+    /// <param name="userAgent"></param>
+    /// <param name="OS"></param>
     /// <param name="result"></param>
     /// <returns></returns>
-    Task<bool> Log(string userName, bool result);
+    Task<bool> Log(string userName, DateTime loginTime, string IP, string address, string? browser, string userAgent, string OS, bool result);
 }
