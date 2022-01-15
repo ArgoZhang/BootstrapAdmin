@@ -1,13 +1,11 @@
 ﻿using BootstrapAdmin.Web.Core;
 using BootstrapAdmin.Web.Services;
 using BootstrapAdmin.Web.Services.SMS;
-using Longbow.Web;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
-using System.Net;
 using System.Security.Claims;
 
 namespace BootstrapAdmin.Web.Controllers
@@ -32,12 +30,10 @@ namespace BootstrapAdmin.Web.Controllers
         /// <param name="appId"></param>
         /// <param name="userService"></param>
         /// <param name="dictService"></param>
-        /// <param name="loginService"></param>
         [HttpPost]
         public async Task<IActionResult> Login(string userName, string password, [FromQuery] string? remember, [FromQuery] string? returnUrl, [FromQuery] string? appId,
             [FromServices] IUser userService,
-            [FromServices] IDict dictService,
-            [FromServices] ILogin loginService)
+            [FromServices] IDict dictService)
         {
             if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
             {
@@ -52,13 +48,6 @@ namespace BootstrapAdmin.Web.Controllers
                 // Cookie 持久化
                 period = dictService.GetCookieExpiresPeriod();
             }
-            var ipLocator = HttpContext.RequestServices.GetRequiredService<BootstrapBlazor.Components.IIPLocatorProvider>();
-            var ip = HttpContext.Connection.RemoteIpAddress?.ToIPv4String() ?? "";
-            var userAgent = HttpContext.Request.Headers["User-Agent"];
-            var agent = new UserAgent(userAgent);
-            var address = await ipLocator.Locate(ip);
-            await loginService.Log(userName, DateTime.Now, ip, address, $"{agent.Browser.Name} {agent.Browser.Version}", userAgent, $"{agent.OS.Name} {agent.OS.Version}", auth);
-
             return auth ? await SignInAsync(userName, returnUrl ?? GetAppHomeUrl(dictService, appId), persistent, period) : RedirectLogin(returnUrl);
         }
 
@@ -133,7 +122,6 @@ namespace BootstrapAdmin.Web.Controllers
         public async Task<IActionResult> Mobile(string phone, string code, [FromQuery] string? remember, [FromQuery] string? returnUrl,
             [FromQuery] string? appId,
             [FromServices] ISMSProvider provider,
-            [FromServices] ILogin loginService,
             [FromServices] IUser userService,
             [FromServices] IDict dictService,
             [FromServices] BootstrapAppContext context)
@@ -151,12 +139,6 @@ namespace BootstrapAdmin.Web.Controllers
                 // Cookie 持久化
                 period = dictService.GetCookieExpiresPeriod();
             }
-            var ipLocator = HttpContext.RequestServices.GetRequiredService<BootstrapBlazor.Components.IIPLocatorProvider>();
-            var ip = HttpContext.Connection.RemoteIpAddress?.ToIPv4String() ?? "";
-            var userAgent = HttpContext.Request.Headers["User-Agent"];
-            var agent = new UserAgent(userAgent);
-            var address = await ipLocator.Locate(ip);
-            await loginService.Log(phone, DateTime.Now, ip, address, $"{agent.Browser.Name} {agent.Browser.Version}", userAgent, $"{agent.OS.Name} {agent.OS.Version}", auth);
             if (auth)
             {
                 userService.TryCreateUserByPhone(phone, code, context.AppId, provider.Options.Roles);
