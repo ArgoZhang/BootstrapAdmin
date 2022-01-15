@@ -15,6 +15,8 @@ public static class ApplicationBuilderExtensions
         // 开启健康检查
         builder.MapBootstrapHealthChecks();
 
+        builder.UseBootstrapBlazor();
+
         builder.UseAuthentication();
         builder.UseAuthorization();
 

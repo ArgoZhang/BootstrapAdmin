@@ -21,9 +21,6 @@ app.UseRouting();
 
 app.UseBootstrapBlazorAdmin();
 
-// 开启缓存中间件
-//app.UseCacheManager();
-
 // 开启 webapi
 app.MapDefaultControllerRoute();
 app.MapBlazorHub();
