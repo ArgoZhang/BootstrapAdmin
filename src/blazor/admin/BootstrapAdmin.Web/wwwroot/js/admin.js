@@ -6,7 +6,7 @@
             var base = $('head > base').attr('href');
             return base + url;
         },
-        login: function (form, url) {
+        login: function (form, obj, url, method) {
             var $form = $(form);
             var $login = $('.login-wrap');
 
@@ -70,7 +70,7 @@
                     }
                 }
 
-                var authenticate = function (postData, mobile) {
+                var authenticate = function (userName, postData, mobile) {
                     var postUrl = url + '?mobile=' + mobile;
                     $.ajax({
                         url: $.formatUrl(postUrl),
@@ -80,6 +80,7 @@
                         dataType: 'json',
                         crossDomain: false,
                         success: function (result) {
+                            obj.invokeMethodAsync(method, userName, result.authenticated);
                             if (result.authenticated) {
                                 $form.submit();
                             }
@@ -104,7 +105,7 @@
 
                 var postData = JSON.stringify({ userName, password });
                 // call webapi authenticate
-                authenticate(postData, mobile);
+                authenticate(userName, postData, mobile);
             });
         }
     });
