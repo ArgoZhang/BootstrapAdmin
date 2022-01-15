@@ -9,13 +9,12 @@ public interface ILogin
     /// 
     /// </summary>
     /// <param name="userName"></param>
-    /// <param name="loginTime"></param>
     /// <param name="IP"></param>
-    /// <param name="address"></param>
-    /// <param name="browser"></param>
-    /// <param name="userAgent"></param>
     /// <param name="OS"></param>
+    /// <param name="browser"></param>
+    /// <param name="address"></param>
+    /// <param name="userAgent"></param>
     /// <param name="result"></param>
     /// <returns></returns>
-    Task<bool> Log(string userName, DateTime loginTime, string IP, string address, string? browser, string userAgent, string OS, bool result);
+    bool Log(string userName, string? IP, string? OS, string? browser, string? address, string? userAgent, bool result);
 }
