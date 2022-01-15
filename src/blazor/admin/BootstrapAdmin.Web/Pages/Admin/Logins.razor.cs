@@ -2,6 +2,9 @@
 
 namespace BootstrapAdmin.Web.Pages.Admin;
 
+/// <summary>
+/// 
+/// </summary>
 public partial class Logins
 {
     /// <summary>

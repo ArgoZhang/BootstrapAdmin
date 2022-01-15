@@ -2,6 +2,9 @@
 
 namespace BootstrapAdmin.Web.Components;
 
+/// <summary>
+/// 
+/// </summary>
 public partial class LoginLogSearch
 {
     /// <summary>
