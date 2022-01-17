@@ -91,6 +91,7 @@ namespace BootstrapAdmin.Web.Shared
         {
             _ = Task.Run(async () =>
             {
+                // TODO: 可考虑加入队列中，通过任务管理定时插入提高效率
                 var clientInfo = await WebClientService.GetClientInfo();
                 TraceService.Log(new Trace
                 {
