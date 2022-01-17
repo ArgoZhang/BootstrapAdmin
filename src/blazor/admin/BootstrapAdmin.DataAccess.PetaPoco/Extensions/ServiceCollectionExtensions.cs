@@ -78,6 +78,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<INavigation, NavigationService>();
         services.AddSingleton<IRole, RoleService>();
         services.AddSingleton<IUser, UserService>();
+        services.AddSingleton<ITrace, TraceService>();
         return services;
     }
 }
