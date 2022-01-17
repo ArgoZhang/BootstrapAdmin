@@ -1,0 +1,104 @@
+﻿@using BootstrapAdmin.Web.Core
+
+<div class="row g-3 form-inline">
+    @if (FrontApp != null)
+    {
+        foreach (var item in FrontApp)
+        {
+            var value = DictService.GetFrontUrl(item.Value);
+            <div class="col-12 col-sm-12">
+                <BootstrapInputGroup>
+                    <BootstrapInput Value="value" DisplayText="@item.Key" ShowLabel="true"></BootstrapInput>
+                    <PopConfirmButton Placement="Placement.Top" Color="Color.Danger" ConfirmIcon="fa fa-trash-o" ConfirmButtonColor="Color.Danger" Text="删除确认按钮" Content="确定删除数据吗？" OnConfirm="() => OnDeleteFrontApp(item.Value,item.Key)" />
+                    <Button Icon="fa fa-edit" Text="编辑" OnClickWithoutRender="() => OnEditFrontApp(item.Value,item.Key)" />
+                </BootstrapInputGroup>
+            </div>
+        }
+    }
+    <div class="col-12 col-sm-12 text-end">
+        <Button ButtonType="ButtonType.Button" Icon="fa fa-plus" Text="新增" OnClickWithoutRender="@OnSaveFrontApp" />
+    </div>
+</div>
+
+@code{
+
+    [NotNull]
+    private Dictionary<string, string>? FrontApp { get; set; }
+
+    [Inject]
+    [NotNull]
+    private IDict? DictService { get; set; }
+
+    [Inject]
+    [NotNull]
+    private DialogService? DialogService { get; set; }
+
+    [NotNull]
+    private DialogOption? Option { get; set; }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        FrontApp = DictService.GetFrontApp();
+    }
+
+    private async Task OnSaveFrontApp()
+    {
+        Option = new DialogOption
+        {
+            Title = "添加前台应用",
+            BodyTemplate = BootstrapDynamicComponent.CreateComponent<FrontAppDialog>(new Dictionary<string, object?>
+            {
+                [nameof(FrontAppDialog.OnSaveComplete)] = new Func<AppInfo, Task>(e => OnSave(e)),
+                [nameof(FrontAppDialog.OnClose)] = new Func<Task>(() => OnClose())
+            }).Render(),
+            ShowFooter = false,
+        };
+        await DialogService.Show(Option);
+    }
+
+    private async Task OnEditFrontApp(string appID, string appName)
+    {
+        var frontapp = DictService.GetFrontAppSettings(appID, appName);
+        var appInfo = new AppInfo()
+        {
+            AppID = appID,
+            AppName = appName,
+            Home = frontapp.homeurl,
+            WebTitle = frontapp.title,
+            WebFooter = frontapp.footer,
+            WebIcon = frontapp.icon,
+            Favicon = frontapp.favicon,
+        };
+
+        Option = new DialogOption
+        {
+            Title = "编辑前台应用",
+            BodyTemplate = BootstrapDynamicComponent.CreateComponent<FrontAppDialog>(new Dictionary<string, object?>
+            {
+                [nameof(FrontAppDialog.Value)] = appInfo,
+                [nameof(FrontAppDialog.OnSaveComplete)] = new Func<AppInfo, Task>(e => OnSave(e)),
+                [nameof(FrontAppDialog.OnClose)] = new Func<Task>(() => OnClose())
+            }).Render(),
+            ShowFooter = false,
+        };
+        await DialogService.Show(Option);
+    }
+
+    private Task OnDeleteFrontApp(string appID, string appName)
+    {
+        DictService.DeleteFrontAppSettings(appID, appName);
+        return Task.CompletedTask;
+    }
+
+    private async Task OnClose()
+    {
+        await Option.Dialog.Close();
+    }
+
+    private async Task OnSave(AppInfo Value)
+    {
+        DictService.SaveFrontApp(Value.AppID, Value.AppName, Value.Home, Value.WebTitle, Value.WebFooter, Value.WebIcon, Value.Favicon);
+        await Option.Dialog.Close();
+    }
+}
