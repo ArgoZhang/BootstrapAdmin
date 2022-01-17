@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BootstrapBlazor" Version="6.2.7-beta02" />
+    <PackageReference Include="BootstrapBlazor" Version="6.2.7" />
     <PackageReference Include="Exceptionless.AspNetCore" Version="4.6.2" />
     <PackageReference Include="Longbow.Logging" Version="5.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
