@@ -415,4 +415,76 @@ class DictService : IDict
         var dicts = GetAll();
         return dicts.Exists(s => s.Category == "应用程序" && s.Code == appId);
     }
+
+    public bool SaveFrontApp(string appId, string AppName, string homeUrl, string title, string footer, string icon, string favicon)
+    {
+        var items = new List<Dict>()
+        {
+            new Dict { Category = "应用程序", Name = AppName, Code = appId, Define = EnumDictDefine.System },
+            new Dict { Category = AppName, Name = "网站页脚", Code = footer },
+            new Dict { Category = AppName, Name = "网站标题", Code = title },
+            new Dict { Category = AppName, Name = "favicon", Code = favicon },
+            new Dict { Category = AppName, Name = "网站图标", Code = icon },
+            new Dict { Category = "应用首页", Name = appId, Code = homeUrl },
+        };
+        var exist = ExistsAppId(appId);
+
+        if (exist)
+        {
+            try
+            {
+                Database.BeginTransaction();
+                Database.Execute("update Dicts set Code=@HomeUrl where Category=@Category and Name=@Name", new { HomeUrl = homeUrl, Category = AppName, Name = appId });
+                Database.Execute("update Dicts set Code=@Footer where Category=@Category and Name='网站页脚'", new { Footer = footer, Category = AppName });
+                Database.Execute("update Dicts set Code=@Title where Category=@Category and Name='网站标题'", new { Title = title, Category = AppName });
+                Database.Execute("update Dicts set Code=@Favicon where Category=@Category and Name='favicon'", new { Favicon = favicon, Category = AppName });
+                Database.Execute("update Dicts set Code=@Icon where Category=@Category and Name='网站图标'", new { Icon = icon, Category = AppName });
+                Database.CompleteTransaction();
+            }
+            catch (Exception)
+            {
+                Database.AbortTransaction();
+                throw;
+            }
+        }
+        else
+        {
+            Database.InsertBatch(items);
+        }
+        return true;
+    }
+
+    public (string homeurl, string title, string footer, string icon, string favicon) GetFrontAppSettings(string appId, string AppName)
+    {
+        var dicts = GetAll();
+        var homeurl = dicts.FirstOrDefault(s => s.Category == "应用首页" && s.Name == appId)?.Code ?? "";
+        var title = dicts.FirstOrDefault(s => s.Category == AppName && s.Name == "网站标题")?.Code ?? "";
+        var footer = dicts.FirstOrDefault(s => s.Category == AppName && s.Name == "网站页脚")?.Code ?? "";
+        var icon = dicts.FirstOrDefault(s => s.Category == AppName && s.Name == "网站图标")?.Code ?? "";
+        var favicon = dicts.FirstOrDefault(s => s.Category == AppName && s.Name == "favicon")?.Code ?? "";
+
+        return (homeurl, title, footer, icon, favicon);
+    }
+
+    public bool DeleteFrontAppSettings(string appId, string AppName)
+    {
+        try
+        {
+            Database.BeginTransaction();
+            Database.Execute("delete from dicts where Category='应用程序' and Name=@Name and Code=@Code", new { Name = AppName, Code = appId });
+            Database.Execute("delete from dicts where Category=@Category and Name='网站页脚'", new { Category = AppName });
+            Database.Execute("delete from dicts where Category=@Category and Name='网站页脚'", new { Category = AppName });
+            Database.Execute("delete from dicts where Category=@Category and Name='网站标题'", new { Category = AppName });
+            Database.Execute("delete from dicts where Category=@Category and Name='favicon'", new { Category = AppName });
+            Database.Execute("delete from dicts where Category=@Category and Name='网站图标'", new { Category = AppName });
+            Database.CompleteTransaction();
+        }
+        catch (Exception)
+        {
+            Database.AbortTransaction();
+            throw;
+        }
+
+        return true;
+    }
 }
