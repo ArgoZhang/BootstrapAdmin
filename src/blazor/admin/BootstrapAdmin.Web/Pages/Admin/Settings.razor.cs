@@ -41,6 +41,9 @@ public partial class Settings
     [NotNull]
     private DialogService? DialogService { get; set; }
 
+    [NotNull]
+    private DialogOption? Option { get; set; }
+
     /// <summary>
     /// 
     /// </summary>
@@ -72,8 +75,7 @@ public partial class Settings
             LoginExpired = DictService.GetLoginExpired(),
             AccessExpired = DictService.GetAccessExpired(),
             CookieExpired = DictService.GetCookieExpiresPeriod(),
-            IPCacheExpired = DictService.GetIPCacheExpired(),
-            FrontApp = DictService.GetFrontApp()
+            IPCacheExpired = DictService.GetIPCacheExpired()
         };
     }
 
@@ -170,34 +172,5 @@ public partial class Settings
         DictService.SaveIPCacheExpired(AppInfo.IPCacheExpired);
 
         await ShowToast(ret, "日志缓存");
-    }
-
-    private async Task OnSaveFrontApp()
-    {
-
-        DialogOption option = new DialogOption
-        {
-            Title = "添加前台应用",
-            BodyTemplate = BootstrapDynamicComponent.CreateComponent<FrontAppDialog>(new Dictionary<string, object?>
-            {
-                [nameof(FrontAppDialog.Value)] = AppInfo
-            }).Render(),
-            ShowFooter = false,
-        };
-        await DialogService.Show(option);
-    }
-
-    private async Task OnDeleteFrontApp()
-    {
-        DialogOption option = new DialogOption
-        {
-            Title = "添加前台应用",
-            BodyTemplate = BootstrapDynamicComponent.CreateComponent<FrontAppDialog>(new Dictionary<string, object?>
-            {
-                [nameof(FrontAppDialog.Value)] = AppInfo
-            }).Render(),
-            ShowFooter = false,
-        };
-        await DialogService.Show(option);
     }
 }
