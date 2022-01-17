@@ -372,4 +372,22 @@ public interface IDict
     /// </summary>
     /// <returns></returns>
     bool ExistsAppId(string appId);
+
+    /// <summary>
+    /// 添加前台应用
+    /// </summary>
+    /// <returns></returns>
+    bool SaveFrontApp(string appId, string AppName, string homeUrl, string title, string footer, string icon, string favicon);
+
+    /// <summary>
+    /// 获得前台应用配置
+    /// </summary>
+    /// <returns></returns>
+    (string homeurl, string title, string footer, string icon, string favicon) GetFrontAppSettings(string appId, string AppName);
+
+    /// <summary>
+    /// 删除前台应用配置
+    /// </summary>
+    /// <returns></returns>
+    bool DeleteFrontAppSettings(string appId, string AppName);
 }
