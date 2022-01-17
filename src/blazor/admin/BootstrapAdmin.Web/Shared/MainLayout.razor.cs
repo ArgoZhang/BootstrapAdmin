@@ -101,7 +101,7 @@ namespace BootstrapAdmin.Web.Shared
                     LogTime = DateTime.Now,
                     OS = clientInfo.OS,
                     UserAgent = clientInfo.UserAgent,
-                    RequestUrl = e.Location,
+                    RequestUrl = NavigationManager.ToBaseRelativePath(e.Location),
                     UserName = AppContext.UserName
                 });
             });
