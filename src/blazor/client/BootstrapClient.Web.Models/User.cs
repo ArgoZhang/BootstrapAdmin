@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace BootstrapAdmin.DataAccess.Models;
+namespace BootstrapClient.DataAccess.Models;
 
 /// <summary>
 /// 

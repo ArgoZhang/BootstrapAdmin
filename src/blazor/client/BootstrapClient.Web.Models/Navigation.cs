@@ -3,12 +3,11 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BootstrapAdmin.DataAccess.Models;
+namespace BootstrapClient.DataAccess.Models;
 
 /// <summary>
 /// Bootstrap Admin 后台管理菜单相关操作实体类
 /// </summary>
-[Table("Navigations")]
 public class Navigation
 {
     /// <summary>
@@ -52,7 +51,7 @@ public class Navigation
     /// 获得/设置 菜单分类, 0 表示系统菜单 1 表示用户自定义菜单
     /// </summary>
     [Display(Name = "类别")]
-    public int Category { get; set; }
+    public EnumNavigationCategory Category { get; set; }
 
     /// <summary>
     /// 获得/设置 链接目标
@@ -64,16 +63,11 @@ public class Navigation
     /// 获得/设置 是否为资源文件, 0 表示菜单 1 表示资源 2 表示按钮
     /// </summary>
     [Display(Name = "类型")]
-    public int IsResource { get; set; }
+    public EnumResource IsResource { get; set; }
 
     /// <summary>
     /// 获得/设置 所属应用程序，此属性由BA后台字典表分配
     /// </summary>
     [Display(Name = "所属应用")]
     public string? Application { get; set; }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public bool HasChildren { get; set; }
 }

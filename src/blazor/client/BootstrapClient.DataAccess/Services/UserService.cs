@@ -1,4 +1,4 @@
-﻿using BootstrapAdmin.DataAccess.Models;
+﻿using BootstrapClient.DataAccess.Models;
 using BootstrapClient.Web.Core;
 using PetaPoco;
 
