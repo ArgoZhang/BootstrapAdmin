@@ -48,9 +48,9 @@ class StringToEnumConverter
     {
         object? ret;
         var field = value?.ToString();
-        if (!string.IsNullOrEmpty(field) && Enum.IsDefined(TargetType, field))
+        if (!string.IsNullOrEmpty(field) && Enum.TryParse(TargetType, field, out var v))
         {
-            ret = field;
+            ret = v;
         }
         else
         {
