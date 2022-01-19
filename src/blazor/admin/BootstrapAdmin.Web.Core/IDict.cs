@@ -359,13 +359,13 @@ public interface IDict
     /// 获得前台应用
     /// </summary>
     /// <returns></returns>
-    Dictionary<string, string>? GetFrontApp();
+    Dictionary<string, string>? GetClients();
 
     /// <summary>
     /// 获得前台应用
     /// </summary>
     /// <returns></returns>
-    string GetFrontUrl(string name);
+    string GetClientUrl(string name);
 
     /// <summary>
     /// 获得前台应用
@@ -377,17 +377,17 @@ public interface IDict
     /// 添加前台应用
     /// </summary>
     /// <returns></returns>
-    bool SaveFrontApp(string appId, string AppName, string homeUrl, string title, string footer, string icon, string favicon);
+    bool SaveClient(string appId, string AppName, string homeUrl, string title, string footer, string icon, string favicon);
 
     /// <summary>
     /// 获得前台应用配置
     /// </summary>
     /// <returns></returns>
-    (string homeurl, string title, string footer, string icon, string favicon) GetFrontAppSettings(string appId, string AppName);
+    (string homeurl, string title, string footer, string icon, string favicon) GetClientSettings(string appId, string AppName);
 
     /// <summary>
     /// 删除前台应用配置
     /// </summary>
     /// <returns></returns>
-    bool DeleteFrontAppSettings(string appId, string AppName);
+    bool DeleteClient(string appId, string AppName);
 }

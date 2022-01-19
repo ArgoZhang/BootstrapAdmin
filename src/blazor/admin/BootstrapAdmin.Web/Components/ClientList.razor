@@ -4,7 +4,7 @@
     {
         foreach (var item in Client)
         {
-            var value = DictService.GetFrontUrl(item.Value);
+            var value = DictService.GetClientUrl(item.Value);
             <div class="col-12 col-sm-12">
                 <BootstrapInputGroup>
                     <BootstrapInputGroupLabel Text="@item.Key"></BootstrapInputGroupLabel>

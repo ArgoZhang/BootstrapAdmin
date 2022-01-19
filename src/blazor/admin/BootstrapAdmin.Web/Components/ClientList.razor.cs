@@ -28,7 +28,7 @@ public partial class ClientList
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        Client = DictService.GetFrontApp();
+        Client = DictService.GetClients();
     }
 
     private async Task OnSaveClient()
@@ -48,7 +48,7 @@ public partial class ClientList
 
     private async Task OnEditClient(string appID, string appName)
     {
-        var frontapp = DictService.GetFrontAppSettings(appID, appName);
+        var frontapp = DictService.GetClientSettings(appID, appName);
         var appInfo = new AppInfo()
         {
             AppID = appID,
@@ -76,7 +76,7 @@ public partial class ClientList
 
     private Task OnDeleteClient(string appID, string appName)
     {
-        DictService.DeleteFrontAppSettings(appID, appName);
+        DictService.DeleteClient(appID, appName);
         return Task.CompletedTask;
     }
 
@@ -87,7 +87,7 @@ public partial class ClientList
 
     private async Task OnSave(AppInfo Value)
     {
-        DictService.SaveFrontApp(Value.AppID, Value.AppName, Value.Home, Value.WebTitle, Value.WebFooter, Value.WebIcon, Value.Favicon);
+        DictService.SaveClient(Value.AppID, Value.AppName, Value.Home, Value.WebTitle, Value.WebFooter, Value.WebIcon, Value.Favicon);
         await Option.Dialog.Close();
     }
 }
