@@ -1,7 +1,7 @@
 ﻿@using BootstrapAdmin.Web.Core;
 @using BootstrapAdmin.Web.Validators;
 
-<ValidateForm OnValidSubmit="OnSaveFrontApp" Model="Value">
+<ValidateForm OnValidSubmit="OnSaveCleint" Model="Value">
     <div class="row g-3 form-inline">
         <div class="col-6 col-sm-6">
             <BootstrapInput @bind-Value="Value.AppID" placeholder="不可为空，50字以内" Readonly="Value.AppID!=null" ValidateRules="@Validators"></BootstrapInput>
@@ -74,7 +74,7 @@
         }
     }
 
-    private Task OnSaveFrontApp(EditContext context)
+    private Task OnSaveCleint(EditContext context)
     {
 
         if (OnSaveComplete != null)

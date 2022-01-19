@@ -9,7 +9,7 @@ namespace BootstrapAdmin.Web.Components;
 public partial class ClientList
 {
     [NotNull]
-    private Dictionary<string, string>? FrontApp { get; set; }
+    private Dictionary<string, string>? Client { get; set; }
 
     [Inject]
     [NotNull]
@@ -28,10 +28,10 @@ public partial class ClientList
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        FrontApp = DictService.GetFrontApp();
+        Client = DictService.GetFrontApp();
     }
 
-    private async Task OnSaveFrontApp()
+    private async Task OnSaveClient()
     {
         Option = new DialogOption
         {
@@ -46,7 +46,7 @@ public partial class ClientList
         await DialogService.Show(Option);
     }
 
-    private async Task OnEditFrontApp(string appID, string appName)
+    private async Task OnEditClient(string appID, string appName)
     {
         var frontapp = DictService.GetFrontAppSettings(appID, appName);
         var appInfo = new AppInfo()
@@ -74,7 +74,7 @@ public partial class ClientList
         await DialogService.Show(Option);
     }
 
-    private Task OnDeleteFrontApp(string appID, string appName)
+    private Task OnDeleteClient(string appID, string appName)
     {
         DictService.DeleteFrontAppSettings(appID, appName);
         return Task.CompletedTask;

@@ -1,21 +1,21 @@
 ﻿
 <div class="row g-3 form-inline">
-    @if (FrontApp != null)
+    @if (Client != null)
     {
-        foreach (var item in FrontApp)
+        foreach (var item in Client)
         {
             var value = DictService.GetFrontUrl(item.Value);
             <div class="col-12 col-sm-12">
                 <BootstrapInputGroup>
                     <BootstrapInputGroupLabel Text="@item.Key"></BootstrapInputGroupLabel>
                     <BootstrapInput Value="value"></BootstrapInput>
-                    <PopConfirmButton Placement="Placement.Top" Color="Color.Danger" Icon="fa fa-trash-o" ConfirmIcon="fa fa-exclamation-circle text-danger" ConfirmButtonColor="Color.Danger" Text="删除" Content="确定删除当前应用吗？" OnConfirm="() => OnDeleteFrontApp(item.Value,item.Key)" />
-                    <Button Icon="fa fa-edit" Text="编辑" OnClickWithoutRender="() => OnEditFrontApp(item.Value,item.Key)" />
+                    <PopConfirmButton Placement="Placement.Top" Color="Color.Danger" Icon="fa fa-trash-o" ConfirmIcon="fa fa-exclamation-circle text-danger" ConfirmButtonColor="Color.Danger" Text="删除" Content="确定删除当前应用吗？" OnConfirm="() => OnDeleteClient(item.Value,item.Key)" />
+                    <Button Icon="fa fa-edit" Text="编辑" OnClickWithoutRender="() => OnEditClient(item.Value,item.Key)" />
                 </BootstrapInputGroup>
             </div>
         }
     }
     <div class="col-12 col-sm-12 text-end">
-        <Button ButtonType="ButtonType.Button" Icon="fa fa-plus" Text="新增" OnClickWithoutRender="@OnSaveFrontApp" />
+        <Button ButtonType="ButtonType.Button" Icon="fa fa-plus" Text="新增" OnClickWithoutRender="@OnSaveClient" />
     </div>
 </div>
