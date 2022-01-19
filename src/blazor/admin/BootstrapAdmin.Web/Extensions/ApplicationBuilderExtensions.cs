@@ -1,4 +1,6 @@
-﻿namespace Microsoft.AspNetCore.Builder;
+﻿using BootstrapAdmin.Web;
+
+namespace Microsoft.AspNetCore.Builder;
 
 /// <summary>
 /// 
@@ -19,6 +21,8 @@ public static class ApplicationBuilderExtensions
 
         builder.UseAuthentication();
         builder.UseAuthorization();
+
+        builder.UseSwagger(builder.Configuration["SwaggerPathBase"].TrimEnd('/'));
 
         return builder;
     }
