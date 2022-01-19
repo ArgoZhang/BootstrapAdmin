@@ -14,6 +14,19 @@ public interface IDict
     List<Dict> GetAll();
 
     /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    string? GetIpLocatorName();
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    string? GetIpLocatorUrl(string? name);
+
+    /// <summary>
     /// 获得 配置所有的 App 集合
     /// </summary>
     /// <returns></returns>
