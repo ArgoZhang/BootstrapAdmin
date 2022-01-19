@@ -25,8 +25,8 @@
             <BootstrapInput @bind-Value="Value.Favicon" placeholder="不可为空，2000字以内"></BootstrapInput>
         </div>
         <div class="col-12 col-sm-12 text-end">
-            <Button ButtonType="ButtonType.Button" Text="关闭" Icon="fa fa-close" OnClick="() => OnClose()"></Button>
             <Button ButtonType="ButtonType.Submit" Text="保存" Icon="fa fa-save"></Button>
+            <Button ButtonType="ButtonType.Button" Text="关闭" Icon="fa fa-close" Color="Color.Secondary" OnClick="() => OnClose()"></Button>
         </div>
     </div>
 </ValidateForm>
