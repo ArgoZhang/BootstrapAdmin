@@ -472,11 +472,7 @@ class DictService : IDict
         {
             Database.BeginTransaction();
             Database.Execute("delete from dicts where Category='应用程序' and Name=@Name and Code=@Code", new { Name = AppName, Code = appId });
-            Database.Execute("delete from dicts where Category=@Category and Name='网站页脚'", new { Category = AppName });
-            Database.Execute("delete from dicts where Category=@Category and Name='网站页脚'", new { Category = AppName });
-            Database.Execute("delete from dicts where Category=@Category and Name='网站标题'", new { Category = AppName });
-            Database.Execute("delete from dicts where Category=@Category and Name='favicon'", new { Category = AppName });
-            Database.Execute("delete from dicts where Category=@Category and Name='网站图标'", new { Category = AppName });
+            Database.Execute("delete from dicts where Category=@Category", new { Category = appId });
             Database.CompleteTransaction();
         }
         catch (Exception)
