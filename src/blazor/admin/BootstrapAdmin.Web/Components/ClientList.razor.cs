@@ -1,27 +1,13 @@
-﻿@using BootstrapAdmin.Web.Core
+﻿using BootstrapAdmin.DataAccess.Models;
+using BootstrapAdmin.Web.Core;
 
-<div class="row g-3 form-inline">
-    @if (FrontApp != null)
-    {
-        foreach (var item in FrontApp)
-        {
-            var value = DictService.GetFrontUrl(item.Value);
-            <div class="col-12 col-sm-12">
-                <BootstrapInputGroup>
-                    <BootstrapInput Value="value" DisplayText="@item.Key" ShowLabel="true"></BootstrapInput>
-                    <PopConfirmButton Placement="Placement.Top" Color="Color.Danger" ConfirmIcon="fa fa-trash-o" ConfirmButtonColor="Color.Danger" Text="删除确认按钮" Content="确定删除数据吗？" OnConfirm="() => OnDeleteFrontApp(item.Value,item.Key)" />
-                    <Button Icon="fa fa-edit" Text="编辑" OnClickWithoutRender="() => OnEditFrontApp(item.Value,item.Key)" />
-                </BootstrapInputGroup>
-            </div>
-        }
-    }
-    <div class="col-12 col-sm-12 text-end">
-        <Button ButtonType="ButtonType.Button" Icon="fa fa-plus" Text="新增" OnClickWithoutRender="@OnSaveFrontApp" />
-    </div>
-</div>
+namespace BootstrapAdmin.Web.Components;
 
-@code{
-
+/// <summary>
+/// 
+/// </summary>
+public partial class ClientList
+{
     [NotNull]
     private Dictionary<string, string>? FrontApp { get; set; }
 
@@ -36,6 +22,9 @@
     [NotNull]
     private DialogOption? Option { get; set; }
 
+    /// <summary>
+    /// 
+    /// </summary>
     protected override void OnInitialized()
     {
         base.OnInitialized();
@@ -47,10 +36,10 @@
         Option = new DialogOption
         {
             Title = "添加前台应用",
-            BodyTemplate = BootstrapDynamicComponent.CreateComponent<FrontAppDialog>(new Dictionary<string, object?>
+            BodyTemplate = BootstrapDynamicComponent.CreateComponent<ClientDialog>(new Dictionary<string, object?>
             {
-                [nameof(FrontAppDialog.OnSaveComplete)] = new Func<AppInfo, Task>(e => OnSave(e)),
-                [nameof(FrontAppDialog.OnClose)] = new Func<Task>(() => OnClose())
+                [nameof(ClientDialog.OnSaveComplete)] = new Func<AppInfo, Task>(e => OnSave(e)),
+                [nameof(ClientDialog.OnClose)] = new Func<Task>(() => OnClose())
             }).Render(),
             ShowFooter = false,
         };
@@ -74,11 +63,11 @@
         Option = new DialogOption
         {
             Title = "编辑前台应用",
-            BodyTemplate = BootstrapDynamicComponent.CreateComponent<FrontAppDialog>(new Dictionary<string, object?>
+            BodyTemplate = BootstrapDynamicComponent.CreateComponent<ClientDialog>(new Dictionary<string, object?>
             {
-                [nameof(FrontAppDialog.Value)] = appInfo,
-                [nameof(FrontAppDialog.OnSaveComplete)] = new Func<AppInfo, Task>(e => OnSave(e)),
-                [nameof(FrontAppDialog.OnClose)] = new Func<Task>(() => OnClose())
+                [nameof(ClientDialog.Value)] = appInfo,
+                [nameof(ClientDialog.OnSaveComplete)] = new Func<AppInfo, Task>(e => OnSave(e)),
+                [nameof(ClientDialog.OnClose)] = new Func<Task>(() => OnClose())
             }).Render(),
             ShowFooter = false,
         };

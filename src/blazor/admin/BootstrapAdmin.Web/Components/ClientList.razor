@@ -1,0 +1,20 @@
+﻿
+<div class="row g-3 form-inline">
+    @if (FrontApp != null)
+    {
+        foreach (var item in FrontApp)
+        {
+            var value = DictService.GetFrontUrl(item.Value);
+            <div class="col-12 col-sm-12">
+                <BootstrapInputGroup>
+                    <BootstrapInput Value="value" DisplayText="@item.Key" ShowLabel="true"></BootstrapInput>
+                    <PopConfirmButton Placement="Placement.Top" Color="Color.Danger" ConfirmIcon="fa fa-trash-o" ConfirmButtonColor="Color.Danger" Text="删除确认按钮" Content="确定删除数据吗？" OnConfirm="() => OnDeleteFrontApp(item.Value,item.Key)" />
+                    <Button Icon="fa fa-edit" Text="编辑" OnClickWithoutRender="() => OnEditFrontApp(item.Value,item.Key)" />
+                </BootstrapInputGroup>
+            </div>
+        }
+    }
+    <div class="col-12 col-sm-12 text-end">
+        <Button ButtonType="ButtonType.Button" Icon="fa fa-plus" Text="新增" OnClickWithoutRender="@OnSaveFrontApp" />
+    </div>
+</div>
