@@ -85,11 +85,4 @@ public partial class Users
     {
         return Task.FromResult(UserService.SaveUser(user.UserName, user.DisplayName, user.NewPassword));
     }
-
-    private bool AuthorizeButton(string operate)
-    {
-        var url = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
-
-        return NavigationService.AuthorizationBlock(url, AppContext.UserName, operate);
-    }
 }
