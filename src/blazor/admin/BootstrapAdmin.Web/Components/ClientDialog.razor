@@ -1,7 +1,7 @@
 ﻿@using BootstrapAdmin.Web.Core;
 @using BootstrapAdmin.Web.Validators;
 
-<ValidateForm OnValidSubmit="CreateFrontApp" Model="Value">
+<ValidateForm OnValidSubmit="OnSaveCleint" Model="Value">
     <div class="row g-3 form-inline">
         <div class="col-6 col-sm-6">
             <BootstrapInput @bind-Value="Value.AppID" placeholder="不可为空，50字以内" Readonly="Value.AppID!=null" ValidateRules="@Validators"></BootstrapInput>
@@ -26,6 +26,7 @@
         </div>
         <div class="col-12 col-sm-12 text-end">
             <Button ButtonType="ButtonType.Submit" Text="保存" Icon="fa fa-save"></Button>
+            <Button ButtonType="ButtonType.Button" Text="关闭" Icon="fa fa-close" Color="Color.Secondary" OnClick="() => OnClose()"></Button>
         </div>
     </div>
 </ValidateForm>
@@ -37,13 +38,26 @@
     /// </summary>
     [NotNull]
     [Parameter]
-    public AppInfo? Value { get; set; }
+    public AppInfo? Value { get; set; } = new();
 
     /// <summary>
     ///
     /// </summary>
     [Parameter]
     public EventCallback<AppInfo>? ValueChanged { get; set; }
+
+    /// <summary>
+    ///
+    /// </summary>
+    [Parameter]
+    public Func<AppInfo, Task>? OnSaveComplete { get; set; }
+
+    /// <summary>
+    ///
+    /// </summary>
+    [Parameter]
+    [NotNull]
+    public Func<Task>? OnClose { get; set; }
 
     [NotNull]
     [Inject]
@@ -60,8 +74,25 @@
         }
     }
 
-    private Task CreateFrontApp(EditContext context)
+    private Task OnSaveCleint(EditContext context)
     {
+
+        if (OnSaveComplete != null)
+        {
+            OnSaveComplete(Value);
+        }
+
+        return Task.CompletedTask;
+    }
+
+    private Task OnCloseDialog(EditContext context)
+    {
+
+        if (OnClose != null)
+        {
+            OnClose();
+        }
+
         return Task.CompletedTask;
     }
 }

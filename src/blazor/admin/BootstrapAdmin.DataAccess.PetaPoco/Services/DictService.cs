@@ -390,13 +390,13 @@ class DictService : IDict
 
     public bool SaveIPCacheExpired(int value) => SaveDict(new Dict { Category = "网站设置", Name = "IP请求缓存时长", Code = value.ToString() });
 
-    public Dictionary<string, string> GetFrontApp()
+    public Dictionary<string, string> GetClients()
     {
         var dicts = GetAll();
         return dicts.Where(s => s.Category == "应用程序" && s.Code != "BA").ToDictionary(s => s.Name, s => s.Code);
     }
 
-    public string GetFrontUrl(string name)
+    public string GetClientUrl(string name)
     {
         var dicts = GetAll();
         return dicts.Where(s => s.Category == "应用首页" && s.Name == name).FirstOrDefault()?.Code ?? "";
@@ -408,7 +408,7 @@ class DictService : IDict
         return dicts.Exists(s => s.Category == "应用程序" && s.Code == appId);
     }
 
-    public bool SaveFrontApp(string appId, string AppName, string homeUrl, string title, string footer, string icon, string favicon)
+    public bool SaveClient(string appId, string AppName, string homeUrl, string title, string footer, string icon, string favicon)
     {
         var items = new List<Dict>()
         {
@@ -446,7 +446,7 @@ class DictService : IDict
         return true;
     }
 
-    public (string homeurl, string title, string footer, string icon, string favicon) GetFrontAppSettings(string appId, string AppName)
+    public (string homeurl, string title, string footer, string icon, string favicon) GetClientSettings(string appId, string AppName)
     {
         var dicts = GetAll();
         var homeurl = dicts.FirstOrDefault(s => s.Category == "应用首页" && s.Name == appId)?.Code ?? "";
@@ -458,13 +458,17 @@ class DictService : IDict
         return (homeurl, title, footer, icon, favicon);
     }
 
-    public bool DeleteFrontAppSettings(string appId, string AppName)
+    public bool DeleteClient(string appId, string AppName)
     {
         try
         {
             Database.BeginTransaction();
             Database.Execute("delete from dicts where Category='应用程序' and Name=@Name and Code=@Code", new { Name = AppName, Code = appId });
-            Database.Execute("delete from dicts where Category=@Category", new { Category = appId });
+            Database.Execute("delete from dicts where Category=@Category and Name='网站页脚'", new { Category = AppName });
+            Database.Execute("delete from dicts where Category=@Category and Name='网站页脚'", new { Category = AppName });
+            Database.Execute("delete from dicts where Category=@Category and Name='网站标题'", new { Category = AppName });
+            Database.Execute("delete from dicts where Category=@Category and Name='favicon'", new { Category = AppName });
+            Database.Execute("delete from dicts where Category=@Category and Name='网站图标'", new { Category = AppName });
             Database.CompleteTransaction();
         }
         catch (Exception)
