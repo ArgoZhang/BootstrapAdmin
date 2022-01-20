@@ -1,5 +1,4 @@
-﻿using BootstrapAdmin.DataAccess.Models;
-using BootstrapAdmin.Web.Core;
+﻿using BootstrapAdmin.Web.Core;
 
 namespace BootstrapAdmin.Web.Components;
 
@@ -9,7 +8,7 @@ namespace BootstrapAdmin.Web.Components;
 public partial class ClientList
 {
     [NotNull]
-    private Dictionary<string, string>? Client { get; set; }
+    private Dictionary<string, string>? Clients { get; set; }
 
     [Inject]
     [NotNull]
@@ -28,7 +27,7 @@ public partial class ClientList
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        Client = DictService.GetClients();
+        Clients = DictService.GetClients();
     }
 
     private async Task OnSaveClient()
@@ -36,47 +35,36 @@ public partial class ClientList
         Option = new DialogOption
         {
             Title = "添加前台应用",
-            BodyTemplate = BootstrapDynamicComponent.CreateComponent<ClientDialog>(new Dictionary<string, object?>
+            Component = BootstrapDynamicComponent.CreateComponent<ClientDialog>(new Dictionary<string, object?>
             {
-                [nameof(ClientDialog.OnSaveComplete)] = new Func<AppInfo, Task>(e => OnSave(e)),
+                [nameof(ClientDialog.OnSave)] = new Func<ClientApp, Task>(app => OnSave(app)),
                 [nameof(ClientDialog.OnClose)] = new Func<Task>(() => OnClose())
-            }).Render(),
+            }),
             ShowFooter = false,
         };
         await DialogService.Show(Option);
     }
 
-    private async Task OnEditClient(string appID, string appName)
+    private async Task OnEditClient(string appId)
     {
-        var frontapp = DictService.GetClientSettings(appID, appName);
-        var appInfo = new AppInfo()
-        {
-            AppID = appID,
-            AppName = appName,
-            Home = frontapp.homeurl,
-            WebTitle = frontapp.title,
-            WebFooter = frontapp.footer,
-            WebIcon = frontapp.icon,
-            Favicon = frontapp.favicon,
-        };
-
+        var client = DictService.GetClient(appId);
         Option = new DialogOption
         {
             Title = "编辑前台应用",
-            BodyTemplate = BootstrapDynamicComponent.CreateComponent<ClientDialog>(new Dictionary<string, object?>
+            Component = BootstrapDynamicComponent.CreateComponent<ClientDialog>(new Dictionary<string, object?>
             {
-                [nameof(ClientDialog.Value)] = appInfo,
-                [nameof(ClientDialog.OnSaveComplete)] = new Func<AppInfo, Task>(e => OnSave(e)),
+                [nameof(ClientDialog.Value)] = client,
+                [nameof(ClientDialog.OnSave)] = new Func<ClientApp, Task>(app => OnSave(app)),
                 [nameof(ClientDialog.OnClose)] = new Func<Task>(() => OnClose())
-            }).Render(),
+            }),
             ShowFooter = false,
         };
         await DialogService.Show(Option);
     }
 
-    private Task OnDeleteClient(string appID, string appName)
+    private Task OnDeleteClient(string appId)
     {
-        DictService.DeleteClient(appID, appName);
+        DictService.DeleteClient(appId);
         return Task.CompletedTask;
     }
 
@@ -85,9 +73,9 @@ public partial class ClientList
         await Option.Dialog.Close();
     }
 
-    private async Task OnSave(AppInfo Value)
+    private async Task OnSave(ClientApp app)
     {
-        DictService.SaveClient(Value.AppID, Value.AppName, Value.Home, Value.WebTitle, Value.WebFooter, Value.WebIcon, Value.Favicon);
+        DictService.SaveClient(app);
         await Option.Dialog.Close();
     }
 }

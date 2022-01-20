@@ -156,68 +156,6 @@ public class AppInfo
     /// <summary>
     /// 
     /// </summary>
-    [NotNull]
-    public Dictionary<string, string>? FrontApp { get; set; }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    [NotNull]
-    [Display(Name = "应用ID")]
-    [Required(ErrorMessage = "{0}不可为空")]
-    public string? AppID { get; set; }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    [NotNull]
-    [Display(Name = "应用名称")]
-    [Required(ErrorMessage = "{0}不可为空")]
-    public string? AppName { get; set; }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    [NotNull]
-    [Display(Name = "应用首页")]
-    [Required(ErrorMessage = "{0}不可为空")]
-    public string? Home { get; set; }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    [NotNull]
-    [Display(Name = "网站标题")]
-    [Required(ErrorMessage = "{0}不可为空")]
-    public string? WebTitle { get; set; }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    [NotNull]
-    [Display(Name = "网站页脚")]
-    [Required(ErrorMessage = "{0}不可为空")]
-    public string? WebFooter { get; set; }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    [NotNull]
-    [Display(Name = "网站图标")]
-    [Required(ErrorMessage = "{0}不可为空")]
-    public string? WebIcon { get; set; }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    [NotNull]
-    [Display(Name = "Favicon")]
-    [Required(ErrorMessage = "{0}不可为空")]
-    public string? Favicon { get; set; }
-
-    /// <summary>
-    /// 
-    /// </summary>
     [Display(Name = "授权码")]
     [Required(ErrorMessage = "{0}不可为空")]
     [NotNull]

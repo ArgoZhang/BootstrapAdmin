@@ -60,7 +60,9 @@ public partial class Settings
         AppInfo = new()
         {
             IsDemo = IsDemo,
+#if DEBUG
             AuthCode = "123789",
+#endif
             Title = DictService.GetWebTitle(),
             Footer = DictService.GetWebFooter(),
             Login = DictService.GetCurrentLogin(),

@@ -1,98 +1,40 @@
-﻿@using BootstrapAdmin.Web.Core;
-@using BootstrapAdmin.Web.Validators;
-
-<ValidateForm OnValidSubmit="OnSaveCleint" Model="Value">
+﻿<ValidateForm OnValidSubmit="OnSaveCleint" Model="Value">
     <div class="row g-3 form-inline">
         <div class="col-6 col-sm-6">
-            <BootstrapInput @bind-Value="Value.AppID" placeholder="不可为空，50字以内" Readonly="Value.AppID!=null" ValidateRules="@Validators"></BootstrapInput>
+            <BootstrapInput @bind-Value="Value.AppId" placeholder="不可为空，50字以内" Readonly="Value.AppId != null" ValidateRules="@Validators"></BootstrapInput>
         </div>
         <div class="col-6 col-sm-6">
-            <BootstrapInput @bind-Value="Value.AppName" placeholder="不可为空，50字以内" Readonly="Value.AppName!=null"></BootstrapInput>
+            <BootstrapInput @bind-Value="Value.AppName" placeholder="不可为空，50字以内" Readonly="Value.AppName != null"></BootstrapInput>
         </div>
         <div class="col-12 col-sm-12">
-            <BootstrapInput @bind-Value="Value.Home" placeholder="不可为空，50字以内"></BootstrapInput>
+            <BootstrapInput @bind-Value="Value.HomeUrl" placeholder="不可为空，50字以内"></BootstrapInput>
         </div>
         <div class="col-12 col-sm-12">
-            <BootstrapInput @bind-Value="Value.WebTitle" placeholder="不可为空，50字以内"></BootstrapInput>
+            <BootstrapInput @bind-Value="Value.ProfileUrl" placeholder="不可为空，50字以内"></BootstrapInput>
         </div>
         <div class="col-12 col-sm-12">
-            <BootstrapInput @bind-Value="Value.WebFooter" placeholder="不可为空，50字以内"></BootstrapInput>
+            <BootstrapInput @bind-Value="Value.SettingsUrl" placeholder="不可为空，50字以内"></BootstrapInput>
         </div>
         <div class="col-12 col-sm-12">
-            <BootstrapInput @bind-Value="Value.WebIcon" placeholder="不可为空，2000字以内"></BootstrapInput>
+            <BootstrapInput @bind-Value="Value.NotificationUrl" placeholder="不可为空，50字以内"></BootstrapInput>
+        </div>
+        <div class="col-12 col-sm-12">
+            <BootstrapInput @bind-Value="Value.Title" placeholder="不可为空，50字以内"></BootstrapInput>
+        </div>
+        <div class="col-12 col-sm-12">
+            <BootstrapInput @bind-Value="Value.Footer" placeholder="不可为空，50字以内"></BootstrapInput>
+        </div>
+        <div class="col-12 col-sm-12">
+            <BootstrapInput @bind-Value="Value.Icon" placeholder="不可为空，2000字以内"></BootstrapInput>
         </div>
         <div class="col-12 col-sm-12">
             <BootstrapInput @bind-Value="Value.Favicon" placeholder="不可为空，2000字以内"></BootstrapInput>
         </div>
-        <div class="col-12 col-sm-12 text-end">
-            <Button ButtonType="ButtonType.Submit" Text="保存" Icon="fa fa-save"></Button>
-            <Button ButtonType="ButtonType.Button" Text="关闭" Icon="fa fa-close" Color="Color.Secondary" OnClick="() => OnClose()"></Button>
+        <div class="col-12 col-sm-12">
+            <div class="table-modal-footer text-end">
+                <Button ButtonType="ButtonType.Button" Text="关闭" Icon="fa fa-close" Color="Color.Secondary" OnClick="OnClickClose"></Button>
+                <Button ButtonType="ButtonType.Submit" Text="保存" Icon="fa fa-save"></Button>
+            </div>
         </div>
     </div>
 </ValidateForm>
-
-@code{
-
-    /// <summary>
-    ///
-    /// </summary>
-    [NotNull]
-    [Parameter]
-    public AppInfo? Value { get; set; } = new();
-
-    /// <summary>
-    ///
-    /// </summary>
-    [Parameter]
-    public EventCallback<AppInfo>? ValueChanged { get; set; }
-
-    /// <summary>
-    ///
-    /// </summary>
-    [Parameter]
-    public Func<AppInfo, Task>? OnSaveComplete { get; set; }
-
-    /// <summary>
-    ///
-    /// </summary>
-    [Parameter]
-    [NotNull]
-    public Func<Task>? OnClose { get; set; }
-
-    [NotNull]
-    [Inject]
-    private IDict? DictService { get; set; }
-
-    private List<IValidator> Validators = new List<IValidator>();
-
-    protected override void OnInitialized()
-    {
-        base.OnInitialized();
-        if (Value?.AppID == null)
-        {
-            Validators.Add(new AppIdValidator(DictService));
-        }
-    }
-
-    private Task OnSaveCleint(EditContext context)
-    {
-
-        if (OnSaveComplete != null)
-        {
-            OnSaveComplete(Value);
-        }
-
-        return Task.CompletedTask;
-    }
-
-    private Task OnCloseDialog(EditContext context)
-    {
-
-        if (OnClose != null)
-        {
-            OnClose();
-        }
-
-        return Task.CompletedTask;
-    }
-}
