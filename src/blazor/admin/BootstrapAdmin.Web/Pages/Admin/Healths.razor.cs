@@ -29,12 +29,10 @@ public partial class Healths
     [NotNull]
     private DialogService? DialogService { get; set; }
 
-    [Inject]
-    [NotNull]
-    private BootstrapAdmin.Caching.ICacheManager? CacheManager { get; set; }
-
     [NotNull]
     private HttpClient? Client { get; set; }
+
+    private bool IsRunning { get; set; }
 
     /// <summary>
     /// 
@@ -45,6 +43,8 @@ public partial class Healths
 
         Client = HttpClientFactory.CreateClient();
         Client.BaseAddress = new Uri(NavigationManager.BaseUri);
+
+        IsRunning = true;
     }
 
     private async Task<QueryData<HealthCheckReportItem>> OnQueryAsync(QueryPageOptions options)
@@ -63,12 +63,15 @@ public partial class Healths
         Duration = report.Duration;
         Status = report.Status;
 
+        IsRunning = false;
         StateHasChanged();
         return ret;
     }
 
     private async Task OnCheck()
     {
+        IsRunning = true;
+        StateHasChanged();
         await HealthTable.ToggleLoading(true);
         await HealthTable.QueryAsync();
         await HealthTable.ToggleLoading(false);
@@ -76,7 +79,7 @@ public partial class Healths
 
     private static List<SelectedItem> GetNameLookup() => LookupHelper.GetCheckItems();
 
-    private string? GetTagText(HealthStatus? status = null) => (status ?? Status) switch
+    private string? GetTagText(HealthStatus? status = null) => IsRunning ? "检查中 ..." : (status ?? Status) switch
     {
         HealthStatus.Healthy => "健康",
         HealthStatus.Degraded => "亚健康",
