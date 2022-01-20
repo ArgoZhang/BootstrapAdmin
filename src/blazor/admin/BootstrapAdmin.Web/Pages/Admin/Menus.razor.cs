@@ -1,4 +1,5 @@
-﻿using BootstrapAdmin.DataAccess.Models;
+﻿using Bootstrap.Security.Blazor;
+using BootstrapAdmin.DataAccess.Models;
 using BootstrapAdmin.Web.Core;
 using BootstrapAdmin.Web.Extensions;
 using BootstrapAdmin.Web.Models;
@@ -36,6 +37,14 @@ public partial class Menus
     [NotNull]
     private BootstrapAppContext? AppContext { get; set; }
 
+    [Inject]
+    [NotNull]
+    private IBootstrapAdminService? AdminService { get; set; }
+
+    [Inject]
+    [NotNull]
+    private NavigationManager? NavigationManager { get; set; }
+
     [NotNull]
     private List<SelectedItem>? Targets { get; set; }
 
@@ -59,6 +68,12 @@ public partial class Menus
 
         ParementMenus = NavigationService.GetAllMenus(AppContext.UserName).Where(s => s.ParentId == "0").Select(s => new SelectedItem(s.Id, s.Name)).ToList();
         ParementMenus.Insert(0, new SelectedItem("0", "请选择"));
+    }
+
+    private bool AuthorizeButton(string operate)
+    {
+        var url = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+        return AdminService.AuhorizingBlock(AppContext.UserName, url, operate);
     }
 
     private async Task OnAssignmentRoles(DataAccess.Models.Navigation menu)
