@@ -282,13 +282,13 @@ public interface IDict
     /// 获得地理位置服务
     /// </summary>
     /// <returns></returns>
-    Dictionary<string, string> GetIps();
+    Dictionary<string, string> GetIpLocators();
 
     /// <summary>
     /// 获得当前地理位置服务
     /// </summary>
     /// <returns></returns>
-    string? GetCurrentIp();
+    string? GetIpLocator();
 
     /// <summary>
     /// 设置当前地理位置服务

@@ -23,7 +23,7 @@ public partial class Settings
     private List<SelectedItem>? Themes { get; set; }
 
     [NotNull]
-    private List<SelectedItem>? IPs { get; set; }
+    private List<SelectedItem>? IPLocators { get; set; }
 
     [Inject]
     [NotNull]
@@ -54,7 +54,9 @@ public partial class Settings
         IsDemo = DictService.IsDemo();
         Logins = DictService.GetLogins().ToSelectedItemList();
         Themes = DictService.GetThemes().ToSelectedItemList();
-        IPs = DictService.GetIps().ToSelectedItemList();
+        IPLocators = DictService.GetIpLocators().ToSelectedItemList();
+        IPLocators.Insert(0, new SelectedItem("", "未选择"));
+
         AppInfo = new()
         {
             IsDemo = IsDemo,
@@ -76,7 +78,8 @@ public partial class Settings
             LoginExpired = DictService.GetLoginExpired(),
             AccessExpired = DictService.GetAccessExpired(),
             CookieExpired = DictService.GetCookieExpiresPeriod(),
-            IPCacheExpired = DictService.GetIPCacheExpired()
+            IPCacheExpired = DictService.GetIPCacheExpired(),
+            IpLocator = DictService.GetIpLocator()
         };
     }
 
@@ -159,7 +162,7 @@ public partial class Settings
 
     private async Task SaveAdressInfo(EditContext context)
     {
-        var ret = DictService.SaveCurrentIp(AppInfo.Ip!);
+        var ret = DictService.SaveCurrentIp(AppInfo.IpLocator!);
         await ShowToast(ret, "地理位置");
     }
 

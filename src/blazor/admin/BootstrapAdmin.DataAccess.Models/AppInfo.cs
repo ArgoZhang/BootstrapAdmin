@@ -108,7 +108,8 @@ public class AppInfo
     /// <summary>
     /// 
     /// </summary>
-    public string? Ip { get; set; }
+    [Display(Name = "地理位置定位器")]
+    public string? IpLocator { get; set; }
 
     /// <summary>
     /// 
