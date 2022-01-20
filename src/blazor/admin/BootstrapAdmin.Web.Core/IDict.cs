@@ -390,17 +390,17 @@ public interface IDict
     /// 添加前台应用
     /// </summary>
     /// <returns></returns>
-    bool SaveClient(string appId, string AppName, string homeUrl, string title, string footer, string icon, string favicon);
+    bool SaveClient(ClientApp client);
 
     /// <summary>
     /// 获得前台应用配置
     /// </summary>
     /// <returns></returns>
-    (string homeurl, string title, string footer, string icon, string favicon) GetClientSettings(string appId, string AppName);
+    ClientApp GetClient(string appId);
 
     /// <summary>
     /// 删除前台应用配置
     /// </summary>
     /// <returns></returns>
-    bool DeleteClient(string appId, string AppName);
+    bool DeleteClient(string appId);
 }

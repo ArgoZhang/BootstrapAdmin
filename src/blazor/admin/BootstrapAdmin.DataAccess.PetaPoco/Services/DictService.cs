@@ -5,6 +5,7 @@ using BootstrapBlazor.Components;
 using Longbow.Security.Cryptography;
 using Microsoft.Extensions.Configuration;
 using PetaPoco;
+using System.Data.Common;
 
 namespace BootstrapAdmin.DataAccess.PetaPoco.Services;
 
@@ -408,76 +409,89 @@ class DictService : IDict
         return dicts.Exists(s => s.Category == "应用程序" && s.Code == appId);
     }
 
-    public bool SaveClient(string appId, string AppName, string homeUrl, string title, string footer, string icon, string favicon)
+    public bool SaveClient(ClientApp client)
     {
-        var items = new List<Dict>()
+        var ret = false;
+        if (!string.IsNullOrEmpty(client.AppId))
         {
-            new Dict { Category = "应用程序", Name = AppName, Code = appId, Define = EnumDictDefine.System },
-            new Dict { Category = AppName, Name = "网站页脚", Code = footer },
-            new Dict { Category = AppName, Name = "网站标题", Code = title },
-            new Dict { Category = AppName, Name = "favicon", Code = favicon },
-            new Dict { Category = AppName, Name = "网站图标", Code = icon },
-            new Dict { Category = "应用首页", Name = appId, Code = homeUrl },
-        };
-        var exist = ExistsAppId(appId);
-
-        if (exist)
-        {
+            DeleteClient(client.AppId);
             try
             {
                 Database.BeginTransaction();
-                Database.Execute("update Dicts set Code=@HomeUrl where Category=@Category and Name=@Name", new { HomeUrl = homeUrl, Category = AppName, Name = appId });
-                Database.Execute("update Dicts set Code=@Footer where Category=@Category and Name='网站页脚'", new { Footer = footer, Category = AppName });
-                Database.Execute("update Dicts set Code=@Title where Category=@Category and Name='网站标题'", new { Title = title, Category = AppName });
-                Database.Execute("update Dicts set Code=@Favicon where Category=@Category and Name='favicon'", new { Favicon = favicon, Category = AppName });
-                Database.Execute("update Dicts set Code=@Icon where Category=@Category and Name='网站图标'", new { Icon = icon, Category = AppName });
+                var items = new List<Dict>()
+                {
+                    new Dict { Category = "应用程序", Name = client.AppName, Code = client.AppId, Define = EnumDictDefine.System },
+                    new Dict { Category = "应用首页", Name = client.AppId, Code = client.HomeUrl, Define = EnumDictDefine.System },
+                    new Dict { Category = client.AppId, Name = "网站页脚", Code = client.Footer, Define = EnumDictDefine.Customer },
+                    new Dict { Category = client.AppId, Name = "网站标题", Code = client.Title, Define = EnumDictDefine.Customer },
+                    new Dict { Category = client.AppId, Name = "favicon", Code = client.Favicon, Define = EnumDictDefine.Customer },
+                    new Dict { Category = client.AppId, Name = "网站图标", Code = client.Icon, Define = EnumDictDefine.Customer },
+                    new Dict { Category = client.AppId, Name = "个人中心地址", Code = client.ProfileUrl, Define = EnumDictDefine.Customer },
+                    new Dict { Category = client.AppId, Name = "系统设置地址", Code = client.SettingsUrl, Define = EnumDictDefine.Customer },
+                    new Dict { Category = client.AppId, Name = "系统通知地址", Code = client.NotificationUrl, Define = EnumDictDefine.Customer }
+                };
+                Database.InsertBatch(items);
                 Database.CompleteTransaction();
+                ret = true;
             }
-            catch (Exception)
+            catch (DbException)
             {
                 Database.AbortTransaction();
                 throw;
             }
         }
-        else
-        {
-            Database.InsertBatch(items);
-        }
-        return true;
+        return ret;
     }
 
-    public (string homeurl, string title, string footer, string icon, string favicon) GetClientSettings(string appId, string AppName)
+    public ClientApp GetClient(string appId)
     {
         var dicts = GetAll();
-        var homeurl = dicts.FirstOrDefault(s => s.Category == "应用首页" && s.Name == appId)?.Code ?? "";
-        var title = dicts.FirstOrDefault(s => s.Category == AppName && s.Name == "网站标题")?.Code ?? "";
-        var footer = dicts.FirstOrDefault(s => s.Category == AppName && s.Name == "网站页脚")?.Code ?? "";
-        var icon = dicts.FirstOrDefault(s => s.Category == AppName && s.Name == "网站图标")?.Code ?? "";
-        var favicon = dicts.FirstOrDefault(s => s.Category == AppName && s.Name == "favicon")?.Code ?? "";
-
-        return (homeurl, title, footer, icon, favicon);
+        return new ClientApp()
+        {
+            AppId = appId,
+            AppName = dicts.FirstOrDefault(s => s.Category == "应用程序" && s.Code == appId)?.Name,
+            HomeUrl = dicts.FirstOrDefault(s => s.Category == "应用首页" && s.Name == appId)?.Code,
+            ProfileUrl = dicts.FirstOrDefault(s => s.Category == appId && s.Name == "个人中心地址")?.Code,
+            SettingsUrl = dicts.FirstOrDefault(s => s.Category == appId && s.Name == "系统设置地址")?.Code,
+            NotificationUrl = dicts.FirstOrDefault(s => s.Category == appId && s.Name == "系统通知地址")?.Code,
+            Title = dicts.FirstOrDefault(s => s.Category == appId && s.Name == "网站标题")?.Code,
+            Footer = dicts.FirstOrDefault(s => s.Category == appId && s.Name == "网站页脚")?.Code,
+            Icon = dicts.FirstOrDefault(s => s.Category == appId && s.Name == "网站图标")?.Code,
+            Favicon = dicts.FirstOrDefault(s => s.Category == appId && s.Name == "favicon")?.Code,
+        };
     }
 
-    public bool DeleteClient(string appId, string AppName)
+    public bool DeleteClient(string appId)
     {
+        var ret = false;
         try
         {
             Database.BeginTransaction();
-            Database.Execute("delete from dicts where Category='应用程序' and Name=@Name and Code=@Code", new { Name = AppName, Code = appId });
-            Database.Execute("delete from dicts where Category=@Category and Name='网站页脚'", new { Category = AppName });
-            Database.Execute("delete from dicts where Category=@Category and Name='网站页脚'", new { Category = AppName });
-            Database.Execute("delete from dicts where Category=@Category and Name='网站标题'", new { Category = AppName });
-            Database.Execute("delete from dicts where Category=@Category and Name='favicon'", new { Category = AppName });
-            Database.Execute("delete from dicts where Category=@Category and Name='网站图标'", new { Category = AppName });
+            Database.Execute("delete Dicts where Category=@0 and Name=@1 and Define=@2", "应用首页", appId, EnumDictDefine.System);
+            Database.Execute("delete Dicts where Category=@0 and Code=@1 and Define=@2", "应用程序", appId, EnumDictDefine.System);
+            Database.Execute("delete Dicts where Category=@Category and Name in (@Names)", new
+            {
+                Category = appId,
+                Names = new List<string>
+                {
+                    "网站标题",
+                    "网站页脚",
+                    "favicon",
+                    "网站图标",
+                    "个人中心地址",
+                    "系统设置地址",
+                    "系统通知地址"
+                }
+            });
             Database.CompleteTransaction();
+            ret = true;
         }
         catch (Exception)
         {
             Database.AbortTransaction();
             throw;
         }
-
-        return true;
+        return ret;
     }
 
     /// <summary>
