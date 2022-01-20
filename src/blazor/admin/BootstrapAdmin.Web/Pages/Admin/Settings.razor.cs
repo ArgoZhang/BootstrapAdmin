@@ -129,7 +129,7 @@ public partial class Settings
 
     private async Task OnSaveApp(EditContext context)
     {
-        var ret = DictService.SaveDemo(AppInfo.EnableDefaultApp);
+        var ret = DictService.SavDefaultApp(AppInfo.EnableDefaultApp);
         await ShowToast(ret, "默认应用");
     }
 
