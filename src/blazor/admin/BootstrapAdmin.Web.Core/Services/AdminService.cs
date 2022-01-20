@@ -1,6 +1,5 @@
 ﻿using Bootstrap.Security.Blazor;
 using BootstrapAdmin.DataAccess.Models;
-using Microsoft.AspNetCore.Components.Authorization;
 
 namespace BootstrapAdmin.Web.Core.Services;
 
@@ -66,7 +65,7 @@ public class AdminService : IBootstrapAdminService
             var menu = menus.FirstOrDefault(m => m.Url.Contains(url, StringComparison.OrdinalIgnoreCase));
             if (menu != null)
             {
-                ret = menus.FirstOrDefault(m => m.ParentId == menu.Id && m.IsResource == EnumResource.Block && m.Url.Equals(blockName, StringComparison.OrdinalIgnoreCase)) != null;
+                ret = menus.Any(m => m.ParentId == menu.Id && m.IsResource == EnumResource.Block && m.Url.Equals(blockName, StringComparison.OrdinalIgnoreCase));
             }
         }
         return ret;
