@@ -66,6 +66,7 @@ public partial class Settings
             TitleSetting = DictService.GetAppTitle(),
             FixHeaderSetting = DictService.GetAppFixHeader(),
             HealthCheckSetting = DictService.GetAppHealthCheck(),
+            EnableDefaultApp = DictService.GetEnableDefaultApp(),
             MobileLogin = DictService.GetAppMobileLogin(),
             OAuthLogin = DictService.GetAppOAuthLogin(),
             AutoLock = DictService.GetAutoLockScreen(),
