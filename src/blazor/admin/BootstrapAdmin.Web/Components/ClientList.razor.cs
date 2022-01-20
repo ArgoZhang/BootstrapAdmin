@@ -37,6 +37,7 @@ public partial class ClientList
             Title = "添加前台应用",
             Component = BootstrapDynamicComponent.CreateComponent<ClientDialog>(new Dictionary<string, object?>
             {
+                [nameof(ClientDialog.Value)] = new ClientApp(),
                 [nameof(ClientDialog.OnSave)] = new Func<ClientApp, Task>(app => OnSave(app)),
                 [nameof(ClientDialog.OnClose)] = new Func<Task>(() => OnClose())
             }),
@@ -68,10 +69,7 @@ public partial class ClientList
         return Task.CompletedTask;
     }
 
-    private async Task OnClose()
-    {
-        await Option.Dialog.Close();
-    }
+    private Task OnClose() => Option.Dialog.Close();
 
     private async Task OnSave(ClientApp app)
     {
