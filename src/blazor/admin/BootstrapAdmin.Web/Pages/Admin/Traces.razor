@@ -1,7 +1,21 @@
 ﻿@page "/admin/traces"
 
-<h3>Traces</h3>
-
-@code {
-
-}
+<AdminTable TItem="DataAccess.Models.Trace" IsPagination="true" PageItemsSource="PageItemsSource" SortList="SortList"
+            ShowDefaultButtons="false" ShowExtendButtons="false" CustomerSearchModel="TraceSearchModel"
+            OnQueryAsync="OnQueryAsync">
+    <TableColumns>
+        <TableColumn @bind-Field="context.UserName" Filterable="true" Searchable="true" Sortable="true"></TableColumn>
+        <TableColumn @bind-Field="context.LogTime" Filterable="true" Searchable="true" Sortable="true"></TableColumn>
+        <TableColumn @bind-Field="context.Ip" Filterable="true" Searchable="true" Sortable="true"></TableColumn>
+        <TableColumn @bind-Field="context.City" Filterable="true" Searchable="true" Sortable="true"></TableColumn>
+        <TableColumn @bind-Field="context.Browser" Filterable="true" Searchable="true" Sortable="true"></TableColumn>
+        <TableColumn @bind-Field="context.OS" Filterable="true" Searchable="true" Sortable="true"></TableColumn>
+        <TableColumn @bind-Field="context.RequestUrl" Filterable="true" Searchable="true" Sortable="true"></TableColumn>
+    </TableColumns>
+    <CustomerSearchTemplate>
+        @if (context is TraceSearchModel searchModel)
+        {
+            <TraceSearch @bind-Value="@searchModel"></TraceSearch>
+        }
+    </CustomerSearchTemplate>
+</AdminTable>

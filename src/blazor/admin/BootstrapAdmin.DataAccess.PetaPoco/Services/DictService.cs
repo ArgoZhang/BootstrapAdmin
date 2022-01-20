@@ -242,19 +242,11 @@ class DictService : IDict
     /// </summary>
     /// <param name="appId"></param>
     /// <returns></returns>
-    public string? GetHomeUrlByAppId(string? appId = null)
+    public string? GetHomeUrlByAppId(string appId)
     {
         string? url = null;
         var dicts = GetAll();
-
-        // 查看是否开启默认应用
-        var enableDefaultApp = GetEnableDefaultApp();
-        if (enableDefaultApp)
-        {
-            // appId 为空时读取前台列表取第一个应用作为默认应用
-            appId ??= GetApps().FirstOrDefault(d => d.Key != AppId).Key ?? AppId;
-            url = dicts.FirstOrDefault(d => d.Category == "应用首页" && d.Name.Equals(appId, StringComparison.OrdinalIgnoreCase) && d.Define == EnumDictDefine.System)?.Code;
-        }
+        url = dicts.FirstOrDefault(d => d.Category == "应用首页" && d.Name.Equals(appId, StringComparison.OrdinalIgnoreCase) && d.Define == EnumDictDefine.System)?.Code;
         return url;
     }
 
@@ -486,5 +478,26 @@ class DictService : IDict
         }
 
         return true;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public string? GetIpLocatorName()
+    {
+        var dicts = GetAll();
+        return dicts.FirstOrDefault(s => s.Category == "网站设置" && s.Name == "IP地理位置接口" && s.Define == EnumDictDefine.System)?.Code;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    public string? GetIpLocatorUrl(string? name)
+    {
+        var dicts = GetAll();
+        return string.IsNullOrWhiteSpace(name) ? null : dicts.FirstOrDefault(s => s.Category == "地理位置" && s.Name == name && s.Define == EnumDictDefine.System)?.Code;
     }
 }

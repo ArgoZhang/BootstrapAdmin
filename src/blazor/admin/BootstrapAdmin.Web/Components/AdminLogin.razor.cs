@@ -56,6 +56,13 @@ public partial class AdminLogin : IDisposable
     [NotNull]
     private WebClientService? WebClientService { get; set; }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    [Inject]
+    [NotNull]
+    private IIPLocatorProvider? IPLocatorProvider { get; set; }
+
     private string? ClassString => CssBuilder.Default("login-wrap")
         .AddClass("is-mobile", UseMobileLogin)
         .Build();
@@ -129,7 +136,12 @@ public partial class AdminLogin : IDisposable
     public async Task Log(string userName, bool result)
     {
         var clientInfo = await WebClientService.GetClientInfo();
-        LoginService.Log(userName, clientInfo.Ip, clientInfo.OS, clientInfo.Browser, clientInfo.City, clientInfo.UserAgent, result);
+        var city = "XX XX";
+        if (!string.IsNullOrEmpty(clientInfo.Ip))
+        {
+            city = await IPLocatorProvider.Locate(clientInfo.Ip);
+        }
+        LoginService.Log(userName, clientInfo.Ip, clientInfo.OS, clientInfo.Browser, city, clientInfo.UserAgent, result);
     }
 
     private void Dispose(bool disposing)

@@ -1,6 +1,7 @@
 ﻿using BootstrapAdmin.DataAccess.Models;
 using BootstrapAdmin.Web.Core;
 using BootstrapAdmin.Web.Extensions;
+using BootstrapAdmin.Web.Services;
 using BootstrapAdmin.Web.Validators;
 
 namespace BootstrapAdmin.Web.Pages.Admin;
@@ -29,6 +30,19 @@ public partial class Users
     [Inject]
     [NotNull]
     private IUser? UserService { get; set; }
+
+
+    [Inject]
+    [NotNull]
+    private INavigation? NavigationService { get; set; }
+
+    [Inject]
+    [NotNull]
+    private NavigationManager? NavigationManager { get; set; }
+
+    [Inject]
+    [NotNull]
+    private BootstrapAppContext? AppContext { get; set; }
 
     private static bool GetDisabled(string? id) => !string.IsNullOrEmpty(id);
 
@@ -70,5 +84,12 @@ public partial class Users
     private Task<bool> OnSaveAsync(User user, ItemChangedType itemChangedType)
     {
         return Task.FromResult(UserService.SaveUser(user.UserName, user.DisplayName, user.NewPassword));
+    }
+
+    private bool AuthorizeButton(string operate)
+    {
+        var url = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+
+        return NavigationService.AuthorizationBlock(url, AppContext.UserName, operate);
     }
 }

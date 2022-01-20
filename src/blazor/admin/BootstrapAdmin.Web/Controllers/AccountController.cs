@@ -1,6 +1,7 @@
 ﻿using BootstrapAdmin.Web.Core;
 using BootstrapAdmin.Web.Services;
 using BootstrapAdmin.Web.Services.SMS;
+using BootstrapAdmin.Web.Utils;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -28,10 +29,12 @@ namespace BootstrapAdmin.Web.Controllers
         /// <param name="remember">Remember.</param>
         /// <param name="returnUrl"></param>
         /// <param name="appId"></param>
+        /// <param name="context"></param>
         /// <param name="userService"></param>
         /// <param name="dictService"></param>
         [HttpPost]
         public async Task<IActionResult> Login(string userName, string password, [FromQuery] string? remember, [FromQuery] string? returnUrl, [FromQuery] string? appId,
+            [FromServices] BootstrapAppContext context,
             [FromServices] IUser userService,
             [FromServices] IDict dictService)
         {
@@ -48,7 +51,8 @@ namespace BootstrapAdmin.Web.Controllers
                 // Cookie 持久化
                 period = dictService.GetCookieExpiresPeriod();
             }
-            return auth ? await SignInAsync(userName, returnUrl ?? GetAppHomeUrl(dictService, appId), persistent, period) : RedirectLogin(returnUrl);
+
+            return auth ? await SignInAsync(userName, LoginHelper.GetDefaultUrl(userName, returnUrl, appId, context.AppId, userService, dictService), persistent, period) : RedirectLogin(returnUrl);
         }
 
         private async Task<IActionResult> SignInAsync(string userName, string returnUrl, bool persistent, int period = 0, string authenticationScheme = CookieAuthenticationDefaults.AuthenticationScheme)
@@ -69,14 +73,6 @@ namespace BootstrapAdmin.Web.Controllers
 
             return Redirect(returnUrl);
         }
-
-        /// <summary>
-        /// 通过 appId 获取设置的首页
-        /// </summary>
-        /// <param name="dictService"></param>
-        /// <param name="appId"></param>
-        /// <returns></returns>
-        private static string GetAppHomeUrl(IDict dictService, string? appId) => dictService.GetHomeUrlByAppId(appId) ?? "/Admin/Index";
 
         private IActionResult RedirectLogin(string? returnUrl = null)
         {
@@ -143,7 +139,7 @@ namespace BootstrapAdmin.Web.Controllers
             {
                 userService.TryCreateUserByPhone(phone, code, context.AppId, provider.Options.Roles);
             }
-            return auth ? await SignInAsync(phone, returnUrl ?? GetAppHomeUrl(dictService, appId), persistent, period, MobileSchema) : RedirectLogin(returnUrl);
+            return auth ? await SignInAsync(phone, LoginHelper.GetDefaultUrl(phone, returnUrl, appId, context.AppId, userService, dictService), persistent, period, MobileSchema) : RedirectLogin(returnUrl);
         }
 
         #endregion

@@ -4,13 +4,14 @@ using BootstrapAdmin.Web.Core;
 using BootstrapAdmin.Web.Extensions;
 using BootstrapAdmin.Web.Services;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components.Routing;
 
 namespace BootstrapAdmin.Web.Shared
 {
     /// <summary>
     /// MainLayout 布局类
     /// </summary>
-    public partial class MainLayout
+    public partial class MainLayout : IDisposable
     {
         private IEnumerable<MenuItem>? MenuItems { get; set; }
 
@@ -42,6 +43,29 @@ namespace BootstrapAdmin.Web.Shared
         [NotNull]
         private ToastService? ToastService { get; set; }
 
+        [Inject]
+        [NotNull]
+        private ITrace? TraceService { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Inject]
+        [NotNull]
+        private WebClientService? WebClientService { get; set; }
+
+        [Inject]
+        [NotNull]
+        private NavigationManager? NavigationManager { get; set; }
+
+        [Inject]
+        [NotNull]
+        private BootstrapAppContext? AppContext { get; set; }
+
+        [Inject]
+        [NotNull]
+        private IIPLocatorProvider? IPLocatorProvider { get; set; }
+
         private string? Title { get; set; }
 
         private string? Footer { get; set; }
@@ -56,6 +80,41 @@ namespace BootstrapAdmin.Web.Shared
 
         [NotNull]
         private string? Icon { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+
+            NavigationManager.LocationChanged += NavigationManager_LocationChanged;
+        }
+
+        private void NavigationManager_LocationChanged(object? sender, LocationChangedEventArgs e)
+        {
+            _ = Task.Run(async () =>
+            {
+                // TODO: 可考虑加入队列中，通过任务管理定时插入提高效率
+                var clientInfo = await WebClientService.GetClientInfo();
+                var city = "XX XX";
+                if (!string.IsNullOrEmpty(clientInfo.Ip))
+                {
+                    city = await IPLocatorProvider.Locate(clientInfo.Ip);
+                }
+                TraceService.Log(new Trace
+                {
+                    Browser = clientInfo.Browser,
+                    City = city,
+                    Ip = clientInfo.Ip,
+                    LogTime = DateTime.Now,
+                    OS = clientInfo.OS,
+                    UserAgent = clientInfo.UserAgent,
+                    RequestUrl = NavigationManager.ToBaseRelativePath(e.Location),
+                    UserName = AppContext.UserName
+                });
+            });
+        }
 
         /// <summary>
         /// OnInitializedAsync 方法
@@ -92,6 +151,24 @@ namespace BootstrapAdmin.Web.Shared
             await ToastService.Error(Title, ex.Message);
 
             logger.LogError(ex, "ErrorLogger");
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                NavigationManager.LocationChanged -= NavigationManager_LocationChanged;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <exception cref="NotImplementedException"></exception>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }

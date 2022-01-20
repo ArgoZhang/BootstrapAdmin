@@ -1,5 +1,7 @@
 ﻿using BootstrapBlazor.Components;
 using BootstrapClient.DataAccess.PetaPoco;
+using BootstrapClient.DataAccess.PetaPoco.Services;
+using BootstrapClient.Web.Core;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
@@ -63,13 +65,13 @@ public static class ServiceCollectionExtensions
 
         //// 增加业务服务
         //services.AddSingleton<IApp, AppService>();
-        //services.AddSingleton<IDict, DictService>();
+        services.AddSingleton<IDict, DictService>();
         //services.AddSingleton<IException, ExceptionService>();
         //services.AddSingleton<IGroup, GroupService>();
         //services.AddSingleton<ILogin, LoginService>();
-        //services.AddSingleton<INavigation, NavigationService>();
+        services.AddSingleton<INavigation, NavigationService>();
         //services.AddSingleton<IRole, RoleService>();
-        //services.AddSingleton<IUser, UserService>();
+        services.AddSingleton<IUser, UserService>();
         return services;
     }
 }

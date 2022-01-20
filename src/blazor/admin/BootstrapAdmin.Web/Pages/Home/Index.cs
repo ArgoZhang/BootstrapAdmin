@@ -1,5 +1,6 @@
 ﻿using BootstrapAdmin.Web.Core;
 using BootstrapAdmin.Web.Services;
+using BootstrapAdmin.Web.Utils;
 using Microsoft.AspNetCore.Authorization;
 
 namespace BootstrapAdmin.Web.Pages.Home;
@@ -37,8 +38,8 @@ public class Index : ComponentBase
     /// </summary>
     protected override void OnInitialized()
     {
-        var appId = UsersService.GetAppIdByUserName(Context.UserName);
-        Url = DictsService.GetHomeUrlByAppId(appId) ?? "/Admin/Index";
+        // 查看是否自定义前台
+        Url = LoginHelper.GetDefaultUrl(Context.UserName, null, null, Context.AppId, UsersService, DictsService);
 
 #if !DEBUG
         Navigation.NavigateTo(Url, true);

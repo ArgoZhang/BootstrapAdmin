@@ -1,4 +1,6 @@
-﻿using BootstrapAdmin.Web.Models;
+﻿using BootstrapAdmin.Web.Core;
+using BootstrapAdmin.Web.Models;
+using BootstrapAdmin.Web.Services;
 
 namespace BootstrapAdmin.Web.Components
 {
@@ -189,5 +191,24 @@ namespace BootstrapAdmin.Web.Components
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
         public Task QueryAsync() => Instance.QueryAsync();
+
+        [Inject]
+        [NotNull]
+        private INavigation? NavigationService { get; set; }
+
+        [Inject]
+        [NotNull]
+        private NavigationManager? NavigationManager { get; set; }
+
+        [Inject]
+        [NotNull]
+        private BootstrapAppContext? AppContext { get; set; }
+
+        private bool AuthorizeButton(string operate)
+        {
+            var url = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+
+            return NavigationService.AuthorizationBlock(url, AppContext.UserName, operate);
+        }
     }
 }
