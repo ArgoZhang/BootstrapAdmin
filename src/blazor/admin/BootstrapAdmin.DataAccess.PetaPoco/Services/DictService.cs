@@ -242,19 +242,11 @@ class DictService : IDict
     /// </summary>
     /// <param name="appId"></param>
     /// <returns></returns>
-    public string? GetHomeUrlByAppId(string? appId = null)
+    public string? GetHomeUrlByAppId(string appId)
     {
         string? url = null;
         var dicts = GetAll();
-
-        // 查看是否开启默认应用
-        var enableDefaultApp = GetEnableDefaultApp();
-        if (enableDefaultApp)
-        {
-            // appId 为空时读取前台列表取第一个应用作为默认应用
-            appId ??= GetApps().FirstOrDefault(d => d.Key != AppId).Key ?? AppId;
-            url = dicts.FirstOrDefault(d => d.Category == "应用首页" && d.Name.Equals(appId, StringComparison.OrdinalIgnoreCase) && d.Define == EnumDictDefine.System)?.Code;
-        }
+        url = dicts.FirstOrDefault(d => d.Category == "应用首页" && d.Name.Equals(appId, StringComparison.OrdinalIgnoreCase) && d.Define == EnumDictDefine.System)?.Code;
         return url;
     }
 

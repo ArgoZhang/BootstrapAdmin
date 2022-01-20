@@ -174,7 +174,7 @@ public interface IDict
     /// </summary>
     /// <param name="appId"></param>
     /// <returns></returns>
-    string? GetHomeUrlByAppId(string? appId = null);
+    string? GetHomeUrlByAppId(string appId);
 
     /// <summary>
     /// 是否开启默认应用
