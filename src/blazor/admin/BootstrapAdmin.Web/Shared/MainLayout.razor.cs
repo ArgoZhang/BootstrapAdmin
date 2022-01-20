@@ -144,7 +144,7 @@ namespace BootstrapAdmin.Web.Shared
             LockInterval = Convert.ToInt32(DictsService.GetAutoLockScreenInterval());
         }
 
-        private Task<bool> OnAuthorizing(string url) => SecurityService.AuhorizingNavigation(Context.UserName, url);
+        private Task<bool> OnAuthorizing(string url) => SecurityService.AuhorizingNavigation(Context.UserName, NavigationManager.ToBaseRelativePath(url));
 
         private async Task OnErrorHandleAsync(ILogger logger, Exception ex)
         {

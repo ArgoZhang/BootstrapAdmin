@@ -1,5 +1,6 @@
-﻿using BootstrapAdmin.Web.Core;
+﻿using Bootstrap.Security.Blazor;
 using BootstrapAdmin.Web.Services;
+using Microsoft.AspNetCore.Components.Authorization;
 
 namespace BootstrapAdmin.Web.Components
 {
@@ -30,7 +31,7 @@ namespace BootstrapAdmin.Web.Components
 
         [Inject]
         [NotNull]
-        private INavigation? NavigationService { get; set; }
+        private IBootstrapAdminService? AdminService { get; set; }
 
         [Inject]
         [NotNull]
@@ -43,8 +44,7 @@ namespace BootstrapAdmin.Web.Components
         private Task<bool> OnQueryCondition(string name)
         {
             var url = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
-
-            return Task.FromResult(NavigationService.AuthorizationBlock(AppContext.UserName, url, name));
+            return Task.FromResult(AdminService.AuhorizingBlock(AppContext.UserName, url, name));
         }
     }
 }

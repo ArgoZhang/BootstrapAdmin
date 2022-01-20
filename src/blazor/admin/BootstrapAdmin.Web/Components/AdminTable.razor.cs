@@ -1,5 +1,5 @@
-﻿using BootstrapAdmin.Web.Core;
-using BootstrapAdmin.Web.Models;
+﻿using Bootstrap.Security.Blazor;
+using BootstrapAdmin.Web.Core.Services;
 using BootstrapAdmin.Web.Services;
 
 namespace BootstrapAdmin.Web.Components
@@ -194,7 +194,7 @@ namespace BootstrapAdmin.Web.Components
 
         [Inject]
         [NotNull]
-        private INavigation? NavigationService { get; set; }
+        private IBootstrapAdminService? AdminService { get; set; }
 
         [Inject]
         [NotNull]
@@ -207,8 +207,7 @@ namespace BootstrapAdmin.Web.Components
         private bool AuthorizeButton(string operate)
         {
             var url = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
-
-            return NavigationService.AuthorizationBlock(url, AppContext.UserName, operate);
+            return AdminService.AuhorizingBlock(AppContext.UserName, url, operate);
         }
     }
 }

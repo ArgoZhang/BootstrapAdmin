@@ -67,21 +67,4 @@ class NavigationService : INavigation
         }
         return ret;
     }
-
-    public bool AuthorizationBlock(string userName, string url, string authKey)
-    {
-        var menus = GetAllMenus(userName);
-
-        var activeMeun = menus.FirstOrDefault(s => s.Url.Equals($"~/{url}", StringComparison.OrdinalIgnoreCase));
-        if (activeMeun == null)
-        {
-            return false;
-        }
-
-        IEnumerable<string> authorKeys = from m in menus
-                                         where m.ParentId == activeMeun.Id && m.IsResource == EnumResource.Block
-                                         select m.Url;
-
-        return authorKeys.Any(s => s.Equals(authKey, StringComparison.OrdinalIgnoreCase));
-    }
 }

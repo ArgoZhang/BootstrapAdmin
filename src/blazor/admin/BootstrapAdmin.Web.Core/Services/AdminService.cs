@@ -1,4 +1,6 @@
 ﻿using Bootstrap.Security.Blazor;
+using BootstrapAdmin.DataAccess.Models;
+using Microsoft.AspNetCore.Components.Authorization;
 
 namespace BootstrapAdmin.Web.Core.Services;
 
@@ -44,12 +46,29 @@ public class AdminService : IBootstrapAdminService
     /// <returns></returns>
     public Task<bool> AuhorizingNavigation(string userName, string url)
     {
-        var ret = false;
-        if (Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out var uri))
-        {
-            ret = Navigations.GetAllMenus(userName)
-                .Any(m => m.Url.Contains(uri.AbsolutePath, StringComparison.OrdinalIgnoreCase));
-        }
+        var ret = Navigations.GetAllMenus(userName).Any(m => m.Url.Contains(url, StringComparison.OrdinalIgnoreCase));
         return Task.FromResult(ret);
+    }
+
+    /// <summary>
+    /// 通过用户名检查当前请求 Url 是否已授权方法
+    /// </summary>
+    /// <param name="userName"></param>
+    /// <param name="url"></param>
+    /// <param name="blockName"></param>
+    /// <returns></returns>
+    public bool AuhorizingBlock(string userName, string url, string blockName)
+    {
+        var ret = User.GetRoles(userName).Any(i => i.Equals("Administrators", StringComparison.OrdinalIgnoreCase));
+        if (!ret)
+        {
+            var menus = Navigations.GetAllMenus(userName);
+            var menu = menus.FirstOrDefault(m => m.Url.Contains(url, StringComparison.OrdinalIgnoreCase));
+            if (menu != null)
+            {
+                ret = menus.FirstOrDefault(m => m.ParentId == menu.Id && m.IsResource == EnumResource.Block && m.Url.Equals(blockName, StringComparison.OrdinalIgnoreCase)) != null;
+            }
+        }
+        return ret;
     }
 }
