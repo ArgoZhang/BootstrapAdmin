@@ -33,7 +33,23 @@
         </ValidateForm>
     </AdminCard>
 
-    <AdminCard HeaderText="后台管理登录地址设置" AuthorizeKey="SaveLogin">
+    <AdminCard HeaderText="网站样式设置" AuthorizeKey="SaveTheme">
+        <AdminAlert Color="Color.Info">
+            <span>注意：本设置将覆盖 <b><TabLink Url="/Admin/Profiles" Text="个人中心" Icon="fa fa-fa">个人中心</TabLink></b> 中设置的网站样式覆盖本设置</span>
+        </AdminAlert>
+        <ValidateForm OnValidSubmit="OnSaveTheme" Model="AppInfo">
+            <div class="row g-3 form-inline">
+                <div class="col-12 col-sm-6">
+                    <Dropdown Items="Themes" @bind-Value="AppInfo.Theme" />
+                </div>
+                <div class="col-12 col-sm-6 text-end">
+                    <Button ButtonType="ButtonType.Submit" Icon="fa fa-save" Text="保存" />
+                </div>
+            </div>
+        </ValidateForm>
+    </AdminCard>
+
+    <AdminCard HeaderText="后台登录首页设置" AuthorizeKey="SaveLogin">
         <AdminAlert Text="通过此功能进行整个网站的登录界面设置" Color="Color.Info" />
         <ValidateForm OnValidSubmit="OnSaveLogin" Model="AppInfo">
             <div class="row g-3 form-inline">
@@ -50,22 +66,6 @@
     <AdminCard HeaderText="前台应用设置" AuthorizeKey="SaveFrontApp">
         <AdminAlert Text="演示系统禁止更改前台应用设置" IsShow="IsDemo" />
         <ClientList />
-    </AdminCard>
-
-    <AdminCard HeaderText="网站样式设置" AuthorizeKey="SaveTheme">
-        <AdminAlert Color="Color.Info">
-            <span>注意：本设置将覆盖 <b><TabLink Url="/Admin/Profiles" Text="个人中心" Icon="fa fa-fa">个人中心</TabLink></b> 中设置的网站样式覆盖本设置</span>
-        </AdminAlert>
-        <ValidateForm OnValidSubmit="OnSaveTheme" Model="AppInfo">
-            <div class="row g-3 form-inline">
-                <div class="col-12 col-sm-6">
-                    <Dropdown Items="Themes" @bind-Value="AppInfo.Theme" />
-                </div>
-                <div class="col-12 col-sm-6 text-end">
-                    <Button ButtonType="ButtonType.Submit" Icon="fa fa-save" Text="保存" />
-                </div>
-            </div>
-        </ValidateForm>
     </AdminCard>
 
     <AdminCard HeaderText="网站功能设置" AuthorizeKey="SaveAppFeatures">
@@ -140,7 +140,7 @@
         <ValidateForm OnValidSubmit="SaveAdressInfo" Model="AppInfo">
             <div class="row g-3 form-inline">
                 <div class="col-6 col-sm-6">
-                    <Dropdown Items="@IPLocators" @bind-Value="AppInfo.IpLocator" ShowLabel="false"></Dropdown>
+                    <Dropdown Items="@IPLocators" @bind-Value="AppInfo.IpLocator" ShowLabel="true"></Dropdown>
                 </div>
                 <div class="col-6 col-sm-6 text-end">
                     <Button ButtonType="ButtonType.Submit" Icon="fa fa-save" Text="保存" />
