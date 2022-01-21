@@ -1,7 +1,7 @@
 ﻿@page "/admin/logins"
 
-<AdminTable TItem="LoginLog" IsPagination="true" CustomerSearchModel="@TableSearchModel"
-            ShowDefaultButtons="false" ShowExtendButtons="false" IsFixedHeader="false">
+<AdminTable TItem="LoginLog" IsPagination="true" CustomerSearchModel="@TableSearchModel" SortList="SortList"
+            ShowDefaultButtons="false" ShowExtendButtons="false">
     <TableColumns>
         <TableColumn @bind-Field="@context.UserName" Filterable="true" Searchable="true"></TableColumn>
         <TableColumn @bind-Field="@context.LoginTime" Filterable="true"></TableColumn>
