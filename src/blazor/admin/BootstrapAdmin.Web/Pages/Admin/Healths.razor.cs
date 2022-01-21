@@ -71,6 +71,7 @@ public partial class Healths
     private async Task OnCheck()
     {
         IsRunning = true;
+        Duration = TimeSpan.Zero;
         StateHasChanged();
         await HealthTable.ToggleLoading(true);
         await HealthTable.QueryAsync();
@@ -86,14 +87,14 @@ public partial class Healths
         _ => "不健康"
     };
 
-    private Color GetTagColor(HealthStatus? status = null) => (status ?? Status) switch
+    private Color GetTagColor(HealthStatus? status = null) => IsRunning ? Color.Success : (status ?? Status) switch
     {
         HealthStatus.Healthy => Color.Success,
         HealthStatus.Degraded => Color.Warning,
         _ => Color.Danger
     };
 
-    private string? GetTagIcon(HealthStatus? status = null) => (status ?? Status) switch
+    private string? GetTagIcon(HealthStatus? status = null) => IsRunning ? "fa fa-fw fa-spin fa-spinner" : (status ?? Status) switch
     {
         HealthStatus.Healthy => "fa fa-check-circle",
         HealthStatus.Degraded => "fa fa-exclamation-circle",
