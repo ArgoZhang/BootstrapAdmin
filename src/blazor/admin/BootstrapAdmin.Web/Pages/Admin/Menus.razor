@@ -13,7 +13,7 @@
         <TableColumn @bind-Field="@context.Order" Width="50"></TableColumn>
         <TableColumn @bind-Field="@context.Icon" Width="50" Align="Alignment.Center">
             <Template Context="v">
-                <i class="text-info @v.Value"></i>
+                <i class="text-info cell-icon @v.Value"></i>
             </Template>
         </TableColumn>
         <TableColumn @bind-Field="@context.Url"></TableColumn>
