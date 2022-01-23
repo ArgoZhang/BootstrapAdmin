@@ -32,7 +32,7 @@ public static class MenuExtensions
     /// 获取前台菜单
     /// </summary>
     /// <returns></returns>
-    public static IEnumerable<MenuItem> ToClientMenus(this List<Navigation> navigations)
+    public static IEnumerable<MenuItem> ToMenus(this IEnumerable<Navigation> navigations)
     {
         var menus = navigations.Where(m => m.IsResource == 0);
         return CascadeMenus(menus);
