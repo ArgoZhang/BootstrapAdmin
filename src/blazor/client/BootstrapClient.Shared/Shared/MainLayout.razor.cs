@@ -2,10 +2,10 @@
 using BootstrapBlazor.Components;
 using BootstrapClient.Web.Core;
 using BootstrapClient.Web.Shared.Extensions;
+using BootstrapClient.Web.Shared.Services;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 
 namespace BootstrapClient.Web.Shared.Shared;
@@ -37,21 +37,9 @@ public sealed partial class MainLayout
 
     private string? NotificationUrl { get; set; }
 
-    /// <summary>
-    /// 获得 当前用户登录显示名称
-    /// </summary>
-    [NotNull]
-    public string? DisplayName { get; private set; }
-
     private string? Title { get; set; }
 
     private string? Footer { get; set; }
-
-    /// <summary>
-    /// 获得 当前用户登录名
-    /// </summary>
-    [NotNull]
-    public string? UserName { get; private set; }
 
     [Inject]
     [NotNull]
@@ -83,9 +71,7 @@ public sealed partial class MainLayout
 
     [Inject]
     [NotNull]
-    private IConfiguration? Configuration { get; set; }
-
-    private string? AppId { get; set; }
+    private BootstrapAppContext? Context { get; set; }
 
     /// <summary>
     /// OnInitialized 方法
@@ -94,10 +80,9 @@ public sealed partial class MainLayout
     {
         base.OnInitialized();
 
-        AppId = Configuration.GetValue("AppId", "Blazor");
-        ProfileUrl = CombinePath(DictsService.GetProfileUrl(AppId));
-        SettingsUrl = CombinePath(DictsService.GetSettingsUrl(AppId));
-        NotificationUrl = CombinePath(DictsService.GetNotificationUrl(AppId));
+        ProfileUrl = CombinePath(DictsService.GetProfileUrl(Context.AppId));
+        SettingsUrl = CombinePath(DictsService.GetSettingsUrl(Context.AppId));
+        NotificationUrl = CombinePath(DictsService.GetNotificationUrl(Context.AppId));
     }
 
     private string CombinePath(string? url)
@@ -117,12 +102,12 @@ public sealed partial class MainLayout
 
         if (!string.IsNullOrEmpty(userName))
         {
-            UserName = userName;
+            Context.UserName = userName;
             var user = UsersService.GetUserByUserName(userName);
 
-            MenuItems = NavigationsService.GetMenus(userName).ToClientMenus();
+            MenuItems = NavigationsService.GetMenus(userName).Where(i => i.Application == Context.AppId).ToMenus();
 
-            DisplayName = user?.DisplayName ?? "未注册账户";
+            Context.DisplayName = user?.DisplayName ?? "未注册账户";
             Title = DictsService.GetWebTitle();
             Footer = DictsService.GetWebFooter();
         }
@@ -130,10 +115,10 @@ public sealed partial class MainLayout
 
     private Task<bool> OnAuthorizing(string url)
     {
-        return SecurityService.AuhorizingNavigation(UserName, url);
+        return SecurityService.AuhorizingNavigation(Context.UserName, url);
     }
 
-    private string LogoutUrl => CombinePath($"/Account/Logout?AppId={AppId}");
+    private string LogoutUrl => CombinePath($"/Account/Logout?AppId={Context.AppId}");
 
-    private string AuthorUrl => CombinePath($"/Account/Login?ReturnUrl={NavigationManager.Uri}&AppId={AppId}");
+    private string AuthorUrl => CombinePath($"/Account/Login?ReturnUrl={NavigationManager.Uri}&AppId={Context.AppId}");
 }

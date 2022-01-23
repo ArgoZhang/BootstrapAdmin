@@ -1,4 +1,5 @@
 ﻿using BootstrapClient.Web.Core.Services;
+using BootstrapClient.Web.Shared.Services;
 using PetaPoco;
 using PetaPoco.Providers;
 
@@ -23,6 +24,9 @@ namespace Microsoft.Extensions.DependencyInjection
 
             // 增加认证授权服务
             services.AddBootstrapAdminSecurity<AdminService>();
+
+            // 增加 BootstrapApp 上下文服务
+            services.AddScoped<BootstrapAppContext>();
 
             // 增加 PetaPoco 数据服务
             services.AddPetaPocoDataAccessServices((provider, builder) =>

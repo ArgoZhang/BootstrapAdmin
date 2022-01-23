@@ -8,7 +8,7 @@
     <Header>
         <span class="ml-3 flex-sm-fill d-none d-sm-block">Bootstrap of Blazor</span>
         <Widget></Widget>
-        <Logout ImageUrl="_content/BootstrapClient.Web.Shared/images/Argo.png" DisplayName="@DisplayName" UserName="@UserName">
+        <Logout ImageUrl="_content/BootstrapClient.Web.Shared/images/Argo.png" DisplayName="@Context.DisplayName" UserName="@Context.UserName">
             <LinkTemplate>
                 <a href="@ProfileUrl"><i class="fa fa-suitcase"></i>个人中心</a>
                 <a href="@SettingsUrl"><i class="fa fa-cog"></i>设置</a>
@@ -28,7 +28,7 @@
         <div class="layout-user">
             <img class="layout-avatar" src="_content/BootstrapClient.Web.Shared/images/Argo-C.png">
             <div class="layout-title">
-                <span>@DisplayName</span>
+                <span>@Context.DisplayName</span>
             </div>
             <div class="layout-user-state"></div>
         </div>
