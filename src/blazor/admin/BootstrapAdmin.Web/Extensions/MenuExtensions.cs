@@ -16,7 +16,7 @@ namespace BootstrapAdmin.Web.Extensions
         public static MenuItem Parse(this DataAccess.Models.Navigation menu) => new()
         {
             Text = menu.Name,
-            Url = menu.Url.Replace("~", ""),
+            Url = menu.Url.Replace("~/", "/"),
             Icon = menu.Icon,
             Match = NavLinkMatch.All,
             Target = menu.Target,
@@ -25,20 +25,10 @@ namespace BootstrapAdmin.Web.Extensions
         };
 
         /// <summary>
-        /// 获取前台菜单
-        /// </summary>
-        /// <returns></returns>
-        public static IEnumerable<MenuItem> ToClientMenus(this List<Navigation> navigations)
-        {
-            var menus = navigations.Where(m => m.Category == EnumNavigationCategory.Customer && m.IsResource == 0);
-            return CascadeMenus(menus);
-        }
-
-        /// <summary>
         /// 获取后台管理菜单
         /// </summary>
         /// <returns></returns>
-        public static IEnumerable<MenuItem> ToAdminMenus(this List<Navigation> navigations)
+        public static IEnumerable<MenuItem> ToMenus(this IEnumerable<Navigation> navigations)
         {
             var menus = navigations.Where(m => m.Category == EnumNavigationCategory.System && m.IsResource == 0);
             return CascadeMenus(menus);
@@ -52,9 +42,9 @@ namespace BootstrapAdmin.Web.Extensions
         public static IEnumerable<MenuItem> CascadeMenus(IEnumerable<Navigation> navigations)
         {
             var root = navigations.Where(m => m.ParentId == "0")
-                            .OrderBy(m => m.Category).ThenBy(m => m.Application).ThenBy(m => m.Order)
-                            .Select(m => m.Parse())
-                            .ToList();
+                .OrderBy(m => m.Category).ThenBy(m => m.Application).ThenBy(m => m.Order)
+                .Select(m => m.Parse())
+                .ToList();
             CascadeMenus(navigations, root);
             return root;
         }

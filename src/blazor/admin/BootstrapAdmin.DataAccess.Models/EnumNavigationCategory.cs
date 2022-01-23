@@ -10,12 +10,12 @@ public enum EnumNavigationCategory
     /// <summary>
     /// 系统使用
     /// </summary>
-    [Description("系统使用")]
+    [Description("后台菜单")]
     System,
 
     /// <summary>
     /// 用户自定义
     /// </summary>
-    [Description("自定义")]
+    [Description("前台菜单")]
     Customer
 }

@@ -133,7 +133,7 @@ namespace BootstrapAdmin.Web.Shared
                 Context.DisplayName = DisplayName;
                 Icon = string.IsNullOrEmpty(user?.Icon) ? "/images/uploader/default.jpg" : GetIcon(user.Icon);
 
-                MenuItems = NavigationsService.GetAllMenus(UserName).ToAdminMenus();
+                MenuItems = NavigationsService.GetAllMenus(UserName).ToMenus();
             }
 
             Title = DictsService.GetWebTitle();
