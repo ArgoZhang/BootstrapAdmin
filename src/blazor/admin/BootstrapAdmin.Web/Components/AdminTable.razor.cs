@@ -26,7 +26,7 @@ namespace BootstrapAdmin.Web.Components
         /// 
         /// </summary>
         [Parameter]
-        public List<string>? SortList { get; set; }
+        public string? SortString { get; set; }
 
         /// <summary>
         /// 

@@ -7,8 +7,6 @@ namespace BootstrapAdmin.Web.Pages.Admin
     /// </summary>
     public partial class Dicts
     {
-        private ITableSearchModel DictsSearchModel { get; set; } = new DictsSearchModel();
-
-        private List<string> SortList { get; } = new List<string> { "Define", "Category", "Name" };
+        private ITableSearchModel DictsSearchModel { get; } = new DictsSearchModel();
     }
 }

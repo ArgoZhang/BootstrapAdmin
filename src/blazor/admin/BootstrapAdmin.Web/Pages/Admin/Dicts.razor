@@ -1,6 +1,6 @@
 ﻿@page "/Admin/Dicts"
 
-<AdminTable TItem="DataAccess.Models.Dict" CustomerSearchModel="DictsSearchModel" SortList="SortList">
+<AdminTable TItem="DataAccess.Models.Dict" CustomerSearchModel="DictsSearchModel" SortString="Define, Category, Name">
     <TableColumns>
         <TableColumn @bind-Field="context.Category" Filterable="true" Searchable="true" Sortable="true"></TableColumn>
         <TableColumn @bind-Field="context.Name" Filterable="true" Searchable="true" Sortable="true"></TableColumn>

@@ -11,9 +11,7 @@ public partial class Traces
 {
     private List<int> PageItemsSource { get; } = new List<int> { 20, 40, 80, 100, 200 };
 
-    private TraceSearchModel TraceSearchModel { get; set; } = new();
-
-    private List<string> SortList { get; } = new() { "LogTime desc" };
+    private TraceSearchModel TraceSearchModel { get; } = new();
 
     [Inject]
     [NotNull]

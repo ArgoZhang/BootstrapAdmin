@@ -30,8 +30,6 @@ public partial class Tasks
 
     private bool IsDemo { get; set; }
 
-    private List<string> SortList { get; } = new List<string>() { "Name", "LastRuntime desc" };
-
     /// <summary>
     /// 
     /// </summary>
@@ -45,6 +43,10 @@ public partial class Tasks
     private Task<QueryData<TasksModel>> OnQueryAsync(QueryPageOptions options)
     {
         var tasks = TaskServicesManager.ToList().ToTasksModelList();
+        if (options.SortList != null && options.SortList.Any())
+        {
+            tasks = tasks.Sort(options.SortList).ToList();
+        }
         var model = tasks.FirstOrDefault(i => i.Name == SelectedRows.FirstOrDefault()?.Name);
         SelectedRows.Clear();
         if (model != null)
@@ -83,7 +85,7 @@ public partial class Tasks
         return Task.FromResult(true);
     }
 
-    private bool OnShowButtonCallback(TasksModel model) => !IsDemo || !Jobs.Any(i => i == model.Name);
+    private bool OnShowButtonCallback(TasksModel model) => !IsDemo && !Jobs.Any(i => i == model.Name);
 
     private static Color GetResultColor(TriggerResult result) => result switch
     {
@@ -122,7 +124,8 @@ public partial class Tasks
     private static string GetStatusIcon(SchedulerStatus status) => status switch
     {
         SchedulerStatus.Running => "fa fa-play-circle",
-        SchedulerStatus.Ready => "fa fa-times-circle",
+        SchedulerStatus.Ready => "fa fa-stop-circle",
+        SchedulerStatus.Disabled => "fa fa-times-circle",
         _ => "未知状态"
     };
 

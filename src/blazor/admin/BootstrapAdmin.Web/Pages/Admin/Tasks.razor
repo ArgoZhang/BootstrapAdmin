@@ -31,10 +31,10 @@
 
     <AdminAlert Text="演示系统禁止修改内置后台任务" IsShow="IsDemo" />
 
-    <AdminTable TItem="TasksModel" ExtendButtonColumnWidth="270" IsFixedHeader="false" SortList="SortList"
-           SelectedRows="SelectedRows" 
-           ShowEditButtonCallback="OnShowButtonCallback" ShowDeleteButtonCallback="OnShowButtonCallback"
-           OnQueryAsync="OnQueryAsync" OnDeleteAsync="OnDeleteAsync" OnSaveAsync="OnSaveAsync">
+    <AdminTable TItem="TasksModel" ExtendButtonColumnWidth="270" IsFixedHeader="false" SortString="Status, LastRuntime desc"
+                SelectedRows="SelectedRows"
+                ShowEditButtonCallback="OnShowButtonCallback" ShowDeleteButtonCallback="OnShowButtonCallback"
+                OnQueryAsync="OnQueryAsync" OnDeleteAsync="OnDeleteAsync" OnSaveAsync="OnSaveAsync">
         <TableColumns>
             <TableColumn @bind-Field="@context.Name" Sortable="true" Filterable="true" Searchable="true" Width="80"></TableColumn>
             <TableColumn @bind-Field="@context.CreateTime" Sortable="true" Filterable="true" Searchable="true" FormatString="yyyy-MM-dd HH:mm:ss"></TableColumn>

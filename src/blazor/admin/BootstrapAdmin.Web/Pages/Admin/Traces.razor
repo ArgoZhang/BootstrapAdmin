@@ -1,6 +1,6 @@
 ﻿@page "/admin/traces"
 
-<AdminTable TItem="DataAccess.Models.Trace" IsPagination="true" PageItemsSource="PageItemsSource" SortList="SortList"
+<AdminTable TItem="DataAccess.Models.Trace" IsPagination="true" PageItemsSource="PageItemsSource" SortString="LogTime desc"
             ShowDefaultButtons="false" ShowExtendButtons="false" CustomerSearchModel="TraceSearchModel"
             OnQueryAsync="OnQueryAsync">
     <TableColumns>
