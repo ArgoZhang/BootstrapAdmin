@@ -65,14 +65,8 @@ class DictService : IDict
 
     private string? GetUrlByName(string appId, string dictName)
     {
-        string? url = null;
         var dicts = GetAll();
-        var appName = dicts.FirstOrDefault(d => d.Category == "应用程序" && d.Code == appId && d.Define == EnumDictDefine.System)?.Name;
-        if (!string.IsNullOrEmpty(appName))
-        {
-            url = dicts.FirstOrDefault(d => d.Category == appName && d.Name == dictName && d.Define == EnumDictDefine.Customer)?.Code;
-        }
-        return url;
+        return dicts.FirstOrDefault(d => d.Category == appId && d.Name == dictName && d.Define == EnumDictDefine.Customer)?.Code;
     }
 
     public string RetrieveIconFolderPath()
