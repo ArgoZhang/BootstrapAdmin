@@ -463,7 +463,7 @@ class DictService : IDict
 
     public bool DeleteClient(string appId)
     {
-        var ret = false;
+        bool ret;
         try
         {
             Database.BeginTransaction();

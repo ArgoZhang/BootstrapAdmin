@@ -15,13 +15,13 @@ public interface IDict
     /// 获取 站点 Title 配置信息
     /// </summary>
     /// <returns></returns>
-    string GetWebTitle();
+    string GetWebTitle(string appId);
 
     /// <summary>
     /// 获取站点 Footer 配置信息
     /// </summary>
     /// <returns></returns>
-    string GetWebFooter();
+    string GetWebFooter(string appId);
 
     /// <summary>
     /// 

@@ -108,8 +108,8 @@ public sealed partial class MainLayout
             MenuItems = NavigationsService.GetMenus(userName).Where(i => i.Application == Context.AppId).ToMenus();
 
             Context.DisplayName = user?.DisplayName ?? "未注册账户";
-            Title = DictsService.GetWebTitle();
-            Footer = DictsService.GetWebFooter();
+            Title = DictsService.GetWebTitle(Context.AppId);
+            Footer = DictsService.GetWebFooter(Context.AppId);
         }
     }
 

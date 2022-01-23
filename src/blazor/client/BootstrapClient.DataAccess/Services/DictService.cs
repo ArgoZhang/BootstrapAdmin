@@ -1,6 +1,5 @@
 ﻿using BootstrapClient.DataAccess.Models;
 using BootstrapClient.Web.Core;
-using Microsoft.Extensions.Configuration;
 using PetaPoco;
 
 namespace BootstrapClient.DataAccess.PetaPoco.Services;
@@ -9,17 +8,13 @@ class DictService : IDict
 {
     private IDatabase Database { get; }
 
-    private string AppId { get; set; }
-
     /// <summary>
     /// 
     /// </summary>
     /// <param name="db"></param>
-    /// <param name="configuration"></param>
-    public DictService(IDatabase db, IConfiguration configuration)
+    public DictService(IDatabase db)
     {
         Database = db;
-        AppId = configuration.GetValue("AppId", "BA");
     }
 
     public List<Dict> GetAll() => Database.Fetch<Dict>();
@@ -31,11 +26,11 @@ class DictService : IDict
         return code == "1";
     }
 
-    public string GetWebTitle()
+    public string GetWebTitle(string appId)
     {
         var dicts = GetAll();
         var title = "网站标题";
-        var name = dicts.FirstOrDefault(d => d.Category == "应用程序" && d.Code == AppId)?.Name;
+        var name = dicts.FirstOrDefault(d => d.Category == "应用程序" && d.Code == appId)?.Name;
         if (!string.IsNullOrEmpty(name))
         {
             var dict = dicts.FirstOrDefault(d => d.Category == name && d.Name == "网站标题") ?? dicts.FirstOrDefault(d => d.Category == "网站设置" && d.Name == "网站标题");
@@ -44,11 +39,11 @@ class DictService : IDict
         return title;
     }
 
-    public string GetWebFooter()
+    public string GetWebFooter(string appId)
     {
         var dicts = GetAll();
         var title = "网站页脚";
-        var name = dicts.FirstOrDefault(d => d.Category == "应用程序" && d.Code == AppId)?.Name;
+        var name = dicts.FirstOrDefault(d => d.Category == "应用程序" && d.Code == appId)?.Name;
         if (!string.IsNullOrEmpty(name))
         {
             var dict = dicts.FirstOrDefault(d => d.Category == name && d.Name == "网站页脚") ?? dicts.FirstOrDefault(d => d.Category == "网站设置" && d.Name == "网站页脚");

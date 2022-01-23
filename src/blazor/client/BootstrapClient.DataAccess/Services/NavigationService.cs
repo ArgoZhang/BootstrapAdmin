@@ -30,39 +30,4 @@ class NavigationService : INavigation
         var order = Database.Provider.EscapeSqlIdentifier("Order");
         return Database.Fetch<Navigation>($"select n.ID, n.ParentId, n.Name, n.{order}, n.Icon, n.Url, n.Category, n.Target, n.IsResource, n.Application from Navigations n inner join (select nr.NavigationID from Users u inner join UserRole ur on ur.UserID = u.ID inner join NavigationRole nr on nr.RoleID = ur.RoleID where u.UserName = @UserName union select nr.NavigationID from Users u inner join UserGroup ug on u.ID = ug.UserID inner join RoleGroup rg on rg.GroupID = ug.GroupID inner join NavigationRole nr on nr.RoleID = rg.RoleID where u.UserName = @UserName union select n.ID from Navigations n where EXISTS (select UserName from Users u inner join UserRole ur on u.ID = ur.UserID inner join Roles r on ur.RoleID = r.ID where u.UserName = @UserName and r.RoleName = 'Administrators')) nav on n.ID = nav.NavigationID Where n.Category = '1' ORDER BY n.Application, n.{order}", new { UserName = userName });
     }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="roleId"></param>
-    /// <returns></returns>
-    public List<string> GetMenusByRoleId(string? roleId)
-    {
-        return Database.Fetch<string>("select NavigationID from NavigationRole where RoleID = @0", roleId);
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="roleId"></param>
-    /// <param name="menuIds"></param>
-    /// <returns></returns>
-    public bool SaveMenusByRoleId(string? roleId, List<string> menuIds)
-    {
-        var ret = false;
-        try
-        {
-            Database.BeginTransaction();
-            Database.Execute("delete from NavigationRole where RoleID = @0", roleId);
-            Database.InsertBatch("NavigationRole", menuIds.Select(g => new { NavigationID = g, RoleID = roleId }));
-            Database.CompleteTransaction();
-            ret = true;
-        }
-        catch (Exception)
-        {
-            Database.AbortTransaction();
-            throw;
-        }
-        return ret;
-    }
 }
