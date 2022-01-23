@@ -1,5 +1,4 @@
 ﻿using BootstrapAdmin.DataAccess.Models;
-using BootstrapAdmin.Web.Components;
 using BootstrapAdmin.Web.Core;
 using BootstrapAdmin.Web.Extensions;
 using Microsoft.AspNetCore.Components.Forms;
@@ -31,18 +30,11 @@ public partial class Settings
 
     [Inject]
     [NotNull]
-    private IUser? UserService { get; set; }
-
-    [Inject]
-    [NotNull]
     private ToastService? ToastService { get; set; }
 
-    [Inject]
+    [CascadingParameter]
     [NotNull]
-    private DialogService? DialogService { get; set; }
-
-    [NotNull]
-    private DialogOption? Option { get; set; }
+    private Layout? Layout { get; set; }
 
     /// <summary>
     /// 
@@ -100,12 +92,14 @@ public partial class Settings
     private async Task OnSaveTitle(EditContext context)
     {
         var ret = DictService.SaveWebTitle(AppInfo.Title);
+        await RenderLayout("title");
         await ShowToast(ret, "网站标题");
     }
 
     private async Task OnSaveFooter(EditContext context)
     {
-        var ret = DictService.SaveWebTitle(AppInfo.Title);
+        var ret = DictService.SaveWebFooter(AppInfo.Footer);
+        await RenderLayout("footer");
         await ShowToast(ret, "网站页脚");
     }
 
@@ -179,4 +173,6 @@ public partial class Settings
 
         await ShowToast(ret, "日志缓存");
     }
+
+    private Task RenderLayout(string key) => Layout.OnUpdate(key);
 }

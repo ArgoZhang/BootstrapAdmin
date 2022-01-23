@@ -153,6 +153,23 @@ namespace BootstrapAdmin.Web.Shared
             logger.LogError(ex, "ErrorLogger");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public Task Update(string key)
+        {
+            if (key == "title")
+            {
+                Title = DictsService.GetWebTitle();
+            }
+            else if (key == "footer")
+            {
+                Footer = DictsService.GetWebFooter();
+            }
+            StateHasChanged();
+            return Task.CompletedTask;
+        }
+
         private void Dispose(bool disposing)
         {
             if (disposing)
