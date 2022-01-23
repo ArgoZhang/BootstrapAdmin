@@ -156,7 +156,7 @@ namespace BootstrapAdmin.Web.Shared
         /// <summary>
         /// 
         /// </summary>
-        public Task Update(string key)
+        public Task OnUpdate(string key)
         {
             if (key == "title")
             {
