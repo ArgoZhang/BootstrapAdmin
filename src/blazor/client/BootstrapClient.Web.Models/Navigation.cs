@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Argo Zhang (argo@163.com). All rights reserved.
 
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BootstrapClient.DataAccess.Models;
 
