@@ -174,5 +174,11 @@ public partial class Settings
         await ShowToast(ret, "日志缓存");
     }
 
-    private Task RenderLayout(string key) => Layout.OnUpdate(key);
+    private async Task RenderLayout(string key)
+    {
+        if (Layout.OnUpdate != null)
+        {
+            await Layout.OnUpdate(key);
+        }
+    }
 }

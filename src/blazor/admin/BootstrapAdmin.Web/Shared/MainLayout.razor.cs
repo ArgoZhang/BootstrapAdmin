@@ -100,7 +100,7 @@ namespace BootstrapAdmin.Web.Shared
                 var city = "XX XX";
                 if (!string.IsNullOrEmpty(clientInfo.Ip))
                 {
-                    city = await IPLocatorProvider.Locate(clientInfo.Ip);
+                    city = await IPLocatorProvider.Locate(clientInfo.Ip) ?? "None";
                 }
                 TraceService.Log(new Trace
                 {

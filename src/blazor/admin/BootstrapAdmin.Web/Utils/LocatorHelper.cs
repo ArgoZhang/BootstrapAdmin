@@ -10,7 +10,6 @@ static class LocatorHelper
         var providerName = dictService.GetIpLocatorName();
         var providerUrl = dictService.GetIpLocatorUrl(providerName ?? string.Empty);
 
-        // TODO: 稍后完善 其余地理位置定位服务
         return providerName switch
         {
             "BaiDuIPSvr" => new BaiDuIPLocator(),

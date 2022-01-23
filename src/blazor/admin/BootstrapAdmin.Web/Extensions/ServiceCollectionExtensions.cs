@@ -36,6 +36,9 @@ namespace Microsoft.Extensions.DependencyInjection
             // 增加 BootstrapBlazor 组件
             services.AddBootstrapBlazor();
 
+            // 配置地理位置定位器
+            services.ConfigureIPLocatorOption(op => op.LocatorFactory = LocatorHelper.CreateLocator);
+
             // 增加手机短信服务
             services.AddSingleton<ISMSProvider, TencentSMSProvider>();
 
