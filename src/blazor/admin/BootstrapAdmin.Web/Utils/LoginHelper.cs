@@ -1,4 +1,5 @@
 ﻿using BootstrapAdmin.Web.Core;
+using BootstrapAdmin.Web.Services;
 
 namespace BootstrapAdmin.Web.Utils;
 
@@ -10,18 +11,21 @@ public static class LoginHelper
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="userName"></param>
+    /// <param name="context"></param>
     /// <param name="returnUrl"></param>
     /// <param name="appId"></param>
-    /// <param name="defaultAppId"></param>
     /// <param name="userService"></param>
     /// <param name="dictService"></param>
     /// <returns></returns>
-    public static string GetDefaultUrl(string userName, string? returnUrl, string? appId, string defaultAppId, IUser userService, IDict dictService)
+    public static string GetDefaultUrl(BootstrapAppContext context, string? returnUrl, string? appId, IUser userService, IDict dictService)
     {
         if (string.IsNullOrEmpty(returnUrl))
         {
             // 查找 User 设置的默认应用
+            var userName = context.UserName;
+            var defaultAppId = context.AppId;
+            var schema = context.BaseUri.Scheme;
+            var host = context.BaseUri.Host;
             appId ??= userService.GetAppIdByUserName(userName) ?? defaultAppId;
 
             if (appId == defaultAppId && dictService.GetEnableDefaultApp())
@@ -32,7 +36,11 @@ public static class LoginHelper
 
             if (!string.IsNullOrEmpty(appId))
             {
-                returnUrl = dictService.GetHomeUrlByAppId(appId);
+                var appUrl = dictService.GetHomeUrlByAppId(appId);
+                if (!string.IsNullOrEmpty(appUrl))
+                {
+                    returnUrl = string.Format(appUrl, schema, host);
+                }
             }
         }
 

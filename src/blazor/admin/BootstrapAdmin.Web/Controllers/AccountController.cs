@@ -52,7 +52,9 @@ namespace BootstrapAdmin.Web.Controllers
                 period = dictService.GetCookieExpiresPeriod();
             }
 
-            return auth ? await SignInAsync(userName, LoginHelper.GetDefaultUrl(userName, returnUrl, appId, context.AppId, userService, dictService), persistent, period) : RedirectLogin(returnUrl);
+            context.UserName = userName;
+            context.BaseUri = new Uri($"{Request.Scheme}://{Request.Host}/");
+            return auth ? await SignInAsync(userName, LoginHelper.GetDefaultUrl(context, returnUrl, appId, userService, dictService), persistent, period) : RedirectLogin(returnUrl);
         }
 
         private async Task<IActionResult> SignInAsync(string userName, string returnUrl, bool persistent, int period = 0, string authenticationScheme = CookieAuthenticationDefaults.AuthenticationScheme)
@@ -139,7 +141,10 @@ namespace BootstrapAdmin.Web.Controllers
             {
                 userService.TryCreateUserByPhone(phone, code, context.AppId, provider.Options.Roles);
             }
-            return auth ? await SignInAsync(phone, LoginHelper.GetDefaultUrl(phone, returnUrl, appId, context.AppId, userService, dictService), persistent, period, MobileSchema) : RedirectLogin(returnUrl);
+
+            context.UserName = phone;
+            context.BaseUri = new Uri(Request.Path.Value!);
+            return auth ? await SignInAsync(phone, LoginHelper.GetDefaultUrl(context, returnUrl, appId, userService, dictService), persistent, period, MobileSchema) : RedirectLogin(returnUrl);
         }
 
         #endregion

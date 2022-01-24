@@ -39,7 +39,7 @@ public class Index : ComponentBase
     protected override void OnInitialized()
     {
         // 查看是否自定义前台
-        Url = LoginHelper.GetDefaultUrl(Context.UserName, null, null, Context.AppId, UsersService, DictsService);
+        Url = LoginHelper.GetDefaultUrl(Context, null, null, UsersService, DictsService);
 
 #if !DEBUG
         Navigation.NavigateTo(Url, true);

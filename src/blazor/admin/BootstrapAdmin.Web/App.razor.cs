@@ -1,29 +1,32 @@
 ﻿using BootstrapAdmin.Web.Services;
 
-namespace BootstrapAdmin.Web
+namespace BootstrapAdmin.Web;
+
+/// <summary>
+/// 
+/// </summary>
+public partial class App
 {
     /// <summary>
     /// 
     /// </summary>
-    public partial class App
+    public string? Title { get; set; }
+
+    [Inject]
+    [NotNull]
+    private BootstrapAppContext? AppContext { get; set; }
+
+    [Inject]
+    [NotNull]
+    private NavigationManager? NavigationManager { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    protected override void OnInitialized()
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        public string? Title { get; set; }
+        base.OnInitialized();
 
-        [Inject]
-        [NotNull]
-        private BootstrapAppContext? AppContext { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        protected override void OnInitialized()
-        {
-            base.OnInitialized();
-
-            //Title = DictHelper.RetrieveWebTitle(AppContext.AppId);
-        }
+        AppContext.BaseUri = NavigationManager.ToAbsoluteUri(NavigationManager.BaseUri);
     }
 }

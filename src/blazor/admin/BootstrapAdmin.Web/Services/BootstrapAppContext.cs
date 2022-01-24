@@ -25,6 +25,12 @@ namespace BootstrapAdmin.Web.Services
         public string? DisplayName { get; internal set; }
 
         /// <summary>
+        /// 获得/设置 应用程序基础地址 如 http://localhost:5210
+        /// </summary>
+        [NotNull]
+        public Uri? BaseUri { get; set; }
+
+        /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="configuration"></param>

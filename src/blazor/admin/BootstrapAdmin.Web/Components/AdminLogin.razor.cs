@@ -1,5 +1,4 @@
 ﻿using BootstrapAdmin.Web.Core;
-using BootstrapAdmin.Web.Services;
 using Microsoft.JSInterop;
 
 namespace BootstrapAdmin.Web.Components;
@@ -75,7 +74,6 @@ public partial class AdminLogin : IDisposable
         base.OnInitialized();
 
         Title = DictsService.GetWebTitle();
-
         PostUrl = QueryHelper.AddQueryString("/Account/Login", new Dictionary<string, string?>
         {
             ["ReturnUrl"] = ReturnUrl,
