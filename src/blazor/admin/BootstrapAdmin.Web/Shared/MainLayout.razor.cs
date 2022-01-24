@@ -88,6 +88,7 @@ namespace BootstrapAdmin.Web.Shared
         {
             base.OnInitialized();
 
+            AppContext.BaseUri = NavigationManager.ToAbsoluteUri(NavigationManager.BaseUri);
             NavigationManager.LocationChanged += NavigationManager_LocationChanged;
         }
 
