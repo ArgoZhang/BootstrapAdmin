@@ -3,10 +3,8 @@ using BootstrapBlazor.Components;
 using BootstrapClient.Web.Core;
 using BootstrapClient.Web.Shared.Extensions;
 using BootstrapClient.Web.Shared.Services;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.Extensions.Options;
 
 namespace BootstrapClient.Web.Shared.Shared;
 
@@ -63,10 +61,6 @@ public sealed partial class MainLayout
 
     [Inject]
     [NotNull]
-    private IOptions<BootstrapAdminAuthenticationOptions>? AuthorizationOption { get; set; }
-
-    [Inject]
-    [NotNull]
     private NavigationManager? NavigationManager { get; set; }
 
     [Inject]
@@ -80,16 +74,17 @@ public sealed partial class MainLayout
     {
         base.OnInitialized();
 
+        Context.BaseUri = NavigationManager.ToAbsoluteUri(NavigationManager.BaseUri);
+
+        var adminUrl = DictsService.GetAdminUrl();
+        if (!string.IsNullOrEmpty(adminUrl))
+        {
+            Context.AdminUrl = string.Format(adminUrl, Context.BaseUri.Scheme, Context.BaseUri.Host).TrimEnd('/');
+        }
+
         ProfileUrl = CombinePath(DictsService.GetProfileUrl(Context.AppId));
         SettingsUrl = CombinePath(DictsService.GetSettingsUrl(Context.AppId));
         NotificationUrl = CombinePath(DictsService.GetNotificationUrl(Context.AppId));
-    }
-
-    private string CombinePath(string? url)
-    {
-        url ??= "";
-        var hostUrl = AuthorizationOption.Value.AuthHost.TrimEnd('/');
-        return string.Join('/', hostUrl, url.TrimStart('/'));
     }
 
     /// <summary>
@@ -121,4 +116,18 @@ public sealed partial class MainLayout
     private string LogoutUrl => CombinePath($"/Account/Logout?AppId={Context.AppId}");
 
     private string AuthorUrl => CombinePath($"/Account/Login?ReturnUrl={NavigationManager.Uri}&AppId={Context.AppId}");
+
+    private string CombinePath(string? url)
+    {
+        url ??= "";
+        if (!string.IsNullOrEmpty(Context.AdminUrl))
+        {
+            url = string.Join('/', Context.AdminUrl, url.TrimStart('/'));
+        }
+        else
+        {
+            url = "#";
+        }
+        return url;
+    }
 }

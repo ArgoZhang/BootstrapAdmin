@@ -40,6 +40,12 @@ public interface IDict
     /// <summary>
     /// 
     /// </summary>
+    /// <returns></returns>
+    string? GetAdminUrl();
+
+    /// <summary>
+    /// 
+    /// </summary>
     /// <param name="appId"></param>
     /// <returns></returns>
     string? GetNotificationUrl(string appId);
