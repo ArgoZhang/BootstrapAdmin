@@ -245,10 +245,8 @@ class DictService : IDict
     /// <returns></returns>
     public string? GetHomeUrlByAppId(string appId)
     {
-        string? url = null;
         var dicts = GetAll();
-        url = dicts.FirstOrDefault(d => d.Category == "应用首页" && d.Name.Equals(appId, StringComparison.OrdinalIgnoreCase) && d.Define == EnumDictDefine.System)?.Code;
-        return url;
+        return dicts.FirstOrDefault(d => d.Category == "应用首页" && d.Name.Equals(appId, StringComparison.OrdinalIgnoreCase) && d.Define == EnumDictDefine.System)?.Code;
     }
 
     public bool GetAppSiderbar()
