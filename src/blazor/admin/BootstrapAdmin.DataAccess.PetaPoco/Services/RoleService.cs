@@ -17,10 +17,6 @@ class RoleService : IRole
 
     private const string RoleServiceGetRolesByGroupIdCacheKey = "RoleService-GetRolesByGroupId";
 
-    private CancellationTokenSource? GetRolesByUserIdCancellationTokenSource { get; set; }
-
-    private CancellationTokenSource? GetRolesByGroupIdCancellationTokenSource { get; set; }
-
     private IDatabase Database { get; }
 
     /// <summary>
@@ -63,6 +59,10 @@ class RoleService : IRole
         {
             Database.AbortTransaction();
             throw;
+        }
+        if(ret)
+        {
+            CacheManager.Clear();
         }
         return ret;
     }
@@ -116,6 +116,10 @@ class RoleService : IRole
         {
             Database.AbortTransaction();
             throw;
+        }
+        if (ret)
+        {
+            CacheManager.Clear();
         }
         return ret;
     }
