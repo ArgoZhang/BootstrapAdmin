@@ -6,15 +6,17 @@ using BootstrapAdmin.Web.Core;
 using BootstrapAdmin.Web.Services;
 using BootstrapAdmin.Web.Utils;
 using Microsoft.AspNetCore.Authorization;
+using System.Reflection;
 
 namespace BootstrapAdmin.Web.Pages.Home;
 
 /// <summary>
 /// 返回前台页面
 /// </summary>
-[Route("/")]
-[Route("/Index")]
-[Route("/Home/Index")]
+[Route("")]
+[Route("Home")]
+[Route("Index")]
+[Route("Home/Index")]
 [Authorize]
 public class Index : ComponentBase
 {
@@ -46,7 +48,7 @@ public class Index : ComponentBase
         Url = LoginHelper.GetDefaultUrl(Context, null, null, UsersService, DictsService);
 
 #if !DEBUG
-        Navigation.NavigateTo(Url, true);
+        Redirect();
 #endif
     }
 
@@ -57,7 +59,17 @@ public class Index : ComponentBase
     /// <param name="firstRender"></param>
     protected override void OnAfterRender(bool firstRender)
     {
-        Navigation.NavigateTo(Url, true);
+        Redirect();
     }
 #endif
+
+    private void Redirect()
+    {
+        var url = Navigation.ToBaseRelativePath(Navigation.Uri).TrimEnd('/');
+        var routes = GetType().GetCustomAttributes<RouteAttribute>();
+        if (!routes.Any(i => i.Template.Equals(url, StringComparison.OrdinalIgnoreCase)))
+        {
+            Navigation.NavigateTo(Url, true);
+        }
+    }
 }
