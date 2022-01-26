@@ -4,7 +4,6 @@
 
 using Bootstrap.DataAccess;
 using Longbow.Web.Mvc;
-using System.Net.Http;
 using System.Net.Http.Json;
 using Xunit;
 

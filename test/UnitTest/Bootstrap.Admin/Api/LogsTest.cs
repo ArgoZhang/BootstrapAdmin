@@ -6,7 +6,6 @@ using Bootstrap.DataAccess;
 using Longbow.Web.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Net.Http;
 using System.Net.Http.Json;
 using Xunit;
 

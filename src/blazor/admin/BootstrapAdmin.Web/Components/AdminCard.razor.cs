@@ -4,7 +4,6 @@
 
 using Bootstrap.Security.Blazor;
 using BootstrapAdmin.Web.Services;
-using Microsoft.AspNetCore.Components.Authorization;
 
 namespace BootstrapAdmin.Web.Components
 {

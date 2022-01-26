@@ -7,11 +7,6 @@ using BootstrapAdmin.DataAccess.EFCore.Models;
 using BootstrapAdmin.DataAccess.Models;
 using BootstrapAdmin.Web.Core;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BootstrapAdmin.DataAccess.EFCore.Services;
 

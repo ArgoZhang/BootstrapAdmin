@@ -3,7 +3,6 @@
 // Website: https://admin.blazor.zone
 
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 
 namespace BootstrapAdmin.DataAccess.Models;
 

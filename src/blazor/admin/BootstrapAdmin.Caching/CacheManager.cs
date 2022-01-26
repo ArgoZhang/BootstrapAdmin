@@ -4,7 +4,6 @@
 
 using BootstrapAdmin.Caching.Services;
 using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.Primitives;
 
 namespace BootstrapAdmin.Caching;
 

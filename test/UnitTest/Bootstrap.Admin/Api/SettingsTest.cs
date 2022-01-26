@@ -2,13 +2,11 @@
 // Licensed under the LGPL License, Version 3.0. See License.txt in the project root for license information.
 // Website: https://admin.blazor.zone
 
-using Bootstrap.Admin.Query;
 using Bootstrap.DataAccess;
 using Bootstrap.Security;
 using Longbow.Cache;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Net.Http.Json;
 using Xunit;
 

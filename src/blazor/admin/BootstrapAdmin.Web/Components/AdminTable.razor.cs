@@ -3,7 +3,6 @@
 // Website: https://admin.blazor.zone
 
 using Bootstrap.Security.Blazor;
-using BootstrapAdmin.Web.Core.Services;
 using BootstrapAdmin.Web.Services;
 
 namespace BootstrapAdmin.Web.Components
