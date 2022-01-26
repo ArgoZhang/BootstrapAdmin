@@ -75,6 +75,12 @@ namespace BootstrapAdmin.DataAccess.EFCore
         /// <summary>
         /// 
         /// </summary>
+        [NotNull]
+        public DbSet<RoleApp>? RoleApp { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="modelBuilder"></param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
