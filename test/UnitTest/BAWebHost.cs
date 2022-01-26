@@ -1,4 +1,8 @@
-﻿using Longbow.Web.SMS;
+﻿// Copyright (c) Argo Zhang (argo@163.com). All rights reserved.
+// Licensed under the LGPL License, Version 3.0. See License.txt in the project root for license information.
+// Website: https://admin.blazor.zone
+
+using Longbow.Web.SMS;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.Mvc.Testing.Handlers;

@@ -1,4 +1,8 @@
-﻿using BootStarpAdmin.DataAccess.SqlSugar.Service;
+﻿// Copyright (c) Argo Zhang (argo@163.com). All rights reserved.
+// Licensed under the LGPL License, Version 3.0. See License.txt in the project root for license information.
+// Website: https://admin.blazor.zone
+
+using BootStarpAdmin.DataAccess.SqlSugar.Service;
 using BootstrapBlazor.Components;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using SqlSugar;

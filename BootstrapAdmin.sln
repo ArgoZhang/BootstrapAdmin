@@ -161,9 +161,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BootStarpAdmin.DataAccess.S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BootstrapClient.Web.Core", "src\blazor\client\BootstrapClient.Web.Core\BootstrapClient.Web.Core.csproj", "{FFDF9FF9-0B29-47D3-AD42-53A476B570EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BootstrapClient.DataAccess.Models", "src\blazor\client\BootstrapClient.Web.Models\BootstrapClient.DataAccess.Models.csproj", "{CC3DF23A-2880-438F-BDEB-DB093E919ABA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BootstrapClient.DataAccess.Models", "src\blazor\client\BootstrapClient.Web.Models\BootstrapClient.DataAccess.Models.csproj", "{CC3DF23A-2880-438F-BDEB-DB093E919ABA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BootstrapAdmin.Caching", "src\blazor\admin\BootstrapAdmin.Caching\BootstrapAdmin.Caching.csproj", "{ADD20515-1C1C-418B-84F6-8B05A7AA315B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BootstrapAdmin.Caching", "src\blazor\admin\BootstrapAdmin.Caching\BootstrapAdmin.Caching.csproj", "{ADD20515-1C1C-418B-84F6-8B05A7AA315B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

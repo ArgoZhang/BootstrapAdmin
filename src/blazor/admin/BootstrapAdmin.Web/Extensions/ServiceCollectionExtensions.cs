@@ -1,12 +1,16 @@
-﻿using BootstrapAdmin.Web;
+﻿// Copyright (c) Argo Zhang (argo@163.com). All rights reserved.
+// Licensed under the LGPL License, Version 3.0. See License.txt in the project root for license information.
+// Website: https://admin.blazor.zone
+
+using BootstrapAdmin.Web;
 using BootstrapAdmin.Web.Core.Services;
 using BootstrapAdmin.Web.HealthChecks;
 using BootstrapAdmin.Web.Services;
 using BootstrapAdmin.Web.Services.SMS;
 using BootstrapAdmin.Web.Services.SMS.Tencent;
 using BootstrapAdmin.Web.Utils;
-using Microsoft.EntityFrameworkCore;
-using BootstrapBlazor.Components;
+using PetaPoco;
+using PetaPoco.Providers;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -51,13 +55,13 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<BootstrapAppContext>();
 
             // 增加 EFCore 数据服务
-            services.AddEFCoreDataAccessServices((provider, option) =>
-            {
-                var configuration = provider.GetRequiredService<IConfiguration>();
-                var connString = configuration.GetConnectionString("bb");
-                option.UseSqlite(connString);
-                option.EnableSensitiveDataLogging();
-            });
+            //services.AddEFCoreDataAccessServices((provider, option) =>
+            //{
+            //    var configuration = provider.GetRequiredService<IConfiguration>();
+            //    var connString = configuration.GetConnectionString("bb");
+            //    option.UseSqlite(connString);
+            //    option.EnableSensitiveDataLogging();
+            //});
 
             // 增加 FreeSql 数据服务
             //            services.AddFreeSql((provider, builder) =>
@@ -72,13 +76,13 @@ namespace Microsoft.Extensions.DependencyInjection
             //            });
 
             // 增加 PetaPoco 数据服务
-            //services.AddPetaPocoDataAccessServices((provider, builder) =>
-            //{
-            //    var configuration = provider.GetRequiredService<IConfiguration>();
-            //    var connString = configuration.GetConnectionString("bb");
-            //    builder.UsingProvider<SQLiteDatabaseProvider>()
-            //           .UsingConnectionString(connString);
-            //});
+            services.AddPetaPocoDataAccessServices((provider, builder) =>
+            {
+                var configuration = provider.GetRequiredService<IConfiguration>();
+                var connString = configuration.GetConnectionString("bb");
+                builder.UsingProvider<SQLiteDatabaseProvider>()
+                       .UsingConnectionString(connString);
+            });
 
             return services;
         }
