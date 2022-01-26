@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
-namespace BootstrapAdmin.Web.Controllers.api;
+namespace BootstrapAdmin.Web.Controllers.Api;
 
 /// <summary>
 /// 
