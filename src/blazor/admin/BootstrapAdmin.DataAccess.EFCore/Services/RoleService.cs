@@ -25,7 +25,7 @@ public class RoleService : IRole
 
     private CancellationTokenSource? GetRolesByGroupIdCancellationTokenSource { get; set; }
 
-    private IDbContextFactory<BootstrapAdminContext> DbFactory;
+    private IDbContextFactory<BootstrapAdminContext> DbFactory { get; }
 
     /// <summary>
     /// 

@@ -2,11 +2,11 @@
 // Licensed under the LGPL License, Version 3.0. See License.txt in the project root for license information.
 // Website: https://admin.blazor.zone
 
-using BootstrapAdmin.Web.Core;
-using BootstrapAdmin.DataAccess.Models;
-using Microsoft.EntityFrameworkCore;
 using BootstrapAdmin.Caching;
 using BootstrapAdmin.DataAccess.EFCore.Models;
+using BootstrapAdmin.DataAccess.Models;
+using BootstrapAdmin.Web.Core;
+using Microsoft.EntityFrameworkCore;
 
 namespace BootstrapAdmin.DataAccess.EFCore.Services
 {
@@ -15,7 +15,7 @@ namespace BootstrapAdmin.DataAccess.EFCore.Services
     /// </summary>
     class NavigationService : INavigation
     {
-        private IDbContextFactory<BootstrapAdminContext> DbFactory { get; set; }
+        private IDbContextFactory<BootstrapAdminContext> DbFactory { get; }
 
         /// <summary>
         /// 

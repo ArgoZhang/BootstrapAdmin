@@ -13,7 +13,7 @@ namespace BootstrapAdmin.DataAccess.EFCore.Services;
 /// </summary>
 public class LoginService : ILogin
 {
-    private IDbContextFactory<BootstrapAdminContext> DbFactory;
+    private IDbContextFactory<BootstrapAdminContext> DbFactory { get; }
 
     /// <summary>
     /// 

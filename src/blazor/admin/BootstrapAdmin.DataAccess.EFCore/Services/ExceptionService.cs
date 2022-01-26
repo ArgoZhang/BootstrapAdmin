@@ -13,7 +13,7 @@ namespace BootstrapAdmin.DataAccess.EFCore.Services;
 /// </summary>
 public class ExceptionService : IException
 {
-    private IDbContextFactory<BootstrapAdminContext> DbFactory;
+    private IDbContextFactory<BootstrapAdminContext> DbFactory { get; }
 
     /// <summary>
     /// 

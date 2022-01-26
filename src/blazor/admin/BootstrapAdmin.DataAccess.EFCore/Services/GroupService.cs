@@ -27,7 +27,7 @@ public class GroupService : IGroup, IDisposable
 
     private CancellationTokenSource? GetGroupsByRoleIdCancellationTokenSource { get; set; }
 
-    private IDbContextFactory<BootstrapAdminContext> DbFactory;
+    private IDbContextFactory<BootstrapAdminContext> DbFactory { get; }
 
     /// <summary>
     /// 

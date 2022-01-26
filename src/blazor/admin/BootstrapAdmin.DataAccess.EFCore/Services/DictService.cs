@@ -17,7 +17,7 @@ class DictService : IDict
 {
     private const string DictServiceCacheKey = "DictService-GetAll";
 
-    private IDbContextFactory<BootstrapAdminContext> DbFactory { get; set; }
+    private IDbContextFactory<BootstrapAdminContext> DbFactory { get; }
 
     private string AppId { get; set; }
 
