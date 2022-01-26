@@ -30,18 +30,22 @@ public static class EntityConfiguration
         builder.Entity<User>().Ignore(u => u.IsReset);
         builder.Entity<User>().Property(s => s.Id).HasConversion(converter).ValueGeneratedOnAdd();
 
-        builder.Entity<UserRole>().Property(s => s.Id).HasConversion(converter).ValueGeneratedOnAdd();
-
         builder.Entity<Role>().ToTable("Roles");
         builder.Entity<Role>().Property(s => s.Id).HasConversion(converter).ValueGeneratedOnAdd();
 
         builder.Entity<Navigation>().ToTable("Navigations");
-        builder.Entity<Navigation>().Property(s => s.Id).HasConversion(converter).ValueGeneratedOnAdd();
+        builder.Entity<Navigation>().Property(s => s.Id).HasConversion(converter!).ValueGeneratedOnAdd();
         builder.Entity<Navigation>().Ignore(s => s.HasChildren);
 
+        builder.Entity<Dict>().ToTable("Dicts");
         builder.Entity<Dict>().Property(s => s.Id).HasConversion(converter).ValueGeneratedOnAdd();
 
+        builder.Entity<Group>().ToTable("Groups");
         builder.Entity<Group>().Property(s => s.Id).HasConversion(converter).ValueGeneratedOnAdd();
+
+        builder.Entity<Error>().ToTable("Exceptions");
+        builder.Entity<LoginLog>().ToTable("LoginLogs");
+        builder.Entity<Trace>().ToTable("Traces");
     }
 }
 
