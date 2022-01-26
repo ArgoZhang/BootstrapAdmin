@@ -1,4 +1,5 @@
-﻿using BootstrapAdmin.DataAccess.Models;
+﻿using BootstrapAdmin.DataAccess.EFCore.Models;
+using BootstrapAdmin.DataAccess.Models;
 using BootstrapAdmin.Web.Core;
 using Longbow.Security.Cryptography;
 using Microsoft.EntityFrameworkCore;
@@ -10,18 +11,35 @@ using System.Threading.Tasks;
 
 namespace BootstrapAdmin.DataAccess.EFCore.Services;
 
+/// <summary>
+/// 
+/// </summary>
 public class UserService : IUser
 {
     private IDbContextFactory<BootstrapAdminContext> DbFactory { get; set; }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="factory"></param>
     public UserService(IDbContextFactory<BootstrapAdminContext> factory) => DbFactory = factory;
 
-    public IEnumerable<User> GetAll()
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public List<User> GetAll()
     {
         using var context = DbFactory.CreateDbContext();
         return context.Users.ToList();
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="userName"></param>
+    /// <param name="password"></param>
+    /// <returns></returns>
     public bool Authenticate(string userName, string password)
     {
         using var context = DbFactory.CreateDbContext();
@@ -36,26 +54,46 @@ public class UserService : IUser
         return isAuth;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="userName"></param>
+    /// <returns></returns>
     public List<string> GetApps(string userName)
     {
-        return new List<string> { "BA" };
+        using var context = DbFactory.CreateDbContext();
+        return context.Dicts.FromSqlRaw("select d.Code from Dicts d inner join RoleApp ra on d.Code = ra.AppId inner join (select r.Id from Roles r inner join UserRole ur on r.ID = ur.RoleID inner join Users u on ur.UserID = u.ID where u.UserName = {0} union select r.Id from Roles r inner join RoleGroup rg on r.ID = rg.RoleID inner join [Groups] g on rg.GroupID = g.ID inner join UserGroup ug on ug.GroupID = g.ID inner join Users u on ug.UserID = u.ID where u.UserName = {0}) r on ra.RoleId = r.ID union select Code from Dicts where Category = {1} and exists(select r.ID from Roles r inner join UserRole ur on r.ID = ur.RoleID inner join Users u on ur.UserID = u.ID where u.UserName = {0} and r.RoleName = {2} union select r.ID from Roles r inner join RoleGroup rg on r.ID = rg.RoleID inner join [Groups] g on rg.GroupID = g.ID inner join UserGroup ug on ug.GroupID = g.ID inner join Users u on ug.UserID = u.ID where u.UserName = {0} and r.RoleName = {2})", new[] { userName, "应用程序", "Administrators" }).Select(s => s.Code).ToList();
+
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="userName"></param>
+    /// <returns></returns>
     public string? GetDisplayName(string? userName)
     {
         using var context = DbFactory.CreateDbContext();
         return string.IsNullOrEmpty(userName) ? "" : context.Users.FirstOrDefault(s => s.UserName == userName)?.DisplayName;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="userName"></param>
+    /// <returns></returns>
     public List<string> GetRoles(string userName)
     {
         using var context = DbFactory.CreateDbContext();
 
-        var user = context.Users.Include(s => s.Roles).FirstOrDefault(s => s.UserName == userName);
-
-        return user != null ? user.Roles!.Select(s => s.RoleName).ToList() : new List<string>();
+        return context.UserRole.FromSqlRaw("select r.RoleName from Roles r inner join UserRole ur on r.ID=ur.RoleID inner join Users u on ur.UserID = u.ID and u.UserName = {0} union select r.RoleName from Roles r inner join RoleGroup rg on r.ID = rg.RoleID inner join [Groups] g on rg.GroupID = g.ID inner join UserGroup ug on ug.GroupID = g.ID inner join Users u on ug.UserID = u.ID and u.UserName = {0}", userName).Select(s => s.RoleId!).ToList();
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="groupId"></param>
+    /// <returns></returns>
     public List<string> GetUsersByGroupId(string? groupId)
     {
         using var context = DbFactory.CreateDbContext();
@@ -63,6 +101,11 @@ public class UserService : IUser
         return context.UserGroup.Where(s => s.GroupId == groupId).Select(s => s.UserId!).ToList();
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="roleId"></param>
+    /// <returns></returns>
     public List<string> GetUsersByRoleId(string? roleId)
     {
         using var context = DbFactory.CreateDbContext();
@@ -70,46 +113,73 @@ public class UserService : IUser
         return context.UserRole.Where(s => s.RoleId == roleId).Select(s => s.UserId!).ToList();
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="groupId"></param>
+    /// <param name="userIds"></param>
+    /// <returns></returns>
     public bool SaveUsersByGroupId(string? groupId, IEnumerable<string> userIds)
     {
         using var dbcontext = DbFactory.CreateDbContext();
-        var group = dbcontext.Groups.Include(s => s.Users).Where(s => s.Id == groupId).FirstOrDefault();
-        if (group != null)
+        var ret = false;
+        try
         {
-            group.Users = dbcontext.Users.Where(s => userIds.Contains(s.Id));
-            return dbcontext.SaveChanges() > 0;
+            dbcontext.Database.ExecuteSqlRaw("delete from UserGroup where GroupId = {0}", groupId!);
+            dbcontext.AddRange(userIds.Select(g => new UserGroup { UserId = g, GroupId = groupId }));
+            dbcontext.SaveChanges();
+            ret = true;
         }
-        else
+        catch (Exception)
         {
-            return false;
+            throw;
         }
+        return ret;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="roleId"></param>
+    /// <param name="userIds"></param>
+    /// <returns></returns>
     public bool SaveUsersByRoleId(string? roleId, IEnumerable<string> userIds)
     {
         using var dbcontext = DbFactory.CreateDbContext();
-        var currentrole = dbcontext.Roles.Include(s => s.Users).Where(s => s.Id == roleId).FirstOrDefault();
-        if (currentrole != null)
+        var ret = false;
+        try
         {
-            currentrole.Users = dbcontext.Users.Where(s => userIds.Contains(s.Id)).ToList();
-            return dbcontext.SaveChanges() > 0;
+            dbcontext.Database.ExecuteSqlRaw("delete from UserRole where RoleID = {0}", roleId!);
+            dbcontext.AddRange(userIds.Select(g => new UserRole { UserId = g, RoleId = roleId }));
+            dbcontext.SaveChanges();
+            ret = true;
         }
-        else
+        catch (Exception)
         {
-            return false;
+            throw;
         }
+        return ret;
     }
 
-    public bool TryCreateUserByPhone(string phone, string appId, ICollection<string> roles)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="phone"></param>
+    /// <param name="code"></param>
+    /// <param name="appId"></param>
+    /// <param name="roles"></param>
+    /// <returns></returns>
+    public bool TryCreateUserByPhone(string phone, string code, string appId, ICollection<string> roles)
     {
         var ret = false;
         using var dbcontext = DbFactory.CreateDbContext();
         try
         {
+            var salt = LgbCryptography.GenerateSalt();
+            var pwd = LgbCryptography.ComputeHash(code, salt);
             var user = GetAll().FirstOrDefault(user => user.UserName == phone);
             if (user == null)
             {
-                dbcontext.Database.BeginTransaction();
                 user = new User()
                 {
                     ApprovedBy = "Mobile",
@@ -137,13 +207,162 @@ public class UserService : IUser
         return ret;
     }
 
-    List<User> IUser.GetAll()
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="userName"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public User? GetUserByUserName(string? userName)
     {
-        throw new NotImplementedException();
+        if (userName != null)
+        {
+            using var dbcontext = DbFactory.CreateDbContext();
+
+            return dbcontext.Set<User>().FirstOrDefault(s => s.UserName == userName);
+        }
+        else
+        {
+            return null;
+        }
     }
 
-    public bool TryCreateUserByPhone(string phone, string code, string appId, ICollection<string> roles)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="userName"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+
+    public string? GetAppIdByUserName(string userName)
     {
-        throw new NotImplementedException();
+        using var dbcontext = DbFactory.CreateDbContext();
+
+        return dbcontext.Set<User>().FirstOrDefault(s => s.UserName == userName)?.App;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="userName"></param>
+    /// <param name="password"></param>
+    /// <param name="newPassword"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public bool ChangePassword(string userName, string password, string newPassword)
+    {
+        var ret = false;
+        if (Authenticate(userName, password))
+        {
+            using var dbcontext = DbFactory.CreateDbContext();
+            var passSalt = LgbCryptography.GenerateSalt();
+            password = LgbCryptography.ComputeHash(newPassword, passSalt);
+            string sql = "update user set Password = {0}, PassSalt = {1} where UserName = {2}";
+            ret = dbcontext.Database.ExecuteSqlRaw(sql, new[] { password, passSalt, userName }) > 0;
+        }
+        return ret;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="userName"></param>
+    /// <param name="displayName"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public bool SaveDisplayName(string userName, string displayName)
+    {
+        using var dbcontext = DbFactory.CreateDbContext();
+        return dbcontext.Database.ExecuteSqlRaw("update User set DisplayName = {1} where UserName = {0}", userName, displayName!) > 0;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="userName"></param>
+    /// <param name="theme"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public bool SaveTheme(string userName, string theme)
+    {
+        using var dbcontext = DbFactory.CreateDbContext();
+        return dbcontext.Database.ExecuteSqlRaw("update User set Css = {1} where UserName = {0}", userName, theme!) > 0;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="userName"></param>
+    /// <param name="logo"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public bool SaveLogo(string userName, string? logo)
+    {
+        using var dbcontext = DbFactory.CreateDbContext();
+        return dbcontext.Database.ExecuteSqlRaw("update User set Icon = {1} where UserName = {0}", userName, logo!) > 0;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="userName"></param>
+    /// <param name="app"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public bool SaveApp(string userName, string app)
+    {
+        using var dbcontext = DbFactory.CreateDbContext();
+        return dbcontext.Database.ExecuteSqlRaw("update User Set App = {1} Where UserName = {0}", userName, app) > 0;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="userName"></param>
+    /// <param name="displayName"></param>
+    /// <param name="password"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public bool SaveUser(string userName, string displayName, string password)
+    {
+        using var dbcontext = DbFactory.CreateDbContext();
+        var salt = LgbCryptography.GenerateSalt();
+        var pwd = LgbCryptography.ComputeHash(password, salt);
+        var user = GetAll().FirstOrDefault(s => s.UserName == userName);
+        bool ret;
+        if (user == null)
+        {
+            try
+            {
+                user = new User()
+                {
+                    ApprovedBy = "System",
+                    ApprovedTime = DateTime.Now,
+                    DisplayName = "手机用户",
+                    UserName = userName,
+                    Icon = "default.jpg",
+                    Description = "系统默认创建",
+                    PassSalt = salt,
+                    Password = pwd
+                };
+                dbcontext.Add(user);
+                // 授权 Default 角色
+                dbcontext.Database.ExecuteSqlRaw("insert into UserRole (UserID, RoleID) select ID, (select ID from Roles where RoleName = 'Default') RoleId from Users where UserName = {0}", userName);
+                ret = dbcontext.SaveChanges() > 0;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        else
+        {
+            user.DisplayName = displayName;
+            user.PassSalt = salt;
+            user.Password = pwd;
+            dbcontext.Update(user);
+            ret = true;
+        }
+        return ret;
     }
 }

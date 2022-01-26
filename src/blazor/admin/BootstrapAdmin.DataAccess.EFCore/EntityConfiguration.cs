@@ -7,6 +7,9 @@ using Microsoft.EntityFrameworkCore.ValueGeneration;
 
 namespace BootstrapAdmin.DataAccess.EFCore;
 
+/// <summary>
+/// 
+/// </summary>
 public static class EntityConfiguration
 {
     /// <summary>
@@ -26,31 +29,11 @@ public static class EntityConfiguration
         builder.Entity<User>().Ignore(u => u.ConfirmPassword);
         builder.Entity<User>().Ignore(u => u.IsReset);
         builder.Entity<User>().Property(s => s.Id).HasConversion(converter).ValueGeneratedOnAdd();
-        builder.Entity<User>().HasMany(s => s.Roles).WithMany(s => s.Users).UsingEntity<UserRole>(s =>
-        {
-            s.HasOne(s => s.User).WithMany(s => s.UserRoles).HasForeignKey(s => s.UserId);
-            s.HasOne(s => s.Role).WithMany(s => s.UserRoles).HasForeignKey(s => s.RoleId);
-        });
-        builder.Entity<User>().HasMany(s => s.Groups).WithMany(s => s.Users).UsingEntity<UserGroup>(s =>
-        {
-            s.HasOne(s => s.User).WithMany(s => s.UserGroup).HasForeignKey(s => s.UserId);
-            s.HasOne(s => s.Group).WithMany(s => s.UserGroup).HasForeignKey(s => s.GroupId);
-        });
 
         builder.Entity<UserRole>().Property(s => s.Id).HasConversion(converter).ValueGeneratedOnAdd();
 
         builder.Entity<Role>().ToTable("Roles");
         builder.Entity<Role>().Property(s => s.Id).HasConversion(converter).ValueGeneratedOnAdd();
-        builder.Entity<Role>().HasMany(s => s.Navigations).WithMany(s => s.Roles).UsingEntity<NavigationRole>(s =>
-        {
-            s.HasOne(s => s.Navigation).WithMany(s => s.NavigationRoles).HasForeignKey(s => s.NavigationId);
-            s.HasOne(s => s.Role).WithMany(s => s.NavigationRoles).HasForeignKey(s => s.RoleId);
-        });
-        builder.Entity<Role>().HasMany(s => s.Groups).WithMany(s => s.Roles).UsingEntity<RoleGroup>(s =>
-        {
-            s.HasOne(s => s.Group).WithMany(s => s.RoleGroup).HasForeignKey(s => s.GroupId);
-            s.HasOne(s => s.Role).WithMany(s => s.RoleGroup).HasForeignKey(s => s.RoleId);
-        });
 
         builder.Entity<Navigation>().ToTable("Navigations");
         builder.Entity<Navigation>().Property(s => s.Id).HasConversion(converter).ValueGeneratedOnAdd();

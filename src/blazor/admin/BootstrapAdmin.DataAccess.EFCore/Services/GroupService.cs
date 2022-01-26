@@ -1,6 +1,9 @@
-﻿using BootstrapAdmin.DataAccess.Models;
+﻿using BootstrapAdmin.Caching;
+using BootstrapAdmin.DataAccess.EFCore.Models;
+using BootstrapAdmin.DataAccess.Models;
 using BootstrapAdmin.Web.Core;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,60 +12,146 @@ using System.Threading.Tasks;
 
 namespace BootstrapAdmin.DataAccess.EFCore.Services;
 
-public class GroupService : IGroup
+/// <summary>
+/// 
+/// </summary>
+public class GroupService : IGroup, IDisposable
 {
+
+    private const string GroupServiceGetAllCacheKey = "GroupService-GetAll";
+
+    private const string GroupServiceGetGroupsByUserIdCacheKey = "GroupService-GetGroupsByUserId";
+
+    private const string GroupServiceGetGroupsByRoleIdCacheKey = "GroupService-GetGroupsByRoleId";
+
+    private CancellationTokenSource? GetGroupsByUserIdCancellationTokenSource { get; set; }
+
+    private CancellationTokenSource? GetGroupsByRoleIdCancellationTokenSource { get; set; }
+
     private IDbContextFactory<BootstrapAdminContext> DbFactory;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="dbFactory"></param>
     public GroupService(IDbContextFactory<BootstrapAdminContext> dbFactory) => DbFactory = dbFactory;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     public List<Group> GetAll()
     {
         using var dbcontext = DbFactory.CreateDbContext();
 
-        return dbcontext.Groups.ToList();
+        return CacheManager.GetOrAdd(GroupServiceGetAllCacheKey, entry => dbcontext.Groups.ToList());
+
     }
 
-    public List<string> GetGroupsByRoleId(string? roleId)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="roleId"></param>
+    /// <returns></returns>
+    public List<string> GetGroupsByRoleId(string? roleId) => CacheManager.GetOrAdd($"{GroupServiceGetGroupsByRoleIdCacheKey}-{roleId}", entry =>
     {
         using var dbcontext = DbFactory.CreateDbContext();
-
+        GetGroupsByRoleIdCancellationTokenSource = new CancellationTokenSource(TimeSpan.FromMinutes(10));
+        var token = new CancellationChangeToken(GetGroupsByRoleIdCancellationTokenSource.Token);
+        entry.ExpirationTokens.Add(token);
         return dbcontext.RoleGroup.Where(s => s.RoleId == roleId).Select(s => s.GroupId!).ToList();
-    }
+    });
 
-    public List<string> GetGroupsByUserId(string? userId)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <returns></returns>
+    public List<string> GetGroupsByUserId(string? userId) => CacheManager.GetOrAdd($"{GroupServiceGetGroupsByUserIdCacheKey}-{userId}", entry =>
     {
         using var dbcontext = DbFactory.CreateDbContext();
+        GetGroupsByUserIdCancellationTokenSource = new CancellationTokenSource(TimeSpan.FromMinutes(10));
+        var token = new CancellationChangeToken(GetGroupsByUserIdCancellationTokenSource.Token);
+        entry.ExpirationTokens.Add(token);
+        return dbcontext.Set<UserGroup>().FromSqlRaw("select GroupID from UserGroup where UserID = {0}", userId!).Select(s => s.GroupId!).ToList();
+    });
 
-        return dbcontext.UserGroup.Where(s => s.UserId == userId).Select(s => s.GroupId!).ToList();
-    }
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="roleId"></param>
+    /// <param name="groupIds"></param>
+    /// <returns></returns>
     public bool SaveGroupsByRoleId(string? roleId, IEnumerable<string> groupIds)
     {
         using var dbcontext = DbFactory.CreateDbContext();
-        var role = dbcontext.Roles.Include(s => s.Groups).Where(s => s.Id == roleId).FirstOrDefault();
-        if (role != null)
+        var ret = false;
+        try
         {
-            role.Groups = dbcontext.Groups.Where(s => groupIds.Contains(s.Id)).ToList();
-            return dbcontext.SaveChanges() > 0;
+            dbcontext.Database.ExecuteSqlRaw("delete from RoleGroup where RoleID = {0}", roleId!);
+            dbcontext.AddRange(groupIds.Select(g => new RoleGroup { GroupId = g, RoleId = roleId }));
+            dbcontext.SaveChanges();
+            ret = true;
         }
-        else
+        catch (Exception)
         {
-            return false;
+            throw;
         }
+
+        if (ret)
+        {
+            // reset cache
+            GetGroupsByRoleIdCancellationTokenSource?.Cancel();
+        }
+        return ret;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <param name="groupIds"></param>
+    /// <returns></returns>
     public bool SaveGroupsByUserId(string? userId, IEnumerable<string> groupIds)
     {
         using var dbcontext = DbFactory.CreateDbContext();
-        var user = dbcontext.Users.Include(s => s.Groups).Where(s => s.Id == userId).FirstOrDefault();
-        if (user != null)
+        var ret = false;
+        try
         {
-            user.Groups = dbcontext.Groups.Where(s => groupIds.Contains(s.Id)).ToList();
-            return dbcontext.SaveChanges() > 0;
+            dbcontext.Database.ExecuteSqlRaw("delete from UserGroup where UserID = {0}", userId!);
+            dbcontext.AddRange(groupIds.Select(g => new UserGroup { GroupId = g, UserId = userId }));
+            dbcontext.SaveChanges();
+            ret = true;
         }
-        else
+        catch (Exception)
         {
-            return false;
+            throw;
         }
+
+        if (ret)
+        {
+            GetGroupsByUserIdCancellationTokenSource?.Cancel();
+        }
+        return ret;
+    }
+    private void Dispose(bool disposing)
+    {
+        if (disposing)
+        {
+            GetGroupsByRoleIdCancellationTokenSource?.Cancel();
+            GetGroupsByRoleIdCancellationTokenSource?.Dispose();
+
+            GetGroupsByUserIdCancellationTokenSource?.Cancel();
+            GetGroupsByUserIdCancellationTokenSource?.Dispose();
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
     }
 }

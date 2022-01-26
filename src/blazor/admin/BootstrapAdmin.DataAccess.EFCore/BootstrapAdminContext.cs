@@ -28,13 +28,13 @@ namespace BootstrapAdmin.DataAccess.EFCore
         /// 
         /// </summary>
         [NotNull]
-        public DbSet<EFUser>? Users { get; set; }
+        public DbSet<User>? Users { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
         [NotNull]
-        public DbSet<EFRole>? Roles { get; set; }
+        public DbSet<Role>? Roles { get; set; }
 
         /// <summary>
         /// 
@@ -46,7 +46,7 @@ namespace BootstrapAdmin.DataAccess.EFCore
         /// 
         /// </summary>
         [NotNull]
-        public DbSet<EFNavigation>? Navigations { get; set; }
+        public DbSet<Navigation>? Navigations { get; set; }
 
         /// <summary>
         /// 
@@ -58,7 +58,7 @@ namespace BootstrapAdmin.DataAccess.EFCore
         /// 
         /// </summary>
         [NotNull]
-        public DbSet<EFGroup>? Groups { get; set; }
+        public DbSet<Group>? Groups { get; set; }
 
         /// <summary>
         /// 
