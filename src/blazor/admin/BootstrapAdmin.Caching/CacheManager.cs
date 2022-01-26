@@ -28,17 +28,11 @@ public static class CacheManager
     /// <param name="key"></param>
     /// <param name="valueFactory"></param>
     /// <returns></returns>
-    public static TItem GetOrAdd<TItem>(string key, Func<ICacheEntry, TItem> valueFactory)
-    {
-        return Cache.GetOrAdd(key, valueFactory);
-    }
+    public static TItem GetOrAdd<TItem>(string key, Func<ICacheEntry, TItem> valueFactory) => Cache.GetOrAdd(key, valueFactory);
 
     /// <summary>
     /// 清除指定键值缓存项
     /// </summary>
     /// <param name="key"></param>
-    public static void Clear(string? key)
-    {
-        Cache.Clear(key);
-    }
+    public static void Clear(string? key = null) => Cache.Clear(key);
 }
