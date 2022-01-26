@@ -2,15 +2,12 @@
 
   <PropertyGroup>
     <IsWebProject>true</IsWebProject>
-    <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <DocumentationFile>\bin\Debug\net6.0\BootstrapAdmin.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="BootstrapBlazor.Middleware" Version="1.0.0" />
     <PackageReference Include="Longbow.Logging" Version="6.0.2" />
     <PackageReference Include="Longbow.Tasks" Version="5.2.1" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>

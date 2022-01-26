@@ -28,7 +28,6 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddLogging(logging => logging.AddFileLogger().AddCloudLogger().AddDBLogger(ExceptionsHelper.Log));
             services.AddCors();
             services.AddResponseCompression();
-            services.AddControllers();
 
             // 增加后台任务
             services.AddTaskServices();
@@ -48,8 +47,6 @@ namespace Microsoft.Extensions.DependencyInjection
 
             // 增加认证授权服务
             services.AddBootstrapAdminSecurity<AdminService>();
-
-            services.AddSwagger();
 
             // 增加 BootstrapApp 上下文服务
             services.AddScoped<BootstrapAppContext>();
