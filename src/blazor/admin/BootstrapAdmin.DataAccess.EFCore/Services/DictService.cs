@@ -31,7 +31,7 @@ class DictService : IDict
     public List<Dict> GetAll()
     {
         using var context = DbFactory.CreateDbContext();
-        return CacheManager.GetOrAdd(DictServiceCacheKey, entry => context.Dicts.ToList());
+        return CacheManager.GetOrAdd(DictServiceCacheKey, entry => context.Dicts.AsNoTracking().ToList());
     }
 
     public Dictionary<string, string> GetApps()
@@ -438,7 +438,7 @@ class DictService : IDict
     private bool SaveDict(Dict dict)
     {
         using var dbcontext = DbFactory.CreateDbContext();
-        var ret = dbcontext.Database.ExecuteSqlRaw("update dicts set Code = @Code where Category = @Category and Name = {0}", dict) == 1;
+        var ret = dbcontext.Database.ExecuteSqlRaw("update Dicts set Code = {1} where Category = {2} and Name = {0}", new[] { dict.Name, dict.Code, dict.Category }!) > 0;
         if (ret)
         {
             // 更新缓存
