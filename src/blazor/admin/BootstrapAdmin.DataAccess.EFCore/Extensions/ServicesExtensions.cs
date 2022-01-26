@@ -44,13 +44,15 @@ public static class ServicesExtensions
     {
         // 增加数据服务
         services.AddSingleton(typeof(IDataService<>), typeof(DefaultDataService<>));
-
-            services.AddSingleton<INavigation, NavigationService>();
-            services.AddSingleton<IDict, DictService>();
-            services.AddSingleton<IUser, UserService>();
-            services.AddSingleton<IRole, RoleService>();
-            services.AddSingleton<IGroup, GroupService>();
-            services.AddSingleton<ILogin, LoginService>();
-            return services;
-        }
+        // 增加缓存服务
+        services.AddCacheManager();
+        services.AddSingleton<INavigation, NavigationService>();
+        services.AddSingleton<IDict, DictService>();
+        services.AddSingleton<IUser, UserService>();
+        services.AddSingleton<IRole, RoleService>();
+        services.AddSingleton<IGroup, GroupService>();
+        services.AddSingleton<ILogin, LoginService>();
+        return services;
+       
     }
+}
