@@ -2,12 +2,15 @@
 
 namespace BootstrapAdmin.DataAccess.EFCore.Models;
 
+/// <summary>
+/// 
+/// </summary>
 public class NavigationRole
 {
     /// <summary>
     /// 
     /// </summary>
-    public string? Id { get; set; }
+    public int Id { get; set; }
 
     /// <summary>
     /// 
