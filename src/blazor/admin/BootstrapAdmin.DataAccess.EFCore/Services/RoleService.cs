@@ -61,7 +61,7 @@ public class RoleService : IRole
          {
              using var dbcontext = DbFactory.CreateDbContext();
 
-             return dbcontext.RoleGroup.Where(s => s.GroupId == groupId).Select(s => s.RoleId!).ToList();
+             return dbcontext.RoleGroup.Where(s => s.GroupId == groupId).Select(s => s.RoleId!).AsNoTracking().ToList();
          });
     }
 
@@ -74,7 +74,7 @@ public class RoleService : IRole
     {
         using var dbcontext = DbFactory.CreateDbContext();
 
-        return dbcontext.NavigationRole.Where(s => s.NavigationId == menuId).Select(s => s.RoleId!).ToList();
+        return dbcontext.NavigationRole.Where(s => s.NavigationId == menuId).Select(s => s.RoleId!).AsNoTracking().ToList();
     }
 
     /// <summary>
@@ -88,7 +88,7 @@ public class RoleService : IRole
         {
             using var dbcontext = DbFactory.CreateDbContext();
 
-            return dbcontext.UserRole.Where(s => s.UserId == userId).Select(s => s.RoleId!).ToList();
+            return dbcontext.UserRole.Where(s => s.UserId == userId).Select(s => s.RoleId!).AsNoTracking().ToList();
         });
 
 
@@ -154,7 +154,7 @@ public class RoleService : IRole
         var ret = false;
         try
         {
-            dbcontext.Database.ExecuteSqlRaw("delete from RoleGroup where GroupID = {0}", userId!);
+            dbcontext.Database.ExecuteSqlRaw("delete from UserRole where UserID = {0}", userId!);
             dbcontext.AddRange(roleIds.Select(g => new UserRole { RoleId = g, UserId = userId }));
             dbcontext.SaveChanges();
             ret = true;

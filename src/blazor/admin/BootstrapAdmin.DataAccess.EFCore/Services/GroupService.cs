@@ -44,7 +44,7 @@ public class GroupService : IGroup, IDisposable
     {
         using var dbcontext = DbFactory.CreateDbContext();
 
-        return CacheManager.GetOrAdd(GroupServiceGetAllCacheKey, entry => dbcontext.Groups.ToList());
+        return CacheManager.GetOrAdd(GroupServiceGetAllCacheKey, entry => dbcontext.Groups.AsNoTracking().ToList());
 
     }
 

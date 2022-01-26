@@ -31,7 +31,7 @@ public class UserService : IUser
     public List<User> GetAll()
     {
         using var context = DbFactory.CreateDbContext();
-        return context.Users.ToList();
+        return context.Users.AsNoTracking().ToList();
     }
 
     /// <summary>
@@ -62,7 +62,7 @@ public class UserService : IUser
     public List<string> GetApps(string userName)
     {
         using var context = DbFactory.CreateDbContext();
-        return context.Dicts.FromSqlRaw("select d.Code from Dicts d inner join RoleApp ra on d.Code = ra.AppId inner join (select r.Id from Roles r inner join UserRole ur on r.ID = ur.RoleID inner join Users u on ur.UserID = u.ID where u.UserName = {0} union select r.Id from Roles r inner join RoleGroup rg on r.ID = rg.RoleID inner join [Groups] g on rg.GroupID = g.ID inner join UserGroup ug on ug.GroupID = g.ID inner join Users u on ug.UserID = u.ID where u.UserName = {0}) r on ra.RoleId = r.ID union select Code from Dicts where Category = {1} and exists(select r.ID from Roles r inner join UserRole ur on r.ID = ur.RoleID inner join Users u on ur.UserID = u.ID where u.UserName = {0} and r.RoleName = {2} union select r.ID from Roles r inner join RoleGroup rg on r.ID = rg.RoleID inner join [Groups] g on rg.GroupID = g.ID inner join UserGroup ug on ug.GroupID = g.ID inner join Users u on ug.UserID = u.ID where u.UserName = {0} and r.RoleName = {2})", new[] { userName, "应用程序", "Administrators" }).Select(s => s.Code).ToList();
+        return context.Dicts.FromSqlRaw("select d.Code from Dicts d inner join RoleApp ra on d.Code = ra.AppId inner join (select r.Id from Roles r inner join UserRole ur on r.ID = ur.RoleID inner join Users u on ur.UserID = u.ID where u.UserName = {0} union select r.Id from Roles r inner join RoleGroup rg on r.ID = rg.RoleID inner join [Groups] g on rg.GroupID = g.ID inner join UserGroup ug on ug.GroupID = g.ID inner join Users u on ug.UserID = u.ID where u.UserName = {0}) r on ra.RoleId = r.ID union select Code from Dicts where Category = {1} and exists(select r.ID from Roles r inner join UserRole ur on r.ID = ur.RoleID inner join Users u on ur.UserID = u.ID where u.UserName = {0} and r.RoleName = {2} union select r.ID from Roles r inner join RoleGroup rg on r.ID = rg.RoleID inner join [Groups] g on rg.GroupID = g.ID inner join UserGroup ug on ug.GroupID = g.ID inner join Users u on ug.UserID = u.ID where u.UserName = {0} and r.RoleName = {2})", new[] { userName, "应用程序", "Administrators" }).Select(s => s.Code).AsNoTracking().ToList();
 
     }
 
@@ -86,7 +86,7 @@ public class UserService : IUser
     {
         using var context = DbFactory.CreateDbContext();
 
-        return context.UserRole.FromSqlRaw("select r.RoleName from Roles r inner join UserRole ur on r.ID=ur.RoleID inner join Users u on ur.UserID = u.ID and u.UserName = {0} union select r.RoleName from Roles r inner join RoleGroup rg on r.ID = rg.RoleID inner join [Groups] g on rg.GroupID = g.ID inner join UserGroup ug on ug.GroupID = g.ID inner join Users u on ug.UserID = u.ID and u.UserName = {0}", userName).Select(s => s.RoleId!).ToList();
+        return context.Roles.FromSqlRaw("select r.RoleName from Roles r inner join UserRole ur on r.ID=ur.RoleID inner join Users u on ur.UserID = u.ID and u.UserName = {0} union select r.RoleName from Roles r inner join RoleGroup rg on r.ID = rg.RoleID inner join [Groups] g on rg.GroupID = g.ID inner join UserGroup ug on ug.GroupID = g.ID inner join Users u on ug.UserID = u.ID and u.UserName = {0}", userName).Select(s => s.RoleName).AsNoTracking().ToList();
     }
 
     /// <summary>
@@ -98,7 +98,7 @@ public class UserService : IUser
     {
         using var context = DbFactory.CreateDbContext();
 
-        return context.UserGroup.Where(s => s.GroupId == groupId).Select(s => s.UserId!).ToList();
+        return context.UserGroup.Where(s => s.GroupId == groupId).Select(s => s.UserId!).AsNoTracking().ToList();
     }
 
     /// <summary>
@@ -110,7 +110,7 @@ public class UserService : IUser
     {
         using var context = DbFactory.CreateDbContext();
 
-        return context.UserRole.Where(s => s.RoleId == roleId).Select(s => s.UserId!).ToList();
+        return context.UserRole.Where(s => s.RoleId == roleId).Select(s => s.UserId!).AsNoTracking().ToList();
     }
 
     /// <summary>

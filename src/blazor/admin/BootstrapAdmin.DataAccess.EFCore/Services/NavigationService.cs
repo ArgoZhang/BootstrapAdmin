@@ -29,7 +29,7 @@ namespace BootstrapAdmin.DataAccess.EFCore.Services
             return CacheManager.GetOrAdd($"{nameof(NavigationService)}-{nameof(GetAllMenus)}-{userName}", entry =>
             {
                 using var context = DbFactory.CreateDbContext();
-                return context.Set<Navigation>().FromSqlRaw("select n.ID, n.ParentId, n.Name, n.[order], n.Icon, n.Url, n.Category, n.Target, n.IsResource, n.Application from Navigations n inner join (select nr.NavigationID from Users u inner join UserRole ur on ur.UserID = u.ID inner join NavigationRole nr on nr.RoleID = ur.RoleID where u.UserName = {0} union select nr.NavigationID from Users u inner join UserGroup ug on u.ID = ug.UserID inner join RoleGroup rg on rg.GroupID = ug.GroupID inner join NavigationRole nr on nr.RoleID = rg.RoleID where u.UserName = {0} union select n.ID from Navigations n where EXISTS (select UserName from Users u inner join UserRole ur on u.ID = ur.UserID inner join Roles r on ur.RoleID = r.ID where u.UserName = {0} and r.RoleName = {1})) nav on n.ID = nav.NavigationID ORDER BY n.Application, n.[order]", new[] { userName, "Administrators" }).ToList();
+                return context.Set<Navigation>().FromSqlRaw("select n.ID, n.ParentId, n.Name, n.[order], n.Icon, n.Url, n.Category, n.Target, n.IsResource, n.Application from Navigations n inner join (select nr.NavigationID from Users u inner join UserRole ur on ur.UserID = u.ID inner join NavigationRole nr on nr.RoleID = ur.RoleID where u.UserName = {0} union select nr.NavigationID from Users u inner join UserGroup ug on u.ID = ug.UserID inner join RoleGroup rg on rg.GroupID = ug.GroupID inner join NavigationRole nr on nr.RoleID = rg.RoleID where u.UserName = {0} union select n.ID from Navigations n where EXISTS (select UserName from Users u inner join UserRole ur on u.ID = ur.UserID inner join Roles r on ur.RoleID = r.ID where u.UserName = {0} and r.RoleName = {1})) nav on n.ID = nav.NavigationID ORDER BY n.Application, n.[order]", new[] { userName, "Administrators" }).AsNoTracking().ToList();
             });
         }
 
@@ -37,7 +37,7 @@ namespace BootstrapAdmin.DataAccess.EFCore.Services
         {
             using var context = DbFactory.CreateDbContext();
 
-            return context.NavigationRole.Where(s => s.RoleId == roleId).Select(s => s.NavigationId!).ToList();
+            return context.NavigationRole.Where(s => s.RoleId == roleId).Select(s => s.NavigationId!).AsNoTracking().ToList();
         }
 
         public bool SaveMenusByRoleId(string? roleId, List<string> menuIds)
