@@ -49,10 +49,4 @@ public interface IDict
     /// <param name="appId"></param>
     /// <returns></returns>
     string? GetNotificationUrl(string appId);
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
-    string RetrieveIconFolderPath();
 }

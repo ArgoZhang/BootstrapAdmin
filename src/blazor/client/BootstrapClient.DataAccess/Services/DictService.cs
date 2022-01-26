@@ -12,10 +12,7 @@ class DictService : IDict
     /// 
     /// </summary>
     /// <param name="db"></param>
-    public DictService(IDatabase db)
-    {
-        Database = db;
-    }
+    public DictService(IDatabase db) => Database = db;
 
     public List<Dict> GetAll() => Database.Fetch<Dict>();
 
@@ -68,11 +65,5 @@ class DictService : IDict
     {
         var dicts = GetAll();
         return dicts.FirstOrDefault(d => d.Category == "应用首页" && d.Name == "BA")?.Code;
-    }
-
-    public string RetrieveIconFolderPath()
-    {
-        var dicts = GetAll();
-        return dicts.FirstOrDefault(d => d.Name == "头像路径" && d.Category == "头像地址" && d.Define == EnumDictDefine.System)?.Code ?? "/images/uploder/";
     }
 }

@@ -15,10 +15,7 @@ class NavigationService : INavigation
     /// 
     /// </summary>
     /// <param name="db"></param>
-    public NavigationService(IDatabase db)
-    {
-        Database = db;
-    }
+    public NavigationService(IDatabase db) => Database = db;
 
     /// <summary>
     /// 获得指定用户名可访问的所有菜单集合
