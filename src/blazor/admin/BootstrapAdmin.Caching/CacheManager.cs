@@ -12,7 +12,14 @@ namespace BootstrapAdmin.Caching;
 /// </summary>
 public static class CacheManager
 {
-    private static ICacheManager Cache { get; } = DefaultCacheManager.Instance;
+    [NotNull]
+    private static ICacheManager? Cache { get; set; }
+
+    /// <summary>
+    /// 由服务调用
+    /// </summary>
+    /// <param name="cache"></param>
+    internal static void Init(ICacheManager cache) => Cache = cache;
 
     /// <summary>
     /// 获得或者新建数据

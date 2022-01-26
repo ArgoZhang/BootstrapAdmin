@@ -10,20 +10,12 @@ namespace BootstrapAdmin.Caching.Services;
 class DefaultCacheManager : ICacheManager
 {
     [NotNull]
-    private MemoryCache? Cache { get; set; }
+    private IMemoryCache? Cache { get; set; }
 
     /// <summary>
     /// 
     /// </summary>
-    private DefaultCacheManager()
-    {
-        Init();
-    }
-
-    private void Init()
-    {
-        Cache = new MemoryCache(new MemoryCacheOptions());
-    }
+    public DefaultCacheManager(IMemoryCache cache) => Cache = cache;
 
     /// <summary>
     /// 
@@ -77,17 +69,11 @@ class DefaultCacheManager : ICacheManager
     {
         if (!string.IsNullOrEmpty(key))
         {
-            // 通过 TokenManager 管理依赖
             Cache.Remove(key);
         }
         else
         {
-            Cache.Compact(100);
+            //Cache.Compact(100);
         }
     }
-
-    #region 静态方法
-    [NotNull]
-    internal static ICacheManager? Instance { get; } = new DefaultCacheManager();
-    #endregion
 }

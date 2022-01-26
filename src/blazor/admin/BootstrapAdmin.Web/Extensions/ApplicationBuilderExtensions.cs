@@ -28,6 +28,9 @@ public static class ApplicationBuilderExtensions
 
         builder.UseSwagger(builder.Configuration["SwaggerPathBase"].TrimEnd('/'));
 
+        // 激活 ICacheManager
+        builder.Services.GetRequiredService<BootstrapAdmin.Caching.ICacheManager>();
+
         return builder;
     }
 }
