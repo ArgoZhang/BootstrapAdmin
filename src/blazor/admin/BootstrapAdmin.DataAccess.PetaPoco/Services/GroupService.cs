@@ -5,22 +5,17 @@
 using BootstrapAdmin.Caching;
 using BootstrapAdmin.DataAccess.Models;
 using BootstrapAdmin.Web.Core;
-using Microsoft.Extensions.Primitives;
 using PetaPoco;
 
 namespace BootstrapAdmin.DataAccess.PetaPoco.Services;
 
-class GroupService : IGroup, IDisposable
+class GroupService : IGroup
 {
     private const string GroupServiceGetAllCacheKey = "GroupService-GetAll";
 
     private const string GroupServiceGetGroupsByUserIdCacheKey = "GroupService-GetGroupsByUserId";
 
     private const string GroupServiceGetGroupsByRoleIdCacheKey = "GroupService-GetGroupsByRoleId";
-
-    private CancellationTokenSource? GetGroupsByUserIdCancellationTokenSource { get; set; }
-
-    private CancellationTokenSource? GetGroupsByRoleIdCancellationTokenSource { get; set; }
 
     private IDatabase Database { get; }
 
@@ -41,13 +36,7 @@ class GroupService : IGroup, IDisposable
     /// </summary>
     /// <param name="userId"></param>
     /// <returns></returns>
-    public List<string> GetGroupsByUserId(string? userId) => CacheManager.GetOrAdd($"{GroupServiceGetGroupsByUserIdCacheKey}-{userId}", entry =>
-    {
-        GetGroupsByUserIdCancellationTokenSource = new CancellationTokenSource(TimeSpan.FromMinutes(10));
-        var token = new CancellationChangeToken(GetGroupsByUserIdCancellationTokenSource.Token);
-        entry.ExpirationTokens.Add(token);
-        return Database.Fetch<string>("select GroupID from UserGroup where UserID = @0", userId);
-    });
+    public List<string> GetGroupsByUserId(string? userId) => CacheManager.GetOrAdd($"{GroupServiceGetGroupsByUserIdCacheKey}-{userId}", entry => Database.Fetch<string>("select GroupID from UserGroup where UserID = @0", userId));
 
     /// <summary>
     /// 
@@ -71,10 +60,9 @@ class GroupService : IGroup, IDisposable
             Database.AbortTransaction();
             throw;
         }
-
         if (ret)
         {
-            GetGroupsByUserIdCancellationTokenSource?.Cancel();
+            CacheManager.Clear();
         }
         return ret;
     }
@@ -84,13 +72,7 @@ class GroupService : IGroup, IDisposable
     /// </summary>
     /// <param name="roleId"></param>
     /// <returns></returns>
-    public List<string> GetGroupsByRoleId(string? roleId) => CacheManager.GetOrAdd($"{GroupServiceGetGroupsByRoleIdCacheKey}-{roleId}", entry =>
-    {
-        GetGroupsByRoleIdCancellationTokenSource = new CancellationTokenSource(TimeSpan.FromMinutes(10));
-        var token = new CancellationChangeToken(GetGroupsByRoleIdCancellationTokenSource.Token);
-        entry.ExpirationTokens.Add(token);
-        return Database.Fetch<string>("select GroupID from RoleGroup where RoleID = @0", roleId);
-    });
+    public List<string> GetGroupsByRoleId(string? roleId) => CacheManager.GetOrAdd($"{GroupServiceGetGroupsByRoleIdCacheKey}-{roleId}", entry => Database.Fetch<string>("select GroupID from RoleGroup where RoleID = @0", roleId));
 
     /// <summary>
     /// 
@@ -117,30 +99,8 @@ class GroupService : IGroup, IDisposable
 
         if (ret)
         {
-            // reset cache
-            GetGroupsByRoleIdCancellationTokenSource?.Cancel();
+            CacheManager.Clear();
         }
         return ret;
-    }
-
-    private void Dispose(bool disposing)
-    {
-        if (disposing)
-        {
-            GetGroupsByRoleIdCancellationTokenSource?.Cancel();
-            GetGroupsByRoleIdCancellationTokenSource?.Dispose();
-
-            GetGroupsByUserIdCancellationTokenSource?.Cancel();
-            GetGroupsByUserIdCancellationTokenSource?.Dispose();
-        }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public void Dispose()
-    {
-        Dispose(true);
-        GC.SuppressFinalize(this);
     }
 }
