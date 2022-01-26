@@ -257,7 +257,7 @@ public class UserService : IUser
             using var dbcontext = DbFactory.CreateDbContext();
             var passSalt = LgbCryptography.GenerateSalt();
             password = LgbCryptography.ComputeHash(newPassword, passSalt);
-            string sql = "update user set Password = {0}, PassSalt = {1} where UserName = {2}";
+            string sql = "update Users set Password = {0}, PassSalt = {1} where UserName = {2}";
             ret = dbcontext.Database.ExecuteSqlRaw(sql, new[] { password, passSalt, userName }) > 0;
         }
         return ret;
@@ -273,7 +273,7 @@ public class UserService : IUser
     public bool SaveDisplayName(string userName, string displayName)
     {
         using var dbcontext = DbFactory.CreateDbContext();
-        return dbcontext.Database.ExecuteSqlRaw("update User set DisplayName = {1} where UserName = {0}", userName, displayName!) > 0;
+        return dbcontext.Database.ExecuteSqlRaw("update Users set DisplayName = {1} where UserName = {0}", userName, displayName!) > 0;
     }
 
     /// <summary>
@@ -286,7 +286,7 @@ public class UserService : IUser
     public bool SaveTheme(string userName, string theme)
     {
         using var dbcontext = DbFactory.CreateDbContext();
-        return dbcontext.Database.ExecuteSqlRaw("update User set Css = {1} where UserName = {0}", userName, theme!) > 0;
+        return dbcontext.Database.ExecuteSqlRaw("update Users set Css = {1} where UserName = {0}", userName, theme!) > 0;
     }
 
     /// <summary>
@@ -299,7 +299,7 @@ public class UserService : IUser
     public bool SaveLogo(string userName, string? logo)
     {
         using var dbcontext = DbFactory.CreateDbContext();
-        return dbcontext.Database.ExecuteSqlRaw("update User set Icon = {1} where UserName = {0}", userName, logo!) > 0;
+        return dbcontext.Database.ExecuteSqlRaw("update Users set Icon = {1} where UserName = {0}", userName, logo!) > 0;
     }
 
     /// <summary>
@@ -312,7 +312,7 @@ public class UserService : IUser
     public bool SaveApp(string userName, string app)
     {
         using var dbcontext = DbFactory.CreateDbContext();
-        return dbcontext.Database.ExecuteSqlRaw("update User Set App = {1} Where UserName = {0}", userName, app) > 0;
+        return dbcontext.Database.ExecuteSqlRaw("update Users Set App = {1} Where UserName = {0}", userName, app) > 0;
     }
 
     /// <summary>
