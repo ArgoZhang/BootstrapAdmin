@@ -65,11 +65,11 @@ public class Index : ComponentBase
 
     private void Redirect()
     {
-        var url = Navigation.ToBaseRelativePath(Navigation.Uri).TrimEnd('/');
         var routes = GetType().GetCustomAttributes<RouteAttribute>();
-        if (!routes.Any(i => i.Template.Equals(url, StringComparison.OrdinalIgnoreCase)))
+        if (routes.Any(i => $"{Navigation.BaseUri}{i.Template}".TrimEnd('/').Equals(Url, StringComparison.OrdinalIgnoreCase)))
         {
-            Navigation.NavigateTo(Url, true);
+            Url = "Admin/Index";
         }
+        Navigation.NavigateTo(Url, true);
     }
 }

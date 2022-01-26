@@ -43,7 +43,7 @@ public static class LoginHelper
                 var appUrl = dictService.GetHomeUrlByAppId(appId);
                 if (!string.IsNullOrEmpty(appUrl))
                 {
-                    returnUrl = string.Format(appUrl, schema, host);
+                    returnUrl = string.Format(appUrl, schema, host).TrimEnd('/');
                 }
             }
         }
