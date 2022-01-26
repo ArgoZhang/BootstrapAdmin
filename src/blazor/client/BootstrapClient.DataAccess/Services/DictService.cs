@@ -64,6 +64,6 @@ class DictService : IDict
     public string? GetAdminUrl()
     {
         var dicts = GetAll();
-        return dicts.FirstOrDefault(d => d.Category == "应用首页" && d.Name == "BA")?.Code;
+        return dicts.FirstOrDefault(d => d.Category == "应用首页" && d.Name == "BA" && d.Define == EnumDictDefine.System)?.Code;
     }
 }
