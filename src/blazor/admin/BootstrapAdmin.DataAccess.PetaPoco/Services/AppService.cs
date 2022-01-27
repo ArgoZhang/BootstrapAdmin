@@ -2,6 +2,7 @@
 // Licensed under the LGPL License, Version 3.0. See License.txt in the project root for license information.
 // Website: https://admin.blazor.zone
 
+using BootstrapAdmin.Caching;
 using BootstrapAdmin.Web.Core;
 using PetaPoco;
 
@@ -9,6 +10,8 @@ namespace BootstrapAdmin.DataAccess.PetaPoco.Services;
 
 class AppService : IApp
 {
+    private const string AppServiceGetAppsByRoleIdCacheKey = "AppService-GetAppsByRoleId";
+
     private IDatabase Database { get; }
 
     public AppService(IDatabase db)
@@ -16,7 +19,7 @@ class AppService : IApp
         Database = db;
     }
 
-    public List<string> GetAppsByRoleId(string? roleId) => Database.Fetch<string>("select AppID from RoleApp where RoleID = @0", roleId);
+    public List<string> GetAppsByRoleId(string? roleId) => CacheManager.GetOrAdd($"{AppServiceGetAppsByRoleIdCacheKey}-{roleId}", entry => Database.Fetch<string>("select AppID from RoleApp where RoleID = @0", roleId));
 
     public bool SaveAppsByRoleId(string? roleId, IEnumerable<string> appIds)
     {
@@ -33,6 +36,10 @@ class AppService : IApp
         {
             Database.AbortTransaction();
             throw;
+        }
+        if (ret)
+        {
+            CacheManager.Clear();
         }
         return ret;
     }
