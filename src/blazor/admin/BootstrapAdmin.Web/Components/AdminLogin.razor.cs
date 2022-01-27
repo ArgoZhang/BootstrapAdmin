@@ -3,6 +3,7 @@
 // Website: https://admin.blazor.zone
 
 using BootstrapAdmin.Web.Core;
+using BootstrapAdmin.Web.Utils;
 using Microsoft.JSInterop;
 
 namespace BootstrapAdmin.Web.Components;
@@ -66,8 +67,14 @@ public partial class AdminLogin : IDisposable
     [NotNull]
     private IIPLocatorProvider? IPLocatorProvider { get; set; }
 
+    private string? LoginView { get; set; }
+
     private string? ClassString => CssBuilder.Default("login-wrap")
         .AddClass("is-mobile", UseMobileLogin)
+        .Build();
+
+    private string? LoginClassString => CssBuilder.Default("wrap")
+        .AddClass(LoginView)
         .Build();
 
     /// <summary>
@@ -77,6 +84,7 @@ public partial class AdminLogin : IDisposable
     {
         base.OnInitialized();
 
+        LoginView = LoginHelper.GetCurrentLoginTheme(DictsService.GetCurrentLogin());
         Title = DictsService.GetWebTitle();
         PostUrl = QueryHelper.AddQueryString("Account/Login", new Dictionary<string, string?>
         {
