@@ -45,12 +45,9 @@ class UserService : IUser
         return isAuth;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="userName"></param>
-    /// <returns></returns>
-    public User? GetUserByUserName(string? userName) => string.IsNullOrEmpty(userName) ? null : Database.FirstOrDefault<User>("Where UserName = @0", userName);
+    private const string UserServiceGetUserByUserNameCacheKey = "UserService-GetUserByUserName";
+
+    public User? GetUserByUserName(string? userName) => CacheManager.GetOrAdd($"{UserServiceGetUserByUserNameCacheKey}-{userName}", entry => string.IsNullOrEmpty(userName) ? null : Database.FirstOrDefault<User>("Where UserName = @0", userName));
 
     private const string UserServiceGetAppsByUserNameCacheKey = "UserService-GetAppsByUserName";
 
@@ -173,17 +170,41 @@ class UserService : IUser
     /// <summary>
     /// 
     /// </summary>
-    public bool SaveDisplayName(string userName, string displayName) => Database.Update<User>("set DisplayName = @1 where UserName = @0", userName, displayName) == 1;
+    public bool SaveDisplayName(string userName, string displayName)
+    {
+        var ret = Database.Update<User>("set DisplayName = @1 where UserName = @0", userName, displayName) == 1;
+        if (ret)
+        {
+            CacheManager.Clear();
+        }
+        return ret;
+    }
 
     /// <summary>
     /// 
     /// </summary>
-    public bool SaveTheme(string userName, string theme) => Database.Update<User>("set Css = @1 where UserName = @0", userName, theme) == 1;
+    public bool SaveTheme(string userName, string theme)
+    {
+        var ret = Database.Update<User>("set Css = @1 where UserName = @0", userName, theme) == 1;
+        if (ret)
+        {
+            CacheManager.Clear();
+        }
+        return ret;
+    }
 
     /// <summary>
     /// 
     /// </summary>
-    public bool SaveLogo(string userName, string? logo) => Database.Update<User>("set Icon = @1 where UserName = @0", userName, logo) == 1;
+    public bool SaveLogo(string userName, string? logo)
+    {
+        var ret = Database.Update<User>("set Icon = @1 where UserName = @0", userName, logo) == 1;
+        if (ret)
+        {
+            CacheManager.Clear();
+        }
+        return ret;
+    }
 
     /// <summary>
     /// 创建手机用户
@@ -296,7 +317,11 @@ class UserService : IUser
 
     public bool SaveApp(string userName, string app)
     {
-        Database.Update<User>("Set App = @1 Where UserName = @0", userName, app);
-        return true;
+        var ret = Database.Update<User>("Set App = @1 Where UserName = @0", userName, app) == 1;
+        if (ret)
+        {
+            CacheManager.Clear();
+        }
+        return ret;
     }
 }
