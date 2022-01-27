@@ -50,4 +50,20 @@ public static class LoginHelper
 
         return returnUrl ?? "/Admin/Index";
     }
+
+    /// <summary>
+    /// 将字典表中的配置 1-Login-Gitee 转化为 gitee
+    /// </summary>
+    /// <param name="loginTheme"></param>
+    /// <returns></returns>
+    public static string? GetCurrentLoginTheme(string loginTheme)
+    {
+        string? ret = null;
+        var segs = loginTheme.Split('-');
+        if (segs.Length == 3)
+        {
+            ret = segs[2].ToLowerInvariant();
+        }
+        return ret;
+    }
 }
