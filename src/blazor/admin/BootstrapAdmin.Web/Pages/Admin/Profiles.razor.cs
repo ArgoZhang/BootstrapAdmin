@@ -56,6 +56,10 @@ public partial class Profiles
     [NotNull]
     private string? DefaultLogoFolder { get; set; }
 
+    [CascadingParameter]
+    [NotNull]
+    private Layout? Layout { get; set; }
+
     /// <summary>
     /// 
     /// </summary>
@@ -109,8 +113,13 @@ public partial class Profiles
 
     private async Task OnSaveDisplayName(EditContext context)
     {
-        var ret = UserService.SaveDisplayName(CurrentUser.DisplayName, CurrentUser.UserName);
+        var ret = UserService.SaveDisplayName(CurrentUser.UserName, CurrentUser.DisplayName);
         await ShowToast(ret, "显示名称");
+        if (ret)
+        {
+            AppContext.DisplayName = CurrentUser.DisplayName;
+            await RenderLayout("displayName");
+        }
     }
 
     private async Task OnSavePassword(EditContext context)
@@ -176,5 +185,13 @@ public partial class Profiles
         }
         await ShowToast(ret, "用户头像", "删除");
         return ret;
+    }
+
+    private async Task RenderLayout(string key)
+    {
+        if (Layout.OnUpdateAsync != null)
+        {
+            await Layout.OnUpdateAsync(key);
+        }
     }
 }

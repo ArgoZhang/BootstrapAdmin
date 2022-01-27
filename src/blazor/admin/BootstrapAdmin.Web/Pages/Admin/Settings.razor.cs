@@ -180,9 +180,9 @@ public partial class Settings
 
     private async Task RenderLayout(string key)
     {
-        if (Layout.OnUpdate != null)
+        if (Layout.OnUpdateAsync != null)
         {
-            await Layout.OnUpdate(key);
+            await Layout.OnUpdateAsync(key);
         }
     }
 }

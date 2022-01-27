@@ -74,8 +74,6 @@ namespace BootstrapAdmin.Web.Shared
 
         private string? Footer { get; set; }
 
-        private string? DisplayName { get; set; }
-
         private string? UserName { get; set; }
 
         private bool Lock { get; set; }
@@ -133,9 +131,8 @@ namespace BootstrapAdmin.Web.Shared
             if (!string.IsNullOrEmpty(UserName))
             {
                 var user = UsersService.GetUserByUserName(UserName);
-                DisplayName = user?.DisplayName ?? "未注册账户";
                 Context.UserName = UserName;
-                Context.DisplayName = DisplayName;
+                Context.DisplayName = user?.DisplayName ?? "未注册账户"; ;
                 Icon = string.IsNullOrEmpty(user?.Icon) ? "/images/uploader/default.jpg" : GetIcon(user.Icon);
 
                 MenuItems = NavigationsService.GetAllMenus(UserName).ToMenus();
@@ -161,7 +158,7 @@ namespace BootstrapAdmin.Web.Shared
         /// <summary>
         /// 
         /// </summary>
-        public Task OnUpdate(string key)
+        public Task OnUpdateAsync(string key)
         {
             if (key == "title")
             {
