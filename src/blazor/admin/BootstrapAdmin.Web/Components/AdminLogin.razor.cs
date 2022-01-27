@@ -78,7 +78,7 @@ public partial class AdminLogin : IDisposable
         base.OnInitialized();
 
         Title = DictsService.GetWebTitle();
-        PostUrl = QueryHelper.AddQueryString("/Account/Login", new Dictionary<string, string?>
+        PostUrl = QueryHelper.AddQueryString("Account/Login", new Dictionary<string, string?>
         {
             ["ReturnUrl"] = ReturnUrl,
             ["AppId"] = AppId
@@ -88,7 +88,7 @@ public partial class AdminLogin : IDisposable
     void OnClickSwitchButton()
     {
         var rem = RememberPassword ? "true" : "false";
-        PostUrl = QueryHelper.AddQueryString(UseMobileLogin ? "/Account/Mobile" : "/Account/Login", new Dictionary<string, string?>()
+        PostUrl = QueryHelper.AddQueryString(UseMobileLogin ? "Account/Mobile" : "Account/Login", new Dictionary<string, string?>()
         {
             [nameof(ReturnUrl)] = ReturnUrl,
             ["AppId"] = AppId,
