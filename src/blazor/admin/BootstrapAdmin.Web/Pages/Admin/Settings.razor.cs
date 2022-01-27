@@ -48,7 +48,7 @@ public partial class Settings
         base.OnInitialized();
 
         IsDemo = DictService.IsDemo();
-        Logins = DictService.GetLogins().ToSelectedItemList();
+        Logins = DictService.GetLogins().ToSelectedItemList().OrderBy(i => i.Value).ToList();
         Themes = DictService.GetThemes().ToSelectedItemList();
         IPLocators = DictService.GetIpLocators().ToSelectedItemList();
         IPLocators.Insert(0, new SelectedItem("", "未选择"));
