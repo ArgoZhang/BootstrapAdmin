@@ -18,3 +18,7 @@ li {
     li:not(:last-child) {
         margin-right: 1rem;
     }
+
+.white + .login-footer li a {
+    color: #fff;
+}

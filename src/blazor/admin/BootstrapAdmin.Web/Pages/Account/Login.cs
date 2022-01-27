@@ -31,6 +31,13 @@ public class Login : ComponentBase
     [Parameter]
     public string? AppId { get; set; }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    [SupplyParameterFromQuery]
+    [Parameter]
+    public string? View { get; set; }
+
     [Inject]
     [NotNull]
     private IDict? DictsService { get; set; }
@@ -41,7 +48,11 @@ public class Login : ComponentBase
     /// <param name="builder"></param>
     protected override void BuildRenderTree(RenderTreeBuilder builder)
     {
-        var view = LoginHelper.GetCurrentLoginTheme(DictsService.GetCurrentLogin());
+        if (!string.IsNullOrEmpty(View))
+        {
+            View = $"0-{View}";
+        }
+        var view = LoginHelper.GetCurrentLoginTheme(View ?? DictsService.GetCurrentLogin());
         var componentType = view switch
         {
             "gitee" => typeof(AdminLoginGitee),
