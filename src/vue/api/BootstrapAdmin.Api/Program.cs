@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Configure the service container.
 builder.Services.AddControllers();
+builder.Services.AddRouting(s => s.LowercaseUrls = true);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
