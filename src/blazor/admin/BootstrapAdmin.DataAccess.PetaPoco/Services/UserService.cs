@@ -2,6 +2,7 @@
 // Licensed under the LGPL License, Version 3.0. See License.txt in the project root for license information.
 // Website: https://admin.blazor.zone
 
+using BootstrapAdmin.Caching;
 using BootstrapAdmin.DataAccess.Models;
 using BootstrapAdmin.Web.Core;
 using Longbow.Security.Cryptography;
@@ -51,20 +52,20 @@ class UserService : IUser
     /// <returns></returns>
     public User? GetUserByUserName(string? userName) => string.IsNullOrEmpty(userName) ? null : Database.FirstOrDefault<User>("Where UserName = @0", userName);
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="userName"></param>
-    /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
-    public List<string> GetApps(string userName) => Database.Fetch<string>($"select d.Code from Dicts d inner join RoleApp ra on d.Code = ra.AppId inner join (select r.Id from Roles r inner join UserRole ur on r.ID = ur.RoleID inner join Users u on ur.UserID = u.ID where u.UserName = @0 union select r.Id from Roles r inner join RoleGroup rg on r.ID = rg.RoleID inner join {Database.Provider.EscapeSqlIdentifier("Groups")} g on rg.GroupID = g.ID inner join UserGroup ug on ug.GroupID = g.ID inner join Users u on ug.UserID = u.ID where u.UserName = @0) r on ra.RoleId = r.ID union select Code from Dicts where Category = @1 and exists(select r.ID from Roles r inner join UserRole ur on r.ID = ur.RoleID inner join Users u on ur.UserID = u.ID where u.UserName = @0 and r.RoleName = @2 union select r.ID from Roles r inner join RoleGroup rg on r.ID = rg.RoleID inner join {Database.Provider.EscapeSqlIdentifier("Groups")} g on rg.GroupID = g.ID inner join UserGroup ug on ug.GroupID = g.ID inner join Users u on ug.UserID = u.ID where u.UserName = @0 and r.RoleName = @2)", userName, "应用程序", "Administrators");
+    private const string UserServiceGetAppsByUserNameCacheKey = "UserService-GetAppsByUserName";
+
+    public List<string> GetApps(string userName) => CacheManager.GetOrAdd($"{UserServiceGetAppsByUserNameCacheKey}-{userName}", entry => Database.Fetch<string>($"select d.Code from Dicts d inner join RoleApp ra on d.Code = ra.AppId inner join (select r.Id from Roles r inner join UserRole ur on r.ID = ur.RoleID inner join Users u on ur.UserID = u.ID where u.UserName = @0 union select r.Id from Roles r inner join RoleGroup rg on r.ID = rg.RoleID inner join {Database.Provider.EscapeSqlIdentifier("Groups")} g on rg.GroupID = g.ID inner join UserGroup ug on ug.GroupID = g.ID inner join Users u on ug.UserID = u.ID where u.UserName = @0) r on ra.RoleId = r.ID union select Code from Dicts where Category = @1 and exists(select r.ID from Roles r inner join UserRole ur on r.ID = ur.RoleID inner join Users u on ur.UserID = u.ID where u.UserName = @0 and r.RoleName = @2 union select r.ID from Roles r inner join RoleGroup rg on r.ID = rg.RoleID inner join {Database.Provider.EscapeSqlIdentifier("Groups")} g on rg.GroupID = g.ID inner join UserGroup ug on ug.GroupID = g.ID inner join Users u on ug.UserID = u.ID where u.UserName = @0 and r.RoleName = @2)", userName, "应用程序", "Administrators"));
+
+    private const string UserServiceGetAppIdByUserNameCacheKey = "UserService-GetAppIdByUserName";
 
     /// <summary>
     /// 通过用户名获得指定的前台 AppId
     /// </summary>
     /// <param name="userName"></param>
     /// <returns></returns>
-    public string? GetAppIdByUserName(string userName) => Database.FirstOrDefault<User>("Where UserName = @0", userName)?.App;
+    public string? GetAppIdByUserName(string userName) => CacheManager.GetOrAdd($"{UserServiceGetAppIdByUserNameCacheKey}-{userName}", entry => Database.FirstOrDefault<User>("Where UserName = @0", userName)?.App);
+
+    private const string UserServiceGetRolesByUserNameCacheKey = "UserService-GetRolesByUserName";
 
     /// <summary>
     /// 
@@ -72,15 +73,15 @@ class UserService : IUser
     /// <param name="userName"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public List<string> GetRoles(string userName) => Database.Fetch<string>($"select r.RoleName from Roles r inner join UserRole ur on r.ID=ur.RoleID inner join Users u on ur.UserID = u.ID and u.UserName = @0 union select r.RoleName from Roles r inner join RoleGroup rg on r.ID = rg.RoleID inner join {Database.Provider.EscapeSqlIdentifier("Groups")} g on rg.GroupID = g.ID inner join UserGroup ug on ug.GroupID = g.ID inner join Users u on ug.UserID = u.ID and u.UserName = @0", userName);
+    public List<string> GetRoles(string userName) => CacheManager.GetOrAdd($"{UserServiceGetRolesByUserNameCacheKey}-{userName}", entry => Database.Fetch<string>($"select r.RoleName from Roles r inner join UserRole ur on r.ID=ur.RoleID inner join Users u on ur.UserID = u.ID and u.UserName = @0 union select r.RoleName from Roles r inner join RoleGroup rg on r.ID = rg.RoleID inner join {Database.Provider.EscapeSqlIdentifier("Groups")} g on rg.GroupID = g.ID inner join UserGroup ug on ug.GroupID = g.ID inner join Users u on ug.UserID = u.ID and u.UserName = @0", userName));
+
+    private const string UserServiceGetUsersByGroupIdCacheKey = "UserService-GetUsersByGroupId";
 
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
-    public List<string> GetUsersByGroupId(string? id) => Database.Fetch<string>("select UserID from UserGroup where GroupID = @0", id);
+    /// <param name="groupId"></param>
+    public List<string> GetUsersByGroupId(string? groupId) => CacheManager.GetOrAdd($"{UserServiceGetUsersByGroupIdCacheKey}-{groupId}", entry => Database.Fetch<string>("select UserID from UserGroup where GroupID = @0", groupId));
 
     /// <summary>
     /// 
@@ -105,15 +106,21 @@ class UserService : IUser
             Database.AbortTransaction();
             throw;
         }
+        if (ret)
+        {
+            CacheManager.Clear();
+        }
         return ret;
     }
+
+    private const string UserServiceGetUsersByRoleIdCacheKey = "UserService-GetUsersByRoleId";
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="roleId"></param>
     /// <returns></returns>
-    public List<string> GetUsersByRoleId(string? roleId) => Database.Fetch<string>("select UserID from UserRole where RoleID = @0", roleId);
+    public List<string> GetUsersByRoleId(string? roleId) => CacheManager.GetOrAdd($"{UserServiceGetUsersByRoleIdCacheKey}-{roleId}", entry => Database.Fetch<string>("select UserID from UserRole where RoleID = @0", roleId));
 
     /// <summary>
     /// 
@@ -136,6 +143,10 @@ class UserService : IUser
         {
             Database.AbortTransaction();
             throw;
+        }
+        if (ret)
+        {
+            CacheManager.Clear();
         }
         return ret;
     }
@@ -225,6 +236,10 @@ class UserService : IUser
             Database.AbortTransaction();
             throw;
         }
+        if (ret)
+        {
+            CacheManager.Clear();
+        }
         return ret;
     }
 
@@ -271,6 +286,10 @@ class UserService : IUser
             user.Password = pwd;
             Database.Update(user);
             ret = true;
+        }
+        if (ret)
+        {
+            CacheManager.Clear();
         }
         return ret;
     }
