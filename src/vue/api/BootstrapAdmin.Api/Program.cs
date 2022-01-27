@@ -1,6 +1,4 @@
 ﻿using Microsoft.OpenApi.Models;
-using PetaPoco;
-using PetaPoco.Providers;
 
 var builder = WebApplication.CreateBuilder(args);
 
