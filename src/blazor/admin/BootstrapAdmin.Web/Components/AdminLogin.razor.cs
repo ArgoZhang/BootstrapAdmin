@@ -13,19 +13,40 @@ namespace BootstrapAdmin.Web.Components;
 /// </summary>
 public partial class AdminLogin : IDisposable
 {
-    private string? Title { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    protected string? Title { get; set; }
 
-    private bool AllowMobile { get; set; } = true;
+    /// <summary>
+    /// 
+    /// </summary>
+    protected bool AllowMobile { get; set; } = true;
 
-    private bool UseMobileLogin { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    protected bool UseMobileLogin { get; set; }
 
-    private bool AllowOAuth { get; set; } = true;
+    /// <summary>
+    /// 
+    /// </summary>
+    protected bool AllowOAuth { get; set; } = true;
 
-    private bool RememberPassword { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    protected bool RememberPassword { get; set; }
 
-    private ElementReference LoginForm { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    protected ElementReference LoginForm { get; set; }
 
-    private string? PostUrl { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    protected string? PostUrl { get; set; }
 
     private JSInterop<AdminLogin>? Interop { get; set; }
 
@@ -41,13 +62,19 @@ public partial class AdminLogin : IDisposable
     [Parameter]
     public string? AppId { get; set; }
 
+    /// <summary>
+    /// 
+    /// </summary>
     [Inject]
     [NotNull]
-    private IDict? DictsService { get; set; }
+    protected IDict? DictsService { get; set; }
 
+    /// <summary>
+    /// 
+    /// </summary>
     [Inject]
     [NotNull]
-    private ILogin? LoginService { get; set; }
+    protected ILogin? LoginService { get; set; }
 
     [Inject]
     [NotNull]
@@ -58,7 +85,7 @@ public partial class AdminLogin : IDisposable
     /// </summary>
     [Inject]
     [NotNull]
-    private WebClientService? WebClientService { get; set; }
+    protected WebClientService? WebClientService { get; set; }
 
     /// <summary>
     /// 
@@ -67,14 +94,11 @@ public partial class AdminLogin : IDisposable
     [NotNull]
     private IIPLocatorProvider? IPLocatorProvider { get; set; }
 
-    private string? LoginView { get; set; }
-
-    private string? ClassString => CssBuilder.Default("login-wrap")
+    /// <summary>
+    /// 
+    /// </summary>
+    protected string? ClassString => CssBuilder.Default("login-wrap")
         .AddClass("is-mobile", UseMobileLogin)
-        .Build();
-
-    private string? LoginClassString => CssBuilder.Default("wrap")
-        .AddClass(LoginView)
         .Build();
 
     /// <summary>
@@ -84,7 +108,6 @@ public partial class AdminLogin : IDisposable
     {
         base.OnInitialized();
 
-        LoginView = LoginHelper.GetCurrentLoginTheme(DictsService.GetCurrentLogin());
         Title = DictsService.GetWebTitle();
         PostUrl = QueryHelper.AddQueryString("Account/Login", new Dictionary<string, string?>
         {
@@ -93,7 +116,10 @@ public partial class AdminLogin : IDisposable
         });
     }
 
-    void OnClickSwitchButton()
+    /// <summary>
+    /// 
+    /// </summary>
+    protected void OnClickSwitchButton()
     {
         var rem = RememberPassword ? "true" : "false";
         PostUrl = QueryHelper.AddQueryString(UseMobileLogin ? "Account/Mobile" : "Account/Login", new Dictionary<string, string?>()
@@ -121,18 +147,29 @@ public partial class AdminLogin : IDisposable
         }
     }
 
-    Task OnRememberPassword(bool remember)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="remember"></param>
+    /// <returns></returns>
+    protected Task OnRememberPassword(bool remember)
     {
         OnClickSwitchButton();
         return Task.CompletedTask;
     }
 
-    void OnSignUp()
+    /// <summary>
+    /// 
+    /// </summary>
+    protected void OnSignUp()
     {
 
     }
 
-    void OnForgotPassword()
+    /// <summary>
+    /// 
+    /// </summary>
+    protected void OnForgotPassword()
     {
 
     }

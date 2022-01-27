@@ -1,0 +1,228 @@
+﻿.wrap {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    color: #40485b;
+    background-color: #f1f2f7;
+    -webkit-font-smoothing: antialiased;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+}
+
+.container {
+    display: flex;
+    box-shadow: 0px 20px 80px 0px rgb(0 0 0 / 30%);
+    width: 1000px;
+    height: 500px;
+    padding: 0;
+    margin: 0 auto;
+    margin-top: calc(100vh / 2 - 275px);
+}
+
+section {
+    width: 50%;
+}
+
+.login-sidebox {
+    position: relative;
+    background: -webkit-gradient(linear, left bottom, left top, from(#3a485a), to(#607089));
+    background: linear-gradient(0deg, #3a485a 0%, #607089 100%);
+    color: #fff;
+}
+
+    .login-sidebox::before,
+    .login-sidebox::after {
+        content: '';
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        position: absolute;
+    }
+
+    .login-sidebox::before {
+        background: url(../images/left-1.png) no-repeat 0 0;
+    }
+
+    .login-sidebox::after {
+        background: url(../images/left-2.png) no-repeat right bottom;
+    }
+
+    .login-sidebox .login-sidebox-content {
+        padding: 80px 80px 48px;
+        position: relative;
+        z-index: 1;
+    }
+
+.login-sidebox-header {
+    margin-bottom: 40px;
+}
+
+.login-sidebox-logo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+    .login-sidebox-logo img {
+        width: 48px;
+        height: auto;
+        border-radius: 50%;
+        margin-right: 14px;
+    }
+
+    .login-sidebox-logo span {
+        display: inline;
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
+
+.login-sidebox-subtitle {
+    font-size: 20pt;
+    font-weight: normal;
+}
+
+.login-sidebox-footer {
+    margin-top: 40px;
+    border-top: solid 1px #ddd;
+    padding-top: 28px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+    .login-sidebox-footer a {
+        cursor: pointer;
+        color: #fff;
+    }
+
+.login-form {
+    padding: 64px;
+    font-size: 0.875rem;
+}
+
+.login-form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 20px;
+}
+
+    .login-form-header h2 {
+        margin-bottom: 0;
+        font-size: 24px;
+        font-weight: bold;
+        line-height: 32px;
+    }
+
+.login-list {
+    display: flex;
+    justify-content: space-between;
+}
+
+    .login-list .item {
+        width: 32px;
+        height: 32px;
+    }
+
+.forget-password {
+    padding: 16px 0;
+}
+
+.form-signin-heading {
+    margin: 0;
+    padding: 20px 15px;
+    text-align: center;
+    background-color: #41cac0;
+    border-radius: 5px 5px 0 0;
+    color: #fff;
+}
+
+.login-sms,
+.is-mobile .login-up {
+    display: none;
+}
+
+.is-mobile .login-sms {
+    display: block;
+}
+
+::deep .btn-login {
+    color: #fff;
+    background: #fe7300;
+    border-color: transparent;
+    text-transform: uppercase;
+    font-weight: 300;
+    font-family: 'Open Sans', sans-serif;
+    line-height: 1;
+}
+
+    ::deep .btn-login:hover {
+        background: #fe7300;
+    }
+
+::deep .divider-wrap {
+    background-color: #7c86bb;
+}
+
+::deep .divider-text {
+    background-color: #f1f2f7;
+}
+
+.login-list {
+    display: flex;
+    justify-content: space-between;
+}
+
+    .login-list ::deep img {
+        width: 32px;
+        height: 32px;
+    }
+
+::deep .btn-sms {
+    width: 140px;
+}
+
+@media (max-width: 767px) {
+    .form-signin {
+        margin: 0 auto;
+        background: #fff;
+        border-radius: 5px;
+        max-width: 320px;
+        border: solid 1px #ddd;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.125);
+    }
+}
+
+@media (min-width: 768px) {
+    .form-signin-heading {
+        padding: 28px 0;
+        background-color: transparent;
+    }
+
+    .slidercaptcha {
+        width: 300px;
+    }
+
+        .slidercaptcha, .slidercaptcha.oauth {
+            height: 280px;
+        }
+
+            .slidercaptcha.card .card-body {
+                padding: 15px 15px 0 15px;
+            }
+
+    .login-footer {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+    }
+
+        .login-footer .login-footer-body li a {
+            color: #e0e0e0;
+        }
+}
+
+::deep .divider {
+    margin: 1.5rem 0;
+}

@@ -148,3 +148,17 @@
             color: #e0e0e0;
         }
 }
+
+@media (min-width: 768px) {
+    .gitee.wrap {
+        background-color: #f1f2f7;
+        background-image: none;
+    }
+
+    .gitee .container {
+        width: 704px;
+        height: 404px;
+        margin: 0 auto;
+        margin-top: calc(100vh / 2 - 190px);
+    }
+}
