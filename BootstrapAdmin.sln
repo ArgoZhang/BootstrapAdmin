@@ -157,13 +157,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BootstrapClient.Web", "src\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BootStarpAdmin.DataAccess.FreeSql", "src\blazor\admin\BootStarpAdmin.DataAccess.FreeSql\BootStarpAdmin.DataAccess.FreeSql.csproj", "{11122D97-B349-4A3E-B7DD-73B8B363C47C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BootStarpAdmin.DataAccess.SqlSugar", "src\blazor\admin\BootStarpAdmin.DataAccess.SqlSugar\BootStarpAdmin.DataAccess.SqlSugar.csproj", "{1D20E6CF-9825-4CDE-B732-AE586BD1AABA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BootStarpAdmin.DataAccess.SqlSugar", "src\blazor\admin\BootStarpAdmin.DataAccess.SqlSugar\BootStarpAdmin.DataAccess.SqlSugar.csproj", "{1D20E6CF-9825-4CDE-B732-AE586BD1AABA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BootstrapClient.Web.Core", "src\blazor\client\BootstrapClient.Web.Core\BootstrapClient.Web.Core.csproj", "{FFDF9FF9-0B29-47D3-AD42-53A476B570EC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BootstrapClient.DataAccess.Models", "src\blazor\client\BootstrapClient.Web.Models\BootstrapClient.DataAccess.Models.csproj", "{CC3DF23A-2880-438F-BDEB-DB093E919ABA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BootstrapAdmin.Caching", "src\blazor\admin\BootstrapAdmin.Caching\BootstrapAdmin.Caching.csproj", "{ADD20515-1C1C-418B-84F6-8B05A7AA315B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "vue", "vue", "{31F93CAE-7ADD-490F-A129-49D90FE4574A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "api", "api", "{FED2B095-F0EA-4E52-A095-BD4C5AEA5C04}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BootstrapAdmin.Api", "src\vue\api\BootstrapAdmin.Api\BootstrapAdmin.Api.csproj", "{7B38D4EF-9297-40B4-ADA5-0A67FC82CF1C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -251,6 +257,10 @@ Global
 		{ADD20515-1C1C-418B-84F6-8B05A7AA315B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADD20515-1C1C-418B-84F6-8B05A7AA315B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ADD20515-1C1C-418B-84F6-8B05A7AA315B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B38D4EF-9297-40B4-ADA5-0A67FC82CF1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B38D4EF-9297-40B4-ADA5-0A67FC82CF1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B38D4EF-9297-40B4-ADA5-0A67FC82CF1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B38D4EF-9297-40B4-ADA5-0A67FC82CF1C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -293,6 +303,9 @@ Global
 		{FFDF9FF9-0B29-47D3-AD42-53A476B570EC} = {55A2459A-6BDE-4493-B2C0-5BE1673E99EE}
 		{CC3DF23A-2880-438F-BDEB-DB093E919ABA} = {55A2459A-6BDE-4493-B2C0-5BE1673E99EE}
 		{ADD20515-1C1C-418B-84F6-8B05A7AA315B} = {45ADEF9B-C8BD-4224-9E12-F6716E85A22C}
+		{31F93CAE-7ADD-490F-A129-49D90FE4574A} = {41B6D37A-5E5E-42B3-85E4-D81A81E3D757}
+		{FED2B095-F0EA-4E52-A095-BD4C5AEA5C04} = {31F93CAE-7ADD-490F-A129-49D90FE4574A}
+		{7B38D4EF-9297-40B4-ADA5-0A67FC82CF1C} = {FED2B095-F0EA-4E52-A095-BD4C5AEA5C04}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {221EAE38-5F75-4391-9A48-E462A9F3B8FC}
