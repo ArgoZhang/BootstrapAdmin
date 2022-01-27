@@ -49,7 +49,10 @@ public class Login : ComponentBase
         };
         builder.OpenComponent(0, componentType);
         builder.AddAttribute(1, nameof(AdminLogin.ReturnUrl), ReturnUrl);
-        builder.AddAttribute(1, nameof(AdminLogin.AppId), AppId);
+        builder.AddAttribute(2, nameof(AdminLogin.AppId), AppId);
+        builder.CloseComponent();
+
+        builder.OpenComponent<AdminLoginFooter>(3);
         builder.CloseComponent();
     }
 }

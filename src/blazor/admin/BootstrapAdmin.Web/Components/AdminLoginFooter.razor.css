@@ -1,0 +1,20 @@
+﻿.login-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.login-footer-body {
+    display: flex;
+}
+
+li {
+    list-style: none;
+}
+
+    li:not(:last-child) {
+        margin-right: 1rem;
+    }
