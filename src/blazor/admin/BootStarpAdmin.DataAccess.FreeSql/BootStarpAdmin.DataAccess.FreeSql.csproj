@@ -6,7 +6,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BootstrapBlazor" Version="6.2.7" />
+    <PackageReference Include="BootstrapBlazor" Version="6.2.9-beta07" />
     <PackageReference Include="FreeSql.Provider.Sqlite" Version="3.0.100" />
   </ItemGroup>
 
