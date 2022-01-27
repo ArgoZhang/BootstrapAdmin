@@ -17,6 +17,8 @@ class RoleService : IRole
 
     private const string RoleServiceGetRolesByGroupIdCacheKey = "RoleService-GetRolesByGroupId";
 
+    private const string RoleServiceGetRolesByMenuIdCacheKey = "RoleService-GetRolesByMenusId";
+
     private IDatabase Database { get; }
 
     /// <summary>
@@ -29,14 +31,13 @@ class RoleService : IRole
     /// 
     /// </summary>
     /// <returns></returns>
-    public List<Role> GetAll() => CacheManager.GetOrAdd(RoleServiceGetAllCacheKey, entry => Database.Fetch<Role>());
+    public List<Role> GetAll() => CacheManager.GetOrAdd(RoleServiceGetAllCacheKey, entry => CacheManager.GetOrAdd(RoleServiceGetAllCacheKey, entry => Database.Fetch<Role>()));
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="groupId"></param>
-    /// <returns></returns>
     public List<string> GetRolesByGroupId(string? groupId) => CacheManager.GetOrAdd($"{RoleServiceGetRolesByGroupIdCacheKey}-{groupId}", entry => Database.Fetch<string>("select RoleID from RoleGroup where GroupID = @0", groupId));
+
+    public List<string> GetRolesByUserId(string? userId) => CacheManager.GetOrAdd($"{RoleServiceGetRolesByUserIdCacheKey}-{userId}", entry => Database.Fetch<string>("select RoleID from UserRole where UserID = @0", userId));
+
+    public List<string> GetRolesByMenuId(string? menuId) => CacheManager.GetOrAdd($"{RoleServiceGetRolesByMenuIdCacheKey}-{menuId}", entry => Database.Fetch<string>("select RoleID from NavigationRole where NavigationID = @0", menuId));
 
     /// <summary>
     /// 
@@ -60,19 +61,12 @@ class RoleService : IRole
             Database.AbortTransaction();
             throw;
         }
-        if(ret)
+        if (ret)
         {
             CacheManager.Clear();
         }
         return ret;
     }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="userId"></param>
-    /// <returns></returns>
-    public List<string> GetRolesByUserId(string? userId) => CacheManager.GetOrAdd($"{RoleServiceGetRolesByUserIdCacheKey}-{userId}", entry => Database.Fetch<string>("select RoleID from UserRole where UserID = @0", userId));
 
     /// <summary>
     /// 
@@ -96,10 +90,12 @@ class RoleService : IRole
             Database.AbortTransaction();
             throw;
         }
+        if (ret)
+        {
+            CacheManager.Clear();
+        }
         return ret;
     }
-
-    public List<string> GetRolesByMenuId(string? menuId) => CacheManager.GetOrAdd($"{RoleServiceGetRolesByUserIdCacheKey}-{menuId}", entry => Database.Fetch<string>("select RoleID from NavigationRole where NavigationID = @0", menuId));
 
     public bool SaveRolesByMenuId(string? menuId, IEnumerable<string> roleIds)
     {
