@@ -56,4 +56,18 @@ public class AdminService : IBootstrapAdminService
         }
         return Task.FromResult(ret);
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="userName"></param>
+    /// <param name="url"></param>
+    /// <param name="blockName"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public bool AuhorizingBlock(string userName, string url, string blockName)
+    {
+        // Client 暂时未使用
+        return true;
+    }
 }
