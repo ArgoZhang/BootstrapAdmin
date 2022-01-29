@@ -30,9 +30,9 @@ namespace BootstrapAdmin.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult<List<User>> Get()
+        public IActionResult Get()
         {
-            return UserService.GetAll();
+            return new JsonResult(new { Code = "0", Message = "login successed!", Result = new { roles = Array.Empty<string>() } }) ;
         }
 
         /// <summary>
