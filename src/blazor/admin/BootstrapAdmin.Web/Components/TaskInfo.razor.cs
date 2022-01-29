@@ -10,7 +10,7 @@ namespace BootstrapAdmin.Web.Components;
 /// <summary>
 /// 
 /// </summary>
-public partial class TaskInfo
+public partial class TaskInfo : IDisposable
 {
     /// <summary>
     /// 
@@ -20,7 +20,7 @@ public partial class TaskInfo
     [EditorRequired]
     public TasksModel? Model { get; set; }
 
-    private List<ConsoleMessageItem> Messages { get; } = new();
+    private List<ConsoleMessageItem> Messages { get; } = new(24);
 
     /// <summary>
     /// 
@@ -47,6 +47,31 @@ public partial class TaskInfo
         {
             Message = message
         });
+        if (Messages.Count > 20)
+        {
+            Messages.RemoveAt(0);
+        }
         await InvokeAsync(StateHasChanged);
+    }
+
+    private void Dispose(bool disposing)
+    {
+        if (disposing)
+        {
+            var sche = TaskServicesManager.Get(Model.Name);
+            if (sche != null)
+            {
+                sche.Triggers.First().PulseCallback = null;
+            }
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
     }
 }

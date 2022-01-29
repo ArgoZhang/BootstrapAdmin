@@ -167,7 +167,7 @@ public partial class Tasks
         var option = new DialogOption()
         {
             Class = "task-info",
-            Title = $"{model.Name} - 日志窗口(最新50条)",
+            Title = $"{model.Name} - 日志窗口(最新 20 条)",
             Component = BootstrapDynamicComponent.CreateComponent<TaskInfo>(new Dictionary<string, object?>
             {
                 [nameof(TaskInfo.Model)] = model
