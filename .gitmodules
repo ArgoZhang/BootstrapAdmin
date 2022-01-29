@@ -1,0 +1,3 @@
+[submodule "src/vue/admin"]
+	path = src/vue/admin
+	url = https://gitee.com/zhangpeihang/vue-vben-admin.git
