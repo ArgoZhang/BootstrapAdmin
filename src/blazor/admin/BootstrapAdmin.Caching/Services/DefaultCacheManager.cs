@@ -71,9 +71,9 @@ class DefaultCacheManager : ICacheManager
         {
             Cache.Remove(key);
         }
-        else
+        else if (Cache is MemoryCache c)
         {
-            //Cache.Compact(100);
+            c.Compact(100);
         }
     }
 }
