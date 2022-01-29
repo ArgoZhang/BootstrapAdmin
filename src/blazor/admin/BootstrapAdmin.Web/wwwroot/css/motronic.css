@@ -1,4 +1,4 @@
-﻿.layout.is-page .layout-side {
+.layout.is-page .layout-side {
     color: #3f4254;
     background-color: #fff;
     box-shadow: 0 0 28px 0 rgb(82 63 105 / 5%);
@@ -26,3 +26,11 @@
         background-color: #fff !important;
     }
 }
+
+.modal-dialog-task ::-webkit-scrollbar-thumb {
+    background-color: #ffffff66;
+}
+
+    .modal-dialog-task ::-webkit-scrollbar-thumb:hover {
+        background-color: #ffffffb3;
+    }
