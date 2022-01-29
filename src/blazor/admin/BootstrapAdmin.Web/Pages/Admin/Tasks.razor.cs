@@ -166,7 +166,7 @@ public partial class Tasks
     {
         var option = new DialogOption()
         {
-            Class = "task-info",
+            Class = "modal-dialog-task",
             Title = $"{model.Name} - 日志窗口(最新 20 条)",
             Component = BootstrapDynamicComponent.CreateComponent<TaskInfo>(new Dictionary<string, object?>
             {
