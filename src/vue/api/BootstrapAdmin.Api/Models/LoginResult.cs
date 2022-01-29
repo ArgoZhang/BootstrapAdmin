@@ -22,10 +22,12 @@ public class LoginResult
     /// <summary>
     /// 
     /// </summary>
+    public Result? Result { get; set; }
+}
+
+public class Result
+{
     public string? Token { get; set; }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public string? RefershToken { get; set; }
 }

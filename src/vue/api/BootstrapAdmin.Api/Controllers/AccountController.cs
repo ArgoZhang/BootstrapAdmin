@@ -6,7 +6,6 @@ using BootstrapAdmin.Api.Authencation;
 using BootstrapAdmin.Api.Extensions;
 using BootstrapAdmin.Api.Models;
 using BootstrapAdmin.Web.Core;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BootstrapAdmin.Api.Controllers;
@@ -14,9 +13,8 @@ namespace BootstrapAdmin.Api.Controllers;
 /// <summary>
 /// 
 /// </summary>
-[Route("api/[controller]/[action]")]
+[Route("api/[controller]")]
 [ApiController]
-[Authorize]
 public class AccountController : ControllerBase
 {
     private IUser UserService { get; }
@@ -32,7 +30,7 @@ public class AccountController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpPost]
-    public ActionResult<LoginResult> Login([FromServices] IConfiguration configuration, [FromBody] LoginUser user)
+    public ActionResult<LoginResult> Post([FromServices] IConfiguration configuration, [FromBody] LoginUser user)
     {
         string? token = null;
         string? refershtoken = null;
@@ -49,12 +47,12 @@ public class AccountController : ControllerBase
                 op.SecurityKey = tokenOption.SecurityKey;
             });
             refershtoken = BootstrapAdminJwtHandler.CreateRefershToken();
-            return new LoginResult { Code = "account:200", Message = "login successed!", Token = token, RefershToken = refershtoken };
+            return new LoginResult { Code = "0", Message = "login successed!", Result = new Result { Token = token, RefershToken = refershtoken } };
 
         }
         else
         {
-            return new LoginResult { Code = "account:400", Message = "login failed!", Token = token, RefershToken = refershtoken };
+            return new LoginResult { Code = "0", Message = "login failed!", Result = new Result { Token = token, RefershToken = refershtoken } };
         }
     }
 }
