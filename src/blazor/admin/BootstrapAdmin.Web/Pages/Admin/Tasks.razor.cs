@@ -2,6 +2,7 @@
 // Licensed under the LGPL License, Version 3.0. See License.txt in the project root for license information.
 // Website: https://admin.blazor.zone
 
+using BootstrapAdmin.Web.Components;
 using BootstrapAdmin.Web.Core;
 using BootstrapAdmin.Web.Extensions;
 using BootstrapAdmin.Web.Models;
@@ -31,6 +32,10 @@ public partial class Tasks
     [Inject]
     [NotNull]
     private IDict? DictService { get; set; }
+
+    [Inject]
+    [NotNull]
+    private DialogService? DialogService { get; set; }
 
     private bool IsDemo { get; set; }
 
@@ -157,9 +162,18 @@ public partial class Tasks
         return Task.CompletedTask;
     }
 
-    private static Task OnLog(TasksModel model)
+    private async Task OnLog(TasksModel model)
     {
-        return Task.CompletedTask;
+        var option = new DialogOption()
+        {
+            Class = "task-info",
+            Title = $"{model.Name} - 日志窗口(最新50条)",
+            Component = BootstrapDynamicComponent.CreateComponent<TaskInfo>(new Dictionary<string, object?>
+            {
+                [nameof(TaskInfo.Model)] = model
+            })
+        };
+        await DialogService.Show(option);
     }
 
     private static bool OnCheckTaskStatus(TasksModel model) => model.Status != SchedulerStatus.Disabled;
