@@ -122,3 +122,8 @@
 .cell-icon {
     margin-top: 4px;
 }
+
+.layout-user,
+.layout-menu {
+    border-right: 1px solid #ddd;
+}
