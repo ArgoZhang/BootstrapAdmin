@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BootstrapAdmin.DataAccess.PetaPoco\BootstrapAdmin.DataAccess.PetaPoco.csproj" />
+    <ProjectReference Include="..\BootstrapBlazor.Analyzers\BootstrapBlazor.Analyzers.csproj" />
   </ItemGroup>
 
   <ItemGroup>
