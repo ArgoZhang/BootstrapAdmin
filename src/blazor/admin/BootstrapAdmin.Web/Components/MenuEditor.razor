@@ -1,0 +1,29 @@
+﻿<div class="row g-3 form-inline">
+    <div class="col-12 col-sm-6 col-md-6">
+        <BootstrapInput @bind-Value="Value.Name" DisplayText="菜单名称" ShowLabel="true"></BootstrapInput>
+    </div>
+    <div class="col-12 col-sm-6 col-md-6">
+        <MenuTree @bind-Value="Value.ParentId" Lookup="@ParementMenus" DisplayText="父级菜单"></MenuTree>
+    </div>
+    <div class="col-12 col-sm-6 col-md-6">
+        <BootstrapInput @bind-Value="Value.Order"></BootstrapInput>
+    </div>
+    <div class="col-12 col-sm-6 col-md-6">
+        <BootstrapInput @bind-Value="Value.Icon"></BootstrapInput>
+    </div>
+    <div class="col-12">
+        <BootstrapInput @bind-Value="Value.Url"></BootstrapInput>
+    </div>
+    <div class="col-12 col-sm-6 col-md-6">
+        <Select @bind-Value="Value.Category"></Select>
+    </div>
+    <div class="col-12 col-sm-6 col-md-6">
+        <Select Items="@Targets" @bind-Value="Value.Target"></Select>
+    </div>
+    <div class="col-12 col-sm-6 col-md-6">
+        <Select @bind-Value="Value.IsResource"></Select>
+    </div>
+    <div class="col-12 col-sm-6 col-md-6">
+        <Select Items="@Apps" @bind-Value="Value.Application"></Select>
+    </div>
+</div>

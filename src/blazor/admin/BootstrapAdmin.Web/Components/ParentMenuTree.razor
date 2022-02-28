@@ -1,6 +1,4 @@
-﻿@inherits AssignmentBase<Navigation>
-
-<Tree Items="InternalItems" ShowCheckbox="true" ShowIcon="true" OnTreeItemChecked="@OnTreeItemChecked" />
+﻿<Tree Items="InternalItems" ShowRadio="true" ShowIcon="true" OnTreeItemChecked="@OnTreeItemChecked" />
 
 @code {
     RenderFragment<Navigation> RenderTreeItem => item =>
