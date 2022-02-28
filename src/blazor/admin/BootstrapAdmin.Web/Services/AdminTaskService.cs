@@ -44,5 +44,5 @@ class AdminTaskService : BackgroundService
 
         // 真实任务负责周期性设置健康检查结果开关为开启
         TaskServicesManager.GetOrAdd("健康检查", token => Task.FromResult(DictService.SaveHealthCheck()), TriggerBuilder.Build(Cron.Minutely(10)));
-    });
+    }, stoppingToken);
 }

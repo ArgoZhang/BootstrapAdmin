@@ -1,0 +1,7 @@
+﻿.tree-dialog {
+    display: flex;
+}
+
+    .tree-dialog ::deep .input-group {
+        flex-wrap: nowrap !important
+    }

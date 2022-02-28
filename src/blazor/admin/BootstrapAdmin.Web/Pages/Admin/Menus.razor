@@ -23,35 +23,7 @@
         <TableColumn @bind-Field="@context.Application" Filterable="true" Lookup="Apps"></TableColumn>
     </TableColumns>
     <EditTemplate Context="v">
-        <div class="row g-3 form-inline">
-            <div class="col-12 col-sm-6 col-md-6">
-                <BootstrapInput @bind-Value="v.Name" DisplayText="菜单名称" ShowLabel="true"></BootstrapInput>
-            </div>
-            <div class="col-12 col-sm-6 col-md-6">
-                <Select @bind-Value="v.ParentId" Items="@ParementMenus" IsDisabled="@(v.ParentId == "0")" DisplayText="父级菜单" ShowLabel="true"></Select>
-            </div>
-            <div class="col-12 col-sm-6 col-md-6">
-                <BootstrapInput @bind-Value="v.Order"></BootstrapInput>
-            </div>
-            <div class="col-12 col-sm-6 col-md-6">
-                <BootstrapInput @bind-Value="v.Icon"></BootstrapInput>
-            </div>
-            <div class="col-12">
-                <BootstrapInput @bind-Value="v.Url"></BootstrapInput>
-            </div>
-            <div class="col-12 col-sm-6 col-md-6">
-                <Select @bind-Value="v.Category"></Select>
-            </div>
-            <div class="col-12 col-sm-6 col-md-6">
-                <Select Items="@Targets" @bind-Value="v.Target"></Select>
-            </div>
-            <div class="col-12 col-sm-6 col-md-6">
-                <Select @bind-Value="v.IsResource"></Select>
-            </div>
-            <div class="col-12 col-sm-6 col-md-6">
-                <Select Items="@Apps" @bind-Value="v.Application"></Select>
-            </div>
-        </div>
+        <MenuEditor Value="v" ParementMenus="ParementMenus" Targets="Targets" Apps="Apps" />
     </EditTemplate>
     <RowButtonTemplate>
         <TableCellButton Size="Size.ExtraSmall" IsShow="@AuthorizeButton("assignRole")" Color="Color.Info" Icon="fa fa-sitemap" Text="分配角色" OnClick="() => OnAssignmentRoles(context)" />
