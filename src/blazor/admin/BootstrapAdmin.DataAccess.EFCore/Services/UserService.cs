@@ -306,6 +306,7 @@ public class UserService : IUser
                 Password = pwd
             };
             dbcontext.Add(user);
+            ret = dbcontext.SaveChanges() > 0;
             // 授权 Default 角色
             dbcontext.Database.ExecuteSqlRaw("insert into UserRole (UserID, RoleID) select ID, (select ID from Roles where RoleName = 'Default') RoleId from Users where UserName = {0}", userName);
             ret = dbcontext.SaveChanges() > 0;
