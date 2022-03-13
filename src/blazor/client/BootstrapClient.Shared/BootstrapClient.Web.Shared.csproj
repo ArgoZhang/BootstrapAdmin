@@ -13,4 +13,9 @@
     <ProjectReference Include="..\BootstrapClient.DataAccess\BootstrapClient.DataAccess.PetaPoco.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Using Include="BootstrapBlazor.Components" />
+    <Using Include="Microsoft.AspNetCore.Components" />
+  </ItemGroup>
+  
 </Project>
