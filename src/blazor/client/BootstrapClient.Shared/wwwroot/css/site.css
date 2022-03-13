@@ -310,3 +310,17 @@
 .widget .dropdown-item:not(:nth-of-type(odd)):active {
     background-color: inherit;
 }
+
+.is-page .layout-main > .tabs {
+    height: calc(100vh - 90px);
+}
+
+.is-fixed-tab .tabs-body {
+    height: calc(100vh - 89px - var(--bb-footer-height));
+    overflow: auto;
+}
+
+    .is-fixed-tab .tabs-body .tabs-body-content {
+        height: auto;
+        min-height: 100%;
+    }
