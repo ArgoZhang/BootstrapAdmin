@@ -43,6 +43,10 @@ public sealed partial class MainLayout
 
     private string? Footer { get; set; }
 
+    private string? ClassString => CssBuilder.Default(Theme)
+        .AddClass("is-fixed-tab")
+        .Build();
+
     [Inject]
     [NotNull]
     private IBootstrapAdminService? SecurityService { get; set; }
