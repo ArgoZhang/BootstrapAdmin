@@ -9,6 +9,7 @@ using BootstrapClient.Web.Shared.Extensions;
 using BootstrapClient.Web.Shared.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.Extensions.Configuration;
 
 namespace BootstrapClient.Web.Shared.Shared;
 
@@ -75,6 +76,10 @@ public sealed partial class MainLayout
     [NotNull]
     private BootstrapAppContext? Context { get; set; }
 
+    [Inject]
+    [NotNull]
+    private IConfiguration? Configuration { get; set; }
+
     /// <summary>
     /// OnInitialized 方法
     /// </summary>
@@ -111,6 +116,13 @@ public sealed partial class MainLayout
             MenuItems = NavigationsService.GetMenus(userName).Where(i => i.Application == Context.AppId).ToMenus();
 
             Context.DisplayName = user?.DisplayName ?? "未注册账户";
+
+            // 增加模拟账户识别
+            if (!string.IsNullOrEmpty(Configuration.GetValue("SimulateUserName", string.Empty)))
+            {
+                Context.DisplayName = $"{Context.DisplayName} (模拟)";
+            }
+
             Title = DictsService.GetWebTitle(Context.AppId);
             Footer = DictsService.GetWebFooter(Context.AppId);
         }
