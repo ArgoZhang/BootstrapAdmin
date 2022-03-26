@@ -132,7 +132,7 @@ namespace BootstrapAdmin.Web.Shared
             {
                 var user = UsersService.GetUserByUserName(UserName);
                 Context.UserName = UserName;
-                Context.DisplayName = user?.DisplayName ?? "未注册账户"; ;
+                Context.DisplayName = user?.DisplayName ?? "未注册账户";
                 Icon = string.IsNullOrEmpty(user?.Icon) ? "/images/uploader/default.jpg" : GetIcon(user.Icon);
 
                 MenuItems = NavigationsService.GetAllMenus(UserName).ToMenus();
