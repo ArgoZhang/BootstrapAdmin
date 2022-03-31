@@ -38,15 +38,15 @@ public static class DialogExtensions
         }
         return ret;
     },
-    new Dictionary<string, object?>
+    parameters =>
     {
-        [nameof(AssignmentBase<TItem>.Items)] = items,
-        [nameof(AssignmentBase<TItem>.Value)] = value,
-        [nameof(AssignmentBase<TItem>.OnValueChanged)] = new Action<List<string>>(v =>
+        parameters.Add(nameof(AssignmentBase<TItem>.Items), items);
+        parameters.Add(nameof(AssignmentBase<TItem>.Value), value);
+        parameters.Add(nameof(AssignmentBase<TItem>.OnValueChanged), new Action<List<string>>(v =>
         {
             value.Clear();
             value.AddRange(v);
-        })
+        }));
     },
     op =>
     {
