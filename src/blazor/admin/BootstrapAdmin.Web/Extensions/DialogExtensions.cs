@@ -32,7 +32,9 @@ public static class DialogExtensions
         var option = new DialogOption
         {
             Title = title,
-            ShowFooter = false
+            ShowFooter = false,
+            IsScrolling = true,
+            Class = "modal-dialog-menu"
         };
         var parameters = new Dictionary<string, object?>()
         {

@@ -1,0 +1,13 @@
+﻿.tree-menu {
+    display: flex;
+    flex-direction: column;
+}
+
+    .tree-menu ::deep .tree {
+        flex: 1;
+        margin: -1rem;
+        padding: 1rem;
+        max-height: calc(100vh - 173px);
+        overflow-y: auto;
+        overflow-x: hidden;
+    }

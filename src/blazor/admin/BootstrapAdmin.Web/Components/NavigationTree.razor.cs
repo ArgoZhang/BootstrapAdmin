@@ -69,5 +69,5 @@ public partial class NavigationTree
 
     private Task OnClickClose() => OnClose();
 
-    private Task OnClickSave() => OnSave(MenusTree.GetCheckItems().Select(i => i.Key?.ToString()).ToList());
+    private Task OnClickSave() => OnSave(MenusTree.GetCheckedItems().Select(i => i.Key?.ToString()).ToList());
 }
