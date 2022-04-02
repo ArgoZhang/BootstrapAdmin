@@ -1,6 +1,13 @@
-﻿@inherits AssignmentBase<Navigation>
+﻿@inherits ComponentBase
 
-<Tree Items="InternalItems" ShowCheckbox="true" ShowIcon="true" OnTreeItemChecked="@OnTreeItemChecked" />
+<div class="tree-menu">
+    <Tree Items="InternalItems" ShowCheckbox="true" ShowIcon="true" @ref="MenusTree" />
+
+    <div class="form-footer">
+        <Button Color="Color.Secondary" Icon="fa fa-times" Text="关闭" OnClickWithoutRender="OnClickClose" />
+        <Button Color="Color.Primary" Icon="fa fa-save" Text="保存" OnClickWithoutRender="OnClickSave" />
+    </div>
+</div>
 
 @code {
     RenderFragment<Navigation> RenderTreeItem => item =>

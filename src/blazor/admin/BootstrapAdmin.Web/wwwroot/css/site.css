@@ -127,3 +127,7 @@
 .layout-menu {
     border-right: 1px solid #ddd;
 }
+
+.modal-dialog-menu.modal-dialog-scrollable .modal-body {
+    overflow: hidden;
+}
