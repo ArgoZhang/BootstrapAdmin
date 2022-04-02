@@ -72,12 +72,12 @@ public partial class Roles
 
     private async Task OnAssignmentMenus(Role role)
     {
-        var apps = NavigationService.GetAllMenus(AppContext.UserName);
+        var menus = NavigationService.GetAllMenus(AppContext.UserName);
         var values = NavigationService.GetMenusByRoleId(role.Id);
 
-        await DialogService.ShowNavigationDialog($"分配菜单 - 当前角色: {role.RoleName}", apps, values, () =>
+        await DialogService.ShowNavigationDialog($"分配菜单 - 当前角色: {role.RoleName}", menus, values, items =>
         {
-            var ret = NavigationService.SaveMenusByRoleId(role.Id, values);
+            var ret = NavigationService.SaveMenusByRoleId(role.Id, items);
             return Task.FromResult(ret);
         }, ToastService);
     }
