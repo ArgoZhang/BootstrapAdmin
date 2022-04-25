@@ -1,8 +1,5 @@
-﻿// Copyright (c) Argo Zhang (argo@163.com). All rights reserved.
-// Licensed under the LGPL License, Version 3.0. See License.txt in the project root for license information.
-// Website: https://admin.blazor.zone
-
-using BootStarpAdmin.DataAccess.SqlSugar.Service;
+﻿using BootStarpAdmin.DataAccess.SqlSugar.Service;
+using BootstrapAdmin.Web.Core;
 using BootstrapBlazor.Components;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using SqlSugar;
@@ -32,16 +29,16 @@ public static class ServiceCollectionExtensions
 
         // 增加数据服务
         services.AddSingleton(typeof(IDataService<>), typeof(DefaultDataService<>));
-
+        services.AddCacheManager();
         // 增加业务服务
-        //services.AddSingleton<IApp, AppService>();
-        //services.AddSingleton<IDict, DictService>();
+        services.AddSingleton<IApp, AppService>();
+        services.AddSingleton<IDict, DictService>();
         //services.AddSingleton<IException, ExceptionService>();
         //services.AddSingleton<IGroup, GroupService>();
         //services.AddSingleton<ILogin, LoginService>();
         //services.AddSingleton<INavigation, NavigationService>();
         //services.AddSingleton<IRole, RoleService>();
-        //services.AddSingleton<IUser, UserService>();
+        services.AddSingleton<IUser, UserService>();
         return services;
     }
 }
