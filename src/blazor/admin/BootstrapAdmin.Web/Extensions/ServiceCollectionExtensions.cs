@@ -87,6 +87,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 var connString = configuration.GetConnectionString("bb");
                 config.DbType = SqlSugar.DbType.Sqlite;
                 config.ConnectionString = connString;
+                config.InitKeyType = SqlSugar.InitKeyType.SystemTable;
             });
 
             return services;

@@ -19,12 +19,12 @@ public static class ServiceCollectionExtensions
     /// <returns></returns>
     public static IServiceCollection AddSqlSugar(this IServiceCollection services, Action<IServiceProvider, ConnectionConfig> sqlSugarBuilder)
     {
-        services.TryAddSingleton<ISqlSugarClient>(provider =>
+        services.AddSingleton<ISqlSugarClient>(provider =>
         {
             var builder = new ConnectionConfig();
             builder.IsAutoCloseConnection = true;
             sqlSugarBuilder(provider, builder);
-            return new SqlSugarClient(builder);
+            return new SqlSugarScope(builder);
         });
 
         // 增加数据服务
