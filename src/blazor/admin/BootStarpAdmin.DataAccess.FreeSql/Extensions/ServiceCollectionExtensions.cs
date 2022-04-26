@@ -24,6 +24,9 @@ public static class ServiceCollectionExtensions
     /// <returns></returns>
     public static IServiceCollection AddFreeSql(this IServiceCollection services, Action<IServiceProvider, FreeSqlBuilder> freeSqlBuilder)
     {
+
+        // 增加缓存服务
+        services.AddCacheManager();
         services.TryAddSingleton<IFreeSql>(provider =>
         {
             var builder = new FreeSqlBuilder();
@@ -45,6 +48,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<INavigation, NavigationService>();
         services.AddSingleton<IRole, RoleService>();
         services.AddSingleton<IUser, UserService>();
+        services.AddSingleton<ITrace, TraceService>();
         return services;
     }
 }

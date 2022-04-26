@@ -6,6 +6,9 @@ using BootstrapAdmin.DataAccess.Models;
 
 namespace BootstrapAdmin.Web.Components;
 
+/// <summary>
+/// 
+/// </summary>
 public partial class MenuEditor
 {
     /// <summary>

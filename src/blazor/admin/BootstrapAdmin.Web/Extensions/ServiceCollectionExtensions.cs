@@ -67,7 +67,7 @@ namespace Microsoft.Extensions.DependencyInjection
             //                var connString = configuration.GetConnectionString("bb");
             //                builder.UseConnectionString(FreeSql.DataType.Sqlite, connString);
             //#if DEBUG
-            //                //调试sql语句输出
+            //                调试sql语句输出
             //                builder.UseMonitorCommand(cmd => System.Console.WriteLine(cmd.CommandText));
             //#endif
             //            });
