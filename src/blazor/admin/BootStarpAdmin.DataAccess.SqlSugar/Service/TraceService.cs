@@ -1,0 +1,78 @@
+﻿// Copyright (c) Argo Zhang (argo@163.com). All rights reserved.
+// Licensed under the LGPL License, Version 3.0. See License.txt in the project root for license information.
+// Website: https://admin.blazor.zone
+
+using BootstrapAdmin.DataAccess.Models;
+using BootstrapAdmin.Web.Core;
+using SqlSugar;
+
+namespace BootstrapAdmin.DataAccess.SqlSugar.Services;
+
+class TraceService : ITrace
+{
+    private ISqlSugarClient Client { get; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="client"></param>
+    public TraceService(ISqlSugarClient client) => Client = client;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="trace"></param>
+    public void Log(Trace trace)
+    {
+        Client.Insertable(trace).ExecuteCommand();
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="searchText"></param>
+    /// <param name="filter"></param>
+    /// <param name="pageIndex"></param>
+    /// <param name="pageItems"></param>
+    /// <param name="sortList"></param>
+    /// <returns></returns>
+    public (IEnumerable<Trace> Items, int ItemsCount) GetAll(string? searchText, TraceFilter filter, int pageIndex, int pageItems, List<string> sortList)
+    {
+        //var sql = new Sql();
+
+        //if (!string.IsNullOrEmpty(searchText))
+        //{
+        //    sql.Where("UserName Like @0 or Ip Like @0 or RequestUrl Like @0", $"%{searchText}%");
+        //}
+
+        //if (!string.IsNullOrEmpty(filter.UserName))
+        //{
+        //    sql.Where("UserName Like @0", $"%{filter.UserName}%");
+        //}
+
+        //if (!string.IsNullOrEmpty(filter.Ip))
+        //{
+        //    sql.Where("Ip Like @0", $"%{filter.Ip}%");
+        //}
+
+        //if (!string.IsNullOrEmpty(filter.RequestUrl))
+        //{
+        //    sql.Where("ErrorPage Like @0", $"%{filter.RequestUrl}%");
+        //}
+
+        //sql.Where("LogTime >= @0 and LogTime <= @1", filter.Star, filter.End);
+
+        //if (sortList.Any())
+        //{
+        //    sql.OrderBy(string.Join(", ", sortList));
+        //}
+        //else
+        //{
+        //    sql.OrderBy("Logtime desc");
+        //}
+
+        //var data = Database.Page<Trace>(pageIndex, pageItems, sql);
+        //return (data.Items, Convert.ToInt32(data.TotalItems));
+        return (new List<Trace>(), 100);
+    }
+}
