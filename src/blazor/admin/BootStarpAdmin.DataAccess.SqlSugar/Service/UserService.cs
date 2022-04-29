@@ -16,13 +16,13 @@ namespace BootStarpAdmin.DataAccess.SqlSugar.Service;
 /// </summary>
 public class UserService : IUser
 {
-    private SqlSugarClient Client;
+    private ISqlSugarClient Client;
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="client"></param>
-    public UserService(SqlSugarClient client) => Client = client;
+    public UserService(ISqlSugarClient client) => Client = client;
 
     /// <summary>
     /// 
@@ -215,7 +215,7 @@ public class UserService : IUser
             try
             {
                 // 开始事务
-                Client.UseTran();
+                Client.Ado.BeginTran();
                 user = new User()
                 {
                     ApprovedBy = "System",
@@ -231,12 +231,12 @@ public class UserService : IUser
                 // 授权 Default 角色
                 Client.Ado.ExecuteCommand("insert into UserRole (UserID, RoleID) select ID, (select ID from Roles where RoleName = 'Default') RoleId from Users where UserName = @userName", new { UserName = userName });
                 // 结束事务
-                Client.CommitTran();
+                Client.Ado.CommitTran();
                 ret = true;
             }
             catch (Exception)
             {
-                Client.RollbackTran();
+                Client.Ado.RollbackTran();
                 throw;
             }
         }
@@ -267,15 +267,15 @@ public class UserService : IUser
         var ret = false;
         try
         {
-            Client.BeginTran();
+            Client.Ado.BeginTran();
             Client.Ado.ExecuteCommand("delete from UserGroup where GroupId = @GroupId", new { GroupId = groupId });
             Client.Insertable<UserGroup>(userIds.Select(g => new { UserID = g, GroupID = groupId })).ExecuteCommand();
-            Client.CommitTran();
+            Client.Ado.CommitTran();
             ret = true;
         }
         catch (Exception)
         {
-            Client.RollbackTran();
+            Client.Ado.RollbackTran();
             throw;
         }
         if (ret)
@@ -297,15 +297,15 @@ public class UserService : IUser
         var ret = false;
         try
         {
-            Client.UseTran();
+            Client.Ado.BeginTran();
             Client.Ado.ExecuteCommand("delete from UserRole where RoleID = @RoleID", new { RoleID = roleId });
             Client.Insertable<UserRole>(userIds.Select(g => new { UserID = g, RoleID = roleId })).ExecuteCommand();
-            Client.CommitTran();
+            Client.Ado.CommitTran();
             ret = true;
         }
         catch (Exception)
         {
-            Client.RollbackTran();
+            Client.Ado.RollbackTran();
             throw;
         }
         if (ret)
@@ -334,7 +334,7 @@ public class UserService : IUser
             var user = Client.Queryable<User>().First(s => s.UserName == phone);
             if (user == null)
             {
-                Client.UseTran();
+                Client.Ado.BeginTran();
                 // 插入用户
                 user = new User()
                 {
@@ -352,7 +352,7 @@ public class UserService : IUser
                 // Authorization
                 var roleIds = Client.Ado.SqlQuery<string>("select ID from Roles where RoleName in (@roles)", new { roles = roles });
                 Client.Insertable<UserRole>(roleIds.Select(g => new { RoleID = g, UserID = user.Id })).ExecuteCommand();
-                Client.CommitTran();
+                Client.Ado.CommitTran();
             }
             else
             {
@@ -364,7 +364,7 @@ public class UserService : IUser
         }
         catch (Exception)
         {
-            Client.RollbackTran();
+            Client.Ado.RollbackTran();
             throw;
         }
         if (ret)

@@ -24,7 +24,7 @@ public class DictService : IDict
 {
     private const string DictServiceCacheKey = "DictService-GetAll";
 
-    private SqlSugarClient Client { get; }
+    private ISqlSugarClient Client { get; }
 
     private string AppId { get; set; }
 
@@ -33,7 +33,7 @@ public class DictService : IDict
     /// </summary>
     /// <param name="client"></param>
     /// <param name="configuration"></param>
-    public DictService(SqlSugarClient client, IConfiguration configuration)
+    public DictService(ISqlSugarClient client, IConfiguration configuration)
     {
         Client = client;
         AppId = configuration.GetValue("AppId", "BA");
@@ -72,7 +72,7 @@ public class DictService : IDict
         bool ret;
         try
         {
-            Client.UseTran();
+            Client.Ado.BeginTran();
             Client.Ado.ExecuteCommand("delete Dicts where Category=@Category and Name=@Name and Define=@Define", new { Category = "应用首页", Name = appId, Define = EnumDictDefine.System });
             Client.Ado.ExecuteCommand("delete Dicts where Category=@Category and Code=@Code and Define=@Define", new { Category = "应用程序", Code = appId, Define = EnumDictDefine.System });
             Client.Ado.ExecuteCommand("delete Dicts where Category=@Category and Name in (@Names)", new
@@ -89,12 +89,12 @@ public class DictService : IDict
                     "系统通知地址"
                 }
             });
-            Client.CommitTran();
+            Client.Ado.CommitTran();
             ret = true;
         }
         catch (Exception)
         {
-            Client.RollbackTran();
+            Client.Ado.RollbackTran();
             throw;
         }
         return ret;
@@ -129,7 +129,7 @@ public class DictService : IDict
     /// 
     /// </summary>
     /// <returns></returns>
-    public List<Dict> GetAll() => CacheManager.GetOrAdd(DictServiceCacheKey, entry => Client.Queryable<Dict>().ToList());
+    public List<Dict> GetAll() => CacheManager.GetOrAdd(DictServiceCacheKey, entry => Client.Queryable<Dict>().AS("Dicts").ToList());
 
     /// <summary>
     /// 
@@ -646,7 +646,7 @@ public class DictService : IDict
             DeleteClient(client.AppId);
             try
             {
-                Client.UseTran();
+                Client.Ado.BeginTran();
                 var items = new List<Dict>()
                 {
                     new Dict { Category = "应用程序", Name = client.AppName, Code = client.AppId, Define = EnumDictDefine.System },
@@ -659,13 +659,13 @@ public class DictService : IDict
                     new Dict { Category = client.AppId, Name = "系统设置地址", Code = client.SettingsUrl, Define = EnumDictDefine.Customer },
                     new Dict { Category = client.AppId, Name = "系统通知地址", Code = client.NotificationUrl, Define = EnumDictDefine.Customer }
                 };
-                Client.Insertable(items);
-                Client.CommitTran();
+                Client.Insertable(items).AS("Dicts").ExecuteCommand();
+                Client.Ado.CommitTran();
                 ret = true;
             }
             catch (DbException)
             {
-                Client.RollbackTran();
+                Client.Ado.RollbackTran();
                 throw;
             }
         }
@@ -802,7 +802,7 @@ public class DictService : IDict
 
     private bool SaveDict(Dict dict)
     {
-        var ret = Client.Updateable(dict).Where(s => s.Category == dict.Category && s.Name == dict.Name).UpdateColumns(s => s.Code).ExecuteCommand() > 0;
+        var ret = Client.Updateable(dict).AS("Dicts").Where(s => s.Category == dict.Category && s.Name == dict.Name).UpdateColumns(s => s.Code).ExecuteCommand() > 0;
         if (ret)
         {
             // 更新缓存

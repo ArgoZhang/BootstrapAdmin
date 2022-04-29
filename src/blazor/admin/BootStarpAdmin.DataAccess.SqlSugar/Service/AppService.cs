@@ -9,13 +9,13 @@ namespace BootStarpAdmin.DataAccess.SqlSugar.Service;
 /// </summary>
 public class AppService : IApp
 {
-    private SqlSugarClient Client;
+    private ISqlSugarClient Client { get; }
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="client"></param>
-    public AppService(SqlSugarClient client) => Client = client;
+    public AppService(ISqlSugarClient client) => Client = client;
 
     /// <summary>
     /// 
@@ -40,8 +40,8 @@ public class AppService : IApp
         {
             Client.Ado.BeginTran();
             Client.Ado.ExecuteCommand("delete from RoleApp where RoleID = @roleId", new { roleId = roleId });
-            Client.Insertable(appIds.Select(g => new RoleApp { AppID = g, RoleID = roleId }).ToList());
-            Client.CommitTran();
+            Client.Insertable(appIds.Select(g => new RoleApp { AppID = g, RoleID = roleId }).ToList()).ExecuteCommand();
+            Client.Ado.CommitTran();
             ret = true;
         }
         catch (Exception)
