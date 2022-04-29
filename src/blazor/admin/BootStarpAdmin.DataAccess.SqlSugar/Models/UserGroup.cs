@@ -2,12 +2,6 @@
 // Licensed under the LGPL License, Version 3.0. See License.txt in the project root for license information.
 // Website: https://admin.blazor.zone
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace BootStarpAdmin.DataAccess.SqlSugar.Models;
 
 /// <summary>
@@ -15,6 +9,11 @@ namespace BootStarpAdmin.DataAccess.SqlSugar.Models;
 /// </summary>
 public class UserGroup
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    public string? ID { get; set; }
+
     /// <summary>
     /// 
     /// </summary>

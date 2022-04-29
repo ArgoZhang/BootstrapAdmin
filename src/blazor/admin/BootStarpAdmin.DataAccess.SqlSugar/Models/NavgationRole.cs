@@ -18,6 +18,11 @@ public class NavigationRole
     /// <summary>
     /// 
     /// </summary>
+    public string? ID { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
     public string? NavigationID { get; set; }
 
     /// <summary>
