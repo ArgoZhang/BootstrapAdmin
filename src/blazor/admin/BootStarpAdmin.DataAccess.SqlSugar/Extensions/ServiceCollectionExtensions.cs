@@ -1,4 +1,5 @@
 ﻿using BootStarpAdmin.DataAccess.SqlSugar.Service;
+using BootstrapAdmin.DataAccess.SqlSugar.Services;
 using BootstrapAdmin.Web.Core;
 using BootstrapBlazor.Components;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -36,9 +37,10 @@ public static class ServiceCollectionExtensions
         //services.AddSingleton<IException, ExceptionService>();
         //services.AddSingleton<IGroup, GroupService>();
         //services.AddSingleton<ILogin, LoginService>();
-        //services.AddSingleton<INavigation, NavigationService>();
+        services.AddSingleton<INavigation, NavigationService>();
         //services.AddSingleton<IRole, RoleService>();
         services.AddSingleton<IUser, UserService>();
+        services.AddSingleton<ITrace, TraceService>();
         return services;
     }
 }
