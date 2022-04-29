@@ -35,7 +35,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IApp, AppService>();
         services.AddSingleton<IDict, DictService>();
         //services.AddSingleton<IException, ExceptionService>();
-        //services.AddSingleton<IGroup, GroupService>();
+        services.AddSingleton<IGroup, GroupService>();
         services.AddSingleton<ILogin, LoginService>();
         services.AddSingleton<INavigation, NavigationService>();
         //services.AddSingleton<IRole, RoleService>();

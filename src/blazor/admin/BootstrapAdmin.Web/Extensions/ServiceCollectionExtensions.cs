@@ -89,6 +89,13 @@ namespace Microsoft.Extensions.DependencyInjection
                 config.DbType = SqlSugar.DbType.Sqlite;
                 config.ConnectionString = connString;
                 config.InitKeyType = SqlSugar.InitKeyType.SystemTable;
+                config.ConfigureExternalServices = new SqlSugar.ConfigureExternalServices()
+                {
+                    EntityNameService = (type, entity) =>
+                    {
+                        entity.DbTableName = entity.DbTableName + "s";
+                    }
+                };
             });
 
             return services;
