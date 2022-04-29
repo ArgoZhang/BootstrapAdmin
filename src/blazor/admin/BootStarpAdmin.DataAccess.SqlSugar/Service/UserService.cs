@@ -30,7 +30,7 @@ public class UserService : IUser
     /// <returns></returns>
     public List<User> GetAll()
     {
-        return Client.Queryable<User>().ToList();
+        return Client.Queryable<User>().IgnoreColumns("NewPassword", "ConfirmPassword", "Period", "IsReset").AS("Users").ToList();
     }
 
     /// <summary>
@@ -65,7 +65,7 @@ public class UserService : IUser
         {
             var passSalt = LgbCryptography.GenerateSalt();
             password = LgbCryptography.ComputeHash(newPassword, passSalt);
-            string sql = "set Password = @Password, PassSalt = @PassSalt where UserName = @UserName";
+            string sql = "update users set Password = @Password, PassSalt = @PassSalt where UserName = @UserName";
             ret = Client.Ado.ExecuteCommand(sql, new { Password = password, PassSalt = passSalt, UserName = userName }) == 1;
         }
         return ret;
@@ -78,7 +78,7 @@ public class UserService : IUser
     /// </summary>
     /// <param name="userName"></param>
     /// <returns></returns>
-    public string? GetAppIdByUserName(string userName) => CacheManager.GetOrAdd($"{UserServiceGetAppIdByUserNameCacheKey}-{userName}", entry => Client.Queryable<User>().Where(s => s.UserName == userName).First()?.App);
+    public string? GetAppIdByUserName(string userName) => CacheManager.GetOrAdd($"{UserServiceGetAppIdByUserNameCacheKey}-{userName}", entry => Client.Queryable<User>().IgnoreColumns("NewPassword", "ConfirmPassword", "Period", "IsReset").AS("Users").Where(s => s.UserName == userName).First()?.App);
 
     private const string UserServiceGetAppsByUserNameCacheKey = "UserService-GetAppsByUserName";
 
@@ -96,7 +96,7 @@ public class UserService : IUser
     /// </summary>
     /// <param name="userName"></param>
     /// <returns></returns>
-    public List<string> GetRoles(string userName) => CacheManager.GetOrAdd($"{UserServiceGetRolesByUserNameCacheKey}-{userName}", entry => Client.Ado.SqlQuery<string>($"select r.RoleName from Roles r inner join UserRole ur on r.ID=ur.RoleID inner join Users u on ur.UserID = u.ID and u.UserName = @0 union select r.RoleName from Roles r inner join RoleGroup rg on r.ID = rg.RoleID inner join [Groups] g on rg.GroupID = g.ID inner join UserGroup ug on ug.GroupID = g.ID inner join Users u on ug.UserID = u.ID and u.UserName=@UserName", new { UserName = userName }));
+    public List<string> GetRoles(string userName) => CacheManager.GetOrAdd($"{UserServiceGetRolesByUserNameCacheKey}-{userName}", entry => Client.Ado.SqlQuery<string>($"select r.RoleName from Roles r inner join UserRole ur on r.ID=ur.RoleID inner join Users u on ur.UserID = u.ID and u.UserName = @UserName union select r.RoleName from Roles r inner join RoleGroup rg on r.ID = rg.RoleID inner join [Groups] g on rg.GroupID = g.ID inner join UserGroup ug on ug.GroupID = g.ID inner join Users u on ug.UserID = u.ID and u.UserName=@UserName", new { UserName = userName }));
 
     private const string UserServiceGetUserByUserNameCacheKey = "UserService-GetUserByUserName";
 
@@ -105,7 +105,7 @@ public class UserService : IUser
     /// </summary>
     /// <param name="userName"></param>
     /// <returns></returns>
-    public User? GetUserByUserName(string? userName) => CacheManager.GetOrAdd($"{UserServiceGetUserByUserNameCacheKey}-{userName}", entry => string.IsNullOrEmpty(userName) ? null : Client.Queryable<User>().Where(s => s.UserName == userName).First());
+    public User? GetUserByUserName(string? userName) => CacheManager.GetOrAdd($"{UserServiceGetUserByUserNameCacheKey}-{userName}", entry => string.IsNullOrEmpty(userName) ? null : Client.Queryable<User>().IgnoreColumns("NewPassword", "ConfirmPassword", "Period", "IsReset").AS("Users").Where(s => s.UserName == userName).First());
 
     private const string UserServiceGetUsersByGroupIdCacheKey = "UserService-GetUsersByGroupId";
 
@@ -208,7 +208,7 @@ public class UserService : IUser
     {
         var salt = LgbCryptography.GenerateSalt();
         var pwd = LgbCryptography.ComputeHash(password, salt);
-        var user = Client.Queryable<User>().First(s => s.UserName == userName);
+        var user = Client.Queryable<User>().IgnoreColumns("NewPassword", "ConfirmPassword", "Period", "IsReset").AS("Users").First(s => s.UserName == userName);
         bool ret;
         if (user == null)
         {
@@ -227,7 +227,7 @@ public class UserService : IUser
                     PassSalt = salt,
                     Password = pwd
                 };
-                Client.Insertable(user).ExecuteCommand();
+                Client.Insertable(user).IgnoreColumns("NewPassword", "ConfirmPassword", "Period", "IsReset").AS("Users").ExecuteCommand();
                 // 授权 Default 角色
                 Client.Ado.ExecuteCommand("insert into UserRole (UserID, RoleID) select ID, (select ID from Roles where RoleName = 'Default') RoleId from Users where UserName = @userName", new { UserName = userName });
                 // 结束事务
@@ -245,7 +245,7 @@ public class UserService : IUser
             user.DisplayName = displayName;
             user.PassSalt = salt;
             user.Password = pwd;
-            Client.Updateable(user).ExecuteCommand();
+            Client.Updateable(user).IgnoreColumns("NewPassword", "ConfirmPassword", "Period", "IsReset").AS("Users").ExecuteCommand();
             ret = true;
         }
         if (ret)
@@ -331,7 +331,7 @@ public class UserService : IUser
         {
             var salt = LgbCryptography.GenerateSalt();
             var pwd = LgbCryptography.ComputeHash(code, salt);
-            var user = Client.Queryable<User>().First(s => s.UserName == phone);
+            var user = Client.Queryable<User>().IgnoreColumns("NewPassword", "ConfirmPassword", "Period", "IsReset").AS("Users").First(s => s.UserName == phone);
             if (user == null)
             {
                 Client.Ado.BeginTran();
@@ -348,7 +348,7 @@ public class UserService : IUser
                     Password = LgbCryptography.ComputeHash(code, salt),
                     App = appId
                 };
-                Client.Insertable(user).ExecuteCommand();
+                Client.Insertable(user).IgnoreColumns("NewPassword", "ConfirmPassword", "Period", "IsReset").AS("Users").ExecuteCommand();
                 // Authorization
                 var roleIds = Client.Ado.SqlQuery<string>("select ID from Roles where RoleName in (@roles)", new { roles = roles });
                 Client.Insertable<UserRole>(roleIds.Select(g => new { RoleID = g, UserID = user.Id })).ExecuteCommand();
@@ -358,7 +358,7 @@ public class UserService : IUser
             {
                 user.PassSalt = salt;
                 user.Password = pwd;
-                Client.Updateable(user).ExecuteCommand();
+                Client.Updateable(user).IgnoreColumns("NewPassword", "ConfirmPassword", "Period", "IsReset").AS("Users").ExecuteCommand();
             }
             ret = true;
         }
