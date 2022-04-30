@@ -9,9 +9,18 @@ namespace BootStarpAdmin.DataAccess.SqlSugar.Models;
 /// </summary>
 public class RoleGroup
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public string? ID { get; set; }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public string? RoleID { get; set; }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public string? GroupID { get; set; }
 }
