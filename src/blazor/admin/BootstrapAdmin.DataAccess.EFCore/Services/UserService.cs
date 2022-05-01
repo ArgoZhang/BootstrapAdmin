@@ -2,6 +2,7 @@
 // Licensed under the LGPL License, Version 3.0. See License.txt in the project root for license information.
 // Website: https://admin.blazor.zone
 
+using BootstrapAdmin.Caching;
 using BootstrapAdmin.DataAccess.EFCore.Models;
 using BootstrapAdmin.DataAccess.Models;
 using BootstrapAdmin.Web.Core;
@@ -51,60 +52,57 @@ public class UserService : IUser
         return isAuth;
     }
 
+    private const string UserServiceGetAppsByUserNameCacheKey = "UserService-GetAppsByUserName";
+
     /// <summary>
     /// 
     /// </summary>
     /// <param name="userName"></param>
     /// <returns></returns>
-    public List<string> GetApps(string userName)
+    public List<string> GetApps(string userName) => CacheManager.GetOrAdd($"{UserServiceGetAppsByUserNameCacheKey}-{userName}", entry =>
     {
         using var context = DbFactory.CreateDbContext();
         return context.Dicts.FromSqlRaw("select d.Code from Dicts d inner join RoleApp ra on d.Code = ra.AppId inner join (select r.Id from Roles r inner join UserRole ur on r.ID = ur.RoleID inner join Users u on ur.UserID = u.ID where u.UserName = {0} union select r.Id from Roles r inner join RoleGroup rg on r.ID = rg.RoleID inner join [Groups] g on rg.GroupID = g.ID inner join UserGroup ug on ug.GroupID = g.ID inner join Users u on ug.UserID = u.ID where u.UserName = {0}) r on ra.RoleId = r.ID union select Code from Dicts where Category = {1} and exists(select r.ID from Roles r inner join UserRole ur on r.ID = ur.RoleID inner join Users u on ur.UserID = u.ID where u.UserName = {0} and r.RoleName = {2} union select r.ID from Roles r inner join RoleGroup rg on r.ID = rg.RoleID inner join [Groups] g on rg.GroupID = g.ID inner join UserGroup ug on ug.GroupID = g.ID inner join Users u on ug.UserID = u.ID where u.UserName = {0} and r.RoleName = {2})", new[] { userName, "应用程序", "Administrators" }).Select(s => s.Code).AsNoTracking().ToList();
-    }
+    });
+
+    private const string UserServiceGetRolesByUserNameCacheKey = "UserService-GetRolesByUserName";
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="userName"></param>
     /// <returns></returns>
-    public string? GetDisplayName(string? userName)
-    {
-        using var context = DbFactory.CreateDbContext();
-        return string.IsNullOrEmpty(userName) ? "" : context.Users.FirstOrDefault(s => s.UserName == userName)?.DisplayName;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="userName"></param>
-    /// <returns></returns>
-    public List<string> GetRoles(string userName)
+    public List<string> GetRoles(string userName) => CacheManager.GetOrAdd($"{UserServiceGetRolesByUserNameCacheKey}-{userName}", entry =>
     {
         using var context = DbFactory.CreateDbContext();
         return context.Roles.FromSqlRaw("select r.RoleName from Roles r inner join UserRole ur on r.ID=ur.RoleID inner join Users u on ur.UserID = u.ID and u.UserName = {0} union select r.RoleName from Roles r inner join RoleGroup rg on r.ID = rg.RoleID inner join [Groups] g on rg.GroupID = g.ID inner join UserGroup ug on ug.GroupID = g.ID inner join Users u on ug.UserID = u.ID and u.UserName = {0}", userName).Select(s => s.RoleName).AsNoTracking().ToList();
-    }
+    });
+
+    private const string UserServiceGetUsersByGroupIdCacheKey = "UserService-GetUsersByGroupId";
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="groupId"></param>
     /// <returns></returns>
-    public List<string> GetUsersByGroupId(string? groupId)
+    public List<string> GetUsersByGroupId(string? groupId) => CacheManager.GetOrAdd($"{UserServiceGetUsersByGroupIdCacheKey}-{groupId}", entry =>
     {
         using var context = DbFactory.CreateDbContext();
         return context.UserGroup.Where(s => s.GroupId == groupId).Select(s => s.UserId!).AsNoTracking().ToList();
-    }
+    });
+
+    private const string UserServiceGetUsersByRoleIdCacheKey = "UserService-GetUsersByRoleId";
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="roleId"></param>
     /// <returns></returns>
-    public List<string> GetUsersByRoleId(string? roleId)
+    public List<string> GetUsersByRoleId(string? roleId) => CacheManager.GetOrAdd($"{UserServiceGetUsersByRoleIdCacheKey}-{roleId}", entry =>
     {
         using var context = DbFactory.CreateDbContext();
         return context.UserRole.Where(s => s.RoleId == roleId).Select(s => s.UserId!).AsNoTracking().ToList();
-    }
+    });
 
     /// <summary>
     /// 
@@ -117,8 +115,12 @@ public class UserService : IUser
         using var dbcontext = DbFactory.CreateDbContext();
         dbcontext.Database.ExecuteSqlRaw("delete from UserGroup where GroupId = {0}", groupId!);
         dbcontext.AddRange(userIds.Select(g => new UserGroup { UserId = g, GroupId = groupId }));
-        dbcontext.SaveChanges();
-        return true;
+        var ret = dbcontext.SaveChanges() > 0;
+        if (ret)
+        {
+            CacheManager.Clear();
+        }
+        return ret;
     }
 
     /// <summary>
@@ -132,8 +134,12 @@ public class UserService : IUser
         using var dbcontext = DbFactory.CreateDbContext();
         dbcontext.Database.ExecuteSqlRaw("delete from UserRole where RoleID = {0}", roleId!);
         dbcontext.AddRange(userIds.Select(g => new UserRole { UserId = g, RoleId = roleId }));
-        dbcontext.SaveChanges();
-        return true;
+        var ret = dbcontext.SaveChanges() > 0;
+        if (ret)
+        {
+            CacheManager.Clear();
+        }
+        return ret;
     }
 
     /// <summary>
@@ -170,8 +176,14 @@ public class UserService : IUser
             dbcontext.AddRange(roleIds.Select(g => new { RoleID = g, UserID = user.Id }));
             ret = dbcontext.SaveChanges() > 0;
         }
+        if (ret)
+        {
+            CacheManager.Clear();
+        }
         return ret;
     }
+
+    private const string UserServiceGetUserByUserNameCacheKey = "UserService-GetUserByUserName";
 
     /// <summary>
     /// 
@@ -179,7 +191,7 @@ public class UserService : IUser
     /// <param name="userName"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public User? GetUserByUserName(string? userName)
+    public User? GetUserByUserName(string? userName) => CacheManager.GetOrAdd($"{UserServiceGetUserByUserNameCacheKey}-{userName}", entry =>
     {
         User? user = null;
         if (userName != null)
@@ -188,7 +200,7 @@ public class UserService : IUser
             user = dbcontext.Set<User>().FirstOrDefault(s => s.UserName == userName);
         }
         return user;
-    }
+    });
 
     /// <summary>
     /// 
@@ -222,6 +234,10 @@ public class UserService : IUser
             string sql = "update Users set Password = {0}, PassSalt = {1} where UserName = {2}";
             ret = dbcontext.Database.ExecuteSqlRaw(sql, new[] { password, passSalt, userName }) > 0;
         }
+        if (ret)
+        {
+            CacheManager.Clear();
+        }
         return ret;
     }
 
@@ -235,7 +251,12 @@ public class UserService : IUser
     public bool SaveDisplayName(string userName, string displayName)
     {
         using var dbcontext = DbFactory.CreateDbContext();
-        return dbcontext.Database.ExecuteSqlRaw("update Users set DisplayName = {1} where UserName = {0}", userName, displayName!) > 0;
+        var ret = dbcontext.Database.ExecuteSqlRaw("update Users set DisplayName = {1} where UserName = {0}", userName, displayName!) > 0;
+        if (ret)
+        {
+            CacheManager.Clear();
+        }
+        return ret;
     }
 
     /// <summary>
@@ -248,7 +269,12 @@ public class UserService : IUser
     public bool SaveTheme(string userName, string theme)
     {
         using var dbcontext = DbFactory.CreateDbContext();
-        return dbcontext.Database.ExecuteSqlRaw("update Users set Css = {1} where UserName = {0}", userName, theme) > 0;
+        var ret = dbcontext.Database.ExecuteSqlRaw("update Users set Css = {1} where UserName = {0}", userName, theme) > 0;
+        if (ret)
+        {
+            CacheManager.Clear();
+        }
+        return ret;
     }
 
     /// <summary>
@@ -261,7 +287,12 @@ public class UserService : IUser
     public bool SaveLogo(string userName, string? logo)
     {
         using var dbcontext = DbFactory.CreateDbContext();
-        return dbcontext.Database.ExecuteSqlRaw("update Users set Icon = {1} where UserName = {0}", userName, logo ?? "") > 0;
+        var ret = dbcontext.Database.ExecuteSqlRaw("update Users set Icon = {1} where UserName = {0}", userName, logo ?? "") > 0;
+        if (ret)
+        {
+            CacheManager.Clear();
+        }
+        return ret;
     }
 
     /// <summary>
@@ -274,7 +305,12 @@ public class UserService : IUser
     public bool SaveApp(string userName, string app)
     {
         using var dbcontext = DbFactory.CreateDbContext();
-        return dbcontext.Database.ExecuteSqlRaw("update Users Set App = {1} Where UserName = {0}", userName, app) > 0;
+        var ret = dbcontext.Database.ExecuteSqlRaw("update Users Set App = {1} Where UserName = {0}", userName, app) > 0;
+        if (ret)
+        {
+            CacheManager.Clear();
+        }
+        return ret;
     }
 
     /// <summary>
@@ -317,7 +353,11 @@ public class UserService : IUser
             user.PassSalt = salt;
             user.Password = pwd;
             dbcontext.Update(user);
-            ret = true;
+            ret = dbcontext.SaveChanges() > 0;
+        }
+        if (ret)
+        {
+            CacheManager.Clear();
         }
         return ret;
     }
