@@ -3,6 +3,7 @@
 // Website: https://admin.blazor.zone
 
 using BootStarpAdmin.DataAccess.FreeSql.Models;
+using BootstrapAdmin.Caching;
 using BootstrapAdmin.DataAccess.Models;
 using BootstrapAdmin.Web.Core;
 using Longbow.Security.Cryptography;
@@ -37,10 +38,9 @@ class UserService : IUser
         return FreeSql.Select<User>().ToList();
     }
 
-    public List<string> GetApps(string userName)
-    {
-        return FreeSql.Ado.Query<string>($"select d.Code from Dicts d inner join RoleApp ra on d.Code = ra.AppId inner join (select r.Id from Roles r inner join UserRole ur on r.ID = ur.RoleID inner join Users u on ur.UserID = u.ID where u.UserName = @UserName union select r.Id from Roles r inner join RoleGroup rg on r.ID = rg.RoleID inner join Groups g on rg.GroupID = g.ID inner join UserGroup ug on ug.GroupID = g.ID inner join Users u on ug.UserID = u.ID where u.UserName = @UserName) r on ra.RoleId = r.ID union select Code from Dicts where Category = @Category and exists(select r.ID from Roles r inner join UserRole ur on r.ID = ur.RoleID inner join Users u on ur.UserID = u.ID where u.UserName = @UserName and r.RoleName = @RoleName union select r.ID from Roles r inner join RoleGroup rg on r.ID = rg.RoleID inner join Groups g on rg.GroupID = g.ID inner join UserGroup ug on ug.GroupID = g.ID inner join Users u on ug.UserID = u.ID where u.UserName = @UserName and r.RoleName = @RoleName)", new { UserName = userName, Category = "应用程序", RoleName = "Administrators" }).ToList();
-    }
+    private const string UserServiceGetAppsByUserNameCacheKey = "UserService-GetAppsByUserName";
+
+    public List<string> GetApps(string userName) => CacheManager.GetOrAdd($"{UserServiceGetAppsByUserNameCacheKey}-{userName}", entry => FreeSql.Ado.Query<string>($"select d.Code from Dicts d inner join RoleApp ra on d.Code = ra.AppId inner join (select r.Id from Roles r inner join UserRole ur on r.ID = ur.RoleID inner join Users u on ur.UserID = u.ID where u.UserName = @UserName union select r.Id from Roles r inner join RoleGroup rg on r.ID = rg.RoleID inner join Groups g on rg.GroupID = g.ID inner join UserGroup ug on ug.GroupID = g.ID inner join Users u on ug.UserID = u.ID where u.UserName = @UserName) r on ra.RoleId = r.ID union select Code from Dicts where Category = @Category and exists(select r.ID from Roles r inner join UserRole ur on r.ID = ur.RoleID inner join Users u on ur.UserID = u.ID where u.UserName = @UserName and r.RoleName = @RoleName union select r.ID from Roles r inner join RoleGroup rg on r.ID = rg.RoleID inner join Groups g on rg.GroupID = g.ID inner join UserGroup ug on ug.GroupID = g.ID inner join Users u on ug.UserID = u.ID where u.UserName = @UserName and r.RoleName = @RoleName)", new { UserName = userName, Category = "应用程序", RoleName = "Administrators" }).ToList());
 
     /// <summary>
     /// 通过用户名获得指定的前台 AppId
@@ -54,22 +54,21 @@ class UserService : IUser
         return FreeSql.Select<User>().Where(s => s.UserName == userName).ToOne(s => s.DisplayName);
     }
 
-    public List<string> GetRoles(string userName)
-    {
-        return FreeSql.Ado.Query<string>($"select r.RoleName from Roles r inner join UserRole ur on r.ID=ur.RoleID inner join Users u on ur.UserID = u.ID and u.UserName = @userName union select r.RoleName from Roles r inner join RoleGroup rg on r.ID = rg.RoleID inner join Groups g on rg.GroupID = g.ID inner join UserGroup ug on ug.GroupID = g.ID inner join Users u on ug.UserID = u.ID and u.UserName = @userName", new { userName }).ToList();
-    }
+    private const string UserServiceGetRolesByUserNameCacheKey = "UserService-GetRolesByUserName";
 
-    public User? GetUserByUserName(string? userName) => string.IsNullOrEmpty(userName) ? null : FreeSql.Select<User>().Where(i => i.UserName == userName).ToOne();
+    public List<string> GetRoles(string userName) => CacheManager.GetOrAdd($"{UserServiceGetRolesByUserNameCacheKey}-{userName}", entry => FreeSql.Ado.Query<string>($"select r.RoleName from Roles r inner join UserRole ur on r.ID=ur.RoleID inner join Users u on ur.UserID = u.ID and u.UserName = @userName union select r.RoleName from Roles r inner join RoleGroup rg on r.ID = rg.RoleID inner join Groups g on rg.GroupID = g.ID inner join UserGroup ug on ug.GroupID = g.ID inner join Users u on ug.UserID = u.ID and u.UserName = @userName", new { userName }).ToList());
 
-    public List<string> GetUsersByGroupId(string? groupId)
-    {
-        return FreeSql.Ado.Query<string>("select UserID from UserGroup where GroupID = @groupId", new { groupId }).ToList();
-    }
+    private const string UserServiceGetUserByUserNameCacheKey = "UserService-GetUserByUserName";
 
-    public List<string> GetUsersByRoleId(string? roleId)
-    {
-        return FreeSql.Ado.Query<string>("select UserID from UserRole where RoleID = @roleId", new { roleId }).ToList();
-    }
+    public User? GetUserByUserName(string? userName) => CacheManager.GetOrAdd($"{UserServiceGetUserByUserNameCacheKey}-{userName}", entry => string.IsNullOrEmpty(userName) ? null : FreeSql.Select<User>().Where(i => i.UserName == userName).ToOne());
+
+    private const string UserServiceGetUsersByGroupIdCacheKey = "UserService-GetUsersByGroupId";
+
+    public List<string> GetUsersByGroupId(string? groupId) => CacheManager.GetOrAdd($"{UserServiceGetUsersByGroupIdCacheKey}-{groupId}", entry => FreeSql.Ado.Query<string>("select UserID from UserGroup where GroupID = @groupId", new { groupId }).ToList());
+
+    private const string UserServiceGetUsersByRoleIdCacheKey = "UserService-GetUsersByRoleId";
+
+    public List<string> GetUsersByRoleId(string? roleId) => CacheManager.GetOrAdd($"{UserServiceGetUsersByRoleIdCacheKey}-{roleId}", entry => FreeSql.Ado.Query<string>("select UserID from UserRole where RoleID = @roleId", new { roleId }).ToList());
 
     public bool SaveUser(string userName, string displayName, string password)
     {
@@ -185,7 +184,7 @@ class UserService : IUser
                     FreeSql.Insert(user).ExecuteAffrows();
                     // Authorization
                     var roleIds = FreeSql.Ado.Query<string>("select ID from Roles where RoleName in (@roles)", new { roles });
-                    FreeSql.Insert(roleIds.Select(g => new UserRole { RoleID = g, UserID = user.Id }));
+                    FreeSql.Insert(roleIds.Select(g => new UserRole { RoleID = g, UserID = user.Id })).ExecuteAffrows();
                 });
             }
             else
@@ -205,26 +204,54 @@ class UserService : IUser
 
     public bool SaveApp(string userName, string app)
     {
-        throw new NotImplementedException();
+        var ret = FreeSql.Ado.ExecuteNonQuery("update users  set App = @App Where UserName = @UserName", new { App = app, UserName = userName }) == 1;
+        if (ret)
+        {
+            CacheManager.Clear();
+        }
+        return ret;
     }
 
     public bool ChangePassword(string userName, string password, string newPassword)
     {
-        throw new NotImplementedException();
+        var ret = false;
+        if (Authenticate(userName, password))
+        {
+            var passSalt = LgbCryptography.GenerateSalt();
+            password = LgbCryptography.ComputeHash(newPassword, passSalt);
+            string sql = "update users set Password = @Password, PassSalt = @PassSalt where UserName = @UserName";
+            ret = FreeSql.Ado.ExecuteNonQuery(sql, new { Password = password, PassSalt = passSalt, UserName = userName }) == 1;
+        }
+        return ret;
     }
 
     public bool SaveDisplayName(string userName, string displayName)
     {
-        throw new NotImplementedException();
+        var ret = FreeSql.Ado.ExecuteNonQuery("update users set DisplayName = @DisplayName where UserName = @UserName", new { DisplayName = displayName, UserName = userName }) == 1;
+        if (ret)
+        {
+            CacheManager.Clear();
+        }
+        return ret;
     }
 
     public bool SaveTheme(string userName, string theme)
     {
-        throw new NotImplementedException();
+        var ret = FreeSql.Ado.ExecuteNonQuery("update users set Css = @Css where UserName = @UserName", new { Css = theme, UserName = userName }) == 1;
+        if (ret)
+        {
+            CacheManager.Clear();
+        }
+        return ret;
     }
 
     public bool SaveLogo(string userName, string? logo)
     {
-        throw new NotImplementedException();
+        var ret = FreeSql.Ado.ExecuteNonQuery("update users set Icon = @Icon where UserName = @UserName", new { Icon = logo, UserName = userName }) == 1;
+        if (ret)
+        {
+            CacheManager.Clear();
+        }
+        return ret;
     }
 }
