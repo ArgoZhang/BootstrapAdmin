@@ -10,14 +10,19 @@ namespace BootStarpAdmin.DataAccess.FreeSql.Service;
 
 class RoleService : IRole
 {
+    private const string RoleServiceGetAllCacheKey = "RoleService-GetAll";
+
+    private const string RoleServiceGetRolesByUserIdCacheKey = "RoleService-GetRolesByUserId";
+
+    private const string RoleServiceGetRolesByGroupIdCacheKey = "RoleService-GetRolesByGroupId";
+
+    private const string RoleServiceGetRolesByMenuIdCacheKey = "RoleService-GetRolesByMenusId";
+
     private IFreeSql FreeSql { get; }
 
     public RoleService(IFreeSql freeSql) => FreeSql = freeSql;
 
-    public List<Role> GetAll()
-    {
-        return FreeSql.Select<Role>().ToList();
-    }
+    public List<Role> GetAll() => CacheManager.GetOrAdd(RoleServiceGetAllCacheKey, EntryPointNotFoundException => FreeSql.Select<Role>().ToList());
 
     public List<string> GetRolesByGroupId(string? groupId) => FreeSql.Ado.Query<string>("select RoleID from RoleGroup where GroupID = @groupId", new { groupId });
 
