@@ -3,6 +3,7 @@
 // Website: https://admin.blazor.zone
 
 using BootStarpAdmin.DataAccess.FreeSql.Models;
+using BootstrapAdmin.Caching;
 using BootstrapAdmin.DataAccess.Models;
 using BootstrapAdmin.Web.Core;
 
@@ -10,15 +11,21 @@ namespace BootStarpAdmin.DataAccess.FreeSql.Service;
 
 class GroupService : IGroup
 {
+    private const string GroupServiceGetAllCacheKey = "GroupService-GetAll";
+
+    private const string GroupServiceGetGroupsByUserIdCacheKey = "GroupService-GetGroupsByUserId";
+
+    private const string GroupServiceGetGroupsByRoleIdCacheKey = "GroupService-GetGroupsByRoleId";
+
     private IFreeSql FreeSql { get; }
 
     public GroupService(IFreeSql freeSql) => FreeSql = freeSql;
 
-    public List<Group> GetAll() => FreeSql.Select<Group>().ToList();
+    public List<Group> GetAll() => CacheManager.GetOrAdd(GroupServiceGetAllCacheKey, entry => FreeSql.Select<Group>().ToList());
 
-    public List<string> GetGroupsByRoleId(string? roleId) => FreeSql.Ado.Query<string>("select GroupID from RoleGroup where RoleID = @roleId", new { roleId });
+    public List<string> GetGroupsByRoleId(string? roleId) => CacheManager.GetOrAdd($"{GroupServiceGetGroupsByRoleIdCacheKey}-{roleId}", entry => FreeSql.Ado.Query<string>("select GroupID from RoleGroup where RoleID = @roleId", new { roleId }));
 
-    public List<string> GetGroupsByUserId(string? userId) => FreeSql.Ado.Query<string>("select GroupID from UserGroup where UserID = @userId", new { userId });
+    public List<string> GetGroupsByUserId(string? userId) => CacheManager.GetOrAdd($"{GroupServiceGetGroupsByUserIdCacheKey}-{userId}", entry => FreeSql.Ado.Query<string>("select GroupID from UserGroup where UserID = @userId", new { userId }));
 
     public bool SaveGroupsByRoleId(string? roleId, IEnumerable<string> groupIds)
     {
@@ -36,6 +43,10 @@ class GroupService : IGroup
         {
             throw;
         }
+        if (ret)
+        {
+            CacheManager.Clear();
+        }
         return ret;
     }
 
@@ -47,13 +58,17 @@ class GroupService : IGroup
             FreeSql.Transaction(() =>
             {
                 FreeSql.Ado.ExecuteNonQuery("delete from UserGroup where UserID = @userId", new { userId });
-                FreeSql.Insert(groupIds.Select(g => new UserGroup { GroupID = g, UserID = userId }));
+                FreeSql.Insert(groupIds.Select(g => new UserGroup { GroupID = g, UserID = userId })).ExecuteAffrows();
                 ret = true;
             });
         }
         catch (Exception)
         {
             throw;
+        }
+        if (ret)
+        {
+            CacheManager.Clear();
         }
         return ret;
     }
