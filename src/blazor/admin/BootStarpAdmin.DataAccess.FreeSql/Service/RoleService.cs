@@ -3,6 +3,7 @@
 // Website: https://admin.blazor.zone
 
 using BootStarpAdmin.DataAccess.FreeSql.Models;
+using BootstrapAdmin.Caching;
 using BootstrapAdmin.DataAccess.Models;
 using BootstrapAdmin.Web.Core;
 
@@ -24,11 +25,11 @@ class RoleService : IRole
 
     public List<Role> GetAll() => CacheManager.GetOrAdd(RoleServiceGetAllCacheKey, EntryPointNotFoundException => FreeSql.Select<Role>().ToList());
 
-    public List<string> GetRolesByGroupId(string? groupId) => FreeSql.Ado.Query<string>("select RoleID from RoleGroup where GroupID = @groupId", new { groupId });
+    public List<string> GetRolesByGroupId(string? groupId) => CacheManager.GetOrAdd($"{RoleServiceGetRolesByGroupIdCacheKey}-{groupId}", entry => FreeSql.Ado.Query<string>("select RoleID from RoleGroup where GroupID = @groupId", new { groupId }));
 
-    public List<string> GetRolesByMenuId(string? menuId) => FreeSql.Ado.Query<string>("select RoleID from NavigationRole where NavigationID = @menuId", new { menuId });
+    public List<string> GetRolesByMenuId(string? menuId) => CacheManager.GetOrAdd($"{RoleServiceGetRolesByMenuIdCacheKey}-{menuId}", entry => FreeSql.Ado.Query<string>("select RoleID from NavigationRole where NavigationID = @menuId", new { menuId }));
 
-    public List<string> GetRolesByUserId(string? userId) => FreeSql.Ado.Query<string>("select RoleID from UserRole where UserID = @userId", new { userId });
+    public List<string> GetRolesByUserId(string? userId) => CacheManager.GetOrAdd($"{RoleServiceGetRolesByUserIdCacheKey}-{userId}", entry => FreeSql.Ado.Query<string>("select RoleID from UserRole where UserID = @userId", new { userId }));
 
     public bool SaveRolesByGroupId(string? groupId, IEnumerable<string> roleIds)
     {
@@ -45,6 +46,10 @@ class RoleService : IRole
         catch (Exception)
         {
             throw;
+        }
+        if (ret)
+        {
+            CacheManager.Clear();
         }
         return ret;
     }
@@ -65,6 +70,10 @@ class RoleService : IRole
         {
             throw;
         }
+        if (ret)
+        {
+            CacheManager.Clear();
+        }
         return ret;
     }
 
@@ -83,6 +92,10 @@ class RoleService : IRole
         catch (Exception)
         {
             throw;
+        }
+        if (ret)
+        {
+            CacheManager.Clear();
         }
         return ret;
     }
