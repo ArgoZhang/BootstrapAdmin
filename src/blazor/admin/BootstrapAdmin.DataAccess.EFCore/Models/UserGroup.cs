@@ -12,6 +12,11 @@ public class UserGroup
     /// <summary>
     /// 
     /// </summary>
+    public string? ID { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
     public string? UserId { get; set; }
 
     /// <summary>

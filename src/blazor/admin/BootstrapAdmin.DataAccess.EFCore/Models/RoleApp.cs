@@ -12,6 +12,11 @@ public class RoleApp
     /// <summary>
     /// 
     /// </summary>
+    public string? ID { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
     public string? AppID { get; set; }
 
     /// <summary>

@@ -12,6 +12,11 @@ public class RoleGroup
     /// <summary>
     /// 
     /// </summary>
+    public string? ID { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
     public string? RoleId { get; set; }
 
     /// <summary>
