@@ -8,9 +8,11 @@
     <PackageReference Include="BootstrapBlazor.Middleware" Version="1.0.0" />
     <PackageReference Include="Longbow.Logging" Version="6.0.2" />
     <PackageReference Include="Longbow.Tasks" Version="5.2.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.5" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BootstrapAdmin.DataAccess.EFCore\BootstrapAdmin.DataAccess.EFCore.csproj" />
     <ProjectReference Include="..\BootstrapAdmin.DataAccess.PetaPoco\BootstrapAdmin.DataAccess.PetaPoco.csproj" />
   </ItemGroup>
 
