@@ -341,11 +341,20 @@ public class UserService : IUser
                 PassSalt = salt,
                 Password = pwd
             };
-            dbcontext.Add(user);
-            ret = dbcontext.SaveChanges() > 0;
-            // 授权 Default 角色
-            dbcontext.Database.ExecuteSqlRaw("insert into UserRole (UserID, RoleID) select ID, (select ID from Roles where RoleName = 'Default') RoleId from Users where UserName = {0}", userName);
-            ret = dbcontext.SaveChanges() > 0;
+            try
+            {
+                dbcontext.Database.BeginTransaction();
+                dbcontext.Add(user);
+                // 授权 Default 角色
+                dbcontext.Database.ExecuteSqlRaw("insert into UserRole (UserID, RoleID) select ID, (select ID from Roles where RoleName = 'Default') RoleId from Users where UserName = {0}", userName);
+                ret = dbcontext.SaveChanges() > 0;
+                dbcontext.Database.CommitTransaction();
+            }
+            catch (Exception)
+            {
+                dbcontext.Database.RollbackTransaction()
+            }
+
         }
         else
         {
