@@ -56,7 +56,10 @@ public static class ServicesExtensions
         services.AddSingleton<IRole, RoleService>();
         services.AddSingleton<IGroup, GroupService>();
         services.AddSingleton<ILogin, LoginService>();
+        services.AddSingleton<ITrace, TraceService>();
+        services.AddSingleton<IApp, AppService>();
         return services;
        
+
     }
 }
