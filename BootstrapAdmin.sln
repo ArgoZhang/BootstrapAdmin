@@ -157,7 +157,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BootstrapClient.Web", "src\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BootStarpAdmin.DataAccess.FreeSql", "src\blazor\admin\BootStarpAdmin.DataAccess.FreeSql\BootStarpAdmin.DataAccess.FreeSql.csproj", "{11122D97-B349-4A3E-B7DD-73B8B363C47C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BootStarpAdmin.DataAccess.SqlSugar", "src\blazor\admin\BootStarpAdmin.DataAccess.SqlSugar\BootStarpAdmin.DataAccess.SqlSugar.csproj", "{1D20E6CF-9825-4CDE-B732-AE586BD1AABA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BootStarpAdmin.DataAccess.SqlSugar", "src\blazor\admin\BootStarpAdmin.DataAccess.SqlSugar\BootStarpAdmin.DataAccess.SqlSugar.csproj", "{1D20E6CF-9825-4CDE-B732-AE586BD1AABA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BootstrapClient.Web.Core", "src\blazor\client\BootstrapClient.Web.Core\BootstrapClient.Web.Core.csproj", "{FFDF9FF9-0B29-47D3-AD42-53A476B570EC}"
 EndProject
