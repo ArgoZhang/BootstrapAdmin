@@ -66,6 +66,8 @@ public static class ServiceCollectionExtensions
 
         //// 增加数据服务
         //services.AddSingleton(typeof(IDataService<>), typeof(DefaultDataService<>));
+        // 增加多数据库支持服务
+        services.AddSingleton<DBManagerService>();
 
         //// 增加业务服务
         //services.AddSingleton<IApp, AppService>();
