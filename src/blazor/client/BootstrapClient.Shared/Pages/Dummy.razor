@@ -1,0 +1,9 @@
+﻿@using BootstrapClient.Web.Shared.Components
+@page "/dummy"
+
+<AdminTable TItem="BootstrapClient.DataAccess.Models.DummyEntity" OnQueryAsync="OnQueryAsync">
+    <TableColumns>
+        <TableColumn @bind-Field="context.Id"></TableColumn>
+        <TableColumn @bind-Field="context.Name"></TableColumn>
+    </TableColumns>
+</AdminTable>

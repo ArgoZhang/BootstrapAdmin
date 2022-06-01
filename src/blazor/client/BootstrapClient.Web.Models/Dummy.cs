@@ -2,18 +2,20 @@
 // Licensed under the LGPL License, Version 3.0. See License.txt in the project root for license information.
 // Website: https://admin.blazor.zone
 
-using BootstrapClient.DataAccess.Models;
-
-namespace BootstrapClient.Web.Core;
+namespace BootstrapClient.DataAccess.Models;
 
 /// <summary>
-/// 数据服务示例接口
+/// 数据库实体类
 /// </summary>
-public interface IDummy
+public class DummyEntity
 {
     /// <summary>
-    /// 获得 全部数据
+    /// 获得/设置 Id
     /// </summary>
-    /// <returns></returns>
-    List<DummyEntity> GetAll();
+    public string? Id { get; set; }
+
+    /// <summary>
+    /// 获得/设置 Name
+    /// </summary>
+    public string? Name { get; set; }
 }
