@@ -64,20 +64,16 @@ public static class ServiceCollectionExtensions
             return db;
         });
 
-        //// 增加数据服务
-        //services.AddSingleton(typeof(IDataService<>), typeof(DefaultDataService<>));
         // 增加多数据库支持服务
         services.AddSingleton<DBManagerService>();
 
-        //// 增加业务服务
-        //services.AddSingleton<IApp, AppService>();
+        // 增加业务服务
         services.AddSingleton<IDict, DictService>();
-        //services.AddSingleton<IException, ExceptionService>();
-        //services.AddSingleton<IGroup, GroupService>();
-        //services.AddSingleton<ILogin, LoginService>();
         services.AddSingleton<INavigation, NavigationService>();
-        //services.AddSingleton<IRole, RoleService>();
         services.AddSingleton<IUser, UserService>();
+
+        // 增加示例数据服务
+        services.AddSingleton<IDummy, DummyService>();
         return services;
     }
 }
