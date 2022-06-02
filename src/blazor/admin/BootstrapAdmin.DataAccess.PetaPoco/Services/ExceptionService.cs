@@ -10,15 +10,16 @@ namespace BootstrapAdmin.DataAccess.PetaPoco.Services;
 
 class ExceptionService : IException
 {
-    private IDatabase Database { get; }
+    private IDBManager DBManager { get; }
 
-    public ExceptionService(IDatabase db) => Database = db;
+    public ExceptionService(IDBManager db) => DBManager = db;
 
     public bool Log(Error exception)
     {
         try
         {
-            Database.Insert(exception);
+            using var db = DBManager.Create();
+            db.Insert(exception);
         }
         catch { }
         return true;
@@ -59,7 +60,8 @@ class ExceptionService : IException
             sql.OrderBy("Logtime desc", "ErrorPage", "UserId");
         }
 
-        var data = Database.Page<Error>(pageIndex, pageItems, sql);
+        using var db = DBManager.Create();
+        var data = db.Page<Error>(pageIndex, pageItems, sql);
         return (data.Items, Convert.ToInt32(data.TotalItems));
     }
 }
