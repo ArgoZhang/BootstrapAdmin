@@ -17,7 +17,7 @@ class DictService : IDict
 {
     private const string DictServiceCacheKey = "DictService-GetAll";
 
-    private IDatabase Database { get; }
+    private IDBManager DBManager { get; }
 
     private string AppId { get; set; }
 
@@ -26,13 +26,17 @@ class DictService : IDict
     /// </summary>
     /// <param name="db"></param>
     /// <param name="configuration"></param>
-    public DictService(IDatabase db, IConfiguration configuration)
+    public DictService(IDBManager db, IConfiguration configuration)
     {
-        Database = db;
+        DBManager = db;
         AppId = configuration.GetValue("AppId", "BA");
     }
 
-    public List<Dict> GetAll() => CacheManager.GetOrAdd(DictServiceCacheKey, entry => Database.Fetch<Dict>());
+    public List<Dict> GetAll() => CacheManager.GetOrAdd(DictServiceCacheKey, entry =>
+    {
+        using var db = DBManager.Create();
+        return db.Fetch<Dict>();
+    });
 
     public Dictionary<string, string> GetApps()
     {
@@ -178,7 +182,8 @@ class DictService : IDict
 
     private bool SaveDict(Dict dict)
     {
-        var ret = Database.Update<Dict>("set Code = @Code where Category = @Category and Name = @Name", dict) == 1;
+        using var db = DBManager.Create();
+        var ret = db.Update<Dict>("set Code = @Code where Category = @Category and Name = @Name", dict) == 1;
         if (ret)
         {
             // 更新缓存
@@ -417,9 +422,10 @@ class DictService : IDict
         if (!string.IsNullOrEmpty(client.AppId))
         {
             DeleteClient(client.AppId);
+            using var db = DBManager.Create();
             try
             {
-                Database.BeginTransaction();
+                db.BeginTransaction();
                 var items = new List<Dict>()
                 {
                     new Dict { Category = "应用程序", Name = client.AppName, Code = client.AppId, Define = EnumDictDefine.System },
@@ -432,13 +438,13 @@ class DictService : IDict
                     new Dict { Category = client.AppId, Name = "系统设置地址", Code = client.SettingsUrl, Define = EnumDictDefine.Customer },
                     new Dict { Category = client.AppId, Name = "系统通知地址", Code = client.NotificationUrl, Define = EnumDictDefine.Customer }
                 };
-                Database.InsertBatch(items);
-                Database.CompleteTransaction();
+                db.InsertBatch(items);
+                db.CompleteTransaction();
                 ret = true;
             }
             catch (DbException)
             {
-                Database.AbortTransaction();
+                db.AbortTransaction();
                 throw;
             }
         }
@@ -466,12 +472,13 @@ class DictService : IDict
     public bool DeleteClient(string appId)
     {
         bool ret;
+        using var db = DBManager.Create();
         try
         {
-            Database.BeginTransaction();
-            Database.Execute("delete Dicts where Category=@0 and Name=@1 and Define=@2", "应用首页", appId, EnumDictDefine.System);
-            Database.Execute("delete Dicts where Category=@0 and Code=@1 and Define=@2", "应用程序", appId, EnumDictDefine.System);
-            Database.Execute("delete Dicts where Category=@Category and Name in (@Names)", new
+            db.BeginTransaction();
+            db.Execute("delete Dicts where Category=@0 and Name=@1 and Define=@2", "应用首页", appId, EnumDictDefine.System);
+            db.Execute("delete Dicts where Category=@0 and Code=@1 and Define=@2", "应用程序", appId, EnumDictDefine.System);
+            db.Execute("delete Dicts where Category=@Category and Name in (@Names)", new
             {
                 Category = appId,
                 Names = new List<string>
@@ -485,12 +492,12 @@ class DictService : IDict
                     "系统通知地址"
                 }
             });
-            Database.CompleteTransaction();
+            db.CompleteTransaction();
             ret = true;
         }
         catch (Exception)
         {
-            Database.AbortTransaction();
+            db.AbortTransaction();
             throw;
         }
         return ret;
