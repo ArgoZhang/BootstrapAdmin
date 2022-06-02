@@ -39,7 +39,6 @@ class TraceService : ITrace
     public (IEnumerable<Trace> Items, int ItemsCount) GetAll(string? searchText, TraceFilter filter, int pageIndex, int pageItems, List<string> sortList)
     {
         var sql = new Sql();
-        using var db = DBManager.Create();
         if (!string.IsNullOrEmpty(searchText))
         {
             sql.Where("UserName Like @0 or Ip Like @0 or RequestUrl Like @0", $"%{searchText}%");
@@ -71,6 +70,7 @@ class TraceService : ITrace
             sql.OrderBy("Logtime desc");
         }
 
+        using var db = DBManager.Create();
         var data = db.Page<Trace>(pageIndex, pageItems, sql);
         return (data.Items, Convert.ToInt32(data.TotalItems));
     }
