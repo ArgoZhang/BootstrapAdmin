@@ -10,13 +10,12 @@ namespace BootstrapAdmin.DataAccess.PetaPoco.Services;
 
 class TraceService : ITrace
 {
-    private IDatabase Database { get; }
+    private IDBManager DBManager { get; }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="db"></param>
-    public TraceService(IDatabase db) => Database = db;
+    public TraceService(IDBManager db)
+    {
+        DBManager = db;
+    }
 
     /// <summary>
     /// 
@@ -24,7 +23,8 @@ class TraceService : ITrace
     /// <param name="trace"></param>
     public void Log(Trace trace)
     {
-        Database.Insert(trace);
+        using var db = DBManager.Create();
+        db.Insert(trace);
     }
 
     /// <summary>
@@ -39,7 +39,7 @@ class TraceService : ITrace
     public (IEnumerable<Trace> Items, int ItemsCount) GetAll(string? searchText, TraceFilter filter, int pageIndex, int pageItems, List<string> sortList)
     {
         var sql = new Sql();
-
+        using var db = DBManager.Create();
         if (!string.IsNullOrEmpty(searchText))
         {
             sql.Where("UserName Like @0 or Ip Like @0 or RequestUrl Like @0", $"%{searchText}%");
@@ -71,7 +71,7 @@ class TraceService : ITrace
             sql.OrderBy("Logtime desc");
         }
 
-        var data = Database.Page<Trace>(pageIndex, pageItems, sql);
+        var data = db.Page<Trace>(pageIndex, pageItems, sql);
         return (data.Items, Convert.ToInt32(data.TotalItems));
     }
 }
