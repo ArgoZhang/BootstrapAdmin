@@ -19,25 +19,44 @@ class RoleService : IRole
 
     private const string RoleServiceGetRolesByMenuIdCacheKey = "RoleService-GetRolesByMenusId";
 
-    private IDatabase Database { get; }
+    private IDBManager DBManager { get; }
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="db"></param>
-    public RoleService(IDatabase db) => Database = db;
+    public RoleService(IDBManager db)
+    {
+        DBManager = db;
+    }
 
     /// <summary>
     /// 
     /// </summary>
     /// <returns></returns>
-    public List<Role> GetAll() => CacheManager.GetOrAdd(RoleServiceGetAllCacheKey, entry => CacheManager.GetOrAdd(RoleServiceGetAllCacheKey, entry => Database.Fetch<Role>()));
+    public List<Role> GetAll() => CacheManager.GetOrAdd(RoleServiceGetAllCacheKey, entry => CacheManager.GetOrAdd(RoleServiceGetAllCacheKey, entry =>
+    {
+        using var db = DBManager.Create();
+        return db.Fetch<Role>();
+    }));
 
-    public List<string> GetRolesByGroupId(string? groupId) => CacheManager.GetOrAdd($"{RoleServiceGetRolesByGroupIdCacheKey}-{groupId}", entry => Database.Fetch<string>("select RoleID from RoleGroup where GroupID = @0", groupId));
+    public List<string> GetRolesByGroupId(string? groupId) => CacheManager.GetOrAdd($"{RoleServiceGetRolesByGroupIdCacheKey}-{groupId}", entry =>
+    {
+        using var db = DBManager.Create();
+        return db.Fetch<string>("select RoleID from RoleGroup where GroupID = @0", groupId);
+    });
 
-    public List<string> GetRolesByUserId(string? userId) => CacheManager.GetOrAdd($"{RoleServiceGetRolesByUserIdCacheKey}-{userId}", entry => Database.Fetch<string>("select RoleID from UserRole where UserID = @0", userId));
+    public List<string> GetRolesByUserId(string? userId) => CacheManager.GetOrAdd($"{RoleServiceGetRolesByUserIdCacheKey}-{userId}", entry =>
+    {
+        using var db = DBManager.Create();
+        return db.Fetch<string>("select RoleID from UserRole where UserID = @0", userId);
+    });
 
-    public List<string> GetRolesByMenuId(string? menuId) => CacheManager.GetOrAdd($"{RoleServiceGetRolesByMenuIdCacheKey}-{menuId}", entry => Database.Fetch<string>("select RoleID from NavigationRole where NavigationID = @0", menuId));
+    public List<string> GetRolesByMenuId(string? menuId) => CacheManager.GetOrAdd($"{RoleServiceGetRolesByMenuIdCacheKey}-{menuId}", entry =>
+    {
+        using var db = DBManager.Create();
+        return db.Fetch<string>("select RoleID from NavigationRole where NavigationID = @0", menuId);
+    });
 
     /// <summary>
     /// 
@@ -48,17 +67,18 @@ class RoleService : IRole
     public bool SaveRolesByGroupId(string? groupId, IEnumerable<string> roleIds)
     {
         var ret = false;
+        using var db = DBManager.Create();
         try
         {
-            Database.BeginTransaction();
-            Database.Execute("delete from RoleGroup where GroupID = @0", groupId);
-            Database.InsertBatch("RoleGroup", roleIds.Select(g => new { RoleID = g, GroupID = groupId }));
-            Database.CompleteTransaction();
+            db.BeginTransaction();
+            db.Execute("delete from RoleGroup where GroupID = @0", groupId);
+            db.InsertBatch("RoleGroup", roleIds.Select(g => new { RoleID = g, GroupID = groupId }));
+            db.CompleteTransaction();
             ret = true;
         }
         catch (Exception)
         {
-            Database.AbortTransaction();
+            db.AbortTransaction();
             throw;
         }
         if (ret)
@@ -77,17 +97,18 @@ class RoleService : IRole
     public bool SaveRolesByUserId(string? userId, IEnumerable<string> roleIds)
     {
         var ret = false;
+        using var db = DBManager.Create();
         try
         {
-            Database.BeginTransaction();
-            Database.Execute("delete from UserRole where UserID = @0", userId);
-            Database.InsertBatch("UserRole", roleIds.Select(g => new { RoleID = g, UserID = userId }));
-            Database.CompleteTransaction();
+            db.BeginTransaction();
+            db.Execute("delete from UserRole where UserID = @0", userId);
+            db.InsertBatch("UserRole", roleIds.Select(g => new { RoleID = g, UserID = userId }));
+            db.CompleteTransaction();
             ret = true;
         }
         catch (Exception)
         {
-            Database.AbortTransaction();
+            db.AbortTransaction();
             throw;
         }
         if (ret)
@@ -100,17 +121,18 @@ class RoleService : IRole
     public bool SaveRolesByMenuId(string? menuId, IEnumerable<string> roleIds)
     {
         var ret = false;
+        using var db = DBManager.Create();
         try
         {
-            Database.BeginTransaction();
-            Database.Execute("delete from NavigationRole where NavigationID = @0", menuId);
-            Database.InsertBatch("NavigationRole", roleIds.Select(g => new { RoleID = g, NavigationID = menuId }));
-            Database.CompleteTransaction();
+            db.BeginTransaction();
+            db.Execute("delete from NavigationRole where NavigationID = @0", menuId);
+            db.InsertBatch("NavigationRole", roleIds.Select(g => new { RoleID = g, NavigationID = menuId }));
+            db.CompleteTransaction();
             ret = true;
         }
         catch (Exception)
         {
-            Database.AbortTransaction();
+            db.AbortTransaction();
             throw;
         }
         if (ret)
