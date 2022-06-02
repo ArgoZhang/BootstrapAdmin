@@ -16,14 +16,14 @@ namespace BootstrapAdmin.DataAccess.PetaPoco.Services;
 /// </summary>
 class DefaultDataService<TModel> : DataServiceBase<TModel> where TModel : class, new()
 {
-    private IDatabase Database { get; }
+    private IDBManager DBManager { get; }
 
     private IUser UserService { get; }
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    public DefaultDataService(IDatabase db, IUser userService) => (Database, UserService) = (db, userService);
+    public DefaultDataService(IDBManager db, IUser userService) => (DBManager, UserService) = (db, userService);
 
     /// <summary>
     /// 删除方法
@@ -34,7 +34,8 @@ class DefaultDataService<TModel> : DataServiceBase<TModel> where TModel : class,
     {
         // 通过模型获取主键列数据
         // 支持批量删除
-        Database.DeleteBatch(models);
+        using var db = DBManager.Create();
+        db.DeleteBatch(models);
         return Task.FromResult(true);
     }
 
@@ -52,13 +53,14 @@ class DefaultDataService<TModel> : DataServiceBase<TModel> where TModel : class,
         }
         else
         {
+            using var db = DBManager.Create();
             if (changedType == ItemChangedType.Add)
             {
-                await Database.InsertAsync(model);
+                await db.InsertAsync(model);
             }
             else
             {
-                await Database.UpdateAsync(model);
+                await db.UpdateAsync(model);
             }
         }
         return true;
@@ -79,16 +81,17 @@ class DefaultDataService<TModel> : DataServiceBase<TModel> where TModel : class,
             IsAdvanceSearch = option.AdvanceSearchs.Any() || option.CustomerSearchs.Any()
         };
 
+        using var db = DBManager.Create();
         if (option.IsPage)
         {
-            var items = await Database.PageAsync<TModel>(option);
+            var items = await db.PageAsync<TModel>(option);
 
             ret.TotalCount = Convert.ToInt32(items.TotalItems);
             ret.Items = items.Items;
         }
         else
         {
-            var items = await Database.FetchAsync<TModel>(option);
+            var items = await db.FetchAsync<TModel>(option);
             ret.TotalCount = items.Count;
             ret.Items = items;
         }
