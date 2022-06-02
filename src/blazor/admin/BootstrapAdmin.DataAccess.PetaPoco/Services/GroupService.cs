@@ -17,26 +17,34 @@ class GroupService : IGroup
 
     private const string GroupServiceGetGroupsByRoleIdCacheKey = "GroupService-GetGroupsByRoleId";
 
-    private IDatabase Database { get; }
+    private IDBManager DBManager { get; }
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="db"></param>
-    public GroupService(IDatabase db) => Database = db;
+    public GroupService(IDBManager db) => DBManager = db;
 
     /// <summary>
     /// 
     /// </summary>
     /// <returns></returns>
-    public List<Group> GetAll() => CacheManager.GetOrAdd(GroupServiceGetAllCacheKey, entry => Database.Fetch<Group>());
+    public List<Group> GetAll() => CacheManager.GetOrAdd(GroupServiceGetAllCacheKey, entry =>
+    {
+        using var db = DBManager.Create();
+        return db.Fetch<Group>();
+    });
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="userId"></param>
     /// <returns></returns>
-    public List<string> GetGroupsByUserId(string? userId) => CacheManager.GetOrAdd($"{GroupServiceGetGroupsByUserIdCacheKey}-{userId}", entry => Database.Fetch<string>("select GroupID from UserGroup where UserID = @0", userId));
+    public List<string> GetGroupsByUserId(string? userId) => CacheManager.GetOrAdd($"{GroupServiceGetGroupsByUserIdCacheKey}-{userId}", entry =>
+    {
+        using var db = DBManager.Create();
+        return db.Fetch<string>("select GroupID from UserGroup where UserID = @0", userId);
+    });
 
     /// <summary>
     /// 
@@ -47,17 +55,18 @@ class GroupService : IGroup
     public bool SaveGroupsByUserId(string? userId, IEnumerable<string> groupIds)
     {
         var ret = false;
+        using var db = DBManager.Create();
         try
         {
-            Database.BeginTransaction();
-            Database.Execute("delete from UserGroup where UserID = @0", userId);
-            Database.InsertBatch("UserGroup", groupIds.Select(g => new { GroupID = g, UserID = userId }));
-            Database.CompleteTransaction();
+            db.BeginTransaction();
+            db.Execute("delete from UserGroup where UserID = @0", userId);
+            db.InsertBatch("UserGroup", groupIds.Select(g => new { GroupID = g, UserID = userId }));
+            db.CompleteTransaction();
             ret = true;
         }
         catch (Exception)
         {
-            Database.AbortTransaction();
+            db.AbortTransaction();
             throw;
         }
         if (ret)
@@ -72,7 +81,11 @@ class GroupService : IGroup
     /// </summary>
     /// <param name="roleId"></param>
     /// <returns></returns>
-    public List<string> GetGroupsByRoleId(string? roleId) => CacheManager.GetOrAdd($"{GroupServiceGetGroupsByRoleIdCacheKey}-{roleId}", entry => Database.Fetch<string>("select GroupID from RoleGroup where RoleID = @0", roleId));
+    public List<string> GetGroupsByRoleId(string? roleId) => CacheManager.GetOrAdd($"{GroupServiceGetGroupsByRoleIdCacheKey}-{roleId}", entry =>
+    {
+        using var db = DBManager.Create();
+        return db.Fetch<string>("select GroupID from RoleGroup where RoleID = @0", roleId);
+    });
 
     /// <summary>
     /// 
@@ -83,17 +96,18 @@ class GroupService : IGroup
     public bool SaveGroupsByRoleId(string? roleId, IEnumerable<string> groupIds)
     {
         var ret = false;
+        using var db = DBManager.Create();
         try
         {
-            Database.BeginTransaction();
-            Database.Execute("delete from RoleGroup where RoleID = @0", roleId);
-            Database.InsertBatch("RoleGroup", groupIds.Select(g => new { GroupID = g, RoleID = roleId }));
-            Database.CompleteTransaction();
+            db.BeginTransaction();
+            db.Execute("delete from RoleGroup where RoleID = @0", roleId);
+            db.InsertBatch("RoleGroup", groupIds.Select(g => new { GroupID = g, RoleID = roleId }));
+            db.CompleteTransaction();
             ret = true;
         }
         catch (Exception)
         {
-            Database.AbortTransaction();
+            db.AbortTransaction();
             throw;
         }
 
