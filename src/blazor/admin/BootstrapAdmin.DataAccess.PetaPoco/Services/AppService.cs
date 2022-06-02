@@ -12,29 +12,34 @@ class AppService : IApp
 {
     private const string AppServiceGetAppsByRoleIdCacheKey = "AppService-GetAppsByRoleId";
 
-    private IDatabase Database { get; }
+    private IDBManager DBManager { get; }
 
-    public AppService(IDatabase db)
+    public AppService(IDBManager db)
     {
-        Database = db;
+        DBManager = db;
     }
 
-    public List<string> GetAppsByRoleId(string? roleId) => CacheManager.GetOrAdd($"{AppServiceGetAppsByRoleIdCacheKey}-{roleId}", entry => Database.Fetch<string>("select AppID from RoleApp where RoleID = @0", roleId));
+    public List<string> GetAppsByRoleId(string? roleId) => CacheManager.GetOrAdd($"{AppServiceGetAppsByRoleIdCacheKey}-{roleId}", entry =>
+    {
+        using var db = DBManager.Create();
+        return db.Fetch<string>("select AppID from RoleApp where RoleID = @0", roleId);
+    });
 
     public bool SaveAppsByRoleId(string? roleId, IEnumerable<string> appIds)
     {
         var ret = false;
+        using var db = DBManager.Create();
         try
         {
-            Database.BeginTransaction();
-            Database.Execute("delete from RoleApp where RoleID = @0", roleId);
-            Database.InsertBatch("RoleApp", appIds.Select(g => new { AppID = g, RoleID = roleId }));
-            Database.CompleteTransaction();
+            db.BeginTransaction();
+            db.Execute("delete from RoleApp where RoleID = @0", roleId);
+            db.InsertBatch("RoleApp", appIds.Select(g => new { AppID = g, RoleID = roleId }));
+            db.CompleteTransaction();
             ret = true;
         }
         catch (Exception)
         {
-            Database.AbortTransaction();
+            db.AbortTransaction();
             throw;
         }
         if (ret)
