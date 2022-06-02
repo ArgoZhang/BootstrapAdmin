@@ -4,15 +4,14 @@
 
 using BootstrapAdmin.DataAccess.Models;
 using BootstrapAdmin.Web.Core;
-using PetaPoco;
 
 namespace BootstrapAdmin.DataAccess.PetaPoco.Services;
 
 class LoginService : ILogin
 {
-    private IDatabase Database { get; }
+    private IDBManager DBManager { get; }
 
-    public LoginService(IDatabase database) => Database = database;
+    public LoginService(IDBManager database) => DBManager = database;
 
     /// <summary>
     /// 
@@ -38,7 +37,8 @@ class LoginService : ILogin
             UserAgent = userAgent,
             Result = result ? "登录成功" : "登录失败"
         };
-        Database.Insert(loginUser);
+        using var db = DBManager.Create();
+        db.Insert(loginUser);
         return true;
     }
 }
