@@ -10,15 +10,15 @@ namespace BootstrapClient.DataAccess.PetaPoco.Services;
 
 internal class DummyService : IDummy
 {
-    private IDatabase Database { get; }
+    private IDBManager DBManager { get; }
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="db"></param>
-    public DummyService(DBManagerService db)
+    public DummyService(IDBManager db)
     {
-        Database = db.Create();
+        DBManager = db;
     }
 
     /// <summary>

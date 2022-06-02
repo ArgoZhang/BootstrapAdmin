@@ -33,13 +33,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<BootstrapAppContext>();
 
             // 增加 PetaPoco 数据服务
-            services.AddPetaPocoDataAccessServices((provider, builder) =>
-            {
-                var configuration = provider.GetRequiredService<IConfiguration>();
-                var connString = configuration.GetConnectionString("ba");
-                builder.UsingProvider<SQLiteDatabaseProvider>()
-                       .UsingConnectionString(connString);
-            });
+            services.AddPetaPocoDataAccessServices();
 
             return services;
         }

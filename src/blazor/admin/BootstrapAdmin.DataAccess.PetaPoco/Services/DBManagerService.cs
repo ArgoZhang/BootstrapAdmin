@@ -47,7 +47,7 @@ internal class DBManagerService : IDBManager
         option.UsingConnectionString(conn);
 
         // provider
-        option.UsingProvider<SqlServerDatabaseProvider>();
+        option.UsingProvider<SQLiteDatabaseProvider>();
 
         var db = new Database(option) { KeepConnectionAlive = keepAlive };
 

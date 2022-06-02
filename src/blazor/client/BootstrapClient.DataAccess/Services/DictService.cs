@@ -10,15 +10,19 @@ namespace BootstrapClient.DataAccess.PetaPoco.Services;
 
 class DictService : IDict
 {
-    private IDatabase Database { get; }
+    private IDBManager DBManager { get; }
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="db"></param>
-    public DictService(IDatabase db) => Database = db;
+    public DictService(IDBManager db) => DBManager = db;
 
-    public List<Dict> GetAll() => Database.Fetch<Dict>();
+    public List<Dict> GetAll()
+    {
+        using var db = DBManager.Create();
+        return db.Fetch<Dict>();
+    }
 
     public bool IsDemo()
     {
