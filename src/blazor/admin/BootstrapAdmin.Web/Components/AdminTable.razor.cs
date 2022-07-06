@@ -183,6 +183,12 @@ namespace BootstrapAdmin.Web.Components
         [Parameter]
         public Func<TItem, bool>? ShowDeleteButtonCallback { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        [Parameter]
+        public Func<TItem, TItem, bool>? ModelEqualityComparer { get; set; }
+
         [NotNull]
         private Table<TItem>? Instance { get; set; }
 
