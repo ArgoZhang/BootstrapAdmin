@@ -141,12 +141,12 @@ public partial class Menus
             ret.AddRange(items.Where(i => i.ParentId == parentId).Select((nav, index) => new TableTreeNode<Navigation>(nav)
             {
                 HasChildren = navs.Any(i => i.ParentId == nav.Id),
-                IsExpand = false,
-                //  获得子项集合 
-                //  IsExpand = navs.Any(i => i.ParentId == nav.Id)
-                //  Items = BuildTreeNodes(navs.Where(i => i.ParentId == nav.Id), nav.Id)
+                IsExpand = navs.Any(i => i.ParentId == nav.Id),
+                Items = BuildTreeNodes(navs.Where(i => i.ParentId == nav.Id), nav.Id)
             }));
             return ret;
         }
     }
+
+    private bool ModelEqualityComparer(Navigation x, Navigation y) => x.Id == y.Id;
 }

@@ -1,8 +1,8 @@
 ﻿@page "/Admin/Menus"
 
 <AdminTable TItem="DataAccess.Models.Navigation"
-            IsTree="true" OnTreeExpand="OnTreeExpand" TreeNodeConverter="TreeNodeConverter" ExtendButtonColumnWidth="200"
-            CustomerSearchModel="SearchModel" OnQueryAsync="OnQueryAsync">
+            IsTree="true" OnTreeExpand="OnTreeExpand" TreeNodeConverter="TreeNodeConverter" ModelEqualityComparer="ModelEqualityComparer"
+            ExtendButtonColumnWidth="200" CustomerSearchModel="SearchModel" OnQueryAsync="OnQueryAsync">
     <TableToolbarTemplate>
         <TableToolbarButton TItem="DataAccess.Models.Navigation" Color="Color.Info" Icon="fa fa-sitemap" Text="分配角色" 
             IsEnableWhenSelectedOneRow="true" IsShow="@AuthorizeButton("assignRole")" 
