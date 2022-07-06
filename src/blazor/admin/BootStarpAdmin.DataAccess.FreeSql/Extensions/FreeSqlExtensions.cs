@@ -24,6 +24,10 @@ static class FreeSqlExtensions
             i.Property(n => n.Period).IsIgnore(true);
             i.Property(n => n.IsReset).IsIgnore(true);
         });
+        freeSql.CodeFirst.ConfigEntity<Trace>(i =>
+        {
+            i.Name("Traces");
+        });
         freeSql.CodeFirst.ConfigEntity<Group>(i =>
         {
             i.Name("Groups");

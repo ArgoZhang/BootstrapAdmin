@@ -123,9 +123,30 @@ public partial class Menus
         });
     }
 
-    private Task<IEnumerable<Navigation>> OnTreeExpand(Navigation menu)
+    private Task<IEnumerable<TableTreeNode<Navigation>>> OnTreeExpand(Navigation menu)
     {
         var navs = NavigationService.GetAllMenus(AppContext.UserName);
-        return Task.FromResult(navs.Where(m => m.ParentId == menu.Id).OrderBy(m => m.Order).AsEnumerable());
+        return Task.FromResult(navs.Where(m => m.ParentId == menu.Id).OrderBy(m => m.Order).AsEnumerable().Select(i => new TableTreeNode<Navigation>(i)));
+    }
+
+    private Task<IEnumerable<TableTreeNode<Navigation>>> TreeNodeConverter(IEnumerable<Navigation> items)
+    {
+        var ret = BuildTreeNodes(items, "0");
+        return Task.FromResult(ret);
+
+        IEnumerable<TableTreeNode<Navigation>> BuildTreeNodes(IEnumerable<Navigation> items, string parentId)
+        {
+            var navs = NavigationService.GetAllMenus(AppContext.UserName);
+            var ret = new List<TableTreeNode<Navigation>>();
+            ret.AddRange(items.Where(i => i.ParentId == parentId).Select((nav, index) => new TableTreeNode<Navigation>(nav)
+            {
+                HasChildren = navs.Any(i => i.ParentId == nav.Id),
+                IsExpand = false,
+                //  获得子项集合 
+                //  IsExpand = navs.Any(i => i.ParentId == nav.Id)
+                //  Items = BuildTreeNodes(navs.Where(i => i.ParentId == nav.Id), nav.Id)
+            }));
+            return ret;
+        }
     }
 }

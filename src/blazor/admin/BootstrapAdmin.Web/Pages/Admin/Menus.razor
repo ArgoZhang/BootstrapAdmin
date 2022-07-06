@@ -1,7 +1,7 @@
 ﻿@page "/Admin/Menus"
 
 <AdminTable TItem="DataAccess.Models.Navigation"
-            IsTree="true" OnTreeExpand="OnTreeExpand" ExtendButtonColumnWidth="200"
+            IsTree="true" OnTreeExpand="OnTreeExpand" TreeNodeConverter="TreeNodeConverter" ExtendButtonColumnWidth="200"
             CustomerSearchModel="SearchModel" OnQueryAsync="OnQueryAsync">
     <TableToolbarTemplate>
         <TableToolbarButton TItem="DataAccess.Models.Navigation" Color="Color.Info" Icon="fa fa-sitemap" Text="分配角色" 

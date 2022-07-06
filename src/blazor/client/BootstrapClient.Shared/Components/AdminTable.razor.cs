@@ -145,7 +145,13 @@ namespace BootstrapClient.Web.Shared.Components
         /// 
         /// </summary>
         [Parameter]
-        public Func<TItem, Task<IEnumerable<TItem>>>? OnTreeExpand { get; set; }
+        public Func<TItem, Task<IEnumerable<TableTreeNode<TItem>>>>? OnTreeExpand { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Parameter]
+        public Func<IEnumerable<TItem>, Task<IEnumerable<TableTreeNode<TItem>>>>? TreeNodeConverter { get; set; }
 
         /// <summary>
         /// 
