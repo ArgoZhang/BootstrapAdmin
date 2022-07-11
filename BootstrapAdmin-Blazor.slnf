@@ -11,8 +11,7 @@
       "src\\blazor\\client\\BootstrapClient.Shared\\BootstrapClient.Web.Shared.csproj",
       "src\\blazor\\client\\BootstrapClient.Web.Core\\BootstrapClient.Web.Core.csproj",
       "src\\blazor\\client\\BootstrapClient.Web.Models\\BootstrapClient.DataAccess.Models.csproj",
-      "src\\blazor\\client\\BootstrapClient.Web\\BootstrapClient.Web.csproj",
-      "test\\UnitTest\\UnitTest.csproj"
+      "src\\blazor\\client\\BootstrapClient.Web\\BootstrapClient.Web.csproj"
     ]
   }
 }
