@@ -30,11 +30,9 @@
         <div class="col-12 col-sm-12">
             <BootstrapInput @bind-Value="Value.Favicon" placeholder="不可为空，2000字以内"></BootstrapInput>
         </div>
-        <div class="col-12 col-sm-12">
-            <div class="table-modal-footer text-end">
-                <Button ButtonType="ButtonType.Button" Text="关闭" Icon="fa fa-close" Color="Color.Secondary" OnClick="OnClickClose"></Button>
-                <Button ButtonType="ButtonType.Submit" Text="保存" Icon="fa fa-save"></Button>
-            </div>
-        </div>
+    </div>
+    <div class="form-footer">
+        <Button ButtonType="ButtonType.Button" Text="关闭" Icon="fa fa-close" Color="Color.Secondary" OnClick="OnClickClose"></Button>
+        <Button ButtonType="ButtonType.Submit" Text="保存" Icon="fa fa-save"></Button>
     </div>
 </ValidateForm>
