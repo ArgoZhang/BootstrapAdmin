@@ -60,13 +60,12 @@ public partial class ClientDialog
         }
     }
 
-    private Task OnSaveCleint(EditContext context)
+    private async Task OnSaveCleint(EditContext context)
     {
         if (OnSave != null)
         {
-            OnSave(Value);
+            await OnSave(Value);
         }
-        return Task.CompletedTask;
     }
 
     private async Task OnClickClose()
