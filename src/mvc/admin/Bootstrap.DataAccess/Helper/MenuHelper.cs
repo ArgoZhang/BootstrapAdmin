@@ -35,30 +35,40 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static bool Save(BootstrapMenu p)
         {
-            // 不允许保存系统菜单与前台演示系统的默认菜单
+            var ret = false;
+
             if (DictHelper.RetrieveSystemModel())
             {
-                if (p.Category == "0") return true;
-
-                // 查找原有数据比对是否为系统菜单与演示菜单
-                if (!string.IsNullOrEmpty(p.Id))
+                // 不允许保存系统菜单与前台演示系统的默认菜单
+                if (p.Category == "0")
                 {
-
-                    // 系统菜单
+                    ret = true;
+                }
+                else if (!string.IsNullOrEmpty(p.Id))
+                {
+                    // 查找原有数据比对是否为系统菜单与演示菜单
                     var menus = RetrieveAllMenus("Admin");
-#pragma warning disable CS8602 // 取消引用可能出现的空引用。
-                    var menu = menus.FirstOrDefault(m => m.Id.Equals(p.Id, System.StringComparison.OrdinalIgnoreCase));
-#pragma warning restore CS8602 // 取消引用可能出现的空引用。
-                    if (menu != null && menu.Category == "0") return true;
-
-                    // 演示系统
-                    var appMenus = BootstrapAppContext.Configuration.GetSection("AppMenus").Get<ICollection<string>>();
-                    if (appMenus.Any(m => m.Equals(menu?.Name, StringComparison.OrdinalIgnoreCase))) return true;
+                    var menu = menus.FirstOrDefault(m => m.Id?.Equals(p.Id, System.StringComparison.OrdinalIgnoreCase) ?? false);
+                    if (menu != null && menu.Category == "0")
+                    {
+                        // 系统菜单
+                        ret = true;
+                    }
+                    else if (BootstrapAppContext.Configuration != null)
+                    {
+                        var appMenus = BootstrapAppContext.Configuration.GetSection("AppMenus").Get<ICollection<string>>();
+                        if (appMenus.Any(m => m.Equals(menu?.Name, StringComparison.OrdinalIgnoreCase)))
+                        {
+                            ret = true;
+                        }
+                    }
                 }
             }
-
-            var ret = DbContextManager.Create<Menu>()?.Save(p) ?? false;
-            if (ret) CacheCleanUtility.ClearCache(menuIds: string.IsNullOrEmpty(p.Id) ? new List<string>() : new List<string>() { p.Id });
+            else
+            {
+                ret = DbContextManager.Create<Menu>()?.Save(p) ?? false;
+                if (ret) CacheCleanUtility.ClearCache(menuIds: string.IsNullOrEmpty(p.Id) ? new List<string>() : new List<string>() { p.Id });
+            }
             return ret;
         }
 
@@ -69,23 +79,38 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static bool Delete(IEnumerable<string> value)
         {
+            var ret = false;
             if (DictHelper.RetrieveSystemModel())
             {
                 // 不允许删除系统菜单与前台演示系统的默认菜单
                 var systemMenus = RetrieveAllMenus("Admin").Where(m => m.Category == "0");
                 value = value.Where(v => !systemMenus.Any(m => m.Id == v));
-                if (!value.Any()) return true;
-
-                // 演示系统
-                var appMenus = BootstrapAppContext.Configuration.GetSection("AppMenus").Get<ICollection<string>>();
-                var appIds = RetrieveAllMenus("Admin").Where(m => appMenus.Any(app => m.Name.Equals(app, System.StringComparison.OrdinalIgnoreCase))).Select(m => m.Id);
-#pragma warning disable CS8602 // 取消引用可能出现的空引用。
-                value = value.Where(m => !appIds.Any(app => app.Equals(m, StringComparison.OrdinalIgnoreCase)));
-#pragma warning restore CS8602 // 取消引用可能出现的空引用。
-                if (!value.Any()) return true;
+                if (!value.Any())
+                {
+                    ret = true;
+                }
+                else if (BootstrapAppContext.Configuration != null)
+                {
+                    // 演示系统
+                    var appMenus = BootstrapAppContext.Configuration.GetSection("AppMenus").Get<ICollection<string>>();
+                    var appIds = RetrieveAllMenus("Admin")
+                        .Where(m => appMenus.Any(app => m.Name.Equals(app, System.StringComparison.OrdinalIgnoreCase)))
+                        .Select(m => m.Id);
+                    value = value.Where(m => !appIds.Any(app => app?.Equals(m, StringComparison.OrdinalIgnoreCase) ?? false));
+                    if (!value.Any())
+                    {
+                        ret = true;
+                    }
+                }
             }
-            var ret = DbContextManager.Create<Menu>()?.Delete(value) ?? false;
-            if (ret) CacheCleanUtility.ClearCache(menuIds: value);
+            else
+            {
+                ret = DbContextManager.Create<Menu>()?.Delete(value) ?? false;
+                if (ret)
+                {
+                    CacheCleanUtility.ClearCache(menuIds: value);
+                }
+            }
             return ret;
         }
 
@@ -101,7 +126,7 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="roleId"></param>
         /// <returns></returns>
-        public static IEnumerable<string> RetrieveMenusByRoleId(string roleId) => CacheManager.GetOrAdd($"{RetrieveMenusByRoleIdDataKey}-{roleId}", k => DbContextManager.Create<Menu>()?.RetrieveMenusByRoleId(roleId), RetrieveMenusByRoleIdDataKey) ?? new string[0];
+        public static IEnumerable<string> RetrieveMenusByRoleId(string roleId) => CacheManager.GetOrAdd($"{RetrieveMenusByRoleIdDataKey}-{roleId}", k => DbContextManager.Create<Menu>()?.RetrieveMenusByRoleId(roleId), RetrieveMenusByRoleIdDataKey) ?? Array.Empty<string>();
 
         /// <summary>
         /// 保存指定角色的所有菜单
@@ -125,7 +150,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<BootstrapMenu> RetrieveAppMenus(string? appId, string? userName, string? activeUrl)
         {
-            if (string.IsNullOrEmpty(appId) || string.IsNullOrEmpty(userName)) return new BootstrapMenu[0];
+            if (string.IsNullOrEmpty(appId) || string.IsNullOrEmpty(userName)) return Array.Empty<BootstrapMenu>();
 
             var menus = RetrieveAllMenus(userName).Where(m => m.Category == "1" && m.IsResource == 0);
             menus = menus.Where(m => m.Application.Equals(appId, StringComparison.OrdinalIgnoreCase));
@@ -162,7 +187,11 @@ namespace Bootstrap.DataAccess
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public static IEnumerable<BootstrapMenu> RetrieveAllMenus(string? userName) => string.IsNullOrEmpty(userName) ? new BootstrapMenu[0] : CacheManager.GetOrAdd($"{RetrieveMenusAll}-{userName}", key => DbContextManager.Create<Menu>()?.RetrieveAllMenus(userName), RetrieveMenusAll) ?? Array.Empty<BootstrapMenu>();
+        public static IEnumerable<BootstrapMenu> RetrieveAllMenus(string? userName) => string.IsNullOrEmpty(userName)
+            ? Array.Empty<BootstrapMenu>()
+            : CacheManager.GetOrAdd($"{RetrieveMenusAll}-{userName}", key => DbContextManager.Create<Menu>()
+                ?.RetrieveAllMenus(userName), RetrieveMenusAll)
+                ?? Array.Empty<BootstrapMenu>();
 
         /// <summary>
         /// 通过当前用户名与指定菜单路径获取此菜单下所有授权按钮集合 (userName, url, auths) => bool

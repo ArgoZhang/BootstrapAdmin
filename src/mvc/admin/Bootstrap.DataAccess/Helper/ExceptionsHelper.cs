@@ -4,6 +4,7 @@
 
 using Longbow.Cache;
 using Longbow.Web.Mvc;
+using Microsoft.Extensions.Logging;
 using PetaPoco;
 using System;
 using System.Collections.Generic;
@@ -25,13 +26,21 @@ namespace Bootstrap.DataAccess
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="provider"></param>
+        /// <param name="eventId"></param>
         /// <param name="ex"></param>
         /// <param name="additionalInfo"></param>
         /// <returns></returns>
-        public static void Log(Exception ex, NameValueCollection additionalInfo)
+        public static void Log(IServiceProvider provider, EventId eventId, Exception? ex, NameValueCollection additionalInfo)
         {
-            var ret = DbContextManager.Create<Exceptions>()?.Log(ex, additionalInfo) ?? false;
-            if (ret) CacheManager.Clear(RetrieveExceptionsDataKey);
+            if (ex != null)
+            {
+                var ret = DbContextManager.Create<Exceptions>()?.Log(ex, additionalInfo) ?? false;
+                if (ret)
+                {
+                    CacheManager.Clear(RetrieveExceptionsDataKey);
+                }
+            }
         }
 
         /// <summary>
