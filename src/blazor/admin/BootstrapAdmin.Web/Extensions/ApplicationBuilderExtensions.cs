@@ -26,9 +26,6 @@ public static class ApplicationBuilderExtensions
         builder.UseAuthentication();
         builder.UseAuthorization();
 
-        // 激活 ICacheManager
-        builder.Services.GetRequiredService<BootstrapAdmin.Caching.ICacheManager>();
-
         return builder;
     }
 }
