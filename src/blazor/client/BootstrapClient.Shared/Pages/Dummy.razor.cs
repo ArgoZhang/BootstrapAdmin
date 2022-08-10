@@ -7,6 +7,9 @@ using BootstrapClient.Web.Core;
 
 namespace BootstrapClient.Web.Shared.Pages;
 
+/// <summary>
+/// 示例数据服务
+/// </summary>
 public partial class Dummy
 {
     [Inject]
