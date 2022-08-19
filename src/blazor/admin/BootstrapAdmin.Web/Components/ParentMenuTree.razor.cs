@@ -2,6 +2,7 @@
 // Licensed under the LGPL License, Version 3.0. See License.txt in the project root for license information.
 // Website: https://admin.blazor.zone
 
+using BootstrapAdmin.DataAccess.Models;
 using BootstrapAdmin.Web.Core;
 using BootstrapAdmin.Web.Extensions;
 using BootstrapAdmin.Web.Services;
@@ -28,7 +29,7 @@ public partial class ParentMenuTree
     public EventCallback<string> ValueChanged { get; set; }
 
     [NotNull]
-    private List<TreeItem>? InternalItems { get; set; }
+    private List<TreeViewItem<Navigation>>? Items { get; set; }
 
     [Inject]
     [NotNull]
@@ -50,12 +51,12 @@ public partial class ParentMenuTree
         base.OnInitialized();
 
         var items = NavigationService.GetAllMenus(Context.UserName);
-        InternalItems = items.ToTreeItemList(new List<string> { Value }, RenderTreeItem);
+        Items = items.ToTreeItemList(new List<string> { Value }, RenderTreeItem);
     }
 
-    private async Task OnTreeItemChecked(List<TreeItem> items)
+    private async Task OnTreeItemClick(TreeViewItem<Navigation> item)
     {
-        Value = items.First().Key?.ToString();
+        Value = item.Value.Name;
         if (ValueChanged.HasDelegate)
         {
             await ValueChanged.InvokeAsync(Value);

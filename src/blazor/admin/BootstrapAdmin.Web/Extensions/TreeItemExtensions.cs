@@ -19,19 +19,17 @@ public static class TreeItemExtensions
     /// <param name="render"></param>
     /// <param name="parentId"></param>
     /// <returns></returns>
-    public static List<TreeItem> ToTreeItemList(this IEnumerable<Navigation> navigations, List<string> selectedItems, RenderFragment<Navigation> render, string? parentId = "0")
+    public static List<TreeViewItem<Navigation>> ToTreeItemList(this IEnumerable<Navigation> navigations, List<string> selectedItems, RenderFragment<Navigation> render, string? parentId = "0")
     {
-        var trees = new List<TreeItem>();
+        var trees = new List<TreeViewItem<Navigation>>();
         var roots = navigations.Where(i => i.ParentId == parentId).OrderBy(i => i.Application).ThenBy(i => i.Order);
         foreach (var node in roots)
         {
-            trees.Add(new TreeItem
+            trees.Add(new TreeViewItem<Navigation>(node)
             {
                 Text = node.Name,
-                Icon = node.Icon,
-                Checked = selectedItems.Any(v => node.Id == v),
-                Key = node.Id,
-                Template = render(node),
+                IsActive = selectedItems.Any(v => node.Id == v),
+                Template = render,
                 Items = ToTreeItemList(navigations, selectedItems, render, node.Id!)
             });
         }

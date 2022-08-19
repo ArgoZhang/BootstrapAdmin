@@ -1,4 +1,4 @@
-﻿<Tree Items="InternalItems" ShowRadio="true" ShowIcon="true" OnTreeItemChecked="@OnTreeItemChecked" />
+﻿<TreeView TItem="Navigation" Items="Items" ShowIcon="true" OnTreeItemClick="OnTreeItemClick" />
 
 @code {
     RenderFragment<Navigation> RenderTreeItem => item =>

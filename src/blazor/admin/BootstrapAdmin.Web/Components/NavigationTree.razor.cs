@@ -14,10 +14,7 @@ namespace BootstrapAdmin.Web.Components;
 public partial class NavigationTree
 {
     [NotNull]
-    private List<TreeItem>? InternalItems { get; set; }
-
-    [NotNull]
-    private Tree? MenusTree { get; set; }
+    private List<TreeViewItem<Navigation>>? InternalItems { get; set; }
 
     [Inject]
     [NotNull]
@@ -53,7 +50,7 @@ public partial class NavigationTree
     [Parameter]
     [EditorRequired]
     [NotNull]
-    public Func<List<string?>, Task>? OnSave { get; set; }
+    public Func<List<string>, Task>? OnSave { get; set; }
 
     /// <summary>
     /// 
@@ -69,5 +66,19 @@ public partial class NavigationTree
 
     private Task OnClickClose() => OnClose();
 
-    private Task OnClickSave() => OnSave(MenusTree.GetCheckedItems().Select(i => i.Key?.ToString()).ToList());
+    private List<TreeViewItem<Navigation>>? _checkedItems;
+
+    private Task OnTreeItemChecked(List<TreeViewItem<Navigation>> items)
+    {
+        _checkedItems = items;
+        return Task.CompletedTask;
+    }
+
+    private async Task OnClickSave()
+    {
+        if (_checkedItems != null)
+        {
+            await OnSave(_checkedItems.Select(i => i.Value.Id).ToList());
+        }
+    }
 }
