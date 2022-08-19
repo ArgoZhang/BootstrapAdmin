@@ -42,13 +42,13 @@
                         <UserLogin />
                     </div>
                 </div>
-                <div class="d-flex justify-content-between mt-4">
+                <div class="d-flex justify-content-between align-items-center mt-4">
                     <Checkbox @bind-Value="RememberPassword" Color="Color.Primary" ShowAfterLabel="true" DisplayText="记住密码自动登录" OnValueChanged="OnRememberPassword" />
                     <Block Condition="AllowMobile">
                         <SwitchButton @bind-ToggleState="UseMobileLogin" OnClick="OnClickSwitchButton" OffText="短信验证登录" OnText="用户密码登录" />
                     </Block>
                 </div>
-                <button class="btn-login btn-lg btn-block mt-4" data-bs-toggle="tooltip" title="不填写密码默认使用 Gitee 认证">登 录</button>
+                <button class="btn btn-login btn-lg btn-block mt-4" data-bs-toggle="tooltip" title="不填写密码默认使用 Gitee 认证">登 录</button>
                 <div class="d-flex justify-content-center mt-3 mb-4">
                     <LinkButton Text="已有账号，忘记密码？" OnClick="OnForgotPassword" />
                 </div>
