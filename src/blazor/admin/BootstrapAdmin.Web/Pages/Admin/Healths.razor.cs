@@ -2,9 +2,9 @@
 // Licensed under the LGPL License, Version 3.0. See License.txt in the project root for license information.
 // Website: https://admin.blazor.zone
 
-using Bootstrap.Security.Blazor.HealthChecks;
 using BootstrapAdmin.Web.Components;
 using BootstrapAdmin.Web.Utils;
+using Longbow.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace BootstrapAdmin.Web.Pages.Admin;
@@ -56,14 +56,13 @@ public partial class Healths
         var payload = await Client.GetStringAsync("/Healths");
         var report = HealthCheckHelper.Parse(payload);
 
-        var ret = new QueryData<HealthCheckReportItem>()
+        var ret = new QueryData<HealthCheckReportItem>
         {
             IsSorted = true,
             IsFiltered = true,
-            IsSearch = true
+            IsSearch = true,
+            Items = report.Items
         };
-
-        ret.Items = report.Items;
         Duration = report.Duration;
         Status = report.Status;
 
