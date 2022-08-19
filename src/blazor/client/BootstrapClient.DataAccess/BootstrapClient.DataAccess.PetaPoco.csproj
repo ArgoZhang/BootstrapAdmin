@@ -1,9 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <PackageReference Include="BootstrapBlazor" Version="6.8.13" />
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="BootstrapBlazor" Version="6.9.4" />
     <PackageReference Include="Longbow.Security.Cryptography" Version="6.0.0" />
-    <PackageReference Include="Microsoft.Data.Sqlite" Version="6.0.7" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="6.0.8" />
     <PackageReference Include="PetaPoco.Extensions" Version="6.0.0" />
   </ItemGroup>
 

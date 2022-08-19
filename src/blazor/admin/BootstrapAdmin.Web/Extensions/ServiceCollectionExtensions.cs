@@ -2,15 +2,13 @@
 // Licensed under the LGPL License, Version 3.0. See License.txt in the project root for license information.
 // Website: https://admin.blazor.zone
 
-using BootstrapAdmin.Web;
 using BootstrapAdmin.Web.Core.Services;
 using BootstrapAdmin.Web.HealthChecks;
 using BootstrapAdmin.Web.Services;
 using BootstrapAdmin.Web.Services.SMS;
 using BootstrapAdmin.Web.Services.SMS.Tencent;
 using BootstrapAdmin.Web.Utils;
-using PetaPoco;
-using PetaPoco.Providers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Microsoft.Extensions.DependencyInjection
 {

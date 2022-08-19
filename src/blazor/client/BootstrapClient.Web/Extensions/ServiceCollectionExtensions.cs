@@ -4,6 +4,7 @@
 
 using BootstrapClient.Web.Core.Services;
 using BootstrapClient.Web.Shared.Services;
+using Microsoft.AspNetCore.Authorization;
 using PetaPoco;
 using PetaPoco.Providers;
 
