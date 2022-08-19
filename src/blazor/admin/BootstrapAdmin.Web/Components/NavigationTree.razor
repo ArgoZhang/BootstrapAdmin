@@ -11,5 +11,10 @@
 
 @code {
     RenderFragment<Navigation> RenderTreeItem => item =>
-    @<div class="d-flex flex-fill"><span class="flex-fill">@item.Name</span><span class="mx-3">@item.Order</span><span class="app-type">@item.IsResource.ToDescriptionString()</span><span class="app-text">@GetApp(item.Application)</span></div>;
+    @<div class="d-flex flex-fill">
+        <span class="flex-fill">@item.Name</span>
+        <span class="ms-3">@item.Order</span>
+        <span class="app-type">@item.IsResource.ToDescriptionString()</span>
+        <span class="app-text">@GetApp(item.Application)</span>
+    </div>;
 }
