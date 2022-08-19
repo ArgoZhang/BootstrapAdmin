@@ -28,6 +28,7 @@ public static class TreeItemExtensions
             trees.Add(new TreeViewItem<Navigation>(node)
             {
                 Text = node.Name,
+                Icon = node.Icon,
                 IsActive = selectedItems.Any(v => node.Id == v),
                 Template = render,
                 Items = ToTreeItemList(navigations, selectedItems, render, node.Id!)

@@ -102,13 +102,15 @@
 }
 
 .app-type {
-    width: 40px;
+    width: 60px;
+    margin-left: 1rem;
     text-align: left;
     color: var(--bs-primary);
 }
 
 .app-text {
-    width: 100px;
+    width: 70px;
+    margin-left: 1rem;
     overflow: hidden;
     text-align: right;
     text-overflow: ellipsis;
@@ -130,4 +132,16 @@
 
 .modal-dialog-menu.modal-dialog-scrollable .modal-body {
     overflow: hidden;
+}
+
+.tree-view {
+    --bb-tree-icon-width: 22px;
+}
+
+.tree-icon {
+    text-align: center;
+}
+
+.tree-view .tree-item .tree-content {
+    width: 100%;
 }
