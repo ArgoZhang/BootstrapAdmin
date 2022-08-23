@@ -4,7 +4,7 @@
             $.bc({ url: 'api/Healths', data: JSON.stringify(data), method: 'post' });
         }
     });
-    var healthStatus = ['<button class="btn btn-danger"><i class="fa fa-times-circle"></i><span>不健康</span></button>', '<button class="btn btn-warning"><i class="fa fa-exclamation-circle"></i><span>亚健康</span></button>', '<button class="btn btn-success"><i class="fa fa-check-circle"></i><span>健康</span></button>'];
+    var healthStatus = ['<button class="btn btn-danger"><i class="fa-solid fa-xmark-circle"></i><span>不健康</span></button>', '<button class="btn btn-warning"><i class="fa-solid fa-exclamation-circle"></i><span>亚健康</span></button>', '<button class="btn btn-success"><i class="fa-solid fa-check-circle"></i><span>健康</span></button>'];
     var StatusFormatter = function (value) {
         return healthStatus[value];
     };
@@ -33,7 +33,7 @@
             { title: "检查结果", field: "Status", formatter: StatusFormatter },
             {
                 title: "明细数据", field: "Data", formatter: function (value, row, index) {
-                    return '<button class="detail btn btn-info"><i class="fa fa-info-circle"></i><span>明细</span></button>';
+                    return '<button class="detail btn btn-info"><i class="fa-solid fa-info-circle"></i><span>明细</span></button>';
                 },
                 events: {
                     'click .detail': function (e, value, row, index) {

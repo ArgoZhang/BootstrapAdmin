@@ -4,8 +4,8 @@
             IsTree="true" OnTreeExpand="OnTreeExpand" TreeNodeConverter="TreeNodeConverter" ModelEqualityComparer="ModelEqualityComparer"
             ExtendButtonColumnWidth="200" CustomerSearchModel="SearchModel" OnQueryAsync="OnQueryAsync">
     <TableToolbarTemplate>
-        <TableToolbarButton TItem="DataAccess.Models.Navigation" Color="Color.Info" Icon="fa fa-sitemap" Text="分配角色" 
-            IsEnableWhenSelectedOneRow="true" IsShow="@AuthorizeButton("assignRole")" 
+        <TableToolbarButton TItem="DataAccess.Models.Navigation" Color="Color.Info" Icon="fa-solid fa-sitemap" Text="分配角色"
+                            IsEnableWhenSelectedOneRow="true" IsShow="@AuthorizeButton("assignRole")" 
             OnClickCallback="menus => OnAssignmentRoles(menus.First())" />
     </TableToolbarTemplate>
     <TableColumns>
@@ -26,7 +26,7 @@
         <MenuEditor Value="v" ParementMenus="ParementMenus" Targets="Targets" Apps="Apps" />
     </EditTemplate>
     <RowButtonTemplate>
-        <TableCellButton Size="Size.ExtraSmall" IsShow="@AuthorizeButton("assignRole")" Color="Color.Info" Icon="fa fa-sitemap" Text="分配角色" OnClick="() => OnAssignmentRoles(context)" />
+        <TableCellButton Size="Size.ExtraSmall" IsShow="@AuthorizeButton("assignRole")" Color="Color.Info" Icon="fa-solid fa-sitemap" Text="分配角色" OnClick="() => OnAssignmentRoles(context)" />
     </RowButtonTemplate>
     <CustomerSearchTemplate>
         @if (context is MenusSearchModel searchModel)

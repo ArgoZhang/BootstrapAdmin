@@ -56,9 +56,9 @@
             <TaskEditor @bind-Value="context" />
         </EditTemplate>
         <RowButtonTemplate>
-            <TableCellButton Size="Size.ExtraSmall" Color="Color.Warning" Icon="fa fa-pause-circle" Text="暂停" OnClick="() => OnPause(context)" IsShow="OnCheckTaskStatus(context)" AutoRenderTableWhenClick="true" />
-            <TableCellButton Size="Size.ExtraSmall" Color="Color.Success" Icon="fa fa-play-circle" Text="运行" OnClick="() => OnRun(context)" IsShow="OnCheckTaskStatus(context)" AutoRenderTableWhenClick="true" />
-            <TableCellButton Size="Size.ExtraSmall" Color="Color.Info" Icon="fa fa-info-circle" Text="日志" OnClick="() => OnLog(context)" IsShow="OnCheckTaskStatus(context)" AutoRenderTableWhenClick="true" />
+            <TableCellButton Size="Size.ExtraSmall" Color="Color.Warning" Icon="fa-solid fa-pause-circle" Text="暂停" OnClick="() => OnPause(context)" IsShow="OnCheckTaskStatus(context)" AutoRenderTableWhenClick="true" />
+            <TableCellButton Size="Size.ExtraSmall" Color="Color.Success" Icon="fa-solid fa-play-circle" Text="运行" OnClick="() => OnRun(context)" IsShow="OnCheckTaskStatus(context)" AutoRenderTableWhenClick="true" />
+            <TableCellButton Size="Size.ExtraSmall" Color="Color.Info" Icon="fa-solid fa-info-circle" Text="日志" OnClick="() => OnLog(context)" IsShow="OnCheckTaskStatus(context)" AutoRenderTableWhenClick="true" />
         </RowButtonTemplate>
     </AdminTable>
 </div>

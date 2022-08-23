@@ -526,7 +526,7 @@
                 // 生成高级查询按钮
                 if (settings.showAdvancedSearchButton) {
                     // template
-                    var $advancedSearchButtonHtml = $('<button class="btn btn-secondary" type="button" name="advancedSearch" title="高级搜索"><i class="fa fa-search-plus"></i><span>高级搜索</span></button>');
+                    var $advancedSearchButtonHtml = $('<button class="btn btn-secondary" type="button" name="advancedSearch" title="高级搜索"><i class="fa-solid fa-search-plus"></i><span>高级搜索</span></button>');
                     $advancedSearchButtonHtml.insertAfter($('.bootstrap-table .fixed-table-toolbar .search [name="clearSearch"]')).on('click', function () {
                         // 弹出高级查询对话框
                         $(settings.advancedSearchModal).modal('show');
@@ -628,7 +628,7 @@
         lgbInfo: function (option) {
             this.each(function () {
                 var $element = $(this);
-                $element.append($('<a href="#" tabindex="-1" role="button" data-toggle="popover"><i class="fa fa-question-circle"></i></a>'));
+                $element.append($('<a href="#" tabindex="-1" role="button" data-toggle="popover"><i class="fa-solid fa-question-circle"></i></a>'));
             });
             var container = this.attr('data-container') || 'body';
             this.find('[data-toggle="popover"]').on('click', function (event) { event.preventDefault(); }).popover($.extend({

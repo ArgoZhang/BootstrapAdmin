@@ -132,9 +132,9 @@ public partial class Tasks
 
     private static string GetStatusIcon(SchedulerStatus status) => status switch
     {
-        SchedulerStatus.Running => "fa fa-play-circle",
-        SchedulerStatus.Ready => "fa fa-stop-circle",
-        SchedulerStatus.Disabled => "fa fa-times-circle",
+        SchedulerStatus.Running => "fa-solid fa-play-circle",
+        SchedulerStatus.Ready => "fa-solid fa-stop-circle",
+        SchedulerStatus.Disabled => "fa-solid fa-times-circle",
         _ => "未知状态"
     };
 

@@ -62,6 +62,7 @@ public partial class MenuTree
             {
                 [nameof(Button.Color)] = Color.Primary,
                 [nameof(Button.Text)] = "确认",
+                [nameof(Button.Icon)] = "fa-solid fa-fw fa-check",
                 [nameof(Button.OnClick)] = EventCallback.Factory.Create<MouseEventArgs>(this, () =>
                 {
                     Option?.Dialog.Close();

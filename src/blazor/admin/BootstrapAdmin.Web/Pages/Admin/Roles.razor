@@ -2,20 +2,20 @@
 
 <AdminTable TItem="DataAccess.Models.Role" ExtendButtonColumnWidth="325">
     <TableToolbarTemplate>
-        <TableToolbarButton TItem="DataAccess.Models.Role" IsEnableWhenSelectedOneRow="true" Color="Color.Info" Icon="fa fa-user" Text="用户" OnClickCallback="roles => OnAssignmentUsers(roles.First())" />
-        <TableToolbarButton TItem="DataAccess.Models.Role" IsEnableWhenSelectedOneRow="true" Color="Color.Warning" Icon="fa fa-bank" Text="部门" OnClickCallback="roles => OnAssignmentGroups(roles.First())" />
-        <TableToolbarButton TItem="DataAccess.Models.Role" IsEnableWhenSelectedOneRow="true" Color="Color.Success" Icon="fa fa-dashboard" Text="菜单" OnClickCallback="roles => OnAssignmentMenus(roles.First())" />
-        <TableToolbarButton TItem="DataAccess.Models.Role" IsEnableWhenSelectedOneRow="true" Color="Color.Secondary" Icon="fa fa-cubes" Text="应用" OnClickCallback="roles => OnAssignmentApps(roles.First())" />
+        <TableToolbarButton TItem="DataAccess.Models.Role" IsEnableWhenSelectedOneRow="true" Color="Color.Info" Icon="fa-solid fa-user" Text="用户" OnClickCallback="roles => OnAssignmentUsers(roles.First())" />
+        <TableToolbarButton TItem="DataAccess.Models.Role" IsEnableWhenSelectedOneRow="true" Color="Color.Warning" Icon="fa-solid fa-bank" Text="部门" OnClickCallback="roles => OnAssignmentGroups(roles.First())" />
+        <TableToolbarButton TItem="DataAccess.Models.Role" IsEnableWhenSelectedOneRow="true" Color="Color.Success" Icon="fa-solid fa-dashboard" Text="菜单" OnClickCallback="roles => OnAssignmentMenus(roles.First())" />
+        <TableToolbarButton TItem="DataAccess.Models.Role" IsEnableWhenSelectedOneRow="true" Color="Color.Secondary" Icon="fa-solid fa-cubes" Text="应用" OnClickCallback="roles => OnAssignmentApps(roles.First())" />
     </TableToolbarTemplate>
     <TableColumns>
         <TableColumn @bind-Field="@context.RoleName" Sortable="true" Filterable="true" Searchable="true" Width="120"></TableColumn>
         <TableColumn @bind-Field="@context.Description" Sortable="true" Filterable="true" Searchable="true"></TableColumn>
     </TableColumns>
     <RowButtonTemplate>
-        <TableCellButton Size="Size.ExtraSmall" Color="Color.Info" Icon="fa fa-user" Text="用户" OnClick="() => OnAssignmentUsers(context)" />
-        <TableCellButton Size="Size.ExtraSmall" Color="Color.Warning" Icon="fa fa-bank" Text="部门" OnClick="() => OnAssignmentGroups(context)" />
-        <TableCellButton Size="Size.ExtraSmall" Color="Color.Success" Icon="fa fa-dashboard" Text="菜单" OnClick="() => OnAssignmentMenus(context)" />
-        <TableCellButton Size="Size.ExtraSmall" Color="Color.Secondary" Icon="fa fa-cubes" Text="应用" OnClick="() => OnAssignmentApps(context)" />
+        <TableCellButton Size="Size.ExtraSmall" Color="Color.Info" Icon="fa-solid fa-user" Text="用户" OnClick="() => OnAssignmentUsers(context)" />
+        <TableCellButton Size="Size.ExtraSmall" Color="Color.Warning" Icon="fa-solid fa-bank" Text="部门" OnClick="() => OnAssignmentGroups(context)" />
+        <TableCellButton Size="Size.ExtraSmall" Color="Color.Success" Icon="fa-solid fa-dashboard" Text="菜单" OnClick="() => OnAssignmentMenus(context)" />
+        <TableCellButton Size="Size.ExtraSmall" Color="Color.Secondary" Icon="fa-solid fa-cubes" Text="应用" OnClick="() => OnAssignmentApps(context)" />
     </RowButtonTemplate>
 </AdminTable>
 

@@ -7,7 +7,7 @@
             <span class="flex-fill">健康检查结果</span>
             <span class="me-3">@Duration</span>
             <Tag class="me-3" Color="GetTagColor()" Icon="@GetTagIcon()">@GetTagText()</Tag>
-            <Button class="btn-hc" IsAsync="true" OnClickWithoutRender="OnCheck" Icon="fa fa-fw fa-refresh" Text="重新检查"></Button>
+            <Button class="btn-hc" IsAsync="true" OnClickWithoutRender="OnCheck" Icon="fa-solid fa-fw fa-refresh" Text="重新检查"></Button>
         </div>
     </CardHeader>
     <CardBody>
@@ -25,7 +25,7 @@
                 </TableColumn>
             </TableColumns>
             <RowButtonTemplate>
-                <TableCellButton Color="Color.Primary" Icon="fa fa-info-circle" Text="明细" OnClick="@(() => OnRowButtonClick(context))" />
+                <TableCellButton Color="Color.Primary" Icon="fa-solid fa-info-circle" Text="明细" OnClick="@(() => OnRowButtonClick(context))" />
             </RowButtonTemplate>
         </AdminTable>
     </CardBody>

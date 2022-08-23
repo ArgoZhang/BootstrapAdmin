@@ -1,5 +1,5 @@
 ﻿@page "/Admin/Profiles"
-@attribute [TabItemOption(Text = "个人中心", Icon = "fa fa-suitcase")]
+@attribute [TabItemOption(Text = "个人中心", Icon = "fa-solid fa-suitcase")]
 
 <div class="tab-scroll-body">
     <AdminCard HeaderText="基本资料" AuthorizeKey="SaveDisplayName">
@@ -13,8 +13,8 @@
                     <BootstrapInput @bind-Value="@CurrentUser.DisplayName" Readonly="IsDemo" />
                 </div>
                 <Block Condition="!IsDemo">
-                    <div class="col-12 text-end">
-                        <Button ButtonType="ButtonType.Submit" Icon="fa fa-save" Text="保存" />
+                    <div class="col-12 justify-content-end">
+                        <Button ButtonType="ButtonType.Submit" Icon="fa-solid fa-floppy-disk" Text="保存" />
                     </div>
                 </Block>
             </div>
@@ -37,8 +37,8 @@
                     <BootstrapPassword @bind-Value="@CurrentUser.ConfirmPassword" Readonly="IsDemo" />
                 </div>
                 <Block Condition="!IsDemo">
-                    <div class="col-12 text-end">
-                        <Button ButtonType="ButtonType.Submit" Icon="fa fa-save" Text="保存" />
+                    <div class="col-12 justify-content-end">
+                        <Button ButtonType="ButtonType.Submit" Icon="fa-solid fa-floppy-disk" Text="保存" />
                     </div>
                 </Block>
             </div>
@@ -52,8 +52,8 @@
                 <Dropdown Items="Apps" @bind-Value="CurrentUser.App" />
             </div>
             <Block Condition="!IsDemo">
-                <div class="col-12 col-sm-6 text-end">
-                    <Button Icon="fa fa-save" Text="保存" OnClickWithoutRender="OnSaveApp" />
+                <div class="col-12 col-sm-6 justify-content-end">
+                    <Button Icon="fa-solid fa-floppy-disk" Text="保存" OnClickWithoutRender="OnSaveApp" />
                 </div>
             </Block>
         </div>
@@ -61,15 +61,15 @@
 
     <AdminCard HeaderText="网站样式" AuthorizeKey="SaveApp">
         <AdminAlert Color="Color.Info">
-            <span>注意：本设置将覆盖 <b><TabLink Url="/Admin/Settings" Text="网站设置" Icon="fa fa-fa">网站设置</TabLink></b> 中设置的网站样式</span>
+            <span>注意：本设置将覆盖 <b><TabLink Url="/Admin/Settings" Text="网站设置" Icon="fa-solid fa-flag">网站设置</TabLink></b> 中设置的网站样式</span>
         </AdminAlert>
         <div class="row g-3 form-inline">
             <div class="col-12 col-sm-6">
                 <Dropdown Items="Themes" @bind-Value="CurrentUser.Css" />
             </div>
             <Block Condition="!IsDemo">
-                <div class="col-12 col-sm-6 text-end">
-                    <Button Icon="fa fa-save" Text="保存" OnClickWithoutRender="OnSaveTheme" />
+                <div class="col-12 col-sm-6 justify-content-end">
+                    <Button Icon="fa-solid fa-floppy-disk" Text="保存" OnClickWithoutRender="OnSaveTheme" />
                 </div>
             </Block>
         </div>

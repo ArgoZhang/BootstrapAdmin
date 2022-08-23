@@ -97,11 +97,11 @@ public partial class Healths
         _ => Color.Danger
     };
 
-    private string? GetTagIcon(HealthStatus? status = null) => IsRunning ? "fa fa-fw fa-spin fa-spinner" : (status ?? Status) switch
+    private string? GetTagIcon(HealthStatus? status = null) => IsRunning ? "fa-solid fa-fw fa-spin fa-spinner" : (status ?? Status) switch
     {
-        HealthStatus.Healthy => "fa fa-check-circle",
-        HealthStatus.Degraded => "fa fa-exclamation-circle",
-        _ => "fa fa-times-circle"
+        HealthStatus.Healthy => "fa-solid fa-check-circle",
+        HealthStatus.Degraded => "fa-solid fa-exclamation-circle",
+        _ => "fa-solid fa-times-circle"
     };
 
     private Task OnRowButtonClick(HealthCheckReportItem item) => DialogService.Show(new DialogOption()

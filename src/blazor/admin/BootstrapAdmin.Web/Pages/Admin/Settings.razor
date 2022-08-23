@@ -10,7 +10,7 @@
                 </div>
                 <Block Condition="!IsDemo">
                     <div class="col-12 col-sm-6 justify-content-end">
-                        <Button ButtonType="ButtonType.Submit" Icon="fa fa-save" Text="保存" />
+                        <Button ButtonType="ButtonType.Submit" Icon="fa-solid fa-floppy-disk" Text="保存" />
                     </div>
                 </Block>
             </div>
@@ -26,7 +26,7 @@
                 </div>
                 <Block Condition="!IsDemo">
                     <div class="col-12 col-sm-6 justify-content-end">
-                        <Button ButtonType="ButtonType.Submit" Icon="fa fa-save" Text="保存" />
+                        <Button ButtonType="ButtonType.Submit" Icon="fa-solid fa-floppy-disk" Text="保存" />
                     </div>
                 </Block>
             </div>
@@ -35,7 +35,7 @@
 
     <AdminCard HeaderText="网站样式设置" AuthorizeKey="SaveTheme">
         <AdminAlert Color="Color.Info">
-            <span>注意：本设置将覆盖 <b><TabLink Url="/Admin/Profiles" Text="个人中心" Icon="fa fa-fa">个人中心</TabLink></b> 中设置的网站样式覆盖本设置</span>
+            <span>注意：本设置将覆盖 <b><TabLink Url="/Admin/Profiles" Text="个人中心" Icon="fa-solid fa-flag">个人中心</TabLink></b> 中设置的网站样式覆盖本设置</span>
         </AdminAlert>
         <ValidateForm OnValidSubmit="OnSaveTheme" Model="AppInfo">
             <div class="row g-3 form-inline">
@@ -43,7 +43,7 @@
                     <Dropdown Items="Themes" @bind-Value="AppInfo.Theme" />
                 </div>
                 <div class="col-12 col-sm-6 justify-content-end">
-                    <Button ButtonType="ButtonType.Submit" Icon="fa fa-save" Text="保存" />
+                    <Button ButtonType="ButtonType.Submit" Icon="fa-solid fa-floppy-disk" Text="保存" />
                 </div>
             </div>
         </ValidateForm>
@@ -57,7 +57,7 @@
                     <Dropdown Items="Logins" @bind-Value="AppInfo.Login" />
                 </div>
                 <div class="col-12 col-sm-6 justify-content-end">
-                    <Button ButtonType="ButtonType.Submit" Icon="fa fa-save" Text="保存" />
+                    <Button ButtonType="ButtonType.Submit" Icon="fa-solid fa-floppy-disk" Text="保存" />
                 </div>
             </div>
         </ValidateForm>
@@ -84,7 +84,7 @@
                     <Toggle @bind-Value="AppInfo.HealthCheckSetting" OnText="启用" OffText="关闭"></Toggle>
                 </div>
                 <div class="col-12 col-sm-12 justify-content-end">
-                    <Button ButtonType="ButtonType.Submit" Icon="fa fa-save" Text="保存" />
+                    <Button ButtonType="ButtonType.Submit" Icon="fa-solid fa-floppy-disk" Text="保存" />
                 </div>
             </div>
         </ValidateForm>
@@ -100,7 +100,7 @@
                     <Toggle @bind-Value="AppInfo.OAuthLogin" OnText="启用" OffText="关闭"></Toggle>
                 </div>
                 <div class="col-12 col-sm-12 justify-content-end">
-                    <Button ButtonType="ButtonType.Submit" Icon="fa fa-save" Text="保存" />
+                    <Button ButtonType="ButtonType.Submit" Icon="fa-solid fa-floppy-disk" Text="保存" />
                 </div>
             </div>
         </ValidateForm>
@@ -116,7 +116,7 @@
                     <BootstrapInputNumber @bind-Value="AppInfo.Interval"></BootstrapInputNumber>
                 </div>
                 <div class="col-12 col-sm-12 justify-content-end">
-                    <Button ButtonType="ButtonType.Submit" Icon="fa fa-save" Text="保存" />
+                    <Button ButtonType="ButtonType.Submit" Icon="fa-solid fa-floppy-disk" Text="保存" />
                 </div>
             </div>
         </ValidateForm>
@@ -130,7 +130,7 @@
                     <Toggle @bind-Value="AppInfo.EnableDefaultApp" OnText="启用" OffText="关闭" />
                 </div>
                 <div class="col-12 col-sm-6 justify-content-end">
-                    <Button ButtonType="ButtonType.Submit" Icon="fa fa-save" Text="保存" />
+                    <Button ButtonType="ButtonType.Submit" Icon="fa-solid fa-floppy-disk" Text="保存" />
                 </div>
             </div>
         </ValidateForm>
@@ -143,7 +143,7 @@
                     <Dropdown Items="@IPLocators" @bind-Value="AppInfo.IpLocator" ShowLabel="true"></Dropdown>
                 </div>
                 <div class="col-6 col-sm-6 justify-content-end">
-                    <Button ButtonType="ButtonType.Submit" Icon="fa fa-save" Text="保存" />
+                    <Button ButtonType="ButtonType.Submit" Icon="fa-solid fa-floppy-disk" Text="保存" />
                 </div>
             </div>
         </ValidateForm>
@@ -171,7 +171,7 @@
                     <BootstrapInputNumber @bind-Value="AppInfo.IPCacheExpired"></BootstrapInputNumber>
                 </div>
                 <div class="col-12 col-sm-12 justify-content-end">
-                    <Button ButtonType="ButtonType.Submit" Icon="fa fa-save" Text="保存" />
+                    <Button ButtonType="ButtonType.Submit" Icon="fa-solid fa-floppy-disk" Text="保存" />
                 </div>
             </div>
         </ValidateForm>
@@ -188,7 +188,7 @@
                     <BootstrapPassword @bind-Value="@AppInfo.AuthCode" />
                 </div>
                 <div class="col-12 col-sm-4 justify-content-end">
-                    <Button ButtonType="ButtonType.Submit" Icon="fa fa-save" Text="保存" />
+                    <Button ButtonType="ButtonType.Submit" Icon="fa-solid fa-floppy-disk" Text="保存" />
                 </div>
             </div>
         </ValidateForm>

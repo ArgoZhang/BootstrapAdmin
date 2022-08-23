@@ -1,10 +1,10 @@
 ﻿<BootstrapInputGroup>
-    <BootstrapInputGroupIcon Icon="fa fa-fw fa-user" />
+    <BootstrapInputGroupIcon Icon="fa-solid fa-fw fa-user" />
     <BootstrapInput @bind-Value="@PhoneNumber" type="tel" name="phone" maxlength="11" data-bs-toggle="tooltip" title="手机号不可为空" PlaceHolder="手机号码" />
 </BootstrapInputGroup>
 
 <BootstrapInputGroup class="mt-3">
-    <BootstrapInputGroupIcon Icon="fa fa-fw fa-lock" />
+    <BootstrapInputGroupIcon Icon="fa-solid fa-fw fa-lock" />
     <BootstrapInput TValue="string" type="number" name="code" maxlength="4" data-bs-toggle="tooltip" title="验证码不能为空" IsDisabled="IsSendCode" @bind-Value="@Code" PlaceHolder="验证码" />
     <Button class="btn-sms" Text="@SendCodeText" OnClick="OnSendCode" LoadingIcon="" IsAsync="true">
         <Tooltip Title="点击发送验证码" Placement="Placement.Top" />
