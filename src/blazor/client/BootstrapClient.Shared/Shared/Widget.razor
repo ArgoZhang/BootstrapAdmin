@@ -10,7 +10,7 @@
                     <div style="width: 40px; height: 40px;">
                         <Avatar Url="_content/Bootstrap.Client.Blazor.Shared/images/Argo-C.png" IsCircle="true" Size="Size.Small" />
                     </div>
-                    <div class="ml-2">
+                    <div class="ms-2">
                         <div class="d-flex position-relative">
                             <h4>Argo Zhang</h4>
                             <small><i class="fa-regular fa-clock"></i> @(4 + index) mins</small>
@@ -24,7 +24,7 @@
             <a href="#" @onclick:preventDefault>查看所有消息</a>
         </FooterTemplate>
     </DropdownWidgetItem>
-    <DropdownWidgetItem Icon="fa-regular fa-bell" BadgeNumber="10" HeaderColor="Color.Success" BadgeColor="Color.Warning">
+    <DropdownWidgetItem Icon="fa-solid fa-bell" BadgeNumber="10" HeaderColor="Color.Success" BadgeColor="Color.Warning">
         <HeaderTemplate>
             <span>您有 10 个未读通知</span>
         </HeaderTemplate>
@@ -33,7 +33,7 @@
             {
                 <a class="dropdown-item d-flex align-items-center" href="#" @onclick:preventDefault>
                     <i class="fa-solid fa-users text-primary"></i>
-                    <div class="ml-2">5 new members joined</div>
+                    <div class="ms-2">5 new members joined</div>
                 </a>
             }
         </BodyTemplate>
