@@ -6,7 +6,9 @@ using BootstrapAdmin.Web.Components;
 using BootstrapAdmin.Web.Core;
 using BootstrapAdmin.Web.Shared;
 using BootstrapAdmin.Web.Utils;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Components.Rendering;
+using Microsoft.Extensions.Options;
 
 namespace BootstrapAdmin.Web.Pages.Account;
 
@@ -42,28 +44,41 @@ public class Login : ComponentBase
     [NotNull]
     private IDict? DictsService { get; set; }
 
+    [Inject]
+    [NotNull]
+    private IOptionsMonitor<BootstrapAdminAuthenticationOptions>? Options { get; set; }
+
     /// <summary>
     /// BuildRenderTree 方法
     /// </summary>
     /// <param name="builder"></param>
     protected override void BuildRenderTree(RenderTreeBuilder builder)
     {
-        if (!string.IsNullOrEmpty(View))
+        if (Options.CurrentValue.Domain)
         {
-            View = $"0-{View}";
+            builder.OpenComponent<Redirect>(0);
+            builder.AddAttribute(1, nameof(Redirect.Url), "/Admin/Index");
+            builder.CloseComponent();
         }
-        var view = LoginHelper.GetCurrentLoginTheme(View ?? DictsService.GetCurrentLogin());
-        var componentType = view switch
+        else
         {
-            "gitee" => typeof(AdminLoginGitee),
-            _ => typeof(AdminLogin)
-        };
-        builder.OpenComponent(0, componentType);
-        builder.AddAttribute(1, nameof(AdminLogin.ReturnUrl), ReturnUrl);
-        builder.AddAttribute(2, nameof(AdminLogin.AppId), AppId);
-        builder.CloseComponent();
+            if (!string.IsNullOrEmpty(View))
+            {
+                View = $"0-{View}";
+            }
+            var view = LoginHelper.GetCurrentLoginTheme(View ?? DictsService.GetCurrentLogin());
+            var componentType = view switch
+            {
+                "gitee" => typeof(AdminLoginGitee),
+                _ => typeof(AdminLogin)
+            };
+            builder.OpenComponent(0, componentType);
+            builder.AddAttribute(1, nameof(AdminLogin.ReturnUrl), ReturnUrl);
+            builder.AddAttribute(2, nameof(AdminLogin.AppId), AppId);
+            builder.CloseComponent();
 
-        builder.OpenComponent<AdminLoginFooter>(3);
-        builder.CloseComponent();
+            builder.OpenComponent<AdminLoginFooter>(3);
+            builder.CloseComponent();
+        }
     }
 }
