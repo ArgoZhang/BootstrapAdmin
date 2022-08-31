@@ -56,7 +56,7 @@ public partial class ParentMenuTree
 
     private async Task OnTreeItemClick(TreeViewItem<Navigation> item)
     {
-        Value = item.Value.Name;
+        Value = item.Value.Id;
         if (ValueChanged.HasDelegate)
         {
             await ValueChanged.InvokeAsync(Value);
