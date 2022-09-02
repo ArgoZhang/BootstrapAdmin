@@ -102,7 +102,7 @@ INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (@@Identity - 5, N'保存网站设置', 60, 'fa-solid fa-flag', 'saveUISettings', '0', 2);
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, N'系统锁屏', 25, N'fa-solid fa-television', N'~/Account/Lock', N'0')
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, N'返回前台', 30, N'fa-solid fa-house-user', N'~/Home/Index', N'0')
-INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, N'网站设置', 40, N'fa-solid fa-flag', N'~/Admin/Settings', N'0')
+INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, N'网站设置', 40, N'fa-solid fa-gear', N'~/Admin/Settings', N'0')
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (@@Identity, N'保存系统名称', 10, 'fa-solid fa-flag', 'saveTitle', '0', 2);
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (@@Identity - 1, N'保存页脚设置', 20, 'fa-solid fa-flag', 'saveFooter', '0', 2);
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (@@Identity - 2, N'保存样式', 30, 'fa-solid fa-flag', 'saveTheme', '0', 2);
@@ -143,7 +143,7 @@ INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (@@Identity - 1, N'编辑', 20, 'fa-solid fa-flag', 'edit', '0', 2);
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (@@Identity - 2, N'删除', 30, 'fa-solid fa-flag', 'del', '0', 2);
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, N'站内消息', 100, N'fa-solid fa-envelope', N'~/Admin/Messages', N'0')
-INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, N'任务管理', 110, N'fa fa-solid fa-tasks', N'~/Admin/Tasks', N'0')
+INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, N'任务管理', 110, N'fa-solid fa-solid fa-tasks', N'~/Admin/Tasks', N'0')
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (@@Identity, N'暂停', 10, 'fa-solid fa-flag', 'pause', '0', 2);
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (@@Identity - 1, N'日志', 20, 'fa-solid fa-flag', 'info', '0', 2);
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, N'通知管理', 120, N'fa-solid fa-bell', N'~/Admin/Notifications', N'0')

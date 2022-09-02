@@ -141,7 +141,7 @@ INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (last_insert_rowid() - 1, '编辑', 20, 'fa-solid fa-flag', 'edit', '0', 2);
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (last_insert_rowid() - 2, '删除', 30, 'fa-solid fa-flag', 'del', '0', 2);
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, '站内消息', 100, 'fa-solid fa-envelope', '~/Admin/Messages', '0');
-INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, '任务管理', 110, 'fa fa-solid fa-tasks', '~/Admin/Tasks', '0');
+INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, '任务管理', 110, 'fa-solid fa-solid fa-tasks', '~/Admin/Tasks', '0');
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (last_insert_rowid(), '暂停', 10, 'fa-solid fa-flag', 'pause', '0', 2);
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category], IsResource) VALUES (last_insert_rowid() - 1, '日志', 20, 'fa-solid fa-flag', 'info', '0', 2);
 INSERT INTO [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, '通知管理', 120, 'fa-solid fa-bell', '~/Admin/Notifications', '0');
