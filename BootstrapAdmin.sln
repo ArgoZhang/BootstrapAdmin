@@ -53,8 +53,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTest", "test\UnitTest\U
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Postgresql", "Postgresql", "{6F61C2AC-84D4-48A9-8A48-680657CC8175}"
 	ProjectSection(SolutionItems) = preProject
-		db\Postgresql\initData.sql = db\Postgresql\initData.sql
-		db\Postgresql\install.sql = db\Postgresql\install.sql
+		db\Postgresql\readme.txt = db\Postgresql\readme.txt
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.Client.DataAccess", "src\mvc\client\Bootstrap.Client.DataAccess\Bootstrap.Client.DataAccess.csproj", "{843811A2-FE49-410F-BF9F-9F1FB14A1DEE}"

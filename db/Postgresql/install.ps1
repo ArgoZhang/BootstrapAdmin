@@ -1,1 +1,0 @@
-# init postgresql data
