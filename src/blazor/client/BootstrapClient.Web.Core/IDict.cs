@@ -45,7 +45,7 @@ public interface IDict
     /// 
     /// </summary>
     /// <returns></returns>
-    string? GetAdminUrl();
+    string GetAdminUrl();
 
     /// <summary>
     /// 
