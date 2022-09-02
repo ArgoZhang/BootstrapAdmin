@@ -7,9 +7,11 @@ using BootstrapBlazor.Components;
 using BootstrapClient.Web.Core;
 using BootstrapClient.Web.Shared.Extensions;
 using BootstrapClient.Web.Shared.Services;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace BootstrapClient.Web.Shared.Shared;
 
@@ -79,6 +81,10 @@ public sealed partial class MainLayout
     [Inject]
     [NotNull]
     private IConfiguration? Configuration { get; set; }
+
+    [Inject]
+    [NotNull]
+    private IOptionsMonitor<BootstrapAdminAuthenticationOptions>? Options { get; set; }
 
     /// <summary>
     /// OnInitialized 方法
