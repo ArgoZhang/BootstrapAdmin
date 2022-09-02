@@ -84,6 +84,7 @@ INSERT INTO Dicts (Id, Category, Name, Code, Define) VALUES (SEQ_DICTS_ID.NEXTVA
 INSERT INTO Dicts (Id, Category, Name, Code, Define) VALUES (SEQ_DICTS_ID.NEXTVAL, '系统首页', 'Admin-LTE', 'Login-LTE', 0);
 
 INSERT INTO Dicts (Id, Category, Name, Code, Define) VALUES (SEQ_DICTS_ID.NEXTVAL, '网站设置', '登录界面', 'Login', 0);
+INSERT INTO Dicts (Id, Category, Name, Code, Define) VALUES (SEQ_DICTS_ID.NEXTVAL, '应用首页', 'BA', '{0}://{1}:5210', 0);
 
 DELETE FROM Navigations Where Category = '0';
 INSERT INTO Navigations (Id, ParentId, Name, "ORDER", Icon, Url, Category) Values (SEQ_NAVIGATIONS_ID.NEXTVAL, 0, '后台管理', 10, 'fa fa-gear', '~/Admin/Index', '0');

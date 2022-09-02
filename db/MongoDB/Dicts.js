@@ -395,5 +395,11 @@
         "Name": "登录界面",
         "Code": "Login",
         "Define": NumberInt(0)
+    },
+    {
+        "Category": "应用首页",
+        "Name": "BA",
+        "Code": "{0}://{1}:5210",
+        "Define": NumberInt(0)
     }
 ];

@@ -89,6 +89,7 @@ INSERT INTO Dicts (Category, Name, Code, Define) VALUES (N'系统首页', N'科�
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES (N'系统首页', N'Admin-LTE', N'Login-LTE', 0);
 
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES (N'网站设置', N'登录界面', N'Login', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES (N'应用首页', N'BA', N'{0}://{1}:5210', 0);
 
 DELETE FROM Navigations Where Category = N'0'
 INSERT [Navigations] ([ParentId], [Name], [Order], [Icon], [Url], [Category]) VALUES (0, N'后台管理', 10, N'fa-solid fa-flag', N'~/Admin/Index', N'0')
