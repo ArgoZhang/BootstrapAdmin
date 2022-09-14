@@ -1,0 +1,21 @@
+﻿<Card class="@IconDialogClassString">
+    <CardHeader>
+        <h5 class="card-title">请选择图标</h5>
+        <button type="button" class="btn-close" aria-label="Close" @onclick="@OnCloseIconDialog"></button>
+    </CardHeader>
+    <CardBody>
+        <FAIconList @bind-Icon="Value" ShowCatalog="true" />
+    </CardBody>
+    <CardFooter>
+        <span>选择图标</span>
+        <i class="@Value fa-fw"></i>
+        <button type="button" class="btn btn-secondary" @onclick="@OnCloseIconDialog">
+            <i class="fa-solid fa-xmark"></i>
+            <span>关闭</span>
+        </button>
+        <button type="button" class="btn btn-primary" @onclick="OnSelctedIcon">
+            <i class="fa-solid fa-floppy-disk"></i>
+            <span>选择</span>
+        </button>
+    </CardFooter>
+</Card>

@@ -42,4 +42,17 @@ public partial class MenuEditor
     [EditorRequired]
     [NotNull]
     public List<SelectedItem>? Apps { get; set; }
+
+    private bool _showIconDialog;
+
+    private void OnToggleIconDialog()
+    {
+        _showIconDialog = true;
+    }
+
+    private Task OnClearIcon()
+    {
+        Value.Icon = null;
+        return Task.CompletedTask;
+    }
 }

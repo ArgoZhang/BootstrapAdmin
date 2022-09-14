@@ -145,3 +145,54 @@
 .tree-view .tree-item .tree-content {
     width: 100%;
 }
+
+.menu-icons {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 5;
+    display: none;
+    --bs-card-title-spacer-y: 0;
+    --bs-card-cap-bg: #fff;
+}
+
+    .menu-icons.show {
+        display: flex;
+    }
+
+    .menu-icons .card-header {
+        display: flex;
+    }
+
+        .menu-icons .card-header .btn-close {
+            margin-top: 4px;
+        }
+
+    .menu-icons .card-title {
+        flex: 1;
+        line-height: 1.5;
+    }
+
+    .menu-icons .card-footer {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+
+        .menu-icons .card-footer > *:not(:last-child) {
+            margin-right: .5rem;
+        }
+
+        .menu-icons .card-footer > i {
+            font-size: 22px;
+            color: #337ab7;
+            border: solid 1px;
+            border-radius: 4px;
+            min-width: 36px;
+            min-height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }

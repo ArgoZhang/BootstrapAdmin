@@ -9,7 +9,12 @@
         <BootstrapInput @bind-Value="Value.Order"></BootstrapInput>
     </div>
     <div class="col-12 col-sm-6 col-md-6">
-        <BootstrapInput @bind-Value="Value.Icon"></BootstrapInput>
+        <label class="form-label">菜单图标</label>
+        <BootstrapInputGroup>
+            <BootstrapInput @bind-Value="Value.Icon"></BootstrapInput>
+            <Button Icon="fa-solid fa-xmark" Color="Color.Secondary" OnClick="OnClearIcon"></Button>
+            <Button Icon="fa-solid fa-bars" OnClick="OnToggleIconDialog"></Button>
+        </BootstrapInputGroup>
     </div>
     <div class="col-12">
         <BootstrapInput @bind-Value="Value.Url"></BootstrapInput>
@@ -27,3 +32,5 @@
         <Select Items="@Apps" @bind-Value="Value.Application"></Select>
     </div>
 </div>
+
+<MenuIconList @bind-Value="Value.Icon" @bind-Open="_showIconDialog" />
