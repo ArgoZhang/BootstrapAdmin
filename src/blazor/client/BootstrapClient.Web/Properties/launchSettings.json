@@ -17,7 +17,7 @@
     },
     "Client": {
       "commandName": "Project",
-      "dotnetRunMessages": "true",
+      "dotnetRunMessages": true,
       "launchBrowser": true,
       "applicationUrl": "http://localhost:49185",
       "environmentVariables": {
