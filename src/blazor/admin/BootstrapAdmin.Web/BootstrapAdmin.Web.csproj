@@ -8,7 +8,7 @@
     <PackageReference Include="BootstrapBlazor.FontAwesome" Version="7.0.1" />
     <PackageReference Include="BootstrapBlazor.Middleware" Version="7.0.0" />
     <PackageReference Include="Longbow.HealthChecks" Version="6.0.0" />
-    <PackageReference Include="Longbow.Logging" Version="6.0.6" />
+    <PackageReference Include="Longbow.Logging" Version="7.0.0" />
     <PackageReference Include="Longbow.Tasks" Version="5.2.1" />
   </ItemGroup>
 
