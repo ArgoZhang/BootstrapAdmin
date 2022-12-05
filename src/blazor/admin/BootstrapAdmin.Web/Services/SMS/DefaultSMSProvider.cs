@@ -33,7 +33,7 @@ public class DefaultSMSProvider : ISMSProvider
     /// <param name="factory"></param>
     public DefaultSMSProvider(IConfiguration configuration, IHttpClientFactory factory)
     {
-        _options = configuration.GetSection(nameof(SMSOptions)).Get<DefaultSMSOptions>();
+        _options = configuration.GetSection(nameof(SMSOptions)).Get<DefaultSMSOptions>() ?? throw new InvalidOperationException("Please config the section of SMSOptions in appsettings.json");
         _client = factory.CreateClient();
     }
 
