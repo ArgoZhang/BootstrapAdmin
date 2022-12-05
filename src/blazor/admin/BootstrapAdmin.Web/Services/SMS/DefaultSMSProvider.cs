@@ -91,8 +91,7 @@ public class DefaultSMSProvider : ISMSProvider
 
     private static string Hash(string data)
     {
-        using var md5 = MD5.Create();
-        var sign = BitConverter.ToString(md5.ComputeHash(Encoding.UTF8.GetBytes(data)));
+        var sign = BitConverter.ToString(MD5.HashData(Encoding.UTF8.GetBytes(data)));
         sign = sign.Replace("-", "").ToLowerInvariant();
         return sign;
     }
