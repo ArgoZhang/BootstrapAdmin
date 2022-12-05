@@ -43,12 +43,20 @@ public partial class MenuEditor
     [NotNull]
     public List<SelectedItem>? Apps { get; set; }
 
-    private bool _showIconDialog;
+    [Inject]
+    [NotNull]
+    private DialogService? DialogService { get; set; }
 
-    private void OnToggleIconDialog()
+    private Task OnToggleIconDialog() => DialogService.Show(new DialogOption()
     {
-        _showIconDialog = true;
-    }
+        Title = "选择图标",
+        ShowFooter = false,
+        Component = BootstrapDynamicComponent.CreateComponent<MenuIconList>(new Dictionary<string, object?>()
+        {
+            [nameof(MenuIconList.Value)] = Value.Icon,
+            [nameof(MenuIconList.ValueChanged)] = EventCallback.Factory.Create<string?>(this, v => Value.Icon = v)
+        })
+    });
 
     private Task OnClearIcon()
     {

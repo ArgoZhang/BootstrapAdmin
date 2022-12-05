@@ -153,14 +153,10 @@
     right: 1rem;
     bottom: 1rem;
     z-index: 5;
-    display: none;
+    display: flex;
     --bs-card-title-spacer-y: 0;
     --bs-card-cap-bg: #fff;
 }
-
-    .menu-icons.show {
-        display: flex;
-    }
 
     .menu-icons .card-header {
         display: flex;
