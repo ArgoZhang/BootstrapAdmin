@@ -7,10 +7,7 @@ using Longbow.Web.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using PetaPoco;
-using System;
-using System.Collections.Generic;
 using System.Net;
-using System.Threading.Tasks;
 
 namespace Bootstrap.DataAccess
 {
@@ -66,7 +63,7 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public static IEnumerable<LoginUser> RetrieveAll(DateTime? startTime, DateTime? endTime, string? ip)
         {
-            return DbContextManager.Create<LoginUser>()?.RetrieveAll(startTime, endTime, ip) ?? new LoginUser[0];
+            return DbContextManager.Create<LoginUser>()?.RetrieveAll(startTime, endTime, ip) ?? Array.Empty<LoginUser>();
         }
     }
 }
