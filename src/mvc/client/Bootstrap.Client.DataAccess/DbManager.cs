@@ -1,8 +1,11 @@
-﻿using Bootstrap.Security.Mvc;
+﻿// Copyright (c) Argo Zhang (argo@163.com). All rights reserved.
+// Licensed under the LGPL License, Version 3.0. See License.txt in the project root for license information.
+// Website: https://admin.blazor.zone
+
+using Bootstrap.Security.Mvc;
 using Longbow.Data;
 using Microsoft.Extensions.Configuration;
 using PetaPoco;
-using System;
 using System.Collections.Specialized;
 
 namespace Bootstrap.Client.DataAccess
@@ -31,7 +34,7 @@ namespace Bootstrap.Client.DataAccess
         /// <param name="connectionName">配置文件中配置的数据库连接字符串名称</param>
         /// <param name="keepAlive">是否保持连接，默认为 false</param>
         /// <returns></returns>
-        public static IDatabase CreateSqlite(string? connectionName = "client", bool keepAlive = false)
+        public static IDatabase CreateSqlite(string connectionName = "client", bool keepAlive = false)
         {
             // 此方法为演示同时连接不同的数据库操作
 
@@ -39,7 +42,7 @@ namespace Bootstrap.Client.DataAccess
             //var conn = Bootstrap.Security.Mvc.BootstrapAppContext.Configuration["ConnectionStrings:client"];
             //var conn = Bootstrap.Security.Mvc.BootstrapAppContext.Configuration.GetSection("ConnectionStrings").GetValue("client", "");
 
-            var conn = BootstrapAppContext.Configuration.GetConnectionString(connectionName);
+            var conn = BootstrapAppContext.Configuration?.GetConnectionString(connectionName);
             var db = Longbow.Data.DbManager.Create(new DatabaseOption()
             {
                 ProviderName = DatabaseProviderType.SQLite,

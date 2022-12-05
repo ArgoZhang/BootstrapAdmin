@@ -31,20 +31,20 @@ namespace Bootstrap.DataAccess
             var ipLocator = context.RequestServices.GetRequiredService<IIPLocatorProvider>();
             var ip = context.Connection.RemoteIpAddress?.ToIPv4String() ?? "";
             var userAgent = context.Request.Headers["User-Agent"];
-            var agent = new UserAgent(userAgent);
+            var agent = new UserAgent(userAgent!);
 
             if (string.IsNullOrEmpty(userName)) userName = ip;
             var loginUser = new LoginUser
             {
                 UserName = userName,
                 LoginTime = DateTime.Now,
-                UserAgent = userAgent,
+                UserAgent = userAgent!,
                 Ip = ip,
                 Browser = $"{agent.Browser?.Name} {agent.Browser?.Version}",
                 OS = $"{agent.OS?.Name} {agent.OS?.Version}",
-                Result = auth ? "登录成功" : "登录失败"
+                Result = auth ? "登录成功" : "登录失败",
+                City = await ipLocator.Locate(ip)
             };
-            loginUser.City = await ipLocator.Locate(ip);
             return DbContextManager.Create<LoginUser>()?.Log(loginUser) ?? false;
         }
 

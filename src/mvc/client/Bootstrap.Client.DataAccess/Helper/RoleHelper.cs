@@ -24,6 +24,6 @@ namespace Bootstrap.Client.DataAccess
         /// <param name="url"></param>
         /// <param name="appId"></param>
         /// <returns></returns>
-        public static IEnumerable<string> RetrievesByUrl(string url, string appId) => CacheManager.GetOrAdd(string.Format("{0}-{1}-{2}", DbHelper.RetrieveRolesByUrlDataKey, url, appId), key => DbContextManager.Create<Role>()?.RetrievesByUrl(url, appId), DbHelper.RetrieveRolesByUrlDataKey) ?? Array.Empty<string>();
+        public static IEnumerable<string> RetrievesByUrl(string url, string? appId) => CacheManager.GetOrAdd(string.Format("{0}-{1}-{2}", DbHelper.RetrieveRolesByUrlDataKey, url, appId), key => DbContextManager.Create<Role>()?.RetrievesByUrl(url, appId), DbHelper.RetrieveRolesByUrlDataKey) ?? Array.Empty<string>();
     }
 }

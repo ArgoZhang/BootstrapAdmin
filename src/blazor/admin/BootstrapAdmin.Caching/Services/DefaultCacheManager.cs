@@ -28,7 +28,7 @@ class DefaultCacheManager : ICacheManager
     {
         HandlerEntry(key, entry);
         return factory(entry);
-    });
+    })!;
 
     /// <summary>
     /// 
@@ -41,7 +41,7 @@ class DefaultCacheManager : ICacheManager
     {
         HandlerEntry(key, entry);
         return factory(entry);
-    });
+    })!;
 
     private static void HandlerEntry(string key, ICacheEntry entry, IChangeToken? token = null)
     {

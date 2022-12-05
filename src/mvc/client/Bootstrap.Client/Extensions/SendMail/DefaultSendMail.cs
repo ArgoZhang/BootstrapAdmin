@@ -20,14 +20,18 @@ namespace Bootstrap.Client.Extensions
         /// 构造函数
         /// </summary>
         /// <param name="option"></param>
-        public DefaultSendMail(IOptionsMonitor<SmtpOption> option)
+        /// <param name="logger"></param>
+        public DefaultSendMail(IOptionsMonitor<SmtpOption> option, ILogger<DefaultSendMail> logger)
         {
+            Logger = logger;
             Option = option.CurrentValue;
             option.OnChange(op => Option = op);
             ProcessLogQueue().ConfigureAwait(false);
         }
 
         private SmtpOption Option { get; set; }
+
+        private ILogger<DefaultSendMail> Logger { get; }
 
         /// <summary>
         /// 发送邮件方法
@@ -58,9 +62,9 @@ namespace Bootstrap.Client.Extensions
             return ret;
         }
 
-        private readonly BlockingCollection<SmtpMessage> _messageQueue = new BlockingCollection<SmtpMessage>(new ConcurrentQueue<SmtpMessage>());
-        private readonly CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
-        private readonly List<SmtpMessage> _currentBatch = new List<SmtpMessage>();
+        private readonly BlockingCollection<SmtpMessage> _messageQueue = new(new ConcurrentQueue<SmtpMessage>());
+        private readonly CancellationTokenSource _cancellationTokenSource = new();
+        private readonly List<SmtpMessage> _currentBatch = new();
 
         private async Task ProcessLogQueue()
         {
@@ -127,7 +131,7 @@ namespace Bootstrap.Client.Extensions
                 catch (Exception ex)
                 {
                     // 发送邮件失败
-                    ex.Log();
+                    Logger.LogError(ex, "");
                 }
             }
         }

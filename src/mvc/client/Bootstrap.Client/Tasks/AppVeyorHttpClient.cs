@@ -39,7 +39,7 @@ namespace Bootstrap.Client.Tasks
             if (section != null)
             {
                 var token = section["Token"];
-                var url = section["Api"];
+                var url = section["Api"]!;
                 Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 Client.BaseAddress = new Uri(url);
 
@@ -47,8 +47,8 @@ namespace Bootstrap.Client.Tasks
                 var branch = payload.Ref.SpanSplit("/").LastOrDefault();
                 if (!string.IsNullOrEmpty(branch) && allowBranchs.Any(b => b.Equals(branch, StringComparison.OrdinalIgnoreCase)))
                 {
-                    var accountName = section["AccountName"];
-                    var projectSlug = section["ProjectSlug"];
+                    var accountName = section["AccountName"]!;
+                    var projectSlug = section["ProjectSlug"]!;
 
                     // 调用 webhook 接口
                     // http://nugetp.b4bim.cn:8050/api/builds

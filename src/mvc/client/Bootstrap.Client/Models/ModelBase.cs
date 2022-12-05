@@ -13,7 +13,7 @@ namespace Bootstrap.Client.Models
         /// </summary>
         public ModelBase()
         {
-            AppId = BootstrapAppContext.AppId;
+            AppId = BootstrapAppContext.AppId ?? throw new NullReferenceException(nameof(BootstrapAppContext.AppId));
             Title = DictHelper.RetrieveWebTitle(AppId);
             Footer = DictHelper.RetrieveWebFooter(AppId);
             Theme = DictHelper.RetrieveActiveTheme();
