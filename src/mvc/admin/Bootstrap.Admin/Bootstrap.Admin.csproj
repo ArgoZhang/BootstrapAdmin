@@ -9,11 +9,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BootstrapBlazor" Version="6.8.13" />
+    <PackageReference Include="BootstrapBlazor" Version="7.1.1" />
     <PackageReference Include="Exceptionless.AspNetCore" Version="4.8.0" />
-    <PackageReference Include="Longbow.Logging" Version="6.0.2" />
+    <PackageReference Include="Longbow.Logging" Version="6.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
-    <PackageReference Include="Sentry.AspNetCore" Version="3.19.0" />
+    <PackageReference Include="Sentry.AspNetCore" Version="3.24.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 

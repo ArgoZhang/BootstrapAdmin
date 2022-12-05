@@ -2,7 +2,7 @@
 
   <ItemGroup>
     <PackageReference Include="Bootstrap.Security" Version="5.2.0" />
-    <PackageReference Include="MongoDB.Driver" Version="2.17.0" />
+    <PackageReference Include="MongoDB.Driver" Version="2.18.0" />
   </ItemGroup>
 
   <ItemGroup>
