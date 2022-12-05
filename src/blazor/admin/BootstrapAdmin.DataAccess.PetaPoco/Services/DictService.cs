@@ -29,7 +29,7 @@ class DictService : IDict
     public DictService(IDBManager db, IConfiguration configuration)
     {
         DBManager = db;
-        AppId = configuration.GetValue("AppId", "BA");
+        AppId = configuration.GetValue("AppId", "BA")!;
     }
 
     public List<Dict> GetAll() => CacheManager.GetOrAdd(DictServiceCacheKey, entry =>

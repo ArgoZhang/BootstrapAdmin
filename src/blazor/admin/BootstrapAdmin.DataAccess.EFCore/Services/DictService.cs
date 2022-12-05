@@ -29,7 +29,7 @@ class DictService : IDict
     public DictService(IDbContextFactory<BootstrapAdminContext> factory, IConfiguration configuration)
     {
         DbFactory = factory;
-        AppId = configuration.GetValue("AppId", "BA");
+        AppId = configuration.GetValue("AppId", "BA")!;
     }
 
     public List<Dict> GetAll()
