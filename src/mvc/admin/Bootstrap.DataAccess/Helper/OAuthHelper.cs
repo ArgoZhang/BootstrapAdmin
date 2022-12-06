@@ -109,7 +109,7 @@ namespace Bootstrap.DataAccess
 #nullable disable
                                 role.SaveByUserId(newUser.Id, roleIds);
 #nullable restore
-                                CacheCleanUtility.ClearCache(userIds: new string[0], roleIds: new string[0], cacheKey: $"{UserHelper.RetrieveUsersByNameDataKey}-{newUser.UserName}");
+                                CacheCleanUtility.ClearCache(userIds: Array.Empty<string>(), roleIds: Array.Empty<string>(), cacheKey: $"{UserHelper.RetrieveUsersByNameDataKey}-{newUser.UserName}");
                             }
                         }
                     }
