@@ -86,18 +86,29 @@ class CloudLogger : LoggerBase
     protected override void WriteMessageCore(string content)
     {
         var url = Options.CurrentValue.Url;
-        if (!string.IsNullOrEmpty(url))
+        if (!string.IsNullOrEmpty(url) && !string.IsNullOrEmpty(content))
         {
-            HttpClientFactory ??= Provider.GetRequiredService<IHttpClientFactory>();
-            var client = HttpClientFactory.CreateClient(Options.CurrentValue.Url);
-            client.Timeout = TimeSpan.FromSeconds(10);
-            client.DefaultRequestHeaders.Connection.Add("keep-alive");
-
             try
             {
-                Task.Run(() => client.PostAsJsonAsync(url, content));
+                Task.Run(() => CreateHttpClient().PostAsJsonAsync(url, content));
             }
             catch { }
+        }
+    }
+
+    private HttpClient? httpClient;
+
+    private HttpClient CreateHttpClient()
+    {
+        return httpClient ?? Create();
+
+        HttpClient Create()
+        {
+            HttpClientFactory ??= Provider.GetRequiredService<IHttpClientFactory>();
+            httpClient ??= HttpClientFactory.CreateClient();
+            httpClient.Timeout = TimeSpan.FromSeconds(10);
+            httpClient.DefaultRequestHeaders.Connection.Add("keep-alive");
+            return httpClient;
         }
     }
 }
