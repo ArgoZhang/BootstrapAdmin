@@ -33,45 +33,67 @@ static class CloudLoggerExtensions
 [ProviderAlias("Cloud")]
 class CloudLoggerProvider : LoggerProvider
 {
-    private readonly HttpClient httpClient;
-    private readonly IDisposable optionsReloadToken;
-    private CloudLoggerOption option;
+    private IOptionsMonitor<CloudLoggerOption> Options { get; }
+
+    private IHttpClientFactory HttpClientFactory { get; }
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    public CloudLoggerProvider(IOptionsMonitor<CloudLoggerOption> options) : base(null, new Func<string, LogLevel, bool>((name, logLevel) => logLevel >= LogLevel.Error))
+    public CloudLoggerProvider(IOptionsMonitor<CloudLoggerOption> options, IHttpClientFactory httpClientFactory) : base(new Func<string, LogLevel, bool>((name, logLevel) => logLevel >= LogLevel.Error))
     {
-        optionsReloadToken = options.OnChange(op => option = op);
-        option = options.CurrentValue;
-
-        httpClient = new HttpClient
-        {
-            Timeout = TimeSpan.FromSeconds(10)
-        };
-        httpClient.DefaultRequestHeaders.Connection.Add("keep-alive");
-
-        LogCallback = new Action<string>(async message =>
-        {
-            if (!string.IsNullOrEmpty(option.Url))
-            {
-                try { await httpClient.PostAsJsonAsync(option.Url, message); }
-                catch { }
-            }
-        });
+        Options = options;
+        HttpClientFactory = httpClientFactory;
     }
+
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
+    /// <param name="categoryName"></param>
+    /// <returns></returns>
+    public override ILogger CreateLogger(string categoryName) => new CloudLogger(categoryName, Options, HttpClientFactory, Filter, null, Configuration);
+}
+
+class CloudLogger : LoggerBase
+{
+    private IOptionsMonitor<CloudLoggerOption> Options { get; }
+
+    private IHttpClientFactory HttpClientFactory { get; }
 
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="disposing"></param>
-    protected override void Dispose(bool disposing)
+    /// <param name="name"></param>
+    /// <param name="options"></param>
+    /// <param name="httpClientFactory"></param>
+    /// <param name="filter"></param>
+    /// <param name="scopeProvider"></param>
+    /// <param name="config"></param>
+    public CloudLogger(string name, IOptionsMonitor<CloudLoggerOption> options, IHttpClientFactory httpClientFactory, Func<string, LogLevel, bool>? filter, IExternalScopeProvider? scopeProvider, IConfiguration? config) : base(name, filter, scopeProvider, config)
     {
-        base.Dispose(disposing);
-        if (disposing)
+        Options = options;
+        HttpClientFactory = httpClientFactory;
+    }
+
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
+    /// <param name="content"></param>
+    /// <exception cref="NotImplementedException"></exception>
+    protected override void WriteMessageCore(string content)
+    {
+        var url = Options.CurrentValue.Url;
+        if (!string.IsNullOrEmpty(url))
         {
-            httpClient.Dispose();
-            optionsReloadToken.Dispose();
+            var client = HttpClientFactory.CreateClient(Options.CurrentValue.Url);
+            client.Timeout = TimeSpan.FromSeconds(10);
+            client.DefaultRequestHeaders.Connection.Add("keep-alive");
+
+            try
+            {
+                Task.Run(() => client.PostAsJsonAsync(url, content));
+            }
+            catch { }
         }
     }
 }
