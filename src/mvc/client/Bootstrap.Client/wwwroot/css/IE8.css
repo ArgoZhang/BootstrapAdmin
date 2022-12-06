@@ -1,8 +1,0 @@
-﻿body > header, body > aside, body > section, body > footer {
-    display: none;
-}
-
-.alert {
-    margin: 15px auto;
-    width: 90%;
-}

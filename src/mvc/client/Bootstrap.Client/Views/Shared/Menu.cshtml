@@ -1,8 +1,0 @@
-﻿@model IEnumerable<Bootstrap.Security.BootstrapMenu>
-<div class="dropdown-menu">
-    <div class="dropdown-menu-arrow"></div>
-    @foreach (var menu in Model)
-    {
-        <a href="@Url.Content(menu.Url)" class="dropdown-item @menu.Active" target="@menu.Target"><i class="@menu.Icon"></i><span>@menu.Name</span></a>
-    }
-</div>
