@@ -20,6 +20,7 @@ static class CloudLoggerExtensions
     /// <returns></returns>
     public static ILoggingBuilder AddCloudLogger(this ILoggingBuilder builder)
     {
+        builder.Services.AddHttpClient();
         builder.Services.AddSingleton<IConfigureOptions<CloudLoggerOption>, LoggerProviderConfigureOptions<CloudLoggerOption, CloudLoggerProvider>>();
         builder.Services.AddSingleton<IOptionsChangeTokenSource<CloudLoggerOption>, LoggerProviderOptionsChangeTokenSource<CloudLoggerOption, CloudLoggerProvider>>();
         builder.Services.AddSingleton<ILoggerProvider, CloudLoggerProvider>();
@@ -35,15 +36,15 @@ class CloudLoggerProvider : LoggerProvider
 {
     private IOptionsMonitor<CloudLoggerOption> Options { get; }
 
-    private IHttpClientFactory HttpClientFactory { get; }
+    private IServiceProvider Provider { get; }
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    public CloudLoggerProvider(IOptionsMonitor<CloudLoggerOption> options, IHttpClientFactory httpClientFactory) : base(new Func<string, LogLevel, bool>((name, logLevel) => logLevel >= LogLevel.Error))
+    public CloudLoggerProvider(IOptionsMonitor<CloudLoggerOption> options, IServiceProvider provider) : base(new Func<string, LogLevel, bool>((name, logLevel) => logLevel >= LogLevel.Error))
     {
         Options = options;
-        HttpClientFactory = httpClientFactory;
+        Provider = provider;
     }
 
     /// <summary>
@@ -51,28 +52,30 @@ class CloudLoggerProvider : LoggerProvider
     /// </summary>
     /// <param name="categoryName"></param>
     /// <returns></returns>
-    public override ILogger CreateLogger(string categoryName) => new CloudLogger(categoryName, Options, HttpClientFactory, Filter, null, Configuration);
+    public override ILogger CreateLogger(string categoryName) => new CloudLogger(categoryName, Options, Provider, Filter, null, Configuration);
 }
 
 class CloudLogger : LoggerBase
 {
     private IOptionsMonitor<CloudLoggerOption> Options { get; }
 
-    private IHttpClientFactory HttpClientFactory { get; }
+    private IServiceProvider Provider { get; }
+
+    private IHttpClientFactory? HttpClientFactory { get; set; }
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="name"></param>
     /// <param name="options"></param>
-    /// <param name="httpClientFactory"></param>
+    /// <param name="provider"></param>
     /// <param name="filter"></param>
     /// <param name="scopeProvider"></param>
     /// <param name="config"></param>
-    public CloudLogger(string name, IOptionsMonitor<CloudLoggerOption> options, IHttpClientFactory httpClientFactory, Func<string, LogLevel, bool>? filter, IExternalScopeProvider? scopeProvider, IConfiguration? config) : base(name, filter, scopeProvider, config)
+    public CloudLogger(string name, IOptionsMonitor<CloudLoggerOption> options, IServiceProvider provider, Func<string, LogLevel, bool>? filter, IExternalScopeProvider? scopeProvider, IConfiguration? config) : base(name, filter, scopeProvider, config)
     {
         Options = options;
-        HttpClientFactory = httpClientFactory;
+        Provider = provider;
     }
 
     /// <summary>
@@ -85,6 +88,7 @@ class CloudLogger : LoggerBase
         var url = Options.CurrentValue.Url;
         if (!string.IsNullOrEmpty(url))
         {
+            HttpClientFactory ??= Provider.GetRequiredService<IHttpClientFactory>();
             var client = HttpClientFactory.CreateClient(Options.CurrentValue.Url);
             client.Timeout = TimeSpan.FromSeconds(10);
             client.DefaultRequestHeaders.Connection.Add("keep-alive");
@@ -106,5 +110,5 @@ class CloudLoggerOption
     /// <summary>
     /// 获得/设置 云日志地址
     /// </summary>
-    public string Url { get; set; } = "";
+    public string? Url { get; set; }
 }
