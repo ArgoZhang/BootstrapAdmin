@@ -15,5 +15,5 @@ public interface IDBManager
     /// 
     /// </summary>
     /// <returns></returns>
-    IDatabase Create(string? connectionName = "ba", bool keepAlive = false);
+    IDatabase Create(string connectionName = "ba", bool keepAlive = false);
 }

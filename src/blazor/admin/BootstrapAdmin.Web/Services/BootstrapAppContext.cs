@@ -38,7 +38,7 @@ namespace BootstrapAdmin.Web.Services
         /// <param name="configuration"></param>
         public BootstrapAppContext(IConfiguration configuration)
         {
-            AppId = configuration.GetValue("AppId", "BA");
+            AppId = configuration.GetValue("AppId", "BA")!;
         }
     }
 }

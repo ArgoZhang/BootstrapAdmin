@@ -32,7 +32,7 @@ namespace BootstrapAdmin.Web.Services.SMS.Tencent
         /// <param name="factory"></param>
         public TencentSMSProvider(IConfiguration configuration, IHttpClientFactory factory)
         {
-            _options = configuration.GetSection(nameof(TencentSMSOptions)).Get<TencentSMSOptions>();
+            _options = configuration.GetSection(nameof(TencentSMSOptions)).Get<TencentSMSOptions>() ?? throw new InvalidOperationException("Please config the section TencentSMSOptions in appsettings.json");
             Options.RequestUrl = "https://yun.tim.qq.com/v5/tlssmssvr/sendsms";
             _client = factory.CreateClient();
             _random = new Random();

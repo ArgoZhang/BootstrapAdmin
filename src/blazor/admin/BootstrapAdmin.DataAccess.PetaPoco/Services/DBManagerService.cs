@@ -36,7 +36,7 @@ internal class DBManagerService : IDBManager
     /// <param name="connectionName">连接字符串键值</param>
     /// <param name="keepAlive"></param>
     /// <returns></returns>
-    public IDatabase Create(string? connectionName = "ba", bool keepAlive = false)
+    public IDatabase Create(string connectionName = "ba", bool keepAlive = false)
     {
         var conn = Configuration.GetConnectionString(connectionName) ?? throw new ArgumentNullException(nameof(connectionName));
 
@@ -58,7 +58,7 @@ internal class DBManagerService : IDBManager
                 [nameof(db.LastCommand)] = db.LastCommand,
                 [nameof(db.LastArgs)] = string.Join(",", db.LastArgs)
             });
-            Logger.LogError(new EventId(1001, "GlobalException"), e.Exception, message);
+            Logger.LogError(e.Exception, "{Message}", message);
         };
         if (WebHost.IsDevelopment())
         {
@@ -69,8 +69,8 @@ internal class DBManagerService : IDBManager
                 {
                     parameters.AppendFormat("{0}: {1}  ", p.ParameterName, p.Value);
                 }
-                Logger.LogInformation(args.Command.CommandText);
-                Logger.LogInformation(parameters.ToString());
+                Logger.LogInformation("{CommandText}", args.Command.CommandText);
+                Logger.LogInformation("{CommandArgs}", parameters.ToString());
             };
         };
         return db;

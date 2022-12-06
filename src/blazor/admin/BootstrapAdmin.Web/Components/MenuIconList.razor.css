@@ -1,0 +1,30 @@
+﻿.form-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.icon {
+    font-size: 22px;
+    color: #337ab7;
+    border: solid 1px;
+    border-radius: 4px;
+    min-width: 36px;
+    min-height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 .25rem;
+}
+
+::deep .fil a:hover {
+    background-color: var(--bs-primary);
+}
+
+::deep .nav-pills .nav-link.active {
+    --bs-nav-pills-link-active-bg: var(--bs-primary);
+}
+
+::deep .icon-list {
+    height: calc(100vh - 8rem - 47px - 52px);
+}

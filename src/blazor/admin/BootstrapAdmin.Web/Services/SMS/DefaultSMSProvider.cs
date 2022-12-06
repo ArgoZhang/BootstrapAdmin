@@ -33,7 +33,7 @@ public class DefaultSMSProvider : ISMSProvider
     /// <param name="factory"></param>
     public DefaultSMSProvider(IConfiguration configuration, IHttpClientFactory factory)
     {
-        _options = configuration.GetSection(nameof(SMSOptions)).Get<DefaultSMSOptions>();
+        _options = configuration.GetSection(nameof(SMSOptions)).Get<DefaultSMSOptions>() ?? throw new InvalidOperationException("Please config the section of SMSOptions in appsettings.json");
         _client = factory.CreateClient();
     }
 
@@ -91,8 +91,7 @@ public class DefaultSMSProvider : ISMSProvider
 
     private static string Hash(string data)
     {
-        using var md5 = MD5.Create();
-        var sign = BitConverter.ToString(md5.ComputeHash(Encoding.UTF8.GetBytes(data)));
+        var sign = BitConverter.ToString(MD5.HashData(Encoding.UTF8.GetBytes(data)));
         sign = sign.Replace("-", "").ToLowerInvariant();
         return sign;
     }

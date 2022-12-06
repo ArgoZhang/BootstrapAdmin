@@ -1,7 +1,0 @@
-﻿@model IEnumerable<Bootstrap.Security.BootstrapMenu>
-<ul class="sub nav flex-column">
-    @foreach (var menu in Model)
-    {
-        @await Html.PartialAsync("SubNavItem", menu)
-    }
-</ul>

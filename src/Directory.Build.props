@@ -3,15 +3,20 @@
   <Import Project="..\Directory.Build.props" />
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
-  
+
   <PropertyGroup>
     <PackageProjectUrl>https://gitee.com/LongbowEnterprise/BootstrapAdmin</PackageProjectUrl>
     <RepositoryUrl>https://gitee.com/LongbowEnterprise/BootstrapAdmin.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Nullable>enable</Nullable>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Using Include="System.Diagnostics.CodeAnalysis" />
+  </ItemGroup>
 
 </Project>

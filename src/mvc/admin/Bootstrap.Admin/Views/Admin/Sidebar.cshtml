@@ -1,5 +1,0 @@
-@model NavigatorBarModel
-@foreach (var menu in Model.Navigations)
-{
-    @await Html.PartialAsync("SubNavItem", menu)
-}

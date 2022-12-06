@@ -20,6 +20,7 @@ static class CloudLoggerExtensions
     /// <returns></returns>
     public static ILoggingBuilder AddCloudLogger(this ILoggingBuilder builder)
     {
+        builder.Services.AddHttpClient();
         builder.Services.AddSingleton<IConfigureOptions<CloudLoggerOption>, LoggerProviderConfigureOptions<CloudLoggerOption, CloudLoggerProvider>>();
         builder.Services.AddSingleton<IOptionsChangeTokenSource<CloudLoggerOption>, LoggerProviderOptionsChangeTokenSource<CloudLoggerOption, CloudLoggerProvider>>();
         builder.Services.AddSingleton<ILoggerProvider, CloudLoggerProvider>();
@@ -33,45 +34,81 @@ static class CloudLoggerExtensions
 [ProviderAlias("Cloud")]
 class CloudLoggerProvider : LoggerProvider
 {
-    private readonly HttpClient httpClient;
-    private readonly IDisposable optionsReloadToken;
-    private CloudLoggerOption option;
+    private IOptionsMonitor<CloudLoggerOption> Options { get; }
+
+    private IServiceProvider Provider { get; }
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    public CloudLoggerProvider(IOptionsMonitor<CloudLoggerOption> options) : base(null, new Func<string, LogLevel, bool>((name, logLevel) => logLevel >= LogLevel.Error))
+    public CloudLoggerProvider(IOptionsMonitor<CloudLoggerOption> options, IServiceProvider provider) : base(new Func<string, LogLevel, bool>((name, logLevel) => logLevel >= LogLevel.Error))
     {
-        optionsReloadToken = options.OnChange(op => option = op);
-        option = options.CurrentValue;
-
-        httpClient = new HttpClient
-        {
-            Timeout = TimeSpan.FromSeconds(10)
-        };
-        httpClient.DefaultRequestHeaders.Connection.Add("keep-alive");
-
-        LogCallback = new Action<string>(async message =>
-        {
-            if (!string.IsNullOrEmpty(option.Url))
-            {
-                try { await httpClient.PostAsJsonAsync(option.Url, message); }
-                catch { }
-            }
-        });
+        Options = options;
+        Provider = provider;
     }
+
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
+    /// <param name="categoryName"></param>
+    /// <returns></returns>
+    public override ILogger CreateLogger(string categoryName) => new CloudLogger(categoryName, Options, Provider, Filter, null, Configuration);
+}
+
+class CloudLogger : LoggerBase
+{
+    private IOptionsMonitor<CloudLoggerOption> Options { get; }
+
+    private IServiceProvider Provider { get; }
+
+    private IHttpClientFactory? HttpClientFactory { get; set; }
 
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="disposing"></param>
-    protected override void Dispose(bool disposing)
+    /// <param name="name"></param>
+    /// <param name="options"></param>
+    /// <param name="provider"></param>
+    /// <param name="filter"></param>
+    /// <param name="scopeProvider"></param>
+    /// <param name="config"></param>
+    public CloudLogger(string name, IOptionsMonitor<CloudLoggerOption> options, IServiceProvider provider, Func<string, LogLevel, bool>? filter, IExternalScopeProvider? scopeProvider, IConfiguration? config) : base(name, filter, scopeProvider, config)
     {
-        base.Dispose(disposing);
-        if (disposing)
+        Options = options;
+        Provider = provider;
+    }
+
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
+    /// <param name="content"></param>
+    /// <exception cref="NotImplementedException"></exception>
+    protected override void WriteMessageCore(string content)
+    {
+        var url = Options.CurrentValue.Url;
+        if (!string.IsNullOrEmpty(url) && !string.IsNullOrEmpty(content))
         {
-            httpClient.Dispose();
-            optionsReloadToken.Dispose();
+            try
+            {
+                Task.Run(() => CreateHttpClient().PostAsJsonAsync(url, content));
+            }
+            catch { }
+        }
+    }
+
+    private HttpClient? httpClient;
+
+    private HttpClient CreateHttpClient()
+    {
+        return httpClient ?? Create();
+
+        HttpClient Create()
+        {
+            HttpClientFactory ??= Provider.GetRequiredService<IHttpClientFactory>();
+            httpClient ??= HttpClientFactory.CreateClient();
+            httpClient.Timeout = TimeSpan.FromSeconds(10);
+            httpClient.DefaultRequestHeaders.Connection.Add("keep-alive");
+            return httpClient;
         }
     }
 }
@@ -84,5 +121,5 @@ class CloudLoggerOption
     /// <summary>
     /// 获得/设置 云日志地址
     /// </summary>
-    public string Url { get; set; } = "";
+    public string? Url { get; set; }
 }
