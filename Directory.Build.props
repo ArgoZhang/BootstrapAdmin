@@ -11,17 +11,17 @@
 
   <Target Condition=" $(IsWebProject) == true Or $(IsTestProject) == true" Name="PostBuild" AfterTargets="PostBuildEvent">
     <Message Text="Copy lic file -> $(TargetDir)" Importance="high" />
-    <Copy Condition="'$(OS)' == 'Windows_NT'" DestinationFolder="$(TargetDir)" SourceFiles="$(MSBuildThisFileDirectory)src\mvc\admin\keys\Longbow.lic" SkipUnchangedFiles="true" />
-    <Copy Condition="'$(OS)' == 'UNIX'" DestinationFolder="$(TargetDir)" SourceFiles="$(MSBuildThisFileDirectory)src/mvc/admin/keys/Longbow.lic" SkipUnchangedFiles="true" />
+    <Copy Condition="'$(OS)' == 'Windows_NT'" DestinationFolder="$(TargetDir)" SourceFiles="$(MSBuildThisFileDirectory)src\blazor\admin\keys\Longbow.lic" SkipUnchangedFiles="true" />
+    <Copy Condition="'$(OS)' == 'UNIX'" DestinationFolder="$(TargetDir)" SourceFiles="$(MSBuildThisFileDirectory)src/blazor/admin/keys/Longbow.lic" SkipUnchangedFiles="true" />
   </Target>
 
   <Target Condition=" $(IsWebProject) == true " Name="PostPublish" AfterTargets="Publish">
     <Message Text="Publish lic file -> $(PublishDir)" Importance="high" />
-    <Copy Condition="'$(OS)' == 'Windows_NT'" DestinationFolder="$(PublishDir)" SourceFiles="$(MSBuildThisFileDirectory)src\mvc\admin\keys\Longbow.lic" SkipUnchangedFiles="true" />
-    <Copy Condition="'$(OS)' == 'UNIX'" DestinationFolder="$(PublishDir)" SourceFiles="$(MSBuildThisFileDirectory)src/mvc/admin/keys/Longbow.lic" SkipUnchangedFiles="true" />
+    <Copy Condition="'$(OS)' == 'Windows_NT'" DestinationFolder="$(PublishDir)" SourceFiles="$(MSBuildThisFileDirectory)src\blazor\admin\keys\Longbow.lic" SkipUnchangedFiles="true" />
+    <Copy Condition="'$(OS)' == 'UNIX'" DestinationFolder="$(PublishDir)" SourceFiles="$(MSBuildThisFileDirectory)src/blazor/admin/keys/Longbow.lic" SkipUnchangedFiles="true" />
     <Message Text="Publish db file -> $(PublishDir)" Importance="high" />
-    <Copy Condition="'$(OS)' == 'Windows_NT'" DestinationFolder="$(PublishDir)" SourceFiles="$(MSBuildThisFileDirectory)src\mvc\admin\Bootstrap.Admin\BootstrapAdmin.db" SkipUnchangedFiles="true" />
-    <Copy Condition="'$(OS)' == 'UNIX'" DestinationFolder="$(PublishDir)" SourceFiles="$(MSBuildThisFileDirectory)src/mvc/admin/Bootstrap.Admin/BootstrapAdmin.db" SkipUnchangedFiles="true" />
+    <Copy Condition="'$(OS)' == 'Windows_NT'" DestinationFolder="$(PublishDir)" SourceFiles="$(MSBuildThisFileDirectory)src\blazor\admin\Bootstrap.Admin\BootstrapAdmin.db" SkipUnchangedFiles="true" />
+    <Copy Condition="'$(OS)' == 'UNIX'" DestinationFolder="$(PublishDir)" SourceFiles="$(MSBuildThisFileDirectory)src/blazor/admin/Bootstrap.Admin/BootstrapAdmin.db" SkipUnchangedFiles="true" />
   </Target>
 
 </Project>
