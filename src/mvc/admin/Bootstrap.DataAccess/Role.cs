@@ -4,10 +4,7 @@
 
 using Bootstrap.Security.DataAccess;
 using PetaPoco;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 
 namespace Bootstrap.DataAccess
 {
@@ -122,8 +119,8 @@ namespace Bootstrap.DataAccess
         /// <returns></returns>
         public virtual bool Save(Role p)
         {
-            if (!string.IsNullOrEmpty(p.RoleName) && p.RoleName.Length > 50) p.RoleName = p.RoleName.Substring(0, 50);
-            if (!string.IsNullOrEmpty(p.Description) && p.Description.Length > 50) p.Description = p.Description.Substring(0, 500);
+            if (!string.IsNullOrEmpty(p.RoleName) && p.RoleName.Length > 50) p.RoleName = p.RoleName[..50];
+            if (!string.IsNullOrEmpty(p.Description) && p.Description.Length > 50) p.Description = p.Description[..500];
 
             using var db = DbManager.Create();
             db.Save(p);
@@ -234,6 +231,6 @@ namespace Bootstrap.DataAccess
         /// <param name="url"></param>
         /// <param name="appId"></param>
         /// <returns></returns>
-        public virtual IEnumerable<string> RetrievesByUrl(string url, string appId) => DbHelper.RetrieveRolesByUrl(url, appId);
+        public virtual IEnumerable<string> RetrievesByUrl(string url, string? appId) => DbHelper.RetrieveRolesByUrl(url, appId);
     }
 }

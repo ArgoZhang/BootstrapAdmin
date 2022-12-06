@@ -4,7 +4,6 @@
 
 using Bootstrap.Admin.Models;
 using Bootstrap.DataAccess;
-using Bootstrap.Security.Mvc;
 using Longbow.AlipayAuth;
 using Longbow.GiteeAuth;
 using Longbow.GitHubAuth;
@@ -14,16 +13,10 @@ using Longbow.WeChatAuth;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace Bootstrap.Admin.Controllers
 {
@@ -189,7 +182,7 @@ namespace Bootstrap.Admin.Controllers
         public async Task<IActionResult> Logout([FromQuery] string appId)
         {
             await HttpContext.SignOutAsync();
-            return Redirect(QueryHelpers.AddQueryString(Request.PathBase + CookieAuthenticationDefaults.LoginPath, "AppId", appId ?? BootstrapAppContext.AppId));
+            return Redirect(QueryHelpers.AddQueryString(Request.PathBase + CookieAuthenticationDefaults.LoginPath, "AppId", appId));
         }
 
         /// <summary>

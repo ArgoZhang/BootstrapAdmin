@@ -153,6 +153,6 @@ namespace Bootstrap.DataAccess
         /// <param name="url">请求 Url 地址</param>
         /// <param name="appId">应用程序Id</param>
         /// <returns>角色名称集合</returns>
-        public static IEnumerable<string> RetrievesByUrl(string url, string appId) => CacheManager.GetOrAdd(string.Format("{0}-{1}-{2}", DbHelper.RetrieveRolesByUrlDataKey, url, appId), key => DbContextManager.Create<Role>()?.RetrievesByUrl(url, appId), DbHelper.RetrieveRolesByUrlDataKey) ?? new string[0];
+        public static IEnumerable<string> RetrievesByUrl(string url, string? appId) => CacheManager.GetOrAdd(string.Format("{0}-{1}-{2}", DbHelper.RetrieveRolesByUrlDataKey, url, appId), key => DbContextManager.Create<Role>()?.RetrievesByUrl(url, appId), DbHelper.RetrieveRolesByUrlDataKey) ?? Array.Empty<string>();
     }
 }

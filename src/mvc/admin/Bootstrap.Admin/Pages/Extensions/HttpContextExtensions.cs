@@ -5,6 +5,7 @@
 using Bootstrap.DataAccess;
 using Longbow.Cache;
 using Longbow.Web;
+using Microsoft.Extensions.Primitives;
 using System.Net;
 
 namespace Microsoft.AspNetCore.Http
@@ -35,7 +36,7 @@ namespace Microsoft.AspNetCore.Http
             onlineUserSvr.AddOrUpdate(context.Connection.Id ?? "", key =>
             {
                 var agent = context.Request.Headers["User-Agent"];
-                var userAgent = string.IsNullOrEmpty(agent) ? null : new UserAgent(agent);
+                var userAgent = StringValues.Empty == agent ? null : new UserAgent(agent);
                 var v = new OnlineUser
                 {
                     UserAgent = agent,
