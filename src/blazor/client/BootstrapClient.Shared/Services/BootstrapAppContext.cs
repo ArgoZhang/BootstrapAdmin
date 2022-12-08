@@ -14,7 +14,8 @@ namespace BootstrapClient.Web.Shared.Services
         /// <summary>
         /// 获得/设置 当前网站 AppId
         /// </summary>
-        public string AppId { get; }
+        [NotNull]
+        public string? AppId { get; }
 
         /// <summary>
         /// 获得/设置 当前登录账号
@@ -45,7 +46,7 @@ namespace BootstrapClient.Web.Shared.Services
         /// <param name="configuration"></param>
         public BootstrapAppContext(IConfiguration configuration)
         {
-            AppId = configuration.GetValue("AppId", "BA")!;
+            AppId = configuration.GetValue<string?>("AppId", "BA");
         }
     }
 }
