@@ -40,7 +40,7 @@ public class Index : ComponentBase
     private string? Url { get; set; }
 
     /// <summary>
-    /// 
+    /// <inheritdoc/>
     /// </summary>
     protected override void OnInitialized()
     {
@@ -53,31 +53,21 @@ public class Index : ComponentBase
     }
 
 #if DEBUG
-    [Inject]
-    [NotNull]
-    private ILogger<Home.Index>? Logger { get; set; }
     /// <summary>
-    /// 
+    /// <inheritdoc/>
     /// </summary>
     /// <param name="firstRender"></param>
     protected override void OnAfterRender(bool firstRender)
     {
-        Redirect();
-
-        if(firstRender)
+        if (firstRender)
         {
-            Logger.LogError("{Test}", "this is a test message");
+            var routes = GetType().GetCustomAttributes<RouteAttribute>();
+            if (routes.Any(i => $"{Navigation.BaseUri}{i.Template}".TrimEnd('/').Equals(Url, StringComparison.OrdinalIgnoreCase)))
+            {
+                Url = "Admin/Index";
+                Navigation.NavigateTo(Url, true);
+            }
         }
     }
 #endif
-
-    private void Redirect()
-    {
-        //var routes = GetType().GetCustomAttributes<RouteAttribute>();
-        //if (routes.Any(i => $"{Navigation.BaseUri}{i.Template}".TrimEnd('/').Equals(Url, StringComparison.OrdinalIgnoreCase)))
-        //{
-        //    Url = "Admin/Index";
-        //}
-        //Navigation.NavigateTo(Url, true);
-    }
 }
