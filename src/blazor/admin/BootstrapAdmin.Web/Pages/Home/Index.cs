@@ -46,10 +46,6 @@ public class Index : ComponentBase
     {
         // 查看是否自定义前台
         Url = LoginHelper.GetDefaultUrl(Context, null, null, UsersService, DictsService);
-
-#if !DEBUG
-        Redirect();
-#endif
     }
 
 #if DEBUG
