@@ -25,9 +25,8 @@ public static class DialogExtensions
     /// <param name="menus">当前用户可用所有菜单集合</param>
     /// <param name="value">已分配菜单集合</param>
     /// <param name="saveCallback"></param>
-    /// <param name="toast"></param>
     /// <returns></returns>
-    public static async Task ShowNavigationDialog(this DialogService dialogService, string title, List<Navigation> menus, List<string> value, Func<List<string>, Task<bool>> saveCallback, ToastService? toast)
+    public static async Task ShowNavigationDialog(this DialogService dialogService, string title, List<Navigation> menus, List<string> value, Func<List<string>, Task<bool>> saveCallback)
     {
         var option = new DialogOption
         {
@@ -38,24 +37,9 @@ public static class DialogExtensions
         };
         var parameters = new Dictionary<string, object?>()
         {
-            [nameof(NavigationTree.Items)] = menus,
-            [nameof(NavigationTree.Value)] = value,
-            [nameof(NavigationTree.OnClose)] = () => option.Dialog.Close(),
-            [nameof(NavigationTree.OnSave)] = new Func<List<string>, Task>(async items =>
-            {
-                var ret = await saveCallback(items);
-                if (toast != null)
-                {
-                    if (ret)
-                    {
-                        await toast.Success("分配操作", "操作成功！");
-                    }
-                    else
-                    {
-                        await toast.Error("分配操作", "操作失败，请联系相关管理员！");
-                    }
-                }
-            })
+            [nameof(NavigationTree.AllMenus)] = menus,
+            [nameof(NavigationTree.SelectedMenus)] = value,
+            [nameof(NavigationTree.OnSave)] = new Func<List<string>, Task<bool>>(items => saveCallback(items))
         };
         option.Component = BootstrapDynamicComponent.CreateComponent<NavigationTree>(parameters);
         await dialogService.Show(option);

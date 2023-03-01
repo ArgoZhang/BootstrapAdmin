@@ -14,19 +14,15 @@ namespace BootstrapAdmin.Web.Components;
 public partial class NavigationTree
 {
     [NotNull]
-    private List<TreeViewItem<Navigation>>? InternalItems { get; set; }
+    private List<TreeViewItem<Navigation>>? Items { get; set; }
 
     [Inject]
     [NotNull]
     private IDict? DictService { get; set; }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    [Parameter]
-    [EditorRequired]
+    [Inject]
     [NotNull]
-    public List<Navigation>? Items { get; set; }
+    private ToastService? ToastService { get; set; }
 
     /// <summary>
     /// 
@@ -34,15 +30,15 @@ public partial class NavigationTree
     [Parameter]
     [EditorRequired]
     [NotNull]
-    public List<string>? Value { get; set; }
+    public List<Navigation>? AllMenus { get; set; }
 
     /// <summary>
-    /// 关闭弹窗回调委托
+    /// 
     /// </summary>
     [Parameter]
     [EditorRequired]
     [NotNull]
-    public Func<Task>? OnClose { get; set; }
+    public List<string>? SelectedMenus { get; set; }
 
     /// <summary>
     /// 保存按钮回调委托
@@ -50,7 +46,10 @@ public partial class NavigationTree
     [Parameter]
     [EditorRequired]
     [NotNull]
-    public Func<List<string>, Task>? OnSave { get; set; }
+    public Func<List<string>, Task<bool>>? OnSave { get; set; }
+
+    [CascadingParameter]
+    private Func<Task>? CloseDialogAsync { get; set; }
 
     /// <summary>
     /// 
@@ -59,26 +58,37 @@ public partial class NavigationTree
     {
         base.OnInitialized();
 
-        InternalItems = Items.ToTreeItemList(Value, RenderTreeItem);
+        Items = AllMenus.ToTreeItemList(SelectedMenus, RenderTreeItem);
     }
 
     private string GetApp(string? app) => DictService.GetApps().FirstOrDefault(i => i.Key == app).Value ?? "未设置";
 
-    private Task OnClickClose() => OnClose();
-
-    private List<TreeViewItem<Navigation>>? _checkedItems;
+    private async Task OnClickClose()
+    {
+        if (CloseDialogAsync != null)
+        {
+            await CloseDialogAsync();
+        }
+    }
 
     private Task OnTreeItemChecked(List<TreeViewItem<Navigation>> items)
     {
-        _checkedItems = items;
+        SelectedMenus = items.Select(i => i.Value.Id).ToList();
         return Task.CompletedTask;
     }
 
     private async Task OnClickSave()
     {
-        if (_checkedItems != null)
+        var ret = await OnSave(SelectedMenus);
+        if (ret)
         {
-            await OnSave(_checkedItems.Select(i => i.Value.Id).ToList());
+            await OnClickClose();
+            await ToastService.Success("分配菜单操作", "操作成功！");
+
+        }
+        else
+        {
+            await ToastService.Error("分配菜单操作", "操作失败，请联系相关管理员！");
         }
     }
 }

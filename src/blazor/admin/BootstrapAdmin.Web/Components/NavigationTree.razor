@@ -1,7 +1,7 @@
 ﻿@inherits ComponentBase
 
 <div class="tree-menu">
-    <TreeView TItem="Navigation" Items="InternalItems" ShowCheckbox="true" ShowIcon="true" OnTreeItemChecked="OnTreeItemChecked"></TreeView>
+    <TreeView TItem="Navigation" Items="Items" ShowCheckbox="true" ShowIcon="true" AutoCheckParent="true" AutoCheckChildren="true" OnTreeItemChecked="OnTreeItemChecked"></TreeView>
 
     <div class="form-footer">
         <Button Color="Color.Secondary" Icon="fa-solid fa-xmark" Text="关闭" OnClickWithoutRender="OnClickClose" />

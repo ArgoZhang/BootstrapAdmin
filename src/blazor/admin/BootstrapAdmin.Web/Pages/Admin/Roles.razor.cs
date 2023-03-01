@@ -79,7 +79,7 @@ public partial class Roles
         {
             var ret = NavigationService.SaveMenusByRoleId(role.Id, items);
             return Task.FromResult(ret);
-        }, ToastService);
+        });
     }
 
     private async Task OnAssignmentApps(Role role)

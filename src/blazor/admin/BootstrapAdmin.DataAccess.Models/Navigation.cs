@@ -15,6 +15,7 @@ public class Navigation
     /// 获得/设置 菜单主键ID
     /// </summary>
     [NotNull]
+    [Key]
     public string? Id { set; get; }
 
     /// <summary>

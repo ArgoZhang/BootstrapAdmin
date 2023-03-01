@@ -32,7 +32,7 @@ public static class TreeItemExtensions
                 IsActive = selectedItems.Any(v => node.Id == v),
                 CheckedState = selectedItems.Any(v => node.Id == v) ? CheckboxState.Checked : CheckboxState.UnChecked,
                 Template = render,
-                Items = ToTreeItemList(navigations, selectedItems, render, node.Id!)
+                Items = ToTreeItemList(navigations, selectedItems, render, node.Id)
             });
         }
         return trees;
