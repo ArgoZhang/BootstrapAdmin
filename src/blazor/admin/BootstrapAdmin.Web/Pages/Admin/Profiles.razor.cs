@@ -151,7 +151,7 @@ public partial class Profiles
         }
 
         // 文件大小 10 M
-        var ret = await file.SaveToFile(fileName, 10 * 1024 * 1000);
+        var ret = await file.SaveToFileAsync(fileName, 10 * 1024 * 1000);
 
         // 更新用户信息
         if (ret)
