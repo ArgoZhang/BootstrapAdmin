@@ -18,22 +18,25 @@ public static class TreeItemExtensions
     /// <param name="selectedItems"></param>
     /// <param name="render"></param>
     /// <param name="parentId"></param>
+    /// <param name="parent"></param>
     /// <returns></returns>
-    public static List<TreeViewItem<Navigation>> ToTreeItemList(this IEnumerable<Navigation> navigations, List<string> selectedItems, RenderFragment<Navigation> render, string? parentId = "0")
+    public static List<TreeViewItem<Navigation>> ToTreeItemList(this IEnumerable<Navigation> navigations, List<string> selectedItems, RenderFragment<Navigation> render, string? parentId = "0", TreeViewItem<Navigation>? parent = null)
     {
         var trees = new List<TreeViewItem<Navigation>>();
         var roots = navigations.Where(i => i.ParentId == parentId).OrderBy(i => i.Application).ThenBy(i => i.Order);
         foreach (var node in roots)
         {
-            trees.Add(new TreeViewItem<Navigation>(node)
+            var item = new TreeViewItem<Navigation>(node)
             {
                 Text = node.Name,
                 Icon = node.Icon,
                 IsActive = selectedItems.Any(v => node.Id == v),
-                CheckedState = selectedItems.Any(v => node.Id == v) ? CheckboxState.Checked : CheckboxState.UnChecked,
+                Parent = parent,
                 Template = render,
-                Items = ToTreeItemList(navigations, selectedItems, render, node.Id)
-            });
+                CheckedState = selectedItems.Any(i => i == node.Id) ? CheckboxState.Checked : CheckboxState.UnChecked
+            };
+            item.Items = ToTreeItemList(navigations, selectedItems, render, node.Id, item);
+            trees.Add(item);
         }
         return trees;
     }
