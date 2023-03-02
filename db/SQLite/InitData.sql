@@ -5,6 +5,8 @@ INSERT INTO Users (UserName, Password, PassSalt, DisplayName, RegisterTime, Appr
 INSERT INTO Users (UserName, Password, PassSalt, DisplayName, RegisterTime, ApprovedTime, ApprovedBy, [Description], [App]) values ('User', 'tXG/yNffpnm6cThrCH7wf6jN1ic3VHvLoY4OrzKtrZ4=', 'c5cIrRMn8XjB84M/D/X7Lg9uUqQFmYNEdxb/4HWH8OLa4pNZ', '测试账号', datetime(CURRENT_TIMESTAMP, 'localtime'), datetime(CURRENT_TIMESTAMP, 'localtime'), 'system', '系统默认创建', 'Demo');
 
 DELETE From Dicts Where Define = 0;
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('菜单', '系统菜单', '0', 0);
+INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('菜单', '外部菜单', '1', 0);
 INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('应用程序', '后台管理', 'BA', 0);
 INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('网站设置', '网站标题', '后台管理系统', 0);
 INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('网站设置', '网站页脚', '2016 © 通用后台管理系统', 0);
