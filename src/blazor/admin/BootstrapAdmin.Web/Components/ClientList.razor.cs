@@ -26,7 +26,7 @@ public partial class ClientList
     private DialogOption? Option { get; set; }
 
     /// <summary>
-    /// 
+    /// <inheritdoc/>
     /// </summary>
     protected override void OnInitialized()
     {
@@ -70,6 +70,8 @@ public partial class ClientList
     private Task OnDeleteClient(string appId)
     {
         DictService.DeleteClient(appId);
+        Clients = DictService.GetClients();
+        StateHasChanged();
         return Task.CompletedTask;
     }
 
@@ -79,5 +81,7 @@ public partial class ClientList
     {
         DictService.SaveClient(app);
         await Option.Dialog.Close();
+        Clients = DictService.GetClients();
+        StateHasChanged();
     }
 }

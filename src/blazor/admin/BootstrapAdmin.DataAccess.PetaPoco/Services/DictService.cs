@@ -438,7 +438,7 @@ class DictService : IDict
                     new Dict { Category = client.AppId, Name = "系统设置地址", Code = client.SettingsUrl, Define = EnumDictDefine.Customer },
                     new Dict { Category = client.AppId, Name = "系统通知地址", Code = client.NotificationUrl, Define = EnumDictDefine.Customer }
                 };
-                db.InsertBatch(items);
+                db.InsertBatch(items.Where(i => !string.IsNullOrEmpty(i.Code)));
                 db.CompleteTransaction();
                 ret = true;
             }
