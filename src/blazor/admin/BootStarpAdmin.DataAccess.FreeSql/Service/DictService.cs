@@ -430,9 +430,9 @@ class DictService : IDict
         {
             FreeSql.Transaction(() =>
             {
-                FreeSql.Ado.ExecuteNonQuery("delete Dicts where Category=@Category and Name=@Name and Define=@Define", new { Category = "应用首页", Name = appId, Define = EnumDictDefine.System });
-                FreeSql.Ado.ExecuteNonQuery("delete Dicts where Category=@Category and Code=@Code and Define=@Define", new { Category = "应用程序", Code = appId, Define = EnumDictDefine.System });
-                FreeSql.Ado.ExecuteNonQuery("delete Dicts where Category=@Category and Name in (@Names)", new
+                FreeSql.Ado.ExecuteNonQuery("delete from Dicts where Category=@Category and Name=@Name and Define=@Define", new { Category = "应用首页", Name = appId, Define = EnumDictDefine.System });
+                FreeSql.Ado.ExecuteNonQuery("delete from Dicts where Category=@Category and Code=@Code and Define=@Define", new { Category = "应用程序", Code = appId, Define = EnumDictDefine.System });
+                FreeSql.Ado.ExecuteNonQuery("delete from Dicts where Category=@Category and Name in (@Names)", new
                 {
                     Category = appId,
                     Names = new List<string>

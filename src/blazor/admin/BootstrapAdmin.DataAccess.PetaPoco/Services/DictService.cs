@@ -476,9 +476,9 @@ class DictService : IDict
         try
         {
             db.BeginTransaction();
-            db.Execute("delete Dicts where Category=@0 and Name=@1 and Define=@2", "应用首页", appId, EnumDictDefine.System);
-            db.Execute("delete Dicts where Category=@0 and Code=@1 and Define=@2", "应用程序", appId, EnumDictDefine.System);
-            db.Execute("delete Dicts where Category=@Category and Name in (@Names)", new
+            db.Execute("delete from Dicts where Category=@0 and Name=@1 and Define=@2", "应用首页", appId, EnumDictDefine.System);
+            db.Execute("delete from Dicts where Category=@0 and Code=@1 and Define=@2", "应用程序", appId, EnumDictDefine.System);
+            db.Execute("delete from Dicts where Category=@Category and Name in (@Names)", new
             {
                 Category = appId,
                 Names = new List<string>

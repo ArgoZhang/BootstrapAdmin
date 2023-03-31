@@ -412,9 +412,9 @@ class DictService : IDict
         try
         {
             dbcontext.Database.BeginTransaction();
-            dbcontext.Database.ExecuteSqlRaw("delete Dicts where Category={0} and Name={1} and Define={2}", "应用首页", appId, EnumDictDefine.System);
-            dbcontext.Database.ExecuteSqlRaw("delete Dicts where Category={0} and Name={1} and Define={2}", "应用程序", appId, EnumDictDefine.System);
-            dbcontext.Database.ExecuteSqlRaw("delete Dicts where Category=@{0} and Name in ({1})", new
+            dbcontext.Database.ExecuteSqlRaw("delete from Dicts where Category={0} and Name={1} and Define={2}", "应用首页", appId, EnumDictDefine.System);
+            dbcontext.Database.ExecuteSqlRaw("delete from Dicts where Category={0} and Name={1} and Define={2}", "应用程序", appId, EnumDictDefine.System);
+            dbcontext.Database.ExecuteSqlRaw("delete from Dicts where Category=@{0} and Name in ({1})", new
             {
                 Category = appId,
                 Names = new List<string>
