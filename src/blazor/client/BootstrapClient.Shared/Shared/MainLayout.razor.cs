@@ -3,12 +3,10 @@
 // Website: https://admin.blazor.zone
 
 using Bootstrap.Security.Blazor;
-using BootstrapBlazor.Components;
 using BootstrapClient.Web.Core;
 using BootstrapClient.Web.Shared.Extensions;
 using BootstrapClient.Web.Shared.Services;
 using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -16,7 +14,7 @@ using Microsoft.Extensions.Options;
 namespace BootstrapClient.Web.Shared.Shared;
 
 /// <summary>
-/// 
+/// MainLayout 母版页
 /// </summary>
 public sealed partial class MainLayout
 {
@@ -87,7 +85,7 @@ public sealed partial class MainLayout
     private IOptionsMonitor<BootstrapAdminAuthenticationOptions>? Options { get; set; }
 
     /// <summary>
-    /// OnInitialized 方法
+    /// <inheritdoc/>
     /// </summary>
     protected override void OnInitialized()
     {
@@ -107,30 +105,35 @@ public sealed partial class MainLayout
     }
 
     /// <summary>
-    /// OnInitialized 方法
+    /// <inheritdoc/>
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
         var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-        var userName = state.User.Identity?.Name;
 
-        if (!string.IsNullOrEmpty(userName))
+        if (state.User.Identity != null && state.User.Identity.IsAuthenticated)
         {
-            Context.UserName = userName;
-            var user = UsersService.GetUserByUserName(userName);
-
-            MenuItems = NavigationsService.GetMenus(userName).Where(i => i.Application == Context.AppId).ToMenus();
-
-            Context.DisplayName = user?.DisplayName ?? "未注册账户";
-
-            // 增加模拟账户识别
-            if (!string.IsNullOrEmpty(Configuration.GetValue("SimulateUserName", string.Empty)))
+            var userName = state.User.Identity.Name;
+            if (!string.IsNullOrEmpty(userName))
             {
-                Context.DisplayName = $"{Context.DisplayName} (模拟)";
-            }
+                Context.UserName = userName;
 
-            Title = DictsService.GetWebTitle(Context.AppId);
-            Footer = DictsService.GetWebFooter(Context.AppId);
+                var simulateUser = Configuration.GetValue<string>("SimulateUserName");
+                // 增加模拟账户识别
+                if (!string.IsNullOrEmpty(simulateUser) && simulateUser == userName)
+                {
+                    Context.DisplayName = $"{Context.DisplayName} (模拟)";
+                }
+                else
+                {
+                    var user = UsersService.GetUserByUserName(userName);
+                    Context.DisplayName = user?.DisplayName ?? userName;
+                }
+
+                Title = DictsService.GetWebTitle(Context.AppId);
+                Footer = DictsService.GetWebFooter(Context.AppId);
+                MenuItems = NavigationsService.GetMenus(userName).Where(i => i.Application == Context.AppId).ToMenus();
+            }
         }
     }
 

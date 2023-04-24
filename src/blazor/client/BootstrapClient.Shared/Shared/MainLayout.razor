@@ -13,7 +13,7 @@
                 <a href="@ProfileUrl"><i class="fa-solid fa-suitcase"></i>个人中心</a>
                 <a href="@SettingsUrl"><i class="fa-solid fa-cog"></i>设置</a>
                 <a href="@NotificationUrl"><i class="fa-solid fa-bell"></i>通知<span id="logoutNoti" class="badge badge-pill badge-success"></span></a>
-                @if(!Options.CurrentValue.Domain)
+                @if (!Options.CurrentValue.Domain)
                 {
                     <LogoutLink Url="@LogoutUrl" />
                 }
