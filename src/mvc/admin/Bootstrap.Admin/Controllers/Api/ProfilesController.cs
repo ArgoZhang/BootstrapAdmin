@@ -112,16 +112,19 @@ namespace Bootstrap.Admin.Controllers.Api
             {
                 var uploadFile = files.Files[0];
                 var webSiteUrl = DictHelper.RetrieveIconFolderPath();
-                fileName = $"{userName}{Path.GetExtension(uploadFile.FileName)}";
-                var filePath = Path.Combine(env.WebRootPath, webSiteUrl.Replace("~", string.Empty).Replace('/', Path.DirectorySeparatorChar).TrimStart(Path.DirectorySeparatorChar) + fileName);
-                fileSize = uploadFile.Length;
-                using (var fs = new FileStream(filePath, FileMode.Create))
+                if (webSiteUrl.StartsWith('~'))
                 {
-                    await uploadFile.CopyToAsync(fs);
+                    fileName = $"{userName}{Path.GetExtension(uploadFile.FileName)}";
+                    var filePath = Path.Combine(env.WebRootPath, webSiteUrl.Replace("~", string.Empty).Replace('/', Path.DirectorySeparatorChar).TrimStart(Path.DirectorySeparatorChar) + fileName);
+                    fileSize = uploadFile.Length;
+                    using (var fs = new FileStream(filePath, FileMode.Create))
+                    {
+                        await uploadFile.CopyToAsync(fs);
+                    }
+                    var iconName = $"{fileName}?v={DateTime.Now.Ticks}";
+                    previewUrl = Url.Content($"{webSiteUrl}{iconName}");
+                    if (!string.IsNullOrEmpty(userName)) UserHelper.SaveUserIconByName(userName, iconName);
                 }
-                var iconName = $"{fileName}?v={DateTime.Now.Ticks}";
-                previewUrl = Url.Content($"{webSiteUrl}{iconName}");
-                if (!string.IsNullOrEmpty(userName)) UserHelper.SaveUserIconByName(userName, iconName);
             }
             return new JsonResult(new
             {
