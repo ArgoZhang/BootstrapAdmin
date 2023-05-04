@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Bootstrap.Admin.Controllers.Api
@@ -33,10 +34,22 @@ namespace Bootstrap.Admin.Controllers.Api
         [ButtonAuthorize(Url = "~/Admin/Profiles", Auth = "saveIcon")]
         public JsonResult Post(string id, [FromServices] IWebHostEnvironment env, [FromForm] DeleteFileCollection files)
         {
-            if (!id.Equals("Delete", StringComparison.OrdinalIgnoreCase)) return new JsonResult(new object());
-            var userName = User.Identity!.Name;
-            var fileName = files.Key;
+            if (!id.Equals("Delete", StringComparison.OrdinalIgnoreCase))
+            {
+                return new JsonResult(new object());
+            }
+            var userName = User.Identity?.Name;
+            if (string.IsNullOrEmpty(userName))
+            {
+                return new JsonResult(new object());
+            }
 
+            // check file
+            var fileName = files.Key;
+            if (!CheckFileName(userName, fileName))
+            {
+                return new JsonResult(new object());
+            }
             fileName = Path.Combine(env.WebRootPath, $"images{Path.DirectorySeparatorChar}uploader{Path.DirectorySeparatorChar}{fileName}");
             if (System.IO.File.Exists(fileName)) System.IO.File.Delete(fileName);
             fileName = "default.jpg";
@@ -55,6 +68,19 @@ namespace Bootstrap.Admin.Controllers.Api
                 },
                 append = false
             });
+        }
+
+        private static bool CheckFileName(string userName, string fileName)
+        {
+            var ret = false;
+            var user = UserHelper.RetrieveUserByUserName(userName);
+            var icon = user?.Icon;
+            if (!string.IsNullOrEmpty(icon))
+            {
+                var file = icon.SpanSplit("?").FirstOrDefault();
+                ret = fileName == file;
+            }
+            return ret;
         }
 
         /// <summary>
