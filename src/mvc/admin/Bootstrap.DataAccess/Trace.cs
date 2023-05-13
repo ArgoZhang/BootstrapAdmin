@@ -104,7 +104,8 @@ namespace Bootstrap.DataAccess
             if (endTime.HasValue) sql.Where("LogTime < @0", endTime.Value.AddDays(1).AddSeconds(-1));
             if (startTime == null && endTime == null) sql.Where("LogTime > @0", DateTime.Today.AddMonths(0 - DictHelper.RetrieveAccessLogPeriod()));
             if (!string.IsNullOrEmpty(ip)) sql.Where("IP = @0", ip);
-            sql.OrderBy($"{po.Sort} {po.Order}");
+
+            sql.SafeOrderBy<Trace>(po.Sort, po.Order);
 
             using var db = DbManager.Create();
             return db.Page<Trace>(po.PageIndex, po.Limit, sql);

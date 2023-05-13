@@ -99,7 +99,9 @@ namespace Bootstrap.DataAccess
             if (startTime.HasValue) sql.Where("LoginTime >= @0", startTime.Value);
             if (endTime.HasValue) sql.Where("LoginTime < @0", endTime.Value.AddDays(1));
             if (!string.IsNullOrEmpty(ip)) sql.Where("ip = @0", ip);
-            sql.OrderBy($"{po.Sort} {po.Order}");
+
+            sql.SafeOrderBy<LoginUser>(po.Sort, po.Order);
+
             using var db = DbManager.Create();
             return db.Page<LoginUser>(po.PageIndex, po.Limit, sql);
         }

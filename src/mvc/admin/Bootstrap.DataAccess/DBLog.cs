@@ -55,7 +55,8 @@ namespace Bootstrap.DataAccess
             if (endTime.HasValue) sql.Where("LogTime < @0", endTime.Value.AddDays(1).AddSeconds(-1));
             if (startTime == null && endTime == null) sql.Where("LogTime > @0", DateTime.Today.AddMonths(0 - DictHelper.RetrieveExceptionsLogPeriod()));
             if (!string.IsNullOrEmpty(userName)) sql.Where("UserName = @0", userName);
-            sql.OrderBy($"{po.Sort} {po.Order}");
+
+            sql.SafeOrderBy<DBLog>(po.Sort, po.Order);
 
             using var db = DbManager.Create();
             return db.Page<DBLog>(po.PageIndex, po.Limit, sql);
