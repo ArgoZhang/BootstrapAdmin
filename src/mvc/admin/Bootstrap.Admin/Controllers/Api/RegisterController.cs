@@ -38,8 +38,10 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="user"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<bool> Post([FromServices]IHubContext<SignalRHub> hub, [FromBody]User user)
+        public async Task<bool> Post([FromServices] IHubContext<SignalRHub> hub, [FromBody] User user)
         {
+            user.ApprovedBy = null;
+            user.ApprovedTime = null;
             var ret = UserHelper.Save(user);
             if (ret) await hub.SendMessageBody(new MessageBody() { Category = "Users", Message = string.Format("{0}-{1}", user.UserName, user.Description) }, HttpContext.RequestAborted);
             return ret;
