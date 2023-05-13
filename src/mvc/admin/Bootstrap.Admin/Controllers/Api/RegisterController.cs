@@ -51,7 +51,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="userName"></param>
         /// <param name="user"></param>
         [HttpPut("{userName}")]
-        public bool Put(string userName, [FromBody]User user) => UserHelper.ResetPassword(userName, user.Password);
+        public bool Put(string userName, [FromBody] User user) => UserHelper.ResetPassword(userName, user.Password);
 
         /// <summary>
         /// 忘记密码调用
@@ -59,7 +59,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="user"></param>
         /// <returns></returns>
         [HttpPut]
-        public bool Put([FromBody]ResetUser user)
+        public bool Put([FromBody] ResetUser user)
         {
             if (UserHelper.RetrieveUserByUserName(user.UserName) == null) return true;
             return UserHelper.ForgotPassword(user);
