@@ -53,7 +53,26 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="userName"></param>
         /// <param name="user"></param>
         [HttpPut("{userName}")]
-        public bool Put(string userName, [FromBody] User user) => UserHelper.ResetPassword(userName, user.Password);
+        public bool Put(string userName, [FromBody] User user)
+        {
+            // 管理员才可以重置密码
+            var ret = false;
+            if (IsAdmin())
+            {
+                ret = UserHelper.ResetPassword(userName, user.Password);
+            }
+            return ret;
+
+            bool IsAdmin()
+            {
+                var ret = User.IsInRole("Administrators");
+                if (!ret && User.Identity != null)
+                {
+                    ret = User.Identity.IsAuthenticated && !string.IsNullOrEmpty(User.Identity.Name) && User.Identity.Name.Equals("Admin", System.StringComparison.OrdinalIgnoreCase);
+                }
+                return ret;
+            }
+        }
 
         /// <summary>
         /// 忘记密码调用
