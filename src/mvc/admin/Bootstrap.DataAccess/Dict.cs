@@ -26,10 +26,8 @@ namespace Bootstrap.DataAccess
         public virtual bool Delete(IEnumerable<string> value)
         {
             if (!value.Any()) return true;
-            var ids = string.Join(",", value);
-            string sql = $"where ID in ({ids})";
             using var db = DbManager.Create();
-            db.Delete<BootstrapDict>(sql);
+            db.Delete<BootstrapDict>("where ID in (@value)", new { value });
             return true;
         }
 

@@ -94,16 +94,15 @@ namespace Bootstrap.DataAccess
         public virtual bool Delete(IEnumerable<string> value)
         {
             if (!value.Any()) return true;
-            var ret = false;
-            var ids = string.Join(",", value);
+            bool ret;
             using var db = DbManager.Create();
             try
             {
                 db.BeginTransaction();
-                db.Execute($"delete from UserRole where RoleID in ({ids})");
-                db.Execute($"delete from RoleGroup where RoleID in ({ids})");
-                db.Execute($"delete from NavigationRole where RoleID in ({ids})");
-                db.Delete<Role>($"where ID in ({ids})");
+                db.Execute($"delete from UserRole where RoleID in (@value)", new { value });
+                db.Execute($"delete from RoleGroup where RoleID in (@value)", new { value });
+                db.Execute($"delete from NavigationRole where RoleID in (@value)", new { value });
+                db.Delete<Role>($"where ID in (@value)", new { value });
                 db.CompleteTransaction();
                 ret = true;
             }

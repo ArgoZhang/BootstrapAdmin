@@ -44,15 +44,14 @@ namespace Bootstrap.DataAccess
         /// <param name="value"></param>
         public virtual bool Delete(IEnumerable<string> value)
         {
-            var ids = string.Join(",", value);
             using var db = DbManager.Create();
             bool ret;
             try
             {
                 db.BeginTransaction();
-                db.Execute($"delete from UserGroup where GroupID in ({ids})");
-                db.Execute($"delete from RoleGroup where GroupID in ({ids})");
-                db.Delete<Group>($"where ID in ({ids})");
+                db.Execute($"delete from UserGroup where GroupID in (@value)", new { value });
+                db.Execute($"delete from RoleGroup where GroupID in (@value)", new { value });
+                db.Delete<Group>("where ID in (@value)", new { value });
                 db.CompleteTransaction();
                 ret = true;
             }
