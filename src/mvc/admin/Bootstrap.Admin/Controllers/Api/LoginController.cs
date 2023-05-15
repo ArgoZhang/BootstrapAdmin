@@ -4,7 +4,7 @@
 
 using Bootstrap.Admin.Query;
 using Bootstrap.DataAccess;
-using Bootstrap.Security.Authentication;
+using Bootstrap.Security.Mvc.Authentication;
 using Longbow.Web.Mvc;
 using Longbow.Web.SMS;
 using Microsoft.AspNetCore.Authorization;
@@ -35,24 +35,18 @@ namespace Bootstrap.Admin.Controllers.Api
         /// JWT 登陆认证接口
         /// </summary>
         /// <param name="config"></param>
+        /// <param name="tokenService"></param>
         /// <param name="user"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<string?> Post([FromServices] IConfiguration config, [FromBody] User user)
+        public async Task<string?> Post([FromServices] IConfiguration config, [FromServices] IJWTTokenService tokenService, [FromBody] User user)
         {
             string? token = null;
             string userName = user.UserName;
             string password = user.Password;
             if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(password) && UserHelper.Authenticate(userName, password))
             {
-                token = BootstrapAdminJwtTokenHandler.CreateToken(userName, op =>
-                {
-                    var tokenOption = config.GetOption(() => new TokenValidateOption());
-                    op.Audience = tokenOption.Audience;
-                    op.Expires = tokenOption.Expires;
-                    op.Issuer = tokenOption.Issuer;
-                    op.SecurityKey = tokenOption.SecurityKey;
-                });
+                token = tokenService.Issue(userName);
             }
             await HttpContext.Log(userName, !string.IsNullOrEmpty(token));
             return token;
