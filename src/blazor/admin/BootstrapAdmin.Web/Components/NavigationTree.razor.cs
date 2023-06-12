@@ -73,7 +73,18 @@ public partial class NavigationTree
 
     private Task OnTreeItemChecked(List<TreeViewItem<Navigation>> items)
     {
-        SelectedMenus = items.Select(i => i.Value.Id).ToList();
+        SelectedMenus = items.SelectMany(i =>
+        {
+            var ret = new List<string>
+            {
+                i.Value.Id
+            };
+            if (i.Parent != null)
+            {
+                ret.Add(i.Parent.Value.Id);
+            }
+            return ret;
+        }).Distinct().ToList();
         return Task.CompletedTask;
     }
 
