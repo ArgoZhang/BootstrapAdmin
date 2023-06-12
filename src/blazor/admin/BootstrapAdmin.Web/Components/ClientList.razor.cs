@@ -75,12 +75,12 @@ public partial class ClientList
         return Task.CompletedTask;
     }
 
-    private Task OnClose() => Option.Dialog.Close();
+    private Task OnClose() => Option.CloseDialogAsync();
 
     private async Task OnSave(ClientApp app)
     {
         DictService.SaveClient(app);
-        await Option.Dialog.Close();
+        await Option.CloseDialogAsync();
         Clients = DictService.GetClients();
         StateHasChanged();
     }

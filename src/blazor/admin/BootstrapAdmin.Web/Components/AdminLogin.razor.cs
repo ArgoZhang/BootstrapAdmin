@@ -3,7 +3,6 @@
 // Website: https://admin.blazor.zone
 
 using BootstrapAdmin.Web.Core;
-using BootstrapAdmin.Web.Utils;
 using Microsoft.JSInterop;
 
 namespace BootstrapAdmin.Web.Components;
@@ -48,7 +47,7 @@ public partial class AdminLogin : IDisposable
     /// </summary>
     protected string? PostUrl { get; set; }
 
-    private JSInterop<AdminLogin>? Interop { get; set; }
+    private DotNetObjectReference<AdminLogin>? Interop { get; set; }
 
     /// <summary>
     /// 
@@ -142,8 +141,8 @@ public partial class AdminLogin : IDisposable
         if (firstRender)
         {
             // register javascript
-            Interop = new JSInterop<AdminLogin>(JSRuntime);
-            await Interop.InvokeVoidAsync(this, LoginForm, "login", "api/Login", nameof(Log));
+            Interop ??= DotNetObjectReference.Create(this);
+            await JSRuntime.InvokeVoidAsync("$.login", LoginForm, Interop, "api/Login", nameof(Log));
         }
     }
 
