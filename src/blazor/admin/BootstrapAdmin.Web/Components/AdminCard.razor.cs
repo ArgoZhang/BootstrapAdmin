@@ -47,7 +47,7 @@ namespace BootstrapAdmin.Web.Components
         private Task<bool> OnQueryCondition(string name)
         {
             var url = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
-            return Task.FromResult(AdminService.AuhorizingBlock(AppContext.UserName, url, name));
+            return Task.FromResult(AdminService.AuthorizingBlock(AppContext.UserName, url, name));
         }
     }
 }

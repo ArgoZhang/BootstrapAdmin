@@ -77,7 +77,7 @@ public partial class Menus
     private bool AuthorizeButton(string operate)
     {
         var url = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
-        return AdminService.AuhorizingBlock(AppContext.UserName, url, operate);
+        return AdminService.AuthorizingBlock(AppContext.UserName, url, operate);
     }
 
     private async Task OnAssignmentRoles(DataAccess.Models.Navigation menu)

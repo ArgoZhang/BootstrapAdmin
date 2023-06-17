@@ -47,7 +47,7 @@ public class AdminService : IBootstrapAdminService
     /// <param name="userName"></param>
     /// <param name="url"></param>
     /// <returns></returns>
-    public Task<bool> AuhorizingNavigation(string userName, string url)
+    public Task<bool> AuthorizingNavigation(string userName, string url)
     {
         var ret = Navigations.GetAllMenus(userName).Any(m => m.Url.Contains(url, StringComparison.OrdinalIgnoreCase));
         return Task.FromResult(ret);
@@ -60,7 +60,7 @@ public class AdminService : IBootstrapAdminService
     /// <param name="url"></param>
     /// <param name="blockName"></param>
     /// <returns></returns>
-    public bool AuhorizingBlock(string userName, string url, string blockName)
+    public bool AuthorizingBlock(string userName, string url, string blockName)
     {
         var ret = User.GetRoles(userName).Any(i => i.Equals("Administrators", StringComparison.OrdinalIgnoreCase));
         if (!ret)

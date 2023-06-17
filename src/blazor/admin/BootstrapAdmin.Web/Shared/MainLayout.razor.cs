@@ -156,7 +156,7 @@ namespace BootstrapAdmin.Web.Shared
             }
             else
             {
-                ret = await SecurityService.AuhorizingNavigation(Context.UserName, relativeUrl);
+                ret = await SecurityService.AuthorizingNavigation(Context.UserName, relativeUrl);
             }
             return ret;
         }
