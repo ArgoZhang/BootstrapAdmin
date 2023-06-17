@@ -146,13 +146,19 @@ namespace BootstrapAdmin.Web.Shared
             LockInterval = Convert.ToInt32(DictsService.GetAutoLockScreenInterval());
         }
 
-        private Task<bool> OnAuthorizing(string url) => SecurityService.AuhorizingNavigation(Context.UserName, NavigationManager.ToBaseRelativePath(url));
-
-        private async Task OnErrorHandleAsync(ILogger logger, Exception ex)
+        private async Task<bool> OnAuthorizing(string url)
         {
-            await ToastService.Error(Title, ex.Message);
-
-            logger.LogError(ex, "ErrorLogger");
+            bool ret;
+            var relativeUrl = NavigationManager.ToBaseRelativePath(url);
+            if (relativeUrl.StartsWith("Account/", StringComparison.OrdinalIgnoreCase))
+            {
+                ret = true;
+            }
+            else
+            {
+                ret = await SecurityService.AuhorizingNavigation(Context.UserName, relativeUrl);
+            }
+            return ret;
         }
 
         /// <summary>
