@@ -216,7 +216,7 @@ namespace BootstrapClient.Web.Shared.Components
         private bool AuthorizeButton(string operate)
         {
             var url = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
-            return AdminService.AuhorizingBlock(AppContext.UserName, url, operate);
+            return AdminService.AuthorizingBlock(AppContext.UserName, url, operate);
         }
     }
 }

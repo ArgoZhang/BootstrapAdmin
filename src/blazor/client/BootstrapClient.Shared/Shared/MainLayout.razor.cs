@@ -139,7 +139,7 @@ public sealed partial class MainLayout
 
     private Task<bool> OnAuthorizing(string url)
     {
-        return SecurityService.AuhorizingNavigation(Context.UserName, url);
+        return SecurityService.AuthorizingNavigation(Context.UserName, url);
     }
 
     private string LogoutUrl => CombinePath($"/Account/Logout?AppId={Context.AppId}");

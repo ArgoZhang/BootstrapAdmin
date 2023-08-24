@@ -46,7 +46,7 @@ public class AdminService : IBootstrapAdminService
     /// <param name="userName"></param>
     /// <param name="url"></param>
     /// <returns></returns>
-    public Task<bool> AuhorizingNavigation(string userName, string url)
+    public Task<bool> AuthorizingNavigation(string userName, string url)
     {
         var ret = false;
         if (Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out var uri))
@@ -65,7 +65,7 @@ public class AdminService : IBootstrapAdminService
     /// <param name="blockName"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public bool AuhorizingBlock(string userName, string url, string blockName)
+    public bool AuthorizingBlock(string userName, string url, string blockName)
     {
         // Client 暂时未使用
         return true;

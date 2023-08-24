@@ -45,10 +45,6 @@ namespace BootstrapAdmin.Web.Shared
 
         [Inject]
         [NotNull]
-        private ToastService? ToastService { get; set; }
-
-        [Inject]
-        [NotNull]
         private ITrace? TraceService { get; set; }
 
         /// <summary>
@@ -92,31 +88,6 @@ namespace BootstrapAdmin.Web.Shared
 
             AppContext.BaseUri = NavigationManager.ToAbsoluteUri(NavigationManager.BaseUri);
             NavigationManager.LocationChanged += NavigationManager_LocationChanged;
-        }
-
-        private void NavigationManager_LocationChanged(object? sender, LocationChangedEventArgs e)
-        {
-            _ = Task.Run(async () =>
-            {
-                // TODO: 可考虑加入队列中，通过任务管理定时插入提高效率
-                var clientInfo = await WebClientService.GetClientInfo();
-                var city = "XX XX";
-                if (!string.IsNullOrEmpty(clientInfo.Ip))
-                {
-                    city = await IPLocatorProvider.Locate(clientInfo.Ip) ?? "None";
-                }
-                TraceService.Log(new Trace
-                {
-                    Browser = clientInfo.Browser,
-                    City = city,
-                    Ip = clientInfo.Ip,
-                    LogTime = DateTime.Now,
-                    OS = clientInfo.OS,
-                    UserAgent = clientInfo.UserAgent,
-                    RequestUrl = NavigationManager.ToBaseRelativePath(e.Location),
-                    UserName = AppContext.UserName
-                });
-            });
         }
 
         /// <summary>
@@ -178,6 +149,31 @@ namespace BootstrapAdmin.Web.Shared
             return Task.CompletedTask;
         }
 
+        private void NavigationManager_LocationChanged(object? sender, LocationChangedEventArgs e)
+        {
+            _ = Task.Run(async () =>
+            {
+                // TODO: 可考虑加入队列中，通过任务管理定时插入提高效率
+                var clientInfo = await WebClientService.GetClientInfo();
+                var city = "XX XX";
+                if (!string.IsNullOrEmpty(clientInfo.Ip))
+                {
+                    city = await IPLocatorProvider.Locate(clientInfo.Ip) ?? "None";
+                }
+                TraceService.Log(new Trace
+                {
+                    Browser = clientInfo.Browser,
+                    City = city,
+                    Ip = clientInfo.Ip,
+                    LogTime = DateTime.Now,
+                    OS = clientInfo.OS,
+                    UserAgent = clientInfo.UserAgent,
+                    RequestUrl = NavigationManager.ToBaseRelativePath(e.Location),
+                    UserName = AppContext.UserName
+                });
+            });
+        }
+
         private void Dispose(bool disposing)
         {
             if (disposing)
@@ -187,7 +183,7 @@ namespace BootstrapAdmin.Web.Shared
         }
 
         /// <summary>
-        /// 
+        /// 释放资源
         /// </summary>
         /// <exception cref="NotImplementedException"></exception>
         public void Dispose()
