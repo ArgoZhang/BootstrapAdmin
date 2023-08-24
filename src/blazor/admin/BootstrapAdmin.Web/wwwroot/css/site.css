@@ -4,7 +4,7 @@
 
 :root {
     --bb-footer-height: 40px;
-    --bb-tab-header-height: 39px;
+    --bb-tab-header-height: 40px;
     --bb-checkboxlist-item-width: 180px;
 }
 
@@ -41,7 +41,8 @@
     box-shadow: none;
 }
 
-.tabs-body {
+.tabs .tabs-body {
+    flex: initial;
     height: calc(100vh - var(--bb-layout-header-height) - var(--bb-tab-header-height) - var(--bb-footer-height));
 }
 
