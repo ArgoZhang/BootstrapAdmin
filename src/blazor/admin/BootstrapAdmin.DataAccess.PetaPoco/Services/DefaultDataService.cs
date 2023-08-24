@@ -78,7 +78,7 @@ class DefaultDataService<TModel> : DataServiceBase<TModel> where TModel : class,
             IsSorted = true,
             IsFiltered = true,
             IsSearch = true,
-            IsAdvanceSearch = option.AdvanceSearchs.Any() || option.CustomerSearchs.Any()
+            IsAdvanceSearch = option.AdvanceSearches.Any() || option.CustomerSearches.Any()
         };
 
         using var db = DBManager.Create();

@@ -41,21 +41,21 @@ static class DatabaseExtensions
         var sql = new Sql();
 
         // 处理模糊查询
-        if (options.Searchs.Any())
+        if (options.Searches.Any())
         {
             var searchTextSql = new Sql();
-            AnalysisExpression(options.Searchs.GetFilterLambda<TModel>(FilterLogic.Or), db, searchTextSql);
+            AnalysisExpression(options.Searches.GetFilterLambda<TModel>(FilterLogic.Or), db, searchTextSql);
             sql.Append(searchTextSql.ToString().Replace("\nAND", "OR"), searchTextSql.Arguments);
         }
 
         // 处理高级搜索
-        if (options.AdvanceSearchs.Any())
+        if (options.AdvanceSearches.Any())
         {
-            AnalysisExpression(options.AdvanceSearchs.GetFilterLambda<TModel>(), db, sql);
+            AnalysisExpression(options.AdvanceSearches.GetFilterLambda<TModel>(), db, sql);
         }
 
         // 处理自定义搜索与过滤
-        var filters = options.Filters.Concat(options.CustomerSearchs);
+        var filters = options.Filters.Concat(options.CustomerSearches);
         if (filters.Any())
         {
             AnalysisExpression(filters.GetFilterLambda<TModel>(), db, sql);

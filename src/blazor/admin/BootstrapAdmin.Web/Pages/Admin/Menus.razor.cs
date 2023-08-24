@@ -98,15 +98,15 @@ public partial class Menus
         var menus = navs.Where(m => m.ParentId == "0");
 
         // 处理模糊查询
-        if (options.Searchs.Any())
+        if (options.Searches.Any())
         {
-            menus = menus.Where(options.Searchs.GetFilterFunc<Navigation>(FilterLogic.Or));
+            menus = menus.Where(options.Searches.GetFilterFunc<Navigation>(FilterLogic.Or));
         }
 
         //  处理 Filter 高级搜索
-        if (options.CustomerSearchs.Any() || options.Filters.Any())
+        if (options.CustomerSearches.Any() || options.Filters.Any())
         {
-            menus = menus.Where(options.CustomerSearchs.Concat(options.Filters).GetFilterFunc<Navigation>());
+            menus = menus.Where(options.CustomerSearches.Concat(options.Filters).GetFilterFunc<Navigation>());
         }
 
         foreach (var item in menus)

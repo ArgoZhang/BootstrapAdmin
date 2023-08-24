@@ -36,7 +36,7 @@ public class LoginLogModel : ITableSearchModel
     /// 
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<IFilterAction> GetSearchs()
+    public IEnumerable<IFilterAction> GetSearches()
     {
         var ret = new List<IFilterAction>();
 

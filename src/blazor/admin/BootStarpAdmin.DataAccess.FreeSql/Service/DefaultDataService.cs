@@ -50,13 +50,13 @@ class DefaultDataService<TModel> : DataServiceBase<TModel> where TModel : class,
             IsSorted = true,
             IsFiltered = true,
             IsSearch = true,
-            IsAdvanceSearch = option.AdvanceSearchs.Any() || option.CustomerSearchs.Any()
+            IsAdvanceSearch = option.AdvanceSearches.Any() || option.CustomerSearches.Any()
         };
         ret.Items = FreeSql.Select<TModel>()
-                           .WhereDynamicFilter(option.Searchs.ToDynamicFilter())
+                           .WhereDynamicFilter(option.Searches.ToDynamicFilter())
                            .WhereDynamicFilter(option.Filters
-                                .Concat(option.AdvanceSearchs)
-                                .Concat(option.CustomerSearchs)
+                                .Concat(option.AdvanceSearches)
+                                .Concat(option.CustomerSearches)
                                 .ToDynamicFilter())
                            .OrderByPropertyNameIf(option.SortOrder != SortOrder.Unset, option.SortName, option.SortOrder == SortOrder.Asc)
                            .Count(out var count)

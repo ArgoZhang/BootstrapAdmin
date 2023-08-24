@@ -68,7 +68,7 @@ class DefaultDataService<TModel> : DataServiceBase<TModel> where TModel : class,
             IsSearch = true
         };
 
-        var filters = option.Filters.Concat(option.Searchs).Concat(option.CustomerSearchs);
+        var filters = option.Filters.Concat(option.Searches).Concat(option.CustomerSearches);
         if (option.IsPage)
         {
             var items = context.Set<TModel>()
