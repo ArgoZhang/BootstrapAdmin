@@ -3,9 +3,9 @@
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
-  
+
   <ItemGroup>
-    <PackageReference Include="BootstrapBlazor" Version="7.9.2" />
+    <PackageReference Include="BootstrapBlazor" Version="7.9.3" />
     <PackageReference Include="Longbow.Security.Cryptography" Version="7.0.0" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="7.0.10" />
     <PackageReference Include="PetaPoco.Extensions" Version="6.0.0" />

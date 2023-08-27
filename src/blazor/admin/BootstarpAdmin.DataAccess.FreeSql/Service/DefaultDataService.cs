@@ -44,22 +44,18 @@ class DefaultDataService<TModel> : DataServiceBase<TModel> where TModel : class,
         return true;
     }
 
-    public override Task<QueryData<TModel>> QueryAsync(QueryPageOptions option)
+    public override Task<QueryData<TModel>> QueryAsync(QueryPageOptions option) => Task.FromResult(new QueryData<TModel>
     {
-        var ret = new QueryData<TModel>()
-        {
-            IsSorted = option.SortOrder != SortOrder.Unset,
-            IsFiltered = option.Filters.Any(),
-            IsAdvanceSearch = option.AdvanceSearches.Any(),
-            IsSearch = option.Searches.Any() || option.CustomerSearches.Any()
-        };
-        ret.Items = FreeSql.Select<TModel>()
-                           .WhereDynamicFilter(option.ToDynamicFilter())
-                           .OrderByPropertyNameIf(option.SortOrder != SortOrder.Unset, option.SortName, option.SortOrder == SortOrder.Asc)
-                           .Count(out var count)
-                           .PageIf(option.PageIndex, option.PageItems, option.IsPage)
-                           .ToList();
-        ret.TotalCount = Convert.ToInt32(count);
-        return Task.FromResult(ret);
-    }
+        IsSorted = option.SortOrder != SortOrder.Unset,
+        IsFiltered = option.Filters.Any(),
+        IsAdvanceSearch = option.AdvanceSearches.Any(),
+        IsSearch = option.Searches.Any() || option.CustomerSearches.Any(),
+        Items = FreeSql.Select<TModel>()
+                       .WhereDynamicFilter(option.ToDynamicFilter())
+                       .OrderByPropertyNameIf(option.SortOrder != SortOrder.Unset, option.SortName, option.SortOrder == SortOrder.Asc)
+                       .Count(out var count)
+                       .PageIf(option.PageIndex, option.PageItems, option.IsPage)
+                       .ToList(),
+        TotalCount = Convert.ToInt32(count)
+    });
 }
