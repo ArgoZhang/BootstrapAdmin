@@ -4,9 +4,8 @@
 
 using BootstrapAdmin.DataAccess.Models;
 using BootstrapAdmin.Web.Core;
-using BootstrapAdmin.Web.Extensions;
 using BootstrapBlazor.Components;
-using PetaPoco;
+using BootstrapBlazor.DataAccess.PetaPoco;
 using PetaPoco.Extensions;
 
 namespace BootstrapAdmin.DataAccess.PetaPoco.Services;
@@ -75,23 +74,23 @@ class DefaultDataService<TModel> : DataServiceBase<TModel> where TModel : class,
     {
         var ret = new QueryData<TModel>()
         {
-            IsSorted = true,
-            IsFiltered = true,
-            IsSearch = true,
-            IsAdvanceSearch = option.AdvanceSearches.Any() || option.CustomerSearches.Any()
+            IsSorted = option.SortOrder != SortOrder.Unset,
+            IsFiltered = option.Filters.Any(),
+            IsAdvanceSearch = option.AdvanceSearches.Any(),
+            IsSearch = option.Searches.Any() || option.CustomerSearches.Any()
         };
 
         using var db = DBManager.Create();
         if (option.IsPage)
         {
-            var items = await db.PageAsync<TModel>(option);
+            var items = await db.PageAsync<TModel>(option.PageIndex, option.PageItems, option.ToFilter(), option.SortName, option.SortOrder);
 
             ret.TotalCount = Convert.ToInt32(items.TotalItems);
             ret.Items = items.Items;
         }
         else
         {
-            var items = await db.FetchAsync<TModel>(option);
+            var items = await db.FetchAsync<TModel>(option.ToFilter(), option.SortName, option.SortOrder);
             ret.TotalCount = items.Count;
             ret.Items = items;
         }

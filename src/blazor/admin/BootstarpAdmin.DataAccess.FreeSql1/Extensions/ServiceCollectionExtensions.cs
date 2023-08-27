@@ -2,8 +2,8 @@
 // Licensed under the LGPL License, Version 3.0. See License.txt in the project root for license information.
 // Website: https://admin.blazor.zone
 
-using BootStarpAdmin.DataAccess.FreeSql.Extensions;
-using BootStarpAdmin.DataAccess.FreeSql.Service;
+using BootstrapAdmin.DataAccess.FreeSql.Extensions;
+using BootstrapAdmin.DataAccess.FreeSql.Service;
 using BootstrapAdmin.Web.Core;
 using BootstrapBlazor.Components;
 using FreeSql;
@@ -24,7 +24,6 @@ public static class ServiceCollectionExtensions
     /// <returns></returns>
     public static IServiceCollection AddFreeSql(this IServiceCollection services, Action<IServiceProvider, FreeSqlBuilder> freeSqlBuilder)
     {
-
         // 增加缓存服务
         services.AddCacheManager();
         services.TryAddSingleton<IFreeSql>(provider =>

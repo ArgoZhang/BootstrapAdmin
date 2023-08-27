@@ -2,12 +2,12 @@
 // Licensed under the LGPL License, Version 3.0. See License.txt in the project root for license information.
 // Website: https://admin.blazor.zone
 
-using BootStarpAdmin.DataAccess.FreeSql.Models;
+using BootstrapAdmin.DataAccess.FreeSql.Models;
 using BootstrapAdmin.DataAccess.Models;
 using BootstrapAdmin.Web.Core;
 using Longbow.Security.Cryptography;
 
-namespace BootStarpAdmin.DataAccess.FreeSql.Service;
+namespace BootstrapAdmin.DataAccess.FreeSql.Service;
 
 class UserService : IUser
 {

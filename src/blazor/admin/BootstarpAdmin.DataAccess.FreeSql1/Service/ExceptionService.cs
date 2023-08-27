@@ -5,7 +5,7 @@
 using BootstrapAdmin.DataAccess.Models;
 using BootstrapAdmin.Web.Core;
 
-namespace BootStarpAdmin.DataAccess.FreeSql.Service;
+namespace BootstrapAdmin.DataAccess.FreeSql.Service;
 
 class ExceptionService : IException
 {

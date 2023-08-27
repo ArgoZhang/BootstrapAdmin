@@ -9,7 +9,7 @@ using Longbow.Security.Cryptography;
 using Microsoft.Extensions.Configuration;
 using System.Data;
 
-namespace BootStarpAdmin.DataAccess.FreeSql.Service;
+namespace BootstrapAdmin.DataAccess.FreeSql.Service;
 
 class DictService : IDict
 {

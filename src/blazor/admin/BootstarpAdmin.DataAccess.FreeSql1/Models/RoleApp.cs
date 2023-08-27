@@ -2,13 +2,11 @@
 // Licensed under the LGPL License, Version 3.0. See License.txt in the project root for license information.
 // Website: https://admin.blazor.zone
 
-namespace BootStarpAdmin.DataAccess.FreeSql.Models;
+namespace BootstrapAdmin.DataAccess.FreeSql.Models;
 
-class UserRole
+class RoleApp
 {
-    public string? ID { get; set; }
-
-    public string? UserID { get; set; }
-
     public string? RoleID { get; set; }
+
+    public string? AppID { get; set; }
 }

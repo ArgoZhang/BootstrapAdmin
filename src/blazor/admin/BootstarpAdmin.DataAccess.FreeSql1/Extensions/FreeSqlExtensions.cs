@@ -2,10 +2,10 @@
 // Licensed under the LGPL License, Version 3.0. See License.txt in the project root for license information.
 // Website: https://admin.blazor.zone
 
-using BootStarpAdmin.DataAccess.FreeSql.Models;
+using BootstrapAdmin.DataAccess.FreeSql.Models;
 using BootstrapAdmin.DataAccess.Models;
 
-namespace BootStarpAdmin.DataAccess.FreeSql.Extensions;
+namespace BootstrapAdmin.DataAccess.FreeSql.Extensions;
 
 static class FreeSqlExtensions
 {

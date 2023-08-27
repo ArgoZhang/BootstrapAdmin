@@ -2,10 +2,11 @@
 // Licensed under the LGPL License, Version 3.0. See License.txt in the project root for license information.
 // Website: https://admin.blazor.zone
 
-using BootStarpAdmin.DataAccess.FreeSql.Extensions;
+using BootstrapAdmin.DataAccess.FreeSql.Extensions;
 using BootstrapBlazor.Components;
+using BootstrapBlazor.DataAccess.FreeSql;
 
-namespace BootStarpAdmin.DataAccess.FreeSql.Service;
+namespace BootstrapAdmin.DataAccess.FreeSql.Service;
 
 class DefaultDataService<TModel> : DataServiceBase<TModel> where TModel : class, new()
 {
@@ -47,17 +48,13 @@ class DefaultDataService<TModel> : DataServiceBase<TModel> where TModel : class,
     {
         var ret = new QueryData<TModel>()
         {
-            IsSorted = true,
-            IsFiltered = true,
-            IsSearch = true,
-            IsAdvanceSearch = option.AdvanceSearches.Any() || option.CustomerSearches.Any()
+            IsSorted = option.SortOrder != SortOrder.Unset,
+            IsFiltered = option.Filters.Any(),
+            IsAdvanceSearch = option.AdvanceSearches.Any(),
+            IsSearch = option.Searches.Any() || option.CustomerSearches.Any()
         };
         ret.Items = FreeSql.Select<TModel>()
-                           .WhereDynamicFilter(option.Searches.ToDynamicFilter())
-                           .WhereDynamicFilter(option.Filters
-                                .Concat(option.AdvanceSearches)
-                                .Concat(option.CustomerSearches)
-                                .ToDynamicFilter())
+                           .WhereDynamicFilter(option.ToDynamicFilter())
                            .OrderByPropertyNameIf(option.SortOrder != SortOrder.Unset, option.SortName, option.SortOrder == SortOrder.Asc)
                            .Count(out var count)
                            .PageIf(option.PageIndex, option.PageItems, option.IsPage)

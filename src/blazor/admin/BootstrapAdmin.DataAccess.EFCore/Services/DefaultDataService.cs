@@ -68,11 +68,11 @@ class DefaultDataService<TModel> : DataServiceBase<TModel> where TModel : class,
             IsSearch = true
         };
 
-        var filters = option.Filters.Concat(option.Searches).Concat(option.CustomerSearches);
+        var filter = option.ToFilter();
         if (option.IsPage)
         {
             var items = context.Set<TModel>()
-                               .Where(filters.GetFilterLambda<TModel>(), filters.Any())
+                               .Where(filter.GetFilterLambda<TModel>(), filter.HasFilters())
                                .Sort(option.SortName!, option.SortOrder, !string.IsNullOrEmpty(option.SortName))
                                .Count(out var count)
                                .Page((option.PageIndex - 1) * option.PageItems, option.PageItems);
@@ -83,7 +83,7 @@ class DefaultDataService<TModel> : DataServiceBase<TModel> where TModel : class,
         else
         {
             var items = context.Set<TModel>()
-                               .Where(filters.GetFilterLambda<TModel>(), filters.Any())
+                               .Where(filter.GetFilterLambda<TModel>(), filter.HasFilters())
                                .Sort(option.SortName!, option.SortOrder, !string.IsNullOrEmpty(option.SortName))
                                .Count(out var count);
             ret.TotalCount = count;

@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BootStarpAdmin.DataAccess.FreeSql.Service;
+namespace BootstrapAdmin.DataAccess.FreeSql.Service;
 
 /// <summary>
 /// 
