@@ -2,7 +2,7 @@
 
 <AdminTable TItem="DataAccess.Models.Navigation"
             IsTree="true" OnTreeExpand="OnTreeExpand" TreeNodeConverter="TreeNodeConverter" ModelEqualityComparer="ModelEqualityComparer"
-            ExtendButtonColumnWidth="200" CustomerSearchModel="SearchModel" OnQueryAsync="OnQueryAsync">
+            ExtendButtonColumnWidth="200" CustomerSearchModel="SearchModel" OnQueryAsync="OnQueryAsync" OnAfterModifyAsync="OnAfterModifyAsync">
     <TableToolbarTemplate>
         <TableToolbarButton TItem="DataAccess.Models.Navigation" Color="Color.Info" Icon="fa-solid fa-users-gear" Text="分配角色"
                             IsEnableWhenSelectedOneRow="true" IsShow="@AuthorizeButton("assignRole")" 
@@ -23,7 +23,7 @@
         <TableColumn @bind-Field="@context.Application" Filterable="true" Lookup="Apps"></TableColumn>
     </TableColumns>
     <EditTemplate Context="v">
-        <MenuEditor Value="v" ParementMenus="ParementMenus" Targets="Targets" Apps="Apps" />
+        <MenuEditor Value="v" ParementMenus="ParamentMenus" Targets="Targets" Apps="Apps" />
     </EditTemplate>
     <RowButtonTemplate>
         <TableCellButton Size="Size.ExtraSmall" IsShow="@AuthorizeButton("assignRole")" Color="Color.Info" Icon="fa-solid fa-users-gear" Text="分配角色" OnClick="() => OnAssignmentRoles(context)" />

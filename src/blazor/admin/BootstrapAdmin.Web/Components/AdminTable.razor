@@ -11,7 +11,8 @@
        ShowDeleteButton="@AuthorizeButton("del")" ShowEditButton="@AuthorizeButton("edit")"
        ShowCardView="true" ShowColumnList="true" ExtendButtonColumnWidth="@ExtendButtonColumnWidth"
        CustomerSearchModel="CustomerSearchModel" SelectedRows="SelectedRows" ModelEqualityComparer="ModelEqualityComparer!"
-       ShowEditButtonCallback="ShowEditButtonCallback!" ShowDeleteButtonCallback="ShowDeleteButtonCallback!"
+       ShowExtendEditButtonCallback="ShowEditButtonCallback!" ShowExtendDeleteButtonCallback="ShowDeleteButtonCallback!" 
+       OnAfterModifyAsync="OnAfterModifyAsync!"
        TableToolbarTemplate="TableToolbarTemplate" TableColumns="TableColumns" EditTemplate="EditTemplate!"
        CustomerSearchTemplate="CustomerSearchTemplate!" RowButtonTemplate="RowButtonTemplate!">
 </Table>

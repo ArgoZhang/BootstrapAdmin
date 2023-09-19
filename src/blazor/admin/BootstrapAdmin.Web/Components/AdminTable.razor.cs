@@ -187,6 +187,12 @@ namespace BootstrapAdmin.Web.Components
         /// 
         /// </summary>
         [Parameter]
+        public Func<Task>? OnAfterModifyAsync { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Parameter]
         public Func<TItem, TItem, bool>? ModelEqualityComparer { get; set; }
 
         [NotNull]

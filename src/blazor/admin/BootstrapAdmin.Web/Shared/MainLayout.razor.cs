@@ -174,6 +174,13 @@ namespace BootstrapAdmin.Web.Shared
             });
         }
 
+        private Task ReloadMenu()
+        {
+            MenuItems = NavigationsService.GetAllMenus(Context.UserName).ToMenus();
+            StateHasChanged();
+            return Task.CompletedTask;
+        }
+
         private void Dispose(bool disposing)
         {
             if (disposing)

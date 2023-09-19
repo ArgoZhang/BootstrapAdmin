@@ -56,7 +56,10 @@ public partial class Menus
     private List<SelectedItem>? Apps { get; set; }
 
     [NotNull]
-    private List<SelectedItem>? ParementMenus { get; set; }
+    private List<SelectedItem>? ParamentMenus { get; set; }
+
+    [CascadingParameter]
+    private Func<Task>? ReloadMenu { get; set; }
 
     private ITableSearchModel? SearchModel { get; set; } = new MenusSearchModel();
 
@@ -70,8 +73,8 @@ public partial class Menus
         Targets = LookupHelper.GetTargets();
         Apps = DictService.GetApps().ToSelectedItemList();
 
-        ParementMenus = NavigationService.GetAllMenus(AppContext.UserName).Where(s => s.ParentId == "0").Select(s => new SelectedItem(s.Id, s.Name)).ToList();
-        ParementMenus.Insert(0, new SelectedItem("0", "请选择"));
+        ParamentMenus = NavigationService.GetAllMenus(AppContext.UserName).Where(s => s.ParentId == "0").Select(s => new SelectedItem(s.Id, s.Name)).ToList();
+        ParamentMenus.Insert(0, new SelectedItem("0", "请选择"));
     }
 
     private bool AuthorizeButton(string operate)
@@ -94,8 +97,8 @@ public partial class Menus
 
     private Task<QueryData<Navigation>> OnQueryAsync(QueryPageOptions options)
     {
-        var navs = NavigationService.GetAllMenus(AppContext.UserName);
-        var menus = navs.Where(m => m.ParentId == "0");
+        var navigations = NavigationService.GetAllMenus(AppContext.UserName);
+        var menus = navigations.Where(m => m.ParentId == "0");
 
         // 处理模糊查询
         if (options.Searches.Any())
@@ -111,7 +114,7 @@ public partial class Menus
 
         foreach (var item in menus)
         {
-            item.HasChildren = navs.Any(i => i.ParentId == item.Id);
+            item.HasChildren = navigations.Any(i => i.ParentId == item.Id);
         }
 
         return Task.FromResult(new QueryData<Navigation>()
@@ -123,10 +126,18 @@ public partial class Menus
         });
     }
 
+    private async Task OnAfterModifyAsync()
+    {
+        if (ReloadMenu != null)
+        {
+            await ReloadMenu();
+        }
+    }
+
     private Task<IEnumerable<TableTreeNode<Navigation>>> OnTreeExpand(Navigation menu)
     {
-        var navs = NavigationService.GetAllMenus(AppContext.UserName);
-        return Task.FromResult(navs.Where(m => m.ParentId == menu.Id).OrderBy(m => m.Order).AsEnumerable().Select(i => new TableTreeNode<Navigation>(i)));
+        var navigations = NavigationService.GetAllMenus(AppContext.UserName);
+        return Task.FromResult(navigations.Where(m => m.ParentId == menu.Id).OrderBy(m => m.Order).AsEnumerable().Select(i => new TableTreeNode<Navigation>(i)));
     }
 
     private Task<IEnumerable<TableTreeNode<Navigation>>> TreeNodeConverter(IEnumerable<Navigation> items)
@@ -136,13 +147,13 @@ public partial class Menus
 
         IEnumerable<TableTreeNode<Navigation>> BuildTreeNodes(IEnumerable<Navigation> items, string parentId)
         {
-            var navs = NavigationService.GetAllMenus(AppContext.UserName);
+            var navigations = NavigationService.GetAllMenus(AppContext.UserName);
             var ret = new List<TableTreeNode<Navigation>>();
             ret.AddRange(items.Where(i => i.ParentId == parentId).Select((nav, index) => new TableTreeNode<Navigation>(nav)
             {
-                HasChildren = navs.Any(i => i.ParentId == nav.Id),
-                IsExpand = navs.Any(i => i.ParentId == nav.Id),
-                Items = BuildTreeNodes(navs.Where(i => i.ParentId == nav.Id), nav.Id)
+                HasChildren = navigations.Any(i => i.ParentId == nav.Id),
+                IsExpand = navigations.Any(i => i.ParentId == nav.Id),
+                Items = BuildTreeNodes(navigations.Where(i => i.ParentId == nav.Id), nav.Id)
             }));
             return ret;
         }
