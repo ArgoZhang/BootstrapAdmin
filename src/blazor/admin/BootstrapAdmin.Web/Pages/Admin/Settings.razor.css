@@ -1,0 +1,7 @@
+﻿::deep .form-inline .form-label {
+    display: block;
+}
+
+::deep .btn-group {
+    flex: 0;
+}
