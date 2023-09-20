@@ -52,7 +52,7 @@ public static class LoginHelper
     }
 
     /// <summary>
-    /// 将字典表中的配置 Login-Gitee 转化为 gitee
+    /// 将字典表中的配置 1-Login-Gitee 转化为 gitee
     /// </summary>
     /// <param name="loginTheme"></param>
     /// <returns></returns>
@@ -60,9 +60,9 @@ public static class LoginHelper
     {
         string? ret = null;
         var segs = loginTheme.Split('-');
-        if (segs.Length == 2)
+        if (segs.Length == 3)
         {
-            ret = segs[1].ToLowerInvariant();
+            ret = segs[2].ToLowerInvariant();
         }
         return ret;
     }

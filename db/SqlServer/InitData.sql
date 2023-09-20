@@ -82,13 +82,13 @@ INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'网站设�
 INSERT [dbo].[Dicts] ([Category], [Name], [Code], [Define]) VALUES (N'网站设置', N'后台地址', 'http://localhost:50852', 0)
 
 -- 系统登录首页设置
-INSERT INTO Dicts (Category, Name, Code, Define) VALUES (N'系统首页', N'2-高仿码云', N'Login-Gitee', 0);
-INSERT INTO Dicts (Category, Name, Code, Define) VALUES (N'系统首页', N'3-蓝色清新', N'Login-Blue', 0);
-INSERT INTO Dicts (Category, Name, Code, Define) VALUES (N'系统首页', N'1-系统默认', N'Login', 0);
-INSERT INTO Dicts (Category, Name, Code, Define) VALUES (N'系统首页', N'4-科技动感', N'Login-Tec', 0);
-INSERT INTO Dicts (Category, Name, Code, Define) VALUES (N'系统首页', N'5-Admin-LTE', N'Login-LTE', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES (N'系统首页', N'高仿码云', N'2-Login-Gitee', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES (N'系统首页', N'蓝色清新', N'3-Login-Blue', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES (N'系统首页', N'系统默认', N'1-Login', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES (N'系统首页', N'科技动感', N'4-Login-Tec', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES (N'系统首页', N'Admin-LTE', N'5-Login-LTE', 0);
 
-INSERT INTO Dicts (Category, Name, Code, Define) VALUES (N'网站设置', N'登录界面', N'Login', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES (N'网站设置', N'登录界面', N'1-Login', 0);
 INSERT INTO Dicts (Category, Name, Code, Define) VALUES (N'应用首页', N'BA', N'{0}://{1}:5210', 0);
 
 DELETE FROM Navigations Where Category = N'0'

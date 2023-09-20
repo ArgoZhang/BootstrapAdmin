@@ -363,37 +363,37 @@
     {
         "Category": "系统首页",
         "Name": "高仿码云",
-        "Code": "Login-Gitee",
+        "Code": "2-Login-Gitee",
         "Define": NumberInt(0)
     },
     {
         "Category": "系统首页",
         "Name": "蓝色清新",
-        "Code": "Login-Blue",
+        "Code": "3-Login-Blue",
         "Define": NumberInt(0)
     },
     {
         "Category": "系统首页",
         "Name": "系统默认",
-        "Code": "Login",
+        "Code": "1-Login",
         "Define": NumberInt(0)
     },
     {
         "Category": "系统首页",
         "Name": "科技动感",
-        "Code": "Login-Tec",
+        "Code": "4-Login-Tec",
         "Define": NumberInt(0)
     },
     {
         "Category": "系统首页",
         "Name": "Admin-LTE",
-        "Code": "Login-LTE",
+        "Code": "5-Login-LTE",
         "Define": NumberInt(0)
     },
     {
         "Category": "网站设置",
         "Name": "登录界面",
-        "Code": "Login",
+        "Code": "1-Login",
         "Define": NumberInt(0)
     },
     {
