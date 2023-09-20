@@ -83,8 +83,8 @@ INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('网站设置
 INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('系统首页', '2-高仿码云', 'Login-Gitee', 0);
 INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('系统首页', '3-蓝色清新', 'Login-Blue', 0);
 INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('系统首页', '1-系统默认', 'Login', 1);
-INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统首页', '科技动感', '4-Login-Tec', 0);
-INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统首页', 'Admin-LTE', '5-Login-LTE', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统首页', '4-科技动感', 'Login-Tec', 0);
+INSERT INTO Dicts (Category, Name, Code, Define) VALUES ('系统首页', '5-Admin-LTE', 'Login-LTE', 0);
 
 INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('网站设置', '登录界面', 'Login', 0);
 INSERT INTO [Dicts] ([Category], [Name], [Code], [Define]) VALUES ('应用首页', 'BA', '{0}://{1}:5210', 0);
