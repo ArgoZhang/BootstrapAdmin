@@ -133,6 +133,12 @@ namespace BootstrapAdmin.Web.Components
         /// 
         /// </summary>
         [Parameter]
+        public bool AutoGenerateColumns { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Parameter]
         public ITableSearchModel? CustomerSearchModel { get; set; }
 
         /// <summary>
