@@ -61,8 +61,8 @@ public class Index : ComponentBase
             if (routes.Any(i => $"{Navigation.BaseUri}{i.Template}".TrimEnd('/').Equals(Url, StringComparison.OrdinalIgnoreCase)))
             {
                 Url = "Admin/Index";
-                Navigation.NavigateTo(Url, true);
             }
+            Navigation.NavigateTo(Url, true);
         }
     }
 #endif
