@@ -48,7 +48,6 @@ public class Index : ComponentBase
         Url = LoginHelper.GetDefaultUrl(Context, null, null, UsersService, DictsService);
     }
 
-#if DEBUG
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
@@ -62,8 +61,7 @@ public class Index : ComponentBase
             {
                 Url = "Admin/Index";
             }
-            Navigation.NavigateTo(Url, true);
         }
+        Navigation.NavigateTo(Url, true);
     }
-#endif
 }
