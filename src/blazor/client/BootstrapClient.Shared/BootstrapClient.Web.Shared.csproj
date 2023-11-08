@@ -5,8 +5,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="7.0.11" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.11" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="7.0.13" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.13" />
   </ItemGroup>
 
   <ItemGroup>
