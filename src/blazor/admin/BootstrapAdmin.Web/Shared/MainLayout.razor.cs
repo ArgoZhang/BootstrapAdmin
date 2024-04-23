@@ -62,10 +62,6 @@ namespace BootstrapAdmin.Web.Shared
         [NotNull]
         private BootstrapAppContext? AppContext { get; set; }
 
-        [Inject]
-        [NotNull]
-        private IIPLocatorProvider? IPLocatorProvider { get; set; }
-
         private string? Title { get; set; }
 
         private string? Footer { get; set; }
@@ -155,15 +151,10 @@ namespace BootstrapAdmin.Web.Shared
             {
                 // TODO: 可考虑加入队列中，通过任务管理定时插入提高效率
                 var clientInfo = await WebClientService.GetClientInfo();
-                var city = "XX XX";
-                if (!string.IsNullOrEmpty(clientInfo.Ip))
-                {
-                    city = await IPLocatorProvider.Locate(clientInfo.Ip) ?? "None";
-                }
                 TraceService.Log(new Trace
                 {
                     Browser = clientInfo.Browser,
-                    City = city,
+                    City = clientInfo.City,
                     Ip = clientInfo.Ip,
                     LogTime = DateTime.Now,
                     OS = clientInfo.OS,

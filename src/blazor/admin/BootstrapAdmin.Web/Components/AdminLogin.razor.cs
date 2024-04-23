@@ -89,13 +89,6 @@ public partial class AdminLogin : IDisposable
     /// <summary>
     /// 
     /// </summary>
-    [Inject]
-    [NotNull]
-    private IIPLocatorProvider? IPLocatorProvider { get; set; }
-
-    /// <summary>
-    /// 
-    /// </summary>
     protected string? ClassString => CssBuilder.Default("login-wrap")
         .AddClass("is-mobile", UseMobileLogin)
         .Build();
@@ -140,7 +133,7 @@ public partial class AdminLogin : IDisposable
 
         if (firstRender)
         {
-            // register javascript
+            // register JavaScript
             Interop ??= DotNetObjectReference.Create(this);
             await JSRuntime.InvokeVoidAsync("$.login", LoginForm, Interop, "api/Login", nameof(Log));
         }
@@ -182,12 +175,7 @@ public partial class AdminLogin : IDisposable
     public async Task Log(string userName, bool result)
     {
         var clientInfo = await WebClientService.GetClientInfo();
-        var city = "XX XX";
-        if (!string.IsNullOrEmpty(clientInfo.Ip))
-        {
-            city = await IPLocatorProvider.Locate(clientInfo.Ip);
-        }
-        LoginService.Log(userName, clientInfo.Ip, clientInfo.OS, clientInfo.Browser, city, clientInfo.UserAgent, result);
+        LoginService.Log(userName, clientInfo.Ip, clientInfo.OS, clientInfo.Browser, clientInfo.City, clientInfo.UserAgent, result);
     }
 
     private void Dispose(bool disposing)

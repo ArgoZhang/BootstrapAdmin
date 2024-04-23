@@ -5,10 +5,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BootstrapBlazor" Version="7.12.0" />
-    <PackageReference Include="BootstrapBlazor.DataAccess.PetaPoco" Version="7.3.0" />
+    <PackageReference Include="BootstrapBlazor" Version="8.4.8-beta03" />
+    <PackageReference Include="BootstrapBlazor.DataAccess.PetaPoco" Version="8.1.0" />
     <PackageReference Include="Longbow.Security.Cryptography" Version="7.0.0" />
-    <PackageReference Include="Microsoft.Data.Sqlite" Version="7.0.13" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.4" />
     <PackageReference Include="PetaPoco.Extensions" Version="6.0.0" />
   </ItemGroup>
 
