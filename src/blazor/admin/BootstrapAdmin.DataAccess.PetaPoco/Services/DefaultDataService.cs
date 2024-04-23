@@ -13,17 +13,8 @@ namespace BootstrapAdmin.DataAccess.PetaPoco.Services;
 /// <summary>
 /// PetaPoco ORM 的 IDataService 接口实现
 /// </summary>
-class DefaultDataService<TModel> : DataServiceBase<TModel> where TModel : class, new()
+class DefaultDataService<TModel>(IDBManager dbManager, IUser userService) : DataServiceBase<TModel> where TModel : class, new()
 {
-    private IDBManager DBManager { get; }
-
-    private IUser UserService { get; }
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    public DefaultDataService(IDBManager db, IUser userService) => (DBManager, UserService) = (db, userService);
-
     /// <summary>
     /// 删除方法
     /// </summary>
@@ -33,7 +24,7 @@ class DefaultDataService<TModel> : DataServiceBase<TModel> where TModel : class,
     {
         // 通过模型获取主键列数据
         // 支持批量删除
-        using var db = DBManager.Create();
+        using var db = dbManager.Create();
         db.DeleteBatch(models);
         return Task.FromResult(true);
     }
@@ -48,11 +39,11 @@ class DefaultDataService<TModel> : DataServiceBase<TModel> where TModel : class,
     {
         if (model is User user)
         {
-            UserService.SaveUser(user.UserName, user.DisplayName, user.NewPassword);
+            userService.SaveUser(user.UserName, user.DisplayName, user.NewPassword);
         }
         else
         {
-            using var db = DBManager.Create();
+            using var db = dbManager.Create();
             if (changedType == ItemChangedType.Add)
             {
                 await db.InsertAsync(model);
@@ -80,7 +71,7 @@ class DefaultDataService<TModel> : DataServiceBase<TModel> where TModel : class,
             IsSearch = option.Searches.Any() || option.CustomerSearches.Any()
         };
 
-        using var db = DBManager.Create();
+        using var db = dbManager.Create();
         if (option.IsPage)
         {
             var items = await db.PageAsync<TModel>(option.PageIndex, option.PageItems, option.ToFilter(), option.SortName, option.SortOrder);

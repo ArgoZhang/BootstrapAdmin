@@ -2,28 +2,20 @@
 // Licensed under the LGPL License, Version 3.0. See License.txt in the project root for license information.
 // Website: https://admin.blazor.zone
 
-using BootstrapAdmin.DataAccess.PetaPoco;
 using BootstrapAdmin.DataAccess.PetaPoco.Services;
 using BootstrapAdmin.Web.Core;
 using BootstrapBlazor.Components;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using PetaPoco;
-using System.Collections.Specialized;
-using System.Data.Common;
-using System.Text;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
-/// 
+/// PetaPoco ORM 扩展数据服务类
 /// </summary>
 public static class ServiceCollectionExtensions
 {
     /// <summary>
-    /// 
+    /// 增加 PetaPoco 数据服务
     /// </summary>
     /// <param name="services"></param>
     /// <returns></returns>
@@ -31,7 +23,7 @@ public static class ServiceCollectionExtensions
     {
         services.TryAddSingleton<IDBManager, DBManagerService>();
 
-        // 增加数据服务
+        // 增加数据服务（未复用 Blazor 扩展 PetaPoco 服务有一些特殊处理）
         services.AddSingleton(typeof(IDataService<>), typeof(DefaultDataService<>));
 
         // 增加缓存服务

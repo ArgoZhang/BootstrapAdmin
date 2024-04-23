@@ -15,21 +15,8 @@ using System.Text;
 
 namespace BootstrapAdmin.DataAccess.PetaPoco.Services;
 
-internal class DBManagerService : IDBManager
+internal class DBManagerService(IConfiguration configuration, ILogger<DBManagerService> logger, IWebHostEnvironment host) : IDBManager
 {
-    private IConfiguration Configuration { get; set; }
-
-    private ILogger<DBManagerService> Logger { get; set; }
-
-    private IWebHostEnvironment WebHost { get; set; }
-
-    public DBManagerService(IConfiguration configuration, ILogger<DBManagerService> logger, IWebHostEnvironment host)
-    {
-        Configuration = configuration;
-        Logger = logger;
-        WebHost = host;
-    }
-
     /// <summary>
     /// 创建 IDatabase 实例方法
     /// </summary>
@@ -38,12 +25,12 @@ internal class DBManagerService : IDBManager
     /// <returns></returns>
     public IDatabase Create(string connectionName = "ba", bool keepAlive = false)
     {
-        var conn = Configuration.GetConnectionString(connectionName) ?? throw new ArgumentNullException(nameof(connectionName));
+        var conn = configuration.GetConnectionString(connectionName) ?? throw new ArgumentNullException(nameof(connectionName));
 
         var option = DatabaseConfiguration.Build();
         option.UsingDefaultMapper<BootstrapAdminConventionMapper>();
 
-        // connectionstring
+        // connectionString
         option.UsingConnectionString(conn);
 
         // provider
@@ -58,9 +45,9 @@ internal class DBManagerService : IDBManager
                 [nameof(db.LastCommand)] = db.LastCommand,
                 [nameof(db.LastArgs)] = string.Join(",", db.LastArgs)
             });
-            Logger.LogError(e.Exception, "{Message}", message);
+            logger.LogError(e.Exception, "{Message}", message);
         };
-        if (WebHost.IsDevelopment())
+        if (host.IsDevelopment())
         {
             db.CommandExecuted += (sender, args) =>
             {
@@ -69,8 +56,8 @@ internal class DBManagerService : IDBManager
                 {
                     parameters.AppendFormat("{0}: {1}  ", p.ParameterName, p.Value);
                 }
-                Logger.LogInformation("{CommandText}", args.Command.CommandText);
-                Logger.LogInformation("{CommandArgs}", parameters.ToString());
+                logger.LogInformation("{CommandText}", args.Command.CommandText);
+                logger.LogInformation("{CommandArgs}", parameters.ToString());
             };
         };
         return db;

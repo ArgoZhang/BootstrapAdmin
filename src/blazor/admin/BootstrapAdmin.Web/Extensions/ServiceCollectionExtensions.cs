@@ -48,6 +48,10 @@ namespace Microsoft.Extensions.DependencyInjection
 
             // 增加 BootstrapApp 上下文服务
             services.AddScoped<BootstrapAppContext>();
+            //            });
+
+            // 增加 PetaPoco 数据服务
+            services.AddPetaPocoDataAccessServices();
 
             // 增加 EFCore 数据服务
             //services.AddEFCoreDataAccessServices((provider, option) =>
@@ -68,10 +72,6 @@ namespace Microsoft.Extensions.DependencyInjection
             //                调试sql语句输出
             //                builder.UseMonitorCommand(cmd => System.Console.WriteLine(cmd.CommandText));
             //#endif
-            //            });
-
-            // 增加 PetaPoco 数据服务
-            services.AddPetaPocoDataAccessServices();
 
             return services;
         }
