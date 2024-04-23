@@ -26,7 +26,7 @@ public static class ServiceCollectionExtensions
     {
         // 增加缓存服务
         services.AddCacheManager();
-        services.TryAddSingleton<IFreeSql>(provider =>
+        services.TryAddSingleton(provider =>
         {
             var builder = new FreeSqlBuilder();
             freeSqlBuilder(provider, builder);
