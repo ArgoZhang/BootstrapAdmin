@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\BootstrapAdmin.Caching\BootstrapAdmin.Caching.csproj" />
+    <ProjectReference Include="..\BootstrapAdmin.Web.Core\BootstrapAdmin.Web.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BootstrapBlazor" Version="8.1.0" />
+    <PackageReference Include="BootstrapBlazor.DataAccess.SqlSugar" Version="8.00" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="SqlSugar"/>
+  </ItemGroup>
+
+</Project>
