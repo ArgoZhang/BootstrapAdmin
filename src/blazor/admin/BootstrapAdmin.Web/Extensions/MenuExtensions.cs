@@ -20,7 +20,7 @@ namespace BootstrapAdmin.Web.Extensions
         public static MenuItem Parse(this DataAccess.Models.Navigation menu) => new()
         {
             Text = menu.Name,
-            Url = menu.Url.Replace("~/", "/"),
+            Url = menu.Url?.Replace("~/", "/"),
             Icon = menu.Icon,
             Match = NavLinkMatch.All,
             Target = menu.Target,

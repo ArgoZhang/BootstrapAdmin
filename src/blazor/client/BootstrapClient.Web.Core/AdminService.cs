@@ -52,7 +52,7 @@ public class AdminService : IBootstrapAdminService
         if (Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out var uri))
         {
             ret = Navigations.GetMenus(userName)
-                .Any(m => m.Url.Contains(uri.AbsolutePath, StringComparison.OrdinalIgnoreCase));
+                .Any(m => m.Url?.Contains(uri.AbsolutePath, StringComparison.OrdinalIgnoreCase) ?? false);
         }
         return Task.FromResult(ret);
     }
