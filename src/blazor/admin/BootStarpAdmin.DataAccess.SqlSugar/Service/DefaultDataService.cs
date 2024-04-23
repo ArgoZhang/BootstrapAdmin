@@ -3,15 +3,10 @@
 // Website: https://admin.blazor.zone
 using BootstrapBlazor.Components;
 
-
 namespace BootstrapAdmin.DataAccess.SqlSugar.Service;
 
-class DefaultDataService<TModel> : DataServiceBase<TModel> where TModel : class, new()
+class DefaultDataService<TModel>(ISqlSugarClient db) : DataServiceBase<TModel> where TModel : class, new()
 {
-    private ISqlSugarClient db { get; }
-
-    public DefaultDataService(ISqlSugarClient db) => this.db = db;
-
     /// <summary>
     /// 删除方法
     /// </summary>
@@ -45,18 +40,11 @@ class DefaultDataService<TModel> : DataServiceBase<TModel> where TModel : class,
     public override Task<QueryData<TModel>> QueryAsync(QueryPageOptions option)
     {
         int count = 0;
-        //var eq = db.Queryable<TModel>();
         var filter = option.ToFilter();
-        //if (filter.HasFilters())
-        //{
-        //    var exp = filter.GetFilterLambda<TModel>();
-        //    eq.Where(exp);
-        //}
-
         var items = db.Queryable<TModel>()
-            .WhereIF(filter.HasFilters(), filter.GetFilterLambda<TModel>())
-            .OrderByIF(option.SortOrder != SortOrder.Unset, $" {option.SortName} {option.SortOrder}")
-            .ToPageList(option.PageIndex, option.PageItems, ref count);
+                      .WhereIF(filter.HasFilters(), filter.GetFilterLambda<TModel>())
+                      .OrderByIF(option.SortOrder != SortOrder.Unset, $"{option.SortName} {option.SortOrder}")
+                      .ToPageList(option.PageIndex, option.PageItems, ref count);
         var data = new QueryData<TModel>
         {
             IsSorted = option.SortOrder != SortOrder.Unset,
@@ -66,7 +54,6 @@ class DefaultDataService<TModel> : DataServiceBase<TModel> where TModel : class,
             Items = items,
             TotalCount = Convert.ToInt32(count)
         };
-
         return Task.FromResult(data);
     }
 }

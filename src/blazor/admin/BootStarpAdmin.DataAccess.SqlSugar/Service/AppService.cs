@@ -7,15 +7,9 @@ using BootstrapAdmin.Web.Core;
 
 namespace BootstrapAdmin.DataAccess.SqlSugar.Service;
 
-class AppService : IApp
+class AppService(ISqlSugarClient db) : IApp
 {
-    private ISqlSugarClient db { get; }
-
-    public AppService(ISqlSugarClient db) => this.db = db;
-
-    public List<string> GetAppsByRoleId(string? roleId) =>
-        // db.Ado.SqlQuery<string>("select AppID from RoleApp where RoleID = @roleId", new { roleId });
-        db.Queryable<RoleApp>().Where(t => t.RoleID == roleId).Select(t => t.AppID).ToList();
+    public List<string> GetAppsByRoleId(string? roleId) => db.Queryable<RoleApp>().Where(t => t.RoleID == roleId).Select(t => t.AppID!).ToList();
 
     public bool SaveAppsByRoleId(string? roleId, IEnumerable<string> appIds)
     {
@@ -23,7 +17,6 @@ class AppService : IApp
         try
         {
             db.Ado.BeginTran();
-            //db.Ado.ExecuteCommand("delete from RoleApp where RoleID = @roleId", new { roleId });
             db.Deleteable<RoleApp>().Where(t => t.RoleID == roleId).ExecuteCommand();
             db.Insertable<RoleApp>(appIds.Select(g => new RoleApp { AppID = g, RoleID = roleId })).ExecuteCommand();
             ret = true;

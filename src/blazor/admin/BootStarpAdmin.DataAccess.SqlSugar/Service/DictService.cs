@@ -11,19 +11,11 @@ using System.Data;
 
 namespace BootstrapAdmin.DataAccess.SqlSugar.Service;
 
-class DictService : IDict
+class DictService(ISqlSugarClient db, IConfiguration configuration) : IDict
 {
     private const string DictServiceCacheKey = "DictService-GetAll";
 
-    private ISqlSugarClient db { get; }
-
-    private string? AppId { get; set; }
-
-    public DictService(ISqlSugarClient db, IConfiguration configuration)
-    {
-        this.db = db;
-        AppId = configuration.GetValue("AppId", "BA");
-    }
+    private string? AppId { get; set; } = configuration.GetValue("AppId", "BA");
 
     public bool AuthenticateDemo(string code)
     {

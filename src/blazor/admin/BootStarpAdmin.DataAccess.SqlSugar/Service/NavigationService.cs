@@ -8,34 +8,25 @@ using BootstrapAdmin.Web.Core;
 
 namespace BootstrapAdmin.DataAccess.SqlSugar.Service;
 
-class NavigationService : INavigation
+class NavigationService(ISqlSugarClient db) : INavigation
 {
-    private ISqlSugarClient db { get; }
-
-    public NavigationService(ISqlSugarClient db) => this.db = db;
-
     public List<Navigation> GetAllMenus(string userName)
     {
         return db.Ado.SqlQuery<Navigation>($"select n.ID, n.ParentId, n.Name, n.[order], n.Icon, n.Url, n.Category, n.Target, n.IsResource, n.Application, ln.Name as ParentName from Navigations n inner join Dicts d on n.Category = d.Code and d.Category = @Category and d.Define = @Define left join Navigations ln on n.ParentId = ln.ID inner join (select nr.NavigationID from Users u inner join UserRole ur on ur.UserID = u.ID inner join NavigationRole nr on nr.RoleID = ur.RoleID where u.UserName = @UserName union select nr.NavigationID from Users u inner join UserGroup ug on u.ID = ug.UserID inner join RoleGroup rg on rg.GroupID = ug.GroupID inner join NavigationRole nr on nr.RoleID = rg.RoleID where u.UserName = @UserName union select n.ID from Navigations n where EXISTS (select UserName from Users u inner join UserRole ur on u.ID = ur.UserID inner join Roles r on ur.RoleID = r.ID where u.UserName = @UserName and r.RoleName = @RoleName)) nav on n.ID = nav.NavigationID ORDER BY n.Application, n.[order]", new { UserName = userName, Category = "菜单", RoleName = "Administrators", Define = EnumDictDefine.System });
     }
 
-    public List<string> GetMenusByRoleId(string? roleId) =>
-        //db.Ado.SqlQuery<string>("select NavigationID from NavigationRole where RoleID = @roleId", new { roleId });
-        db.Queryable<NavigationRole>().Where(t => t.RoleID == roleId).Select(t => t.NavigationID).ToList();
+    public List<string> GetMenusByRoleId(string? roleId) => db.Queryable<NavigationRole>().Where(t => t.RoleID == roleId).Select(t => t.NavigationID!).ToList();
 
     public bool SaveMenusByRoleId(string? roleId, List<string> menuIds)
     {
         var ret = false;
         try
         {
-
             db.Ado.BeginTran();
-            //db.Ado.ExecuteCommand("delete from NavigationRole where RoleID = @roleId", new { roleId });
             db.Deleteable<NavigationRole>().Where(t => t.RoleID == roleId).ExecuteCommand();
             db.Insertable<NavigationRole>(menuIds.Select(g => new NavigationRole { NavigationID = g, RoleID = roleId })).ExecuteCommand();
-            ret = true;
             db.Ado.CommitTran();
-
+            ret = true;
         }
         catch (Exception)
         {

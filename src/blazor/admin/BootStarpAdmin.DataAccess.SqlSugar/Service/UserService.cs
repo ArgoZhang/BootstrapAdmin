@@ -9,12 +9,8 @@ using Longbow.Security.Cryptography;
 
 namespace BootstrapAdmin.DataAccess.SqlSugar.Service;
 
-class UserService : IUser
+class UserService(ISqlSugarClient db) : IUser
 {
-    private ISqlSugarClient db { get; }
-
-    public UserService(ISqlSugarClient db) => this.db = db;
-
     public bool Authenticate(string userName, string password)
     {
         var user = db.Queryable<User>()
@@ -49,20 +45,12 @@ class UserService : IUser
     /// </summary>
     /// <param name="userName"></param>
     /// <returns></returns>
-    public string? GetAppIdByUserName(string userName) =>
-    //db.Ado.SqlQuery<User>("select * from users where username=@userName", new { userName }).Select(s => s.App).Single();
-    db.Queryable<User>().Where(s => s.UserName == userName).Select(s => s.App).Single();
+    public string? GetAppIdByUserName(string userName) => db.Queryable<User>().Where(s => s.UserName == userName).Select(s => s.App).Single();
 
-    public string? GetDisplayName(string? userName)
-    {
-        return db.Queryable<User>().Where(s => s.UserName == userName).Select(s => s.DisplayName).Single();
-    }
+    public string? GetDisplayName(string? userName) => db.Queryable<User>().Where(s => s.UserName == userName).Select(s => s.DisplayName).Single();
 
     public List<string> GetRoles(string userName)
     {
-        //var roles = db.Ado.SqlQuery<string>($"select r.RoleName from Roles r inner join UserRole ur on r.ID=ur.RoleID inner join Users u on ur.UserID = u.ID and u.UserName = @userName union select r.RoleName from Roles r inner join RoleGroup rg on r.ID = rg.RoleID inner join Groups g on rg.GroupID = g.ID inner join UserGroup ug on ug.GroupID = g.ID inner join Users u on ug.UserID = u.ID and u.UserName = @userName", new { userName });
-
-        //转为 linq写法
         var roles = db.Union(
             db.Queryable<Role>()
             .InnerJoin<UserRole>((r, ur) => r.Id == ur.RoleID)
@@ -78,37 +66,20 @@ class UserService : IUser
         return roles;
     }
 
-    public User? GetUserByUserName(string? userName) =>
-        string.IsNullOrEmpty(userName) ? null :
-        // db.Ado.SqlQuery<User>("select * from users where username=@userName", new { userName }).Single();
-        //转linq写法
-        db.Queryable<User>()
-        .Where(t => t.UserName == userName).Single();
+    public User? GetUserByUserName(string? userName) => string.IsNullOrEmpty(userName)
+        ? null
+        : db.Queryable<User>().Where(t => t.UserName == userName).Single();
 
 
-    public List<string> GetUsersByGroupId(string? groupId)
-    {
-        //return db.Ado.SqlQuery<string>("select UserID from UserGroup where GroupID = @groupId", new { groupId });
-        //转linq写法
-        return db.Queryable<UserGroup>()
-            .Where(t => t.GroupID == groupId)
-            .Select(t => t.UserID)
-            .ToList()
-            .Select(t => t ?? "") //这个转换本来没有意义，但是 UserID Model自动中存储的是可空  做个转换  避免vs提示错误          
-            .ToList();
-    }
+    public List<string> GetUsersByGroupId(string? groupId) => db.Queryable<UserGroup>()
+        .Where(t => t.GroupID == groupId)
+        .Select(t => t.UserID!)
+        .ToList();
 
-    public List<string> GetUsersByRoleId(string? roleId)
-    {
-        //return db.Ado.SqlQuery<string>("select UserID from UserRole where RoleID = @roleId", new { roleId });
-
-        return db.Queryable<UserRole>()
-            .Where(t => t.RoleID == roleId)
-            .Select(t => t.UserID)
-            .ToList()
-            .Select(t => t ?? "")//这个转换本来没有意义，但是 UserID Model自动中存储的是可空  做个转换  避免vs提示错误 
-            .ToList();
-    }
+    public List<string> GetUsersByRoleId(string? roleId) => db.Queryable<UserRole>()
+        .Where(t => t.RoleID == roleId)
+        .Select(t => t.UserID!)
+        .ToList();
 
     public bool SaveUser(string userName, string displayName, string password)
     {
@@ -133,11 +104,8 @@ class UserService : IUser
                 Password = pwd
             };
             db.Insertable(user).ExecuteCommand();
+
             // 授权 Default 角色
-            //db.Ado.ExecuteCommand("insert into UserRole (UserID, RoleID) select ID, (select ID from Roles where RoleName = 'Default') RoleId from Users where UserName = @userName", new { userName });
-
-            //改linq写法
-
             var urs = db.Queryable<User>()
                 .Where(t => t.UserName == userName)
                 .Select(t => new UserRole()
@@ -168,11 +136,9 @@ class UserService : IUser
         try
         {
             db.Ado.BeginTran();
-            //db.Ado.ExecuteCommand("delete from UserGroup where GroupId = @groupId", new { groupId });
             db.Deleteable<UserGroup>().Where(x => x.GroupID == groupId).ExecuteCommand();
             db.Insertable<UserGroup>(userIds.Select(g => new UserGroup { UserID = g, GroupID = groupId })).ExecuteCommand();
             db.Ado.CommitTran();
-
             ret = true;
         }
         catch (Exception)
@@ -189,11 +155,10 @@ class UserService : IUser
         try
         {
             db.Ado.BeginTran();
-            //db.Ado.ExecuteCommand("delete from UserRole where RoleID = @roleId", new { roleId });
             db.Deleteable<UserRole>().Where(x => x.RoleID == roleId).ExecuteCommand();
             db.Insertable<UserRole>(userIds.Select(g => new UserRole { UserID = g, RoleID = roleId })).ExecuteCommand();
-            ret = true;
             db.Ado.CommitTran();
+            ret = true;
         }
         catch (Exception)
         {
@@ -236,7 +201,6 @@ class UserService : IUser
                 };
                 db.Insertable(user).ExecuteCommand();
                 // Authorization
-                //var roleIds = db.Ado.SqlQuery<string>("select ID from Roles where RoleName in (@roles)", new { roles });
                 var roleIds = db.Queryable<Role>().Where(t => roles.Contains(t.RoleName)).Select(t => t.Id).ToList();
                 db.Insertable<UserRole>(roleIds.Select(g => new UserRole { RoleID = g, UserID = user.Id })).ExecuteCommand();
                 db.Ado.CommitTran();

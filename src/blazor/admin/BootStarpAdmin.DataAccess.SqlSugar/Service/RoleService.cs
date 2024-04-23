@@ -8,29 +8,18 @@ using BootstrapAdmin.Web.Core;
 
 namespace BootstrapAdmin.DataAccess.SqlSugar.Service;
 
-class RoleService : IRole
+class RoleService(ISqlSugarClient db) : IRole
 {
-    private ISqlSugarClient db { get; }
-
-    public RoleService(ISqlSugarClient db) => this.db = db;
-
     public List<Role> GetAll()
     {
         return db.Queryable<Role>().ToList();
     }
 
-    public List<string> GetRolesByGroupId(string? groupId) =>
-        //db.Ado.SqlQuery<string>("select RoleID from RoleGroup where GroupID = @groupId", new { groupId });
-        db.Queryable<RoleGroup>().Where(t => t.GroupID == groupId).Select(t => t.RoleID).ToList();
+    public List<string> GetRolesByGroupId(string? groupId) => db.Queryable<RoleGroup>().Where(t => t.GroupID == groupId).Select(t => t.RoleID!).ToList();
 
-    public List<string> GetRolesByMenuId(string? menuId) =>
-        //db.Ado.SqlQuery<string>("select RoleID from NavigationRole where NavigationID = @menuId", new { menuId });
-        db.Queryable<NavigationRole>().Where(t => t.NavigationID == menuId).Select(t => t.RoleID).ToList();
+    public List<string> GetRolesByMenuId(string? menuId) => db.Queryable<NavigationRole>().Where(t => t.NavigationID == menuId).Select(t => t.RoleID!).ToList();
 
-    public List<string> GetRolesByUserId(string? userId) =>
-        //db.Ado.SqlQuery<string>("select RoleID from UserRole where UserID = @userId", new { userId });
-        db.Queryable<UserRole>().Where(t => t.UserID == userId).Select(t => t.RoleID).ToList();
-
+    public List<string> GetRolesByUserId(string? userId) => db.Queryable<UserRole>().Where(t => t.UserID == userId).Select(t => t.RoleID!).ToList();
 
     public bool SaveRolesByGroupId(string? groupId, IEnumerable<string> roleIds)
     {
@@ -38,11 +27,10 @@ class RoleService : IRole
         try
         {
             db.Ado.BeginTran();
-            //db.Ado.ExecuteCommand("delete from RoleGroup where GroupID = @groupId", new { groupId });
             db.Deleteable<RoleGroup>().Where(t => t.GroupID == groupId).ExecuteCommand();
             db.Insertable<RoleGroup>(roleIds.Select(g => new RoleGroup { RoleID = g, GroupID = groupId })).ExecuteCommand();
-            ret = true;
             db.Ado.CommitTran();
+            ret = true;
         }
         catch (Exception)
         {
@@ -58,11 +46,10 @@ class RoleService : IRole
         try
         {
             db.Ado.BeginTran();
-            //db.Ado.ExecuteCommand("delete from NavigationRole where NavigationID = @menuId", new { menuId });
             db.Deleteable<NavigationRole>().Where(t => t.NavigationID == menuId).ExecuteCommand();
             db.Insertable<NavigationRole>(roleIds.Select(g => new NavigationRole { RoleID = g, NavigationID = menuId })).ExecuteCommand();
-            ret = true;
             db.Ado.CommitTran();
+            ret = true;
         }
         catch (Exception)
         {
@@ -78,7 +65,6 @@ class RoleService : IRole
         try
         {
             db.Ado.BeginTran();
-            //db.Ado.ExecuteCommand("delete from UserRole where UserID = @userId", new { userId });
             db.Deleteable<UserRole>().Where(t => t.UserID == userId).ExecuteCommand();
             db.Insertable<UserRole>(roleIds.Select(g => new UserRole { RoleID = g, UserID = userId })).ExecuteCommand();
             db.Ado.CommitTran();

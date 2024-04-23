@@ -7,12 +7,8 @@ using BootstrapAdmin.Web.Core;
 
 namespace BootstrapAdmin.DataAccess.SqlSugar.Service;
 
-class LoginService : ILogin
+class LoginService(ISqlSugarClient db) : ILogin
 {
-    private ISqlSugarClient db { get; }
-
-    public LoginService(ISqlSugarClient db) => this.db = db;
-
     public bool Log(string userName, string? IP, string? OS, string? browser, string? address, string? userAgent, bool result)
     {
         var loginUser = new LoginLog()
