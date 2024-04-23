@@ -10,15 +10,8 @@ namespace BootstrapAdmin.DataAccess.EFCore.Services;
 /// <summary>
 /// EFCore ORM 的 IDataService 接口实现
 /// </summary>
-class DefaultDataService<TModel> : DataServiceBase<TModel> where TModel : class, new()
+class DefaultDataService<TModel>(IDbContextFactory<BootstrapAdminContext> factory) : DataServiceBase<TModel> where TModel : class, new()
 {
-    private IDbContextFactory<BootstrapAdminContext> DbFactory { get; }
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    public DefaultDataService(IDbContextFactory<BootstrapAdminContext> factory) => DbFactory = factory;
-
     /// <summary>
     /// 删除方法
     /// </summary>
@@ -28,7 +21,7 @@ class DefaultDataService<TModel> : DataServiceBase<TModel> where TModel : class,
     {
         // 通过模型获取主键列数据
         // 支持批量删除
-        var context = DbFactory.CreateDbContext();
+        using var context = factory.CreateDbContext();
         context.RemoveRange(models);
         return await context.SaveChangesAsync() > 0;
     }
@@ -41,7 +34,7 @@ class DefaultDataService<TModel> : DataServiceBase<TModel> where TModel : class,
     /// <returns></returns>
     public override async Task<bool> SaveAsync(TModel model, ItemChangedType changedType)
     {
-        var context = DbFactory.CreateDbContext();
+        using var context = factory.CreateDbContext();
         if (changedType == ItemChangedType.Add)
         {
             context.Entry(model).State = EntityState.Added;
@@ -60,7 +53,7 @@ class DefaultDataService<TModel> : DataServiceBase<TModel> where TModel : class,
     /// <returns></returns>
     public override Task<QueryData<TModel>> QueryAsync(QueryPageOptions option)
     {
-        var context = DbFactory.CreateDbContext();
+        using var context = factory.CreateDbContext();
         var ret = new QueryData<TModel>()
         {
             IsSorted = true,
