@@ -193,3 +193,10 @@
             align-items: center;
             justify-content: center;
         }
+
+@supports not selector(::-webkit-scrollbar) {
+    .scroll {
+        scrollbar-color: rgba(0,0,0,0.3) rgba(0,0,0,0);
+        scrollbar-width: thin;
+    }
+}
