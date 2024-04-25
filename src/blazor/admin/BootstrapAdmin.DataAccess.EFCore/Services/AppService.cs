@@ -8,30 +8,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BootstrapAdmin.DataAccess.EFCore.Services;
 
-/// <summary>
-/// 
-/// </summary>
-public class AppService : IApp
+class AppService(IDbContextFactory<BootstrapAdminContext> dbFactory) : IApp
 {
-    private IDbContextFactory<BootstrapAdminContext> DbFactory { get; }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="dbFactory"></param>
-    public AppService(IDbContextFactory<BootstrapAdminContext> dbFactory) => DbFactory = dbFactory;
-
     /// <summary>
     /// 
     /// </summary>
     /// <param name="roleId"></param>
-    /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
     public List<string> GetAppsByRoleId(string? roleId)
     {
-        using var dbcontext = DbFactory.CreateDbContext();
-
-        return dbcontext.RoleApp.Where(s => s.RoleID == roleId).Select(s => s.AppID!).AsNoTracking().ToList();
+        using var context = dbFactory.CreateDbContext();
+        return context.RoleApp.Where(s => s.RoleID == roleId).Select(s => s.AppID!).AsNoTracking().ToList();
     }
 
     /// <summary>
@@ -46,10 +32,10 @@ public class AppService : IApp
         var ret = false;
         try
         {
-            using var dbcontext = DbFactory.CreateDbContext();
-            dbcontext.Database.ExecuteSqlRaw("delete from RoleApp where RoleID = {0}", roleId!);
-            dbcontext.AddRange(appIds.Select(g => new RoleApp { AppID = g, RoleID = roleId }));
-            ret = dbcontext.SaveChanges() > 0;
+            using var context = dbFactory.CreateDbContext();
+            context.Database.ExecuteSqlRaw("delete from RoleApp where RoleID = {0}", roleId!);
+            context.AddRange(appIds.Select(g => new RoleApp { AppID = g, RoleID = roleId }));
+            ret = context.SaveChanges() > 0;
         }
         catch (Exception)
         {

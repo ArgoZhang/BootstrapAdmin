@@ -11,15 +11,8 @@ namespace BootstrapAdmin.DataAccess.EFCore.Services;
 /// <summary>
 /// 
 /// </summary>
-public class LoginService : ILogin
+class LoginService(IDbContextFactory<BootstrapAdminContext> dbFactory) : ILogin
 {
-    private IDbContextFactory<BootstrapAdminContext> DbFactory { get; }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public LoginService(IDbContextFactory<BootstrapAdminContext> dbFactory) => DbFactory = dbFactory;
-
     /// <summary>
     /// 
     /// </summary>
@@ -34,7 +27,7 @@ public class LoginService : ILogin
     /// <exception cref="NotImplementedException"></exception>
     public bool Log(string userName, string? IP, string? OS, string? browser, string? address, string? userAgent, bool result)
     {
-        using var dbcontext = DbFactory.CreateDbContext();
+        using var context = dbFactory.CreateDbContext();
 
         var loginUser = new LoginLog()
         {
@@ -47,7 +40,7 @@ public class LoginService : ILogin
             UserAgent = userAgent,
             Result = result ? "登录成功" : "登录失败"
         };
-        dbcontext.Add(loginUser);
-        return dbcontext.SaveChanges() > 0;
+        context.Add(loginUser);
+        return context.SaveChanges() > 0;
     }
 }

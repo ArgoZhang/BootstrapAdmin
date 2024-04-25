@@ -10,11 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BootstrapAdmin.DataAccess.EFCore.Services;
 
-/// <summary>
-/// 
-/// </summary>
-/// <param name="factory"></param>
-public class UserService(IDbContextFactory<BootstrapAdminContext> factory) : IUser
+class UserService(IDbContextFactory<BootstrapAdminContext> factory) : IUser
 {
     /// <summary>
     /// 
@@ -107,10 +103,10 @@ public class UserService(IDbContextFactory<BootstrapAdminContext> factory) : IUs
     /// <returns></returns>
     public bool SaveUsersByGroupId(string? groupId, IEnumerable<string> userIds)
     {
-        using var dbcontext = factory.CreateDbContext();
-        dbcontext.Database.ExecuteSqlRaw("delete from UserGroup where GroupId = {0}", groupId!);
-        dbcontext.AddRange(userIds.Select(g => new UserGroup { UserId = g, GroupId = groupId }));
-        dbcontext.SaveChanges();
+        using var context = factory.CreateDbContext();
+        context.Database.ExecuteSqlRaw("delete from UserGroup where GroupId = {0}", groupId!);
+        context.AddRange(userIds.Select(g => new UserGroup { UserId = g, GroupId = groupId }));
+        context.SaveChanges();
         return true;
     }
 
@@ -122,10 +118,10 @@ public class UserService(IDbContextFactory<BootstrapAdminContext> factory) : IUs
     /// <returns></returns>
     public bool SaveUsersByRoleId(string? roleId, IEnumerable<string> userIds)
     {
-        using var dbcontext = factory.CreateDbContext();
-        dbcontext.Database.ExecuteSqlRaw("delete from UserRole where RoleID = {0}", roleId!);
-        dbcontext.AddRange(userIds.Select(g => new UserRole { UserId = g, RoleId = roleId }));
-        dbcontext.SaveChanges();
+        using var context = factory.CreateDbContext();
+        context.Database.ExecuteSqlRaw("delete from UserRole where RoleID = {0}", roleId!);
+        context.AddRange(userIds.Select(g => new UserRole { UserId = g, RoleId = roleId }));
+        context.SaveChanges();
         return true;
     }
 
@@ -140,7 +136,7 @@ public class UserService(IDbContextFactory<BootstrapAdminContext> factory) : IUs
     public bool TryCreateUserByPhone(string phone, string code, string appId, ICollection<string> roles)
     {
         var ret = false;
-        using var dbcontext = factory.CreateDbContext();
+        using var context = factory.CreateDbContext();
         var salt = LgbCryptography.GenerateSalt();
         var pwd = LgbCryptography.ComputeHash(code, salt);
         var user = GetAll().FirstOrDefault(user => user.UserName == phone);
@@ -156,12 +152,12 @@ public class UserService(IDbContextFactory<BootstrapAdminContext> factory) : IUs
                 Description = "手机用户",
                 App = appId
             };
-            dbcontext.Add(user);
+            context.Add(user);
 
             // Authorization
-            var roleIds = dbcontext.Roles.Where(s => roles.Contains(s.RoleName)).Select(s => s.Id).ToList();
-            dbcontext.AddRange(roleIds.Select(g => new { RoleID = g, UserID = user.Id }));
-            ret = dbcontext.SaveChanges() > 0;
+            var roleIds = context.Roles.Where(s => roles.Contains(s.RoleName)).Select(s => s.Id).ToList();
+            context.AddRange(roleIds.Select(g => new { RoleID = g, UserID = user.Id }));
+            ret = context.SaveChanges() > 0;
         }
         return ret;
     }
@@ -177,8 +173,8 @@ public class UserService(IDbContextFactory<BootstrapAdminContext> factory) : IUs
         User? user = null;
         if (userName != null)
         {
-            using var dbcontext = factory.CreateDbContext();
-            user = dbcontext.Set<User>().FirstOrDefault(s => s.UserName == userName);
+            using var context = factory.CreateDbContext();
+            user = context.Set<User>().FirstOrDefault(s => s.UserName == userName);
         }
         return user;
     }
@@ -192,8 +188,8 @@ public class UserService(IDbContextFactory<BootstrapAdminContext> factory) : IUs
 
     public string? GetAppIdByUserName(string userName)
     {
-        using var dbcontext = factory.CreateDbContext();
-        return dbcontext.Set<User>().FirstOrDefault(s => s.UserName == userName)?.App;
+        using var context = factory.CreateDbContext();
+        return context.Set<User>().FirstOrDefault(s => s.UserName == userName)?.App;
     }
 
     /// <summary>
@@ -209,11 +205,11 @@ public class UserService(IDbContextFactory<BootstrapAdminContext> factory) : IUs
         var ret = false;
         if (Authenticate(userName, password))
         {
-            using var dbcontext = factory.CreateDbContext();
+            using var context = factory.CreateDbContext();
             var passSalt = LgbCryptography.GenerateSalt();
             password = LgbCryptography.ComputeHash(newPassword, passSalt);
             string sql = "update Users set Password = {0}, PassSalt = {1} where UserName = {2}";
-            ret = dbcontext.Database.ExecuteSqlRaw(sql, new[] { password, passSalt, userName }) > 0;
+            ret = context.Database.ExecuteSqlRaw(sql, new[] { password, passSalt, userName }) > 0;
         }
         return ret;
     }
@@ -227,8 +223,8 @@ public class UserService(IDbContextFactory<BootstrapAdminContext> factory) : IUs
     /// <exception cref="NotImplementedException"></exception>
     public bool SaveDisplayName(string userName, string displayName)
     {
-        using var dbcontext = factory.CreateDbContext();
-        return dbcontext.Database.ExecuteSqlRaw("update Users set DisplayName = {1} where UserName = {0}", userName, displayName!) > 0;
+        using var context = factory.CreateDbContext();
+        return context.Database.ExecuteSqlRaw("update Users set DisplayName = {1} where UserName = {0}", userName, displayName!) > 0;
     }
 
     /// <summary>
@@ -240,8 +236,8 @@ public class UserService(IDbContextFactory<BootstrapAdminContext> factory) : IUs
     /// <exception cref="NotImplementedException"></exception>
     public bool SaveTheme(string userName, string theme)
     {
-        using var dbcontext = factory.CreateDbContext();
-        return dbcontext.Database.ExecuteSqlRaw("update Users set Css = {1} where UserName = {0}", userName, theme) > 0;
+        using var context = factory.CreateDbContext();
+        return context.Database.ExecuteSqlRaw("update Users set Css = {1} where UserName = {0}", userName, theme) > 0;
     }
 
     /// <summary>
@@ -253,8 +249,8 @@ public class UserService(IDbContextFactory<BootstrapAdminContext> factory) : IUs
     /// <exception cref="NotImplementedException"></exception>
     public bool SaveLogo(string userName, string? logo)
     {
-        using var dbcontext = factory.CreateDbContext();
-        return dbcontext.Database.ExecuteSqlRaw("update Users set Icon = {1} where UserName = {0}", userName, logo ?? "") > 0;
+        using var context = factory.CreateDbContext();
+        return context.Database.ExecuteSqlRaw("update Users set Icon = {1} where UserName = {0}", userName, logo ?? "") > 0;
     }
 
     /// <summary>
@@ -266,8 +262,8 @@ public class UserService(IDbContextFactory<BootstrapAdminContext> factory) : IUs
     /// <exception cref="NotImplementedException"></exception>
     public bool SaveApp(string userName, string app)
     {
-        using var dbcontext = factory.CreateDbContext();
-        return dbcontext.Database.ExecuteSqlRaw("update Users Set App = {1} Where UserName = {0}", userName, app) > 0;
+        using var context = factory.CreateDbContext();
+        return context.Database.ExecuteSqlRaw("update Users Set App = {1} Where UserName = {0}", userName, app) > 0;
     }
 
     /// <summary>
@@ -280,7 +276,7 @@ public class UserService(IDbContextFactory<BootstrapAdminContext> factory) : IUs
     /// <exception cref="NotImplementedException"></exception>
     public bool SaveUser(string userName, string displayName, string password)
     {
-        using var dbcontext = factory.CreateDbContext();
+        using var context = factory.CreateDbContext();
         var salt = LgbCryptography.GenerateSalt();
         var pwd = LgbCryptography.ComputeHash(password, salt);
         var user = GetAll().FirstOrDefault(s => s.UserName == userName);
@@ -298,18 +294,18 @@ public class UserService(IDbContextFactory<BootstrapAdminContext> factory) : IUs
                 PassSalt = salt,
                 Password = pwd
             };
-            dbcontext.Add(user);
-            ret = dbcontext.SaveChanges() > 0;
+            context.Add(user);
+            ret = context.SaveChanges() > 0;
             // 授权 Default 角色
-            dbcontext.Database.ExecuteSqlRaw("insert into UserRole (UserID, RoleID) select ID, (select ID from Roles where RoleName = 'Default') RoleId from Users where UserName = {0}", userName);
-            ret = dbcontext.SaveChanges() > 0;
+            context.Database.ExecuteSqlRaw("insert into UserRole (UserID, RoleID) select ID, (select ID from Roles where RoleName = 'Default') RoleId from Users where UserName = {0}", userName);
+            ret = context.SaveChanges() > 0;
         }
         else
         {
             user.DisplayName = displayName;
             user.PassSalt = salt;
             user.Password = pwd;
-            dbcontext.Update(user);
+            context.Update(user);
             ret = true;
         }
         return ret;

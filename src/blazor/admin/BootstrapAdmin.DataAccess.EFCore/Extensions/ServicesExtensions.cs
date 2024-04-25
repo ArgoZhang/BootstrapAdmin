@@ -33,7 +33,7 @@ public static class ServicesExtensions
 #if DEBUG
             options.LogTo(System.Console.WriteLine);
 #endif
-        });
+        }, ServiceLifetime.Singleton);
 
         // 增加数据服务
         services.AddSingleton(typeof(IDataService<>), typeof(DefaultDataService<>));
@@ -45,6 +45,8 @@ public static class ServicesExtensions
         services.AddSingleton<IGroup, GroupService>();
         services.AddSingleton<ILogin, LoginService>();
         services.AddSingleton<ITrace, TraceService>();
+        services.AddSingleton<IApp, AppService>();
+        services.AddSingleton<IException, ExceptionService>();
         return services;
     }
 }

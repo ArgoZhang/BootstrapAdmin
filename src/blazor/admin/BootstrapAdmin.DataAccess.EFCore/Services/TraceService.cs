@@ -8,34 +8,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BootstrapAdmin.DataAccess.EFCore.Services;
 
-/// <summary>
-/// 
-/// </summary>
-public class TraceService : ITrace
+class TraceService(IDbContextFactory<BootstrapAdminContext> dbFactory) : ITrace
 {
-    private IDbContextFactory<BootstrapAdminContext> DbFactory { get; }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="dbFactory"></param>
-    public TraceService(IDbContextFactory<BootstrapAdminContext> dbFactory) => DbFactory = dbFactory;
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="searchText"></param>
-    /// <param name="filter"></param>
-    /// <param name="pageIndex"></param>
-    /// <param name="pageItems"></param>
-    /// <param name="sortList"></param>
-    /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
     public (IEnumerable<Trace> Items, int ItemsCount) GetAll(string? searchText, TraceFilter filter, int pageIndex, int pageItems, List<string> sortList)
     {
-        using var dbcontext = DbFactory.CreateDbContext();
+        using var context = dbFactory.CreateDbContext();
 
-        var items = dbcontext.Set<Trace>();
+        var items = context.Set<Trace>();
 
         if (!string.IsNullOrEmpty(searchText))
         {
@@ -79,9 +58,9 @@ public class TraceService : ITrace
     /// <exception cref="NotImplementedException"></exception>
     public void Log(Trace trace)
     {
-        using var dbcontext = DbFactory.CreateDbContext();
+        using var context = dbFactory.CreateDbContext();
 
-        dbcontext.Add(trace);
-        dbcontext.SaveChanges();
+        context.Add(trace);
+        context.SaveChanges();
     }
 }

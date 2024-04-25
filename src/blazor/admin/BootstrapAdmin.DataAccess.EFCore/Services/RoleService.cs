@@ -13,7 +13,11 @@ namespace BootstrapAdmin.DataAccess.EFCore.Services;
 /// <summary>
 /// 
 /// </summary>
-public class RoleService : IRole
+/// <remarks>
+/// 
+/// </remarks>
+/// <param name="dbFactory"></param>
+public class RoleService(IDbContextFactory<BootstrapAdminContext> dbFactory) : IRole
 {
     private const string RoleServiceGetAllCacheKey = "RoleService-GetAll";
 
@@ -25,14 +29,6 @@ public class RoleService : IRole
 
     private CancellationTokenSource? GetRolesByGroupIdCancellationTokenSource { get; set; }
 
-    private IDbContextFactory<BootstrapAdminContext> DbFactory { get; }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="dbFactory"></param>
-    public RoleService(IDbContextFactory<BootstrapAdminContext> dbFactory) => DbFactory = dbFactory;
-
     /// <summary>
     /// 
     /// </summary>
@@ -41,9 +37,8 @@ public class RoleService : IRole
     {
         return CacheManager.GetOrAdd(RoleServiceGetAllCacheKey, entry =>
         {
-            using var dbcontext = DbFactory.CreateDbContext();
-
-            return dbcontext.Roles.ToList();
+            using var context = dbFactory.CreateDbContext();
+            return context.Roles.ToList();
         });
 
     }
@@ -58,9 +53,8 @@ public class RoleService : IRole
     {
         return CacheManager.GetOrAdd($"{RoleServiceGetRolesByGroupIdCacheKey}-{groupId}", entry =>
          {
-             using var dbcontext = DbFactory.CreateDbContext();
-
-             return dbcontext.RoleGroup.Where(s => s.GroupId == groupId).Select(s => s.RoleId!).AsNoTracking().ToList();
+             using var context = dbFactory.CreateDbContext();
+             return context.RoleGroup.Where(s => s.GroupId == groupId).Select(s => s.RoleId!).AsNoTracking().ToList();
          });
     }
 
@@ -71,9 +65,8 @@ public class RoleService : IRole
     /// <returns></returns>
     public List<string> GetRolesByMenuId(string? menuId)
     {
-        using var dbcontext = DbFactory.CreateDbContext();
-
-        return dbcontext.NavigationRole.Where(s => s.NavigationId == menuId).Select(s => s.RoleId!).AsNoTracking().ToList();
+        using var context = dbFactory.CreateDbContext();
+        return context.NavigationRole.Where(s => s.NavigationId == menuId).Select(s => s.RoleId!).AsNoTracking().ToList();
     }
 
     /// <summary>
@@ -85,12 +78,9 @@ public class RoleService : IRole
     {
         return CacheManager.GetOrAdd($"{RoleServiceGetRolesByUserIdCacheKey}-{userId}", entry =>
         {
-            using var dbcontext = DbFactory.CreateDbContext();
-
-            return dbcontext.UserRole.Where(s => s.UserId == userId).Select(s => s.RoleId!).AsNoTracking().ToList();
+            using var context = dbFactory.CreateDbContext();
+            return context.UserRole.Where(s => s.UserId == userId).Select(s => s.RoleId!).AsNoTracking().ToList();
         });
-
-
     }
 
     /// <summary>
@@ -101,13 +91,13 @@ public class RoleService : IRole
     /// <returns></returns>
     public bool SaveRolesByGroupId(string? groupId, IEnumerable<string> roleIds)
     {
-        using var dbcontext = DbFactory.CreateDbContext();
+        using var context = dbFactory.CreateDbContext();
         var ret = false;
         try
         {
-            dbcontext.Database.ExecuteSqlRaw("delete from RoleGroup where GroupID = {0}", groupId!);
-            dbcontext.AddRange(roleIds.Select(g => new RoleGroup { RoleId = g, GroupId = groupId }));
-            dbcontext.SaveChanges();
+            context.Database.ExecuteSqlRaw("delete from RoleGroup where GroupID = {0}", groupId!);
+            context.AddRange(roleIds.Select(g => new RoleGroup { RoleId = g, GroupId = groupId }));
+            context.SaveChanges();
             ret = true;
         }
         catch (Exception)
@@ -125,13 +115,13 @@ public class RoleService : IRole
     /// <returns></returns>
     public bool SaveRolesByMenuId(string? menuId, IEnumerable<string> roleIds)
     {
-        using var dbcontext = DbFactory.CreateDbContext();
+        using var context = dbFactory.CreateDbContext();
         var ret = false;
         try
         {
-            dbcontext.Database.ExecuteSqlRaw("delete from NavigationRole where NavigationID = {0}", menuId!);
-            dbcontext.AddRange(roleIds.Select(g => new NavigationRole { RoleId = g, NavigationId = menuId }));
-            dbcontext.SaveChanges();
+            context.Database.ExecuteSqlRaw("delete from NavigationRole where NavigationID = {0}", menuId!);
+            context.AddRange(roleIds.Select(g => new NavigationRole { RoleId = g, NavigationId = menuId }));
+            context.SaveChanges();
             ret = true;
         }
         catch (Exception)
@@ -149,13 +139,13 @@ public class RoleService : IRole
     /// <returns></returns>
     public bool SaveRolesByUserId(string? userId, IEnumerable<string> roleIds)
     {
-        using var dbcontext = DbFactory.CreateDbContext();
+        using var context = dbFactory.CreateDbContext();
         var ret = false;
         try
         {
-            dbcontext.Database.ExecuteSqlRaw("delete from UserRole where UserID = {0}", userId!);
-            dbcontext.AddRange(roleIds.Select(g => new UserRole { RoleId = g, UserId = userId }));
-            dbcontext.SaveChanges();
+            context.Database.ExecuteSqlRaw("delete from UserRole where UserID = {0}", userId!);
+            context.AddRange(roleIds.Select(g => new UserRole { RoleId = g, UserId = userId }));
+            context.SaveChanges();
             ret = true;
         }
         catch (Exception)

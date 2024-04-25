@@ -11,12 +11,8 @@ using Microsoft.Extensions.Primitives;
 
 namespace BootstrapAdmin.DataAccess.EFCore.Services;
 
-/// <summary>
-/// 
-/// </summary>
-public class GroupService : IGroup, IDisposable
+class GroupService(IDbContextFactory<BootstrapAdminContext> dbFactory) : IGroup, IDisposable
 {
-
     private const string GroupServiceGetAllCacheKey = "GroupService-GetAll";
 
     private const string GroupServiceGetGroupsByUserIdCacheKey = "GroupService-GetGroupsByUserId";
@@ -27,24 +23,15 @@ public class GroupService : IGroup, IDisposable
 
     private CancellationTokenSource? GetGroupsByRoleIdCancellationTokenSource { get; set; }
 
-    private IDbContextFactory<BootstrapAdminContext> DbFactory { get; }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="dbFactory"></param>
-    public GroupService(IDbContextFactory<BootstrapAdminContext> dbFactory) => DbFactory = dbFactory;
-
     /// <summary>
     /// 
     /// </summary>
     /// <returns></returns>
     public List<Group> GetAll()
     {
-        using var dbcontext = DbFactory.CreateDbContext();
+        using var context = dbFactory.CreateDbContext();
 
-        return CacheManager.GetOrAdd(GroupServiceGetAllCacheKey, entry => dbcontext.Groups.AsNoTracking().ToList());
-
+        return CacheManager.GetOrAdd(GroupServiceGetAllCacheKey, entry => context.Groups.AsNoTracking().ToList());
     }
 
     /// <summary>
@@ -54,11 +41,11 @@ public class GroupService : IGroup, IDisposable
     /// <returns></returns>
     public List<string> GetGroupsByRoleId(string? roleId) => CacheManager.GetOrAdd($"{GroupServiceGetGroupsByRoleIdCacheKey}-{roleId}", entry =>
     {
-        using var dbcontext = DbFactory.CreateDbContext();
+        using var context = dbFactory.CreateDbContext();
         GetGroupsByRoleIdCancellationTokenSource = new CancellationTokenSource(TimeSpan.FromMinutes(10));
         var token = new CancellationChangeToken(GetGroupsByRoleIdCancellationTokenSource.Token);
         entry.ExpirationTokens.Add(token);
-        return dbcontext.RoleGroup.Where(s => s.RoleId == roleId).Select(s => s.GroupId!).ToList();
+        return context.RoleGroup.Where(s => s.RoleId == roleId).Select(s => s.GroupId!).ToList();
     });
 
     /// <summary>
@@ -68,11 +55,11 @@ public class GroupService : IGroup, IDisposable
     /// <returns></returns>
     public List<string> GetGroupsByUserId(string? userId) => CacheManager.GetOrAdd($"{GroupServiceGetGroupsByUserIdCacheKey}-{userId}", entry =>
     {
-        using var dbcontext = DbFactory.CreateDbContext();
+        using var context = dbFactory.CreateDbContext();
         GetGroupsByUserIdCancellationTokenSource = new CancellationTokenSource(TimeSpan.FromMinutes(10));
         var token = new CancellationChangeToken(GetGroupsByUserIdCancellationTokenSource.Token);
         entry.ExpirationTokens.Add(token);
-        return dbcontext.Set<UserGroup>().FromSqlRaw("select GroupID from UserGroup where UserID = {0}", userId!).Select(s => s.GroupId!).ToList();
+        return context.Set<UserGroup>().FromSqlRaw("select GroupID from UserGroup where UserID = {0}", userId!).Select(s => s.GroupId!).ToList();
     });
 
     /// <summary>
@@ -83,13 +70,13 @@ public class GroupService : IGroup, IDisposable
     /// <returns></returns>
     public bool SaveGroupsByRoleId(string? roleId, IEnumerable<string> groupIds)
     {
-        using var dbcontext = DbFactory.CreateDbContext();
+        using var context = dbFactory.CreateDbContext();
         var ret = false;
         try
         {
-            dbcontext.Database.ExecuteSqlRaw("delete from RoleGroup where RoleID = {0}", roleId!);
-            dbcontext.AddRange(groupIds.Select(g => new RoleGroup { GroupId = g, RoleId = roleId }));
-            dbcontext.SaveChanges();
+            context.Database.ExecuteSqlRaw("delete from RoleGroup where RoleID = {0}", roleId!);
+            context.AddRange(groupIds.Select(g => new RoleGroup { GroupId = g, RoleId = roleId }));
+            context.SaveChanges();
             ret = true;
         }
         catch (Exception)
@@ -113,13 +100,13 @@ public class GroupService : IGroup, IDisposable
     /// <returns></returns>
     public bool SaveGroupsByUserId(string? userId, IEnumerable<string> groupIds)
     {
-        using var dbcontext = DbFactory.CreateDbContext();
+        using var context = dbFactory.CreateDbContext();
         var ret = false;
         try
         {
-            dbcontext.Database.ExecuteSqlRaw("delete from UserGroup where UserID = {0}", userId!);
-            dbcontext.AddRange(groupIds.Select(g => new UserGroup { GroupId = g, UserId = userId }));
-            dbcontext.SaveChanges();
+            context.Database.ExecuteSqlRaw("delete from UserGroup where UserID = {0}", userId!);
+            context.AddRange(groupIds.Select(g => new UserGroup { GroupId = g, UserId = userId }));
+            context.SaveChanges();
             ret = true;
         }
         catch (Exception)

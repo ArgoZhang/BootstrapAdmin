@@ -13,28 +13,15 @@ using System.Data.Common;
 
 namespace BootstrapAdmin.DataAccess.EFCore.Services;
 
-class DictService : IDict
+class DictService(IDbContextFactory<BootstrapAdminContext> factory, IConfiguration configuration) : IDict
 {
     private const string DictServiceCacheKey = "DictService-GetAll";
 
-    private IDbContextFactory<BootstrapAdminContext> DbFactory { get; }
-
-    private string AppId { get; set; }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="factory"></param>
-    /// <param name="configuration"></param>
-    public DictService(IDbContextFactory<BootstrapAdminContext> factory, IConfiguration configuration)
-    {
-        DbFactory = factory;
-        AppId = configuration.GetValue("AppId", "BA")!;
-    }
+    private string AppId { get; set; } = configuration.GetValue("AppId", "BA")!;
 
     public List<Dict> GetAll()
     {
-        using var context = DbFactory.CreateDbContext();
+        using var context = factory.CreateDbContext();
         return CacheManager.GetOrAdd(DictServiceCacheKey, entry => context.Dicts.AsNoTracking().ToList());
     }
 
@@ -356,7 +343,7 @@ class DictService : IDict
 
     public bool SaveClient(ClientApp client)
     {
-        using var dbcontext = DbFactory.CreateDbContext();
+        using var dbcontext = factory.CreateDbContext();
         var ret = false;
         if (!string.IsNullOrEmpty(client.AppId))
         {
@@ -407,7 +394,7 @@ class DictService : IDict
 
     public bool DeleteClient(string appId)
     {
-        using var dbcontext = DbFactory.CreateDbContext();
+        using var dbcontext = factory.CreateDbContext();
         bool ret;
         try
         {
@@ -441,7 +428,7 @@ class DictService : IDict
 
     private bool SaveDict(Dict dict)
     {
-        using var dbcontext = DbFactory.CreateDbContext();
+        using var dbcontext = factory.CreateDbContext();
         var ret = dbcontext.Database.ExecuteSqlRaw("update Dicts set Code = {1} where Category = {2} and Name = {0}", new[] { dict.Name, dict.Code, dict.Category }!) > 0;
         if (ret)
         {

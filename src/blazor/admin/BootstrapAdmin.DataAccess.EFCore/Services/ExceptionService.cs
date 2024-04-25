@@ -8,19 +8,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BootstrapAdmin.DataAccess.EFCore.Services;
 
-/// <summary>
-/// 
-/// </summary>
-public class ExceptionService : IException
+class ExceptionService(IDbContextFactory<BootstrapAdminContext> dbFactory) : IException
 {
-    private IDbContextFactory<BootstrapAdminContext> DbFactory { get; }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="dbFactory"></param>
-    public ExceptionService(IDbContextFactory<BootstrapAdminContext> dbFactory) => DbFactory = dbFactory;
-
     /// <summary>
     /// 
     /// </summary>
@@ -33,9 +22,9 @@ public class ExceptionService : IException
     /// <exception cref="NotImplementedException"></exception>
     public (IEnumerable<Error> Items, int ItemsCount) GetAll(string? searchText, ExceptionFilter filter, int pageIndex, int pageItems, List<string> sortList)
     {
-        using var dbcontext = DbFactory.CreateDbContext();
+        using var context = dbFactory.CreateDbContext();
 
-        var items = dbcontext.Set<Error>();
+        var items = context.Set<Error>();
 
         if (!string.IsNullOrEmpty(searchText))
         {
@@ -76,12 +65,10 @@ public class ExceptionService : IException
     /// 
     /// </summary>
     /// <param name="exception"></param>
-    /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
     public bool Log(Error exception)
     {
-        using var dbcontext = DbFactory.CreateDbContext();
-        dbcontext.Add(exception);
-        return dbcontext.SaveChanges() > 0;
+        using var context = dbFactory.CreateDbContext();
+        context.Add(exception);
+        return context.SaveChanges() > 0;
     }
 }
