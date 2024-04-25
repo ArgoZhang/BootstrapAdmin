@@ -21,13 +21,13 @@ public static class ServiceCollectionExtensions
     /// <returns></returns>
     public static IServiceCollection AddPetaPocoDataAccessServices(this IServiceCollection services)
     {
+        // 增加缓存服务
+        services.AddCacheManager();
+
         services.TryAddSingleton<IDBManager, DBManagerService>();
 
         // 增加数据服务（未复用 Blazor 扩展 PetaPoco 服务有一些特殊处理）
         services.AddSingleton(typeof(IDataService<>), typeof(DefaultDataService<>));
-
-        // 增加缓存服务
-        services.AddCacheManager();
 
         // 增加业务服务
         services.AddSingleton<IApp, AppService>();

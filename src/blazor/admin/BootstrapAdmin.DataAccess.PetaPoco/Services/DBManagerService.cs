@@ -15,7 +15,7 @@ using System.Text;
 
 namespace BootstrapAdmin.DataAccess.PetaPoco.Services;
 
-internal class DBManagerService(IConfiguration configuration, ILogger<DBManagerService> logger, IWebHostEnvironment host) : IDBManager
+class DBManagerService(IConfiguration configuration, ILogger<DBManagerService> logger, IWebHostEnvironment host) : IDBManager
 {
     /// <summary>
     /// 创建 IDatabase 实例方法
