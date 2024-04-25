@@ -50,6 +50,9 @@ namespace Microsoft.Extensions.DependencyInjection
             // 增加 PetaPoco 数据服务
             services.AddPetaPocoDataAccessServices();
 
+            //增加 FreeSql 数据服务
+            //services.AddFreeSqlDataAccessServices();
+
             // 增加 EFCore 数据服务
             //services.AddEFCoreDataAccessServices((provider, option) =>
             //{
@@ -58,17 +61,6 @@ namespace Microsoft.Extensions.DependencyInjection
             //    option.UseSqlite(connString);
             //    option.EnableSensitiveDataLogging();
             //});
-
-            // 增加 FreeSql 数据服务
-            //            services.AddFreeSql((provider, builder) =>
-            //            {
-            //                var configuration = provider.GetRequiredService<IConfiguration>();
-            //                var connString = configuration.GetConnectionString("bb");
-            //                builder.UseConnectionString(FreeSql.DataType.Sqlite, connString);
-            //#if DEBUG
-            //                调试sql语句输出
-            //                builder.UseMonitorCommand(cmd => System.Console.WriteLine(cmd.CommandText));
-            //#endif
 
             return services;
         }
