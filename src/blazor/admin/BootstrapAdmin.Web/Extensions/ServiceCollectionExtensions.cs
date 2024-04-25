@@ -45,7 +45,6 @@ namespace Microsoft.Extensions.DependencyInjection
 
             // 增加 BootstrapApp 上下文服务
             services.AddScoped<BootstrapAppContext>();
-            //            });
 
             // 增加 PetaPoco 数据服务
             services.AddPetaPocoDataAccessServices();
@@ -54,13 +53,7 @@ namespace Microsoft.Extensions.DependencyInjection
             //services.AddFreeSqlDataAccessServices();
 
             // 增加 EFCore 数据服务
-            //services.AddEFCoreDataAccessServices((provider, option) =>
-            //{
-            //    var configuration = provider.GetRequiredService<IConfiguration>();
-            //    var connString = configuration.GetConnectionString("bb");
-            //    option.UseSqlite(connString);
-            //    option.EnableSensitiveDataLogging();
-            //});
+            //services.AddEFCoreDataAccessServices();
 
             return services;
         }
