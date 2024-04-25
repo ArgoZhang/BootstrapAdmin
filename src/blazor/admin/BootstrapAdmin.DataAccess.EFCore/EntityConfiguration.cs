@@ -2,23 +2,18 @@
 // Licensed under the LGPL License, Version 3.0. See License.txt in the project root for license information.
 // Website: https://admin.blazor.zone
 
+using BootstrapAdmin.DataAccess.EFCore.Models;
 using BootstrapAdmin.DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.EntityFrameworkCore.ValueGeneration;
+using System.Reflection.Emit;
 
 namespace BootstrapAdmin.DataAccess.EFCore;
 
-/// <summary>
-/// 
-/// </summary>
-public static class EntityConfiguration
+static class EntityConfiguration
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="builder"></param>
     public static void Configure(this ModelBuilder builder)
     {
         var converter = new ValueConverter<string?, int>(
@@ -49,14 +44,18 @@ public static class EntityConfiguration
         builder.Entity<Error>().ToTable("Exceptions");
         builder.Entity<LoginLog>().ToTable("LoginLogs");
         builder.Entity<Trace>().ToTable("Traces");
+
+        builder.Entity<NavigationRole>().HasNoKey();
+        builder.Entity<RoleApp>().HasNoKey();
+        builder.Entity<RoleGroup>().HasNoKey();
+        builder.Entity<UserRole>().HasNoKey();
+        builder.Entity<UserGroup>().HasNoKey();
     }
 }
 
 internal class GuidStringGenerator : ValueGenerator
 {
-
     public override bool GeneratesTemporaryValues => false;
 
     protected override object? NextValue(EntityEntry entry) => "0";
-
 }

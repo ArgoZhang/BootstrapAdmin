@@ -13,23 +13,16 @@ namespace BootstrapAdmin.DataAccess.EFCore.Services;
 /// <summary>
 /// 
 /// </summary>
-public class UserService : IUser
+/// <param name="factory"></param>
+public class UserService(IDbContextFactory<BootstrapAdminContext> factory) : IUser
 {
-    private IDbContextFactory<BootstrapAdminContext> DbFactory { get; }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="factory"></param>
-    public UserService(IDbContextFactory<BootstrapAdminContext> factory) => DbFactory = factory;
-
     /// <summary>
     /// 
     /// </summary>
     /// <returns></returns>
     public List<User> GetAll()
     {
-        using var context = DbFactory.CreateDbContext();
+        using var context = factory.CreateDbContext();
         return context.Users.AsNoTracking().ToList();
     }
 
@@ -42,7 +35,7 @@ public class UserService : IUser
     public bool Authenticate(string userName, string password)
     {
         var isAuth = false;
-        using var context = DbFactory.CreateDbContext();
+        using var context = factory.CreateDbContext();
         var user = context.Users.Where(s => s.ApprovedTime != null).FirstOrDefault(x => x.UserName == userName);
         if (user != null && !string.IsNullOrEmpty(user.PassSalt))
         {
@@ -58,7 +51,7 @@ public class UserService : IUser
     /// <returns></returns>
     public List<string> GetApps(string userName)
     {
-        using var context = DbFactory.CreateDbContext();
+        using var context = factory.CreateDbContext();
         return context.Dicts.FromSqlRaw("select d.Code from Dicts d inner join RoleApp ra on d.Code = ra.AppId inner join (select r.Id from Roles r inner join UserRole ur on r.ID = ur.RoleID inner join Users u on ur.UserID = u.ID where u.UserName = {0} union select r.Id from Roles r inner join RoleGroup rg on r.ID = rg.RoleID inner join [Groups] g on rg.GroupID = g.ID inner join UserGroup ug on ug.GroupID = g.ID inner join Users u on ug.UserID = u.ID where u.UserName = {0}) r on ra.RoleId = r.ID union select Code from Dicts where Category = {1} and exists(select r.ID from Roles r inner join UserRole ur on r.ID = ur.RoleID inner join Users u on ur.UserID = u.ID where u.UserName = {0} and r.RoleName = {2} union select r.ID from Roles r inner join RoleGroup rg on r.ID = rg.RoleID inner join [Groups] g on rg.GroupID = g.ID inner join UserGroup ug on ug.GroupID = g.ID inner join Users u on ug.UserID = u.ID where u.UserName = {0} and r.RoleName = {2})", new[] { userName, "应用程序", "Administrators" }).Select(s => s.Code).AsNoTracking().ToList();
     }
 
@@ -69,7 +62,7 @@ public class UserService : IUser
     /// <returns></returns>
     public string? GetDisplayName(string? userName)
     {
-        using var context = DbFactory.CreateDbContext();
+        using var context = factory.CreateDbContext();
         return string.IsNullOrEmpty(userName) ? "" : context.Users.FirstOrDefault(s => s.UserName == userName)?.DisplayName;
     }
 
@@ -80,7 +73,7 @@ public class UserService : IUser
     /// <returns></returns>
     public List<string> GetRoles(string userName)
     {
-        using var context = DbFactory.CreateDbContext();
+        using var context = factory.CreateDbContext();
         return context.Roles.FromSqlRaw("select r.RoleName from Roles r inner join UserRole ur on r.ID=ur.RoleID inner join Users u on ur.UserID = u.ID and u.UserName = {0} union select r.RoleName from Roles r inner join RoleGroup rg on r.ID = rg.RoleID inner join [Groups] g on rg.GroupID = g.ID inner join UserGroup ug on ug.GroupID = g.ID inner join Users u on ug.UserID = u.ID and u.UserName = {0}", userName).Select(s => s.RoleName).AsNoTracking().ToList();
     }
 
@@ -91,7 +84,7 @@ public class UserService : IUser
     /// <returns></returns>
     public List<string> GetUsersByGroupId(string? groupId)
     {
-        using var context = DbFactory.CreateDbContext();
+        using var context = factory.CreateDbContext();
         return context.UserGroup.Where(s => s.GroupId == groupId).Select(s => s.UserId!).AsNoTracking().ToList();
     }
 
@@ -102,7 +95,7 @@ public class UserService : IUser
     /// <returns></returns>
     public List<string> GetUsersByRoleId(string? roleId)
     {
-        using var context = DbFactory.CreateDbContext();
+        using var context = factory.CreateDbContext();
         return context.UserRole.Where(s => s.RoleId == roleId).Select(s => s.UserId!).AsNoTracking().ToList();
     }
 
@@ -114,7 +107,7 @@ public class UserService : IUser
     /// <returns></returns>
     public bool SaveUsersByGroupId(string? groupId, IEnumerable<string> userIds)
     {
-        using var dbcontext = DbFactory.CreateDbContext();
+        using var dbcontext = factory.CreateDbContext();
         dbcontext.Database.ExecuteSqlRaw("delete from UserGroup where GroupId = {0}", groupId!);
         dbcontext.AddRange(userIds.Select(g => new UserGroup { UserId = g, GroupId = groupId }));
         dbcontext.SaveChanges();
@@ -129,7 +122,7 @@ public class UserService : IUser
     /// <returns></returns>
     public bool SaveUsersByRoleId(string? roleId, IEnumerable<string> userIds)
     {
-        using var dbcontext = DbFactory.CreateDbContext();
+        using var dbcontext = factory.CreateDbContext();
         dbcontext.Database.ExecuteSqlRaw("delete from UserRole where RoleID = {0}", roleId!);
         dbcontext.AddRange(userIds.Select(g => new UserRole { UserId = g, RoleId = roleId }));
         dbcontext.SaveChanges();
@@ -147,7 +140,7 @@ public class UserService : IUser
     public bool TryCreateUserByPhone(string phone, string code, string appId, ICollection<string> roles)
     {
         var ret = false;
-        using var dbcontext = DbFactory.CreateDbContext();
+        using var dbcontext = factory.CreateDbContext();
         var salt = LgbCryptography.GenerateSalt();
         var pwd = LgbCryptography.ComputeHash(code, salt);
         var user = GetAll().FirstOrDefault(user => user.UserName == phone);
@@ -184,7 +177,7 @@ public class UserService : IUser
         User? user = null;
         if (userName != null)
         {
-            using var dbcontext = DbFactory.CreateDbContext();
+            using var dbcontext = factory.CreateDbContext();
             user = dbcontext.Set<User>().FirstOrDefault(s => s.UserName == userName);
         }
         return user;
@@ -199,7 +192,7 @@ public class UserService : IUser
 
     public string? GetAppIdByUserName(string userName)
     {
-        using var dbcontext = DbFactory.CreateDbContext();
+        using var dbcontext = factory.CreateDbContext();
         return dbcontext.Set<User>().FirstOrDefault(s => s.UserName == userName)?.App;
     }
 
@@ -216,7 +209,7 @@ public class UserService : IUser
         var ret = false;
         if (Authenticate(userName, password))
         {
-            using var dbcontext = DbFactory.CreateDbContext();
+            using var dbcontext = factory.CreateDbContext();
             var passSalt = LgbCryptography.GenerateSalt();
             password = LgbCryptography.ComputeHash(newPassword, passSalt);
             string sql = "update Users set Password = {0}, PassSalt = {1} where UserName = {2}";
@@ -234,7 +227,7 @@ public class UserService : IUser
     /// <exception cref="NotImplementedException"></exception>
     public bool SaveDisplayName(string userName, string displayName)
     {
-        using var dbcontext = DbFactory.CreateDbContext();
+        using var dbcontext = factory.CreateDbContext();
         return dbcontext.Database.ExecuteSqlRaw("update Users set DisplayName = {1} where UserName = {0}", userName, displayName!) > 0;
     }
 
@@ -247,7 +240,7 @@ public class UserService : IUser
     /// <exception cref="NotImplementedException"></exception>
     public bool SaveTheme(string userName, string theme)
     {
-        using var dbcontext = DbFactory.CreateDbContext();
+        using var dbcontext = factory.CreateDbContext();
         return dbcontext.Database.ExecuteSqlRaw("update Users set Css = {1} where UserName = {0}", userName, theme) > 0;
     }
 
@@ -260,7 +253,7 @@ public class UserService : IUser
     /// <exception cref="NotImplementedException"></exception>
     public bool SaveLogo(string userName, string? logo)
     {
-        using var dbcontext = DbFactory.CreateDbContext();
+        using var dbcontext = factory.CreateDbContext();
         return dbcontext.Database.ExecuteSqlRaw("update Users set Icon = {1} where UserName = {0}", userName, logo ?? "") > 0;
     }
 
@@ -273,7 +266,7 @@ public class UserService : IUser
     /// <exception cref="NotImplementedException"></exception>
     public bool SaveApp(string userName, string app)
     {
-        using var dbcontext = DbFactory.CreateDbContext();
+        using var dbcontext = factory.CreateDbContext();
         return dbcontext.Database.ExecuteSqlRaw("update Users Set App = {1} Where UserName = {0}", userName, app) > 0;
     }
 
@@ -287,7 +280,7 @@ public class UserService : IUser
     /// <exception cref="NotImplementedException"></exception>
     public bool SaveUser(string userName, string displayName, string password)
     {
-        using var dbcontext = DbFactory.CreateDbContext();
+        using var dbcontext = factory.CreateDbContext();
         var salt = LgbCryptography.GenerateSalt();
         var pwd = LgbCryptography.ComputeHash(password, salt);
         var user = GetAll().FirstOrDefault(s => s.UserName == userName);

@@ -7,56 +7,44 @@ using BootstrapAdmin.DataAccess.EFCore.Services;
 using BootstrapAdmin.Web.Core;
 using BootstrapBlazor.Components;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
-/// 
+/// EFCore ORM 注入服务扩展类
 /// </summary>
 public static class ServicesExtensions
 {
     /// <summary>
-    /// 
+    /// 注入 EFCore 数据服务类
     /// </summary>
     /// <param name="services"></param>
-    /// <param name="optionConfigure"></param>
-    /// <param name="lifetime"></param>
-    /// <returns></returns>
-    public static IServiceCollection AddEFCoreDataAccessServices(this IServiceCollection services, Action<IServiceProvider, DbContextOptionsBuilder> optionConfigure, ServiceLifetime lifetime = ServiceLifetime.Singleton)
+    public static IServiceCollection AddEFCoreDataAccessServices(this IServiceCollection services)
     {
-        services.AddDbContextFactory<BootstrapAdminContext>(optionConfigure, lifetime);
-
-        services.AddServices();
-        return services;
-    }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="services"></param>
-    /// <param name="optionConfigure"></param>
-    /// <param name="lifetime"></param>
-    /// <returns></returns>
-    public static IServiceCollection AddEFCoreDataAccessServices(this IServiceCollection services, Action<DbContextOptionsBuilder> optionConfigure, ServiceLifetime lifetime = ServiceLifetime.Singleton)
-    {
-        services.AddDbContextFactory<BootstrapAdminContext>(optionConfigure, lifetime);
-
-        services.AddServices();
-        return services;
-    }
-
-    private static IServiceCollection AddServices(this IServiceCollection services)
-    {
-        // 增加数据服务
-        services.AddSingleton(typeof(IDataService<>), typeof(DefaultDataService<>));
         // 增加缓存服务
         services.AddCacheManager();
+
+        services.AddDbContextFactory<BootstrapAdminContext>((provider, options) =>
+        {
+            var configuration = provider.GetRequiredService<IConfiguration>();
+            var connString = configuration.GetConnectionString("ba");
+            options.UseSqlite(connString);
+#if DEBUG
+            options.LogTo(System.Console.WriteLine);
+#endif
+        });
+
+        // 增加数据服务
+        services.AddSingleton(typeof(IDataService<>), typeof(DefaultDataService<>));
+
         services.AddSingleton<INavigation, NavigationService>();
         services.AddSingleton<IDict, DictService>();
         services.AddSingleton<IUser, UserService>();
         services.AddSingleton<IRole, RoleService>();
         services.AddSingleton<IGroup, GroupService>();
         services.AddSingleton<ILogin, LoginService>();
+        services.AddSingleton<ITrace, TraceService>();
         return services;
-       
     }
 }
