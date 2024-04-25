@@ -52,6 +52,9 @@ namespace Microsoft.Extensions.DependencyInjection
             //增加 FreeSql 数据服务
             //services.AddFreeSqlDataAccessServices();
 
+            //增加 SqlSugar 数据服务
+            //services.AddSqlSugarDataAccessServices();
+
             // 增加 EFCore 数据服务
             //services.AddEFCoreDataAccessServices();
 
