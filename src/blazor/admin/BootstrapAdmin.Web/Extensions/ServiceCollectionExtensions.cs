@@ -47,13 +47,13 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<BootstrapAppContext>();
 
             // 增加 PetaPoco 数据服务
-            services.AddPetaPocoDataAccessServices();
+            //services.AddPetaPocoDataAccessServices();
 
             //增加 FreeSql 数据服务
             //services.AddFreeSqlDataAccessServices();
 
             //增加 SqlSugar 数据服务
-            //services.AddSqlSugarDataAccessServices();
+            services.AddSqlSugarDataAccessServices();
 
             // 增加 EFCore 数据服务
             //services.AddEFCoreDataAccessServices();
