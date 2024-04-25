@@ -8,12 +8,8 @@ using BootstrapBlazor.DataAccess.FreeSql;
 
 namespace BootstrapAdmin.DataAccess.FreeSql.Service;
 
-class DefaultDataService<TModel> : DataServiceBase<TModel> where TModel : class, new()
+class DefaultDataService<TModel>(IFreeSql freeSql) : DataServiceBase<TModel> where TModel : class, new()
 {
-    private IFreeSql FreeSql { get; }
-
-    public DefaultDataService(IFreeSql freeSql) => FreeSql = freeSql;
-
     /// <summary>
     /// 删除方法
     /// </summary>
@@ -21,7 +17,7 @@ class DefaultDataService<TModel> : DataServiceBase<TModel> where TModel : class,
     /// <returns></returns>
     public override async Task<bool> DeleteAsync(IEnumerable<TModel> models)
     {
-        await FreeSql.Delete<TModel>(models).ExecuteAffrowsAsync();
+        await freeSql.Delete<TModel>(models).ExecuteAffrowsAsync();
         return true;
     }
 
@@ -35,11 +31,11 @@ class DefaultDataService<TModel> : DataServiceBase<TModel> where TModel : class,
     {
         if (changedType == ItemChangedType.Add)
         {
-            await FreeSql.Insert<TModel>(model).ExecuteAffrowsAsync();
+            await freeSql.Insert<TModel>(model).ExecuteAffrowsAsync();
         }
         else if (changedType == ItemChangedType.Update)
         {
-            await FreeSql.Update<TModel>(model).ExecuteAffrowsAsync();
+            await freeSql.Update<TModel>(model).ExecuteAffrowsAsync();
         }
         return true;
     }
@@ -50,7 +46,7 @@ class DefaultDataService<TModel> : DataServiceBase<TModel> where TModel : class,
         IsFiltered = option.Filters.Any(),
         IsAdvanceSearch = option.AdvanceSearches.Any(),
         IsSearch = option.Searches.Any() || option.CustomerSearches.Any(),
-        Items = FreeSql.Select<TModel>()
+        Items = freeSql.Select<TModel>()
                        .WhereDynamicFilter(option.ToDynamicFilter())
                        .OrderByPropertyNameIf(option.SortOrder != SortOrder.Unset, option.SortName, option.SortOrder == SortOrder.Asc)
                        .Count(out var count)

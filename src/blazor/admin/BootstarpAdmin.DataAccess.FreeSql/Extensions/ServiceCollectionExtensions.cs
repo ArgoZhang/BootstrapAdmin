@@ -7,6 +7,7 @@ using BootstrapAdmin.DataAccess.FreeSql.Service;
 using BootstrapAdmin.Web.Core;
 using BootstrapBlazor.Components;
 using FreeSql;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Microsoft.Extensions.DependencyInjection;
@@ -20,16 +21,24 @@ public static class ServiceCollectionExtensions
     /// 注入 FreeSql 数据服务类
     /// </summary>
     /// <param name="services"></param>
-    /// <param name="freeSqlBuilder"></param>
     /// <returns></returns>
-    public static IServiceCollection AddFreeSql(this IServiceCollection services, Action<IServiceProvider, FreeSqlBuilder> freeSqlBuilder)
+    public static IServiceCollection AddFreeSqlDataAccessServices(this IServiceCollection services)
     {
         // 增加缓存服务
         services.AddCacheManager();
+
         services.TryAddSingleton(provider =>
         {
             var builder = new FreeSqlBuilder();
-            freeSqlBuilder(provider, builder);
+            var configuration = provider.GetRequiredService<IConfiguration>();
+            var connString = configuration.GetConnectionString("ba");
+            builder.UseConnectionString(DataType.Sqlite, connString);
+
+#if DEBUG
+            //调试 sql 语句输出
+            builder.UseMonitorCommand(cmd => System.Console.WriteLine(cmd.CommandText));
+#endif
+
             var instance = builder.Build();
             instance.Mapper();
             return instance;
