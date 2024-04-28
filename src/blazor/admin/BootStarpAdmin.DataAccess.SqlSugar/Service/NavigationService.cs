@@ -24,7 +24,7 @@ class NavigationService(ISqlSugarClient db) : INavigation
         {
             db.Ado.BeginTran();
             db.Deleteable<NavigationRole>().Where(t => t.RoleID == roleId).ExecuteCommand();
-            db.Insertable<NavigationRole>(menuIds.Select(g => new NavigationRole { NavigationID = g, RoleID = roleId })).ExecuteCommand();
+            db.Insertable(menuIds.Select(g => new NavigationRole { NavigationID = g, RoleID = roleId }).ToList()).ExecuteCommand();
             db.Ado.CommitTran();
             ret = true;
         }

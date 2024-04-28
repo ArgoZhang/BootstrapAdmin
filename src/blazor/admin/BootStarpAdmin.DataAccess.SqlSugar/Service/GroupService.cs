@@ -24,7 +24,7 @@ class GroupService(ISqlSugarClient db) : IGroup
         {
             db.Ado.BeginTran();
             db.Deleteable<RoleGroup>().Where(t => t.RoleID == roleId).ExecuteCommand();
-            db.Insertable<RoleGroup>(groupIds.Select(g => new RoleGroup { GroupID = g, RoleID = roleId })).ExecuteCommand();
+            db.Insertable(groupIds.Select(g => new RoleGroup { GroupID = g, RoleID = roleId }).ToList()).ExecuteCommand();
             ret = true;
             db.Ado.CommitTran();
         }
@@ -43,7 +43,7 @@ class GroupService(ISqlSugarClient db) : IGroup
         {
             db.Ado.BeginTran();
             db.Deleteable<UserGroup>().Where(t => t.UserID == userId).ExecuteCommand();
-            db.Insertable<UserGroup>(groupIds.Select(g => new UserGroup { GroupID = g, UserID = userId })).ExecuteCommand();
+            db.Insertable(groupIds.Select(g => new UserGroup { GroupID = g, UserID = userId }).ToList()).ExecuteCommand();
             db.Ado.CommitTran();
             ret = true;
         }

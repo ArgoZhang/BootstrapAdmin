@@ -18,7 +18,7 @@ class AppService(ISqlSugarClient db) : IApp
         {
             db.Ado.BeginTran();
             db.Deleteable<RoleApp>().Where(t => t.RoleID == roleId).ExecuteCommand();
-            db.Insertable<RoleApp>(appIds.Select(g => new RoleApp { AppID = g, RoleID = roleId })).ExecuteCommand();
+            db.Insertable(appIds.Select(g => new RoleApp { AppID = g, RoleID = roleId }).ToList()).ExecuteCommand();
             ret = true;
             db.Ado.CommitTran();
         }

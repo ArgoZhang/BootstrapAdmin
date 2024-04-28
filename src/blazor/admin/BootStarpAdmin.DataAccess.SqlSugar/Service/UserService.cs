@@ -137,7 +137,7 @@ class UserService(ISqlSugarClient db) : IUser
         {
             db.Ado.BeginTran();
             db.Deleteable<UserGroup>().Where(x => x.GroupID == groupId).ExecuteCommand();
-            db.Insertable<UserGroup>(userIds.Select(g => new UserGroup { UserID = g, GroupID = groupId })).ExecuteCommand();
+            db.Insertable(userIds.Select(g => new UserGroup { UserID = g, GroupID = groupId }).ToList()).ExecuteCommand();
             db.Ado.CommitTran();
             ret = true;
         }
@@ -156,7 +156,7 @@ class UserService(ISqlSugarClient db) : IUser
         {
             db.Ado.BeginTran();
             db.Deleteable<UserRole>().Where(x => x.RoleID == roleId).ExecuteCommand();
-            db.Insertable<UserRole>(userIds.Select(g => new UserRole { UserID = g, RoleID = roleId })).ExecuteCommand();
+            db.Insertable(userIds.Select(g => new UserRole { UserID = g, RoleID = roleId }).ToList()).ExecuteCommand();
             db.Ado.CommitTran();
             ret = true;
         }
@@ -202,7 +202,7 @@ class UserService(ISqlSugarClient db) : IUser
                 db.Insertable(user).ExecuteCommand();
                 // Authorization
                 var roleIds = db.Queryable<Role>().Where(t => roles.Contains(t.RoleName)).Select(t => t.Id).ToList();
-                db.Insertable<UserRole>(roleIds.Select(g => new UserRole { RoleID = g, UserID = user.Id })).ExecuteCommand();
+                db.Insertable(roleIds.Select(g => new UserRole { RoleID = g, UserID = user.Id }).ToList()).ExecuteCommand();
                 db.Ado.CommitTran();
             }
             else
