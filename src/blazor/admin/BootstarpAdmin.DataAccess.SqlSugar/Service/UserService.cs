@@ -2,6 +2,7 @@
 // Licensed under the LGPL License, Version 3.0. See License.txt in the project root for license information.
 // Website: https://admin.blazor.zone
 
+using BootstrapAdmin.Caching;
 using BootstrapAdmin.DataAccess.Models;
 using BootstrapAdmin.DataAccess.SqlSugar.Models;
 using BootstrapAdmin.Web.Core;
@@ -223,26 +224,66 @@ class UserService(ISqlSugarClient db) : IUser
 
     public bool SaveApp(string userName, string app)
     {
-        throw new NotImplementedException();
+        var ret = db.Updateable<User>().SetColumns(t => t.App == app).Where(t => t.UserName == userName).ExecuteCommand() > 0;
+        if (ret)
+        {
+            CacheManager.Clear();
+        }
+        return ret;
     }
 
     public bool ChangePassword(string userName, string password, string newPassword)
     {
-        throw new NotImplementedException();
+        var ret = false;
+        if (Authenticate(userName, password))
+        {
+            var passSalt = LgbCryptography.GenerateSalt();
+            password = LgbCryptography.ComputeHash(newPassword, passSalt);
+            ret = db.Updateable<User>()
+                .SetColumns(t => t.Password == password)
+                .SetColumns(t => t.PassSalt == passSalt)
+                .Where(t => t.UserName == userName)
+                .ExecuteCommand() > 0;
+        }
+        return ret;
     }
 
     public bool SaveDisplayName(string userName, string displayName)
     {
-        throw new NotImplementedException();
+        var ret = db.Updateable<User>()
+            .SetColumns(t => t.DisplayName == displayName)
+            .Where(t => t.UserName == userName)
+            .ExecuteCommand() > 0;
+        if (ret)
+        {
+            CacheManager.Clear();
+        }
+        return ret;
     }
 
     public bool SaveTheme(string userName, string theme)
     {
-        throw new NotImplementedException();
+        var ret = db.Updateable<User>()
+            .SetColumns(t => t.Css == theme)
+            .Where(t => t.UserName == userName)
+            .ExecuteCommand() > 0;
+        if (ret)
+        {
+            CacheManager.Clear();
+        }
+        return ret;
     }
 
     public bool SaveLogo(string userName, string? logo)
     {
-        throw new NotImplementedException();
+        var ret = db.Updateable<User>()
+            .SetColumns(t => t.Icon == logo)
+            .Where(t => t.UserName == userName)
+            .ExecuteCommand() > 0;
+        if (ret)
+        {
+            CacheManager.Clear();
+        }
+        return ret;
     }
 }
