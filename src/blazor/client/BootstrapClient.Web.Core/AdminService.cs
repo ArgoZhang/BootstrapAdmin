@@ -67,7 +67,16 @@ public class AdminService : IBootstrapAdminService
     /// <exception cref="NotImplementedException"></exception>
     public bool AuthorizingBlock(string userName, string url, string blockName)
     {
-        // Client 暂时未使用
-        return true;
+        var ret = User.GetRoles(userName).Any(i => i.Equals("Administrators", StringComparison.OrdinalIgnoreCase));
+        if (!ret)
+        {
+            var menus = Navigations.GetMenus(userName);
+            var menu = menus.FirstOrDefault(m => m.Url.Contains(url, StringComparison.OrdinalIgnoreCase));
+            if (menu != null)
+            {
+                ret = menus.Any(m => m.ParentId == menu.Id && m.IsResource == DataAccess.Models.EnumResource.Block && m.Url.Equals(blockName, StringComparison.OrdinalIgnoreCase));
+            }
+        }
+        return ret;
     }
 }
