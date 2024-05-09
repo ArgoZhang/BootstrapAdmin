@@ -18,7 +18,7 @@ namespace Bootstrap.Admin.Controllers.Api
     /// 登陆接口
     /// </summary>
     [Route("api/[controller]")]
-    [AllowAnonymous]
+    [Authorize]
     [ApiController]
     public class LoginController : ControllerBase
     {
@@ -27,7 +27,6 @@ namespace Bootstrap.Admin.Controllers.Api
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        [Authorize]
         [HttpGet]
         public QueryData<LoginUser> Get([FromQuery] QueryLoginOption value) => value.RetrieveData();
 
@@ -39,6 +38,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="user"></param>
         /// <returns></returns>
         [HttpPost]
+        [AllowAnonymous]
         public async Task<string?> Post([FromServices] IConfiguration config, [FromServices] IJWTTokenService tokenService, [FromBody] User user)
         {
             string? token = null;
