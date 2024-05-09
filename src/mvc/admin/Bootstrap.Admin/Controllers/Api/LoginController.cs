@@ -59,6 +59,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// <param name="phone"></param>
         /// <returns></returns>
         [HttpPut]
+        [AllowAnonymous]
         public async Task<SMSResult> Put([FromServices] ISMSProvider provider, [FromQuery] string phone) => string.IsNullOrEmpty(phone) ? new SMSResult() { Result = false, Msg = "手机号不可为空" } : await provider.SendCodeAsync(phone);
 
         /// <summary>
@@ -66,6 +67,7 @@ namespace Bootstrap.Admin.Controllers.Api
         /// </summary>
         /// <returns></returns>
         [HttpOptions]
+        [AllowAnonymous]
         public string? Options()
         {
             return null;
