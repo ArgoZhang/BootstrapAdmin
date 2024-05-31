@@ -15,10 +15,10 @@ namespace BootstrapAdmin.Web.Pages.Admin;
 /// </summary>
 public partial class Tasks
 {
-    private List<TasksModel> SelectedRows { get; set; } = new List<TasksModel>();
+    private List<TasksModel> SelectedRows { get; set; } = [];
 
-    private static IEnumerable<string> Jobs => new string[]
-    {
+    private static IEnumerable<string> Jobs =>
+    [
         "单次任务",
         "周期任务",
         "Cron 任务",
@@ -27,7 +27,7 @@ public partial class Tasks
         "禁用任务",
         "SQL日志",
         "健康检查"
-    };
+    ];
 
     [Inject]
     [NotNull]

@@ -6,7 +6,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BootstrapBlazor" Version="8.4.8-beta03" />
+    <PackageReference Include="BootstrapBlazor" Version="8.6.0" />
     <PackageReference Include="BootstrapBlazor.DataAccess.SqlSugar" Version="8.00" />
   </ItemGroup>
 
