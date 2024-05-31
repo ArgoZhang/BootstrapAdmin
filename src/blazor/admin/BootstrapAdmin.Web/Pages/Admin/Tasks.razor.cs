@@ -72,7 +72,7 @@ public partial class Tasks
     {
         var taskExecutor = new DefaultTaskExecutor();
         TaskServicesManager.Remove(model.Name);
-        TaskServicesManager.GetOrAdd(model.Name, token => taskExecutor.Execute(token), TriggerBuilder.Build(model.Trigger));
+        TaskServicesManager.GetOrAdd(model.Name, taskExecutor.Execute, TriggerBuilder.Build(model.Trigger));
         return Task.FromResult(true);
     }
 
@@ -183,8 +183,9 @@ public partial class Tasks
         /// <summary>
         /// 任务执行方法
         /// </summary>
+        /// <param name="provider"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public Task Execute(CancellationToken cancellationToken) => Task.Delay(1000, cancellationToken);
+        public Task Execute(IServiceProvider provider, CancellationToken cancellationToken) => Task.Delay(1000, cancellationToken);
     }
 }

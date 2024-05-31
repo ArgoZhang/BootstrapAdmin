@@ -41,15 +41,19 @@ namespace BootstrapAdmin.Web.Jobs
         /// <summary>
         /// 任务执行方法
         /// </summary>
+        /// <param name="provider"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public System.Threading.Tasks.Task Execute(CancellationToken cancellationToken)
+        public System.Threading.Tasks.Task Execute(IServiceProvider provider, CancellationToken cancellationToken)
         {
             var logs = new List<DBLog>();
             while (_messageQueue.TryTake(out var log))
             {
                 if (log != null) logs.Add(log);
-                if (logs.Count >= 100) break;
+                if (logs.Count >= 100)
+                {
+                    break;
+                }
             }
             if (logs.Any())
             {
