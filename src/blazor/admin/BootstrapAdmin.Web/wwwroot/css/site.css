@@ -60,12 +60,16 @@
     height: calc(100vh - var(--bb-layout-header-height) - var(--bb-tab-header-height) - var(--bb-footer-height));
 }
 
-.tabs-body-content .error-stack {
-    height: calc(100vh - var(--bb-layout-header-height) - var(--bb-tab-header-height) - var(--bb-footer-height));
-    overflow: auto;
-    margin: -1rem;
-    padding: 1rem;
+.tabs-body-content {
+    height: 100%;
 }
+
+    .tabs-body-content .error-stack {
+        height: calc(100vh - var(--bb-layout-header-height) - var(--bb-tab-header-height) - var(--bb-footer-height));
+        overflow: auto;
+        margin: -1rem;
+        padding: 1rem;
+    }
 
 ::-webkit-scrollbar {
     width: 6px;
