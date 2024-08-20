@@ -29,15 +29,6 @@
 
 使用 NET Core + Bootstrap + PetaPoco + HTML 5 + jQuery 构建的后台管理平台  
 
- **BootstrapAdmin**  与  **开源驰骋 ccflow**  达成如下协议.
-
-1. 驰骋工作流引擎、表单引擎、快速开发平台系统采用 `GPL` 协议.
-2. 驰骋 `.net` 版本成为 `ccflow`, `java` 版本成为 `jflow` 两个版本代码 100% 开源.
-3. 与 BootstrapAdmin 签订服务合同的并且付费的  BootstrapAdmin 客户使用ccflow不开源系统代码受到法律保护.
-4. 驰骋 BPM 代码下载地址: [传送门](http://ccflow.org/down.htm?from=argo)
-
-<a href='http://ccflow.org/?from=argo' target=_blank ><img src='https://images.gitee.com/uploads/images/2021/0718/172630_7ebb560a_554725.png' /></a>
-
 ### 特别说明
 **BootstrapAdmin** 无需二次开发，要做的仅仅是与前台系统集成，前台系统模板工程为 **Bootstrap.Client**   
 项目原始出发点是把权限系统从业务系统中剥离出来，项目开发专注于功能，详细配置说明请点击 [查看文档](https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis/%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90)
@@ -74,10 +65,6 @@
 ### 数据库
 数据库支持列表如下：  
 **MSSQL/Oracle/SQLite/MySql/MariaDB/Postgresql/Firebird/MongoDB**  
-
-### 工作流
-
-与 **驰骋工作流** 进行深度集成，欢迎访问其主页 [传送门](http://ccflow.org/?from=argo)  
 
 ### 浏览器支持
 
