@@ -9,7 +9,7 @@ namespace BootstrapAdmin.Web.Components;
 /// <summary>
 /// FAIconList 组件
 /// </summary>
-[JSModuleAutoLoader("Components/FAIconList.razor.js", JSObjectReference = true)]
+[JSModuleAutoLoader("./Components/FAIconList.razor.js", JSObjectReference = true)]
 public partial class FAIconList
 {
     private string? ClassString => CssBuilder.Default("icon-list")
