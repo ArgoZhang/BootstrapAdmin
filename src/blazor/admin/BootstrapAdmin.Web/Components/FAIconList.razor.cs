@@ -66,6 +66,7 @@ public partial class FAIconList
         base.OnParametersSet();
 
         DialogHeaderText ??= "请选择图标";
+        CopiedTooltipText ??= "已拷贝";
     }
 
     /// <summary>
