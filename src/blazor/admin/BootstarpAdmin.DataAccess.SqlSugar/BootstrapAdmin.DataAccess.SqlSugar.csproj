@@ -14,4 +14,8 @@
     <Using Include="SqlSugar" />
   </ItemGroup>
 
+  <PropertyGroup>
+    <NoWarn>CS8002</NoWarn>
+  </PropertyGroup>
+
 </Project>
