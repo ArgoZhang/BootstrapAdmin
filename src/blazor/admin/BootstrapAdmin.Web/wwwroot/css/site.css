@@ -1,25 +1,9 @@
-﻿html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-}
-
-:root {
+﻿:root {
     --bb-footer-height: 40px;
     --bb-tab-header-height: 40px;
     --bb-checkboxlist-item-width: 180px;
     --bb-header-bg: #17a2b8;
     --bb-header-color: #f8f9fa;
-}
-
-.layout {
-    --bb-layout-header-background: var(--bb-header-bg);
-    --bb-layout-sidebar-banner-background: var(--bb-header-bg);
-    --bb-layout-headerbar-background: #1ab394;
-    --bb-layout-header-color: var(--bb-header-color);
-    --bb-layout-title-color: var(--bb-header-color);
-}
-
-.dropdown-logout {
-    --bb-logout-text-color: var(--bb-header-color);
 }
 
 #blazor-error-ui {
