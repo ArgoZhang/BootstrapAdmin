@@ -316,7 +316,7 @@ class UserService : IUser
                 {
                     ApprovedBy = "System",
                     ApprovedTime = DateTime.Now,
-                    DisplayName = "手机用户",
+                    DisplayName = displayName,
                     UserName = userName,
                     Icon = "default.jpg",
                     Description = "系统默认创建",
