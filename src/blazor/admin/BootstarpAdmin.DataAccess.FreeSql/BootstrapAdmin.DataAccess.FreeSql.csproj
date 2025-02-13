@@ -6,8 +6,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BootstrapBlazor" Version="8.10.3" />
-    <PackageReference Include="BootstrapBlazor.DataAccess.FreeSql" Version="8.3.0" />
+    <PackageReference Include="BootstrapBlazor" Version="9.3.0" />
+    <PackageReference Include="BootstrapBlazor.DataAccess.FreeSql" Version="9.0.0" />
   </ItemGroup>
 
 </Project>
