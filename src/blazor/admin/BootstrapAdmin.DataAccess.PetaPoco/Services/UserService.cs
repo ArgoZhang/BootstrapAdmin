@@ -10,22 +10,15 @@ using PetaPoco;
 
 namespace BootstrapAdmin.DataAccess.PetaPoco.Services;
 
-class UserService : IUser
+class UserService(IDBManager manager) : IUser
 {
-    private IDBManager DBManager { get; }
-
-    public UserService(IDBManager db)
-    {
-        DBManager = db;
-    }
-
     /// <summary>
     /// 
     /// </summary>
     /// <returns></returns>
     public List<User> GetAll()
     {
-        using var db = DBManager.Create();
+        using var db = manager.Create();
         return db.Fetch<User>();
     }
 
@@ -38,7 +31,7 @@ class UserService : IUser
     /// <exception cref="NotImplementedException"></exception>
     public bool Authenticate(string userName, string password)
     {
-        using var db = DBManager.Create();
+        using var db = manager.Create();
         var user = db.SingleOrDefault<User>("select DisplayName, Password, PassSalt from Users where ApprovedTime is not null and UserName = @0", userName);
 
         var isAuth = false;
@@ -53,7 +46,7 @@ class UserService : IUser
 
     public User? GetUserByUserName(string? userName) => CacheManager.GetOrAdd($"{UserServiceGetUserByUserNameCacheKey}-{userName}", entry =>
     {
-        using var db = DBManager.Create();
+        using var db = manager.Create();
         return string.IsNullOrEmpty(userName) ? null : db.FirstOrDefault<User>("Where UserName = @0", userName);
     });
 
@@ -61,7 +54,7 @@ class UserService : IUser
 
     public List<string> GetApps(string userName) => CacheManager.GetOrAdd($"{UserServiceGetAppsByUserNameCacheKey}-{userName}", entry =>
     {
-        using var db = DBManager.Create();
+        using var db = manager.Create();
         return db.Fetch<string>($"select d.Code from Dicts d inner join RoleApp ra on d.Code = ra.AppId inner join (select r.Id from Roles r inner join UserRole ur on r.ID = ur.RoleID inner join Users u on ur.UserID = u.ID where u.UserName = @0 union select r.Id from Roles r inner join RoleGroup rg on r.ID = rg.RoleID inner join {db.Provider.EscapeSqlIdentifier("Groups")} g on rg.GroupID = g.ID inner join UserGroup ug on ug.GroupID = g.ID inner join Users u on ug.UserID = u.ID where u.UserName = @0) r on ra.RoleId = r.ID union select Code from Dicts where Category = @1 and exists(select r.ID from Roles r inner join UserRole ur on r.ID = ur.RoleID inner join Users u on ur.UserID = u.ID where u.UserName = @0 and r.RoleName = @2 union select r.ID from Roles r inner join RoleGroup rg on r.ID = rg.RoleID inner join {db.Provider.EscapeSqlIdentifier("Groups")} g on rg.GroupID = g.ID inner join UserGroup ug on ug.GroupID = g.ID inner join Users u on ug.UserID = u.ID where u.UserName = @0 and r.RoleName = @2)", userName, "应用程序", "Administrators");
     });
 
@@ -74,7 +67,7 @@ class UserService : IUser
     /// <returns></returns>
     public string? GetAppIdByUserName(string userName) => CacheManager.GetOrAdd($"{UserServiceGetAppIdByUserNameCacheKey}-{userName}", entry =>
     {
-        using var db = DBManager.Create();
+        using var db = manager.Create();
         return db.FirstOrDefault<User>("Where UserName = @0", userName)?.App;
     });
 
@@ -88,7 +81,7 @@ class UserService : IUser
     /// <exception cref="NotImplementedException"></exception>
     public List<string> GetRoles(string userName) => CacheManager.GetOrAdd($"{UserServiceGetRolesByUserNameCacheKey}-{userName}", entry =>
     {
-        using var db = DBManager.Create();
+        using var db = manager.Create();
         return db.Fetch<string>($"select r.RoleName from Roles r inner join UserRole ur on r.ID=ur.RoleID inner join Users u on ur.UserID = u.ID and u.UserName = @0 union select r.RoleName from Roles r inner join RoleGroup rg on r.ID = rg.RoleID inner join {db.Provider.EscapeSqlIdentifier("Groups")} g on rg.GroupID = g.ID inner join UserGroup ug on ug.GroupID = g.ID inner join Users u on ug.UserID = u.ID and u.UserName = @0", userName);
     });
 
@@ -100,7 +93,7 @@ class UserService : IUser
     /// <param name="groupId"></param>
     public List<string> GetUsersByGroupId(string? groupId) => CacheManager.GetOrAdd($"{UserServiceGetUsersByGroupIdCacheKey}-{groupId}", entry =>
     {
-        using var db = DBManager.Create();
+        using var db = manager.Create();
         return db.Fetch<string>("select UserID from UserGroup where GroupID = @0", groupId);
     });
 
@@ -114,7 +107,7 @@ class UserService : IUser
     public bool SaveUsersByGroupId(string? id, IEnumerable<string> userIds)
     {
         var ret = false;
-        using var db = DBManager.Create();
+        using var db = manager.Create();
         try
         {
             db.BeginTransaction();
@@ -144,7 +137,7 @@ class UserService : IUser
     /// <returns></returns>
     public List<string> GetUsersByRoleId(string? roleId) => CacheManager.GetOrAdd($"{UserServiceGetUsersByRoleIdCacheKey}-{roleId}", entry =>
     {
-        using var db = DBManager.Create();
+        using var db = manager.Create();
         return db.Fetch<string>("select UserID from UserRole where RoleID = @0", roleId);
     });
 
@@ -157,7 +150,7 @@ class UserService : IUser
     public bool SaveUsersByRoleId(string? roleId, IEnumerable<string> userIds)
     {
         var ret = false;
-        using var db = DBManager.Create();
+        using var db = manager.Create();
         try
         {
             db.BeginTransaction();
@@ -187,7 +180,7 @@ class UserService : IUser
     public bool ChangePassword(string userName, string password, string newPassword)
     {
         var ret = false;
-        using var db = DBManager.Create();
+        using var db = manager.Create();
         if (Authenticate(userName, password))
         {
             var passSalt = LgbCryptography.GenerateSalt();
@@ -203,7 +196,7 @@ class UserService : IUser
     /// </summary>
     public bool SaveDisplayName(string userName, string displayName)
     {
-        using var db = DBManager.Create();
+        using var db = manager.Create();
         var ret = db.Update<User>("set DisplayName = @1 where UserName = @0", userName, displayName) == 1;
         if (ret)
         {
@@ -217,7 +210,7 @@ class UserService : IUser
     /// </summary>
     public bool SaveTheme(string userName, string theme)
     {
-        using var db = DBManager.Create();
+        using var db = manager.Create();
         var ret = db.Update<User>("set Css = @1 where UserName = @0", userName, theme) == 1;
         if (ret)
         {
@@ -231,7 +224,7 @@ class UserService : IUser
     /// </summary>
     public bool SaveLogo(string userName, string? logo)
     {
-        using var db = DBManager.Create();
+        using var db = manager.Create();
         var ret = db.Update<User>("set Icon = @1 where UserName = @0", userName, logo) == 1;
         if (ret)
         {
@@ -251,7 +244,7 @@ class UserService : IUser
     public bool TryCreateUserByPhone(string phone, string code, string appId, ICollection<string> roles)
     {
         var ret = false;
-        using var db = DBManager.Create();
+        using var db = manager.Create();
         try
         {
             var salt = LgbCryptography.GenerateSalt();
@@ -303,7 +296,7 @@ class UserService : IUser
     {
         var salt = LgbCryptography.GenerateSalt();
         var pwd = LgbCryptography.ComputeHash(password, salt);
-        using var db = DBManager.Create();
+        using var db = manager.Create();
         var user = db.FirstOrDefault<User>("Where UserName = @0", userName);
         bool ret;
         if (user == null)
@@ -353,7 +346,7 @@ class UserService : IUser
 
     public bool SaveApp(string userName, string app)
     {
-        using var db = DBManager.Create();
+        using var db = manager.Create();
         var ret = db.Update<User>("Set App = @1 Where UserName = @0", userName, app) == 1;
         if (ret)
         {
