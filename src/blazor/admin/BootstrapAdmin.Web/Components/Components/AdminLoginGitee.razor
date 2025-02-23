@@ -1,0 +1,74 @@
+﻿@inherits AdminLogin
+
+<div class="wrap">
+    <div class="container">
+        <section class="login-sidebox">
+            <div class="login-sidebox-content">
+                <div class="login-sidebox-header">
+                    <div class="login-sidebox-logo">
+                        <img alt="logo" src="../favicon.png"><span>Bootstrap Admin</span>
+                    </div>
+                    <h2 class="login-sidebox-subtitle">
+                        通用后台权限管理系统
+                    </h2>
+                </div>
+                <div class="login-sidebox-body">
+                    <p>
+                        基于 RBAC 的 NetCore 后台管理框架，权限管理，前后台分离，支持多站点单点登录，兼容所有主流浏览器，内置微信、支付宝、QQ等多种登录方式，内置多种样式，可切换至 Blazor 多 Tabs 模式，权限控制细化到网页内任意元素（按钮、表格、文本框等等）
+                    </p>
+                </div>
+                <div class="login-sidebox-footer">
+                    <div>开源文档：<a href="https://gitee.com/LongbowEnterprise/BootstrapAdmin/wikis">码云托管平台 - Wiki</a></div>
+                </div>
+            </div>
+        </section>
+        <section class="login-form">
+            <div class="login-form-header">
+                <h2>登录</h2>
+                <span class="d-flex">
+                    没有帐号？
+                    <LinkButton Text="点此注册" OnClick="OnSignUp" />
+                </span>
+            </div>
+            <ValidateForm Model="Model" OnValidSubmit="OnLogin">
+                <div class="@ClassString">
+                    <Block Condition="AllowMobile">
+                        <div class="login-sms">
+                            <SMSLogin></SMSLogin>
+                        </div>
+                    </Block>
+                    <div class="login-up">
+                        <BootstrapInputGroup>
+                            <BootstrapInputGroupIcon Icon="fa-solid fa-fw fa-user" />
+                            <BootstrapInput maxlength="16" @bind-Value="@Model.UserName" IsAutoFocus="true" PlaceHolder="账号" />
+                        </BootstrapInputGroup>
+                        <BootstrapInputGroup class="mt-3">
+                            <BootstrapInputGroupIcon Icon="fa-solid fa-fw fa-lock" />
+                            <BootstrapPassword PlaceHolder="密码" @bind-Value="@Model.Password" />
+                        </BootstrapInputGroup>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <Checkbox @bind-Value="RememberPassword" Color="Color.Primary" ShowLabel="false" ShowAfterLabel="true" DisplayText="记住密码自动登录" OnValueChanged="OnRememberPassword" />
+                    <Block Condition="AllowMobile">
+                        <SwitchButton @bind-ToggleState="UseMobileLogin" OnClick="OnClickSwitchButton" OffText="短信验证登录" OnText="用户密码登录" />
+                    </Block>
+                </div>
+                <Button ButtonType="ButtonType.Submit" class="btn btn-login btn-lg btn-block mt-4" TooltipText="不填写密码默认使用 Gitee 认证">登 录</Button>
+                <div class="d-flex justify-content-center mt-3 mb-4">
+                    <LinkButton Text="已有账号，忘记密码？" OnClick="OnForgotPassword" />
+                </div>
+                <Block Condition="AllowOAuth">
+                    <Divider Text="其他方式登录" />
+                    <div class="login-list">
+                        <LinkButton Url="Account/Gitee" Title="使用 Gitee 帐号登录" ImageUrl="images/gitee.svg" />
+                        <LinkButton Url="Account/Github" Title="使用 GitHub 帐号登录" ImageUrl="images/git.svg" />
+                        <LinkButton Url="#" Title="微信-暂未实现" ImageUrl="images/weixin-2.svg" />
+                        <LinkButton Url="Account/Tencent" Title="使用 QQ 账号登录" ImageUrl="images/qq.svg" />
+                        <LinkButton Url="Account/Alipay" Title="使用支付宝账号登录" ImageUrl="images/zhifubao.svg" />
+                    </div>
+                </Block>
+            </ValidateForm>
+        </section>
+    </div>
+</div>

@@ -3,7 +3,7 @@
 // Website: https://admin.blazor.zone
 
 using BootstrapAdmin.DataAccess.Models;
-using BootstrapAdmin.Web.Components;
+using BootstrapAdmin.Web.Components.Components;
 
 namespace BootstrapAdmin.Web.Extensions;
 
