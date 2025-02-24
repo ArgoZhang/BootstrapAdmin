@@ -1,48 +1,50 @@
 ﻿@inherits LayoutComponentBase
 
-<Layout SideWidth="0" IsPage="true" ShowGotoTop="true" ShowCollapseBar="true"
-        IsFullSide="@IsFullSide" IsFixedHeader="@IsFixedHeader" IsFixedFooter="@IsFixedFooter" ShowFooter="@ShowFooter"
-        Menus="@MenuItems" UseTabSet="@UseTabSet"
-        TabDefaultUrl="/Home/Index"
-        AdditionalAssemblies="new[] { GetType().Assembly }" OnAuthorizing="@OnAuthorizing" class="@ClassString">
-    <Header>
-        <span class="ms-3 flex-sm-fill d-none d-sm-block">Bootstrap of Blazor</span>
-        <Widget></Widget>
-        <Logout ImageUrl="_content/BootstrapClient.Web.Shared/images/Argo.png" DisplayName="@Context.DisplayName" UserName="@Context.UserName">
-            <LinkTemplate>
-                <a href="@ProfileUrl"><i class="fa-solid fa-suitcase"></i>个人中心</a>
-                <a href="@SettingsUrl"><i class="fa-solid fa-cog"></i>设置</a>
-                <a href="@NotificationUrl"><i class="fa-solid fa-bell"></i>通知<span id="logoutNoti" class="badge badge-pill badge-success"></span></a>
-                @if (!Options.CurrentValue.Domain)
-                {
-                    <LogoutLink Url="@LogoutUrl" />
-                }
-            </LinkTemplate>
-        </Logout>
-        <div class="layout-drawer" @onclick="@(e => IsOpen = !IsOpen)"><i class="fa-solid fa-gears"></i></div>
-    </Header>
-    <Side>
-        <div class="layout-banner">
-            <img class="layout-logo" src="_content/BootstrapClient.Web.Shared/images/logo.png" />
-            <div class="layout-title">
-                <span>@Title</span>
+<BootstrapBlazorRoot>
+    <Layout SideWidth="0" IsPage="true" ShowGotoTop="true" ShowCollapseBar="true"
+            IsFullSide="@IsFullSide" IsFixedHeader="@IsFixedHeader" IsFixedFooter="@IsFixedFooter" ShowFooter="@ShowFooter"
+            Menus="@MenuItems" UseTabSet="@UseTabSet"
+            TabDefaultUrl="/Home/Index"
+            AdditionalAssemblies="new[] { GetType().Assembly }" OnAuthorizing="@OnAuthorizing" class="@ClassString">
+        <Header>
+            <span class="ms-3 flex-sm-fill d-none d-sm-block">Bootstrap of Blazor</span>
+            <Widget></Widget>
+            <Logout ImageUrl="images/Argo-C.png" DisplayName="@Context.DisplayName" UserName="@Context.UserName">
+                <LinkTemplate>
+                    <a href="@ProfileUrl"><i class="fa-solid fa-suitcase"></i>个人中心</a>
+                    <a href="@SettingsUrl"><i class="fa-solid fa-cog"></i>设置</a>
+                    <a href="@NotificationUrl"><i class="fa-solid fa-bell"></i>通知<span id="logoutNoti" class="badge badge-pill badge-success"></span></a>
+                    @if (!Options.CurrentValue.Domain)
+                    {
+                        <LogoutLink Url="@LogoutUrl" />
+                    }
+                </LinkTemplate>
+            </Logout>
+            <div class="layout-drawer" @onclick="@(e => IsOpen = !IsOpen)"><i class="fa-solid fa-gears"></i></div>
+        </Header>
+        <Side>
+            <div class="layout-banner">
+                <img class="layout-logo" src="images/logo.png" />
+                <div class="layout-title">
+                    <span>@Title</span>
+                </div>
             </div>
-        </div>
-    </Side>
-    <Main>
-        <CascadingValue Value="this" IsFixed="true">
-            @Body
-        </CascadingValue>
-    </Main>
-    <Footer>
-        <div class="text-center flex-fill">
-            <a class="page-layout-demo-footer-link" href="https://gitee.com/LongbowEnterprise/BootstrapAdmin" target="_blank">@Footer</a>
-        </div>
-    </Footer>
-    <NotAuthorized>
-        <Redirect Url="@AuthorUrl" />
-    </NotAuthorized>
-</Layout>
+        </Side>
+        <Main>
+            <CascadingValue Value="this" IsFixed="true">
+                @Body
+            </CascadingValue>
+        </Main>
+        <Footer>
+            <div class="text-center flex-fill">
+                <a class="page-layout-demo-footer-link" href="https://gitee.com/LongbowEnterprise/BootstrapAdmin" target="_blank">@Footer</a>
+            </div>
+        </Footer>
+        <NotAuthorized>
+            <Redirect Url="@AuthorUrl" />
+        </NotAuthorized>
+    </Layout>
+</BootstrapBlazorRoot>
 
 <Drawer Placement="Placement.Right" @bind-IsOpen="@IsOpen" IsBackdrop="true">
     <div class="layout-drawer-body">
@@ -145,3 +147,9 @@
         </div>
     </div>
 </Drawer>
+
+<div id="blazor-error-ui">
+    An unhandled error has occurred.
+    <a href="" class="reload">Reload</a>
+    <a class="dismiss">🗙</a>
+</div>
