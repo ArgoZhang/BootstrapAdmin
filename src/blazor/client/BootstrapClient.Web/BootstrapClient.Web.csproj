@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="BootstrapBlazor.FontAwesome" Version="9.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BootstrapClient.DataAccess\BootstrapClient.DataAccess.PetaPoco.csproj" />
   </ItemGroup>
 
