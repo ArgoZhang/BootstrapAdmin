@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BootstrapClient.Shared\BootstrapClient.Web.Shared.csproj" />
+    <ProjectReference Include="..\BootstrapClient.DataAccess\BootstrapClient.DataAccess.PetaPoco.csproj" />
   </ItemGroup>
 
   <ItemGroup>
