@@ -47,8 +47,6 @@ public partial class AdminLogin : IDisposable
     /// </summary>
     protected string? PostUrl { get; set; }
 
-    private DotNetObjectReference<AdminLogin>? Interop { get; set; }
-
     /// <summary>
     /// 
     /// </summary>
@@ -74,10 +72,6 @@ public partial class AdminLogin : IDisposable
     [Inject]
     [NotNull]
     protected ILogin? LoginService { get; set; }
-
-    [Inject]
-    [NotNull]
-    private IJSRuntime? JSRuntime { get; set; }
 
     /// <summary>
     /// 
