@@ -133,18 +133,6 @@ public partial class AdminTable<TItem> where TItem : class, new()
     /// 
     /// </summary>
     [Parameter]
-    public bool ShowExtendEditButton { get; set; }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    [Parameter]
-    public bool ShowExtendDeleteButton { get; set; }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    [Parameter]
     public bool AutoGenerateColumns { get; set; }
 
     /// <summary>
@@ -242,26 +230,6 @@ public partial class AdminTable<TItem> where TItem : class, new()
     [Inject]
     [NotNull]
     private BootstrapAppContext? AppContext { get; set; }
-
-    private bool AuthorizeExtendEditButton(string operate)
-    {
-        if (ShowExtendEditButton == false)
-        {
-            return false;
-        }
-
-        return AuthorizeButton(operate);
-    }
-
-    private bool AuthorizeExtendDeleteButton(string operate)
-    {
-        if (ShowExtendEditButton == false)
-        {
-            return false;
-        }
-
-        return AuthorizeButton(operate);
-    }
 
     private bool AuthorizeButton(string operate)
     {
