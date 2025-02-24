@@ -16,10 +16,10 @@
     <link href="css/motronic.css" rel="stylesheet" />
     <link href="BootstrapAdmin.Web.styles.css" rel="stylesheet" />
 
-    <HeadOutlet @rendermode="InteractiveServer" />
+    <HeadOutlet @rendermode="new InteractiveServerRenderMode(false)" />
 </head>
 <body>
-    <Routes @rendermode="InteractiveServer" />
+    <Routes @rendermode="new InteractiveServerRenderMode(false)" />
 
     <script src="_content/BootstrapBlazor/js/bootstrap.blazor.bundle.min.js"></script>
     <script src="_framework/blazor.web.js"></script>
