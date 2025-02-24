@@ -13,7 +13,7 @@
     <BodyTemplate>
         <Table TItem="HealthCheckReportItem" IsFixedHeader="false" @ref="HealthTable" IsMultipleSelect="false"
                IsStriped="true" IsBordered="true" ExtendButtonColumnWidth="100"
-               ShowToolbar="false" ShowExtendEditButton="false" ShowExtendDeleteButton="false"
+               ShowToolbar="false" ShowExtendButtons="true" ShowExtendEditButton="false" ShowExtendDeleteButton="false"
                ShowEmpty="false" ShowSearch="false" ShowLoading="true" OnQueryAsync="OnQueryAsync">
             <TableColumns>
                 <TableColumn @bind-Field="@context.Name" Lookup="@GetNameLookup()" Text="检查项"></TableColumn>
