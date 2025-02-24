@@ -11,6 +11,7 @@ namespace BootstrapAdmin.Web.Components.Components;
 /// <summary>
 /// AdminLoginGitee 组件
 /// </summary>
+[JSModuleAutoLoader("./Components/Components/AdminLoginGitee.razor.js", AutoInvokeInit = false, AutoInvokeDispose = false)]
 public partial class AdminLoginGitee
 {
     [Inject, NotNull]
