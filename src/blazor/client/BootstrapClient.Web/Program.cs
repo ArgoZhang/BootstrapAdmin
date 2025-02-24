@@ -27,8 +27,6 @@ app.UseAntiforgery();
 app.UseAuthentication();
 app.UseAuthorization();
 
-// 开启 webapi
-app.MapDefaultControllerRoute();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
