@@ -13,7 +13,7 @@ using Microsoft.Extensions.Options;
 namespace BootstrapAdmin.Web.Components.Pages.Account;
 
 /// <summary>
-/// 
+/// Login 组件
 /// </summary>
 [Layout(typeof(LoginLayout))]
 [Route("/Account/Login")]
