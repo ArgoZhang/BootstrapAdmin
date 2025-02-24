@@ -3,6 +3,7 @@
 // Website: https://admin.blazor.zone
 
 using BootstrapAdmin.Web.Core;
+using BootstrapAdmin.Web.Models;
 using BootstrapAdmin.Web.Services;
 using BootstrapAdmin.Web.Services.SMS;
 using BootstrapAdmin.Web.Utils;
@@ -19,36 +20,37 @@ namespace BootstrapAdmin.Web.Controllers;
 /// Account controller.
 /// </summary>
 [AllowAnonymous]
-public class AccountController : Controller
+public class LoginController : Controller
 {
     private const string MobileSchema = "Mobile";
 
-    #region UserLogin
     /// <summary>
     /// Login the specified userName, password and remember.
     /// </summary>
     /// <returns>The login.</returns>
-    /// <param name="userName">User name.</param>
-    /// <param name="password">Password.</param>
-    /// <param name="remember">Remember.</param>
+    /// <param name="model"></param>
     /// <param name="returnUrl"></param>
     /// <param name="appId"></param>
     /// <param name="context"></param>
     /// <param name="userService"></param>
     /// <param name="dictService"></param>
     [HttpPost]
-    public async Task<IActionResult> Login(string userName, string password, [FromQuery] string? remember, [FromQuery] string? returnUrl, [FromQuery] string? appId,
+    [IgnoreAntiforgeryToken]
+    public async Task<RedirectResult> Login([FromBody] LoginModel model,
+        [FromQuery] string? returnUrl, [FromQuery] string? appId,
         [FromServices] BootstrapAppContext context,
         [FromServices] IUser userService,
         [FromServices] IDict dictService)
     {
+        var userName = model.UserName;
+        var password = model.Password;
         if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
         {
             return RedirectLogin();
         }
 
         var auth = userService.Authenticate(userName, password);
-        var persistent = remember == "true";
+        var persistent = model.RememberMe;
         var period = 0;
         if (persistent)
         {
@@ -58,10 +60,12 @@ public class AccountController : Controller
 
         context.UserName = userName;
         context.BaseUri = new Uri($"{Request.Scheme}://{Request.Host}/");
-        return auth ? await SignInAsync(userName, LoginHelper.GetDefaultUrl(context, returnUrl, appId, userService, dictService), persistent, period) : RedirectLogin(returnUrl);
+        return auth
+            ? await SignInAsync(userName, LoginHelper.GetDefaultUrl(context, returnUrl, appId, userService, dictService), persistent, period)
+            : RedirectLogin(returnUrl);
     }
 
-    private async Task<IActionResult> SignInAsync(string userName, string returnUrl, bool persistent, int period = 0, string authenticationScheme = CookieAuthenticationDefaults.AuthenticationScheme)
+    private async Task<RedirectResult> SignInAsync(string userName, string returnUrl, bool persistent, int period = 0, string authenticationScheme = CookieAuthenticationDefaults.AuthenticationScheme)
     {
         var identity = new ClaimsIdentity(authenticationScheme);
         identity.AddClaim(new Claim(ClaimTypes.Name, userName));
@@ -94,9 +98,7 @@ public class AccountController : Controller
         }
         return Redirect(url);
     }
-    #endregion
 
-    #region Logout
     /// <summary>
     /// Logout this instance.
     /// </summary>
@@ -113,7 +115,6 @@ public class AccountController : Controller
             ["ReturnUrl"] = returnUrl
         }));
     }
-    #endregion
 
     #region Mobile Login
     /// <summary>
