@@ -11,23 +11,20 @@ namespace BootstrapAdmin.Web.Components.Components;
 /// <summary>
 /// AdminLoginGitee 组件
 /// </summary>
+[JSModuleAutoLoader("./Components/Components/AdminLoginGitee.razor.js", AutoInvokeInit = false, AutoInvokeDispose = false)]
 public partial class AdminLoginGitee
 {
     [Inject, NotNull]
     private IUser? UserService { get; set; }
 
-    [Inject, NotNull]
-    private NavigationManager? NavigationManager { get; set; }
-
     private LoginModel Model { get; set; } = new();
 
-    private Task OnLogin(EditContext context)
+    private async Task OnLogin(EditContext context)
     {
         var auth = UserService.Authenticate(Model.UserName, Model.Password);
         if (auth)
         {
-            NavigationManager.NavigateTo("Account/LoginTo", true);
+            await InvokeVoidAsync("login", "Login/Login", Model.UserName, Model.RememberMe);
         }
-        return Task.CompletedTask;
     }
 }

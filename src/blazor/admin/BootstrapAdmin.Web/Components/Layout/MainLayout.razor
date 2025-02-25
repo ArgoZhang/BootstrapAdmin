@@ -1,41 +1,43 @@
 ﻿@inherits LayoutComponentBase
 
-<CascadingValue Value="ReloadMenu" IsFixed="true">
-    <Layout SideWidth="0" IsPage="true" IsFullSide="true" IsFixedHeader="true"
-            ShowFooter="true" ShowGotoTop="true" ShowCollapseBar="true" Menus="@MenuItems"
-            OnAuthorizing="@OnAuthorizing"
-            UseTabSet="true" TabDefaultUrl="/Admin/Index" OnUpdateAsync="OnUpdateAsync">
-        <Header>
-            <span class="ms-3 flex-fill">Bootstrap of Blazor</span>
-            <Logout ImageUrl="@Icon" DisplayName="@Context.DisplayName" UserName="@UserName">
-                <LinkTemplate>
-                    <a href="/Admin/Profiles"><i class="fa-solid fa-suitcase"></i>个人中心</a>
-                    <a href="/Admin/Index"><i class="fa-solid fa-cog"></i>设置</a>
-                    <a href="/Admin/Notifications"><i class="fa-solid fa-bell"></i>通知<span id="logoutNoti" class="badge badge-pill badge-success"></span></a>
-                    <LogoutLink />
-                </LinkTemplate>
-            </Logout>
-            <div class="layout-drawer"><i class="fa-solid fa-gears"></i></div>
-        </Header>
-        <Side>
-            <div class="layout-banner">
-                <img class="layout-logo" src="/images/logo.png" />
-                <div class="layout-title">
-                    <span>@Title</span>
+<BootstrapBlazorRoot>
+    <CascadingValue Value="ReloadMenu" IsFixed="true">
+        <Layout SideWidth="0" IsPage="true" IsFullSide="true" IsFixedHeader="true"
+                ShowFooter="true" ShowGotoTop="true" ShowCollapseBar="true" Menus="@MenuItems"
+                OnAuthorizing="@OnAuthorizing"
+                UseTabSet="true" TabDefaultUrl="/Admin/Index" OnUpdateAsync="OnUpdateAsync">
+            <Header>
+                <span class="ms-3 flex-fill">Bootstrap of Blazor</span>
+                <Logout ImageUrl="@Icon" DisplayName="@Context.DisplayName" UserName="@UserName">
+                    <LinkTemplate>
+                        <a href="/Admin/Profiles"><i class="fa-solid fa-suitcase"></i>个人中心</a>
+                        <a href="/Admin/Index"><i class="fa-solid fa-cog"></i>设置</a>
+                        <a href="/Admin/Notifications"><i class="fa-solid fa-bell"></i>通知<span id="logoutNoti" class="badge badge-pill badge-success"></span></a>
+                        <LogoutLink />
+                    </LinkTemplate>
+                </Logout>
+                <div class="layout-drawer"><i class="fa-solid fa-gears"></i></div>
+            </Header>
+            <Side>
+                <div class="layout-banner">
+                    <img class="layout-logo" src="/images/logo.png" />
+                    <div class="layout-title">
+                        <span>@Title</span>
+                    </div>
                 </div>
-            </div>
-        </Side>
-        <Main>
-            @Body
-        </Main>
-        <Footer>
-            <div class="flex-fill text-center text-dark">@Footer</div>
-        </Footer>
-        <NotAuthorized>
-            <Redirect />
-        </NotAuthorized>
-    </Layout>
-</CascadingValue>
+            </Side>
+            <Main>
+                @Body
+            </Main>
+            <Footer>
+                <div class="flex-fill text-center text-dark">@Footer</div>
+            </Footer>
+            <NotAuthorized>
+                <Redirect />
+            </NotAuthorized>
+        </Layout>
+    </CascadingValue>
+</BootstrapBlazorRoot>
 
 @if (Lock)
 {

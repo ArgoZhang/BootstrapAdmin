@@ -27,7 +27,7 @@ public partial class Healths
     private HealthStatus Status { get; set; }
 
     [NotNull]
-    private AdminTable<HealthCheckReportItem>? HealthTable { get; set; }
+    private Table<HealthCheckReportItem>? HealthTable { get; set; }
 
     [Inject]
     [NotNull]
