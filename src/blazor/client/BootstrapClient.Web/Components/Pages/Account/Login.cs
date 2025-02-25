@@ -6,8 +6,6 @@ using BootstrapClient.Web.Components.Shared;
 using BootstrapClient.Web.Core;
 using BootstrapClient.Web.Extensions;
 using BootstrapClient.Web.Services;
-using Microsoft.AspNetCore;
-using Microsoft.Extensions.Options;
 
 namespace BootstrapClient.Web.Components.Pages.Account;
 
