@@ -25,7 +25,6 @@ public static class ServiceCollectionExtensions
     {
         services.AddLogging(logging => logging.AddFileLogger().AddCloudLogger().AddDBLogger(ExceptionsHelper.Log));
         services.AddCors();
-        services.AddResponseCompression();
 
         // 增加后台任务
         services.AddTaskServices();

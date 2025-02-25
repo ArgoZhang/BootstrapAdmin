@@ -20,7 +20,6 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddBootstrapBlazorClient(this IServiceCollection services)
     {
         services.AddCors();
-        services.AddResponseCompression();
 
         // 增加 BootstrapBlazor 组件
         services.AddBootstrapBlazor();
