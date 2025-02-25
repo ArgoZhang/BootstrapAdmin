@@ -1,12 +1,11 @@
 ﻿// Copyright (c) Argo Zhang (argo@163.com). All rights reserved.
 // Licensed under the LGPL License, Version 3.0. See License.txt in the project root for license information.
-// Website: https://admin.blazor.zone
+// Website: https://pro.blazor.zone
 
 using BootstrapAdmin.Web.Core;
 using BootstrapAdmin.Web.Models;
 using BootstrapAdmin.Web.Services;
 using BootstrapAdmin.Web.Services.SMS;
-using BootstrapAdmin.Web.Utils;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -36,7 +35,7 @@ public class LoginController : Controller
     /// <param name="dictService"></param>
     [HttpPost]
     [IgnoreAntiforgeryToken]
-    public async Task<RedirectResult> Login([FromBody] LoginModel model,
+    public async Task<ActionResult> Login([FromBody] LoginModel model,
         [FromQuery] string? returnUrl, [FromQuery] string? appId,
         [FromServices] BootstrapAppContext context,
         [FromServices] IUser userService,
@@ -50,6 +49,11 @@ public class LoginController : Controller
         }
 
         var auth = userService.Authenticate(userName, password);
+        if (auth == false)
+        {
+            return RedirectLogin();
+        }
+
         var persistent = model.RememberMe;
         var period = 0;
         if (persistent)
@@ -60,12 +64,10 @@ public class LoginController : Controller
 
         context.UserName = userName;
         context.BaseUri = new Uri($"{Request.Scheme}://{Request.Host}/");
-        return auth
-            ? await SignInAsync(userName, LoginHelper.GetDefaultUrl(context, returnUrl, appId, userService, dictService), persistent, period)
-            : RedirectLogin(returnUrl);
+        return await SignInAsync(userName, returnUrl, appId, persistent, period);
     }
 
-    private async Task<RedirectResult> SignInAsync(string userName, string returnUrl, bool persistent, int period = 0, string authenticationScheme = CookieAuthenticationDefaults.AuthenticationScheme)
+    private async Task<LocalRedirectResult> SignInAsync(string userName, string? returnUrl, string? appId, bool persistent, int period = 0, string authenticationScheme = CookieAuthenticationDefaults.AuthenticationScheme)
     {
         var identity = new ClaimsIdentity(authenticationScheme);
         identity.AddClaim(new Claim(ClaimTypes.Name, userName));
@@ -80,8 +82,8 @@ public class LoginController : Controller
             properties.ExpiresUtc = DateTimeOffset.Now.AddDays(period);
         }
         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity), properties);
-
-        return Redirect(returnUrl);
+        var url = string.IsNullOrEmpty(appId) ? "/Admin/Index" : $"/Home/Index?ReturnUrl={returnUrl}&AppId={appId}";
+        return LocalRedirect(url);
     }
 
     private RedirectResult RedirectLogin(string? returnUrl = null)
@@ -135,6 +137,11 @@ public class LoginController : Controller
         }
 
         var auth = provider.Validate(phone, code);
+        if (auth == false)
+        {
+            return RedirectLogin();
+        }
+
         var persistent = remember == "true";
         var period = 0;
         if (persistent)
@@ -149,7 +156,7 @@ public class LoginController : Controller
 
         context.UserName = phone;
         context.BaseUri = new Uri(Request.Path.Value!);
-        return auth ? await SignInAsync(phone, LoginHelper.GetDefaultUrl(context, returnUrl, appId, userService, dictService), persistent, period, MobileSchema) : RedirectLogin(returnUrl);
+        return await SignInAsync(phone, returnUrl, appId, persistent, period, MobileSchema);
     }
 
     #endregion

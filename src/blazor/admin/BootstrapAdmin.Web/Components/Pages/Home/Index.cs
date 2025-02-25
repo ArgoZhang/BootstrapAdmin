@@ -1,25 +1,40 @@
 ﻿// Copyright (c) Argo Zhang (argo@163.com). All rights reserved.
 // Licensed under the LGPL License, Version 3.0. See License.txt in the project root for license information.
-// Website: https://admin.blazor.zone
+// Website: https://pro.blazor.zone
 
+using BootstrapAdmin.Web.Components.Layout;
 using BootstrapAdmin.Web.Core;
 using BootstrapAdmin.Web.Services;
 using BootstrapAdmin.Web.Utils;
 using Microsoft.AspNetCore.Authorization;
-using System.Reflection;
+using Microsoft.AspNetCore.Components.Authorization;
 
 namespace BootstrapAdmin.Web.Pages.Home;
 
 /// <summary>
 /// 返回前台页面
 /// </summary>
-[Route("")]
-[Route("Home")]
-[Route("Index")]
-[Route("Home/Index")]
+[Route("/")]
+[Route("/Home")]
+[Route("/Home/Index")]
 [Authorize]
+[Layout(typeof(LoginLayout))]
 public class Index : ComponentBase
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    [SupplyParameterFromQuery]
+    [Parameter]
+    public string? ReturnUrl { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    [SupplyParameterFromQuery]
+    [Parameter]
+    public string? AppId { get; set; }
+
     [Inject]
     [NotNull]
     private NavigationManager? Navigation { get; set; }
@@ -36,17 +51,36 @@ public class Index : ComponentBase
     [NotNull]
     private IUser? UsersService { get; set; }
 
+    [Inject]
     [NotNull]
-    private string? Url { get; set; }
+    private AuthenticationStateProvider? AuthenticationStateProvider { get; set; }
+
+    [Inject]
+    [NotNull]
+    private NavigationManager? NavigationManager { get; set; }
+
+    private bool _render = true;
 
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    protected override void OnInitialized()
+    /// <returns></returns>
+    protected override async Task OnParametersSetAsync()
     {
-        // 查看是否自定义前台
-        Url = LoginHelper.GetDefaultUrl(Context, null, null, UsersService, DictsService);
+        _render = false;
+        await base.OnParametersSetAsync();
+
+        var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        Context.UserName = state.User.Identity?.Name;
+        Context.BaseUri = NavigationManager.ToAbsoluteUri(NavigationManager.BaseUri);
+        _render = true;
     }
+
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
+    /// <returns></returns>
+    protected override bool ShouldRender() => _render;
 
     /// <summary>
     /// <inheritdoc/>
@@ -56,12 +90,8 @@ public class Index : ComponentBase
     {
         if (firstRender)
         {
-            var routes = GetType().GetCustomAttributes<RouteAttribute>();
-            if (routes.Any(i => $"{Navigation.BaseUri}{i.Template}".TrimEnd('/').Equals(Url, StringComparison.OrdinalIgnoreCase)))
-            {
-                Url = "Admin/Index";
-            }
+            var url = LoginHelper.GetDefaultUrl(Context, ReturnUrl, AppId, UsersService, DictsService);
+            Navigation.NavigateTo(url);
         }
-        Navigation.NavigateTo(Url, true);
     }
 }

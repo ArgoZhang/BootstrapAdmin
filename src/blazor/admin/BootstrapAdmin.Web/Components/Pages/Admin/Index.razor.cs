@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace BootstrapAdmin.Web.Components.Pages.Admin;
 
 /// <summary>
-/// 
+/// Index 组件
 /// </summary>
 [AllowAnonymous]
 public partial class Index

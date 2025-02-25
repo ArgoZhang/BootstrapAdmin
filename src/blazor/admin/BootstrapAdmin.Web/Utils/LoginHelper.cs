@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Argo Zhang (argo@163.com). All rights reserved.
 // Licensed under the LGPL License, Version 3.0. See License.txt in the project root for license information.
-// Website: https://admin.blazor.zone
+// Website: https://pro.blazor.zone
 
 using BootstrapAdmin.Web.Core;
 using BootstrapAdmin.Web.Services;
@@ -23,32 +23,32 @@ public static class LoginHelper
     /// <returns></returns>
     public static string GetDefaultUrl(BootstrapAppContext context, string? returnUrl, string? appId, IUser userService, IDict dictService)
     {
-        if (string.IsNullOrEmpty(returnUrl))
+        if (string.IsNullOrEmpty(appId))
         {
             // 查找 User 设置的默认应用
             var userName = context.UserName;
             var defaultAppId = context.AppId;
-            var schema = context.BaseUri.Scheme;
-            var host = context.BaseUri.Host;
-            appId ??= userService.GetAppIdByUserName(userName) ?? defaultAppId;
-
+            appId = userService.GetAppIdByUserName(userName) ?? defaultAppId;
             if (appId == defaultAppId && dictService.GetEnableDefaultApp())
             {
                 // 开启默认应用
                 appId = dictService.GetApps().FirstOrDefault(d => d.Key != defaultAppId).Key;
             }
+        }
+        return context.FormatUrl(returnUrl, appId, dictService);
+    }
 
-            if (!string.IsNullOrEmpty(appId))
-            {
-                var appUrl = dictService.GetHomeUrlByAppId(appId);
-                if (!string.IsNullOrEmpty(appUrl))
-                {
-                    returnUrl = string.Format(appUrl, schema, host).TrimEnd('/');
-                }
-            }
+    private static string FormatUrl(this BootstrapAppContext context, string? returnUrl, string? appId, IDict dictService)
+    {
+        if (string.IsNullOrEmpty(appId))
+        {
+            return "Admin/Index";
         }
 
-        return returnUrl ?? "/Admin/Index";
+        var url = dictService.GetHomeUrlByAppId(appId);
+        return string.IsNullOrEmpty(url)
+            ? "Admin/Index"
+            : $"{string.Format(url, context.BaseUri.Scheme, context.BaseUri.Host)}{returnUrl}";
     }
 
     /// <summary>

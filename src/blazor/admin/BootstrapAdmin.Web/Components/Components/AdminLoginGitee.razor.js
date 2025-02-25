@@ -1,8 +1,8 @@
 ﻿import { execute } from "../../_content/BootstrapBlazor/modules/ajax.js"
 
 export async function login(url, userName, rememberMe) {
-    var password = document.querySelector('input[type="password"]').value;
-    await execute({
+    const password = document.querySelector('input[type="password"]').value;
+    const response = await execute({
         url: url,
         method: 'POST',
         toJson: false,
@@ -12,5 +12,7 @@ export async function login(url, userName, rememberMe) {
             rememberMe
         }
     });
-    location.href = "/";
+    if (response.redirected) {
+        window.location.href = response.url;
+    }
 }
