@@ -404,12 +404,6 @@ class DictService : IDict
         return dicts.Where(s => s.Category == "应用程序" && s.Code != "BA").ToDictionary(s => s.Name, s => s.Code);
     }
 
-    public string GetClientUrl(string name)
-    {
-        var dicts = GetAll();
-        return dicts.Where(s => s.Category == "应用首页" && s.Name == name).FirstOrDefault()?.Code ?? "";
-    }
-
     public bool ExistsAppId(string appId)
     {
         var dicts = GetAll();

@@ -382,12 +382,6 @@ public interface IDict
     /// 获得前台应用
     /// </summary>
     /// <returns></returns>
-    string GetClientUrl(string name);
-
-    /// <summary>
-    /// 获得前台应用
-    /// </summary>
-    /// <returns></returns>
     bool ExistsAppId(string appId);
 
     /// <summary>

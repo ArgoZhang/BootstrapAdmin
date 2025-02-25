@@ -1,7 +1,7 @@
 ﻿<div class="row g-3 form-inline">
     @foreach (var item in Clients)
     {
-        var value = DictService.GetClientUrl(item.Value);
+        var value = DictService.GetHomeUrlByAppId(item.Value);
         <div class="col-12 col-sm-12">
             <BootstrapInputGroup @key="item.Value">
                 <BootstrapInputGroupLabel DisplayText="@item.Key"></BootstrapInputGroupLabel>
