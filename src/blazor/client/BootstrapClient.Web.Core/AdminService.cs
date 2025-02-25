@@ -9,36 +9,24 @@ namespace BootstrapClient.Web.Core.Services;
 /// <summary>
 /// 
 /// </summary>
-public class AdminService : IBootstrapAdminService
+/// <param name="user"></param>
+/// <param name="navigations"></param>
+public class AdminService(IUser user, INavigation navigations) : IBootstrapAdminService
 {
-    private IUser User { get; set; }
-
-    private INavigation Navigations { get; set; }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="user"></param>
-    /// <param name="navigations"></param>
-    public AdminService(IUser user, INavigation navigations)
-    {
-        User = user;
-        Navigations = navigations;
-    }
 
     /// <summary>
     /// 通过用户名获取角色集合方法
     /// </summary>
     /// <param name="userName"></param>
     /// <returns></returns>
-    public List<string> GetRoles(string userName) => User.GetRoles(userName);
+    public List<string> GetRoles(string userName) => user.GetRoles(userName);
 
     /// <summary>
     /// 通过用户名获取授权 App 集合方法
     /// </summary>
     /// <param name="userName"></param>
     /// <returns></returns>
-    public List<string> GetApps(string userName) => User.GetApps(userName);
+    public List<string> GetApps(string userName) => user.GetApps(userName);
 
     /// <summary>
     /// 通过用户名检查当前请求 Url 是否已授权方法
@@ -51,7 +39,7 @@ public class AdminService : IBootstrapAdminService
         var ret = false;
         if (Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out var uri))
         {
-            ret = Navigations.GetMenus(userName)
+            ret = navigations.GetMenus(userName)
                 .Any(m => m.Url?.Contains(uri.AbsolutePath, StringComparison.OrdinalIgnoreCase) ?? false);
         }
         return Task.FromResult(ret);
@@ -64,13 +52,12 @@ public class AdminService : IBootstrapAdminService
     /// <param name="url"></param>
     /// <param name="blockName"></param>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
     public bool AuthorizingBlock(string userName, string url, string blockName)
     {
-        var ret = User.GetRoles(userName).Any(i => i.Equals("Administrators", StringComparison.OrdinalIgnoreCase));
+        var ret = user.GetRoles(userName).Any(i => i.Equals("Administrators", StringComparison.OrdinalIgnoreCase));
         if (!ret)
         {
-            var menus = Navigations.GetMenus(userName);
+            var menus = navigations.GetMenus(userName);
             var menu = menus.FirstOrDefault(m => m.Url.Contains(url, StringComparison.OrdinalIgnoreCase));
             if (menu != null)
             {
