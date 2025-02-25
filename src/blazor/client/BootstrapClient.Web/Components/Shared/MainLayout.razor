@@ -1,0 +1,155 @@
+﻿@inherits LayoutComponentBase
+
+<BootstrapBlazorRoot>
+    <Layout SideWidth="0" IsPage="true" ShowGotoTop="true" ShowCollapseBar="true"
+            IsFullSide="@IsFullSide" IsFixedHeader="@IsFixedHeader" IsFixedFooter="@IsFixedFooter" ShowFooter="@ShowFooter"
+            Menus="@MenuItems" UseTabSet="@UseTabSet"
+            TabDefaultUrl="/Home/Index"
+            AdditionalAssemblies="new[] { GetType().Assembly }" OnAuthorizing="@OnAuthorizing" class="@ClassString">
+        <Header>
+            <span class="ms-3 flex-sm-fill d-none d-sm-block">Bootstrap of Blazor</span>
+            <Widget></Widget>
+            <Logout ImageUrl="images/Argo-C.png" DisplayName="@Context.DisplayName" UserName="@Context.UserName">
+                <LinkTemplate>
+                    <a href="@ProfileUrl"><i class="fa-solid fa-suitcase"></i>个人中心</a>
+                    <a href="@SettingsUrl"><i class="fa-solid fa-cog"></i>设置</a>
+                    <a href="@NotificationUrl"><i class="fa-solid fa-bell"></i>通知<span id="logoutNoti" class="badge badge-pill badge-success"></span></a>
+                    @if (!Options.CurrentValue.Domain)
+                    {
+                        <LogoutLink Url="@LogoutUrl" />
+                    }
+                </LinkTemplate>
+            </Logout>
+            <div class="layout-drawer" @onclick="@(e => IsOpen = !IsOpen)"><i class="fa-solid fa-gears"></i></div>
+        </Header>
+        <Side>
+            <div class="layout-banner">
+                <img class="layout-logo" src="images/logo.png" />
+                <div class="layout-title">
+                    <span>@Title</span>
+                </div>
+            </div>
+        </Side>
+        <Main>
+            <CascadingValue Value="this" IsFixed="true">
+                @Body
+            </CascadingValue>
+        </Main>
+        <Footer>
+            <div class="text-center flex-fill">
+                <a class="page-layout-demo-footer-link" href="https://gitee.com/LongbowEnterprise/BootstrapAdmin" target="_blank">@Footer</a>
+            </div>
+        </Footer>
+        <NotAuthorized>
+            <Redirect Url="@AuthorUrl" />
+        </NotAuthorized>
+    </Layout>
+</BootstrapBlazorRoot>
+
+<Drawer Placement="Placement.Right" @bind-IsOpen="@IsOpen" IsBackdrop="true">
+    <div class="layout-drawer-body">
+        <div class="btn btn-primary w-100" @onclick="@(e => IsOpen = false)">点击关闭</div>
+        <div class="page-layout-demo-option">
+            <p>布局调整</p>
+            <div class="row">
+                <div class="col-6">
+                    <div class="layout-item @(IsFullSide ? "active d-flex" : "d-flex")" @onclick="@(e => IsFullSide = true)" data-toggle="tooltip" title="左右结构">
+                        <div class="layout-left d-flex flex-column">
+                            <div class="layout-left-header"></div>
+                            <div class="layout-left-body flex-fill"></div>
+                        </div>
+                        <div class="layout-right d-flex flex-column flex-fill">
+                            <div class="layout-right-header"></div>
+                            <div class="layout-right-body flex-fill"></div>
+                            <div class="layout-right-footer"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="layout-item flex-column @(IsFullSide ? "d-flex" : "active d-flex")" @onclick="@(e => IsFullSide = false)" data-toggle="tooltip" title="上下结构">
+                        <div class="layout-top">
+                        </div>
+                        <div class="layout-body d-flex flex-fill">
+                            <div class="layout-left">
+                            </div>
+                            <div class="layout-right flex-fill">
+                            </div>
+                        </div>
+                        <div class="layout-footer">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-layout-demo-option">
+            <p>固定调整</p>
+            <div class="row">
+                <div class="col-6 d-flex align-items-center">
+                    <Switch @bind-Value="@IsFixedHeader" OnColor="@Color.Success" OffColor="@Color.Secondary"></Switch>
+                </div>
+                <div class="col-6 text-right">
+                    <span>固定页头</span>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-6 d-flex align-items-center">
+                    <Switch @bind-Value="@IsFixedFooter" OnColor="@Color.Success" OffColor="@Color.Secondary"></Switch>
+                </div>
+                <div class="col-6 text-right">
+                    <span>固定页脚</span>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-6 d-flex align-items-center">
+                    <Switch @bind-Value="@ShowFooter" OnColor="@Color.Success" OffColor="@Color.Primary"></Switch>
+                </div>
+                <div class="col-6 text-right">
+                    <span>显示页脚</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-layout-demo-option">
+            <p>主题配色</p>
+            <div class="row">
+                <div class="col-2">
+                    <span class="color color1" @onclick="@(e => Theme = "color1")"></span>
+                </div>
+                <div class="col-2">
+                    <span class="color color2" @onclick="@(e => Theme = "color2")"></span>
+                </div>
+                <div class="col-2">
+                    <span class="color color3" @onclick="@(e => Theme = "color3")"></span>
+                </div>
+                <div class="col-2">
+                    <span class="color color4" @onclick="@(e => Theme = "color4")"></span>
+                </div>
+                <div class="col-2">
+                    <span class="color color5" @onclick="@(e => Theme = "color5")"></span>
+                </div>
+                <div class="col-2">
+                    <span class="color color6" @onclick="@(e => Theme = "color6")"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-layout-demo-option">
+            <p>更多设置</p>
+            <div class="row">
+                <div class="col-6 d-flex align-items-center">
+                    <Switch @bind-Value="@UseTabSet" OnColor="@Color.Success" OffColor="@Color.Primary"></Switch>
+                </div>
+                <div class="col-6 text-right">
+                    <span>@(UseTabSet ? "多标签" : "单页")</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</Drawer>
+
+<div id="blazor-error-ui">
+    An unhandled error has occurred.
+    <a href="" class="reload">Reload</a>
+    <a class="dismiss">🗙</a>
+</div>
