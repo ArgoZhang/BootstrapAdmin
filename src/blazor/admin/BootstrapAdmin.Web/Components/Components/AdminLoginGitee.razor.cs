@@ -24,7 +24,7 @@ public partial class AdminLoginGitee
         var auth = UserService.Authenticate(Model.UserName, Model.Password);
         if (auth)
         {
-            await InvokeVoidAsync("login", "Login/Login", Model.UserName, Model.RememberMe);
+            await InvokeVoidAsync("login", $"Login/Login?ReturnUrl={ReturnUrl}&AppId={AppId}", Model.UserName, Model.RememberMe);
         }
     }
 }
