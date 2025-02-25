@@ -81,7 +81,7 @@ public sealed partial class MainLayout
 
     [Inject]
     [NotNull]
-    private IOptionsMonitor<BootstrapAdminAuthenticationOptions>? Options { get; set; }
+    private IOptions<BootstrapAdminAuthenticationOptions>? Options { get; set; }
 
     /// <summary>
     /// <inheritdoc/>
@@ -98,9 +98,9 @@ public sealed partial class MainLayout
             Context.AdminUrl = string.Format(adminUrl, Context.BaseUri.Scheme, Context.BaseUri.Host).TrimEnd('/');
         }
 
-        ProfileUrl = CombinePath(DictsService.GetProfileUrl(Context.AppId));
-        SettingsUrl = CombinePath(DictsService.GetSettingsUrl(Context.AppId));
-        NotificationUrl = CombinePath(DictsService.GetNotificationUrl(Context.AppId));
+        ProfileUrl = Context.CombinePath(DictsService.GetProfileUrl(Context.AppId));
+        SettingsUrl = Context.CombinePath(DictsService.GetSettingsUrl(Context.AppId));
+        NotificationUrl = Context.CombinePath(DictsService.GetNotificationUrl(Context.AppId));
     }
 
     /// <summary>
@@ -110,7 +110,7 @@ public sealed partial class MainLayout
     {
         var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
 
-        if (state.User.Identity != null && state.User.Identity.IsAuthenticated)
+        if (state.User.Identity is { IsAuthenticated: true })
         {
             var userName = state.User.Identity.Name;
             if (!string.IsNullOrEmpty(userName))
@@ -141,21 +141,5 @@ public sealed partial class MainLayout
         return SecurityService.AuthorizingNavigation(Context.UserName, url);
     }
 
-    private string LogoutUrl => CombinePath($"/Account/Logout?AppId={Context.AppId}");
-
-    private string AuthorUrl => CombinePath($"/Account/Login?ReturnUrl={NavigationManager.Uri}&AppId={Context.AppId}");
-
-    private string CombinePath(string? url)
-    {
-        url ??= "";
-        if (!string.IsNullOrEmpty(Context.AdminUrl))
-        {
-            url = string.Join('/', Context.AdminUrl, url.TrimStart('/'));
-        }
-        else
-        {
-            url = "#";
-        }
-        return url;
-    }
+    private string LogoutUrl => Context.CombinePath($"/Account/Logout?AppId={Context.AppId}");
 }
