@@ -2,7 +2,7 @@
 
 <div class="wrap white">
     <div class="container">
-        <form method="post" class="form-signin" action="@PostUrl" @ref="LoginForm">
+        <form class="form-signin" method="post" action="@PostUrl">
             <h2 class="form-signin-heading">@Title</h2>
             <div class="@ClassString">
                 @if (AllowMobile)
@@ -14,7 +14,7 @@
                 <div class="login-up">
                 </div>
                 <div class="d-flex justify-content-between align-items-center mt-3">
-                    <Checkbox @bind-Value="RememberPassword" Color="Color.Primary" ShowAfterLabel="true" DisplayText="记住密码自动登录" OnValueChanged="OnRememberPassword" />
+                    <Checkbox name="rememberMe" TValue="bool" Color="Color.Primary" ShowAfterLabel="true" DisplayText="记住密码自动登录" OnValueChanged="OnRememberPassword" />
                     <Block Condition="AllowMobile">
                         <SwitchButton @bind-ToggleState="UseMobileLogin" OnClick="OnClickSwitchButton" OffText="短信验证登录" OnText="用户密码登录" />
                     </Block>
@@ -35,6 +35,7 @@
                     </div>
                 </Block>
             </div>
+            <AntiforgeryToken></AntiforgeryToken>
         </form>
     </div>
 </div>

@@ -35,11 +35,6 @@ public partial class AdminLogin : IDisposable
     /// <summary>
     /// 
     /// </summary>
-    protected bool RememberPassword { get; set; }
-
-    /// <summary>
-    /// 
-    /// </summary>
     protected ElementReference LoginForm { get; set; }
 
     /// <summary>
@@ -107,13 +102,7 @@ public partial class AdminLogin : IDisposable
     /// </summary>
     protected void OnClickSwitchButton()
     {
-        var rem = RememberPassword ? "true" : "false";
-        PostUrl = QueryHelper.AddQueryString(UseMobileLogin ? "Account/Mobile" : "Account/Login", new Dictionary<string, string?>()
-        {
-            [nameof(ReturnUrl)] = ReturnUrl,
-            ["AppId"] = AppId,
-            ["remember"] = rem
-        });
+        PostUrl = UseMobileLogin ? "Login/Mobile" : "Login/Login";
     }
 
     /// <summary>
