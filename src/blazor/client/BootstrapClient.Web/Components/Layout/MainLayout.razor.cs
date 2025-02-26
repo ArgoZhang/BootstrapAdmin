@@ -10,7 +10,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.Options;
 
-namespace BootstrapClient.Web.Components.Shared;
+namespace BootstrapClient.Web.Components.Layout;
 
 /// <summary>
 /// MainLayout 母版页

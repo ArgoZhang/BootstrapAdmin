@@ -2,7 +2,7 @@
 // Licensed under the LGPL License, Version 3.0. See License.txt in the project root for license information.
 // Website: https://pro.blazor.zone
 
-using BootstrapClient.Web.Components.Shared;
+using BootstrapClient.Web.Components.Layout;
 using BootstrapClient.Web.Core;
 using BootstrapClient.Web.Extensions;
 using BootstrapClient.Web.Services;
