@@ -90,11 +90,7 @@ public partial class AdminLogin : IDisposable
         base.OnInitialized();
 
         Title = DictsService.GetWebTitle();
-        PostUrl = QueryHelper.AddQueryString("Account/Login", new Dictionary<string, string?>
-        {
-            ["ReturnUrl"] = ReturnUrl,
-            ["AppId"] = AppId
-        });
+        PostUrl = UseMobileLogin ? "Login/Mobile" : "Login/Login";
     }
 
     /// <summary>

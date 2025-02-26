@@ -6,9 +6,11 @@ using BootstrapAdmin.Web.Core;
 using BootstrapAdmin.Web.Models;
 using BootstrapAdmin.Web.Services;
 using BootstrapAdmin.Web.Services.SMS;
+using BootstrapAdmin.Web.Utils;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Security.Claims;
@@ -60,10 +62,11 @@ public class LoginController : Controller
 
         context.UserName = userName;
         context.BaseUri = new Uri($"{Request.Scheme}://{Request.Host}/");
-        return await SignInAsync(userName, model.ReturnUrl, model.AppId, persistent, period);
+        var url = LoginHelper.GetDefaultUrl(context, model.ReturnUrl, model.AppId, userService, dictService);
+        return await SignInAsync(url, userName, persistent, period);
     }
 
-    private async Task<LocalRedirectResult> SignInAsync(string userName, string? returnUrl, string? appId, bool persistent, int period = 0, string authenticationScheme = CookieAuthenticationDefaults.AuthenticationScheme)
+    private async Task<RedirectResult> SignInAsync(string url, string userName, bool persistent, int period = 0, string authenticationScheme = CookieAuthenticationDefaults.AuthenticationScheme)
     {
         var identity = new ClaimsIdentity(authenticationScheme);
         identity.AddClaim(new Claim(ClaimTypes.Name, userName));
@@ -78,8 +81,7 @@ public class LoginController : Controller
             properties.ExpiresUtc = DateTimeOffset.Now.AddDays(period);
         }
         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity), properties);
-        var url = string.IsNullOrEmpty(appId) ? "/Admin/Index" : $"/Home/Index?ReturnUrl={returnUrl}&AppId={appId}";
-        return LocalRedirect(url);
+        return Redirect(url);
     }
 
     private LocalRedirectResult RedirectLogin()
@@ -115,7 +117,7 @@ public class LoginController : Controller
     /// </summary>
     /// <returns></returns>
     [HttpPost()]
-    public async Task<LocalRedirectResult> Mobile([FromForm] LoginModel model,
+    public async Task<ActionResult> Mobile([FromForm] LoginModel model,
         [FromServices] ISMSProvider provider,
         [FromServices] IUser userService,
         [FromServices] IDict dictService,
@@ -148,7 +150,8 @@ public class LoginController : Controller
 
         context.UserName = phone;
         context.BaseUri = new Uri(Request.Path.Value!);
-        return await SignInAsync(phone, model.ReturnUrl, model.AppId, persistent, period, MobileSchema);
+        var url = LoginHelper.GetDefaultUrl(context, model.ReturnUrl, model.AppId, userService, dictService);
+        return await SignInAsync(url, phone, persistent, period, MobileSchema);
     }
 
     ///// <summary>
