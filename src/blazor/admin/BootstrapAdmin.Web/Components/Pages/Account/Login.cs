@@ -57,7 +57,7 @@ public class Login : ComponentBase
         if (Options.CurrentValue.Domain)
         {
             builder.OpenComponent<Redirect>(0);
-            builder.AddAttribute(1, nameof(Redirect.Url), "/Admin/Index");
+            builder.AddAttribute(1, nameof(Redirect.Url), "/");
             builder.CloseComponent();
         }
         else

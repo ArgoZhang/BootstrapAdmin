@@ -17,8 +17,8 @@ namespace BootstrapAdmin.Web.Pages.Home;
 [Route("/")]
 [Route("/Home")]
 [Route("/Home/Index")]
-[Authorize]
 [Layout(typeof(LoginLayout))]
+[Authorize]
 public class Index : ComponentBase
 {
     /// <summary>
@@ -34,10 +34,6 @@ public class Index : ComponentBase
     [SupplyParameterFromQuery]
     [Parameter]
     public string? AppId { get; set; }
-
-    [Inject]
-    [NotNull]
-    private NavigationManager? Navigation { get; set; }
 
     [Inject]
     [NotNull]
@@ -59,39 +55,39 @@ public class Index : ComponentBase
     [NotNull]
     private NavigationManager? NavigationManager { get; set; }
 
-    private bool _render = true;
+    [CascadingParameter]
+    private HttpContext? HttpContext { get; set; }
 
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    /// <returns></returns>
-    protected override async Task OnParametersSetAsync()
+    protected override void OnInitialized()
     {
-        _render = false;
-        await base.OnParametersSetAsync();
-
-        var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-        Context.UserName = state.User.Identity?.Name;
-        Context.BaseUri = NavigationManager.ToAbsoluteUri(NavigationManager.BaseUri);
-        _render = true;
-    }
-
-    /// <summary>
-    /// <inheritdoc/>
-    /// </summary>
-    /// <returns></returns>
-    protected override bool ShouldRender() => _render;
-
-    /// <summary>
-    /// <inheritdoc/>
-    /// </summary>
-    /// <param name="firstRender"></param>
-    protected override void OnAfterRender(bool firstRender)
-    {
-        if (firstRender)
+        if (HttpContext != null)
         {
-            var url = LoginHelper.GetDefaultUrl(Context, ReturnUrl, AppId, UsersService, DictsService);
-            Navigation.NavigateTo(url);
+            var userName = HttpContext?.User.Identity?.Name;
+            Context.UserName = userName;
         }
+        Context.BaseUri ??= NavigationManager.ToAbsoluteUri(NavigationManager.BaseUri);
     }
+
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
+    protected override async Task OnInitializedAsync()
+    {
+        if (string.IsNullOrEmpty(Context.UserName))
+        {
+            var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            Context.UserName = state.User.Identity?.Name;
+        }
+        var url = LoginHelper.GetDefaultUrl(Context, ReturnUrl, AppId, UsersService, DictsService);
+        NavigationManager.NavigateTo(url);
+    }
+
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
+    /// <returns></returns>
+    protected override bool ShouldRender() => false;
 }

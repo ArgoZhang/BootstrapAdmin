@@ -35,14 +35,15 @@ public static class LoginHelper
                 appId = dictService.GetApps().FirstOrDefault(d => d.Key != defaultAppId).Key;
             }
         }
-        return context.FormatUrl(returnUrl, appId, dictService);
-    }
 
-    private static string FormatUrl(this BootstrapAppContext context, string? returnUrl, string? appId, IDict dictService)
-    {
         if (string.IsNullOrEmpty(appId))
         {
             return "Admin/Index";
+        }
+
+        if (appId == context.AppId)
+        {
+            return returnUrl ?? "/Admin/Index";
         }
 
         var url = dictService.GetHomeUrlByAppId(appId);

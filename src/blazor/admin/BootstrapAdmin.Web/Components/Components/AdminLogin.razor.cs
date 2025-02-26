@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Argo Zhang (argo@163.com). All rights reserved.
 // Licensed under the LGPL License, Version 3.0. See License.txt in the project root for license information.
-// Website: https://admin.blazor.zone
+// Website: https://pro.blazor.zone
 
 using BootstrapAdmin.Web.Core;
 using Microsoft.JSInterop;
@@ -8,7 +8,7 @@ using Microsoft.JSInterop;
 namespace BootstrapAdmin.Web.Components.Components;
 
 /// <summary>
-/// 
+/// AdminLogin 组件
 /// </summary>
 public partial class AdminLogin : IDisposable
 {
@@ -31,11 +31,6 @@ public partial class AdminLogin : IDisposable
     /// 
     /// </summary>
     protected bool AllowOAuth { get; set; } = true;
-
-    /// <summary>
-    /// 
-    /// </summary>
-    protected bool RememberPassword { get; set; }
 
     /// <summary>
     /// 
@@ -95,11 +90,7 @@ public partial class AdminLogin : IDisposable
         base.OnInitialized();
 
         Title = DictsService.GetWebTitle();
-        PostUrl = QueryHelper.AddQueryString("Account/Login", new Dictionary<string, string?>
-        {
-            ["ReturnUrl"] = ReturnUrl,
-            ["AppId"] = AppId
-        });
+        PostUrl = UseMobileLogin ? "Login/Mobile" : "Login/Login";
     }
 
     /// <summary>
@@ -107,13 +98,7 @@ public partial class AdminLogin : IDisposable
     /// </summary>
     protected void OnClickSwitchButton()
     {
-        var rem = RememberPassword ? "true" : "false";
-        PostUrl = QueryHelper.AddQueryString(UseMobileLogin ? "Account/Mobile" : "Account/Login", new Dictionary<string, string?>()
-        {
-            [nameof(ReturnUrl)] = ReturnUrl,
-            ["AppId"] = AppId,
-            ["remember"] = rem
-        });
+        PostUrl = UseMobileLogin ? "Login/Mobile" : "Login/Login";
     }
 
     /// <summary>
@@ -168,7 +153,7 @@ public partial class AdminLogin : IDisposable
     }
 
     /// <summary>
-    /// 
+    /// <inheritdoc/>
     /// </summary>
     public void Dispose()
     {
