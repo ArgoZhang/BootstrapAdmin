@@ -5,12 +5,11 @@
         <form class="form-signin" method="post" action="@PostUrl">
             <h2 class="form-signin-heading">@Title</h2>
             <div class="@ClassString">
-                @if (AllowMobile)
-                {
+                <Block Condition="AllowMobile">
                     <div class="login-sms">
-                        <SMSLogin />
+                        <SMSLogin></SMSLogin>
                     </div>
-                }
+                </Block>
                 <div class="login-up">
                 </div>
                 <div class="d-flex justify-content-between align-items-center mt-3">
@@ -35,6 +34,8 @@
                     </div>
                 </Block>
             </div>
+            <input type="hidden" name="returnUrl" value="@ReturnUrl" />
+            <input type="hidden" name="appId" value="@AppId" />
             <AntiforgeryToken></AntiforgeryToken>
         </form>
     </div>
