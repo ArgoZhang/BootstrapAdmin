@@ -43,7 +43,7 @@ public static class LoginHelper
 
         if (appId == context.AppId)
         {
-            return returnUrl ?? "/";
+            return returnUrl ?? "/Admin/Index";
         }
 
         var url = dictService.GetHomeUrlByAppId(appId);
