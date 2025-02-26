@@ -39,6 +39,9 @@ public static class ServiceCollectionExtensions
         // 增加手机短信服务
         services.AddSingleton<ISMSProvider, TencentSMSProvider>();
 
+        // 增加认证服务
+        services.AddCascadingAuthenticationState();
+
         // 增加认证授权服务
         services.AddBootstrapAdminSecurity<AdminService>();
 
