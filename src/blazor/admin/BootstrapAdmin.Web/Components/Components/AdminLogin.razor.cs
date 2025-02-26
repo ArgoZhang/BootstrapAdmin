@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Argo Zhang (argo@163.com). All rights reserved.
 // Licensed under the LGPL License, Version 3.0. See License.txt in the project root for license information.
-// Website: https://admin.blazor.zone
+// Website: https://pro.blazor.zone
 
 using BootstrapAdmin.Web.Core;
 using Microsoft.JSInterop;
@@ -8,7 +8,7 @@ using Microsoft.JSInterop;
 namespace BootstrapAdmin.Web.Components.Components;
 
 /// <summary>
-/// 
+/// AdminLogin 组件
 /// </summary>
 public partial class AdminLogin : IDisposable
 {
@@ -153,7 +153,7 @@ public partial class AdminLogin : IDisposable
     }
 
     /// <summary>
-    /// 
+    /// <inheritdoc/>
     /// </summary>
     public void Dispose()
     {
