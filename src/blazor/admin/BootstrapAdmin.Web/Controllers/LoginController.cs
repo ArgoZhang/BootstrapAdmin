@@ -28,15 +28,11 @@ public class LoginController : Controller
     /// </summary>
     /// <returns>The login.</returns>
     /// <param name="model"></param>
-    /// <param name="returnUrl"></param>
-    /// <param name="appId"></param>
     /// <param name="context"></param>
     /// <param name="userService"></param>
     /// <param name="dictService"></param>
     [HttpPost]
-    [IgnoreAntiforgeryToken]
-    public async Task<ActionResult> Login([FromBody] LoginModel model,
-        [FromQuery] string? returnUrl, [FromQuery] string? appId,
+    public async Task<ActionResult> Login([FromForm] LoginModel model,
         [FromServices] BootstrapAppContext context,
         [FromServices] IUser userService,
         [FromServices] IDict dictService)
@@ -64,7 +60,7 @@ public class LoginController : Controller
 
         context.UserName = userName;
         context.BaseUri = new Uri($"{Request.Scheme}://{Request.Host}/");
-        return await SignInAsync(userName, returnUrl, appId, persistent, period);
+        return await SignInAsync(userName, model.ReturnUrl, model.AppId, persistent, period);
     }
 
     private async Task<LocalRedirectResult> SignInAsync(string userName, string? returnUrl, string? appId, bool persistent, int period = 0, string authenticationScheme = CookieAuthenticationDefaults.AuthenticationScheme)
@@ -86,19 +82,15 @@ public class LoginController : Controller
         return LocalRedirect(url);
     }
 
-    private RedirectResult RedirectLogin(string? returnUrl = null)
+    private LocalRedirectResult RedirectLogin()
     {
-        var url = returnUrl;
-        if (string.IsNullOrEmpty(url))
+        var query = Request.Query.Aggregate(new Dictionary<string, string?>(), (d, v) =>
         {
-            var query = Request.Query.Aggregate(new Dictionary<string, string?>(), (d, v) =>
-            {
-                d.Add(v.Key, v.Value.ToString());
-                return d;
-            });
-            url = QueryHelpers.AddQueryString(Request.PathBase + CookieAuthenticationDefaults.LoginPath, query);
-        }
-        return Redirect(url);
+            d.Add(v.Key, v.Value.ToString());
+            return d;
+        });
+        var url = QueryHelpers.AddQueryString(Request.PathBase + CookieAuthenticationDefaults.LoginPath, query);
+        return LocalRedirect(url);
     }
 
     /// <summary>
@@ -118,19 +110,19 @@ public class LoginController : Controller
         }));
     }
 
-    #region Mobile Login
     /// <summary>
     /// 短信验证登陆方法
     /// </summary>
     /// <returns></returns>
     [HttpPost()]
-    public async Task<IActionResult> Mobile(string phone, string code, [FromQuery] string? remember, [FromQuery] string? returnUrl,
-        [FromQuery] string? appId,
+    public async Task<LocalRedirectResult> Mobile([FromForm] LoginModel model,
         [FromServices] ISMSProvider provider,
         [FromServices] IUser userService,
         [FromServices] IDict dictService,
         [FromServices] BootstrapAppContext context)
     {
+        var phone = model.Phone;
+        var code = model.Code;
         if (string.IsNullOrEmpty(phone) || string.IsNullOrEmpty(code))
         {
             return RedirectLogin();
@@ -142,7 +134,7 @@ public class LoginController : Controller
             return RedirectLogin();
         }
 
-        var persistent = remember == "true";
+        var persistent = model.RememberMe;
         var period = 0;
         if (persistent)
         {
@@ -156,10 +148,8 @@ public class LoginController : Controller
 
         context.UserName = phone;
         context.BaseUri = new Uri(Request.Path.Value!);
-        return await SignInAsync(phone, returnUrl, appId, persistent, period, MobileSchema);
+        return await SignInAsync(phone, model.ReturnUrl, model.AppId, persistent, period, MobileSchema);
     }
-
-    #endregion
 
     ///// <summary>
     ///// Accesses the denied.
