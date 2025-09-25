@@ -1,5 +1,4 @@
 ﻿@inherits AdminLogin
-@attribute [JSModuleAutoLoader("Components/Components/AdminLoginGitee.razor.js", JSObjectReference = true)]
 
 <div class="wrap">
     <div class="container">
@@ -31,7 +30,7 @@
                     <LinkButton Text="点此注册" OnClick="OnSignUp" />
                 </span>
             </div>
-            <form class="form-signin" method="post" action="@PostUrl">
+            <form id="@Id" class="form-signin" method="post" action="@PostUrl">
                 <div class="@ClassString">
                     <Block Condition="AllowMobile">
                         <div class="login-sms">
@@ -41,11 +40,11 @@
                     <div class="login-up">
                         <BootstrapInputGroup>
                             <BootstrapInputGroupIcon Icon="fa-solid fa-fw fa-user" />
-                            <BootstrapInput name="userName" maxlength="16" TValue="string" IsAutoFocus="true" PlaceHolder="账号" />
+                            <BootstrapInput name="userName" maxlength="16" @bind-Value="@_userName" IsAutoFocus="true" PlaceHolder="账号" />
                         </BootstrapInputGroup>
                         <BootstrapInputGroup class="mt-3">
                             <BootstrapInputGroupIcon Icon="fa-solid fa-fw fa-lock" />
-                            <BootstrapPassword name="password" PlaceHolder="密码" />
+                            <BootstrapPassword name="password" @bind-Value="@_password" PlaceHolder="密码" />
                         </BootstrapInputGroup>
                     </div>
                 </div>
@@ -76,3 +75,5 @@
         </section>
     </div>
 </div>
+
+<ToastContainer></ToastContainer>
