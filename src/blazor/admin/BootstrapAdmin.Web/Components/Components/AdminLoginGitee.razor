@@ -1,4 +1,5 @@
 ﻿@inherits AdminLogin
+@attribute [JSModuleAutoLoader("Components/Components/AdminLoginGitee.razor.js", JSObjectReference = true)]
 
 <div class="wrap">
     <div class="container">
@@ -54,7 +55,7 @@
                         <SwitchButton @bind-ToggleState="UseMobileLogin" OnClick="OnClickSwitchButton" OffText="短信验证登录" OnText="用户密码登录" />
                     </Block>
                 </div>
-                <Button ButtonType="ButtonType.Submit" class="btn btn-login btn-lg btn-block mt-4" TooltipText="不填写密码默认使用 Gitee 认证">登 录</Button>
+                <Button ButtonType="ButtonType.Submit" class="btn btn-login btn-lg btn-block mt-4">登 录</Button>
                 <div class="d-flex justify-content-center mt-3 mb-4">
                     <LinkButton Text="已有账号，忘记密码？" OnClick="OnForgotPassword" />
                 </div>
