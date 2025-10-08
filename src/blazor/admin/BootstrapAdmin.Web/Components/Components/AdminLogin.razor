@@ -1,4 +1,4 @@
-﻿@inherits BootstrapModuleComponentBase
+@inherits BootstrapModuleComponentBase
 
 <div class="wrap white">
     <div class="container">
@@ -11,6 +11,7 @@
                     </div>
                 </Block>
                 <div class="login-up">
+                    <UserLogin />
                 </div>
                 <div class="d-flex justify-content-between align-items-center mt-3">
                     <Checkbox name="rememberMe" TValue="bool" Color="Color.Primary" ShowAfterLabel="true" DisplayText="记住密码自动登录" OnValueChanged="OnRememberPassword" />
