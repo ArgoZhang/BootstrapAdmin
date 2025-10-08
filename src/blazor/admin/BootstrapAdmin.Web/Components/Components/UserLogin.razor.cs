@@ -4,6 +4,9 @@
 
 namespace BootstrapAdmin.Web.Components.Components;
 
+/// <summary>
+/// 
+/// </summary>
 public partial class UserLogin
 {
     private string? UserName { get; set; }
