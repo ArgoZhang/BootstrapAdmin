@@ -5,9 +5,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BootstrapBlazor" Version="9.3.1-beta36" />
+    <PackageReference Include="BootstrapBlazor" Version="9.11.0" />
     <PackageReference Include="BootstrapBlazor.DataAccess.PetaPoco" Version="9.0.0" />
-    <PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.2" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.9" />
     <PackageReference Include="PetaPoco.Extensions" Version="8.0.0" />
   </ItemGroup>
 
