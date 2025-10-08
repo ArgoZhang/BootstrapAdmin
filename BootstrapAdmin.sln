@@ -52,8 +52,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{E057452E-0
 		README.zh-CN.md = README.zh-CN.md
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{85574E7C-7D58-4135-AB4B-76678552D271}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "srcipts", "srcipts", "{72C103DB-E1D3-449F-97C2-DF12CA111FD4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "win", "win", "{C6F2DCA0-7941-4C28-9328-2D495F5DCB00}"
@@ -106,7 +104,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "git", "git", "{64EACBD1-23D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "blazor", "blazor", "{DAE3826B-AAAB-468A-9A06-2F56EF5C0767}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "github", "github", "{C07631B9-5E5E-417A-9A16-3C88956D574E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "actions", "actions", "{C07631B9-5E5E-417A-9A16-3C88956D574E}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\build.yml = .github\workflows\build.yml
 		.github\workflows\docker.yml = .github\workflows\docker.yml
@@ -139,6 +137,14 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BootstrapAdmin.DataAccess.FreeSql", "src\blazor\admin\BootstarpAdmin.DataAccess.FreeSql\BootstrapAdmin.DataAccess.FreeSql.csproj", "{06653C38-6603-4CF3-9712-08EAB80D1F29}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BootstrapAdmin.DataAccess.SqlSugar", "src\blazor\admin\BootStarpAdmin.DataAccess.SqlSugar\BootstrapAdmin.DataAccess.SqlSugar.csproj", "{A9A17A73-91D9-4105-A173-77B8A7489219}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "configuration", "configuration", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		appveyor.yml = appveyor.yml
+		exclusion.dic = exclusion.dic
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
