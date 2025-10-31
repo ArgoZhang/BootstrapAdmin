@@ -16,4 +16,4 @@ jobs:
       with:
         dotnet-version: 9.0.x
     - name: Build with dotnet
-      run: dotnet build src/admin/Bootstrap.Admin/ --configuration Release
+      run: dotnet build src/blazor/admin/Bootstrap.Admin/ --configuration Release
