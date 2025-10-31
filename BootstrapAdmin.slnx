@@ -1,0 +1,101 @@
+<Solution>
+  <Folder Name="/actions/">
+    <File Path=".github/workflows/build.yml" />
+    <File Path=".github/workflows/docker.yml" />
+  </Folder>
+  <Folder Name="/configuration/">
+    <File Path=".editorconfig" />
+    <File Path=".gitignore" />
+    <File Path="appveyor.yml" />
+    <File Path="exclusion.dic" />
+  </Folder>
+  <Folder Name="/db/" />
+  <Folder Name="/db/MongoDB/">
+    <File Path="db/MongoDB/Dicts.js" />
+    <File Path="db/MongoDB/Groups.js" />
+    <File Path="db/MongoDB/init.js" />
+    <File Path="db/MongoDB/install.ps1" />
+    <File Path="db/MongoDB/install.sh" />
+    <File Path="db/MongoDB/Navigations.js" />
+    <File Path="db/MongoDB/Roles.js" />
+    <File Path="db/MongoDB/Users.js" />
+  </Folder>
+  <Folder Name="/db/MySQL/">
+    <File Path="db/MySQL/initData.sql" />
+    <File Path="db/MySQL/install.ps1" />
+    <File Path="db/MySQL/install.sh" />
+    <File Path="db/MySQL/install.sql" />
+    <File Path="db/MySQL/my.ini" />
+  </Folder>
+  <Folder Name="/db/Oracle/">
+    <File Path="db/Oracle/InitData.sql" />
+    <File Path="db/Oracle/Install.sql" />
+  </Folder>
+  <Folder Name="/db/Postgresql/">
+    <File Path="db/Postgresql/readme.txt" />
+  </Folder>
+  <Folder Name="/db/SQLite/">
+    <File Path="db/SQLite/InitData.sql" />
+    <File Path="db/SQLite/Install.sql" />
+  </Folder>
+  <Folder Name="/db/SQLServer/">
+    <File Path="db/SqlServer/InitData.sql" />
+    <File Path="db/SqlServer/install.ps1" />
+    <File Path="db/SqlServer/Install.sql" />
+  </Folder>
+  <Folder Name="/docs/">
+    <File Path="README.md" />
+    <File Path="README.zh-CN.md" />
+  </Folder>
+  <Folder Name="/src/" />
+  <Folder Name="/src/blazor/" />
+  <Folder Name="/src/blazor/admin/">
+    <Project Path="src/blazor/admin/BootstarpAdmin.DataAccess.FreeSql/BootstrapAdmin.DataAccess.FreeSql.csproj" />
+    <Project Path="src/blazor/admin/BootStarpAdmin.DataAccess.SqlSugar/BootstrapAdmin.DataAccess.SqlSugar.csproj" />
+    <Project Path="src/blazor/admin/BootstrapAdmin.Caching/BootstrapAdmin.Caching.csproj" />
+    <Project Path="src/blazor/admin/BootstrapAdmin.DataAccess.EFCore/BootstrapAdmin.DataAccess.EFCore.csproj" />
+    <Project Path="src/blazor/admin/BootstrapAdmin.DataAccess.Models/BootstrapAdmin.DataAccess.Models.csproj" />
+    <Project Path="src/blazor/admin/BootstrapAdmin.DataAccess.PetaPoco/BootstrapAdmin.DataAccess.PetaPoco.csproj" />
+    <Project Path="src/blazor/admin/BootstrapAdmin.Web.Core/BootstrapAdmin.Web.Core.csproj" />
+    <Project Path="src/blazor/admin/BootstrapAdmin.Web/BootstrapAdmin.Web.csproj" />
+  </Folder>
+  <Folder Name="/src/blazor/client/">
+    <Project Path="src/blazor/client/BootstrapClient.DataAccess/BootstrapClient.DataAccess.PetaPoco.csproj" />
+    <Project Path="src/blazor/client/BootstrapClient.Web.Core/BootstrapClient.Web.Core.csproj" />
+    <Project Path="src/blazor/client/BootstrapClient.Web.Models/BootstrapClient.DataAccess.Models.csproj" />
+    <Project Path="src/blazor/client/BootstrapClient.Web/BootstrapClient.Web.csproj" />
+  </Folder>
+  <Folder Name="/srcipts/" />
+  <Folder Name="/srcipts/appveyor/">
+    <File Path="appveyor.yml" />
+    <File Path="scripts/appveyor/appveyor.build.ps1" />
+    <File Path="scripts/appveyor/appveyor.install.ps1" />
+    <File Path="scripts/appveyor/appveyor.test.ps1" />
+  </Folder>
+  <Folder Name="/srcipts/git/">
+    <File Path="scripts/git/commit_msg_template.txt" />
+    <File Path="scripts/git/readme.md" />
+    <File Path="scripts/git/run.cmd" />
+    <File Path="scripts/git/run.sh" />
+  </Folder>
+  <Folder Name="/srcipts/linux/">
+    <File Path="scripts/linux/deploy-admin.sh" />
+    <File Path="scripts/linux/deploy-client.sh" />
+    <File Path="scripts/linux/init.sh" />
+    <File Path="scripts/linux/publish-admin.sh" />
+    <File Path="scripts/linux/publish-client.sh" />
+    <File Path="scripts/linux/watch-run-admin.sh" />
+    <File Path="scripts/linux/watch-run-client.sh" />
+  </Folder>
+  <Folder Name="/srcipts/linux/services/">
+    <File Path="scripts/linux/services/ba.admin.service" />
+    <File Path="scripts/linux/services/ba.client.service" />
+    <File Path="scripts/linux/services/nginx.service" />
+  </Folder>
+  <Folder Name="/srcipts/win/">
+    <File Path="scripts/windows/publish-admin.cmd" />
+    <File Path="scripts/windows/publish-client.cmd" />
+    <File Path="scripts/windows/watch-run-admin.cmd" />
+    <File Path="scripts/windows/watch-run-client.cmd" />
+  </Folder>
+</Solution>

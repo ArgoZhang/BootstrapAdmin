@@ -140,7 +140,7 @@ csharp_style_namespace_declarations= file_scoped:silent
 visual_basic_preferred_modifier_order = Partial,Default,Private,Protected,Public,Friend,NotOverridable,Overridable,MustOverride,Overloads,Overrides,MustInherit,NotInheritable,Static,Shared,Shadows,ReadOnly,WriteOnly,Dim,Const,WithEvents,Widening,Narrowing,Custom,Async:suggestion 
 [*.cs]
 # Add file header
-file_header_template = Copyright (c) Argo Zhang (argo@163.com). All rights reserved.\nLicensed under the LGPL License, Version 3.0. See License.txt in the project root for license information.\nWebsite: https://pro.blazor.zone
+file_header_template = Copyright (c) Argo Zhang (argo@live.ca). All rights reserved.\nLicensed under the LGPL License, Version 3.0. See License.txt in the project root for license information.\nWebsite: https://pro.blazor.zone
 csharp_using_directive_placement = outside_namespace:silent
 csharp_prefer_simple_using_statement = true:suggestion
 csharp_style_prefer_method_group_conversion = true:silent
