@@ -1,0 +1,92 @@
+name: 🐞 Bug Report
+description: File a bug/issue
+title: "bug(): title"
+labels: [bug]
+assignees:
+  - argozhang
+body:
+- type: checkboxes
+  attributes:
+    label: Is there an existing issue for this?
+    description: Please search to see if an issue already exists for the bug you encountered ([BootstrapBlazor/issues](https://github.com/ArgoZhang/BootstrapAdmin/issues?q=is%3Aissue)).
+    options:
+    - label: I have searched the existing issues
+      required: true
+- type: textarea
+  attributes:
+    label: Describe the bug
+    description: A clear and concise description of what the bug is.
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Expected Behavior
+    description: A clear and concise description of what you expected to happen.
+  validations:
+    required: true
+- type: dropdown
+  attributes:
+    label: Interactive render mode
+    description: What render mode of our software are you running?
+    options:
+      - Static Server (Static server-side rendering (static SSR))
+      - Interactive Server (Interactive server-side rendering (interactive SSR) using Blazor Server)
+      - Interactive WebAssembly (Client-side rendering (CSR) using Blazor WebAssembly)
+      - Interactive Auto (Server, then client)
+    default: 1
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Steps To Reproduce
+    description: |
+      We ❤ code! Point us to a [minimalistic project which reproduces this issue (repro)](https://github.com/ArgoZhang/BootstrapAdmin/blob/main/docs/repro.md) hosted in a public GitHub repo.
+      
+      We will close this issue if:
+      - The repro project you share with us is complex. We can't investigate custom projects, so don't point us to such, please.
+      - If we will not be able to repro the behavior you're reporting.
+      - If the repro project is attached as a `.zip` file.
+      - If the GitHub repro project is set to `Private`.
+      
+      如果您选择此模板说明您是想提交一个组件的 `BUG` 而不是来描述一个您遇到的问题结果，所以必须提供复现步骤与复现工程。如果不提供我们将不予处理，机器人将于一段时间后自动关闭本 `Issue`
+
+      请在下方文本框内写清楚，运行后点击那个页面，或者点击那个按钮复现问题，文件上传拖动到下方文本框内即可。
+      
+      **最小复现工程** 
+      - 删除 `bin` `obj` 文件夹后打包成 `zip` 压缩包的文件
+      - 公开 `github` 仓库地址
+      - 私有 `github` 仓库地址（邀请 argo@live.ca）
+    
+    placeholder: "drop file in here. （此处写复现步骤，最小工程压缩包可拖拽到这里）"
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Exceptions (if any)
+    description: Include the exception you get when facing this issue.
+  validations:
+    required: false
+- type: dropdown
+  attributes:
+    label: .NET Version
+    options:
+      - NET9.0
+      - NET8.0
+      - NET7.0
+      - NET6.0
+    default: 0
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Anything else?
+    description: |
+      - ASP.NET Core version:
+      - The IDE (VS / VS Code/ VS4Mac) you're running on, and its version:
+      - Include the output of `dotnet --info`:
+      
+      Links? References? Anything that will give us more context about the issue you are encountering!
+      
+      Tip: You can attach images or log files by clicking this area to highlight it and then dragging files in.
+  validations:
+    required: false
