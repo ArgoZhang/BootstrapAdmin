@@ -1,5 +1,14 @@
 <Solution>
-  <Folder Name="/actions/">
+  <Folder Name="/actions/" />
+  <Folder Name="/actions/ISSUE_TEMPLATE/">
+    <File Path=".github/ISSUE_TEMPLATE/10_bug_report.yml" />
+    <File Path=".github/ISSUE_TEMPLATE/20_feature_request.yml" />
+    <File Path=".github/ISSUE_TEMPLATE/30_documentation.yml" />
+    <File Path=".github/ISSUE_TEMPLATE/40_unit_test.yml" />
+    <File Path=".github/ISSUE_TEMPLATE/50_other.yml" />
+    <File Path=".github/ISSUE_TEMPLATE/60_config.yml" />
+  </Folder>
+  <Folder Name="/actions/workflow/">
     <File Path=".github/workflows/build.yml" />
     <File Path=".github/workflows/docker.yml" />
   </Folder>
