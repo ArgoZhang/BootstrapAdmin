@@ -65,6 +65,9 @@
     <Project Path="src/blazor/client/BootstrapClient.Web.Models/BootstrapClient.DataAccess.Models.csproj" />
     <Project Path="src/blazor/client/BootstrapClient.Web/BootstrapClient.Web.csproj" />
   </Folder>
+  <Folder Name="/src/props/">
+    <File Path="src/Directory.Build.props" />
+  </Folder>
   <Folder Name="/srcipts/" />
   <Folder Name="/srcipts/appveyor/">
     <File Path="appveyor.yml" />
