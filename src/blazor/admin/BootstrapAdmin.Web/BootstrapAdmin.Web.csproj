@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BootstrapBlazor.FontAwesome" Version="10.0.0" />
+    <PackageReference Include="BootstrapBlazor.FontAwesome" Version="10.0.3" />
     <PackageReference Include="BootstrapBlazor.Middleware" Version="10.0.0" />
     <PackageReference Include="Longbow.HealthChecks" Version="9.0.0" />
     <PackageReference Include="Longbow.Tasks" Version="10.0.0" />
